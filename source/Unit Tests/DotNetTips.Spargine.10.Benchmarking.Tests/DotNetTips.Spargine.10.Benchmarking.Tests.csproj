@@ -1,0 +1,12 @@
+﻿<Project Sdk="MSTest.Sdk/3.9.0">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>DotNetTips.Spargine._10.Benchmarking.Tests</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseVSTest>true</UseVSTest>
+  </PropertyGroup>
+
+</Project>

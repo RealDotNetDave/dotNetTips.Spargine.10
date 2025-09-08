@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<AnalysisLevel>none</AnalysisLevel>
+	<AssemblyVersion>2024.8.3.1</AssemblyVersion>
+	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
+	<EnableNETAnalyzers>false</EnableNETAnalyzers>
+	<FileVersion>2025.8.5.1</FileVersion>
+	<IsPackable>false</IsPackable>
+	<NeutralLanguage>en-US</NeutralLanguage>
+	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+	<TargetFramework>net10.0</TargetFramework>
+	<Version>2024.8.3.1</Version>
+	<LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+	<PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
+	<PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\dotNetTips.Spargine.10.Extensions.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\dotNetTips.Spargine.10.Tester.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10\dotNetTips.Spargine.10.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,100 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<AnalysisLevel>preview-recommended</AnalysisLevel>
+	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+	<ApplicationIcon>dotNetTips-Spargine-Logo.ico</ApplicationIcon>
+	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyVersion>2025.10.12.1</AssemblyVersion>
+	<Authors>David McCarter</Authors>
+	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
+	<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
+	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+	<Company>David McCarter - dotNetTips.com</Company>
+	<Configurations>Debug;Release</Configurations>
+	<Copyright>McCarter Consulting (David McCarter)</Copyright>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>embedded</DebugType>
+	<Description>Common classes from dotNetTips.com that can be used with BenchmarkDotNet.</Description>
+	<DocumentationFile>..\..\..\AppBin\DotNetTips.Spargine.10.Benchmarking.xml</DocumentationFile>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<EnablePackageValidation>false</EnablePackageValidation>
+	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
+	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+	<FileVersion>2025.10.12.1</FileVersion>
+	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<IncludeSymbols>true</IncludeSymbols>
+	<LangVersion>preview</LangVersion>
+	<NeutralLanguage>en-US</NeutralLanguage>
+	<Nullable>enable</Nullable>
+	<PackageIcon>dotNetTips-Spargine-8-Logo.png</PackageIcon>
+	<PackageProjectUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.8</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.8</RepositoryUrl>
+	<RootNamespace>DotNetTips.Spargine.Benchmarking</RootNamespace>
+	<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
+	<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<TargetFramework>net10.0</TargetFramework>
+	<Title>DotNetTips.Spargine.Benchmarking</Title>
+	<Version>2025.10.12.1</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="CollectionBenchmark.PersonRecord.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Content Include="dotNetTips-Spargine-Logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Include="..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="BenchmarkDotNet" Version="0.15.2" />
+	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Update="dotNetTips-Spargine-8-Logo.png">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	<OutputPath>..\..\..\AppBin\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<Compile Update="Properties\Resources.Designer.cs">
+	  <DesignTime>True</DesignTime>
+	  <AutoGen>True</AutoGen>
+	  <DependentUpon>Resources.resx</DependentUpon>
+	</Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+	<EmbeddedResource Update="Properties\Resources.resx">
+	  <Generator>ResXFileCodeGenerator</Generator>
+	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	</EmbeddedResource>
+  </ItemGroup>
+</Project>

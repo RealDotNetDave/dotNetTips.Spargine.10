@@ -1,0 +1,53 @@
+Method,Runtime,Mean,Allocated
+'DefaultIfNull + Default Value: Null Test',.NET 8.0,1.8531,0 B
+'DefaultIfNull + Default Value',.NET 8.0,1.7995,0 B
+'DefaultIfNullOrEmpty + Default Value: Null Test',.NET 8.0,1.7798,0 B
+'DefaultIfNullOrEmpty + Default Value',.NET 8.0,1.578,0 B
+'HasValue: Length',.NET 8.0,2.5111,0 B
+'HasValue: Min & Max Count',.NET 8.0,2.1465,0 B
+'HasValue: RegEx + IgnoreCase',.NET 8.0,"5,136.90",6608 B
+'HasValue: String',.NET 8.0,2.1394,0 B
+'ToByteArray: ASCII',.NET 8.0,181.2398,1000 B
+'ToByteArray: BigEndianUnicode',.NET 8.0,"2,909.52",1968 B
+'ToByteArray: Default',.NET 8.0,285.3026,1000 B
+'ToByteArray: Latin1',.NET 8.0,387.3438,1144 B
+'ToByteArray: Unicode',.NET 8.0,442.67,1968 B
+'ToByteArray: UTF32',.NET 8.0,"5,342.25",4128 B
+'ToByteArray: UTF8',.NET 8.0,287.8065,1000 B
+CombineToString,.NET 8.0,"4,238.67",6736 B
+Concat,.NET 8.0,"3,940.03",6416 B
+DefaultIfNull,.NET 8.0,1.5995,0 B
+DefaultIfNullOrEmpty,.NET 8.0,4.0618,0 B
+Extract,.NET 8.0,45.8421,56 B
+FromDeflateStringAsync,.NET 8.0,"11,173.69",7576 B
+FromZLibStringAsync,.NET 8.0,"11,720.09",7616 B
+HasValue,.NET 8.0,1.878,0 B
+HasWhitespace,.NET 8.0,2.8462,0 B
+Indent,.NET 8.0,308.6381,1984 B
+IsAsciiDigit,.NET 8.0,0.0007,0 B
+IsAsciiLetter,.NET 8.0,0.2432,0 B
+IsAsciiLetterOrDigit,.NET 8.0,0.2435,0 B
+IsAsciiWhitespace,.NET 8.0,0.2434,0 B
+IsCreditCardNumber,.NET 8.0,31.7631,0 B
+IsCurrencyCode,.NET 8.0,36.2115,0 B
+IsDomainAddress,.NET 8.0,70.179,0 B
+IsEmailAddress,.NET 8.0,116.4907,0 B
+IsEmpty,.NET 8.0,0.0023,0 B
+IsFirstLastName,.NET 8.0,55.6518,0 B
+IsGuid,.NET 8.0,248.2003,96 B
+IsISBN,.NET 8.0,90.9971,0 B
+IsMacAddress,.NET 8.0,76.127,0 B
+IsNotEmpty,.NET 8.0,0.002,0 B
+IsOneToSevenAlpha,.NET 8.0,39.9697,0 B
+IsScientific,.NET 8.0,100.7681,0 B
+IsString,.NET 8.0,"6,556.60",0 B
+IsStringSHA1Hash,.NET 8.0,460.0561,0 B
+IsUrl,.NET 8.0,39.722,0 B
+ReplaceEllipsisWithPeriod,.NET 8.0,37.7118,224 B
+StartsWithOrdinal,.NET 8.0,5.5478,0 B
+StartsWithOrdinalIgnoreCase,.NET 8.0,5.7962,0 B
+SubstringTrim,.NET 8.0,24.9529,104 B
+ToDeflateStringAsync,.NET 8.0,"27,180.85",8001 B
+ToTitleCase,.NET 8.0,91.3127,176 B
+ToTrimmed,.NET 8.0,524.6664,3976 B
+ToZLibStringAsync,.NET 8.0,"27,968.23",8344 B

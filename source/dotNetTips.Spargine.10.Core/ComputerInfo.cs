@@ -1,0 +1,322 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.10.Core
+// Author           : David McCarter
+// Created          : 12-17-2020
+//
+// Last Modified By : David McCarter
+// Last Modified On : 07-21-2025
+// ***********************************************************************
+// <copyright file="ComputerInfo.cs" company="McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary>Used to retrieve common computer information.</summary>
+// ***********************************************************************
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
+using System.Globalization;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+using System.Text.Json;
+using DotNetTips.Spargine.Core.Devices;
+using DotNetTips.Spargine.Core.Internal;
+using static System.Environment;
+
+//`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
+
+namespace DotNetTips.Spargine.Core;
+
+/// <summary>
+/// Provides detailed information about the computer system.
+/// </summary>
+[Information(nameof(ComputerInfo), author: "David McCarter", createdOn: "10/15/2018", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineComputerInfo")]
+[DataContract(Namespace = "dotNetTips.com/Info")]
+[Serializable]
+public sealed class ComputerInfo
+{
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ComputerInfo"/> class.
+	/// </summary>
+	public ComputerInfo()
+	{
+	}
+
+	/// <summary>
+	/// Converts the current instance of <see cref="ComputerInfo"/> to a JSON string.
+	/// </summary>
+	/// <remarks>
+	/// This method serializes the current object into a JSON format string using <see cref="JsonSerializer"/>.
+	/// </remarks>
+	/// <returns>
+	/// A JSON string representation of the current <see cref="ComputerInfo"/> instance.
+	/// </returns>
+	[Pure]
+	[return: NotNull]
+	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public string ToJson()
+	{
+		return JsonSerializer.Serialize(this);
+	}
+
+	/// <summary>
+	/// Returns a string that represents the current object.
+	/// </summary>
+	/// <returns>A string that represents the current object.</returns>
+	[Pure]
+	[return: NotNull]
+	public override string ToString() => this.PropertiesToString();
+
+	/// <summary>
+	/// Gets the computer culture in three-letter ISO language name format.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(ComputerCulture), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string ComputerCulture { get; private set; } = CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
+
+	/// <summary>
+	/// Gets the computer UI culture in three-letter ISO language name format.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(ComputerUICulture), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string ComputerUICulture { get; private set; } = CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName;
+
+	/// <summary>
+	/// Gets the current managed thread identifier.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(CurrentManagedTreadId), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int CurrentManagedTreadId { get; private set; } = CurrentManagedThreadId;
+
+	/// <summary>
+	/// Gets the current stack trace information.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(CurrentStackTrace), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string CurrentStackTrace { get; private set; } = StackTrace;
+
+	/// <summary>
+	/// Gets the current system tick count.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(CurrentSystemTickCount), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int CurrentSystemTickCount { get; private set; } = Clock.TickCount;
+
+	/// <summary>
+	/// Shows the directory from which the current process is running.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(CurrentWorkingDirectory), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string CurrentWorkingDirectory { get; private set; } = CurrentDirectory;
+	/// <summary>
+	/// Gets the disk usage information for the computer.
+	/// </summary>
+	/// <remarks>
+	/// This property calculates the total free space and total size of all ready drives on the computer.
+	/// </remarks>
+	/// <value>
+	/// A string representing the total free space and total size of all ready drives.
+	/// </value>
+	[DataMember]
+	[Information(nameof(DiskUsage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public string DiskUsage => $"{DriveInfo.GetDrives().Where(d => d.IsReady).Sum(d => d.TotalFreeSpace)} bytes free of {DriveInfo.GetDrives().Where(d => d.IsReady).Sum(d => d.TotalSize)} bytes";
+
+	/// <summary>
+	/// Displays a description of the .NET framework in use.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(FrameworkDescription), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string FrameworkDescription { get; private set; } = RuntimeInformation.FrameworkDescription;
+
+	/// <summary>
+	/// Gets the version of the .NET framework.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(FrameworkVersion), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public Version FrameworkVersion { get; private set; } = Environment.Version;
+
+	/// <summary>
+	/// Gets the CPU usage privileged time.
+	/// </summary>
+	/// <remarks>
+	/// CPU Privileged Time refers to the amount of time the CPU spends executing
+	/// system-level operations or kernel-mode code. This includes tasks such as
+	/// managing hardware, handling interrupts, and performing other low-level system
+	/// functions.
+	/// </remarks>
+	/// <returns>The privileged CPU usage time as a <see cref="TimeSpan"/>.</returns>
+	[DataMember]
+	[Information(nameof(GetCpuUsagePrivilegedTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public TimeSpan GetCpuUsagePrivilegedTime { get; private set; } = CpuUsage.PrivilegedTime;
+
+	/// <summary>
+	/// Gets the current CPU usage total time.
+	/// </summary>
+	/// <returns>The total CPU usage time as a <see cref="TimeSpan"/>.</returns>
+	[DataMember]
+	[Information(nameof(GetCpuUsageTotalTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static TimeSpan GetCpuUsageTotalTime { get; private set; } = CpuUsage.TotalTime;
+
+	/// <summary>
+	/// Gets the CPU usage user time.
+	/// </summary>
+	/// <returns>The user CPU usage time as a <see cref="TimeSpan"/>.</returns>
+	[DataMember]
+	[Information(nameof(GetCpuUsageUserTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static TimeSpan GetCpuUsageUserTime { get; private set; } = CpuUsage.UserTime;
+
+	/// <summary>
+	/// Gets a value indicating whether the shutdown process has started.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(HasShutdownStarted), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool HasShutdownStarted { get; private set; } = Environment.HasShutdownStarted;
+
+	/// <summary>
+	/// Gets the IP addresses assigned to the computer.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(IPAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string IPAddress { get; private set; } = Dns.GetHostAddresses(Dns.GetHostName()).Where(p => p.AddressFamily == AddressFamily.InterNetwork).ToDelimitedString();
+
+	/// <summary>
+	/// Gets a value indicating whether the operating system is 64-bit.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(Is64BitOperatingSystem), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool Is64BitOperatingSystem { get; private set; } = Environment.Is64BitOperatingSystem;
+
+	/// <summary>
+	/// Gets a value indicating whether the process is 64-bit.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(Is64BitProcess), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool Is64BitProcess { get; private set; } = Environment.Is64BitProcess;
+
+	/// <summary>
+	/// Determines whether the network is available.
+	/// </summary>
+	/// <returns><c>true</c> if the network is available; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method checks all network interfaces to determine if any are operational and not virtual or loopback interfaces.
+	/// </remarks>
+	[Information(nameof(IsNetworkAvailable), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool IsNetworkAvailable => NetworkInterface.GetAllNetworkInterfaces().Any(networkInterface =>
+					networkInterface.OperationalStatus == OperationalStatus.Up &&
+					!networkInterface.Description.Contains("VIRTUALBOX", StringComparison.OrdinalIgnoreCase) &&
+					!networkInterface.Description.Contains("LOOPBACK", StringComparison.OrdinalIgnoreCase));
+
+	/// <summary>
+	/// Gets a value indicating whether the user interface is interactive.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(IsUserInteractive), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool IsUserInteractive { get; private set; } = UserInteractive;
+
+	/// <summary>
+	/// Gets the logical drives on the computer.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(LogicalDrives), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string LogicalDrives { get; private set; } = GetLogicalDrives().ToDelimitedString();
+
+	/// <summary>
+	/// Gets the computer’s machine name.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(MachineName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string MachineName { get; private set; } = Environment.MachineName;
+
+	/// <summary>
+	/// Gets the architecture (e.g., 64-bit or 32-bit) of the operating system.
+	/// </summary>
+	[DataMember()]
+	[Information(nameof(OSArchitecture), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string OSArchitecture { get; private set; } = RuntimeInformation.OSArchitecture.ToString();
+
+	/// <summary>
+	/// Gets the description of the operating system.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(OSDescription), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string OSDescription { get; private set; } = RuntimeInformation.OSDescription;
+
+	/// <summary>
+	/// Gets the size of the operating system's memory page.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(OSMemoryPageSize), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int OSMemoryPageSize { get; private set; } = Environment.SystemPageSize;
+
+	/// <summary>
+	/// Gets the amount of physical memory in use.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(PhysicalMemoryInUse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public long PhysicalMemoryInUse { get; private set; } = WorkingSet;
+
+	/// <summary>
+	/// Gets the architecture of the process.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(ProcessArchitecture), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public Architecture ProcessArchitecture { get; private set; } = RuntimeInformation.ProcessArchitecture;
+
+	/// <summary>
+	/// Gets the number of processors.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(ProcessorCount), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int ProcessorCount { get; private set; } = Environment.ProcessorCount;
+
+	/// <summary>
+	/// Gets the system directory path.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(SystemDirectory), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string SystemDirectory { get; private set; } = Environment.SystemDirectory;
+
+	/// <summary>
+	/// Gets the size of the system page.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(SystemPageSize), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int SystemPageSize { get; private set; } = Environment.SystemPageSize;
+
+	/// <summary>
+	/// Gets the system tick count.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(TickCount), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int TickCount { get; private set; } = Clock.TickCount;
+
+	/// <summary>
+	/// Gets the system tick count as a 64-bit value.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(TickCount64), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public long TickCount64 { get; private set; } = Clock.TickCount64;
+
+	/// <summary>
+	/// Gets the uptime of the system.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(Uptime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public TimeSpan Uptime => TimeSpan.FromMilliseconds(Environment.TickCount64);
+
+	/// <summary>
+	/// Gets the domain name associated with the current user.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(UserDomainName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string UserDomainName { get; private set; } = Environment.UserDomainName;
+
+	/// <summary>
+	/// Gets the name of the current user.
+	/// </summary>
+	[DataMember]
+	[Information(nameof(UserName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string UserName { get; private set; } = Environment.UserName;
+}

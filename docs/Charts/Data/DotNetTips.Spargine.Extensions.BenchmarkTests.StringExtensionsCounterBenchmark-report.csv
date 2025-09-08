@@ -1,0 +1,153 @@
+Method,Runtime,Categories,Count,Mean,Allocated
+'ComputeHash: SHA256',.NET 8.0,Strings,2,"1,429.83",1440 B
+'ComputeHash: SHA256',.NET 8.0,Strings,4,"2,009.64",1552 B
+'ComputeHash: SHA256',.NET 8.0,Strings,8,"3,023.91",1776 B
+'ComputeHash: SHA256',.NET 8.0,Strings,16,"4,890.38",2232 B
+'ComputeHash: SHA256',.NET 8.0,Strings,32,"8,482.55",3144 B
+'ComputeHash: SHA256',.NET 8.0,Strings,64,"15,980.38",4968 B
+'ComputeHash: SHA256',.NET 8.0,Strings,128,"30,694.37",8616 B
+'ComputeHash: SHA256',.NET 8.0,Strings,256,"59,986.55",15912 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,2,208.584,720 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,4,319.164,1256 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,8,539.229,2320 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,16,996.284,4448 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,32,"1,905.18",8704 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,64,"3,541.06",17216 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,128,"7,597.34",34240 B
+'Split: RemoveEmptyEntries',.NET 8.0,Strings,256,"14,357.67",68288 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,2,218.941,680 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,4,334.969,1200 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,8,596.448,2232 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,16,908.472,4104 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,32,"1,513.77",7752 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,64,"2,657.85",15048 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,128,"5,197.36",29640 B
+'Split: TrimEntries + Count',.NET 8.0,Strings,256,"10,551.89",58824 B
+'Split: TrimEntries',.NET 8.0,Strings,2,219.537,680 B
+'Split: TrimEntries',.NET 8.0,Strings,4,346.02,1200 B
+'Split: TrimEntries',.NET 8.0,Strings,8,600.858,2232 B
+'Split: TrimEntries',.NET 8.0,Strings,16,"1,112.49",4296 B
+'Split: TrimEntries',.NET 8.0,Strings,32,"2,156.07",8424 B
+'Split: TrimEntries',.NET 8.0,Strings,64,"4,153.59",16680 B
+'Split: TrimEntries',.NET 8.0,Strings,128,"8,741.25",33192 B
+'Split: TrimEntries',.NET 8.0,Strings,256,"16,790.02",66216 B
+ComputeSHA256Hash,.NET 8.0,Strings,2,"2,073.68",1640 B
+ComputeSHA256Hash,.NET 8.0,Strings,4,"2,574.14",2000 B
+ComputeSHA256Hash,.NET 8.0,Strings,8,"4,077.99",2712 B
+ComputeSHA256Hash,.NET 8.0,Strings,16,"6,598.45",4128 B
+ComputeSHA256Hash,.NET 8.0,Strings,32,"12,099.65",6960 B
+ComputeSHA256Hash,.NET 8.0,Strings,64,"23,159.63",12624 B
+ComputeSHA256Hash,.NET 8.0,Strings,128,"44,692.09",23952 B
+ComputeSHA256Hash,.NET 8.0,Strings,256,"88,398.49",46608 B
+ContainsAny,.NET 8.0,Strings,2,46.837,184 B
+ContainsAny,.NET 8.0,Strings,4,46.069,184 B
+ContainsAny,.NET 8.0,Strings,8,46.05,184 B
+ContainsAny,.NET 8.0,Strings,16,46.816,184 B
+ContainsAny,.NET 8.0,Strings,32,46.216,184 B
+ContainsAny,.NET 8.0,Strings,64,46.414,184 B
+ContainsAny,.NET 8.0,Strings,128,46.525,184 B
+ContainsAny,.NET 8.0,Strings,256,46.025,184 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",2,150.375,608 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",4,251.45,1144 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",8,446.731,2208 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",16,839.034,4336 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",32,"1,626.70",8592 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",64,"3,280.66",17104 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",128,"6,491.16",34128 B
+DelimitedStringToArray,.NET 8.0,"Strings,**NEW**",256,"13,237.73",68176 B
+EqualsIgnoreCase,.NET 8.0,Strings,2,1.242,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,4,1.635,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,8,1.243,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,16,1.656,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,32,1.639,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,64,1.227,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,128,1.47,0 B
+EqualsIgnoreCase,.NET 8.0,Strings,256,1.673,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,2,1.428,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,4,1.403,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,8,1.458,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,16,1.4,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,32,1.899,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,64,1.405,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,128,1.473,0 B
+EqualsOrBothNullOrEmpty,.NET 8.0,Strings,256,1.405,0 B
+FromBase64,.NET 8.0,Strings,2,257.493,480 B
+FromBase64,.NET 8.0,Strings,4,461.269,816 B
+FromBase64,.NET 8.0,Strings,8,871.338,1496 B
+FromBase64,.NET 8.0,Strings,16,"1,727.84",2864 B
+FromBase64,.NET 8.0,Strings,32,"3,390.92",5600 B
+FromBase64,.NET 8.0,Strings,64,"6,738.24",11072 B
+FromBase64,.NET 8.0,Strings,128,"13,437.52",22016 B
+FromBase64,.NET 8.0,Strings,256,"24,728.89",43904 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",2,"4,932.41",1696 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",4,"6,143.22",2456 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",8,"8,750.56",4032 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",16,"14,240.51",7168 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",32,"26,684.06",13433 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",64,"43,678.28",25833 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",128,"77,148.68",50609 B
+FromBrotliStringAsync,.NET 8.0,"**NEW**,Strings,Async",256,"142,292.97",100139 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",2,"5,121.57",1880 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",4,"5,977.11",2624 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",8,"7,743.21",4192 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",16,"11,127.34",7312 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",32,"20,952.52",13576 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",64,"33,960.75",26017 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",128,"59,189.65",50801 B
+FromGZipStringAsync,.NET 8.0,"**NEW**,Strings,Async",256,"111,110.09",100274 B
+RemoveCRLF,.NET 8.0,Strings,2,865.178,800 B
+RemoveCRLF,.NET 8.0,Strings,4,"1,397.74",1480 B
+RemoveCRLF,.NET 8.0,Strings,8,"2,459.90",2848 B
+RemoveCRLF,.NET 8.0,Strings,16,"4,604.44",5584 B
+RemoveCRLF,.NET 8.0,Strings,32,"8,797.14",11056 B
+RemoveCRLF,.NET 8.0,Strings,64,"16,813.41",22000 B
+RemoveCRLF,.NET 8.0,Strings,128,"34,777.07",43888 B
+RemoveCRLF,.NET 8.0,Strings,256,"68,034.09",87664 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",2,93.017,320 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",4,165.461,608 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",8,311.428,1184 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",16,635.055,2336 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",32,"1,188.69",4640 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",64,"2,345.98",9248 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",128,"4,675.15",18464 B
+Split,.NET 8.0,"**FOR COMPARISON**,Strings",256,"9,634.35",36896 B
+SplitLines,.NET 8.0,Strings,2,114.244,520 B
+SplitLines,.NET 8.0,Strings,4,207.386,1024 B
+SplitLines,.NET 8.0,Strings,8,409.877,2024 B
+SplitLines,.NET 8.0,Strings,16,800.75,4024 B
+SplitLines,.NET 8.0,Strings,32,"1,586.25",8024 B
+SplitLines,.NET 8.0,Strings,64,"3,159.65",16024 B
+SplitLines,.NET 8.0,Strings,128,"6,404.27",32024 B
+SplitLines,.NET 8.0,Strings,256,"12,995.60",64024 B
+SplitRemoveEmpty,.NET 8.0,Strings,2,107.729,368 B
+SplitRemoveEmpty,.NET 8.0,Strings,4,152.943,600 B
+SplitRemoveEmpty,.NET 8.0,Strings,8,225.347,1056 B
+SplitRemoveEmpty,.NET 8.0,Strings,16,405.247,1968 B
+SplitRemoveEmpty,.NET 8.0,Strings,32,726.207,3792 B
+SplitRemoveEmpty,.NET 8.0,Strings,64,"1,403.46",7440 B
+SplitRemoveEmpty,.NET 8.0,Strings,128,"3,162.69",14736 B
+SplitRemoveEmpty,.NET 8.0,Strings,256,"5,633.18",29328 B
+ToBase64,.NET 8.0,Strings,2,616.624,3688 B
+ToBase64,.NET 8.0,Strings,4,601.513,3688 B
+ToBase64,.NET 8.0,Strings,8,600.303,3688 B
+ToBase64,.NET 8.0,Strings,16,604.48,3688 B
+ToBase64,.NET 8.0,Strings,32,601.35,3688 B
+ToBase64,.NET 8.0,Strings,64,601.731,3688 B
+ToBase64,.NET 8.0,Strings,128,605.655,3688 B
+ToBase64,.NET 8.0,Strings,256,603.501,3688 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",2,"6,071.25",1864 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",4,"7,614.89",2472 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",8,"10,555.86",4808 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",16,"17,674.13",8401 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",32,"28,640.78",15369 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",64,"47,625.32",28785 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",128,"85,053.57",55449 B
+ToBrotliStringAsync,.NET 8.0,"**NEW**,Strings",256,"161,552.82",108530 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",2,"12,114.80",1952 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",4,"14,518.53",2536 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",8,"20,803.25",4233 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",16,"28,217.79",8617 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",32,"46,638.27",15705 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",64,"93,035.96",29233 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",128,"170,098.07",55954 B
+ToGZipStringAsync,.NET 8.0,"**NEW**,Strings",256,"317,988.84",97907 B

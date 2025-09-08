@@ -1,0 +1,14 @@
+Spargine Fast:
+
+FastSortedList
+FastStringBuilder *Missing some tests
+FastCount
+FastLoggerExtentions *
+FastHashData
+FastProcessor
+FastAny
+FastSuffle
+FastGetHashCode
+FastClone
+FastCompare
+FastReplace *

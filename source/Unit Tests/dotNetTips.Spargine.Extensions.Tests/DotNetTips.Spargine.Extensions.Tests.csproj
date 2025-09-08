@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<AnalysisLevel>none</AnalysisLevel>
+	<AssemblyVersion>2025.8.5.1</AssemblyVersion>
+	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
+	<EnableNETAnalyzers>false</EnableNETAnalyzers>
+	<FileVersion>2025.8.5.1</FileVersion>
+	<IsPackable>false</IsPackable>
+	<NeutralLanguage>en-US</NeutralLanguage>
+	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+	<TargetFramework>net10.0</TargetFramework>
+	<LangVersion>preview</LangVersion>
+	<Version>2025.8.5.1</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<OutputPath>..\..\..\AppBin</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	<OutputPath>..\..\..\AppBin</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.8" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+	<PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
+	<PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
+	<PackageReference Include="coverlet.collector" Version="6.0.4">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\dotNetTips.Spargine.10.Core.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\dotNetTips.Spargine.10.Extensions.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\dotNetTips.Spargine.10.Tester.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+	<Compile Update="Properties\Resources.Designer.cs">
+	  <DesignTime>True</DesignTime>
+	  <AutoGen>True</AutoGen>
+	  <DependentUpon>Resources.resx</DependentUpon>
+	</Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+	<EmbeddedResource Update="Properties\Resources.resx">
+	  <Generator>ResXFileCodeGenerator</Generator>
+	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	</EmbeddedResource>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,1406 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.10.Extensions
+// Author           : David McCarter
+// Created          : 09-15-2017
+//
+// Last Modified By : David McCarter
+// Last Modified On : 07-21-2025
+// ***********************************************************************
+// <copyright file="StringExtensions.cs" company="McCarter Consulting">
+//     David McCarter - dotNetTips.com
+// </copyright>
+// <summary>Common String Extensions.</summary>
+// ***********************************************************************
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO.Compression;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+using DotNetTips.Spargine.Core;
+using DotNetTips.Spargine.Core.RegularExpressions;
+using DotNetTips.Spargine.Core.Security;
+using DotNetTips.Spargine.Extensions;
+using DotNetTips.Spargine.Extensions.Properties;
+using Microsoft.Extensions.ObjectPool;
+//`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
+
+namespace DotNetTips.Spargine.Extensions;
+
+/// <summary>
+/// Provides a collection of static methods for string manipulation and checks, enhancing the built-in string functionality.
+/// </summary>
+/// <remarks>
+/// The <see cref="StringExtensions"/> class includes methods for various string operations such as computing hashes,
+/// checking for specific content within strings (e.g., email addresses, domain names, GUIDs), converting strings to different formats or encodings,
+/// and performing manipulations like concatenation, extraction, and indentation. These utilities aim to simplify common string handling tasks
+/// in .NET applications.
+/// </remarks>
+[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.Available)]
+public static class StringExtensions
+{
+	/// <summary>
+	/// Provides a static instance of the <see cref="ASCIIEncoding"/> class for use throughout the StringExtensions class.
+	/// This encoding is used for operations that require ASCII character encoding.
+	/// </summary>
+	private static readonly ASCIIEncoding _encoding = new();
+
+	/// <summary>
+	/// The string builder pool
+	/// </summary>
+	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
+		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
+
+	/// <summary>
+	/// Computes the hash of the given input string using the specified hash algorithm.
+	/// </summary>
+	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
+	/// <param name="hash">The hash algorithm type to use for computing the hash.</param>
+	/// <returns>A byte array containing the computed hash of the input string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the specified hash algorithm is not supported.</exception>
+	/// <remarks>
+	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hash.
+	/// </remarks>
+	private static byte[] GetHash(string input, HashType hash)
+	{
+		var inputBytes = Encoding.ASCII.GetBytes(input);
+
+		return hash switch
+		{
+			HashType.SHA256 => SHA256.HashData(inputBytes),
+			HashType.SHA384 => SHA384.HashData(inputBytes),
+			HashType.SHA512 => SHA512.HashData(inputBytes),
+			_ => [],
+		};
+	}
+
+	/// <summary>
+	/// Calculates the size of a byte array needed to store the Base64 encoded version of the input string.
+	/// </summary>
+	/// <param name="input">The input string to be encoded.</param>
+	/// <returns>The size of the byte array needed to store the Base64 encoded string, or 0 if the input is null or empty.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the input string is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static int CalculateByteArraySize([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		return input.IsNullOrEmpty() ? 0 : input.Length * 3 / 4;
+	}
+
+	/// <summary>
+	/// Combines an array of strings into a single string using the <see cref="FastStringBuilder.Combine"/> method.
+	/// </summary>
+	/// <param name="input">The initial string to start the combination. Must not be null.</param>
+	/// <param name="args">An array of strings to combine with the initial string. Must not be null.</param>
+	/// <returns>A combined string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Concat), "David McCarter", "1/3/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static string CombineToString([DisallowNull] this string input, [DisallowNull] params string[] args)
+	{
+		return FastStringBuilder.Combine(false, args: args.AddFirst(input).AsReadOnly());
+	}
+
+	/// <summary>
+	/// Computes the hash of the given input string using the specified hash algorithm.
+	/// </summary>
+	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
+	/// <param name="hashType">The type of hash algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
+	/// <returns>A string representation of the computed hash.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		var hash = GetHash(input, hashType);
+
+		var sb = _stringBuilderPool.Value.Get().Clear();
+
+		try
+		{
+			foreach (var hashItem in hash.AsSpan())
+			{
+				_ = sb.Append(hashItem.ToString("x2", CultureInfo.InvariantCulture));
+			}
+
+			return sb.ToString().ToTrimmed()!;
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb);
+		}
+	}
+
+	/// <summary>
+	/// Computes the SHA256 hash of the given input string.
+	/// </summary>
+	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
+	/// <returns>A string representation of the SHA256 hash.</returns>
+	/// <remarks>
+	/// This method uses the <see cref="SHA256"/> class to compute the hash.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ComputeSHA256Hash), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string ComputeSHA256Hash([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		// Create a SHA256
+		// ComputeHash - returns byte array
+		var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(input));
+
+		// Convert byte array to a string
+		return FastStringBuilder.BytesToString(ref bytes);
+	}
+
+	/// <summary>
+	/// Concatenates the given strings using the specified delimiter, with an option to add a line feed after each string.
+	/// </summary>
+	/// <param name="input">The initial string to start the concatenation. Must not be null or empty.</param>
+	/// <param name="delimiter">The delimiter to use for concatenation. If null or empty, an empty string is used.</param>
+	/// <param name="addLineFeed">If true, adds a line feed after each string in the concatenation.</param>
+	/// <param name="args">A collection of strings to concatenate. Must not be null.</param>
+	/// <returns>
+	/// A concatenated string that starts with the <paramref name="input"/> string, followed by the <paramref name="args"/> strings, separated by the <paramref name="delimiter"/>.
+	/// If <paramref name="addLineFeed"/> is true, a line feed is added after each string.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="input"/> or <paramref name="args"/> is null.
+	/// </exception>
+	/// <remarks>
+	/// This method uses a pooled <see cref="StringBuilder"/> to optimize memory usage during concatenation.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		delimiter = delimiter.ArgumentNotNullOrEmpty();
+
+		if (args is null)
+		{
+			return input;
+		}
+
+		var sb = _stringBuilderPool.Value.Get().Clear();
+
+		try
+		{
+			sb = sb.Append(input);
+
+			if (args.HasItems())
+			{
+				foreach (var arg in args)
+				{
+					_ = addLineFeed
+						? sb.AppendLine(arg)
+						: sb.Append(string.Concat(arg, delimiter));
+				}
+			}
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb);
+		}
+	}
+
+	/// <summary>
+	/// Determines whether the input string contains any of the specified characters, using the specified string comparison option.
+	/// </summary>
+	/// <param name="input">The input string to check. Must not be null.</param>
+	/// <param name="stringComparison">
+	/// The string comparison option to use. Defaults to <see cref="StringComparison.OrdinalIgnoreCase"/>.
+	/// </param>
+	/// <param name="characters">The collection of characters to check for in the input string. Must not be null.</param>
+	/// <returns>
+	/// <c>true</c> if the input string contains any of the specified characters; otherwise, <c>false</c>.
+	/// Returns <c>false</c> if the input string or the characters collection is null or empty.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="input"/> or <paramref name="characters"/> is null.
+	/// </exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool ContainsAny([DisallowNull] this string input, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase, [DisallowNull] params ReadOnlyCollection<string> characters)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		characters = characters.ArgumentNotNull();
+
+		stringComparison = stringComparison.ArgumentDefined();
+
+		return characters.Count != 0 && characters.FastAny(character => input.Contains(character, stringComparison));
+	}
+
+	/// <summary>
+	/// Returns the original string if it is not null; otherwise, returns an empty string.
+	/// </summary>
+	/// <param name="value">The string to check for null.</param>
+	/// <returns>The original string if not null; otherwise, <see cref="string.Empty"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static string DefaultIfNull([AllowNull] this string value)
+	{
+		return value ?? string.Empty;
+	}
+
+	/// <summary>
+	/// Returns the original string if it is not null; otherwise, returns the specified default value or an empty string if the default value is also null.
+	/// </summary>
+	/// <param name="value">The string to check for null.</param>
+	/// <param name="defaultValue">The default value to return if the string is null. This can also be null, in which case an empty string is returned.</param>
+	/// <returns>The original string if it is not null; otherwise, the default value if it is not null; otherwise, <see cref="string.Empty"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static string DefaultIfNull([AllowNull] this string value, [AllowNull] string defaultValue) => value switch
+	{
+		null when defaultValue is not null => defaultValue,
+		_ => string.Empty,
+	};
+
+	/// <summary>
+	/// Returns the original string if it is not null or empty; otherwise, returns the specified default value.
+	/// </summary>
+	/// <param name="value">The string to check for null or emptiness.</param>
+	/// <param name="defaultValue">The default value to return if the string is null or empty. This value must not be null.</param>
+	/// <returns>The original string if it is not null or empty; otherwise, the <paramref name="defaultValue"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="defaultValue"/> is null.</exception>
+	/// <remarks>
+	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is null or empty.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(DefaultIfNullOrEmpty), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static string DefaultIfNullOrEmpty([AllowNull] this string value, [DisallowNull] string defaultValue)
+	{
+		defaultValue = defaultValue.ArgumentNotNull();
+
+		return string.IsNullOrEmpty(value) ? defaultValue : value;
+	}
+
+	/// <summary>
+	/// Splits a delimited string into an array of strings, removing empty entries.
+	/// </summary>
+	/// <param name="input">The input string to split.</param>
+	/// <param name="delimiter">The character delimiter to split the string by. Default is a comma.</param>
+	/// <returns>An array of strings that were delimited by the specified character.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(DelimitedStringToArray), "David McCarter", "8/13/2020", "8/13/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string[] DelimitedStringToArray([DisallowNull] this string input, [ConstantExpected] char delimiter = ControlChars.Comma)
+	{
+		return string.IsNullOrEmpty(input) ? [] : input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+	}
+
+	/// <summary>
+	/// Determines whether the end of this string instance matches the specified string when compared using the specified comparison option.
+	/// </summary>
+	/// <param name="input">The input string to compare.</param>
+	/// <param name="inputToCompare">The string to compare to the end of the input string.</param>
+	/// <returns><c>true</c> if <paramref name="inputToCompare"/> matches the end of this string; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses <see cref="string.Equals(string, string, StringComparison)"/> for comparison.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool EqualsIgnoreCase([DisallowNull] this string input, string inputToCompare)
+	{
+		return input is null || inputToCompare is null ? false : string.Equals(input, inputToCompare, StringComparison.OrdinalIgnoreCase);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is equal to the current string, ignoring case, or if both are null or empty.
+	/// </summary>
+	/// <param name="input">The first string to compare.</param>
+	/// <param name="inputToCompare">The second string to compare.</param>
+	/// <returns>true if the value of the <paramref name="input"/> parameter is equal to the value of the <paramref name="inputToCompare"/> parameter, ignoring case, or if both are null or empty; otherwise, false.</returns>
+	/// <remarks>
+	/// This method uses <see cref="string.Equals(string?, string?, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> to perform the comparison.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EqualsOrBothNullOrEmpty), "David McCarter", "7/15/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool EqualsOrBothNullOrEmpty([DisallowNull] this string input, string inputToCompare)
+	{
+		return string.Equals(input ?? string.Empty, inputToCompare ?? string.Empty, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Extracts a substring from the input string that is between the specified start and end strings.
+	/// </summary>
+	/// <param name="input">The input string to extract from.</param>
+	/// <param name="start">The starting string to look for.</param>
+	/// <param name="end">The ending string to look for.</param>
+	/// <returns>The extracted substring between the start and end strings.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the input, start, or end string is null or empty.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Extract), "David McCarter", "10/8/2020", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string Extract([DisallowNull] this string input, [DisallowNull] string start, [DisallowNull] string end)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		start = start.ArgumentNotNullOrEmpty();
+		end = end.ArgumentNotNullOrEmpty();
+
+		var startIndex = input.IndexOf(start, StringComparison.Ordinal);
+		var endIndex = input.IndexOf(end, StringComparison.Ordinal);
+
+		return input[startIndex..endIndex];
+	}
+
+	/// <summary>
+	/// Compares two strings using the specified string comparison option.
+	/// </summary>
+	/// <param name="value">The first string to compare. Must not be null.</param>
+	/// <param name="valueToCompare">The second string to compare. Must not be null.</param>
+	/// <param name="comparison">The string comparison option to use. Must not be null.</param>
+	/// <returns><c>true</c> if the strings are equal according to the specified comparison option; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/>, <paramref name="valueToCompare"/>, or <paramref name="comparison"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FastCompare), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool FastCompare([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
+	{
+		return string.Equals(value, valueToCompare, comparison);
+	}
+
+	/// <summary>
+	/// Replaces all occurrences of a specified string in the input string with another specified string, using ordinal comparison.
+	/// </summary>
+	/// <param name="input">The string to perform replacements on. Must not be null or empty.</param>
+	/// <param name="oldValue">The string to be replaced. If this string is not found, the original string is returned unchanged.</param>
+	/// <param name="newValue">The string to replace all occurrences of <paramref name="oldValue"/>.</param>
+	/// <returns>
+	/// A new string that is equivalent to the input string except that all instances of <paramref name="oldValue"/> are replaced with <paramref name="newValue"/>.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null or empty.</exception>
+	/// <remarks>
+	/// This method uses <see cref="string.Replace(string, string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for optimal performance.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static string FastReplace([DisallowNull] this string input, string oldValue, string newValue)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		var sb = _stringBuilderPool.Value.Get().Clear();
+		_ = sb.Append(input);
+
+		try
+		{
+			return sb.Replace(oldValue, newValue).ToString().Trim();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb);
+		}
+	}
+
+	/// <summary>
+	/// Decodes a string from Base64 encoding.
+	/// </summary>
+	/// <param name="input">The Base64 encoded string to decode.</param>
+	/// <returns>A decoded string from the Base64 encoded <paramref name="input"/>.</returns>
+	/// <remarks>
+	/// This method decodes the string using <see cref="Convert.FromBase64String(string)"/> and then converts the byte array to a string using <see cref="Encoding.UTF8"/>.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FromBase64), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string FromBase64([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		return _encoding.GetString(Convert.FromBase64String(input));
+	}
+
+	/// <summary>
+	/// Decompresses a Brotli compressed string asynchronously.
+	/// </summary>
+	/// <param name="value">The Brotli compressed string.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous decompression operation. The value of the TResult parameter contains the decompressed string.</returns>
+	/// <remarks>
+	/// This method uses <see cref="BrotliStream"/> for decompression.
+	/// Original code from: https://khalidabuhakmeh.com/compress-strings-with-dotnet-and-csharp
+	/// </remarks>
+	[Information(nameof(FromBrotliStringAsync), "David McCarter", "10/24/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static async Task<string> FromBrotliStringAsync([DisallowNull] this string value, CancellationToken cancellationToken = default)
+	{
+		var input = new MemoryStream(Convert.FromBase64String(value.ArgumentNotNull()));
+
+		await using (input.ConfigureAwait(false))
+		{
+			using (var output = new MemoryStream())
+			{
+				await using (output.ConfigureAwait(false))
+				{
+					using (var stream = new BrotliStream(input, CompressionMode.Decompress))
+					{
+						await using (stream.ConfigureAwait(false))
+						{
+							await stream.CopyToAsync(output, cancellationToken).ConfigureAwait(false);
+
+							return Encoding.Unicode.GetString(output.ToArray());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Decompresses a Deflate compressed string asynchronously.
+	/// </summary>
+	/// <param name="value">The Deflate compressed string.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous decompression operation. The value of the TResult parameter contains the decompressed string.</returns>
+	/// <remarks>
+	/// This method uses <see cref="DeflateStream"/> for decompression.
+	/// </remarks>
+	[Information(nameof(FromDeflateStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static async Task<string> FromDeflateStringAsync([DisallowNull] this string value, CancellationToken cancellationToken = default)
+	{
+		var bytes = value.ToByteArrayFromBase64();
+
+		var input = new MemoryStream(bytes);
+
+		await using (input.ConfigureAwait(false))
+		{
+			using (var output = new MemoryStream())
+			{
+				await using (output.ConfigureAwait(false))
+				{
+					using (var stream = new DeflateStream(input, CompressionMode.Decompress))
+					{
+						await using (stream.ConfigureAwait(false))
+						{
+							await stream.CopyToAsync(output, cancellationToken).ConfigureAwait(false);
+							await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+
+							return Encoding.Unicode.GetString(output.ToArray());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Decompresses a GZip compressed string asynchronously.
+	/// </summary>
+	/// <param name="value">The GZip compressed string.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous decompression operation. The value of the TResult parameter contains the decompressed string.</returns>
+	/// <remarks>
+	/// This method uses <see cref="GZipStream"/> for decompression.
+	/// Original code from: https://khalidabuhakmeh.com/compress-strings-with-dotnet-and-csharp
+	/// </remarks>
+	[Information(nameof(FromGZipStringAsync), "David McCarter", "10/24/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static async Task<string> FromGZipStringAsync([DisallowNull] this string value, CancellationToken cancellationToken = default)
+	{
+		var bytes = value.ToByteArrayFromBase64();
+
+		var input = new MemoryStream(bytes);
+
+		await using (input.ConfigureAwait(false))
+		{
+			using (var output = new MemoryStream())
+			{
+				await using (output.ConfigureAwait(false))
+				{
+					using (var stream = new GZipStream(input, CompressionMode.Decompress))
+					{
+						await using (stream.ConfigureAwait(false))
+						{
+							await stream.CopyToAsync(output, cancellationToken).ConfigureAwait(false);
+							await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+
+							return Encoding.Unicode.GetString(output.ToArray());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Decompresses a ZLib compressed string asynchronously.
+	/// </summary>
+	/// <param name="value">The ZLib compressed string.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous decompression operation. The value of the TResult parameter contains the decompressed string.</returns>
+	/// <remarks>
+	/// This method uses <see cref="DeflateStream"/> for decompression, as ZLib compression is closely related to the Deflate compression algorithm.
+	/// </remarks>
+	[Information(nameof(FromZLibStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static async Task<string> FromZLibStringAsync([DisallowNull] this string value, CancellationToken cancellationToken = default)
+	{
+		var bytes = value.ToByteArrayFromBase64();
+
+		var input = new MemoryStream(bytes);
+
+		await using (input.ConfigureAwait(false))
+		{
+			using (var output = new MemoryStream())
+			{
+				await using (output.ConfigureAwait(false))
+				{
+					using (var stream = new ZLibStream(input, CompressionMode.Decompress))
+					{
+						await using (stream.ConfigureAwait(false))
+						{
+							await stream.CopyToAsync(output, cancellationToken).ConfigureAwait(false);
+							await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+
+							return Encoding.Unicode.GetString(output.ToArray());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Hashes the input string using the specified hashing algorithm.
+	/// </summary>
+	/// <param name="input">The input string to hash. Must not be null.</param>
+	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
+	/// <returns>A base64-encoded string representing the hashed password.</returns>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HashPassword), "David McCarter", "5/6/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static string HashPassword([DisallowNull] this string input, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		return PasswordHasher.HashPassword(input, algorithmType);
+	}
+
+	/// <summary>
+	/// Checks if the string has a value (is not null or whitespace).
+	/// </summary>
+	/// <param name="input">The string to check.</param>
+	/// <returns><c>true</c> if the string is not null or whitespace; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method considers a string as having a value if it is not null and contains characters other than whitespace.
+	/// Uses <see cref="string.IsNullOrWhiteSpace(string)"/> internally to check if the string is null or whitespace.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool HasValue(this string input)
+	{
+		return input is not null && (input.Trim().Length > 0);
+	}
+
+	/// <summary>
+	/// Checks if the string has a specified length.
+	/// </summary>
+	/// <param name="input">The string to check.</param>
+	/// <param name="length">The length to check for.</param>
+	/// <returns><c>true</c> if the string is not null and has the specified length; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method checks if the <paramref name="input"/> string has a length equal to the specified <paramref name="length"/>.
+	/// It is an extension method and cannot be called on a null instance.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool HasValue(this string input, int length)
+	{
+		length = length.ArgumentInRange(min: 1, max: length);
+
+		return input is not null && (input.ArgumentNotNull().Trim().Length == length);
+	}
+
+	/// <summary>
+	/// Checks if the input string has the specified value.
+	/// </summary>
+	/// <param name="input">The input string to check.</param>
+	/// <param name="value">The value to compare with the input string.</param>
+	/// <returns><c>true</c> if the input string has the specified value; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method first checks if the input string has any value using <see cref="HasValue(string)"/> method.
+	/// Then, it compares the input string with the specified value using <see cref="string.Equals(string, string, StringComparison)"/>
+	/// with <see cref="StringComparison.Ordinal"/>.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool HasValue(this string input, string value)
+	{
+		return input.HasValue() && string.Equals(input, value, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Checks if the input string matches the specified regular expression pattern.
+	/// </summary>
+	/// <param name="input">The input string to check.</param>
+	/// <param name="expression">The regular expression pattern to match against the input string. Uses <see cref="Regex"/> for matching.</param>
+	/// <param name="options">The options for the regular expression match. See <see cref="RegexOptions"/> for details.</param>
+	/// <returns><c>true</c> if the input string matches the regular expression pattern; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method first checks if the input string has any value using <see cref="HasValue(string)"/> method.
+	/// Then, it creates a new <see cref="Regex"/> instance with the specified pattern and options to perform the match.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool HasValue(this string input, [StringSyntax(StringSyntaxAttribute.Regex)] string expression, [NotNull] RegexOptions options)
+	{
+		return input.HasValue() && expression.HasValue() && new Regex(expression, options.ArgumentDefined()).IsMatch(input);
+	}
+
+	/// <summary>
+	/// Checks if the input string has a value within the specified length range.
+	/// </summary>
+	/// <param name="input">The input string to check.</param>
+	/// <param name="minLength">The minimum length of the string.</param>
+	/// <param name="maxLength">The maximum length of the string.</param>
+	/// <returns><c>true</c> if the string's length is within the specified range; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method checks if the <paramref name="input"/> string's length is between <paramref name="minLength"/> and <paramref name="maxLength"/>.
+	/// It is an extension method and cannot be called on a null instance.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool HasValue(this string input, int minLength, int maxLength)
+	{
+		minLength = minLength.ArgumentInRange(min: 0, max: maxLength);
+		maxLength = maxLength.ArgumentInRange(min: minLength, max: int.MaxValue);
+
+		return input is not null && input.Length.IsInRange(minLength, maxLength);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string contains any whitespace characters.
+	/// </summary>
+	/// <param name="input">The string to check for whitespace.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> contains any whitespace characters; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses <see cref="char.IsWhiteSpace(char)"/> to check each character in the string for whitespace.
+	/// </remarks>
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool HasWhitespace([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		//Span is slower
+		foreach (var inputItem in input)
+		{
+			if (!inputItem.IsAsciiWhitespace())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Indents each line of the input string by the specified length using the specified indentation character.
+	/// </summary>
+	/// <param name="input">The input string to indent.</param>
+	/// <param name="length">The number of indentation characters to add to each line.</param>
+	/// <param name="indentationCharacter">The character to use for indentation.</param>
+	/// <returns>The indented string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the input string is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string Indent([DisallowNull] this string input, in int length, [ConstantExpected] in char indentationCharacter)
+	{
+		if (input.CheckIsNotNull() is false || length <= 0)
+		{
+			return string.Empty;
+		}
+
+		var sb = _stringBuilderPool.Value.Get().Clear();
+
+		try
+		{
+			if (length == 0)
+			{
+				_ = sb.Append(input.ArgumentNotNull());
+			}
+
+			for (var charIndex = 1; charIndex <= Math.Abs(length); charIndex++)
+			{
+				_ = sb.Append(indentationCharacter);
+			}
+
+			if (length > 0)
+			{
+				_ = sb.Append(input);
+			}
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb);
+		}
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid credit card number.
+	/// </summary>
+	/// <param name="input">The string to validate as a credit card number.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid credit card number; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the credit card number.
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsCreditCardNumber), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsCreditCardNumber([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsCreditCardNumber(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid currency code.
+	/// </summary>
+	/// <param name="input">The string to validate as a currency code.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid currency code; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the currency code.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsCurrencyCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsCurrencyCode([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsCurrencyCode(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid domain address.
+	/// </summary>
+	/// <param name="input">The string to validate as a domain address.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid domain address; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the domain address.
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsDomainAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsDomainAddress([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsUrlDomainAddress(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid email address.
+	/// </summary>
+	/// <param name="input">The string to validate as an email address.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid email address; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the email address.
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsEmailAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsEmailAddress([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsEmailAddress(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is empty.
+	/// </summary>
+	/// <param name="input">The string to check.</param>
+	/// <returns><c>true</c> if the string is null or empty; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is empty.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	public static bool IsEmpty([NotNullWhen(false)] this string? input)
+	{
+		return string.IsNullOrEmpty(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid first and last name.
+	/// </summary>
+	/// <param name="input">The string to validate as a first and last name.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> matches the first and last name pattern; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the first and last name.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsFirstLastName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsFirstLastName([DisallowNull] this string input)
+	{
+		return RegexProcessor.ContainsFirstLastName(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid GUID.
+	/// </summary>
+	/// <param name="input">The string to validate as a GUID.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid GUID; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the GUID.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsGuid), "David McCarter", "3/24/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool IsGuid([DisallowNull][StringSyntax(StringSyntaxAttribute.GuidFormat)] this string input)
+	{
+		return RegexProcessor.IsGuid(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid International Standard Book Number (ISBN).
+	/// </summary>
+	/// <param name="input">The string to validate as an ISBN.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid ISBN; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the ISBN.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsISBN), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsISBN([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsISBN(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid MAC address.
+	/// </summary>
+	/// <param name="input">The string to validate as a MAC address.</param>
+	/// <returns><c>true</c> if the <paramref name="input"/> is a valid MAC address; otherwise, <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsMacAddress), "David McCarter", "3/24/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool IsMacAddress([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsMACAddress(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is not empty.
+	/// </summary>
+	/// <param name="input">The string to check.</param>
+	/// <returns><c>true</c> if the string is not empty; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method checks the opposite of <see cref="IsEmpty(string?)"/> to determine if a string is not empty.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsNotEmpty), "David McCarter", "8/18/20", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	public static bool IsNotEmpty(this string? input) => input.IsEmpty() is false;
+
+	/// <summary>
+	/// Determines whether the specified string contains only characters in the range of '1' to '7' and is alphabetic.
+	/// </summary>
+	/// <param name="input">The string to validate.</param>
+	/// <returns><c>true</c> if the string matches the pattern; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the input string.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsOneToSevenAlpha), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsOneToSevenAlpha([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsOneToSevenAlpha(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is in scientific notation.
+	/// </summary>
+	/// <param name="input">The string to validate.</param>
+	/// <returns><c>true</c> if the string is in scientific notation; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the input string.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsScientific), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsScientific([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsScientific(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string matches the pattern defined in the regular expression.
+	/// </summary>
+	/// <param name="input">The string to validate.</param>
+	/// <returns><c>true</c> if the string matches the pattern; otherwise, <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsString([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsValidString(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid SHA1 hash.
+	/// </summary>
+	/// <param name="input">The string to validate.</param>
+	/// <returns><c>true</c> if the string is a valid SHA1 hash; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the input string.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsStringSHA1Hash), "David McCarter", "5/31/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsStringSHA1Hash([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsSHA1Hash(input);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is a valid URL.
+	/// </summary>
+	/// <param name="input">The string to validate.</param>
+	/// <returns><c>true</c> if the string is a valid URL; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to validate the input string.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsUrl), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool IsUrl([DisallowNull] this string input)
+	{
+		return RegexProcessor.IsUrl(input);
+	}
+
+	/// <summary>
+	/// Removes all carriage return and line feed characters from the specified string.
+	/// </summary>
+	/// <param name="input">The string from which to remove carriage return and line feed characters.</param>
+	/// <param name="replacement">The string to replace carriage return and line feed characters with. Defaults to an empty string.</param>
+	/// <returns>A new string with all carriage return and line feed characters replaced by the specified replacement string.</returns>
+	/// <remarks>
+	/// This method uses a regular expression to identify and replace carriage return and line feed characters.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RemoveCRLF), "Kristine Tran", "2/1/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string? RemoveCRLF(this string input, string replacement = ControlChars.EmptyString)
+	{
+		return RegexProcessor.ReplaceCrLf(input, replacement);
+	}
+
+	/// <summary>
+	/// Replaces all occurrences of an ellipsis (...) in the specified string with a period (.).
+	/// </summary>
+	/// <param name="input">The string to modify.</param>
+	/// <returns>A new string with all ellipses replaced by periods.</returns>
+	/// <remarks>
+	/// This method is useful for normalizing text that uses ellipses.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ReplaceEllipsisWithPeriod), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string ReplaceEllipsisWithPeriod([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty(true);
+
+		if (input.EndsWith("...", StringComparison.OrdinalIgnoreCase))
+		{
+			input = input[0..^2];
+		}
+
+		return input;
+	}
+
+
+	/// <summary>
+	/// Splits the input string into a <see cref="ReadOnlyCollection{T}"/> of strings,
+	/// separated by the specified <paramref name="delimiter"/>.
+	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
+	/// </summary>
+	/// <param name="input">The string to split.</param>
+	/// <param name="options">Options for controlling the splitting operation.</param>
+	/// <param name="delimiter">The character to use as a delimiter. <see cref="ControlChars.Comma"/> is the default.</param>
+	/// <returns>A <see cref="ReadOnlyCollection{T}"/> of strings that has been split from the input string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, StringSplitOptions options, [ConstantExpected] char delimiter = ControlChars.Comma)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		options = options.ArgumentDefined();
+
+		return input.Split([delimiter], options).AsReadOnly();
+	}
+
+	/// <summary>
+	/// Splits the input string into a <see cref="ReadOnlyCollection{String}"/> of strings,
+	/// separated by the specified <paramref name="delimiter"/>.
+	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
+	/// The <paramref name="count"/> parameter specifies the maximum number of substrings to return.
+	/// </summary>
+	/// <param name="input">The string to split.</param>
+	/// <param name="options">Options for controlling the splitting operation, such as removing empty entries.</param>
+	/// <param name="count">The maximum number of substrings to return.</param>
+	/// <param name="delimiter">The character to use as a delimiter. Defaults to <see cref="ControlChars.Comma"/>.</param>
+	/// <returns>A <see cref="ReadOnlyCollection{String}"/> of strings that has been split from the input string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] char delimiter = ControlChars.Comma)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		options = options.ArgumentDefined();
+		count = count.ArgumentInRange(min: 1);
+
+		return Array.AsReadOnly(input.Split([delimiter], count, options));
+	}
+
+	/// <summary>
+	/// Splits the input string into a ReadOnlyCollection{string} of strings,
+	/// separated by the specified <paramref name="separator"/>.
+	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
+	/// The <paramref name="count"/> parameter specifies the maximum number of substrings to return.
+	/// </summary>
+	/// <param name="input">The string to split.</param>
+	/// <param name="options">Options for controlling the splitting operation, such as removing empty entries.</param>
+	/// <param name="count">The maximum number of substrings to return.</param>
+	/// <param name="separator">The string to use as a delimiter. Defaults to <see cref="ControlChars.DefaultSeparator"/>.</param>
+	/// <returns>A ReadOnlyCollection{string} of strings that has been split from the input string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] string separator = ControlChars.DefaultSeparator)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		options = options.ArgumentDefined();
+		count = count.ArgumentInRange(min: 1);
+
+		return input.Split([separator], count, options).AsReadOnly();
+	}
+
+	/// <summary>
+	/// Splits the input string into a sequence of lines.
+	/// </summary>
+	/// <param name="input">The string to split into lines.</param>
+	/// <returns>A <see cref="LineSplitEnumerator"/> that can iterate over each line in the input string.</returns>
+	/// <remarks>
+	/// This method is an extension method and can be called directly on any string instance.
+	/// It is particularly useful for processing multi-line strings.
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SplitLines), "David McCarter", "6/9/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed)]
+	public static LineSplitEnumerator SplitLines([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		// LineSplitEnumerator is a struct so there is no allocation here
+		return new LineSplitEnumerator(input.AsSpan());
+	}
+
+	/// <summary>
+	/// Splits the input string by commas and removes any empty entries from the resulting array.
+	/// </summary>
+	/// <param name="input">The string to split. This string cannot be null.</param>
+	/// <returns>A ReadOnlyCollection{string} containing the non-empty elements from the split string.</returns>
+	/// <remarks>
+	/// This method uses <see cref="string.Split(char[], StringSplitOptions)"/> internally with <see cref="StringSplitOptions.RemoveEmptyEntries"/> to remove empty entries.
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SplitRemoveEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<string> SplitRemoveEmpty([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		return input.Trim().Split([ControlChars.Comma], options: StringSplitOptions.RemoveEmptyEntries).AsReadOnly();
+	}
+
+	/// <summary>
+	/// Determines whether the beginning of this string instance matches the specified string when compared using the ordinal sort order.
+	/// </summary>
+	/// <param name="input">The string to check. This string cannot be null.</param>
+	/// <param name="inputToCompare">The string to compare to the beginning of this string. This string cannot be null.</param>
+	/// <returns><c>true</c> if <paramref name="inputToCompare"/> matches the beginning of this string; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method performs an ordinal (case-sensitive and culture-insensitive) comparison.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static bool StartsWithOrdinal([DisallowNull] this string input, string inputToCompare)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		return input.StartsWith(inputToCompare, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Determines whether the beginning of this string instance matches the specified string when compared using the ordinal sort order and ignoring case.
+	/// </summary>
+	/// <param name="input">The string to check. This string cannot be null.</param>
+	/// <param name="inputToCompare">The string to compare to the beginning of this string. This string cannot be null.</param>
+	/// <returns><c>true</c> if <paramref name="inputToCompare"/> matches the beginning of this string, ignoring case; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method performs a comparison using <see cref="StringComparison.OrdinalIgnoreCase"/>.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	public static bool StartsWithOrdinalIgnoreCase([DisallowNull] this string input, string inputToCompare)
+	{
+		return string.IsNullOrEmpty(input) || string.IsNullOrEmpty(inputToCompare)
+					? false
+					: input.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase);
+	}
+
+	/// <summary>
+	/// Trims whitespace from the start and end of the substring extracted from the specified range of the input string.
+	/// </summary>
+	/// <param name="input">The input string from which to extract and trim the substring.</param>
+	/// <param name="startIndex">The zero-based starting character position of a substring in this instance.</param>
+	/// <param name="length">The number of characters in the substring.</param>
+	/// <returns>A string that is equivalent to the substring of length that begins at startIndex in input, but with white-space characters removed from the start and end.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="startIndex"/> or <paramref name="length"/> is less than zero, or <paramref name="startIndex"/> + <paramref name="length"/> is greater than the length of <paramref name="input"/>.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[return: NotNull]
+	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string SubstringTrim(this string input, int startIndex, int length)
+	{
+		if (input.IsNullOrEmpty())
+		{
+			return ControlChars.EmptyString;
+		}
+
+		if (startIndex < 0 || length < 0 || startIndex + length > input.Length)
+		{
+			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(length));
+		}
+
+		// SUGGESTION FROM COPILOT SLOWER.
+		return input.AsSpan(startIndex, length).ToString().Trim();
+	}
+
+	/// <summary>
+	/// Converts the input string to its Base64 encoded form.
+	/// </summary>
+	/// <param name="input">The string to encode.</param>
+	/// <returns>A Base64 encoded string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToBase64), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string ToBase64([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty(true);
+
+		return Convert.ToBase64String(_encoding.GetBytes(input));
+	}
+
+	/// <summary>
+	/// Converts a Base64 encoded string to a byte span.
+	/// </summary>
+	/// <param name="input">The Base64 encoded string.</param>
+	/// <returns>A span of bytes representing the decoded Base64 string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the input string is null or empty.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToBase64ByteSpan), "David McCarter", "11/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static Span<byte> ToBase64ByteSpan([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+
+		var span = new Span<byte>(new byte[input.Length * 3 / 4]);
+
+		return Convert.TryFromBase64String(input, span, out var bytesWritten) ? span[..bytesWritten] : [];
+	}
+
+	/// <summary>
+	/// Compresses the specified string using the Brotli algorithm and returns the compressed string in an asynchronous operation.
+	/// </summary>
+	/// <param name="input">The string to compress. This string cannot be null.</param>
+	/// <param name="level">The compression level to use. Defaults to <see cref="CompressionLevel.Fastest"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A <see cref="Task{String}"/> representing the asynchronous operation, which upon completion, yields the Brotli compressed string.</returns>
+	/// <example>
+	/// Input: "dotNetTips.com"
+	/// Output
+	/// Fastest: iw2AZABvAHQATgBlAHQAVABpAHAAcwAuAGMAbwBtAA==
+	/// NoCompression: iw2AZABvAHQATgBlAHQAVABpAHAAcwAuAGMAbwBtAA==
+	/// Optimal: iw0A+I+UrMG9dHJoJzwdrIKg1dYDoCSJKErYXLOsvkcYAw==
+	/// SmallestSize: iw0A+I+UrMG9dHJoJzwdrIKg1dYDoCSJKErYXLOsvkcYAw==
+	/// </example>
+	[Information(nameof(ToBrotliStringAsync), "David McCarter", "10/24/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static async Task<string> ToBrotliStringAsync([DisallowNull] this string input, CompressionLevel level = CompressionLevel.Fastest, CancellationToken cancellationToken = default)
+	{
+		var inputStream = new MemoryStream(Encoding.Unicode.GetBytes(input.ArgumentNotNull()));
+
+		await using (inputStream.ConfigureAwait(continueOnCapturedContext: false))
+		{
+			var outputStream = new MemoryStream();
+
+			await using (outputStream.ConfigureAwait(continueOnCapturedContext: false))
+			{
+				var brotliStream = new BrotliStream(outputStream, level);
+
+				await using (brotliStream.ConfigureAwait(continueOnCapturedContext: false))
+				{
+					await inputStream.CopyToAsync(brotliStream, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+					await brotliStream.FlushAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+
+					return Convert.ToBase64String(outputStream.ToArray());
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Converts the specified string to a byte array using the provided encoding.
+	/// </summary>
+	/// <param name="input">The string to convert. This string cannot be null.</param>
+	/// <param name="encoding">The encoding to use for the conversion. This cannot be null. See <see cref="Encoding"/> for encoding types.</param>
+	/// <returns>A byte array representing the encoded string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToByteArray), "David McCarter", "12/21/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static byte[] ToByteArray([DisallowNull] this string input, [DisallowNull] Encoding encoding)
+	{
+		input = input.ArgumentNotNullOrEmpty();
+		encoding = encoding.ArgumentNotNull();
+
+		return encoding.GetBytes(input);
+	}
+
+	/// <summary>
+	/// Converts a Base64 encoded string to a byte array.
+	/// </summary>
+	/// <param name="base64String">The Base64 encoded string.</param>
+	/// <returns>The byte array representation of the Base64 encoded string.</returns>
+	/// <exception cref="FormatException">Thrown when the input string is not a valid Base64 string.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToByteArrayFromBase64), "David McCarter", "4/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static byte[] ToByteArrayFromBase64(this string base64String)
+	{
+		if (string.IsNullOrEmpty(base64String))
+		{
+			return [];
+		}
+
+		var buffer = new Span<byte>(new byte[base64String.CalculateByteArraySize()]);
+
+		return !Convert.TryFromBase64String(base64String, buffer, out var bytesWritten)
+			? throw new FormatException(Resources.TheInputStringIsNotAValidBase64String)
+			: buffer[..bytesWritten].ToArray();
+	}
+
+	/// <summary>
+	/// Compresses the specified string using the Deflate algorithm and returns the compressed string in an asynchronous operation.
+	/// </summary>
+	/// <param name="input">The string to compress. This string cannot be null.</param>
+	/// <param name="level">The compression level to use. Defaults to <see cref="CompressionLevel.Fastest"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A <see cref="Task{String}"/> representing the asynchronous operation, which upon completion, yields the Deflate compressed string.</returns>
+	/// <example>
+	/// Input: "dotNetTips.com"
+	/// Output
+	/// Fastest: SmHIZyhh8GNIZShhCGHIZChgKGbQY0hmyGfIZQAAAAD//w==
+	/// NoCompression: ABwA4/9kAG8AdABOAGUAdABUAGkAcABzAC4AYwBvAG0AAAAA//8=
+	/// Optimal: SmHIZyhh8GNIBZIhDJkMBQzFDHoMyUDRXAYAAAAA//8=
+	/// SmallestSize: SmHIZyhh8GNIBZIhDJkMBQzFDHoMyUDRXAYAAAAA//8=
+	/// </example>
+	[Information(nameof(ToDeflateStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static async Task<string> ToDeflateStringAsync([DisallowNull] this string input, CompressionLevel level = CompressionLevel.Fastest, CancellationToken cancellationToken = default)
+	{
+		input = input.ArgumentNotNull();
+
+		using var inputMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(input));
+		using var outputMemoryStream = new MemoryStream();
+		using (var deflateStream = new DeflateStream(outputMemoryStream, level, true))
+		{
+			await inputMemoryStream.CopyToAsync(deflateStream, cancellationToken).ConfigureAwait(false);
+		}
+
+		return Convert.ToBase64String(outputMemoryStream.ToArray());
+	}
+
+	/// <summary>
+	/// Compresses the specified string using the GZip algorithm and returns the compressed string in an asynchronous operation.
+	/// </summary>
+	/// <param name="input">The string to compress. This string cannot be null.</param>
+	/// <param name="level">The compression level to use. Defaults to <see cref="CompressionLevel.Fastest"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A <see cref="Task{String}"/> representing the asynchronous operation, which upon completion, yields the GZip compressed string.</returns>
+	/// <example>
+	/// Input: "dotNetTips.com"
+	/// Output
+	/// Fastest: H4sIAAAAAAAECkphyGcoYfBjSGUoYQhhyGQoYChm0GNIZshnyGUAAAAA//8=
+	/// NoCompression: H4sIAAAAAAAECgAcAOP/ZABvAHQATgBlAHQAVABpAHAAcwAuAGMAbwBtAAAAAP//
+	/// Optimal: H4sIAAAAAAAACkphyGcoYfBjSAWSIQyZDAUMxQx6DMlA0VwGAAAAAP//
+	/// SmallestSize: H4sIAAAAAAACCkphyGcoYfBjSAWSIQyZDAUMxQx6DMlA0VwGAAAAAP/
+	/// </example>
+	/// <remarks>Make sure to call .Dispose on Task,</remarks>
+	[Information(nameof(ToGZipStringAsync), "David McCarter", "10/24/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static async Task<string> ToGZipStringAsync([DisallowNull] this string input, CompressionLevel level = CompressionLevel.Fastest, CancellationToken cancellationToken = default)
+	{
+		input = input.ArgumentNotNull();
+
+		using var inputMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(input));
+		using var outputMemoryStream = new MemoryStream();
+		using (var gzipStream = new GZipStream(outputMemoryStream, level, true))
+		{
+			await inputMemoryStream.CopyToAsync(gzipStream, cancellationToken).ConfigureAwait(false);
+		}
+
+		return Convert.ToBase64String(outputMemoryStream.ToArray());
+	}
+
+	/// <summary>
+	/// Converts the specified string to title case, considering culture-specific rules.
+	/// </summary>
+	/// <param name="input">The string to convert to title case. This string cannot be null.</param>
+	/// <returns>A string converted to title case using <see cref="CultureInfo.CurrentCulture"/> rules.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToTitleCase), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string ToTitleCase([DisallowNull] this string input)
+	{
+		input = input.ArgumentNotNullOrEmpty(true);
+
+		return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input);
+	}
+
+	/// <summary>
+	/// Trims the specified string, removing all leading and trailing white-space characters. If the input is null, an empty string is returned.
+	/// </summary>
+	/// <param name="input">The string to trim. If this string is null, an empty string is returned.</param>
+	/// <returns>A trimmed string, or an empty string if the input is null.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToTrimmed), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static string? ToTrimmed([AllowNull] this string input)
+	{
+		return input!.IsNullOrEmpty() ? input : input?.Trim();
+	}
+
+	/// <summary>
+	/// Compresses the specified string using the ZLib algorithm and returns the compressed string in an asynchronous operation.
+	/// </summary>
+	/// <param name="input">The string to compress. This string cannot be null.</param>
+	/// <param name="level">The compression level to use. Defaults to <see cref="CompressionLevel.Fastest"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A <see cref="Task{String}"/> representing the asynchronous operation, which upon completion, yields the ZLib compressed string.</returns>
+	/// <example>
+	/// Input: "dotNetTips.com"
+	/// Output
+	/// Fastest: eAFKYchnKGHwY0hlKGEIYchkKGAoZtBjSGbIZ8hlAAAAAP//
+	/// NoCompression: eAEAHADj/2QAbwB0AE4AZQB0AFQAaQBwAHMALgBjAG8AbQAAAAD//w==
+	/// Optimal: eJxKYchnKGHwY0gFkiEMmQwFDMUMegzJQNFcBgAAAAD//w==
+	/// SmallestSize: eNpKYchnKGHwY0gFkiEMmQwFDMUMegzJQNFcBgAAAAD//w==
+	/// </example>
+	[Information(nameof(ToZLibStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static async Task<string> ToZLibStringAsync([DisallowNull] this string input, CompressionLevel level = CompressionLevel.Fastest, CancellationToken cancellationToken = default)
+	{
+		input = input.ArgumentNotNull();
+
+		using var inputMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(input));
+		using var outputMemoryStream = new MemoryStream();
+		using (var zlibStream = new ZLibStream(outputMemoryStream, level, true))
+		{
+			await inputMemoryStream.CopyToAsync(zlibStream, cancellationToken).ConfigureAwait(false);
+		}
+
+		return Convert.ToBase64String(outputMemoryStream.ToArray());
+	}
+
+	/// <summary>
+	/// Verifies the hashed password against the input string using the specified hashing algorithm.
+	/// </summary>
+	/// <param name="hashedPassword">The hashed password to verify. Must not be null.</param>
+	/// <param name="input">The input string to compare against the hashed password. Must not be null.</param>
+	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
+	/// <returns>A <see cref="PasswordVerificationResult"/> indicating whether the verification succeeded or failed.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(VerifyHashedPassword), "David McCarter", "5/6/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static PasswordVerificationResult VerifyHashedPassword([DisallowNull] this string hashedPassword, [DisallowNull] string input, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
+	{
+		hashedPassword = hashedPassword.ArgumentNotNullOrEmpty();
+		input = input.ArgumentNotNullOrEmpty();
+
+		return PasswordHasher.VerifyHashedPassword(hashedPassword, input, algorithmType);
+	}
+
+}
