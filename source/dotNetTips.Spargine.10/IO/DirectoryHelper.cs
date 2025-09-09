@@ -410,6 +410,8 @@ public static class DirectoryHelper
 		//OPTIMIZATION FROM COPILOT BREAKS CODE
 		path = path.ArgumentExists();
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
+
+
 		searchOption = searchOption.ArgumentDefined();
 
 		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = false, AttributesToSkip = FileAttributes.Hidden };

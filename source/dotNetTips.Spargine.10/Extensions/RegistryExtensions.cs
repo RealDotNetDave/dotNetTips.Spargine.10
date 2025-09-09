@@ -42,7 +42,13 @@ public static class RegistryExtensions
 	/// <returns>RegistryKey.</returns>
 	/// <exception cref="PlatformNotSupportedException"></exception>
 	[Information(nameof(GetSubKey), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static RegistryKey? GetSubKey([NotNull] this RegistryKey key, [NotNull] string name) => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? key.OpenSubKey(name) : throw new PlatformNotSupportedException();
+	public static RegistryKey? GetSubKey([NotNull] this RegistryKey key, [NotNull] in string name)
+	{
+		key = key.ArgumentNotNull();
+		_ = name.CheckIsNotNullOrEmpty(throwException: true);
+
+		return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? key.OpenSubKey(name) : throw new PlatformNotSupportedException();
+	}
 
 	/// <summary>
 	/// Gets the registry key value.
@@ -55,8 +61,8 @@ public static class RegistryExtensions
 	[Information(nameof(GetValue), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T? GetValue<T>([NotNull] this RegistryKey key, string name)
 	{
-		name = name.ArgumentNotNullOrEmpty();
 		key = key.ArgumentNotNull();
+		_ = name.CheckIsNotNullOrEmpty(throwException: true);
 
 		var returnValue = default(T);
 

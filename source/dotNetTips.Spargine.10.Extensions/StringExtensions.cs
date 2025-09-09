@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 09-08-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -363,6 +363,27 @@ public static class StringExtensions
 	public static bool FastCompare([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
 	{
 		return string.Equals(value, valueToCompare, comparison);
+	}
+
+	/// <summary>
+	/// Determines whether the specified string is null or empty in a fast manner.
+	/// </summary>
+	/// <param name="input">The string to check for null or emptiness.</param>
+	/// <returns>
+	/// <c>false</c> if the string is <c>null</c> or <see cref="string.Empty"/>; otherwise, <c>true</c>.
+	/// </returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FastIsNullOrEmpty), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool FastIsNullOrEmpty([AllowNull] this string input)
+	{
+		if (input is null || input == string.Empty)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	/// <summary>
