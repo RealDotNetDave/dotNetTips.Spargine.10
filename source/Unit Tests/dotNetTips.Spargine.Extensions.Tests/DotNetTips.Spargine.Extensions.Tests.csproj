@@ -22,8 +22,8 @@
 	<OutputPath>..\..\..\AppBin</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-	<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.8" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.9" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
 	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
 	<PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
 	<PackageReference Include="MSTest.TestFramework" Version="3.10.4" />

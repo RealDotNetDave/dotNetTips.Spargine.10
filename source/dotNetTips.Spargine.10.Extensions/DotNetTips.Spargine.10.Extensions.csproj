@@ -99,7 +99,7 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="linq2db" Version="5.4.1" />
-	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="9.0.8" />
+	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="9.0.9" />
 	<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="4.14.0">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
