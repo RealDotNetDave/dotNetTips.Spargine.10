@@ -31,6 +31,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 {
+	private byte[] _byteArray;
 
 	private PersonRecord[] _personRecordArray;
 	private Person[] _personRefArray;
@@ -199,6 +200,16 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ArrayExtensions.FastHashData) + ": byte[]")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void HashDataFastHashData()
+	{
+		var byteArray = this._byteArray;
+		var result = byteArray.FastHashData();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void HasItems_Ref()
@@ -264,10 +275,10 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	//[BenchmarkCategory(Categories.ReferenceType)]
 	//public void PerformAction_Record()
 	//{
-	//	var people = this._personRecordArray;
+	//	var byteArray = this._personRecordArray;
 	//	var sb = new StringBuilder();
 
-	//	people.PerformAction((person) =>
+	//	byteArray.PerformAction((person) =>
 	//	{
 	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{person.PropertiesToString()}|");
 	//	});
@@ -379,6 +390,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this._personRecordArray = this.GetPersonRecordArray();
 		this._personRefArray = this.GetPersonRefArray();
 		this._personValArray = this.GetPersonValArray();
+		this._byteArray = this.GetByteArray(this.Count);
 
 		LogInfo($"PersonRecordArray: {this._personRecordArray.Length}");
 		LogInfo($"PersonRefArray: {this._personRefArray.Length}");

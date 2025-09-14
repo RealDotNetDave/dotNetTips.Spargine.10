@@ -234,28 +234,6 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastModifyCollection))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void FastModifyCollection()
-	{
-		var people = this._personRecordList;
-
-		var result = people.FastModifyCollection(person => person with { Email = "TestData" });
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor))]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void FastProcessor_Ref()
-	{
-		var people = this._personRefEnumerable;
-
-		people.FastProcessor(person => person.Phone = "5555555555");
-
-		this.Consume(people);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrDefault) + ": With Alternate")]
 	public void FirstOrDefaultAlternate()
 	{
@@ -354,6 +332,48 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		var people = this._personRefEnumerable;
 
 		var result = people.Join();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastModifyCollection))]
+	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	public void ModifyCollectionFastModifyCollection()
+	{
+		var people = this._personRefEnumerable;
+
+		var result = people.FastModifyCollection(person =>
+		{
+			person.Phone = "5555555555";
+			return person;
+		});
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor))]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void ModifyCollectionFastProcessor()
+	{
+		var people = this._personRefEnumerable;
+
+		people.FastProcessor(person => person.Phone = "5555555555");
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = "Modify Collection: Normal Loop")]
+	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
+	public void ModifyCollectionLoop()
+	{
+		var people = this._personRefEnumerable;
+		var result = new List<Person>(people.Count());
+
+		foreach (var person in people)
+		{
+			person.Phone = "5555555555";
+			result.Add(person);
+		}
 
 		this.Consume(result);
 	}

@@ -292,14 +292,6 @@ public class ListExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.ToReadOnlyCollection))]
-	public void ToReadOnlyCollection()
-	{
-		var result = this._peopleRefList.ToReadOnlyCollection();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(ListExtensions.ToReadOnlyList))]
 	public void ToReadOnlyList()
 	{
