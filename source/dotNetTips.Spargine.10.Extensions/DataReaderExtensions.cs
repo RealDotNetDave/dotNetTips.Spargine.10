@@ -47,7 +47,7 @@ public static class DataReaderExtensions
 	/// <param name="includeHeaderAsFirstRow">if set to <c>true</c> [include header as first row].</param>
 	/// <param name="delimiter">The delimiter.</param>
 	/// <param name="convertedRows">The list of converted rows.</param>
-	private static void AddHeaderRowToCsv(IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter, List<string> convertedRows)
+	private static void AddHeaderRowToCsv(IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] in char delimiter, List<string> convertedRows)
 	{
 		if (includeHeaderAsFirstRow)
 		{
@@ -88,7 +88,7 @@ public static class DataReaderExtensions
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static ReadOnlyCollection<string> ToCsv([DisallowNull] this IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter = ControlChars.Comma)
+	public static ReadOnlyCollection<string> ToCsv([DisallowNull] this IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] in char delimiter = ControlChars.Comma)
 	{
 		dataReader = dataReader.ArgumentNotNull();
 

@@ -218,7 +218,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(ToDelimitedString), "David McCarter", "11/03/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static string ToDelimitedString<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [ConstantExpected] char delimiter = ControlChars.Comma) where TKey : notnull
+	public static string ToDelimitedString<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma) where TKey : notnull
 	{
 		return FastStringBuilder.ToDelimitedString((Dictionary<TKey, TValue>)collection, delimiter);
 	}

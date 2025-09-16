@@ -325,9 +325,9 @@ public struct Address : IAddress<Address>
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
-	public static Address ToAddress([NotNull] RefTypes.Address address)
+	public static Address ToAddress([NotNull] in RefTypes.Address address)
 	{
-		address = address.ArgumentNotNull();
+		_ = address.ArgumentNotNull();
 
 		return new Address(address.Id)
 		{

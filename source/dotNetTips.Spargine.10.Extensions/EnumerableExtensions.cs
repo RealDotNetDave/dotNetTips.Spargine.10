@@ -507,7 +507,7 @@ public static class EnumerableExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public string ToDelimitedString([ConstantExpected] char delimiter = ControlChars.Comma)
+		public string ToDelimitedString([ConstantExpected] in char delimiter = ControlChars.Comma)
 		{
 			if (collection is null || collection.FastCount() == 0)
 			{

@@ -4,7 +4,7 @@
 // Created          : 09-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 09-16-2025
 // ***********************************************************************
 // <copyright file="CountryPhonePostalInfoRepository.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -159,7 +159,7 @@ public static class CountryPhonePostalInfoRepository
 			{
 				if (charIndex == phoneCodeSpan.Length || phoneCodeSpan[charIndex] == ControlChars.Comma)
 				{
-					var codeSpan = phoneCodeSpan.Slice(start, charIndex - start).Trim();
+					var codeSpan = phoneCodeSpan[start..charIndex].Trim();
 					var strippedCode = RegexProcessor.GetNumbers(codeSpan.ToString());
 
 					if (number.StartsWith(strippedCode, StringComparison.Ordinal))

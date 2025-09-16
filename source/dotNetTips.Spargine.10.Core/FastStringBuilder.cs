@@ -220,7 +220,7 @@ public static class FastStringBuilder
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Concat), "David McCarter", "2/19/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
-	public static string Concat([ConstantExpected] char delimiter = ControlChars.Comma, in bool addLineFeed = false, [DisallowNull] params string[] args)
+	public static string Concat([ConstantExpected] in char delimiter = ControlChars.Comma, in bool addLineFeed = false, [DisallowNull] params string[] args)
 	{
 		args = args.ArgumentNotNull();
 
@@ -348,7 +348,7 @@ public static class FastStringBuilder
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Join), "David McCarter", "03/04/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static string Join([DisallowNull] IEnumerable<string> values, [ConstantExpected] char delimiter = ControlChars.Comma)
+	public static string Join([DisallowNull] IEnumerable<string> values, [ConstantExpected] in char delimiter = ControlChars.Comma)
 	{
 		values = values.ArgumentNotNull();
 
@@ -511,7 +511,7 @@ public static class FastStringBuilder
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
-	public static string ToDelimitedString<TKey, TValue>([DisallowNull] in Dictionary<TKey, TValue> collection, [ConstantExpected] char delimiter = ControlChars.Comma)
+	public static string ToDelimitedString<TKey, TValue>([DisallowNull] in Dictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma)
 		where TKey : notnull
 	{
 		if (collection is null || collection.Count == 0)

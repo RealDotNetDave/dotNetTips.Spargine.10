@@ -119,7 +119,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <(AddressRecord? left, AddressRecord? right)
+	public static bool operator <(in AddressRecord? left,in AddressRecord? right)
 	{
 		if (left is null)
 		{
@@ -144,7 +144,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <=(AddressRecord? left, AddressRecord? right)
+	public static bool operator <=(in AddressRecord? left,in AddressRecord? right)
 	{
 		if (left is null)
 		{
@@ -169,7 +169,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >(AddressRecord? left, AddressRecord? right)
+	public static bool operator >(in AddressRecord? left,in AddressRecord? right)
 	{
 		if (left is null)
 		{
@@ -194,7 +194,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >=(AddressRecord? left, AddressRecord? right)
+	public static bool operator >=(in AddressRecord? left,in  AddressRecord? right)
 	{
 		if (right is null)
 		{
@@ -265,7 +265,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// Value indicating the relative order of the objects.
 	/// </returns>
 	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int CompareTo(AddressRecord? other)
+	public int CompareTo(in AddressRecord? other)
 	{
 		return other is null ? 1 : string.Compare(this.Id, other.Id, StringComparison.Ordinal);
 	}
@@ -331,7 +331,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// True if equal, otherwise false.
 	/// </returns>
 	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public bool Equals(AddressRecord? other)
+	public bool Equals(in AddressRecord? other)
 	{
 		if (ReferenceEquals(this, other))
 		{
@@ -361,9 +361,9 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
 	[Information(nameof(ToAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static AddressRecord ToAddress([NotNull] Address address)
+	public static AddressRecord ToAddress([NotNull] in Address address)
 	{
-		address = address.ArgumentNotNull();
+		_ = address.ArgumentNotNull();
 
 		return new(address.Id)
 		{

@@ -97,7 +97,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// <returns>The result of the operator.</returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <(PersonRecord? left, PersonRecord? right)
+	public static bool operator <(in PersonRecord? left, in PersonRecord? right)
 	{
 		if (left is null)
 		{
@@ -120,7 +120,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// <returns>The result of the operator.</returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <=(PersonRecord? left, PersonRecord? right)
+	public static bool operator <=(in PersonRecord? left, in PersonRecord? right)
 	{
 		if (left is null)
 		{
@@ -138,7 +138,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// <returns>The result of the operator.</returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >(PersonRecord? left, PersonRecord? right)
+	public static bool operator >(in PersonRecord? left, in PersonRecord? right)
 	{
 		if (left is null)
 		{
@@ -161,7 +161,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// <returns>The result of the operator.</returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >=(PersonRecord? left, PersonRecord? right)
+	public static bool operator >=(in PersonRecord? left, in PersonRecord? right)
 	{
 		if (right is null)
 		{
@@ -211,7 +211,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// <returns>
 	/// Value indicating the relative order of the objects.
 	/// </returns>
-	public int CompareTo(PersonRecord? other)
+	public int CompareTo(in PersonRecord? other)
 	{
 		return other is null ? 1 : string.Compare(this.Id, other.Id, StringComparison.Ordinal);
 	}
@@ -252,7 +252,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// </summary>
 	/// <param name="other">Other <see cref="PersonRecord"/>.</param>
 	/// <returns>True if equal, otherwise false.</returns>
-	public bool Equals(PersonRecord? other)
+	public bool Equals(in PersonRecord? other)
 	{
 		if (ReferenceEquals(this, other))
 		{
@@ -279,9 +279,9 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// </exception>
 	[return: NotNull]
 	[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static PersonRecord ToPersonRecord([NotNull] Person person)
+	public static PersonRecord ToPersonRecord([NotNull] in Person person)
 	{
-		person = person.ArgumentNotNull();
+		_ = person.ArgumentNotNull();
 
 		PersonRecord newPerson = new()
 		{

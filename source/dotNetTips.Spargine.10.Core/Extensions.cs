@@ -327,7 +327,7 @@ internal static partial class Extensions
 	/// <param name="list">The list.</param>
 	/// <param name="delimiter">The delimiter.</param>
 	/// <returns>System.String.</returns>
-	internal static string ToDelimitedString([NotNull] this IDictionary list, [ConstantExpected] char delimiter = ControlChars.Comma)
+	internal static string ToDelimitedString([NotNull] this IDictionary list, [ConstantExpected] in char delimiter = ControlChars.Comma)
 	{
 		if (string.IsNullOrEmpty(delimiter.ToString()))
 		{
@@ -368,7 +368,7 @@ internal static partial class Extensions
 	/// <param name="list">The list.</param>
 	/// <param name="delimiter">The delimiter (default is comma if not supplied).</param>
 	/// <returns>System.String.</returns>
-	internal static string ToDelimitedString<T>([NotNull] this IEnumerable<T> list, [ConstantExpected] char delimiter = ControlChars.Comma)
+	internal static string ToDelimitedString<T>([NotNull] this IEnumerable<T> list, [ConstantExpected] in char delimiter = ControlChars.Comma)
 	{
 		if (list.FastCount() == 0)
 		{

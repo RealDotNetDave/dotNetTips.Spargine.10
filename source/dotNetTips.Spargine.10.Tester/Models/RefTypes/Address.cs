@@ -113,7 +113,7 @@ public sealed class Address : IAddress<Address>
 	/// <c>false</c>.
 	/// </returns>
 	[DebuggerStepThrough]
-	public static bool operator !=(Address? left, Address? right)
+	public static bool operator !=(in Address? left, in Address? right)
 	{
 		return !(left == right);
 	}
@@ -129,7 +129,7 @@ public sealed class Address : IAddress<Address>
 	/// <c>false</c>.
 	/// </returns>
 	[DebuggerStepThrough]
-	public static bool operator <(Address? left, Address? right)
+	public static bool operator <(in Address? left, in Address? right)
 	{
 		if (left is null)
 		{
@@ -156,7 +156,7 @@ public sealed class Address : IAddress<Address>
 	/// <c>false</c>.
 	/// </returns>
 	[DebuggerStepThrough]
-	public static bool operator <=(Address? left, Address? right)
+	public static bool operator <=(in Address? left, in Address? right)
 	{
 		if (left is null)
 		{
@@ -182,7 +182,7 @@ public sealed class Address : IAddress<Address>
 	/// <c>false</c>.
 	/// </returns>
 	[DebuggerStepThrough]
-	public static bool operator ==(Address? left, Address? right)
+	public static bool operator ==(in Address? left, in Address? right)
 	{
 		return EqualityComparer<Address>.Default.Equals(left, right);
 	}
@@ -199,7 +199,7 @@ public sealed class Address : IAddress<Address>
 	/// <c>false</c>.
 	/// </returns>
 	[DebuggerStepThrough]
-	public static bool operator >(Address? left, Address? right)
+	public static bool operator >(in Address? left, in Address? right)
 	{
 		if (left is null)
 		{
@@ -226,7 +226,7 @@ public sealed class Address : IAddress<Address>
 	/// otherwise, <c>false</c>.
 	/// </returns>
 	[DebuggerStepThrough]
-	public static bool operator >=(Address? left, Address? right)
+	public static bool operator >=(in Address? left, in Address? right)
 	{
 		if (right is null)
 		{
@@ -341,7 +341,7 @@ public sealed class Address : IAddress<Address>
 	/// <c>true</c> if the <see cref="Id"/> values are equal;
 	/// otherwise, <c>false</c>.
 	/// </returns>
-	public bool Equals(Address? other)
+	public bool Equals(in Address? other)
 	{
 		if (ReferenceEquals(this, other))
 		{
@@ -391,9 +391,9 @@ public sealed class Address : IAddress<Address>
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
 	[Information(nameof(ToAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Address ToAddress([NotNull] AddressRecord address)
+	public static Address ToAddress([NotNull] in AddressRecord address)
 	{
-		address = address.ArgumentNotNull();
+		_ = address.ArgumentNotNull();
 
 		return new(address.Id)
 		{

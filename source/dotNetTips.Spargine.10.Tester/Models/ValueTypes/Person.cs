@@ -145,7 +145,7 @@ public struct Person() : IPerson<Person, Address>
 	/// Thrown if <paramref name="person"/> is null.
 	/// </exception>
 	[return: NotNull]
-	public static explicit operator Person(PersonRecord person) => ToPerson(person);
+	public static explicit operator Person(in PersonRecord person) => ToPerson(person);
 
 	/// <summary>
 	/// Explicitly converts a <see cref="RefTypes.Person"/> to a
@@ -156,7 +156,7 @@ public struct Person() : IPerson<Person, Address>
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="refPerson"/> is null.
 	/// </exception>
-	public static explicit operator Person(RefTypes.Person refPerson) => ToPerson(refPerson);
+	public static explicit operator Person(in RefTypes.Person refPerson) => ToPerson(refPerson);
 
 	/// <summary>
 	/// Non-generic comparison required by <see cref="IComparable"/>.

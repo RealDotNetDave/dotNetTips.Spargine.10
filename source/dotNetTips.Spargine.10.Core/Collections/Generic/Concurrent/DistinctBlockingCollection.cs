@@ -51,7 +51,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// </summary>
 	/// <param name="boundedCapacity">The bounded size of the collection.</param>
 	[Information("DistinctBlockingCollection", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public DistinctBlockingCollection(int boundedCapacity) : base(boundedCapacity)
+	public DistinctBlockingCollection(in int boundedCapacity) : base(boundedCapacity)
 	{ }
 
 	/// <summary>

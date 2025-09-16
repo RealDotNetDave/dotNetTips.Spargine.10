@@ -148,9 +148,9 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <returns>A read-only collection of the paths of the created temporary files.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public ReadOnlyCollection<string> CreateFiles(int count)
+	public ReadOnlyCollection<string> CreateFiles(in int count)
 	{
-		count = count.ArgumentInRange(min: 1);
+		_ = count.ArgumentInRange(min: 1);
 		var files = new ConcurrentBag<string>();
 
 		_ = Parallel.For(0, count, _ =>

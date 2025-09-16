@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+
 namespace DotNetTips.Spargine.Core;
 
 /// <summary>
@@ -23,7 +24,7 @@ namespace DotNetTips.Spargine.Core;
 /// <param name="includeGenericParameters">If true, includes generic parameters in the display name.</param>
 /// <param name="nestedTypeDelimiter">The delimiter to use for nested types.</param>
 [Information(Status = Status.Available)]
-public readonly struct DisplayNameOptions(bool fullName, bool includeGenericParameterNames, bool includeGenericParameters, char nestedTypeDelimiter = ControlChars.Plus) : IEquatable<DisplayNameOptions>
+public readonly struct DisplayNameOptions(bool fullName, bool includeGenericParameterNames, bool includeGenericParameters, in char nestedTypeDelimiter = ControlChars.Plus) : IEquatable<DisplayNameOptions>
 {
 
 	/// <summary>

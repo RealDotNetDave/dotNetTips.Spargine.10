@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-30-2025
+// Last Modified On : 09-16-2025
 // ***********************************************************************
 // <copyright file="PasswordHasher.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -151,6 +151,7 @@ public static class PasswordHasher
 
 		return Convert.ToBase64String(result);
 	}
+
 	/// <summary>
 	/// Verifies a hashed password using Argon2.
 	/// </summary>

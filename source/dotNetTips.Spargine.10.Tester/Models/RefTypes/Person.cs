@@ -97,7 +97,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <param name="left">Left <see cref="Person"/>.</param>
 	/// <param name="right">Right <see cref="Person"/>.</param>
 	/// <returns>True if not equal, otherwise false.</returns>
-	public static bool operator !=(Person? left, Person? right)
+	public static bool operator !=(in Person? left, in Person? right)
 	{
 		return !(left == right);
 	}
@@ -108,7 +108,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <param name="left">Left <see cref="Person"/>.</param>
 	/// <param name="right">Right <see cref="Person"/>.</param>
 	/// <returns>True if left is less than right.</returns>
-	public static bool operator <(Person? left, Person? right)
+	public static bool operator <(in Person? left, in Person? right)
 	{
 		if (left is null)
 		{
@@ -129,7 +129,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <param name="left">Left <see cref="Person"/>.</param>
 	/// <param name="right">Right <see cref="Person"/>.</param>
 	/// <returns>True if left is less than or equal to right.</returns>
-	public static bool operator <=(Person? left, Person? right)
+	public static bool operator <=(in Person? left, in Person? right)
 	{
 		if (left is null)
 		{
@@ -150,7 +150,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <param name="left">Left <see cref="Person"/>.</param>
 	/// <param name="right">Right <see cref="Person"/>.</param>
 	/// <returns>True if equal, otherwise false.</returns>
-	public static bool operator ==(Person? left, Person? right)
+	public static bool operator ==(in Person? left, in Person? right)
 	{
 		return EqualityComparer<Person>.Default.Equals(left, right);
 	}
@@ -161,7 +161,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <param name="left">Left <see cref="Person"/>.</param>
 	/// <param name="right">Right <see cref="Person"/>.</param>
 	/// <returns>True if left is greater than right.</returns>
-	public static bool operator >(Person? left, Person? right)
+	public static bool operator >(in Person? left, in Person? right)
 	{
 		if (left is null)
 		{
@@ -182,7 +182,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <param name="left">Left <see cref="Person"/>.</param>
 	/// <param name="right">Right <see cref="Person"/>.</param>
 	/// <returns>True if left is greater than or equal to right.</returns>
-	public static bool operator >=(Person? left, Person? right)
+	public static bool operator >=(in Person? left, in Person? right)
 	{
 		if (right is null)
 		{
@@ -227,7 +227,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>
 	/// Value indicating the relative order of the objects.
 	/// </returns>
-	public int CompareTo(Person? other)
+	public int CompareTo(in Person? other)
 	{
 		return other is null ? 1 : string.Compare(this.Id, other.Id, StringComparison.Ordinal);
 	}
@@ -263,7 +263,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// </summary>
 	/// <param name="other">Other <see cref="Person"/>.</param>
 	/// <returns>True if equal, otherwise false.</returns>
-	public bool Equals(Person? other)
+	public bool Equals(in Person? other)
 	{
 		if (ReferenceEquals(this, other))
 		{
@@ -326,9 +326,9 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>A new instance of <see cref="Person"/> based on the provided <see cref="PersonRecord"/>.</returns>
 	[return: NotNull]
 	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Person ToPerson([NotNull] PersonRecord person)
+	public static Person ToPerson([NotNull] in PersonRecord person)
 	{
-		person = person.ArgumentNotNull();
+		_ = person.ArgumentNotNull();
 
 		Person newPerson = new(person.Email, person.Id)
 		{
