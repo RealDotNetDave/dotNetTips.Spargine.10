@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-28-2025
+// Last Modified On : 09-17-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -112,21 +112,26 @@ public class ObjectExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ObjectExtensions.FastGetHashCode))]
-	[BenchmarkCategory(Categories.New)]
-	public void FastGetHashCode()
-	{
-		var word = RandomData.GenerateWord(15);
-
-		this.Consume(word.FastGetHashCode());
-	}
-
 	[Benchmark(Description = nameof(ObjectExtensions.FromJson))]
 	public void FromJson()
 	{
 		var result = this._peopleJson.FromJson<Person>();
 
 		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FastGetHashCode))]
+	[BenchmarkCategory(Categories.New)]
+	public void HashCodeFastGetHashCode()
+	{
+		this.Consume(this.LongTestString.FastGetHashCode());
+	}
+
+	[Benchmark(Description = "string.GetHashCode()")]
+	[BenchmarkCategory(Categories.New, Categories.ForComparison)]
+	public void HashCodeGetHashCode()
+	{
+		this.Consume(this.LongTestString.GetHashCode());
 	}
 
 	[Benchmark(Description = nameof(ObjectExtensions.HasProperty) + ": Person-ref")]

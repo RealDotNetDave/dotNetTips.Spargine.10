@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark-20250917-152529</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark-20250917-152529</th></tr>
+<tr>
+<th>GenerateRandomKey .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark.GenerateRandomKey()
+push      rbx
+sub       rsp,30
+xor       eax,eax
+mov       [rsp+28],rax
+mov       rbx,rcx
+call      qword ptr [7FFE77A44408]
+mov       [rsp+28],rax
+mov       rbx,[rbx+18]
+mov       rdx,[rsp+28]
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       eax,eax
+mov       [rbx+8],rax
+add       rsp,30
+pop       rbx
+ret
+
+DotNetTips.Spargine.Core.Ulid.NewUlid()
+		var ulidChars = new char[UlidLength].AsSpan();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		var timestampBytes = GenerateTimeStamp().AsSpan(0, 6);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		EncodeBase32(timestampBytes, ulidChars, 0, TimestampLength);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		var randomnessBytes = GenerateRandomBytes().AsSpan(0, 10); // Ensure only 10 bytes are used
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		EncodeBase32(randomnessBytes, ulidChars, TimestampLength, RandomLength);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return new Ulid(new string(ulidChars));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,70
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+20],ymm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqa   xmmword ptr [rsp+60],xmm4
+mov       rcx,offset MT_System.Char[]
+mov       edx,1A
+call      CORINFO_HELP_NEWARR_1_VC
+lea       rbx,[rax+10]
+lea       rcx,[rsp+48]
+call      qword ptr [7FFE77994F18]
+mov       rdx,346DC5D63886594B
+mulx      rsi,rsi,[rsp+50]
+shr       rsi,0B
+mov       rdi,0FFFFC77CEDD32800
+add       rsi,rdi
+mov       rcx,offset MT_System.Byte[]
+mov       edx,8
+call      CORINFO_HELP_NEWARR_1_VC
+lea       rdx,[rax+10]
+mov       [rdx],rsi
+add       rax,10
+mov       [rsp+60],rax
+mov       dword ptr [rsp+68],6
+mov       [rsp+30],rbx
+mov       dword ptr [rsp+38],1A
+lea       rdx,[rsp+30]
+lea       rcx,[rsp+60]
+xor       r8d,r8d
+mov       r9d,0A
+call      qword ptr [7FFE77A44468]
+mov       rcx,offset MT_System.Byte[]
+mov       edx,0A
+call      CORINFO_HELP_NEWARR_1_VC
+mov       rsi,rax
+lea       rcx,[rsi+10]
+mov       [rsp+40],rcx
+mov       edx,0A
+call      qword ptr [7FFE7790E7D8]
+xor       edx,edx
+mov       [rsp+40],rdx
+mov       [rsp+40],rdx
+add       rsi,10
+mov       [rsp+60],rsi
+mov       dword ptr [rsp+68],0A
+mov       [rsp+30],rbx
+mov       dword ptr [rsp+38],1A
+lea       rdx,[rsp+30]
+lea       rcx,[rsp+60]
+mov       r8d,0A
+mov       r9d,10
+call      qword ptr [7FFE77A44468]
+mov       [rsp+20],rbx
+mov       dword ptr [rsp+28],1A
+lea       rcx,[rsp+20]
+call      System.String.Ctor(System.ReadOnlySpan`1<Char>)
+mov       rdx,rax
+lea       rcx,[rsp+58]
+call      qword ptr [7FFE77A44498]
+mov       rax,[rsp+58]
+add       rsp,70
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

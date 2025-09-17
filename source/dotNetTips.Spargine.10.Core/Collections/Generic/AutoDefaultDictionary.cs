@@ -71,7 +71,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AutoDefaultDictionary{TKey, TValue}"/> class with the specified comparer.
 	/// </summary>
-	/// <param name="comparer">The comparer to use when comparing keys.</param>
+	/// <param name="comparer">The comparer to use when comparing c</param>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public AutoDefaultDictionary(in IEqualityComparer<TKey> comparer) : base(comparer)
 	{

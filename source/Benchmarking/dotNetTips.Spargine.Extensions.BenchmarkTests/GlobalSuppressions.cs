@@ -79,3 +79,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Maintainability", "CA1515:Consider making public types internal", Justification = "<Pending>", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.BenchmarkTests.StringExtensionsBenchmark")]
 [assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.Extensions.BenchmarkTests.CollectionExtensionsCollectionBenchmark.Setup")]
 [assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.Extensions.BenchmarkTests.Program.Main")]
+[assembly: SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.Extensions.BenchmarkTests.ObjectExtensionsBenchmark.HashCodeGetHashCode")]

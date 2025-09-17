@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-05-2025
+// Last Modified On : 09-17-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -157,10 +157,10 @@ public static class ListExtensions
 		/// <returns>The number of elements in the list.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastCount), "David McCarter", "4/12/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastCount), "David McCarter", "4/12/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public long FastCount()
 		{
-			return list.ArgumentNotNull().Count;
+			return Unsafe.As<List<T>>(list).Count;
 		}
 
 		/// <summary>

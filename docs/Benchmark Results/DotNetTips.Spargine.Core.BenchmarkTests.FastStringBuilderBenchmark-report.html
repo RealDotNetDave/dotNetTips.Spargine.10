@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Core.BenchmarkTests.FastStringBuilderBenchmark-20250917-090851</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.2, Windows 10 (10.0.19045.6332/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.100-rc.1.25451.107
+  [Host]     : .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2
+  Job-PSYKRA : .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Namespace=DotNetTips.Spargine.Core.BenchmarkTests  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                                           </th><th>Categories          </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;Format: SB.AppendFormat() for Comparison&#39;</td><td>Strings,**FOR COMPARISON**</td><td>132.3 ns</td><td>1.44 ns</td><td>1.28 ns</td><td>0.34 ns</td><td>129.7 ns</td><td>131.8 ns</td><td>132.2 ns</td><td>132.9 ns</td><td>134.9 ns</td><td>7,557,301.8</td><td>6.829 ns</td><td>14.00</td><td>2.795</td><td>2.000</td><td>-0.0493</td><td>2</td><td>*</td><td>No</td><td>3,870 B</td><td>-</td><td>-</td><td>-</td><td>0.0119</td><td>0.0005</td><td>0.0005</td><td>344 B</td>
+</tr><tr><td>&#39;Remove: SB.Replace() with string.Empty for Comparison&#39;</td><td>Strings,**FOR COMPARISON**</td><td>638.6 ns</td><td>12.47 ns</td><td>11.05 ns</td><td>2.95 ns</td><td>606.8 ns</td><td>635.8 ns</td><td>642.1 ns</td><td>644.7 ns</td><td>649.6 ns</td><td>1,566,000.8</td><td>5.523 ns</td><td>14.00</td><td>5.061</td><td>2.000</td><td>-1.5737</td><td>4</td><td>*</td><td>No</td><td>4,372 B</td><td>-</td><td>-</td><td>-</td><td>0.0906</td><td>0.0019</td><td>0.0019</td><td>3968 B</td>
+</tr><tr><td>Format</td><td>Strings,**NEW**</td><td>125.9 ns</td><td>1.46 ns</td><td>1.37 ns</td><td>0.35 ns</td><td>124.3 ns</td><td>125.0 ns</td><td>125.8 ns</td><td>126.7 ns</td><td>128.9 ns</td><td>7,940,216.2</td><td>7.323 ns</td><td>15.00</td><td>2.320</td><td>2.000</td><td>0.6112</td><td>1</td><td>*</td><td>No</td><td>5,707 B</td><td>-</td><td>-</td><td>-</td><td>0.0012</td><td>-</td><td>-</td><td>128 B</td>
+</tr><tr><td>Remove</td><td>Strings,**NEW**</td><td>361.7 ns</td><td>7.20 ns</td><td>6.74 ns</td><td>1.74 ns</td><td>341.1 ns</td><td>360.7 ns</td><td>363.2 ns</td><td>364.5 ns</td><td>369.6 ns</td><td>2,764,412.9</td><td>6.630 ns</td><td>15.00</td><td>6.190</td><td>2.000</td><td>-1.7797</td><td>3</td><td>*</td><td>No</td><td>5,668 B</td><td>-</td><td>-</td><td>-</td><td>0.0448</td><td>0.0010</td><td>0.0010</td><td>1952 B</td>
+</tr></tbody></table>
+</body>
+</html>

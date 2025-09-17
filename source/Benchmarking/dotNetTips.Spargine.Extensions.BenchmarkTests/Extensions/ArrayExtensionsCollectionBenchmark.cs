@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-28-2025
+// Last Modified On : 09-17-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -162,32 +162,6 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		var result = this._personValArray.DoesNotHaveItems();
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = "Process Collection: foreach()")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void FastProcessor_Normal_Ref()
-	{
-		var people = this._personRefArray;
-
-		for (var index = 0; index < people.Length; index++)
-		{
-			people[index].Phone = "5555555555";
-		}
-
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = "Process Collection: FastProcessor()")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void FastProcessor_Ref()
-	{
-		var people = this._personRefArray;
-
-		people.FastProcessor(person => person.Phone = "5555555555");
-
-		this.Consume(people);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Reference")]
@@ -359,6 +333,32 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		}
 
 		this.Consume(sb.ToString());
+	}
+
+	[Benchmark(Description = "Process Collection: FastProcessor()")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void ProcessCollectionFastProcessorRef()
+	{
+		var people = this._personRefArray;
+
+		people.FastProcessor(person => person.Phone = "5555555555");
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = "Process Collection: foreach()")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
+	public void ProcessCollectionNormalRef()
+	{
+		var people = this._personRefArray;
+
+		for (var index = 0; index < people.Length; index++)
+		{
+			people[index].Phone = "5555555555";
+		}
+
+
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.RemoveFirst) + " : Reference")]

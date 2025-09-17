@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark-20250917-152529</title>
+
+<style type="text/css">
+    pre { margin: 0px; }
+    table { border-collapse:collapse; }
+    td.perMethod { border-top: 1px black solid; }
+    tr.evenMap td { background-color: #F5F5F5; }  
+</style>
+
+<style type='text/css'>
+    td.label:hover { cursor: pointer; background-color: yellow !important; }
+    td.highlighted { background-color: yellow !important; }
+</style></head><body>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script>$(document).ready(function () {
+    var selectedIndex = 0;
+
+    function highlight() {
+        $('td.reference.highlighted').removeClass('highlighted');
+
+        var selectedLabel = $(this).attr('data-label');
+        if (selectedLabel) {
+            $('td.reference[data-reference=' + selectedLabel + ']').addClass('highlighted');
+        }
+        selectedIndex = 0;
+    }
+
+    function selectNext() {
+        var $highlighted = $('td.reference.highlighted');
+        var selected = $highlighted[selectedIndex++ % $highlighted.length];
+
+        if (selected) {
+            var selectedReference = $(selected).attr('id');
+            if (selectedReference) {
+                window.location.hash = '#' + selectedReference;
+            }
+        }
+    }
+
+    $('td.label').on('click', highlight);
+
+    $(document).on('keydown', function (event) {
+        if (event.keyCode == 114) { // F3
+            event.preventDefault();
+            // Remap F3 to some other key that the browser doesn't care about
+            selectNext();
+        }
+    });
+});</script>
+<h2>.NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2</h2>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark.GenerateRandomKey()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,30</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+28],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFE77A44408]; DotNetTips.Spargine.Core.Ulid.NewUlid()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+28],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,[rbx+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rsp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbx+8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_ASSIGN_REF</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbx+8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,30</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Core.Ulid.NewUlid()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>		var ulidChars = new char[UlidLength].AsSpan();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var timestampBytes = GenerateTimeStamp().AsSpan(0, 6);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		EncodeBase32(timestampBytes, ulidChars, 0, TimestampLength);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var randomnessBytes = GenerateRandomBytes().AsSpan(0, 10); // Ensure only 10 bytes are used
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		EncodeBase32(randomnessBytes, ulidChars, TimestampLength, RandomLength);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		return new Ulid(new string(ulidChars));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>push      rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>push      rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,70</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rsp+20],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rsp+40],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqa   xmmword ptr [rsp+60],xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Char[]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,1A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_NEWARR_1_VC</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbx,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rsp+48]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFE77994F18]; System.DateTimeOffset.get_UtcNow()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,346DC5D63886594B</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mulx      rsi,rsi,[rsp+50]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>shr       rsi,0B</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdi,0FFFFC77CEDD32800</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsi,rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Byte[]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_NEWARR_1_VC</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rdx],rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rax,10</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+60],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rsp+68],6</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+30],rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rsp+38],1A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rsp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rsp+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9d,0A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFE77A44468]; DotNetTips.Spargine.Core.Ulid.EncodeBase32(System.ReadOnlySpan`1<Byte> ByRef, System.Span`1<Char>, Int32, Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Byte[]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,0A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_NEWARR_1_VC</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rsi+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+40],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,0A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFE7790E7D8]; System.Security.Cryptography.RandomNumberGeneratorImplementation.GetBytes(Byte*, Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       edx,edx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+40],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+40],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsi,10</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+60],rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rsp+68],0A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+30],rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rsp+38],1A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rsp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rsp+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8d,0A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9d,10</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFE77A44468]; DotNetTips.Spargine.Core.Ulid.EncodeBase32(System.ReadOnlySpan`1<Byte> ByRef, System.Span`1<Char>, Int32, Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rsp+28],1A</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      System.String.Ctor(System.ReadOnlySpan`1<Char>)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rsp+58]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFE77A44498]; DotNetTips.Spargine.Core.Ulid..ctor(System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rsp+58]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,70</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+</body></html>
