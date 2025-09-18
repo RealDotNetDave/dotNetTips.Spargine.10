@@ -317,24 +317,16 @@ public static class ArrayExtensions
 		/// <param name="action">The action to perform on each element.</param>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
 		public void PerformAction([DisallowNull] Action<T> action)
 		{
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			if (typeof(T).IsValueType)
+			foreach (var value in array)
 			{
-				foreach (var value in array)
-				{
-					action.Invoke(value);
-				}
+				action.Invoke(value);
 			}
-			else
-			{
-				_ = Parallel.For(0, array.LongLength, index => action(array[index]));
-			}
-
 		}
 
 		/// <summary>

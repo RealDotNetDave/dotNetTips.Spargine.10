@@ -269,7 +269,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 		for (var index = 0; index < people.LongLength; index++)
 		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}|");
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
 		}
 
 		this.Consume(sb.ToString());
@@ -284,7 +284,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 		people.PerformAction((person) =>
 		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}|");
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-");
 		});
 
 		this.Consume(sb.ToString());
@@ -299,7 +299,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 		for (var index = 0; index < people.LongLength; index++)
 		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}|");
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
 		}
 
 		this.Consume(sb.ToString());
@@ -314,7 +314,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 		people.PerformAction((person) =>
 		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}|");
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-");
 		});
 
 		this.Consume(sb.ToString());
@@ -329,7 +329,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 		for (var index = 0; index < people.LongLength; index++)
 		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}|");
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
 		}
 
 		this.Consume(sb.ToString());
