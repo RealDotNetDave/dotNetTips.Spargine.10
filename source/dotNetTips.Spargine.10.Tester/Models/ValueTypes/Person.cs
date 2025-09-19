@@ -511,7 +511,7 @@ public struct Person() : IPerson<Person, Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._firstName.FastCompare(safeValue))
+			if (this._firstName.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -615,7 +615,7 @@ public struct Person() : IPerson<Person, Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._phone.FastCompare(safeValue))
+			if (this._phone.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}

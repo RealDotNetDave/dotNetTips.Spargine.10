@@ -375,7 +375,7 @@ public struct Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._address1.FastCompare(safeValue))
+			if (this._address1.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -413,7 +413,7 @@ public struct Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._address2.FastCompare(safeValue))
+			if (this._address2.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -450,7 +450,7 @@ public struct Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._city.FastCompare(safeValue))
+			if (this._city.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -487,7 +487,7 @@ public struct Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._country.FastCompare(safeValue))
+			if (this._country.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -525,7 +525,7 @@ public struct Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._countyProvince.FastCompare(safeValue))
+			if (this._countyProvince.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -670,7 +670,7 @@ public struct Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._state.FastCompare(safeValue))
+			if (this._state.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}

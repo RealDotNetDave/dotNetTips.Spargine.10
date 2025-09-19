@@ -534,7 +534,7 @@ public sealed class Person : IPerson<Person, Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._firstName.FastCompare(safeValue))
+			if (this._firstName.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -604,7 +604,7 @@ public sealed class Person : IPerson<Person, Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._lastName.FastCompare(safeValue))
+			if (this._lastName.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
