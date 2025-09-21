@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-20-2025
+// Last Modified On : 09-19-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -136,11 +136,9 @@ public static class ArrayExtensions
 			startIndex = startIndex.ArgumentInRange(0);
 			count = count.ArgumentInRange(min: 1, max: array.Length);
 
-			var people = new ArraySegment<T>(array);
+			var people = new ArraySegment<T>(array, startIndex, count);
 
-			var result = people.Slice(startIndex, count);
-
-			return [.. result];
+			return [.. people];
 		}
 
 		/// <summary>
