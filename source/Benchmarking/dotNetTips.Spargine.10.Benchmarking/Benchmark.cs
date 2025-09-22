@@ -85,6 +85,8 @@ namespace DotNetTips.Spargine.Benchmarking;
 public class Benchmark
 {
 
+	private const string PhoneNumberUpdate = "555-555-5555";
+
 	/// <summary>
 	/// Text indicating a failed operation or status.
 	/// </summary>
@@ -377,7 +379,7 @@ public class Benchmark
 			return;
 		}
 
-		person.Phone = RandomData.GenerateNumber(10);
+		person.CellPhone = PhoneNumberUpdate;
 	}
 
 	/// <summary>
@@ -388,7 +390,7 @@ public class Benchmark
 
 	public virtual void Update(Tester.Models.ValueTypes.Person person)
 	{
-		person.Phone = RandomData.GenerateNumber(10);
+		person.CellPhone = PhoneNumberUpdate;
 	}
 
 	/// <summary>
@@ -404,7 +406,7 @@ public class Benchmark
 			return;
 		}
 
-		person = person with { Email = TestEmailLowerCase };
+		person = person with { CellPhone = PhoneNumberUpdate };
 	}
 
 	/// <summary>
