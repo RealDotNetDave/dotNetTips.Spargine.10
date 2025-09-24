@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-05-2025
+// Last Modified On : 09-24-2025
 // ***********************************************************************
 // <copyright file="Categories.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -95,6 +95,21 @@ public static class Categories
 	/// Category for benchmarks that involve logging operations.
 	/// </summary>
 	public const string Logging = "LOGGING";
+
+	/// <summary>
+	/// The math
+	/// </summary>
+	public const string Math = "MATH";
+
+	/// <summary>
+	/// The memory
+	/// </summary>
+	public const string Memory = "MEMORY";
+
+	/// <summary>
+	/// The network
+	/// </summary>
+	public const string Network = "NETWORK";
 
 	/// <summary>
 	/// Special category for new benchmarks or benchmarks that have been recently added.

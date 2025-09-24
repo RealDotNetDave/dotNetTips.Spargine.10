@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2025
+// Last Modified On : 09-22-2025
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -84,7 +84,9 @@ namespace DotNetTips.Spargine.Benchmarking;
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
 public class Benchmark
 {
-
+	/// <summary>
+	/// Fake phone number.
+	/// </summary>
 	private const string PhoneNumberUpdate = "555-555-5555";
 
 	/// <summary>
