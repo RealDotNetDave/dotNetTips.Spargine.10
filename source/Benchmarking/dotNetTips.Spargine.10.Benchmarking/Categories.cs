@@ -37,6 +37,11 @@ public static class Categories
 	public const string Async = "Async";
 
 	/// <summary>
+	/// The binary
+	/// </summary>
+	public const string Binary = "Binary";
+
+	/// <summary>
 	/// Category for benchmarks related to cloud computing and operations.
 	/// </summary>
 	public const string Cloud = "Cloud";
@@ -75,6 +80,11 @@ public static class Categories
 	/// Category for benchmarks that involve immutable data structures.
 	/// </summary>
 	public const string Immutable = "Immutable";
+
+	/// <summary>
+	/// The interop
+	/// </summary>
+	public const string Interop = "Interop";
 
 	/// <summary>
 	/// Category for benchmarks that involve input/output operations.
@@ -122,6 +132,11 @@ public static class Categories
 	public const string Queues = "Queues";
 
 	/// <summary>
+	/// The real world
+	/// </summary>
+	public const string RealWorld = "Real World";
+
+	/// <summary>
 	/// Category for benchmarks that involve record types.
 	/// </summary>
 	public const string RecordType = "Record Type";
@@ -140,6 +155,11 @@ public static class Categories
 	/// Category for benchmarks that involve serialization operations.
 	/// </summary>
 	public const string Serialization = "Serialization";
+
+	/// <summary>
+	/// The simd
+	/// </summary>
+	public const string SIMD = "SIMD";
 
 	/// <summary>
 	/// Category for benchmarks that involve Span operations.
