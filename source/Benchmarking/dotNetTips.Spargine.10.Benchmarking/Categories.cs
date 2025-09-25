@@ -27,6 +27,11 @@ public static class Categories
 {
 
 	/// <summary>
+	/// The anti pattern
+	/// </summary>
+	public const string AntiPattern = "Anti-Pattern";
+
+	/// <summary>
 	/// Category for benchmarks involving arrays.
 	/// </summary>
 	public const string Array = "Array";
@@ -55,6 +60,21 @@ public static class Categories
 	/// Category for benchmarks involving data compression techniques.
 	/// </summary>
 	public const string Compression = "Compression";
+
+	/// <summary>
+	/// The concurrent
+	/// </summary>
+	public const string Concurrent = "Concurrent";
+
+	/// <summary>
+	/// The database
+	/// </summary>
+	public const string Database = "Database";
+
+	/// <summary>
+	/// The early binding
+	/// </summary>
+	public const string EarlyBinding = "Early Binding";
 
 	/// <summary>
 	/// Category for benchmarks involving encryption algorithms.
@@ -97,6 +117,11 @@ public static class Categories
 	public const string JSON = "JSON";
 
 	/// <summary>
+	/// The late binding
+	/// </summary>
+	public const string LateBinding = "Late Binding";
+
+	/// <summary>
 	/// Category for benchmarks that involve LINQ operations.
 	/// </summary>
 	public const string LINQ = "LINQ";
@@ -105,6 +130,11 @@ public static class Categories
 	/// Category for benchmarks that involve logging operations.
 	/// </summary>
 	public const string Logging = "LOGGING";
+
+	/// <summary>
+	/// The marshalling
+	/// </summary>
+	public const string Marshalling = "Marshalling";
 
 	/// <summary>
 	/// The math
@@ -125,6 +155,11 @@ public static class Categories
 	/// Special category for new benchmarks or benchmarks that have been recently added.
 	/// </summary>
 	public const string New = "**NEW**";
+
+	/// <summary>
+	/// The p invoke
+	/// </summary>
+	public const string PInvoke = "P/Invoke";
 
 	/// <summary>
 	/// Category for benchmarks that involve queue data structures.

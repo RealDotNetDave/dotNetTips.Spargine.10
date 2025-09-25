@@ -400,15 +400,17 @@ public class Benchmark
 	/// This method demonstrates how to modify properties of record types, specifically for benchmarking purposes.
 	/// </summary>
 	/// <param name="person">The item record whose Email property will be updated.</param>
+	/// <returns>A new <see cref="PersonRecord"/> with the updated CellPhone property.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public virtual void Update([DisallowNull] PersonRecord person)
+	public virtual PersonRecord Update([DisallowNull] PersonRecord person)
 	{
 		if (person is null)
 		{
-			return;
+			return null!;
 		}
 
-		person = person with { CellPhone = PhoneNumberUpdate };
+		// Create and return a new record instance with the updated CellPhone property
+		return person with { CellPhone = PhoneNumberUpdate };
 	}
 
 	/// <summary>
