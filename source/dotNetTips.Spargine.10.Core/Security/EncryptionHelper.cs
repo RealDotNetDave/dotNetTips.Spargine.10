@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-16-2025
+// Last Modified On : 09-26-2025
 // ***********************************************************************
 // <copyright file="EncryptionHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,8 +15,10 @@
 // Supports authenticated encryption with AES-GCM, ensuring confidentiality and integrity of sensitive data.
 // </summary>
 // ***********************************************************************
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,10 +37,11 @@ namespace DotNetTips.Spargine.Core.Security;
 [Information(Version = "1", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
 public static class EncryptionHelper
 {
-
 	private const byte FormatVersion = 1;
 	private const int NonceSize = 12; // 96-bit nonce per NIST recommendation
 	private const int TagSize = 16;   // 128-bit auth tag (recommended)
+
+	private static readonly ArrayPool<byte> _byteArrayPool = ArrayPool<byte>.Shared;
 
 	/// <summary>
 	/// Generates AES key and initialization vector (IV) based on a SHA256 hash of the provided key.
@@ -247,26 +250,15 @@ public static class EncryptionHelper
 
 	/// <summary>
 	/// Encrypts a string using AES-GCM (Galois/Counter Mode) authenticated encryption.
+	/// Format: [version][nonce][ciphertext][tag] -> Base64.
+	/// Uses ArrayPool to minimize transient allocations and zeroes all sensitive buffers before returning them.
 	/// </summary>
-	/// <param name="plainText">
-	/// The plaintext string to encrypt.
-	/// </param>
-	/// <param name="key">
-	/// The 256-bit (32 byte) key used for encryption.
-	/// </param>
-	/// <param name="aad">
-	/// Optional additional authenticated data (AAD) to include in the authentication tag.
-	/// </param>
-	/// <returns>
-	/// The encrypted payload as a Base64 string in the format: [version][nonce][ciphertext][tag].
-	/// </returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="plainText"/> or <paramref name="key"/> is null or empty.
-	/// </exception>
-	/// <exception cref="ArgumentException">
-	/// Thrown if <paramref name="key"/> is not 32 bytes in length.
-	/// </exception>
+	/// <param name="plainText">Plaintext to encrypt.</param>
+	/// <param name="key">256-bit (32 byte) key.</param>
+	/// <param name="aad">Optional Additional Authenticated Data.</param>
+	/// <returns>Base64 payload string.</returns>
 	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string AesGcmEncrypt([DisallowNull] string plainText, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
@@ -278,33 +270,75 @@ public static class EncryptionHelper
 			ExceptionThrower.ThrowArgumentException("AES-GCM requires a 256-bit (32 byte) key.", nameof(key));
 		}
 
-		var nonce = new byte[NonceSize];
+		// Fast path: determine size up front so we rent exact buffers (no over-rent).
+		var plainByteCount = Encoding.UTF8.GetByteCount(plainText);
 
-		RandomNumberGenerator.Fill(nonce);
+		// Rent variable-sized buffers. (nonce & tag are small; still using pool for consistency.)
+		var nonce = _byteArrayPool.Rent(NonceSize);
+		var plaintextBuffer = _byteArrayPool.Rent(plainByteCount == 0 ? 1 : plainByteCount); // rent at least 1 to avoid 0-length rent edge case.
+		var cipherBuffer = _byteArrayPool.Rent(plainByteCount == 0 ? 1 : plainByteCount);
+		var tag = _byteArrayPool.Rent(TagSize);
+		var bytesWritten = 0;
 
-		var plaintextBytes = Encoding.UTF8.GetBytes(plainText);
-		var ciphertext = new byte[plaintextBytes.Length];
-		var tag = new byte[TagSize];
-
-		// Use ctor that specifies tag size to avoid SYSLIB0053
-		using (var aes = new AesGcm(key, TagSize))
+		try
 		{
-			aes.Encrypt(nonce, plaintextBytes, ciphertext, tag, aad);
+			// Fill nonce (only the first NonceSize bytes are used).
+			RandomNumberGenerator.Fill(nonce.AsSpan(0, NonceSize));
+
+			if (plainByteCount > 0)
+			{
+				bytesWritten = Encoding.UTF8.GetBytes(plainText, plaintextBuffer);
+			}
+
+			using (var aes = new AesGcm(key, TagSize))
+			{
+				aes.Encrypt(
+					nonce.AsSpan(0, NonceSize),
+					plaintextBuffer.AsSpan(0, bytesWritten),
+					cipherBuffer.AsSpan(0, bytesWritten),
+					tag.AsSpan(0, TagSize),
+					aad);
+			}
+
+			// Payload layout.
+			var payloadLength = 1 + NonceSize + bytesWritten + TagSize;
+			var payload = _byteArrayPool.Rent(payloadLength);
+
+			try
+			{
+				var span = payload.AsSpan(0, payloadLength);
+				span[0] = FormatVersion;
+
+				nonce.AsSpan(0, NonceSize).CopyTo(span.Slice(1, NonceSize));
+				cipherBuffer.AsSpan(0, bytesWritten).CopyTo(span.Slice(1 + NonceSize, bytesWritten));
+				tag.AsSpan(0, TagSize).CopyTo(span.Slice(1 + NonceSize + bytesWritten, TagSize));
+
+				return Convert.ToBase64String(payload, 0, payloadLength);
+			}
+			finally
+			{
+				// Zero & return payload buffer.
+				CryptographicOperations.ZeroMemory(payload.AsSpan(0, payloadLength));
+				_byteArrayPool.Return(payload, clearArray: true);
+			}
 		}
+		finally
+		{
+			// Zero sensitive data (always zero the full used spans).
+			if (bytesWritten > 0)
+			{
+				CryptographicOperations.ZeroMemory(plaintextBuffer.AsSpan(0, bytesWritten));
+				CryptographicOperations.ZeroMemory(cipherBuffer.AsSpan(0, bytesWritten));
+			}
+			CryptographicOperations.ZeroMemory(tag.AsSpan(0, TagSize));
+			CryptographicOperations.ZeroMemory(nonce.AsSpan(0, NonceSize));
 
-		CryptographicOperations.ZeroMemory(plaintextBytes);
-
-		// Build payload: [version][nonce][ciphertext][tag] -> Base64
-		var output = new byte[1 + NonceSize + ciphertext.Length + TagSize];
-		output[0] = FormatVersion;
-
-		Buffer.BlockCopy(nonce, 0, output, 1, NonceSize);
-
-		Buffer.BlockCopy(ciphertext, 0, output, 1 + NonceSize, ciphertext.Length);
-
-		Buffer.BlockCopy(tag, 0, output, 1 + NonceSize + ciphertext.Length, TagSize);
-
-		return Convert.ToBase64String(output);
+			// Return all rented buffers.
+			_byteArrayPool.Return(plaintextBuffer, clearArray: true);
+			_byteArrayPool.Return(cipherBuffer, clearArray: true);
+			_byteArrayPool.Return(tag, clearArray: true);
+			_byteArrayPool.Return(nonce, clearArray: true);
+		}
 	}
 
 	/// <summary>

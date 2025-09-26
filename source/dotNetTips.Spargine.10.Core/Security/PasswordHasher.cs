@@ -12,10 +12,12 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
+using DotNetTips.Spargine.Core;
 using Konscious.Security.Cryptography;
 using Org.BouncyCastle.Crypto.Digests;
 
@@ -29,6 +31,11 @@ namespace DotNetTips.Spargine.Core.Security;
 [Information(nameof(PasswordHasher), "David McCarter", "5/14/2025", Status = Status.New)]
 public static class PasswordHasher
 {
+	private const int Iterations = 4;
+	private const int MemorySize = 32768;
+
+	private static readonly ArrayPool<byte> _byteArrayPool = ArrayPool<byte>.Shared;
+	private static readonly int _degreeOfParallelism = App.MaxDegreeOfParallelism();
 
 	/// <summary>
 	/// Hashes a password using Argon2.
@@ -42,19 +49,28 @@ public static class PasswordHasher
 		using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password)))
 		{
 			argon2.Salt = salt;
-			argon2.DegreeOfParallelism = 8; // Number of threads to use
-			argon2.MemorySize = 32768; // Memory size in KB
-			argon2.Iterations = 4; // Number of iterations
+			argon2.DegreeOfParallelism = _degreeOfParallelism; // Number of threads to use
+			argon2.MemorySize = MemorySize; // Memory size in KB
+			argon2.Iterations = Iterations; // Number of iterations
 
 			var hash = argon2.GetBytes(32); // Generate a 256-bit hash
 
-			var passwordHash = GC.AllocateUninitializedArray<byte>(1 + SaltSize + hash.Length);
-			passwordHash[0] = Version;
+			var passwordHashLength = 1 + SaltSize + hash.Length;
+			var passwordHash = _byteArrayPool.Rent(passwordHashLength);
 
-			Buffer.BlockCopy(salt, 0, passwordHash, 1, SaltSize);
-			Buffer.BlockCopy(hash, 0, passwordHash, 1 + SaltSize, hash.Length);
+			try
+			{
+				passwordHash[0] = Version;
 
-			return Convert.ToBase64String(passwordHash);
+				Buffer.BlockCopy(salt, 0, passwordHash, 1, SaltSize);
+				Buffer.BlockCopy(hash, 0, passwordHash, 1 + SaltSize, hash.Length);
+
+				return Convert.ToBase64String(passwordHash, 0, passwordHashLength);
+			}
+			finally
+			{
+				_byteArrayPool.Return(passwordHash, clearArray: true);
+			}
 		}
 	}
 
@@ -68,13 +84,22 @@ public static class PasswordHasher
 		var salt = RandomNumberGenerator.GetBytes(SaltSize);
 		var bytes = Rfc2898DeriveBytes.Pbkdf2(password, salt, Pbkdf2IterCount, HashAlgorithmName.SHA256, Pbkdf2SubkeyLength);
 
-		var passwordHash = GC.AllocateUninitializedArray<byte>(1 + SaltSize + Pbkdf2SubkeyLength);
-		passwordHash[0] = Version;
+		var passwordHashLength = 1 + SaltSize + Pbkdf2SubkeyLength;
+		var passwordHash = _byteArrayPool.Rent(passwordHashLength);
 
-		Buffer.BlockCopy(salt, 0, passwordHash, 1, SaltSize);
-		Buffer.BlockCopy(bytes, 0, passwordHash, 1 + SaltSize, Pbkdf2SubkeyLength);
+		try
+		{
+			passwordHash[0] = Version;
 
-		return Convert.ToBase64String(passwordHash);
+			Buffer.BlockCopy(salt, 0, passwordHash, 1, SaltSize);
+			Buffer.BlockCopy(bytes, 0, passwordHash, 1 + SaltSize, Pbkdf2SubkeyLength);
+
+			return Convert.ToBase64String(passwordHash, 0, passwordHashLength);
+		}
+		finally
+		{
+			_byteArrayPool.Return(passwordHash, clearArray: true);
+		}
 	}
 
 	/// <summary>
@@ -122,10 +147,18 @@ public static class PasswordHasher
 		var passwordBytes = Encoding.UTF8.GetBytes(password);
 		digest.BlockUpdate(passwordBytes, 0, passwordBytes.Length);
 
-		var result = new byte[digest.GetDigestSize()];
-		_ = digest.DoFinal(result, 0);
+		var resultSize = digest.GetDigestSize();
+		var pool = _byteArrayPool.Rent(resultSize);
 
-		return Convert.ToBase64String(result);
+		try
+		{
+			_ = digest.DoFinal(pool, 0);
+			return Convert.ToBase64String(pool, 0, resultSize);
+		}
+		finally
+		{
+			ArrayPool<byte>.Shared.Return(pool, clearArray: true);
+		}
 	}
 
 	/// <summary>
@@ -146,10 +179,18 @@ public static class PasswordHasher
 		var passwordBytes = Encoding.UTF8.GetBytes(password);
 		digest.BlockUpdate(passwordBytes, 0, passwordBytes.Length);
 
-		var result = new byte[bitLength / 8];
-		_ = digest.DoFinal(result, 0, result.Length);
+		var resultSize = bitLength / 8;
+		var result = _byteArrayPool.Rent(resultSize);
 
-		return Convert.ToBase64String(result);
+		try
+		{
+			_ = digest.DoFinal(result, 0, resultSize);
+			return Convert.ToBase64String(result, 0, resultSize);
+		}
+		finally
+		{
+			_byteArrayPool.Return(result, clearArray: true);
+		}
 	}
 
 	/// <summary>
@@ -168,24 +209,35 @@ public static class PasswordHasher
 			return PasswordVerificationResult.Failed;
 		}
 
-		var salt = new byte[SaltSize];
-		Buffer.BlockCopy(passwordBytes, 1, salt, 0, SaltSize);
+		var salt = _byteArrayPool.Rent(SaltSize);
+		var storedHashLength = passwordBytes.Length - 1 - SaltSize;
+		var storedHash = _byteArrayPool.Rent(storedHashLength);
 
-		var storedHash = new byte[passwordBytes.Length - 1 - SaltSize];
-		Buffer.BlockCopy(passwordBytes, 1 + SaltSize, storedHash, 0, storedHash.Length);
-
-		using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password)))
+		try
 		{
-			argon2.Salt = salt;
-			argon2.DegreeOfParallelism = 8;
-			argon2.MemorySize = 32768;
-			argon2.Iterations = 4;
+			Buffer.BlockCopy(passwordBytes, 1, salt, 0, SaltSize);
+			Buffer.BlockCopy(passwordBytes, 1 + SaltSize, storedHash, 0, storedHashLength);
 
-			var computedHash = argon2.GetBytes(storedHash.Length);
+			using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password)))
+			{
+				argon2.Salt = salt.AsSpan(0, SaltSize).ToArray(); // Argon2id requires byte[], not span
+				argon2.DegreeOfParallelism = _degreeOfParallelism;
+				argon2.MemorySize = MemorySize;
+				argon2.Iterations = Iterations;
 
-			return CryptographicOperations.FixedTimeEquals(storedHash, computedHash)
-				? PasswordVerificationResult.Success
-				: PasswordVerificationResult.Failed;
+				var computedHash = argon2.GetBytes(storedHashLength);
+
+				return CryptographicOperations.FixedTimeEquals(
+					storedHash.AsSpan(0, storedHashLength),
+					computedHash.AsSpan())
+					? PasswordVerificationResult.Success
+					: PasswordVerificationResult.Failed;
+			}
+		}
+		finally
+		{
+			_byteArrayPool.Return(salt, clearArray: true);
+			_byteArrayPool.Return(storedHash, clearArray: true);
 		}
 	}
 
@@ -205,15 +257,27 @@ public static class PasswordHasher
 			return PasswordVerificationResult.Failed;
 		}
 
-		var salt = new byte[SaltSize];
-		Buffer.BlockCopy(passwordBytes, 1, salt, 0, SaltSize);
+		var salt = _byteArrayPool.Rent(SaltSize);
+		var subKey = _byteArrayPool.Rent(Pbkdf2SubkeyLength);
 
-		var subKey = new byte[Pbkdf2SubkeyLength];
-		Buffer.BlockCopy(passwordBytes, 1 + SaltSize, subKey, 0, Pbkdf2SubkeyLength);
+		try
+		{
+			Buffer.BlockCopy(passwordBytes, 1, salt, 0, SaltSize);
+			Buffer.BlockCopy(passwordBytes, 1 + SaltSize, subKey, 0, Pbkdf2SubkeyLength);
 
-		var bytes = Rfc2898DeriveBytes.Pbkdf2(password, salt, Pbkdf2IterCount, HashAlgorithmName.SHA256, Pbkdf2SubkeyLength);
+			var bytes = Rfc2898DeriveBytes.Pbkdf2(password, salt.AsSpan(0, SaltSize).ToArray(), Pbkdf2IterCount, HashAlgorithmName.SHA256, Pbkdf2SubkeyLength);
 
-		return CryptographicOperations.FixedTimeEquals(subKey, bytes) ? PasswordVerificationResult.Success : PasswordVerificationResult.Failed;
+			return CryptographicOperations.FixedTimeEquals(
+				subKey.AsSpan(0, Pbkdf2SubkeyLength),
+				bytes.AsSpan())
+				? PasswordVerificationResult.Success
+				: PasswordVerificationResult.Failed;
+		}
+		finally
+		{
+			_byteArrayPool.Return(salt, clearArray: true);
+			_byteArrayPool.Return(subKey, clearArray: true);
+		}
 	}
 
 	/// <summary>
@@ -258,7 +322,7 @@ public static class PasswordHasher
 	/// <param name="algorithmType">The hashing algorithm to use.</param>
 	/// <returns>System.String.</returns>
 	[Pure]
-	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static string HashPassword([DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
 	{
 		password = password.ArgumentNotNull();
