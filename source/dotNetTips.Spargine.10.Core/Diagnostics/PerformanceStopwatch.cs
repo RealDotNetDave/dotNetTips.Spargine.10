@@ -207,7 +207,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	[Information(nameof(GetElapsedTimeString), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public string GetElapsedTimeString()
 	{
-		return $"Elapsed Time: {this.Elapsed.TotalMilliseconds} ms";
+		return $"Elapsed Time: {this.Elapsed.TotalMilliseconds.FormatTime()}";
 	}
 
 	/// <summary>
@@ -231,7 +231,6 @@ public sealed class PerformanceStopwatch : Stopwatch
 	[Information(nameof(GetSummaryReport), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string GetSummaryReport()
 	{
-
 		var builder = _stringBuilderPool.Value.Get();
 
 		try
@@ -242,13 +241,13 @@ public sealed class PerformanceStopwatch : Stopwatch
 			var lapCount = 0;
 			foreach (var lap in this.GetLaps())
 			{
-				_ = builder.AppendLine($"Lap {lapCount++}: {lap.TotalMilliseconds} ms");
+				_ = builder.AppendLine($"Lap {lapCount++}: {lap.TotalMilliseconds.FormatTime()}");
 			}
 
 			foreach (var entry in this.Diagnostics)
 			{
 				_ = builder.AppendLine(
-					$"{entry.Timestamp:u}: {entry.Message} - {entry.Elapsed.TotalMilliseconds} ms");
+					$"{entry.Timestamp:u}: {entry.Message} - {entry.Elapsed.TotalMilliseconds.FormatTime()}");
 			}
 
 			return builder.ToString();
