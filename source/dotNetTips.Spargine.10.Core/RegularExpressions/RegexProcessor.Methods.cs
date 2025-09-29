@@ -41,7 +41,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input contains a word; otherwise, <c>false</c>.</returns>
 	[Information(nameof(ContainsWord), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool ContainsWord(string input) => input is null ? false : ContainsWordRegex().IsMatch(input);
+	public static bool ContainsWord(string input)
+	{
+		return input is null ? false : ContainsWordRegex().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Extracts a version number from the input string using a regular expression.
