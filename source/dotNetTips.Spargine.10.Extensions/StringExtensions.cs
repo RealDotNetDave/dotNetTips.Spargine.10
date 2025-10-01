@@ -25,6 +25,7 @@ using DotNetTips.Spargine.Core.Security;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Extensions.Properties;
 using Microsoft.Extensions.ObjectPool;
+
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
 
 namespace DotNetTips.Spargine.Extensions;
@@ -38,7 +39,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// and performing manipulations like concatenation, extraction, and indentation. These utilities aim to simplify common string handling tasks
 /// in .NET applications.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.UpdateDocumentation)]
 public static class StringExtensions
 {
 	/// <summary>
@@ -384,6 +385,57 @@ public static class StringExtensions
 		{
 			return true;
 		}
+	}
+
+	/// <summary>
+	/// Parses a URL string into its constituent components: scheme, host, port, and path.
+	/// </summary>
+	/// <param name="url">The URL to parse. Must not be null or empty.</param>
+	/// <returns>A tuple containing the scheme, host, port, and path components of the URL.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="url"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="url"/> is empty or does not contain a valid scheme separator ("://").</exception>
+	/// <remarks>
+	/// This method provides a faster alternative to the <see cref="Uri"/> class for simple URL parsing.
+	/// It uses <see cref="Span{T}"/> operations for efficient string manipulation without allocations.
+	/// If no port is specified in the URL, it defaults to "443".
+	/// If no path is present, it defaults to "/".
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var url = "https://www.example.com:8080/path/to/resource?query=value";
+	/// var (scheme, host, port, path) = url.ParseUrl();
+	/// // scheme = "https"
+	/// // host = "www.example.com"
+	/// // port = "8080"
+	/// // path = "/path/to/resource?query=value"
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	public static (string Scheme, string Host, string Port, string Path) FastParseUrl([NotNull] this string url)
+	{
+		// TODO: FASTER THAN USING URI CLASS. NEEDS UNIT TESTS. BENCHMARK.
+
+		url = url.ArgumentNotNullOrEmpty();
+
+		var span = url.AsSpan();
+
+		// Extract scheme
+		var schemeIndex = span.IndexOf("://".AsSpan());
+		var scheme = span[..schemeIndex].ToString();
+		span = span[(schemeIndex + 3)..];
+
+		// Find first slash for path
+		var pathIndex = span.IndexOf('/');
+		var hostAndPort = pathIndex >= 0 ? span[..pathIndex] : span;
+		var path = pathIndex >= 0 ? span[pathIndex..].ToString() : "/";
+
+		// Extract host and port
+		var portIndex = hostAndPort.IndexOf(':');
+		var host = (portIndex >= 0 ? hostAndPort[..portIndex] : hostAndPort).ToString();
+		var port = portIndex >= 0 ? hostAndPort[(portIndex + 1)..].ToString() : "443";
+
+		return (scheme, host, port, path);
 	}
 
 	/// <summary>

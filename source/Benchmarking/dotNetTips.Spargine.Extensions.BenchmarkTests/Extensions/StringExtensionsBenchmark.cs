@@ -50,7 +50,10 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _personName = "David McCarter";
 	private readonly string _stringWithEllipsis = RandomData.GenerateWord(100) + "...";
 	private readonly char _testCharacter = RandomData.GenerateCharacter();
+
+	private readonly string _url = "https://api.example.com:8443/v1/users/123?include=profile,settings&format=json#section1";
 	private string _zlibString;
+
 
 	[Benchmark(Description = nameof(StringExtensions.CombineToString))]
 	[BenchmarkCategory(Categories.Strings)]
@@ -456,6 +459,23 @@ public class StringExtensionsBenchmark : Benchmark
 	{
 		var result = this._domainAddress.IsUrl();
 
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.FastParseUrl))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void ParseUrlFastParseUrl()
+	{
+		var result = this._url.FastParseUrl();
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "Parse Url: Uri")]
+	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
+	public void ParseUrlUri()
+	{
+		var uri = new Uri(this._url);
+		var result = (uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath, uri.Query, uri.Fragment);
 		this.Consume(result);
 	}
 
