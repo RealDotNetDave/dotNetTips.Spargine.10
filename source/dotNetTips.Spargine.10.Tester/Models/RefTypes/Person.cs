@@ -115,12 +115,7 @@ public sealed class Person : IPerson<Person, Address>
 			return right is not null;
 		}
 
-		if (right is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) < 0;
+		return right is null ? false : left.CompareTo(right) < 0;
 	}
 
 	/// <summary>

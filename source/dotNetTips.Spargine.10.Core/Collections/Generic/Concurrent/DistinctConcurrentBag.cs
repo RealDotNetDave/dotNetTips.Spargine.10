@@ -112,12 +112,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public bool Contains([NotNullWhen(true)] T item)
 	{
-		if (item is null)
-		{
-			return false;
-		}
-
-		return this._uniqueItems.Contains(item);
+		return item is null ? false : this._uniqueItems.Contains(item);
 	}
 
 	/// <summary>

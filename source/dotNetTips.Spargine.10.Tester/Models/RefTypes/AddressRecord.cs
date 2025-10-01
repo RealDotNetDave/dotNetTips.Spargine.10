@@ -119,19 +119,14 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <(in AddressRecord? left,in AddressRecord? right)
+	public static bool operator <(in AddressRecord? left, in AddressRecord? right)
 	{
 		if (left is null)
 		{
 			return right is not null;
 		}
 
-		if (right is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) < 0;
+		return right is null ? false : left.CompareTo(right) < 0;
 	}
 
 	/// <summary>
@@ -144,7 +139,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <=(in AddressRecord? left,in AddressRecord? right)
+	public static bool operator <=(in AddressRecord? left, in AddressRecord? right)
 	{
 		if (left is null)
 		{
@@ -169,7 +164,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >(in AddressRecord? left,in AddressRecord? right)
+	public static bool operator >(in AddressRecord? left, in AddressRecord? right)
 	{
 		if (left is null)
 		{
@@ -194,7 +189,7 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// </returns>
 	[DebuggerStepThrough]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >=(in AddressRecord? left,in  AddressRecord? right)
+	public static bool operator >=(in AddressRecord? left, in AddressRecord? right)
 	{
 		if (right is null)
 		{

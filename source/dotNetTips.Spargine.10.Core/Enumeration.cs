@@ -155,12 +155,9 @@ public class Enumeration : IComparable
 	/// Greater than zero: This instance follows <paramref name="obj"/> in the sort order.</returns>
 	public int CompareTo(object? obj)
 	{
-		if (obj is null)
-		{
-			return 1;
-		}
-
-		return obj is not Enumeration other
+		return obj is null
+			? 1
+			: obj is not Enumeration other
 			? throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, ErrorObjectMustBeOfTypeFormat, nameof(Enumeration)), nameof(obj))
 			: this.Value.CompareTo(other.Value);
 	}
