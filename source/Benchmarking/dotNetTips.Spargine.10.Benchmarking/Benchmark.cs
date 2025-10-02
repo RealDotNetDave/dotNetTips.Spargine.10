@@ -21,7 +21,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Order;
@@ -69,7 +68,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [ConfidenceIntervalErrorColumn]
 [CsvExporter]
 [DisassemblyDiagnoser(printSource: true, exportGithubMarkdown: true, exportCombinedDisassemblyReport: true, exportDiff: true, exportHtml: true)]
-[EtwProfiler]
+//[EtwProfiler]
 [EventPipeProfiler(EventPipeProfile.GcVerbose)]
 [GcServer(true)]
 [HardwareCounters]

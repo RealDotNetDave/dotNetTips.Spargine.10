@@ -125,6 +125,8 @@ public static partial class Validator
 	[Information(nameof(ArgumentDefined), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T ArgumentDefined<T>([DisallowNull] this T input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString) where T : Enum
 	{
+		//TODO: USE TRYPARSE. CACHE NAMES AND VALUES TO MAKE IT FASTER.
+
 		var isValid = Enum.IsDefined(input.ArgumentNotNull().GetType(), input);
 
 		if (isValid is false)
