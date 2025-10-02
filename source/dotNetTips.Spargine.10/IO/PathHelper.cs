@@ -71,6 +71,7 @@ public static class PathHelper
 	public static DirectoryInfo CombinePaths(bool createIfNotExists, [DisallowNull] params string[] paths)
 	{
 		paths = paths.ArgumentItemsExists(nameof(paths));
+
 		var pathsCount = paths.LongLength;
 
 		for (var paramCount = 0; paramCount < pathsCount; paramCount++)
