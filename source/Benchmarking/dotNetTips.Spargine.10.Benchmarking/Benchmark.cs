@@ -21,6 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Order;
@@ -30,6 +31,7 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.Common;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using static BenchmarkDotNet.Attributes.JsonExporterAttribute;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
 
@@ -43,11 +45,12 @@ namespace DotNetTips.Spargine.Benchmarking;
 //[AsciiDocExporter]
 //[Atlassian]
 //[ConcurrencyVisualizerProfiler]
+//[ConfidenceIntervalErrorColumn]
 //[CsvMeasurementsExporter]
 //[EvaluateOverhead]
-//[ExceptionDiagnoser]
 //[Full()]
 //[GitHub]
+//[HtmlExporter]
 //[InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 //[IterationsColumn]
 //[KurtosisColumn]
@@ -65,22 +68,22 @@ namespace DotNetTips.Spargine.Benchmarking;
 [AllStatisticsColumn]
 [BaselineColumn]
 [CategoriesColumn]
-[ConfidenceIntervalErrorColumn]
 [CsvExporter]
 [DisassemblyDiagnoser(printSource: true, exportGithubMarkdown: true, exportCombinedDisassemblyReport: true, exportDiff: true, exportHtml: true)]
-//[EtwProfiler]
-[EventPipeProfiler(EventPipeProfile.GcVerbose)]
+[EvaluateOverhead]
+[ExceptionDiagnoser]
+[Full]
 [GcServer(true)]
-[HardwareCounters]
-[HtmlExporter]
+[InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
+[IterationsColumn]
 [JsonExporter(indentJson: true)]
-[MarkdownExporter]
 [MemoryDiagnoser(displayGenColumns: true)]
 [Orderer(SummaryOrderPolicy.Method)]
 [RankColumn]
-[ReturnValueValidator]
+[SkewnessColumn]
 [StatisticalTestColumn]
 [StopOnFirstError(true)]
+[ThreadingDiagnoser]
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
 public class Benchmark
 {
@@ -376,6 +379,8 @@ public class Benchmark
 	/// <param name="person">The item object whose Email property will be updated.</param>
 	public virtual void Update([DisallowNull] Person person)
 	{
+		//TODO: CHANGE ALL UPDATE METHODS TO RETURN VALUE
+
 		if (person is null)
 		{
 			return;
