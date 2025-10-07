@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-19-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,6 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using DotNetTips.Spargine.Core.Cache;
 using DotNetTips.Spargine.Core.Properties;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -122,12 +123,34 @@ public static partial class Validator
 	/// <exception cref="ArgumentException">Input cannot be null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">The value is not defined in the enum type.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentDefined), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ArgumentDefined), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static T ArgumentDefined<T>([DisallowNull] this T input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString) where T : Enum
 	{
-		//TODO: USE TRYPARSE. CACHE NAMES AND VALUES TO MAKE IT FASTER.
+		input = input.ArgumentNotNull();
 
-		var isValid = Enum.IsDefined(input.ArgumentNotNull().GetType(), input);
+		// Get the enum type
+		var enumType = typeof(T);
+
+		// Create a cache key for this enum type
+		var cacheKey = $"EnumDefined:{enumType.FullName}";
+
+		// Try to get the defined values from cache
+		if (!InMemoryCache.Instance.TryGetValue<HashSet<object>>(cacheKey, out var definedValues))
+		{
+			// If not in cache, create and cache the defined values
+			definedValues = new HashSet<object>();
+
+			foreach (var value in Enum.GetValues(enumType))
+			{
+				_ = definedValues.Add(value);
+			}
+
+			// Cache with a long expiration since enum definitions don't change during runtime
+			InMemoryCache.Instance.AddCacheItem(cacheKey, definedValues, TimeSpan.FromMinutes(10));
+		}
+
+		// Check if the input value is defined
+		var isValid = definedValues!.Contains(input);
 
 		if (isValid is false)
 		{

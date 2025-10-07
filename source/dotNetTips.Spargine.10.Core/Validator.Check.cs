@@ -4,7 +4,7 @@
 // Created          : 06-26-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-05-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="Validator.Check.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using DotNetTips.Spargine.Core.Cache;
 using DotNetTips.Spargine.Core.Properties;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -128,11 +129,37 @@ public static partial class Validator
 	[Information(nameof(CheckIsDefined), "David McCarter", "1/31/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckIsDefined(this Enum input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
-		var isDefined = input is not null && Enum.IsDefined(input.GetType(), input);
+		if (input is null)
+		{
+			return false;
+		}
+
+		var enumType = input.GetType();
+
+		// Create a cache key for this enum type
+		var cacheKey = $"EnumDefined:{enumType.FullName}";
+
+		// Try to get the defined values from cache
+		if (!InMemoryCache.Instance.TryGetValue<HashSet<object>>(cacheKey, out var definedValues))
+		{
+			// If not in cache, create and cache the defined values
+			definedValues = new HashSet<object>();
+
+			foreach (var value in Enum.GetValues(enumType))
+			{
+				_ = definedValues.Add(value);
+			}
+
+			// Cache with a long expiration since enum definitions don't change during runtime
+			InMemoryCache.Instance.AddCacheItem(cacheKey, definedValues, TimeSpan.FromHours(24));
+		}
+
+		// Check if the input value is defined
+		var isDefined = definedValues!.Contains(input);
 
 		if (isDefined is false && throwException)
 		{
-			ExceptionThrower.ThrowInvalidValueException(CreateExceptionMessage(errorMessage, Resources.ErrorEnumNotDefined), input!);
+			ExceptionThrower.ThrowInvalidValueException(CreateExceptionMessage(errorMessage, Resources.ErrorEnumNotDefined), input);
 		}
 
 		return isDefined;

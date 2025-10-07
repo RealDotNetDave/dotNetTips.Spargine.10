@@ -51,8 +51,6 @@ namespace DotNetTips.Spargine.Benchmarking;
 //[HtmlExporter]
 //[KurtosisColumn]
 //[LogicalGroupColumn]
-//[MaxColumn]
-//[MinColumn]
 //[MValueColumn]
 //[NamespaceColumn]
 //[NativeMemoryProfiler]

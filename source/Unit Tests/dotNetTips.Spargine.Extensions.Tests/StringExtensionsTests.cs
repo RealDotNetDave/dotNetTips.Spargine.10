@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -297,6 +297,193 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result, "Expected to return true for the same strings ignoring case.");
+	}
+
+	[TestMethod]
+	[Description("Tests URL parsing with all components present")]
+	public void FastParseUrl_WithAllComponents_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "https://www.example.com:8080/path/to/resource?query=value";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("https", result.Scheme);
+		Assert.AreEqual("www.example.com", result.Host);
+		Assert.AreEqual("8080", result.Port);
+		Assert.AreEqual("/path/to/resource?query=value", result.Path);
+	}
+
+	[TestMethod]
+	[Description("Tests URL with complex path")]
+	public void FastParseUrl_WithComplexPath_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "https://api.example.com/v1/users/123/profile?fields=name,email&include=orders#summary";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("https", result.Scheme);
+		Assert.AreEqual("api.example.com", result.Host);
+		Assert.AreEqual("443", result.Port);
+		Assert.AreEqual("/v1/users/123/profile?fields=name,email&include=orders#summary", result.Path);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentNullException))]
+	[Description("Tests empty URL, should throw ArgumentException")]
+	public void FastParseUrl_WithEmptyUrl_ThrowsArgumentException()
+	{
+		// Arrange
+		var url = string.Empty;
+
+		// Act - Should throw exception
+		var result = url.FastParseUrl();
+	}
+
+	[TestMethod]
+	[Description("Tests URL parsing with fragment")]
+	public void FastParseUrl_WithFragment_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "https://docs.example.com/guide#section-3.2";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("https", result.Scheme);
+		Assert.AreEqual("docs.example.com", result.Host);
+		Assert.AreEqual("443", result.Port);
+		Assert.AreEqual("/guide#section-3.2", result.Path);
+	}
+
+	[TestMethod]
+	[Description("Tests URL with different scheme")]
+	public void FastParseUrl_WithFtpScheme_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "ftp://ftp.example.com:21/public/file.txt";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("ftp", result.Scheme);
+		Assert.AreEqual("ftp.example.com", result.Host);
+		Assert.AreEqual("21", result.Port);
+		Assert.AreEqual("/public/file.txt", result.Path);
+	}
+
+	[TestMethod]
+	[Description("Tests URL with IP address as host")]
+	public void FastParseUrl_WithIpAddress_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "http://192.168.1.1:8080/admin";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("http", result.Scheme);
+		Assert.AreEqual("192.168.1.1", result.Host);
+		Assert.AreEqual("8080", result.Port);
+		Assert.AreEqual("/admin", result.Path);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentNullException))]
+	[Description("Tests null URL, should throw ArgumentNullException")]
+	public void FastParseUrl_WithNullUrl_ThrowsArgumentNullException()
+	{
+		// Act - Should throw exception
+		string nullUrl = null;
+		var result = nullUrl.FastParseUrl();
+	}
+
+	[TestMethod]
+	[Description("Tests URL parsing without path, should default to /")]
+	public void FastParseUrl_WithoutPath_DefaultsToSlash()
+	{
+		// Arrange
+		var url = "https://api.example.com:8443";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("https", result.Scheme);
+		Assert.AreEqual("api.example.com", result.Host);
+		Assert.AreEqual("8443", result.Port);
+		Assert.AreEqual("/", result.Path, "Path should default to /");
+	}
+
+	[TestMethod]
+	[Description("Tests URL parsing without port, should default to 443")]
+	public void FastParseUrl_WithoutPort_DefaultsTo443()
+	{
+		// Arrange
+		var url = "http://example.com/path";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("http", result.Scheme);
+		Assert.AreEqual("example.com", result.Host);
+		Assert.AreEqual("443", result.Port, "Port should default to 443");
+		Assert.AreEqual("/path", result.Path);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentException))]
+	[Description("Tests URL without scheme separator, should throw ArgumentException")]
+	public void FastParseUrl_WithoutScheme_ThrowsArgumentException()
+	{
+		// Arrange
+		var url = "www.example.com/path";
+
+		// Act - Should throw exception
+		var result = url.FastParseUrl();
+	}
+
+	[TestMethod]
+	[Description("Tests URL parsing with query parameters")]
+	public void FastParseUrl_WithQueryParameters_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "https://search.example.com/search?q=test&page=1&sort=desc";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("https", result.Scheme);
+		Assert.AreEqual("search.example.com", result.Host);
+		Assert.AreEqual("443", result.Port);
+		Assert.AreEqual("/search?q=test&page=1&sort=desc", result.Path);
+	}
+
+	[TestMethod]
+	[Description("Tests URL with subdomain")]
+	public void FastParseUrl_WithSubdomain_ParsesCorrectly()
+	{
+		// Arrange
+		var url = "https://api.service.example.co.uk:8080/v2/users";
+
+		// Act
+		var result = url.FastParseUrl();
+
+		// Assert
+		Assert.AreEqual("https", result.Scheme);
+		Assert.AreEqual("api.service.example.co.uk", result.Host);
+		Assert.AreEqual("8080", result.Port);
+		Assert.AreEqual("/v2/users", result.Path);
 	}
 
 	[TestMethod]

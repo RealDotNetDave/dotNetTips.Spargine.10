@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-08-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -42,6 +42,8 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.UpdateDocumentation)]
 public static class StringExtensions
 {
+	private const string UrlSeparator = "://";
+
 	/// <summary>
 	/// Provides a static instance of the <see cref="ASCIIEncoding"/> class for use throughout the StringExtensions class.
 	/// This encoding is used for operations that require ASCII character encoding.
@@ -411,17 +413,20 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static (string Scheme, string Host, string Port, string Path) FastParseUrl([NotNull] this string url)
 	{
-		// TODO: FASTER THAN USING URI CLASS. NEEDS UNIT TESTS. BENCHMARK.
-
 		url = url.ArgumentNotNullOrEmpty();
+
+		if (!url.Contains(UrlSeparator, StringComparison.Ordinal))
+		{
+			ExceptionThrower.ThrowArgumentException($"Sting is a incorrect format. Missing {UrlSeparator}.", nameof(url));
+		}
 
 		var span = url.AsSpan();
 
 		// Extract scheme
-		var schemeIndex = span.IndexOf("://".AsSpan());
+		var schemeIndex = span.IndexOf(UrlSeparator.AsSpan());
 		var scheme = span[..schemeIndex].ToString();
 		span = span[(schemeIndex + 3)..];
 
