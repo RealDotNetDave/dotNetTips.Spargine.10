@@ -356,16 +356,13 @@ public class Benchmark
 	/// This method demonstrates how to modify properties of objects that are constrained by generic type parameters.
 	/// </summary>
 	/// <param name="person">The item object whose Email property will be updated.</param>
-	public virtual void Update([DisallowNull] Person person)
+	public virtual Person Update([DisallowNull] Person person)
 	{
-		//TODO: CHANGE ALL UPDATE METHODS TO RETURN VALUE
-
-		if (person is null)
-		{
-			return;
-		}
+		person = person.ArgumentNotNull();
 
 		person.CellPhone = PhoneNumberUpdate;
+
+		return person;
 	}
 
 	/// <summary>
@@ -373,10 +370,11 @@ public class Benchmark
 	/// This method demonstrates how to modify properties of value type objects that are constrained by generic type parameters.
 	/// </summary>
 	/// <param name="person">The value type item object whose Email property will be updated.</param>
-
-	public virtual void Update(Tester.Models.ValueTypes.Person person)
+	public virtual Tester.Models.ValueTypes.Person Update(Tester.Models.ValueTypes.Person person)
 	{
 		person.CellPhone = PhoneNumberUpdate;
+
+		return person;
 	}
 
 	/// <summary>
@@ -388,10 +386,7 @@ public class Benchmark
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public virtual PersonRecord Update([DisallowNull] PersonRecord person)
 	{
-		if (person is null)
-		{
-			return null!;
-		}
+		person = person.ArgumentNotNull();
 
 		// Create and return a new record instance with the updated CellPhone property
 		return person with { CellPhone = PhoneNumberUpdate };
@@ -403,16 +398,15 @@ public class Benchmark
 	/// </summary>
 	/// <param name="coordinate">The coordinate object to update.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public virtual void Update(ICoordinate coordinate)
+	public virtual T Update<T>([NotNull] T coordinate) where T : ICoordinate
 	{
-		if (coordinate is null)
-		{
-			return;
-		}
+		coordinate = coordinate.ArgumentNotNull();
 
 		coordinate.X = 100;
 		coordinate.Y = 200;
 		coordinate.Z = 300;
+
+		return coordinate;
 	}
 
 	/// <summary>
