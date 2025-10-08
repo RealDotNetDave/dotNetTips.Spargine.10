@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-17-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -169,6 +169,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	public void GenerateHashCode_Ref()
 	{
 		var people = this._personRefArray;
+
 		var result = people.GenerateHashCode();
 
 		this.Consume(result);

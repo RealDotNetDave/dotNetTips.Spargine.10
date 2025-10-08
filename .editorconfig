@@ -834,7 +834,7 @@ dotnet_diagnostic.CA1856.severity = warning
 
 # A constant is expected for the parameter
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1857.severity = suggestion
+dotnet_diagnostic.CA1857.severity = warning
 
 # Use StartsWith instead of IndexOf
 dotnet_diagnostic.CA1858.severity = error

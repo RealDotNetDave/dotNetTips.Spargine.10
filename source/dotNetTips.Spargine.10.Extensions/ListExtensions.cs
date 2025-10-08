@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-17-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -370,7 +370,7 @@ public static class ListExtensions
 		/// Shuffles the elements of the list in a random order.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.None, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.None, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void FastShuffle()
 		{
 			list = list.ArgumentNotNull();

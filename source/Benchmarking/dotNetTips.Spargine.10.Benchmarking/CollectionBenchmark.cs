@@ -183,8 +183,6 @@ public partial class CollectionBenchmark : Benchmark
 	{
 		base.Setup();
 
-		LogInfo($"Collection MaxCount={this.MaxCount}, : {nameof(CollectionBenchmark)}.");
-
 		this._halfCount = this.MaxCount / 2;
 
 		// Load collections.
@@ -213,10 +211,6 @@ public partial class CollectionBenchmark : Benchmark
 
 		// Load insert collections
 		this.LoadInsertCollections();
-
-		// TODO: REMOVE ALL BEFORE RELEASE
-		// WRITE OUT PERSON LOOKUPS: TEMP
-		LogInfo($"PERSONRECORD FIRSTNAMEHALF {this.PersonFirstNameHalf}: Record-{personRecordArray[this._halfCount].FirstName}, Ref-{personRefArray[this._halfCount].FirstName}, Val-{personValArray[this._halfCount].FirstName}");
 
 	}
 

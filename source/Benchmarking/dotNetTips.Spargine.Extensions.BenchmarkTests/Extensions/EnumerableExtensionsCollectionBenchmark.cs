@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-28-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -176,7 +176,7 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastCount) + ":With Predicate")]
+	[Benchmark(Description = nameof(EnumerableExtensions.FastCount) + ": With Predicate")]
 	public void Count_FastCount_WithPredicate()
 	{
 		var result = this._personRefEnumerable.FastCount(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
@@ -497,17 +497,31 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 		// Create collection with duplicates
 		var dups = this._personRefEnumerable.Shuffle().Take(this.Count / 10);
-		this._personRefListDups = this._personRefEnumerable.ToList();
+		this._personRefListDups = [.. this._personRefEnumerable];
 		foreach (var person in dups)
 		{
 			_ = this._personRefListDups.Append(person);
 		}
 	}
 
+	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle))]
+	public void ShuffleFastShuffle()
+	{
+		var result = this._personRefEnumerable.FastShuffle();
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
-	public void ShuffleWithCount()
+	public void ShuffleFastShuffleWithCount()
 	{
 		var result = this._personRefEnumerable.FastShuffle(this.Count / 2);
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "Shuffle")]
+	public void ShuffleShuffle()
+	{
+		var result = this._personRefEnumerable.Shuffle();
 		this.Consume(result);
 	}
 

@@ -58,10 +58,6 @@ public partial class CollectionBenchmark
 		this._personRefList = LoadPeopleRefCollection(this.MaxCount);
 		this._personValList = LoadPeopleValCollection(this.MaxCount);
 		this._personRecordList = LoadPeopleRecordCollection(this.MaxCount);
-
-		//Display collection counts
-		LogInfo($"Ref Array Count={this._personRefList.Count}");
-		LogInfo($"Val Array Count={this._personValList.Count}");
 	}
 
 	/// <summary>

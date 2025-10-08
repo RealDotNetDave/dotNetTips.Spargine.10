@@ -4,7 +4,7 @@
 // Created          : 04-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-11-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Coordinate.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -36,10 +36,6 @@ public partial class CollectionBenchmark
 	/// </summary>
 	private Coordinate[] _coordinateArray;
 
-	/// <summary>
-	/// The coordinate list.
-	/// </summary>
-	private List<Coordinate> _coordinateList;
 
 	/// <summary>
 	/// Loads the coordinate collections into memory. This includes both a list and an array of Coordinate objects,
@@ -48,10 +44,6 @@ public partial class CollectionBenchmark
 	protected void LoadCoordinateCollections()
 	{
 		this._coordinateArray = [.. RandomData.GenerateCoordinateCollection<Coordinate>(this.MaxCount)];
-		this._coordinateList = [.. this._coordinateArray];
-
-		LogInfo($"Coordinate Array Count = {this._coordinateArray.Length}: {nameof(CollectionBenchmark)}.");
-		LogInfo($"Coordinate List Count = {this._coordinateList.Count}: {nameof(CollectionBenchmark)}.");
 	}
 
 	/// <summary>

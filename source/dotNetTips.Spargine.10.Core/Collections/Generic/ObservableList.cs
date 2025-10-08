@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-27-2025
+// Last Modified On : 08-19-2025
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.

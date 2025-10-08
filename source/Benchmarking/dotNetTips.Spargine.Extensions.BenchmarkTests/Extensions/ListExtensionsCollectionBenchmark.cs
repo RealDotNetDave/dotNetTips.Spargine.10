@@ -4,7 +4,7 @@
 // Created          : 01-09-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-28-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="DotNetTips.Spargine.Extensions.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
@@ -106,6 +107,24 @@ public class ListExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	{
 		var result = new Person[this._peopleRefList.Count];
 		this._peopleRefList.CopyTo(result);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "Count")]
+	[BenchmarkCategory(Categories.ForComparison)]
+	public void Count_Count()
+	{
+		var result = this._peopleRefList.Count;
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.FastCount))]
+	[BenchmarkCategory(Categories.New)]
+	public void Count_FastCount()
+	{
+		var result = this._peopleRefList.FastCount();
 
 		this.Consume(result);
 	}
@@ -252,11 +271,20 @@ public class ListExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void Shuffle()
+	public void ShuffleFastShuffle()
 	{
 		this._peopleRefList.FastShuffle();
 
 		this.Consume(this._peopleRefList);
+	}
+
+	[Benchmark(Description = "Shuffle")]
+	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
+	public void ShuffleShuffle()
+	{
+		var result = this._peopleRefList.Shuffle();
+
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.Split))]

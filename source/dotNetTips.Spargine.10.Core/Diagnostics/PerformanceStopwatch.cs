@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -231,23 +231,34 @@ public sealed class PerformanceStopwatch : Stopwatch
 	[Information(nameof(GetSummaryReport), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string GetSummaryReport()
 	{
+		// Pre-calculate collections to avoid multiple property calls
+		var laps = this.GetLaps();
+		var diagnosticEntries = this.Diagnostics;
+
+		// Estimate capacity to reduce reallocations (title + elapsed line + laps + diagnostics + some extra)
+		var estimatedCapacity = 64 + (laps.Count * 32) + (diagnosticEntries.Count * 80);
+
 		var builder = _stringBuilderPool.Value.Get();
+		_ = builder.EnsureCapacity(estimatedCapacity);
 
 		try
 		{
-			_ = builder.AppendLine($"Performance Report - {this.Title}");
-			_ = builder.AppendLine(this.GetElapsedTimeString());
+			_ = builder.AppendLine($"Performance Report - {this.Title}").AppendLine(this.GetElapsedTimeString());
 
 			var lapCount = 0;
-			foreach (var lap in this.GetLaps())
+
+			foreach (var lap in laps)
 			{
 				_ = builder.AppendLine($"Lap {lapCount++}: {lap.TotalMilliseconds.FormatTime()}");
 			}
 
-			foreach (var entry in this.Diagnostics)
+			foreach (var entry in diagnosticEntries)
 			{
-				_ = builder.AppendLine(
-					$"{entry.Timestamp:u}: {entry.Message} - {entry.Elapsed.TotalMilliseconds.FormatTime()}");
+				_ = builder.AppendFormat(CultureInfo.InvariantCulture,
+					"{0:u}: {1} - {2}\n",
+					entry.Timestamp,
+					entry.Message,
+					entry.Elapsed.TotalMilliseconds.FormatTime());
 			}
 
 			return builder.ToString();
@@ -263,7 +274,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </summary>
 	/// <param name="logger">Logger used for logging.</param>
 	/// <param name="message">The message to log.</param>
-	[Information(nameof(LogMessage), "David McCarter", "05/08/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(LogMessage), "David McCarter", "05/08/2025", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public void LogMessage([DisallowNull] ILogger logger, [DisallowNull] string message)
 	{
 		logger = logger.ArgumentNotNull();

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-05-2025
+// Last Modified On : 10-07-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -359,8 +359,22 @@ public static class EnumerableExtensions
 			count = count.ArgumentInRange(min: 1, max: int.MaxValue);
 			collection = collection.ArgumentNotNull();
 
-
 			return collection.Shuffle().Take(count);
+		}
+
+		/// <summary>
+		/// Fasts the shuffle.
+		/// </summary>
+		/// <returns>System.Collections.Generic.IEnumerable&lt;T&gt;.</returns>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
+		public IEnumerable<T> FastShuffle()
+		{
+			collection = collection.ArgumentNotNull();
+
+			return collection.Shuffle();
 		}
 
 		/// <summary>
