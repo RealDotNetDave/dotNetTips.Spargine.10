@@ -754,7 +754,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastModifyCollection), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastModifyCollection), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlyCollection<T> FastModifyCollection([DisallowNull] Func<T, T> action)
 		{
 			collection = collection.ArgumentNotNull();
@@ -775,7 +775,7 @@ public static class EnumerableExtensions
 			}
 			else
 			{
-				var span = CollectionsMarshal.AsSpan(collection.ToList());
+				var span = collection.ToList().AsReadOnlySpan();
 				var processedCollection = new ReadOnlyCollectionBuilder<T>(span.Length);
 				var itemCount = span.Length;
 

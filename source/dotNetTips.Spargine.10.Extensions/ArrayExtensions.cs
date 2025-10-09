@@ -133,6 +133,7 @@ public static class ArrayExtensions
 		[Information(nameof(SelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 		public T[] SelectItems(int startIndex, int count)
 		{
+			//TODO: FIX, TOO SLOW
 			startIndex = startIndex.ArgumentInRange(0);
 			count = count.ArgumentInRange(min: 1, max: array.Length);
 
