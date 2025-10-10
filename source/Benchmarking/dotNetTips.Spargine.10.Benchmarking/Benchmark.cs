@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 10-10-2025
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -329,22 +329,48 @@ public class Benchmark
 
 	/// <summary>
 	/// Simulates work by computing the hash code of the provided item object.
-	/// This method demonstrates how to perform operations on objects that are constrained by generic type parameters.
+	/// This method is designed for benchmarking scenarios where a consistent, 
+	/// non-optimizable operation is needed to prevent the JIT compiler from eliminating code.
 	/// </summary>
-	/// <param name="item">The object whose hash code will be computed.</param> 
+	/// <param name="item">The object whose hash code will be computed. Must not be null.</param>
+	/// <returns>An integer hash code of the provided object, as computed by <see cref="RuntimeHelpers.GetHashCode(object)"/>.</returns>
+	/// <exception cref="NullReferenceException">Thrown when <paramref name="item"/> is null despite the <see cref="DisallowNullAttribute"/>.</exception>
+	/// <remarks>
+	/// This method uses <see cref="RuntimeHelpers.GetHashCode"/> which provides a stable hash code
+	/// for an object during the lifetime of the process, making it suitable for benchmarking operations
+	/// that need to perform real work without being eliminated by compiler optimizations.
+	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void SimulateWork([DisallowNull] object item)
+	public static int SimulateWork([DisallowNull] object item)
 	{
-		_ = RuntimeHelpers.GetHashCode(item);
+		return RuntimeHelpers.GetHashCode(item);
 	}
 
 	/// <summary>
 	/// Simulates work asynchronously by computing the hash code of the provided item object.
-	/// This method wraps the synchronous operation in a Task for compatibility with async workflows.
+	/// This method is designed for benchmarking asynchronous operations where a consistent,
+	/// non-optimizable operation is needed in an asynchronous context.
 	/// </summary>
-	/// <param name="item">The object whose hash code will be computed.</param>
-	/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
-	/// <returns>A Task representing the asynchronous operation.</returns>
+	/// <param name="item">The object whose hash code will be computed. Must not be null.</param>
+	/// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
+	/// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+	/// <exception cref="NullReferenceException">Thrown when <paramref name="item"/> is null despite the <see cref="DisallowNullAttribute"/>.</exception>
+	/// <exception cref="TaskCanceledException">Thrown when the operation is canceled through the <paramref name="cancellationToken"/>.</exception>
+	/// <remarks>
+	/// <para>
+	/// This method creates a new task using <see cref="Task.Run(Action, CancellationToken)"/> that calls 
+	/// <see cref="SimulateWork(object)"/> to compute the hash code of the provided object.
+	/// </para>
+	/// <para>
+	/// The method is marked as virtual to allow derived classes to override the implementation,
+	/// for example to simulate different workloads or introduce specific delays.
+	/// </para>
+	/// <para>
+	/// Unlike its synchronous counterpart, this method supports cancellation through the 
+	/// <paramref name="cancellationToken"/> parameter.
+	/// </para>
+	/// </remarks>
+	/// <seealso cref="SimulateWork(object)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public virtual Task SimulateWorkAsync([DisallowNull] object item, CancellationToken cancellationToken = default)
 	{
