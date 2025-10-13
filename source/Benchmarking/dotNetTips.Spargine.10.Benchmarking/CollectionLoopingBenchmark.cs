@@ -4,7 +4,7 @@
 // Created          : 10-08-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-08-2025
+// Last Modified On : 10-13-2025
 // ***********************************************************************
 // <copyright file="CollectionLoopingBenchmark.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -32,6 +32,7 @@ public class CollectionLoopingBenchmark : SmallCollectionBenchmark
 	private List<Person> _personRefList;
 
 	[Benchmark(Description = "for(): Array(Ref)")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ForArrayRef()
 	{
 		var collection = this._personRefArray;
@@ -43,6 +44,7 @@ public class CollectionLoopingBenchmark : SmallCollectionBenchmark
 	}
 
 	[Benchmark(Description = "foreach(): Array(Ref)")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ForEachArrayRef()
 	{
 		var collection = this._personRefArray;
@@ -54,6 +56,7 @@ public class CollectionLoopingBenchmark : SmallCollectionBenchmark
 	}
 
 	[Benchmark(Description = "foreach(): List<ref>")]
+	[BenchmarkCategory(Categories.Collections, Categories.ReferenceType)]
 	public void ForEachListRef()
 	{
 		var collection = this._personRefList;
@@ -65,6 +68,7 @@ public class CollectionLoopingBenchmark : SmallCollectionBenchmark
 	}
 
 	[Benchmark(Description = "for(): List<ref>")]
+	[BenchmarkCategory(Categories.Collections, Categories.ReferenceType)]
 	public void ForListRef()
 	{
 		var collection = this._personRefList;

@@ -214,7 +214,7 @@ public static class Categories
 	/// <summary>
 	/// Special category for benchmarks that have been updated.
 	/// </summary>
-	public const string Updated = "Updated";
+	public const string Updated = "**Updated**";
 
 	/// <summary>
 	/// Category for benchmarks that involve validation operations.
