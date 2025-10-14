@@ -36,9 +36,11 @@ namespace DotNetTips.Spargine;
 /// library, which provides a wide range of utilities and helper methods for .NET developers.
 /// </remarks>
 [SupportedOSPlatform("windows")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "ADD URL")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineServiceHelper")]
 public static class ServiceHelper
 {
+	//TODO: ADD LOGGING TO METHODS
+
 	/// <summary>
 	/// Loads the service specified by the service name.
 	/// </summary>

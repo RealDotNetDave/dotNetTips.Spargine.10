@@ -183,7 +183,7 @@ public static class ArrayExtensions
 			}
 			else
 			{
-				return array.LongLength != arrayToCheck.LongLength ? false : array.AsSpan().SequenceEqual(arrayToCheck);
+				return array.Length != arrayToCheck.Length ? false : array.AsSpan().SequenceEqual(arrayToCheck);
 			}
 		}
 
