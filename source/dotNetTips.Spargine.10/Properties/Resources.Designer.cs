@@ -115,6 +115,15 @@ namespace DotNetTips.Spargine.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process {0} has been killed on {1}..
+        /// </summary>
+        internal static string ProcessHasBeenKilled {
+            get {
+                return ResourceManager.GetString("ProcessHasBeenKilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resource {0} was not found..
         /// </summary>
         internal static string ResourceWasNotFound {
@@ -129,6 +138,24 @@ namespace DotNetTips.Spargine.Properties {
         internal static string RetriesAreLimitedTo255 {
             get {
                 return ResourceManager.GetString("RetriesAreLimitedTo255", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service {0} has been started on {1}..
+        /// </summary>
+        internal static string ServiceHasBeenStartedOn {
+            get {
+                return ResourceManager.GetString("ServiceHasBeenStartedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service {0} has been stopped on {1}..
+        /// </summary>
+        internal static string ServiceHasBeenStoppedOn {
+            get {
+                return ResourceManager.GetString("ServiceHasBeenStoppedOn", resourceCulture);
             }
         }
         

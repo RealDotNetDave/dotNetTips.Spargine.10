@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -155,5 +155,14 @@
   </data>
   <data name="AssemblyCompanyNameAttributeIsNotSet" xml:space="preserve">
     <value>Assembly company name attribute is not set.</value>
+  </data>
+  <data name="ProcessHasBeenKilled" xml:space="preserve">
+    <value>Process {0} has been killed on {1}.</value>
+  </data>
+  <data name="ServiceHasBeenStartedOn" xml:space="preserve">
+    <value>Service {0} has been started on {1}.</value>
+  </data>
+  <data name="ServiceHasBeenStoppedOn" xml:space="preserve">
+    <value>Service {0} has been stopped on {1}.</value>
   </data>
 </root>
