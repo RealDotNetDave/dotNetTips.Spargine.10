@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-10-2025
+// Last Modified On : 10-15-2025
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,6 +26,7 @@ namespace DotNetTips.Spargine.Core.Network;
 [Information(Status = Status.NeedsDocumentation, Documentation = "")]
 public static class NetworkHelper
 {
+	//TODO: ADD MORE HELPER METHODS
 
 	/// <summary>
 	/// Checks the network connections and returns a read-only collection of active network interfaces.
@@ -65,6 +66,32 @@ public static class NetworkHelper
 		{
 			if (networkInterface.OperationalStatus == OperationalStatus.Up &&
 				networkInterface.Description.Contains("Bluetooth", StringComparison.OrdinalIgnoreCase))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Checks if the computer is connected to an Ethernet network.
+	/// </summary>
+	/// <returns><c>true</c> if the computer is connected to an Ethernet network; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method examines all network interfaces and checks if any active interface 
+	/// has "Ethernet" in its description. It uses case-insensitive comparison.
+	/// </remarks>
+	[Pure]
+	[Information(nameof(IsConnectedToEthernet), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static bool IsConnectedToEthernet()
+	{
+		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+		foreach (var networkInterface in networkInterfaces)
+		{
+			if (networkInterface.OperationalStatus == OperationalStatus.Up &&
+				networkInterface.Description.Contains("Ethernet", StringComparison.OrdinalIgnoreCase))
 			{
 				return true;
 			}
