@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 10-15-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -125,42 +125,87 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Finds the index of the first occurrence of an item in the collection.
+		/// Finds the otherIndex of the first occurrence of an item in the collection.
 		/// </summary>
 		/// <param name="item">The item to find in the collection.</param>
-		/// <returns>The zero-based index of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
+		/// <returns>The zero-based otherIndex of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
 		/// <remarks>
 		/// This method uses <see cref="EqualityComparer{T}.Default"/> to compare elements.
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item)
 		{
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
-			var index = 0;
 			var comparer = EqualityComparer<T>.Default;
+
+			// Special case for arrays for better performance
+			if (collection is T[] array)
+			{
+				for (var arrayIndex = 0; arrayIndex < array.Length; arrayIndex++)
+				{
+					if (comparer.Equals(array[arrayIndex], item))
+					{
+						return arrayIndex;
+					}
+				}
+				return -1;
+			}
+
+			// Special case for List<T> using Span for better performance
+			if (collection is List<T> list)
+			{
+				var span = CollectionsMarshal.AsSpan(list);
+
+				for (var listIndex = 0; listIndex < span.Length; listIndex++)
+				{
+					if (comparer.Equals(span[listIndex], item))
+					{
+						return listIndex;
+					}
+				}
+				return -1;
+			}
+
+			// Special case for any indexed collection
+			if (collection is IReadOnlyList<T> readOnlyList)
+			{
+				var count = readOnlyList.Count;
+
+				for (var readOnlyIndex = 0; readOnlyIndex < count; readOnlyIndex++)
+				{
+					if (comparer.Equals(readOnlyList[readOnlyIndex], item))
+					{
+						return readOnlyIndex;
+					}
+				}
+				return -1;
+			}
+
+			// Fall back to enumeration for other collection types
+			var otherIndex = 0;
 
 			foreach (var element in collection)
 			{
 				if (comparer.Equals(element, item))
 				{
-					return index;
+					return otherIndex;
 				}
 
-				index++;
+				otherIndex++;
 			}
 
 			return -1;
 		}
 
 		/// <summary>
-		/// Finds the index of the first occurrence of an item in the collection that matches the specified accumulatorFunction.
+		/// Finds the otherIndex of the first occurrence of an item in the collection that matches the specified accumulatorFunction.
 		/// </summary>
 		/// <param name="accumulatorPredicate">The accumulatorFunction to accumulatorPredicate against the elements of the collection.</param>
-		/// <returns>The zero-based index of the first occurrence of an item that matches the accumulatorFunction within the entire collection, if found; otherwise, -1.</returns>
+		/// <returns>The zero-based otherIndex of the first occurrence of an item that matches the accumulatorFunction within the entire collection, if found; otherwise, -1.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -175,11 +220,11 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Finds the index of the first occurrence of an item in the collection using a specified comparer.
+		/// Finds the otherIndex of the first occurrence of an item in the collection using a specified comparer.
 		/// </summary>
 		/// <param name="item">The item to find in the collection.</param>
 		/// <param name="comparer">The equality comparer to use for comparing items.</param>
-		/// <returns>The zero-based index of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
+		/// <returns>The zero-based otherIndex of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -330,7 +375,7 @@ public static class EnumerableExtensions
 		/// <summary>
 		/// Replaces elements in the collection based on a specified condition.
 		/// </summary>
-		/// <param name="accumulatorPredicate">A accumulatorFunction that determines whether an element should be replaced, based on the element and its index.</param>
+		/// <param name="accumulatorPredicate">A accumulatorFunction that determines whether an element should be replaced, based on the element and its otherIndex.</param>
 		/// <param name="replacement">The replacement value for elements that meet the condition.</param>
 		/// <returns>A new collection with elements replaced based on the specified condition.</returns>
 		[Pure]
@@ -985,13 +1030,55 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> EnsureUnique()
 		{
 			collection = collection.ArgumentNotNull();
 
-			//RECOMENDATION FROM COPILOT SLOWER.
-			return collection.Distinct();
+			// Return early if collection is already a unique set
+			if (collection is HashSet<T> hashSet)
+			{
+				return hashSet;
+			}
+
+			if (collection is SortedSet<T> sortedSet)
+			{
+				return sortedSet;
+			}
+
+			if (collection is FrozenSet<T> frozenSet)
+			{
+				return frozenSet;
+			}
+
+			// For small collections, using a direct HashSet approach is faster than LINQ
+			if (collection is ICollection<T> collectionT)
+			{
+				return collectionT.Count <= 1
+					? collection // Single element or empty is already unique
+					: new HashSet<T>(collection, EqualityComparer<T>.Default);
+			}
+
+			// Use specialized implementation for lists to avoid multiple enumerations
+			if (collection is List<T> list)
+			{
+				if (list.Count <= 1)
+				{
+					return list;
+				}
+
+				var hashSetWithCapacity = new HashSet<T>(list.Count, EqualityComparer<T>.Default);
+
+				foreach (var item in list)
+				{
+					_ = hashSetWithCapacity.Add(item);
+				}
+
+				return hashSetWithCapacity;
+			}
+
+			// Default implementation using HashSet for other collection types
+			return new HashSet<T>(collection, EqualityComparer<T>.Default);
 		}
 
 		/// <summary>
