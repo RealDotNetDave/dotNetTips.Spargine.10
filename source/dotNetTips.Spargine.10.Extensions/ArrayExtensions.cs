@@ -134,8 +134,9 @@ public static class ArrayExtensions
 		public T[] SelectItems(int startIndex, int count)
 		{
 			//TODO: FIX, TOO SLOW
+			array = array.ArgumentNotNull();
 			startIndex = startIndex.ArgumentInRange(0);
-			count = count.ArgumentInRange(min: 1, max: array.Length);
+			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
 
 			var people = new ArraySegment<T>(array, startIndex, count);
 

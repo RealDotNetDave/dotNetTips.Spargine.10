@@ -99,4 +99,19 @@ public static class NetworkHelper
 
 		return false;
 	}
+
+	/// <summary>
+	/// Checks if the computer is connected to any network.
+	/// </summary>
+	/// <returns><c>true</c> if the computer is connected to any network; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// This method uses the built-in .NET NetworkInterface.GetIsNetworkAvailable() method
+	/// to determine if any network connection is available on the system.
+	/// </remarks>
+	[Pure]
+	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static bool IsConnectedToNetwork()
+	{
+		return NetworkInterface.GetIsNetworkAvailable();
+	}
 }

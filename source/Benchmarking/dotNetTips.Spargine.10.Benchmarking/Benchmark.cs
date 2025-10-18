@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-10-2025
+// Last Modified On : 10-17-2025
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -129,7 +129,7 @@ public class Benchmark
 	/// <summary>
 	/// Caches byte arrays of various sizes to avoid regenerating them for each benchmark iteration.
 	/// </summary>
-	private readonly ConcurrentDictionary<int, byte[]> _byteArrayCache = new();
+	private readonly ConcurrentDictionary<double, byte[]> _byteArrayCache = new();
 
 	/// <summary>
 	/// Caches string arrays of various configurations to avoid regenerating them for each benchmark iteration.
@@ -235,13 +235,21 @@ public class Benchmark
 	}
 
 	/// <summary>
-	/// Generates a random byte array of a specified size in kilobytes. If the byte array of the requested size has already been generated, it retrieves the cached version to avoid regeneration.
+	/// Generates a random byte array of a specified size in kilobytes, or retrieves a previously cached array of the same size.
 	/// </summary>
-	/// <param name="sizeInKb">The size of the byte array to generate, in kilobytes. Defaults to 1.</param>
-	/// <returns>A byte array of the specified size.</returns>
-	public byte[] GetByteArray(int sizeInKb = 1)
+	/// <remarks>
+	/// This method leverages an internal cache to avoid regenerating byte arrays of the same size across multiple benchmark iterations,
+	/// which helps reduce the overhead of array creation during benchmarking. The generated arrays contain random data created by the
+	/// <see cref="RandomData.GenerateByteArray"/> method. The minimum size allowed is 1KB, and any smaller request will be adjusted upward.
+	/// </remarks>
+	/// <param name="sizeInKb">The size of the byte array to generate, in kilobytes. Defaults to 1KB if not specified.
+	/// Values less than 1 will be set to 1.</param>
+	/// <returns>A byte array of the specified size, either newly generated or retrieved from cache.</returns>
+	/// <seealso cref="_byteArrayCache"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public byte[] GetByteArray(double sizeInKb = 1)
 	{
-		sizeInKb = sizeInKb.EnsureMinimum(1);
+		sizeInKb = sizeInKb.ArgumentInRange(.01);
 		return this._byteArrayCache.GetOrAdd(sizeInKb, RandomData.GenerateByteArray(sizeInKb));
 	}
 
