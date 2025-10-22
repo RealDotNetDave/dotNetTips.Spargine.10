@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-17-2025
+// Last Modified On : 10-21-2025
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -129,7 +129,7 @@ public class Benchmark
 	/// <summary>
 	/// Caches byte arrays of various sizes to avoid regenerating them for each benchmark iteration.
 	/// </summary>
-	private readonly ConcurrentDictionary<double, byte[]> _byteArrayCache = new();
+	private readonly ConcurrentDictionary<int, byte[]> _byteArrayCache = new();
 
 	/// <summary>
 	/// Caches string arrays of various configurations to avoid regenerating them for each benchmark iteration.
@@ -238,19 +238,49 @@ public class Benchmark
 	/// Generates a random byte array of a specified size in kilobytes, or retrieves a previously cached array of the same size.
 	/// </summary>
 	/// <remarks>
+	/// <para>
 	/// This method leverages an internal cache to avoid regenerating byte arrays of the same size across multiple benchmark iterations,
 	/// which helps reduce the overhead of array creation during benchmarking. The generated arrays contain random data created by the
-	/// <see cref="RandomData.GenerateByteArray"/> method. The minimum size allowed is 1KB, and any smaller request will be adjusted upward.
+	/// <see cref="RandomData.GenerateByteArray"/> method.
+	/// </para>
+	/// <para>
+	/// The caching behavior improves benchmark consistency by ensuring that the same array instance is used across all iterations
+	/// for a given size, eliminating allocation overhead as a variable in the measurements.
+	/// </para>
+	/// <para>
+	/// This method is performance-optimized with <see cref="MethodImplOptions.AggressiveInlining"/> for efficient execution
+	/// in benchmarking scenarios.
+	/// </para>
 	/// </remarks>
-	/// <param name="sizeInKb">The size of the byte array to generate, in kilobytes. Defaults to 1KB if not specified.
-	/// Values less than 1 will be set to 1.</param>
+	/// <param name="count">The size of the byte array to generate, in kilobytes. Defaults to 1KB if not specified.
+	/// Values less than 1 will be adjusted to 1 using the <see cref="Extensions.ArgumentInRange{T}"/> extension method.</param>
 	/// <returns>A byte array of the specified size, either newly generated or retrieved from cache.</returns>
 	/// <seealso cref="_byteArrayCache"/>
+	/// <seealso cref="RandomData.GenerateByteArray"/>
+	/// <example>
+	/// <code>
+	/// public class MyBenchmark : Benchmark
+	/// {
+	///     [Benchmark]
+	///     public void ProcessByteArray()
+	///     {
+	///         // Get a 10KB byte array (cached after first call)
+	///         byte[] data = this.GetByteArray(10);
+	///         
+	///         // Perform operations with the data
+	///         var result = ProcessData(data);
+	///         
+	///         // Prevent dead code elimination
+	///         this.Consume(result);
+	///     }
+	/// }
+	/// </code>
+	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public byte[] GetByteArray(double sizeInKb = 1)
+	public byte[] GetByteArray(int count = 1)
 	{
-		sizeInKb = sizeInKb.ArgumentInRange(.01);
-		return this._byteArrayCache.GetOrAdd(sizeInKb, RandomData.GenerateByteArray(sizeInKb));
+		count = count.ArgumentInRange(1);
+		return this._byteArrayCache.GetOrAdd(count, RandomData.GenerateByteArray(count));
 	}
 
 	/// <summary>
@@ -474,7 +504,7 @@ public class Benchmark
 	public Tester.Models.ValueTypes.Coordinate CoordinateVal02 { get; private set; }
 
 	/// <summary>
-	/// Retrieve JSON from resources for a <see cref="IPerson{TAddress}" /> object.
+	/// Retrieve JSON from resources for a Person /> object.
 	/// </summary>
 	/// <value>The JSON test data for a item.</value>
 	public static string JsonTestDataPerson => Resources.JsonTestDataPerson;
@@ -503,7 +533,7 @@ public class Benchmark
 	public string LongTestString { get; } = "Parsing and formatting are the lifeblood of any modern web app or service: take data off the wire, parse it, manipulate it, format it back out. As such, in .NET Core 2.1 along with bringing up Span<T>, we invested in the formatting and parsing of primitives, from Int32 to DateTime. Many of those changes can be read about in my previous blog posts, but one of the key factors in enabling those performance improvements was in moving a lot of native code to managed. That may be counter-intuitive, in that it’s “common knowledge” that C code is faster than C# code. However, in addition to the gap between them narrowing, having (mostly) safe C# code has made the code base easier to experiment in, so whereas we may have been skittish about tweaking the native implementations, the community-at-large has dived head first into optimizing these implementations wherever possible. That effort continues in full force in .NET Core 3.0, with some very nice rewards reaped.";
 
 	/// <summary>
-	/// Retrieve the JSON representation of a <see cref="IPerson{TAddress}" /> object from the resources.
+	/// Retrieve the JSON representation of a Person object from the resources.
 	/// This property provides access to the JSON data used for testing and benchmarking purposes.
 	/// </summary>
 	/// <value>The item json.</value>

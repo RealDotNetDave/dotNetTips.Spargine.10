@@ -161,11 +161,8 @@ public static class StringBuilderExtensions
 		/// <summary>
 		/// Appends a collection of values to the <see cref="StringBuilder"/>, separated by the specified separator, using a custom join action.
 		/// </summary>
-		/// <typeparam name="T">The type of the elements in <paramref name="values"/>.</typeparam>
 		/// <param name="separator">The separator to use between values.</param>
 		/// <param name="values">The collection of values to append.</param>
-		/// <param name="joinAction">The action to perform for each value.</param>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> or <paramref name="joinAction"/> is null.</exception>
 		/// <remarks>
 		/// If <paramref name="values"/> is null, the method returns without modifying the <see cref="StringBuilder"/>.
 		/// The separator is appended after each value, and removed after the last value.

@@ -118,8 +118,8 @@ public static class CollectionExtensions
 		/// </summary>
 		/// <param name="item">The item to add to the collection.</param>
 		/// <returns><c>true</c> if the item was added to the collection; otherwise, <c>false</c>.</returns>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
-		/// <exception cref="ArgumentReadOnlyException">Thrown if <paramref name="collection"/> is read-only.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
+		/// <exception cref="ArgumentReadOnlyException">Thrown if collection is read-only.</exception>
 		[Information(nameof(AddIfNotExists), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool AddIfNotExists([AllowNull] in T item)
 		{

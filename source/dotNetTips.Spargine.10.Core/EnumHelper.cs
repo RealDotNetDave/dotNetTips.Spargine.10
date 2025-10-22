@@ -112,21 +112,61 @@ public static class EnumHelper
 	}
 
 	/// <summary>
-	/// Gets the description of the enum value using the <see cref="EnumMemberAttribute" /> if available; otherwise, it returns the enum's name.
+	/// Gets the description of the enum value by checking multiple attributes in this order:
+	/// 1. <see cref="DescriptionAttribute"/>
+	/// 2. <see cref="EnumMemberAttribute"/>
+	/// 3. The enum's name as a fallback
 	/// </summary>
 	/// <param name="input">The enum value to get the description for.</param>
 	/// <returns>The description of the enum value.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input" /> is null.</exception>
-	[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
-	public static string? GetDescription(Enum input)
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if the provided input is not a valid enum value.</exception>
+	[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static string GetDescription(this Enum input)
 	{
-		input = input.ArgumentDefined();
+		input = input.ArgumentNotNull();
 
 		return _descriptionCache.GetOrAdd(input, key =>
 		{
-			var field = key.GetType().GetField(key.ToString());
-			var attributes = (EnumMemberAttribute[])field!.GetCustomAttributes(typeof(EnumMemberAttribute), false);
-			return attributes.Length > 0 ? attributes[0].Value! : key.ToString();
+			var type = key.GetType();
+
+			// Verify this is actually an enum type
+			if (!type.IsEnum)
+			{
+				throw new ArgumentException("Type provided must be an Enum.", nameof(input));
+			}
+
+			var name = Enum.GetName(type, key);
+
+			if (name == null)
+			{
+				return key.ToString();
+			}
+
+			// Get field and look for Description attribute first
+			var field = type.GetField(name);
+
+			if (field == null)
+			{
+				return name;
+			}
+
+			// First try DescriptionAttribute
+			var descriptionAttr = field.GetCustomAttribute<DescriptionAttribute>(false);
+			if (descriptionAttr != null && !string.IsNullOrEmpty(descriptionAttr.Description))
+			{
+				return descriptionAttr.Description;
+			}
+
+			// Then try EnumMemberAttribute
+			var enumMemberAttr = field.GetCustomAttribute<EnumMemberAttribute>(false);
+			if (enumMemberAttr != null && !string.IsNullOrEmpty(enumMemberAttr.Value))
+			{
+				return enumMemberAttr.Value;
+			}
+
+			// Fall back to the enum name
+			return name;
 		});
 	}
 
