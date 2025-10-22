@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-08-2025
+// Last Modified On : 10-22-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -180,6 +180,8 @@ public static class ObjectExtensions
 	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public static Lazy<T> ToLazy<T>(this T value)
 	{
+		value = value.ArgumentNotNull();
+
 		return new Lazy<T>(() => value);
 	}
 
