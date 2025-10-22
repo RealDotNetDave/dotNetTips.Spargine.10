@@ -37,11 +37,6 @@ internal static partial class Extensions
 {
 
 	/// <summary>
-	/// The description cache
-	/// </summary>
-	private static readonly ConcurrentDictionary<Enum, string> _descriptionCache = new();
-
-	/// <summary>
 	/// The string builder pool
 	/// </summary>
 	private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
@@ -221,27 +216,6 @@ internal static partial class Extensions
 
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
-	}
-
-	/// <summary>
-	/// Gets the description of the specified <see cref="Enum"/> value.
-	/// </summary>
-	/// <param name="input">The enum value to get the description for.</param>
-	/// <returns>
-	/// The description associated with the enum value, as defined by the <see cref="EnumMemberAttribute"/>.
-	/// If no description is found, returns the enum value's name as a string.
-	/// </returns>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is not a defined enum value.</exception>
-	internal static string GetDescription(this Enum input)
-	{
-		input = input.ArgumentDefined();
-
-		return _descriptionCache.GetOrAdd(input, key =>
-		{
-			var field = key.GetType().GetField(key.ToString());
-			var attributes = (EnumMemberAttribute[]?)field?.GetCustomAttributes(typeof(EnumMemberAttribute), false);
-			return attributes is { Length: > 0 } ? attributes[0].Value ?? key.ToString() : key.ToString();
-		});
 	}
 
 	/// <summary>

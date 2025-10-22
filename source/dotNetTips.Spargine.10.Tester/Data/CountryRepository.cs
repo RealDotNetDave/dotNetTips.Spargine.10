@@ -20,7 +20,6 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Data.Converters;
 using DotNetTips.Spargine.Tester.Data.Models;
 using DotNetTips.Spargine.Tester.Properties;
