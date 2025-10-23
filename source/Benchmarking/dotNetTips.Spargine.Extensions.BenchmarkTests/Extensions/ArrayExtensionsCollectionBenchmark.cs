@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
@@ -201,6 +202,17 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	{
 		var people = this._personValArray;
 		var result = people.HasItems();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.SelectItems))]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void SelectItems()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		var result = people.SelectItems(0, 2);
 
 		this.Consume(result);
 	}

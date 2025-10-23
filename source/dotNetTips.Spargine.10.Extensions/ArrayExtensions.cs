@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-15-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -130,7 +130,7 @@ public static class ArrayExtensions
 		/// <param name="startIndex">The start index.</param>
 		/// <param name="count">The count.</param>
 		/// <returns>T[].</returns>
-		[Information(nameof(SelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(SelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public T[] SelectItems(int startIndex, int count)
 		{
 			//TODO: FIX, TOO SLOW
