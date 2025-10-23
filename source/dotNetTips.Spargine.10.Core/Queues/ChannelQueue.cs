@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-19-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -367,7 +367,7 @@ public sealed class ChannelQueue<T>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public bool TryWriteOnce([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null)
 	{
 		item = item.ArgumentNotNull();

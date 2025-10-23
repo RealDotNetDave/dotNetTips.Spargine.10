@@ -14,6 +14,7 @@
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Security;
+using DotNetTips.Spargine.Tester;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
 
@@ -26,6 +27,7 @@ public class EncryptionHelperBenchmark : Benchmark
 	private const string Key = "!&@^@%@$@#!!!";
 
 	private string _aesCypherText;
+	private string _aesGcmEncryptText;
 	private byte[] _aesIv;
 	private byte[] _aesKey;
 	private string _cypherText = string.Empty;
@@ -35,6 +37,24 @@ public class EncryptionHelperBenchmark : Benchmark
 	public void AesDecrypt()
 	{
 		var result = EncryptionHelper.AesEncrypt(this._aesCypherText, this._aesKey, this._aesIv);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EncryptionHelper.AesGcmEncrypt))]
+	[BenchmarkCategory(Categories.Encryption)]
+	public void AesGcmEncrypt()
+	{
+		var result = EncryptionHelper.AesGcmEncrypt(this.LongTestString, this._aesKey, this._aesIv);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EncryptionHelper.AesGcmDecrypt))]
+	[BenchmarkCategory(Categories.Encryption)]
+	public void AesGcmDecrypt()
+	{
+		var result = EncryptionHelper.AesGcmDecrypt(this._aesGcmEncryptText, this._aesKey, this._aesIv);
 
 		this.Consume(result);
 	}
@@ -83,6 +103,7 @@ public class EncryptionHelperBenchmark : Benchmark
 		this._aesKey = EncryptionHelper.GenerateAesKey();
 		this._aesIv = EncryptionHelper.GenerateAesIV();
 		this._aesCypherText = EncryptionHelper.AesEncrypt(this.LongTestString, this._aesKey, this._aesIv);
+		this._aesGcmEncryptText= EncryptionHelper.AesGcmEncrypt(this.LongTestString, this._aesKey, this._aesIv);
 	}
 
 	[Benchmark(Description = nameof(EncryptionHelper.SimpleSHA256Decrypt))]

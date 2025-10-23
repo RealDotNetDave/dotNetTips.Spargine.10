@@ -158,7 +158,7 @@ public static class JsonSerialization
 	/// <returns>An instance of <typeparamref name="TResult"/> deserialized from the JSON string.</returns>
 	/// <exception cref="InvalidOperationException">Failed to deserialize the JSON string to {typeof(TResult)}.</exception>
 	[Pure]
-	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, JsonSerializerOptions? options = null)
 	{
 		json = json.ArgumentNotNullOrEmpty();
@@ -178,7 +178,7 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="typeInfo"/> is null.</exception>
 	/// <exception cref="InvalidOperationException">Failed to deserialize the JSON string to {typeof(TResult)}.</exception>
 	[Pure]
-	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, [DisallowNull] JsonTypeInfo<TResult> typeInfo)
 	{
 		json = json.ArgumentNotNullOrEmpty();
@@ -278,7 +278,7 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the items in the json collection is less than count.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
 	[Pure]
-	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count)
 	{
 		file = file.ArgumentExists();
@@ -353,7 +353,7 @@ public static class JsonSerialization
 	/// <returns>A JSON string representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the input object is null.</exception>
 	[Pure]
-	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string Serialize([DisallowNull] object obj, JsonSerializerOptions? options = null)
 	{
 		obj = obj.ArgumentNotNull();
@@ -370,7 +370,7 @@ public static class JsonSerialization
 	/// <returns>A JSON string representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the input object or <paramref name="typeInfo"/> is null.</exception>
 	[Pure]
-	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string Serialize<T>([DisallowNull] T obj, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		obj = obj.ArgumentNotNull();

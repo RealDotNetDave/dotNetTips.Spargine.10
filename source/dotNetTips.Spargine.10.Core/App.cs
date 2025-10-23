@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-20-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="App.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary>Application Information and Utility Methods.</summary>
 // ***********************************************************************
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -53,7 +54,8 @@ public static class App
 	/// <summary>
 	/// A dictionary to store application state data.
 	/// </summary>
-	private static readonly Dictionary<string, object> _appState = [];
+	private static readonly ConcurrentDictionary<string, object> _appState = new(StringComparer.OrdinalIgnoreCase);
+
 
 	/// <summary>
 	/// Computer information.
@@ -124,7 +126,7 @@ public static class App
 	/// </code>
 	/// This will change the current culture to English (United States).
 	/// </example>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static void ChangeCulture([DisallowNull] string cultureName)
 	{
 		CultureInfo.CurrentCulture = new CultureInfo(cultureName.ArgumentNotNullOrEmpty());
@@ -141,7 +143,7 @@ public static class App
 	/// </code>
 	/// This will change the current culture and UI culture to English (United States).
 	/// </example>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static void ChangeCulture([DisallowNull] CultureInfo culture)
 	{
 		CultureInfo.CurrentCulture = culture.ArgumentNotNull();
@@ -159,7 +161,7 @@ public static class App
 	/// </code>
 	/// This will change the current UI culture to French (France).
 	/// </example>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static void ChangeUICulture([DisallowNull] string cultureName)
 	{
 		CultureInfo.CurrentUICulture = new CultureInfo(cultureName.ArgumentNotNullOrEmpty());
@@ -176,7 +178,7 @@ public static class App
 	/// Console.WriteLine(folderPath);
 	/// </code></example>
 	[Pure]
-	[Information(nameof(ExecutingFolder), author: "David McCarter", createdOn: "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ExecutingFolder), author: "David McCarter", createdOn: "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ExecutingFolder()
 	{
 		var currentWorkingDirectory = _computerInfo.Value.CurrentWorkingDirectory;
@@ -200,7 +202,7 @@ public static class App
 	/// It is useful for debugging, logging, or generating support information.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(GenerateDiagnosticReport), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateDiagnosticReport), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static string GenerateDiagnosticReport()
 	{
 		return $@"
@@ -224,7 +226,7 @@ public static class App
 	/// This will retrieve the value associated with the key "Theme" from the application state.
 	/// </example>
 	[Pure]
-	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static object? GetAppState(string key) => _appState.TryGetValue(key, out var value) ? value : null;
 
 	/// <summary>
@@ -243,7 +245,7 @@ public static class App
 	/// This will parse the command-line arguments and print each key-value pair.
 	/// </example>
 	[Pure]
-	[Information(nameof(GetCommandLineArguments), BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCommandLineArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static IReadOnlyDictionary<string, string> GetCommandLineArguments()
 	{
 		return Environment.GetCommandLineArgs()
@@ -269,7 +271,7 @@ public static class App
 	/// This will print the names of all specific cultures.
 	/// </example>
 	[Pure]
-	[Information(nameof(GetCultureNames), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetCultureNames), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetCultureNames(CultureTypes cultureType = CultureTypes.AllCultures)
 	{
 		return _cultureNames ??= CultureInfo.GetCultures(cultureType).OrderBy(p => p.Name).Select(c => c.Name).ToList().AsReadOnly();
@@ -288,7 +290,7 @@ public static class App
 	/// where each key and value is a non-null string. If a key or value is null, it is replaced with an empty string.
 	/// </returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static IReadOnlyDictionary<string, string> GetEnvironmentVariables()
 	{
 		return Environment.GetEnvironmentVariables()
@@ -383,7 +385,7 @@ public static class App
 	/// <returns><c>true</c> if the application is already running; otherwise, <c>false</c>.</returns>
 	/// <remarks>This method checks if there are any processes with the same name as the current process. If more than one is found, it indicates that the application is already running.</remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsRunning()
 	{
 		return Process.GetProcessesByName(ProcessName).Count() > 0;
@@ -395,7 +397,7 @@ public static class App
 	/// <returns><c>true</c> if the application is running from an ASP.NET context; otherwise, <c>false</c>.</returns>
 	/// <remarks>This method determines if the application is running within an ASP.NET context by checking the presence of ASP.NET temporary files in the application's dynamic directory.</remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsRunningFromAspNet()
 	{
 		return (!string.IsNullOrEmpty(AppDomain.CurrentDomain.DynamicDirectory)) && AppDomain.CurrentDomain.DynamicDirectory.Contains(TempAspFiles, StringComparison.OrdinalIgnoreCase);
@@ -407,7 +409,7 @@ public static class App
 	/// <returns><c>true</c> if the current user is an administrator; otherwise, <c>false</c>.</returns>
 	/// <exception cref="PlatformNotSupportedException">Thrown when the operating system is not Windows, as administrator status can only be checked on Windows.</exception>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsUserAdministrator()
 	{
 		return !RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -434,7 +436,7 @@ public static class App
 	/// <remarks>This method calculates the maximum degree of parallelism by taking 75% of the processor count, doubling it, and rounding up to the nearest whole number.
 	/// It is designed to optimize parallel operations by not overloading the system with too many concurrent tasks.</remarks>
 	[Pure]
-	[Information(nameof(MaxDegreeOfParallelism), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(MaxDegreeOfParallelism), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static int MaxDegreeOfParallelism()
 	{
 		return Convert.ToInt32(Math.Ceiling(_computerInfo.Value.ProcessorCount * 0.75 * 2.0));
@@ -474,7 +476,7 @@ public static class App
 	/// }
 	/// </code></example>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ReferencedAssemblies()
 	{
 		var entryAssembly = Assembly.GetEntryAssembly();
@@ -516,18 +518,27 @@ public static class App
 	/// <summary>
 	/// Sets a value in the application state dictionary.
 	/// </summary>
-	/// <param name="key">The key to identify the state value.</param>
-	/// <param name="value">The value to store in the application state.</param>
+	/// <param name="key">The key to identify the state value. Must not be <c>null</c> or empty.</param>
+	/// <param name="value">The value to store in the application state. Must not be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="key"/> is <c>null</c> or empty, or when <paramref name="value"/> is <c>null</c>.</exception>
+	/// <remarks>
+	/// This method stores or updates a value in the application state dictionary using the specified key.
+	/// The dictionary uses case-insensitive string comparison for keys and is thread-safe.
+	/// </remarks>
 	/// <example>
 	/// Example usage:
 	/// <code>
 	/// App.SetAppState("Theme", "Dark");
+	/// App.SetAppState("MaxRetries", 5);
 	/// </code>
-	/// This will store the value "Dark" with the key "Theme" in the application state.
+	/// This will store the value "Dark" with the key "Theme" and the integer value 5 with the key "MaxRetries" in the application state.
 	/// </example>
-	[Information(nameof(SetAppState), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static void SetAppState(string key, object value)
+	[Information(nameof(SetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static void SetAppState([DisallowNull] string key, [DisallowNull] object value)
 	{
+		key = key.ArgumentNotNullOrEmpty();
+		value = value.ArgumentNotNull();
+
 		_appState[key] = value;
 	}
 
@@ -543,7 +554,7 @@ public static class App
 	/// This will output the company name from the application's assembly information.
 	/// </example>
 	[Pure]
-	[Information(nameof(AppInfo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(AppInfo), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static AppInfo AppInfo
 	{
 		get
@@ -558,7 +569,7 @@ public static class App
 	/// <value>The current culture.</value>
 	/// <remarks>This property provides access to the current culture used by the application. It is a wrapper around <see cref="CultureInfo.CurrentCulture" />.</remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static CultureInfo CurrentCulture
 	{
 		get
@@ -589,7 +600,7 @@ public static class App
 	/// <remarks>This property provides access to the current UI culture used by the application. It is a wrapper around <see cref="CultureInfo.CurrentUICulture" />.
 	/// The UI culture is used for string localization, date and number formatting, and other culture-specific operations in the UI.</remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static CultureInfo CurrentUICulture
 	{
 		get
@@ -604,7 +615,7 @@ public static class App
 	/// <value>The framework description.</value>
 	/// <example>Example output: ".NET 5.0.6"</example>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string FrameworkDescription
 	{
 		get
@@ -618,7 +629,7 @@ public static class App
 	/// </summary>
 	/// <value>The installed UI culture.</value>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static CultureInfo InstalledUICulture
 	{
 		get
@@ -632,7 +643,7 @@ public static class App
 	/// </summary>
 	/// <value>The operating system platform.</value>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Architecture OSArchitecture
 	{
 		get
@@ -646,7 +657,7 @@ public static class App
 	/// </summary>
 	/// <value>The operating system description.</value>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string OSDescription
 	{
 		get
@@ -660,7 +671,7 @@ public static class App
 	/// </summary>
 	/// <value>The process architecture.</value>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Architecture ProcessArchitecture
 	{
 		get
@@ -681,7 +692,7 @@ public static class App
 	/// This will output the unique identifier of the current process.
 	/// </example>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static int ProcessId
 	{
 		get
@@ -702,7 +713,7 @@ public static class App
 	/// This will output the name of the current process.
 	/// </example>
 	[Pure]
-	[Information(nameof(ProcessName), "David McCarter", "7/26/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ProcessName), "David McCarter", "7/26/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ProcessName
 	{
 		get
@@ -734,7 +745,7 @@ public static class App
 	/// It includes the sequence of method calls that led to the current point of execution.
 	/// </remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string StackTrace
 	{
 		get
@@ -752,7 +763,7 @@ public static class App
 	/// It includes both shared and private data, such as the pages containing all the instructions that the process executes, as well as the pages containing the process's data.
 	/// </remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static long WorkingSet
 	{
 		get

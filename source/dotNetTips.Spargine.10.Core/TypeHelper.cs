@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-23-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -881,7 +881,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
 	{
 		type = type.ArgumentNotNull();
@@ -903,7 +903,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="methodInfo"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] MethodInfo methodInfo) where TAttribute : Attribute
 	{
 		methodInfo = methodInfo.ArgumentNotNull();
@@ -915,7 +915,7 @@ public static class TypeHelper
 	/// Gets a custom attribute of the specified type from the given property.
 	/// </summary>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] PropertyInfo propertyInfo) where TAttribute : Attribute
 	{
 		propertyInfo = propertyInfo.ArgumentNotNull();
@@ -942,7 +942,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Type[] GetGenericArguments([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -960,7 +960,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
@@ -979,7 +979,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> or <paramref name="interfaceNames"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input, params IReadOnlyCollection<string> interfaceNames)
 	{
 		input = input.ArgumentNotNull();
@@ -1003,7 +1003,7 @@ public static class TypeHelper
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ReadOnlyCollection<Type> GetImplementedInterfaceTypes([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
@@ -1191,7 +1191,7 @@ public static class TypeHelper
 	/// <param name="nestedTypeDelimiter">The delimiter to use for nested types.</param>
 	/// <returns>The display name of the type.</returns>
 	[return: NotNull]
-	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GetTypeDisplayName(Type type, bool fullName = true, bool includeGenericParameterNames = false, bool includeGenericParameters = true, char nestedTypeDelimiter = ControlChars.Dot)
 	{
 		type = type.ArgumentNotNull();
@@ -1226,7 +1226,7 @@ public static class TypeHelper
 	/// Gets all members of the specified type that have the specified attribute.
 	/// </summary>
 	[return: NotNull]
-	[Information(nameof(GetTypeMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetTypeMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>([DisallowNull] Type type)
 		where TAttribute : Attribute
 	{
@@ -1263,7 +1263,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="baseClass"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(HasBaseClass), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(HasBaseClass), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool HasBaseClass(Type type, Type baseClass)
 	{
 		type = type.ArgumentNotNull();
@@ -1315,7 +1315,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool HasMethod([DisallowNull] Type type, string methodName, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
 	{
 		type = type.ArgumentNotNull();
@@ -1333,7 +1333,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(HasParameterlessConstructor), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(HasParameterlessConstructor), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool HasParameterlessConstructor([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -1352,7 +1352,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool HasProperty([DisallowNull] Type type, [DisallowNull] string propertyName)
 	{
 		type = type.ArgumentNotNull();
@@ -1371,7 +1371,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="interfaceType"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool ImplementsInterface([DisallowNull] Type type, [DisallowNull] Type interfaceType)
 	{
 		type = type.ArgumentNotNull();
@@ -1410,7 +1410,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="targetType"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsAssignableTo), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(IsAssignableTo), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool IsAssignableTo([DisallowNull] Type type, [DisallowNull] Type targetType)
 	{
 		type = type.ArgumentNotNull();
@@ -1440,7 +1440,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool IsClosedGeneric([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -1458,7 +1458,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool IsEnumerable([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();

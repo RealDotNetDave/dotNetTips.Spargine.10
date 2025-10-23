@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-03-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -138,6 +139,126 @@ public class TypeHelperBenchmark : Benchmark
 	public void GetAllFields()
 	{
 		var result = TypeHelper.GetAllFields(typeof(Benchmark));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetGenericArguments))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetGenericArguments()
+	{
+		var result = TypeHelper.GetGenericArguments(typeof(Dictionary<string, int>));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetImplementedInterfaces()
+	{
+		var list = new List<int>();
+		var result = TypeHelper.GetImplementedInterfaces(list);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces) + ": Interface Names")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetImplementedInterfacesInterfaceNames()
+	{
+		var list = new List<int>();
+		var result = TypeHelper.GetImplementedInterfaces(list, new List<string> { nameof(IEnumerable), nameof(IDisposable) });
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaceTypes))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetImplementedInterfaceTypes()
+	{
+		var list = new List<int>();
+		var result = TypeHelper.GetImplementedInterfaceTypes(list);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetTypeMembersWithAttribute))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetTypeMembersWithAttribute()
+	{
+		var result = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(typeof(TypeHelper));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.HasBaseClass))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void HasBaseClass()
+	{
+		var result = TypeHelper.HasBaseClass(typeof(Exception), typeof(object));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.HasMethod))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void HasMethod()
+	{
+		var result = TypeHelper.HasMethod(typeof(Person), "ToString");
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.HasParameterlessConstructor))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void HasParameterlessConstructor()
+	{
+		var result = TypeHelper.HasParameterlessConstructor(typeof(StringBuilder));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.HasProperty))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void HasProperty()
+	{
+		var result = TypeHelper.HasProperty(typeof(string), "Length");
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void ImplementsInterface()
+	{
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.IsAssignableTo))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void IsAssignableTo()
+	{
+		var result = TypeHelper.IsAssignableTo(typeof(string), typeof(object));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.IsClosedGeneric))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void IsClosedGeneric()
+	{
+		var result = TypeHelper.IsClosedGeneric(typeof(List<int>));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.IsEnumerable))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void IsEnumerable()
+	{
+		var result = TypeHelper.IsEnumerable(typeof(List<int>));
 
 		this.Consume(result);
 	}

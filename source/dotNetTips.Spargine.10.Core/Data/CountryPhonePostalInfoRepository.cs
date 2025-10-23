@@ -100,7 +100,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <returns>The <see cref="CountryPhonePostalInfo"/> if found; otherwise, <c>null</c>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo(string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNull();

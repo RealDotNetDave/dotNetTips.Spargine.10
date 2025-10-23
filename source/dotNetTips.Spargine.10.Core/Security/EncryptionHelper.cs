@@ -203,7 +203,7 @@ public static class EncryptionHelper
 	/// Thrown if the payload is invalid, the version is unsupported, or decryption fails.
 	/// </exception>
 	[Pure]
-	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string AesGcmDecrypt([DisallowNull] string base64Payload, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		base64Payload = base64Payload.ArgumentNotNullOrEmpty();
@@ -259,7 +259,7 @@ public static class EncryptionHelper
 	/// <returns>Base64 payload string.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string AesGcmEncrypt([DisallowNull] string plainText, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		plainText = plainText.ArgumentNotNullOrEmpty();

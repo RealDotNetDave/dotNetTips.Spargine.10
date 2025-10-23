@@ -157,7 +157,18 @@ public class ChannelQueueCollectionBenchmark : SmallCollectionBenchmark
 		}
 	}
 
-	[Benchmark(Description = "Write & Read Async: IEnumerable")]
+	[Benchmark(Description = "TryWriteOnce")]
+	[BenchmarkCategory(Categories.Async)]
+	public async Task TryWriteOnce()
+	{
+		var queue = new ChannelQueue<string>();
+		var key = "k1";
+		var written = queue.TryWriteOnce("hello", key);
+
+		await this.ConsumeAsync(written).ConfigureAwait(false);
+	}
+
+		[Benchmark(Description = "Write & Read Async: IEnumerable")]
 	[BenchmarkCategory(Categories.Async)]
 	public async Task WriteReadAsyncIEnumerableAsync()
 	{
