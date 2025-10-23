@@ -136,11 +136,9 @@ public sealed class ChannelQueue<T>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Acknowledge), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public bool Acknowledge([DisallowNull] string idempotencyKey)
 	{
-		idempotencyKey = idempotencyKey.ArgumentNotNullOrEmpty();
-
 		return this._idempotencyKeys.TryRemove(idempotencyKey, out _);
 	}
 
@@ -164,7 +162,7 @@ public sealed class ChannelQueue<T>
 	/// Removes all items from the channel.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clear), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(Clear), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public void Clear()
 	{
 		while (this._channel.Reader.TryRead(out _))
@@ -281,7 +279,7 @@ public sealed class ChannelQueue<T>
 	/// This enables future enqueues with the same key.
 	/// </remarks>
 	[Information(nameof(ReadAsync), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public async ValueTask<T> ReadAsync([DisallowNull] Func<T, string> keyResolver, CancellationToken cancellationToken = default)
 	{
 		keyResolver = keyResolver.ArgumentNotNull();
@@ -328,7 +326,7 @@ public sealed class ChannelQueue<T>
 	/// This method does not block. If the channel is empty, it returns immediately with <c>false</c>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRead), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(TryRead), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public bool TryRead(out T item)
 	{
 		return this._channel.Reader.TryRead(out item!);
@@ -338,7 +336,7 @@ public sealed class ChannelQueue<T>
 	/// Attempts to write an item to the channel without waiting.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryWrite), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(TryWrite), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public bool TryWrite([DisallowNull] T item)
 	{
 		item = item.ArgumentNotNull();
@@ -367,7 +365,7 @@ public sealed class ChannelQueue<T>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public bool TryWriteOnce([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null)
 	{
 		item = item.ArgumentNotNull();
@@ -484,7 +482,7 @@ public sealed class ChannelQueue<T>
 	/// If the write fails due to a closed channel, the key is removed to allow future attempts.
 	/// </remarks>
 	[Information(nameof(WriteOnceAsync), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public async Task<bool> WriteOnceAsync([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null, CancellationToken cancellationToken = default)
 	{
 		item = item.ArgumentNotNull();
@@ -524,7 +522,7 @@ public sealed class ChannelQueue<T>
 	/// <summary>
 	/// Gets a task that completes when the channel is done.
 	/// </summary>
-	[Information(nameof(Completion), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(Completion), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public Task Completion => this._channel.Reader.Completion;
 
 	/// <summary>
@@ -548,7 +546,7 @@ public sealed class ChannelQueue<T>
 	/// <summary>
 	/// Gets a value indicating whether the channel is completed.
 	/// </summary>
-	[Information(nameof(IsCompleted), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(IsCompleted), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public bool IsCompleted => this._channel.Reader.Completion.IsCompleted;
 
 
