@@ -123,7 +123,7 @@ public static partial class Validator
 	/// <exception cref="ArgumentException">Input cannot be null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">The value is not defined in the enum type.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentDefined), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ArgumentDefined), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T ArgumentDefined<T>([DisallowNull] this T input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString) where T : Enum
 	{
 		input = input.ArgumentNotNull();

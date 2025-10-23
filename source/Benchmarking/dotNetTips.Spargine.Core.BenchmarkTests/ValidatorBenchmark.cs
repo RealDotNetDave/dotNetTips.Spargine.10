@@ -125,4 +125,15 @@ public class ValidatorBenchmark : Benchmark
 		_ = this.ValidateItemsExist_Validation_Inlining(this._people);
 	}
 
+	[Benchmark(Description = nameof(Validator.ArgumentDefined))]
+	[BenchmarkCategory(Categories.Validation, Categories.New)]
+	public void ArgumentDefined()
+	{
+		var value = Status.Available;
+
+		var result = value.ArgumentDefined();
+
+		this.Consume(result);
+	}
+
 }
