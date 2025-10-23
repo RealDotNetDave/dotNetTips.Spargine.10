@@ -166,6 +166,16 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+
+	[Benchmark(Description = nameof(RandomData.GenerateAddress) + ": Ref")]
+	[BenchmarkCategory(Categories.New)]
+	public void GenerateAddressRef()
+	{
+		var result = RandomData.GenerateAddress<Address>();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(RandomData.GeneratePerson) + ": Val")]
 	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonVal()
