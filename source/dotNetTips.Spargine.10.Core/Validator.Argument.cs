@@ -99,7 +99,7 @@ public static partial class Validator
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> or <paramref name="predicate"/> is <c>null</c>.</exception>
 	/// <exception cref="ArgumentInvalidException">Thrown if the predicate returns <c>false</c> for the input value.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentCustom), "David McCarter", "5/25/2025", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(ArgumentCustom), "David McCarter", "5/25/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static T ArgumentCustom<T>([DisallowNull] this T input, [DisallowNull] Func<T, bool> predicate, string errorMessage = "", [CallerArgumentExpression(nameof(input))] string paramName = "")
 	{
 		input = input.ArgumentNotNull();
@@ -109,6 +109,7 @@ public static partial class Validator
 		{
 			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.CustomValidationFailed), paramName);
 		}
+
 		return input;
 	}
 
