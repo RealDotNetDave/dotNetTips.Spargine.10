@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -235,7 +235,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// Extracts the timestamp from the ULID.
 	/// </summary>
 	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
-	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
 	public DateTimeOffset GetTimeStamp()
 	{
 		var timestampChars = this._ulid.AsSpan(0, TimestampLength);
@@ -278,7 +278,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <returns>A new <see cref="Ulid"/> instance.</returns>
 	[return: NotNull]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
 		var ulidChars = new char[UlidLength].AsSpan();
@@ -301,7 +301,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <returns>A <see cref="Ulid"/> instance.</returns>
 	/// <exception cref="ArgumentException">Thrown if the value is not a valid ULID.</exception>
 	[return: NotNull]
-	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static Ulid Parse(string value) => new(value);
 
 	/// <summary>

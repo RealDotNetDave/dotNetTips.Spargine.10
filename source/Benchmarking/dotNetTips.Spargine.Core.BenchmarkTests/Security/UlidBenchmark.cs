@@ -4,7 +4,7 @@
 // Created          : 08-29-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-15-2024
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="UlidBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,10 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.Core.Security;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
 
@@ -26,13 +24,12 @@ public class UlidBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(Ulid.NewUlid))]
 	[BenchmarkCategory(Categories.New)]
-	public void GenerateUlid()
+	public void NewUlid()
 	{
 		var result = Ulid.NewUlid;
 
 		this.Consume(result);
 	}
-
 
 	public override void Setup()
 	{
@@ -46,5 +43,18 @@ public class UlidBenchmark : Benchmark
 		var result = Ulid.NewUlid;
 
 		this.Consume(result.GetHashCode());
+	}
+
+	[Benchmark(Description = nameof(Ulid.GetTimeStamp))]
+	[BenchmarkCategory(Categories.New)]
+	public void GetTimeStamp()
+	{
+		// Arrange
+		var ulid = Ulid.NewUlid();
+
+		// Act
+		var result = ulid.GetTimeStamp();
+
+		this.Consume(result);
 	}
 }
