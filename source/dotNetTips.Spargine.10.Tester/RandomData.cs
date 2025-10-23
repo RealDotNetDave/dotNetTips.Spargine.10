@@ -945,7 +945,7 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
 	/// <returns>An instance of the specified person type populated with random data.</returns>
 	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
-	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
 	public static TPerson GeneratePerson<TPerson>(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		if (typeof(TPerson) == typeof(Person))

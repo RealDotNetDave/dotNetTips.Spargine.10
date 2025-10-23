@@ -162,8 +162,6 @@ public class AutoDefaultDictionaryTests
 		Assert.AreEqual("Missing: 1", value);
 	}
 
-
-
 	[TestMethod]
 	public void DefaultConstructor_ShouldInitializeWithDefaultValue()
 	{

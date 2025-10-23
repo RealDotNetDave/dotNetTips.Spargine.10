@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -95,7 +95,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <summary>
 	/// Removes all items from the <see cref="DistinctConcurrentBag{T}"/>.
 	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public void Clear()
 	{
 		while (this._bag.TryTake(out _))
@@ -120,7 +120,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// </summary>
 	/// <param name="array">The one-dimensional array that is the destination of the elements copied from <see cref="DistinctConcurrentBag{T}"/>. The array must have zero-based indexing.</param>
 	/// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void CopyTo(T[] array, int arrayIndex)
 	{
 		this._uniqueItems.CopyTo(array, arrayIndex);
@@ -131,7 +131,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// </summary>
 	/// <returns>An <see cref="IEnumerator{T}"/> for the <see cref="DistinctConcurrentBag{T}"/>.</returns>
 
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public IEnumerator<T> GetEnumerator()
 	{
 		return this._uniqueItems.GetEnumerator();
@@ -183,7 +183,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="item">The item.</param>
 	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 	/// <exception cref="ArgumentNullException">item</exception>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool TryAdd([NotNull] T item)
 	{
 		if (item is null)
@@ -222,7 +222,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <summary>
 	/// Gets the number of elements contained in the <see cref="DistinctConcurrentBag{T}"/>.
 	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public int Count
 	{
 		get
