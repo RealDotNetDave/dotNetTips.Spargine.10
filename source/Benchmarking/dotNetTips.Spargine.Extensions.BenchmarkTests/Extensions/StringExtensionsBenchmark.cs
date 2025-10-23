@@ -191,6 +191,16 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(StringExtensions.FastReplace))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void FastReplace()
+	{
+		var input = "Hello World";
+		var result = input.FastReplace("Hello", "Googbye");
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(StringExtensions.Extract))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void Extract()

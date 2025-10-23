@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -150,7 +150,7 @@ public static class CountryRepository
 	/// </exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Country? GetCountry(string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNullOrEmpty();

@@ -457,7 +457,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Replace(string, string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for optimal performance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static string FastReplace([DisallowNull] this string input, string oldValue, string newValue)
 	{
 		input = input.ArgumentNotNullOrEmpty();

@@ -30,6 +30,15 @@ public class CountryRepositoryBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(CountryRepository.GetCountry))]
+	[BenchmarkCategory(Categories.New)]
+	public void GetCountry()
+	{
+		var result = CountryRepository.GetCountry("US");
+		
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(CountryRepository.GetCountry) + ": By CountryName")]
 	[BenchmarkCategory(Categories.New)]
 	public void GetCountryByCountryName()
