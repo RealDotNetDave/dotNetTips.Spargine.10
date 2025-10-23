@@ -445,7 +445,6 @@ internal static partial class Extensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public static string FormatTime(this double milliseconds)
 	{
 		if (milliseconds < 1000)

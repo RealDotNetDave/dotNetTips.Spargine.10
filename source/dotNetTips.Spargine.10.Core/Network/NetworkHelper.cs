@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-15-2025
+// Last Modified On : 10-23-2025
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -83,7 +83,7 @@ public static class NetworkHelper
 	/// has "Ethernet" in its description. It uses case-insensitive comparison.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(IsConnectedToEthernet), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(IsConnectedToEthernet), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static bool IsConnectedToEthernet()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -91,7 +91,7 @@ public static class NetworkHelper
 		foreach (var networkInterface in networkInterfaces)
 		{
 			if (networkInterface.OperationalStatus == OperationalStatus.Up &&
-				networkInterface.Description.Contains("Ethernet", StringComparison.OrdinalIgnoreCase))
+				networkInterface.Name.Contains("Ethernet", StringComparison.OrdinalIgnoreCase))
 			{
 				return true;
 			}
@@ -109,7 +109,7 @@ public static class NetworkHelper
 	/// to determine if any network connection is available on the system.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static bool IsConnectedToNetwork()
 	{
 		return NetworkInterface.GetIsNetworkAvailable();

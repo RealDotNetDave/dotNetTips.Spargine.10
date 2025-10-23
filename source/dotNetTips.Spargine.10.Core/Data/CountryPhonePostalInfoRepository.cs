@@ -100,7 +100,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <returns>The <see cref="CountryPhonePostalInfo"/> if found; otherwise, <c>null</c>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo(string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNull();
@@ -189,7 +189,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="countryNameOrIso"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static PostalCodeState ValidatePostalCode(string countryNameOrIso, string postalCode)
 	{
 		var country = GetCountryPhonePostalInfo(countryNameOrIso.ArgumentNotNull());
