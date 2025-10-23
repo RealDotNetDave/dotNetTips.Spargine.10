@@ -37,12 +37,15 @@ using static BenchmarkDotNet.Attributes.JsonExporterAttribute;
 
 namespace DotNetTips.Spargine.Benchmarking;
 
-//Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter], [Atlassian], [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub], [HardwareCounters], [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn], [MValueColumn], [NamespaceColumn], [NativeMemoryProfiler], [PlainExporter], [SkewnessColumn], [StackOverflow], [TailCallDiagnoser], [ThreadingDiagnoser]
-
 /// <summary>
 /// Provides an abstract base for benchmark tests, including setup and cleanup routines, 
 /// methods for consuming objects, generating random data, and updating test entities. 
 /// It also includes properties for accessing various test data and configurations.
+/// Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter], [Atlassian],
+/// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub], [HardwareCounters],
+/// [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn], [MValueColumn], [NamespaceColumn],
+/// [NativeMemoryProfiler], [PlainExporter], [SkewnessColumn], [StackOverflow],
+/// [TailCallDiagnoser], [ThreadingDiagnoser]
 /// </summary>
 [AllStatisticsColumn]
 [BaselineColumn]

@@ -64,7 +64,7 @@ public static class TypeHelper
 	/// <summary>
 	/// Shared in-memory cache instance used for caching reflection results such as declared methods and abstract methods.
 	/// </summary>
-	private static readonly InMemoryCache _methodCache = InMemoryCache.Instance;
+	private static readonly InMemoryCache _commonCache = InMemoryCache.Instance;
 
 	/// <summary>
 	/// Provides a pool of reusable <see cref="StringBuilder"/> instances to reduce allocations and improve performance.
@@ -353,7 +353,7 @@ public static class TypeHelper
 		// Create a unique cache key based on the AppDomain, baseType, and classOnly flag
 		var cacheKey = $"FindDerivedTypes.{currentDomain.FriendlyName}.{baseType.AssemblyQualifiedName}.{classOnly}";
 
-		if (_methodCache.TryGetValue<Type[]>(cacheKey, out var cachedTypes))
+		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedTypes))
 		{
 			return Array.AsReadOnly(cachedTypes!);
 		}
@@ -376,7 +376,7 @@ public static class TypeHelper
 
 		var result = types.ToArray();
 
-		_methodCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
 
 		return Array.AsReadOnly(result);
 	}
@@ -504,14 +504,14 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllAbstractMethods";
 
-		if (_methodCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
+		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
 			return Array.AsReadOnly(cachedMethods!);
 		}
 
 		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsAbstract).ToArray();
 
-		_methodCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(5));
 
 		return Array.AsReadOnly(methods);
 	}
@@ -535,7 +535,7 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllConstructors";
 
-		if (_methodCache.TryGetValue<ConstructorInfo[]>(cacheKey, out var cachedConstructors))
+		if (_commonCache.TryGetValue<ConstructorInfo[]>(cacheKey, out var cachedConstructors))
 		{
 			foreach (var ctor in cachedConstructors!)
 			{
@@ -553,7 +553,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_methodCache.AddCacheItem(cacheKey, constructors.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, constructors.ToArray(), TimeSpan.FromMinutes(5));
 
 		foreach (var ctor in constructors)
 		{
@@ -580,7 +580,7 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllDeclaredFields";
 
-		if (_methodCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
+		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
 		{
 			foreach (var field in cachedFields!)
 			{
@@ -596,7 +596,7 @@ public static class TypeHelper
 			BindingFlags.NonPublic |
 			BindingFlags.DeclaredOnly);
 
-		_methodCache.AddCacheItem(cacheKey, fields, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, fields, TimeSpan.FromMinutes(5));
 
 		foreach (var field in fields)
 		{
@@ -623,7 +623,7 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllDeclaredMethods";
 
-		if (_methodCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
+		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
 			foreach (var method in cachedMethods!)
 			{
@@ -640,7 +640,7 @@ public static class TypeHelper
 			BindingFlags.NonPublic |
 			BindingFlags.DeclaredOnly);
 
-		_methodCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(5));
 
 		foreach (var method in methods)
 		{
@@ -667,7 +667,7 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllFields";
 
-		if (_methodCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
+		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
 		{
 			foreach (var field in cachedFields!)
 			{
@@ -686,7 +686,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_methodCache.AddCacheItem(cacheKey, fields.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, fields.ToArray(), TimeSpan.FromMinutes(5));
 
 		foreach (var field in fields)
 		{
@@ -733,7 +733,7 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllMethods";
 
-		if (_methodCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
+		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
 			foreach (var method in cachedMethods!)
 			{
@@ -752,7 +752,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_methodCache.AddCacheItem(cacheKey, methods.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, methods.ToArray(), TimeSpan.FromMinutes(5));
 
 		foreach (var method in methods)
 		{
@@ -779,7 +779,7 @@ public static class TypeHelper
 
 		var cacheKey = $"{type.FullName}.GetAllProperties";
 
-		if (_methodCache.TryGetValue<PropertyInfo[]>(cacheKey, out var cachedProperties))
+		if (_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var cachedProperties))
 		{
 			foreach (var property in cachedProperties!)
 			{
@@ -798,7 +798,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_methodCache.AddCacheItem(cacheKey, properties.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, properties.ToArray(), TimeSpan.FromMinutes(5));
 
 		foreach (var property in properties)
 		{
@@ -1055,7 +1055,7 @@ public static class TypeHelper
 
 		var cacheKey = $"GetMembersWithAttribute.{type.FullName}";
 
-		if (_methodCache.TryGetValue<MemberInfo[]>(cacheKey, out var cachedMembers))
+		if (_commonCache.TryGetValue<MemberInfo[]>(cacheKey, out var cachedMembers))
 		{
 			foreach (var member in cachedMembers!)
 			{
@@ -1085,7 +1085,7 @@ public static class TypeHelper
 			}
 		}
 
-		_methodCache.AddCacheItem(cacheKey, membersWithAttribute.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, membersWithAttribute.ToArray(), TimeSpan.FromMinutes(5));
 
 		foreach (var member in membersWithAttribute)
 		{
@@ -1199,7 +1199,7 @@ public static class TypeHelper
 		// Create a cache key that uniquely identifies the combination of type and display options
 		var cacheKey = $"{type.AssemblyQualifiedName}.GetTypeDisplayName.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}";
 
-		if (_methodCache.TryGetValue<string>(cacheKey, out var cachedDisplayName))
+		if (_commonCache.TryGetValue<string>(cacheKey, out var cachedDisplayName))
 		{
 			return cachedDisplayName!;
 		}
@@ -1212,7 +1212,7 @@ public static class TypeHelper
 
 			var displayName = sb.ToString();
 
-			_methodCache.AddCacheItem(cacheKey, displayName, TimeSpan.FromMinutes(5));
+			_commonCache.AddCacheItem(cacheKey, displayName, TimeSpan.FromMinutes(5));
 
 			return displayName;
 		}
@@ -1267,18 +1267,40 @@ public static class TypeHelper
 	public static bool HasBaseClass(Type type, Type baseClass)
 	{
 		type = type.ArgumentNotNull();
-		baseClass = baseClass.ArgumentNotNull();
 
-		while (type is not null)
+		if (baseClass == null)
 		{
-			if (type == baseClass)
-			{
-				return true;
-			}
-			type = type.BaseType!;
+			return false;
 		}
 
-		return false;
+		// Create a cache key based on the type and baseClass
+		var cacheKey = $"{type.FullName}.HasBaseClass.{baseClass.FullName}";
+
+		// Check if the result is already in the cache
+		if (_commonCache.TryGetValue<bool>(cacheKey, out var cachedResult))
+		{
+			return cachedResult;
+		}
+
+		// Calculate the result if not cached
+		var result = false;
+		var currentType = type;
+
+		while (currentType is not null)
+		{
+			if (currentType == baseClass)
+			{
+				result = true;
+				break;
+			}
+
+			currentType = currentType.BaseType!;
+		}
+
+		// Cache the result for future use
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
+
+		return result;
 	}
 
 	/// <summary>
@@ -1353,9 +1375,28 @@ public static class TypeHelper
 	public static bool ImplementsInterface([DisallowNull] Type type, [DisallowNull] Type interfaceType)
 	{
 		type = type.ArgumentNotNull();
-		interfaceType = interfaceType.ArgumentNotNull();
 
-		return type.GetInterfaces().Any(i => i == interfaceType);
+		if (interfaceType == null || interfaceType.IsInterface == false)
+		{
+			return false;
+		}
+
+		// Create a cache key based on the type and interfaceType
+		var cacheKey = $"{type.FullName}.ImplementsInterface.{interfaceType.FullName}";
+
+		// Check if the result is already in the cache
+		if (_commonCache.TryGetValue<bool>(cacheKey, out var cachedResult))
+		{
+			return cachedResult;
+		}
+
+		// Calculate the result if not cached
+		var result = type.GetInterfaces().Any(i => i == interfaceType);
+
+		// Cache the result for future use
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
+
+		return result;
 	}
 
 	/// <summary>
