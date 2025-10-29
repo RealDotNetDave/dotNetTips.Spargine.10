@@ -689,8 +689,7 @@ dotnet_diagnostic.CA1815.severity = warning
 
 # Properties should not return arrays
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-# Examples in Rock Your Code: Coding Standards for Microsoft .NET
-dotnet_diagnostic.CA1819.severity = suggestion
+dotnet_diagnostic.CA1819.severity = warning
 dotnet_code_quality.CA1819.api_surface = public, protected
 
 # Test for empty strings using string length
