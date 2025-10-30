@@ -573,7 +573,7 @@ public static class EnumerableExtensions
 				return string.Empty;
 			}
 
-			var sb = _stringBuilderPool.Value.Get().Clear();
+			var sb = _stringBuilderPool.Value.Get();
 
 			try
 			{
@@ -592,7 +592,7 @@ public static class EnumerableExtensions
 			}
 			finally
 			{
-				_stringBuilderPool.Value.Return(sb);
+				_stringBuilderPool.Value.Return(sb.Clear());
 			}
 		}
 

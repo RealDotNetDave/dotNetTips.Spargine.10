@@ -79,7 +79,7 @@ public static partial class RegexProcessor
 	{
 		ArgumentNullException.ThrowIfNull(input);
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -92,7 +92,7 @@ public static partial class RegexProcessor
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 

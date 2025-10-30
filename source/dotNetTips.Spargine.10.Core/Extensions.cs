@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -20,7 +19,6 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using DotNetTips.Spargine.Core.Properties;
@@ -314,7 +312,7 @@ internal static partial class Extensions
 			return string.Empty;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -332,7 +330,7 @@ internal static partial class Extensions
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -350,7 +348,7 @@ internal static partial class Extensions
 			return string.Empty;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -368,7 +366,7 @@ internal static partial class Extensions
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 

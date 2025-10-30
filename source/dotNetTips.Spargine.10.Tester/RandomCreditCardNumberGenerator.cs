@@ -172,7 +172,7 @@ public static partial class RandomCreditCardNumberGenerator
 	{
 		prefix = prefix.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 		try
 		{
 			_ = sb.Append(prefix);
@@ -220,7 +220,7 @@ public static partial class RandomCreditCardNumberGenerator
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 

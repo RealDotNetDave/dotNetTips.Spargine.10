@@ -74,7 +74,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -94,7 +94,7 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		// Set capacity to increase performance
 		_ = sb.EnsureCapacity((bytes.Length * 2) + 2);
@@ -110,7 +110,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -135,7 +135,7 @@ public static class FastStringBuilder
 	{
 		args = args.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -148,7 +148,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -179,7 +179,7 @@ public static class FastStringBuilder
 	{
 		args = args.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -198,7 +198,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -224,7 +224,7 @@ public static class FastStringBuilder
 	{
 		args = args.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -244,7 +244,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -272,7 +272,7 @@ public static class FastStringBuilder
 
 		delimiter ??= ControlChars.CommaSpace;
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -292,7 +292,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -327,7 +327,7 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -335,7 +335,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -352,7 +352,7 @@ public static class FastStringBuilder
 	{
 		values = values.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -372,7 +372,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -389,7 +389,7 @@ public static class FastStringBuilder
 	{
 		values = values.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -409,7 +409,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -440,7 +440,7 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -449,7 +449,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 
 	}
@@ -470,7 +470,7 @@ public static class FastStringBuilder
 			return input ?? ControlChars.EmptyString;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -492,7 +492,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -519,7 +519,7 @@ public static class FastStringBuilder
 			throw new ArgumentNullException(nameof(collection), Resources.TheCollectionParameterMustNotBeNull);
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -538,7 +538,7 @@ public static class FastStringBuilder
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 }

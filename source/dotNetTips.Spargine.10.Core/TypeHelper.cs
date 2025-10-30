@@ -1167,7 +1167,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -1177,7 +1177,7 @@ public static class TypeHelper
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -1204,7 +1204,7 @@ public static class TypeHelper
 			return cachedDisplayName!;
 		}
 
-		var sb = _stringBuilderPool.Get().Clear();
+		var sb = _stringBuilderPool.Get();
 
 		try
 		{
@@ -1218,7 +1218,7 @@ public static class TypeHelper
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb);
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 

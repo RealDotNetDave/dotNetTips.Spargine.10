@@ -206,6 +206,7 @@ public class ObservableListTests
 
 		// Assert
 		Assert.AreEqual(list.Count, array.Length, "The length of the array should match the count of the list.");
+
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list.ElementAt(i), array[i], $"The element at index {i} should match between the list and the array.");

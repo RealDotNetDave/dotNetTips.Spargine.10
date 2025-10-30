@@ -238,34 +238,34 @@ public sealed class PerformanceStopwatch : Stopwatch
 		// Estimate capacity to reduce reallocations (title + elapsed line + laps + diagnostics + some extra)
 		var estimatedCapacity = 64 + (laps.Count * 32) + (diagnosticEntries.Count * 80);
 
-		var builder = _stringBuilderPool.Value.Get();
-		_ = builder.EnsureCapacity(estimatedCapacity);
+		var sb = _stringBuilderPool.Value.Get();
+		_ = sb.EnsureCapacity(estimatedCapacity);
 
 		try
 		{
-			_ = builder.AppendLine($"Performance Report - {this.Title}").AppendLine(this.GetElapsedTimeString());
+			_ = sb.AppendLine($"Performance Report - {this.Title}").AppendLine(this.GetElapsedTimeString());
 
 			var lapCount = 0;
 
 			foreach (var lap in laps)
 			{
-				_ = builder.AppendLine($"Lap {lapCount++}: {lap.TotalMilliseconds.FormatTime()}");
+				_ = sb.AppendLine($"Lap {lapCount++}: {lap.TotalMilliseconds.FormatTime()}");
 			}
 
 			foreach (var entry in diagnosticEntries)
 			{
-				_ = builder.AppendFormat(CultureInfo.InvariantCulture,
+				_ = sb.AppendFormat(CultureInfo.InvariantCulture,
 					"{0:u}: {1} - {2}\n",
 					entry.Timestamp,
 					entry.Message,
 					entry.Elapsed.TotalMilliseconds.FormatTime());
 			}
 
-			return builder.ToString();
+			return sb.ToString();
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(builder);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 

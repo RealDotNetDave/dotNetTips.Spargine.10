@@ -704,7 +704,7 @@ public static class ObjectExtensions
 			var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(obj.ToJson())).AsSpan();
 
 			// Convert byte array to a string
-			var sb = _stringBuilderPool.Value.Get().Clear();
+			var sb = _stringBuilderPool.Value.Get();
 
 			try
 			{
@@ -717,7 +717,7 @@ public static class ObjectExtensions
 			}
 			finally
 			{
-				_stringBuilderPool.Value.Return(sb);
+				_stringBuilderPool.Value.Return(sb.Clear());
 			}
 		}
 

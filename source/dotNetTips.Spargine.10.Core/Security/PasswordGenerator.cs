@@ -111,7 +111,7 @@ public static class PasswordGenerator
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 }

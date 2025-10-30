@@ -51,7 +51,7 @@ public static class DataReaderExtensions
 	{
 		if (includeHeaderAsFirstRow)
 		{
-			var sb = _stringBuilderPool.Get().Clear();
+			var sb = _stringBuilderPool.Get();
 
 			try
 			{
@@ -72,7 +72,7 @@ public static class DataReaderExtensions
 			}
 			finally
 			{
-				_stringBuilderPool.Return(sb);
+				_stringBuilderPool.Return(sb.Clear());
 			}
 		}
 	}
@@ -98,7 +98,7 @@ public static class DataReaderExtensions
 
 		while (dataReader.Read())
 		{
-			var sb = _stringBuilderPool.Get().Clear();
+			var sb = _stringBuilderPool.Get();
 
 			try
 			{
@@ -135,7 +135,7 @@ public static class DataReaderExtensions
 			}
 			finally
 			{
-				_stringBuilderPool.Return(sb);
+				_stringBuilderPool.Return(sb.Clear());
 			}
 		}
 

@@ -122,7 +122,7 @@ public static class StringExtensions
 
 		var hash = GetHash(input, hashType);
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -135,7 +135,7 @@ public static class StringExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 
@@ -190,7 +190,7 @@ public static class StringExtensions
 			return input;
 		}
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -210,7 +210,7 @@ public static class StringExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 
@@ -462,7 +462,7 @@ public static class StringExtensions
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 		_ = sb.Append(input);
 
 		try
@@ -471,7 +471,7 @@ public static class StringExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 
@@ -789,7 +789,7 @@ public static class StringExtensions
 			return string.Empty;
 		}
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -812,7 +812,7 @@ public static class StringExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 

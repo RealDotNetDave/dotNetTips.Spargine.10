@@ -203,7 +203,7 @@ public static class InformationAttributeDocGenerator
 	{
 		assembly = assembly.ArgumentNotNull();
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -224,7 +224,7 @@ public static class InformationAttributeDocGenerator
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 

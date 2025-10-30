@@ -902,7 +902,7 @@ public static class NumericExtensions
 			ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ValueMustBeInTheRange13999, nameof(number));
 		}
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -921,7 +921,7 @@ public static class NumericExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 
@@ -965,7 +965,7 @@ public static class NumericExtensions
 			return $"{Resources.Minus}{ControlChars.Space}{ToWords(Math.Abs(value))}";
 		}
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
@@ -1052,7 +1052,7 @@ public static class NumericExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
 	}
 }
