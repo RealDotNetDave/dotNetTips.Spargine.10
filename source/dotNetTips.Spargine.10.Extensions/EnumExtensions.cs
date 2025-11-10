@@ -59,21 +59,6 @@ public static class EnumExtensions
 		}
 
 		/// <summary>
-		/// Gets the names and values of an <see cref="Enum" />.
-		/// This method returns a read-only collection of tuples, where each tuple contains the name (description) and the numeric value of each enum member.
-		/// The description is obtained from the enum member's name itself.
-		/// </summary>
-		/// <returns>
-		/// A read-only collection of tuples containing the description and value of each enum member.
-		/// </returns>
-		[return: NotNull]
-		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
-		public ReadOnlyCollection<(string Description, int Value)> GetItems()
-		{
-			return EnumHelper.GetItems(input);
-		}
-
-		/// <summary>
 		/// Gets a read-only collection of <see cref="EnumValue"/> for the specified enum type <typeparamref name="T"/>.
 		/// </summary>
 		/// <typeparam name="T">The enum type to retrieve values for.</typeparam>
@@ -86,7 +71,7 @@ public static class EnumExtensions
 		public ReadOnlyCollection<EnumValue> GetValues<T>(bool fixNames = true)
 			where T : Enum
 		{
-			return EnumHelper.GetValues<T>(fixNames);
+			return EnumHelper.GetItems<T>(fixNames);
 		}
 	}
 }

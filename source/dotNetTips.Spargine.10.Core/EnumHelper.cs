@@ -19,7 +19,6 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -171,34 +170,6 @@ public static class EnumHelper
 	}
 
 	/// <summary>
-	/// Gets the names and values of an <see cref="Enum" />.
-	/// This method returns a read-only collection of tuples, where each tuple contains the name (description) and the numeric value of each enum member.
-	/// The description is obtained from the enum member's name itself.
-	/// </summary>
-	/// <param name="input">The enumeration to retrieve items from.</param>
-	/// <returns>A <see cref="ReadOnlyCollection{T}" /> where T is a tuple of string and int, representing the description and value of each enum member.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input" /> is null.</exception>
-	[return: NotNull]
-	[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<(string Description, int Value)> GetItems(Enum input)
-	{
-		input = input.ArgumentDefined();
-
-		var enumType = input.GetType();
-		var enumValues = Enum.GetValues(enumType);
-
-		var items = new List<(string Description, int Value)>(enumValues.Length);
-
-		foreach (var value in enumValues)
-		{
-			var name = Enum.GetName(enumType, value);
-			items.Add((Description: name ?? string.Empty, Value: Convert.ToInt32(value, CultureInfo.InvariantCulture)));
-		}
-
-		return items.AsReadOnly();
-	}
-
-	/// <summary>
 	/// Gets the enumeration names and values for a specified enumeration type.
 	/// </summary>
 	/// <typeparam name="T">The type of the enumeration.</typeparam>
@@ -213,8 +184,8 @@ public static class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GetValues), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Documentation = "https://bit.ly/SpargineEnumerationHandling", Status = Status.Available)]
-	public static ReadOnlyCollection<EnumValue> GetValues<T>(bool fixNames = true)
+	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Documentation = "https://bit.ly/SpargineEnumerationHandling", Status = Status.Available)]
+	public static ReadOnlyCollection<EnumValue> GetItems<T>(bool fixNames = true)
 		where T : Enum
 	{
 		var enumType = typeof(T);

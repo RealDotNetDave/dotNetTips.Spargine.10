@@ -45,31 +45,9 @@ public class EnumHelperTests
 	}
 
 	[TestMethod]
-	public void GetItems_ReturnsAllEnumItems()
-	{
-		var items = EnumHelper.GetItems(Status.Available);
-		Assert.AreEqual(8, items.Count);
-		Assert.IsTrue(items.Contains(("NotSet", 0)));
-		Assert.IsTrue(items.Contains(("New", 1)));
-		Assert.IsTrue(items.Contains(("Available", 2)));
-		Assert.IsTrue(items.Contains(("NotUsed", 3)));
-		Assert.IsTrue(items.Contains(("Obsolete", 4)));
-		Assert.IsTrue(items.Contains(("Updated", 5)));
-		Assert.IsTrue(items.Contains(("NeedsDocumentation", 6)));
-		Assert.IsTrue(items.Contains(("UpdateDocumentation", 7)));
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
-	public void GetItems_ThrowsOnNull()
-	{
-		EnumHelper.GetItems(null!);
-	}
-
-	[TestMethod]
 	public void GetValues_ReturnsAllEnumValues_WithDefaultNames()
 	{
-		var values = EnumHelper.GetValues<Status>();
+		var values = EnumHelper.GetItems<Status>();
 		Assert.AreEqual(8, values.Count);
 		Assert.IsTrue(values.Any(v => v.Name == "Not Set" && v.Value == 0));
 		Assert.IsTrue(values.Any(v => v.Name == "New" && v.Value == 1));
@@ -84,7 +62,7 @@ public class EnumHelperTests
 	[TestMethod]
 	public void GetValues_ReturnsAllEnumValues_WithoutFixNames()
 	{
-		var values = EnumHelper.GetValues<Status>(fixNames: false);
+		var values = EnumHelper.GetItems<Status>(fixNames: false);
 		Assert.AreEqual(8, values.Count);
 		Assert.IsTrue(values.Any(v => v.Name == "NotSet" && v.Value == 0));
 		Assert.IsTrue(values.Any(v => v.Name == "New" && v.Value == 1));
