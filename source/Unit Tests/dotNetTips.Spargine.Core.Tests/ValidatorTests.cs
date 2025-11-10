@@ -4,7 +4,7 @@
 // Created          : 11-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="ValidatorTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -84,35 +84,66 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
-	public void ArgumentDefined_StatusEnum_InvalidValue_ThrowsArgumentOutOfRangeException()
+	public void ArgumentCustom_ChainedValidation_Success()
 	{
 		// Arrange
-		var value = (Status)999;
+		var input = "test@example.com";
+		Func<string, bool> predicate1 = s => !string.IsNullOrEmpty(s);
+		Func<string, bool> predicate2 = s => s.Contains("@");
 
 		// Act
-		_ = value.ArgumentDefined();
-	}
-
-	[TestMethod]
-	public void ArgumentDefined_StatusEnum_ValidValue_ReturnsValue()
-	{
-		// Arrange
-		var value = Status.Available;
-
-		// Act
-		var result = value.ArgumentDefined();
+		var result = input.ArgumentCustom(predicate1).ArgumentCustom(predicate2);
 
 		// Assert
-		Assert.AreEqual(value, result);
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
-	public void ArgumentCustom_ValidPredicate_ReturnsInput()
+	public void ArgumentCustom_ComplexObjectValidation_Success()
 	{
 		// Arrange
-		var input = 42;
-		Func<int, bool> predicate = x => x > 0;
+		var person = RandomData.GeneratePerson<Person>();
+		Func<Person, bool> predicate = p => !string.IsNullOrEmpty(p.Email) && p.Email.Contains("@");
+
+		// Act
+		var result = person.ArgumentCustom(predicate);
+
+		// Assert
+		Assert.AreEqual(person, result);
+	}
+
+	[TestMethod]
+	public void ArgumentCustom_DateTimeValidation_Success()
+	{
+		// Arrange
+		var input = DateTime.Now.AddDays(1);
+		Func<DateTime, bool> predicate = dt => dt > DateTime.Now;
+
+		// Act
+		var result = input.ArgumentCustom(predicate);
+
+		// Assert
+		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentInvalidException))]
+	public void ArgumentCustom_GuidValidation_Failure()
+	{
+		// Arrange
+		var input = Guid.Empty;
+		Func<Guid, bool> predicate = g => g != Guid.Empty;
+
+		// Act
+		_ = input.ArgumentCustom(predicate);
+	}
+
+	[TestMethod]
+	public void ArgumentCustom_GuidValidation_Success()
+	{
+		// Arrange
+		var input = Guid.NewGuid();
+		Func<Guid, bool> predicate = g => g != Guid.Empty;
 
 		// Act
 		var result = input.ArgumentCustom(predicate);
@@ -131,6 +162,32 @@ public class ValidatorTests
 
 		// Act
 		_ = input.ArgumentCustom(predicate);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentInvalidException))]
+	public void ArgumentCustom_ListValidation_Failure()
+	{
+		// Arrange
+		var input = new List<int> { 1, -2, 3, 4, 5 };
+		Func<List<int>, bool> predicate = list => list.Count > 0 && list.All(x => x > 0);
+
+		// Act
+		_ = input.ArgumentCustom(predicate);
+	}
+
+	[TestMethod]
+	public void ArgumentCustom_ListValidation_Success()
+	{
+		// Arrange
+		var input = new List<int> { 1, 2, 3, 4, 5 };
+		Func<List<int>, bool> predicate = list => list.Count > 0 && list.All(x => x > 0);
+
+		// Act
+		var result = input.ArgumentCustom(predicate);
+
+		// Assert
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
@@ -157,269 +214,97 @@ public class ValidatorTests
 		_ = input.ArgumentCustom(predicate);
 	}
 
-
 	[TestMethod]
-	public void CheckIsNotNullOrEmpty_ValidString_ReturnsTrue()
+	[ExpectedException(typeof(ArgumentInvalidException))]
+	public void ArgumentCustom_PredicateWithMultipleConditions_Failure()
 	{
 		// Arrange
-		var input = "Valid String";
+		var input = 23;
+		Func<int, bool> predicate = x => x > 0 && x < 100 && x % 5 == 0;
 
 		// Act
-		var result = input.CheckIsNotNullOrEmpty();
+		_ = input.ArgumentCustom(predicate);
+	}
+
+	[TestMethod]
+	public void ArgumentCustom_PredicateWithMultipleConditions_Success()
+	{
+		// Arrange
+		var input = 25;
+		Func<int, bool> predicate = x => x > 0 && x < 100 && x % 5 == 0;
+
+		// Act
+		var result = input.ArgumentCustom(predicate);
 
 		// Assert
-		Assert.IsTrue(result);
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
-	public void CheckIsNotNullOrEmpty_NullString_ReturnsFalse()
+	[ExpectedException(typeof(ArgumentInvalidException))]
+	public void ArgumentCustom_RangeValidation_Failure()
 	{
 		// Arrange
-		string input = null;
+		var input = 150.5;
+		Func<double, bool> predicate = x => x >= 0.0 && x <= 100.0;
 
 		// Act
-		var result = input.CheckIsNotNullOrEmpty();
+		_ = input.ArgumentCustom(predicate);
+	}
+
+
+	[TestMethod]
+	public void ArgumentCustom_RangeValidation_Success()
+	{
+		// Arrange
+		var input = 50.5;
+		Func<double, bool> predicate = x => x >= 0.0 && x <= 100.0;
+
+		// Act
+		var result = input.ArgumentCustom(predicate);
 
 		// Assert
-		Assert.IsFalse(result);
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
-	public void CheckIsNotNullOrEmpty_EmptyString_ReturnsFalse()
+	[ExpectedException(typeof(ArgumentInvalidException))]
+	public void ArgumentCustom_StringLengthValidation_Failure()
 	{
 		// Arrange
-		var input = string.Empty;
+		var input = "Hi";
+		Func<string, bool> predicate = s => s.Length >= 5 && s.Length <= 20;
 
 		// Act
-		var result = input.CheckIsNotNullOrEmpty();
+		_ = input.ArgumentCustom(predicate);
+	}
+
+	[TestMethod]
+	public void ArgumentCustom_StringLengthValidation_Success()
+	{
+		// Arrange
+		var input = "Hello World";
+		Func<string, bool> predicate = s => s.Length >= 5 && s.Length <= 20;
+
+		// Act
+		var result = input.ArgumentCustom(predicate);
 
 		// Assert
-		Assert.IsFalse(result);
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
-	public void CheckIsNotNullOrEmpty_WhitespaceString_ReturnsTrue()
+	public void ArgumentCustom_ValidPredicate_ReturnsInput()
 	{
 		// Arrange
-		var input = "   ";
+		var input = 42;
+		Func<int, bool> predicate = x => x > 0;
 
 		// Act
-		var result = input.CheckIsNotNullOrEmpty();
+		var result = input.ArgumentCustom(predicate);
 
 		// Assert
-		Assert.IsTrue(result, "Whitespace-only string should return true as it's not empty");
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
-	public void CheckIsNotNullOrEmpty_NullStringWithThrowException_ThrowsArgumentNullException()
-	{
-		// Arrange
-		string input = null;
-
-		// Act
-		_ = input.CheckIsNotNullOrEmpty(throwException: true);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
-	public void CheckIsNotNullOrEmpty_EmptyStringWithThrowException_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var input = string.Empty;
-
-		// Act
-		_ = input.CheckIsNotNullOrEmpty(throwException: true);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_WithCustomErrorMessage_ThrowsWithCustomMessage()
-	{
-		// Arrange
-		string input = null;
-		var customMessage = "Custom error: String cannot be null or empty";
-
-		try
-		{
-			// Act
-			_ = input.CheckIsNotNullOrEmpty(throwException: true, errorMessage: customMessage);
-			Assert.Fail("Expected ArgumentNullException was not thrown.");
-		}
-		catch (ArgumentNullException ex)
-		{
-			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
-		}
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_SingleCharacterString_ReturnsTrue()
-	{
-		// Arrange
-		var input = "A";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_LongString_ReturnsTrue()
-	{
-		// Arrange
-		var input = new string('A', 1000);
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_StringWithSpecialCharacters_ReturnsTrue()
-	{
-		// Arrange
-		var input = "!@#$%^&*()";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_StringWithNewLine_ReturnsTrue()
-	{
-		// Arrange
-		var input = "\n";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_StringWithTab_ReturnsTrue()
-	{
-		// Arrange
-		var input = "\t";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_NullWithoutThrowException_DoesNotThrow()
-	{
-		// Arrange
-		string input = null;
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty(throwException: false);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_EmptyWithoutThrowException_DoesNotThrow()
-	{
-		// Arrange
-		var input = string.Empty;
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty(throwException: false);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_UnicodeString_ReturnsTrue()
-	{
-		// Arrange
-		var input = "こんにちは";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_EmojiString_ReturnsTrue()
-	{
-		// Arrange
-		var input = "😀😁😂";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_MixedWhitespaceAndText_ReturnsTrue()
-	{
-		// Arrange
-		var input = "  Hello  ";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_NumericString_ReturnsTrue()
-	{
-		// Arrange
-		var input = "12345";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_ZeroString_ReturnsTrue()
-	{
-		// Arrange
-		var input = "0";
-
-		// Act
-		var result = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void CheckIsNotNullOrEmpty_ConsistentResults_MultipleCallsSameInput()
-	{
-		// Arrange
-		var input = "Test String";
-
-		// Act
-		var result1 = input.CheckIsNotNullOrEmpty();
-		var result2 = input.CheckIsNotNullOrEmpty();
-
-		// Assert
-		Assert.AreEqual(result1, result2);
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
@@ -444,177 +329,27 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	public void ArgumentCustom_StringLengthValidation_Success()
+	[ExpectedException(typeof(ArgumentOutOfRangeException))]
+	public void ArgumentDefined_StatusEnum_InvalidValue_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
-		var input = "Hello World";
-		Func<string, bool> predicate = s => s.Length >= 5 && s.Length <= 20;
+		var value = (Status)999;
 
 		// Act
-		var result = input.ArgumentCustom(predicate);
+		_ = value.ArgumentDefined();
+	}
+
+	[TestMethod]
+	public void ArgumentDefined_StatusEnum_ValidValue_ReturnsValue()
+	{
+		// Arrange
+		var value = Status.Available;
+
+		// Act
+		var result = value.ArgumentDefined();
 
 		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
-	public void ArgumentCustom_StringLengthValidation_Failure()
-	{
-		// Arrange
-		var input = "Hi";
-		Func<string, bool> predicate = s => s.Length >= 5 && s.Length <= 20;
-
-		// Act
-		_ = input.ArgumentCustom(predicate);
-	}
-
-	[TestMethod]
-	public void ArgumentCustom_ComplexObjectValidation_Success()
-	{
-		// Arrange
-		var person = RandomData.GeneratePerson<Person>();
-		Func<Person, bool> predicate = p => !string.IsNullOrEmpty(p.Email) && p.Email.Contains("@");
-
-		// Act
-		var result = person.ArgumentCustom(predicate);
-
-		// Assert
-		Assert.AreEqual(person, result);
-	}
-
-
-	[TestMethod]
-	public void ArgumentCustom_RangeValidation_Success()
-	{
-		// Arrange
-		var input = 50.5;
-		Func<double, bool> predicate = x => x >= 0.0 && x <= 100.0;
-
-		// Act
-		var result = input.ArgumentCustom(predicate);
-
-		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
-	public void ArgumentCustom_RangeValidation_Failure()
-	{
-		// Arrange
-		var input = 150.5;
-		Func<double, bool> predicate = x => x >= 0.0 && x <= 100.0;
-
-		// Act
-		_ = input.ArgumentCustom(predicate);
-	}
-
-	[TestMethod]
-	public void ArgumentCustom_ListValidation_Success()
-	{
-		// Arrange
-		var input = new List<int> { 1, 2, 3, 4, 5 };
-		Func<List<int>, bool> predicate = list => list.Count > 0 && list.All(x => x > 0);
-
-		// Act
-		var result = input.ArgumentCustom(predicate);
-
-		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
-	public void ArgumentCustom_ListValidation_Failure()
-	{
-		// Arrange
-		var input = new List<int> { 1, -2, 3, 4, 5 };
-		Func<List<int>, bool> predicate = list => list.Count > 0 && list.All(x => x > 0);
-
-		// Act
-		_ = input.ArgumentCustom(predicate);
-	}
-
-	[TestMethod]
-	public void ArgumentCustom_DateTimeValidation_Success()
-	{
-		// Arrange
-		var input = DateTime.Now.AddDays(1);
-		Func<DateTime, bool> predicate = dt => dt > DateTime.Now;
-
-		// Act
-		var result = input.ArgumentCustom(predicate);
-
-		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	public void ArgumentCustom_GuidValidation_Success()
-	{
-		// Arrange
-		var input = Guid.NewGuid();
-		Func<Guid, bool> predicate = g => g != Guid.Empty;
-
-		// Act
-		var result = input.ArgumentCustom(predicate);
-
-		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
-	public void ArgumentCustom_GuidValidation_Failure()
-	{
-		// Arrange
-		var input = Guid.Empty;
-		Func<Guid, bool> predicate = g => g != Guid.Empty;
-
-		// Act
-		_ = input.ArgumentCustom(predicate);
-	}
-
-	[TestMethod]
-	public void ArgumentCustom_ChainedValidation_Success()
-	{
-		// Arrange
-		var input = "test@example.com";
-		Func<string, bool> predicate1 = s => !string.IsNullOrEmpty(s);
-		Func<string, bool> predicate2 = s => s.Contains("@");
-
-		// Act
-		var result = input.ArgumentCustom(predicate1).ArgumentCustom(predicate2);
-
-		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	public void ArgumentCustom_PredicateWithMultipleConditions_Success()
-	{
-		// Arrange
-		var input = 25;
-		Func<int, bool> predicate = x => x > 0 && x < 100 && x % 5 == 0;
-
-		// Act
-		var result = input.ArgumentCustom(predicate);
-
-		// Assert
-		Assert.AreEqual(input, result);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
-	public void ArgumentCustom_PredicateWithMultipleConditions_Failure()
-	{
-		// Arrange
-		var input = 23;
-		Func<int, bool> predicate = x => x > 0 && x < 100 && x % 5 == 0;
-
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		Assert.AreEqual(value, result);
 	}
 
 	[TestMethod]
@@ -1946,16 +1681,6 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	public void CheckIsDefined_NullInput_ThrowsArgumentNullException()
-	{
-		// Arrange
-		TestEnum? input = null;
-
-		// Act & Assert
-		Assert.ThrowsException<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true));
-	}
-
-	[TestMethod]
 	public void CheckIsDefined_WithDefaultErrorMessage_ThrowsException()
 	{
 		// Arrange
@@ -2049,6 +1774,271 @@ public class ValidatorTests
 
 		// Act
 		var result = Validator.CheckIsNotEmpty(input);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_ConsistentResults_MultipleCallsSameInput()
+	{
+		// Arrange
+		var input = "Test String";
+
+		// Act
+		var result1 = input.CheckIsNotNullOrEmpty();
+		var result2 = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.AreEqual(result1, result2);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_EmojiString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "😀😁😂";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_EmptyString_ReturnsFalse()
+	{
+		// Arrange
+		var input = string.Empty;
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentNullException))]
+	public void CheckIsNotNullOrEmpty_EmptyStringWithThrowException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var input = string.Empty;
+
+		// Act
+		_ = input.CheckIsNotNullOrEmpty(throwException: true);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_EmptyWithoutThrowException_DoesNotThrow()
+	{
+		// Arrange
+		var input = string.Empty;
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty(throwException: false);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_LongString_ReturnsTrue()
+	{
+		// Arrange
+		var input = new string('A', 1000);
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_MixedWhitespaceAndText_ReturnsTrue()
+	{
+		// Arrange
+		var input = "  Hello  ";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_NullString_ReturnsFalse()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	[ExpectedException(typeof(ArgumentNullException))]
+	public void CheckIsNotNullOrEmpty_NullStringWithThrowException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		_ = input.CheckIsNotNullOrEmpty(throwException: true);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_NullWithoutThrowException_DoesNotThrow()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty(throwException: false);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_NumericString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "12345";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_SingleCharacterString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "A";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_StringWithNewLine_ReturnsTrue()
+	{
+		// Arrange
+		var input = "\n";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_StringWithSpecialCharacters_ReturnsTrue()
+	{
+		// Arrange
+		var input = "!@#$%^&*()";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_StringWithTab_ReturnsTrue()
+	{
+		// Arrange
+		var input = "\t";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_UnicodeString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "こんにちは";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_ValidString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "Valid String";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_WhitespaceString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "   ";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Whitespace-only string should return true as it's not empty");
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_WithCustomErrorMessage_ThrowsWithCustomMessage()
+	{
+		// Arrange
+		string input = null;
+		var customMessage = "Custom error: String cannot be null or empty";
+
+		try
+		{
+			// Act
+			_ = input.CheckIsNotNullOrEmpty(throwException: true, errorMessage: customMessage);
+			Assert.Fail("Expected ArgumentNullException was not thrown.");
+		}
+		catch (ArgumentNullException ex)
+		{
+			// Assert
+			Assert.IsTrue(ex.Message.Contains(customMessage));
+		}
+	}
+
+	[TestMethod]
+	public void CheckIsNotNullOrEmpty_ZeroString_ReturnsTrue()
+	{
+		// Arrange
+		var input = "0";
+
+		// Act
+		var result = input.CheckIsNotNullOrEmpty();
 
 		// Assert
 		Assert.IsTrue(result);

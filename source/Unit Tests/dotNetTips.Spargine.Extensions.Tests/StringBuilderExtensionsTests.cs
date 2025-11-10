@@ -46,16 +46,10 @@ public class StringBuilderExtensionsTests
 	public void AppendBytesTest()
 	{
 		var sb = new StringBuilder();
-		var byteArray = RandomData.GenerateByteArray( 256);
+		var byteArray = RandomData.GenerateByteArray(256);
 		sb.AppendBytes(byteArray);
 
 		Assert.IsTrue(sb.Length > 50);
-
-		var pool = new StringBuilder();
-
-		pool.AppendBytes(byteArray);
-
-		Assert.IsTrue(pool.Length > 50);
 	}
 
 	[TestMethod]

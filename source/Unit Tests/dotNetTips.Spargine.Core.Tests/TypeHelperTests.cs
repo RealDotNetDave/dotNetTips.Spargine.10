@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-30-2025
+// Last Modified On : 09-01-2025
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.

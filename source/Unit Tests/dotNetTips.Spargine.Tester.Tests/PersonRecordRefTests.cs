@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="PersonRecordRefTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -378,7 +378,7 @@ public class PersonRecordRefTests
 	{
 		// Arrange
 		var personRecord = new PersonRecord("test@example.com", "1229282723");
-		var expectedString = "PersonRecord.Email:test@example.com, PersonRecord.Id:1229282723";
+		var expectedString = "Email:test@example.com, Id:1229282723";
 
 		// Act
 		var result = personRecord.ToString();

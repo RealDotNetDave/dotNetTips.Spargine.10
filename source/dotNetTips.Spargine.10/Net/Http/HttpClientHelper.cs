@@ -4,7 +4,7 @@
 // Created          : 01-11-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-27-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="HttpClientHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -73,19 +73,7 @@ public static class HttpClientHelper
 
 		try
 		{
-			// Use progressive retry for HTTP GET.
-			HttpResponseMessage? response = null;
-			_ = await ExecutionHelper.ProgressiveRetryAsync(
-				async () =>
-				{
-					response = await Client.GetAsync(url, cancellationToken: cancellationToken).ConfigureAwait(false);
-					_ = response.EnsureSuccessStatusCode();
-				},
-				retryCount: 3,
-				retryWaitMilliseconds: 100,
-				logger: null,
-				cancellationToken: cancellationToken
-			).ConfigureAwait(false);
+			var response = await Client.GetAsync(url, cancellationToken: cancellationToken).ConfigureAwait(false);
 
 			return response!;
 		}
@@ -99,11 +87,6 @@ public static class HttpClientHelper
 		{
 			// Handle timeout.
 			ExceptionThrower.ThrowInvalidOperationException(message: Resources.TheOperationHasTimedOut, ex);
-		}
-		catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
-		{
-			// Handle 404
-			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
 		}
 
 		return null;

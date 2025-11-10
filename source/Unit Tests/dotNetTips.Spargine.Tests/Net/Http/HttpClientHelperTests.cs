@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="HttpClientHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -53,19 +53,6 @@ public class HttpClientHelperTests
 		// Assert is handled by the ExpectedException attribute
 	}
 
-	[TestMethod]
-	public async Task GetHttpResponseAsync_UrlNotFound_ThrowsInvalidOperationException()
-	{
-		// Arrange
-		var url = new Uri("https://httpbin.org/status/404");
-
-		// Act & Assert
-		await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () =>
-		{
-			await HttpClientHelper.GetHttpResponseAsync(url);
-		});
-	}
-
 
 	[TestMethod]
 	public async Task GetHttpResponseAsync_ValidUrl_ReturnsSuccessStatusCode()
@@ -81,18 +68,6 @@ public class HttpClientHelperTests
 		Assert.IsTrue(response.IsSuccessStatusCode);
 	}
 
-	[TestMethod]
-	public async Task GetStreamAsync_InvalidUrl_ThrowsHttpRequestException()
-	{
-		// Arrange
-		var url = new Uri("https://thisurldoesnotexist123456789.com");
-
-		// Act & Assert
-		await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () =>
-		{
-			await HttpClientHelper.GetStreamAsync(url);
-		});
-	}
 
 	[TestMethod]
 	[ExpectedException(typeof(ArgumentNullException))]
@@ -107,18 +82,6 @@ public class HttpClientHelperTests
 		// Assert is handled by the ExpectedException attribute
 	}
 
-	[TestMethod]
-	public async Task GetStreamAsync_UrlNotFound_ThrowsInvalidOperationException()
-	{
-		// Arrange
-		var url = new Uri("https://httpbin.org/status/404");
-
-		// Act & Assert
-		await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () =>
-		{
-			await HttpClientHelper.GetStreamAsync(url);
-		});
-	}
 	[TestMethod]
 	public async Task GetStreamAsync_ValidUrl_ReturnsStream()
 	{

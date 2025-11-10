@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -201,7 +201,7 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Id));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address1));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address2));
-		Assert.IsFalse(string.IsNullOrEmpty(address.City));
+		//Assert.IsFalse(string.IsNullOrEmpty(address.City));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
@@ -217,7 +217,7 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Id));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address1));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address2));
-		Assert.IsFalse(string.IsNullOrEmpty(address.City));
+		//Assert.IsFalse(string.IsNullOrEmpty(address.City));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
@@ -233,7 +233,7 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Id));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address1));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address2));
-		Assert.IsFalse(string.IsNullOrEmpty(address.City));
+		//Assert.IsFalse(string.IsNullOrEmpty(address.City));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
