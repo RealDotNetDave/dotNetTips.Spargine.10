@@ -104,7 +104,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = RandomData.GeneratePersonValCollection(this.Count);
 
-		this.Consume(result);
+		this.Consume(result.Count);
 	}
 
 	[Benchmark(Description = "Person" + ":OrderBy()")]
@@ -113,7 +113,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 
@@ -123,7 +123,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(PersonRecord) + ":OrderBy()")]
@@ -132,7 +132,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	public override void Setup()

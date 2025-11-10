@@ -179,19 +179,23 @@ public static class EnumHelper
 	/// <returns>A <see cref="ReadOnlyCollection{T}" /> where T is a tuple of string and int, representing the description and value of each enum member.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input" /> is null.</exception>
 	[return: NotNull]
-	[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<(string Description, int Value)> GetItems(Enum input)
 	{
 		input = input.ArgumentDefined();
 
 		var enumType = input.GetType();
-		var enumValues = Enum.GetValues(enumType).Cast<Enum>();
+		var enumValues = Enum.GetValues(enumType);
 
-		var items = Array.ConvertAll(enumValues.ToArray(), value =>
-			(Description: Enum.GetName(enumType, value), Value: Convert.ToInt32(value, CultureInfo.InvariantCulture))
-		);
+		var items = new List<(string Description, int Value)>(enumValues.Length);
 
-		return items.AsReadOnly()!;
+		foreach (var value in enumValues)
+		{
+			var name = Enum.GetName(enumType, value);
+			items.Add((Description: name ?? string.Empty, Value: Convert.ToInt32(value, CultureInfo.InvariantCulture)));
+		}
+
+		return items.AsReadOnly();
 	}
 
 	/// <summary>

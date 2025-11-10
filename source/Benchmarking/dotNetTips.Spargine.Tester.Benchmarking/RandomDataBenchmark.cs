@@ -40,11 +40,21 @@ public class RandomDataBenchmark : Benchmark
 		_ = DirectoryHelper.DeleteDirectory(new DirectoryInfo(this._filePath));
 	}
 
+
+	[Benchmark(Description = nameof(RandomData.GenerateAddress) + ": Ref")]
+	[BenchmarkCategory(Categories.New)]
+	public void GenerateAddressRef()
+	{
+		var result = RandomData.GenerateAddress<Address>();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(RandomData.GenerateByteArray))]
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateByteArray()
 	{
-		var result = RandomData.GenerateByteArray(sizeInKb: 1);
+		var result = RandomData.GenerateByteArray(100);
 
 		this.Consume(result);
 	}
@@ -162,16 +172,6 @@ public class RandomDataBenchmark : Benchmark
 	public void GeneratePersonRef()
 	{
 		var result = RandomData.GeneratePerson<Person>();
-
-		this.Consume(result);
-	}
-
-
-	[Benchmark(Description = nameof(RandomData.GenerateAddress) + ": Ref")]
-	[BenchmarkCategory(Categories.New)]
-	public void GenerateAddressRef()
-	{
-		var result = RandomData.GenerateAddress<Address>();
 
 		this.Consume(result);
 	}
