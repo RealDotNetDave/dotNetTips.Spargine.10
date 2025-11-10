@@ -4,7 +4,7 @@
 // Created          : 09-17-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-17-2024
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="RandomCreditCardNumberGeneratorTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -60,7 +60,7 @@ public class RandomCreditCardNumberGeneratorTests
 	public void GetCreditCardNumbers_ReturnsCorrectCount()
 	{
 		// Arrange
-		int count = 5;
+		int count = 56;
 
 		// Act
 		var creditCardNumbers = RandomCreditCardNumberGenerator.GetCreditCardNumbers(count);

@@ -4,7 +4,7 @@
 // Created          : 03-13-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="RandomCreditCardNumberGenerator.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -257,7 +257,7 @@ public static partial class RandomCreditCardNumberGenerator
 
 		for (var cardCount = 0; cardCount < count; cardCount++)
 		{
-			var prefixAndLength = _prefixes[RandomNumberGenerator.GetInt32(0, _prefixes.Length - 1)];
+			var prefixAndLength = _prefixes[RandomNumberGenerator.GetInt32(0, _prefixes.Length)];
 
 			result.Add(CreateFakeCreditCardNumber(prefixAndLength.Prefix, prefixAndLength.Length));
 		}

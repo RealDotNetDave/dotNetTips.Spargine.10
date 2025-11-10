@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-30-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.Serialization;
 using DotNetTips.Spargine.Core;
 
@@ -59,19 +60,26 @@ public static class EnumExtensions
 		}
 
 		/// <summary>
-		/// Gets a read-only collection of <see cref="EnumValue"/> for the specified enum type <typeparamref name="T"/>.
+		/// Gets the names and values of an <see cref="Enum" />.
+		/// This method returns a read-only collection of tuples, where each tuple contains the name (description) and the numeric value of each enum member.
+		/// The description is obtained from the enum member's name itself.
 		/// </summary>
-		/// <typeparam name="T">The enum type to retrieve values for.</typeparam>
-		/// <param name="fixNames">If true, fixes the names of the enum values; otherwise, uses the original names.</param>
-		/// <returns>
-		/// A read-only collection of <see cref="EnumValue"/> representing the values of the enum.
-		/// </returns>
-		[return: NotNull]
-		[Information(nameof(GetValues), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
-		public ReadOnlyCollection<EnumValue> GetValues<T>(bool fixNames = true)
-			where T : Enum
+		/// <returns>A <see cref="ReadOnlyCollection{T}" /> where T is a tuple of string and int, representing the description and value of each enum member.</returns>
+		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public ReadOnlyCollection<(string Description, int Value)> GetItems()
 		{
-			return EnumHelper.GetItems<T>(fixNames);
+			var enumType = input.GetType();
+			var enumValues = Enum.GetValues(enumType);
+			var enumNames = Enum.GetNames(enumType);
+
+			var items = new List<(string Description, int Value)>(enumValues.Length);
+
+			for (var index = 0; index < enumValues.Length; index++)
+			{
+				items.Add((Description: enumNames[index], Value: Convert.ToInt32(enumValues.GetValue(index), CultureInfo.InvariantCulture)));
+			}
+
+			return items.ToReadOnlyCollection();
 		}
 	}
 }

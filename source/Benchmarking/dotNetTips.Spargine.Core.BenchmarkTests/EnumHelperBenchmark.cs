@@ -4,7 +4,7 @@
 // Created          : 06-02-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2025
+// Last Modified On : 11-10-2025
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -23,10 +23,10 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 public class EnumHelperBenchmark : Benchmark
 {
 
-	[Benchmark(Description = nameof(EnumHelper.GetValues))]
+	[Benchmark(Description = nameof(EnumHelper.GetItems))]
 	public void GetValues()
 	{
-		var result = EnumHelper.GetValues<RequestCacheLevel>(false);
+		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
 
 		this.Consume(result);
 	}
