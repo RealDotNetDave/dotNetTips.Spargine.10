@@ -131,12 +131,7 @@ public sealed class Address : IAddress<Address>
 	[DebuggerStepThrough]
 	public static bool operator <(in Address? left, in Address? right)
 	{
-		if (left is null)
-		{
-			return right is not null;
-		}
-
-		return right is null ? false : left.CompareTo(right) < 0;
+		return left is null ? right is not null : right is null ? false : left.CompareTo(right) < 0;
 	}
 
 	/// <summary>
@@ -153,17 +148,7 @@ public sealed class Address : IAddress<Address>
 	[DebuggerStepThrough]
 	public static bool operator <=(in Address? left, in Address? right)
 	{
-		if (left is null)
-		{
-			return true;
-		}
-
-		if (right is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) <= 0;
+		return left is null ? true : right is null ? false : left.CompareTo(right) <= 0;
 	}
 
 	/// <summary>
@@ -196,17 +181,7 @@ public sealed class Address : IAddress<Address>
 	[DebuggerStepThrough]
 	public static bool operator >(in Address? left, in Address? right)
 	{
-		if (left is null)
-		{
-			return false;
-		}
-
-		if (right is null)
-		{
-			return true;
-		}
-
-		return left.CompareTo(right) > 0;
+		return left is null ? false : right is null ? true : left.CompareTo(right) > 0;
 	}
 
 	/// <summary>
@@ -223,17 +198,7 @@ public sealed class Address : IAddress<Address>
 	[DebuggerStepThrough]
 	public static bool operator >=(in Address? left, in Address? right)
 	{
-		if (right is null)
-		{
-			return true;
-		}
-
-		if (left is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) >= 0;
+		return right is null ? true : left is null ? false : left.CompareTo(right) >= 0;
 	}
 
 	/// <summary>
@@ -253,17 +218,11 @@ public sealed class Address : IAddress<Address>
 	/// </exception>
 	int IComparable.CompareTo(object? obj)
 	{
-		if (obj is null)
-		{
-			return 1;
-		}
-
-		if (obj is Address other)
-		{
-			return this.CompareTo(other);
-		}
-
-		throw new ArgumentException($"Object must be of type {nameof(Address)}", nameof(obj));
+		return obj is null
+			? 1
+			: obj is Address other
+			? this.CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(Address)}", nameof(obj));
 	}
 
 	/// <summary>
@@ -338,12 +297,7 @@ public sealed class Address : IAddress<Address>
 	/// </returns>
 	public bool Equals(in Address? other)
 	{
-		if (ReferenceEquals(this, other))
-		{
-			return true;
-		}
-
-		return other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
+		return ReferenceEquals(this, other) ? true : other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
 	}
 
 	/// <summary>
@@ -358,12 +312,7 @@ public sealed class Address : IAddress<Address>
 	/// </returns>
 	public override bool Equals(object? obj)
 	{
-		if (ReferenceEquals(this, obj))
-		{
-			return true;
-		}
-
-		return obj is Address other && this.Equals(other);
+		return ReferenceEquals(this, obj) ? true : obj is Address other && this.Equals(other);
 	}
 
 	/// <summary>

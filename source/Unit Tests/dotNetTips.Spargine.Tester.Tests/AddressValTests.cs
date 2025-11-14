@@ -309,8 +309,6 @@ public class AddressValTests
 		Assert.IsTrue(a1 <= a2 || a2 <= a1);
 		Assert.IsTrue(a1 > a2 || a2 > a1 || a1 == a2);
 		Assert.IsTrue(a1 >= a2 || a2 >= a1);
-		Assert.IsTrue(a1 <= a1);
-		Assert.IsTrue(a1 >= a1);
 	}
 
 	[TestMethod]

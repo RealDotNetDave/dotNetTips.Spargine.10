@@ -650,6 +650,7 @@ dotnet_code_quality.require_explicit_visibility = true
 dotnet_code_quality.require_variable_declaration_for_explicit_type = false
 dotnet_code_quality_unused_parameters = all:warning
 dotnet_enable_roslyn_analyzers = true
+dotnet_code_quality.interpolated_string_composite_format = true
 
 #### Performance ####
 #### https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/performance-warnings ####
@@ -883,6 +884,12 @@ dotnet_diagnostic.CA1871.severity = warning
 # Prefer 'Convert.ToHexString'and 'Convert.ToHexStringLower' overcall chains based on'BitConverter.ToString'
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1872.severity = warning
+
+# CA1873: Use 'Convert.ToHexString' and 'Convert.ToHexStringLower'
+dotnet_diagnostic.CA1873.severity = warning
+
+# CA1874: Prefer static HashData method over ComputeHash
+dotnet_diagnostic.CA1874.severity = warning
 
 #### Obsolete ####
 
@@ -1356,6 +1363,9 @@ dotnet_diagnostic.CA2021.severity = warning
 # Avoid inexact read withStream.Read
 dotnet_diagnostic.CA2022.severity = warning
 
+# Invalid braces in message template
+dotnet_diagnostic.CA2023.severity = warning
+
 # Do not useStreamReader.EndOfStream in asyncmethods
 dotnet_diagnostic.CA2024.severity = warning
 
@@ -1794,11 +1804,20 @@ dotnet_diagnostic.CA2260.severity = warning
 # Do not use ConfigureAwaitOptions.SuppressThrowing with Task<TResult>
 dotnet_diagnostic.CA2261.severity = warning
 
+# Set 'MaxResponseHeadersLength' properly
+dotnet_diagnostic.CA2262.severity = warning
+
 # Do not pass a non-nullable value to 'ArgumentNullException.ThrowIfNull'
 dotnet_diagnostic.CA2264.severity = warning
 
 # Do not compare Span<T> to null or default
 dotnet_diagnostic.CA2265.severity = error
+
+# Use correct type parameter
+dotnet_diagnostic.CA2266.severity = warning
+
+# Use correct type parameter for 'IAsyncEnumerable.ConfigureAwait'
+dotnet_diagnostic.CA2267.severity = warning
 
 #### Language Rules ####
 
@@ -1846,6 +1865,9 @@ dotnet_diagnostic.IDE0072.severity = suggestion
 # Simplify LINQ expression
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
 dotnet_diagnostic.IDE0120.severity = warning
+
+# Simplify LINQ type check and cast
+dotnet_diagnostic.IDE0121.severity = warning
 
 # Make struct fields writable
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
@@ -1937,6 +1959,7 @@ dotnet_style_prefer_inferred_tuple_names = true:warning
 dotnet_style_prefer_simplified_boolean_expressions = false:silent
 dotnet_style_prefer_simplified_interpolation = true:warning
 dotnet_style_require_accessibility_modifiers = never
+dotnet_style_prefer_collection_expression = true:suggestion
 
 # Expression-level preferences
 dotnet_prefer_system_hash_code = true
@@ -2073,6 +2096,9 @@ dotnet_diagnostic.IDE0280.severity = error
 # Use primary constructor
 dotnet_diagnostic.IDE0290.severity = suggestion
 
+# Use collection expression for new
+dotnet_diagnostic.IDE0306.severity = warning
+
 # Add braces
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
 dotnet_diagnostic.IDE0011.severity = error
@@ -2120,6 +2146,21 @@ dotnet_diagnostic.IDE0320.severity = warning
 
 # Prefer 'System.Threading.Lock'
 dotnet_diagnostic.IDE0330.severity = warning
+
+# Use unbound generic type
+dotnet_diagnostic.IDE0340.severity = warning
+
+# Use implicitly typed lambda
+dotnet_diagnostic.IDE0350.severity = warning
+
+# Simplify property accessor
+dotnet_diagnostic.IDE0360.severity = suggestion
+
+# Remove unnecessary `unsafe` modifier
+dotnet_diagnostic.IDE0380.severity = warning
+
+# Remove unnecessary suppression (null-forgiving operator)
+dotnet_diagnostic.IDE0370.severity = warning
 
 dotnet_naming_rule.public_members_must_be_capitalized.severity = warning
 dotnet_naming_rule.public_members_must_be_capitalized.style = camel_case
@@ -2614,6 +2655,30 @@ csharp_prefer_simple_using_statement = false:silent
 csharp_prefer_system_threading_lock = true
 dotnet_style_prefer_collection_expression = true:suggestion
 
+# Enable foreach explicit cast preference
+dotnet_style_prefer_foreach_explicit_cast_in_source = when_strongly_typed:warning
+
+# Prefer System.Threading.Lock
+csharp_prefer_system_threading_lock = true:warning
+
+# Prefer parameter null checking
+csharp_style_prefer_parameter_null_checking = true:suggestion
+
+# Prefer extended property pattern
+csharp_style_prefer_extended_property_pattern = true:suggestion
+
+# Prefer UTF-8 string literals
+csharp_style_prefer_utf8_string_literals = true:suggestion
+
+# Prefer tuple swap
+csharp_style_prefer_tuple_swap = true:suggestion
+
+# Prefer local over anonymous function
+csharp_style_prefer_local_over_anonymous_function = true:suggestion
+
+# Prefer unbound generic type in nameof
+csharp_style_prefer_unbound_generic_type_in_nameof = true:warning
+
 # C# Style Rules
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/language-rules#c-style-rules
 [*.{cs,csx,cake}]
@@ -2689,6 +2754,24 @@ dotnet_diagnostic.IDE0140.severity = suggestion
 
 # Prefer 'null' check over type check 
 dotnet_diagnostic.IDE0150.severity = warning
+
+# Embedded statements must be on their own line 
+dotnet_diagnostic.IDE2001.severity = warning
+
+# Consecutive braces must not have blank line between them
+dotnet_diagnostic.IDE2002.severity = warning
+
+# Blank line required between block and subsequent statement 
+dotnet_diagnostic.IDE2003.severity = warning
+
+# Blank line not allowed after constructor initializer colon 
+dotnet_diagnostic.IDE2004.severity = warning
+
+# Blank line not allowed after conditional expression token 
+dotnet_diagnostic.IDE2005.severity = warning
+
+# Blank line not allowed after arrow expression clause token
+dotnet_diagnostic.IDE2006.severity = warning
 
 # Expression-level preferences
 csharp_prefer_simple_default_expression = true:warning

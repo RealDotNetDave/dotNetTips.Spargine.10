@@ -116,8 +116,8 @@ public class PersonComparerByLastNameTests
 	public void Compare_Works_WhenBothAreNull()
 	{
 		var comparer = new PersonComparerByLastName();
-		Person? p1 = null;
-		Person? p2 = null;
+		Person p1 = null;
+		Person p2 = null;
 		Assert.AreEqual(0, comparer.Compare(p1, p2));
 	}
 
@@ -125,7 +125,7 @@ public class PersonComparerByLastNameTests
 	public void Compare_Works_WhenXIsNull()
 	{
 		var comparer = new PersonComparerByLastName();
-		Person? p1 = null;
+		Person p1 = null;
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
 		Assert.IsTrue(comparer.Compare(p1, p2) < 0);
 	}
@@ -135,7 +135,7 @@ public class PersonComparerByLastNameTests
 	{
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
-		Person? p2 = null;
+		Person p2 = null;
 		Assert.IsTrue(comparer.Compare(p1, p2) > 0);
 	}
 }
