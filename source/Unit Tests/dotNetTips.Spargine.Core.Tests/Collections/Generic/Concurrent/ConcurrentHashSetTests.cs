@@ -4,7 +4,7 @@
 // Created          : 12-06-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -43,7 +43,7 @@ public class ConcurrentHashSetTests
 	public void Add_NullItem_ThrowsArgumentNullException()
 	{
 		var hashSet = new ConcurrentHashSet<string>();
-		Assert.ThrowsException<ArgumentNullException>(() => hashSet.Add(null));
+		Assert.ThrowsExactly<ArgumentNullException>(() => hashSet.Add(null));
 	}
 
 	[TestMethod]
@@ -235,71 +235,56 @@ public class ConcurrentHashSetTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void CopyTo_NegativeArrayIndex_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		var set = new ConcurrentHashSet<string> { "one", "two", "three" };
 		string[] array = new string[3];
 
-		// Act
-		set.CopyTo(array, -1);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => set.CopyTo(array, -1));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CopyTo_NullArray_ThrowsArgumentNullException()
 	{
 		// Arrange
-		var set = new ConcurrentHashSet<string> { "one", "two", "three" };
+		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
 
-		// Act
-		set.CopyTo(null, 0);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => set.CopyTo(null, 0));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void CopyTo_WithInsufficientArraySpace_ThrowsArgumentException()
 	{
 		// Arrange
 		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
 		var array = new int[2];
 
-		// Act
-		set.CopyTo(array, 0);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => set.CopyTo(array, 0));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void CopyTo_WithNegativeArrayIndex_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
 		var array = new int[5];
 
-		// Act
-		set.CopyTo(array, -1);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => set.CopyTo(array, -1));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CopyTo_WithNullArray_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
 
-		// Act
-		set.CopyTo(null, 0);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => set.CopyTo(null, 0));
 	}
 
 	[TestMethod]

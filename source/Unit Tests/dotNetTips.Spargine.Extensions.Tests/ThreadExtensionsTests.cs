@@ -4,7 +4,7 @@
 // Created          : 11-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ThreadExtensionsTests.cs" company="DotNetTips.Spargine.Extensions.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -28,30 +28,24 @@ public class ThreadExtensionsTests
 {
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void TrySetPriority_InvalidPriority_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		var thread = new Thread(() => { });
 		var invalidPriority = (ThreadPriority)int.MaxValue;
 
-		// Act
-		thread.TrySetPriority(invalidPriority);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => thread.TrySetPriority(invalidPriority));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void TrySetPriority_NullThread_ThrowsArgumentNullException()
 	{
 		// Arrange
 		Thread thread = null;
 
-		// Act
-		thread.TrySetPriority(ThreadPriority.Normal);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => thread.TrySetPriority(ThreadPriority.Normal));
 	}
 
 	[TestMethod]
@@ -70,7 +64,6 @@ public class ThreadExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void WaitUntil_NegativeWaitIterations_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
@@ -78,24 +71,19 @@ public class ThreadExtensionsTests
 		var interval = TimeSpan.FromMilliseconds(100);
 		var negativeWaitIterations = -1;
 
-		// Act
-		thread.WaitUntil(interval, negativeWaitIterations);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => thread.WaitUntil(interval, negativeWaitIterations));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void WaitUntil_NullThread_ThrowsArgumentNullException()
 	{
 		// Arrange
 		Thread thread = null;
 		var interval = TimeSpan.FromMilliseconds(100);
 
-		// Act
-		thread.WaitUntil(interval);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => thread.WaitUntil(interval));
 	}
 
 	[TestMethod]

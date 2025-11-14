@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-18-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="DateTimeExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -513,11 +513,11 @@ public class DateTimeExtensionsTests : UnitTester
 	public void IsInRangeThrowsException_ThrowsForOutOfRange()
 	{
 		var now = DateTime.Now;
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(2), "param"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(2), "param"));
 		var ts = TimeSpan.FromDays(1);
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => ts.IsInRangeThrowsException(ts.Add(TimeSpan.FromDays(2)), ts.Add(TimeSpan.FromDays(3)), "param"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ts.IsInRangeThrowsException(ts.Add(TimeSpan.FromDays(2)), ts.Add(TimeSpan.FromDays(3)), "param"));
 		var dto = DateTimeOffset.Now;
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => dto.IsInRangeThrowsException(dto.AddDays(1), dto.AddDays(2), "param"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => dto.IsInRangeThrowsException(dto.AddDays(1), dto.AddDays(2), "param"));
 	}
 
 	/// <summary>
@@ -532,7 +532,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		Assert.IsTrue(result1);
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(5), "TEST"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(5), "TEST"));
 	}
 
 	/// <summary>
@@ -547,7 +547,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		Assert.IsTrue(result1);
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(5), "TEST"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(5), "TEST"));
 	}
 
 	/// <summary>
@@ -562,7 +562,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		Assert.IsTrue(result1);
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.Add(new TimeSpan(10, 0, 0, 0)), new TimeSpan(20, 0, 0, 0), "TEST"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.Add(new TimeSpan(10, 0, 0, 0)), new TimeSpan(20, 0, 0, 0), "TEST"));
 	}
 
 	[TestMethod]

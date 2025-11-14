@@ -37,30 +37,25 @@ public class PersonNameTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonName_Constructor_NullFirstName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var lastName = "Doe";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonName(null, lastName);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonName(null, lastName));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonName_Constructor_NullLastName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var firstName = "John";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonName(firstName, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonName(firstName, null));
 	}
+
 	[TestMethod]
 	public void PersonName_Constructor_ValidParameters_CreatesInstance()
 	{

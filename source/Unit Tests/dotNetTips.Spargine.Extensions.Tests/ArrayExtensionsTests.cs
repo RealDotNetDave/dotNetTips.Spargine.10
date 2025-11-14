@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -301,39 +301,36 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ContainsAny_EmptyInput_ReturnsFalse()
 	{
 		// Arrange
 		var input = string.Empty;
 		var characters = new List<string> { "h", "w" }.AsReadOnly();
 
-		// Act
-		var result = input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ContainsAny_NullCharacters_ReturnsFalse()
 	{
 		// Arrange
 		var input = "Hello, World!";
 		ReadOnlyCollection<string> characters = null;
 
-		// Act
-		var result = input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ContainsAny_NullInput_ReturnsFalse()
 	{
 		// Arrange
 		string input = null;
 		var characters = new List<string> { "h", "w" }.AsReadOnly();
 
-		// Act
-		_ = input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters));
 	}
 
 	[TestMethod]
@@ -570,11 +567,13 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PerformAction_NullOrEmptyArray_DoesNothing()
 	{
+		// Arrange
 		int[] arr = null;
-		arr.PerformAction(x => Assert.Fail("Should not be called"));
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => arr.PerformAction(x => Assert.Fail("Should not be called")));
 	}
 
 	[TestMethod]
@@ -623,14 +622,13 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveFirst_NullArray_ThrowsArgumentNullException()
 	{
 		// Arrange
 		int[] array = null;
 
-		// Act
-		_ = array.RemoveFirst();
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.RemoveFirst());
 	}
 
 	[TestMethod]
@@ -660,34 +658,25 @@ public class ArrayExtensionsTests
 		CollectionAssert.AreEqual(new[] { 2, 3, 4, 5 }, result);
 	}
 
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
-	public void RemoveLast_EmptyArray_ReturnsEmpty()
-	{
-		var arr = new int[0];
-		var result = arr.RemoveLast();
-	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
-	public void RemoveLast_EmptyArray_ReturnsEmptyArray()
+	public void RemoveLast_EmptyArray_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var array = new int[0];
 
 		// Act
-		var result = array.RemoveLast();
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => array.RemoveLast());
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveLast_NullArray_ThrowsArgumentNullException()
 	{
 		// Arrange
 		int[] array = null;
 
 		// Act
-		_ = array.RemoveLast();
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => array.RemoveLast());
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 07-11-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-07-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ReadOnlySpanExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -47,11 +47,14 @@ public class ReadOnlySpanExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PickRandom_EmptySpan_ThrowsArgumentException()
 	{
-		ReadOnlySpan<int> emptySpan = new ReadOnlySpan<int>();
-		emptySpan.PickRandom();
+		// Arrange & Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+		{
+			ReadOnlySpan<int> emptySpan = new ReadOnlySpan<int>();
+			emptySpan.PickRandom();
+		});
 	}
 
 	[TestMethod]

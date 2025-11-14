@@ -4,7 +4,7 @@
 // Created          : 01-03-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="FastStringBuilderTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -242,18 +242,22 @@ public class FastStringBuilderTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToDelimitedString_EmptyDictionaryThrows()
 	{
+		// Arrange
 		var dict = new Dictionary<string, string>();
-		FastStringBuilder.ToDelimitedString(dict, ',');
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => FastStringBuilder.ToDelimitedString(dict, ','));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToDelimitedString_NullDictionaryThrows()
 	{
+		// Arrange
 		Dictionary<string, string> dict = null;
-		FastStringBuilder.ToDelimitedString(dict, ',');
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => FastStringBuilder.ToDelimitedString(dict, ','));
 	}
 }

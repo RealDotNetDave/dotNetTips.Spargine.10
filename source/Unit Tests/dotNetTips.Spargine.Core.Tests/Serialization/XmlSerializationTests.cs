@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-22-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="XmlSerializationTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -158,7 +158,7 @@ public class XmlSerializationTests
 			Assert.Fail(ex.Message);
 		}
 
-		_ = Assert.ThrowsException<FileNotFoundException>(
+		_ = Assert.ThrowsExactly<FileNotFoundException>(
 			() => XmlSerialization.DeserializeFromFile<Person>(new FileInfo("XXX")));
 	}
 

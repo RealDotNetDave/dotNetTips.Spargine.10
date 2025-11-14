@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-24-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="SocketsHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -28,17 +28,17 @@ public class SocketsHelperTests
 {
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task ConnectTcpAsync_NullContext_ThrowsArgumentNullException()
 	{
 		// Arrange
 		SocketsHttpConnectionContext context = null;
 		var cancellationToken = new CancellationToken(false);
 
-		// Act
-		await SocketsHelper.ConnectTcpAsync(context, cancellationToken);
-
-		// Assert is handled by the ExpectedException attribute
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await SocketsHelper.ConnectTcpAsync(context, cancellationToken);
+		});
 	}
 
 }

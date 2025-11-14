@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-28-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -219,7 +219,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		// Test Params
-		_ = Assert.ThrowsException<ArgumentNullException>(() => people.FastCount(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.FastCount(null));
 
 		//Test Finding City names that contain 'A'.
 		Assert.IsNotNull(people.FastCount(p => p.FirstName.Contains('A', StringComparison.CurrentCultureIgnoreCase)));
@@ -345,7 +345,7 @@ public class EnumerableExtensionsTests
 		var person = RandomData.GeneratePerson<Person>();
 		IEqualityComparer<Person> nullComparer = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => people.IndexOf(person, nullComparer));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(person, nullComparer));
 	}
 
 	[TestMethod]
@@ -374,7 +374,7 @@ public class EnumerableExtensionsTests
 	{
 		List<Person> nullCollection = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => nullCollection.IndexOf(p => p.FirstName == "Test"));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.IndexOf(p => p.FirstName == "Test"));
 	}
 
 	[TestMethod]
@@ -382,7 +382,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 
-		Assert.ThrowsException<ArgumentNullException>(() => people.IndexOf(accumulatorPredicate: null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(accumulatorPredicate: null));
 	}
 
 	[TestMethod]
@@ -526,7 +526,7 @@ public class EnumerableExtensionsTests
 	{
 		List<string> nullCollection = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => nullCollection.RemoveNulls().ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.RemoveNulls().ToList());
 	}
 
 	[TestMethod]
@@ -554,7 +554,7 @@ public class EnumerableExtensionsTests
 	{
 		List<int> nullCollection = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => nullCollection.ReplaceIf((x, index) => x % 2 == 0, 0).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.ReplaceIf((x, index) => x % 2 == 0, 0).ToList());
 	}
 
 	[TestMethod]
@@ -562,7 +562,7 @@ public class EnumerableExtensionsTests
 	{
 		var numbers = new List<int> { 1, 2, 3, 4, 5 };
 
-		Assert.ThrowsException<ArgumentNullException>(() => numbers.ReplaceIf(null, 0).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => numbers.ReplaceIf(null, 0).ToList());
 	}
 
 	[TestMethod]
@@ -593,7 +593,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 		List<Person> nullList = null;
 
-		_ = Assert.ThrowsException<ArgumentNullException>(nullList.Shuffle);
+		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);
 
 		Assert.IsTrue(people.Shuffle().Count() == Count);
 	}
@@ -604,7 +604,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 		List<Person> nullList = null;
 
-		_ = Assert.ThrowsException<ArgumentNullException>(nullList.Shuffle);
+		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);
 
 		Assert.IsTrue(people.FastShuffle(5).FastCount() == 5);
 	}
@@ -621,7 +621,7 @@ public class EnumerableExtensionsTests
 
 		var emptyPeople = new List<Person>();
 
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => emptyPeople.Split(10));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => emptyPeople.Split(10));
 	}
 
 	[TestMethod]

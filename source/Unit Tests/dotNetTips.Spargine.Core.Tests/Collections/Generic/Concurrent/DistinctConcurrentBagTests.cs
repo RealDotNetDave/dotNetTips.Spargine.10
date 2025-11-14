@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -189,20 +189,24 @@ public class DistinctConcurrentBagTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void CopyTo_NegativeArrayIndex_ShouldThrowArgumentOutOfRangeException()
 	{
+		// Arrange
 		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
 		var array = new int[5];
-		bag.CopyTo(array, -1);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => bag.CopyTo(array, -1));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CopyTo_NullArray_ShouldThrowArgumentNullException()
 	{
+		// Arrange
 		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
-		bag.CopyTo(null, 0);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.CopyTo(null, 0));
 	}
 
 	[TestMethod]

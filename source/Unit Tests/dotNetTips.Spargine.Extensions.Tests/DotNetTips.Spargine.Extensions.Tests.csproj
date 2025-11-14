@@ -22,16 +22,16 @@
 	<OutputPath>..\..\..\AppBin</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-	<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.10" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
-	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-	<PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
-	<PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.0" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+	<PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
+	<PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
 	<PackageReference Include="coverlet.collector" Version="6.0.4">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
-	<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
+	<PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
   </ItemGroup>
   <ItemGroup>
 	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\dotNetTips.Spargine.10.Core.csproj" />

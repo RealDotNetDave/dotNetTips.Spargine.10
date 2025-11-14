@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ObservableListTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -137,7 +137,6 @@ public class ObservableListTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void CopyTo_ArrayTooSmall_ShouldThrowArgumentException()
 	{
 		// Arrange
@@ -146,8 +145,8 @@ public class ObservableListTests
 		this._observableList.Add(3);
 		int[] array = new int[2]; // Smaller array than list size
 
-		// Act
-		this._observableList.CopyTo(array, 0); // Attempt to copy
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => this._observableList.CopyTo(array, 0));
 	}
 
 	[TestMethod]
@@ -171,24 +170,21 @@ public class ObservableListTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void CopyTo_NegativeArrayIndex_ShouldThrowArgumentOutOfRangeException()
 	{
 		// Arrange
 		this._observableList.Add(1);
 		int[] array = new int[1];
 
-		// Act
-		this._observableList.CopyTo(array, -1); // Attempt to copy with a negative index
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => this._observableList.CopyTo(array, -1));
 	}
 
-
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CopyTo_NullArray_ShouldThrowArgumentNullException()
 	{
-		// Act
-		this._observableList.CopyTo(null, 0); // Attempt to copy to a null array
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.CopyTo(null, 0));
 	}
 
 	[TestMethod]
@@ -252,15 +248,14 @@ public class ObservableListTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void CopyTo_WithNegativeCount_ShouldThrowArgumentOutOfRangeException()
 	{
 		// Arrange
 		this._observableList.Add(1);
 		int[] array = new int[1];
 
-		// Act
-		this._observableList.CopyTo(array, 0, -1); // Attempt to copy with a negative count
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => this._observableList.CopyTo(array, 0, -1));
 	}
 
 	[TestMethod]
@@ -340,7 +335,7 @@ public class ObservableListTests
 		this._observableList.Add(1);
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.ExceptWith(null), "Method should throw ArgumentNullException if the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.ExceptWith(null), "Method should throw ArgumentNullException if the other collection is null.");
 	}
 
 	[TestMethod]
@@ -410,7 +405,7 @@ public class ObservableListTests
 		this._observableList.Add(1);
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.IntersectWith(null), "Method should throw ArgumentNullException if the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.IntersectWith(null), "Method should throw ArgumentNullException if the other collection is null.");
 	}
 
 	[TestMethod]
@@ -480,7 +475,7 @@ public class ObservableListTests
 	public void IsProperSubsetOf_WithNullOtherCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange & Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.IsProperSubsetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.IsProperSubsetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
 	}
 
 	[TestMethod]
@@ -533,7 +528,7 @@ public class ObservableListTests
 	public void IsProperSupersetOf_WithNullOtherCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange & Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.IsProperSupersetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.IsProperSupersetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
 	}
 
 	[TestMethod]
@@ -639,7 +634,7 @@ public class ObservableListTests
 	public void IsSubsetOf_WithNullOtherCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange & Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.IsSubsetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.IsSubsetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
 	}
 
 	[TestMethod]
@@ -706,7 +701,7 @@ public class ObservableListTests
 	public void IsSupersetOf_WithNullOtherCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange & Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.IsSupersetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.IsSupersetOf(null), "Method should throw ArgumentNullException if the other collection is null.");
 	}
 
 	[TestMethod]
@@ -783,7 +778,7 @@ public class ObservableListTests
 		this._observableList.Add(3);
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.Overlaps(null), "Should throw ArgumentNullException when the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.Overlaps(null), "Should throw ArgumentNullException when the other collection is null.");
 	}
 
 	[TestMethod]
@@ -844,7 +839,6 @@ public class ObservableListTests
 		Assert.IsTrue(this._observableList.Contains(1), "List should contain the item that does not match the predicate.");
 	}
 
-
 	[TestMethod]
 	public void RemoveWhere_WithNoMatchingPredicate_ShouldNotRemoveAnyItems()
 	{
@@ -871,7 +865,7 @@ public class ObservableListTests
 		this._observableList.Add(3);
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.RemoveWhere(null), "Should throw ArgumentNullException for null predicate.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.RemoveWhere(null), "Should throw ArgumentNullException for null predicate.");
 	}
 
 	[TestMethod]
@@ -911,7 +905,7 @@ public class ObservableListTests
 	public void SetEquals_WithNullOtherCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange & Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.SetEquals(null), "Should throw ArgumentNullException when the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.SetEquals(null), "Should throw ArgumentNullException when the other collection is null.");
 	}
 
 	[TestMethod]
@@ -967,7 +961,7 @@ public class ObservableListTests
 		// Arrange
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.SymmetricExceptWith(null), "Method should throw ArgumentNullException when the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.SymmetricExceptWith(null), "Method should throw ArgumentNullException when the other collection is null.");
 	}
 
 
@@ -1061,7 +1055,7 @@ public class ObservableListTests
 		// Arrange
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => this._observableList.UnionWith(null), "Method should throw ArgumentNullException when the other collection is null.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.UnionWith(null), "Method should throw ArgumentNullException when the other collection is null.");
 	}
 
 	[TestMethod]
@@ -1096,6 +1090,7 @@ public class ObservableListTests
 		Assert.IsTrue(this._observableList.Contains(4), "List should contain elements from the other collection.");
 		Assert.AreEqual(4, this._observableList.Count, "List should contain exactly four unique elements.");
 	}
+
 
 	internal class CustomIntComparer : IEqualityComparer<int>
 	{

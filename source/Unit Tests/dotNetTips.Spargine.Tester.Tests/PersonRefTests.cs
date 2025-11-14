@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="PersonRefTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -15,6 +15,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,17 +33,15 @@ public class PersonRefTests
 	public void Address1_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Address1 = new string('a', 101));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Address1 = new string('a', 101));
 	}
 
 	[TestMethod]
 	public void Address2_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Address2 = new string('a', 101));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Address2 = new string('a', 101));
 	}
-
-
 
 	[TestMethod]
 	public void Addresses_SetSameCollection_DoesNotChange()
@@ -60,15 +59,14 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void BornOn_SetFutureDate_Throws()
 	{
 		// Arrange
-		var person = new Person("test@example.com", "1");
+		var person = new Person("test@example.com", "149483736633");
 		var future = DateTimeOffset.UtcNow.AddDays(1);
 
 		// Act
-		person.BornOn = future;
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.BornOn = future);
 	}
 
 	[TestMethod]
@@ -98,22 +96,21 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void CellPhone_SetTooLong_Throws()
 	{
 		// Arrange
-		var person = new Person("test@example.com", "1");
+		var person = new Person("test@example.com", "149483736633");
 		var phone = new string('1', 51);
 
 		// Act
-		person.CellPhone = phone;
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.CellPhone = phone);
 	}
 
 	[TestMethod]
 	public void City_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.City = new string('a', 101));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.City = new string('a', 101));
 	}
 
 	[TestMethod]
@@ -146,7 +143,7 @@ public class PersonRefTests
 	public void CompareTo_Object_ThrowsOnInvalidType()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentException>(() => ((IComparable)address).CompareTo("not an address"));
+		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)address).CompareTo("not an address"));
 	}
 
 	[TestMethod]
@@ -194,22 +191,22 @@ public class PersonRefTests
 	public void Country_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Country = new string('a', 56));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Country = new string('a', 56));
 	}
 
 	[TestMethod]
 	public void CountyProvince_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.CountyProvince = new string('a', 61));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.CountyProvince = new string('a', 61));
 	}
 
 	[TestMethod]
 	public void Email_InitOnly_ThrowsOnNullOrEmptyOrInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => new Person(null!, "1234567890"));
-		Assert.ThrowsException<ArgumentNullException>(() => new Person(string.Empty, "1234567890"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Person(new string('a', 76), "1234567890"));
+		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(null!, "1234567890"));
+		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(string.Empty, "1234567890"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person(new string('a', 76), "1234567890"));
 	}
 
 	[TestMethod]
@@ -254,29 +251,28 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void FirstName_SetTooLong_Throws()
 	{
 		// Arrange
-		var person = new Person("test@example.com", "1");
+		var person = new Person("test@example.com", "149483736633");
 		var name = new string('a', 51);
 
 		// Act
-		person.FirstName = name;
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.FirstName = name);
 	}
 
 	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Address("short"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Address(new string('a', 51)));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Address("short"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Address(new string('a', 51)));
 	}
 
 	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength_Person()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Person("email@email.com", "short"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Person("email@email.com", new string('a', 51)));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", "short"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", new string('a', 51)));
 	}
 
 	[TestMethod]
@@ -293,15 +289,14 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void LastName_SetTooLong_Throws()
 	{
 		// Arrange
-		var person = new Person("test@example.com", "1");
+		var person = new Person("test@example.com", "149483736633");
 		var name = new string('a', 51);
 
 		// Act
-		person.LastName = name;
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.LastName = name);
 	}
 
 	[TestMethod]
@@ -314,8 +309,8 @@ public class PersonRefTests
 		Assert.IsFalse(a1 != a2);
 		Assert.IsFalse(a1 == a3);
 		Assert.IsTrue(a1 != a3);
-		Assert.IsTrue((Address?)null == (Address?)null);
-		Assert.IsFalse((Address?)null != (Address?)null);
+		Assert.IsTrue((Address)null == (Address)null);
+		Assert.IsFalse((Address)null != (Address)null);
 	}
 
 	[TestMethod]
@@ -327,12 +322,10 @@ public class PersonRefTests
 		Assert.IsTrue(a1 <= a2 || a2 <= a1);
 		Assert.IsTrue(a1 > a2 || a2 > a1 || a1 == a2);
 		Assert.IsTrue(a1 >= a2 || a2 >= a1);
-		Assert.IsTrue(a1 <= a1);
-		Assert.IsTrue(a1 >= a1);
 		Assert.IsFalse(a1 < null);
 		Assert.IsTrue(a1 > null);
-		Assert.IsTrue((Address?)null < a1);
-		Assert.IsFalse((Address?)null > a1);
+		Assert.IsTrue((Address)null < a1);
+		Assert.IsFalse((Address)null > a1);
 	}
 
 	[TestMethod]
@@ -401,7 +394,6 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void Person_Constructor_NullEmail_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -409,20 +401,17 @@ public class PersonRefTests
 
 		// Act
 
-		_ = new Person(null, id);
+		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(null, id));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void Person_Constructor_NullId_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var email = "test@example.com";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new Person(email, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = new Person(email, null));
 	}
 
 	[TestMethod]
@@ -632,36 +621,35 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void Phone_SetTooLong_Throws()
 	{
 		// Arrange
-		var person = new Person("test@example.com", "1");
+		var person = new Person("test@example.com", "149483736633");
 		var phone = new string('1', 51);
 
 		// Act
-		person.Phone = phone;
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.Phone = phone);
 	}
 
 	[TestMethod]
 	public void Phone_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Phone = new string('a', 51));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Phone = new string('a', 51));
 	}
 
 	[TestMethod]
 	public void PostalCode_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.PostalCode = new string('a', 26));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.PostalCode = new string('a', 26));
 	}
 
 	[TestMethod]
 	public void State_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.State = new string('a', 66));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.State = new string('a', 66));
 	}
 
 	[TestMethod]

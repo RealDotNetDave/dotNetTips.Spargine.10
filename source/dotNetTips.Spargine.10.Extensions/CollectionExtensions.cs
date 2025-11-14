@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-01-2025
+// Last Modified On : 11-13-2025
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections.Frozen;
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
@@ -220,18 +221,30 @@ public static class CollectionExtensions
 		}
 
 		/// <summary>
-		/// Converts a <see cref="ICollection{T}"/> to a <see cref="ReadOnlySpan{T}"/>.
+		/// Converts an <see cref="ICollection{T}"/> to a <see cref="ReadOnlySpan{T}"/>.
 		/// This method provides an efficient way to access a collection with the performance benefits of a <see cref="ReadOnlySpan{T}"/>.
 		/// </summary>
 		/// <returns>
-		/// A read-only span representing the same elements as the collection.
+		/// A <see cref="ReadOnlySpan{T}"/> representing the same elements as the collection.
 		/// </returns>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown if <paramref name="collection"/> is <c>null</c>.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <remarks>
-		/// This method is particularly useful for high-performance scenarios where the overhead of enumeration or random access in a collection needs to be minimized.
+		/// This method creates a new array from the collection and returns it as a <see cref="ReadOnlySpan{T}"/>.
+		/// This is particularly useful for high-performance scenarios where the overhead of enumeration or random access 
+		/// in a collection needs to be minimized. Note that this method allocates a new array, so the span is a snapshot 
+		/// of the collection at the time of the call.
 		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var myCollection = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// ReadOnlySpan&lt;int&gt; span = myCollection.AsReadOnlySpan();
+		/// // span now contains the elements from myCollection
+		/// foreach (var item in span)
+		/// {
+		///     Console.WriteLine(item);
+		/// }
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -250,7 +263,6 @@ public static class CollectionExtensions
 		/// Converts a <see cref="Collection{T}" /> to <see cref="Span{T}" />.
 		/// This method provides an efficient way to access a <see cref="Collection{T}" /> with the performance benefits of a <see cref="Span{T}" />.
 		/// </summary>
-		/// <typeparam name="T">The type of elements in the collection.</typeparam>
 		/// <returns>A span representing the same elements as the collection.</returns>
 		/// <remarks>
 		/// This method is particularly useful for high-performance scenarios where the overhead of enumeration or random access in a collection needs to be minimized.

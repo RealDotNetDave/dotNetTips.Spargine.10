@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="EnumHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,10 +38,10 @@ public class EnumHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetDescription_ThrowsOnNull()
 	{
-		EnumHelper.GetDescription(null!);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => EnumHelper.GetDescription(null!));
 	}
 
 	[TestMethod]
@@ -82,9 +82,9 @@ public class EnumHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void Parse_ThrowsOnNullOrEmpty()
 	{
-		EnumHelper.Parse<Status>(null!);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => EnumHelper.Parse<Status>(null!));
 	}
 }

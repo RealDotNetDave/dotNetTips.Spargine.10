@@ -1,4 +1,16 @@
-
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.Core.Tests
+// Author           : David McCarter
+// Created          : 05-14-2025
+//
+// Last Modified By : David McCarter
+// Last Modified On : 11-14-2025
+// ***********************************************************************
+// <copyright file="PasswordHasherTests.cs" company="DotNetTips.Spargine.Core.Tests">
+//     Copyright (c) McCarter Consulting. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using DotNetTips.Spargine.Core.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -90,14 +102,13 @@ public class PasswordHasherTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NotSupportedException))]
 	public void HashPassword_UnsupportedAlgorithm_ThrowsNotSupportedException()
 	{
 		// Arrange
 		var password = "TestPassword123";
 
-		// Act
-		_ = PasswordHasher.HashPassword(password, (HashAlgorithmType)999);
+		// Act & Assert
+		Assert.ThrowsExactly<NotSupportedException>(() => PasswordHasher.HashPassword(password, (HashAlgorithmType)999));
 	}
 
 
@@ -174,14 +185,13 @@ public class PasswordHasherTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void VerifyHashedPassword_UnsupportedAlgorithm_ThrowsNotSupportedException()
 	{
 		// Arrange
 		var hashedPassword = "SomeHashedPassword";
 		var password = "TestPassword123";
 
-		// Act
-		_ = PasswordHasher.VerifyHashedPassword(hashedPassword, password, (HashAlgorithmType)999);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => PasswordHasher.VerifyHashedPassword(hashedPassword, password, (HashAlgorithmType)999));
 	}
 }

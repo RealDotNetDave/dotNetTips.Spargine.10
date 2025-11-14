@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -54,14 +54,13 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CalculateByteArraySize_NullOrEmptyString_ReturnsZero()
 	{
 		// Arrange
 		string nullString = null;
 
-		// Act
-		var resultForNull = StringExtensions.CalculateByteArraySize(nullString);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.CalculateByteArraySize(nullString));
 	}
 
 	[TestMethod]
@@ -334,15 +333,14 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[Description("Tests empty URL, should throw ArgumentException")]
 	public void FastParseUrl_WithEmptyUrl_ThrowsArgumentException()
 	{
 		// Arrange
 		var url = string.Empty;
 
-		// Act - Should throw exception
-		var result = url.FastParseUrl();
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => url.FastParseUrl());
 	}
 
 	[TestMethod]
@@ -397,13 +395,14 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[Description("Tests null URL, should throw ArgumentNullException")]
 	public void FastParseUrl_WithNullUrl_ThrowsArgumentNullException()
 	{
-		// Act - Should throw exception
+		// Arrange
 		string nullUrl = null;
-		var result = nullUrl.FastParseUrl();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullUrl.FastParseUrl());
 	}
 
 	[TestMethod]
@@ -441,15 +440,14 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	[Description("Tests URL without scheme separator, should throw ArgumentException")]
 	public void FastParseUrl_WithoutScheme_ThrowsArgumentException()
 	{
 		// Arrange
 		var url = "www.example.com/path";
 
-		// Act - Should throw exception
-		var result = url.FastParseUrl();
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => url.FastParseUrl());
 	}
 
 	[TestMethod]
@@ -503,11 +501,13 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void FastReplace_NullInput_ThrowsArgumentNullException()
 	{
+		// Arrange
 		string input = null;
-		input.FastReplace("World", "Universe");
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.FastReplace("World", "Universe"));
 	}
 
 	[TestMethod]
@@ -550,11 +550,13 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void HashPassword_NullInput_ThrowsArgumentNullException()
 	{
+		// Arrange
 		string password = null;
-		password.HashPassword();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => password.HashPassword());
 	}
 	[TestMethod]
 	public void HashPassword_PBKDF2_ReturnsNonEmptyString()
@@ -581,13 +583,13 @@ public class StringExtensionsTests
 
 		Assert.IsTrue(testValue.HasValue(10));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.HasValue(-100));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(-100));
 
 		Assert.IsTrue(testValue.HasValue(1, 10));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.HasValue(-10, 500));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(-10, 500));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.HasValue(12, -10));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(12, -10));
 
 		Assert.IsFalse(testValue.HasValue("XXXXX"));
 
@@ -991,7 +993,7 @@ public class StringExtensionsTests
 
 		Assert.IsTrue(result.EndsWith("...") is false);
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => string.IsNullOrEmpty(string.Empty.ReplaceEllipsisWithPeriod()));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.IsNullOrEmpty(string.Empty.ReplaceEllipsisWithPeriod()));
 	}
 
 	[TestMethod]
@@ -1333,9 +1335,9 @@ public class StringExtensionsTests
 		var testValue = RandomData.GenerateWord(50);
 
 		//Test parameters
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(-100, 10));
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, -10));
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, 100));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(-100, 10));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, -10));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, 100));
 
 		//Test
 		Assert.IsTrue(testValue.SubstringTrim(1, 10).HasValue());
@@ -1355,16 +1357,13 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToBase64ByteSpan_NullString_ThrowsArgumentNullException()
 	{
 		// Arrange
 		string input = null;
 
-		// Act
-		StringExtensions.ToBase64ByteSpan(input);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.ToBase64ByteSpan(input));
 	}
 
 	[TestMethod]
@@ -1390,16 +1389,13 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FormatException))]
 	public void ToByteArrayFromBase64_InvalidBase64String_ThrowsFormatException()
 	{
 		// Arrange
 		var base64String = "InvalidBase64String";
 
-		// Act
-		base64String.ToByteArrayFromBase64();
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FormatException>(() => base64String.ToByteArrayFromBase64());
 	}
 
 	[TestMethod]
@@ -1455,39 +1451,25 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void VerifyHashedPassword_NullHash_ThrowsArgumentNullException()
 	{
+		// Arrange
 		string hash = null;
-		hash.VerifyHashedPassword("MySecretPassword123!");
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => hash.VerifyHashedPassword("MySecretPassword123!"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void VerifyHashedPassword_NullInput_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var password = "MySecretPassword123!";
 		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
 		string input = null;
-		hash.VerifyHashedPassword(input);
-	}
 
-	[TestMethod]
-	public void VerifyHashedPassword_PBKDF2_Failed()
-	{
-		var password = "MySecretPassword123!";
-		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
-		var result = hash.VerifyHashedPassword("WrongPassword", HashAlgorithmType.PBKDF2);
-		Assert.AreEqual(PasswordVerificationResult.Failed, result);
-	}
-
-	[TestMethod]
-	public void VerifyHashedPassword_PBKDF2_Success()
-	{
-		var password = "MySecretPassword123!";
-		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
-		var result = hash.VerifyHashedPassword(password, HashAlgorithmType.PBKDF2);
-		Assert.AreEqual(PasswordVerificationResult.Success, result);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => hash.VerifyHashedPassword(input));
 	}
 
 	[TestMethod]

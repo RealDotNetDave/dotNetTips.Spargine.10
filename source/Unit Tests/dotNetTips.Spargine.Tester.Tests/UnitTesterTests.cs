@@ -56,18 +56,16 @@ public class UnitTesterTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PropertiesToString_NullInput_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var tester = new TestUnitTester();
 
 		// Act
-		tester.PropertiesToString<Sample>(null!, p => true);
+		Assert.ThrowsExactly<ArgumentNullException>(() => tester.PropertiesToString<Sample>(null!, p => true));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PropertiesToString_NullSelector_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -75,7 +73,7 @@ public class UnitTesterTests
 		var sample = new Sample();
 
 		// Act
-		tester.PropertiesToString(sample, null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => tester.PropertiesToString(sample, null!));
 	}
 
 	[TestMethod]
@@ -94,7 +92,7 @@ public class UnitTesterTests
 
 	private class TestUnitTester : UnitTester
 	{
-		public TestUnitTester(string? outputDirectory = null) : base(outputDirectory) { }
+		public TestUnitTester(string outputDirectory = null) : base(outputDirectory) { }
 
 		public new string PropertiesToString<T>(T input, Func<PropertyInfo, bool> propertySelector) =>
 			base.PropertiesToString(input, propertySelector);

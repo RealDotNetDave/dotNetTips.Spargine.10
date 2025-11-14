@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-28-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -43,7 +43,7 @@ public class DictionaryExtensionsTests
 		var newPerson = RandomData.GeneratePerson<Person>();
 
 		// Test parameters
-		_ = Assert.ThrowsException<ArgumentNullException>(() => people.AddIfNotExists(null, newPerson));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.AddIfNotExists(null, newPerson));
 
 		// Test
 		Assert.IsTrue(people.AddIfNotExists(newPerson.Id, newPerson));
@@ -93,7 +93,7 @@ public class DictionaryExtensionsTests
 		var value = 42;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.AddIfNotExists(key, value));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.AddIfNotExists(key, value));
 	}
 
 	[TestMethod]
@@ -105,7 +105,7 @@ public class DictionaryExtensionsTests
 		var value = 42;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.AddIfNotExists(key, value));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.AddIfNotExists(key, value));
 	}
 
 	[TestMethod]
@@ -233,7 +233,7 @@ public class DictionaryExtensionsTests
 		var newPerson = RandomData.GeneratePerson<Person>();
 
 		// Test Parameters
-		_ = Assert.ThrowsException<ArgumentNullException>(() => people.GetOrAdd(null, newPerson));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.GetOrAdd(null, newPerson));
 
 		// TEST
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
@@ -349,7 +349,7 @@ public class DictionaryExtensionsTests
 	{
 		Dictionary<string, Person> nullDictionary = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => nullDictionary.ToFrozenDictionary());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToFrozenDictionary());
 	}
 
 	[TestMethod]
@@ -384,7 +384,7 @@ public class DictionaryExtensionsTests
 	{
 		Dictionary<string, Person> nullDictionary = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => nullDictionary.ToImmutableSortedDictionary());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToImmutableSortedDictionary());
 	}
 
 	/// <summary>
@@ -443,7 +443,7 @@ public class DictionaryExtensionsTests
 		Dictionary<string, int> dictionary = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.ToLookupWithDefault(0));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToLookupWithDefault(0));
 	}
 
 
@@ -542,7 +542,7 @@ public class DictionaryExtensionsTests
 		IComparer<string> comparer = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.ToSortedDictionary(comparer));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSortedDictionary(comparer));
 	}
 
 	[TestMethod]
@@ -553,7 +553,7 @@ public class DictionaryExtensionsTests
 		var comparer = Comparer<string>.Default;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.ToSortedDictionary(comparer));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSortedDictionary(comparer));
 	}
 
 	/// <summary>
@@ -616,7 +616,7 @@ public class DictionaryExtensionsTests
 		Func<string, int> func = key => 0;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.TryGetValue("key1", func));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryGetValue("key1", func));
 	}
 
 	[TestMethod]
@@ -631,7 +631,7 @@ public class DictionaryExtensionsTests
 		Func<string, int> func = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => dictionary.TryGetValue("key3", func));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryGetValue("key3", func));
 	}
 
 	/// <summary>
@@ -645,7 +645,7 @@ public class DictionaryExtensionsTests
 		var personFromCollection = people.Shuffle().First();
 
 		// Test Parameters
-		_ = Assert.ThrowsException<ArgumentNullException>(() => people.Upsert(null, newPerson));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.Upsert(null, newPerson));
 
 		// Test
 		people.Upsert(newPerson.Id, newPerson);
@@ -654,7 +654,6 @@ public class DictionaryExtensionsTests
 		people.Upsert(personFromCollection.Value.Id, personFromCollection.Value);
 		Assert.IsTrue(people.FastCount() == CollectionCount + 1);
 	}
-
 }
 
 [ExcludeFromCodeCoverage]

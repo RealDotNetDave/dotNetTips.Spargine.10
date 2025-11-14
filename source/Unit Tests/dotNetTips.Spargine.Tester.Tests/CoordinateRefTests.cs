@@ -59,7 +59,6 @@ public class CoordinateRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidCastException))]
 	public void Coordinate_CompareTo_InvalidObjectType_ShouldThrowArgumentException()
 	{
 		// Arrange
@@ -67,18 +66,17 @@ public class CoordinateRefTests
 		var invalidObject = new object();
 
 		// Act
-		_ = coord.CompareTo(invalidObject);
+		Assert.ThrowsExactly<InvalidCastException>(() => coord.CompareTo(invalidObject));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void Coordinate_CompareTo_NullObject_ShouldThrowArgumentException()
 	{
 		// Arrange
 		var coord = new Coordinate(1, 2, 3);
 
 		// Act
-		_ = coord.CompareTo(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => coord.CompareTo(null));
 	}
 
 	[TestMethod]

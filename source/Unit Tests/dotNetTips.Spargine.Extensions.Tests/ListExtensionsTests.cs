@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-27-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -233,7 +233,7 @@ public class ListExtensionsTests
 		List<int> nullList = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => nullList.GenerateHashCode(), "Expected an ArgumentNullException for a null list.");
+		Assert.ThrowsExactly<ArgumentNullException>(() => nullList.GenerateHashCode(), "Expected an ArgumentNullException for a null list.");
 	}
 
 	[TestMethod]
@@ -243,7 +243,7 @@ public class ListExtensionsTests
 		var list = new List<int>();
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentException>(() => list.IndexAtLooped(0), "Expected an ArgumentOutOfRangeException for an empty list.");
+		Assert.ThrowsExactly<ArgumentException>(() => list.IndexAtLooped(0), "Expected an ArgumentOutOfRangeException for an empty list.");
 	}
 
 	[TestMethod]
@@ -449,7 +449,7 @@ public class ListExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).ToImmutable();
 		List<Person> nullList = null;
 
-		_ = Assert.ThrowsException<ArgumentNullException>(nullList.Shuffle);
+		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);
 
 		var shuffledPeople = people.Shuffle();
 
@@ -533,16 +533,13 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToCollectionWithNullListTest()
 	{
 		// Arrange
 		List<int> list = null;
 
 		// Act
-		var result = list.ToCollection();
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToCollection());
 	}
 
 
@@ -575,16 +572,11 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToDistinctBlockingCollectionWithNullListTest()
 	{
-		// Arrange
 		List<int> list = null;
 
-		// Act
-		var result = list.ToDistinctBlockingCollection();
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToDistinctBlockingCollection());
 	}
 
 	[TestMethod]
@@ -629,30 +621,20 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToFastSortedList_WithNullComparer_ShouldThrowArgumentNullException()
 	{
-		// Arrange
 		var list = new List<int> { 1, 2, 3 };
 		IComparer<int> comparer = null;
 
-		// Act
-		var result = list.ToFastSortedList(comparer);
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList(comparer));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToFastSortedList_WithNullList_ShouldThrowArgumentNullException()
 	{
-		// Arrange
 		List<int> list = null;
 
-		// Act
-		var result = list.ToFastSortedList();
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList());
 	}
 
 	[TestMethod]
@@ -734,16 +716,13 @@ public class ListExtensionsTests
 
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToFrozenSetWithNullListTest()
 	{
 		// Arrange
 		List<int> list = null;
 
 		// Act
-		var result = list.ToFrozenSet();
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFrozenSet());
 	}
 
 
@@ -760,7 +739,6 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task ToListAsync_WithNullInput_ShouldThrowArgumentNullException()
 	{
 		// Arrange
@@ -768,7 +746,10 @@ public class ListExtensionsTests
 		var cancellationToken = CancellationToken.None;
 
 		// Act
-		await data.ToListAsync(cancellationToken);
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await data.ToListAsync(cancellationToken);
+		});
 	}
 
 	[TestMethod]
@@ -844,16 +825,11 @@ public class ListExtensionsTests
 
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToReadOnlyListWithNullListTest()
 	{
-		// Arrange
 		List<int> list = null;
 
-		// Act
-		var readOnlyList = list.ToReadOnlyList();
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToReadOnlyList());
 	}
 
 	[TestMethod]
@@ -889,16 +865,11 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToReadOnlyObservableCollectionWithNullListTest()
 	{
-		// Arrange
 		List<int> list = null;
 
-		// Act
-		var readOnlyObservableCollection = list.ToReadOnlyObservableCollection();
-
-		// Assert is handled by the ExpectedException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToReadOnlyObservableCollection());
 	}
 
 }

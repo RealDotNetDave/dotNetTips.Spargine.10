@@ -27,12 +27,11 @@ public class DriveHelperTests
 {
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[SupportedOSPlatform("windows")]
 	public void GetDriveFormat_NullDrive_ThrowsArgumentNullException()
 	{
 		// Act
-		DriveHelper.GetDriveFormat(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveFormat(null));
 	}
 
 	[TestMethod]
@@ -50,12 +49,11 @@ public class DriveHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[SupportedOSPlatform("windows")]
 	public void GetDriveFreeSpace_NullDrive_ThrowsArgumentNullException()
 	{
 		// Act
-		DriveHelper.GetDriveFreeSpace(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveFreeSpace(null));
 	}
 
 	[TestMethod]
@@ -73,12 +71,11 @@ public class DriveHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[SupportedOSPlatform("windows")]
 	public void GetDriveLabel_NullDrive_ThrowsArgumentNullException()
 	{
 		// Act
-		DriveHelper.GetDriveLabel(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveLabel(null));
 	}
 
 	[TestMethod]
@@ -96,12 +93,11 @@ public class DriveHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[SupportedOSPlatform("windows")]
 	public void GetDriveSerialNumber_NullDrive_ThrowsArgumentNullException()
 	{
 		// Act
-		DriveHelper.GetDriveSerialNumber(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveSerialNumber(null));
 	}
 
 	[TestMethod]
@@ -119,12 +115,11 @@ public class DriveHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	[SupportedOSPlatform("windows")]
 	public void GetDriveTotalSize_NullDrive_ThrowsArgumentNullException()
 	{
 		// Act
-		DriveHelper.GetDriveTotalSize(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveTotalSize(null));
 	}
 
 	[TestMethod]

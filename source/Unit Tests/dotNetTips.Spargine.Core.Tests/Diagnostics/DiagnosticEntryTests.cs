@@ -4,7 +4,7 @@
 // Created          : 07-31-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-31-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="DiagnosticEntryTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -19,20 +19,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
 
 namespace DotNetTips.Spargine.Core.Tests.Diagnostics;
+
 [TestClass]
 public class DiagnosticEntryTests
 {
-
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void Constructor_NullMessage_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var timestamp = DateTimeOffset.UtcNow;
 		string message = null;
 		var elapsed = TimeSpan.Zero;
 
-		_ = new DiagnosticEntry(timestamp, message, elapsed);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new DiagnosticEntry(timestamp, message, elapsed));
 	}
+
 	[TestMethod]
 	public void Constructor_ValidParameters_PropertiesSetCorrectly()
 	{

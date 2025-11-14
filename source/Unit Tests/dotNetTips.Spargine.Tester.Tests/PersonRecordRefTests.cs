@@ -15,6 +15,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -44,12 +45,11 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void BornOn_Init_ThrowsOnFutureDate()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new PersonRecord("email@email.com", "1234567890") { BornOn = DateTimeOffset.UtcNow.AddDays(1) });
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void BornOn_SetFutureDate_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
@@ -57,7 +57,7 @@ public class PersonRecordRefTests
 		var person = new PersonRecord("test@example.com", "1229282723");
 
 		// Act
-		_ = person with { BornOn = futureDate };
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person with { BornOn = futureDate });
 
 	}
 
@@ -78,7 +78,7 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void CellPhone_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new PersonRecord("email@email.com", "1234567890") { CellPhone = new string('a', 51) });
 	}
 
@@ -86,7 +86,7 @@ public class PersonRecordRefTests
 	public void CompareTo_Object_ThrowsOnInvalidType()
 	{
 		var record = new PersonRecord("email@email.com", "1234567890");
-		Assert.ThrowsException<ArgumentException>(() => ((IComparable)record).CompareTo("not a person record"));
+		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)record).CompareTo("not a person record"));
 	}
 
 	[TestMethod]
@@ -119,29 +119,29 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void Email_InitOnly_ThrowsOnNullOrEmptyOrInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => new PersonRecord(null!, "1234567890"));
-		Assert.ThrowsException<ArgumentNullException>(() => new PersonRecord(string.Empty, "1234567890"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new PersonRecord(new string('a', 76), "1234567890"));
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonRecord(null!, "1234567890"));
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonRecord(string.Empty, "1234567890"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new PersonRecord(new string('a', 76), "1234567890"));
 	}
 
 	[TestMethod]
 	public void FirstName_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new PersonRecord("email@email.com", "1234567890") { FirstName = new string('a', 51) });
 	}
 
 	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new PersonRecord("email@email.com", "short"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new PersonRecord("email@email.com", new string('a', 51)));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new PersonRecord("email@email.com", "short"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new PersonRecord("email@email.com", new string('a', 51)));
 	}
 
 	[TestMethod]
 	public void LastName_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new PersonRecord("email@email.com", "1234567890") { LastName = new string('a', 51) });
 	}
 
@@ -177,12 +177,10 @@ public class PersonRecordRefTests
 		Assert.IsTrue(p1 <= p2 || p2 <= p1);
 		Assert.IsTrue(p1 > p2 || p2 > p1 || p1 == p2);
 		Assert.IsTrue(p1 >= p2 || p2 >= p1);
-		Assert.IsTrue(p1 <= p1);
-		Assert.IsTrue(p1 >= p1);
 		Assert.IsFalse(p1 < null);
 		Assert.IsTrue(p1 > null);
-		Assert.IsTrue((PersonRecord?)null < p1);
-		Assert.IsFalse((PersonRecord?)null > p1);
+		Assert.IsTrue((PersonRecord)null < p1);
+		Assert.IsFalse((PersonRecord)null > p1);
 	}
 
 	[TestMethod]
@@ -215,16 +213,12 @@ public class PersonRecordRefTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void PersonRecord_Constructor_NullId_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var email = "test@example.com";
 
-		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonRecord(email, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new PersonRecord(email, null));
 	}
 
 	[TestMethod]
@@ -390,7 +384,7 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void Phone_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new PersonRecord("email@email.com", "1234567890") { Phone = new string('a', 51) });
 	}
 

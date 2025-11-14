@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -97,14 +97,14 @@ public class TypeHelperTests : UnitTester
 	public void FindDerivedTypes_AppDomain_NullBaseType_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, null, true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, null, true));
 	}
 
 	[TestMethod]
 	public void FindDerivedTypes_AppDomain_NullDomain_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(null, typeof(Exception), true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(null, typeof(Exception), true));
 	}
 
 	[TestMethod]
@@ -122,7 +122,7 @@ public class TypeHelperTests : UnitTester
 	public void FindDerivedTypes_CurrentlyLoadedAssemblies_NullBaseType_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(null, true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(null, true));
 	}
 
 	[TestMethod]
@@ -152,14 +152,14 @@ public class TypeHelperTests : UnitTester
 	public void FindDerivedTypes_Directory_NullBaseType_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(new DirectoryInfo(App.ExecutingFolder()), SearchOption.AllDirectories, null, true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(new DirectoryInfo(App.ExecutingFolder()), SearchOption.AllDirectories, null, true));
 	}
 
 	[TestMethod]
 	public void FindDerivedTypes_Directory_NullPath_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(null, SearchOption.AllDirectories, typeof(Exception), true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FindDerivedTypes(null, SearchOption.AllDirectories, typeof(Exception), true));
 	}
 
 	[TestMethod]
@@ -197,7 +197,7 @@ public class TypeHelperTests : UnitTester
 		var fileInfo = new FileInfo(fileName);
 
 		// Act & Assert
-		Assert.ThrowsException<JsonException>(() => TypeHelper.FromJsonFile<Person>(fileInfo));
+		_ = Assert.ThrowsExactly<JsonException>(() => TypeHelper.FromJsonFile<Person>(fileInfo));
 
 		// Cleanup
 		File.Delete(fileName);
@@ -210,14 +210,14 @@ public class TypeHelperTests : UnitTester
 		var fileInfo = new FileInfo(@"C:\nonexistentfile.json");
 
 		// Act & Assert
-		Assert.ThrowsException<FileNotFoundException>(() => TypeHelper.FromJsonFile<Person>(fileInfo));
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => TypeHelper.FromJsonFile<Person>(fileInfo));
 	}
 
 	[TestMethod]
 	public void FromJsonFile_NullFile_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.FromJsonFile<Person>(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FromJsonFile<Person>(null));
 	}
 
 	[TestMethod]
@@ -286,7 +286,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllConstructors_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllConstructors(null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllConstructors(null).ToList());
 	}
 
 	[TestMethod]
@@ -322,7 +322,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllDeclaredFields_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllDeclaredFields(null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllDeclaredFields(null).ToList());
 	}
 	[TestMethod]
 	public void GetAllDeclaredFields_WithDeclaredFields_ReturnsFields()
@@ -372,7 +372,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllDeclaredMethods_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllDeclaredMethods(null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllDeclaredMethods(null).ToList());
 	}
 
 	[TestMethod]
@@ -406,7 +406,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllFields_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllFields(null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllFields(null).ToList());
 	}
 
 	[TestMethod]
@@ -440,7 +440,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllGenericMethods_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllGenericMethods(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllGenericMethods(null));
 	}
 
 	[TestMethod]
@@ -474,7 +474,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllMethods_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllMethods(null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllMethods(null).ToList());
 	}
 
 	[TestMethod]
@@ -509,7 +509,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllProperties_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllProperties(null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllProperties(null).ToList());
 	}
 
 	[TestMethod]
@@ -543,7 +543,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllPublicMethods_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllPublicMethods(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllPublicMethods(null));
 	}
 
 	[TestMethod]
@@ -577,7 +577,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllStaticMethods_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAllStaticMethods(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllStaticMethods(null));
 	}
 
 	[TestMethod]
@@ -630,7 +630,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAttribute_MethodInfo_Null_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((MethodInfo)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((MethodInfo)null));
 	}
 
 	[TestMethod]
@@ -651,7 +651,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAttribute_PropertyInfo_Null_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((PropertyInfo)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((PropertyInfo)null));
 	}
 
 	[TestMethod]
@@ -742,7 +742,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetGenericArguments_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetGenericArguments(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetGenericArguments(null));
 	}
 
 	[TestMethod]
@@ -767,14 +767,14 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetImplementedInterfaces_Filtered_NullInput_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaces(null, new List<string>()));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaces(null, new List<string>()));
 	}
 
 	[TestMethod]
 	public void GetImplementedInterfaces_Filtered_NullInterfaceNames_ThrowsArgumentNullException()
 	{
 		var list = new List<int>();
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaces(list, null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaces(list, null));
 	}
 
 	[TestMethod]
@@ -788,7 +788,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetImplementedInterfaces_NullInput_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaces(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaces(null));
 	}
 
 	[TestMethod]
@@ -814,7 +814,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetImplementedInterfaceTypes_NullInput_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaceTypes(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetImplementedInterfaceTypes(null));
 	}
 
 	[TestMethod]
@@ -848,7 +848,7 @@ public class TypeHelperTests : UnitTester
 		object nullObject = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetInstanceHashCode(nullObject), "Null object should throw ArgumentNullException.");
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetInstanceHashCode(nullObject), "Null object should throw ArgumentNullException.");
 	}
 
 	[TestMethod]
@@ -925,7 +925,7 @@ public class TypeHelperTests : UnitTester
 	public void GetPropertyValues_NullInput_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetPropertyValues<object>(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetPropertyValues<object>(null));
 	}
 
 	[TestMethod]
@@ -1147,7 +1147,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetTypeMembersWithAttribute_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(null));
 	}
 
 	[TestMethod]
@@ -1168,7 +1168,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void HasAttribute_MethodInfo_Null_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.HasAttribute<ObsoleteAttribute>(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.HasAttribute<ObsoleteAttribute>(null));
 	}
 
 	[TestMethod]
@@ -1199,7 +1199,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void HasMethod_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.HasMethod(null, "ToString"));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.HasMethod(null, "ToString"));
 	}
 
 	[TestMethod]
@@ -1211,7 +1211,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void HasParameterlessConstructor_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.HasParameterlessConstructor(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.HasParameterlessConstructor(null));
 	}
 
 	[TestMethod]
@@ -1278,7 +1278,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void IsClosedGeneric_NullType_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => TypeHelper.IsClosedGeneric(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsClosedGeneric(null));
 	}
 
 	[TestMethod]

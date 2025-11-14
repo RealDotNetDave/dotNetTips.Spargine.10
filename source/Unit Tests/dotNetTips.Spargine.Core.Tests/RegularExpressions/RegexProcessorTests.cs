@@ -4,7 +4,7 @@
 // Created          : 02-05-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-27-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="RegexProcessorTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -182,7 +182,7 @@ public class RegexProcessorTests
 		string input = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => RegexProcessor.GetNumbers(input));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => RegexProcessor.GetNumbers(input));
 	}
 
 	[TestMethod]

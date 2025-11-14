@@ -14,6 +14,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.ValueTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,7 +29,6 @@ public class PersonValTests
 {
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void BornOn_SetFutureDate_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
@@ -36,7 +36,7 @@ public class PersonValTests
 		var person = new Person("test@example.com", "1229282723");
 
 		// Act
-		person.BornOn = futureDate;
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.BornOn = futureDate);
 	}
 
 	[TestMethod]
@@ -111,8 +111,8 @@ public class PersonValTests
 	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Person("email@email.com", "short"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Person("email@email.com", new string('a', 51)));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", "short"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", new string('a', 51)));
 	}
 
 	[TestMethod]
@@ -163,29 +163,22 @@ public class PersonValTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void Person_Constructor_NullEmail_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var id = "1229282723";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new Person(null, id);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(null, id));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void Person_Constructor_NullId_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var email = "test@example.com";
 
-		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new Person(email, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person(email, null));
 	}
 
 	[TestMethod]

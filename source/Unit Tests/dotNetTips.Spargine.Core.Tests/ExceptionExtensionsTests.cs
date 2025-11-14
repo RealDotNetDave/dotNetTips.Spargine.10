@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-03-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ExceptionExtensionsTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -100,7 +100,7 @@ public class ExceptionExtensionsTests
 	{
 		Exception ex = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => ex.ContainsExceptionOfType<InvalidOperationException>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ex.ContainsExceptionOfType<InvalidOperationException>());
 	}
 
 	[TestMethod]
@@ -171,7 +171,7 @@ public class ExceptionExtensionsTests
 	{
 		var ex = new Exception("Test exception");
 
-		Assert.ThrowsException<ArgumentNullException>(() => ex.FromHierarchy(e => e.InnerException, null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ex.FromHierarchy(e => e.InnerException, null).ToList());
 	}
 
 
@@ -180,7 +180,7 @@ public class ExceptionExtensionsTests
 	{
 		var ex = new Exception("Test exception");
 
-		Assert.ThrowsException<ArgumentNullException>(() => ex.FromHierarchy(null, e => e != null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ex.FromHierarchy(null, e => e != null).ToList());
 	}
 
 	[TestMethod]
@@ -188,7 +188,7 @@ public class ExceptionExtensionsTests
 	{
 		Exception ex = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => ex.FromHierarchy(e => e.InnerException, e => e != null).ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ex.FromHierarchy(e => e.InnerException, e => e != null).ToList());
 	}
 
 	[TestMethod]
@@ -588,7 +588,7 @@ public class ExceptionExtensionsTests
 	{
 		Exception ex = null;
 
-		Assert.ThrowsException<ArgumentNullException>(() => ex.TraverseFor<InvalidOperationException>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ex.TraverseFor<InvalidOperationException>());
 	}
 
 }

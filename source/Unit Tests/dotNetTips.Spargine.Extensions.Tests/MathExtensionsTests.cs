@@ -4,7 +4,7 @@
 // Created          : 07-12-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-26-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="MathExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -111,7 +111,6 @@ public class MathExtensionsTests
 
 
 	[TestMethod]
-	[ExpectedException(typeof(DivideByZeroException))]
 	public void CalculatePercent_IntegerZeroFirstValue_ThrowsDivideByZeroException()
 	{
 		// Arrange
@@ -119,7 +118,7 @@ public class MathExtensionsTests
 		int second = 100;
 
 		// Act & Assert
-		first.CalculatePercent(second);
+		Assert.ThrowsExactly<DivideByZeroException>(() => first.CalculatePercent(second));
 	}
 
 	[TestMethod]
@@ -157,7 +156,6 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(DivideByZeroException))]
 	public void CalculatePercent_LongZeroFirstValue_ThrowsDivideByZeroException()
 	{
 		// Arrange
@@ -165,7 +163,7 @@ public class MathExtensionsTests
 		long second = 100L;
 
 		// Act & Assert
-		first.CalculatePercent(second);
+		Assert.ThrowsExactly<DivideByZeroException>(() => first.CalculatePercent(second));
 	}
 
 

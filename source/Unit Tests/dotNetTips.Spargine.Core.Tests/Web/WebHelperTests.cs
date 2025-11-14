@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-10-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="WebHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -86,19 +86,20 @@ public class WebHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void IsLocalUri_WithNullPath_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var request = new DefaultHttpContext().Request;
 
-		WebHelper.IsLocalUri(null, request);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => WebHelper.IsLocalUri(null, request));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void IsLocalUri_WithNullRequest_ThrowsArgumentNullException()
 	{
-		WebHelper.IsLocalUri("/home", null);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => WebHelper.IsLocalUri("/home", null));
 	}
 
 }

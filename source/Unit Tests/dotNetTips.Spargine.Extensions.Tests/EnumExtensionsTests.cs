@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="EnumExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -74,14 +74,14 @@ public class EnumExtensionsTests
 	[TestMethod]
 	public void Parse_InvalidValue_ThrowsArgumentException()
 	{
-		Assert.ThrowsException<ArgumentException>(() => "NotAValue".Parse<TaskStatus>());
+		_ = Assert.ThrowsExactly<ArgumentException>(() => "NotAValue".Parse<TaskStatus>());
 	}
 
 	[TestMethod]
 	public void Parse_NullOrEmpty_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => ((string)null).Parse<TaskStatus>());
-		Assert.ThrowsException<ArgumentNullException>(() => string.Empty.Parse<TaskStatus>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((string)null).Parse<TaskStatus>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.Empty.Parse<TaskStatus>());
 	}
 
 	[TestMethod]

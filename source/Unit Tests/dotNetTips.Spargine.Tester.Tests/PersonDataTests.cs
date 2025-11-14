@@ -27,7 +27,6 @@ public class PersonDataTests
 {
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonData_Constructor_NullCellPhone_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -39,13 +38,10 @@ public class PersonDataTests
 		var phone = "0987654321";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonData(bornOn, null, country, email, firstName, lastName, phone);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonData(bornOn, null, country, email, firstName, lastName, phone));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonData_Constructor_NullCountry_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -57,13 +53,10 @@ public class PersonDataTests
 		var phone = "0987654321";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonData(bornOn, cellPhone, null, email, firstName, lastName, phone);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonData(bornOn, cellPhone, null, email, firstName, lastName, phone));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonData_Constructor_NullEmail_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -75,13 +68,10 @@ public class PersonDataTests
 		var phone = "0987654321";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonData(bornOn, cellPhone, country, null, firstName, lastName, phone);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonData(bornOn, cellPhone, country, null, firstName, lastName, phone));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonData_Constructor_NullFirstName_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -93,13 +83,10 @@ public class PersonDataTests
 		var phone = "0987654321";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonData(bornOn, cellPhone, country, email, null, lastName, phone);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonData(bornOn, cellPhone, country, email, null, lastName, phone));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonData_Constructor_NullLastName_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -111,13 +98,10 @@ public class PersonDataTests
 		var phone = "0987654321";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonData(bornOn, cellPhone, country, email, firstName, null, phone);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonData(bornOn, cellPhone, country, email, firstName, null, phone));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PersonData_Constructor_NullPhone_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -129,9 +113,7 @@ public class PersonDataTests
 		var lastName = "Doe";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new PersonData(bornOn, cellPhone, country, email, firstName, lastName, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentNullException>(() => new PersonData(bornOn, cellPhone, country, email, firstName, lastName, null));
 	}
 	[TestMethod]
 	public void PersonData_Constructor_ValidParameters_CreatesInstance()

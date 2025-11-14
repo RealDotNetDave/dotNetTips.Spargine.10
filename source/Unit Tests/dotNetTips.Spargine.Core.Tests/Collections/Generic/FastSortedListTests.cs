@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-09-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="FastSortedListTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -78,8 +78,9 @@ public class FastSortedListTests
 	{
 		var list = new FastSortedList<string>();
 
-		Assert.ThrowsException<ArgumentNullException>(() => list.Add(null), "Adding a null item should throw ArgumentNullException.");
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.Add(null), "Adding a null item should throw ArgumentNullException.");
 	}
+
 	[TestMethod]
 	public void Add_ShouldMarkUnsorted()
 	{
@@ -99,7 +100,7 @@ public class FastSortedListTests
 	{
 		var list = new FastSortedList<int>();
 
-		Assert.ThrowsException<ArgumentNullException>(() => list.AddRange(null), "Adding a null collection should throw ArgumentNullException.");
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.AddRange(null), "Adding a null collection should throw ArgumentNullException.");
 	}
 
 	[TestMethod]

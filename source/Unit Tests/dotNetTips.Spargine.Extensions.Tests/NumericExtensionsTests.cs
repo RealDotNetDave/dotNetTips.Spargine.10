@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-12-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="NumericExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -284,7 +284,7 @@ public class NumericExtensionsTests : UnitTester
 		long bytes = -1024;
 
 		// Act and Assert
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => bytes.BytesToMegabytes(), "Converting negative bytes should throw ArgumentException.");
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => bytes.BytesToMegabytes(), "Converting negative bytes should throw ArgumentException.");
 	}
 
 	[TestMethod]
@@ -350,8 +350,8 @@ public class NumericExtensionsTests : UnitTester
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		Assert.IsTrue(result.Length > 5);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Decimal));
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Hexadecimal));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Decimal));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Hexadecimal));
 
 	}
 
@@ -516,7 +516,7 @@ public class NumericExtensionsTests : UnitTester
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		Assert.IsTrue(result.Length > 5);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 	}
 
 	[TestMethod]
@@ -638,13 +638,13 @@ public class NumericExtensionsTests : UnitTester
 
 		Assert.IsTrue(testValue4.IsInRangeThrowsException(50, 500));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue1.IsInRangeThrowsException(200, 300));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue1.IsInRangeThrowsException(200, 300));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue2.IsInRangeThrowsException(200, 300));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue2.IsInRangeThrowsException(200, 300));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue3.IsInRangeThrowsException(200, 300));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue3.IsInRangeThrowsException(200, 300));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue4.IsInRangeThrowsException(200, 300));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue4.IsInRangeThrowsException(200, 300));
 	}
 
 	[TestMethod]
@@ -658,7 +658,7 @@ public class NumericExtensionsTests : UnitTester
 
 		Assert.IsTrue(testValue.IsIntervalThrowsException(100, "test"));
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.IsIntervalThrowsException(99, "test"));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.IsIntervalThrowsException(99, "test"));
 	}
 
 	[TestMethod]
@@ -782,7 +782,7 @@ public class NumericExtensionsTests : UnitTester
 		//PrintResult(result, nameof(NumericFormat.Percent));
 		Assert.IsTrue(result.Length > 5);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
 	}
 
@@ -862,7 +862,7 @@ public class NumericExtensionsTests : UnitTester
 		//PrintResult(result, nameof(NumericFormat.Percent));
 		Assert.IsTrue(result.Length > 4);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 	}
 
 	[TestMethod]
@@ -954,7 +954,7 @@ public class NumericExtensionsTests : UnitTester
 		//PrintResult(result, nameof(NumericFormat.Percent));
 		Assert.IsTrue(result.Length > 5);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
 	}
 
@@ -995,7 +995,7 @@ public class NumericExtensionsTests : UnitTester
 		//PrintResult(result, nameof(NumericFormat.Percent));
 		Assert.IsTrue(result.Length > 5);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
 	}
 
@@ -1036,7 +1036,7 @@ public class NumericExtensionsTests : UnitTester
 		//PrintResult(result, nameof(NumericFormat.Percent));
 		Assert.IsTrue(result.Length > 5);
 
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
 	}
 

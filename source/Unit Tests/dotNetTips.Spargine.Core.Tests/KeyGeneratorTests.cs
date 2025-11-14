@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="KeyGeneratorTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -71,12 +71,10 @@ public class KeyGeneratorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GenerateCustomKey_WithNullItems_ShouldThrowArgumentException()
 	{
-		// Act
-		KeyGenerator.GenerateCustomKey('-', true, null);
-		// Assert handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateCustomKey('-', true, null));
 	}
 
 	[TestMethod]
@@ -114,13 +112,10 @@ public class KeyGeneratorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GenerateKey_WithNullPrefix_ShouldThrowArgumentNullException()
 	{
-		// Act
-		KeyGenerator.GenerateKey(null);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateKey(null));
 	}
 
 	[TestMethod]
@@ -171,13 +166,10 @@ public class KeyGeneratorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GenerateSortableKey_WithNullPrefix_ShouldThrowArgumentNullException()
 	{
-		// Act
-		KeyGenerator.GenerateSortableKey(null);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateSortableKey(null));
 	}
 
 	[TestMethod]

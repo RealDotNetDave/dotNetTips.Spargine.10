@@ -5,7 +5,7 @@
 // Created          : 10-09-2024
 //
 // Last Modified By : david
-// Last Modified On : 10-09-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="LinqExtensionsTests.cs" company="DotNetTips.Spargine.Extensions.Tests">
 //     Copyright (c) . All rights reserved.
@@ -129,7 +129,7 @@ public class LinqExtensionsTests
 			};
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => data.If(condition, transforms));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => data.If(condition, transforms));
 	}
 
 	[TestMethod]
@@ -144,7 +144,7 @@ public class LinqExtensionsTests
 	};
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => data.If(condition, transforms));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => data.If(condition, transforms));
 	}
 
 	[TestMethod]
@@ -156,7 +156,7 @@ public class LinqExtensionsTests
 		Func<IQueryable<int>, IQueryable<int>>[] transforms = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => data.If(condition, transforms));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => data.If(condition, transforms));
 	}
 
 	[TestMethod]
@@ -168,7 +168,7 @@ public class LinqExtensionsTests
 		Func<IEnumerable<int>, IEnumerable<int>>[] transforms = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => data.If(condition, transforms));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => data.If(condition, transforms));
 	}
 }
 

@@ -367,19 +367,17 @@ public class AppTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetLocalizedString_ThrowsArgumentException_WhenKeyIsEmpty()
 	{
 		// Act
-		App.GetLocalizedString(Resources.ResourceManager, string.Empty, "en-US");
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.GetLocalizedString(Resources.ResourceManager, string.Empty, "en-US"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetLocalizedString_ThrowsArgumentNullException_WhenKeyIsNull()
 	{
 		// Act
-		App.GetLocalizedString(Resources.ResourceManager, null, "en-US");
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.GetLocalizedString(Resources.ResourceManager, null, "en-US"));
 	}
 
 	[TestMethod]

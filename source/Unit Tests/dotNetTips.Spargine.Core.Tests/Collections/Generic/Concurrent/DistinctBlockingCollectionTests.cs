@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-31-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -33,11 +33,13 @@ public class DistinctBlockingCollectionTests
 	/// Defines the test method AddNullItemTest.
 	/// </summary>
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddNullItemTest()
 	{
+		// Arrange
 		var collection = new DistinctBlockingCollection<string>();
-		collection.Add(null);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => collection.Add(null));
 	}
 
 	/// <summary>
@@ -84,13 +86,15 @@ public class DistinctBlockingCollectionTests
 	/// Defines the test method AddWithCancelledTokenTest.
 	/// </summary>
 	[TestMethod]
-	[ExpectedException(typeof(OperationCanceledException))]
 	public void AddWithCancelledTokenTest()
 	{
+		// Arrange
 		var collection = new DistinctBlockingCollection<string>();
 		var cancellationTokenSource = new CancellationTokenSource();
 		cancellationTokenSource.Cancel();
-		collection.Add("test1", cancellationTokenSource.Token);
+
+		// Act & Assert
+		Assert.ThrowsExactly<OperationCanceledException>(() => collection.Add("test1", cancellationTokenSource.Token));
 	}
 
 	/// <summary>
@@ -199,10 +203,10 @@ public class DistinctBlockingCollectionTests
 	/// Defines the test method ConstructorWithBoundedCapacityNegativeTest.
 	/// </summary>
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ConstructorWithBoundedCapacityNegativeTest()
 	{
-		_ = new DistinctBlockingCollection<string>(-1);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new DistinctBlockingCollection<string>(-1));
 	}
 
 	/// <summary>
@@ -413,13 +417,15 @@ public class DistinctBlockingCollectionTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(OperationCanceledException))]
 	public void TryAddWithMillisecondsTimeoutAndCancelledTokenTest()
 	{
+		// Arrange
 		var collection = new DistinctBlockingCollection<string>();
 		var cancellationTokenSource = new CancellationTokenSource();
 		cancellationTokenSource.Cancel();
-		collection.TryAdd("test1", 1000, cancellationTokenSource.Token);
+
+		// Act & Assert
+		Assert.ThrowsExactly<OperationCanceledException>(() => collection.TryAdd("test1", 1000, cancellationTokenSource.Token));
 	}
 
 	[TestMethod]
@@ -463,13 +469,15 @@ public class DistinctBlockingCollectionTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(OperationCanceledException))]
 	public void TryAddWithTimeoutAndCancelledTokenTest()
 	{
+		// Arrange
 		var collection = new DistinctBlockingCollection<string>();
 		var cancellationTokenSource = new CancellationTokenSource();
 		cancellationTokenSource.Cancel();
-		collection.TryAdd("test1", 1000, cancellationTokenSource.Token);
+
+		// Act & Assert
+		Assert.ThrowsExactly<OperationCanceledException>(() => collection.TryAdd("test1", 1000, cancellationTokenSource.Token));
 	}
 
 	[TestMethod]
@@ -504,13 +512,15 @@ public class DistinctBlockingCollectionTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(OperationCanceledException))]
 	public void TryAddWithTimeSpanAndCancelledTokenTest()
 	{
+		// Arrange
 		var collection = new DistinctBlockingCollection<string>();
 		var cancellationTokenSource = new CancellationTokenSource();
 		cancellationTokenSource.Cancel();
-		collection.TryAdd("test1", 1000, cancellationTokenSource.Token);
+
+		// Act & Assert
+		Assert.ThrowsExactly<OperationCanceledException>(() => collection.TryAdd("test1", 1000, cancellationTokenSource.Token));
 	}
 
 	[TestMethod]

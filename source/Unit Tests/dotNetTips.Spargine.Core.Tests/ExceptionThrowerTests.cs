@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ExceptionThrowerTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -140,528 +140,479 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void ThrowArgumentException_WithInnerException_ThrowsArgumentException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => ExceptionThrower.ThrowArgumentException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void ThrowArgumentException_WithMessage_ThrowsArgumentException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentException("Test message", "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => ExceptionThrower.ThrowArgumentException("Test message", "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ThrowArgumentInvalidException_WithInnerException_ThrowsArgumentInvalidException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentInvalidException("Test message", "paramName", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowArgumentInvalidException("Test message", "paramName", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ThrowArgumentInvalidException_WithMessage_ThrowsArgumentInvalidException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentInvalidException("Test message", "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowArgumentInvalidException("Test message", "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ThrowArgumentInvalidException_WithNullMessage_ThrowsArgumentInvalidException()
 	{
-		ExceptionThrower.ThrowArgumentInvalidException(null, "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowArgumentInvalidException(null, "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ThrowArgumentInvalidException_WithNullMessageAndInnerException_ThrowsArgumentInvalidException()
 	{
-		ExceptionThrower.ThrowArgumentInvalidException(null, "paramName", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowArgumentInvalidException(null, "paramName", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ThrowArgumentNullException_WithInnerException_ThrowsArgumentNullException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentNullException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ExceptionThrower.ThrowArgumentNullException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ThrowArgumentNullException_WithMessage_ThrowsArgumentNullException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentNullException("Test message", "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ExceptionThrower.ThrowArgumentNullException("Test message", "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ThrowArgumentNullException_WithNullMessage_ThrowsArgumentNullException()
 	{
-		ExceptionThrower.ThrowArgumentNullException(null, "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ExceptionThrower.ThrowArgumentNullException(null, "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ThrowArgumentNullException_WithParamName_ThrowsArgumentNullException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentNullException("paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ExceptionThrower.ThrowArgumentNullException("paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ThrowArgumentOutOfRangeException_WithInnerException_ThrowsArgumentOutOfRangeException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentOutOfRangeException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ExceptionThrower.ThrowArgumentOutOfRangeException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ThrowArgumentOutOfRangeException_WithMessage_ThrowsArgumentOutOfRangeException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentOutOfRangeException("Test message", "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ExceptionThrower.ThrowArgumentOutOfRangeException("Test message", "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ThrowArgumentOutOfRangeException_WithNullMessage_ThrowsArgumentOutOfRangeException()
 	{
-		ExceptionThrower.ThrowArgumentOutOfRangeException(null, "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ExceptionThrower.ThrowArgumentOutOfRangeException(null, "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ThrowArgumentOutOfRangeException_WithParamName_ThrowsArgumentOutOfRangeException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentOutOfRangeException("paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ExceptionThrower.ThrowArgumentOutOfRangeException("paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentReadOnlyException))]
 	public void ThrowArgumentReadOnlyException_WithMessage_ThrowsArgumentReadOnlyException()
 	{
-		// Act
-		ExceptionThrower.ThrowArgumentReadOnlyException("Test message", "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => ExceptionThrower.ThrowArgumentReadOnlyException("Test message", "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentReadOnlyException))]
 	public void ThrowArgumentReadOnlyException_WithNullMessage_ThrowsArgumentReadOnlyException()
 	{
-		ExceptionThrower.ThrowArgumentReadOnlyException(null, "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => ExceptionThrower.ThrowArgumentReadOnlyException(null, "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ThrowDirectoryNotFoundException_WithInnerException_ThrowsArgumentInvalidException()
 	{
-		ExceptionThrower.ThrowDirectoryNotFoundException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowDirectoryNotFoundException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(DirectoryNotFoundException))]
 	public void ThrowDirectoryNotFoundException_WithMessage_ThrowsDirectoryNotFoundException()
 	{
-		// Act
-		ExceptionThrower.ThrowDirectoryNotFoundException("Test message", new DirectoryInfo("nonexistent"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => ExceptionThrower.ThrowDirectoryNotFoundException("Test message", new DirectoryInfo("nonexistent")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(DirectoryNotFoundException))]
 	public void ThrowDirectoryNotFoundException_WithNullMessage_ThrowsDirectoryNotFoundException()
 	{
-		ExceptionThrower.ThrowDirectoryNotFoundException(null, new DirectoryInfo("nonexistent"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => ExceptionThrower.ThrowDirectoryNotFoundException(null, new DirectoryInfo("nonexistent")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void ThrowFileNotFoundException_WithInnerException_ThrowsFileNotFoundException()
 	{
-		// Act
-		ExceptionThrower.ThrowFileNotFoundException("Test message", "nonexistent.txt", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException("Test message", "nonexistent.txt", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void ThrowFileNotFoundException_WithMessage_ThrowsFileNotFoundException()
 	{
-		// Act
-		ExceptionThrower.ThrowFileNotFoundException("Test message", "nonexistent.txt");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException("Test message", "nonexistent.txt"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void ThrowFileNotFoundException_WithNullInnerException_ThrowsFileNotFoundException()
 	{
-		// Act
-		ExceptionThrower.ThrowFileNotFoundException("Test message", (Exception)null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException("Test message", (Exception)null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void ThrowFileNotFoundException_WithNullMessage_ThrowsFileNotFoundException()
 	{
-		// Act
-		ExceptionThrower.ThrowFileNotFoundException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException(null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void ThrowFileNotFoundException_WithNullMessageAndInnerException_ThrowsFileNotFoundException()
 	{
-		// Act
-		ExceptionThrower.ThrowFileNotFoundException(null, (Exception)null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException(null, (Exception)null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidCastException))]
 	public void ThrowInvalidCastException_WithInnerException_ThrowsInvalidCastException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidCastException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidCastException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidCastException))]
 	public void ThrowInvalidCastException_WithMessage_ThrowsInvalidCastException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidCastException("Test message", "paramName");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidCastException("Test message", "paramName"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidEnumTypeException))]
 	public void ThrowInvalidEnumTypeException_WithMessage_ThrowsInvalidEnumTypeException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidEnumTypeException("Test message");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidEnumTypeException>(() => ExceptionThrower.ThrowInvalidEnumTypeException("Test message"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidEnumTypeException))]
 	public void ThrowInvalidEnumTypeException_WithNullMessage_ThrowsInvalidEnumTypeException()
 	{
-		ExceptionThrower.ThrowInvalidEnumTypeException(null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidEnumTypeException>(() => ExceptionThrower.ThrowInvalidEnumTypeException(null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidCastException))]
 	public void ThrowInvalidEnumTypeException_WithNullMessageAndInnerException_ThrowsInvalidCastException()
 	{
-		ExceptionThrower.ThrowInvalidEnumTypeException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidEnumTypeException(null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidOperationException))]
 	public void ThrowInvalidOperationException_WithInnerException_ThrowsInvalidOperationException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidOperationException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => ExceptionThrower.ThrowInvalidOperationException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidOperationException))]
 	public void ThrowInvalidOperationException_WithMessage_ThrowsInvalidOperationException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidOperationException("Test message");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => ExceptionThrower.ThrowInvalidOperationException("Test message"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidOperationException))]
 	public void ThrowInvalidOperationException_WithNullMessage_ThrowsInvalidOperationException()
 	{
-		ExceptionThrower.ThrowInvalidOperationException(null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => ExceptionThrower.ThrowInvalidOperationException(null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidOperationException))]
 	public void ThrowInvalidOperationException_WithNullMessageAndInnerException_ThrowsInvalidOperationException()
 	{
-		ExceptionThrower.ThrowInvalidOperationException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => ExceptionThrower.ThrowInvalidOperationException(null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidValueException<int>))]
 	public void ThrowInvalidValueException_WithInnerException_ThrowsInvalidValueException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidValueException("Test message", 42, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidValueException<int>>(() => ExceptionThrower.ThrowInvalidValueException("Test message", 42, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidValueException<int>))]
 	public void ThrowInvalidValueException_WithMessage_ThrowsInvalidValueException()
 	{
-		// Act
-		ExceptionThrower.ThrowInvalidValueException("Test message", 42);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidValueException<int>>(() => ExceptionThrower.ThrowInvalidValueException("Test message", 42));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidValueException<int>))]
 	public void ThrowInvalidValueException_WithNullMessage_ThrowsInvalidValueException()
 	{
-		ExceptionThrower.ThrowInvalidValueException<int>(null, 42);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidValueException<int>>(() => ExceptionThrower.ThrowInvalidValueException<int>(null, 42));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidValueException<int>))]
 	public void ThrowInvalidValueException_WithNullMessageAndInnerException_ThrowsInvalidValueException()
 	{
-		ExceptionThrower.ThrowInvalidValueException<int>(null, 42, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidValueException<int>>(() => ExceptionThrower.ThrowInvalidValueException<int>(null, 42, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void ThrowIOException_WithInnerException_ThrowsIOException()
 	{
-		// Act
-		ExceptionThrower.ThrowIOException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<IOException>(() => ExceptionThrower.ThrowIOException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void ThrowIOException_WithMessage_ThrowsIOException()
 	{
-		// Act
-		ExceptionThrower.ThrowIOException("Test message");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<IOException>(() => ExceptionThrower.ThrowIOException("Test message"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void ThrowIOException_WithNullInnerException_ThrowsIOException()
 	{
-		// Act
-		ExceptionThrower.ThrowIOException("Test message", null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<IOException>(() => ExceptionThrower.ThrowIOException("Test message", null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void ThrowIOException_WithNullMessage_ThrowsIOException()
 	{
-		// Act
-		ExceptionThrower.ThrowIOException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<IOException>(() => ExceptionThrower.ThrowIOException(null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void ThrowIOException_WithNullMessage_ThrowsIOException2()
 	{
-		ExceptionThrower.ThrowIOException(null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<IOException>(() => ExceptionThrower.ThrowIOException(null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void ThrowIOException_WithNullMessageAndInnerException_ThrowsIOException()
 	{
-		// Act
-		ExceptionThrower.ThrowIOException(null, null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<IOException>(() => ExceptionThrower.ThrowIOException(null, null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(JsonException))]
 	public void ThrowJsonException_WithInnerException_ThrowsJsonException()
 	{
-		// Act
-		ExceptionThrower.ThrowJsonException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<JsonException>(() => ExceptionThrower.ThrowJsonException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(JsonException))]
 	public void ThrowJsonException_WithMessage_ThrowsJsonException()
 	{
-		// Act
-		ExceptionThrower.ThrowJsonException("Test message");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<JsonException>(() => ExceptionThrower.ThrowJsonException("Test message"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(JsonException))]
 	public void ThrowJsonException_WithNullMessage_ThrowsJsonException()
 	{
-		ExceptionThrower.ThrowJsonException(null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<JsonException>(() => ExceptionThrower.ThrowJsonException(null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(JsonException))]
 	public void ThrowJsonException_WithNullMessageAndInnerException_ThrowsJsonException()
 	{
-		ExceptionThrower.ThrowJsonException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<JsonException>(() => ExceptionThrower.ThrowJsonException(null, new Exception("Inner exception")));
 	}
 
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithInnerExceptionAndUserMessage_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithMessage_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithMessageAndInnerExceptionAndNullUserMessage_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithMessageAndMessageIdAndNullInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", "messageId", null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", "messageId", null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithMessageAndNullMessageIdAndInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithMessageId_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", "messageId");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", "messageId"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithMessageIdAndInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException("Test message", "messageId", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message", "messageId", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessage_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessageAndInnerExceptionAndNullUserMessage_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessageAndInnerExceptionAndUserMessage_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException(null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessageAndMessageId_ThrowsMessageNotQueuedException2()
 	{
-		ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessageAndMessageIdAndInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessageAndMessageIdAndNullInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId", null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, "messageId", null));
 	}
 
 
 	[TestMethod]
-	[ExpectedException(typeof(MessageNotQueuedException))]
 	public void ThrowMessageNotQueuedException_WithNullMessageAndNullMessageIdAndInnerException_ThrowsMessageNotQueuedException()
 	{
-		// Act
-		ExceptionThrower.ThrowMessageNotQueuedException(null, null, new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, null, new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NetworkConnectionException))]
 	public void ThrowNetworkConnectionException_WithInnerException_ThrowsNetworkConnectionException()
 	{
-		// Act
-		ExceptionThrower.ThrowNetworkConnectionException("Test message", new Exception("Inner exception"));
+		// Act & Assert
+		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException("Test message", new Exception("Inner exception")));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NetworkConnectionException))]
 	public void ThrowNetworkConnectionException_WithMessage_ThrowsNetworkConnectionException()
 	{
-		// Act
-		ExceptionThrower.ThrowNetworkConnectionException("Test message");
+		// Act & Assert
+		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException("Test message"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NetworkConnectionException))]
 	public void ThrowNetworkConnectionException_WithMessageAndNetworkInterface_ThrowsNetworkConnectionException()
 	{
 		// Arrange
 		var networkInterface = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault();
 
-		// Act
-		ExceptionThrower.ThrowNetworkConnectionException("Test message", networkInterface);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException("Test message", networkInterface));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NetworkConnectionException))]
 	public void ThrowNetworkConnectionException_WithNullMessage_ThrowsNetworkConnectionException2()
 	{
-		ExceptionThrower.ThrowNetworkConnectionException(null);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException(null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NetworkConnectionException))]
 	public void ThrowNetworkConnectionException_WithNullMessageAndNetworkInterface_ThrowsNetworkConnectionException()
 	{
 		// Arrange
 		var networkInterface = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault();
 
-		// Act
-		ExceptionThrower.ThrowNetworkConnectionException(null, networkInterface);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException(null, networkInterface));
 	}
 }

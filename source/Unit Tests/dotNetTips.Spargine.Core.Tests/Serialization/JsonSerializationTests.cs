@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-15-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="JsonSerializationTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,7 +38,7 @@ public class JsonSerializationTests
 	public void Deserialize_InvalidJson_ThrowsInvalidOperationException()
 	{
 		var invalidJson = "{ invalid json }";
-		Assert.ThrowsException<JsonException>(() => JsonSerialization.Deserialize<Person>(invalidJson));
+		_ = Assert.ThrowsExactly<JsonException>(() => JsonSerialization.Deserialize<Person>(invalidJson));
 	}
 
 	[TestMethod]
@@ -60,7 +60,7 @@ public class JsonSerializationTests
 		var json = JsonSerialization.Serialize(person);
 
 		// Explicitly specify the overload by casting null to JsonTypeInfo<Person>
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.Deserialize<Person>(json, (JsonTypeInfo<Person>)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Deserialize<Person>(json, (JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -87,7 +87,7 @@ public class JsonSerializationTests
 	public void DeserializeFromFile_FileDoesNotExist_ThrowsFileNotFoundException()
 	{
 		var file = new FileInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".json"));
-		Assert.ThrowsException<FileNotFoundException>(() => JsonSerialization.DeserializeFromFile<Person>(file));
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => JsonSerialization.DeserializeFromFile<Person>(file));
 	}
 
 	[TestMethod]
@@ -125,7 +125,7 @@ public class JsonSerializationTests
 		var expected = "{\"Name\":\"Test\",\"Value\":1}";
 
 		// Act and Assert
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.JsonEqual(null, expected));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.JsonEqual(null, expected));
 	}
 
 	[TestMethod]
@@ -147,7 +147,7 @@ public class JsonSerializationTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(2);
 		var json = JsonSerialization.Serialize(people);
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 0));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 0));
 	}
 
 	[TestMethod]
@@ -156,7 +156,7 @@ public class JsonSerializationTests
 		var people = RandomData.GeneratePersonRefCollection(2);
 		var json = JsonSerialization.Serialize(people);
 		var info = PersonRefJsonSerializerContext.Default.Person;
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 0, info));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 0, info));
 	}
 
 	[TestMethod]
@@ -164,7 +164,7 @@ public class JsonSerializationTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(2);
 		var json = JsonSerialization.Serialize(people);
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 2, null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 2, null));
 	}
 
 	[TestMethod]
@@ -184,27 +184,27 @@ public class JsonSerializationTests
 	[TestMethod]
 	public void Serialize_NullObject_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.Serialize(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Serialize(null));
 	}
 
 	[TestMethod]
 	public void Serialize_WithOptions_NullObject_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.Serialize(null, null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Serialize(null, null));
 	}
 
 	[TestMethod]
 	public void Serialize_WithTypeInfo_NullObject_ThrowsArgumentNullException()
 	{
 		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.Serialize<Person>(null, typeInfo));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Serialize<Person>(null, typeInfo));
 	}
 
 	[TestMethod]
 	public void Serialize_WithTypeInfo_NullTypeInfo_ThrowsArgumentNullException()
 	{
 		var person = RandomData.GeneratePerson<Person>();
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.Serialize(person, null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Serialize(person, null));
 	}
 
 	/// <summary>
@@ -283,7 +283,7 @@ public class JsonSerializationTests
 			Assert.Fail(ex.Message);
 		}
 
-		_ = Assert.ThrowsException<FileNotFoundException>(
+		_ = Assert.ThrowsExactly<FileNotFoundException>(
 			() => JsonSerialization.DeserializeFromFile<Person>(new FileInfo($"{fileName}.bogus")));
 	}
 
@@ -311,13 +311,13 @@ public class JsonSerializationTests
 	public void SerializeToFile_NullFile_ThrowsArgumentNullException()
 	{
 		var person = RandomData.GeneratePerson<Person>();
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.SerializeToFile(person, null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.SerializeToFile(person, null));
 	}
 
 	[TestMethod]
 	public void SerializeToFile_NullObject_ThrowsArgumentNullException()
 	{
 		var file = new FileInfo(Path.GetTempFileName());
-		Assert.ThrowsException<ArgumentNullException>(() => JsonSerialization.SerializeToFile(null, file));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.SerializeToFile(null, file));
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-04-2025
+// Last Modified On : 11-13-2025
 // ***********************************************************************
 // <copyright file="CoordinateValTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -59,7 +59,6 @@ public class CoordinateValTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void Coordinate_CompareTo_InvalidObjectType_ShouldThrowArgumentException()
 	{
 		// Arrange
@@ -67,18 +66,17 @@ public class CoordinateValTests
 		var invalidObject = new object();
 
 		// Act
-		_ = coord.CompareTo(invalidObject);
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => coord.CompareTo(invalidObject));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void Coordinate_CompareTo_NullObject_ShouldThrowArgumentException()
 	{
 		// Arrange
 		var coord = new Coordinate(1, 2, 3);
 
 		// Act
-		_ = coord.CompareTo(null);
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => coord.CompareTo(null));
 	}
 
 	[TestMethod]

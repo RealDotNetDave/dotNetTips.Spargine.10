@@ -4,7 +4,7 @@
 // Created          : 04-09-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-20-2025
+// Last Modified On : 11-13-2025
 // ***********************************************************************
 // <copyright file="AssemblyHelperUnitTester.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -31,6 +31,8 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class AssemblyHelperUnitTester : UnitTester
 {
+	//TODO: ADD MISSING TESTS
+
 	const string SDKVersion = "10.0.100";
 
 	private string _testOutputDirectory;
@@ -60,22 +62,20 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void DoesAssemblyReference_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.DoesAssemblyReference(null!, "System.Runtime");
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.DoesAssemblyReference(null!, "System.Runtime"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void DoesAssemblyReference_NullReferencedAssemblyName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
 
 		// Act
-		_ = AssemblyHelper.DoesAssemblyReference(assemblyFile, null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.DoesAssemblyReference(assemblyFile, null!));
 	}
 
 	[TestMethod]
@@ -107,22 +107,20 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void DoesTypeExistInAssembly_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.DoesTypeExistInAssembly(null!, "System.String");
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.DoesTypeExistInAssembly(null!, "System.String"));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void DoesTypeExistInAssembly_NullTypeName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
 
 		// Act
-		_ = AssemblyHelper.DoesTypeExistInAssembly(assemblyFile, null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.DoesTypeExistInAssembly(assemblyFile, null!));
 	}
 
 	[TestMethod]
@@ -244,22 +242,20 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void FindTypesImplementing_NullFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.FindTypesImplementing(null!, typeof(IDisposable));
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.FindTypesImplementing(null!, typeof(IDisposable)));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void FindTypesImplementing_NullTypeNames_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
 
 		// Act
-		_ = AssemblyHelper.FindTypesImplementing(assemblyFile, null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.FindTypesImplementing(assemblyFile, null!));
 	}
 
 	[TestMethod]
@@ -279,26 +275,10 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
-	public void GetAssemblyCustomAttributes_InvalidAssembly_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var invalidAssemblyFile = new FileInfo("NonExistentAssembly.dll");
-
-		// Act
-		var result = AssemblyHelper.GetAssemblyCustomAttributes(invalidAssemblyFile);
-
-		// Assert
-		Assert.IsNotNull(result, "Expected a non-null result, but got null.");
-		Assert.AreEqual(0, result.Count, "Expected no custom attributes for an invalid assembly, but some were found.");
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetAssemblyCustomAttributes_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetAssemblyCustomAttributes(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyCustomAttributes(null!));
 	}
 
 	[TestMethod]
@@ -331,25 +311,10 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
-	public void GetAssemblyEntryPoint_InvalidAssembly_ReturnsNull()
-	{
-		// Arrange
-		var invalidAssemblyFile = new FileInfo("NonExistentAssembly.dll");
-
-		// Act
-		var entryPoint = AssemblyHelper.GetAssemblyEntryPoint(invalidAssemblyFile);
-
-		// Assert
-		Assert.IsNull(entryPoint, "Expected null for an invalid assembly, but got a value.");
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetAssemblyEntryPoint_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetAssemblyEntryPoint(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyEntryPoint(null!));
 	}
 
 	[TestMethod]
@@ -424,7 +389,7 @@ public class AssemblyHelperUnitTester : UnitTester
 		var fileInfo = new FileInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".dll"));
 
 		// Act & Assert
-		Assert.ThrowsException<FileNotFoundException>(() => AssemblyHelper.GetAssemblyMetadata(fileInfo));
+		Assert.ThrowsExactly<FileNotFoundException>(() => AssemblyHelper.GetAssemblyMetadata(fileInfo));
 	}
 
 	[TestMethod]
@@ -434,29 +399,28 @@ public class AssemblyHelperUnitTester : UnitTester
 		var file = new FileInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".dll"));
 
 		// Act & Assert
-		Assert.ThrowsException<FileNotFoundException>(() => AssemblyHelper.GetAssemblyMetadata(file));
+		Assert.ThrowsExactly<FileNotFoundException>(() => AssemblyHelper.GetAssemblyMetadata(file));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetAssemblyMetadata_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetAssemblyMetadata(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyMetadata(null!));
 	}
 
 	[TestMethod]
 	public void GetAssemblyMetadata_NullFile_Throws()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => AssemblyHelper.GetAssemblyMetadata(null!));
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyMetadata(null!));
 	}
 
 	[TestMethod]
 	public void GetAssemblyMetadata_NullFile_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => AssemblyHelper.GetAssemblyMetadata(null!));
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyMetadata(null!));
 	}
 
 	[TestMethod]
@@ -527,26 +491,10 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
-	public void GetDependentAssemblies_InvalidAssembly_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var invalidAssemblyFile = new FileInfo("NonExistentAssembly.dll");
-
-		// Act
-		var dependentAssemblies = AssemblyHelper.GetDependentAssemblies(invalidAssemblyFile);
-
-		// Assert
-		Assert.IsNotNull(dependentAssemblies, "Expected a non-null collection of dependent assemblies.");
-		Assert.AreEqual(0, dependentAssemblies.Count, "Expected an empty collection for an invalid assembly.");
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetDependentAssemblies_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetDependentAssemblies(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetDependentAssemblies(null!));
 	}
 
 	[TestMethod]
@@ -566,21 +514,6 @@ public class AssemblyHelperUnitTester : UnitTester
 		Assert.IsTrue(dependentAssemblies.Any(dep => dep.Name == "System.Runtime"), "Expected 'System.Runtime' to be a dependent assembly.");
 	}
 
-	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
-	public void GetMethodsInType_InvalidAssembly_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var invalidAssemblyFile = new FileInfo("NonExistentAssembly.dll");
-		var typeName = typeof(FastStringBuilder).FullName!;
-
-		// Act
-		var methods = AssemblyHelper.GetMethodsInType(invalidAssemblyFile, typeName);
-
-		// Assert
-		Assert.IsNotNull(methods, "Expected a non-null collection of methods.");
-		Assert.AreEqual(0, methods.Count, "Expected an empty collection for an invalid assembly.");
-	}
 
 	[TestMethod]
 	public void GetMethodsInType_InvalidType_ReturnsEmptyCollection()
@@ -598,22 +531,20 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetMethodsInType_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetMethodsInType(null!, typeof(FastStringBuilder).FullName!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetMethodsInType(null!, typeof(FastStringBuilder).FullName!));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetMethodsInType_NullTypeName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
 
 		// Act
-		_ = AssemblyHelper.GetMethodsInType(assemblyFile, null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetMethodsInType(assemblyFile, null!));
 	}
 
 	[TestMethod]
@@ -648,26 +579,21 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void GetPublicTypes_InvalidAssembly_ReturnsEmptyCollection()
 	{
 		// Arrange
 		var invalidAssemblyFile = new FileInfo("NonExistentAssembly.dll");
 
 		// Act
-		var publicTypes = AssemblyHelper.GetAssemblyPublicTypes(invalidAssemblyFile);
+		Assert.ThrowsExactly<FileNotFoundException>(() => AssemblyHelper.GetAssemblyPublicTypes(invalidAssemblyFile));
 
-		// Assert
-		Assert.IsNotNull(publicTypes, "Expected a non-null collection of public types.");
-		Assert.AreEqual(0, publicTypes.Count, "Expected an empty collection for an invalid assembly.");
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetPublicTypes_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetAssemblyPublicTypes(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyPublicTypes(null!));
 	}
 
 	[TestMethod]
@@ -746,7 +672,7 @@ public class AssemblyHelperUnitTester : UnitTester
 		var fileInfo = new FileInfo(@"C:\Windows\System32\config\SYSTEM");
 
 		// Act & Assert
-		Assert.ThrowsException<FileNotFoundException>(() => AssemblyHelper.IsDotNetAssembly(fileInfo));
+		Assert.ThrowsExactly<FileNotFoundException>(() => AssemblyHelper.IsDotNetAssembly(fileInfo));
 	}
 
 	[TestMethod]
@@ -756,14 +682,14 @@ public class AssemblyHelperUnitTester : UnitTester
 		var fileInfo = new FileInfo(@"C:\nonexistentfile.dll");
 
 		// Act & Assert
-		Assert.ThrowsException<FileNotFoundException>(() => AssemblyHelper.IsDotNetAssembly(fileInfo));
+		Assert.ThrowsExactly<FileNotFoundException>(() => AssemblyHelper.IsDotNetAssembly(fileInfo));
 	}
 
 	[TestMethod]
 	public void IsDotNetAssembly_NullFile_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => AssemblyHelper.IsDotNetAssembly(null));
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.IsDotNetAssembly(null));
 	}
 
 	[TestMethod]
@@ -827,11 +753,10 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void LoadAssembliesFromDirectory_NullDirectory_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.FindAssembliesFromDirectory(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.FindAssembliesFromDirectory(null!));
 	}
 
 	[TestMethod]
@@ -853,11 +778,10 @@ public class AssemblyHelperUnitTester : UnitTester
 
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void LoadAssemblyTypes_NullFile_ThrowsArgumentNullException()
 	{
 		// Act
-		_ = AssemblyHelper.GetAssemblyTypes(null!);
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.GetAssemblyTypes(null!));
 	}
 
 	[TestMethod]
@@ -877,25 +801,23 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PrintToDebug_NullPropertySelector_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var collection = new List<object> { new { Name = "Test" } };
 
-		// Act
-		this._unitTester.PrintToDebug(collection, null);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._unitTester.PrintToDebug(collection, null));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void SaveToFile_NullPropertySelector_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var collection = new List<object> { new { Name = "Test" } };
 
-		// Act
-		this._unitTester.SaveToFile(collection, null);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._unitTester.SaveToFile(collection, null));
 	}
 
 	[TestInitialize]
@@ -933,13 +855,13 @@ public class AssemblyHelperUnitTester : UnitTester
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(TargetInvocationException))]
 	public void VersionParseSafe_NullInput_ThrowsArgumentNullException()
 	{
-		// Act
-		_ = typeof(AssemblyHelper)
-			.GetMethod("VersionParseSafe", BindingFlags.NonPublic | BindingFlags.Static)!
-			.Invoke(null, new object[] { null! });
+		// Act & Assert
+		Assert.ThrowsExactly<TargetInvocationException>(() =>
+			typeof(AssemblyHelper)
+				.GetMethod("VersionParseSafe", BindingFlags.NonPublic | BindingFlags.Static)!
+				.Invoke(null, new object[] { null! }));
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-12-2025
+// Last Modified On : 11-11-2025
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -244,7 +244,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
 	/// <remarks>
 	/// Retrieves an item from the cache using the specified key. If the item is found, it is returned; otherwise, the default value for type <typeparamref name="T"/> is returned.
-	/// This method utilizes the <see cref="MemoryCache.TryGetValue"/> method to attempt to retrieve the item.
+	/// This method utilizes the MemoryCache.TryGetValue method to attempt to retrieve the item.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
@@ -268,7 +268,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
 	/// <remarks>
 	/// Retrieves an item from the cache using the specified key asynchronously. If the item is found, it is returned; otherwise, the default value for type <typeparamref name="T"/> is returned.
-	/// This method utilizes the <see cref="MemoryCache.TryGetValue"/> method to attempt to retrieve the item.
+	/// This method utilizes the MemoryCache.TryGetValue method to attempt to retrieve the item.
 	/// </remarks>
 	[Information(nameof(GetCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public Task<T> GetCacheItemAsync<T>([DisallowNull] string key, CancellationToken cancellationToken = default)

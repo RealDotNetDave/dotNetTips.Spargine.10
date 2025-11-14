@@ -280,11 +280,10 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveAttributes_NullDirectory_ThrowsArgumentNullException()
 	{
 		// Act
-		DirectoryHelper.RemoveAttributes(null, FileAttributes.ReadOnly);
+		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.RemoveAttributes(null, FileAttributes.ReadOnly));
 	}
 
 	[SupportedOSPlatform("windows")]

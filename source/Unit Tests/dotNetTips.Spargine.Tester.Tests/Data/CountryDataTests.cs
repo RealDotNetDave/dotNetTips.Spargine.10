@@ -114,8 +114,8 @@ public class CountryDataTests
 	[TestMethod]
 	public void GetCountry_NullOrEmpty_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => CountryRepository.GetCountry((string)null!));
-		Assert.ThrowsException<ArgumentNullException>(() => CountryRepository.GetCountry(string.Empty));
+		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry((string)null!));
+		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry(string.Empty));
 	}
 
 

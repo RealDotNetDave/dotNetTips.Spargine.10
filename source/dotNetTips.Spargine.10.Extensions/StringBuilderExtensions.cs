@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-15-2025
+// Last Modified On : 11-13-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -181,11 +181,29 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Appends a collection of string values to the <see cref="StringBuilder"/>, separated by the specified separator.
+		/// Appends a collection of string values to the <see cref="StringBuilder"/>, separated by the specified <paramref name="separator"/>.
 		/// </summary>
-		/// <param name="separator">The separator to use between values.</param>
-		/// <param name="values">The collection of string values to append as a <see cref="ReadOnlyCollection{T}"/>.</param>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> or <paramref name="values"/> is null.</exception>
+		/// <param name="separator">
+		/// The separator to use between values. If <c>null</c> or empty, the method will use the default separator returned by <see cref="SetSeparator(string)"/>.
+		/// </param>
+		/// <param name="values">A <see cref="ReadOnlyCollection{T}"/> of string values to append. The collection must not be <c>null</c>.</param>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when the current <see cref="StringBuilder"/> instance or the <paramref name="values"/> parameter is <c>null</c>.
+		/// Parameter validation is performed via extension preconditions.
+		/// </exception>
+		/// <remarks>
+		/// This overload adapts the provided <paramref name="values"/> collection and forwards each value to the generic
+		/// AppendValues overload using an action that appends the value to the builder.
+		/// The <paramref name="separator"/> is normalized by <see cref="SetSeparator(string)"/> before joining.
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var sb = new StringBuilder();
+		/// var values = new System.Collections.ObjectModel.ReadOnlyCollection&lt;string&gt;(new[] { "a", "b", "c" });
+		/// sb.AppendValues(",", values);
+		/// // Resulting content: "a,b,c"
+		/// </code>
+		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues([DisallowNull] string separator, [DisallowNull] params ReadOnlyCollection<string> values)
@@ -342,11 +360,26 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Clears the <see cref="StringBuilder"/> and sets its capacity.
+		/// Clears the <see cref="StringBuilder"/> and sets its capacity to the specified value.
 		/// </summary>
-		/// <param name="capacity">The new capacity to set for the <see cref="StringBuilder"/>.</param>
-		/// <returns>The <see cref="StringBuilder"/> instance after clearing and setting capacity.</returns>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> is null.</exception>
+		/// <param name="capacity">The new capacity to set for the <see cref="StringBuilder"/>. Must be greater than or equal to zero.</param>
+		/// <returns>The same <see cref="StringBuilder"/> instance after clearing its content and setting the new capacity, allowing for method chaining.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the <see cref="StringBuilder"/> instance is <c>null</c>.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than zero or less than the current length after clearing.</exception>
+		/// <remarks>
+		/// This method first clears all content from the <see cref="StringBuilder"/>, then sets its capacity to the specified value.
+		/// Setting the capacity can help optimize memory usage when you know the approximate size of the content you'll be building.
+		/// The method returns the same <see cref="StringBuilder"/> instance, enabling fluent-style method chaining.
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var sb = new StringBuilder("Initial content");
+		/// sb.ClearSetCapacity(100);
+		/// // StringBuilder is now empty with capacity set to 100
+		/// sb.Append("New content");
+		/// Console.WriteLine(sb.ToString()); // Output: "New content"
+		/// </code>
+		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ClearSetCapacity), author: "David McCarter", createdOn: "11/13/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 		public StringBuilder ClearSetCapacity(int capacity)

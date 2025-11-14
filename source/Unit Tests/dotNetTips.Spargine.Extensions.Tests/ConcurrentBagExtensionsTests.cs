@@ -4,7 +4,7 @@
 // Created          : 02-24-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-24-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsTests.cs" company="DotNetTips.Spargine.Extensions.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -39,15 +39,14 @@ public class ConcurrentBagExtensionsTests
 		Assert.AreEqual(2, bag.Count);
 	}
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddRange_NullBag_ThrowsArgumentNullException()
 	{
 		// Arrange
 		ConcurrentBag<int> bag = null;
 		var items = new List<int> { 1, 2, 3 };
 
-		// Act
-		bag.AddRange(items);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.AddRange(items));
 	}
 
 	[TestMethod]
@@ -94,27 +93,25 @@ public class ConcurrentBagExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveRange_NullBag_ThrowsArgumentNullException()
 	{
 		// Arrange
 		ConcurrentBag<int> bag = null;
 		var items = new List<int> { 1, 2, 3 };
 
-		// Act
-		bag.RemoveRange(items);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.RemoveRange(items));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveRange_NullItems_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var bag = new ConcurrentBag<int>();
 		List<int> items = null;
 
-		// Act
-		bag.RemoveRange(items);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.RemoveRange(items));
 	}
 
 	[TestMethod]
@@ -147,14 +144,13 @@ public class ConcurrentBagExtensionsTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToList_NullBag_ThrowsArgumentNullException()
 	{
 		// Arrange
 		ConcurrentBag<int> bag = null;
 
-		// Act
-		bag.ToList();
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.ToList());
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 12-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-20-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="InMemoryCacheTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -25,25 +25,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
 
 namespace DotNetTips.Spargine.Core.Tests.Cache;
+
 [ExcludeFromCodeCoverage]
 [TestClass]
 public class InMemoryCacheTests
 {
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_EmptyKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.AddCacheItem(string.Empty, RandomData.GeneratePerson<Person>());
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem(string.Empty, RandomData.GeneratePerson<Person>()));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_NullItem_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.AddCacheItem<string>("testKey", null);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem<string>("testKey", null));
 	}
 
 	[TestMethod]
@@ -64,30 +69,36 @@ public class InMemoryCacheTests
 
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_WithCustomExpirationDateTime_EmptyKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
 		var futureDate = DateTimeOffset.Now.AddMinutes(30);
-		cache.AddCacheItem(string.Empty, RandomData.GeneratePerson<Person>(), futureDate);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem(string.Empty, RandomData.GeneratePerson<Person>(), futureDate));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_WithCustomExpirationDateTime_NullItem_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
 		var futureDate = DateTimeOffset.Now.AddMinutes(30);
-		cache.AddCacheItem<string>("testKey", null, futureDate);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem<string>("testKey", null, futureDate));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_WithCustomExpirationDateTime_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
 		var futureDate = DateTimeOffset.Now.AddMinutes(30);
-		cache.AddCacheItem(null, RandomData.GeneratePerson<Person>(), futureDate);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem(null, RandomData.GeneratePerson<Person>(), futureDate));
 	}
 
 	[TestMethod]
@@ -106,27 +117,33 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_WithCustomTimeout_EmptyKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.AddCacheItem(string.Empty, RandomData.GeneratePerson<Person>(), TimeSpan.FromMinutes(30));
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem(string.Empty, RandomData.GeneratePerson<Person>(), TimeSpan.FromMinutes(30)));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_WithCustomTimeout_NullItem_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.AddCacheItem<string>("testKey", null, TimeSpan.FromMinutes(30));
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem<string>("testKey", null, TimeSpan.FromMinutes(30)));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddCacheItem_WithCustomTimeout_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.AddCacheItem(null, RandomData.GeneratePerson<Person>(), TimeSpan.FromMinutes(30));
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.AddCacheItem(null, RandomData.GeneratePerson<Person>(), TimeSpan.FromMinutes(30)));
 	}
 
 	[TestMethod]
@@ -146,11 +163,14 @@ public class InMemoryCacheTests
 
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task AddCacheItemAsync_NullItem_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		await cache.AddCacheItemAsync<string>("testKey", null);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.AddCacheItemAsync<string>("testKey", null));
 	}
 
 	[TestMethod]
@@ -170,21 +190,27 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task AddCacheItemAsync_WithCustomExpirationDateTime_NullItem_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
 		var futureDate = DateTimeOffset.Now.AddMinutes(30);
-		await cache.AddCacheItemAsync<string>("testKey", null, futureDate);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.AddCacheItemAsync<string>("testKey", null, futureDate));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task AddCacheItemAsync_WithCustomExpirationDateTime_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
 		var futureDate = DateTimeOffset.Now.AddMinutes(30);
-		await cache.AddCacheItemAsync(null, RandomData.GeneratePerson<Person>(), futureDate);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.AddCacheItemAsync(null, RandomData.GeneratePerson<Person>(), futureDate));
 	}
 
 	[TestMethod]
@@ -203,19 +229,25 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task AddCacheItemAsync_WithCustomTimeout_NullItem_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		await cache.AddCacheItemAsync<string>("testKey", null, TimeSpan.FromMinutes(30));
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.AddCacheItemAsync<string>("testKey", null, TimeSpan.FromMinutes(30)));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task AddCacheItemAsync_WithCustomTimeout_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		await cache.AddCacheItemAsync(null, RandomData.GeneratePerson<Person>(), TimeSpan.FromMinutes(30));
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.AddCacheItemAsync(null, RandomData.GeneratePerson<Person>(), TimeSpan.FromMinutes(30)));
 	}
 
 	[TestMethod]
@@ -297,11 +329,13 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ContainsKey_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.ContainsKey(null);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.ContainsKey(null));
 	}
 
 	[TestMethod]
@@ -426,11 +460,13 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GetCacheItem_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.GetCacheItem<Person>(null);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.GetCacheItem<Person>(null));
 	}
 
 	[TestMethod]
@@ -443,11 +479,14 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task GetCacheItemAsync_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		await cache.GetCacheItemAsync<Person>(null);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.GetCacheItemAsync<Person>(null));
 	}
 
 	[TestMethod]
@@ -482,11 +521,14 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task GetOrCreateAsync_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		await cache.GetOrCreateAsync<string>(null, _ => Task.FromResult("x"));
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.GetOrCreateAsync<string>(null, _ => Task.FromResult("x")));
 	}
 
 	[TestMethod]
@@ -567,11 +609,13 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveCacheItem_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.RemoveCacheItem(null);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.RemoveCacheItem(null));
 	}
 
 	[TestMethod]
@@ -613,11 +657,13 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void TryGetValue_NullKey_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
-		cache.TryGetValue<string>(null, out _);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.TryGetValue<string>(null, out _));
 	}
 
 	[TestMethod]

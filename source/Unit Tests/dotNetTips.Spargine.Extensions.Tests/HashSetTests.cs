@@ -4,7 +4,7 @@
 // Created          : 01-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="HashSetTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -81,14 +81,13 @@ public class HashSetTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ToImmutableHashSet_NullHashSet_ThrowsArgumentNullException()
 	{
 		// Arrange
 		HashSet<int> hashSet = null;
 
-		// Act
-		_ = hashSet.ToImmutableHashSet();
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => hashSet.ToImmutableHashSet());
 	}
 
 	[TestMethod]

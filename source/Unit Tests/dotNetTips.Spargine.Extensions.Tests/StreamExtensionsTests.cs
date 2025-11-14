@@ -4,7 +4,7 @@
 // Created          : 10-09-2024
 //
 // Last Modified By : david
-// Last Modified On : 01-02-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="StreamExtensionsTests.cs" company="DotNetTips.Spargine.Extensions.Tests">
 //     Copyright (c) . All rights reserved.
@@ -35,7 +35,7 @@ public class StreamExtensionsTests
 		stream.FlushClose();
 
 		// Assert
-		Assert.ThrowsException<ObjectDisposedException>(() => stream.WriteByte(0));
+		_ = Assert.ThrowsExactly<ObjectDisposedException>(() => stream.WriteByte(0));
 	}
 
 	[TestMethod]

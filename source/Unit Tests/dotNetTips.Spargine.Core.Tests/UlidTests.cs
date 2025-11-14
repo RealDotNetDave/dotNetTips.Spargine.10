@@ -4,7 +4,7 @@
 // Created          : 05-06-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="UlidTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -22,53 +22,6 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class UlidTests
 {
-	[TestMethod]
-	public void Ulid_GetTimeStamp_ReturnsReasonableDateTimeOffset()
-	{
-		// Arrange
-		var ulid = Ulid.NewUlid();
-
-		// Act
-		var timestamp = ulid.GetTimeStamp();
-
-		// Assert
-		// Should be within a reasonable range of now (allowing for clock drift)
-		var now = DateTimeOffset.UtcNow;
-		Assert.IsTrue(timestamp <= now && timestamp > now.AddMinutes(-5));
-	}
-
-	[TestMethod]
-	public void Ulid_GetTimeStamp_ConsistentForSameUlid()
-	{
-		// Arrange
-		var ulidString = Ulid.NewUlid().ToString();
-		var ulid1 = new Ulid(ulidString);
-		var ulid2 = new Ulid(ulidString);
-
-		// Act
-		var ts1 = ulid1.GetTimeStamp();
-		var ts2 = ulid2.GetTimeStamp();
-
-		// Assert
-		Assert.AreEqual(ts1, ts2);
-	}
-
-	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
-	public void Ulid_GetTimeStamp_InvalidCharacter_ThrowsArgumentException()
-	{
-		// Arrange
-		// Create a ULID string with an invalid character in the timestamp portion
-		var validUlid = Ulid.NewUlid().ToString();
-		var invalidUlid = "!" + validUlid.Substring(1); // Replace first char with invalid '!'
-
-		var ulid = new Ulid(invalidUlid);
-
-		// Act
-		_ = ulid.GetTimeStamp();
-
-		// Assert handled by ExpectedException
-	}
 
 	[TestMethod]
 	public void Ulid_CompareTo_DifferentValues_ReturnsNonZero()
@@ -85,42 +38,33 @@ public class UlidTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void Ulid_Constructor_EmptyValue_ThrowsArgumentException()
 	{
 		// Arrange
 		var emptyValue = string.Empty;
 
-		// Act
-		_ = new Ulid(emptyValue);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(emptyValue));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void Ulid_Constructor_InvalidLength_ThrowsArgumentException()
 	{
 		// Arrange
 		var invalidLengthUlid = "1234567890"; // Too short
 
-		// Act
-		_ = new Ulid(invalidLengthUlid);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(invalidLengthUlid));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void Ulid_Constructor_NullValue_ThrowsArgumentException()
 	{
 		// Arrange
 		string nullValue = null;
 
-		// Act
-		_ = new Ulid(nullValue);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(nullValue));
 	}
 
 	[TestMethod]
@@ -135,7 +79,6 @@ public class UlidTests
 		// Assert
 		Assert.AreEqual(validUlid, ulid.ToString());
 	}
-
 
 	[TestMethod]
 	public void Ulid_Equals_DifferentValues_ReturnsFalse()
@@ -165,7 +108,6 @@ public class UlidTests
 		// Assert
 		Assert.IsTrue(result);
 	}
-
 
 	[TestMethod]
 	public void Ulid_EqualsObject_DifferentValues_ReturnsFalse()
@@ -209,6 +151,51 @@ public class UlidTests
 
 		// Assert
 		Assert.AreEqual(hashCode1, hashCode2);
+	}
+
+	[TestMethod]
+	public void Ulid_GetTimeStamp_ConsistentForSameUlid()
+	{
+		// Arrange
+		var ulidString = Ulid.NewUlid().ToString();
+		var ulid1 = new Ulid(ulidString);
+		var ulid2 = new Ulid(ulidString);
+
+		// Act
+		var ts1 = ulid1.GetTimeStamp();
+		var ts2 = ulid2.GetTimeStamp();
+
+		// Assert
+		Assert.AreEqual(ts1, ts2);
+	}
+
+	[TestMethod]
+	public void Ulid_GetTimeStamp_InvalidCharacter_ThrowsArgumentException()
+	{
+		// Arrange
+		// Create a ULID string with an invalid character in the timestamp portion
+		var validUlid = Ulid.NewUlid().ToString();
+		var invalidUlid = "!" + validUlid.Substring(1); // Replace first char with invalid '!'
+
+		var ulid = new Ulid(invalidUlid);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => ulid.GetTimeStamp());
+	}
+
+	[TestMethod]
+	public void Ulid_GetTimeStamp_ReturnsReasonableDateTimeOffset()
+	{
+		// Arrange
+		var ulid = Ulid.NewUlid();
+
+		// Act
+		var timestamp = ulid.GetTimeStamp();
+
+		// Assert
+		// Should be within a reasonable range of now (allowing for clock drift)
+		var now = DateTimeOffset.UtcNow;
+		Assert.IsTrue(timestamp <= now && timestamp > now.AddMinutes(-5));
 	}
 
 	[TestMethod]
@@ -322,14 +309,13 @@ public class UlidTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentException))]
 	public void Ulid_Parse_InvalidUlidString_ThrowsArgumentException()
 	{
 		// Arrange
 		var invalidUlid = "INVALID_ULID_STRING";
 
-		// Act
-		_ = Ulid.Parse(invalidUlid);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => Ulid.Parse(invalidUlid));
 	}
 
 	[TestMethod]
@@ -420,6 +406,7 @@ public class UlidTests
 			// Assert
 			Assert.IsFalse(result);
 		}
+
 		[TestMethod]
 		public void Ulid_EqualsObject_SameValues_ReturnsTrue()
 		{

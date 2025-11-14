@@ -75,10 +75,9 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(InvalidOperationException))]
 	public void ServiceStatus_NonExistingService_ThrowsInvalidOperationException()
 	{
-		_ = ServiceHelper.ServiceStatus(NonExistingServiceName);
+		Assert.ThrowsExactly<InvalidOperationException>(() => ServiceHelper.ServiceStatus(NonExistingServiceName));
 	}
 
 	[TestMethod]

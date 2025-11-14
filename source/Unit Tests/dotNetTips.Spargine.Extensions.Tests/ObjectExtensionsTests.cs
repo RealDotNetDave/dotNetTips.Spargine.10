@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-26-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,7 +38,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void As_Null_ThrowsArgumentNullException()
 	{
 		object obj = null;
-		Assert.ThrowsException<ArgumentNullException>(() => obj.As<object>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.As<object>());
 	}
 
 	[TestMethod]
@@ -83,7 +83,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void ComputeSha256Hash_Null_ThrowsArgumentNullException()
 	{
 		object obj = null;
-		Assert.ThrowsException<ArgumentNullException>(() => obj.ComputeSha256Hash());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ComputeSha256Hash());
 	}
 
 	[TestMethod]
@@ -141,16 +141,16 @@ public class ObjectExtensionsTests : UnitTester
 	public void FastClone_Null_ThrowsArgumentNullException()
 	{
 		Person person = null;
-		Assert.ThrowsException<ArgumentNullException>(() => person.FastClone<Person>());
-		Assert.ThrowsException<ArgumentNullException>(() => person.FastClone<Person>((JsonSerializerOptions)null));
-		Assert.ThrowsException<ArgumentNullException>(() => person.FastClone((JsonTypeInfo<Person>)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastClone<Person>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastClone<Person>((JsonSerializerOptions)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastClone((JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
 	public void FastClone_NullTypeInfo_ThrowsArgumentNullException()
 	{
 		var person = RandomData.GeneratePerson<Person>();
-		Assert.ThrowsException<ArgumentNullException>(() => person.FastClone((JsonTypeInfo<Person>)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastClone((JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -199,9 +199,9 @@ public class ObjectExtensionsTests : UnitTester
 	public void FromJson_Null_ThrowsArgumentNullException()
 	{
 		string json = null;
-		Assert.ThrowsException<ArgumentNullException>(() => json.FromJson<Person>());
-		Assert.ThrowsException<ArgumentNullException>(() => json.FromJson<Person>((JsonSerializerOptions)null));
-		Assert.ThrowsException<ArgumentNullException>(() => json.FromJson((JsonTypeInfo<Person>)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => json.FromJson<Person>());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => json.FromJson<Person>((JsonSerializerOptions)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => json.FromJson((JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -209,7 +209,7 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		var person = RandomData.GeneratePerson<Person>();
 		var json = person.ToJson();
-		Assert.ThrowsException<ArgumentNullException>(() => json.FromJson((JsonTypeInfo<Person>)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => json.FromJson((JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -293,7 +293,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void PropertiesToDictionary_Null_ThrowsArgumentNullException()
 	{
 		object obj = null;
-		Assert.ThrowsException<ArgumentNullException>(() => obj.PropertiesToDictionary());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.PropertiesToDictionary());
 	}
 
 	[TestMethod]
@@ -322,7 +322,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void PropertiesToString_Null_ThrowsArgumentNullException()
 	{
 		object obj = null;
-		Assert.ThrowsException<ArgumentNullException>(() => obj.PropertiesToString());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.PropertiesToString());
 	}
 
 	[TestMethod]
@@ -339,15 +339,15 @@ public class ObjectExtensionsTests : UnitTester
 	public void ToJson_Null_ThrowsArgumentNullException()
 	{
 		object obj = null;
-		Assert.ThrowsException<ArgumentNullException>(() => obj.ToJson());
-		Assert.ThrowsException<ArgumentNullException>(() => obj.ToJson(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ToJson());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ToJson(null));
 	}
 
 	[TestMethod]
 	public void ToJson_WithTypeInfo_NullTypeInfo_ThrowsArgumentNullException()
 	{
 		var person = RandomData.GeneratePerson<Person>();
-		Assert.ThrowsException<ArgumentNullException>(() => person.ToJson((JsonTypeInfo<Person>)null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJson((JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -364,7 +364,7 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		var person = RandomData.GeneratePerson<Person>();
 		FileInfo file = null;
-		Assert.ThrowsException<ArgumentNullException>(() => person.ToJsonFile(file));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJsonFile(file));
 	}
 
 	[TestMethod]
@@ -372,7 +372,7 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		object obj = null;
 		var file = new FileInfo(Path.GetTempFileName());
-		Assert.ThrowsException<ArgumentNullException>(() => obj.ToJsonFile(file));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ToJsonFile(file));
 	}
 
 	[TestMethod]

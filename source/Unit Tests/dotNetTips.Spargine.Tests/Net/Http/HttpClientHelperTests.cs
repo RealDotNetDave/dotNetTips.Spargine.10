@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="HttpClientHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -34,23 +34,23 @@ public class HttpClientHelperTests
 		var url = new Uri("https://thisurldoesnotexist123456789.com");
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<HttpRequestException>(async () =>
+		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
 		{
 			await HttpClientHelper.GetHttpResponseAsync(url);
 		});
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task GetHttpResponseAsync_NullUrl_ThrowsArgumentNullException()
 	{
 		// Arrange
 		Uri url = null;
 
-		// Act
-		await HttpClientHelper.GetHttpResponseAsync(url);
-
-		// Assert is handled by the ExpectedException attribute
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await HttpClientHelper.GetHttpResponseAsync(url);
+		});
 	}
 
 
@@ -70,16 +70,16 @@ public class HttpClientHelperTests
 
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public async Task GetStreamAsync_NullUrl_ThrowsArgumentNullException()
 	{
 		// Arrange
 		Uri url = null;
 
-		// Act
-		await HttpClientHelper.GetStreamAsync(url);
-
-		// Assert is handled by the ExpectedException attribute
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await HttpClientHelper.GetStreamAsync(url);
+		});
 	}
 
 	[TestMethod]

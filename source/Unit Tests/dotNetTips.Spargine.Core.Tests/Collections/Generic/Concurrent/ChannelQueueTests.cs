@@ -4,7 +4,7 @@
 // Created          : 07-26-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ChannelQueueTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +23,6 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Queues;
-using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetTips.Spargine.Core.Tests.Collections.Generic.Concurrent;
@@ -33,24 +31,6 @@ namespace DotNetTips.Spargine.Core.Tests.Collections.Generic.Concurrent;
 [TestClass]
 public class ChannelQueueTests
 {
-
-	private static async Task AddToQueueAsync(ChannelQueue<Person> channel, List<Person> people, CancellationToken token)
-	{
-		foreach (var person in people)
-		{
-			await channel.WriteAsync(person, cancellationToken: token).ConfigureAwait(false);
-		}
-
-		_ = channel.Lock();
-	}
-
-	private static async Task ListenToQueue(ChannelQueue<Person> channel, CancellationToken token)
-	{
-		await foreach (var item in channel.ListenAsync(token))
-		{
-			Debug.WriteLine(item.Email);
-		}
-	}
 
 	[TestMethod]
 	public void Acknowledge_RemovesKey_ReturnsTrue()
@@ -96,10 +76,10 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void Constructor_NegativeCapacity_ThrowsArgumentOutOfRangeException()
 	{
-		_ = new ChannelQueue<int>(-1);
+		// Arrange & Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new ChannelQueue<int>(-1));
 	}
 
 
@@ -136,7 +116,7 @@ public class ChannelQueueTests
 		int negativeCapacity = -1;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new ChannelQueue<int>(negativeCapacity), "A negative capacity should throw an ArgumentOutOfRangeException.");
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new ChannelQueue<int>(negativeCapacity), "A negative capacity should throw an ArgumentOutOfRangeException.");
 	}
 
 	[TestMethod]
@@ -279,7 +259,7 @@ public class ChannelQueueTests
 		Assert.IsTrue(lockResult, "Lock should succeed on first call.");
 
 		var writeTask = channel.WriteAsync(2);
-		Assert.ThrowsException<AggregateException>(() => writeTask.Wait(1000), "Writing to a locked channel should throw an exception.");
+		Assert.ThrowsExactly<AggregateException>(() => writeTask.Wait(1000), "Writing to a locked channel should throw an exception.");
 	}
 
 	[TestMethod]
@@ -315,22 +295,42 @@ public class ChannelQueueTests
 	[TestMethod]
 	public async Task ReadAsync_CancellationRequested_ThrowsOperationCanceledException()
 	{
+		// Arrange
 		var channel = new ChannelQueue<int>();
 		var cts = new CancellationTokenSource();
 
 		// Simulate a scenario where cancellation is requested before the operation starts
 		cts.Cancel();
 
-		await Assert.ThrowsExceptionAsync<TaskCanceledException>(async () => await channel.ReadAsync(cts.Token), "ReadAsync should throw an OperationCanceledException when cancellation is requested.");
+		// Act & Assert
+		try
+		{
+			await channel.ReadAsync(cts.Token);
+			Assert.Fail("ReadAsync should throw a TaskCanceledException when cancellation is requested.");
+		}
+		catch (TaskCanceledException)
+		{
+			// Expected exception
+		}
 	}
 
 	[TestMethod]
 	public async Task ReadAsync_EmptyChannel_ThrowsChannelClosedException()
 	{
+		// Arrange
 		var channel = new ChannelQueue<int>();
 		channel.Lock(); // Ensure the channel is closed for writing and will not receive any items.
 
-		await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () => await channel.ReadAsync(), "Reading from an empty and locked channel should throw a ChannelClosedException.");
+		// Act & Assert
+		try
+		{
+			await channel.ReadAsync();
+			Assert.Fail("Reading from an empty and locked channel should throw an InvalidOperationException.");
+		}
+		catch (InvalidOperationException)
+		{
+			// Expected exception
+		}
 	}
 
 
@@ -403,21 +403,41 @@ public class ChannelQueueTests
 	[TestMethod]
 	public async Task WriteAsync_AfterLock_ThrowsChannelClosedException()
 	{
+		// Arrange
 		var channel = new ChannelQueue<int>();
 		channel.Lock(); // Lock the channel to prevent further writes
 
-		await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () => await channel.WriteAsync(42), "WriteAsync should throw a ChannelClosedException when attempting to write to a locked channel.");
+		// Act & Assert
+		try
+		{
+			await channel.WriteAsync(42);
+			Assert.Fail("WriteAsync should throw an InvalidOperationException when attempting to write to a locked channel.");
+		}
+		catch (InvalidOperationException)
+		{
+			// Expected exception
+		}
 	}
 
 	[TestMethod]
 	public async Task WriteAsync_LockQueue_PreventsFurtherWrites()
 	{
+		// Arrange
 		var channel = new ChannelQueue<int>();
 		var items = Enumerable.Range(1, 5);
 
 		await channel.WriteAsync(items, true);
 
-		await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () => await channel.WriteAsync(6), "WriteAsync should throw a ChannelClosedException when attempting to write to a locked channel.");
+		// Act & Assert
+		try
+		{
+			await channel.WriteAsync(6);
+			Assert.Fail("WriteAsync should throw an InvalidOperationException when attempting to write to a locked channel.");
+		}
+		catch (InvalidOperationException)
+		{
+			// Expected exception
+		}
 	}
 
 	[TestMethod]

@@ -199,21 +199,21 @@ public class AddressValTests
 	public void Address1_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Address1 = new string('a', 101));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Address1 = new string('a', 101));
 	}
 
 	[TestMethod]
 	public void Address2_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Address2 = new string('a', 101));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Address2 = new string('a', 101));
 	}
 
 	[TestMethod]
 	public void City_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.City = new string('a', 101));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.City = new string('a', 101));
 	}
 
 	[TestMethod]
@@ -234,7 +234,7 @@ public class AddressValTests
 	public void CompareTo_Object_ThrowsOnInvalidType()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentException>(() => ((IComparable)address).CompareTo("not an address"));
+		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)address).CompareTo("not an address"));
 	}
 
 	[TestMethod]
@@ -255,21 +255,21 @@ public class AddressValTests
 	public void Country_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Country = new string('a', 56));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Country = new string('a', 56));
 	}
 
 	[TestMethod]
 	public void CountyProvince_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.CountyProvince = new string('a', 61));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.CountyProvince = new string('a', 61));
 	}
 
 	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Address("short"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Address(new string('a', 51)));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Address("short"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Address(new string('a', 51)));
 	}
 	[TestMethod]
 	public void Operator_Equality_And_Inequality()
@@ -317,21 +317,21 @@ public class AddressValTests
 	public void Phone_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.Phone = new string('a', 51));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.Phone = new string('a', 51));
 	}
 
 	[TestMethod]
 	public void PostalCode_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.PostalCode = new string('a', 26));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.PostalCode = new string('a', 26));
 	}
 
 	[TestMethod]
 	public void State_ThrowsOnInvalidLength()
 	{
 		var address = Address.Create("1234567890");
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => address.State = new string('a', 100));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => address.State = new string('a', 100));
 	}
 
 	[TestMethod]

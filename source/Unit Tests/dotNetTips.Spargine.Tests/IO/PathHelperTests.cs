@@ -61,10 +61,9 @@ public class PathHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CombinePaths_ParamsStringArray_NullPaths_ThrowsArgumentNullException()
 	{
-		PathHelper.CombinePaths(true, null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.CombinePaths(true, null));
 	}
 
 	[TestMethod]
@@ -84,13 +83,13 @@ public class PathHelperTests
 	[TestMethod]
 	public void EnsureTrailingSlash_EmptyString_ThrowsArgumentException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => PathHelper.EnsureTrailingSlash(string.Empty));
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.EnsureTrailingSlash(string.Empty));
 	}
 
 	[TestMethod]
 	public void EnsureTrailingSlash_Null_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => PathHelper.EnsureTrailingSlash(null));
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.EnsureTrailingSlash(null));
 	}
 
 	[TestMethod]
@@ -133,10 +132,9 @@ public class PathHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void HasInvalidFilterChars_NullFilter_ThrowsArgumentNullException()
 	{
-		PathHelper.HasInvalidFilterChars(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.HasInvalidFilterChars(null));
 	}
 	[TestMethod]
 	public void HasInvalidFilterChars_WithInvalidChars_ReturnsTrue()
@@ -204,10 +202,9 @@ public class PathHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PathContainsWildcard_NullPath_ThrowsArgumentNullException()
 	{
-		PathHelper.PathContainsWildcard(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.PathContainsWildcard(null));
 	}
 
 	[TestMethod]
@@ -251,10 +248,9 @@ public class PathHelperTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void PathHasInvalidChars_NullPath_ThrowsArgumentNullException()
 	{
-		PathHelper.PathHasInvalidChars(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.PathHasInvalidChars(null));
 	}
 
 	[TestMethod]

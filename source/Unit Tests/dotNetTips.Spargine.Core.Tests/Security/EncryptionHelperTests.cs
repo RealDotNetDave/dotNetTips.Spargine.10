@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="EncryptionHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -36,21 +36,21 @@ public class EncryptionHelperTests
 	public void AesDecrypt_NullCipherText_ThrowsArgumentNullException()
 	{
 		// Act and Assert
-		Assert.ThrowsException<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(null, this._key, this._iv));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(null, this._key, this._iv));
 	}
 
 	[TestMethod]
 	public void AesDecrypt_NullIv_ThrowsArgumentNullException()
 	{
 		// Act and Assert
-		_ = Assert.ThrowsException<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(this._cipherText, this._key, null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(this._cipherText, this._key, null));
 	}
 
 	[TestMethod]
 	public void AesDecrypt_NullKey_ThrowsArgumentNullException()
 	{
 		// Act and Assert
-		Assert.ThrowsException<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(this._cipherText, null, this._iv));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(this._cipherText, null, this._iv));
 	}
 
 	[TestMethod]
@@ -68,7 +68,7 @@ public class EncryptionHelperTests
 	{
 		var key = new byte[16]; // Invalid length
 		var payload = EncryptionHelper.AesGcmEncrypt("test", EncryptionHelper.GenerateAesGcmKey());
-		Assert.ThrowsException<ArgumentException>(() =>
+		_ = Assert.ThrowsExactly<ArgumentException>(() =>
 			EncryptionHelper.AesGcmDecrypt(payload, key));
 	}
 
@@ -92,7 +92,7 @@ public class EncryptionHelperTests
 	public void AesGcmEncrypt_InvalidKeyLength_Throws()
 	{
 		var key = new byte[16]; // Invalid length
-		Assert.ThrowsException<ArgumentException>(() =>
+		_ = Assert.ThrowsExactly<ArgumentException>(() =>
 			EncryptionHelper.AesGcmEncrypt("test", key));
 	}
 
@@ -164,7 +164,7 @@ public class EncryptionHelperTests
 	public void VerifySHA256HashedPassword_NullHashedPassword_ThrowsArgumentNullException()
 	{
 		// Act and Assert
-		Assert.ThrowsException<ArgumentNullException>(() => EncryptionHelper.VerifySHA256HashedPassword(null, "TestPassword"));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.VerifySHA256HashedPassword(null, "TestPassword"));
 	}
 
 }

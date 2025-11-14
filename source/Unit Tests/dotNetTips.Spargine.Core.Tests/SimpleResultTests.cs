@@ -4,7 +4,7 @@
 // Created          : 06-16-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="SimpleResultTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -173,14 +173,13 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void FromResult_NullSimpleResult_ThrowsArgumentNullException()
 	{
 		// Arrange
 		SimpleResult<int> simpleResult = null;
 
-		// Act
-		_ = SimpleResult<int>.FromResult(simpleResult);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => SimpleResult<int>.FromResult(simpleResult));
 	}
 
 	[TestMethod]

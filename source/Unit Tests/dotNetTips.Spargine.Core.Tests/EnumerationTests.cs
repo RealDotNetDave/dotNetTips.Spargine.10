@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="EnumerationTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -28,58 +28,17 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class EnumerationTests
 {
-	[TestMethod]
-	public void TryFromValue_ValidValue_ReturnsTrueAndCorrectResult()
-	{
-		var success = Enumeration.TryFromValue<NumericFormat>(1, out var result);
-		Assert.IsTrue(success);
-		Assert.IsNotNull(result);
-		Assert.AreEqual("D", result.DisplayName);
-	}
-
-	[TestMethod]
-	public void TryFromValue_InvalidValue_ReturnsFalseAndNullResult()
-	{
-		var success = Enumeration.TryFromValue<NumericFormat>(999, out var result);
-		Assert.IsFalse(success);
-		Assert.IsNull(result);
-	}
 
 	[TestMethod]
 	public void AbsoluteDifference_NullFirstValue_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => Enumeration.AbsoluteDifference(null, DateTimeFormat.MonthDay));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Enumeration.AbsoluteDifference(null, DateTimeFormat.MonthDay));
 	}
 
 	[TestMethod]
 	public void AbsoluteDifference_NullSecondValue_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => Enumeration.AbsoluteDifference(DateTimeFormat.MonthDay, null));
-	}
-
-	[TestMethod]
-	public void TryFromDisplayName_ValidDisplayName_ReturnsTrueAndCorrectResult()
-	{
-		var success = Enumeration.TryFromDisplayName<NumericFormat>("C", out var result);
-		Assert.IsTrue(success);
-		Assert.IsNotNull(result);
-		Assert.AreEqual(NumericFormat.Currency, result);
-	}
-
-	[TestMethod]
-	public void TryFromDisplayName_InvalidDisplayName_ReturnsFalseAndNullResult()
-	{
-		var success = Enumeration.TryFromDisplayName<NumericFormat>("NotAFormat", out var result);
-		Assert.IsFalse(success);
-		Assert.IsNull(result);
-	}
-
-	[TestMethod]
-	public void TryFromDisplayName_NullDisplayName_ReturnsFalseAndNullResult()
-	{
-		var success = Enumeration.TryFromDisplayName<NumericFormat>(null, out var result);
-		Assert.IsFalse(success);
-		Assert.IsNull(result);
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Enumeration.AbsoluteDifference(DateTimeFormat.MonthDay, null));
 	}
 
 	[TestMethod]
@@ -100,7 +59,7 @@ public class EnumerationTests
 	{
 		var numericFormat = NumericFormat.Currency;
 		var differentType = new object();
-		Assert.ThrowsException<ArgumentException>(() => numericFormat.CompareTo(differentType));
+		_ = Assert.ThrowsExactly<ArgumentException>(() => numericFormat.CompareTo(differentType));
 	}
 
 	[TestMethod]
@@ -163,13 +122,13 @@ public class EnumerationTests
 	[TestMethod]
 	public void FromDisplayName_EmptyDisplayName_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => Enumeration.FromDisplayName<NumericFormat>(string.Empty));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Enumeration.FromDisplayName<NumericFormat>(string.Empty));
 	}
 
 	[TestMethod]
 	public void FromDisplayName_NullDisplayName_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => Enumeration.FromDisplayName<NumericFormat>(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Enumeration.FromDisplayName<NumericFormat>(null));
 	}
 
 	[TestMethod]
@@ -182,7 +141,7 @@ public class EnumerationTests
 	[TestMethod]
 	public void FromValue_InvalidValue_ThrowsInvalidOperationException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => Enumeration.FromValue<NumericFormat>(999));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Enumeration.FromValue<NumericFormat>(999));
 	}
 
 	[TestMethod]
@@ -233,6 +192,47 @@ public class EnumerationTests
 		var dateTimeFormat = DateTimeFormat.FullDateLongTime;
 
 		Assert.IsTrue(string.IsNullOrEmpty(dateTimeFormat.ToString()) is false);
+	}
+
+	[TestMethod]
+	public void TryFromDisplayName_InvalidDisplayName_ReturnsFalseAndNullResult()
+	{
+		var success = Enumeration.TryFromDisplayName<NumericFormat>("NotAFormat", out var result);
+		Assert.IsFalse(success);
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void TryFromDisplayName_NullDisplayName_ReturnsFalseAndNullResult()
+	{
+		var success = Enumeration.TryFromDisplayName<NumericFormat>(null, out var result);
+		Assert.IsFalse(success);
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void TryFromDisplayName_ValidDisplayName_ReturnsTrueAndCorrectResult()
+	{
+		var success = Enumeration.TryFromDisplayName<NumericFormat>("C", out var result);
+		Assert.IsTrue(success);
+		Assert.IsNotNull(result);
+		Assert.AreEqual(NumericFormat.Currency, result);
+	}
+
+	[TestMethod]
+	public void TryFromValue_InvalidValue_ReturnsFalseAndNullResult()
+	{
+		var success = Enumeration.TryFromValue<NumericFormat>(999, out var result);
+		Assert.IsFalse(success);
+		Assert.IsNull(result);
+	}
+	[TestMethod]
+	public void TryFromValue_ValidValue_ReturnsTrueAndCorrectResult()
+	{
+		var success = Enumeration.TryFromValue<NumericFormat>(1, out var result);
+		Assert.IsTrue(success);
+		Assert.IsNotNull(result);
+		Assert.AreEqual("D", result.DisplayName);
 	}
 
 	[TestMethod]

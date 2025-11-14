@@ -4,7 +4,7 @@
 // Created          : 04-13-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-19-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ValidatorCheckTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -43,7 +43,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(outOfRangeLower, outOfRangeUpper));
 
 		// Test Exception throwing.
-		_ = Assert.ThrowsException<InvalidValueException<DateTime>>(
+		_ = Assert.ThrowsExactly<InvalidValueException<DateTime>>(
 			() => testValue.CheckIsInRange(outOfRangeLower, outOfRangeUpper, true));
 	}
 
@@ -57,7 +57,7 @@ public class ValidatorCheckTests
 		Assert.IsTrue(value.CheckIsDefined());
 
 		// Test Exception throwing.
-		_ = Assert.ThrowsException<InvalidValueException<Enum>>(() => ((BenchmarkStatus)100).CheckIsDefined(true));
+		_ = Assert.ThrowsExactly<InvalidValueException<Enum>>(() => ((BenchmarkStatus)100).CheckIsDefined(true));
 	}
 
 	[TestMethod]
@@ -74,7 +74,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(outOfRangeLowerValue, outOfRangeUpperValue));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<DateOnly>>(
+		_ = Assert.ThrowsExactly<InvalidValueException<DateOnly>>(
 			() => testValue.CheckIsInRange(outOfRangeLowerValue, outOfRangeUpperValue, true));
 	}
 
@@ -92,7 +92,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(outOfRangeLowerValue, outOfRangeUpperValue));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<DateTimeOffset>>(
+		_ = Assert.ThrowsExactly<InvalidValueException<DateTimeOffset>>(
 			() => testValue.CheckIsInRange(outOfRangeLowerValue, outOfRangeUpperValue, true));
 	}
 
@@ -106,7 +106,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(0, 100));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<decimal>>(() => testValue.CheckIsInRange(0, 100, true));
+		_ = Assert.ThrowsExactly<InvalidValueException<decimal>>(() => testValue.CheckIsInRange(0, 100, true));
 	}
 
 	[TestMethod]
@@ -119,7 +119,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(0, 100));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<double>>(() => testValue.CheckIsInRange(0, 100, true));
+		_ = Assert.ThrowsExactly<InvalidValueException<double>>(() => testValue.CheckIsInRange(0, 100, true));
 	}
 
 	[TestMethod]
@@ -132,7 +132,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(0, 100));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<int>>(() => testValue.CheckIsInRange(0, 100, true));
+		_ = Assert.ThrowsExactly<InvalidValueException<int>>(() => testValue.CheckIsInRange(0, 100, true));
 	}
 
 	[TestMethod]
@@ -145,7 +145,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(0, 100));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<long>>(() => testValue.CheckIsInRange(0, 100, true));
+		_ = Assert.ThrowsExactly<InvalidValueException<long>>(() => testValue.CheckIsInRange(0, 100, true));
 	}
 
 	[TestMethod]
@@ -162,7 +162,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(outOfRangeLowerValue, outOfRangeUpperValue));
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidValueException<TimeOnly>>(
+		_ = Assert.ThrowsExactly<InvalidValueException<TimeOnly>>(
 			() => testValue.CheckIsInRange(outOfRangeLowerValue, outOfRangeUpperValue, true));
 	}
 
@@ -191,7 +191,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(invalidValue.CheckIsNotNull());
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentNullException>(() => invalidValue.CheckIsNotNull(true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => invalidValue.CheckIsNotNull(true));
 	}
 
 	[TestMethod]
@@ -204,7 +204,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(Guid.Empty.CheckIsNotEmpty());
 
 		// Test Exception
-		_ = Assert.ThrowsException<InvalidOperationException>(() => Guid.Empty.CheckIsNotEmpty(true));
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => Guid.Empty.CheckIsNotEmpty(true));
 	}
 
 	[TestMethod]
@@ -227,7 +227,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(personProper.CheckIsCondition(personProper.Id.IsEmpty(), errorMessage: "Should be false."));
 
 		Person nullPerson = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(
+		_ = Assert.ThrowsExactly<ArgumentNullException>(
 			() => nullPerson.CheckIsCondition(personProper.Id.IsNotEmpty(), true));
 	}
 
@@ -247,9 +247,9 @@ public class ValidatorCheckTests
 		}
 
 		DirectoryInfo nullDirectoryInfo = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullDirectoryInfo.CheckExists(true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDirectoryInfo.CheckExists(true));
 
-		_ = Assert.ThrowsException<DirectoryNotFoundException>(
+		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(
 			() => new DirectoryInfo("fakefile").CheckExists(throwException: true));
 	}
 
@@ -272,9 +272,9 @@ public class ValidatorCheckTests
 		}
 
 		FileInfo nullFileInfo = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullFileInfo.CheckExists(true));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullFileInfo.CheckExists(true));
 
-		_ = Assert.ThrowsException<FileNotFoundException>(() => new FileInfo("fakefile").CheckExists(true));
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => new FileInfo("fakefile").CheckExists(true));
 	}
 
 	[TestMethod]

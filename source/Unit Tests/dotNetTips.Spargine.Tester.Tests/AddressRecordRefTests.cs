@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-30-2025
+// Last Modified On : 08-12-2025
 // ***********************************************************************
 // <copyright file="AddressRecordRefTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -30,19 +30,18 @@ public class AddressRecordRefTests
 	[TestMethod]
 	public void Address1_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { Address1 = new string('a', 101) });
 	}
 
 	[TestMethod]
 	public void Address2_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { Address2 = new string('a', 101) });
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void AddressRecord_Constructor_NullId_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -56,9 +55,7 @@ public class AddressRecordRefTests
 		var phone = "555-1234";
 
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		_ = new AddressRecord(null, address1, address2, city, state, countyProvince, country, postalCode, phone);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new AddressRecord(null, address1, address2, city, state, countyProvince, country, postalCode, phone));
 	}
 
 	[TestMethod]
@@ -262,7 +259,7 @@ public class AddressRecordRefTests
 	[TestMethod]
 	public void City_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { City = new string('a', 101) });
 	}
 
@@ -283,28 +280,28 @@ public class AddressRecordRefTests
 	public void CompareTo_Object_ThrowsOnInvalidType()
 	{
 		var record = AddressRecord.Create("1234567890");
-		Assert.ThrowsException<ArgumentException>(() => ((IComparable)record).CompareTo("not an address record"));
+		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)record).CompareTo("not an address record"));
 	}
 
 	[TestMethod]
 	public void Country_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { Country = new string('a', 56) });
 	}
 
 	[TestMethod]
 	public void CountyProvince_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { CountyProvince = new string('a', 61) });
 	}
 
 	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new AddressRecord("short"));
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => new AddressRecord(new string('a', 51)));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new AddressRecord("short"));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new AddressRecord(new string('a', 51)));
 	}
 
 	[TestMethod]
@@ -319,21 +316,21 @@ public class AddressRecordRefTests
 	[TestMethod]
 	public void Phone_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { Phone = new string('a', 51) });
 	}
 
 	[TestMethod]
 	public void PostalCode_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { PostalCode = new string('a', 26) });
 	}
 
 	[TestMethod]
 	public void State_Init_ThrowsOnInvalidLength()
 	{
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { State = new string('a', 100) });
 	}
 

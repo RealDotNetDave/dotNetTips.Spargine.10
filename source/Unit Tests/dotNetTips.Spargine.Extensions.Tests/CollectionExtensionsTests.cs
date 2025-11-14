@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-06-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -109,7 +109,7 @@ public class CollectionExtensionsTests
 		var collection = new Collection<Person>(people);
 
 		// Null argument
-		Assert.ThrowsException<ArgumentNullException>(() => CollectionExtensions.AsReadOnlySpan<Person>(null));
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.AsReadOnlySpan<Person>(null));
 
 		// Valid
 		var span = collection.AsReadOnlySpan();

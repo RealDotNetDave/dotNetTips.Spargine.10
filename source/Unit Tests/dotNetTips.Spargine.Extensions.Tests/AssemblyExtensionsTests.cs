@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-29-2023
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="AssemblyExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -30,7 +30,7 @@ public class AssemblyExtensionsTests
 	[TestMethod]
 	public void GetAllInterfaces_NullAssembly_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => ((Assembly)null).GetAllInterfaces());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((Assembly)null).GetAllInterfaces());
 	}
 
 	[TestMethod]
@@ -44,7 +44,7 @@ public class AssemblyExtensionsTests
 	[TestMethod]
 	public void GetAllTypes_NullAssembly_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => ((Assembly)null).GetAllTypes());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((Assembly)null).GetAllTypes());
 	}
 
 	[TestMethod]
@@ -58,7 +58,7 @@ public class AssemblyExtensionsTests
 	[TestMethod]
 	public void GetInstances_NullAssembly_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsException<ArgumentNullException>(() => ((Assembly)null).GetInstances<AssemblyExtensionsTests>().ToList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((Assembly)null).GetInstances<AssemblyExtensionsTests>().ToList());
 	}
 
 	[TestMethod]
@@ -93,7 +93,7 @@ public class AssemblyExtensionsTests
 		var type = typeof(AssemblyExtensionsTests);
 
 		// Act and Assert
-		Assert.ThrowsException<ArgumentNullException>(() => ((Assembly)null).GetTypes(type));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((Assembly)null).GetTypes(type));
 	}
 
 	[TestMethod]
@@ -103,7 +103,7 @@ public class AssemblyExtensionsTests
 		var assembly = Assembly.GetExecutingAssembly();
 
 		// Act and Assert
-		Assert.ThrowsException<ArgumentNullException>(() => assembly.GetTypes(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => assembly.GetTypes(null));
 	}
 
 	[TestMethod]

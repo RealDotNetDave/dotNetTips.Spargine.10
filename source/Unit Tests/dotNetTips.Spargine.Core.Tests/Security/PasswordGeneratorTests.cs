@@ -4,7 +4,7 @@
 // Created          : 11-12-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-12-2024
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="PasswordGeneratorTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -44,17 +44,15 @@ public class PasswordGeneratorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void GeneratePassword_InvalidLength_ThrowsException()
 	{
 		// Arrange
 		int length = 7;
 
-		// Act
-		PasswordGenerator.GeneratePassword(length);
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => PasswordGenerator.GeneratePassword(length));
 	}
+
 	[TestMethod]
 	public void GeneratePassword_ValidLength_ReturnsPassword()
 	{

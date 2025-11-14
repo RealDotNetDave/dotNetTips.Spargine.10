@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-29-2023
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -35,7 +35,7 @@ public class DirectoryInfoExtensionsTests
 
 		Assert.IsTrue(result > 0);
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => DirectoryInfoExtensions.GetSize(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryInfoExtensions.GetSize(null));
 	}
 
 	[TestMethod]
@@ -47,7 +47,7 @@ public class DirectoryInfoExtensionsTests
 
 		Assert.IsTrue(result > 0);
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => directory.GetSize(null) == 0);
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => directory.GetSize(null) == 0);
 	}
 
 	[TestMethod]
@@ -59,7 +59,7 @@ public class DirectoryInfoExtensionsTests
 
 		Assert.IsTrue(result > 0);
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => directory.GetSize("*.txt", (SearchOption)100) ==
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => directory.GetSize("*.txt", (SearchOption)100) ==
 			0);
 	}
 

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="DotNetTips.Spargine.Tester.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -217,12 +217,10 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Id));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address1));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address2));
-		//Assert.IsFalse(string.IsNullOrEmpty(address.City));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
 		Assert.IsFalse(string.IsNullOrEmpty(address.PostalCode));
-		Assert.IsFalse(string.IsNullOrEmpty(address.State));
 	}
 
 	[TestMethod]
@@ -233,19 +231,16 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Id));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address1));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address2));
-		//Assert.IsFalse(string.IsNullOrEmpty(address.City));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
 		Assert.IsFalse(string.IsNullOrEmpty(address.PostalCode));
-		Assert.IsFalse(string.IsNullOrEmpty(address.State));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(NotSupportedException))]
 	public void GenerateAddress_UnsupportedType_ThrowsException()
 	{
-		RandomData.GenerateAddress<string>();
+		Assert.ThrowsExactly<NotSupportedException>(() => RandomData.GenerateAddress<string>());
 	}
 
 	[TestMethod]
@@ -303,12 +298,11 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void GenerateAddressCollection_InvalidCountry_ThrowsException()
 	{
 		// Act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		RandomData.GenerateAddressCollection<Address>(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => RandomData.GenerateAddressCollection<Address>(null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 	}
 

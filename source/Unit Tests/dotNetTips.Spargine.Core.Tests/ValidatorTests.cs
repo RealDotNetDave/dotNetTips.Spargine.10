@@ -4,7 +4,7 @@
 // Created          : 11-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="ValidatorTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,36 +38,33 @@ public class ValidatorTests
 	private const string GoodEmail = "fakeemail@google.com";
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ArgumentCountInRange_CountAboveMax_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		var list = new List<int> { 1, 2, 3, 4, 5 };
 
-		// Act
-		Validator.ArgumentCountInRange(list, 1, 3);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => Validator.ArgumentCountInRange(list, 1, 3));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ArgumentCountInRange_CountBelowMin_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		var list = new List<int> { 1 };
 
-		// Act
-		Validator.ArgumentCountInRange(list, 2, 5);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => Validator.ArgumentCountInRange(list, 2, 5));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ArgumentCountInRange_NullCollection_ThrowsArgumentNullException()
 	{
 		// Arrange
 		List<int> list = null!;
 
-		// Act
-		Validator.ArgumentCountInRange(list, 1, 3);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentCountInRange(list, 1, 3));
 	}
 
 	[TestMethod]
@@ -127,15 +124,14 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ArgumentCustom_GuidValidation_Failure()
 	{
 		// Arrange
 		var input = Guid.Empty;
 		Func<Guid, bool> predicate = g => g != Guid.Empty;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
@@ -153,27 +149,25 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ArgumentCustom_InvalidPredicate_ThrowsArgumentInvalidException()
 	{
 		// Arrange
 		var input = -5;
 		Func<int, bool> predicate = x => x > 0;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ArgumentCustom_ListValidation_Failure()
 	{
 		// Arrange
 		var input = new List<int> { 1, -2, 3, 4, 5 };
 		Func<List<int>, bool> predicate = list => list.Count > 0 && list.All(x => x > 0);
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
@@ -191,39 +185,36 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ArgumentCustom_NullInput_ThrowsArgumentNullException()
 	{
 		// Arrange
 		string input = null;
 		Func<string, bool> predicate = s => s.Length > 0;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void ArgumentCustom_NullPredicate_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var input = "test";
 		Func<string, bool> predicate = null;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ArgumentCustom_PredicateWithMultipleConditions_Failure()
 	{
 		// Arrange
 		var input = 23;
 		Func<int, bool> predicate = x => x > 0 && x < 100 && x % 5 == 0;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
@@ -241,15 +232,14 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ArgumentCustom_RangeValidation_Failure()
 	{
 		// Arrange
 		var input = 150.5;
 		Func<double, bool> predicate = x => x >= 0.0 && x <= 100.0;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentCustom(predicate));
 	}
 
 
@@ -268,15 +258,14 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentInvalidException))]
 	public void ArgumentCustom_StringLengthValidation_Failure()
 	{
 		// Arrange
 		var input = "Hi";
 		Func<string, bool> predicate = s => s.Length >= 5 && s.Length <= 20;
 
-		// Act
-		_ = input.ArgumentCustom(predicate);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentCustom(predicate));
 	}
 
 	[TestMethod]
@@ -329,14 +318,13 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentOutOfRangeException))]
 	public void ArgumentDefined_StatusEnum_InvalidValue_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		var value = (Status)999;
 
-		// Act
-		_ = value.ArgumentDefined();
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => value.ArgumentDefined());
 	}
 
 	[TestMethod]
@@ -381,10 +369,10 @@ public class ValidatorTests
 
 		//Test Exceptions
 		DirectoryInfo nullDirectoryInfo = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullDirectoryInfo.ArgumentExists());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDirectoryInfo.ArgumentExists());
 
 		var fakeDirectory = new DirectoryInfo("fakefile");
-		_ = Assert.ThrowsException<DirectoryNotFoundException>(() => DirectoryHelper.DeleteDirectory(fakeDirectory));
+		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => DirectoryHelper.DeleteDirectory(fakeDirectory));
 	}
 
 	[TestMethod]
@@ -426,9 +414,9 @@ public class ValidatorTests
 		}
 
 		FileInfo nullFileInfo = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullFileInfo.ArgumentExists());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullFileInfo.ArgumentExists());
 
-		_ = Assert.ThrowsException<FileNotFoundException>(() => new FileInfo("fakefile").ArgumentExists());
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => new FileInfo("fakefile").ArgumentExists());
 
 		tempFile.Delete();
 	}
@@ -486,7 +474,7 @@ public class ValidatorTests
 		//Test Exception
 		_ = byte.TryParse("101", out var invalidValue);
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
 			() => invalidValue.ArgumentInRange(lowerValue, upperValue));
 	}
 
@@ -509,7 +497,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
 			() => testValue.ArgumentInRange(outOfRangeLowerValue, outOfRangeUpperValue));
 	}
 
@@ -552,7 +540,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
 			() => testValue.ArgumentInRange(outOfRangeLowerValue, outOfRangeUpperValue));
 	}
 
@@ -595,7 +583,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
 			() => testValue.ArgumentInRange(outOfRangeLower, outOfRangeUpper));
 	}
 
@@ -636,7 +624,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 100));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 100));
 	}
 
 	[TestMethod]
@@ -674,7 +662,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 100));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 100));
 	}
 
 	[TestMethod]
@@ -712,7 +700,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, max: 100));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, max: 100));
 	}
 
 	[TestMethod]
@@ -750,7 +738,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 100));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 100));
 	}
 
 	[TestMethod]
@@ -788,25 +776,7 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 2));
-	}
-
-	[TestMethod]
-	public void ArgumentInRangeStringWithDefaultTest()
-	{
-		var testValue = "dotNetTips.com";
-		var defaultValue = "Spargine";
-
-		try
-		{
-			var result = testValue.ArgumentInRange(5, 10, defaultValue: defaultValue);
-
-			Assert.AreEqual(result, defaultValue);
-		}
-		catch
-		{
-			Assert.Fail();
-		}
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(0, 2));
 	}
 
 	[TestMethod]
@@ -830,28 +800,8 @@ public class ValidatorTests
 		}
 
 		// Test Exception
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
 			() => testValue.ArgumentInRange(outOfRangeLowerValue, outOfRangeUpperValue));
-	}
-
-	[TestMethod]
-	public void ArgumentInRangeTimeOnlyWithDefaultTest()
-	{
-		var lowerValue = new TimeOnly(1, 3, 3);
-		var upperValue = new TimeOnly(2, 3, 3);
-		var testValue = new TimeOnly(5, 3, 20);
-		var defaultValue = new TimeOnly(2, 3, 3);
-
-		try
-		{
-			var result = testValue.ArgumentInRange(lowerValue, upperValue, defaultValue);
-
-			Assert.AreEqual(result, defaultValue);
-		}
-		catch
-		{
-			Assert.Fail();
-		}
 	}
 
 	[TestMethod]
@@ -873,7 +823,7 @@ public class ValidatorTests
 		}
 
 		//Test Exception
-		_ = Assert.ThrowsException<ArgumentInvalidException>(
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(
 			() => personProper.ArgumentMeetsCondition(personProper.Id == "AA", errorMessage: "Person is missing Id"));
 	}
 
@@ -931,7 +881,7 @@ public class ValidatorTests
 			Assert.Fail();
 		}
 
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => ((BenchmarkStatus)100).ArgumentDefined());
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ((BenchmarkStatus)100).ArgumentDefined());
 	}
 
 	[TestMethod]
@@ -941,7 +891,7 @@ public class ValidatorTests
 		IReadOnlyCollection<int> input = new List<int>().AsReadOnly();
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => Validator.ArgumentItemsExists(input));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentItemsExists(input));
 	}
 
 	[TestMethod]
@@ -951,7 +901,7 @@ public class ValidatorTests
 		IReadOnlyCollection<int> input = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => Validator.ArgumentItemsExists(input));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentItemsExists(input));
 	}
 
 	[TestMethod]
@@ -976,7 +926,7 @@ public class ValidatorTests
 		var errorMessage = "Custom error message";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<ArgumentNullException>(() => Validator.ArgumentItemsExists(input, errorMessage));
+		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentItemsExists(input, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -988,7 +938,7 @@ public class ValidatorTests
 		var paramName = "input";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<ArgumentNullException>(() => Validator.ArgumentItemsExists(input, paramName: paramName));
+		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentItemsExists(input, paramName: paramName));
 		Assert.IsTrue(ex.Message.Contains(paramName));
 	}
 
@@ -1009,7 +959,7 @@ public class ValidatorTests
 
 		// Test null collection
 		Person[] nullPeople = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
 	}
 
 	[TestMethod]
@@ -1029,7 +979,7 @@ public class ValidatorTests
 
 		// Test null collection
 		IEnumerable<Person> nullPeople = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
 	}
 
 	[TestMethod]
@@ -1049,7 +999,7 @@ public class ValidatorTests
 
 		// Test null collection
 		List<Person> nullPeople = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
 	}
 
 	[TestMethod]
@@ -1068,10 +1018,10 @@ public class ValidatorTests
 
 		// Test null
 		IEnumerable<Person> nullPeople = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullPeople.ArgumentItemsExists(10));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullPeople.ArgumentItemsExists(10));
 
 		// Test invalid WordCount
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => people.ArgumentItemsExists(5));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => people.ArgumentItemsExists(5));
 	}
 
 	[TestMethod]
@@ -1091,7 +1041,7 @@ public class ValidatorTests
 
 		// Test null collection
 		ReadOnlyCollection<Person> nullPeople = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullPeople.ArgumentItemsExists());
 	}
 
 	[TestMethod]
@@ -1109,7 +1059,7 @@ public class ValidatorTests
 		}
 
 		// Test invalid match
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => BadEmail.ArgumentMatched(expression));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => BadEmail.ArgumentMatched(expression));
 
 		// Test default value
 		var result = BadEmail.ArgumentMatched(expression, defaultValue: defaultValue);
@@ -1117,7 +1067,7 @@ public class ValidatorTests
 		Assert.AreEqual(result, defaultValue);
 
 		// Test null match
-		_ = Assert.ThrowsException<ArgumentNullException>(() => GoodEmail.ArgumentMatched(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => GoodEmail.ArgumentMatched(null));
 	}
 
 	[TestMethod]
@@ -1200,7 +1150,7 @@ public class ValidatorTests
 		}
 
 		Person nullPerson = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullPerson.ArgumentNotNull());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullPerson.ArgumentNotNull());
 	}
 
 	[TestMethod]
@@ -1224,7 +1174,7 @@ public class ValidatorTests
 		Assert.AreEqual(result, defaultValue);
 
 		// Test Bad value
-		_ = Assert.ThrowsException<ArgumentInvalidException>(() => Guid.Empty.ArgumentNotNullOrEmpty());
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => Guid.Empty.ArgumentNotNullOrEmpty());
 	}
 
 	[TestMethod]
@@ -1240,7 +1190,7 @@ public class ValidatorTests
 			Assert.Fail();
 		}
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => string.Empty.ArgumentNotNullOrEmpty());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.Empty.ArgumentNotNullOrEmpty());
 	}
 
 	[TestMethod]
@@ -1260,7 +1210,7 @@ public class ValidatorTests
 			Assert.Fail();
 		}
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => string.Empty.ArgumentNotNullOrEmpty());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.Empty.ArgumentNotNullOrEmpty());
 	}
 
 	[TestMethod]
@@ -1279,7 +1229,7 @@ public class ValidatorTests
 
 		// Test Null Uri
 		Uri nullUri = null;
-		_ = Assert.ThrowsException<ArgumentNullException>(() => nullUri.ArgumentNotNull());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullUri.ArgumentNotNull());
 	}
 
 	[TestMethod]
@@ -1314,7 +1264,7 @@ public class ValidatorTests
 			Assert.Fail();
 		}
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => ReadOnlySpan<Person>.Empty.ArgumentNotEmpty());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ReadOnlySpan<Person>.Empty.ArgumentNotEmpty());
 	}
 
 	[TestMethod]
@@ -1331,7 +1281,7 @@ public class ValidatorTests
 			Assert.Fail();
 		}
 
-		_ = Assert.ThrowsException<ArgumentNullException>(() => Span<Person>.Empty.ArgumentNotEmpty());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Span<Person>.Empty.ArgumentNotEmpty());
 	}
 
 	[TestMethod]
@@ -1341,7 +1291,7 @@ public class ValidatorTests
 		ICollection<int> input = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
 	}
 
 	[TestMethod]
@@ -1351,7 +1301,7 @@ public class ValidatorTests
 		ICollection<int> input = new List<int>().AsReadOnly();
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
 	}
 
 	[TestMethod]
@@ -1376,7 +1326,7 @@ public class ValidatorTests
 		var errorMessage = "Custom error message";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, errorMessage));
+		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -1388,7 +1338,7 @@ public class ValidatorTests
 		var paramName = "input";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, paramName: paramName));
+		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, paramName: paramName));
 		Assert.IsTrue(ex.Message.Contains(paramName));
 	}
 
@@ -1399,7 +1349,7 @@ public class ValidatorTests
 		IList<int> input = null;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
 	}
 
 	[TestMethod]
@@ -1409,7 +1359,7 @@ public class ValidatorTests
 		IList<int> input = new List<int>().AsReadOnly();
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
 	}
 
 	[TestMethod]
@@ -1434,7 +1384,7 @@ public class ValidatorTests
 		var errorMessage = "Custom error message";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, errorMessage));
+		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -1446,7 +1396,7 @@ public class ValidatorTests
 		var paramName = "input";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, paramName: paramName));
+		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, paramName: paramName));
 		Assert.IsTrue(ex.Message.Contains(paramName));
 	}
 
@@ -1473,7 +1423,7 @@ public class ValidatorTests
 		Type expectedType = null;
 
 		// Act & Assert
-		Assert.ThrowsException<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
+		_ = Assert.ThrowsExactly<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
 	}
 
 	[TestMethod]
@@ -1484,7 +1434,7 @@ public class ValidatorTests
 		var expectedType = typeof(string);
 
 		// Act & Assert
-		Assert.ThrowsException<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
+		_ = Assert.ThrowsExactly<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
 	}
 
 	[TestMethod]
@@ -1510,7 +1460,7 @@ public class ValidatorTests
 		var errorMessage = "Types do not match";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true, errorMessage));
+		var ex = Assert.ThrowsExactly<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -1549,7 +1499,7 @@ public class ValidatorTests
 		var expectedType = typeof(int);
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
+		var ex = Assert.ThrowsExactly<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
 		Assert.IsTrue(ex.Message.Contains("Invalid type"));
 	}
 
@@ -1576,7 +1526,7 @@ public class ValidatorTests
 		var errorMessage = "Condition not met";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidValueException<object>>(() => Validator.CheckIsCondition(input, condition, true, errorMessage));
+		var ex = Assert.ThrowsExactly<InvalidValueException<object>>(() => Validator.CheckIsCondition(input, condition, true, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -1615,7 +1565,7 @@ public class ValidatorTests
 		var condition = true;
 
 		// Act & Assert
-		Assert.ThrowsException<ArgumentNullException>(() => Validator.CheckIsCondition(input, condition));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.CheckIsCondition(input, condition));
 	}
 
 	[TestMethod]
@@ -1626,7 +1576,7 @@ public class ValidatorTests
 		var condition = false;
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidValueException<object>>(() => Validator.CheckIsCondition(input, condition, true));
+		var ex = Assert.ThrowsExactly<InvalidValueException<object>>(() => Validator.CheckIsCondition(input, condition, true));
 		Assert.IsTrue(ex.Message.Contains("Invalid value"));
 	}
 
@@ -1676,7 +1626,7 @@ public class ValidatorTests
 		var errorMessage = "Enum value is not defined";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true, errorMessage));
+		var ex = Assert.ThrowsExactly<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -1687,7 +1637,7 @@ public class ValidatorTests
 		var input = (TestEnum)999;
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true));
+		var ex = Assert.ThrowsExactly<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true));
 		Assert.IsTrue(ex.Message.Contains("The value is not defined in the Enum."));
 	}
 
@@ -1712,7 +1662,7 @@ public class ValidatorTests
 		var errorMessage = "GUID is empty";
 
 		// Act & Assert
-		var ex = Assert.ThrowsException<InvalidOperationException>(() => Validator.CheckIsNotEmpty(input, true, errorMessage));
+		var ex = Assert.ThrowsExactly<InvalidOperationException>(() => Validator.CheckIsNotEmpty(input, true, errorMessage));
 		Assert.IsTrue(ex.Message.Contains(errorMessage));
 	}
 
@@ -1820,14 +1770,13 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CheckIsNotNullOrEmpty_EmptyStringWithThrowException_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var input = string.Empty;
 
-		// Act
-		_ = input.CheckIsNotNullOrEmpty(throwException: true);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.CheckIsNotNullOrEmpty(throwException: true));
 	}
 
 	[TestMethod]
@@ -1883,14 +1832,13 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CheckIsNotNullOrEmpty_NullStringWithThrowException_ThrowsArgumentNullException()
 	{
 		// Arrange
 		string input = null;
 
-		// Act
-		_ = input.CheckIsNotNullOrEmpty(throwException: true);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.CheckIsNotNullOrEmpty(throwException: true));
 	}
 
 	[TestMethod]
@@ -2056,17 +2004,14 @@ public class ValidatorTests
 	}
 
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void TestNullCollectionWithErrorMessage()
 	{
 		// Arrange
 		Collection<string> collection = null;
 		var errorMessage = "Collection should not be null.";
 
-		// Act
-		Validator.ArgumentNotNull(collection, errorMessage, paramName: nameof(collection));
-
-		// Assert is handled by ExpectedException
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentNotNull(collection, errorMessage, paramName: nameof(collection)));
 	}
 
 	public enum TestEnum

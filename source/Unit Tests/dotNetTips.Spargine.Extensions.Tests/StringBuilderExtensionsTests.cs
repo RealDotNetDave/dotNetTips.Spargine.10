@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-29-2025
+// Last Modified On : 11-14-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -200,7 +200,7 @@ public class StringBuilderExtensionsTests
 		Assert.IsTrue(sb.Length > 0, "StringBuilder should have initial content.");
 
 		// Call ClearSetCapacity
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => sb.ClearSetCapacity(newCapacity));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => sb.ClearSetCapacity(newCapacity));
 
 		// Verify the StringBuilder is cleared
 		Assert.AreEqual(0, sb.Length, "StringBuilder should be cleared.");

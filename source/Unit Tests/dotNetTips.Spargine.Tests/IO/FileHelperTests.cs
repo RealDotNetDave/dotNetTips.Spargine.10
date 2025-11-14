@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-14-2025
+// Last Modified On : 11-13-2025
 // ***********************************************************************
 // <copyright file="FileHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -51,10 +51,9 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddAttributes_NullFile_Test()
 	{
-		FileHelper.AddAttributes(null, FileAttributes.ReadOnly);
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.AddAttributes(null, FileAttributes.ReadOnly));
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -77,10 +76,9 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void AddReadOnlyAttribute_NullFile_Test()
 	{
-		FileHelper.AddReadOnlyAttribute(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.AddReadOnlyAttribute(null));
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -114,7 +112,6 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(FileNotFoundException))]
 	public void CopyFile_FileNotFound_Test()
 	{
 		var sourceFile = new FileInfo("NonExistentFile.txt");
@@ -122,7 +119,7 @@ public class FileHelperTests
 
 		try
 		{
-			FileHelper.CopyFile(sourceFile, destinationDir);
+			Assert.ThrowsExactly<FileNotFoundException>(() => FileHelper.CopyFile(sourceFile, destinationDir));
 		}
 		finally
 		{
@@ -135,14 +132,13 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CopyFile_NullDestination_Test()
 	{
 		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
 
 		try
 		{
-			FileHelper.CopyFile(sourceFile, null);
+			Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.CopyFile(sourceFile, null));
 		}
 		finally
 		{
@@ -152,13 +148,12 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void CopyFile_NullFile_Test()
 	{
 		var destinationDir = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), nameof(this.CopyFile_NullFile_Test)));
 		try
 		{
-			FileHelper.CopyFile(null, destinationDir);
+			Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.CopyFile(null, destinationDir));
 		}
 		finally
 		{
@@ -215,7 +210,7 @@ public class FileHelperTests
 		cts.Cancel();
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<TaskCanceledException>(() => FileHelper.CopyFileAsync(sourceFile, destinationDir, cts.Token));
+		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => FileHelper.CopyFileAsync(sourceFile, destinationDir, cts.Token));
 
 		// Cleanup
 		File.Delete(sourceFile.FullName);
@@ -232,7 +227,7 @@ public class FileHelperTests
 		destinationDir.Create();
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => FileHelper.CopyFileAsync(sourceFile, destinationDir));
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.CopyFileAsync(sourceFile, destinationDir));
 
 		destinationDir.Delete(true);
 	}
@@ -372,10 +367,9 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void FileHasInvalidChars_NullFile_Test()
 	{
-		FileHelper.FileHasInvalidChars(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.FileHasInvalidChars(null));
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -413,14 +407,13 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void MoveFile_NullDestinationFile_Test()
 	{
 		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
 
 		try
 		{
-			FileHelper.MoveFile(sourceFile, null);
+			Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.MoveFile(sourceFile, null));
 		}
 		finally
 		{
@@ -431,12 +424,11 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void MoveFile_NullSourceFile_Test()
 	{
 		var destinationFile = new FileInfo(Path.Combine(App.ExecutingFolder(), "MoveFile_NullSourceFile_Test.txt"));
 
-		FileHelper.MoveFile(null, destinationFile);
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.MoveFile(null, destinationFile));
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -476,7 +468,6 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(IOException))]
 	public void MoveFile_ShouldThrowIOException_WhenFileIsLocked()
 	{
 		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
@@ -486,7 +477,7 @@ public class FileHelperTests
 		{
 			using (var stream = sourceFile.Open(FileMode.Open, FileAccess.Read, FileShare.None))
 			{
-				FileHelper.MoveFile(sourceFile, destinationFile);
+				Assert.ThrowsExactly<IOException>(() => FileHelper.MoveFile(sourceFile, destinationFile));
 			}
 		}
 		finally
@@ -514,10 +505,9 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveAttributes_NullFile_Test()
 	{
-		FileHelper.RemoveAttributes(null, FileAttributes.ReadOnly);
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.RemoveAttributes(null, FileAttributes.ReadOnly));
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -541,10 +531,9 @@ public class FileHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	[ExpectedException(typeof(ArgumentNullException))]
 	public void RemoveReadOnlyAttribute_NullFile_Test()
 	{
-		FileHelper.RemoveReadOnlyAttribute(null);
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.RemoveReadOnlyAttribute(null));
 	}
 
 	[SupportedOSPlatform("windows")]
