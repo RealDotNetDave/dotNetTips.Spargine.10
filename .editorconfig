@@ -1021,7 +1021,7 @@ dotnet_diagnostic.CA1831.severity = error
 
 # Use AsSpan or AsMemory instead of Range-based indexers for getting ReadOnlySpan or ReadOnlyMemory portion of an array
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1832.severity = warning
+dotnet_diagnostic.CA1832.severity = error
 
 # Use AsSpan or AsMemory instead of Range-based indexers for getting Span or Memory portion of an array
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
