@@ -4,7 +4,7 @@
 // Created          : 02-10-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-15-2025
+// Last Modified On : 11-18-2025
 // ***********************************************************************
 // <copyright file="InternalMethods.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -134,7 +134,7 @@ internal static class InternalMethods
 	/// <param name="ignoreNulls">if set to <c>true</c> [ignore nulls].</param>
 	/// <param name="includeMemberName">if set to <c>true</c> [include member name].</param>
 	/// <returns>System.String.</returns>
-	internal static string PropertiesToString(this object obj, string header = ControlChars.EmptyString, char keyValueSeparator = ControlChars.Colon, string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
+	internal static string PropertiesToString(this object obj, string header = ControlChars.EmptyString, in char keyValueSeparator = ControlChars.Colon, string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 	{
 		var typeName = obj.GetType().Name;
 

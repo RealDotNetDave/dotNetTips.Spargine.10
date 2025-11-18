@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-21-2025
+// Last Modified On : 11-18-2025
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -563,7 +563,7 @@ public static class RandomData
 	/// <example>Output: 65 'A'</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static char GenerateCharacter(char minValue, char maxValue)
+	public static char GenerateCharacter(in char minValue, in char maxValue)
 	{
 		return (char)GenerateInteger(minValue, maxValue);
 	}
@@ -694,9 +694,9 @@ public static class RandomData
 	/// This method constructs a randomized email address by combining:
 	/// </para>
 	/// <list type="number">
-	///   <item><description>A username generated with <see cref="GenerateWord(int, int, char, char)"/> (5-25 chars)</description></item>
+	///   <item><description>A username generated with <see cref="GenerateWord(int, int, in char, in char)"/> (5-25 chars)</description></item>
 	///   <item><description>The "@" symbol</description></item>
-	///   <item><description>A domain name generated with <see cref="GenerateWord(int, int, char, char)"/> (5-15 chars)</description></item>
+	///   <item><description>A domain name generated with <see cref="GenerateWord(int, int, in char, in char)"/> (5-15 chars)</description></item>
 	///   <item><description>A dot separator</description></item>
 	///   <item><description>A domain extension from <see cref="GenerateDomainExtension"/></description></item>
 	/// </list>
@@ -711,7 +711,6 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	/// <seealso cref="GenerateEmailAddressWithName"/>
-	/// <seealso cref="GenerateWord(int, int, char, char)"/>
 	/// <seealso cref="GenerateDomainExtension"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateEmailAddress), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -1383,7 +1382,7 @@ public static class RandomData
 	/// <example>Output: LBEEUMHHHK</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string GenerateWord(int length = 1, char minCharacter = 'a', char maxCharacter = 'Z')
+	public static string GenerateWord(int length = 1, in char minCharacter = 'a', in char maxCharacter = 'Z')
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
 
@@ -1418,7 +1417,7 @@ public static class RandomData
 	/// <example>Output: ACRNFTPAE</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string GenerateWord(int minLength = 1, int maxLength = 1, char minCharacter = 'a', char maxCharacter = 'Z')
+	public static string GenerateWord(int minLength = 1, int maxLength = 1, in char minCharacter = 'a', in char maxCharacter = 'Z')
 	{
 		minLength = minLength.ArgumentInRange(1, defaultValue: 1);
 		maxLength = maxLength.ArgumentInRange(1, defaultValue: 1);
