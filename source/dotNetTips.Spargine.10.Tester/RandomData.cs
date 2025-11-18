@@ -1303,7 +1303,7 @@ public static class RandomData
 	/// Generates a URL host name without the protocol (such as http:// or https://).
 	/// </summary>
 	/// <returns>A string representing a URL host name in the format "www.{random-domain}.{tld}". The domain name is 
-	/// generated using <see cref="GenerateWord(int, int, char, char)"/> with a length between 1-25 lowercase letters, 
+	/// generated using <see cref="GenerateWord(int, int,in char,in char)"/> with a length between 1-25 lowercase letters, 
 	/// and the top-level domain is generated using <see cref="GenerateUrlHostNameNoSubDomain"/>.</returns>
 	/// <remarks>
 	/// This method generates realistic-looking domain names that can be used for testing and simulation purposes.

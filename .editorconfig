@@ -955,6 +955,7 @@ dotnet_diagnostic.CA1806.severity = error
 dotnet_diagnostic.CA1810.severity = suggestion 
 
 # Avoid uninstantiated internal classes
+# Broken in .NET 10 @@@@
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1812.severity = suggestion
 
