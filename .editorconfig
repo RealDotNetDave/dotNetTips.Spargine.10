@@ -951,11 +951,12 @@ dotnet_diagnostic.CA1806.severity = error
 
 # Initialize reference type static fields inline
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1810.severity = suggestion
+# Broken in .NET 10 @@@@
+dotnet_diagnostic.CA1810.severity = suggestion 
 
 # Avoid uninstantiated internal classes
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1812.severity = silent
+dotnet_diagnostic.CA1812.severity = suggestion
 
 # Avoid unsealed attributes
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
@@ -983,7 +984,7 @@ dotnet_diagnostic.CA1821.severity = error
 
 # Mark members as static
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
-dotnet_diagnostic.CA1822.severity = warning
+dotnet_diagnostic.CA1822.severity = suggestion
 
 # Avoid unused private fields
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
@@ -1006,7 +1007,7 @@ dotnet_diagnostic.CA1827.severity = suggestion
 
 # Do not use CountAsync/LongCountAsync when AnyAsync can be used
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1828.severity = silent
+dotnet_diagnostic.CA1828.severity = suggestion
 
 # Use Length/Count property instead of Enumerable.Count() method
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
@@ -1144,9 +1145,9 @@ dotnet_diagnostic.CA1864.severity = suggestion
 
 # Use 'string.Method(char)' instead of 'string.Method(string)' for string with single char
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1865.severity = warning
-dotnet_diagnostic.CA1866.severity = warning
-dotnet_diagnostic.CA1867.severity = warning
+dotnet_diagnostic.CA1865.severity = error
+dotnet_diagnostic.CA1866.severity = error
+dotnet_diagnostic.CA1867.severity = error
 
 # Unnecessary call to 'Contains' for sets
 dotnet_diagnostic.CA1868.severity = error
@@ -1170,8 +1171,6 @@ dotnet_diagnostic.CA1873.severity = warning
 
 # CA1874: Prefer static HashData method over ComputeHash
 dotnet_diagnostic.CA1874.severity = warning
-
-dotnet_diagnostic.PERF001.severity = warning
 
 ####################################################################################################
 # Reliability Rules (CA2000-CA2024)

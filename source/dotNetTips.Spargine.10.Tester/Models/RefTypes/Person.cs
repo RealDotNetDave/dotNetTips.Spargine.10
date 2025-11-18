@@ -4,7 +4,7 @@
 // Created          : 07-17-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-20-2025
+// Last Modified On : 11-17-2025
 // ***********************************************************************
 // <copyright file="Person.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -110,12 +110,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>True if left is less than right.</returns>
 	public static bool operator <(in Person? left, in Person? right)
 	{
-		if (left is null)
-		{
-			return right is not null;
-		}
-
-		return right is null ? false : left.CompareTo(right) < 0;
+		return left is null ? right is not null : right is null ? false : left.CompareTo(right) < 0;
 	}
 
 	/// <summary>
@@ -126,17 +121,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>True if left is less than or equal to right.</returns>
 	public static bool operator <=(in Person? left, in Person? right)
 	{
-		if (left is null)
-		{
-			return true;
-		}
-
-		if (right is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) <= 0;
+		return left is null ? true : right is null ? false : left.CompareTo(right) <= 0;
 	}
 
 	/// <summary>
@@ -158,17 +143,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>True if left is greater than right.</returns>
 	public static bool operator >(in Person? left, in Person? right)
 	{
-		if (left is null)
-		{
-			return false;
-		}
-
-		if (right is null)
-		{
-			return true;
-		}
-
-		return left.CompareTo(right) > 0;
+		return left is null ? false : right is null ? true : left.CompareTo(right) > 0;
 	}
 
 	/// <summary>
@@ -179,17 +154,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>True if left is greater than or equal to right.</returns>
 	public static bool operator >=(in Person? left, in Person? right)
 	{
-		if (right is null)
-		{
-			return true;
-		}
-
-		if (left is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) >= 0;
+		return right is null ? true : left is null ? false : left.CompareTo(right) >= 0;
 	}
 
 	/// <summary>
@@ -204,12 +169,9 @@ public sealed class Person : IPerson<Person, Address>
 	/// </exception>
 	int IComparable.CompareTo(object? obj)
 	{
-		if (obj is null)
-		{
-			return 1;
-		}
-
-		return obj is Person other
+		return obj is null
+			? 1
+			: obj is Person other
 			? this.CompareTo(other)
 			: throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
 	}
@@ -260,12 +222,7 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>True if equal, otherwise false.</returns>
 	public bool Equals(in Person? other)
 	{
-		if (ReferenceEquals(this, other))
-		{
-			return true;
-		}
-
-		return other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
+		return ReferenceEquals(this, other) ? true : other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
 	}
 
 	/// <inheritdoc />

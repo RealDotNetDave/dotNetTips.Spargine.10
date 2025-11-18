@@ -384,8 +384,8 @@ public static class FastStringBuilder
 	/// <returns>A single string with the values joined by the delimiter.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Join), "David McCarter", "03/04/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static string Join([DisallowNull] IEnumerable<string> values, string delimiter = ControlChars.CommaSpace)
+	[Information(nameof(Join), "David McCarter", "03/04/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static string Join([DisallowNull] IEnumerable<string> values, [ConstantExpected] in string delimiter = ControlChars.CommaSpace)
 	{
 		values = values.ArgumentNotNull();
 

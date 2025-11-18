@@ -80,7 +80,7 @@ public class SimpleResult<T>
 	[return: NotNull]
 	private string GenerateExceptionMessages()
 	{
-		return FastStringBuilder.Join(this._exceptions.Select(e => e.GetAllMessages()), Environment.NewLine);
+		return FastStringBuilder.Join(this._exceptions.Select(e => e.GetAllMessages()), ControlChars.CR);
 	}
 
 	/// <summary>

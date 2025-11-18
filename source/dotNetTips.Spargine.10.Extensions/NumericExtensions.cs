@@ -197,7 +197,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string FormatTime(this double milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -243,14 +243,17 @@ public static class NumericExtensions
 		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
 
 		var parts = new List<string>(3);
+
 		if (timeSpan.Hours > 0)
 		{
 			parts.Add($"{timeSpan.Hours} hour{(timeSpan.Hours == 1 ? string.Empty : "s")}");
 		}
+
 		if (timeSpan.Minutes > 0)
 		{
 			parts.Add($"{timeSpan.Minutes} minute{(timeSpan.Minutes == 1 ? string.Empty : "s")}");
 		}
+
 		if (timeSpan.Seconds > 0 || parts.Count == 0)
 		{
 			parts.Add($"{timeSpan.Seconds} second{(timeSpan.Seconds == 1 ? string.Empty : "s")}");

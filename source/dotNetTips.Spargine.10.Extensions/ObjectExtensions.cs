@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-22-2025
+// Last Modified On : 11-17-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -177,12 +177,13 @@ public static class ObjectExtensions
 	/// <returns>
 	/// A <see cref="Lazy{T}"/> instance that returns the specified value when evaluated.
 	/// </returns>
-	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static Lazy<T> ToLazy<T>(this T value)
 	{
 		value = value.ArgumentNotNull();
 
-		return new Lazy<T>(() => value);
+		return new Lazy<T>(() => value, LazyThreadSafetyMode.PublicationOnly);
 	}
 
 	/// <summary>
@@ -246,12 +247,9 @@ public static class ObjectExtensions
 		[Information(nameof(Max), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public T? Max<T>([DisallowNull] T obj2) where T : IComparable
 		{
-			if (obj is T comparableObj)
-			{
-				return TypeHelper.Max(comparableObj, obj2);
-			}
-
-			throw new InvalidOperationException($"The object is not of type {typeof(T).Name} which implements IComparable.");
+			return obj is T comparableObj
+				? TypeHelper.Max(comparableObj, obj2)
+				: throw new InvalidOperationException($"The object is not of type {typeof(T).Name} which implements IComparable.");
 		}
 
 		/// <summary>
@@ -395,15 +393,84 @@ public static class ObjectExtensions
 		}
 
 		/// <summary>
-		/// Converts an object’s fields into a dictionary, with field names as keys and their values as dictionary values.
+		/// Converts an object's fields into a dictionary, with field names as keys and their values as dictionary values.
+		/// This method uses reflection to extract field information, including both public and private instance fields.
 		/// </summary>
-		/// <param name="memberName">The name of a specific member to convert. If empty, all fields are converted.</param>
-		/// <param name="ignoreNulls">Specifies whether to ignore fields with null values.</param>
-		/// <returns>A dictionary containing the names and string representations of the fields of the object.</returns>
+		/// <param name="memberName">
+		/// The name of a specific member to convert. If empty, all fields are converted.
+		/// This parameter is used as a prefix for hierarchical field names in nested objects.
+		/// </param>
+		/// <param name="ignoreNulls">
+		/// Specifies whether to ignore fields with null values.
+		/// When <c>true</c>, null-valued fields are excluded from the resulting dictionary.
+		/// When <c>false</c>, all fields are included regardless of their value.
+		/// </param>
+		/// <returns>
+		/// A read-only dictionary containing the names and string representations of the fields of the object.
+		/// For nested objects and collections, the field names are hierarchical using dot notation (e.g., "Parent.Child.Field").
+		/// For collection items, the names include array-style indexing (e.g., "Items[0].Field").
+		/// Built-in types are returned as their string representation without further processing.
+		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// This method processes fields differently based on the object type:
+		/// </para>
+		/// <list type="bullet">
+		/// <item>
+		/// <description>
+		/// <b>Built-in types</b> (e.g., <see cref="string"/>, <see cref="int"/>, <see cref="DateTime"/>):
+		/// The object's <see cref="object.ToString"/> value is returned directly.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Collections</b> (<see cref="IEnumerable"/>): Each item in the collection is recursively processed,
+		/// with field names indexed as "[0]", "[1]", etc.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Complex objects</b>: All fields (public and private) are extracted using reflection,
+		/// excluding compiler-generated fields (e.g., auto-property backing fields).
+		/// Nested objects are recursively processed with hierarchical naming.
+		/// </description>
+		/// </item>
+		/// </list>
+		/// <para>
+		/// <b>Performance Note:</b> This method uses reflection (<see cref="Type.GetFields(BindingFlags)"/>),
+		/// which may have performance implications for frequently called code paths.
+		/// Consider caching results for objects that don't change.
+		/// </para>
+		/// <para>
+		/// <b>Compiler-Generated Fields:</b> Fields marked with <see cref="CompilerGeneratedAttribute"/>
+		/// (such as backing fields for auto-implemented properties) are automatically skipped to avoid
+		/// duplicate entries when used alongside <see cref="PropertiesToDictionary"/>.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// public class Person
+		/// {
+		///     private string _name = "John Doe";
+		///     private int _age = 30;
+		/// }
+		/// 
+		/// var person = new Person();
+		/// var fieldDict = person.FieldsToDictionary();
+		/// // Result: { "Person._name": "John Doe", "Person._age": "30" }
+		/// 
+		/// // With ignoreNulls = false
+		/// var allFields = person.FieldsToDictionary(ignoreNulls: false);
+		/// // Result includes null-valued fields
+		/// </code>
+		/// </example>
+		/// <seealso cref="PropertiesToDictionary"/>
+		/// <seealso cref="FieldsToString"/>
+		/// <seealso cref="Type.GetFields(BindingFlags)"/>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
 		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -430,6 +497,11 @@ public static class ObjectExtensions
 
 					foreach (var kvp in item.FieldsToDictionary(itemInnerMember, ignoreNulls))
 					{
+						if (ignoreNulls && string.IsNullOrEmpty(kvp.Value))
+						{
+							continue;
+						}
+
 						result[kvp.Key] = kvp.Value;
 					}
 				}
@@ -455,11 +527,19 @@ public static class ObjectExtensions
 					continue;
 				}
 
-				var innerMember = $"{newMemberName}{field.Name}";
-
-				foreach (var kvp in innerObject!.FieldsToDictionary(innerMember, ignoreNulls))
+				if (innerObject is not null)
 				{
-					result[kvp.Key] = kvp.Value;
+					var innerMember = $"{newMemberName}{field.Name}";
+
+					foreach (var kvp in innerObject.FieldsToDictionary(innerMember, ignoreNulls))
+					{
+						if (ignoreNulls && string.IsNullOrEmpty(kvp.Value))
+						{
+							continue;
+						}
+
+						result[kvp.Key] = kvp.Value;
+					}
 				}
 			}
 

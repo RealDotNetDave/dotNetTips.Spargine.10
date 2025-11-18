@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 11-17-2025
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -371,7 +371,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// This method checks if the elapsed time has exceeded the configured <see cref="AlertThreshold"/>. 
 	/// If the threshold is exceeded, the stopwatch is stopped, and the <see cref="ThresholdExceeded"/> event is triggered.
 	/// </remarks>
-	[Information(nameof(StopIfThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(StopIfThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public bool StopIfThresholdExceeded()
 	{
 		if (this.IsThresholdExceeded)
@@ -600,7 +600,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// Gets a value indicating whether the elapsed time has exceeded the configured threshold.
 	/// </summary>
 	[Pure]
-	[Information(nameof(IsThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(IsThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public bool IsThresholdExceeded
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

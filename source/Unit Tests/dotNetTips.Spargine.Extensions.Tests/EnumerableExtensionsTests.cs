@@ -275,6 +275,149 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastShuffle_WithoutCount_EmptyCollection_DoesNotThrow()
+	{
+		var emptyList = new List<Person>();
+
+		emptyList.FastShuffle();
+
+		Assert.AreEqual(0, emptyList.Count);
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_MultipleInvocations_ModifiesInPlace()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var originalPeople = people.ToHashSet();
+
+		people.FastShuffle();
+		var afterFirstShuffle = people.ToList();
+
+		people.FastShuffle();
+		var afterSecondShuffle = people.ToList();
+
+		// All should have the same count and elements
+		Assert.AreEqual(Count, people.Count);
+		foreach (var person in originalPeople)
+		{
+			Assert.IsTrue(people.Contains(person));
+		}
+
+		// Statistically, the orders should be different
+		var sameOrderAfterBothShuffles = afterFirstShuffle.SequenceEqual(afterSecondShuffle);
+		Assert.IsFalse(sameOrderAfterBothShuffles);
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_NullCollection_ThrowsArgumentNullException()
+	{
+		List<Person> nullCollection = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FastShuffle());
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_PreservesAllElements()
+	{
+		var numbers = Enumerable.Range(1, 100).ToList();
+		var originalNumbers = numbers.ToHashSet();
+
+		numbers.FastShuffle();
+
+		Assert.AreEqual(100, numbers.Count);
+		foreach (var num in originalNumbers)
+		{
+			Assert.IsTrue(numbers.Contains(num));
+		}
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_ProducesDifferentResults()
+	{
+		var people1 = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people2 = people1.ToList();
+
+		people1.FastShuffle();
+		people2.FastShuffle();
+
+		// Statistical test: two shuffles should produce different orders
+		var identical = people1.SequenceEqual(people2);
+		Assert.IsFalse(identical);
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_ShufflesCollection()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var originalOrder = people.ToList();
+
+		people.FastShuffle();
+
+		Assert.AreEqual(Count, people.Count);
+		// Verify it's not the same order (statistically very unlikely with large Count)
+		var sameOrder = people.SequenceEqual(originalOrder);
+		Assert.IsFalse(sameOrder);
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_SingleElement_DoesNotThrow()
+	{
+		var singlePerson = new List<Person> { RandomData.GeneratePerson<Person>() };
+		var originalPerson = singlePerson[0];
+
+		singlePerson.FastShuffle();
+
+		Assert.AreEqual(1, singlePerson.Count);
+		Assert.AreEqual(originalPerson, singlePerson[0]);
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_WorksWithComplexTypes()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var originalPeople = people.ToHashSet();
+
+		people.FastShuffle();
+
+		Assert.AreEqual(Count, people.Count);
+		foreach (var person in originalPeople)
+		{
+			Assert.IsTrue(people.Contains(person));
+		}
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_WorksWithStrings()
+	{
+		var words = RandomData.GenerateWords(Count, 5, 10).ToList();
+		var originalWords = words.ToHashSet();
+
+		words.FastShuffle();
+
+		Assert.AreEqual(Count, words.Count);
+		foreach (var word in originalWords)
+		{
+			Assert.IsTrue(words.Contains(word));
+		}
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_WorksWithValueTypes()
+	{
+		var numbers = Enumerable.Range(1, Count).ToList();
+
+		numbers.FastShuffle();
+
+		Assert.AreEqual(Count, numbers.Count);
+		for (int i = 1; i <= Count; i++)
+		{
+			Assert.IsTrue(numbers.Contains(i));
+		}
+	}
+
+
+
+	[TestMethod]
 	public void FromDelimitedStringTest()
 	{
 		var testValue = ".net, c#, vb, f#";

@@ -29,7 +29,24 @@ namespace DotNetTips.Spargine.Core.Tests.Diagnostics;
 public class PerformanceStopwatchTests
 {
 
+
 	private readonly ILogger _logger = new NullLogger<PerformanceStopwatchTests>();
+
+	[TestMethod]
+	public void AddDiagnosticEntry_WithEmptyMessage_ThrowsArgumentException()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.AddDiagnosticEntry_WithEmptyMessage_ThrowsArgumentException));
+
+		_ = Assert.ThrowsExactly<ArgumentException>(() => psw.AddDiagnosticEntry(string.Empty));
+	}
+
+	[TestMethod]
+	public void AddDiagnosticEntry_WithNullMessage_ThrowsArgumentNullException()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.AddDiagnosticEntry_WithNullMessage_ThrowsArgumentNullException));
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.AddDiagnosticEntry(null));
+	}
 
 	[TestMethod]
 	public void AddDiagnosticEntryTest()
@@ -40,6 +57,15 @@ public class PerformanceStopwatchTests
 
 		Assert.AreEqual(1, psw.Diagnostics.Count);
 		Assert.IsTrue(psw.Diagnostics[0].Message.Contains("Test diagnostic entry"));
+	}
+
+	[TestMethod]
+	public void AlertThreshold_IsSetCorrectly()
+	{
+		var threshold = TimeSpan.FromSeconds(5);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(threshold);
+
+		Assert.AreEqual(threshold, psw.AlertThreshold);
 	}
 
 
@@ -92,6 +118,24 @@ public class PerformanceStopwatchTests
 		Assert.AreEqual(title, psw.Title);
 	}
 
+	[TestMethod]
+	public void Diagnostics_AreSortedByTimestamp()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.Diagnostics_AreSortedByTimestamp));
+
+		psw.AddDiagnosticEntry("First message");
+		Thread.Sleep(50);
+		psw.AddDiagnosticEntry("Second message");
+		Thread.Sleep(50);
+		psw.AddDiagnosticEntry("Third message");
+
+		var diagnostics = psw.Diagnostics;
+
+		Assert.AreEqual(3, diagnostics.Count);
+		Assert.IsTrue(diagnostics[0].Timestamp <= diagnostics[1].Timestamp);
+		Assert.IsTrue(diagnostics[1].Timestamp <= diagnostics[2].Timestamp);
+	}
+
 
 	[TestMethod]
 	public void DiagnosticsLogTest()
@@ -129,6 +173,29 @@ public class PerformanceStopwatchTests
 
 		Assert.IsTrue(diagnostics.Count > 0);
 		Assert.IsTrue(diagnostics[0].Message.Contains("Test message"));
+	}
+
+	[TestMethod]
+	public void ExportToJson_ContainsTitle()
+	{
+		var title = "JsonExportTest";
+		var psw = PerformanceStopwatch.StartNew(title);
+
+		var json = psw.ExportToJson();
+
+		Assert.IsTrue(json.Contains(title));
+	}
+
+	[TestMethod]
+	public void ExportToJson_IsFormattedJson()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.ExportToJson_IsFormattedJson));
+
+		var json = psw.ExportToJson();
+
+		Assert.IsTrue(json.Contains(Environment.NewLine));
+		Assert.IsTrue(json.Contains("{"));
+		Assert.IsTrue(json.Contains("}"));
 	}
 
 	[TestMethod]
@@ -187,6 +254,18 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
+	public void GetSummaryReport_ContainsLapInformation()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.GetSummaryReport_ContainsLapInformation));
+
+		psw.RecordLap();
+
+		var report = psw.GetSummaryReport();
+
+		Assert.IsTrue(report.Contains("Lap 0"));
+	}
+
+	[TestMethod]
 	public void GetSummaryReportTest()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.GetSummaryReportTest));
@@ -203,6 +282,54 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
+	public void IsThresholdExceeded_WhenThresholdExceeded_ReturnsTrue()
+	{
+		var alertThreshold = TimeSpan.FromMilliseconds(50);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.IsThresholdExceeded_WhenThresholdExceeded_ReturnsTrue));
+
+		Thread.Sleep(200);
+
+		Assert.IsTrue(psw.IsThresholdExceeded);
+	}
+
+	[TestMethod]
+	public void IsThresholdExceeded_WhenThresholdNotExceeded_ReturnsFalse()
+	{
+		var alertThreshold = TimeSpan.FromSeconds(10);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.IsThresholdExceeded_WhenThresholdNotExceeded_ReturnsFalse));
+
+		Thread.Sleep(100);
+
+		Assert.IsFalse(psw.IsThresholdExceeded);
+	}
+
+	[TestMethod]
+	public void IsThresholdExceeded_WhenThresholdNotSet_ReturnsFalse()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.IsThresholdExceeded_WhenThresholdNotSet_ReturnsFalse));
+
+		Thread.Sleep(100);
+
+		Assert.IsFalse(psw.IsThresholdExceeded);
+	}
+
+	[TestMethod]
+	public void LogMessage_WithNullLogger_ThrowsArgumentNullException()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.LogMessage_WithNullLogger_ThrowsArgumentNullException));
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.LogMessage(null, "Test message"));
+	}
+
+	[TestMethod]
+	public void LogMessage_WithNullMessage_ThrowsArgumentNullException()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.LogMessage_WithNullMessage_ThrowsArgumentNullException));
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.LogMessage(this._logger, null));
+	}
+
+	[TestMethod]
 	public void LogMessageTest()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.LogMessageTest));
@@ -213,6 +340,27 @@ public class PerformanceStopwatchTests
 
 		Assert.IsTrue(psw.Diagnostics.Count > 0);
 		Assert.IsTrue(psw.Diagnostics[0].Message.Contains("Intermediate log message"));
+	}
+
+	[TestMethod]
+	public void RecordLap_MultipleLaps_AreSortedByTime()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.RecordLap_MultipleLaps_AreSortedByTime));
+
+		Thread.Sleep(100);
+		psw.RecordLap();
+
+		Thread.Sleep(50);
+		psw.RecordLap();
+
+		Thread.Sleep(200);
+		psw.RecordLap();
+
+		var laps = psw.GetLaps();
+
+		Assert.AreEqual(3, laps.Count);
+		Assert.IsTrue(laps[0] < laps[1]);
+		Assert.IsTrue(laps[1] < laps[2]);
 	}
 
 	[TestMethod]
@@ -241,6 +389,132 @@ public class PerformanceStopwatchTests
 
 		Assert.IsNotNull(psw);
 		Assert.AreEqual(alertThreshold, psw.AlertThreshold);
+	}
+
+	[TestMethod]
+	public void StartNewWithEmptyTitle_DoesNotAddColon()
+	{
+		var psw = PerformanceStopwatch.StartNew(string.Empty);
+
+		Assert.AreEqual(string.Empty, psw.Title);
+	}
+
+	[TestMethod]
+	public void StartNewWithTitle_AddsColonToTitle()
+	{
+		var title = "TestOperation";
+		var psw = PerformanceStopwatch.StartNew(title);
+
+		Assert.AreEqual($"{title}:", psw.Title);
+	}
+
+	[TestMethod]
+	public void StopIfThresholdExceeded_TriggersThresholdExceededEvent()
+	{
+		var alertThreshold = TimeSpan.FromMilliseconds(50);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopIfThresholdExceeded_TriggersThresholdExceededEvent));
+		var eventTriggered = false;
+
+		psw.ThresholdExceeded += (sender, args) => eventTriggered = true;
+
+		Thread.Sleep(200);
+
+		_ = psw.StopIfThresholdExceeded();
+
+		Assert.IsTrue(eventTriggered);
+	}
+
+	[TestMethod]
+	public void StopIfThresholdExceeded_WhenNoThreshold_ReturnsFalse()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.StopIfThresholdExceeded_WhenNoThreshold_ReturnsFalse));
+
+		Thread.Sleep(100);
+
+		var result = psw.StopIfThresholdExceeded();
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void StopIfThresholdExceeded_WhenThresholdExceeded_ReturnsTrue()
+	{
+		var alertThreshold = TimeSpan.FromMilliseconds(50);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopIfThresholdExceeded_WhenThresholdExceeded_ReturnsTrue));
+
+		Thread.Sleep(200);
+
+		var result = psw.StopIfThresholdExceeded();
+
+		Assert.IsTrue(result);
+		Assert.IsFalse(psw.IsRunning);
+	}
+
+	[TestMethod]
+	public void StopIfThresholdExceeded_WhenThresholdNotExceeded_ReturnsFalse()
+	{
+		var alertThreshold = TimeSpan.FromSeconds(10);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopIfThresholdExceeded_WhenThresholdNotExceeded_ReturnsFalse));
+
+		Thread.Sleep(100);
+
+		var result = psw.StopIfThresholdExceeded();
+
+		Assert.IsFalse(result);
+		Assert.IsTrue(psw.IsRunning);
+	}
+
+	[TestMethod]
+	public void StopReset_TriggersResetCompletedEvent()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.StopReset_TriggersResetCompletedEvent));
+		var eventTriggered = false;
+
+		psw.ResetCompleted += (sender, args) => eventTriggered = true;
+
+		Thread.Sleep(100);
+
+		_ = psw.StopReset();
+
+		Assert.IsTrue(eventTriggered);
+	}
+
+	[TestMethod]
+	public void StopReset_TriggersStoppedCompletedEvent()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.StopReset_TriggersStoppedCompletedEvent));
+		var eventTriggered = false;
+		TimeSpan? eventElapsed = null;
+
+		psw.StoppedCompleted += (sender, args) =>
+		{
+			eventTriggered = true;
+			eventElapsed = args.Elapsed;
+		};
+
+		Thread.Sleep(100);
+
+		var elapsed = psw.StopReset();
+
+		Assert.IsTrue(eventTriggered);
+		Assert.IsNotNull(eventElapsed);
+		Assert.IsTrue(eventElapsed.Value.TotalMilliseconds >= 100);
+	}
+
+	[TestMethod]
+	public void StopReset_WithThresholdExceeded_TriggersThresholdExceededEvent()
+	{
+		var alertThreshold = TimeSpan.FromMilliseconds(50);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopReset_WithThresholdExceeded_TriggersThresholdExceededEvent));
+		var eventTriggered = false;
+
+		psw.ThresholdExceeded += (sender, args) => eventTriggered = true;
+
+		Thread.Sleep(200);
+
+		_ = psw.StopReset();
+
+		Assert.IsTrue(eventTriggered);
 	}
 
 	[TestMethod]
@@ -280,6 +554,37 @@ public class PerformanceStopwatchTests
 
 		Assert.IsTrue(elapsed.TotalMilliseconds >= 500);
 		Assert.AreEqual(0, psw.ElapsedMilliseconds);
+	}
+
+	[TestMethod]
+	public void StopRestart_TriggersStoppedCompletedEvent()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.StopRestart_TriggersStoppedCompletedEvent));
+		var eventTriggered = false;
+
+		psw.StoppedCompleted += (sender, args) => eventTriggered = true;
+
+		Thread.Sleep(100);
+
+		_ = psw.StopRestart();
+
+		Assert.IsTrue(eventTriggered);
+	}
+
+	[TestMethod]
+	public void StopRestart_WithThresholdExceeded_TriggersThresholdExceededEvent()
+	{
+		var alertThreshold = TimeSpan.FromMilliseconds(50);
+		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopRestart_WithThresholdExceeded_TriggersThresholdExceededEvent));
+		var eventTriggered = false;
+
+		psw.ThresholdExceeded += (sender, args) => eventTriggered = true;
+
+		Thread.Sleep(200);
+
+		_ = psw.StopRestart();
+
+		Assert.IsTrue(eventTriggered);
 	}
 
 	[TestMethod]

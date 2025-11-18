@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-15-2025
+// Last Modified On : 11-17-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -744,7 +744,7 @@ public static class EnumerableExtensions
 		/// <param name="action">The action to apply to each item in the collection.</param>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "12/9/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "12/9/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void FastProcessor([DisallowNull] Action<T> action)
 		{
 			collection = collection.ArgumentNotNull();
@@ -752,7 +752,7 @@ public static class EnumerableExtensions
 
 			if (collection is List<T> list)
 			{
-				var span = list.AsReadOnlySpan();
+				var span = CollectionsMarshal.AsSpan(list);
 				var itemCount = span.Length;
 
 				for (var index = 0; index < itemCount; index++)
@@ -807,29 +807,29 @@ public static class EnumerableExtensions
 
 			if (collection is List<T> list)
 			{
-				var span = CollectionsMarshal.AsSpan(list);
-				var processedCollection = new ReadOnlyCollectionBuilder<T>(span.Length);
+				ReadOnlySpan<T> span = CollectionsMarshal.AsSpan(list);
 				var itemCount = span.Length;
+				var resultArray = new T[itemCount];
 
 				for (var index = 0; index < itemCount; index++)
 				{
-					processedCollection.Add(action.Invoke(span[index]));
+					resultArray[index] = action.Invoke(span[index]);
 				}
 
-				return processedCollection.AsReadOnly();
+				return new ReadOnlyCollection<T>(resultArray);
 			}
 			else
 			{
 				var span = collection.ToList().AsReadOnlySpan();
-				var processedCollection = new ReadOnlyCollectionBuilder<T>(span.Length);
 				var itemCount = span.Length;
+				var resultArray = new T[itemCount];
 
 				for (var index = 0; index < itemCount; index++)
 				{
-					processedCollection.Add(action(span[index]));
+					resultArray[index] = action(span[index]);
 				}
 
-				return processedCollection.AsReadOnly();
+				return new ReadOnlyCollection<T>(resultArray);
 			}
 		}
 

@@ -118,7 +118,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The <see cref="DateOnly"/> to get the week number for.</param>
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
-	[Information(nameof(GetWeekOfTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetWeekOfTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static int GetWeekOfTheYear(DateOnly input)
 	{
 		return ISOWeek.GetWeekOfYear(input);
@@ -130,7 +130,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The <see cref="DateTime"/> to get the week number for.</param>
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
-	[Information(nameof(GetWeekOfTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetWeekOfTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static int GetWeekOfTheYear(DateTime input)
 	{
 		return ISOWeek.GetWeekOfYear(input);
@@ -142,7 +142,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The year to get the number of weeks for.</param>
 	/// <returns>The number of weeks in the specified year according to ISO 8601.</returns>
 	[Pure]
-	[Information(nameof(GetWeeksInTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetWeeksInTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static int GetWeeksInTheYear(int input)
 	{
 		return ISOWeek.GetWeeksInYear(input);
@@ -154,7 +154,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The <see cref="DateTime"/> to get the week number for.</param>
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
-	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static int GetYear(DateTime input)
 	{
 		return ISOWeek.GetYear(input);
@@ -166,7 +166,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The <see cref="DateOnly"/> to get the week number for.</param>
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
-	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static int GetYear(DateOnly input)
 	{
 		return ISOWeek.GetYear(input);
@@ -180,7 +180,7 @@ public static class DateTimeExtensions
 	/// A <see cref="DateTime"/> representing the last day of the ISO 8601 week-based year.
 	/// </returns>
 	[Pure]
-	[Information(nameof(GetYearEnd), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetYearEnd), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static DateTime GetYearEnd(int input)
 	{
 		return ISOWeek.GetYearEnd(input);
@@ -194,7 +194,7 @@ public static class DateTimeExtensions
 	/// A <see cref="DateTime"/> representing the first day of the ISO 8601 week-based year.
 	/// </returns>
 	[Pure]
-	[Information(nameof(GetYearStart), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetYearStart), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static DateTime GetYearStart(int input)
 	{
 		return ISOWeek.GetYearStart(input);

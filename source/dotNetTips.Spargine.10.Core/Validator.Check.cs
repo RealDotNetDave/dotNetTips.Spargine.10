@@ -4,7 +4,7 @@
 // Created          : 06-26-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 11-17-2025
 // ***********************************************************************
 // <copyright file="Validator.Check.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -143,7 +143,7 @@ public static partial class Validator
 		if (!InMemoryCache.Instance.TryGetValue<HashSet<object>>(cacheKey, out var definedValues))
 		{
 			// If not in cache, create and cache the defined values
-			definedValues = new HashSet<object>();
+			definedValues = [];
 
 			foreach (var value in Enum.GetValues(enumType))
 			{
@@ -442,7 +442,7 @@ public static partial class Validator
 	/// Thrown if <paramref name="throwException"/> is <c>true</c> and <paramref name="input"/> is <c>null</c> or empty.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckIsNotNullOrEmpty), "David McCarter", "8/28/2025", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(CheckIsNotNullOrEmpty), "David McCarter", "8/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static bool CheckIsNotNullOrEmpty(this string input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
 		var isValid = string.IsNullOrEmpty(input) == false;
