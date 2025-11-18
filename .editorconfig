@@ -1056,7 +1056,7 @@ dotnet_diagnostic.CA1840.severity = suggestion
 
 # Prefer Dictionary Contains methods
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1841.severity = suggestion
+dotnet_diagnostic.CA1841.severity = silent
 
 # Do not use 'WhenAll' with a single task
 dotnet_diagnostic.CA1842.severity = error
