@@ -760,7 +760,7 @@ dotnet_diagnostic.CA1309.severity = warning
 dotnet_diagnostic.CA1310.severity = warning
 
 # Specify a culture or use an invariant version
-dotnet_diagnostic.CA1311.severity = warning
+dotnet_diagnostic.CA1311.severity = error
 
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = warning
