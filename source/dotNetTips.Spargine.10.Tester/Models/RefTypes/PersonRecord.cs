@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-25-2025
+// Last Modified On : 11-21-2025
 // ***********************************************************************
 // <copyright file="PersonRecord.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -456,7 +456,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// Thrown if the value is null or empty.
 	/// </exception>
 	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown if the value is not between 0 and 75 chars.
+	/// Thrown if the value is not between 10 and 75 chars.
 	/// </exception>
 	[DataMember(Name = "email", IsRequired = true)]
 	[EmailAddress(ErrorMessageResourceName = "ErrorMessageEmailLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
@@ -479,7 +479,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 				ExceptionThrower.ThrowArgumentNullException(nameof(this.Email));
 			}
 
-			if (value.HasValue(0, 75) is false)
+			if (value.HasValue(10, 75) is false)
 			{
 				ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ErrorMessageEmailLengthIsLimitedToCharacters, nameof(this.Email));
 			}

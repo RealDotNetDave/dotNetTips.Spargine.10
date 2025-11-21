@@ -4,7 +4,7 @@
 // Created          : 10-25-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-20-2025
+// Last Modified On : 11-21-2025
 // ***********************************************************************
 // <copyright file="Person.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -460,7 +460,7 @@ public struct Person() : IPerson<Person, Address>
 	/// Thrown if the value is null or empty.
 	/// </exception>
 	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown if the value is not between 0 and 75 chars.
+	/// Thrown if the value is not between 10 and 75 chars.
 	/// </exception>
 	[DataMember(Name = "email", IsRequired = true)]
 	[EmailAddress(ErrorMessageResourceName = "ErrorMessageEmailLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
@@ -479,7 +479,7 @@ public struct Person() : IPerson<Person, Address>
 				ExceptionThrower.ThrowArgumentNullException(nameof(this.Email));
 			}
 
-			if (value.HasValue(0, 75) is false)
+			if (value.HasValue(10, 75) is false)
 			{
 				ExceptionThrower.ThrowArgumentOutOfRangeException(
 					Resources.ErrorMessageEmailLengthIsLimitedToCharacters, nameof(this.Email));
