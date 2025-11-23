@@ -1165,13 +1165,13 @@ dotnet_diagnostic.CA1871.severity = warning
 
 # Prefer 'Convert.ToHexString' and 'Convert.ToHexStringLower' over call chains based on 'BitConverter.ToString'
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1872.severity = warning
+dotnet_diagnostic.CA1872.severity = error
 
 # CA1873: Use 'Convert.ToHexString' and 'Convert.ToHexStringLower'
-dotnet_diagnostic.CA1873.severity = warning
+dotnet_diagnostic.CA1873.severity = error
 
 # CA1874: Prefer static HashData method over ComputeHash
-dotnet_diagnostic.CA1874.severity = warning
+dotnet_diagnostic.CA1874.severity = error
 
 ####################################################################################################
 # Reliability Rules (CA2000-CA2024)
