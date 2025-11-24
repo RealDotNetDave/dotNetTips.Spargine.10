@@ -129,13 +129,13 @@ public class ListExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.DoesNotHaveItems))]
+	[Benchmark(Description = nameof(ListExtensions.IsEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void DoesNotHaveItems()
 	{
 		var people = this._peopleRefList;
 
-		this.Consume(people.DoesNotHaveItems());
+		this.Consume(people.IsEmpty());
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": record")]
@@ -165,30 +165,30 @@ public class ListExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(people.GenerateHashCode());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.HasItems))]
+	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItems()
 	{
 		var people = this._peopleRefList;
 
-		this.Consume(people.HasItems());
+		this.Consume(people.IsNotEmpty());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.HasItems) + ": With Count")]
+	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty) + ": With Count")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItemsWithCount()
 	{
 		var people = this._peopleRefList;
 
-		this.Consume(people.HasItems(5));
+		this.Consume(people.IsNotEmpty(5));
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.HasItems) + ": With Predicate")]
+	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty) + ": With Predicate")]
 	public void HasItemsWithPredicate()
 	{
 		var people = this._peopleRefList;
 
-		this.Consume(people.HasItems(p => p.BornOn.Value.Date.Month > 0));
+		this.Consume(people.IsNotEmpty(p => p.BornOn.Value.Date.Month > 0));
 	}
 
 	[Benchmark(Description = "Index []")]

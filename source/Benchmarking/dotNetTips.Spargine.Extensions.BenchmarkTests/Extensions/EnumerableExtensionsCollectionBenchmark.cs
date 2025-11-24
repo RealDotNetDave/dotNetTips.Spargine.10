@@ -204,12 +204,12 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.DoesNotHaveItems))]
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty))]
 	public void DoesNotHaveItems()
 	{
 		var people = new List<Person>().AsEnumerable();
 
-		var result = people.DoesNotHaveItems();
+		var result = people.IsEmpty();
 
 		this.Consume(result);
 	}
@@ -268,20 +268,20 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.HasItems))]
+	[Benchmark(Description = nameof(EnumerableExtensions.IsNotEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItems()
 	{
-		var result = this._personRefEnumerable.HasItems();
+		var result = this._personRefEnumerable.IsNotEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.HasItems) + ": With Count")]
+	[Benchmark(Description = nameof(EnumerableExtensions.IsNotEmpty) + ": With Count")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItemsWithCount()
 	{
-		var result = this._personRefEnumerable.HasItems(this.Count);
+		var result = this._personRefEnumerable.IsNotEmpty(this.Count);
 
 		this.Consume(result);
 	}

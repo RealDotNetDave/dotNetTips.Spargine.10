@@ -27,38 +27,38 @@ public class ObservableCollectionExtensionsCollectionBenchmark : SmallCollection
 
 	private ObservableCollection<Person> _personRefObservableCollection;
 
-	[Benchmark(Description = nameof(ObservableCollectionExtensions.DoesNotHaveItems))]
+	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void DoesNotHaveItems()
 	{
-		var result = this._personRefObservableCollection.DoesNotHaveItems();
+		var result = this._personRefObservableCollection.IsEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ObservableCollectionExtensions.HasItems))]
+	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItems()
 	{
-		var result = this._personRefObservableCollection.HasItems();
+		var result = this._personRefObservableCollection.IsNotEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ObservableCollectionExtensions.HasItems) + ": With Count")]
+	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty) + ": With Count")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItemsWithCount()
 	{
-		var result = this._personRefObservableCollection.HasItems(5);
+		var result = this._personRefObservableCollection.IsNotEmpty(5);
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ObservableCollectionExtensions.HasItems) + ": With Predicate")]
+	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty) + ": With Predicate")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void HasItemsWithPredicate()
 	{
-		var result = this._personRefObservableCollection.HasItems(p => p.LastName.IsNotEmpty());
+		var result = this._personRefObservableCollection.IsNotEmpty(p => p.LastName.IsNotEmpty());
 
 		this.Consume(result);
 	}

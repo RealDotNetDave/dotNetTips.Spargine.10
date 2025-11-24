@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AnalysisLevel>latest</AnalysisLevel>
+	  <AnalysisLevel>latest-recommended</AnalysisLevel>
 		<AssemblyVersion>2025.10.12.1</AssemblyVersion>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>

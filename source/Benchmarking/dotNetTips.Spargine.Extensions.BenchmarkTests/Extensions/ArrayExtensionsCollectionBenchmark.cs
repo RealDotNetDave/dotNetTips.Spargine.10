@@ -147,20 +147,20 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	//	this.Consume(result);
 	//}
 
-	[Benchmark(Description = nameof(ArrayExtensions.DoesNotHaveItems) + ": as Reference")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsEmpty) + ": as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void DoesNotHaveItems_Ref()
 	{
-		var result = this._personRefArray.DoesNotHaveItems();
+		var result = this._personRefArray.IsEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.DoesNotHaveItems) + ": as Value")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsEmpty) + ": as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void DoesNotHaveItems_Val()
 	{
-		var result = this._personValArray.DoesNotHaveItems();
+		var result = this._personValArray.IsEmpty();
 
 		this.Consume(result);
 	}
@@ -186,73 +186,62 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": as Reference")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void HasItems_Ref()
 	{
 		var people = this._personRefArray;
-		var result = people.HasItems();
+		var result = people.IsNotEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": as Value")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void HasItems_Val()
 	{
 		var people = this._personValArray;
-		var result = people.HasItems();
+		var result = people.IsNotEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.SelectItems))]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void SelectItems()
-	{
-		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
-
-		var result = people.SelectItems(0, 2);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": With Count as Reference")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Count as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void HasItemsWithCount_Ref()
 	{
 		var people = this._personRefArray;
-		var result = people.HasItems(this.Count);
+		var result = people.IsNotEmpty(this.Count);
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": With Count as Value")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Count as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void HasItemsWithCount_Val()
 	{
 		var people = this._personValArray;
-		var result = people.HasItems(this.Count);
+		var result = people.IsNotEmpty(this.Count);
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": With Predicate as Reference")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Predicate as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void HasItemsWithPredicate_Ref()
 	{
 		var people = this._personRefArray;
-		var result = people.HasItems(p => p.LastName.IsNotEmpty());
+		var result = people.IsNotEmpty(p => p.LastName.IsNotEmpty());
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.HasItems) + ": With Predicate as Value")]
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Predicate as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void HasItemsWithPredicate_Val()
 	{
 		var people = this._personValArray;
-		var result = people.HasItems(p => p.LastName.IsNotEmpty());
+		var result = people.IsNotEmpty(p => p.LastName.IsNotEmpty());
 
 		this.Consume(result);
 	}
@@ -392,6 +381,17 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		var people = this._personRefArray;
 
 		var result = people.RemoveLast();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.SelectItems))]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void SelectItems()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		var result = people.SelectItems(0, 2);
 
 		this.Consume(result);
 	}

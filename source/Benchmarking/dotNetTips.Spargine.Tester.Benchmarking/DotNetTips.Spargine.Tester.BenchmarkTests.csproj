@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AnalysisLevel>latest</AnalysisLevel>
+	  <AnalysisLevel>latest-recommended</AnalysisLevel>
 		<AssemblyVersion>2024.8.8.9</AssemblyVersion>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>

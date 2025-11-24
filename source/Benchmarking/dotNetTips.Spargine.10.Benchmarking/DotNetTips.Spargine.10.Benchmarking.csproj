@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<AnalysisLevel>preview-recommended</AnalysisLevel>
+	<AnalysisLevel>latest-recommended</AnalysisLevel>
 	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 	<ApplicationIcon>dotNetTips-Spargine-Logo.ico</ApplicationIcon>
 	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
@@ -48,7 +48,7 @@
 	<Version>2025.10.12.1</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="CollectionBenchmark.PersonRecord.cs" />
+	<Compile Remove="CollectionBenchmark.PersonRecord.cs" />
   </ItemGroup>
 
   <ItemGroup>

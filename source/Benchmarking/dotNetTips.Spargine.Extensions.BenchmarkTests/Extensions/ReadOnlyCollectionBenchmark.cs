@@ -27,10 +27,10 @@ public class ReadOnlyCollectionBenchmark : SmallCollectionBenchmark
 
 	private ReadOnlyCollection<Person> _personRefReadOnlyCollection;
 
-	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.DoesNotHaveItems))]
+	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.IsEmpty))]
 	public void DoesNotHaveItems()
 	{
-		this.Consume(this._personRefReadOnlyCollection.DoesNotHaveItems());
+		this.Consume(this._personRefReadOnlyCollection.IsEmpty());
 	}
 
 	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.GenerateHashCode))]

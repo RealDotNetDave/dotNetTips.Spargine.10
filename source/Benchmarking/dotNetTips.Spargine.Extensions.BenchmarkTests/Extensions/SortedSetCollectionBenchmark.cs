@@ -31,24 +31,24 @@ public class SortedSetCollectionBenchmark : SmallCollectionBenchmark
 
 	private SortedSet<Person> _personRefSortedSet;
 
-	[Benchmark(Description = nameof(SortedSetExtensions.DoesNotHaveItems))]
+	[Benchmark(Description = nameof(SortedSetExtensions.IsEmpty))]
 	public void DoesNotHaveItems()
 	{
 		var people = this._personRefSortedSet;
 
-		this.Consume(people.DoesNotHaveItems());
+		this.Consume(people.IsEmpty());
 	}
 
-	[Benchmark(Description = nameof(SortedSetExtensions.HasItems))]
+	[Benchmark(Description = nameof(SortedSetExtensions.IsNotEmpty))]
 	public void HasItems()
 	{
-		this.Consume(this._personRefSortedSet.HasItems());
+		this.Consume(this._personRefSortedSet.IsNotEmpty());
 	}
 
-	[Benchmark(Description = nameof(SortedSetExtensions.HasItems) + ": With Predicate")]
+	[Benchmark(Description = nameof(SortedSetExtensions.IsNotEmpty) + ": With Predicate")]
 	public void HasItemsWithPredicate()
 	{
-		this.Consume(this._personRefSortedSet.HasItems(p => p.LastName.IsNotEmpty()));
+		this.Consume(this._personRefSortedSet.IsNotEmpty(p => p.LastName.IsNotEmpty()));
 	}
 
 	public override void Setup()

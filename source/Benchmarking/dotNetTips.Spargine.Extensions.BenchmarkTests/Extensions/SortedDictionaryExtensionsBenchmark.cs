@@ -31,36 +31,36 @@ public class SortedDictionaryExtensionsBenchmark : SmallCollectionBenchmark
 
 	private SortedDictionary<string, Person> _personRefSortedDictionary;
 
-	[Benchmark(Description = nameof(SortedDictionaryExtensions.DoesNotHaveItems))]
+	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsEmpty))]
 	public void DoesNotHaveItems()
 	{
 		var people = this._personRefSortedDictionary;
 
-		this.Consume(people.DoesNotHaveItems());
+		this.Consume(people.IsEmpty());
 	}
 
-	[Benchmark(Description = nameof(SortedDictionaryExtensions.HasItems))]
+	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty))]
 	public void HaveItems()
 	{
 		var people = this._personRefSortedDictionary;
 
-		this.Consume(people.HasItems());
+		this.Consume(people.IsNotEmpty());
 	}
 
-	[Benchmark(Description = nameof(SortedDictionaryExtensions.HasItems) + ": With Count")]
+	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty) + ": With Count")]
 	public void HaveItemsWithCount()
 	{
 		var people = this._personRefSortedDictionary;
 
-		this.Consume(people.HasItems(this.Count));
+		this.Consume(people.IsNotEmpty(this.Count));
 	}
 
-	[Benchmark(Description = nameof(SortedDictionaryExtensions.HasItems) + ": With Predicate")]
+	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty) + ": With Predicate")]
 	public void HaveItemsWithPredicate()
 	{
 		var people = this._personRefSortedDictionary;
 
-		this.Consume(people.HasItems(p => p.Value.BornOn.Value.Date.Month > 0));
+		this.Consume(people.IsNotEmpty(p => p.Value.BornOn.Value.Date.Month > 0));
 	}
 
 	public override void Setup()

@@ -56,13 +56,13 @@ public class DictionaryExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.HasItems) + ": With Predicate")]
+	[Benchmark(Description = nameof(DictionaryExtensions.IsNotEmpty) + ": With Predicate")]
 	public void HasItemsWithPredicateTest()
 	{
 		var people = this._personRefDictionary;
 
 		// Explicitly specify the extension method to resolve ambiguity
-		var result = DictionaryExtensions.HasItems(people, p => p.Value.BornOn.Value.Date.Month > 0);
+		var result = DictionaryExtensions.IsNotEmpty(people, p => p.Value.BornOn.Value.Date.Month > 0);
 
 		this.Consume(result);
 	}

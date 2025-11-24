@@ -32,18 +32,18 @@ public class ImmutableArrayExtensionsBenchmark : SmallCollectionBenchmark
 
 	private ImmutableArray<Person> _personRefImmutableArray;
 
-	[Benchmark(Description = nameof(ImmutableArrayExtensions.HasItems))]
+	[Benchmark(Description = nameof(ImmutableArrayExtensions.IsNotEmpty))]
 	public void HasItems()
 	{
-		var result = this._personRefImmutableArray.HasItems();
+		var result = this._personRefImmutableArray.IsNotEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ImmutableArrayExtensions.HasItems) + ": With Count")]
+	[Benchmark(Description = nameof(ImmutableArrayExtensions.IsNotEmpty) + ": With Count")]
 	public void HasItemsWithCount()
 	{
-		var result = this._personRefImmutableArray.HasItems(this.Count);
+		var result = this._personRefImmutableArray.IsNotEmpty(this.Count);
 
 		this.Consume(result);
 	}
