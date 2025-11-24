@@ -292,7 +292,7 @@ public class ExceptionExtensionsTests
 
 		var messages = ex.GetAllMessagesWithStackTrace();
 
-		Assert.IsTrue(messages.HasItems());
+		Assert.IsTrue(messages.IsNotEmpty());
 	}
 
 	[TestMethod]

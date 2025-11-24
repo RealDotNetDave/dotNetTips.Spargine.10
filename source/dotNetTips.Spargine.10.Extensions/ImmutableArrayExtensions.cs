@@ -4,7 +4,7 @@
 // Created          : 01-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-01-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,8 +45,8 @@ public static class ImmutableArrayExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems()
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty()
 		{
 			return collection.ArgumentNotNull().IsEmpty ? false : collection.Length > 0;
 		}
@@ -63,8 +63,8 @@ public static class ImmutableArrayExtensions
 		/// </exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems([DisallowNull] Func<T, bool> actionPredicate)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
 			return collection.ArgumentNotNull().IsEmpty || actionPredicate is null ? false : collection.Any(actionPredicate);
 		}
@@ -78,8 +78,8 @@ public static class ImmutableArrayExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems(int count)
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty(int count)
 		{
 			return collection.ArgumentNotNull().IsEmpty ? false : collection.Length == count;
 		}
@@ -98,7 +98,7 @@ public static class ImmutableArrayExtensions
 		[Information(nameof(Shuffle), "David McCarter", "8/27/2020", "1/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> Shuffle()
 		{
-			return collection.DoesNotHaveItems() ? collection : [.. collection.OrderBy(_ => RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue))];
+			return collection.IsEmpty() ? collection : [.. collection.OrderBy(_ => RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue))];
 		}
 	}
 }

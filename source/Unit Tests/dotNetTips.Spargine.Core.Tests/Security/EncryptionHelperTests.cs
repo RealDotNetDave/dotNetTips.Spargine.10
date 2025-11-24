@@ -119,7 +119,7 @@ public class EncryptionHelperTests
 	{
 		var result = EncryptionHelper.GenerateAesIV();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -127,7 +127,7 @@ public class EncryptionHelperTests
 	{
 		var result = EncryptionHelper.GenerateAesKey();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]

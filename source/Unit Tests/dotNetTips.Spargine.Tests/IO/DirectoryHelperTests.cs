@@ -251,7 +251,7 @@ public class DirectoryHelperTests
 
 		DirectoryHelper.MoveDirectory(folderSource, folderDestination, 10);
 
-		Assert.IsTrue(folderDestination.EnumerateFiles().HasItems());
+		Assert.IsTrue(folderDestination.EnumerateFiles().IsNotEmpty());
 
 		DirectoryHelper.DeleteDirectory(folderDestination);
 	}
@@ -294,7 +294,7 @@ public class DirectoryHelperTests
 
 		var result = DirectoryHelper.SafeDirectorySearch(folder, ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -309,7 +309,7 @@ public class DirectoryHelperTests
 
 		var result = DirectoryHelper.SafeFileSearch(folders, "*.png", SearchOption.AllDirectories);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -320,7 +320,7 @@ public class DirectoryHelperTests
 
 		var result = DirectoryHelper.SafeFileSearch(folder, "*.png", SearchOption.AllDirectories);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[SupportedOSPlatform("windows")]

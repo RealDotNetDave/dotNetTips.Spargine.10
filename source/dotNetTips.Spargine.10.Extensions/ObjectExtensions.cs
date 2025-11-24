@@ -59,7 +59,7 @@ public static class ObjectExtensions
 	[Information(nameof(ProcessCollectionToDispose), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void ProcessCollectionToDispose<T>([AllowNull] IEnumerable<T> items) where T : IDisposable
 	{
-		if (items!.HasItems())
+		if (items!.IsNotEmpty())
 		{
 			foreach (var item in items!)
 			{

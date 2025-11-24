@@ -34,9 +34,9 @@ public class SortedSetExtensionsTest
 		var collection = new SortedSet<Tester.Models.RefTypes.Person>(RandomData.GeneratePersonRefCollection(100));
 		SortedSet<Tester.Models.RefTypes.Person> nullCollection = null;
 
-		Assert.IsFalse(collection.DoesNotHaveItems());
+		Assert.IsFalse(collection.IsEmpty());
 
-		Assert.IsTrue(nullCollection.DoesNotHaveItems());
+		Assert.IsTrue(nullCollection.IsEmpty());
 	}
 
 	[TestMethod]
@@ -45,9 +45,9 @@ public class SortedSetExtensionsTest
 		var collection = new SortedSet<Tester.Models.RefTypes.Person>(RandomData.GeneratePersonRefCollection(100));
 		SortedSet<Tester.Models.RefTypes.Person> nullCollection = null;
 
-		Assert.IsTrue(collection.HasItems());
+		Assert.IsTrue(collection.IsNotEmpty());
 
-		Assert.IsFalse(nullCollection.HasItems());
+		Assert.IsFalse(nullCollection.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -56,11 +56,11 @@ public class SortedSetExtensionsTest
 		var collection = new SortedSet<Tester.Models.RefTypes.Person>(RandomData.GeneratePersonRefCollection(100));
 		ObservableCollection<Coordinate> nullCollection = null;
 
-		Assert.IsTrue(collection.HasItems(100));
+		Assert.IsTrue(collection.IsNotEmpty(100));
 
-		Assert.IsFalse(collection.HasItems(5));
+		Assert.IsFalse(collection.IsNotEmpty(5));
 
-		Assert.IsFalse(nullCollection.HasItems());
+		Assert.IsFalse(nullCollection.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -71,9 +71,9 @@ public class SortedSetExtensionsTest
 
 		Func<Tester.Models.RefTypes.Person, bool> selector = (person) => person.Email.IsNotNull();
 
-		Assert.IsTrue(collection.HasItems(selector));
+		Assert.IsTrue(collection.IsNotEmpty(selector));
 
-		Assert.IsFalse(nullCollection.HasItems());
+		Assert.IsFalse(nullCollection.IsNotEmpty());
 	}
 	[TestMethod]
 	public void ToImmutableSortedSet()

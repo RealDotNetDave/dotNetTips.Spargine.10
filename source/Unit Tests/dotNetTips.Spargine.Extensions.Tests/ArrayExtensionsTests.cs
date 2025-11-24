@@ -384,9 +384,9 @@ public class ArrayExtensionsTests
 		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
 		Person[] nullPeople = null;
 
-		Assert.IsFalse(people1.DoesNotHaveItems());
+		Assert.IsFalse(people1.IsEmpty());
 
-		Assert.IsTrue(nullPeople.DoesNotHaveItems());
+		Assert.IsTrue(nullPeople.IsEmpty());
 	}
 
 	[TestMethod]
@@ -454,23 +454,23 @@ public class ArrayExtensionsTests
 	public void HasItems_WithCount_ReturnsExpected()
 	{
 		var arr = new[] { 1, 2, 3 };
-		Assert.IsTrue(arr.HasItems(3));
-		Assert.IsFalse(arr.HasItems(2));
+		Assert.IsTrue(arr.IsNotEmpty(3));
+		Assert.IsFalse(arr.IsNotEmpty(2));
 	}
 
 	[TestMethod]
 	public void HasItems_WithFunc_ReturnsExpected()
 	{
 		var arr = new[] { 1, 2, 3, 4 };
-		Assert.IsTrue(arr.HasItems(x => x > 2));
-		Assert.IsFalse(arr.HasItems(x => x > 10));
+		Assert.IsTrue(arr.IsNotEmpty(x => x > 2));
+		Assert.IsFalse(arr.IsNotEmpty(x => x > 10));
 	}
 
 	[TestMethod]
 	public void HasItems_WithNullArray_ReturnsFalse()
 	{
 		int[] arr = null;
-		Assert.IsFalse(arr.HasItems());
+		Assert.IsFalse(arr.IsNotEmpty());
 	}
 
 	/// <summary>
@@ -482,9 +482,9 @@ public class ArrayExtensionsTests
 		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
 		Person[] nullPeople = null;
 
-		Assert.IsTrue(people1.HasItems());
+		Assert.IsTrue(people1.IsNotEmpty());
 
-		Assert.IsFalse(nullPeople.HasItems());
+		Assert.IsFalse(nullPeople.IsNotEmpty());
 	}
 
 	/// <summary>
@@ -496,11 +496,11 @@ public class ArrayExtensionsTests
 		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
 		Person[] nullPeople = null;
 
-		Assert.IsTrue(people1.HasItems(10));
+		Assert.IsTrue(people1.IsNotEmpty(10));
 
-		Assert.IsFalse(people1.HasItems(100));
+		Assert.IsFalse(people1.IsNotEmpty(100));
 
-		Assert.IsFalse(nullPeople.HasItems(10));
+		Assert.IsFalse(nullPeople.IsNotEmpty(10));
 
 	}
 
@@ -515,11 +515,11 @@ public class ArrayExtensionsTests
 
 		Func<Person, bool> selector = (person) => person.Email.IsNotNull();
 
-		Assert.IsTrue(collection.HasItems(selector));
+		Assert.IsTrue(collection.IsNotEmpty(selector));
 
-		Assert.IsFalse(nullCollection.HasItems(selector));
+		Assert.IsFalse(nullCollection.IsNotEmpty(selector));
 
-		Assert.IsFalse(nullCollection.HasItems(null));
+		Assert.IsFalse(nullCollection.IsNotEmpty(null));
 	}
 
 	[TestMethod]

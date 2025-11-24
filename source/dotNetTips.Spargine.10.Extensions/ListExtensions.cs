@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-22-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -145,8 +145,8 @@ public static class ListExtensions
 		/// <returns>True if the list is null or empty; otherwise, false.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(DoesNotHaveItems), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool DoesNotHaveItems()
+		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsEmpty()
 		{
 			return list == null || list.Count == 0;
 		}
@@ -190,8 +190,8 @@ public static class ListExtensions
 		/// </summary>
 		/// <returns>True if the list has items; otherwise, false.</returns>
 		[Pure]
-		[Information(nameof(HasItems), "David McCarter", "8/27/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public bool HasItems()
+		[Information(nameof(IsNotEmpty), "David McCarter", "8/27/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty()
 		{
 			return list?.Count > 0;
 		}
@@ -204,8 +204,8 @@ public static class ListExtensions
 		/// <returns>True if any items match the predicate; otherwise, false.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public bool HasItems([DisallowNull] Predicate<T> action)
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty([DisallowNull] Predicate<T> action)
 		{
 			return list.CheckIsNotNull() is false || action.CheckIsNotNull() is false ? false : list.Exists(action);
 		}
@@ -218,8 +218,8 @@ public static class ListExtensions
 		/// <returns>True if the list has the specified count; otherwise, false.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "8/27/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-		public bool HasItems(int count)
+		[Information(nameof(IsNotEmpty), "David McCarter", "8/27/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty(int count)
 		{
 			return list is null ? false : list.Count == count;
 		}

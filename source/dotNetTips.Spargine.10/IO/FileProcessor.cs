@@ -284,7 +284,7 @@ public class FileProcessor
 	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int DeleteFolders(in IEnumerable<DirectoryInfo> folders, in bool recursive = true)
 	{
-		if (folders is null || folders.HasItems() is false)
+		if (folders is null || folders.IsNotEmpty() is false)
 		{
 			return 0;
 		}

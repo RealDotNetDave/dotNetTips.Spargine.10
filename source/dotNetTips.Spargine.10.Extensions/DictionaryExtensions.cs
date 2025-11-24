@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-19-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -130,7 +130,7 @@ public static class DictionaryExtensions
 	{
 		var items = collection.Select(p => p.Value);
 
-		if (items.HasItems())
+		if (items.IsNotEmpty())
 		{
 			foreach (var item in items)
 			{
@@ -182,8 +182,8 @@ public static class DictionaryExtensions
 	/// <returns><c>true</c> if the specified actionPredicate has items; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool HasItems<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, Func<KeyValuePair<TKey, TValue>, bool> actionPredicate)
+	[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static bool IsNotEmpty<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, Func<KeyValuePair<TKey, TValue>, bool> actionPredicate)
 	{
 		return collection is not null && actionPredicate is not null && collection.Any(actionPredicate);
 	}

@@ -208,7 +208,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
 
-		Assert.IsFalse(people.DoesNotHaveItems());
+		Assert.IsFalse(people.IsEmpty());
 	}
 
 	/// <summary>
@@ -252,9 +252,9 @@ public class DictionaryExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
 		Dictionary<string, Person> nullPeople = null;
 
-		Assert.IsTrue(people.HasItems());
+		Assert.IsTrue(people.IsNotEmpty());
 
-		Assert.IsFalse(nullPeople.HasItems());
+		Assert.IsFalse(nullPeople.IsNotEmpty());
 	}
 
 	/// <summary>
@@ -268,7 +268,7 @@ public class DictionaryExtensionsTests
 		// Explicitly specify the extension method to resolve ambiguity  
 		Func<KeyValuePair<string, Person>, bool> selector = p => p.Value.Email.IsNotNull();
 
-		Assert.IsTrue(DictionaryExtensions.HasItems(people, selector));
+		Assert.IsTrue(DictionaryExtensions.IsNotEmpty(people, selector));
 	}
 
 	/// <summary>
@@ -280,10 +280,10 @@ public class DictionaryExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
 		Dictionary<string, Person> nullPeople = null;
 
-		Assert.IsTrue(people.HasItems(CollectionCount));
-		Assert.IsFalse(people.HasItems(100));
+		Assert.IsTrue(people.IsNotEmpty(CollectionCount));
+		Assert.IsFalse(people.IsNotEmpty(100));
 
-		Assert.IsFalse(nullPeople.HasItems(CollectionCount));
+		Assert.IsFalse(nullPeople.IsNotEmpty(CollectionCount));
 	}
 
 	/// <summary>
@@ -296,7 +296,7 @@ public class DictionaryExtensionsTests
 
 		var result = people.ToConcurrentDictionary();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 	/// <summary>
 	/// Defines the test method ToDelimitedDictionaryTest.
@@ -323,7 +323,7 @@ public class DictionaryExtensionsTests
 
 		var result = people.ToFrozenDictionary();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 		Assert.AreEqual(people.Count, result.Count);
 		foreach (var kvp in people)
 		{
@@ -340,7 +340,7 @@ public class DictionaryExtensionsTests
 
 		var result = emptyDictionary.ToFrozenDictionary();
 
-		Assert.IsFalse(result.HasItems());
+		Assert.IsFalse(result.IsNotEmpty());
 		Assert.AreEqual(0, result.Count);
 	}
 
@@ -359,7 +359,7 @@ public class DictionaryExtensionsTests
 
 		var result = people.ToImmutableSortedDictionary();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 		Assert.AreEqual(people.Count, result.Count);
 		foreach (var kvp in people)
 		{
@@ -375,7 +375,7 @@ public class DictionaryExtensionsTests
 
 		var result = emptyDictionary.ToImmutableSortedDictionary();
 
-		Assert.IsFalse(result.HasItems());
+		Assert.IsFalse(result.IsNotEmpty());
 		Assert.AreEqual(0, result.Count);
 	}
 
@@ -397,7 +397,7 @@ public class DictionaryExtensionsTests
 
 		var result = people.ToImmutable();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -566,7 +566,7 @@ public class DictionaryExtensionsTests
 
 		var result = people.ToSortedDictionary();
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-25-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -47,8 +47,8 @@ public static class SortedSetExtensions
 		/// <c>true</c> if the set is <c>null</c> or empty; otherwise, <c>false</c>.
 		/// </returns>
 		[Pure]
-		[Information(nameof(DoesNotHaveItems), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool DoesNotHaveItems()
+		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsEmpty()
 		{
 			return collection is null ? true : collection.Count <= 0;
 		}
@@ -61,8 +61,8 @@ public static class SortedSetExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems()
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty()
 		{
 			return collection is null ? false : collection.Count > 0;
 		}
@@ -76,8 +76,8 @@ public static class SortedSetExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems([AllowNull] Func<T, bool> actionPredicate)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty([AllowNull] Func<T, bool> actionPredicate)
 		{
 			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
 		}

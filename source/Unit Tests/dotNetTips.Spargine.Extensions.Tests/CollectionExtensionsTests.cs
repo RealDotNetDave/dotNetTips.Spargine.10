@@ -135,9 +135,9 @@ public class CollectionExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		var emptyPeople = new List<Person>();
 
-		Assert.IsFalse(people.DoesNotHaveItems());
+		Assert.IsFalse(people.IsEmpty());
 
-		Assert.IsTrue(emptyPeople.DoesNotHaveItems());
+		Assert.IsTrue(emptyPeople.IsEmpty());
 	}
 
 	[TestMethod]

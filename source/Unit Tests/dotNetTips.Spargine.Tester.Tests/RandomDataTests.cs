@@ -65,7 +65,7 @@ public class RandomDataTests
 	/// <param name="files">The files.</param>
 	private void DeleteFiles(IEnumerable<string> files)
 	{
-		if (files.DoesNotHaveItems())
+		if (files.IsEmpty())
 		{
 			return;
 		}

@@ -159,7 +159,7 @@ public static class HttpRequestExtensions
 
 		value = GetBytes(request);
 
-		return value.HasItems();
+		return value.IsNotEmpty();
 
 		static byte[] GetBytes(HttpRequest request)
 		{

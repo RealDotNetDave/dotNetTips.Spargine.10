@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,8 +38,8 @@ public static class SortedDictionaryExtensions
 	/// <param name="collection">The <see cref="SortedDictionary{TKey, TValue}"/> to check.</param>
 	/// <returns><c>true</c> if the dictionary is null or empty; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(DoesNotHaveItems), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-	public static bool DoesNotHaveItems<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
+	[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+	public static bool IsEmpty<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return collection is null ? true : collection.Count <= 0;
 	}
@@ -53,8 +53,8 @@ public static class SortedDictionaryExtensions
 	/// <returns><c>true</c> if the specified dictionary has items; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-	public static bool HasItems<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
+	[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+	public static bool IsNotEmpty<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return collection is null ? false : collection.Count > 0;
 	}
@@ -69,8 +69,8 @@ public static class SortedDictionaryExtensions
 	/// <returns><c>true</c> if the specified actionPredicate finds items that match the condition; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-	public static bool HasItems<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection, [DisallowNull] Func<KeyValuePair<TKey, TValue>, bool> actionPredicate) where TKey : notnull
+	[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+	public static bool IsNotEmpty<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection, [DisallowNull] Func<KeyValuePair<TKey, TValue>, bool> actionPredicate) where TKey : notnull
 	{
 		collection = collection.ArgumentNotNull();
 		actionPredicate = actionPredicate.ArgumentNotNull();
@@ -88,8 +88,8 @@ public static class SortedDictionaryExtensions
 	/// <returns><c>true</c> if the count of items in the <paramref name="collection"/> equals the specified <paramref name="count"/>; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-	public static bool HasItems<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection, int count) where TKey : notnull
+	[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+	public static bool IsNotEmpty<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection, int count) where TKey : notnull
 	{
 		return collection is null ? false : collection.Count == count;
 	}

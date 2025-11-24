@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-17-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -630,7 +630,7 @@ public static class EnumerableExtensions
 		[Information(nameof(ToImmutable), "David McCarter", "6/7/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> ToImmutableArray()
 		{
-			return collection.DoesNotHaveItems() ? [] : [.. collection];
+			return collection.IsEmpty() ? [] : [.. collection];
 		}
 
 		/// <summary>
@@ -969,7 +969,7 @@ public static class EnumerableExtensions
 		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public bool HasDuplicates()
 		{
-			if (collection.DoesNotHaveItems())
+			if (collection.IsEmpty())
 			{
 				return false;
 			}
@@ -993,8 +993,8 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the specified collection has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(DoesNotHaveItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public bool DoesNotHaveItems() => collection?.Count() <= 0;
+		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public bool IsEmpty() => collection?.Count() <= 0;
 
 		/// <summary>
 		/// Determines whether the specified collection is null or empty.
@@ -1128,7 +1128,7 @@ public static class EnumerableExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			return collection.HasItems() ? collection.FastShuffle(1).FirstOrDefault() : default;
+			return collection.IsNotEmpty() ? collection.FastShuffle(1).FirstOrDefault() : default;
 		}
 
 		/// <summary>
@@ -1256,16 +1256,16 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public bool HasItems(int count) => collection is null ? false : collection.Count() == count;
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		public bool IsNotEmpty(int count) => collection is null ? false : collection.Count() == count;
 
 		/// <summary>
 		/// Determines whether the specified collection has any items.
 		/// </summary>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public bool HasItems() => collection is null ? false : collection.Count() > 0;
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		public bool IsNotEmpty() => collection is null ? false : collection.Count() > 0;
 
 		/// <summary>
 		/// Converts a <see cref="ConcurrentBag{T}"/> to a <see cref="ReadOnlyCollection{T}"/>.

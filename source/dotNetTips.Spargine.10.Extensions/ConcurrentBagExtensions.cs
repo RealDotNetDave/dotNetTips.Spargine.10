@@ -37,7 +37,7 @@ public static class ConcurrentBagExtensions
 		[Information(nameof(AddRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void AddRange([DisallowNull] IEnumerable<T> items)
 		{
-			if (items.DoesNotHaveItems())
+			if (items.IsEmpty())
 			{
 				return;
 			}

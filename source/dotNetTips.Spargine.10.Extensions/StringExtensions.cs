@@ -196,7 +196,7 @@ public static class StringExtensions
 		{
 			sb = sb.Append(input);
 
-			if (args.HasItems())
+			if (args.IsNotEmpty())
 			{
 				foreach (var arg in args)
 				{

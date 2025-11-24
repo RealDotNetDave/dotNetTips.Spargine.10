@@ -198,7 +198,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = new List<Person>().AsEnumerable();
 
-		Assert.IsTrue(people.DoesNotHaveItems());
+		Assert.IsTrue(people.IsEmpty());
 	}
 
 	[TestMethod]
@@ -423,9 +423,9 @@ public class EnumerableExtensionsTests
 		var testValue = ".net, c#, vb, f#";
 
 		//Test
-		Assert.IsTrue(testValue.ToDelimitedString(',').HasItems());
-		Assert.IsTrue(testValue.ToDelimitedString().HasItems());
-		Assert.IsTrue(string.Empty.ToDelimitedString().DoesNotHaveItems());
+		Assert.IsTrue(testValue.ToDelimitedString(',').IsNotEmpty());
+		Assert.IsTrue(testValue.ToDelimitedString().IsNotEmpty());
+		Assert.IsTrue(string.Empty.ToDelimitedString().IsEmpty());
 	}
 
 	[TestMethod]
@@ -463,9 +463,9 @@ public class EnumerableExtensionsTests
 		var collection = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		IEnumerable<Person> nullCollection = null;
 
-		Assert.IsTrue(collection.HasItems());
+		Assert.IsTrue(collection.IsNotEmpty());
 
-		Assert.IsFalse(nullCollection.HasItems());
+		Assert.IsFalse(nullCollection.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -474,11 +474,11 @@ public class EnumerableExtensionsTests
 		var collection = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		IEnumerable<Person> nullCollection = null;
 
-		Assert.IsTrue(collection.HasItems(Count));
+		Assert.IsTrue(collection.IsNotEmpty(Count));
 
-		Assert.IsFalse(collection.HasItems(100));
+		Assert.IsFalse(collection.IsNotEmpty(100));
 
-		Assert.IsFalse(nullCollection.HasItems(Count));
+		Assert.IsFalse(nullCollection.IsNotEmpty(Count));
 	}
 
 	[TestMethod]
@@ -568,7 +568,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.OrderByOrdinal(p => p.Email);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -578,7 +578,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.OrderBy("Email desc");
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -588,7 +588,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.Page(10);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -804,7 +804,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToCollection().HasItems());
+		Assert.IsTrue(people.ToCollection().IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -820,7 +820,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToFrozenSet().HasItems());
+		Assert.IsTrue(people.ToFrozenSet().IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -828,7 +828,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToImmutableArray().HasItems());
+		Assert.IsTrue(people.ToImmutableArray().IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -836,7 +836,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToImmutable().HasItems());
+		Assert.IsTrue(people.ToImmutable().IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -844,7 +844,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToLinkedList().HasItems());
+		Assert.IsTrue(people.ToLinkedList().IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -862,7 +862,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToReadOnlyCollection().HasItems());
+		Assert.IsTrue(people.ToReadOnlyCollection().IsNotEmpty());
 	}
 
 	[TestMethod]

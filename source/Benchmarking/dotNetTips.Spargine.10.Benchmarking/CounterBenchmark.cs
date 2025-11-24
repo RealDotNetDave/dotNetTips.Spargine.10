@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// Provides a base class for benchmark tests that involve a counter. This abstract class is designed to be inherited by benchmarks that require counting operations, ensuring a consistent setup and logging mechanism across different counting benchmarks.
 /// </summary>
 [Obsolete("This class is obsolete and will be removed at the end of 2025. Use LargeCollectionBenchmark, SmallCollectionBenchmark, TinyCollectionBenchmark instead.")]
-public abstract class CounterBenchmark : Benchmark
+public abstract class CounterBenchmark
 {
 
 	/// <summary>

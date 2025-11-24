@@ -35,9 +35,9 @@ public class SortedDictionaryExtensionsTest
 		var peopleSortedSet = new SortedDictionary<string, Person>(RandomData.GeneratePersonRefCollection(10).ToDictionary(p => p.Id));
 		SortedDictionary<string, Person> nullPeople = null;
 
-		Assert.IsFalse(peopleSortedSet.DoesNotHaveItems());
+		Assert.IsFalse(peopleSortedSet.IsEmpty());
 
-		Assert.IsTrue(nullPeople.DoesNotHaveItems());
+		Assert.IsTrue(nullPeople.IsEmpty());
 	}
 
 	[TestMethod]
@@ -46,9 +46,9 @@ public class SortedDictionaryExtensionsTest
 		var peopleSortedSet = new SortedDictionary<string, Person>(RandomData.GeneratePersonRefCollection(10).ToDictionary(p => p.Id));
 		SortedDictionary<string, Person> nullPeople = null;
 
-		Assert.IsTrue(peopleSortedSet.HasItems());
+		Assert.IsTrue(peopleSortedSet.IsNotEmpty());
 
-		Assert.IsFalse(nullPeople.HasItems());
+		Assert.IsFalse(nullPeople.IsNotEmpty());
 	}
 
 	/// <summary>
@@ -61,7 +61,7 @@ public class SortedDictionaryExtensionsTest
 
 		Func<KeyValuePair<string, Person>, bool> selector = p => p.Value.Email.IsNotNull();
 
-		Assert.IsTrue(peopleSortedSet.HasItems(selector));
+		Assert.IsTrue(peopleSortedSet.IsNotEmpty(selector));
 	}
 
 	[TestMethod]
@@ -70,10 +70,10 @@ public class SortedDictionaryExtensionsTest
 		var peopleSortedSet = new SortedDictionary<string, Person>(RandomData.GeneratePersonRefCollection(10).ToDictionary(p => p.Id));
 		SortedDictionary<string, Person> nullPeople = null;
 
-		Assert.IsTrue(peopleSortedSet.HasItems(10));
-		Assert.IsFalse(peopleSortedSet.HasItems(100));
+		Assert.IsTrue(peopleSortedSet.IsNotEmpty(10));
+		Assert.IsFalse(peopleSortedSet.IsNotEmpty(100));
 
-		Assert.IsFalse(nullPeople.HasItems(10));
+		Assert.IsFalse(nullPeople.IsNotEmpty(10));
 	}
 	[TestMethod]
 	public void ToImmutableTest()

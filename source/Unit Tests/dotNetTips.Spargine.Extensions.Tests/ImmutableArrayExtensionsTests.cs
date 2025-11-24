@@ -34,7 +34,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray<int>.Empty;
 
 		// Act
-		var result = array.HasItems();
+		var result = array.IsNotEmpty();
 
 		// Assert
 		Assert.IsFalse(result);
@@ -47,7 +47,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Act
-		var result = array.HasItems();
+		var result = array.IsNotEmpty();
 
 		// Assert
 		Assert.IsTrue(result);
@@ -60,7 +60,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray<int>.Empty;
 
 		// Act
-		var result = array.HasItems(3);
+		var result = array.IsNotEmpty(3);
 
 		// Assert
 		Assert.IsFalse(result);
@@ -73,7 +73,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Act
-		var result = array.HasItems(2);
+		var result = array.IsNotEmpty(2);
 
 		// Assert
 		Assert.IsFalse(result);
@@ -86,7 +86,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Act
-		var result = array.HasItems(3);
+		var result = array.IsNotEmpty(3);
 
 		// Assert
 		Assert.IsTrue(result);
@@ -99,7 +99,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray<int>.Empty;
 
 		// Act
-		var result = array.HasItems(x => x > 1);
+		var result = array.IsNotEmpty(x => x > 1);
 
 		// Assert
 		Assert.IsFalse(result);
@@ -112,7 +112,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Act
-		Assert.IsFalse(array.HasItems(null));
+		Assert.IsFalse(array.IsNotEmpty(null));
 	}
 
 	[TestMethod]
@@ -122,7 +122,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Act
-		var result = array.HasItems(x => x > 1);
+		var result = array.IsNotEmpty(x => x > 1);
 
 		// Assert
 		Assert.IsTrue(result);

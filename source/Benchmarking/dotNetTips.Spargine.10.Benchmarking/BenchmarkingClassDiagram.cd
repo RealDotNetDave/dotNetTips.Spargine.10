@@ -6,7 +6,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>gASAIAgJSAQAEQAAAEAQCAAgEAhIAAgXAQSCU0A4UCA=</HashCode>
+      <HashCode>ggSgIQgJSAQAEQAACEAQCEEkMAhIAAgXAQSCU0A4UCA=</HashCode>
       <FileName>Benchmark.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -47,7 +47,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>gQCAAEYEqEoAQEAABEgghAABACACBAqAiAAAEAAAAKA=</HashCode>
+      <HashCode>AQCAAQYEqCIAaAQQBUwAhAoAAAAAAAqAgUAAEQAAgKA=</HashCode>
       <FileName>CollectionBenchmark.Coordinate.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -1159,11 +1159,11 @@ public static class RandomData
 		State? state = null;
 		City? city = null;
 
-		if (country!.States != null && country.States.HasItems())
+		if (country!.States != null && country.States.IsNotEmpty())
 		{
 			state = country.States.PickRandom();
 
-			if (state?.Cities != null && state.Cities.HasItems())
+			if (state?.Cities != null && state.Cities.IsNotEmpty())
 			{
 				city = state.Cities.PickRandom();
 			}

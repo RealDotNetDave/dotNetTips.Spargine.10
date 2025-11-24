@@ -496,7 +496,7 @@ public static class DirectoryHelper
 			{
 				var directoryFiles = directory.GetFiles(searchPattern, options);
 
-				if (directoryFiles.HasItems())
+				if (directoryFiles.IsNotEmpty())
 				{
 					foreach (var directoryFile in directoryFiles)
 					{
@@ -548,7 +548,7 @@ public static class DirectoryHelper
 		searchOption = searchOption.ArgumentDefined();
 		searchPatterns = searchPatterns.ArgumentNotNull();
 
-		return searchPatterns.Any(pattern => SafeDirectorySearch(path, pattern, searchOption).HasItems());
+		return searchPatterns.Any(pattern => SafeDirectorySearch(path, pattern, searchOption).IsNotEmpty());
 	}
 
 	/// <summary>

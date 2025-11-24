@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-30-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,8 +44,8 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(DoesNotHaveItems), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool DoesNotHaveItems()
+		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsEmpty()
 		{
 			return collection == null || collection.Count == 0;
 		}
@@ -58,8 +58,8 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems()
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty()
 		{
 			return collection is null ? false : collection.Count > 0;
 		}
@@ -73,8 +73,8 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems([DisallowNull] Func<T, bool> actionPredicate)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
 			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
 		}
@@ -88,8 +88,8 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool HasItems(int count)
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		public bool IsNotEmpty(int count)
 		{
 			return collection is null ? false : collection.FastCount() == count;
 		}

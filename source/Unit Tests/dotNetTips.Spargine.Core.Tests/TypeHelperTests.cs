@@ -46,7 +46,7 @@ public class TypeHelperTests : UnitTester
 	{
 		var result = TypeHelper.BuiltInTypeNames().Values;
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -145,7 +145,7 @@ public class TypeHelperTests : UnitTester
 			typeof(MulticastDelegate),
 			true);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -167,7 +167,7 @@ public class TypeHelperTests : UnitTester
 	{
 		var result = TypeHelper.FindDerivedTypes(typeof(Exception), true);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -175,7 +175,7 @@ public class TypeHelperTests : UnitTester
 	{
 		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(MulticastDelegate), true);
 
-		Assert.IsTrue(result.HasItems());
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]

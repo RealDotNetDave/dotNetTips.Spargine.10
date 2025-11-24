@@ -284,7 +284,7 @@ public struct Person() : IPerson<Person, Address>
 			Phone = person.Phone,
 		};
 
-		if (person.Addresses.HasItems())
+		if (person.Addresses.IsNotEmpty())
 		{
 			foreach (var address in person.Addresses)
 			{
@@ -317,7 +317,7 @@ public struct Person() : IPerson<Person, Address>
 			Phone = person.Phone
 		};
 
-		if (person.Addresses.HasItems())
+		if (person.Addresses.IsNotEmpty())
 		{
 			foreach (var address in person.Addresses)
 			{

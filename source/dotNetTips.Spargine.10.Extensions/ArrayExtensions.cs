@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 11-24-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -64,7 +64,7 @@ public static class ArrayExtensions
 		[Information(nameof(FastHashData), author: "David McCarter", createdOn: "3/11/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public byte[] FastHashData()
 		{
-			return array.DoesNotHaveItems() ? [] : SHA256.HashData(array);
+			return array.IsEmpty() ? [] : SHA256.HashData(array);
 		}
 	}
 
@@ -223,8 +223,8 @@ public static class ArrayExtensions
 		/// <returns><c>true</c> if the array is null or empty; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(DoesNotHaveItems), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool DoesNotHaveItems()
+		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsEmpty()
 		{
 			return array == null || array.LongLength == 0;
 		}
@@ -277,8 +277,8 @@ public static class ArrayExtensions
 		/// <returns><c>true</c> if the specified array has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool HasItems()
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty()
 		{
 			return array is null ? false : array.LongLength > 0;
 		}
@@ -290,8 +290,8 @@ public static class ArrayExtensions
 		/// <returns><c>true</c> if the specified values has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool HasItems(in Func<T, bool> actionFunction)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty(in Func<T, bool> actionFunction)
 		{
 			return array is null || actionFunction is null ? false : array.Any(actionFunction);
 		}
@@ -303,8 +303,8 @@ public static class ArrayExtensions
 		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasItems), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool HasItems(int count)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty(int count)
 		{
 			return array is null ? false : array.LongLength == count;
 		}
