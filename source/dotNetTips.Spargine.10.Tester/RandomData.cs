@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-18-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -887,7 +887,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static byte[] GenerateNonZeroByteArray(int count)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);

@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -80,7 +80,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null or empty.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void PrintToDebug([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		if (input.IsNullOrEmpty())
@@ -105,7 +105,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> or <paramref name="propertySelector"/> is null.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void PrintToDebug<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
@@ -136,7 +136,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.
 	/// </exception>
 	[DebuggerStepThrough]
-	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void PrintToDebug<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();
@@ -158,7 +158,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null or empty.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void SaveToFile([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		if (input.IsNullOrEmpty())
@@ -182,7 +182,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> or <paramref name="propertySelector"/> is null.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
@@ -211,7 +211,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.
 	/// </exception>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void SaveToFile<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();
@@ -242,7 +242,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </exception>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();

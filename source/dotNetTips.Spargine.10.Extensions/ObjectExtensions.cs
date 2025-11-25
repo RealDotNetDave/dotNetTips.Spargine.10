@@ -558,7 +558,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
 		public string FieldsToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 		{
 			obj = obj.ArgumentNotNull();

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -296,6 +296,127 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result, "Expected to return true for the same strings ignoring case.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_CompareWithStringIsNullOrEmpty()
+	{
+		// Arrange
+		string[] testCases = [null, string.Empty, "test", "   ", RandomData.GenerateWord(25)];
+
+		// Act & Assert
+		foreach (var testCase in testCases)
+		{
+			var expectedResult = !string.IsNullOrEmpty(testCase);
+			var actualResult = testCase.FastIsNullOrEmpty();
+
+			Assert.AreEqual(expectedResult, actualResult,
+				$"FastIsNullOrEmpty should return inverse of string.IsNullOrEmpty for input: '{testCase ?? "<null>"}'");
+		}
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_EmptyString_ReturnsFalse()
+	{
+		// Arrange
+		var emptyString = string.Empty;
+
+		// Act
+		var result = emptyString.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsFalse(result, "Expected to return false for an empty string.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_LongString_ReturnsTrue()
+	{
+		// Arrange
+		var longString = RandomData.GenerateWord(100);
+
+		// Act
+		var result = longString.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Expected to return true for a long string.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_NullString_ReturnsFalse()
+	{
+		// Arrange
+		string nullString = null;
+
+		// Act
+		var result = nullString.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsFalse(result, "Expected to return false for a null string.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_SingleCharacterString_ReturnsTrue()
+	{
+		// Arrange
+		var singleChar = "A";
+
+		// Act
+		var result = singleChar.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Expected to return true for a single character string.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_SpecialCharacters_ReturnsTrue()
+	{
+		// Arrange
+		var specialChars = "!@#$%^&*()";
+
+		// Act
+		var result = specialChars.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Expected to return true for a string with special characters.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_UnicodeString_ReturnsTrue()
+	{
+		// Arrange
+		var unicodeString = "Hello 世界 🌍";
+
+		// Act
+		var result = unicodeString.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Expected to return true for a Unicode string.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_ValidString_ReturnsTrue()
+	{
+		// Arrange
+		var validString = RandomData.GenerateWord(10);
+
+		// Act
+		var result = validString.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Expected to return true for a valid non-empty string.");
+	}
+
+	[TestMethod]
+	public void FastIsNullOrEmpty_WhitespaceString_ReturnsTrue()
+	{
+		// Arrange
+		var whitespaceString = "   ";
+
+		// Act
+		var result = whitespaceString.FastIsNullOrEmpty();
+
+		// Assert
+		Assert.IsTrue(result, "Expected to return true for a whitespace-only string (it's not empty).");
 	}
 
 	[TestMethod]

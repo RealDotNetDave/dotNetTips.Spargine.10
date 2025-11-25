@@ -344,7 +344,7 @@ public static class TypeHelper
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
 	{
 		currentDomain = currentDomain.ArgumentNotNull();

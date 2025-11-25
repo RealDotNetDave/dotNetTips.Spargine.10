@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-19-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -376,17 +376,10 @@ public static class StringExtensions
 	/// <c>false</c> if the string is <c>null</c> or <see cref="string.Empty"/>; otherwise, <c>true</c>.
 	/// </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastIsNullOrEmpty), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FastIsNullOrEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static bool FastIsNullOrEmpty([AllowNull] this string input)
 	{
-		if (input is null || input == string.Empty)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return input is null || input == string.Empty;
 	}
 
 	/// <summary>
@@ -457,7 +450,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Replace(string, string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for optimal performance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static string FastReplace([DisallowNull] this string input, string oldValue, string newValue)
 	{
 		input = input.ArgumentNotNullOrEmpty();

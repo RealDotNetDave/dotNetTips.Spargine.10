@@ -383,7 +383,7 @@ public sealed class Address : IAddress<Address>
 	/// <returns>
 	/// A string representation of the address record.
 	/// </returns>
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString()
 	{
 		return this.PropertiesToString();

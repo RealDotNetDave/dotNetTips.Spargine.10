@@ -150,7 +150,7 @@ public static class CountryRepository
 	/// </exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Country? GetCountry(string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNullOrEmpty();

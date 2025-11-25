@@ -15,7 +15,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -36,6 +41,55 @@ public class TypeHelperBenchmark : Benchmark
 
 	private readonly int _collectionCount = 50;
 	private List<Person> _people;
+
+	private ReadOnlyCollection<Type> FindDerivedTypesNoCache([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
+	{
+		currentDomain = currentDomain.ArgumentNotNull();
+		baseType = baseType.ArgumentNotNull();
+
+		var assemblyCollection = currentDomain.GetAssemblies();
+
+		List<Type> types = [];
+
+		foreach (var assembly in assemblyCollection)
+		{
+			try
+			{
+				types.AddRange(this.LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
+			}
+			catch (ReflectionTypeLoadException reflectionEx)
+			{
+				Trace.WriteLine(reflectionEx.GetAllMessages());
+			}
+		}
+
+		var result = types.ToArray();
+
+		return Array.AsReadOnly(result);
+	}
+
+	private IEnumerable<Type> LoadDerivedTypes(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
+	{
+		foreach (var type in types)
+		{
+			if (classOnly && !type.IsClass)
+			{
+				continue;
+			}
+
+			if (baseType.IsInterface)
+			{
+				if (type.ImplementedInterfaces.Contains(baseType))
+				{
+					yield return type.AsType();
+				}
+			}
+			else if (type.IsSubclassOf(baseType))
+			{
+				yield return type.AsType();
+			}
+		}
+	}
 
 	[Obsolete(message: "TEST")]
 	private void MethodWithObsoleteAttribute() { }
@@ -91,8 +145,16 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes))]
-	[BenchmarkCategory(Categories.Reflection)]
+	[BenchmarkCategory(Categories.Reflection, Categories.ForComparison)]
 	public void FindDerivedTypes()
+	{
+		var result = this.FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(MulticastDelegate), true);
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void FindDerivedTypesCached()
 	{
 		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(MulticastDelegate), true);
 		this.Consume(result);
@@ -143,6 +205,63 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllGenericMethods()
+	{
+		var result = TypeHelper.GetAllGenericMethods(typeof(StringBuilder));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllMethods))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllMethods()
+	{
+		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllProperties))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllProperties()
+	{
+		var result = TypeHelper.GetAllProperties(typeof(Person));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllPublicMethods()
+	{
+		var result = TypeHelper.GetAllPublicMethods(typeof(Person));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllStaticMethods))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllStaticMethods()
+	{
+		var result = TypeHelper.GetAllPublicMethods(typeof(TypeHelper));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": FieldInfo")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAttributeFieldInfo()
+	{
+#pragma warning disable CS0612 // Type or member is obsolete
+		var field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
+#pragma warning restore CS0612 // Type or member is obsolete
+		var result = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(TypeHelper.GetGenericArguments))]
 	[BenchmarkCategory(Categories.Reflection, Categories.New)]
 	public void GetGenericArguments()
@@ -178,6 +297,51 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaceTypes(list);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetInstanceHashCode))]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void GetInstanceHashCode()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = TypeHelper.GetInstanceHashCode(person);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GetMembersWithAttribute()
+	{
+		var type = typeof(Person);
+
+		var result = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetPropertyValues))]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void GetPropertyValues()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = TypeHelper.GetPropertyValues(person);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetTypeDisplayName()
+	{
+		var type = typeof(int[]);
+		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		var result = TypeHelper.GetTypeDisplayName(type, options);
 
 		this.Consume(result);
 	}
@@ -259,108 +423,6 @@ public class TypeHelperBenchmark : Benchmark
 	public void IsEnumerable()
 	{
 		var result = TypeHelper.IsEnumerable(typeof(List<int>));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetAllGenericMethods()
-	{
-		var result = TypeHelper.GetAllGenericMethods(typeof(StringBuilder));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetAllMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetAllMethods()
-	{
-		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetAllProperties))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetAllProperties()
-	{
-		var result = TypeHelper.GetAllProperties(typeof(Person));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetAllPublicMethods()
-	{
-		var result = TypeHelper.GetAllPublicMethods(typeof(Person));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetAllStaticMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetAllStaticMethods()
-	{
-		var result = TypeHelper.GetAllPublicMethods(typeof(TypeHelper));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": FieldInfo")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetAttributeFieldInfo()
-	{
-#pragma warning disable CS0612 // Type or member is obsolete
-		var field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
-#pragma warning restore CS0612 // Type or member is obsolete
-		var result = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetInstanceHashCode))]
-	[BenchmarkCategory(Categories.Reflection)]
-	public void GetInstanceHashCode()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-
-		var result = TypeHelper.GetInstanceHashCode(person);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void GetMembersWithAttribute()
-	{
-		var type = typeof(Person);
-
-		var result = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetPropertyValues))]
-	[BenchmarkCategory(Categories.Reflection)]
-	public void GetPropertyValues()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-
-		var result = TypeHelper.GetPropertyValues(person);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetTypeDisplayName()
-	{
-		var type = typeof(int[]);
-		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
-
-		var result = TypeHelper.GetTypeDisplayName(type, options);
 
 		this.Consume(result);
 	}
