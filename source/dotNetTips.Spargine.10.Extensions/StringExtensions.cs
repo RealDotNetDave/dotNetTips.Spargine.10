@@ -376,7 +376,7 @@ public static class StringExtensions
 	/// <c>false</c> if the string is <c>null</c> or <see cref="string.Empty"/>; otherwise, <c>true</c>.
 	/// </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastIsNullOrEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FastIsNullOrEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool FastIsNullOrEmpty([AllowNull] this string input)
 	{
 		return input is null || input == string.Empty;
@@ -450,7 +450,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Replace(string, string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for optimal performance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FastReplace([DisallowNull] this string input, string oldValue, string newValue)
 	{
 		input = input.ArgumentNotNullOrEmpty();

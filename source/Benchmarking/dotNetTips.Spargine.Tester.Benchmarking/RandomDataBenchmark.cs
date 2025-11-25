@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-11-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -145,6 +145,15 @@ public class RandomDataBenchmark : Benchmark
 	public void GenerateKey()
 	{
 		var result = RandomData.GenerateKey();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateNonZeroByteArray))]
+	[BenchmarkCategory(Categories.New)]
+	public void GenerateNonZeroByteArray()
+	{
+		var result = RandomData.GenerateNonZeroByteArray(100);
 
 		this.Consume(result);
 	}

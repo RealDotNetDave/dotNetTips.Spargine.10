@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -130,7 +130,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void CreateWithParameters()
 	{
-		var result = TypeHelper.Create<Person>("TESTID", "DOTNETDAVE@LIVE.COM");
+		var result = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTID");
 
 		this.Consume(result);
 	}

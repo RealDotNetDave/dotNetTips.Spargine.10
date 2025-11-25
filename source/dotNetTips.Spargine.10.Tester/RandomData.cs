@@ -887,7 +887,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static byte[] GenerateNonZeroByteArray(int count)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);

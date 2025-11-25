@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -95,7 +95,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <summary>
 	/// Removes all items from the <see cref="DistinctConcurrentBag{T}"/>.
 	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void Clear()
 	{
 		while (this._bag.TryTake(out _))

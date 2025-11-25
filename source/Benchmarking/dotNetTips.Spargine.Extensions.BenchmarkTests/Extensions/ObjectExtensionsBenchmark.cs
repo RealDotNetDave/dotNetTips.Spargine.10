@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-17-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -108,6 +108,14 @@ public class ObjectExtensionsBenchmark : Benchmark
 	public void Duplicate01()
 	{
 		var result = this.PersonRecord01 with { Id = "12345678" };
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FieldsToDictionary))]
+	public void FieldsToDictionary()
+	{
+		var result = this.PersonRef01.FieldsToDictionary("Person");
 
 		this.Consume(result);
 	}
