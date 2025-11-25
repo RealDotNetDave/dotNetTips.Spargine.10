@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 11-25-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -350,7 +350,8 @@ public static class TypeHelper
 		currentDomain = currentDomain.ArgumentNotNull();
 		baseType = baseType.ArgumentNotNull();
 
-		var cacheKey = string.Concat("FindDerivedTypes.", currentDomain.FriendlyName, ".", baseType.AssemblyQualifiedName, ".", classOnly ? "1" : "0");
+		var cacheKey = string.Create(null, stackalloc char[128], $"FindDerivedTypes.{currentDomain.FriendlyName}.{baseType.MetadataToken}.{(classOnly ? '1' : '0')}");
+
 
 		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedTypes))
 		{
@@ -358,15 +359,16 @@ public static class TypeHelper
 		}
 
 		var assemblyCollection = currentDomain.GetAssemblies();
-		var types = new List<Type>(capacity: 32); // Pre-allocate with reasonable capacity
+
+		List<Type> types = new(capacity: 16);
 
 		var assemblyCount = assemblyCollection.Length;
 
-		for (var index = 0; index < assemblyCount; index++)
+		foreach (var assembly in assemblyCollection)
 		{
 			try
 			{
-				types.AddRange(LoadDerivedTypes(assemblyCollection[index].DefinedTypes, baseType, classOnly));
+				types.AddRange(LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
 			}
 			catch (ReflectionTypeLoadException reflectionEx)
 			{

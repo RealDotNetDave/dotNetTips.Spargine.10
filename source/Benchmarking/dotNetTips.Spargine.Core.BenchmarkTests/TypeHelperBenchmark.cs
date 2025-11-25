@@ -148,7 +148,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Reflection, Categories.ForComparison)]
 	public void FindDerivedTypes()
 	{
-		var result = this.FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(MulticastDelegate), true);
+		var result = this.FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
 		this.Consume(result);
 	}
 
@@ -156,7 +156,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Reflection)]
 	public void FindDerivedTypesCached()
 	{
-		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(MulticastDelegate), true);
+		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(Exception), true);
 		this.Consume(result);
 	}
 
