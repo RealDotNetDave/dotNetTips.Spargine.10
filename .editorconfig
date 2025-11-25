@@ -1004,11 +1004,11 @@ dotnet_diagnostic.CA1826.severity = error
 
 # Do not use Count/LongCount when Any can be used
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1827.severity = suggestion
+dotnet_diagnostic.CA1827.severity = warning
 
 # Do not use CountAsync/LongCountAsync when AnyAsync can be used
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1828.severity = suggestion
+dotnet_diagnostic.CA1828.severity = warning
 
 # Use Length/Count property instead of Enumerable.Count() method
 # Examples in Rock Your Code: Code Performance in Microsoft .NET

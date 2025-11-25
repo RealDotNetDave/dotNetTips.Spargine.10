@@ -350,8 +350,7 @@ public static class TypeHelper
 		currentDomain = currentDomain.ArgumentNotNull();
 		baseType = baseType.ArgumentNotNull();
 
-		// Create a unique cache key based on the AppDomain, baseType, and classOnly flag
-		var cacheKey = $"FindDerivedTypes.{currentDomain.FriendlyName}.{baseType.AssemblyQualifiedName}.{classOnly}";
+		var cacheKey = string.Concat("FindDerivedTypes.", currentDomain.FriendlyName, ".", baseType.AssemblyQualifiedName, ".", classOnly ? "1" : "0");
 
 		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedTypes))
 		{
@@ -359,14 +358,15 @@ public static class TypeHelper
 		}
 
 		var assemblyCollection = currentDomain.GetAssemblies();
+		var types = new List<Type>(capacity: 32); // Pre-allocate with reasonable capacity
 
-		List<Type> types = [];
+		var assemblyCount = assemblyCollection.Length;
 
-		foreach (var assembly in assemblyCollection)
+		for (var index = 0; index < assemblyCount; index++)
 		{
 			try
 			{
-				types.AddRange(LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
+				types.AddRange(LoadDerivedTypes(assemblyCollection[index].DefinedTypes, baseType, classOnly));
 			}
 			catch (ReflectionTypeLoadException reflectionEx)
 			{
