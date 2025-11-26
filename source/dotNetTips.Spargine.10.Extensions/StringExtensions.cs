@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -362,10 +362,11 @@ public static class StringExtensions
 	/// <returns><c>true</c> if the strings are equal according to the specified comparison option; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/>, <paramref name="valueToCompare"/>, or <paramref name="comparison"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastCompare), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FastCompare), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool FastCompare([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
 	{
 		return string.Equals(value, valueToCompare, comparison);
+
 	}
 
 	/// <summary>
@@ -881,10 +882,10 @@ public static class StringExtensions
 	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is empty.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static bool IsEmpty([NotNullWhen(false)] this string? input)
 	{
-		return string.IsNullOrEmpty(input);
+		return input is null || input.Length == 0;
 	}
 
 	/// <summary>
@@ -953,7 +954,7 @@ public static class StringExtensions
 	/// This method checks the opposite of <see cref="IsEmpty(string?)"/> to determine if a string is not empty.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsNotEmpty), "David McCarter", "8/18/20", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	[Information(nameof(IsNotEmpty), "David McCarter", "8/18/20", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsNotEmpty(this string? input) => input.IsEmpty() is false;
 
 	/// <summary>

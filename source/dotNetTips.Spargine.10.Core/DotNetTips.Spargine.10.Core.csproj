@@ -82,8 +82,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="IEasyDisposable.cs" />
-    <Compile Remove="Security\BarCode.cs" />
+	<Compile Remove="IEasyDisposable.cs" />
+	<Compile Remove="Security\BarCode.cs" />
   </ItemGroup>
 
   <ItemGroup>

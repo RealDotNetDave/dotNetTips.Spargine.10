@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -445,6 +445,7 @@ public static class FastStringBuilder
 		try
 		{
 			action.Invoke(sb);
+
 			return sb.ToString();
 		}
 		finally
@@ -452,6 +453,52 @@ public static class FastStringBuilder
 			_stringBuilderPool.Return(sb.Clear());
 		}
 
+	}
+
+	/// <summary>
+	/// Performs the specified action on a <see cref="StringBuilder"/> instance obtained from an object pool,
+	/// with a pre-allocated capacity to minimize memory reallocations.
+	/// This approach improves performance by reducing memory allocations.
+	/// </summary>
+	/// <param name="capacity">The initial capacity to set for the StringBuilder. Must be greater than or equal to zero.</param>
+	/// <param name="action">The action to perform on the <see cref="StringBuilder"/>. Must not be null.</param>
+	/// <returns>A string resulting from the action performed on the <see cref="StringBuilder"/>.</returns>
+	/// <example>
+	/// Here is an example of using PerformAction method with capacity:
+	/// <code>
+	/// // Building a string from an array of 100 strings, each 15 chars
+	/// var result = FastStringBuilder.PerformAction(1500, sb => 
+	/// {
+	///     foreach (var word in words)
+	///     {
+	///         sb.Append(word);
+	///     }
+	/// });
+	/// </code>
+	/// </example>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(PerformAction), "David McCarter", "11/26/2025", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, Status = Status.New)]
+	public static string PerformAction(in int capacity, [AllowNull] in Action<StringBuilder> action)
+	{
+		if (action is null)
+		{
+			return ControlChars.EmptyString;
+		}
+
+		_ = capacity.CheckIsInRange(0, int.MaxValue, throwException: true);
+
+		var sb = _stringBuilderPool.Get().SetCapacity(capacity);
+
+		try
+		{
+			action.Invoke(sb);
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
 	}
 
 	/// <summary>
@@ -510,25 +557,32 @@ public static class FastStringBuilder
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
-	public static string ToDelimitedString<TKey, TValue>([DisallowNull] in Dictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma)
-		where TKey : notnull
+	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
+	public static string ToDelimitedString<TKey, TValue>([DisallowNull] in Dictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma) where TKey : notnull
 	{
 		if (collection is null || collection.Count == 0)
 		{
-			throw new ArgumentNullException(nameof(collection), Resources.TheCollectionParameterMustNotBeNull);
+			ExceptionThrower.ThrowArgumentException(Resources.TheCollectionParameterMustNotBeNull, nameof(collection));
 		}
 
 		var sb = _stringBuilderPool.Get();
 
 		try
 		{
+			_ = sb.EnsureCapacity(collection.Count * 22);
+
+			var isFirst = true;
+
 			//FrozenDictionary, ImmutableArray and FrozenSet is slower.
 			foreach (var item in collection)
 			{
-				if (sb.Length > 0)
+				if (!isFirst)
 				{
 					_ = sb.Append(delimiter);
+				}
+				else
+				{
+					isFirst = false;
 				}
 
 				_ = sb.Append(item.Key).Append(ControlChars.Colon).Append(item.Value);

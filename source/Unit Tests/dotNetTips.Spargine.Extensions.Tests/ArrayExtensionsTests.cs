@@ -39,7 +39,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddFirst(null);
 
-		Assert.IsTrue(result.FastCount() == 10);
+		Assert.IsTrue(result.FastLongCount() == 10);
 	}
 
 	/// <summary>
@@ -53,7 +53,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddFirst(person);
 
-		Assert.IsTrue(result.FastCount() == 11);
+		Assert.IsTrue(result.FastLongCount() == 11);
 	}
 
 	[TestMethod]
@@ -63,7 +63,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(null, people.Length == 10);
 
-		Assert.IsTrue(result.FastCount() == 10);
+		Assert.IsTrue(result.FastLongCount() == 10);
 	}
 
 	/// <summary>
@@ -77,7 +77,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(person, people.Length == 10);
 
-		Assert.IsTrue(result.FastCount() == 11);
+		Assert.IsTrue(result.FastLongCount() == 11);
 	}
 
 	/// <summary>
@@ -91,10 +91,10 @@ public class ArrayExtensionsTests
 
 		var result = people.AddLast(person);
 
-		Assert.IsTrue(result.FastCount() == 11);
+		Assert.IsTrue(result.FastLongCount() == 11);
 		Assert.IsTrue(result.Last() == person);
 
-		Assert.IsTrue(result.AddLast(null).FastCount() == 11);
+		Assert.IsTrue(result.AddLast(null).FastLongCount() == 11);
 	}
 
 	[TestMethod]
@@ -393,7 +393,7 @@ public class ArrayExtensionsTests
 	public void FastCount_ReturnsCorrectLength()
 	{
 		var arr = new[] { 1, 2, 3, 4, 5 };
-		Assert.AreEqual(5, arr.FastCount());
+		Assert.AreEqual(5, arr.FastLongCount());
 	}
 
 	[TestMethod]
@@ -716,7 +716,7 @@ public class ArrayExtensionsTests
 
 		var result = people.RemoveLast();
 
-		Assert.IsTrue(result.FastCount() == 99);
+		Assert.IsTrue(result.FastLongCount() == 99);
 	}
 
 	[TestMethod]
@@ -747,7 +747,7 @@ public class ArrayExtensionsTests
 
 		words = words.AddLast(words.First());
 
-		Assert.IsTrue(words.ToDistinct().FastCount() == 10);
+		Assert.IsTrue(words.ToDistinct().FastLongCount() == 10);
 	}
 
 	[TestMethod]
@@ -839,18 +839,18 @@ public class ArrayExtensionsTests
 
 		var result = people.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.FastCount() == 10);
+		Assert.IsTrue(result.FastLongCount() == 10);
 
 		result = people.Upsert(person);
 
-		Assert.IsTrue(result.FastCount() == 11);
+		Assert.IsTrue(result.FastLongCount() == 11);
 
 		result = people.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.FastCount() == 10);
+		Assert.IsTrue(result.FastLongCount() == 10);
 
 		result = people.Upsert(null);
 
-		Assert.IsTrue(result.FastCount() == 10);
+		Assert.IsTrue(result.FastLongCount() == 10);
 	}
 }

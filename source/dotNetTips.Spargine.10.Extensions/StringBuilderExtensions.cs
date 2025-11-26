@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-13-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <remarks>
 /// This class includes methods for appending key-value pairs, bytes, and collections with various formatting options.
 /// </remarks>
-[Information(nameof(StringBuilderExtensions), "David McCarter", "5/26/2020", "7/29/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineStringBuilderExtensions")]
+[Information(nameof(StringBuilderExtensions), "David McCarter", "5/26/2020", "7/29/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineStringBuilderExtensions")]
 public static class StringBuilderExtensions
 {
 
@@ -388,6 +388,39 @@ public static class StringBuilderExtensions
 
 			sb.Clear().Capacity = capacity;
 
+			return sb;
+		}
+
+		/// <summary>
+		/// Sets the capacity of the <see cref="StringBuilder"/> to the specified value.
+		/// </summary>
+		/// <param name="capacity">The new capacity to set for the <see cref="StringBuilder"/>. Must be greater than or equal to the current <see cref="StringBuilder.Length"/> and less than or equal to <see cref="StringBuilder.MaxCapacity"/>.</param>
+		/// <returns>The same <see cref="StringBuilder"/> instance after setting the new capacity, allowing for method chaining.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the <see cref="StringBuilder"/> instance is <c>null</c>.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than the current length or greater than the maximum capacity.</exception>
+		/// <remarks>
+		/// This method sets the <see cref="StringBuilder.Capacity"/> property directly without clearing the existing content.
+		/// Unlike <see cref="ClearSetCapacity"/>, this method preserves the current string content in the <see cref="StringBuilder"/>.
+		/// Setting the capacity can help optimize memory usage when you know the approximate size of additional content to be appended.
+		/// The method returns the same <see cref="StringBuilder"/> instance, enabling fluent-style method chaining.
+		/// For best performance, set the capacity before performing multiple append operations to minimize memory reallocations.
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var sb = new StringBuilder("Hello");
+		/// sb.SetCapacity(100).Append(" World");
+		/// // StringBuilder now has "Hello World" with capacity set to 100
+		/// Console.WriteLine(sb.ToString()); // Output: "Hello World"
+		/// Console.WriteLine(sb.Capacity);   // Output: 100
+		/// </code>
+		/// </example>
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(SetCapacity), author: "David McCarter", createdOn: "11/26/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		public StringBuilder SetCapacity(int capacity)
+		{
+			sb = sb.ArgumentNotNull();
+			sb.Capacity = capacity;
 			return sb;
 		}
 

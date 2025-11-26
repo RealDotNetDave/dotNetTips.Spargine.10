@@ -180,7 +180,7 @@ public class ObjectExtensionsTests : UnitTester
 		int[] numbers = { 1, 2, 3, 4, 5 };
 
 		var hashCode = numbers.GetHashCode();
-		var fastHashCode = numbers.FastGetHashCode();
+		var fastHashCode = numbers.FastHashCode();
 
 		Assert.AreEqual(hashCode, fastHashCode);
 	}
@@ -191,7 +191,7 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 
 		var hashCode = person.GetHashCode();
-		var fastHashCode = person.FastGetHashCode();
+		var fastHashCode = person.FastHashCode();
 
 		Assert.AreNotEqual(hashCode, fastHashCode);
 	}

@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -707,8 +707,8 @@ public static class ObjectExtensions
 		/// <returns>The hash code for the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastGetHashCode), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public int FastGetHashCode()
+		[Information(nameof(FastHashCode), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public int FastHashCode()
 		{
 			obj = obj.ArgumentNotNull();
 
@@ -723,15 +723,14 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 		public T FastClone<T>([DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			obj = obj.ArgumentNotNull();
 			typeInfo = typeInfo.ArgumentNotNull();
 
-			var json = obj.ToJson(typeInfo);
+			return JsonSerializer.Deserialize(JsonSerializer.Serialize(obj, typeInfo), typeInfo)!;
 
-			return json.FromJson(typeInfo);
 		}
 
 		/// <summary>
@@ -747,9 +746,7 @@ public static class ObjectExtensions
 		{
 			obj = obj.ArgumentNotNull();
 
-			var json = obj!.ToJson(options);
-
-			return json.FromJson<T>(options);
+			return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(obj, options), options)!;
 		}
 
 		/// <summary>
@@ -759,12 +756,32 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 		public T FastClone<T>()
 		{
 			obj = obj.ArgumentNotNull();
 
-			return FromJson<T>(obj!.ToJson(JsonSerializerOptions.Default));
+			return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(obj))!;
+
+		}
+
+		/// <summary>
+		/// Creates a deep clone using binary MessagePack serialization (fastest, requires MessagePack attributes).
+		/// Use this when cloning performance is critical and types are annotated with MessagePack attributes.
+		/// </summary>
+		/// <typeparam name="T">The type of the object.</typeparam>
+		/// <returns>A deep clone of the object.</returns>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastCloneBinary), Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		public T FastCloneBinary<T>()
+		{
+			obj = obj.ArgumentNotNull();
+
+			// Requires: Install-Package MessagePack
+			// Types must be annotated with [MessagePackObject] and [Key] attributes
+			return MessagePack.MessagePackSerializer.Deserialize<T>(
+				MessagePack.MessagePackSerializer.Serialize(obj))!;
 		}
 
 		/// <summary>

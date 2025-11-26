@@ -61,7 +61,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	[Information("DistinctBlockingCollection", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public DistinctBlockingCollection(in IEnumerable<T> collection)
 	{
-		if (collection?.FastCount() > 0)
+		if (collection?.FastLongCount() > 0)
 		{
 			foreach (var item in collection.Where(p => p is not null))
 			{

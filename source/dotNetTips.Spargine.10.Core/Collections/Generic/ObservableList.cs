@@ -259,7 +259,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public virtual void Clear()
 	{
-		if (this._set.FastCount() == 0)
+		if (this._set.FastLongCount() == 0)
 		{
 			return;
 		}
@@ -347,7 +347,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		copy.ExceptWith(other);
 
-		if (copy.FastCount() == this._set.FastCount())
+		if (copy.FastLongCount() == this._set.FastLongCount())
 		{
 			return;
 		}
@@ -387,7 +387,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		copy.IntersectWith(other);
 
-		if (copy.FastCount() == this._set.FastCount())
+		if (copy.FastLongCount() == this._set.FastLongCount())
 		{
 			return;
 		}
@@ -548,7 +548,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 		var removed = this._set.Where(i => !copy.Contains(i)).ToList();
 		var added = copy.Where(i => !this._set.Contains(i)).ToList();
 
-		if (removed.FastCount() == 0 && added.FastCount() == 0)
+		if (removed.FastLongCount() == 0 && added.FastLongCount() == 0)
 		{
 			return;
 		}
@@ -585,7 +585,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		copy.UnionWith(other);
 
-		if (copy.FastCount() == this._set.FastCount())
+		if (copy.FastLongCount() == this._set.FastLongCount())
 		{
 			return;
 		}

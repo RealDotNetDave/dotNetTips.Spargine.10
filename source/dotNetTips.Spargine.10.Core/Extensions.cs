@@ -115,9 +115,11 @@ internal static partial class Extensions
 	/// <param name="sb">The <see cref="StringBuilder"/> to clear and set capacity for.</param>
 	/// <param name="capacity">The new capacity to set for the <see cref="StringBuilder"/>.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ClearSetCapacity), author: "David McCarter", createdOn: "11/13/2024", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	internal static StringBuilder ClearSetCapacity([NotNull] this StringBuilder sb, int capacity)
 	{
+
 		sb = sb.ArgumentNotNull();
 		sb.Clear().Capacity = capacity;
 		return sb;
@@ -167,8 +169,8 @@ internal static partial class Extensions
 	/// <returns>The number of elements in the collection.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastCount), "David McCarter", "5/21/2022", Status = Status.Available)]
-	internal static long FastCount<T>(this IEnumerable<T> collection) => collection.ArgumentNotNull().LongCount();
+	[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", Status = Status.Available)]
+	internal static long FastLongCount<T>(this IEnumerable<T> collection) => collection.ArgumentNotNull().LongCount();
 
 	/// <summary>
 	/// Returns the hierarchy from the source, validating that <paramref name="source"/>, <paramref name="nextItemFunction"/>, and <paramref name="canContinue"/> are not null.
@@ -273,6 +275,16 @@ internal static partial class Extensions
 		return input is not null && input.Length.CheckIsInRange(minLength, maxLength);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SetCapacity), author: "David McCarter", createdOn: "11/26/2025", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	internal static StringBuilder SetCapacity([NotNull] this StringBuilder sb, int capacity)
+	{
+
+		sb = sb.ArgumentNotNull();
+		sb.Capacity = capacity;
+		return sb;
+	}
+
 	/// <summary>
 	/// Converts a Base64 encoded string to a byte array.
 	/// </summary>
@@ -343,7 +355,7 @@ internal static partial class Extensions
 	/// <returns>System.String.</returns>
 	internal static string ToDelimitedString<T>([NotNull] this IEnumerable<T> list, [ConstantExpected] in char delimiter = ControlChars.Comma)
 	{
-		if (list.FastCount() == 0)
+		if (list.FastLongCount() == 0)
 		{
 			return string.Empty;
 		}

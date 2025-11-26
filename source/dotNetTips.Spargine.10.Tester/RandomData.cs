@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -281,7 +281,7 @@ public static class RandomData
 		}
 
 		var format = postalFormats.PickRandom();
-		var sb = _stringBuilderPool.Get().ClearSetCapacity(format.Length);
+		var sb = _stringBuilderPool.Get().SetCapacity(format.Length);
 
 		try
 		{
@@ -918,7 +918,7 @@ public static class RandomData
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
 
-		var sb = _stringBuilderPool.Get().ClearSetCapacity(length);
+		var sb = _stringBuilderPool.Get().SetCapacity(length);
 
 		try
 		{
@@ -1386,7 +1386,7 @@ public static class RandomData
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
 
-		var sb = _stringBuilderPool.Get().ClearSetCapacity(length);
+		var sb = _stringBuilderPool.Get().SetCapacity(length);
 
 		try
 		{

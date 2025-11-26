@@ -126,7 +126,7 @@ public class AssemblyExtensionsTests
 	{
 		var result = Assembly.GetExecutingAssembly().GetTypes();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.FastLongCount() > 0);
 	}
 
 }

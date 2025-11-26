@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using DotNetTips.Spargine.Core;
 using Microsoft.Extensions.ObjectPool;
@@ -414,12 +415,34 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
 		public IEnumerable<T> FastShuffle()
 		{
 			collection = collection.ArgumentNotNull();
 
-			return collection.Shuffle();
+			// Optimize for common collection types
+			if (collection is T[] array)
+			{
+				var shuffled = (T[])array.Clone();
+				RandomNumberGenerator.Shuffle(shuffled);
+				return shuffled;
+			}
+
+			if (collection is List<T> list)
+			{
+				var shuffled = new List<T>(list);
+				var span = CollectionsMarshal.AsSpan(shuffled);
+				RandomNumberGenerator.Shuffle(span);
+				return shuffled;
+			}
+
+			// For other IEnumerable types, materialize to array first
+			var items = collection as ICollection<T> ?? collection.ToArray();
+			var resultArray = new T[items.Count];
+			items.CopyTo(resultArray, 0);
+			RandomNumberGenerator.Shuffle(resultArray);
+
+			return resultArray;
 		}
 
 		/// <summary>
@@ -568,7 +591,7 @@ public static class EnumerableExtensions
 		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public string ToDelimitedString([ConstantExpected] in char delimiter = ControlChars.Comma)
 		{
-			if (collection is null || collection.FastCount() == 0)
+			if (collection is null || collection.FastLongCount() == 0)
 			{
 				return string.Empty;
 			}
@@ -816,7 +839,7 @@ public static class EnumerableExtensions
 					resultArray[index] = action.Invoke(span[index]);
 				}
 
-				return new ReadOnlyCollection<T>(resultArray);
+				return Array.AsReadOnly(resultArray);
 			}
 			else
 			{
@@ -829,7 +852,7 @@ public static class EnumerableExtensions
 					resultArray[index] = action(span[index]);
 				}
 
-				return new ReadOnlyCollection<T>(resultArray);
+				return Array.AsReadOnly(resultArray);
 			}
 		}
 
@@ -838,8 +861,8 @@ public static class EnumerableExtensions
 		/// </summary>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public long FastCount()
+		[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public long FastLongCount()
 		{
 			collection = collection.ArgumentNotNull();
 
@@ -876,8 +899,8 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastCount), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public long FastCount([DisallowNull] Func<T, bool> accumulatorPredicate)
+		[Information(nameof(FastLongCount), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public long FastLongCount([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			return collection.ArgumentNotNull().Count(accumulatorPredicate.ArgumentNotNull());
 		}
@@ -897,7 +920,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool FastAny([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -906,13 +929,13 @@ public static class EnumerableExtensions
 			//RECOMENDATION FROM COPILOT SLOWER.
 			foreach (var item in collection)
 			{
-				if (accumulatorPredicate.Invoke(item) is false)
+				if (accumulatorPredicate.Invoke(item))
 				{
-					return false;
+					return true;
 				}
 			}
 
-			return true;
+			return false;
 		}
 
 		/// <summary>

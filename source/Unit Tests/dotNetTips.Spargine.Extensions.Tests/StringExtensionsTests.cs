@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1348,9 +1348,9 @@ public class StringExtensionsTests
 	{
 		var testValue = $"{RandomData.GenerateWord(25)},{RandomData.GenerateWord(25)}";
 
-		Assert.IsTrue(testValue.Split(',', options: StringSplitOptions.RemoveEmptyEntries).FastCount() == 2);
+		Assert.IsTrue(testValue.Split(',', options: StringSplitOptions.RemoveEmptyEntries).FastLongCount() == 2);
 
-		Assert.IsTrue(testValue.Split(',', count: 2, options: StringSplitOptions.RemoveEmptyEntries).FastCount() == 2);
+		Assert.IsTrue(testValue.Split(',', count: 2, options: StringSplitOptions.RemoveEmptyEntries).FastLongCount() == 2);
 	}
 
 	[TestMethod]
@@ -1360,11 +1360,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(',', 2, StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastCount() == 2);
+		Assert.IsTrue(result.FastLongCount() == 2);
 
 		result = testValue.Split(',', 1, StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.FastLongCount() == 1);
 	}
 
 	[TestMethod]
@@ -1374,11 +1374,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastCount() == 3);
+		Assert.IsTrue(result.FastLongCount() == 3);
 
 		result = testValue.Split(',', StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastCount() == 3);
+		Assert.IsTrue(result.FastLongCount() == 3);
 	}
 
 	[TestMethod]
@@ -1388,11 +1388,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(",", 2, StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastCount() == 2);
+		Assert.IsTrue(result.FastLongCount() == 2);
 
 		result = testValue.Split(",", 1, StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.FastLongCount() == 1);
 	}
 
 	[TestMethod]
@@ -1402,11 +1402,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastCount() == 3);
+		Assert.IsTrue(result.FastLongCount() == 3);
 
 		result = testValue.Split(",", StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastCount() == 3);
+		Assert.IsTrue(result.FastLongCount() == 3);
 	}
 
 	[TestMethod]

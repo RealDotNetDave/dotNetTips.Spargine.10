@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 11-26-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -64,7 +64,7 @@ public static class ArrayExtensions
 		[Information(nameof(FastHashData), author: "David McCarter", createdOn: "3/11/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public byte[] FastHashData()
 		{
-			return array.IsEmpty() ? [] : SHA256.HashData(array);
+			return SHA256.HashData(array);
 		}
 	}
 
@@ -235,8 +235,8 @@ public static class ArrayExtensions
 		/// <returns>The total number of elements in the array as a long.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastCount), "David McCarter", "1/9/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public long FastCount()
+		[Information(nameof(FastLongCount), "David McCarter", "1/9/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public long FastLongCount()
 		{
 			return array.ArgumentNotNull().LongLength;
 		}
@@ -252,10 +252,11 @@ public static class ArrayExtensions
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			//Span, ImmutableArray and FrozenSet is slower.
-			foreach (var item in array)
+			var length = array.Length;
+
+			for (var index = 0; index < length; index++)
 			{
-				action.Invoke(item);
+				action(array[index]);
 			}
 		}
 
