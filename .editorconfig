@@ -977,7 +977,7 @@ dotnet_code_quality.CA1819.api_surface = public, protected
 
 # Test for empty strings using string length
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1820.severity = warning
+dotnet_diagnostic.CA1820.severity = error
 
 # Remove empty finalizers
 # Examples in Rock Your Code: Code Performance in Microsoft .NET

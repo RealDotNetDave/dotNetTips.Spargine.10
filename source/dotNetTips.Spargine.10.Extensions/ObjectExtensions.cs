@@ -599,10 +599,25 @@ public static class ObjectExtensions
 		public bool IsNull() => obj is null;
 
 		/// <summary>
+		/// Determines whether the specified object is a string.
+		/// </summary>
+		/// <returns><c>true</c> if the object is a <see cref="string"/>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// This method performs a type check using pattern matching to determine if the object is a string type.
+		/// This is more efficient than using reflection or type comparison methods.
+		/// Pattern matching with the <c>is</c> operator provides optimal performance for type checking.
+		/// </remarks>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		public bool IsString() => obj is string;
+
+		/// <summary>
 		/// Determines whether the specified object is not null.
 		/// </summary>
 		/// <returns><c>true</c> if the object is not null; otherwise, <c>false</c>.</returns>
 		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotNull), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotNull() => obj is not null;
 
