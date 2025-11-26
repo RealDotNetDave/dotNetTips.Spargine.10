@@ -91,7 +91,7 @@ public static class ObservableCollectionExtensions
 		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
 		public bool IsNotEmpty(int count)
 		{
-			return collection is null ? false : collection.FastCount() == count;
+			return collection is null ? false : collection.FastLongCount() == count;
 		}
 	}
 }
