@@ -557,7 +557,7 @@ public static class FastStringBuilder
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
 	public static string ToDelimitedString<TKey, TValue>([DisallowNull] in Dictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma) where TKey : notnull
 	{
 		if (collection is null || collection.Count == 0)
@@ -565,27 +565,22 @@ public static class FastStringBuilder
 			ExceptionThrower.ThrowArgumentException(Resources.TheCollectionParameterMustNotBeNull, nameof(collection));
 		}
 
-		var sb = _stringBuilderPool.Get();
+		var sb = _stringBuilderPool.Get().SetCapacity(collection.Count * 22);
 
 		try
 		{
-			_ = sb.EnsureCapacity(collection.Count * 22);
+			using var enumerator = collection.GetEnumerator();
 
-			var isFirst = true;
-
-			//FrozenDictionary, ImmutableArray and FrozenSet is slower.
-			foreach (var item in collection)
+			if (enumerator.MoveNext())
 			{
-				if (!isFirst)
-				{
-					_ = sb.Append(delimiter);
-				}
-				else
-				{
-					isFirst = false;
-				}
+				var first = enumerator.Current;
+				_ = sb.Append(first.Key).Append(ControlChars.Colon).Append(first.Value);
+			}
 
-				_ = sb.Append(item.Key).Append(ControlChars.Colon).Append(item.Value);
+			while (enumerator.MoveNext())
+			{
+				var item = enumerator.Current;
+				_ = sb.Append(delimiter).Append(item.Key).Append(ControlChars.Colon).Append(item.Value);
 			}
 
 			return sb.ToString();

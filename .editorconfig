@@ -1108,7 +1108,7 @@ dotnet_diagnostic.CA1854.severity = error
 
 # Use Span<T>.Clear() instead of Span<T>.Fill()
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1855.severity = warning
+dotnet_diagnostic.CA1855.severity = suggestion
 
 # Incorrect usage of ConstantExpected attribute
 # Examples in Rock Your Code: Code Performance in Microsoft .NET

@@ -19,7 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
@@ -367,22 +366,34 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Shuffles the elements of the list in a random order.
+		/// Shuffles the elements of the list into a random order using a cryptographically secure random number generator.
 		/// </summary>
+		/// <returns>A new <see cref="List{T}"/> containing all elements from the original list in a randomly shuffled order.</returns>
+		/// <remarks>
+		/// This method uses <see cref="System.Linq.Enumerable.Shuffle{T}(IEnumerable{T})"/> which internally utilizes
+		/// <see cref="RandomNumberGenerator"/> to ensure cryptographically secure randomization.
+		/// The original list is not modified; instead, a new list is returned with the shuffled elements.
+		/// <para>
+		/// Performance: This method creates a new list and performs the shuffle operation. For very large lists (100,000+ elements),
+		/// consider the memory allocation overhead.
+		/// </para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="list"/> is null.</exception>
+		/// <example>
+		/// This example shows how to use <see cref="FastShuffle{T}"/> to randomly shuffle a list of integers.
+		/// <code>
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var shuffled = numbers.FastShuffle();
+		/// // Result: A new list with elements in random order, e.g., { 3, 1, 5, 2, 4 }
+		/// </code>
+		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.None, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-		public void FastShuffle()
+		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.None, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+		public List<T> FastShuffle()
 		{
 			list = list.ArgumentNotNull();
 
-			var random = new byte[4];
-
-			for (var currentIndex = list.Count - 1; currentIndex > 0; currentIndex--)
-			{
-				RandomNumberGenerator.Fill(random);
-				var randomIndex = BitConverter.ToInt32(random, 0) & (int.MaxValue % (currentIndex + 1));
-				(list[currentIndex], list[randomIndex]) = (list[randomIndex], list[currentIndex]);
-			}
+			return [.. list.Shuffle()];
 		}
 
 		/// <summary>

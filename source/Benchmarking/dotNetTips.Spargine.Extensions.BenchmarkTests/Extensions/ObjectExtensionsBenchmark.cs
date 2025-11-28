@@ -128,11 +128,11 @@ public class ObjectExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ObjectExtensions.FastGetHashCode))]
+	[Benchmark(Description = nameof(ObjectExtensions.FastHashCode))]
 	[BenchmarkCategory(Categories.New)]
 	public void HashCodeFastGetHashCode()
 	{
-		this.Consume(this.LongTestString.FastGetHashCode());
+		this.Consume(this.LongTestString.FastHashCode());
 	}
 
 	[Benchmark(Description = "string.GetHashCode()")]

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-26-2025
+// Last Modified On : 11-28-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -762,12 +762,30 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Processes each item in the given collection using the specified action.
+		/// Processes each item in the given collection using the specified action with optimized performance.
 		/// </summary>
 		/// <param name="action">The action to apply to each item in the collection.</param>
+		/// <remarks>
+		/// This method provides optimized processing paths for different collection types:
+		/// <list type="bullet">
+		/// <item><description><see cref="List{T}"/> - Uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> for direct memory access without bounds checking.</description></item>
+		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Uses <see cref="MemoryMarshal.GetArrayDataReference{T}(T[])"/> and <see cref="Unsafe.Add{T}(ref T, int)"/> for maximum performance.</description></item>
+		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Uses standard foreach enumeration to avoid allocation overhead.</description></item>
+		/// </list>
+		/// Performance benefits are most significant with large collections (1000+ elements) and lightweight action delegates.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="action"/> is null.</exception>
+		/// <example>
+		/// This example shows how to use <see cref="FastProcessor{T}"/> to process items in a list.
+		/// <code>
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// numbers.FastProcessor(n => Console.WriteLine(n * 2));
+		/// // Output: 2, 4, 6, 8, 10
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "12/9/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "12/9/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public void FastProcessor([DisallowNull] Action<T> action)
 		{
 			collection = collection.ArgumentNotNull();
@@ -780,17 +798,24 @@ public static class EnumerableExtensions
 
 				for (var index = 0; index < itemCount; index++)
 				{
-					action.Invoke(span[index]);
+					action(span[index]);
+				}
+			}
+			else if (collection is T[] array)
+			{
+				ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
+				var arrayLength = array.Length;
+
+				for (var index = 0; index < arrayLength; index++)
+				{
+					action(Unsafe.Add(ref arrayStart, index));
 				}
 			}
 			else
 			{
-				var span = CollectionsMarshal.AsSpan(collection.ToList());
-				var itemCount = span.Length;
-
-				for (var index = 0; index < itemCount; index++)
+				foreach (var item in collection)
 				{
-					action(span[index]);
+					action(item);
 				}
 			}
 		}
@@ -815,15 +840,33 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Modifies each item in the given collection using the specified accumulatorFunction and returns a read-only collection of the modified items.
+		/// Modifies each item in the given collection using the specified transformation function and returns a read-only collection of the modified items with optimized performance.
 		/// </summary>
-		/// <param name="action">The accumulatorFunction to apply to each item in the collection.</param>
-		/// <returns>A read-only collection of the modified items.</returns>
+		/// <param name="action">The transformation function to apply to each item in the collection. This function takes an item of type <typeparamref name="T"/> and returns a modified item of the same type.</param>
+		/// <returns>A <see cref="ReadOnlyCollection{T}"/> containing the transformed elements from the original collection.</returns>
+		/// <remarks>
+		/// This method provides optimized processing paths for different collection types:
+		/// <list type="bullet">
+		/// <item><description><see cref="List{T}"/> - Uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> to access list elements as a <see cref="ReadOnlySpan{T}"/> for direct memory access without bounds checking.</description></item>
+		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Converts to <see cref="List{T}"/> and then processes via <see cref="ReadOnlySpan{T}"/> for consistent performance.</description></item>
+		/// </list>
+		/// Performance benefits are most significant with large collections (1000+ elements) where the transformation function is lightweight.
+		/// The method creates a new array for the results, ensuring the returned collection is independent of the source.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when collection or <paramref name="action"/> is null.</exception>
+		/// <example>
+		/// This example shows how to use FastProcessor to transform items in a list.
+		/// <code>
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var doubled = numbers.FastProcessor(n =&gt; n * 2);
+		/// // Result: ReadOnlyCollection containing { 2, 4, 6, 8, 10 }
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastModifyCollection), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-		public ReadOnlyCollection<T> FastModifyCollection([DisallowNull] Func<T, T> action)
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+		public ReadOnlyCollection<T> FastProcessor([DisallowNull] Func<T, T> action)
 		{
 			collection = collection.ArgumentNotNull();
 			action = action.ArgumentNotNull();

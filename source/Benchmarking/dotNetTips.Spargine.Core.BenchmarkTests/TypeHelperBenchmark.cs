@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 11-28-2025
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,12 +14,15 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text;
 using BenchmarkDotNet.Attributes;
@@ -41,6 +44,62 @@ public class TypeHelperBenchmark : Benchmark
 
 	private readonly int _collectionCount = 50;
 	private List<Person> _people;
+
+	private Dictionary<Type, string> BuiltInTypeNamesNoCache()
+	{
+
+		var builtInTypes = new Dictionary<Type, string>();
+
+		// Add primitive types
+		var primitiveTypes = new[]
+		{
+				typeof(bool), typeof(byte), typeof(char), typeof(decimal), typeof(double),
+				typeof(float), typeof(int), typeof(long), typeof(sbyte), typeof(short),
+				typeof(uint), typeof(ulong), typeof(ushort)
+			};
+
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: true, includeGenericParameters: true);
+
+		foreach (var type in primitiveTypes)
+		{
+			builtInTypes[type] = TypeHelper.GetTypeDisplayName(type, options);
+		}
+
+		// Add other common built-in types
+		var commonTypes = new[]
+		{
+				typeof(string), typeof(object), typeof(DateTime), typeof(DateTimeOffset),
+				typeof(TimeSpan), typeof(Guid), typeof(Uri), typeof(BigInteger), typeof(Half),
+				typeof(IntPtr), typeof(UIntPtr), typeof(DateTimeKind), typeof(Nullable<>),
+				typeof(ValueTuple), typeof(Tuple), typeof(Span<>), typeof(ReadOnlySpan<>),
+				typeof(Memory<>), typeof(ReadOnlyMemory<>), typeof(ArraySegment<>),
+				typeof(KeyValuePair<,>), typeof(List<>), typeof(Dictionary<,>), typeof(HashSet<>),
+				typeof(Queue<>), typeof(Stack<>), typeof(LinkedList<>), typeof(SortedList<,>),
+				typeof(SortedDictionary<,>), typeof(SortedSet<>), typeof(ConcurrentDictionary<,>),
+				typeof(ConcurrentQueue<>), typeof(ConcurrentStack<>), typeof(BlockingCollection<>),
+				typeof(ObservableCollection<>), typeof(ReadOnlyCollection<>), typeof(ReadOnlyDictionary<,>),
+				typeof(ReadOnlyObservableCollection<>), typeof(ImmutableArray<>), typeof(ImmutableList<>),
+				typeof(ImmutableDictionary<,>), typeof(ImmutableHashSet<>), typeof(ImmutableQueue<>),
+				typeof(ImmutableStack<>), typeof(ImmutableSortedDictionary<,>), typeof(ImmutableSortedSet<>)
+			};
+
+		foreach (var type in commonTypes)
+		{
+			builtInTypes[type] = TypeHelper.GetTypeDisplayName(type, includeGenericParameterNames: true, includeGenericParameters: true);
+		}
+
+		// Add types from the System namespace
+		var systemTypes = Assembly.GetAssembly(typeof(int))?.GetTypes()
+			.Where(t => string.Equals(t.Namespace, "System", StringComparison.Ordinal) && t.IsPublic && !t.IsGenericType)
+			.ToList();
+
+		foreach (var type in systemTypes!)
+		{
+			builtInTypes[type] = TypeHelper.GetTypeDisplayName(type, includeGenericParameterNames: true, includeGenericParameters: true);
+		}
+
+		return builtInTypes;
+	}
 
 	private ReadOnlyCollection<Type> FindDerivedTypesNoCache([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
 	{
@@ -91,8 +150,24 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	[Obsolete(message: "TEST")]
-	private void MethodWithObsoleteAttribute() { }
+	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames))]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void BuiltInTypeNames()
+	{
+		var result = TypeHelper.BuiltInTypeNames();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(BuiltInTypeNamesNoCache))]
+	[BenchmarkCategory(Categories.Reflection, Categories.ForComparison, Categories.New)]
+	public void BuiltInTypeNames_NoCache()
+	{
+		var result = this.BuiltInTypeNamesNoCache();
+
+		this.Consume(result);
+	}
+
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypes))]
 	[BenchmarkCategory(Categories.Reflection)]

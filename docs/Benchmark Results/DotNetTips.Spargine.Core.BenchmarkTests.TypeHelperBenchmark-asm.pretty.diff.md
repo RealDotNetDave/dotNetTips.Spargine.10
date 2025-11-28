@@ -1,1 +1,1 @@
-## DotNetTips.Spargine.Core.BenchmarkTests.TypeHelperBenchmark-20250917-111217
+## DotNetTips.Spargine.Core.BenchmarkTests.TypeHelperBenchmark-20251125-160829

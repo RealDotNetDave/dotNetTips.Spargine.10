@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-26-2025
+// Last Modified On : 11-28-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -744,8 +744,8 @@ public static class ObjectExtensions
 			obj = obj.ArgumentNotNull();
 			typeInfo = typeInfo.ArgumentNotNull();
 
-			return JsonSerializer.Deserialize(JsonSerializer.Serialize(obj, typeInfo), typeInfo)!;
-
+			var json = JsonSerializer.Serialize(obj, typeInfo);
+			return JsonSerializer.Deserialize(json, typeInfo)!;
 		}
 
 		/// <summary>
@@ -761,7 +761,9 @@ public static class ObjectExtensions
 		{
 			obj = obj.ArgumentNotNull();
 
-			return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(obj, options), options)!;
+			var json = JsonSerializer.Serialize(obj, options);
+			return JsonSerializer.Deserialize<T>(json, options)!;
+
 		}
 
 		/// <summary>
@@ -776,8 +778,8 @@ public static class ObjectExtensions
 		{
 			obj = obj.ArgumentNotNull();
 
-			return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(obj))!;
-
+			var json = JsonSerializer.Serialize(obj);
+			return JsonSerializer.Deserialize<T>(json)!;
 		}
 
 		/// <summary>
@@ -788,8 +790,8 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastCloneBinary), Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
-		public T FastCloneBinary<T>()
+		[Information(nameof(FastBinaryClone), Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		public T FastBinaryClone<T>()
 		{
 			obj = obj.ArgumentNotNull();
 

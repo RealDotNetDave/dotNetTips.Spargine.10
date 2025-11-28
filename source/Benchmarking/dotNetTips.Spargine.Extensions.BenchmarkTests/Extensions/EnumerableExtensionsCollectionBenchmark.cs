@@ -176,18 +176,18 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastCount) + ": With Predicate")]
+	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": With Predicate")]
 	public void Count_FastCount_WithPredicate()
 	{
-		var result = this._personRefEnumerable.FastCount(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
+		var result = this._personRefEnumerable.FastLongCount(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastCount))]
+	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount))]
 	public void Counting_FastCount()
 	{
-		var result = this._personRefEnumerable.FastCount();
+		var result = this._personRefEnumerable.FastLongCount();
 
 		this.Consume(result);
 	}
