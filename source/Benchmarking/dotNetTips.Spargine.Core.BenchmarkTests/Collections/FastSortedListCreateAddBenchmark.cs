@@ -76,7 +76,7 @@ public class FastSortedListCreateAddBenchmark : SmallCollectionBenchmark
 		this.Consume(people.Count);
 	}
 
-	[Benchmark(Description = nameof(FastSortedList<Person>.Add) + ": with OrdinalStringComparer")]
+	[Benchmark(Description = "Add: with OrdinalStringComparer")]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
 	public void Add_SortedList_Comparer()
 	{

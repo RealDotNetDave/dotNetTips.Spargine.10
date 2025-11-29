@@ -19,6 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
@@ -370,7 +371,7 @@ public static class ListExtensions
 		/// </summary>
 		/// <returns>A new <see cref="List{T}"/> containing all elements from the original list in a randomly shuffled order.</returns>
 		/// <remarks>
-		/// This method uses <see cref="System.Linq.Enumerable.Shuffle{T}(IEnumerable{T})"/> which internally utilizes
+		/// This method uses <see cref="Enumerable.Shuffle{T}(IEnumerable{T})"/> which internally utilizes
 		/// <see cref="RandomNumberGenerator"/> to ensure cryptographically secure randomization.
 		/// The original list is not modified; instead, a new list is returned with the shuffled elements.
 		/// <para>
@@ -378,7 +379,6 @@ public static class ListExtensions
 		/// consider the memory allocation overhead.
 		/// </para>
 		/// </remarks>
-		/// <exception cref="ArgumentNullException">Thrown when <paramref name="list"/> is null.</exception>
 		/// <example>
 		/// This example shows how to use <see cref="FastShuffle{T}"/> to randomly shuffle a list of integers.
 		/// <code>

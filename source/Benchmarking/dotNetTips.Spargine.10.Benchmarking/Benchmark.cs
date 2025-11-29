@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-21-2025
+// Last Modified On : 11-29-2025
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -256,7 +256,7 @@ public class Benchmark
 	/// </para>
 	/// </remarks>
 	/// <param name="count">The size of the byte array to generate, in kilobytes. Defaults to 1KB if not specified.
-	/// Values less than 1 will be adjusted to 1 using the <see cref="Extensions.ArgumentInRange{T}"/> extension method.</param>
+	/// Values less than 1 will be adjusted to 1 using the ArgumentInRange extension method.</param>
 	/// <returns>A byte array of the specified size, either newly generated or retrieved from cache.</returns>
 	/// <seealso cref="_byteArrayCache"/>
 	/// <seealso cref="RandomData.GenerateByteArray"/>
@@ -375,7 +375,7 @@ public class Benchmark
 	/// </summary>
 	/// <param name="item">The object whose hash code will be computed. Must not be null.</param>
 	/// <returns>An integer hash code of the provided object, as computed by <see cref="RuntimeHelpers.GetHashCode(object)"/>.</returns>
-	/// <exception cref="NullReferenceException">Thrown when <paramref name="item"/> is null despite the <see cref="DisallowNullAttribute"/>.</exception>
+	/// <exception cref="NullReferenceException">Thrown when <paramref name="item"/> is null despite the DisallowNullAttribute.</exception>
 	/// <remarks>
 	/// This method uses <see cref="RuntimeHelpers.GetHashCode"/> which provides a stable hash code
 	/// for an object during the lifetime of the process, making it suitable for benchmarking operations
@@ -395,7 +395,7 @@ public class Benchmark
 	/// <param name="item">The object whose hash code will be computed. Must not be null.</param>
 	/// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
 	/// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-	/// <exception cref="NullReferenceException">Thrown when <paramref name="item"/> is null despite the <see cref="DisallowNullAttribute"/>.</exception>
+	/// <exception cref="NullReferenceException">Thrown when <paramref name="item"/> is null despite the DisallowNullAttribute.</exception>
 	/// <exception cref="TaskCanceledException">Thrown when the operation is canceled through the <paramref name="cancellationToken"/>.</exception>
 	/// <remarks>
 	/// <para>
@@ -599,7 +599,7 @@ public class Benchmark
 	public Tester.Models.ValueTypes.Person PersonVal02 { get; private set; }
 
 	/// <summary>
-	/// Retrieve the XML representation of a <see cref="IPerson{TAddress}" /> object from the resources.
+	/// Retrieve the XML representation of a IPerson object from the resources.
 	/// This property provides access to the XML data used for testing and benchmarking purposes.
 	/// </summary>
 	/// <value>The item XML.</value>

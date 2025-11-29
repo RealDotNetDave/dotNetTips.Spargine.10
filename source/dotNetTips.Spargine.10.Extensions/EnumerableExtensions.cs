@@ -776,7 +776,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="action"/> is null.</exception>
 		/// <example>
-		/// This example shows how to use <see cref="FastProcessor{T}"/> to process items in a list.
+		/// This example shows how to use FastProcessor to process items in a list.
 		/// <code>
 		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
 		/// numbers.FastProcessor(n => Console.WriteLine(n * 2));

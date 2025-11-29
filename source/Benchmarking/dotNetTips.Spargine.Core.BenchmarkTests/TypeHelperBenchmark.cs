@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-28-2025
+// Last Modified On : 11-29-2025
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -114,7 +114,7 @@ public class TypeHelperBenchmark : Benchmark
 		{
 			try
 			{
-				types.AddRange(this.LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
+				types.AddRange(this.LoadDerivedTypesNoCache(assembly.DefinedTypes, baseType, classOnly));
 			}
 			catch (ReflectionTypeLoadException reflectionEx)
 			{
@@ -127,7 +127,207 @@ public class TypeHelperBenchmark : Benchmark
 		return Array.AsReadOnly(result);
 	}
 
-	private IEnumerable<Type> LoadDerivedTypes(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
+	private ReadOnlyCollection<MethodInfo> GetAllAbstractMethodsNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+
+		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsAbstract).ToArray();
+
+		return Array.AsReadOnly(methods);
+	}
+
+	private IEnumerable<ConstructorInfo> GetAllConstructorsNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+
+		var typeInfo = type.GetTypeInfo();
+		var constructors = new List<ConstructorInfo>();
+
+		while (typeInfo is not null)
+		{
+			constructors.AddRange(typeInfo.DeclaredConstructors);
+			typeInfo = typeInfo.BaseType?.GetTypeInfo();
+		}
+
+
+		foreach (var ctor in constructors)
+		{
+			yield return ctor;
+		}
+	}
+
+
+	private IEnumerable<FieldInfo> GetAllDeclaredFieldsNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+
+		var fields = type.GetFields(
+			BindingFlags.Instance |
+			BindingFlags.Static |
+			BindingFlags.Public |
+			BindingFlags.NonPublic |
+			BindingFlags.DeclaredOnly);
+
+
+		foreach (var field in fields)
+		{
+			yield return field;
+		}
+	}
+
+	private IEnumerable<MethodInfo> GetAllDeclaredMethodsNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+		var methods = type.GetMethods(
+			BindingFlags.Instance |
+			BindingFlags.Static |
+			BindingFlags.Public |
+			BindingFlags.NonPublic |
+			BindingFlags.DeclaredOnly);
+
+
+		foreach (var method in methods)
+		{
+			yield return method;
+		}
+	}
+
+	private IEnumerable<FieldInfo> GetAllFieldsNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+		var fields = new List<FieldInfo>();
+		var typeInfo = type.GetTypeInfo();
+
+		while (typeInfo is not null)
+		{
+			fields.AddRange(typeInfo.DeclaredFields);
+			typeInfo = typeInfo.BaseType?.GetTypeInfo();
+		}
+
+		foreach (var field in fields)
+		{
+			yield return field;
+		}
+	}
+
+	private IEnumerable<MethodInfo> GetAllMethodsNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+
+		var methods = new List<MethodInfo>();
+		var typeInfo = type.GetTypeInfo();
+
+		while (typeInfo is not null)
+		{
+			methods.AddRange(typeInfo.DeclaredMethods);
+			typeInfo = typeInfo.BaseType?.GetTypeInfo();
+		}
+
+		foreach (var method in methods)
+		{
+			yield return method;
+		}
+	}
+
+	private IEnumerable<PropertyInfo> GetAllPropertiesNoCache([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
+
+		var properties = new List<PropertyInfo>();
+		var typeInfo = type.GetTypeInfo();
+
+		while (typeInfo is not null)
+		{
+			properties.AddRange(typeInfo.DeclaredProperties);
+			typeInfo = typeInfo.BaseType?.GetTypeInfo();
+		}
+
+
+		foreach (var property in properties)
+		{
+			yield return property;
+		}
+	}
+
+	private IEnumerable<MemberInfo> GetMembersWithAttributeNoCache<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
+	{
+		type = type.ArgumentNotNull();
+
+		var membersWithAttribute = new List<MemberInfo>();
+
+		// Check for attributes on the type itself
+		if (Attribute.IsDefined(type, typeof(TAttribute), true))
+		{
+			membersWithAttribute.Add(type);
+		}
+
+		// Define binding flags once to avoid repetition
+		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+		// Check for attributes on the properties, methods, fields, and events of the type
+		foreach (var member in type.GetMembers(bindingFlags))
+		{
+			if (Attribute.IsDefined(member, typeof(TAttribute), true))
+			{
+				membersWithAttribute.Add(member);
+			}
+		}
+
+		foreach (var member in membersWithAttribute)
+		{
+			yield return member;
+		}
+	}
+
+	private bool HasBaseClassNoCache(Type type, Type baseClass)
+	{
+		type = type.ArgumentNotNull();
+
+		if (baseClass == null)
+		{
+			return false;
+		}
+
+		// Calculate the result if not cached
+		var result = false;
+		var currentType = type;
+
+		while (currentType is not null)
+		{
+			if (currentType == baseClass)
+			{
+				result = true;
+				break;
+			}
+
+			currentType = currentType.BaseType!;
+		}
+
+		return result;
+	}
+
+	private bool ImplementsInterfaceNoCache([DisallowNull] Type type, [DisallowNull] Type interfaceType)
+	{
+		type = type.ArgumentNotNull();
+
+		if (interfaceType == null || interfaceType.IsInterface == false)
+		{
+			return false;
+		}
+
+		// Calculate the result if not cached
+		var result = type.GetInterfaces().Any(i => i == interfaceType);
+
+		return result;
+	}
+
+	private IEnumerable<Type> LoadDerivedTypesNoCache(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
 	{
 		foreach (var type in types)
 		{
@@ -151,16 +351,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void BuiltInTypeNames()
-	{
-		var result = TypeHelper.BuiltInTypeNames();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(BuiltInTypeNamesNoCache))]
-	[BenchmarkCategory(Categories.Reflection, Categories.ForComparison, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
 	public void BuiltInTypeNames_NoCache()
 	{
 		var result = this.BuiltInTypeNamesNoCache();
@@ -168,6 +359,14 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void BuiltInTypeNamesCached()
+	{
+		var result = TypeHelper.BuiltInTypeNames();
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypes))]
 	[BenchmarkCategory(Categories.Reflection)]
@@ -220,7 +419,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes))]
-	[BenchmarkCategory(Categories.Reflection, Categories.ForComparison)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void FindDerivedTypes()
 	{
 		var result = this.FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
@@ -236,8 +435,17 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllAbstractMethods()
+	{
+		var result = this.GetAllAbstractMethodsNoCache(typeof(Benchmark));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllAbstractMethodsCached()
 	{
 		var result = TypeHelper.GetAllAbstractMethods(typeof(Benchmark));
 
@@ -245,39 +453,77 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllConstructors()
+	{
+		var result = this.GetAllConstructorsNoCache(typeof(Benchmark));
+
+		this.Consume(result.Count());
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllConstructorsCached()
 	{
 		var result = TypeHelper.GetAllConstructors(typeof(Benchmark));
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllDeclaredFields()
+	{
+		var result = this.GetAllDeclaredFieldsNoCache(typeof(Benchmark));
+
+		this.Consume(result.Count());
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllDeclaredFieldsCached()
 	{
 		var result = TypeHelper.GetAllDeclaredFields(typeof(Benchmark));
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllDeclaredMethods()
+	{
+		var result = this.GetAllDeclaredMethodsNoCache(typeof(Benchmark));
+
+		this.Consume(result.Count());
+	}
+
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllDeclaredMethodsCached()
 	{
 		var result = TypeHelper.GetAllDeclaredMethods(typeof(Benchmark));
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllFields))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllFields()
+	{
+		var result = this.GetAllFieldsNoCache(typeof(Benchmark));
+
+		this.Consume(result.Count());
+	}
+
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllFields) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllFieldsCached()
 	{
 		var result = TypeHelper.GetAllFields(typeof(Benchmark));
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
@@ -290,21 +536,40 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllMethods()
+	{
+		var result = this.GetAllMethodsNoCache(typeof(StringBuilder));
+
+		this.Consume(result.Count());
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllMethodsCached()
 	{
 		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllProperties))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllProperties()
+	{
+		var result = this.GetAllPropertiesNoCache(typeof(Person));
+
+		this.Consume(result.Count());
+	}
+
+
+	[Benchmark(Description = nameof(TypeHelper.GetAllProperties) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void GetAllPropertiesCached()
 	{
 		var result = TypeHelper.GetAllProperties(typeof(Person));
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
@@ -347,7 +612,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetImplementedInterfaces()
 	{
 		var list = new List<int>();
@@ -388,14 +653,25 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute))]
-	[BenchmarkCategory(Categories.Strings)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetMembersWithAttribute()
+	{
+		var type = typeof(Person);
+
+		var result = this.GetMembersWithAttributeNoCache<InformationAttribute>(type);
+
+		this.Consume(result.Count());
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute) + ": Cached")]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GetMembersWithAttributeCached()
 	{
 		var type = typeof(Person);
 
 		var result = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type);
 
-		this.Consume(result);
+		this.Consume(result.Count());
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetPropertyValues))]
@@ -409,9 +685,9 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName))]
+	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": Cached")]
 	[BenchmarkCategory(Categories.Reflection, Categories.New)]
-	public void GetTypeDisplayName()
+	public void GetTypeDisplayNameCached()
 	{
 		var type = typeof(int[]);
 		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
@@ -420,6 +696,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		this.Consume(result);
 	}
+
 
 	[Benchmark(Description = nameof(TypeHelper.GetTypeMembersWithAttribute))]
 	[BenchmarkCategory(Categories.Reflection, Categories.New)]
@@ -431,8 +708,17 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasBaseClass))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void HasBaseClass()
+	{
+		var result = this.HasBaseClassNoCache(typeof(Exception), typeof(object));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.HasBaseClass) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void HasBaseClassCached()
 	{
 		var result = TypeHelper.HasBaseClass(typeof(Exception), typeof(object));
 
@@ -467,8 +753,17 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void ImplementsInterface()
+	{
+		var result = this.ImplementsInterfaceNoCache(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface) + ": Cached")]
+	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	public void ImplementsInterfaceCached()
 	{
 		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
 

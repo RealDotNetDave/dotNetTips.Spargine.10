@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -273,9 +272,7 @@ public class ListExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
 	public void ShuffleFastShuffle()
 	{
-		this._peopleRefList.FastShuffle();
-
-		this.Consume(this._peopleRefList);
+		this.Consume(this._peopleRefList.FastShuffle());
 	}
 
 	[Benchmark(Description = "Shuffle")]

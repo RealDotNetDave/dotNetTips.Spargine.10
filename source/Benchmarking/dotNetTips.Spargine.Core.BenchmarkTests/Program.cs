@@ -45,7 +45,7 @@ internal sealed class Program
 			//_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
 			_ = BenchmarkRunner.Run<TypeHelperBenchmark>(config);
-			_ = BenchmarkRunner.Run<EnumHelperBenchmark>(config);
+			//_ = BenchmarkRunner.Run<EnumHelperBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine("COMPLETE!");
 			Console.Beep();

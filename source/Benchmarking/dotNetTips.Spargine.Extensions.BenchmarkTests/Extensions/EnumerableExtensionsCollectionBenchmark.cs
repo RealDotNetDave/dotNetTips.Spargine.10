@@ -336,21 +336,6 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastModifyCollection))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void ModifyCollectionFastModifyCollection()
-	{
-		var people = this._personRefEnumerable;
-
-		var result = people.FastModifyCollection(person =>
-		{
-			person.Phone = "5555555555";
-			return person;
-		});
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor))]
 	[BenchmarkCategory(Categories.ReferenceType)]
 	public void ModifyCollectionFastProcessor()

@@ -26,7 +26,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 {
 	private ConcurrentHashSet<Person> _personRefConcurrentHashSet;
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Clear))]
+	[Benchmark(Description = "Clear")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void Clear()
 	{
@@ -37,7 +37,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Contains))]
+	[Benchmark(Description = "Contains")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void Contains()
 	{
@@ -48,7 +48,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.CopyTo))]
+	[Benchmark(Description = "CopyTo")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void CopyTo()
 	{
@@ -60,7 +60,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(array);
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Count))]
+	[Benchmark(Description = "Count")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void CountPeople()
 	{
@@ -71,7 +71,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.IsEmpty))]
+	[Benchmark(Description = "IsEmpty")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void IsEmpty()
 	{
@@ -82,7 +82,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Remove))]
+	[Benchmark(Description = "Remove")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void Remove()
 	{
@@ -102,7 +102,7 @@ public class ConcurrentHashSetCollectionBenchmark : SmallCollectionBenchmark
 
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.TryRemove))]
+	[Benchmark(Description = "TryRemove")]
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void TryRemove()
 	{
