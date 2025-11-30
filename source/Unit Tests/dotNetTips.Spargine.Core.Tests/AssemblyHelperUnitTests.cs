@@ -4,9 +4,9 @@
 // Created          : 04-09-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-13-2025
+// Last Modified On : 11-30-2025
 // ***********************************************************************
-// <copyright file="AssemblyHelperUnitTester.cs" company="DotNetTips.Spargine.Core.Tests">
+// <copyright file="AssemblyHelperUnitTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -29,11 +29,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DotNetTips.Spargine.Core.Tests;
 
 [TestClass]
-public class AssemblyHelperUnitTester : UnitTester
+public class AssemblyHelperUnitTests : UnitTester
 {
-	//TODO: ADD MISSING TESTS
 
-	const string SDKVersion = "10.0.100";
+	const string SDKVersion = "10.0.0";
 
 	private string _testOutputDirectory;
 	private TestUnitTester _unitTester;
