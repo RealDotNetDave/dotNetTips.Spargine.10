@@ -331,7 +331,7 @@ public class AppTests
 	{
 		var result = App.GetEnvironmentVariables();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.FastLongCount() > 0);
 
 		foreach (var info in result)
 		{
@@ -495,7 +495,7 @@ public class AppTests
 	{
 		var result = App.ReferencedAssemblies();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.FastLongCount() > 0);
 	}
 
 	[TestMethod]

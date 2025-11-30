@@ -131,12 +131,16 @@ public static class ArrayExtensions
 		/// <param name="startIndex">The start index.</param>
 		/// <param name="count">The count.</param>
 		/// <returns>T[].</returns>
-		[Information(nameof(SelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(SelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 		public T[] SelectItems(int startIndex, int count)
 		{
-			//TODO: FIX, TOO SLOW
+			//TODO: CHECK ALLOCATIONS
+
 			array = array.ArgumentNotNull();
-			startIndex = startIndex.ArgumentInRange(0);
+			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
 			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
 
 			var people = new ArraySegment<T>(array, startIndex, count);
@@ -179,14 +183,7 @@ public static class ArrayExtensions
 		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
-			if (array is null || arrayToCheck is null)
-			{
-				return false;
-			}
-			else
-			{
-				return array.Length != arrayToCheck.Length ? false : array.AsSpan().SequenceEqual(arrayToCheck);
-			}
+			return array is null || arrayToCheck is null ? false : array.Length != arrayToCheck.Length ? false : array.AsSpan().SequenceEqual(arrayToCheck);
 		}
 
 		/// <summary>
