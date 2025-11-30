@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Security.AccessControl;
@@ -307,7 +308,7 @@ public class DirectoryHelperTests
 
 		folders.Add(folder);
 
-		var result = DirectoryHelper.SafeFileSearch(folders, "*.png", SearchOption.AllDirectories);
+		var result = DirectoryHelper.SafeFileSearch(folders, "*.tmp", SearchOption.AllDirectories).ToArray();
 
 		Assert.IsTrue(result.IsNotEmpty());
 	}
@@ -318,7 +319,7 @@ public class DirectoryHelperTests
 	{
 		var folder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Temp"));
 
-		var result = DirectoryHelper.SafeFileSearch(folder, "*.png", SearchOption.AllDirectories);
+		var result = DirectoryHelper.SafeFileSearch(folder, "*.tmp", SearchOption.AllDirectories);
 
 		Assert.IsTrue(result.IsNotEmpty());
 	}

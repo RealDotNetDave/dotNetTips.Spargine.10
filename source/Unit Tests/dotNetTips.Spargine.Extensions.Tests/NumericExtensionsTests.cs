@@ -914,7 +914,7 @@ public class NumericExtensionsTests : UnitTester
 
 		Assert.IsTrue(testValue.ToWords().HasValue());
 
-		Assert.IsTrue(testValue.ToWords().FastCount() == 49);
+		Assert.IsTrue(testValue.ToWords().Length == 49);
 	}
 
 	[TestMethod]

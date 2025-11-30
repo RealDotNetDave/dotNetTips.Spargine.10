@@ -70,7 +70,7 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void CreateTypeTest02()
 	{
-		var result = TypeHelper.Create<Person>("TESTID", "DOTNETDAVE@LIVE.COM");
+		var result = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTIDTESTTEST");
 
 		Assert.IsNotNull(result);
 	}

@@ -193,6 +193,38 @@ public static class NetworkHelper
 	/// Gets the network speed (bandwidth) of active network interfaces in bits per second.
 	/// </summary>
 	/// <returns>A read-only collection of tuples containing interface name and speed in bps.</returns>
+	/// <remarks>
+	/// <para>
+	/// This method enumerates all network interfaces on the system and returns the speed (bandwidth) 
+	/// for each active interface. The speed is reported in bits per second (bps).
+	/// </para>
+	/// <para>
+	/// Only interfaces with <see cref="OperationalStatus.Up"/> status and a speed greater than 0 
+	/// are included in the results. Interfaces that are down, disconnected, or report a speed of 0 
+	/// or less are excluded.
+	/// </para>
+	/// <para>
+	/// Common speed values:
+	/// <list type="bullet">
+	/// <item><description>10,000,000 bps (10 Mbps) - Fast Ethernet</description></item>
+	/// <item><description>100,000,000 bps (100 Mbps) - Fast Ethernet</description></item>
+	/// <item><description>1,000,000,000 bps (1 Gbps) - Gigabit Ethernet</description></item>
+	/// <item><description>10,000,000,000 bps (10 Gbps) - 10 Gigabit Ethernet</description></item>
+	/// </list>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// This example shows how to retrieve and display network speeds:
+	/// <code>
+	/// var speeds = NetworkHelper.GetNetworkSpeeds();
+	/// 
+	/// foreach (var (interfaceName, speedBps) in speeds)
+	/// {
+	///     var speedMbps = speedBps / 1_000_000.0;
+	///     Console.WriteLine($"{interfaceName}: {speedMbps:F2} Mbps");
+	/// }
+	/// </code>
+	/// </example>
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(GetNetworkSpeeds), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
@@ -203,7 +235,7 @@ public static class NetworkHelper
 
 		foreach (var networkInterface in networkInterfaces)
 		{
-			if (networkInterface.OperationalStatus == OperationalStatus.Up)
+			if (networkInterface.OperationalStatus == OperationalStatus.Up && networkInterface.Speed > 0)
 			{
 				speeds.Add((networkInterface.Name, networkInterface.Speed));
 			}

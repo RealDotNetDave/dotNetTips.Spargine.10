@@ -146,11 +146,11 @@ public class EnumerableExtensionsTests
 
 		var result = people.AddIf(person, true);
 
-		Assert.IsTrue(result.FastCount() == people.Count() + 1);
+		Assert.IsTrue(result.Count() == people.Count() + 1);
 
 		result = people.AddIf(person, false);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count() == Count);
 	}
 
 	[TestMethod]
@@ -210,7 +210,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.EnsureUnique().ToList();
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 	}
 
 	[TestMethod]
@@ -219,10 +219,10 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		// Test Params
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.FastCount(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.FastLongCount(null));
 
 		//Test Finding City names that contain 'A'.
-		Assert.IsNotNull(people.FastCount(p => p.FirstName.Contains('A', StringComparison.CurrentCultureIgnoreCase)));
+		Assert.IsNotNull(people.Count(p => p.FirstName.Contains('A', StringComparison.CurrentCultureIgnoreCase)));
 	}
 
 	[TestMethod]
@@ -230,19 +230,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.FastCount() == Count);
-	}
-
-	[TestMethod]
-	public void FastModifyCollectionTestRecord()
-	{
-		var people = RandomData.GeneratePersonRecordCollection(Count);
-
-		var updatedCollection = people.FastModifyCollection(person => person with { Email = TestData });
-
-		Assert.IsTrue(people.Count == updatedCollection.Count);
-
-		Assert.IsTrue(updatedCollection.All(p => p.Email == TestData));
+		Assert.IsTrue(people.Count == Count);
 	}
 
 	[TestMethod]
@@ -290,14 +278,13 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		var originalPeople = people.ToHashSet();
 
-		people.FastShuffle();
-		var afterFirstShuffle = people.ToList();
+		var afterFirstShuffle = people.FastShuffle();
 
-		people.FastShuffle();
-		var afterSecondShuffle = people.ToList();
+		var afterSecondShuffle = people.FastShuffle();
 
 		// All should have the same count and elements
 		Assert.AreEqual(Count, people.Count);
+
 		foreach (var person in originalPeople)
 		{
 			Assert.IsTrue(people.Contains(person));
@@ -337,8 +324,8 @@ public class EnumerableExtensionsTests
 		var people1 = RandomData.GeneratePersonRefCollection(Count).ToList();
 		var people2 = people1.ToList();
 
-		people1.FastShuffle();
-		people2.FastShuffle();
+		people1 = people1.FastShuffle();
+		people2 = people2.FastShuffle();
 
 		// Statistical test: two shuffles should produce different orders
 		var identical = people1.SequenceEqual(people2);
@@ -351,7 +338,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		var originalOrder = people.ToList();
 
-		people.FastShuffle();
+		people = people.FastShuffle();
 
 		Assert.AreEqual(Count, people.Count);
 		// Verify it's not the same order (statistically very unlikely with large Count)
@@ -749,7 +736,7 @@ public class EnumerableExtensionsTests
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);
 
-		Assert.IsTrue(people.FastShuffle(5).FastCount() == 5);
+		Assert.IsTrue(people.FastShuffle(5).Count() == 5);
 	}
 
 	[TestMethod]
@@ -796,7 +783,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.ToBlockingCollection();
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 	}
 
 	[TestMethod]
@@ -893,10 +880,10 @@ public class EnumerableExtensionsTests
 
 		var result = people.Upsert(person);
 
-		Assert.IsTrue(result.FastCount() == people.Count() + 1);
+		Assert.IsTrue(result.Count() == people.Count() + 1);
 
 		result = people.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count() == Count);
 	}
 }

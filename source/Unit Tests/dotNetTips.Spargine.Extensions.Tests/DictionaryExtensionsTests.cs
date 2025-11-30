@@ -176,10 +176,10 @@ public class DictionaryExtensionsTests
 		var newPeople = RandomData.GeneratePersonRefCollection(2).ToDictionary(p => p.Id);
 
 		var result = people.AddRange(newPeople, true);
-		Assert.IsTrue(people.FastCount() == CollectionCount + 2);
+		Assert.IsTrue(people.Count == CollectionCount + 2);
 
 		result = people.AddRange(newPeople, true);
-		Assert.IsTrue(people.FastCount() == CollectionCount + 2);
+		Assert.IsTrue(people.Count == CollectionCount + 2);
 	}
 
 	[TestMethod]
@@ -219,7 +219,7 @@ public class DictionaryExtensionsTests
 	{
 		var people1 = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
 
-		Assert.IsTrue(people1.FastCount() == CollectionCount);
+		Assert.IsTrue(people1.Count == CollectionCount);
 
 	}
 
@@ -237,10 +237,10 @@ public class DictionaryExtensionsTests
 
 		// TEST
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
-		Assert.IsTrue(people.FastCount() == CollectionCount + 1);
+		Assert.IsTrue(people.Count == CollectionCount + 1);
 
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
-		Assert.IsTrue(people.FastCount() == CollectionCount + 1);
+		Assert.IsTrue(people.Count == CollectionCount + 1);
 	}
 
 	/// <summary>
@@ -649,10 +649,10 @@ public class DictionaryExtensionsTests
 
 		// Test
 		people.Upsert(newPerson.Id, newPerson);
-		Assert.IsTrue(people.FastCount() == CollectionCount + 1);
+		Assert.IsTrue(people.Count == CollectionCount + 1);
 
 		people.Upsert(personFromCollection.Value.Id, personFromCollection.Value);
-		Assert.IsTrue(people.FastCount() == CollectionCount + 1);
+		Assert.IsTrue(people.Count == CollectionCount + 1);
 	}
 }
 

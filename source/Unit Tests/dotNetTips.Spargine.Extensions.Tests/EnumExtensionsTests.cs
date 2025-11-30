@@ -68,7 +68,7 @@ public class EnumExtensionsTests
 	{
 		var result = TaskStatus.Canceled.GetItems();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.Count > 0);
 	}
 
 	[TestMethod]

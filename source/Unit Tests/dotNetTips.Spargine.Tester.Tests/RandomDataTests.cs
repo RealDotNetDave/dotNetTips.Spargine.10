@@ -103,7 +103,7 @@ public class RandomDataTests
 
 			var newPeople = new List<Person>();
 
-			for (var personCount = 0; personCount < people.FastCount(); personCount++)
+			for (var personCount = 0; personCount < people.Count; personCount++)
 			{
 				_ = newPeople.AddIfNotExists(people[personCount]);
 			}
@@ -334,7 +334,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(addresses);
 
-		Assert.IsTrue(addresses.FastCount() == AddressCount);
+		Assert.IsTrue(addresses.Count == AddressCount);
 	}
 
 	[TestMethod]
@@ -478,7 +478,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(files.Path);
 
-		Assert.IsTrue(files.Files.FastCount() == Count);
+		Assert.IsTrue(files.Files.Count == Count);
 
 		this.DeleteFiles(files.Files);
 	}
@@ -492,7 +492,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(files.Path);
 
-		Assert.IsTrue(files.Files.FastCount() == Count);
+		Assert.IsTrue(files.Files.Count == Count);
 
 		this.DeleteFiles(files.Files);
 	}
@@ -510,7 +510,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(files);
 
-		Assert.IsTrue(files.FastCount() == Count);
+		Assert.IsTrue(files.Count == Count);
 
 		this.DeleteFiles(files);
 	}
@@ -789,7 +789,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(personNames);
 
-		Assert.IsTrue(personNames.FastCount() == Count);
+		Assert.IsTrue(personNames.Count == Count);
 	}
 
 	[TestMethod]
@@ -822,7 +822,7 @@ public class RandomDataTests
 		Assert.IsNotNull(person.LastName);
 		Assert.IsNotNull(person.Phone);
 
-		Assert.IsTrue(person.Addresses.FastCount() == AddressCount);
+		Assert.IsTrue(person.Addresses.Count == AddressCount);
 
 		JsonSerialization.SerializeToFile(
 			person,
@@ -836,7 +836,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(people);
 
-		Assert.IsTrue(people.FastCount() == Count);
+		Assert.IsTrue(people.Count == Count);
 
 		JsonSerialization.SerializeToFile(people, new FileInfo(Path.Combine(App.ExecutingFolder(), "PeopleRef.json")));
 	}
@@ -856,7 +856,7 @@ public class RandomDataTests
 		Assert.IsNotNull(person.Id);
 		Assert.IsNotNull(person.LastName);
 		Assert.IsNotNull(person.Phone);
-		Assert.IsTrue(person.Addresses.FastCount() == AddressCount);
+		Assert.IsTrue(person.Addresses.Count == AddressCount);
 
 		JsonSerialization.SerializeToFile(person, new FileInfo(Path.Combine(App.ExecutingFolder(), "PersonRef.json")));
 	}
@@ -866,9 +866,9 @@ public class RandomDataTests
 	{
 		var people = RandomData.GeneratePersonValCollection(Count);
 
-		Assert.IsTrue(people.FastCount() == Count);
+		Assert.IsTrue(people.Count == Count);
 
-		Assert.IsTrue(people.ToDictionary(item => item.Id).FastCount() == Count);
+		Assert.IsTrue(people.ToDictionary(item => item.Id).Count == Count);
 
 		JsonSerialization.SerializeToFile(people, new FileInfo(Path.Combine(App.ExecutingFolder(), "PeopleVal.json")));
 	}
@@ -890,7 +890,7 @@ public class RandomDataTests
 		Assert.IsNotNull(person.Phone);
 		Assert.IsTrue(person.Addresses.Count == 5);
 
-		Assert.IsTrue(person.Addresses.FastCount() == AddressCount);
+		Assert.IsTrue(person.Addresses.Count == AddressCount);
 
 		JsonSerialization.SerializeToFile(person, new FileInfo(Path.Combine(App.ExecutingFolder(), "PersonVal.json")));
 	}
@@ -1123,7 +1123,7 @@ public class RandomDataTests
 
 		var words = RandomData.GenerateWords(WordCount, 10, 25);
 
-		Assert.IsTrue(words.FastCount() == WordCount);
+		Assert.IsTrue(words.Count == WordCount);
 	}
 
 	/// <summary>

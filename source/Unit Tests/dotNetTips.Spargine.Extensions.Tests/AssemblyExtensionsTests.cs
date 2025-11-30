@@ -52,7 +52,7 @@ public class AssemblyExtensionsTests
 	{
 		var result = Assembly.GetExecutingAssembly().GetAllTypes();
 
-		Assert.IsTrue(result.FastCount() >= 1);
+		Assert.IsTrue(result.Count >= 1);
 	}
 
 	[TestMethod]
@@ -73,7 +73,7 @@ public class AssemblyExtensionsTests
 	{
 		var result = Assembly.GetExecutingAssembly().GetInstances<AssemblyExtensionsTests>();
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.Count() == 1);
 	}
 
 	[TestMethod]
@@ -83,7 +83,7 @@ public class AssemblyExtensionsTests
 
 		var result = assembly.GetAllInterfaces().ToList();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.Count > 0);
 	}
 
 	[TestMethod]

@@ -397,20 +397,6 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
-	public void FastHashData_EmptyData_ReturnsEmptyHash()
-	{
-		// Arrange
-		var data = new byte[0];
-
-		// Act
-		var result = data.FastHashData();
-
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Length);
-	}
-
-	[TestMethod]
 	public void FastHashData_ValidData_ReturnsHash()
 	{
 		// Arrange

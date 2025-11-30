@@ -453,7 +453,7 @@ public class ListExtensionsTests
 
 		var shuffledPeople = people.Shuffle();
 
-		Assert.IsTrue(people.FastCount() == shuffledPeople.FastCount());
+		Assert.IsTrue(people.Count == shuffledPeople.Count());
 	}
 
 	[TestMethod]
@@ -462,7 +462,7 @@ public class ListExtensionsTests
 		var list = new List<int> { 1, 2, 3, 4, 5 };
 		var originalList = new List<int>(list);
 
-		list.FastShuffle();
+		list = list.FastShuffle();
 
 		Assert.AreEqual(5, list.Count);
 		Assert.IsTrue(list.Contains(1));
@@ -494,7 +494,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 	}
 
 
@@ -566,7 +566,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 
 		Assert.IsTrue(result.IsAddingCompleted);
 	}
@@ -588,7 +588,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 	}
 
 	[TestMethod]
@@ -660,7 +660,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 	}
 
 
@@ -735,7 +735,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Length == Count);
 	}
 
 	[TestMethod]
@@ -780,7 +780,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.FastCount() == Count);
+		Assert.IsTrue(result.Count == Count);
 	}
 
 	[TestMethod]
@@ -788,7 +788,7 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToReadOnlyCollection();
 
-		Assert.IsTrue(people.FastCount() == Count);
+		Assert.IsTrue(people.Count == Count);
 	}
 
 	[TestMethod]

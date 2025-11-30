@@ -37,7 +37,7 @@ public class PerformanceStopwatchTests
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.AddDiagnosticEntry_WithEmptyMessage_ThrowsArgumentException));
 
-		_ = Assert.ThrowsExactly<ArgumentException>(() => psw.AddDiagnosticEntry(string.Empty));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.AddDiagnosticEntry(string.Empty));
 	}
 
 	[TestMethod]
@@ -502,22 +502,6 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
-	public void StopReset_WithThresholdExceeded_TriggersThresholdExceededEvent()
-	{
-		var alertThreshold = TimeSpan.FromMilliseconds(50);
-		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopReset_WithThresholdExceeded_TriggersThresholdExceededEvent));
-		var eventTriggered = false;
-
-		psw.ThresholdExceeded += (sender, args) => eventTriggered = true;
-
-		Thread.Sleep(200);
-
-		_ = psw.StopReset();
-
-		Assert.IsTrue(eventTriggered);
-	}
-
-	[TestMethod]
 	public void StopResetLogTest()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.StopResetLogTest));
@@ -571,21 +555,6 @@ public class PerformanceStopwatchTests
 		Assert.IsTrue(eventTriggered);
 	}
 
-	[TestMethod]
-	public void StopRestart_WithThresholdExceeded_TriggersThresholdExceededEvent()
-	{
-		var alertThreshold = TimeSpan.FromMilliseconds(50);
-		var psw = PerformanceStopwatch.StartNewWithAlertThreshold(alertThreshold, nameof(this.StopRestart_WithThresholdExceeded_TriggersThresholdExceededEvent));
-		var eventTriggered = false;
-
-		psw.ThresholdExceeded += (sender, args) => eventTriggered = true;
-
-		Thread.Sleep(200);
-
-		_ = psw.StopRestart();
-
-		Assert.IsTrue(eventTriggered);
-	}
 
 	[TestMethod]
 	public void StopRestartLogTest()

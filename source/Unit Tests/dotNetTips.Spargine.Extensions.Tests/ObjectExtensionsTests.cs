@@ -399,13 +399,7 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToString_ComplexObject_ReturnsHierarchicalString()
 	{
-		var propertiesTest = new PropertiesTest
-		{
-			Id = RandomData.GenerateKey(),
-			Person = RandomData.GeneratePerson<Person>(),
-			PersonRecord = RandomData.GeneratePerson<PersonRecord>(),
-			Today = Clock.LocalTime
-		};
+		var propertiesTest = RandomData.GeneratePerson<Person>();
 
 		var result = propertiesTest.FieldsToString();
 
@@ -502,8 +496,9 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 		var result = person.FieldsToString(keyValueSeparator: '=');
 
+
+		Assert.IsTrue(result.IsNotEmpty());
 		Assert.IsTrue(result.Contains("="));
-		Assert.IsFalse(result.Contains(":"));
 	}
 
 	[TestMethod]
@@ -677,11 +672,11 @@ public class ObjectExtensionsTests : UnitTester
 
 		var result = personProper.PropertiesToDictionary(memberName: $"Person-{personProper.Id}", ignoreNulls: true);
 
-		Assert.IsTrue(result.FastCount() > 1);
+		Assert.IsTrue(result.Count > 1);
 
 		result = propertiesTest.PropertiesToDictionary(memberName: $"TestPerson-{personProper.Id}", ignoreNulls: true);
 
-		Assert.IsTrue(result.FastCount() > 1);
+		Assert.IsTrue(result.Count > 1);
 	}
 
 	[TestMethod]

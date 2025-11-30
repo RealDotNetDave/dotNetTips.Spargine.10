@@ -73,9 +73,9 @@ public class CollectionExtensionsTests
 		var person = RandomData.GeneratePerson<Person>();
 
 		// TEST
-		people.AddIf(person, people.FastCount() == Count);
+		people.AddIf(person, people.Count == Count);
 
-		Assert.IsTrue(people.FastCount() == 11);
+		Assert.IsTrue(people.Count == 11);
 	}
 
 	[TestMethod]
@@ -168,11 +168,11 @@ public class CollectionExtensionsTests
 		// TEST
 		people.Upsert(person);
 
-		Assert.IsTrue(people.FastCount() == 11);
+		Assert.IsTrue(people.Count == 11);
 
 		personRecords.Upsert(personRecord);
 
-		Assert.IsTrue(personRecords.FastCount() == 11);
+		Assert.IsTrue(personRecords.Count == 11);
 	}
 
 	[TestMethod]

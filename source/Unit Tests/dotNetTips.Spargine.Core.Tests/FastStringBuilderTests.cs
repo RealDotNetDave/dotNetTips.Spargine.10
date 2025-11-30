@@ -248,7 +248,7 @@ public class FastStringBuilderTests
 		var dict = new Dictionary<string, string>();
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => FastStringBuilder.ToDelimitedString(dict, ','));
+		Assert.ThrowsExactly<ArgumentException>(() => FastStringBuilder.ToDelimitedString(dict, ','));
 	}
 
 	[TestMethod]

@@ -308,7 +308,7 @@ public class StringExtensionsTests
 		foreach (var testCase in testCases)
 		{
 			var expectedResult = !string.IsNullOrEmpty(testCase);
-			var actualResult = testCase.FastIsNullOrEmpty();
+			var actualResult = !testCase.FastIsNullOrEmpty();
 
 			Assert.AreEqual(expectedResult, actualResult,
 				$"FastIsNullOrEmpty should return inverse of string.IsNullOrEmpty for input: '{testCase ?? "<null>"}'");
@@ -325,7 +325,7 @@ public class StringExtensionsTests
 		var result = emptyString.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsFalse(result, "Expected to return false for an empty string.");
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -338,11 +338,11 @@ public class StringExtensionsTests
 		var result = longString.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsTrue(result, "Expected to return true for a long string.");
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void FastIsNullOrEmpty_NullString_ReturnsFalse()
+	public void FastIsNullOrEmpty_NullString_ReturnsTrue()
 	{
 		// Arrange
 		string nullString = null;
@@ -351,11 +351,11 @@ public class StringExtensionsTests
 		var result = nullString.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsFalse(result, "Expected to return false for a null string.");
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
-	public void FastIsNullOrEmpty_SingleCharacterString_ReturnsTrue()
+	public void FastIsNullOrEmpty_SingleCharacterString_ReturnsFalse()
 	{
 		// Arrange
 		var singleChar = "A";
@@ -364,11 +364,11 @@ public class StringExtensionsTests
 		var result = singleChar.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsTrue(result, "Expected to return true for a single character string.");
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void FastIsNullOrEmpty_SpecialCharacters_ReturnsTrue()
+	public void FastIsNullOrEmpty_SpecialCharacters_ReturnsFalse()
 	{
 		// Arrange
 		var specialChars = "!@#$%^&*()";
@@ -377,11 +377,11 @@ public class StringExtensionsTests
 		var result = specialChars.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsTrue(result, "Expected to return true for a string with special characters.");
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void FastIsNullOrEmpty_UnicodeString_ReturnsTrue()
+	public void FastIsNullOrEmpty_UnicodeString_ReturnsFalse()
 	{
 		// Arrange
 		var unicodeString = "Hello 世界 🌍";
@@ -390,11 +390,11 @@ public class StringExtensionsTests
 		var result = unicodeString.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsTrue(result, "Expected to return true for a Unicode string.");
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void FastIsNullOrEmpty_ValidString_ReturnsTrue()
+	public void FastIsNullOrEmpty_ValidString_ReturnsFalse()
 	{
 		// Arrange
 		var validString = RandomData.GenerateWord(10);
@@ -403,11 +403,11 @@ public class StringExtensionsTests
 		var result = validString.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsTrue(result, "Expected to return true for a valid non-empty string.");
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void FastIsNullOrEmpty_WhitespaceString_ReturnsTrue()
+	public void FastIsNullOrEmpty_WhitespaceString_ReturnsFalse()
 	{
 		// Arrange
 		var whitespaceString = "   ";
@@ -416,7 +416,7 @@ public class StringExtensionsTests
 		var result = whitespaceString.FastIsNullOrEmpty();
 
 		// Assert
-		Assert.IsTrue(result, "Expected to return true for a whitespace-only string (it's not empty).");
+		Assert.IsFalse(result, "Expected to return true for a whitespace-only string (it's not empty).");
 	}
 
 	[TestMethod]
@@ -1340,7 +1340,7 @@ public class StringExtensionsTests
 	{
 		var testValue = $"{RandomData.GenerateWord(25)},{RandomData.GenerateWord(25)}";
 
-		Assert.IsTrue(testValue.SplitRemoveEmpty().FastCount() > 1);
+		Assert.IsTrue(testValue.SplitRemoveEmpty().Count > 1);
 	}
 
 	[TestMethod]

@@ -46,11 +46,11 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(AbstractTestType).GetAllAbstractMethods();
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.Count == 1);
 
 		result = typeof(DataTable).GetAllAbstractMethods();
 
-		Assert.IsTrue(result.FastCount() == 0);
+		Assert.IsTrue(result.Count == 0);
 	}
 
 	[TestMethod]
@@ -58,7 +58,7 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(Person).GetAllDeclaredFields();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.Count() > 0);
 	}
 
 	[TestMethod]
@@ -66,7 +66,7 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(Person).GetAllDeclaredMethods();
 
-		Assert.IsTrue(result.FastCount() > 0);
+		Assert.IsTrue(result.Count() > 0);
 	}
 
 	/// <summary>
@@ -77,11 +77,11 @@ public class TypeExtensionsTests
 	{
 		var result1 = typeof(TestType).GetAllFields();
 
-		Assert.IsTrue(result1.FastCount() == 1);
+		Assert.IsTrue(result1.Count() == 1);
 
 		var result2 = typeof(Person).GetAllFields();
 
-		Assert.IsTrue(result2.FastCount() >= 8);
+		Assert.IsTrue(result2.Count() >= 8);
 	}
 
 	/// <summary>
@@ -92,11 +92,11 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(TestType).GetAllMethods();
 
-		Assert.IsTrue(result.FastCount() == 13);
+		Assert.IsTrue(result.Count() == 13);
 
 		result = typeof(Person).GetAllMethods();
 
-		Assert.IsTrue(result.FastCount() >= 40);
+		Assert.IsTrue(result.Count() >= 40);
 	}
 
 	/// <summary>
@@ -167,7 +167,7 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(TestType).GetAllGenericMethods();
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.Count == 1);
 	}
 
 	[TestMethod]
@@ -177,15 +177,15 @@ public class TypeExtensionsTests
 
 		var result = table.GetImplementedInterfaces("IComponent");
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.Count == 1);
 
 		result = table.GetImplementedInterfaces("IFakeInterface");
 
-		Assert.IsTrue(result.FastCount() == 0);
+		Assert.IsTrue(result.Count == 0);
 
 		result = table.GetImplementedInterfaces("IComponent", "IDisposable");
 
-		Assert.IsTrue(result.FastCount() == 2);
+		Assert.IsTrue(result.Count == 2);
 
 	}
 
@@ -208,7 +208,7 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(Person).GetAllPublicMethods();
 
-		Assert.IsTrue(result.FastCount() >= 30);
+		Assert.IsTrue(result.Count >= 30);
 	}
 
 	/// <summary>
@@ -219,7 +219,7 @@ public class TypeExtensionsTests
 	{
 		var result = typeof(TestType).GetAllStaticMethods();
 
-		Assert.IsTrue(result.FastCount() == 1);
+		Assert.IsTrue(result.Count == 1);
 	}
 
 	/// <summary>
@@ -234,11 +234,11 @@ public class TypeExtensionsTests
 
 		var result1 = typeof(LoggingHelper).GetTypeMembersWithAttribute<InformationAttribute>();
 
-		Assert.IsTrue(result1.FastCount() > 0);
+		Assert.IsTrue(result1.Count > 0);
 
 		var result2 = typeof(TestType).GetTypeMembersWithAttribute<XmlAnyAttributeAttribute>();
 
-		Assert.IsTrue(result2.FastCount() == 0);
+		Assert.IsTrue(result2.Count == 0);
 	}
 
 

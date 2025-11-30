@@ -560,9 +560,14 @@ public static class FastStringBuilder
 	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
 	public static string ToDelimitedString<TKey, TValue>([DisallowNull] in Dictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma) where TKey : notnull
 	{
-		if (collection is null || collection.Count == 0)
+		if (collection is null)
 		{
-			ExceptionThrower.ThrowArgumentException(Resources.TheCollectionParameterMustNotBeNull, nameof(collection));
+			ExceptionThrower.ThrowArgumentNullException(Resources.TheCollectionParameterMustNotBeNull, nameof(collection));
+		}
+
+		if (collection.Count == 0)
+		{
+			return ControlChars.EmptyString;
 		}
 
 		var sb = _stringBuilderPool.Get().SetCapacity(collection.Count * 22);

@@ -37,11 +37,11 @@ public class HashSetTests
 
 		people.AddIf(person, true);
 
-		Assert.IsTrue(people.FastCount() == 11);
+		Assert.IsTrue(people.Count == 11);
 
 		people.AddIf(person, false);
 
-		Assert.IsTrue(people.FastCount() == 11);
+		Assert.IsTrue(people.Count == 11);
 
 	}
 
@@ -50,7 +50,7 @@ public class HashSetTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToConcurrentHashSet();
 
-		Assert.IsTrue(people.FastCount() == 10);
+		Assert.IsTrue(people.Count == 10);
 	}
 
 	[TestMethod]
@@ -109,7 +109,7 @@ public class HashSetTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToImmutable();
 
-		Assert.IsTrue(people.FastCount() == 10);
+		Assert.IsTrue(people.Count == 10);
 	}
 
 	[TestMethod]
@@ -121,10 +121,10 @@ public class HashSetTests
 
 		people.Upsert(person);
 
-		Assert.IsTrue(people.FastCount() == 11);
+		Assert.IsTrue(people.Count == 11);
 
 		people.Upsert(personFromCollection);
 
-		Assert.IsTrue(people.FastCount() == 11);
+		Assert.IsTrue(people.Count == 11);
 	}
 }
