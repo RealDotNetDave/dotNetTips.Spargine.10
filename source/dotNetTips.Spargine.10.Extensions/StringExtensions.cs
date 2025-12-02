@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-26-2025
+// Last Modified On : 12-02-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -365,7 +365,10 @@ public static class StringExtensions
 	[Information(nameof(FastCompare), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool FastCompare([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
 	{
-		return string.Equals(value, valueToCompare, comparison);
+		value = value.ArgumentNotNull();
+		valueToCompare = valueToCompare.ArgumentNotNull();
+
+		return value.AsSpan().Equals(valueToCompare.AsSpan(), comparison);
 
 	}
 

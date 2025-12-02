@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 12-02-2025
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -278,18 +278,25 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <returns>A new <see cref="Ulid"/> instance.</returns>
 	[return: NotNull]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
-		var ulidChars = new char[UlidLength].AsSpan();
+		// Use stackalloc for both timestamp and random bytes to avoid heap allocations
+		Span<char> ulidChars = stackalloc char[UlidLength];
 
-		// Use only the first 6 bytes of the timestamp (48 bits)
-		var timestampBytes = GenerateTimeStamp().AsSpan(0, 6);
-		EncodeBase32(timestampBytes, ulidChars, 0, TimestampLength);
+		// Generate and encode timestamp (6 bytes = 48 bits)
+		Span<byte> timestampBytes = stackalloc byte[8];
 
-		// Encode the randomness bytes
-		var randomnessBytes = GenerateRandomBytes().AsSpan(0, 10); // Ensure only 10 bytes are used
-		EncodeBase32(randomnessBytes, ulidChars, TimestampLength, RandomLength);
+		_ = BitConverter.TryWriteBytes(timestampBytes, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+
+		EncodeBase32(timestampBytes.Slice(0, 6), ulidChars, 0, TimestampLength);
+
+		// Generate and encode randomness (10 bytes)
+		Span<byte> randomBytes = stackalloc byte[10];
+
+		RandomNumberGenerator.Fill(randomBytes);
+
+		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);
 
 		return new Ulid(new string(ulidChars));
 	}

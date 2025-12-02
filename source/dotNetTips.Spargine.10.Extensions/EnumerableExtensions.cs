@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-28-2025
+// Last Modified On : 12-02-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -945,7 +945,7 @@ public static class EnumerableExtensions
 		[Information(nameof(FastLongCount), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public long FastLongCount([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
-			return collection.ArgumentNotNull().Count(accumulatorPredicate.ArgumentNotNull());
+			return collection.LongCount(accumulatorPredicate);
 		}
 
 		/// <summary>
@@ -969,10 +969,43 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			//RECOMENDATION FROM COPILOT SLOWER.
+			// Optimize for List<T> using Span for better performance
+			if (collection is List<T> list)
+			{
+				var span = CollectionsMarshal.AsSpan(list);
+				var spanLength = span.Length;
+
+				for (var index = 0; index < spanLength; index++)
+				{
+					if (accumulatorPredicate(span[index]))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			// Optimize for arrays using direct indexing
+			if (collection is T[] array)
+			{
+				var arrayLength = array.Length;
+
+				for (var index = 0; index < arrayLength; index++)
+				{
+					if (accumulatorPredicate(array[index]))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			// Fall back to standard enumeration for other collection types
 			foreach (var item in collection)
 			{
-				if (accumulatorPredicate.Invoke(item))
+				if (accumulatorPredicate(item))
 				{
 					return true;
 				}

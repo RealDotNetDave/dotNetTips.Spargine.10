@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-28-2025
+// Last Modified On : 12-02-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -795,8 +795,6 @@ public static class ObjectExtensions
 		{
 			obj = obj.ArgumentNotNull();
 
-			// Requires: Install-Package MessagePack
-			// Types must be annotated with [MessagePackObject] and [Key] attributes
 			return MessagePack.MessagePackSerializer.Deserialize<T>(
 				MessagePack.MessagePackSerializer.Serialize(obj))!;
 		}

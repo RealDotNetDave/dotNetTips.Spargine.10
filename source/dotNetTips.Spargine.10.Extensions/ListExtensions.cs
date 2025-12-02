@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 12-02-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -158,7 +158,7 @@ public static class ListExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FastCount), "David McCarter", "4/12/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public long FastCount()
+		public int FastCount()
 		{
 			return Unsafe.As<List<T>>(list).Count;
 		}
@@ -207,7 +207,7 @@ public static class ListExtensions
 		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty([DisallowNull] Predicate<T> action)
 		{
-			return list.CheckIsNotNull() is false || action.CheckIsNotNull() is false ? false : list.Exists(action);
+			return list.Exists(action);
 		}
 
 		/// <summary>
