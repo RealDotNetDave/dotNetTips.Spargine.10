@@ -170,20 +170,42 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-	/// Wraps the specified value in a <see cref="Lazy{T}"/> instance.
+	/// Wraps the specified value in a <see cref="Lazy{T}"/> instance using a pre-initialized value.
 	/// </summary>
 	/// <typeparam name="T">The type of the value to wrap.</typeparam>
-	/// <param name="value">The value to wrap in a <see cref="Lazy{T}"/>.</param>
+	/// <param name="value">The value to wrap in a <see cref="Lazy{T}"/>. Cannot be null.</param>
 	/// <returns>
-	/// A <see cref="Lazy{T}"/> instance that returns the specified value when evaluated.
+	/// A <see cref="Lazy{T}"/> instance containing the pre-initialized value.
 	/// </returns>
+	/// <remarks>
+	/// <para>
+	/// This method creates a <see cref="Lazy{T}"/> instance with a pre-initialized value,
+	/// avoiding lazy initialization overhead. The value is validated immediately upon method invocation.
+	/// </para>
+	/// <para>
+	/// The returned <see cref="Lazy{T}"/> instance is thread-safe by default and can be safely
+	/// accessed from multiple threads concurrently without additional synchronization.
+	/// </para>
+	/// <para>
+	/// Use this method when you want to wrap an already-computed value in a <see cref="Lazy{T}"/>
+	/// wrapper for deferred access patterns or to maintain API consistency with lazy-initialized values.
+	/// </para>
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
+	/// <example>
+	/// <code>
+	/// var person = new Person { Name = "John", Age = 30 };
+	/// Lazy&lt;Person&gt; lazyPerson = person.ToLazy();
+	/// 
+	/// // Value is already initialized - no lazy evaluation occurs
+	/// var result = lazyPerson.Value; // Returns the original person instance
+	/// </code>
+	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static Lazy<T> ToLazy<T>(this T value)
+	public static Lazy<T> ToLazy<T>([DisallowNull] this T value)
 	{
-		value = value.ArgumentNotNull();
-
-		return new Lazy<T>(() => value, LazyThreadSafetyMode.PublicationOnly);
+		return new Lazy<T>(() => value.ArgumentNotNull());
 	}
 
 	/// <summary>

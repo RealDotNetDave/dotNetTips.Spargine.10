@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-26-2025
+// Last Modified On : 12-03-2025
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -81,22 +81,22 @@ public static class RandomData
 	/// <summary>
 	/// A lazy-loaded read-only collection of countries.
 	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<Country>> _countries = new(CountryRepository.GetCountries().ToReadOnlyCollection());
+	private static readonly Lazy<ReadOnlyCollection<Country>> _countries = CountryRepository.GetCountries().ToReadOnlyCollection().ToLazy();
 
 	/// <summary>
 	/// A lazy-loaded array of domain extensions.
 	/// </summary>
-	private static readonly Lazy<string[]> _domainExtensions = new(Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries));
+	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
 
 	/// <summary>
 	/// A lazy-loaded read-only collection of first names.
 	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<string>> _firstNames = new(Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection());
+	private static readonly Lazy<ReadOnlyCollection<string>> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
 
 	/// <summary>
 	/// A lazy-loaded read-only collection of last names.
 	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<string>> _lastNames = new(Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection());
+	private static readonly Lazy<ReadOnlyCollection<string>> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
 
 	// Replace the existing declaration of _lock with the following:
 	private static readonly Lock _lock = new();
