@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-02-2025
+// Last Modified On : 12-03-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -793,12 +793,73 @@ public static class ObjectExtensions
 		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 		public T FastBinaryClone<T>()
 		{
-			//TODO: Consider adding options parameter for MessagePack serialization settings
-
 			obj = obj.ArgumentNotNull();
 
 			return MessagePack.MessagePackSerializer.Deserialize<T>(
 				MessagePack.MessagePackSerializer.Serialize(obj))!;
+		}
+
+		/// <summary>
+		/// Creates a deep clone using binary MessagePack serialization with custom serializer options.
+		/// Use this when you need to control serialization behavior such as resolvers, security settings, or compression.
+		/// </summary>
+		/// <typeparam name="T">The type of the object.</typeparam>
+		/// <param name="options">The <see cref="MessagePack.MessagePackSerializerOptions"/> to use for serialization and deserialization. If null, the default options are used.</param>
+		/// <returns>A deep clone of the object.</returns>
+		/// <remarks>
+		/// <para>
+		/// This overload allows customization of MessagePack serialization behavior through <see cref="MessagePack.MessagePackSerializerOptions"/>.
+		/// Common customization scenarios include:
+		/// </para>
+		/// <list type="bullet">
+		/// <item>
+		/// <description>
+		/// <b>Custom Resolvers:</b> Use <c>.WithResolver()</c> to specify custom type resolution for serialization.
+		/// For example, <c>MessagePackSerializerOptions.Standard.WithResolver(MessagePack.Resolvers.StandardResolver.Instance)</c>
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Security Settings:</b> Use <c>.WithSecurity(MessagePack.MessagePackSecurity.UntrustedData)</c> when deserializing untrusted data
+		/// to protect against deserialization attacks.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Compression:</b> Enable LZ4 compression for smaller payload sizes using appropriate resolver settings.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Private Member Serialization:</b> Use <c>StandardResolverAllowPrivate.Options</c> to serialize non-public types and members.
+		/// </description>
+		/// </item>
+		/// </list>
+		/// <para>
+		/// <b>Warning:</b> When providing custom options, ensure security settings are appropriate for your scenario.
+		/// Refer to the MessagePack Security Notes at https://github.com/MessagePack-CSharp/MessagePack-CSharp for best practices.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var person = new Person { Name = "John", Age = 30 };
+		/// 
+		/// // Clone with custom security settings
+		/// var options = MessagePackSerializerOptions.Standard
+		///     .WithResolver(MessagePack.Resolvers.StandardResolver.Instance)
+		///     .WithSecurity(MessagePack.MessagePackSecurity.UntrustedData);
+		/// var clone = person.FastBinaryClone(options);
+		/// </code>
+		/// </example>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public T FastBinaryClone<T>([AllowNull] MessagePack.MessagePackSerializerOptions options = null)
+		{
+			obj = obj.ArgumentNotNull();
+
+			return MessagePack.MessagePackSerializer.Deserialize<T>(
+				MessagePack.MessagePackSerializer.Serialize(obj, options), options)!;
 		}
 
 		/// <summary>
