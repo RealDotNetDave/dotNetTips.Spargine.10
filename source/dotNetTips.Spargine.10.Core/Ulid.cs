@@ -278,22 +278,29 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <returns>A new <see cref="Ulid"/> instance.</returns>
 	[return: NotNull]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
 		// Use stackalloc for both timestamp and random bytes to avoid heap allocations
 		Span<char> ulidChars = stackalloc char[UlidLength];
 
 		// Generate and encode timestamp (6 bytes = 48 bits)
-		Span<byte> timestampBytes = stackalloc byte[8];
+		// Avoid allocating an 8-byte array when we only need 6 bytes
+		Span<byte> timestampBytes = stackalloc byte[6];
+		var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-		_ = BitConverter.TryWriteBytes(timestampBytes, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+		// Manually write the 48-bit timestamp (little-endian)
+		timestampBytes[0] = (byte)(timestamp >> 40);
+		timestampBytes[1] = (byte)(timestamp >> 32);
+		timestampBytes[2] = (byte)(timestamp >> 24);
+		timestampBytes[3] = (byte)(timestamp >> 16);
+		timestampBytes[4] = (byte)(timestamp >> 8);
+		timestampBytes[5] = (byte)timestamp;
 
-		EncodeBase32(timestampBytes.Slice(0, 6), ulidChars, 0, TimestampLength);
+		EncodeBase32(timestampBytes, ulidChars, 0, TimestampLength);
 
 		// Generate and encode randomness (10 bytes)
 		Span<byte> randomBytes = stackalloc byte[10];
-
 		RandomNumberGenerator.Fill(randomBytes);
 
 		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);

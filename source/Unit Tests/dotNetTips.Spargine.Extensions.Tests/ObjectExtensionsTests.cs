@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-17-2025
+// Last Modified On : 12-03-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -135,6 +135,159 @@ public class ObjectExtensionsTests : UnitTester
 		{
 			Debug.WriteLine(ex.Message);
 			Assert.Fail();
+		}
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_Array_ReturnsClonedArray()
+	{
+		var numbers = new[] { 1, 2, 3, 4, 5 };
+		var clone = numbers.FastBinaryClone<int[]>();
+
+		Assert.IsNotNull(clone);
+		Assert.AreEqual(numbers.Length, clone.Length);
+		Assert.AreNotSame(numbers, clone);
+
+		for (int i = 0; i < numbers.Length; i++)
+		{
+			Assert.AreEqual(numbers[i], clone[i]);
+		}
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_Collection_ReturnsClonedCollection()
+	{
+		var people = RandomData.GeneratePersonRefCollection(5).ToList();
+
+		var clone = people.FastBinaryClone<List<Person>>();
+
+		Assert.IsNotNull(clone);
+		Assert.AreEqual(people.Count, clone.Count);
+		Assert.AreNotSame(people, clone);
+
+		for (int i = 0; i < people.Count; i++)
+		{
+			Assert.AreNotSame(people[i], clone[i]);
+			Assert.AreEqual(people[i].Id, clone[i].Id);
+		}
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_ComplexValueType_ReturnsClone()
+	{
+		var address = RandomData.GenerateAddress<Address>();
+		var clone = address.FastBinaryClone<Address>();
+
+		Assert.AreNotSame(address, clone);
+		Assert.AreEqual(address.Address1, clone.Address1);
+		Assert.AreEqual(address.City, clone.City);
+		Assert.AreEqual(address.State, clone.State);
+		Assert.AreEqual(address.PostalCode, clone.PostalCode);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_EmptyCollection_ReturnsEmptyClone()
+	{
+		var emptyList = new List<Person>();
+		var clone = emptyList.FastBinaryClone<List<Person>>();
+
+		Assert.IsNotNull(clone);
+		Assert.AreEqual(0, clone.Count);
+		Assert.AreNotSame(emptyList, clone);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_ModifyingClone_DoesNotAffectOriginal()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var originalFirstName = person.FirstName;
+
+		var clone = person.FastBinaryClone<Person>();
+		clone.FirstName = "ModifiedName";
+
+		Assert.AreEqual(originalFirstName, person.FirstName);
+		Assert.AreEqual("ModifiedName", clone.FirstName);
+		Assert.AreNotEqual(person.FirstName, clone.FirstName);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_Null_ThrowsArgumentNullException()
+	{
+		Person person = null;
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastBinaryClone<Person>());
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_PrimitiveTypes_ReturnsClone()
+	{
+		int value = 42;
+		var clone = value.FastBinaryClone<int>();
+		Assert.AreEqual(value, clone);
+
+		string text = "Test String";
+		var clonedText = text.FastBinaryClone<string>();
+		Assert.AreEqual(text, clonedText);
+
+		DateTime dateTime = DateTime.Now;
+		var clonedDateTime = dateTime.FastBinaryClone<DateTime>();
+		Assert.AreEqual(dateTime, clonedDateTime);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_RoundTrip_MaintainsDataIntegrity()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var clone1 = person.FastBinaryClone<Person>();
+		var clone2 = clone1.FastBinaryClone<Person>();
+
+		Assert.IsNotNull(clone2);
+		Assert.AreNotSame(person, clone2);
+		Assert.AreNotSame(clone1, clone2);
+		Assert.AreEqual(person.Id, clone2.Id);
+		Assert.AreEqual(person.Email, clone2.Email);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_SimpleObject_ReturnsDeepClone()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var clone = person.FastBinaryClone<Person>();
+
+		Assert.IsNotNull(clone);
+		Assert.AreNotSame(person, clone);
+		Assert.AreEqual(person.Id, clone.Id);
+		Assert.AreEqual(person.Email, clone.Email);
+		Assert.AreEqual(person.FirstName, clone.FirstName);
+		Assert.AreEqual(person.LastName, clone.LastName);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_WithInheritance_PreservesTypeInformation()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var clone = person.FastBinaryClone<Person>();
+
+		Assert.IsNotNull(clone);
+		Assert.IsInstanceOfType(clone, typeof(Person));
+		Assert.AreEqual(person.GetType(), clone.GetType());
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_WithNestedObjects_ClonesAllLevels()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var clone = person.FastBinaryClone<Person>();
+
+		Assert.IsNotNull(clone);
+		Assert.AreNotSame(person, clone);
+
+		if (person.Addresses?.Count > 0 && clone.Addresses?.Count > 0)
+		{
+			Assert.AreNotSame(person.Addresses[0], clone.Addresses[0]);
+			Assert.AreEqual(person.Addresses[0].Address1, clone.Addresses[0].Address1);
 		}
 	}
 

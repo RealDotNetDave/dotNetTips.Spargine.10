@@ -261,6 +261,8 @@ public static class ArrayExtensions
 		/// // Output: 2, 4, 6, 8, 10
 		/// </code>
 		/// </example>
+		[Pure]
+		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "11/8/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public void FastProcessor([DisallowNull] Action<T> action)
@@ -268,12 +270,11 @@ public static class ArrayExtensions
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
-			var length = array.Length;
+			var span = array.AsSpan();
 
-			for (var index = 0; index < length; index++)
+			foreach (ref var item in span)
 			{
-				action(Unsafe.Add(ref arrayStart, index));
+				action(item);
 			}
 		}
 

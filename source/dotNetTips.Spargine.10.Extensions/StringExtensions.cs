@@ -368,8 +368,7 @@ public static class StringExtensions
 		value = value.ArgumentNotNull();
 		valueToCompare = valueToCompare.ArgumentNotNull();
 
-		return value.AsSpan().Equals(valueToCompare.AsSpan(), comparison);
-
+		return MemoryExtensions.Equals(value.AsSpan(), valueToCompare.AsSpan(), comparison);
 	}
 
 	/// <summary>

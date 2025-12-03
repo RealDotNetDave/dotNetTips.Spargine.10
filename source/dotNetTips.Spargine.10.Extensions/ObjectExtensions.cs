@@ -790,9 +790,11 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastBinaryClone), Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 		public T FastBinaryClone<T>()
 		{
+			//TODO: Consider adding options parameter for MessagePack serialization settings
+
 			obj = obj.ArgumentNotNull();
 
 			return MessagePack.MessagePackSerializer.Deserialize<T>(
