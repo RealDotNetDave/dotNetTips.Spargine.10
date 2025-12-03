@@ -1173,6 +1173,12 @@ dotnet_diagnostic.CA1873.severity = error
 # CA1874: Prefer static HashData method over ComputeHash
 dotnet_diagnostic.CA1874.severity = error
 
+# CA1875: Use 'Regex.Count'
+dotnet_diagnostic.CA1875.severity = warning
+
+# CA1877: Use 'Path.Combine' or 'Path.Join' overloads
+dotnet_diagnostic.CA1877.severity = warning
+
 ####################################################################################################
 # Reliability Rules (CA2000-CA2024)
 # Reliability rules support library and application reliability
