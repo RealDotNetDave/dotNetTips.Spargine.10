@@ -362,8 +362,8 @@ public static class StringExtensions
 	/// <returns><c>true</c> if the strings are equal according to the specified comparison option; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/>, <paramref name="valueToCompare"/>, or <paramref name="comparison"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastCompare), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	public static bool FastCompare([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
+	[Information(nameof(FastEquals), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static bool FastEquals([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
 	{
 		value = value.ArgumentNotNull();
 		valueToCompare = valueToCompare.ArgumentNotNull();

@@ -412,7 +412,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._address1.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
+			if (this._address1.FastEquals(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -451,7 +451,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._address2.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
+			if (this._address2.FastEquals(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -489,7 +489,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._city.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
+			if (this._city.FastEquals(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -527,7 +527,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._country.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
+			if (this._country.FastEquals(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -566,7 +566,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._countyProvince.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
+			if (this._countyProvince.FastEquals(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}
@@ -639,7 +639,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._phone.FastCompare(safeValue))
+			if (this._phone.FastEquals(safeValue))
 			{
 				return;
 			}
@@ -677,7 +677,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._postalCode.FastCompare(safeValue))
+			if (this._postalCode.FastEquals(safeValue))
 			{
 				return;
 			}
@@ -716,7 +716,7 @@ public sealed class Address : IAddress<Address>
 		{
 			var safeValue = value ?? string.Empty;
 
-			if (this._state.FastCompare(safeValue, StringComparison.CurrentCultureIgnoreCase))
+			if (this._state.FastEquals(safeValue, StringComparison.CurrentCultureIgnoreCase))
 			{
 				return;
 			}

@@ -267,6 +267,8 @@ public static class ArrayExtensions
 		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "11/8/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public void FastProcessor([DisallowNull] Action<T> action)
 		{
+			//TODO: USING ARRAYS PERFORMS SLOWER. FIX.
+
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
