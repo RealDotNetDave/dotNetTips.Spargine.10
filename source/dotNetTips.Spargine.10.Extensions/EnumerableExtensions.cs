@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-02-2025
+// Last Modified On : 12-05-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -966,13 +966,15 @@ public static class EnumerableExtensions
 		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool FastAny([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
+			//TODO: WORK ON PERFORMANCE. ANY IS FASTER.
+
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
 			// Optimize for List<T> using Span for better performance
 			if (collection is List<T> list)
 			{
-				var span = CollectionsMarshal.AsSpan(list);
+				var span = list.AsReadOnlySpan();
 				var spanLength = span.Length;
 
 				for (var index = 0; index < spanLength; index++)

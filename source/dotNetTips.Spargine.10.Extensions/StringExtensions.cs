@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-02-2025
+// Last Modified On : 12-05-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -368,7 +368,14 @@ public static class StringExtensions
 		value = value.ArgumentNotNull();
 		valueToCompare = valueToCompare.ArgumentNotNull();
 
-		return MemoryExtensions.Equals(value.AsSpan(), valueToCompare.AsSpan(), comparison);
+		// Quick reference equality check before span comparison
+		if (ReferenceEquals(value, valueToCompare))
+		{
+			return true;
+		}
+
+		// Use AsSpan for efficient comparison without allocations
+		return value.AsSpan().Equals(valueToCompare.AsSpan(), comparison);
 	}
 
 	/// <summary>
