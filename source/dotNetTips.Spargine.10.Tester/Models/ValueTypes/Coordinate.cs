@@ -4,7 +4,7 @@
 // Created          : 06-04-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified On : 12-04-2025
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -156,7 +156,10 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// <param name="obj">The object to compare with the current instance.</param>
 	/// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
 	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override readonly bool Equals(object? obj) => obj is Coordinate proper && this.Equals(proper);
+	public override readonly bool Equals(object? obj)
+	{
+		return obj is Coordinate proper && this.Equals(proper);
+	}
 
 	/// <summary>
 	/// Indicates whether the current object is equal to another object of the same type.
@@ -164,7 +167,10 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// <param name="other">An object to compare with this instance.</param>
 	/// <returns>True if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.</returns>
 	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public readonly bool Equals(Coordinate other) => this.X == other.X && this.Y == other.Y && this.Z == other.Z;
+	public readonly bool Equals(Coordinate other)
+	{
+		return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
+	}
 
 	/// <summary>
 	/// Returns a hash code for this instance.
