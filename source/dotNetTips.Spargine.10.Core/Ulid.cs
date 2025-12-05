@@ -17,6 +17,7 @@
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using DotNetTips.Spargine.Core;
 
@@ -133,45 +134,56 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	public static bool operator >=(Ulid left, Ulid right) => left.CompareTo(right) >= 0;
 
 	/// <summary>
-	/// Encodes a byte array into a Base32 encoded character array.
+	/// Encodes a byte span into a Base32 encoded character span using Crockford's Base32 alphabet.
 	/// </summary>
 	/// <remarks>
 	/// This method converts a sequence of bytes into a Base32 encoded string representation.
 	/// Base32 encoding is used to ensure that the ULID is represented in a compact and human-readable format.
+	/// The implementation uses bit manipulation for optimal performance.
 	/// </remarks>
-	/// <param name="bytes">The byte array to encode.</param>
-	/// <param name="chars">The character array to store the encoded characters.</param>
-	/// <param name="charIndex">The starting index in the character array where encoding begins.</param>
-	/// <param name="length">The number of bytes to encode.</param>
-	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
-	private static void EncodeBase32(in ReadOnlySpan<byte> bytes, Span<char> chars, int charIndex, int length)
+	/// <param name="bytes">The byte span to encode.</param>
+	/// <param name="chars">The character span to store the encoded characters.</param>
+	/// <param name="charIndex">The starting index in the character span where encoding begins.</param>
+	/// <param name="length">The number of characters to encode.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	private static void EncodeBase32(ReadOnlySpan<byte> bytes, Span<char> chars, int charIndex, int length)
 	{
+		const int Mask = 0x1F;
 		var byteIndex = 0;
 		var bitIndex = 0;
-		const int mask = 0x1F;
 
 		for (var index = 0; index < length; index++)
 		{
+			int value;
+
 			if (bitIndex > 3)
 			{
-				var dualByte = (bytes[byteIndex] << 8) | (byteIndex + 1 < bytes.Length ? bytes[byteIndex + 1] : 0);
-				dualByte >>= 16 - (bitIndex + 5);
-				chars[charIndex + index] = Base32Chars[dualByte & mask];
+				// Need to read from two bytes
+				var currentByte = bytes[byteIndex];
+				var nextByte = byteIndex + 1 < bytes.Length ? bytes[byteIndex + 1] : 0;
+				var dualByte = (currentByte << 8) | nextByte;
+				value = (dualByte >> (16 - bitIndex - 5)) & Mask;
 				byteIndex++;
-				bitIndex = (bitIndex + 5) % 8;
+				bitIndex = (bitIndex + 5) & 7; // Equivalent to (bitIndex + 5) % 8
 			}
 			else
 			{
-				chars[charIndex + index] = Base32Chars[(bytes[byteIndex] >> (3 - bitIndex)) & mask];
+				// Can read from single byte
+				value = (bytes[byteIndex] >> (3 - bitIndex)) & Mask;
 				bitIndex += 5;
+
 				if (bitIndex >= 8)
 				{
 					bitIndex -= 8;
 					byteIndex++;
 				}
 			}
+
+			chars[charIndex + index] = Base32Chars[value];
 		}
 	}
+
 
 	/// <summary>
 	/// Generates a random byte array for the ULID.
@@ -274,30 +286,46 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	}
 
 	/// <summary>
-	/// Generates a new ULID.
+	/// Generates a new ULID (Universally Unique Lexicographically Sortable Identifier).
 	/// </summary>
-	/// <returns>A new <see cref="Ulid"/> instance.</returns>
+	/// <returns>A new <see cref="Ulid"/> instance with timestamp and random components.</returns>
+	/// <remarks>
+	/// <para>
+	/// This method generates a ULID that consists of:
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description>48-bit timestamp (milliseconds since Unix epoch) - 10 characters</description></item>
+	/// <item><description>80-bit cryptographically secure random data - 16 characters</description></item>
+	/// </list>
+	/// <para>
+	/// The implementation uses stack allocation to avoid heap allocations, providing optimal performance
+	/// for high-frequency ULID generation scenarios.
+	/// </para>
+	/// </remarks>
 	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
-		// Use stackalloc for both timestamp and random bytes to avoid heap allocations
+		// Allocate all required memory on the stack to avoid heap allocations
 		Span<char> ulidChars = stackalloc char[UlidLength];
-
-		// Generate and encode timestamp (6 bytes = 48 bits)
 		Span<byte> timestampBytes = stackalloc byte[8];
-
-		_ = BitConverter.TryWriteBytes(timestampBytes, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-
-		EncodeBase32(timestampBytes.Slice(0, 6), ulidChars, 0, TimestampLength);
-
-		// Generate and encode randomness (10 bytes)
 		Span<byte> randomBytes = stackalloc byte[10];
 
+		// Generate timestamp (48 bits = 6 bytes)
+		var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+		_ = BitConverter.TryWriteBytes(timestampBytes, timestamp);
+
+		// Encode timestamp component (10 characters)
+		EncodeBase32(timestampBytes[..6], ulidChars, 0, TimestampLength);
+
+		// Generate cryptographically secure random bytes (80 bits = 10 bytes)
 		RandomNumberGenerator.Fill(randomBytes);
 
+		// Encode random component (16 characters)
 		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);
 
+		// Create and return the ULID
 		return new Ulid(new string(ulidChars));
 	}
 
