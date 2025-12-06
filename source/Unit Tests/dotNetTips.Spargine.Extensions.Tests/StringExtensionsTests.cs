@@ -239,7 +239,7 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void FastCompare_DifferentStrings_ReturnsFalse()
+	public void FastEquals_DifferentStrings_ReturnsFalse()
 	{
 		// Arrange
 		var value = "Hello";
@@ -247,14 +247,14 @@ public class StringExtensionsTests
 		var comparison = StringComparison.Ordinal;
 
 		// Act
-		var result = value.FastCompare(valueToCompare, comparison);
+		var result = value.FastEquals(valueToCompare, comparison);
 
 		// Assert
 		Assert.IsFalse(result, "Expected to return false for different strings.");
 	}
 
 	[TestMethod]
-	public void FastCompare_DifferentStringsIgnoreCase_ReturnsFalse()
+	public void FastEquals_DifferentStringsIgnoreCase_ReturnsFalse()
 	{
 		// Arrange
 		var value = "Hello";
@@ -262,14 +262,14 @@ public class StringExtensionsTests
 		var comparison = StringComparison.OrdinalIgnoreCase;
 
 		// Act
-		var result = value.FastCompare(valueToCompare, comparison);
+		var result = value.FastEquals(valueToCompare, comparison);
 
 		// Assert
 		Assert.IsFalse(result, "Expected to return false for different strings ignoring case.");
 	}
 
 	[TestMethod]
-	public void FastCompare_SameStrings_ReturnsTrue()
+	public void FastEquals_SameStrings_ReturnsTrue()
 	{
 		// Arrange
 		var value = "Hello";
@@ -277,14 +277,14 @@ public class StringExtensionsTests
 		var comparison = StringComparison.Ordinal;
 
 		// Act
-		var result = value.FastCompare(valueToCompare, comparison);
+		var result = value.FastEquals(valueToCompare, comparison);
 
 		// Assert
 		Assert.IsTrue(result, "Expected to return true for the same strings.");
 	}
 
 	[TestMethod]
-	public void FastCompare_SameStringsIgnoreCase_ReturnsTrue()
+	public void FastEquals_SameStringsIgnoreCase_ReturnsTrue()
 	{
 		// Arrange
 		var value = "Hello";
@@ -292,7 +292,7 @@ public class StringExtensionsTests
 		var comparison = StringComparison.OrdinalIgnoreCase;
 
 		// Act
-		var result = value.FastCompare(valueToCompare, comparison);
+		var result = value.FastEquals(valueToCompare, comparison);
 
 		// Assert
 		Assert.IsTrue(result, "Expected to return true for the same strings ignoring case.");

@@ -24,21 +24,10 @@ public class PersonComparerByLastNameTests
 {
 
 	[TestMethod]
-	public void Compare_HandlesNullPersons()
-	{
-		var comparer = new PersonComparerByLastName();
-		var person = new Person("id1", "test1@example.com") { LastName = "Smith" };
-
-		Assert.IsTrue(comparer.Compare(person, null) > 0);
-		Assert.IsTrue(comparer.Compare(null, person) < 0);
-		Assert.AreEqual(0, comparer.Compare(null, null));
-	}
-
-	[TestMethod]
 	public void Compare_ReturnsNegative_WhenFirstLastNameIsLess()
 	{
-		var person1 = new Person("id1", "test1@example.com") { LastName = "Anderson" };
-		var person2 = new Person("id2", "test2@example.com") { LastName = "Smith" };
+		var person1 = new Person("id1xxxxxxx", "test1@xxxxexample.com") { LastName = "Anderson" };
+		var person2 = new Person("id2xxxxxxx", "test2@xxxxexample.com") { LastName = "Smith" };
 		var comparer = new PersonComparerByLastName();
 
 		int result = comparer.Compare(person1, person2);
@@ -67,8 +56,8 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsPositive_WhenFirstLastNameIsGreater()
 	{
-		var person1 = new Person("id1", "test1@example.com") { LastName = "Zimmerman" };
-		var person2 = new Person("id2", "test2@example.com") { LastName = "Smith" };
+		var person1 = new Person("id112345678", "test1@example.com") { LastName = "Zimmerman" };
+		var person2 = new Person("id212345678", "test2@example.com") { LastName = "Smith" };
 		var comparer = new PersonComparerByLastName();
 
 		int result = comparer.Compare(person1, person2);

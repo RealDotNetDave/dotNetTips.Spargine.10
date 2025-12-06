@@ -1114,10 +1114,7 @@ public static class EnumerableExtensions
 				return true;
 			}
 
-			using (var enumerator = collection.GetEnumerator())
-			{
-				return !enumerator.MoveNext();
-			}
+			return collection.Any() == false;
 		}
 
 		/// <summary>

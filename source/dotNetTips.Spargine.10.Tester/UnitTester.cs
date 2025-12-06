@@ -159,16 +159,17 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null or empty.</exception>
 	[DebuggerStepThrough]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public void SaveToFile([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	public string SaveToFile([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
-		if (input.IsNullOrEmpty())
-		{
-			return;
-		}
+		//TODO: OVERLOAD ALL SAVETOFILE METHODS TO ACCEPT FILE PATH PARAMETER.
+
+		input = input.ArgumentNotNull();
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
 		File.WriteAllText(filePath, input);
+
+		return filePath;
 	}
 
 	/// <summary>
@@ -183,7 +184,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> or <paramref name="propertySelector"/> is null.</exception>
 	[DebuggerStepThrough]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public void SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	public string SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
@@ -196,6 +197,8 @@ public abstract class UnitTester(string? outputDirectory = null)
 			.ToArray(); // Materialize the content to avoid deferred execution issues.
 
 		File.WriteAllLines(filePath, content);
+
+		return filePath;
 	}
 
 	/// <summary>
@@ -212,7 +215,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </exception>
 	[DebuggerStepThrough]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public void SaveToFile<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	public string SaveToFile<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
@@ -221,7 +224,10 @@ public abstract class UnitTester(string? outputDirectory = null)
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
 		var content = this.PropertiesToString(input, propertySelector);
+
 		File.WriteAllText(filePath, content);
+
+		return filePath;
 	}
 
 	/// <summary>
@@ -243,7 +249,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public async Task SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	public async Task<string> SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
@@ -256,6 +262,8 @@ public abstract class UnitTester(string? outputDirectory = null)
 			.ToArray();
 
 		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
+
+		return filePath;
 	}
 
 	/// <summary>

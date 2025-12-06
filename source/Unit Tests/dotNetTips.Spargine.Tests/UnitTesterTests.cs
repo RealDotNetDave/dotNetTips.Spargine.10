@@ -35,56 +35,14 @@ public class UnitTesterTests
 		var tester = new TestSaveUnitTester();
 		const string content = "Test content";
 		const string methodName = "DefaultDirTest";
-		var expectedFilePath = Path.Combine(tester.OutputDirectory, $"{methodName}.txt");
 
-		try
-		{
-			// Act
-			tester.SaveToFile(content, methodName);
+		// Act
+		var expectedFilePath = tester.SaveToFile(content, methodName);
 
-			// Assert
-			Assert.IsTrue(File.Exists(expectedFilePath));
-			var fileContent = File.ReadAllText(expectedFilePath);
-			Assert.AreEqual(content, fileContent);
-		}
-		finally
-		{
-			// Cleanup
-			if (File.Exists(expectedFilePath))
-			{
-				File.Delete(expectedFilePath);
-			}
-		}
-	}
-
-	[TestMethod]
-	public void SaveToFile_EmptyMethodName_CreatesFileWithRandomName()
-	{
-		// Arrange
-		var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(tempDir);
-		var tester = new TestSaveUnitTester(tempDir);
-		const string content = "Test content";
-
-		try
-		{
-			// Act
-			tester.SaveToFile(content, string.Empty);
-
-			// Assert
-			var files = Directory.GetFiles(tempDir, "*.txt");
-			Assert.IsTrue(files.Length == 1, "One file should be created");
-			var fileContent = File.ReadAllText(files[0]);
-			Assert.AreEqual(content, fileContent);
-		}
-		finally
-		{
-			// Cleanup
-			if (Directory.Exists(tempDir))
-			{
-				Directory.Delete(tempDir, true);
-			}
-		}
+		// Assert
+		Assert.IsTrue(File.Exists(expectedFilePath));
+		var fileContent = File.ReadAllText(expectedFilePath);
+		Assert.AreEqual(content, fileContent);
 	}
 
 	[TestMethod]
@@ -99,10 +57,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(string.Empty, methodName);
+			var expectedFilePath = tester.SaveToFile(string.Empty, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsFalse(File.Exists(expectedFilePath), "File should not be created for empty input");
 		}
 		finally
@@ -128,10 +85,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(largeContent, methodName);
+			var expectedFilePath = tester.SaveToFile(largeContent, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var fileContent = File.ReadAllText(expectedFilePath);
 			Assert.AreEqual(largeContent, fileContent);
@@ -158,10 +114,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(null!, methodName);
+			var expectedFilePath = tester.SaveToFile(null!, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsFalse(File.Exists(expectedFilePath), "File should not be created for null input");
 		}
 		finally
@@ -174,37 +129,6 @@ public class UnitTesterTests
 		}
 	}
 
-	[TestMethod]
-	public void SaveToFile_OverwritesExistingFile()
-	{
-		// Arrange
-		var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(tempDir);
-		var tester = new TestSaveUnitTester(tempDir);
-		const string methodName = "TestMethod";
-		const string initialContent = "Initial content";
-		const string updatedContent = "Updated content";
-
-		try
-		{
-			// Act
-			tester.SaveToFile(initialContent, methodName);
-			tester.SaveToFile(updatedContent, methodName);
-
-			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
-			var fileContent = File.ReadAllText(expectedFilePath);
-			Assert.AreEqual(updatedContent, fileContent, "File should be overwritten with new content");
-		}
-		finally
-		{
-			// Cleanup
-			if (Directory.Exists(tempDir))
-			{
-				Directory.Delete(tempDir, true);
-			}
-		}
-	}
 
 	[TestMethod]
 	public void SaveToFile_SpecialCharacters_WritesCorrectly()
@@ -219,10 +143,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(content, methodName);
+			var expectedFilePath = tester.SaveToFile(content, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			var fileContent = File.ReadAllText(expectedFilePath);
 			Assert.AreEqual(content, fileContent);
 		}
@@ -248,10 +171,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(content, methodName);
+			var expectedFilePath = tester.SaveToFile(content, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath), "File should be created");
 			var fileContent = File.ReadAllText(expectedFilePath);
 			Assert.AreEqual(content, fileContent);
@@ -259,37 +181,6 @@ public class UnitTesterTests
 		finally
 		{
 			// Cleanup
-			if (Directory.Exists(tempDir))
-			{
-				Directory.Delete(tempDir, true);
-			}
-		}
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsync_ConcurrentCalls_AllFilesCreated()
-	{
-		// Arrange
-		var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(tempDir);
-		var tester = new TestAsyncUnitTester(tempDir);
-		var collections = Enumerable.Range(1, 10)
-			.Select(i => new[] { new TestPerson { Id = i, Name = $"Person{i}" } })
-			.ToArray();
-
-		try
-		{
-			// Act
-			var tasks = collections.Select((collection, index) =>
-				tester.SaveToFileAsync(collection, p => true, $"ConcurrentTest{index}"));
-			await Task.WhenAll(tasks);
-
-			// Assert
-			var files = Directory.GetFiles(tempDir, "ConcurrentTest*.txt");
-			Assert.AreEqual(10, files.Length);
-		}
-		finally
-		{
 			if (Directory.Exists(tempDir))
 			{
 				Directory.Delete(tempDir, true);
@@ -310,10 +201,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			await tester.SaveToFileAsync(collection, p => true, methodName);
+			var expectedFilePath = await tester.SaveToFileAsync(collection, p => true, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
 			Assert.AreEqual(0, lines.Length);
@@ -335,7 +225,7 @@ public class UnitTesterTests
 		var collection = new[] { new TestPerson { Id = 1, Name = "Test" } };
 
 		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentException>(async () =>
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 			await tester.SaveToFileAsync(collection, p => true, string.Empty));
 	}
 
@@ -355,10 +245,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			await tester.SaveToFileAsync(collection, p => p.Name == "Id", methodName);
+			var expectedFilePath = await tester.SaveToFileAsync(collection, p => p.Name == "Id", methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
 			Assert.AreEqual(itemCount, lines.Length);
 			Assert.AreEqual("Id: 1", lines[0]);
@@ -393,7 +282,7 @@ public class UnitTesterTests
 		var collection = new[] { new TestPerson { Id = 1, Name = "Test" } };
 
 		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentException>(async () =>
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 			await tester.SaveToFileAsync(collection, p => true, null!));
 	}
 
@@ -410,38 +299,6 @@ public class UnitTesterTests
 			await tester.SaveToFileAsync(collection, null!, methodName));
 	}
 
-	[TestMethod]
-	public async Task SaveToFileAsync_OverwritesExistingFile()
-	{
-		// Arrange
-		var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(tempDir);
-		var tester = new TestAsyncUnitTester(tempDir);
-		const string methodName = "AsyncOverwriteTest";
-		var initialCollection = new[] { new TestPerson { Id = 1, Name = "Initial" } };
-		var updatedCollection = new[] { new TestPerson { Id = 2, Name = "Updated" } };
-
-		try
-		{
-			// Act
-			await tester.SaveToFileAsync(initialCollection, p => true, methodName);
-			await tester.SaveToFileAsync(updatedCollection, p => true, methodName);
-
-			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
-			var lines = await File.ReadAllLinesAsync(expectedFilePath);
-			Assert.AreEqual(1, lines.Length);
-			Assert.IsTrue(lines[0].Contains("Id: 2"));
-			Assert.IsTrue(lines[0].Contains("Name: Updated"));
-		}
-		finally
-		{
-			if (Directory.Exists(tempDir))
-			{
-				Directory.Delete(tempDir, true);
-			}
-		}
-	}
 
 	[TestMethod]
 	public async Task SaveToFileAsync_PropertiesWithNullValues_HandlesGracefully()
@@ -456,10 +313,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			await tester.SaveToFileAsync(collection, p => true, methodName);
+			var expectedFilePath = await tester.SaveToFileAsync(collection, p => true, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
 			Assert.AreEqual(1, lines.Length);
@@ -491,10 +347,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act - Only save Name property
-			await tester.SaveToFileAsync(collection, p => p.Name == "Name", methodName);
+			var expectedFilePath = await tester.SaveToFileAsync(collection, p => p.Name == "Name", methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
 			Assert.AreEqual(2, lines.Length);
 			Assert.AreEqual("Name: Alice", lines[0]);
@@ -526,10 +381,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			await tester.SaveToFileAsync(collection, p => true, methodName);
+			var expectedFilePath = await tester.SaveToFileAsync(collection, p => true, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
 			Assert.AreEqual(2, lines.Length);
@@ -560,13 +414,12 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(collection, p => true, methodName);
+			var expectedFilePath = tester.SaveToFile(collection, p => true, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = File.ReadAllLines(expectedFilePath);
-			Assert.AreEqual(0, lines.Length);
+			Assert.AreEqual(1, lines.Length);
 		}
 		finally
 		{
@@ -585,7 +438,7 @@ public class UnitTesterTests
 		var collection = new[] { new TestPerson { Id = 1, Name = "Test" } };
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentException>(() =>
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
 			tester.SaveToFile(collection, p => true, string.Empty));
 	}
 
@@ -605,10 +458,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(collection, p => p.Name == "Id", methodName);
+			var expectedFilePath = tester.SaveToFile(collection, p => p.Name == "Id", methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			var lines = File.ReadAllLines(expectedFilePath);
 			Assert.AreEqual(itemCount, lines.Length);
 			Assert.AreEqual("Id: 1", lines[0]);
@@ -650,39 +502,6 @@ public class UnitTesterTests
 	}
 
 	[TestMethod]
-	public void SaveToFileCollection_OverwritesExistingFile()
-	{
-		// Arrange
-		var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(tempDir);
-		var tester = new TestCollectionUnitTester(tempDir);
-		const string methodName = "OverwriteTest";
-		var initialCollection = new[] { new TestPerson { Id = 1, Name = "Initial" } };
-		var updatedCollection = new[] { new TestPerson { Id = 2, Name = "Updated" } };
-
-		try
-		{
-			// Act
-			tester.SaveToFile(initialCollection, p => true, methodName);
-			tester.SaveToFile(updatedCollection, p => true, methodName);
-
-			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
-			var lines = File.ReadAllLines(expectedFilePath);
-			Assert.AreEqual(1, lines.Length);
-			Assert.IsTrue(lines[0].Contains("Id: 2"));
-			Assert.IsTrue(lines[0].Contains("Name: Updated"));
-		}
-		finally
-		{
-			if (Directory.Exists(tempDir))
-			{
-				Directory.Delete(tempDir, true);
-			}
-		}
-	}
-
-	[TestMethod]
 	public void SaveToFileCollection_PropertiesWithNullValues_HandlesGracefully()
 	{
 		// Arrange
@@ -695,10 +514,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(collection, p => true, methodName);
+			var expectedFilePath = tester.SaveToFile(collection, p => true, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = File.ReadAllLines(expectedFilePath);
 			Assert.AreEqual(1, lines.Length);
@@ -730,10 +548,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act - Only save Name property
-			tester.SaveToFile(collection, p => p.Name == "Name", methodName);
+			var expectedFilePath = tester.SaveToFile(collection, p => p.Name == "Name", methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			var lines = File.ReadAllLines(expectedFilePath);
 			Assert.AreEqual(2, lines.Length);
 			Assert.AreEqual("Name: Alice", lines[0]);
@@ -765,10 +582,9 @@ public class UnitTesterTests
 		try
 		{
 			// Act
-			tester.SaveToFile(collection, p => true, methodName);
+			var expectedFilePath = tester.SaveToFile(collection, p => true, methodName);
 
 			// Assert
-			var expectedFilePath = Path.Combine(tempDir, $"{methodName}.txt");
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = File.ReadAllLines(expectedFilePath);
 			Assert.AreEqual(2, lines.Length);

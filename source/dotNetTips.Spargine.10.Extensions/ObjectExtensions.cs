@@ -205,7 +205,9 @@ public static class ObjectExtensions
 	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static Lazy<T> ToLazy<T>([DisallowNull] this T value)
 	{
-		return new Lazy<T>(() => value.ArgumentNotNull());
+		value = value.ArgumentNotNull();
+
+		return new Lazy<T>(() => value);
 	}
 
 	/// <summary>
@@ -422,7 +424,7 @@ public static class ObjectExtensions
 		/// The name of a specific member to convert. If empty, all fields are converted.
 		/// This parameter is used as a prefix for hierarchical field names in nested objects.
 		/// </param>
-		/// <param name="ignoreNulls">
+		/// <param name="ignoreEmptyValues">
 		/// Specifies whether to ignore fields with null values.
 		/// When <c>true</c>, null-valued fields are excluded from the resulting dictionary.
 		/// When <c>false</c>, all fields are included regardless of their value.
@@ -481,8 +483,8 @@ public static class ObjectExtensions
 		/// var fieldDict = person.FieldsToDictionary();
 		/// // Result: { "Person._name": "John Doe", "Person._age": "30" }
 		/// 
-		/// // With ignoreNulls = false
-		/// var allFields = person.FieldsToDictionary(ignoreNulls: false);
+		/// // With ignoreEmptyValues = false
+		/// var allFields = person.FieldsToDictionary(ignoreEmptyValues: false);
 		/// // Result includes null-valued fields
 		/// </code>
 		/// </example>
@@ -493,7 +495,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
-		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
+		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
 			memberName = memberName.ArgumentNotNull();
 			var objectType = obj.ArgumentNotNull().GetType();
@@ -517,9 +519,9 @@ public static class ObjectExtensions
 					var itemId = itemCount++;
 					var itemInnerMember = $"{memberName}[{itemId.ToString(CultureInfo.CurrentCulture)}]";
 
-					foreach (var kvp in item.FieldsToDictionary(itemInnerMember, ignoreNulls))
+					foreach (var kvp in item.FieldsToDictionary(itemInnerMember, ignoreEmptyValues))
 					{
-						if (ignoreNulls && string.IsNullOrEmpty(kvp.Value))
+						if (ignoreEmptyValues && string.IsNullOrEmpty(kvp.Value))
 						{
 							continue;
 						}
@@ -544,7 +546,7 @@ public static class ObjectExtensions
 
 				var innerObject = field.GetValue(obj);
 
-				if (ignoreNulls && innerObject is null)
+				if (ignoreEmptyValues && innerObject is null)
 				{
 					continue;
 				}
@@ -553,9 +555,9 @@ public static class ObjectExtensions
 				{
 					var innerMember = $"{newMemberName}{field.Name}";
 
-					foreach (var kvp in innerObject.FieldsToDictionary(innerMember, ignoreNulls))
+					foreach (var kvp in innerObject.FieldsToDictionary(innerMember, ignoreEmptyValues))
 					{
-						if (ignoreNulls && string.IsNullOrEmpty(kvp.Value))
+						if (ignoreEmptyValues && string.IsNullOrEmpty(kvp.Value))
 						{
 							continue;
 						}
@@ -597,7 +599,7 @@ public static class ObjectExtensions
 				typeName = string.Empty;
 			}
 
-			var fields = obj.FieldsToDictionary(memberName: typeName, ignoreNulls: ignoreNulls);
+			var fields = obj.FieldsToDictionary(memberName: typeName, ignoreEmptyValues: ignoreNulls);
 
 			// Remove empty values
 			if (ignoreNulls)

@@ -109,7 +109,6 @@ public static class RandomData
 	/// <summary>
 	/// Provides a thread-static instance of RandomNumberGenerator for generating cryptographically secure random numbers.
 	/// </summary>
-	[ThreadStatic]
 	private static readonly RandomNumberGenerator _randomNumberGenerator;
 
 	/// <summary>
@@ -120,7 +119,10 @@ public static class RandomData
 	/// <summary>
 	/// Initializes static members of the <see cref="RandomData" /> class.
 	/// </summary>
-	static RandomData() => _randomNumberGenerator = RandomNumberGenerator.Create();
+	static RandomData()
+	{
+		_randomNumberGenerator = RandomNumberGenerator.Create();
+	}
 
 	/// <summary>
 	/// Generates the first line of an address.

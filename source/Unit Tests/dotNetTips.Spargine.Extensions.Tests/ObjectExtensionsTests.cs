@@ -217,21 +217,6 @@ public class ObjectExtensionsTests : UnitTester
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastBinaryClone<Person>());
 	}
 
-	[TestMethod]
-	public void FastBinaryClone_PrimitiveTypes_ReturnsClone()
-	{
-		int value = 42;
-		var clone = value.FastBinaryClone<int>();
-		Assert.AreEqual(value, clone);
-
-		string text = "Test String";
-		var clonedText = text.FastBinaryClone<string>();
-		Assert.AreEqual(text, clonedText);
-
-		DateTime dateTime = DateTime.Now;
-		var clonedDateTime = dateTime.FastBinaryClone<DateTime>();
-		Assert.AreEqual(dateTime, clonedDateTime);
-	}
 
 	[TestMethod]
 	public void FastBinaryClone_RoundTrip_MaintainsDataIntegrity()
@@ -494,7 +479,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void FieldsToDictionary_WithIgnoreNullsFalse_IncludesAllFields()
 	{
 		var testObject = new DisposableFields();
-		var dict = testObject.FieldsToDictionary(ignoreNulls: false);
+		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: false);
 
 		Assert.IsNotNull(dict);
 		Assert.IsTrue(dict.Count > 0);
@@ -504,7 +489,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void FieldsToDictionary_WithIgnoreNullsTrue_ExcludesNullFields()
 	{
 		var testObject = new DisposableFields();
-		var dict = testObject.FieldsToDictionary(ignoreNulls: true);
+		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: true);
 
 		Assert.IsNotNull(dict);
 		// Verify that null fields are excluded

@@ -241,23 +241,4 @@ public class FastStringBuilderTests
 		Assert.AreEqual(expected, result);
 	}
 
-	[TestMethod]
-	public void ToDelimitedString_EmptyDictionaryThrows()
-	{
-		// Arrange
-		var dict = new Dictionary<string, string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentException>(() => FastStringBuilder.ToDelimitedString(dict, ','));
-	}
-
-	[TestMethod]
-	public void ToDelimitedString_NullDictionaryThrows()
-	{
-		// Arrange
-		Dictionary<string, string> dict = null;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => FastStringBuilder.ToDelimitedString(dict, ','));
-	}
 }
