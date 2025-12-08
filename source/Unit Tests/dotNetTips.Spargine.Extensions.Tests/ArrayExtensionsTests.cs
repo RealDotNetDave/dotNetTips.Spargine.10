@@ -422,6 +422,16 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastSelectItemsTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		var result = people.FastSelectItems(0, 2);
+
+		Assert.IsTrue(result.Length == 2);
+	}
+
+	[TestMethod]
 	public void GenerateHashCode_ReturnsConsistentValue()
 	{
 		var arr1 = new[] { "a", "b", "c" };
@@ -703,16 +713,6 @@ public class ArrayExtensionsTests
 		var result = people.RemoveLast();
 
 		Assert.IsTrue(result.FastLongCount() == 99);
-	}
-
-	[TestMethod]
-	public void SelectItemsTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
-
-		var result = people.SelectItems(0, 2);
-
-		Assert.IsTrue(result.Length == 2);
 	}
 
 	[TestMethod]

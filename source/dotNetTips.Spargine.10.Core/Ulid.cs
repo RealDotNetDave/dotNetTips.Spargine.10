@@ -307,6 +307,8 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
+		//TODO: WORK ON PERF. SLOWER THAN GUID.NewGuid()
+
 		// Allocate all required memory on the stack to avoid heap allocations
 		Span<char> ulidChars = stackalloc char[UlidLength];
 		Span<byte> timestampBytes = stackalloc byte[8];

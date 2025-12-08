@@ -481,6 +481,8 @@ public static class FastStringBuilder
 	[Information(nameof(PerformAction), "David McCarter", "11/26/2025", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, Status = Status.New)]
 	public static string PerformAction(in int capacity, [AllowNull] in Action<StringBuilder> action)
 	{
+		//TODO: WORK ON PERF. SLOWER WHEN APPENDING WITH STRING BUILDER USING OBJECTPOOL.
+
 		if (action is null)
 		{
 			return ControlChars.EmptyString;
