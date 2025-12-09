@@ -937,7 +937,7 @@ dotnet_diagnostic.CA1727.severity = error
 [*.{cs,vb}]
 
 # Use Literals Where Appropriate
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1802.severity = suggestion
 
 # Do not initialize unnecessarily
@@ -950,33 +950,31 @@ dotnet_diagnostic.CA1805.severity = error
 dotnet_diagnostic.CA1806.severity = error
 
 # Initialize reference type static fields inline
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
-# Broken in .NET 10 @@@@
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1810.severity = suggestion 
 
 # Avoid uninstantiated internal classes
-# Broken in .NET 10 @@@@
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1812.severity = suggestion
 
 # Avoid unsealed attributes
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1813.severity = suggestion
 
 # Prefer jagged arrays over multidimensional
 dotnet_diagnostic.CA1814.severity = warning
 
 # Override equals and operator equals on value types
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1815.severity = warning
 
 # Properties should not return arrays
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1819.severity = warning
 dotnet_code_quality.CA1819.api_surface = public, protected
 
 # Test for empty strings using string length
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1820.severity = error
 
 # Remove empty finalizers
@@ -984,7 +982,7 @@ dotnet_diagnostic.CA1820.severity = error
 dotnet_diagnostic.CA1821.severity = error
 
 # Mark members as static
-# Examples in Rock Your Code: Coding Standards for Microsoft .NET
+# Examples in Rock Your Code: Coding Standards for Microsoft .NET >
 dotnet_diagnostic.CA1822.severity = suggestion
 
 # Avoid unused private fields
@@ -995,15 +993,15 @@ dotnet_diagnostic.CA1823.severity = error
 dotnet_diagnostic.CA1824.severity = suggestion
 
 # Avoid zero-length array allocations
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1825.severity = suggestion
 
 # Use property instead of Linq Enumerable method
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1826.severity = error
 
 # Do not use Count/LongCount when Any can be used
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET >
 dotnet_diagnostic.CA1827.severity = silent
 
 # Do not use CountAsync/LongCountAsync when AnyAsync can be used

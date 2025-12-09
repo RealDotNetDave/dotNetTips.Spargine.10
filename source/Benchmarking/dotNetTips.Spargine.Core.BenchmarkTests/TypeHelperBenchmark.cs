@@ -404,7 +404,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void CreateWithParameters()
 	{
-		var result = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTID");
+		var result = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTID12345678");
 
 		this.Consume(result);
 	}
