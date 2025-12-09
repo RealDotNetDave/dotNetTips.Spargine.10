@@ -13,7 +13,6 @@
 // ***********************************************************************
 
 using System;
-using System.Globalization;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -30,12 +29,12 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Strings)]
 public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 {
+	private static readonly char[] _charList = new[] { 'a', 'z' };
 	private string _base64String;
 	private string _brotilString;
 	private string _crlfCompareString;
 	private string _crlfString;
 	private string _gzipString;
-	private static readonly char[] _charList = new[] { 'a', 'z' };
 
 	[Benchmark(Description = nameof(StringExtensions.ComputeHash) + ": SHA256")]
 	[BenchmarkCategory(Categories.Strings)]
@@ -57,7 +56,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ContainsAny))]
 	[BenchmarkCategory(Categories.Strings)]
-public void ContainsAny()
+	public void ContainsAny()
 	{
 		// Fix: Pass a ReadOnlyCollection<char> as required by the method signature.
 		var charsToCheck = new System.Collections.ObjectModel.ReadOnlyCollection<char>(
@@ -95,20 +94,29 @@ public void ContainsAny()
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.FastCompare))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void FastCompare()
-	{
-		var result = this._crlfString.FastCompare(this._crlfCompareString, StringComparison.Ordinal);
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(StringExtensions.FromBase64))]
 	[BenchmarkCategory(Categories.Strings)]
 	public void FromBase64()
 	{
 		var result = this._base64String.FromBase64();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.IsEmpty))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void IsEmpty()
+	{
+		var result = this._crlfString.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.IsNotEmpty))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void IsNotEmpty()
+	{
+		var result = this._crlfString.IsNotEmpty();
 
 		this.Consume(result);
 	}

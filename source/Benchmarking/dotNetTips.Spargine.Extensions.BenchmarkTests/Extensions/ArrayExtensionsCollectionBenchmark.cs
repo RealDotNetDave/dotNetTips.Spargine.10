@@ -385,13 +385,13 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.SelectItems))]
+	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void SelectItems()
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
 
-		var result = people.SelectItems(0, 2);
+		var result = people.FastSelectItems(0, 2);
 
 		this.Consume(result);
 	}
