@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 12-12-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -24,6 +24,8 @@ using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.Serializers;
+
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
@@ -112,6 +114,67 @@ public class ObjectExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ObjectExtensions.FastBinaryClone) + ": Collection<ref>")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void FastBinaryCloneCollectionPersonRef()
+	{
+		var result = this._personCollection.FastBinaryClone<Collection<Person>>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FastBinaryClone) + ": PersonRecord")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void FastBinaryClonePersonRecord()
+	{
+		var result = this.PersonRecord01.FastBinaryClone<PersonRecord>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FastBinaryClone) + ": Person - ref")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void FastBinaryClonePersonRef()
+	{
+		var result = this.PersonRef01.FastBinaryClone<Person>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FastBinaryClone) + ": Person - val")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void FastBinaryClonePersonVal()
+	{
+		var result = this.PersonVal01.FastBinaryClone<Spargine.Tester.Models.ValueTypes.Person>();
+
+		this.Consume(result);
+	}
+
+
+	[Benchmark(Description = nameof(ObjectExtensions.FastClone) + ": Person")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void FastClone()
+	{
+		var result = this.PersonRef01.FastClone<Person>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FastClone) + ": Person + JsonSerializerOptions")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void FastCloneJsonSerializerOptions()
+	{
+		var options = new JsonSerializerOptions
+		{
+			DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+			WriteIndented = true,
+		};
+
+		var result = this.PersonRef01.FastClone<Person>(options);
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ObjectExtensions.FieldsToDictionary))]
 	public void FieldsToDictionary()
 	{
@@ -124,6 +187,14 @@ public class ObjectExtensionsBenchmark : Benchmark
 	public void FromJson()
 	{
 		var result = this._peopleJson.FromJson<Person>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FromJson) + ": JsonTypeInfo")]
+	public void FromJsonJsonTypeInfo()
+	{
+		var result = this._peopleJson.FromJson(PersonRefJsonSerializerContext.Default.Person);
 
 		this.Consume(result);
 	}
@@ -347,6 +418,15 @@ public class ObjectExtensionsBenchmark : Benchmark
 	public void ToJson03()
 	{
 		var result = this.PersonRef01.ToJson(JsonSerializerOptions.Default);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.ToJson) + ": Person + JsonTypeInfo")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void ToJsonJsonTypeInfo()
+	{
+		var result = this.PersonRef01.ToJson(PersonRefJsonSerializerContext.Default.Person);
 
 		this.Consume(result);
 	}
