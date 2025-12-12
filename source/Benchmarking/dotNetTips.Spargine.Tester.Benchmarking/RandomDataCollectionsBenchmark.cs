@@ -113,9 +113,8 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result.Count());
+		this.Consume(result.Any());
 	}
-
 
 	[Benchmark(Description = nameof(Coordinate) + ":OrderBy()")]
 	[BenchmarkCategory(Categories.New, Categories.RecordType)]
@@ -123,7 +122,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result.Count());
+		this.Consume(result.Any());
 	}
 
 	[Benchmark(Description = nameof(PersonRecord) + ":OrderBy()")]
@@ -132,7 +131,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result.Count());
+		this.Consume(result.Any());
 	}
 
 	public override void Setup()
