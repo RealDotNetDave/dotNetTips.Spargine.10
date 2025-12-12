@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using DotNetTips.Spargine.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -27,6 +28,26 @@ public class ExecutionHelperTests
 
 	private const int RetryCount = 3;
 	private const int RetryWait = 10;
+
+	[TestMethod]
+	public async Task ProgressiveRetryAsyncTest()
+	{
+		try
+		{
+			var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
+			{
+				var drives = DriveHelper.GetRemovableDrives();
+				return Task.CompletedTask;
+
+			}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
+
+			Assert.IsTrue(result.Value > 0);
+		}
+		catch (Exception ex)
+		{
+			Assert.Fail($"Progressive retry failed: {ex.Message}.");
+		}
+	}
 
 	[TestMethod]
 	public void ProgressiveRetryTest()

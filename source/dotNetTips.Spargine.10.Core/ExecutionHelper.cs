@@ -66,7 +66,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static SimpleResult<int> ProgressiveRetry([DisallowNull] Action operation, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, int retryWaitMilliseconds = 100, ILogger? logger = null)
 	{
 		operation = operation.ArgumentNotNull();
@@ -128,7 +128,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetryAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetryAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static async Task<SimpleResult<int>> ProgressiveRetryAsync([DisallowNull] Func<Task> function, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, [ConstantExpected(Min = 1, Max = int.MaxValue)] int retryWaitMilliseconds = 100, ILogger? logger = null, CancellationToken cancellationToken = default)
 	{
 		function = function.ArgumentNotNull();

@@ -182,6 +182,169 @@ public class FastStringBuilderTests
 	}
 
 	[TestMethod]
+	public void PerformAction_WithCapacity_EmptyActionTest()
+	{
+		Action<StringBuilder> action = (StringBuilder sb) => { };
+
+		var result = FastStringBuilder.PerformAction(100, action);
+
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_ExactCapacityTest()
+	{
+		var words = new[] { "Hello", "World", "Test" };
+		var expectedLength = string.Join("|", words).Length;
+		var capacity = expectedLength;
+
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			for (var i = 0; i < words.Length; i++)
+			{
+				_ = sb.Append(words[i]);
+				if (i < words.Length - 1)
+				{
+					_ = sb.Append("|");
+				}
+			}
+		};
+
+		var result = FastStringBuilder.PerformAction(capacity, action);
+
+		Assert.AreEqual("Hello|World|Test", result);
+		Assert.AreEqual(expectedLength, result.Length);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_LargeDataTest()
+	{
+		var capacity = 5000;
+		var itemCount = 100;
+
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			for (var i = 0; i < itemCount; i++)
+			{
+				_ = sb.Append($"Item{i}:");
+			}
+		};
+
+		var result = FastStringBuilder.PerformAction(capacity, action);
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains("Item0:"));
+		Assert.IsTrue(result.Contains($"Item{itemCount - 1}:"));
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_MaxValueCapacityTest()
+	{
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			_ = sb.Append("Maximum");
+		};
+
+		var result = FastStringBuilder.PerformAction(int.MaxValue, action);
+
+		Assert.AreEqual("Maximum", result);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_MultipleAppendsTest()
+	{
+		var capacity = 200;
+		var strings = RandomData.GenerateWords(WordCount, WordMinLength, WordMaxLength).Take(20).ToArray();
+
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			foreach (var word in strings)
+			{
+				_ = sb.Append($"WORD:{word}|");
+			}
+		};
+
+		var result = FastStringBuilder.PerformAction(capacity, action);
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.StartsWith("WORD:"));
+		Assert.IsTrue(result.Contains("|"));
+		Assert.AreEqual(strings.Length, result.Count(c => c == '|'));
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_NegativeCapacityTest()
+	{
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			_ = sb.Append("Test");
+		};
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
+		{
+			_ = FastStringBuilder.PerformAction(-1, action);
+		});
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_NullActionTest()
+	{
+		var result = FastStringBuilder.PerformAction(100, null);
+
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_SmallCapacityGrowthTest()
+	{
+		var capacity = 10;
+		var longText = "This is a much longer text that exceeds the initial capacity";
+
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			_ = sb.Append(longText);
+		};
+
+		var result = FastStringBuilder.PerformAction(capacity, action);
+
+		Assert.AreEqual(longText, result);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_ValidActionTest()
+	{
+		var capacity = 500;
+		var words = RandomData.GenerateWords(10, 5, 10).ToArray();
+
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			foreach (var word in words)
+			{
+				_ = sb.Append($"{word}|");
+			}
+		};
+
+		var result = FastStringBuilder.PerformAction(capacity, action);
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Length > 0);
+		Assert.IsTrue(result.Contains("|"));
+	}
+
+	[TestMethod]
+	public void PerformAction_WithCapacity_ZeroCapacityTest()
+	{
+		Action<StringBuilder> action = (StringBuilder sb) =>
+		{
+			_ = sb.Append("Test");
+		};
+
+		var result = FastStringBuilder.PerformAction(0, action);
+
+		Assert.AreEqual("Test", result);
+	}
+
+	[TestMethod]
 	public void PerformActionTest()
 	{
 		var strings = RandomData.GenerateWords(WordCount, WordMinLength, WordMaxLength).ToArray();

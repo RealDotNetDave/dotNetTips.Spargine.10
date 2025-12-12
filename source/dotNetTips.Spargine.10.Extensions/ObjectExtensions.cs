@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-03-2025
+// Last Modified On : 12-12-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -268,7 +268,7 @@ public static class ObjectExtensions
 		/// <typeparam name="T">The type of the objects to compare. Must implement <see cref="IComparable"/>.</typeparam>
 		/// <param name="obj2">The second object to compare. This parameter can be null.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Max), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(Max), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T? Max<T>([DisallowNull] T obj2) where T : IComparable
 		{
 			return obj is T comparableObj
@@ -633,7 +633,7 @@ public static class ObjectExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 		public bool IsString() => obj is string;
 
 		/// <summary>
@@ -877,7 +877,7 @@ public static class ObjectExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 		public T FastBinaryClone<T>([AllowNull] MessagePack.MessagePackSerializerOptions options = null)
 		{
 			obj = obj.ArgumentNotNull();

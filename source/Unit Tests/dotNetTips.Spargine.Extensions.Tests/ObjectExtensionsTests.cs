@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-03-2025
+// Last Modified On : 12-12-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -97,6 +98,38 @@ public class ObjectExtensionsTests : UnitTester
 		//PrintResult(result, nameof(this.ComputeSha256HashTest));
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void DisposeCollection_WithEmptyCollection_DoesNotThrow()
+	{
+		var emptyCollection = new List<DisposableFields>();
+
+		try
+		{
+			emptyCollection.DisposeCollection();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail("Should not throw for empty collection");
+		}
+	}
+
+	[TestMethod]
+	public void DisposeCollection_WithNullCollection_DoesNotThrow()
+	{
+		List<DisposableFields> nullCollection = null;
+
+		try
+		{
+			nullCollection.DisposeCollection();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail("Should not throw for null collection");
+		}
 	}
 
 	[TestMethod]
@@ -274,6 +307,41 @@ public class ObjectExtensionsTests : UnitTester
 			Assert.AreNotSame(person.Addresses[0], clone.Addresses[0]);
 			Assert.AreEqual(person.Addresses[0].Address1, clone.Addresses[0].Address1);
 		}
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_WithNullOptions_UsesDefaults()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var clone = person.FastBinaryClone<Person>(null);
+
+		Assert.IsNotNull(clone);
+		Assert.AreNotSame(person, clone);
+		Assert.AreEqual(person.Id, clone.Id);
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_WithOptions_Null_ThrowsArgumentNullException()
+	{
+		Person person = null;
+		var options = MessagePack.MessagePackSerializerOptions.Standard;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastBinaryClone<Person>(options));
+	}
+
+	[TestMethod]
+	public void FastBinaryClone_WithOptions_ReturnsClone()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var options = MessagePack.MessagePackSerializerOptions.Standard;
+
+		var clone = person.FastBinaryClone<Person>(options);
+
+		Assert.IsNotNull(clone);
+		Assert.AreNotSame(person, clone);
+		Assert.AreEqual(person.Id, clone.Id);
+		Assert.AreEqual(person.Email, clone.Email);
 	}
 
 	[TestMethod]
@@ -740,6 +808,87 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void GetImplementedInterfaces_WithFilter_ReturnsFilteredInterfaces()
+	{
+		var list = new List<int> { 1, 2, 3 };
+		var filterNames = new ReadOnlyCollection<string>(new[] { "IEnumerable" });
+
+		var interfaces = list.GetImplementedInterfaces(filterNames);
+
+		Assert.IsNotNull(interfaces);
+	}
+
+	[TestMethod]
+	public void GetImplementedInterfaces_WithList_ReturnsMultipleInterfaces()
+	{
+		var list = new List<int> { 1, 2, 3 };
+
+		var interfaces = ObjectExtensions.GetImplementedInterfaces(list);
+
+		Assert.IsNotNull(interfaces);
+		Assert.IsTrue(interfaces.Count > 0);
+	}
+
+	[TestMethod]
+	public void GetImplementedInterfaces_WithPerson_ReturnsInterfaces()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var interfaces = ObjectExtensions.GetImplementedInterfaces(person);
+
+		Assert.IsNotNull(interfaces);
+		Assert.IsInstanceOfType(interfaces, typeof(ReadOnlyCollection<string>));
+	}
+
+	[TestMethod]
+	public void GetImplementedInterfaceTypes_WithList_ReturnsMultipleTypes()
+	{
+		var list = new List<string> { "a", "b", "c" };
+
+		var interfaceTypes = list.GetImplementedInterfaceTypes();
+
+		Assert.IsNotNull(interfaceTypes);
+		Assert.IsTrue(interfaceTypes.Count > 0);
+	}
+
+	[TestMethod]
+	public void GetImplementedInterfaceTypes_WithPerson_ReturnsTypes()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var interfaceTypes = person.GetImplementedInterfaceTypes();
+
+		Assert.IsNotNull(interfaceTypes);
+		Assert.IsInstanceOfType(interfaceTypes, typeof(ReadOnlyCollection<Type>));
+	}
+
+	[TestMethod]
+	public void HasProperty_WithEmptyPropertyName_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.HasProperty(string.Empty));
+	}
+
+	[TestMethod]
+	public void HasProperty_WithNullPropertyName_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.HasProperty(null));
+	}
+
+	[TestMethod]
+	public void HasProperty_WithPrivateProperty_FindsProperty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var hasId = person.HasProperty("Id");
+
+		Assert.IsTrue(hasId);
+	}
+
+	[TestMethod]
 	public void HasPropertyTest()
 	{
 		var person = RandomData.GeneratePerson<Person>();
@@ -750,11 +899,150 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void InitializeFields_Null_ThrowsArgumentNullException()
+	{
+		DisposableFields obj = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.InitializeFields());
+	}
+
+	[TestMethod]
+	public void InitializeFields_WithNullFields_InitializesFields()
+	{
+		var testObject = new DisposableFields();
+
+		try
+		{
+			testObject.InitializeFields();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail("Should initialize fields without throwing");
+		}
+	}
+
+	[TestMethod]
 	public void InitializeFieldsTest()
 	{
 		var testObject = new DisposableFields();
 
 		testObject.InitializeFields();
+	}
+
+	[TestMethod]
+	public void IsString_WithNonString_ReturnsFalse()
+	{
+		object obj = 42;
+
+		var result = obj.IsString();
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsString_WithNull_ReturnsFalse()
+	{
+		object obj = null;
+
+		var result = obj.IsString();
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsString_WithPerson_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.IsString();
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsString_WithString_ReturnsTrue()
+	{
+		object obj = "test string";
+
+		var result = obj.IsString();
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Max_BothComparableIntegers_ReturnsLarger()
+	{
+		int value1 = 10;
+		int value2 = 20;
+
+		var result = value1.Max(value2);
+
+		Assert.AreEqual(20, result);
+	}
+
+	[TestMethod]
+	public void Max_BothComparableStrings_ReturnsLarger()
+	{
+		string value1 = "apple";
+		string value2 = "zebra";
+
+		var result = value1.Max(value2);
+
+		Assert.AreEqual("zebra", result);
+	}
+
+	[TestMethod]
+	public void Max_EqualValues_ReturnsEitherValue()
+	{
+		int value1 = 42;
+		int value2 = 42;
+
+		var result = value1.Max(value2);
+
+		Assert.AreEqual(42, result);
+	}
+
+	[TestMethod]
+	public void Max_FirstValueLarger_ReturnsFirst()
+	{
+		int value1 = 100;
+		int value2 = 50;
+
+		var result = value1.Max(value2);
+
+		Assert.AreEqual(100, result);
+	}
+
+	[TestMethod]
+	public void Max_NegativeNumbers_ReturnsCorrectMax()
+	{
+		int value1 = -10;
+		int value2 = -5;
+
+		var result = value1.Max(value2);
+
+		Assert.AreEqual(-5, result);
+	}
+
+	[TestMethod]
+	public void Max_NonComparableObject_ThrowsInvalidOperationException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var person2 = RandomData.GeneratePerson<Person>();
+
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => person.Max(person2));
+	}
+
+	[TestMethod]
+	public void Max_WithDateTime_ReturnsLaterDate()
+	{
+		var date1 = new DateTime(2025, 1, 1);
+		var date2 = new DateTime(2025, 12, 31);
+
+		var result = date1.Max(date2);
+
+		Assert.AreEqual(date2, result);
 	}
 
 	[TestMethod]
@@ -818,10 +1106,73 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void PropertiesToString_EmptyHeader_DoesNotPrependHeader()
+	{
+		int value = 42;
+
+		var result = value.PropertiesToString(header: string.Empty);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
 	public void PropertiesToString_Null_ThrowsArgumentNullException()
 	{
 		object obj = null;
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.PropertiesToString());
+	}
+
+	[TestMethod]
+	public void PropertiesToString_NullSequenceSeparator_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
+			person.PropertiesToString(sequenceSeparator: null));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithCustomSeparators_FormatsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.PropertiesToString(
+			header: "PERSON:",
+			keyValueSeparator: '=',
+			sequenceSeparator: " | ",
+			ignoreNulls: true,
+			includeMemberName: true);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.IsTrue(result.StartsWith("PERSON:"));
+		Assert.IsTrue(result.Contains("="));
+		Assert.IsTrue(result.Contains(" | "));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithIgnoreNullsFalse_IncludesNulls()
+	{
+		var testObject = new PropertiesTest
+		{
+			Id = RandomData.GenerateKey(),
+			Person = null,
+			PersonRecord = RandomData.GeneratePerson<PersonRecord>(),
+			Today = Clock.LocalTime
+		};
+
+		var result = testObject.PropertiesToString(ignoreNulls: false);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithIncludeMemberNameFalse_ExcludesTypeName()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.PropertiesToString(includeMemberName: false);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
 
 	[TestMethod]
@@ -1024,6 +1375,31 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void TryDispose_WithThrowExceptionFalse_SuppressesException()
+	{
+		var faultyDisposable = new FaultyDisposableObject();
+
+		try
+		{
+			faultyDisposable.TryDispose(throwException: false);
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail("Should suppress exception when throwException is false");
+		}
+	}
+
+	[TestMethod]
+	public void TryDispose_WithThrowExceptionTrue_RethrowsException()
+	{
+		var faultyDisposable = new FaultyDisposableObject();
+
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
+			faultyDisposable.TryDispose(throwException: true));
+	}
+
+	[TestMethod]
 	public void TryDisposeTest()
 	{
 		var disposableObj = new DisposableFields();
@@ -1039,4 +1415,13 @@ public class ObjectExtensionsTests : UnitTester
 			Assert.Fail();
 		}
 	}
+
+	private class FaultyDisposableObject : IDisposable
+	{
+		public void Dispose()
+		{
+			throw new InvalidOperationException("Faulty dispose");
+		}
+	}
+
 }
