@@ -899,7 +899,6 @@ public static class ObjectExtensions
 			obj = obj.ArgumentNotNull();
 
 			// Create a SHA256
-			// ComputeHash - returns byte array
 			var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(obj.ToJson())).AsSpan();
 
 			// Convert byte array to a string

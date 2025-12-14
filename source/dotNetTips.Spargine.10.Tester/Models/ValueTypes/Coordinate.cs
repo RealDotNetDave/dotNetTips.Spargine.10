@@ -177,7 +177,10 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// </summary>
 	/// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
 	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override readonly int GetHashCode() => HashCode.Combine(this.X, this.Y, this.Z);
+	public override readonly int GetHashCode()
+	{
+		return HashCode.Combine(this.X, this.Y, this.Z);
+	}
 
 	/// <summary>
 	/// Returns a string that represents the current <see cref="Coordinate"/>.

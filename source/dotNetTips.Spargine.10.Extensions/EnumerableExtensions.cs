@@ -567,16 +567,73 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Converts the specified collection to a <see cref="Collection{T}"/>.
+		/// Converts the specified collection to a <see cref="Collection{T}"/> with optimized performance for common collection types.
 		/// </summary>
+		/// <returns>A <see cref="Collection{T}"/> that wraps or contains elements from the input collection.</returns>
+		/// <remarks>
+		/// This method provides optimized conversion paths for different collection types to minimize allocations and enumerations:
+		/// <list type="bullet">
+		/// <item><description><see cref="IList{T}"/> - Directly wraps the list without copying (fastest path, zero allocation).</description></item>
+		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Directly wraps the array without copying.</description></item>
+		/// <item><description><see cref="ICollection{T}"/> - Creates a pre-sized <see cref="List{T}"/> and copies elements once, then wraps it.</description></item>
+		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Uses collection expression to materialize and wrap the collection.</description></item>
+		/// </list>
+		/// Performance characteristics:
+		/// <list type="bullet">
+		/// <item><description><b>IList&lt;T&gt; input:</b> O(1) operation, no allocations beyond the Collection wrapper.</description></item>
+		/// <item><description><b>Array input:</b> O(1) operation, no allocations beyond the Collection wrapper.</description></item>
+		/// <item><description><b>ICollection&lt;T&gt; input:</b> O(n) operation, single enumeration with pre-sized list allocation.</description></item>
+		/// <item><description><b>Other IEnumerable&lt;T&gt; input:</b> O(n) operation, potential array allocation.</description></item>
+		/// </list>
+		/// </remarks>
+		/// <example>
+		/// This example shows how to use <see cref="ToCollection"/> with different collection types:
+		/// <code>
+		/// // From List&lt;T&gt; - direct wrap, no copy
+		/// var list = new List&lt;int&gt; { 1, 2, 3 };
+		/// Collection&lt;int&gt; collection1 = list.ToCollection();
+		///
+		/// // From array - direct wrap, no copy
+		/// int[] array = { 1, 2, 3 };
+		/// Collection&lt;int&gt; collection2 = array.ToCollection();
+		///
+		/// // From IEnumerable&lt;T&gt; - materialized then wrapped
+		/// IEnumerable&lt;int&gt; enumerable = Enumerable.Range(1, 3);
+		/// Collection&lt;int&gt; collection3 = enumerable.ToCollection();
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Collection<T> ToCollection()
 		{
 			collection = collection.ArgumentItemsExists();
 
+			// Optimize for common collection types to avoid double enumeration
+			if (collection is IList<T> list)
+			{
+				return new Collection<T>(list);
+			}
+
+			// Optimize for arrays with direct creation
+			if (collection is T[] array)
+			{
+				return new Collection<T>(array);
+			}
+
+			// For other types, materialize to list first for better performance
+			if (collection is ICollection<T> collectionT)
+			{
+				var tempList = new List<T>(collectionT.Count);
+				foreach (var item in collection)
+				{
+					tempList.Add(item);
+				}
+				return new Collection<T>(tempList);
+			}
+
+			// Fall back to collection expression for unknown types
 			return new Collection<T>([.. collection]);
 		}
 
@@ -1200,12 +1257,15 @@ public static class EnumerableExtensions
 			{
 				while (enumerator.MoveNext())
 				{
-					var currentPage = new List<T>(pageSize);
+					var currentPage = new List<T>(pageSize)
+					{
+						enumerator.Current
+					};
 
-					do
+					while (currentPage.Count < pageSize && enumerator.MoveNext())
 					{
 						currentPage.Add(enumerator.Current);
-					} while (currentPage.Count < pageSize && enumerator.MoveNext());
+					}
 
 					yield return currentPage;
 				}
