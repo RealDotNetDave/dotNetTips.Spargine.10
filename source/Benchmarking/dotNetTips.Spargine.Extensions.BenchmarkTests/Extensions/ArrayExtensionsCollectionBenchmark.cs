@@ -26,11 +26,11 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 /// <summary>
 /// Class ArrayExtensionsCollectionBenchmark.
-/// Implements the <see cref="SmallCollectionBenchmark" />
+/// Implements the <see cref="LargeCollectionBenchmark" />
 /// </summary>
-/// <seealso cref="SmallCollectionBenchmark" />
+/// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
-public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
+public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private byte[] _byteArray;
 

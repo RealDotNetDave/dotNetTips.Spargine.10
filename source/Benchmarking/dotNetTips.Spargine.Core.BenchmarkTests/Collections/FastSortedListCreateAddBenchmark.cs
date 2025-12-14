@@ -23,7 +23,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections;
 
 [BenchmarkCategory(Categories.Collections)]
-public class FastSortedListCreateAddBenchmark : SmallCollectionBenchmark
+public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _peopleRefArrayToInsert;
 	private Dictionary<string, Person> _peopleRefDictionaryToInsert;

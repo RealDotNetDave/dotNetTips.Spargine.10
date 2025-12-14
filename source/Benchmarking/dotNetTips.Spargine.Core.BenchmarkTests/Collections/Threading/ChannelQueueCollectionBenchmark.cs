@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Threading;
 /// Collection type PerfTestRunner.
 /// </summary>
 [BenchmarkCategory(Categories.Async)]
-public class ChannelQueueCollectionBenchmark : SmallCollectionBenchmark
+public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 {
 
 	/// <summary>
@@ -76,6 +76,17 @@ public class ChannelQueueCollectionBenchmark : SmallCollectionBenchmark
 		base.Setup();
 
 		this._personRefArray = this.GetPersonRefArray();
+	}
+
+	[Benchmark(Description = "TryWriteOnce")]
+	[BenchmarkCategory(Categories.Async)]
+	public async Task TryWriteOnce()
+	{
+		var queue = new ChannelQueue<string>();
+		var key = "k1";
+		var written = queue.TryWriteOnce("hello", key);
+
+		await this.ConsumeAsync(written).ConfigureAwait(false);
 	}
 
 	/// <summary>
@@ -157,18 +168,7 @@ public class ChannelQueueCollectionBenchmark : SmallCollectionBenchmark
 		}
 	}
 
-	[Benchmark(Description = "TryWriteOnce")]
-	[BenchmarkCategory(Categories.Async)]
-	public async Task TryWriteOnce()
-	{
-		var queue = new ChannelQueue<string>();
-		var key = "k1";
-		var written = queue.TryWriteOnce("hello", key);
-
-		await this.ConsumeAsync(written).ConfigureAwait(false);
-	}
-
-		[Benchmark(Description = "Write & Read Async: IEnumerable")]
+	[Benchmark(Description = "Write & Read Async: IEnumerable")]
 	[BenchmarkCategory(Categories.Async)]
 	public async Task WriteReadAsyncIEnumerableAsync()
 	{

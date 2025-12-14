@@ -24,11 +24,11 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 /// <summary>
 /// Class CollectionExtensionsCollectionBenchmark.
-/// Implements the <see cref="SmallCollectionBenchmark" />
+/// Implements the <see cref="LargeCollectionBenchmark" />
 /// </summary>
-/// <seealso cref="SmallCollectionBenchmark" />
+/// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
-public class CollectionExtensionsCollectionBenchmark : SmallCollectionBenchmark
+public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
 	private Collection<Person> _peopleRefCollection;

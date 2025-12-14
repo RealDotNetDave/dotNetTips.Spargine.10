@@ -22,11 +22,11 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 /// <summary>
-/// Class SortedSetCollectionBenchmark. Implements the <see cref="SmallCollectionBenchmark"/>
+/// Class SortedSetCollectionBenchmark. Implements the <see cref="LargeCollectionBenchmark"/>
 /// </summary>
-/// <seealso cref="SmallCollectionBenchmark"/>
+/// <seealso cref="LargeCollectionBenchmark"/>
 [BenchmarkCategory(Categories.Collections)]
-public class SortedSetCollectionBenchmark : SmallCollectionBenchmark
+public class SortedSetCollectionBenchmark : LargeCollectionBenchmark
 {
 
 	private SortedSet<Person> _personRefSortedSet;

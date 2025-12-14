@@ -22,11 +22,11 @@ namespace DotNetTips.Spargine.Benchmarking;
 
 /// <summary>
 /// Class CollectionLoopingBenchmark.
-/// Implements the <see cref="SmallCollectionBenchmark" />
+/// Implements the <see cref="LargeCollectionBenchmark" />
 /// </summary>
-/// <seealso cref="SmallCollectionBenchmark" />
+/// <seealso cref="LargeCollectionBenchmark" />
 [Information(Status = Status.New)]
-public class CollectionLoopingBenchmark : SmallCollectionBenchmark
+public class CollectionLoopingBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _personRefArray;
 	private List<Person> _personRefList;

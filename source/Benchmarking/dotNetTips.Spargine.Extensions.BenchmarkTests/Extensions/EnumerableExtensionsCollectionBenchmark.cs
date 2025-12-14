@@ -16,8 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
@@ -29,12 +27,13 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 /// <summary>
 /// EnumerableExtensions PerfTestRunner.
-/// Implements the <see cref="SmallCollectionBenchmark" />
+/// Implements the <see cref="LargeCollectionBenchmark" />
 /// </summary>
-/// <seealso cref="SmallCollectionBenchmark" />
+/// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
-public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
+public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
+	//TODO: BREAK UP. TAKES OVER 4 HOURS TO RUN ALL TESTS!	
 
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
 	private List<PersonRecord> _personRecordList;
@@ -47,7 +46,6 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
 	private static bool AnyWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Any(predicate);
-	private static int CountWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Count(predicate);
 
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -80,6 +78,14 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	{
 
 		var result = this._personRefEnumerable.AddLast(this.PersonRef01).Last();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastAny) + ": With Predicate")]
+	public void AnyFastAnyWithPredicate()
+	{
+		var result = this._personRefEnumerable.FastAny(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
 		this.Consume(result);
 	}
@@ -136,55 +142,6 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "IEnumerable.Count: With Predicate")]
-	[BenchmarkCategory(Categories.ForComparison)]
-	public void Count_Count_WithPredicate()
-	{
-		var result = CountWithPredicate(this._personRefEnumerable, p => p.LastName.Contains('a', StringComparison.CurrentCulture));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.CountAsync))]
-	public async Task Count_CountAsync()
-	{
-		var result = await this._personRefEnumerable.CountAsync(CancellationToken.None).ConfigureAwait(false);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = "EnumerableExtensions.Count()")]
-	public void Count_EnumerableExtensions_Count()
-	{
-		var result = this._personRefEnumerable.Count();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = "EnumerableExtensions.Count()" + ": IList ")]
-	public void Count_FastCount_IList()
-	{
-		var result = this._personRefList.FastCount();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": With Predicate")]
-	public void Count_FastCount_WithPredicate()
-	{
-		var result = this._personRefEnumerable.FastLongCount(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount))]
-	public void Counting_FastCount()
-	{
-		var result = this._personRefEnumerable.FastLongCount();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.Create))]
 	public void Create()
 	{
@@ -211,14 +168,6 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
 		var result = people.EnsureUnique().Last();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastAny) + ": With Predicate")]
-	public void FastAnyWithPredicate()
-	{
-		var result = this._personRefEnumerable.FastAny(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
 		this.Consume(result);
 	}
@@ -527,72 +476,6 @@ public class EnumerableExtensionsCollectionBenchmark : SmallCollectionBenchmark
 	{
 		var people = this._personRefEnumerable;
 		var result = people.StructuralSequenceEqual(people.TakeLast(10));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToBlockingCollection))]
-	public void ToBlockingCollection01()
-	{
-		var result = this._personRefEnumerable.ToBlockingCollection();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection))]
-	public void ToCollection()
-	{
-		var result = this._personRefEnumerable.ToCollection();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToDelimitedString))]
-	public void ToDelimitedString()
-	{
-		var result = this._personRefEnumerable.ToDelimitedString(',');
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToFrozenSet))]
-	public void ToFrozenSet()
-	{
-		var result = this._personRefEnumerable.ToFrozenSet();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToImmutable))]
-	public void ToImmutable()
-	{
-		var result = this._personRefEnumerable.AsEnumerable().ToImmutable();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToLinkedList))]
-	public void ToLinkedList()
-	{
-		var result = this._personRefEnumerable.ToLinkedList();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToListAsync))]
-	public async Task ToListAsync()
-	{
-		var people = this._personRefEnumerable;
-
-		var result = await people.ToListAsync().ConfigureAwait(false);
-
-		await this.ConsumeAsync(result).ConfigureAwait(false);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
-	public void ToReadOnlyCollection()
-	{
-		var result = this._personRefEnumerable.ToReadOnlyCollection();
 
 		this.Consume(result);
 	}
