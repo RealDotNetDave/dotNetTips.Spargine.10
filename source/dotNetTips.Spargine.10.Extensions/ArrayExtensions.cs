@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-08-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -126,11 +126,27 @@ public static class ArrayExtensions
 		}
 
 		/// <summary>
-		/// Selects the items.
+		/// Selects a range of items from the array using optimized ArraySegment slicing.
 		/// </summary>
-		/// <param name="startIndex">The start index.</param>
-		/// <param name="count">The count.</param>
-		/// <returns>T[].</returns>
+		/// <param name="startIndex">The zero-based starting index of the range to select.</param>
+		/// <param name="count">The number of elements to select from the array.</param>
+		/// <returns>A new array containing the selected elements from the specified range.</returns>
+		/// <remarks>
+		/// This method uses <see cref="ArraySegment{T}"/> and its <see cref="ArraySegment{T}.Slice(int, int)"/> method
+		/// to efficiently extract a subset of array elements without copying the entire array during the slicing operation.
+		/// The final result is returned as a new array using collection expression syntax.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="startIndex"/> is less than 0 or greater than array.Length - 1.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than 1 or exceeds the number of elements available from <paramref name="startIndex"/> to the end of the array.</exception>
+		/// <example>
+		/// This example shows how to select a range of elements from an array.
+		/// <code>
+		/// int[] numbers = { 10, 20, 30, 40, 50, 60, 70 };
+		/// int[] subset = numbers.FastSelectItems(2, 3);
+		/// // Result: { 30, 40, 50 }
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-05-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -409,9 +409,30 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Fasts the shuffle.
+		/// Shuffles the elements of the collection into a random order using a cryptographically secure random number generator.
 		/// </summary>
-		/// <returns>System.Collections.Generic.IEnumerable&lt;T&gt;.</returns>
+		/// <returns>An <see cref="IEnumerable{T}"/> containing all elements from the original collection in a randomized order.</returns>
+		/// <remarks>
+		/// This method provides optimized shuffling paths for different collection types using <see cref="RandomNumberGenerator.Shuffle{T}(Span{T})"/>:
+		/// <list type="bullet">
+		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Clones the array and shuffles in-place for optimal performance.</description></item>
+		/// <item><description><see cref="List{T}"/> - Creates a copy and uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> to shuffle via span for improved performance.</description></item>
+		/// <item><description><see cref="ICollection{T}"/> - Materializes to an array, then shuffles using the cryptographically secure random number generator.</description></item>
+		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Converts to array first, then shuffles.</description></item>
+		/// </list>
+		/// This method uses <see cref="RandomNumberGenerator"/> to ensure cryptographically strong randomization, which is more secure
+		/// than pseudo-random shuffling but may have slightly higher overhead for very large collections (100,000+ elements).
+		/// The original collection is never modified; a new shuffled collection is always returned.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when the collection is null.</exception>
+		/// <example>
+		/// This example shows how to use <see cref="FastShuffle"/> to randomize a collection of integers.
+		/// <code>
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var shuffled = numbers.FastShuffle();
+		/// // Result: A randomized sequence like { 3, 1, 5, 2, 4 }
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
