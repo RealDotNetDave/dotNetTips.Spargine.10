@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -218,7 +218,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(ToDelimitedString), "David McCarter", "11/03/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static string ToDelimitedString<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [ConstantExpected] in char delimiter = ControlChars.Comma) where TKey : notnull
+	public static string ToDelimitedString<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [ConstantExpected] char delimiter = ControlChars.Comma) where TKey : notnull
 	{
 		return FastStringBuilder.ToDelimitedString((Dictionary<TKey, TValue>)collection, delimiter);
 	}

@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-27-2024
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="NumericFormat.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -82,6 +82,6 @@ public class NumericFormat : Enumeration
 	/// </summary>
 	/// <param name="value">The value.</param>
 	/// <param name="displayName">The display name.</param>
-	private NumericFormat(int value, string displayName) : base(value, displayName) { }
+	private NumericFormat(in int value, string displayName) : base(value, displayName) { }
 
 }

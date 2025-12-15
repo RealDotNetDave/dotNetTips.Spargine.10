@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-25-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -29,7 +29,7 @@ public static class CharacterExtensions
 	/// Extension methods for <see cref="char"/> to determine ASCII character types.
 	/// </summary>
 	/// <param name="character">The character to evaluate.</param>
-	extension(in char character)
+	extension(char character)
 	{
 		/// <summary>
 		/// Determines whether the specified character is an ASCII digit.

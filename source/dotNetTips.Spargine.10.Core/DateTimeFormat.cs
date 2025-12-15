@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-28-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="DateTimeFormat.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -122,6 +122,6 @@ public class DateTimeFormat : Enumeration
 	/// </summary>
 	/// <param name="value">The integer value representing the format.</param>
 	/// <param name="displayName">The display name or format string.</param>
-	private DateTimeFormat(int value, string displayName) : base(value, displayName) { }
+	private DateTimeFormat(in int value, string displayName) : base(value, displayName) { }
 
 }

@@ -4,7 +4,7 @@
 // Created          : 08-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-25-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="FilePropertyWriter.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -95,7 +95,7 @@ public static class FilePropertyWriter
 	/// <param name="hresult">The HRESULT value to check.</param>
 	/// <param name="api">The name of the API call for error reporting.</param>
 	/// <exception cref="Win32Exception">Thrown if <paramref name="hresult"/> is not S_OK (0).</exception>
-	private static void ThrowIfFailed(int hresult, string api)
+	private static void ThrowIfFailed(in int hresult, string api)
 	{
 		if (hresult != 0)
 		{

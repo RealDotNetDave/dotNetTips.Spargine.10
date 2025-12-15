@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-13-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="AddressRecord.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -387,9 +387,9 @@ public sealed record AddressRecord : IAddress<AddressRecord>
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
 	[Information(nameof(ToAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static AddressRecord ToAddress([NotNull] ValueTypes.Address address)
+	public static AddressRecord ToAddress([NotNull] in ValueTypes.Address address)
 	{
-		address = address.ArgumentNotNull();
+		_ = address.ArgumentNotNull();
 
 		return new(address.Id)
 		{

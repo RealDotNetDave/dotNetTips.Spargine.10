@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-21-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="PersonRecord.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -317,9 +317,9 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// </exception>
 	[return: NotNull]
 	[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
-	public static PersonRecord ToPersonRecord([NotNull] ValueTypes.Person person)
+	public static PersonRecord ToPersonRecord([NotNull] in ValueTypes.Person person)
 	{
-		person = person.ArgumentNotNull();
+		_ = person.ArgumentNotNull();
 
 		PersonRecord newPerson = new()
 		{

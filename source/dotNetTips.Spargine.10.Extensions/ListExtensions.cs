@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-02-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -219,7 +219,7 @@ public static class ListExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), "David McCarter", "8/27/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-		public bool IsNotEmpty(int count)
+		public bool IsNotEmpty(in int count)
 		{
 			return list is null ? false : list.Count == count;
 		}
@@ -233,7 +233,7 @@ public static class ListExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public T IndexAtLooped(int index)
+		public T IndexAtLooped(in int index)
 		{
 			list = list.ArgumentNotNull();
 

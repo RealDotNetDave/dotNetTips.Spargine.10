@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -161,11 +161,51 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveToFile([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
-		//TODO: OVERLOAD ALL SAVETOFILE METHODS TO ACCEPT FILE PATH PARAMETER.
-
 		input = input.ArgumentNotNull();
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
+
+		File.WriteAllText(filePath, input);
+
+		return filePath;
+	}
+
+	/// <summary>
+	/// Saves the specified input string to a file in the specified directory.
+	/// </summary>
+	/// <param name="input">The string to save to the file. Cannot be null or empty.</param>
+	/// <param name="directory">The directory where the file will be saved. Cannot be null.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// Used to generate the output file name.
+	/// </param>
+	/// <returns>The full path of the saved file.</returns>
+	/// <remarks>
+	/// This method generates a file name based on the calling method name. If the method name is empty,
+	/// a random key is used as the file name. The file is saved with a .txt extension in the specified directory.
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> or <paramref name="directory"/> is null.</exception>
+	/// <exception cref="IOException">Thrown when an I/O error occurs while writing to the file.</exception>
+	/// <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission to write to the directory.</exception>
+	/// <exception cref="System.IO.DirectoryNotFoundException">Thrown when the specified directory does not exist.</exception>
+	/// <example>
+	/// This example shows how to use <see cref="SaveToFile(string, DirectoryInfo, string)"/> to save content to a specific directory.
+	/// <code>
+	/// var tester = new MyUnitTester();
+	/// var outputDir = new DirectoryInfo(@"C:\TestOutput");
+	/// string content = "Test data to save";
+	/// string savedPath = tester.SaveToFile(content, outputDir);
+	/// Console.WriteLine($"File saved to: {savedPath}");
+	/// </code>
+	/// </example>
+	[DebuggerStepThrough]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public string SaveToFile([NotNull] string input, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		input = input.ArgumentNotNull();
+		directory = directory.ArgumentNotNull();
+
+		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
 		File.WriteAllText(filePath, input);
 
@@ -188,7 +228,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	{
 		collection = collection.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
-		methodName = methodName.ArgumentNotNullOrEmpty();
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
@@ -219,13 +258,123 @@ public abstract class UnitTester(string? outputDirectory = null)
 	{
 		input = input.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
-		methodName = methodName.ArgumentNotNullOrEmpty();
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
 		var content = this.PropertiesToString(input, propertySelector);
 
 		File.WriteAllText(filePath, content);
+
+		return filePath;
+	}
+
+	/// <summary>
+	/// Saves the properties of an object to a file in the specified directory.
+	/// </summary>
+	/// <typeparam name="T">The type of the object.</typeparam>
+	/// <param name="input">The object whose properties will be saved to the file. Cannot be null.</param>
+	/// <param name="propertySelector">A function that determines which properties to include in the output. Cannot be null.</param>
+	/// <param name="directory">The directory where the file will be saved. Cannot be null.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// Used to generate the output file name.
+	/// </param>
+	/// <returns>The full path of the saved file.</returns>
+	/// <remarks>
+	/// This method generates a file name based on the calling method name. If the method name is empty,
+	/// a random key is used as the file name. The file is saved with a .txt extension in the specified directory.
+	/// The object's properties are converted to a string representation using the property selector function,
+	/// formatting each property as "PropertyName: PropertyValue" and joining them with comma-space separators.
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="input"/>, <paramref name="propertySelector"/>, or <paramref name="directory"/> is null.
+	/// </exception>
+	/// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception>
+	/// <exception cref="IOException">Thrown when an I/O error occurs while writing to the file.</exception>
+	/// <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission to write to the directory.</exception>
+	/// <exception cref="System.IO.DirectoryNotFoundException">Thrown when the specified directory does not exist.</exception>
+	/// <example>
+	/// This example shows how to use <see cref="SaveToFile{T}(T, Func{PropertyInfo, bool}, DirectoryInfo, string)"/> to save an object's properties to a specific directory.
+	/// <code>
+	/// var tester = new MyUnitTester();
+	/// var outputDir = new DirectoryInfo(@"C:\TestOutput");
+	/// var person = new Person { FirstName = "John", LastName = "Doe", Age = 30 };
+	/// string savedPath = tester.SaveToFile(person, p => p.PropertyType == typeof(string), outputDir);
+	/// Console.WriteLine($"File saved to: {savedPath}");
+	/// </code>
+	/// </example>
+	[DebuggerStepThrough]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public string SaveToFile<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		input = input.ArgumentNotNull();
+		propertySelector = propertySelector.ArgumentNotNull();
+		directory = directory.ArgumentNotNull();
+
+		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
+
+		var content = this.PropertiesToString(input, propertySelector);
+
+		File.WriteAllText(filePath, content);
+
+		return filePath;
+	}
+
+	/// <summary>
+	/// Saves the properties of each object in a collection to a file in the specified directory.
+	/// </summary>
+	/// <typeparam name="T">The type of the objects in the collection.</typeparam>
+	/// <param name="collection">The collection of objects whose properties will be saved to the file. Cannot be null.</param>
+	/// <param name="propertySelector">A function that determines which properties to include in the output. Cannot be null.</param>
+	/// <param name="directory">The directory where the file will be saved. Cannot be null.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// Used to generate the output file name.
+	/// </param>
+	/// <returns>The full path of the saved file.</returns>
+	/// <remarks>
+	/// This method generates a file name based on the calling method name. If the method name is empty,
+	/// a random key is used as the file name. The file is saved with a .txt extension in the specified directory.
+	/// Each object in the collection is converted to a string representation using the property selector,
+	/// and each object's properties are written as a separate line in the file.
+	/// The collection is materialized to an array before writing to avoid deferred execution issues.
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="collection"/>, <paramref name="propertySelector"/>, or <paramref name="directory"/> is null.
+	/// </exception>
+	/// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception>
+	/// <exception cref="IOException">Thrown when an I/O error occurs while writing to the file.</exception>
+	/// <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission to write to the directory.</exception>
+	/// <exception cref="System.IO.DirectoryNotFoundException">Thrown when the specified directory does not exist.</exception>
+	/// <example>
+	/// This example shows how to use <see cref="SaveToFile{T}(IEnumerable{T}, Func{PropertyInfo, bool}, DirectoryInfo, string)"/> to save a collection of objects to a specific directory.
+	/// <code>
+	/// var tester = new MyUnitTester();
+	/// var outputDir = new DirectoryInfo(@"C:\TestOutput");
+	/// var people = new List&lt;Person&gt; 
+	/// { 
+	///     new Person { FirstName = "John", LastName = "Doe" },
+	///     new Person { FirstName = "Jane", LastName = "Smith" }
+	/// };
+	/// string savedPath = tester.SaveToFile(people, p => p.PropertyType == typeof(string), outputDir);
+	/// Console.WriteLine($"File saved to: {savedPath}");
+	/// </code>
+	/// </example>
+	[DebuggerStepThrough]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public string SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		collection = collection.ArgumentNotNull();
+		propertySelector = propertySelector.ArgumentNotNull();
+		directory = directory.ArgumentNotNull();
+
+		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
+
+		var content = collection
+			.Select(item => this.PropertiesToString(item, propertySelector))
+			.ToArray(); // Materialize the content to avoid deferred execution issues.
+
+		File.WriteAllLines(filePath, content);
 
 		return filePath;
 	}
@@ -253,9 +402,70 @@ public abstract class UnitTester(string? outputDirectory = null)
 	{
 		collection = collection.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
-		methodName = methodName.ArgumentNotNullOrEmpty();
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
+
+		var content = collection
+			.Select(item => this.PropertiesToString(item, propertySelector))
+			.ToArray();
+
+		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
+
+		return filePath;
+	}
+
+	/// <summary>
+	/// Asynchronously saves the properties of each object in a collection to a file in the specified directory.
+	/// </summary>
+	/// <typeparam name="T">The type of the objects in the collection.</typeparam>
+	/// <param name="collection">The collection of objects whose properties will be saved to the file. Cannot be null.</param>
+	/// <param name="propertySelector">A function that determines which properties to include in the output. Cannot be null.</param>
+	/// <param name="directory">The directory where the file will be saved. Cannot be null.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// Used to generate the output file name.
+	/// </param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the full path of the saved file.</returns>
+	/// <remarks>
+	/// This method generates a file name based on the calling method name. If the method name is empty,
+	/// a random key is used as the file name. The file is saved with a .txt extension in the specified directory.
+	/// Each object in the collection is converted to a string representation using the property selector,
+	/// and each object's properties are written as a separate line in the file.
+	/// The collection is materialized to an array before writing to avoid deferred execution issues.
+	/// The asynchronous write operation uses <see cref="File.WriteAllLinesAsync(string, IEnumerable{string}, CancellationToken)"/>
+	/// with ConfigureAwait(false) to avoid capturing the synchronization context.
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="collection"/>, <paramref name="propertySelector"/>, or <paramref name="directory"/> is null.
+	/// </exception>
+	/// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception>
+	/// <exception cref="IOException">Thrown when an I/O error occurs while writing to the file.</exception>
+	/// <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission to write to the directory.</exception>
+	/// <exception cref="System.IO.DirectoryNotFoundException">Thrown when the specified directory does not exist.</exception>
+	/// <example>
+	/// This example shows how to use <see cref="SaveToFileAsync{T}(IEnumerable{T}, Func{PropertyInfo, bool}, DirectoryInfo, string)"/> to asynchronously save a collection of objects to a specific directory.
+	/// <code>
+	/// var tester = new MyUnitTester();
+	/// var outputDir = new DirectoryInfo(@"C:\TestOutput");
+	/// var people = new List&lt;Person&gt; 
+	/// { 
+	///     new Person { FirstName = "John", LastName = "Doe" },
+	///     new Person { FirstName = "Jane", LastName = "Smith" }
+	/// };
+	/// string savedPath = await tester.SaveToFileAsync(people, p => p.PropertyType == typeof(string), outputDir);
+	/// Console.WriteLine($"File saved to: {savedPath}");
+	/// </code>
+	/// </example>
+	[AsyncStateMachine(typeof(Task))]
+	[DebuggerStepThrough]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public async Task<string> SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		collection = collection.ArgumentNotNull();
+		propertySelector = propertySelector.ArgumentNotNull();
+		directory = directory.ArgumentNotNull();
+
+		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
 		var content = collection
 			.Select(item => this.PropertiesToString(item, propertySelector))

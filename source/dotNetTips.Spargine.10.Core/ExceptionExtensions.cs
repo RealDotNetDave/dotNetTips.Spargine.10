@@ -4,7 +4,7 @@
 // Created          : 05-04-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-18-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -413,7 +413,7 @@ public static class ExceptionExtensions
 		/// <returns>A string containing all exception messages, separated by the specified delimiter.</returns>
 		[return: NotNull]
 		[Information(nameof(GetAllMessages), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2024")]
-		public string GetAllMessages([ConstantExpected] in char delimiter = ControlChars.Comma)
+		public string GetAllMessages([ConstantExpected] char delimiter = ControlChars.Comma)
 		{
 			exception = exception.ArgumentNotNull();
 

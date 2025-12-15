@@ -4,7 +4,7 @@
 // Created          : 03-20-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2024
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="SourceGenerators.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -48,7 +48,7 @@ internal static partial class SourceGenerators
 	/// </summary>
 	/// <param name="processorArchitecture">The processor architecture as an integer. Expected values are from the PROCESSOR_ARCHITECTURE_* constants.</param>
 	/// <returns>The <see cref="Architecture"/> enum value that corresponds to the given processor architecture integer.</returns>
-	internal static Architecture ConvertProcessorArchitecture(int processorArchitecture) => processorArchitecture switch
+	internal static Architecture ConvertProcessorArchitecture(in int processorArchitecture) => processorArchitecture switch
 	{
 		PROCESSOR_ARCHITECTURE_ARM64 => Architecture.Arm64,
 		PROCESSOR_ARCHITECTURE_ARM => Architecture.Arm,

@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="Enumeration.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -54,7 +54,7 @@ public class Enumeration : IComparable
 	/// <param name="displayName">The display name of the enumeration.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="displayName"/> is null or empty.</exception>
 	[Information(nameof(Enumeration), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	protected Enumeration(int value, [DisallowNull] string displayName)
+	protected Enumeration(in int value, [DisallowNull] string displayName)
 	{
 		this.Value = value;
 		this.DisplayName = displayName;

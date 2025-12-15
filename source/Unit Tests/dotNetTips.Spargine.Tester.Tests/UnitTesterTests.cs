@@ -4,7 +4,7 @@
 // Created          : 01-05-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="UnitTesterTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -88,6 +89,88 @@ public class UnitTesterTests
 
 		// Assert
 		Assert.AreEqual("Name: Sample", result);
+	}
+
+	[TestMethod]
+	public void SaveToFileWithDirectory_NonExistentDirectory_ThrowsDirectoryNotFoundException()
+	{
+		// Arrange
+		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
+		var tester = new TestUnitTester();
+		const string content = "Test content";
+		const string methodName = "NonExistentDirTest";
+
+		// Act & Assert
+		Assert.ThrowsExactly<DirectoryNotFoundException>(() =>
+			tester.SaveToFile(content, nonExistentDir, methodName));
+	}
+
+	[TestMethod]
+	public void SaveToFileWithDirectory_NullDirectory_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var tester = new TestUnitTester();
+		const string content = "Test content";
+		const string methodName = "NullDirTest";
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			tester.SaveToFile(content, (DirectoryInfo)null!, methodName));
+	}
+
+	[TestMethod]
+	public void SaveToFileWithDirectory_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
+		tempDir.Create();
+		var tester = new TestUnitTester();
+		const string methodName = "NullInputTest";
+
+		try
+		{
+			// Act & Assert
+			Assert.ThrowsExactly<ArgumentNullException>(() =>
+				tester.SaveToFile(null!, tempDir, methodName));
+		}
+		finally
+		{
+			if (tempDir.Exists)
+			{
+				tempDir.Delete(true);
+			}
+		}
+	}
+
+
+	[TestMethod]
+	public void SaveToFileWithDirectory_ValidInput_CreatesFileInSpecifiedDirectory()
+	{
+		// Arrange
+		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
+		tempDir.Create();
+		var tester = new TestUnitTester();
+		const string content = "Test content for directory";
+		const string methodName = "DirectoryTest";
+
+		try
+		{
+			// Act
+			var savedFilePath = tester.SaveToFile(content, tempDir, methodName);
+
+			// Assert
+			Assert.IsTrue(File.Exists(savedFilePath), "File should be created in specified directory");
+			Assert.IsTrue(savedFilePath.StartsWith(tempDir.FullName), "File should be in the specified directory");
+			var fileContent = File.ReadAllText(savedFilePath);
+			Assert.AreEqual(content, fileContent);
+		}
+		finally
+		{
+			if (tempDir.Exists)
+			{
+				tempDir.Delete(true);
+			}
+		}
 	}
 
 	private class TestUnitTester : UnitTester

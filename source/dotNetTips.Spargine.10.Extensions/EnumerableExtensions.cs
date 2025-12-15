@@ -667,7 +667,7 @@ public static class EnumerableExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public string ToDelimitedString([ConstantExpected] in char delimiter = ControlChars.Comma)
+		public string ToDelimitedString([ConstantExpected] char delimiter = ControlChars.Comma)
 		{
 			if (collection is null || collection.FastLongCount() == 0)
 			{
@@ -1436,7 +1436,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public bool IsNotEmpty(int count) => collection is null ? false : collection.Count() == count;
+		public bool IsNotEmpty(in int count) => collection is null ? false : collection.Count() == count;
 
 		/// <summary>
 		/// Determines whether the specified collection has any items.

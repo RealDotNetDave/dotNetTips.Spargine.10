@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-03-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -166,7 +166,7 @@ public static class RandomData
 	/// <returns>A <see cref="PersonRecord"/> populated with random data.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GeneratePersonRecord), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	private static PersonRecord GeneratePersonRecord(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
+	private static PersonRecord GeneratePersonRecord(int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
 		addressCount = addressCount.ArgumentInRange(min: 0, max: 100, defaultValue: 2);
 
@@ -327,9 +327,6 @@ public static class RandomData
 	/// <exception cref="ArgumentException">
 	/// Thrown when the <paramref name="words"/> collection is empty.
 	/// </exception>
-	/// <remarks>
-	/// This method uses <see cref="GenerateInteger(int, int)"/> to select a random index within the bounds of the <paramref name="words"/> collection.
-	/// </remarks>
 	private static string Of([NotNull] params ReadOnlyCollection<string> words) => words[GenerateInteger(0, words.Count - 1)];
 
 	/// <summary>
@@ -447,7 +444,7 @@ public static class RandomData
 	/// <returns>A collection of addresses of the specified type for a random country.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateAddressCollection), "David McCarter", "6/1/2025", Status = Status.New)]
-	public static Collection<TAddress> GenerateAddressCollection<TAddress>(int count = 2, int addressLength = 25, int countyProvinceLength = 20) where TAddress : IAddress<TAddress>
+	public static Collection<TAddress> GenerateAddressCollection<TAddress>(in int count = 2, in int addressLength = 25, in int countyProvinceLength = 20) where TAddress : IAddress<TAddress>
 	{
 		return GenerateAddressCollection<TAddress>(_countries.Value.PickRandom()!, count, addressLength, countyProvinceLength);
 	}
@@ -559,13 +556,10 @@ public static class RandomData
 	/// <param name="minValue">The minimum value of the character to generate.</param>
 	/// <param name="maxValue">The maximum value of the character to generate.</param>
 	/// <returns>A random character between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
-	/// <remarks>
-	/// This method utilizes <see cref="GenerateInteger(int, int)"/> to generate a random integer within the specified range and then casts it to a character.
-	/// </remarks>
 	/// <example>Output: 65 'A'</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static char GenerateCharacter(in char minValue, in char maxValue)
+	public static char GenerateCharacter(char minValue, char maxValue)
 	{
 		return (char)GenerateInteger(minValue, maxValue);
 	}
@@ -696,9 +690,9 @@ public static class RandomData
 	/// This method constructs a randomized email address by combining:
 	/// </para>
 	/// <list type="number">
-	///   <item><description>A username generated with <see cref="GenerateWord(int, int, in char, in char)"/> (5-25 chars)</description></item>
+	///   <item><description>A username generated with <see cref="GenerateWord(int, int, char,  char)"/> (5-25 chars)</description></item>
 	///   <item><description>The "@" symbol</description></item>
-	///   <item><description>A domain name generated with <see cref="GenerateWord(int, int, in char, in char)"/> (5-15 chars)</description></item>
+	///   <item><description>A domain name generated with <see cref="GenerateWord(int, int, char,  char)"/> (5-15 chars)</description></item>
 	///   <item><description>A dot separator</description></item>
 	///   <item><description>A domain extension from <see cref="GenerateDomainExtension"/></description></item>
 	/// </list>
@@ -822,7 +816,7 @@ public static class RandomData
 	/// <exception cref="ArgumentOutOfRangeException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateInteger), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static int GenerateInteger(int min = int.MinValue, int max = int.MaxValue)
+	public static int GenerateInteger(in int min = int.MinValue, int max = int.MaxValue)
 	{
 		//Ensure maxLength is +1 of minLength so the _randomNumberGenerator does not cause an exception.
 		max = max.EnsureMinimum(min + 1);
@@ -947,7 +941,7 @@ public static class RandomData
 	/// <returns>An instance of the specified person type populated with random data.</returns>
 	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
 	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
-	public static TPerson GeneratePerson<TPerson>(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
+	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
 		if (typeof(TPerson) == typeof(Person))
 		{
@@ -1003,9 +997,6 @@ public static class RandomData
 	/// </summary>
 	/// <param name="count">The number of <see cref="PersonRecord"/> objects to generate. Default is 1.</param>
 	/// <returns>A read-only collection of <see cref="PersonRecord"/> objects.</returns>
-	/// <remarks>
-	/// This method leverages <see cref="GeneratePersonRecord(int, int, int)"/> to create each <see cref="PersonRecord"/> in the collection.
-	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GeneratePersonRecordCollection), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<PersonRecord> GeneratePersonRecordCollection(int count = 2)
@@ -1305,7 +1296,7 @@ public static class RandomData
 	/// Generates a URL host name without the protocol (such as http:// or https://).
 	/// </summary>
 	/// <returns>A string representing a URL host name in the format "www.{random-domain}.{tld}". The domain name is 
-	/// generated using <see cref="GenerateWord(int, int,in char,in char)"/> with a length between 1-25 lowercase letters, 
+	/// generated using <see cref="GenerateWord(int, int, char, char)"/> with a length between 1-25 lowercase letters, 
 	/// and the top-level domain is generated using <see cref="GenerateUrlHostNameNoSubDomain"/>.</returns>
 	/// <remarks>
 	/// This method generates realistic-looking domain names that can be used for testing and simulation purposes.
@@ -1384,7 +1375,7 @@ public static class RandomData
 	/// <example>Output: LBEEUMHHHK</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string GenerateWord(int length = 1, in char minCharacter = 'a', in char maxCharacter = 'Z')
+	public static string GenerateWord(int length = 1, char minCharacter = 'a', char maxCharacter = 'Z')
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
 
@@ -1419,7 +1410,7 @@ public static class RandomData
 	/// <example>Output: ACRNFTPAE</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string GenerateWord(int minLength = 1, int maxLength = 1, in char minCharacter = 'a', in char maxCharacter = 'Z')
+	public static string GenerateWord(int minLength = 1, int maxLength = 1, char minCharacter = 'a', char maxCharacter = 'Z')
 	{
 		minLength = minLength.ArgumentInRange(1, defaultValue: 1);
 		maxLength = maxLength.ArgumentInRange(1, defaultValue: 1);

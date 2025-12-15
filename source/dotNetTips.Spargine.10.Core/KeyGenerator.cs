@@ -61,7 +61,7 @@ public static class KeyGenerator
 	/// </example>
 	[return: NotNull]
 	[Information(nameof(GenerateCustomKey), "David McCarter", "8/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
-	public static string GenerateCustomKey([ConstantExpected] in char separator = ControlChars.Dash, bool addTimeStamp = true, params string[] items)
+	public static string GenerateCustomKey([ConstantExpected] char separator = ControlChars.Dash, bool addTimeStamp = true, params string[] items)
 	{
 		items = items.ArgumentItemsExists();
 

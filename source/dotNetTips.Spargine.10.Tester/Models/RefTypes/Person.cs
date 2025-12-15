@@ -245,9 +245,9 @@ public sealed class Person : IPerson<Person, Address>
 	/// <returns>DotNetTips.Spargine.Tester.Models.RefTypes.Person.</returns>
 	[return: NotNull]
 	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Person ToPerson(ValueTypes.Person person)
+	public static Person ToPerson(in ValueTypes.Person person)
 	{
-		person = person.ArgumentNotNull();
+		_ = person.ArgumentNotNull();
 
 		Person newPerson = new()
 		{

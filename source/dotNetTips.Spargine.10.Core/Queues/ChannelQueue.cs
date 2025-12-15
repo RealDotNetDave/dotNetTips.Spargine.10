@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -78,7 +78,7 @@ public sealed class ChannelQueue<T>
 	/// The default cancellation timeout is set to 5 minutes for graceful shutdowns.
 	/// </remarks>
 	[Information(nameof(ChannelQueue<>), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public ChannelQueue(int capacity)
+	public ChannelQueue(in int capacity)
 	: this(capacity, null) { }
 
 	/// <summary>
@@ -93,7 +93,7 @@ public sealed class ChannelQueue<T>
 	/// The cancellation timeout controls how long operations will wait before being canceled.
 	/// </remarks>
 	[Information(nameof(ChannelQueue<>), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public ChannelQueue(int? capacity, TimeSpan? cancellationTimeout = null)
+	public ChannelQueue(in int? capacity, TimeSpan? cancellationTimeout = null)
 	{
 		this._channel = capacity is null
 			? Channel.CreateUnbounded<T>()

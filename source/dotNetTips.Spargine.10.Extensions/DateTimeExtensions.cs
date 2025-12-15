@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-18-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -143,7 +143,7 @@ public static class DateTimeExtensions
 	/// <returns>The number of weeks in the specified year according to ISO 8601.</returns>
 	[Pure]
 	[Information(nameof(GetWeeksInTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static int GetWeeksInTheYear(int input)
+	public static int GetWeeksInTheYear(in int input)
 	{
 		return ISOWeek.GetWeeksInYear(input);
 	}
@@ -181,7 +181,7 @@ public static class DateTimeExtensions
 	/// </returns>
 	[Pure]
 	[Information(nameof(GetYearEnd), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static DateTime GetYearEnd(int input)
+	public static DateTime GetYearEnd(in int input)
 	{
 		return ISOWeek.GetYearEnd(input);
 	}
@@ -195,7 +195,7 @@ public static class DateTimeExtensions
 	/// </returns>
 	[Pure]
 	[Information(nameof(GetYearStart), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static DateTime GetYearStart(int input)
+	public static DateTime GetYearStart(in int input)
 	{
 		return ISOWeek.GetYearStart(input);
 	}

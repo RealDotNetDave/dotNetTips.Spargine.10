@@ -4,7 +4,7 @@
 // Created          : 03-11-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-11-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="DisplayNameOptions.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Core;
 /// <param name="includeGenericParameters">If true, includes generic parameters in the display name.</param>
 /// <param name="nestedTypeDelimiter">The delimiter to use for nested types.</param>
 [Information(Status = Status.Available)]
-public readonly struct DisplayNameOptions(bool fullName, bool includeGenericParameterNames, bool includeGenericParameters, in char nestedTypeDelimiter = ControlChars.Plus) : IEquatable<DisplayNameOptions>
+public readonly struct DisplayNameOptions(bool fullName, bool includeGenericParameterNames, bool includeGenericParameters, char nestedTypeDelimiter = ControlChars.Plus) : IEquatable<DisplayNameOptions>
 {
 
 	/// <summary>

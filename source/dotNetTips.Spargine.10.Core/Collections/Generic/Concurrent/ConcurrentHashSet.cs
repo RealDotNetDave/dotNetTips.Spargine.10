@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-23-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -178,7 +178,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items in the set.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public ConcurrentHashSet(int concurrencyLevel, in IEnumerable<T> collection, IEqualityComparer<T> comparer)
+	public ConcurrentHashSet(in int concurrencyLevel, in IEnumerable<T> collection, IEqualityComparer<T> comparer)
 		: this(concurrencyLevel, DefaultCapacity, false, comparer) => this.InitializeFromCollection(collection);
 
 	/// <summary>
@@ -189,7 +189,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items in the set.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="comparer"/> is null.</exception>
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public ConcurrentHashSet(int concurrencyLevel, int capacity, IEqualityComparer<T> comparer)
+	public ConcurrentHashSet(in int concurrencyLevel, int capacity, IEqualityComparer<T> comparer)
 		: this(concurrencyLevel, capacity, false, comparer)
 	{
 	}
@@ -235,7 +235,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="toExclusive">The exclusive end index of the bucket range for which locks are to be acquired.</param>
 	/// <param name="locksAcquired">The number of locks successfully acquired by this method. This parameter is passed by reference.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void AcquireLocks(int fromInclusive, int toExclusive, ref int locksAcquired)
+	private void AcquireLocks(in int fromInclusive, in int toExclusive, ref int locksAcquired)
 	{
 		Debug.Assert(fromInclusive <= toExclusive);
 		var locks = this._tables._locks;
@@ -379,7 +379,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="bucketCount">The total number of buckets in the <see cref="ConcurrentHashSet{T}"/>.</param>
 	/// <returns>The index of the bucket.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static int GetBucket(int hashCode, int bucketCount)
+	private static int GetBucket(in int hashCode, in int bucketCount)
 	{
 		//SUGGESTION FROM COPILOT BROKE THE CODE
 		var bucketNo = (hashCode & 0x7fffffff) % bucketCount;
@@ -396,7 +396,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="bucketCount">The total number of buckets in the <see cref="ConcurrentHashSet{T}"/>.</param>
 	/// <param name="lockCount">The total number of locks in the <see cref="ConcurrentHashSet{T}"/>.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void GetBucketAndLockNo(int hashCode, out int bucketNo, out int lockNo, int bucketCount, int lockCount)
+	private static void GetBucketAndLockNo(in int hashCode, out int bucketNo, out int lockNo, in int bucketCount, in int lockCount)
 	{
 		bucketNo = (hashCode & 0x7fffffff) % bucketCount;
 		lockNo = bucketNo % lockCount;
@@ -567,7 +567,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="fromInclusive">The inclusive start index of the bucket range for which locks are to be released.</param>
 	/// <param name="toExclusive">The exclusive end index of the bucket range for which locks are to be released.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void ReleaseLocks(int fromInclusive, int toExclusive)
+	private void ReleaseLocks(in int fromInclusive, in int toExclusive)
 	{
 		for (var inclusiveCount = fromInclusive; inclusiveCount < toExclusive; inclusiveCount++)
 		{

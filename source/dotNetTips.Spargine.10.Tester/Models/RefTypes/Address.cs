@@ -360,9 +360,9 @@ public sealed class Address : IAddress<Address>
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
-	public static Address ToAddress([NotNull] ValueTypes.Address address)
+	public static Address ToAddress([NotNull] in ValueTypes.Address address)
 	{
-		address = address.ArgumentNotNull();
+		_ = address.ArgumentNotNull();
 
 		return new Address(address.Id)
 		{

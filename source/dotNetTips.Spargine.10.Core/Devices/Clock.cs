@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="Clock.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -42,7 +42,7 @@ public static class Clock
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsLeapYear), "David McCarter", "11/14/2024", Status = Status.Available)]
-	public static bool IsLeapYear(int year)
+	public static bool IsLeapYear(in int year)
 	{
 		return DateTime.IsLeapYear(year);
 	}

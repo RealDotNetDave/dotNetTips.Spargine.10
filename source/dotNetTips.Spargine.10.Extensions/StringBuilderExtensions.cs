@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-26-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -382,7 +382,7 @@ public static class StringBuilderExtensions
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ClearSetCapacity), author: "David McCarter", createdOn: "11/13/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-		public StringBuilder ClearSetCapacity(int capacity)
+		public StringBuilder ClearSetCapacity(in int capacity)
 		{
 			sb = sb.ArgumentNotNull();
 
@@ -417,7 +417,7 @@ public static class StringBuilderExtensions
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(SetCapacity), author: "David McCarter", createdOn: "11/26/2025", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
-		public StringBuilder SetCapacity(int capacity)
+		public StringBuilder SetCapacity(in int capacity)
 		{
 			sb = sb.ArgumentNotNull();
 			sb.Capacity = capacity;

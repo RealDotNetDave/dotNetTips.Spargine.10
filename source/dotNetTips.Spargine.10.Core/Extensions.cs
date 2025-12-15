@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-19-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="Extensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -312,7 +312,7 @@ internal static partial class Extensions
 	/// <param name="list">The list.</param>
 	/// <param name="delimiter">The delimiter.</param>
 	/// <returns>System.String.</returns>
-	internal static string ToDelimitedString([NotNull] this IDictionary list, [ConstantExpected] in char delimiter = ControlChars.Comma)
+	internal static string ToDelimitedString([NotNull] this IDictionary list, [ConstantExpected] char delimiter = ControlChars.Comma)
 	{
 		if (string.IsNullOrEmpty(delimiter.ToString()))
 		{
@@ -353,7 +353,7 @@ internal static partial class Extensions
 	/// <param name="list">The list.</param>
 	/// <param name="delimiter">The delimiter (default is comma if not supplied).</param>
 	/// <returns>System.String.</returns>
-	internal static string ToDelimitedString<T>([NotNull] this IEnumerable<T> list, [ConstantExpected] in char delimiter = ControlChars.Comma)
+	internal static string ToDelimitedString<T>([NotNull] this IEnumerable<T> list, [ConstantExpected] char delimiter = ControlChars.Comma)
 	{
 		if (list.FastLongCount() == 0)
 		{

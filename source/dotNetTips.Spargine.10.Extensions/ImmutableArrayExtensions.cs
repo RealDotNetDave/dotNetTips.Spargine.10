@@ -4,7 +4,7 @@
 // Created          : 01-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -79,7 +79,7 @@ public static class ImmutableArrayExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool IsNotEmpty(int count)
+		public bool IsNotEmpty(in int count)
 		{
 			return collection.ArgumentNotNull().IsEmpty ? false : collection.Length == count;
 		}

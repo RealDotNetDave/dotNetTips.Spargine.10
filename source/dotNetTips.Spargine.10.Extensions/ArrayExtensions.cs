@@ -284,16 +284,15 @@ public static class ArrayExtensions
 		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "11/8/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public void FastProcessor([DisallowNull] Action<T> action)
 		{
-			//TODO: USING ARRAYS PERFORMS SLOWER. FIX.
-
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			var span = array.AsSpan();
+			ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
+			var arrayLength = array.Length;
 
-			foreach (ref var item in span)
+			for (var index = 0; index < arrayLength; index++)
 			{
-				action(item);
+				action(Unsafe.Add(ref arrayStart, index));
 			}
 		}
 
@@ -310,9 +309,33 @@ public static class ArrayExtensions
 		}
 
 		/// <summary>
-		/// Determines whether the specified array has items.
+		/// Determines whether the specified array contains any elements.
 		/// </summary>
-		/// <returns><c>true</c> if the specified array has items; otherwise, <c>false</c>.</returns>
+		/// <returns>
+		/// <c>true</c> if the array is not null and contains at least one element; otherwise, <c>false</c>.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a safe way to check if an array has elements without throwing exceptions.
+		/// It returns <c>false</c> if the array reference is null, making it suitable for defensive programming patterns.
+		/// The method uses <see cref="Array.LongLength"/> to support arrays with more than <see cref="int.MaxValue"/> elements.
+		/// This is the inverse operation of <see cref="IsEmpty"/>.
+		/// </remarks>
+		/// <example>
+		/// This example shows how to use IsNotEmpty() to check if an array has elements.
+		/// <code>
+		/// int[] numbers = { 1, 2, 3 };
+		/// bool hasItems = numbers.IsNotEmpty();
+		/// Console.WriteLine(hasItems); // Output: True
+		/// 
+		/// int[] emptyArray = Array.Empty&lt;int&gt;();
+		/// bool isEmpty = emptyArray.IsNotEmpty();
+		/// Console.WriteLine(isEmpty); // Output: False
+		/// 
+		/// int[] nullArray = null;
+		/// bool isNull = nullArray.IsNotEmpty();
+		/// Console.WriteLine(isNull); // Output: False
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -322,10 +345,33 @@ public static class ArrayExtensions
 		}
 
 		/// <summary>
-		/// Determines whether the specified values has items.
+		/// Determines whether the array contains any elements that satisfy the specified condition.
 		/// </summary>
-		/// <param name="actionFunction">The predicate to test each element.</param>
-		/// <returns><c>true</c> if the specified values has items; otherwise, <c>false</c>.</returns>
+		/// <param name="actionFunction">A function to test each element for a condition.</param>
+		/// <returns>
+		/// <c>true</c> if the array is not null, the predicate function is not null, and at least one element satisfies the condition; otherwise, <c>false</c>.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a safe way to check if an array contains elements matching a predicate without throwing exceptions.
+		/// It returns <c>false</c> if either the array reference or the predicate function is null, making it suitable for defensive programming patterns.
+		/// The method uses <see cref="Enumerable.Any{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/> internally to test each element against the provided condition.
+		/// </remarks>
+		/// <example>
+		/// This example shows how to use IsNotEmpty with a predicate to check if an array contains specific elements.
+		/// <code>
+		/// int[] numbers = { 1, 2, 3, 4, 5 };
+		/// bool hasEvenNumbers = numbers.IsNotEmpty(n => n % 2 == 0);
+		/// Console.WriteLine(hasEvenNumbers); // Output: True
+		/// 
+		/// int[] oddNumbers = { 1, 3, 5 };
+		/// bool hasEven = oddNumbers.IsNotEmpty(n => n % 2 == 0);
+		/// Console.WriteLine(hasEven); // Output: False
+		/// 
+		/// int[] nullArray = null;
+		/// bool result = nullArray.IsNotEmpty(n => n > 0);
+		/// Console.WriteLine(result); // Output: False
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -335,14 +381,37 @@ public static class ArrayExtensions
 		}
 
 		/// <summary>
-		/// Determines whether the specified count has items.
+		/// Determines whether the array length exactly matches the specified count.
 		/// </summary>
-		/// <param name="count">The count to compare.</param>
-		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
+		/// <param name="count">The expected number of elements in the array.</param>
+		/// <returns>
+		/// <c>true</c> if the array is not null and its length equals the specified <paramref name="count"/>; otherwise, <c>false</c>.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a safe way to verify that an array has an exact number of elements without throwing exceptions.
+		/// It returns <c>false</c> if the array reference is null, making it suitable for defensive programming patterns.
+		/// The method uses <see cref="Array.LongLength"/> to support arrays with more than <see cref="int.MaxValue"/> elements.
+		/// This is useful for validation scenarios where you need to ensure an array has a specific size before processing.
+		/// </remarks>
+		/// <example>
+		/// This example shows how to use IsNotEmpty with a count parameter to verify array size.
+		/// <code>
+		/// int[] numbers = { 1, 2, 3 };
+		/// bool hasThreeItems = numbers.IsNotEmpty(3);
+		/// Console.WriteLine(hasThreeItems); // Output: True
+		/// 
+		/// bool hasFiveItems = numbers.IsNotEmpty(5);
+		/// Console.WriteLine(hasFiveItems); // Output: False
+		/// 
+		/// int[] nullArray = null;
+		/// bool result = nullArray.IsNotEmpty(3);
+		/// Console.WriteLine(result); // Output: False
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsNotEmpty(int count)
+		public bool IsNotEmpty(in int count)
 		{
 			return array is null ? false : array.LongLength == count;
 		}

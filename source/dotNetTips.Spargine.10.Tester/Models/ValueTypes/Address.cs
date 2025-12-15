@@ -4,7 +4,7 @@
 // Created          : 12-04-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-25-2025
+// Last Modified On : 12-15-2025
 // ***********************************************************************
 // <copyright file="Address.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -300,9 +300,9 @@ public struct Address : IAddress<Address>
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
 	[Information(nameof(ToAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Address ToAddress([NotNull] AddressRecord address)
+	public static Address ToAddress([NotNull] in AddressRecord address)
 	{
-		address = address.ArgumentNotNull();
+		_ = address.ArgumentNotNull();
 
 		return new(address.Id)
 		{
