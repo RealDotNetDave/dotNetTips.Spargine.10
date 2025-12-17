@@ -105,7 +105,7 @@ public static class StringExtensions
 	[Information(nameof(Concat), "David McCarter", "1/3/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string CombineToString([DisallowNull] this string input, [DisallowNull] params string[] args)
 	{
-		return FastStringBuilder.Combine(false, args: args.AddFirst(input).AsReadOnly());
+		return FastStringBuilder.Combine(false, args: args.AddFirst(input).AsReadOnlySpan());
 	}
 
 	/// <summary>

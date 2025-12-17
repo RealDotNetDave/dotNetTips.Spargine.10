@@ -4,9 +4,9 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-07-2025
+// Last Modified On : 12-17-2025
 // ***********************************************************************
-// <copyright file="FastStringBuilderCounterBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
+// <copyright file="FastStringBuilderCounterBenchmark.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -67,7 +67,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void Combine()
 	{
-		var result = FastStringBuilder.Combine(false, this._words.AsReadOnly());
+		var result = FastStringBuilder.Combine(false, this._words.AsReadOnlySpan());
 
 		base.Consume(result);
 	}
@@ -90,7 +90,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void CombineWithSpace()
 	{
-		var result = FastStringBuilder.CombineWithSpace(this._words.AsReadOnly());
+		var result = FastStringBuilder.CombineWithSpace(this._words.AsReadOnlySpan());
 
 		base.Consume(result);
 	}

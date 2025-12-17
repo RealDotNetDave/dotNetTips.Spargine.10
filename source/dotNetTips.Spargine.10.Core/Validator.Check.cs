@@ -239,7 +239,7 @@ public static partial class Validator
 
 		if (isValid is false && throwException)
 		{
-			ExceptionThrower.ThrowInvalidValueException(CreateExceptionMessage(errorMessage, Resources.ErrorNumberIsInvalidBasedOnTheMinMaxValue), input);
+			ExceptionThrower.ThrowArgumentOutOfRangeException(CreateExceptionMessage(errorMessage, Resources.ErrorNumberIsInvalidBasedOnTheMinMaxValue));
 		}
 
 		return isValid;

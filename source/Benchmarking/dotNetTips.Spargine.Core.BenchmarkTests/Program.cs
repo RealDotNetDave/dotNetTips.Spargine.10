@@ -8,7 +8,7 @@
 // ***********************************************************************
 // <copyright file="Program.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
-// </copyright>
+// </copyright>.
 // <summary></summary>
 // ***********************************************************************
 using System;
@@ -18,6 +18,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
+using DotNetTips.Spargine.Core.BenchmarkTests.Collections;
 using Perfolizer.Horology;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
@@ -42,9 +43,9 @@ internal sealed class Program
 
 			config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-			_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+			//_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			//_ = BenchmarkRunner.Run<TypeHelperBenchmark>(config);
+			_ = BenchmarkRunner.Run<FastSortedListCreateAddBenchmark>(config);
 			//_ = BenchmarkRunner.Run<EnumHelperBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine("COMPLETE!");

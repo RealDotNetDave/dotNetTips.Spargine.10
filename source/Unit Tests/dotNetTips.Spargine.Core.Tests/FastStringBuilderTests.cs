@@ -80,10 +80,10 @@ public class FastStringBuilderTests
 	public void CombineTest()
 	{
 		var words = RandomData.GenerateWords(5, 3, 8).ToReadOnlyCollection();
-		var result = FastStringBuilder.Combine(false, words);
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
 		Assert.AreEqual(string.Concat(words), result);
 
-		result = FastStringBuilder.Combine(true, words);
+		result = FastStringBuilder.Combine(true, words.AsReadOnlySpan());
 		var expected = string.Join(Environment.NewLine, words) + Environment.NewLine;
 
 		Assert.AreEqual(expected, result);
@@ -93,7 +93,7 @@ public class FastStringBuilderTests
 	public void CombineWithSpaceTest()
 	{
 		var words = RandomData.GenerateWords(3, 2, 5).ToReadOnlyCollection();
-		var result = FastStringBuilder.CombineWithSpace(words);
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
 		var expected = string.Join(" ", words);
 		Assert.AreEqual(expected, result);
 	}
@@ -245,7 +245,7 @@ public class FastStringBuilderTests
 			_ = sb.Append("Maximum");
 		};
 
-		var result = FastStringBuilder.PerformAction(int.MaxValue, action);
+		var result = FastStringBuilder.PerformAction(int.MaxValue - 100, action);
 
 		Assert.AreEqual("Maximum", result);
 	}
