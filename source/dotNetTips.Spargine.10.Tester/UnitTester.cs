@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -38,43 +38,52 @@ namespace DotNetTips.Spargine.Tester;
 [Information(Status = Status.NeedsDocumentation, Documentation = "ADD URL")]
 public abstract class UnitTester(string? outputDirectory = null)
 {
+	/// <summary>
+	/// Generates a file name for output based on the calling method name.
+	/// </summary>
+	/// <param name="methodName">
+	/// The name of the calling method. This is typically provided automatically via 
+	/// <see cref="CallerMemberNameAttribute"/> in the public methods.
+	/// </param>
+	/// <returns>
+	/// A string representing the file name with a .txt extension. 
+	/// If <paramref name="methodName"/> is null or empty, returns a file name based on a randomly generated key.
+	/// Otherwise, returns a file name based on the method name.
+	/// </returns>
+	/// <remarks>
+	/// <para>
+	/// This private helper method is used by all file-saving methods in the <see cref="UnitTester"/> class
+	/// to generate consistent file names based on the calling test method.
+	/// </para>
+	/// <para>
+	/// <b>File Naming Strategy:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// When <paramref name="methodName"/> has a value: <c>{methodName}.txt</c>
+	/// <example>If called from a method named "TestPersonValidation", generates "TestPersonValidation.txt"</example>
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// When <paramref name="methodName"/> is null or empty: <c>{RandomKey}.txt</c>
+	/// <example>Generates something like "a1b2c3d4-e5f6-7890-abcd-ef1234567890.txt"</example>
+	/// </description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// The random key fallback ensures that files are always uniquely named even when the calling method name
+	/// cannot be determined, preventing accidental file overwrites during test execution.
+	/// </para>
+	/// </remarks>
+	/// <seealso cref="RandomData.GenerateKey"/>
+	/// <seealso cref="SaveToFile(string, string)"/>
 	private static string GenerateFileName([NotNull] string methodName)
 	{
-		string fileName;
-
-		if (methodName.FastIsNullOrEmpty())
-		{
-			fileName = $"{RandomData.GenerateKey}.txt";
-		}
-		else
-		{
-			fileName = $"{methodName}.txt";
-		}
+		var fileName = methodName.FastIsNullOrEmpty() ? $"{RandomData.GenerateKey}.txt" : $"{methodName}.txt";
 
 		return fileName;
-	}
-
-	/// <summary>
-	/// Converts the properties of an object to a string representation based on a selection function.
-	/// </summary>
-	/// <typeparam name="T">The type of the object.</typeparam>
-	/// <param name="input">The object whose properties will be converted to a string.</param>
-	/// <param name="propertySelector">A function that determines which properties to include in the output.</param>
-	/// <returns>A string representation of the selected properties of the object.</returns>
-	[Information(nameof(PropertiesToString), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	protected virtual string PropertiesToString<T>(T input, Func<PropertyInfo, bool> propertySelector)
-	{
-		input = input.ArgumentNotNull();
-		propertySelector = propertySelector.ArgumentNotNull();
-
-		return string.Join(ControlChars.CommaSpace, input?.GetType()
-					?.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-					?.Where(propertySelector)
-					?.Select(prop =>
-					{
-						var value = prop.GetValue(input);
-						return $"{prop.Name}: {value}";
-					}) ?? Array.Empty<string>());
 	}
 
 	/// <summary>
@@ -126,7 +135,9 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		foreach (var item in collection)
 		{
-			Debug.WriteLine(this.PropertiesToString(item, propertySelector));
+			var itemString = item!.PropertiesToString(propertySelector);
+
+			Debug.WriteLine(itemString);
 		}
 
 		Debug.WriteLine(new string(ControlChars.Equal, 80));
@@ -152,7 +163,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 		propertySelector = propertySelector.ArgumentNotNull();
 
 		Debug.WriteLineIf(methodName.HasValue(), $"Method: {methodName}");
-		Debug.WriteLine(this.PropertiesToString(input, propertySelector));
+		Debug.WriteLine(input.PropertiesToString(propertySelector));
 	}
 
 	/// <summary>
@@ -283,7 +294,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
 		var content = collection
-			.Select(item => this.PropertiesToString(item, propertySelector))
+			.Select(item => item!.PropertiesToString(propertySelector))
 			.ToArray(); // Materialize the content to avoid deferred execution issues.
 
 		File.WriteAllLines(filePath, content);
@@ -310,9 +321,14 @@ public abstract class UnitTester(string? outputDirectory = null)
 		input = input.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
 
-		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
+		var content = input.PropertiesToString(propertySelector);
 
-		var content = this.PropertiesToString(input, propertySelector);
+		if (string.IsNullOrEmpty(content))
+		{
+			return string.Empty;
+		}
+
+		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
 		File.WriteAllText(filePath, content);
 
@@ -364,7 +380,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
-		var content = this.PropertiesToString(input, propertySelector);
+		var content = input.PropertiesToString(propertySelector);
 
 		File.WriteAllText(filePath, content);
 
@@ -422,7 +438,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
 		var content = collection
-			.Select(item => this.PropertiesToString(item, propertySelector))
+			.Select(item => item!.PropertiesToString(propertySelector))
 			.ToArray(); // Materialize the content to avoid deferred execution issues.
 
 		File.WriteAllLines(filePath, content);
@@ -457,7 +473,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
 		var content = collection
-			.Select(item => this.PropertiesToString(item, propertySelector))
+			.Select(item => item!.PropertiesToString(propertySelector))
 			.ToArray();
 
 		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
@@ -519,7 +535,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
 		var content = collection
-			.Select(item => this.PropertiesToString(item, propertySelector))
+			.Select(item => item!.PropertiesToString(propertySelector))
 			.ToArray();
 
 		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);

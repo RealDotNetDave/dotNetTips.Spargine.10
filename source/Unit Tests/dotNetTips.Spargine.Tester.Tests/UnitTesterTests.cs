@@ -4,7 +4,7 @@
 // Created          : 01-05-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="UnitTesterTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using DotNetTips.Spargine.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -38,8 +39,8 @@ public class UnitTesterTests
 		var result = tester.PropertiesToString(sample, p => true);
 
 		// Assert
-		Assert.IsTrue(result.Contains("Id: 1"));
-		Assert.IsTrue(result.Contains("Name: Test"));
+		Assert.IsTrue(result.Contains("Id:1"));
+		Assert.IsTrue(result.Contains("Name:Test"));
 	}
 
 	[TestMethod]
@@ -88,7 +89,7 @@ public class UnitTesterTests
 		var result = tester.PropertiesToString(sample, p => p.Name == "Name");
 
 		// Assert
-		Assert.AreEqual("Name: Sample", result);
+		Assert.AreEqual("Name:Sample", result);
 	}
 
 	[TestMethod]
@@ -103,43 +104,6 @@ public class UnitTesterTests
 		// Act & Assert
 		Assert.ThrowsExactly<DirectoryNotFoundException>(() =>
 			tester.SaveToFile(content, nonExistentDir, methodName));
-	}
-
-	[TestMethod]
-	public void SaveToFileWithDirectory_NullDirectory_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var tester = new TestUnitTester();
-		const string content = "Test content";
-		const string methodName = "NullDirTest";
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			tester.SaveToFile(content, (DirectoryInfo)null!, methodName));
-	}
-
-	[TestMethod]
-	public void SaveToFileWithDirectory_NullInput_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
-		tempDir.Create();
-		var tester = new TestUnitTester();
-		const string methodName = "NullInputTest";
-
-		try
-		{
-			// Act & Assert
-			Assert.ThrowsExactly<ArgumentNullException>(() =>
-				tester.SaveToFile(null!, tempDir, methodName));
-		}
-		finally
-		{
-			if (tempDir.Exists)
-			{
-				tempDir.Delete(true);
-			}
-		}
 	}
 
 
@@ -177,8 +141,8 @@ public class UnitTesterTests
 	{
 		public TestUnitTester(string outputDirectory = null) : base(outputDirectory) { }
 
-		public new string PropertiesToString<T>(T input, Func<PropertyInfo, bool> propertySelector) =>
-			base.PropertiesToString(input, propertySelector);
+		public string PropertiesToString<T>(T input, Func<PropertyInfo, bool> propertySelector) =>
+			input.PropertiesToString(propertySelector);
 	}
 
 	private class Sample

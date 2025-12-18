@@ -4,7 +4,7 @@
 // Created          : 04-09-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-30-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="AssemblyHelperUnitTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core.Tests;
 public class AssemblyHelperUnitTests : UnitTester
 {
 
-	const string SDKVersion = "10.0.0";
+	const string SDKVersion = "10.0.1";
 
 	private string _testOutputDirectory;
 	private TestUnitTester _unitTester;

@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-12-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -325,6 +325,135 @@ public static class ObjectExtensions
 			var properties = obj.PropertiesToDictionary(memberName: typeName, ignoreNulls: ignoreNulls);
 
 			// Remove empty values
+			if (ignoreNulls)
+			{
+				properties = properties.Where(p => !string.IsNullOrEmpty(p.Value))
+					.ToDictionary(pair => pair.Key, pair => pair.Value);
+			}
+
+			var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
+
+			return result!.StartsWith(sequenceSeparator, StringComparison.CurrentCulture) ? result[sequenceSeparator.Length..] : result;
+		}
+
+		/// <summary>
+		/// Converts selected object properties into a string representation using a property selector function.
+		/// </summary>
+		/// <param name="propertySelector">A function that determines which properties to include in the output. Cannot be null.</param>
+		/// <param name="header">An optional header to prepend to the string representation.</param>
+		/// <param name="keyValueSeparator">The character used to separate property names from their values.</param>
+		/// <param name="sequenceSeparator">The string used to separate properties in the string representation.</param>
+		/// <param name="ignoreNulls">Specifies whether properties with null values should be ignored.</param>
+		/// <param name="includeMemberName">Specifies whether the property name should be included in the string representation.</param>
+		/// <returns>A string representation of the selected object properties.</returns>
+		/// <remarks>
+		/// <para>
+		/// This overload provides fine-grained control over which properties are included in the output
+		/// by using a predicate function that evaluates each <see cref="PropertyInfo"/> instance.
+		/// </para>
+		/// <para>
+		/// <b>Common Use Cases:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description>Filter by property type: <c>p => p.PropertyType == typeof(string)</c></description></item>
+		/// <item><description>Filter by property name: <c>p => p.Name.StartsWith("Id")</c></description></item>
+		/// <item><description>Filter by custom attribute: <c>p => p.GetCustomAttribute&lt;JsonIgnoreAttribute&gt;() == null</c></description></item>
+		/// <item><description>Include only readable properties: <c>p => p.CanRead</c></description></item>
+		/// <item><description>Include only writable properties: <c>p => p.CanWrite</c></description></item>
+		/// </list>
+		/// <para>
+		/// Unlike the standard PropertiesToString method which converts all properties,
+		/// this overload allows selective property inclusion based on custom criteria.
+		/// </para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="propertySelector"/> or <paramref name="sequenceSeparator"/> is null.</exception>
+		/// <example>
+		/// <code>
+		/// public class Person
+		/// {
+		///     public int Id { get; set; }
+		///     public string Name { get; set; }
+		///     public int Age { get; set; }
+		///     [JsonIgnore]
+		///     public string Secret { get; set; }
+		/// }
+		/// 
+		/// var person = new Person { Id = 1, Name = "John", Age = 30, Secret = "hidden" };
+		/// 
+		/// // Include only string properties
+		/// var stringProps = person.PropertiesToString(p => p.PropertyType == typeof(string));
+		/// // Result: "Name:John"
+		/// 
+		/// // Include only Id property
+		/// var idOnly = person.PropertiesToString(p => p.Name == "Id");
+		/// // Result: "Id:1"
+		/// 
+		/// // Include all properties except those with JsonIgnore attribute
+		/// var visible = person.PropertiesToString(p => p.GetCustomAttribute&lt;JsonIgnoreAttribute&gt;() == null);
+		/// // Result: "Id:1, Name:John, Age:30"
+		/// </code>
+		/// </example>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
+		{
+			obj = obj.ArgumentNotNull();
+			propertySelector = propertySelector.ArgumentNotNull();
+			sequenceSeparator = sequenceSeparator.ArgumentNotNull();
+
+			var typeName = obj.GetType().Name;
+
+			if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
+			{
+				typeName = "Item";
+			}
+			else if (includeMemberName is false)
+			{
+				typeName = string.Empty;
+			}
+
+			// Get all properties
+			var allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+			// Filter properties using the selector
+			var selectedProperties = allProperties.Where(propertySelector);
+
+			// Build dictionary from selected properties only
+			var properties = new Dictionary<string, string>();
+
+			foreach (var property in selectedProperties)
+			{
+				try
+				{
+					var value = property.GetValue(obj);
+					var propertyName = string.IsNullOrEmpty(typeName) ? property.Name : $"{typeName}.{property.Name}";
+
+					if (value is null)
+					{
+						if (!ignoreNulls)
+						{
+							properties[propertyName] = string.Empty;
+						}
+					}
+					else
+					{
+						properties[propertyName] = value.ToString() ?? string.Empty;
+					}
+				}
+				catch (Exception ex)
+				{
+					// Handle properties that throw exceptions during value retrieval
+					if (!ignoreNulls)
+					{
+						var propertyName = string.IsNullOrEmpty(typeName) ? property.Name : $"{typeName}.{property.Name}";
+						properties[propertyName] = $"[Error: {ex.GetType().Name}]";
+					}
+				}
+			}
+
+			// Remove empty values if ignoreNulls is true
 			if (ignoreNulls)
 			{
 				properties = properties.Where(p => !string.IsNullOrEmpty(p.Value))

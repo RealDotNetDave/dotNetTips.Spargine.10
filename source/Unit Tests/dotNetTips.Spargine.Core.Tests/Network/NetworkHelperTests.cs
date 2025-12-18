@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-30-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="NetworkHelperTests.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -245,7 +245,7 @@ public class NetworkHelperTests
 	{
 		var result = NetworkHelper.GetNetworkSpeeds();
 		var allInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-		var activeInterfaceCount = allInterfaces.Count(ni => ni.OperationalStatus == OperationalStatus.Up);
+		var activeInterfaceCount = allInterfaces.Count(ni => ni.OperationalStatus == OperationalStatus.Up && ni.Speed > 0);
 
 		Assert.AreEqual(activeInterfaceCount, result.Count, "Should only include speeds from active interfaces.");
 	}

@@ -4,7 +4,7 @@
 // Created          : 04-13-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="ValidatorCheckTests.cs" company="McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -132,7 +132,7 @@ public class ValidatorCheckTests
 		Assert.IsFalse(testValue.CheckIsInRange(0, 100));
 
 		// Test Exception
-		_ = Assert.ThrowsExactly<InvalidValueException<int>>(() => testValue.CheckIsInRange(0, 100, true));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.CheckIsInRange(0, 100, true));
 	}
 
 	[TestMethod]

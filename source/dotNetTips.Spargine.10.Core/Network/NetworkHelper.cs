@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-30-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -230,8 +230,8 @@ public static class NetworkHelper
 	[Information(nameof(GetNetworkSpeeds), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static ReadOnlyCollection<(string InterfaceName, long SpeedBps)> GetNetworkSpeeds()
 	{
-		var speeds = new List<(string, long)>();
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+		var speeds = new List<(string, long)>(networkInterfaces.Length);
 
 		foreach (var networkInterface in networkInterfaces)
 		{
@@ -240,6 +240,8 @@ public static class NetworkHelper
 				speeds.Add((networkInterface.Name, networkInterface.Speed));
 			}
 		}
+
+		speeds.TrimExcess();
 
 		return speeds.AsReadOnly();
 	}
@@ -335,8 +337,15 @@ public static class NetworkHelper
 	/// </summary>
 	/// <returns><c>true</c> if the computer is connected to an Ethernet network; otherwise, <c>false</c>.</returns>
 	/// <remarks>
+	/// <para>
 	/// This method examines all network interfaces and checks if any active interface 
-	/// has "Ethernet" in its description. It uses case-insensitive comparison.
+	/// is of type <see cref="NetworkInterfaceType.Ethernet"/>.
+	/// </para>
+	/// <para>
+	/// Unlike checking the interface name (which can vary by system), this method uses
+	/// the standardized <see cref="NetworkInterfaceType"/> enumeration for reliable detection
+	/// across different operating systems and configurations.
+	/// </para>
 	/// </remarks>
 	[Pure]
 	[Information(nameof(IsConnectedToEthernet), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
@@ -347,7 +356,7 @@ public static class NetworkHelper
 		foreach (var networkInterface in networkInterfaces)
 		{
 			if (networkInterface.OperationalStatus == OperationalStatus.Up &&
-				networkInterface.Name.Contains("Ethernet", StringComparison.OrdinalIgnoreCase))
+				networkInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
 			{
 				return true;
 			}
