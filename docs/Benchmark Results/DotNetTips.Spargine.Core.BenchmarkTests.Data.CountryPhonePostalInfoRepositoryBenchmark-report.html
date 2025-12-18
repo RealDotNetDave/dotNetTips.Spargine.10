@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.Data.CountryPhonePostalInfoRepositoryBenchmark-20250917-150341</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Data.CountryPhonePostalInfoRepositoryBenchmark-20251218-000448</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,22 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.2, Windows 10 (10.0.19045.6332/22H2/2022Update)
+BenchmarkDotNet v0.15.6, Windows 10 (10.0.19045.6691/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.100-rc.1.25451.107
-  [Host]     : .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2
-  Job-PSYKRA : .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2
+.NET SDK 10.0.101
+  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
-Namespace=DotNetTips.Spargine.Core.BenchmarkTests.Data  Categories=**NEW**  
+Categories=**NEW**  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                 </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method                 </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;ValidatePhoneNumber: US&#39;</td><td>1,357.96 ns</td><td>12.373 ns</td><td>10.332 ns</td><td>2.865 ns</td><td>1,339.73 ns</td><td>1,352.18 ns</td><td>1,355.87 ns</td><td>1,368.68 ns</td><td>1,373.78 ns</td><td>736,399.6</td><td>5.067 ns</td><td>13.00</td><td>1.779</td><td>2.000</td><td>-0.1150</td><td>3</td><td>*</td><td>No</td><td>0.0553</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>1712 B</td>
-</tr><tr><td>&#39;ValidatePostalCode: US-Full&#39;</td><td>741.73 ns</td><td>4.440 ns</td><td>3.936 ns</td><td>1.052 ns</td><td>735.54 ns</td><td>738.28 ns</td><td>742.91 ns</td><td>744.48 ns</td><td>747.84 ns</td><td>1,348,204.8</td><td>6.474 ns</td><td>14.00</td><td>1.641</td><td>2.000</td><td>-0.3082</td><td>2</td><td>*</td><td>No</td><td>0.0010</td><td>-</td><td>-</td><td>-</td><td>7,710 B</td><td>56 B</td>
-</tr><tr><td>GetCountryPhonePostalInfo</td><td>20.15 ns</td><td>0.153 ns</td><td>0.128 ns</td><td>0.035 ns</td><td>20.02 ns</td><td>20.07 ns</td><td>20.14 ns</td><td>20.18 ns</td><td>20.49 ns</td><td>49,620,558.5</td><td>6.482 ns</td><td>13.00</td><td>4.036</td><td>2.000</td><td>1.3271</td><td>1</td><td>*</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>191 B</td><td>-</td>
+</thead><tbody><tr><td>&#39;ValidatePhoneNumber: US&#39;</td><td>1,294.94 ns</td><td>13.471 ns</td><td>12.601 ns</td><td>3.253 ns</td><td>1,267.55 ns</td><td>1,290.19 ns</td><td>1,293.45 ns</td><td>1,303.11 ns</td><td>1,321.03 ns</td><td>772,238.8</td><td>5.873 ns</td><td>15.00</td><td>3</td><td>No</td><td>0.0591</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0019</td><td>0.0019</td><td>11038 B</td>
+</tr><tr><td>&#39;ValidatePostalCode: US-Full&#39;</td><td>716.83 ns</td><td>2.614 ns</td><td>2.183 ns</td><td>0.605 ns</td><td>713.68 ns</td><td>715.13 ns</td><td>717.12 ns</td><td>717.84 ns</td><td>720.76 ns</td><td>1,395,027.1</td><td>6.197 ns</td><td>13.00</td><td>2</td><td>No</td><td>0.0010</td><td>-</td><td>-</td><td>-</td><td>7,068 B</td><td>-</td><td>-</td><td>56 B</td>
+</tr><tr><td>GetCountryPhonePostalInfo</td><td>19.08 ns</td><td>0.147 ns</td><td>0.137 ns</td><td>0.035 ns</td><td>18.86 ns</td><td>19.00 ns</td><td>19.08 ns</td><td>19.15 ns</td><td>19.33 ns</td><td>52,419,398.4</td><td>7.482 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>191 B</td><td>-</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

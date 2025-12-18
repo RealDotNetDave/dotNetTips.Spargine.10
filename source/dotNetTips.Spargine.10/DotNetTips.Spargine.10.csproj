@@ -80,6 +80,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="IO\FilePropertyReader.cs" />
+    <Compile Remove="IO\FilePropertyWriter.cs" />
+    <Compile Remove="IO\IPropertyStore.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<None Remove="dotNetTips-Spargine-8-Logo.png" />
   </ItemGroup>
 

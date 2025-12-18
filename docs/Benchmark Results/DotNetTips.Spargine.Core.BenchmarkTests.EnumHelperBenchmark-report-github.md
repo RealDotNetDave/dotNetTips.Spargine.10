@@ -1,15 +1,16 @@
 ```
 
-BenchmarkDotNet v0.15.2, Windows 10 (10.0.19045.6332/22H2/2022Update)
+BenchmarkDotNet v0.15.6, Windows 10 (10.0.19045.6691/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.100-rc.1.25451.107
-  [Host]     : .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2
-  Job-PSYKRA : .NET 10.0.0 (10.0.25.45207), X64 RyuJIT AVX2
+.NET SDK 10.0.101
+  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
 
 EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
-Namespace=DotNetTips.Spargine.Core.BenchmarkTests  
 
 ```
-| Method    | Mean       | Error    | StdDev   | StdErr  | Min        | Q1         | Median     | Q3         | Max        | Op/s      | CI99.9% Margin | Iterations | Kurtosis | MValue | Skewness | Rank | LogicalGroup | Baseline | Exceptions | Gen0   | Completed Work Items | Lock Contentions | Allocated |
-|---------- |-----------:|---------:|---------:|--------:|-----------:|-----------:|-----------:|-----------:|-----------:|----------:|---------------:|-----------:|---------:|-------:|---------:|-----:|------------- |--------- |-----------:|-------:|---------------------:|-----------------:|----------:|
-| GetValues | 1,572.6 ns | 13.29 ns | 12.43 ns | 3.21 ns | 1,554.1 ns | 1,562.3 ns | 1,567.9 ns | 1,580.6 ns | 1,597.7 ns | 635,889.9 |       5.895 ns |      15.00 |    1.988 |  2.000 |   0.4365 |    1 | *            | No       |          - | 0.0267 |                    - |                - |     840 B |
+| Method                | Categories                 | Mean        | Error     | StdDev    | StdErr   | Min         | Q1          | Median      | Q3          | Max         | Op/s         | CI99.9% Margin | Iterations | Rank | Baseline | Exceptions | Completed Work Items | Lock Contentions | Gen0   | Code Size | Allocated |
+|---------------------- |--------------------------- |------------:|----------:|----------:|---------:|------------:|------------:|------------:|------------:|------------:|-------------:|---------------:|-----------:|-----:|--------- |-----------:|---------------------:|-----------------:|-------:|----------:|----------:|
+| **GetDescription**        | ****NEW****                    |    **15.87 ns** |  **0.183 ns** |  **0.171 ns** | **0.044 ns** |    **15.64 ns** |    **15.77 ns** |    **15.86 ns** |    **15.97 ns** |    **16.24 ns** | **62,993,274.0** |       **7.478 ns** |      **15.00** |    **1** | **No**       |          **-** |                    **-** |                **-** | **0.0008** |   **2,359 B** |      **24 B** |
+| **GetDescriptionNoCache** | ****NEW**,**FOR COMPARISON**** |   **900.04 ns** |  **7.111 ns** |  **6.304 ns** | **1.685 ns** |   **892.84 ns** |   **894.43 ns** |   **898.66 ns** |   **904.91 ns** |   **909.73 ns** |  **1,111,067.5** |       **6.158 ns** |      **14.00** |    **2** | **No**       |          **-** |                    **-** |                **-** | **0.0076** |  **11,446 B** |     **248 B** |
+| **GetItems**              | ****                           | **1,583.04 ns** | **12.777 ns** | **11.952 ns** | **3.086 ns** | **1,565.69 ns** | **1,574.52 ns** | **1,579.12 ns** | **1,592.18 ns** | **1,604.16 ns** |    **631,694.4** |       **5.957 ns** |      **15.00** |    **3** | **No**       |          **-** |                    **-** |                **-** | **0.0267** |        **NA** |     **840 B** |

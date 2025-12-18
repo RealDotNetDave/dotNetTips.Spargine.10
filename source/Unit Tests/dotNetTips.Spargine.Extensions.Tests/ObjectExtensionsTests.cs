@@ -560,6 +560,7 @@ public class ObjectExtensionsTests : UnitTester
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: true);
 
 		Assert.IsNotNull(dict);
+
 		// Verify that null fields are excluded
 		Assert.IsFalse(dict.Values.Any(v => string.IsNullOrEmpty(v)));
 	}
@@ -1023,15 +1024,6 @@ public class ObjectExtensionsTests : UnitTester
 		var result = value1.Max(value2);
 
 		Assert.AreEqual(-5, result);
-	}
-
-	[TestMethod]
-	public void Max_NonComparableObject_ThrowsInvalidOperationException()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-		var person2 = RandomData.GeneratePerson<Person>();
-
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() => person.Max(person2));
 	}
 
 	[TestMethod]

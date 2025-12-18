@@ -426,7 +426,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the collection is null.</exception>
 		/// <example>
-		/// This example shows how to use <see cref="FastShuffle"/> to randomize a collection of integers.
+		/// This example shows how to use FastShuffle to randomize a collection of integers.
 		/// <code>
 		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
 		/// var shuffled = numbers.FastShuffle();
@@ -439,6 +439,8 @@ public static class EnumerableExtensions
 		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
 		public IEnumerable<T> FastShuffle()
 		{
+			//TODO: SLOWER THAN LINQ SHUFFLE. FIX.
+
 			collection = collection.ArgumentNotNull();
 
 			// Optimize for common collection types

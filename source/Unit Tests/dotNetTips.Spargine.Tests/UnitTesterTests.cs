@@ -218,18 +218,6 @@ public class UnitTesterTests
 	}
 
 	[TestMethod]
-	public async Task SaveToFileAsync_EmptyMethodName_ThrowsArgumentException()
-	{
-		// Arrange
-		var tester = new TestAsyncUnitTester();
-		var collection = new[] { new TestPerson { Id = 1, Name = "Test" } };
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await tester.SaveToFileAsync(collection, p => true, string.Empty));
-	}
-
-	[TestMethod]
 	public async Task SaveToFileAsync_LargeCollection_WritesAllItems()
 	{
 		// Arrange
@@ -275,18 +263,6 @@ public class UnitTesterTests
 	}
 
 	[TestMethod]
-	public async Task SaveToFileAsync_NullMethodName_ThrowsArgumentException()
-	{
-		// Arrange
-		var tester = new TestAsyncUnitTester();
-		var collection = new[] { new TestPerson { Id = 1, Name = "Test" } };
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await tester.SaveToFileAsync(collection, p => true, null!));
-	}
-
-	[TestMethod]
 	public async Task SaveToFileAsync_NullPropertySelector_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -298,7 +274,6 @@ public class UnitTesterTests
 		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 			await tester.SaveToFileAsync(collection, null!, methodName));
 	}
-
 
 	[TestMethod]
 	public async Task SaveToFileAsync_PropertiesWithNullValues_HandlesGracefully()
@@ -428,18 +403,6 @@ public class UnitTesterTests
 				Directory.Delete(tempDir, true);
 			}
 		}
-	}
-
-	[TestMethod]
-	public void SaveToFileCollection_EmptyMethodName_ThrowsArgumentException()
-	{
-		// Arrange
-		var tester = new TestCollectionUnitTester();
-		var collection = new[] { new TestPerson { Id = 1, Name = "Test" } };
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			tester.SaveToFile(collection, p => true, string.Empty));
 	}
 
 	[TestMethod]

@@ -38,9 +38,18 @@ namespace DotNetTips.Spargine.Tester;
 [Information(Status = Status.NeedsDocumentation, Documentation = "ADD URL")]
 public abstract class UnitTester(string? outputDirectory = null)
 {
-	private static string GenerateFileName(string methodName)
+	private static string GenerateFileName([NotNull] string methodName)
 	{
-		var fileName = methodName.IsNullOrEmpty() ? $"{RandomData.GenerateKey}.txt" : $"{methodName}.txt";
+		string fileName;
+
+		if (methodName.FastIsNullOrEmpty())
+		{
+			fileName = $"{RandomData.GenerateKey}.txt";
+		}
+		else
+		{
+			fileName = $"{methodName}.txt";
+		}
 
 		return fileName;
 	}
@@ -149,19 +158,57 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <summary>
 	/// Saves the specified input string to a file in the output directory.
 	/// </summary>
-	/// <param name="input">The string to save to the file. Cannot be null or empty.</param>
+	/// <param name="input">The string content to save to the file. Cannot be null or empty.</param>
 	/// <param name="methodName">
-	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// The name of the calling method. This parameter is automatically populated by the compiler
+	/// using the <see cref="CallerMemberNameAttribute"/>. Used to generate the output file name.
+	/// If empty, a random key is used as the file name.
 	/// </param>
+	/// <returns>
+	/// The full path of the saved file if successful; otherwise, <see cref="string.Empty"/> if the input is null or empty.
+	/// </returns>
 	/// <remarks>
-	/// If the <paramref name="input"/> is null or empty, the method will return without saving anything to the file.
+	/// <para>
+	/// This method generates a file name based on the calling method name. The file is saved with a .txt extension
+	/// in the directory specified by <see cref="OutputDirectory"/>.
+	/// </para>
+	/// <para>
+	/// If the <paramref name="input"/> parameter is null or empty, the method returns <see cref="string.Empty"/>
+	/// without attempting to write to the file system.
+	/// </para>
+	/// <para>
+	/// <b>File Naming Convention:</b>
+	/// <list type="bullet">
+	/// <item><description>If <paramref name="methodName"/> has a value: <c>{methodName}.txt</c></description></item>
+	/// <item><description>If <paramref name="methodName"/> is empty: <c>{RandomKey}.txt</c></description></item>
+	/// </list>
+	/// </para>
 	/// </remarks>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null or empty.</exception>
+	/// <exception cref="IOException">Thrown when an I/O error occurs while writing to the file.</exception>
+	/// <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission to write to the directory.</exception>
+	/// <exception cref="System.IO.DirectoryNotFoundException">Thrown when the output directory does not exist.</exception>
+	/// <exception cref="PathTooLongException">Thrown when the resulting file path exceeds the system-defined maximum length.</exception>
+	/// <example>
+	/// This example shows how to use <see cref="SaveToFile(string, string)"/> to save content to a file.
+	/// <code>
+	/// var tester = new MyUnitTester();
+	/// string content = "Test data to save";
+	/// string savedPath = tester.SaveToFile(content);
+	/// Console.WriteLine($"File saved to: {savedPath}");
+	/// // Output might be: File saved to: C:\Output\MyTestMethod.txt
+	/// </code>
+	/// </example>
+	/// <seealso cref="SaveToFile(string, DirectoryInfo, string)"/>
+	/// <seealso cref="SaveToFile{T}(T, Func{PropertyInfo, bool}, string)"/>
+	/// <seealso cref="OutputDirectory"/>
 	[DebuggerStepThrough]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveToFile([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
-		input = input.ArgumentNotNull();
+		if (input.IsNullOrEmpty())
+		{
+			return string.Empty;
+		}
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
@@ -202,7 +249,11 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public string SaveToFile([NotNull] string input, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
-		input = input.ArgumentNotNull();
+		if (input.IsNullOrEmpty())
+		{
+			return string.Empty;
+		}
+
 		directory = directory.ArgumentNotNull();
 
 		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));

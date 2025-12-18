@@ -41,18 +41,18 @@ internal static partial class LibraryImport
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static partial bool CopyFileEx(string lpExistingFileName, string lpNewFileName, CopyProgressRoutine lpProgressRoutine, IntPtr lpData, ref int pbCancel, CopyFileMode dwCopyFlags);
 
-	/// <summary>
-	/// Retrieves a property store for a file or folder specified by its parsing name.
-	/// </summary>
-	/// <param name="pszPath">The parsing name of the file or folder.</param>
-	/// <param name="zeroWorks">Reserved. Pass IntPtr.Zero.</param>
-	/// <param name="flags">Flags that control how the property store is retrieved. See <see cref="GETPROPERTYSTOREFLAGS"/>.</param>
-	/// <param name="iIdPropStore">The interface ID of the property store. Typically <c>IID_IPropertyStore</c>.</param>
-	/// <param name="propertyStore">When this method returns, contains the <see cref="IPropertyStore"/> interface for the specified file or folder.</param>
-	/// <returns>Returns HRESULT. S_OK if successful.</returns>
-	[LibraryImport("shell32.dll", StringMarshalling = StringMarshalling.Utf16, SetLastError = true)]
-	[DefaultDllImportSearchPaths(DllImportSearchPath.SafeDirectories)]
-	internal static partial int SHGetPropertyStoreFromParsingName(string pszPath, IntPtr zeroWorks, GETPROPERTYSTOREFLAGS flags, ref Guid iIdPropStore, [MarshalAs(UnmanagedType.Interface)] out IPropertyStore propertyStore);
+	///// <summary>
+	///// Retrieves a property store for a file or folder specified by its parsing name.
+	///// </summary>
+	///// <param name="pszPath">The parsing name of the file or folder.</param>
+	///// <param name="zeroWorks">Reserved. Pass IntPtr.Zero.</param>
+	///// <param name="flags">Flags that control how the property store is retrieved. See <see cref="GETPROPERTYSTOREFLAGS"/>.</param>
+	///// <param name="iIdPropStore">The interface ID of the property store. Typically <c>IID_IPropertyStore</c>.</param>
+	///// <param name="propertyStore">When this method returns, contains the <see cref="IPropertyStore"/> interface for the specified file or folder.</param>
+	///// <returns>Returns HRESULT. S_OK if successful.</returns>
+	//[LibraryImport("shell32.dll", StringMarshalling = StringMarshalling.Utf16, SetLastError = true)]
+	//[DefaultDllImportSearchPaths(DllImportSearchPath.SafeDirectories)]
+	//internal static partial int SHGetPropertyStoreFromParsingName(string pszPath, IntPtr zeroWorks, GETPROPERTYSTOREFLAGS flags, ref Guid iIdPropStore, [MarshalAs(UnmanagedType.Interface)] out IPropertyStore propertyStore);
 
 	/// <summary>
 	/// Retrieves a <see cref="PROPERTYKEY"/> structure from a canonical property name.

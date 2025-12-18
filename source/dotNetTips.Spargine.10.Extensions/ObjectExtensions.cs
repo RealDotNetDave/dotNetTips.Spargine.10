@@ -349,6 +349,13 @@ public static class ObjectExtensions
 		public IReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
 			memberName = memberName.ArgumentNotNull();
+
+			// Return just member name if obj is null and ignoreNulls is false
+			if (memberName.HasValue() && obj is null && ignoreNulls is false)
+			{
+				return new Dictionary<string, string> { { memberName, string.Empty } };
+			}
+
 			var objectType = obj.ArgumentNotNull().GetType();
 
 			var result = new Dictionary<string, string>();
@@ -356,7 +363,7 @@ public static class ObjectExtensions
 			// Reserve a special treatment for specific types by design (like string -that's a list of chars and you don't want to iterate on its items)
 			if (TypeHelper.BuiltInTypeNames().ContainsKey(objectType))
 			{
-				result.Add(memberName, obj.ToString()!);
+				result.Add(memberName, obj!.ToString()!);
 				return result;
 			}
 
@@ -368,7 +375,7 @@ public static class ObjectExtensions
 				// Loop through the collection using the enumerator strategy and collect all items in the result bag
 				// Note: if the collection is empty it will not return anything about its existence,
 				// because the method is supposed to catch value items not the list itself
-				foreach (var item in (IEnumerable)obj)
+				foreach (var item in (IEnumerable)obj!)
 				{
 					var itemId = itemCount++;
 
@@ -409,7 +416,7 @@ public static class ObjectExtensions
 
 					var innerMember = FastStringBuilder.Format("{0}{1}", newMemberName, property.Name);
 
-					result = result.Concat(innerObject!.PropertiesToDictionary(innerMember)).ToDictionary(e => e.Key, e => e.Value);
+					result = result.Concat(innerObject!.PropertiesToDictionary(innerMember, ignoreNulls)).ToDictionary(e => e.Key, e => e.Value);
 				}
 			}
 

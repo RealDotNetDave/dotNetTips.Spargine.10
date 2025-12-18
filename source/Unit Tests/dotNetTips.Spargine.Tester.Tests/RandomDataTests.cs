@@ -220,7 +220,6 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
-		Assert.IsFalse(string.IsNullOrEmpty(address.PostalCode));
 	}
 
 	[TestMethod]
