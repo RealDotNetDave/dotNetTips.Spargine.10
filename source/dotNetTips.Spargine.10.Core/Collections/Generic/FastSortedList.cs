@@ -146,12 +146,10 @@ public class FastSortedList<T> : List<T>
 	/// <param name="item">The object to be added to the end of the <see cref="FastSortedList{T}"/>. The value can be <see langword="null" /> for reference types.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	[Information(BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public new void Add([DisallowNull] T item)
 	{
-		item = item.ArgumentNotNull();
-
-		base.Add(item);
+		base.Add(item.ArgumentNotNull());
 		this._sorted = false;
 	}
 

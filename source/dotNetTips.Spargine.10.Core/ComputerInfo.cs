@@ -88,7 +88,7 @@ public sealed class ComputerInfo
 	/// </summary>
 	[DataMember]
 	[Information(nameof(CurrentManagedTreadId), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int CurrentManagedTreadId { get; private set; } = CurrentManagedThreadId;
+	public int CurrentManagedTreadId { get; private set; } = Thread.CurrentThread.ManagedThreadId;
 
 	/// <summary>
 	/// Gets the current stack trace information.

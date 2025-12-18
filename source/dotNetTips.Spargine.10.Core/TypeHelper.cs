@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-29-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -293,17 +293,15 @@ public static class TypeHelper
 	/// <returns>An instance of type <typeparamref name="T"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="paramArray"/> is null.</exception>
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static T Create<T>([DisallowNull] params object[] paramArray)
 		where T : class
 	{
 		paramArray = paramArray.ArgumentNotNull();
 
-		var instance = Activator.CreateInstance(typeof(T), args: paramArray);
+		var instance = Activator.CreateInstance(typeof(T), args: paramArray) as T;
 
-		return instance is null
-			? throw new InvalidOperationException($"Unable to create an instance of type {typeof(T).FullName}.")
-			: (T)instance;
+		return instance ?? throw new InvalidOperationException($"Unable to create an instance of type {typeof(T).FullName}.");
 	}
 
 	/// <summary>
@@ -1019,27 +1017,30 @@ public static class TypeHelper
 	/// <param name="instance">The instance to compute the hash code for.</param>
 	/// <returns>The computed hash code.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="instance"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static int GetInstanceHashCode([DisallowNull] object instance)
 	{
 		instance = instance.ArgumentNotNull();
 
-		var hash = 0;
+		var properties = instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-		foreach (var property in instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+		// Use HashCode struct for better performance and distribution
+		var hashCode = new HashCode();
+
+		foreach (var property in properties.AsSpan())
 		{
 			if (property.CanRead)
 			{
 				var value = property.GetValue(instance);
 
-				if (value != null)
+				if (value is not null)
 				{
-					hash = HashCode.Combine(hash, value.GetHashCode());
+					hashCode.Add(value);
 				}
 			}
 		}
 
-		return hash;
+		return hashCode.ToHashCode();
 	}
 
 	/// <summary>
@@ -1119,26 +1120,34 @@ public static class TypeHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetPropertyValues<T>(in T input)
 	{
 		_ = input.ArgumentNotNull();
 
-		var returnValue = new Dictionary<string, string>();
+		var properties = input!.GetType().GetAllProperties()
+			.Where(p => p.CanRead)
+			.OrderBy(p => p.Name)
+			.ToArray();
 
-		var properties = input?.GetType().GetAllProperties().Where(p => p.CanRead).OrderBy(p => p.Name).ToArray();
+		var returnValue = new Dictionary<string, string>(properties.Length);
 
-		foreach (var propertyInfo in properties!)
+		foreach (var propertyInfo in properties)
 		{
 			var propertyValue = propertyInfo.GetValue(input);
 
+			if (propertyValue is null)
+			{
+				continue;
+			}
+
 			if (propertyValue is IDictionary dictionary && dictionary.Count > 0)
 			{
-				_ = returnValue.AddIfNotExists(new KeyValuePair<string, string>(propertyInfo.Name, dictionary.ToDelimitedString()));
+				returnValue[propertyInfo.Name] = dictionary.ToDelimitedString();
 			}
-			else if (propertyValue is not null)
+			else
 			{
-				_ = returnValue.AddIfNotExists(new KeyValuePair<string, string>(propertyInfo.Name, propertyValue.ToString()!));
+				returnValue[propertyInfo.Name] = propertyValue.ToString()!;
 			}
 		}
 

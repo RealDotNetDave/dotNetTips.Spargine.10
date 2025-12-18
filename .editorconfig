@@ -1051,7 +1051,7 @@ dotnet_diagnostic.CA1839.severity = error
 
 # Use Environment.CurrentManagedThreadId instead of Thread.CurrentThread.ManagedThreadId
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
-dotnet_diagnostic.CA1840.severity = suggestion
+dotnet_diagnostic.CA1840.severity = silent
 
 # Prefer Dictionary Contains methods
 # Examples in Rock Your Code: Code Performance in Microsoft .NET

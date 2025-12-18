@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-16-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -72,22 +72,25 @@ public static class FastStringBuilder
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static int EstimateParamsStringLength(ReadOnlySpan<string> args)
 	{
+		var length = args.Length;
+
+		// Early exit for empty span
+		if (length == 0)
+		{
+			return 0;
+		}
+
 		var estimatedCapacity = 0;
 
-		// Use direct span indexing for optimal performance
-		// The JIT can optimize this pattern with bounds check elimination
-		for (var i = 0; i < args.Length; i++)
+		// Use foreach for ReadOnlySpan - JIT optimizes with bounds check elimination
+		foreach (var arg in args)
 		{
 			// Handle null strings as zero length to avoid NullReferenceException
-			estimatedCapacity += args[i]?.Length ?? 0;
+			estimatedCapacity += arg?.Length ?? 0;
 		}
 
 		// Add separator characters: (n-1) separators for n strings
-		// Guard against negative result when args.Length is 0
-		if (args.Length > 0)
-		{
-			estimatedCapacity += args.Length - 1;
-		}
+		estimatedCapacity += length - 1;
 
 		return estimatedCapacity;
 	}
@@ -283,7 +286,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="args"/> is null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Combine), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 	public static string CombineWithSpace([DisallowNull] params ReadOnlySpan<string> args)
 	{
 		if (args.Length == 0)
@@ -291,13 +294,18 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		var estimatedCapacity = EstimateParamsStringLength(args);
+		// Single string - no spaces needed
+		if (args.Length == 1)
+		{
+			return args[0] ?? ControlChars.EmptyString;
+		}
 
+		var estimatedCapacity = EstimateParamsStringLength(args);
 		var sb = _stringBuilderPool.Get().SetCapacity(estimatedCapacity);
 
 		try
 		{
-			// Append first item without checking index
+			// Append first item (null-safe)
 			_ = sb.Append(args[0]);
 
 			// Append remaining items with leading space
@@ -863,24 +871,24 @@ public static class FastStringBuilder
 		// Estimate: ~22 chars per entry (avg key + ':' + avg value + delimiter + ToString overhead)
 		var sb = _stringBuilderPool.Get().SetCapacity(collection.Count * 22);
 
-
 		try
 		{
-			// Explicit enumerator avoids LINQ overhead and enables direct KeyValuePair access
-			using var enumerator = collection.GetEnumerator();
+			var isFirst = true;
 
-			// Handle first entry without delimiter
-			if (enumerator.MoveNext())
+			// Use foreach with KeyValuePair<TKey, TValue> - no LINQ, no explicit enumerator disposal needed
+			// Dictionary<TKey, TValue>.Enumerator is a value type, so foreach doesn't box
+			foreach (var item in collection)
 			{
-				var first = enumerator.Current;
-				_ = sb.Append(first.Key).Append(ControlChars.Colon).Append(first.Value);
-			}
+				if (isFirst)
+				{
+					isFirst = false;
+				}
+				else
+				{
+					_ = sb.Append(delimiter);
+				}
 
-			// Process remaining entries with leading delimiter
-			while (enumerator.MoveNext())
-			{
-				var item = enumerator.Current;
-				_ = sb.Append(delimiter).Append(item.Key).Append(ControlChars.Colon).Append(item.Value);
+				_ = sb.Append(item.Key).Append(ControlChars.Colon).Append(item.Value);
 			}
 
 			return sb.ToString();

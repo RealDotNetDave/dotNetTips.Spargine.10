@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -436,36 +436,12 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
 		public IEnumerable<T> FastShuffle()
 		{
-			//TODO: SLOWER THAN LINQ SHUFFLE. FIX.
-
 			collection = collection.ArgumentNotNull();
 
-			// Optimize for common collection types
-			if (collection is T[] array)
-			{
-				var shuffled = (T[])array.Clone();
-				RandomNumberGenerator.Shuffle(shuffled);
-				return shuffled;
-			}
-
-			if (collection is List<T> list)
-			{
-				var shuffled = new List<T>(list);
-				var span = CollectionsMarshal.AsSpan(shuffled);
-				RandomNumberGenerator.Shuffle(span);
-				return shuffled;
-			}
-
-			// For other IEnumerable types, materialize to array first
-			var items = collection as ICollection<T> ?? collection.ToArray();
-			var resultArray = new T[items.Count];
-			items.CopyTo(resultArray, 0);
-			RandomNumberGenerator.Shuffle(resultArray);
-
-			return resultArray;
+			return collection.Shuffle();
 		}
 
 		/// <summary>
@@ -1046,54 +1022,10 @@ public static class EnumerableExtensions
 		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool FastAny([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
-			//TODO: WORK ON PERFORMANCE. ANY IS FASTER.
-
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			// Optimize for List<T> using Span for better performance
-			if (collection is List<T> list)
-			{
-				var span = list.AsReadOnlySpan();
-				var spanLength = span.Length;
-
-				for (var index = 0; index < spanLength; index++)
-				{
-					if (accumulatorPredicate(span[index]))
-					{
-						return true;
-					}
-				}
-
-				return false;
-			}
-
-			// Optimize for arrays using direct indexing
-			if (collection is T[] array)
-			{
-				var arrayLength = array.Length;
-
-				for (var index = 0; index < arrayLength; index++)
-				{
-					if (accumulatorPredicate(array[index]))
-					{
-						return true;
-					}
-				}
-
-				return false;
-			}
-
-			// Fall back to standard enumeration for other collection types
-			foreach (var item in collection)
-			{
-				if (accumulatorPredicate(item))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return collection.Count(accumulatorPredicate) > 0;
 		}
 
 		/// <summary>
