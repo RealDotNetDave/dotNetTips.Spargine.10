@@ -30,72 +30,6 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class ComputerInfoTests
 {
-	[TestMethod]
-	public void ToJson_ShouldReturnValidJson()
-	{
-		// Arrange
-		var computerInfo = new ComputerInfo();
-
-		// Act
-		var json = computerInfo.ToJson();
-
-		// Assert
-		Assert.IsFalse(string.IsNullOrWhiteSpace(json), "ToJson should return a non-empty JSON string.");
-
-		// Optionally, check that the JSON contains some known property values
-		Assert.IsTrue(json.Contains(computerInfo.ComputerCulture), "JSON should contain ComputerCulture value.");
-		Assert.IsTrue(json.Contains(computerInfo.MachineName), "JSON should contain MachineName value.");
-	}
-
-	[TestMethod]
-	public void DiskUsage_ShouldReturnFormattedString()
-	{
-		// Arrange
-		var computerInfo = new ComputerInfo();
-
-		// Act
-		var diskUsage = computerInfo.DiskUsage;
-
-		// Assert
-		Assert.IsFalse(string.IsNullOrWhiteSpace(diskUsage), "DiskUsage should return a non-empty string.");
-		Assert.IsTrue(diskUsage.Contains("bytes free of"), "DiskUsage should contain the expected format.");
-	}
-
-	[TestMethod]
-	public void GetCpuUsageUserTime_ShouldReturnTimeSpan()
-	{
-		// Act
-		var userTime = ComputerInfo.GetCpuUsageUserTime;
-
-		// Assert
-		Assert.IsInstanceOfType(userTime, typeof(TimeSpan), "GetCpuUsageUserTime should return a TimeSpan.");
-		Assert.IsTrue(userTime >= TimeSpan.Zero, "GetCpuUsageUserTime should be non-negative.");
-	}
-
-	[TestMethod]
-	public void GetCpuUsageTotalTime_ShouldReturnTimeSpan()
-	{
-		// Act
-		var totalTime = ComputerInfo.GetCpuUsageTotalTime;
-
-		// Assert
-		Assert.IsInstanceOfType(totalTime, typeof(TimeSpan), "GetCpuUsageTotalTime should return a TimeSpan.");
-		Assert.IsTrue(totalTime >= TimeSpan.Zero, "GetCpuUsageTotalTime should be non-negative.");
-	}
-
-	[TestMethod]
-	public void GetCpuUsagePrivilegedTime_ShouldReturnTimeSpan()
-	{
-		// Arrange
-		var computerInfo = new ComputerInfo();
-
-		// Act
-		var privilegedTime = computerInfo.GetCpuUsagePrivilegedTime;
-
-		// Assert
-		Assert.IsInstanceOfType(privilegedTime, typeof(TimeSpan), "GetCpuUsagePrivilegedTime should return a TimeSpan.");
-		Assert.IsTrue(privilegedTime >= TimeSpan.Zero, "GetCpuUsagePrivilegedTime should be non-negative.");
-	}
 
 	[TestMethod]
 	public void ComputerCulture_ShouldReturnCorrectCulture()
@@ -163,6 +97,20 @@ public class ComputerInfoTests
 	}
 
 	[TestMethod]
+	public void DiskUsage_ShouldReturnFormattedString()
+	{
+		// Arrange
+		var computerInfo = new ComputerInfo();
+
+		// Act
+		var diskUsage = computerInfo.DiskUsage;
+
+		// Assert
+		Assert.IsFalse(string.IsNullOrWhiteSpace(diskUsage), "DiskUsage should return a non-empty string.");
+		Assert.IsTrue(diskUsage.Contains("bytes free of"), "DiskUsage should contain the expected format.");
+	}
+
+	[TestMethod]
 	public void FrameworkDescription_ShouldReturnCorrectDescription()
 	{
 		// Arrange
@@ -188,6 +136,42 @@ public class ComputerInfoTests
 
 		// Assert
 		Assert.AreEqual(expectedVersion, actualVersion, "The FrameworkVersion property should return the correct framework version.");
+	}
+
+	[TestMethod]
+	public void GetCpuUsagePrivilegedTime_ShouldReturnTimeSpan()
+	{
+		// Arrange
+		var computerInfo = new ComputerInfo();
+
+		// Act
+		var privilegedTime = computerInfo.GetCpuUsagePrivilegedTime;
+
+		// Assert
+		Assert.IsInstanceOfType(privilegedTime, typeof(TimeSpan), "GetCpuUsagePrivilegedTime should return a TimeSpan.");
+		Assert.IsTrue(privilegedTime >= TimeSpan.Zero, "GetCpuUsagePrivilegedTime should be non-negative.");
+	}
+
+	[TestMethod]
+	public void GetCpuUsageTotalTime_ShouldReturnTimeSpan()
+	{
+		// Act
+		var totalTime = ComputerInfo.GetCpuUsageTotalTime;
+
+		// Assert
+		Assert.IsInstanceOfType(totalTime, typeof(TimeSpan), "GetCpuUsageTotalTime should return a TimeSpan.");
+		Assert.IsTrue(totalTime >= TimeSpan.Zero, "GetCpuUsageTotalTime should be non-negative.");
+	}
+
+	[TestMethod]
+	public void GetCpuUsageUserTime_ShouldReturnTimeSpan()
+	{
+		// Act
+		var userTime = ComputerInfo.GetCpuUsageUserTime;
+
+		// Assert
+		Assert.IsInstanceOfType(userTime, typeof(TimeSpan), "GetCpuUsageUserTime should return a TimeSpan.");
+		Assert.IsTrue(userTime >= TimeSpan.Zero, "GetCpuUsageUserTime should be non-negative.");
 	}
 
 	[TestMethod]
@@ -444,6 +428,22 @@ public class ComputerInfoTests
 
 		// Assert
 		Assert.AreEqual(expectedTickCount64, actualTickCount64, "The TickCount64 property should return the correct tick count.");
+	}
+	[TestMethod]
+	public void ToJson_ShouldReturnValidJson()
+	{
+		// Arrange
+		var computerInfo = new ComputerInfo();
+
+		// Act
+		var json = computerInfo.ToJson();
+
+		// Assert
+		Assert.IsFalse(string.IsNullOrWhiteSpace(json), "ToJson should return a non-empty JSON string.");
+
+		// Optionally, check that the JSON contains some known property values
+		Assert.IsTrue(json.Contains(computerInfo.ComputerCulture), "JSON should contain ComputerCulture value.");
+		Assert.IsTrue(json.Contains(computerInfo.MachineName), "JSON should contain MachineName value.");
 	}
 
 	[TestMethod]

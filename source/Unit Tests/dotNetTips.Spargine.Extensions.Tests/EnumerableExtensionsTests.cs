@@ -79,28 +79,6 @@ public class EnumerableExtensionsTests
 		Assert.IsTrue(people.Count() == Count + 1);
 	}
 
-	[TestMethod]
-	public void AddFirst_AddsItemAtBeginning()
-	{
-		var list = new List<int> { 2, 3, 4 };
-		list.AddFirst(1);
-		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 4 }, list);
-	}
-
-	[TestMethod]
-	public void AddFirstTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		var person1 = RandomData.GeneratePerson<Person>();
-
-		people.AddFirst(person1);
-
-		Assert.IsTrue(people.Count == Count + 1);
-
-		people.AddFirst(null);
-
-		Assert.IsTrue(people.Count == Count + 1);
-	}
 
 	[TestMethod]
 	public void AddIf_ConditionFalse_ReturnsOriginal()
@@ -115,25 +93,6 @@ public class EnumerableExtensionsTests
 	{
 		var list = new List<int> { 1, 2 };
 		list.AddIf(3, true);
-		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, list);
-	}
-
-	[TestMethod]
-	public void AddIf_NullItem_ReturnsOriginal()
-	{
-		var list = new List<string> { "a", "b" };
-		string item = null;
-		list.AddIf(item, true);
-
-		Assert.IsTrue(list.Count() == 2);
-
-	}
-
-	[TestMethod]
-	public void AddLast_AddsItemAtEnd()
-	{
-		var list = new List<int> { 1, 2 };
-		list.AddLast(3);
 		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, list);
 	}
 
@@ -442,17 +401,6 @@ public class EnumerableExtensionsTests
 		var result = people.HasDuplicates();
 
 		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void HasItemsTest()
-	{
-		var collection = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-		IEnumerable<Person> nullCollection = null;
-
-		Assert.IsTrue(collection.IsNotEmpty());
-
-		Assert.IsFalse(nullCollection.IsNotEmpty());
 	}
 
 	[TestMethod]

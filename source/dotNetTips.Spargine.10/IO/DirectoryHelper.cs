@@ -22,8 +22,10 @@ using System.Security.Principal;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Properties;
+
+#if NET10_0_WINDOWS
 using DotNetTips.Spargine.Win32;
-using Microsoft.Win32;
+#endif
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
 
@@ -260,6 +262,7 @@ public static class DirectoryHelper
 	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
 	{
+#if NET10_0_WINDOWS
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) is false)
 		{
 			throw new PlatformNotSupportedException();
@@ -323,6 +326,9 @@ public static class DirectoryHelper
 		}
 
 		return folders.AsReadOnly();
+#else
+		throw new PlatformNotSupportedException();
+#endif
 	}
 
 	/// <summary>

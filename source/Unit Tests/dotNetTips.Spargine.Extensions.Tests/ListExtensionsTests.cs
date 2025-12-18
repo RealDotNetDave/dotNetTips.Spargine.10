@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-18-2025
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -43,6 +43,307 @@ public class ListExtensionsTests
 			yield return item;
 			await Task.Yield();
 		}
+	}
+
+	[TestMethod]
+	public void AddFirstAndAddLastCombinedTest()
+	{
+		// Arrange
+		var list = new List<int> { 3, 4 };
+
+		// Act
+		list.AddFirst(2);
+		list.AddFirst(1);
+		list.AddLast(5);
+		list.AddLast(6);
+
+		// Assert
+		Assert.AreEqual(6, list.Count, "List should contain 6 items.");
+		Assert.AreEqual(1, list[0], "First item should be 1.");
+		Assert.AreEqual(2, list[1], "Second item should be 2.");
+		Assert.AreEqual(3, list[2], "Third item should be 3.");
+		Assert.AreEqual(4, list[3], "Fourth item should be 4.");
+		Assert.AreEqual(5, list[4], "Fifth item should be 5.");
+		Assert.AreEqual(6, list[5], "Sixth item should be 6.");
+	}
+
+	[TestMethod]
+	public void AddFirstMultipleItemsTest()
+	{
+		// Arrange
+		var list = new List<int> { 4, 5, 6 };
+
+		// Act
+		list.AddFirst(3);
+		list.AddFirst(2);
+		list.AddFirst(1);
+
+		// Assert
+		Assert.AreEqual(6, list.Count, "List should contain 6 items.");
+		Assert.AreEqual(1, list[0], "First item should be 1.");
+		Assert.AreEqual(2, list[1], "Second item should be 2.");
+		Assert.AreEqual(3, list[2], "Third item should be 3.");
+		Assert.AreEqual(4, list[3], "Fourth item should be 4.");
+	}
+
+	[TestMethod]
+	public void AddFirstPerformanceWithLargeListTest()
+	{
+		// Arrange
+		var list = new List<int>(Enumerable.Range(2, 10000));
+		var itemToAdd = 1;
+
+		// Act
+		list.AddFirst(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(10001, list.Count, "List should contain 10001 items.");
+		Assert.AreEqual(itemToAdd, list[0], "First item should be the added item.");
+		Assert.AreEqual(2, list[1], "Second item should be 2.");
+	}
+
+	[TestMethod]
+	public void AddFirstPreservesOrderTest()
+	{
+		// Arrange
+		var list = new List<string> { "second", "third", "fourth" };
+		var itemToAdd = "first";
+
+		// Act
+		list.AddFirst(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(4, list.Count, "List should have 4 items.");
+		Assert.AreEqual(itemToAdd, list[0], "First item should be the newly added item.");
+		Assert.AreEqual("second", list[1], "Second item should remain in second position.");
+		Assert.AreEqual("third", list[2], "Third item should remain in third position.");
+		Assert.AreEqual("fourth", list[3], "Fourth item should remain in fourth position.");
+	}
+
+	[TestMethod]
+	public void AddFirstToEmptyListTest()
+	{
+		// Arrange
+		var list = new List<int>();
+		var itemToAdd = 42;
+
+		// Act
+		list.AddFirst(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(1, list.Count, "List should contain exactly 1 item.");
+		Assert.AreEqual(itemToAdd, list[0], "The first (and only) item should be the added item.");
+	}
+
+	[TestMethod]
+	public void AddFirstWithNullItemTest()
+	{
+		// Arrange
+		var list = new List<string> { "item1", "item2", "item3" };
+		string nullItem = null;
+		var originalCount = list.Count;
+
+		// Act
+		list.AddFirst(nullItem);
+
+		// Assert
+		Assert.AreEqual(originalCount, list.Count, "List count should remain unchanged when adding null.");
+		Assert.IsFalse(list.Contains(null), "List should not contain null after attempting to add null.");
+	}
+
+	[TestMethod]
+	public void AddFirstWithNullListShouldThrowTest()
+	{
+		// Arrange
+		List<int> list = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.AddFirst(42),
+			"Should throw ArgumentNullException when list is null.");
+	}
+
+	[TestMethod]
+	public void AddFirstWithReferenceTypeTest()
+	{
+		// Arrange
+		var list = new List<Person>();
+		var personToAdd = RandomData.GeneratePersonRefCollection(1).First();
+
+		// Act
+		list.AddFirst(personToAdd);
+
+		// Assert
+		Assert.AreEqual(1, list.Count, "List should contain exactly 1 person.");
+		Assert.AreSame(personToAdd, list[0], "The added person should be the same reference.");
+	}
+
+	[TestMethod]
+	public void AddFirstWithValidItemTest()
+	{
+		// Arrange
+		var list = new List<int> { 2, 3, 4, 5 };
+		var itemToAdd = 1;
+
+		// Act
+		list.AddFirst(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(5, list.Count, "List should contain 5 items after adding one.");
+		Assert.AreEqual(itemToAdd, list[0], "The first item should be the added item.");
+		Assert.AreEqual(2, list[1], "The second item should be 2.");
+	}
+
+	[TestMethod]
+	public void AddFirstWithValueTypesTest()
+	{
+		// Arrange
+		var list = new List<decimal> { 2.2m, 3.3m, 4.4m };
+		var valueToAdd = 1.1m;
+
+		// Act
+		list.AddFirst(valueToAdd);
+
+		// Assert
+		Assert.AreEqual(4, list.Count, "List should contain 4 decimal values.");
+		Assert.AreEqual(valueToAdd, list[0], "First value should be the added decimal.");
+	}
+
+	[TestMethod]
+	public void AddLastMultipleItemsTest()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+
+		// Act
+		list.AddLast(4);
+		list.AddLast(5);
+		list.AddLast(6);
+
+		// Assert
+		Assert.AreEqual(6, list.Count, "List should contain 6 items.");
+		Assert.AreEqual(4, list[3], "Fourth item should be 4.");
+		Assert.AreEqual(5, list[4], "Fifth item should be 5.");
+		Assert.AreEqual(6, list[5], "Sixth item should be 6.");
+	}
+
+	[TestMethod]
+	public void AddLastPerformanceWithLargeListTest()
+	{
+		// Arrange
+		var list = new List<int>(Enumerable.Range(1, 10000));
+		var itemToAdd = 10001;
+
+		// Act
+		list.AddLast(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(10001, list.Count, "List should contain 10001 items.");
+		Assert.AreEqual(itemToAdd, list[10000], "Last item should be the added item.");
+	}
+
+	[TestMethod]
+	public void AddLastPreservesOrderTest()
+	{
+		// Arrange
+		var list = new List<string> { "first", "second", "third" };
+		var itemToAdd = "last";
+
+		// Act
+		list.AddLast(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(4, list.Count, "List should have 4 items.");
+		Assert.AreEqual("first", list[0], "First item should remain unchanged.");
+		Assert.AreEqual("second", list[1], "Second item should remain unchanged.");
+		Assert.AreEqual("third", list[2], "Third item should remain unchanged.");
+		Assert.AreEqual(itemToAdd, list[3], "Last item should be the newly added item.");
+	}
+
+	[TestMethod]
+	public void AddLastToEmptyListTest()
+	{
+		// Arrange
+		var list = new List<int>();
+		var itemToAdd = 42;
+
+		// Act
+		list.AddLast(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(1, list.Count, "List should contain exactly 1 item.");
+		Assert.AreEqual(itemToAdd, list[0], "The first (and only) item should be the added item.");
+	}
+
+	[TestMethod]
+	public void AddLastWithNullItemTest()
+	{
+		// Arrange
+		var list = new List<string> { "item1", "item2", "item3" };
+		string nullItem = null;
+		var originalCount = list.Count;
+
+		// Act
+		list.AddLast(nullItem);
+
+		// Assert
+		Assert.AreEqual(originalCount, list.Count, "List count should remain unchanged when adding null.");
+		Assert.IsFalse(list.Contains(null), "List should not contain null after attempting to add null.");
+	}
+
+	[TestMethod]
+	public void AddLastWithNullListShouldThrowTest()
+	{
+		// Arrange
+		List<int> list = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.AddLast(42),
+			"Should throw ArgumentNullException when list is null.");
+	}
+
+	[TestMethod]
+	public void AddLastWithReferenceTypeTest()
+	{
+		// Arrange
+		var list = new List<Person>();
+		var personToAdd = RandomData.GeneratePersonRefCollection(1).First();
+
+		// Act
+		list.AddLast(personToAdd);
+
+		// Assert
+		Assert.AreEqual(1, list.Count, "List should contain exactly 1 person.");
+		Assert.AreSame(personToAdd, list[0], "The added person should be the same reference.");
+	}
+
+	[TestMethod]
+	public void AddLastWithValidItemTest()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var itemToAdd = 6;
+
+		// Act
+		list.AddLast(itemToAdd);
+
+		// Assert
+		Assert.AreEqual(6, list.Count, "List should contain 6 items after adding one.");
+		Assert.AreEqual(itemToAdd, list[5], "The last item should be the added item.");
+	}
+
+	[TestMethod]
+	public void AddLastWithValueTypesTest()
+	{
+		// Arrange
+		var list = new List<decimal> { 1.1m, 2.2m, 3.3m };
+		var valueToAdd = 4.4m;
+
+		// Act
+		list.AddLast(valueToAdd);
+
+		// Assert
+		Assert.AreEqual(4, list.Count, "List should contain 4 decimal values.");
+		Assert.AreEqual(valueToAdd, list[3], "Last value should be the added decimal.");
 	}
 
 	[TestMethod]

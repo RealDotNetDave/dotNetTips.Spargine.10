@@ -45,7 +45,7 @@
 	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	<ServerGarbageCollection>true</ServerGarbageCollection>
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<TargetFramework>net10.0</TargetFramework>
+	<TargetFrameworks>net10.0;net10.0-windows</TargetFrameworks>
 	<Title>DotNetTips.Spargine.10</Title>
 	<Version>2025.10.12.1</Version>
   </PropertyGroup>
@@ -66,6 +66,10 @@
 	<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' != 'net10.0-windows'">
+	<Compile Remove="**\RegistryHelper.cs" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<OutputPath>..\..\AppBin\</OutputPath>
 	<DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.xml</DocumentationFile>
@@ -74,15 +78,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="WinData\**" />
-    <EmbeddedResource Remove="WinData\**" />
-    <None Remove="WinData\**" />
+	<Compile Remove="IO\FilePropertyReader.cs" />
+	<Compile Remove="IO\FilePropertyWriter.cs" />
+	<Compile Remove="IO\IPropertyStore.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="IO\FilePropertyReader.cs" />
-    <Compile Remove="IO\FilePropertyWriter.cs" />
-    <Compile Remove="IO\IPropertyStore.cs" />
+  <ItemGroup Condition="'$(OS)'!='Windows_NT'">
+	<Compile Remove="WinData\**" />
+	<EmbeddedResource Remove="WinData\**" />
+	<None Remove="WinData\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -121,14 +125,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
-    <ProjectReference Include="..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+	<ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+	<ProjectReference Include="..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
 	<Compile Update="Properties\Resources.Designer.cs">
-	  <DesignTime>true</DesignTime>
-	  <AutoGen>true</AutoGen>
+	  <DesignTime>True</DesignTime>
+	  <AutoGen>True</AutoGen>
 	  <DependentUpon>Resources.resx</DependentUpon>
 	</Compile>
   </ItemGroup>
@@ -145,6 +149,10 @@
 	  <HintPath>$(SystemRoot)\System32\WinMetadata\Windows.winmd</HintPath>
 	</Reference>
   </ItemGroup>-->
+
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+	<DefineConstants>$(DefineConstants);WINDOWS</DefineConstants>
+  </PropertyGroup>
 
 
 </Project>

@@ -447,11 +447,6 @@ public static class ArrayExtensions
 		{
 			array = array.ArgumentItemsExists();
 
-			if (array.LongLength == 0)
-			{
-				return [];
-			}
-
 			var result = new T[array.LongLength - 1];
 			Array.Copy(array, 1, result, 0, array.LongLength - 1);
 			return result;
