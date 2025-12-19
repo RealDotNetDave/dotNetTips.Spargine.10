@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 10-23-2025
 // ***********************************************************************
-// <copyright file="CountryRepository.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="CountryRepository.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

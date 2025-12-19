@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-14-2025
 // ***********************************************************************
-// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
@@ -21,7 +21,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 02-21-2025
 // ***********************************************************************
-// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

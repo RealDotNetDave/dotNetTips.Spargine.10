@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-05-2025
 // ***********************************************************************
-// <copyright file="TempFileManager.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="TempFileManager.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>TempFileManager creates and maintains a list of temporary files.</summary>

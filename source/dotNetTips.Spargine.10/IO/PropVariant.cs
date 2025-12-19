@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 08-25-2025
 // ***********************************************************************
-// <copyright file="PropVariant.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="PropVariant.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Minimal PropVariant wrapper for VT_LPWSTR (strings). Dispose frees COM memory. Extend if you need more types (VT_FILETIME, vectors, etc.).</summary>

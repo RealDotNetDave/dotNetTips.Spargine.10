@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 08-19-2025
 // ***********************************************************************
-// <copyright file="SimpleResult.Generic.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="SimpleResult.Generic.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

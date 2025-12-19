@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-16-2025
 // ***********************************************************************
-// <copyright file="PasswordHasher.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="PasswordHasher.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

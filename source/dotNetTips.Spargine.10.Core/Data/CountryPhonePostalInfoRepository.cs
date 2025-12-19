@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-17-2025
 // ***********************************************************************
-// <copyright file="CountryPhonePostalInfoRepository.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="CountryPhonePostalInfoRepository.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

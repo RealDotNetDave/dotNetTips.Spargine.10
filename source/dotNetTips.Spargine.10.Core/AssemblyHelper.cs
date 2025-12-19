@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-06-2025
 // ***********************************************************************
-// <copyright file="AssemblyHelper.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="AssemblyHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
