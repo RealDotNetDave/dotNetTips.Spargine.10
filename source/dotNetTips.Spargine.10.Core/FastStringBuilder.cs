@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-19-2025
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,7 +20,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
-using DotNetTips.Spargine.Core.Properties;
 using Microsoft.Extensions.ObjectPool;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -305,13 +304,24 @@ public static class FastStringBuilder
 
 		try
 		{
-			// Append first item (null-safe)
-			_ = sb.Append(args[0]);
+			// Append first item directly without null coalescing to avoid allocation
+			if (args[0] is not null)
+			{
+				_ = sb.Append(args[0]);
+			}
 
-			// Append remaining items with leading space
+			// Use single Append call with interpolated handler for better performance
 			for (var index = 1; index < args.Length; index++)
 			{
-				_ = sb.Append(ControlChars.Space).Append(args[index]);
+				if (args[index] is not null)
+				{
+					_ = sb.Append(ControlChars.Space);
+					_ = sb.Append(args[index]);
+				}
+				else
+				{
+					_ = sb.Append(ControlChars.Space);
+				}
 			}
 
 			return sb.ToString();
@@ -858,12 +868,7 @@ public static class FastStringBuilder
 	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
 	public static string ToDelimitedString<TKey, TValue>([DisallowNull] Dictionary<TKey, TValue> collection, [ConstantExpected] char delimiter = ControlChars.Comma) where TKey : notnull
 	{
-		if (collection is null)
-		{
-			ExceptionThrower.ThrowArgumentNullException(Resources.TheCollectionParameterMustNotBeNull, nameof(collection));
-		}
-
-		if (collection.Count == 0)
+		if ((collection is null) || (collection.Count == 0))
 		{
 			return ControlChars.EmptyString;
 		}

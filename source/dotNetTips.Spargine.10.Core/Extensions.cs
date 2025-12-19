@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-19-2025
 // ***********************************************************************
 // <copyright file="Extensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -119,9 +119,7 @@ internal static partial class Extensions
 	[Information(nameof(ClearSetCapacity), author: "David McCarter", createdOn: "11/13/2024", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	internal static StringBuilder ClearSetCapacity([NotNull] this StringBuilder sb, int capacity)
 	{
-
-		sb = sb.ArgumentNotNull();
-		sb.Clear().Capacity = capacity;
+		_ = sb.Clear().EnsureCapacity(capacity);
 		return sb;
 	}
 
@@ -279,9 +277,7 @@ internal static partial class Extensions
 	[Information(nameof(SetCapacity), author: "David McCarter", createdOn: "11/26/2025", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	internal static StringBuilder SetCapacity([NotNull] this StringBuilder sb, int capacity)
 	{
-
-		sb = sb.ArgumentNotNull();
-		sb.Capacity = capacity;
+		_ = sb.EnsureCapacity(capacity);
 		return sb;
 	}
 

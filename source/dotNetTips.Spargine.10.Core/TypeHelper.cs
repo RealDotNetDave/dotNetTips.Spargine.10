@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-19-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -50,6 +50,7 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTypeHelper")]
 public static class TypeHelper
 {
+	private const int TimeOutMinutes = 5;
 
 	/// <summary>
 	/// A read-only collection of built-in .NET types. This collection is used internally to check if a type is a built-in .NET type.
@@ -376,7 +377,7 @@ public static class TypeHelper
 
 		var result = types.ToArray();
 
-		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		return Array.AsReadOnly(result);
 	}
@@ -511,7 +512,7 @@ public static class TypeHelper
 
 		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsAbstract).ToArray();
 
-		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		return Array.AsReadOnly(methods);
 	}
@@ -553,7 +554,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_commonCache.AddCacheItem(cacheKey, constructors.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, constructors.ToArray(), TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var ctor in constructors)
 		{
@@ -596,7 +597,7 @@ public static class TypeHelper
 			BindingFlags.NonPublic |
 			BindingFlags.DeclaredOnly);
 
-		_commonCache.AddCacheItem(cacheKey, fields, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, fields, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var field in fields)
 		{
@@ -640,7 +641,7 @@ public static class TypeHelper
 			BindingFlags.NonPublic |
 			BindingFlags.DeclaredOnly);
 
-		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var method in methods)
 		{
@@ -686,7 +687,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_commonCache.AddCacheItem(cacheKey, fields.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, fields.ToArray(), TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var field in fields)
 		{
@@ -752,7 +753,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_commonCache.AddCacheItem(cacheKey, methods.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, methods.ToArray(), TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var method in methods)
 		{
@@ -798,7 +799,7 @@ public static class TypeHelper
 			typeInfo = typeInfo.BaseType?.GetTypeInfo();
 		}
 
-		_commonCache.AddCacheItem(cacheKey, properties.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, properties.ToArray(), TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var property in properties)
 		{
@@ -1022,25 +1023,23 @@ public static class TypeHelper
 	{
 		instance = instance.ArgumentNotNull();
 
-		var properties = instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+		//TODO: BACKED OUT CHANGES FROM COPIOT SINCE IT WAS MUCH SLOWER.
+		var hash = 0;
 
-		// Use HashCode struct for better performance and distribution
-		var hashCode = new HashCode();
-
-		foreach (var property in properties.AsSpan())
+		foreach (var property in instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).AsSpan())
 		{
 			if (property.CanRead)
 			{
 				var value = property.GetValue(instance);
 
-				if (value is not null)
+				if (value != null)
 				{
-					hashCode.Add(value);
+					hash = HashCode.Combine(hash, value.GetHashCode());
 				}
 			}
 		}
 
-		return hashCode.ToHashCode();
+		return hash;
 	}
 
 	/// <summary>
@@ -1088,7 +1087,7 @@ public static class TypeHelper
 			}
 		}
 
-		_commonCache.AddCacheItem(cacheKey, membersWithAttribute.ToArray(), TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, membersWithAttribute.ToArray(), TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var member in membersWithAttribute)
 		{
@@ -1120,19 +1119,33 @@ public static class TypeHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetPropertyValues<T>(in T input)
 	{
 		_ = input.ArgumentNotNull();
 
-		var properties = input!.GetType().GetAllProperties()
-			.Where(p => p.CanRead)
-			.OrderBy(p => p.Name)
-			.ToArray();
+		var type = input!.GetType();
 
-		var returnValue = new Dictionary<string, string>(properties.Length);
+		// Use caching to avoid repeated reflection
+		var cacheKey = $"{type.FullName}.GetPropertyValues";
 
-		foreach (var propertyInfo in properties)
+		PropertyInfo[]? properties;
+
+		if (!_commonCache.TryGetValue(cacheKey, out properties))
+		{
+			// Get properties once and cache them
+			properties = [.. type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+				.Where(p => p.CanRead)
+				.OrderBy(p => p.Name)];
+
+			_commonCache.AddCacheItem(cacheKey, properties, TimeSpan.FromMinutes(TimeOutMinutes));
+		}
+
+		// Pre-allocate dictionary with exact capacity
+		var returnValue = new Dictionary<string, string>(properties!.Length);
+
+		// Process each property
+		foreach (var propertyInfo in properties.AsSpan())
 		{
 			var propertyValue = propertyInfo.GetValue(input);
 
@@ -1141,14 +1154,25 @@ public static class TypeHelper
 				continue;
 			}
 
-			if (propertyValue is IDictionary dictionary && dictionary.Count > 0)
+			// Handle dictionary properties
+			if (propertyValue is IDictionary dictionary)
 			{
-				returnValue[propertyInfo.Name] = dictionary.ToDelimitedString();
+				if (dictionary.Count > 0)
+				{
+					returnValue[propertyInfo.Name] = dictionary.ToDelimitedString();
+				}
+				continue;
 			}
-			else
+
+			// Handle string properties (avoid ToString() allocation)
+			if (propertyValue is string stringValue)
 			{
-				returnValue[propertyInfo.Name] = propertyValue.ToString()!;
+				returnValue[propertyInfo.Name] = stringValue;
+				continue;
 			}
+
+			// For all other types, ToString() is necessary but unavoidable
+			returnValue[propertyInfo.Name] = propertyValue.ToString()!;
 		}
 
 		return returnValue.ToReadOnlyCollection();
@@ -1223,7 +1247,7 @@ public static class TypeHelper
 
 			var displayName = sb.ToString();
 
-			_commonCache.AddCacheItem(cacheKey, displayName, TimeSpan.FromMinutes(5));
+			_commonCache.AddCacheItem(cacheKey, displayName, TimeSpan.FromMinutes(TimeOutMinutes));
 
 			return displayName;
 		}
@@ -1309,7 +1333,7 @@ public static class TypeHelper
 		}
 
 		// Cache the result for future use
-		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		return result;
 	}
@@ -1405,7 +1429,7 @@ public static class TypeHelper
 		var result = type.GetInterfaces().Any(i => i == interfaceType);
 
 		// Cache the result for future use
-		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(5));
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		return result;
 	}

@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-19-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -386,7 +386,7 @@ public static class StringBuilderExtensions
 		{
 			sb = sb.ArgumentNotNull();
 
-			sb.Clear().Capacity = capacity;
+			_ = sb.Clear().EnsureCapacity(capacity);
 
 			return sb;
 		}
@@ -420,7 +420,8 @@ public static class StringBuilderExtensions
 		public StringBuilder SetCapacity(in int capacity)
 		{
 			sb = sb.ArgumentNotNull();
-			sb.Capacity = capacity;
+
+			_ = sb.EnsureCapacity(capacity);
 			return sb;
 		}
 
