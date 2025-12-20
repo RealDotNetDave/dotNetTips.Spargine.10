@@ -4,7 +4,7 @@
 // Created          : 11-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-20-2025
 // ***********************************************************************
 // <copyright file="ValidatorTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -21,7 +21,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -371,7 +370,7 @@ public class ValidatorTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDirectoryInfo.ArgumentExists());
 
 		var fakeDirectory = new DirectoryInfo("fakefile");
-		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => Directory.Delete(fakeDirectory.FullName));
+		_ = Assert.ThrowsExactly<System.IO.DirectoryNotFoundException>(() => Directory.Delete(fakeDirectory.FullName));
 	}
 
 	[TestMethod]

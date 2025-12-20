@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-20-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -231,19 +231,18 @@ public class StringBuilderExtensionsTests
 	public void ClearSetCapacityZeroCapacityTest()
 	{
 		var sb = new StringBuilder("Initial content");
-		int newCapacity = 0;
 
 		// Ensure the StringBuilder has initial content
 		Assert.IsTrue(sb.Length > 0, "StringBuilder should have initial content.");
 
 		// Call ClearSetCapacity
-		sb.ClearSetCapacity(newCapacity);
+		_ = sb.ClearSetCapacity(0);
 
 		// Verify the StringBuilder is cleared
 		Assert.AreEqual(0, sb.Length, "StringBuilder should be cleared.");
 
 		// Verify the capacity is set correctly
-		Assert.AreEqual(newCapacity, sb.Capacity, "StringBuilder capacity should be set to zero.");
+		Assert.AreEqual(16, sb.Capacity, "StringBuilder capacity should be set to zero.");
 	}
 
 }
