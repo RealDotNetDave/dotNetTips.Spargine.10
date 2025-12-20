@@ -84,6 +84,13 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = "Array: Spargine IndexOf(ref)")]
+	[BenchmarkCategory(Categories.GenericCollections)]
+	public int Array_Search_IndexOf_LINQ_Ref()
+	{
+		return this._personRefArray.IndexOf(p => p.Equals(this.PersonRefLookupLast));
+	}
+
 	[Benchmark(Description = nameof(GetHashCode))]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ArrayHashCode_Ref()

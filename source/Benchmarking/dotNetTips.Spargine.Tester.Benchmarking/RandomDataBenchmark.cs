@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 12-20-2025
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -16,7 +16,6 @@ using System;
 using System.IO;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester.Data;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
@@ -37,7 +36,7 @@ public class RandomDataBenchmark : Benchmark
 	{
 		base.Cleanup();
 
-		_ = DirectoryHelper.DeleteDirectory(new DirectoryInfo(this._filePath));
+		Directory.Delete(this._filePath);
 	}
 
 
