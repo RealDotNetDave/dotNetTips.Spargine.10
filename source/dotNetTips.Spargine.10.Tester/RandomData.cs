@@ -395,9 +395,8 @@ public static class RandomData
 		var postalCode = GeneratePostalCode(country, city);
 		var stateName = state?.Name ?? string.Empty;
 
-		if (typeof(TAddress) == typeof(Address))
-		{
-			return (TAddress)(object)new Address
+		return typeof(TAddress) == typeof(Address)
+			? (TAddress)(object)new Address
 			{
 				Id = id,
 				Address1 = address1,
@@ -408,31 +407,23 @@ public static class RandomData
 				Phone = phone,
 				PostalCode = postalCode,
 				State = stateName
-			};
-		}
-		else if (typeof(TAddress) == typeof(Models.ValueTypes.Address))
-		{
-			return (TAddress)(object)new Models.ValueTypes.Address
-			{
-				Id = id,
-				Address1 = address1,
-				Address2 = address2,
-				City = cityName,
-				Country = countryName,
-				CountyProvince = countyProvince,
-				Phone = phone,
-				PostalCode = postalCode,
-				State = stateName
-			};
-		}
-		else if (typeof(TAddress) == typeof(AddressRecord))
-		{
-			return (TAddress)(object)new AddressRecord(id, address1, address2, cityName, stateName, countyProvince, countryName, postalCode, phone);
-		}
-		else
-		{
-			throw new NotSupportedException($"Type {typeof(TAddress).FullName} is not supported by GenerateAddress.");
-		}
+			}
+			: typeof(TAddress) == typeof(Models.ValueTypes.Address)
+				? (TAddress)(object)new Models.ValueTypes.Address
+				{
+					Id = id,
+					Address1 = address1,
+					Address2 = address2,
+					City = cityName,
+					Country = countryName,
+					CountyProvince = countyProvince,
+					Phone = phone,
+					PostalCode = postalCode,
+					State = stateName
+				}
+				: typeof(TAddress) == typeof(AddressRecord)
+							? (TAddress)(object)new AddressRecord(id, address1, address2, cityName, stateName, countyProvince, countryName, postalCode, phone)
+							: throw new NotSupportedException($"Type {typeof(TAddress).FullName} is not supported by GenerateAddress.");
 	}
 
 	/// <summary>
@@ -943,22 +934,13 @@ public static class RandomData
 	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
 	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
-		if (typeof(TPerson) == typeof(Person))
-		{
-			return (TPerson)(object)GeneratePersonRef(addressCount, addressLength, countyProvinceLength);
-		}
-		else if (typeof(TPerson) == typeof(Models.ValueTypes.Person))
-		{
-			return (TPerson)(object)GeneratePersonVal(addressCount, addressLength, countyProvinceLength);
-		}
-		else if (typeof(TPerson) == typeof(PersonRecord))
-		{
-			return (TPerson)(object)GeneratePersonRecord(addressCount, addressLength, countyProvinceLength);
-		}
-		else
-		{
-			throw new NotSupportedException($"Type {typeof(TPerson).FullName} is not supported by GeneratePerson.");
-		}
+		return typeof(TPerson) == typeof(Person)
+			? (TPerson)(object)GeneratePersonRef(addressCount, addressLength, countyProvinceLength)
+			: typeof(TPerson) == typeof(Models.ValueTypes.Person)
+				? (TPerson)(object)GeneratePersonVal(addressCount, addressLength, countyProvinceLength)
+				: typeof(TPerson) == typeof(PersonRecord)
+							? (TPerson)(object)GeneratePersonRecord(addressCount, addressLength, countyProvinceLength)
+							: throw new NotSupportedException($"Type {typeof(TPerson).FullName} is not supported by GeneratePerson.");
 	}
 
 	/// <summary>

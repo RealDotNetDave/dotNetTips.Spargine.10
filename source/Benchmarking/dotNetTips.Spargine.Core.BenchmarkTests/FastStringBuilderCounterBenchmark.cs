@@ -69,7 +69,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	{
 		var result = FastStringBuilder.Combine(false, this._words.AsReadOnlySpan());
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Combine Strings: SB.Append() for Comparison")]
@@ -83,7 +83,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 			_ = sb.Append(string.Format(CultureInfo.InvariantCulture, "{0}", arg));
 		}
 
-		base.Consume(sb.ToString());
+		this.Consume(sb.ToString());
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.CombineWithSpace))]
@@ -92,7 +92,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	{
 		var result = FastStringBuilder.CombineWithSpace(this._words.AsReadOnlySpan());
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Combine Strings with Space: SB.Append() for Comparison")]
@@ -106,7 +106,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 			_ = sb.Append(string.Format(CultureInfo.InvariantCulture, "{0} ", arg));
 		}
 
-		base.Consume(sb.ToString().Trim());
+		this.Consume(sb.ToString().Trim());
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Concat) + ": with Char delimiter")]
@@ -214,7 +214,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 		var result = FastStringBuilder.PerformAction(action);
 
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "PerformAction: SB.Append() for Comparison")]
@@ -228,7 +228,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 			_ = sb.Append(this._words[index]);
 		}
 
-		base.Consume(sb.ToString());
+		this.Consume(sb.ToString());
 	}
 
 	[Benchmark(Description = "PerformAction: Using Object Pool for Comparison")]
@@ -250,7 +250,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 		_stringBuilderPool.Return(sb);
 
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 	[Benchmark(Description = nameof(FastStringBuilder.BytesToString) + ": ReadOnlySpan")]
 	[BenchmarkCategory(Categories.Array, Categories.Strings)]
@@ -317,7 +317,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 			_ = sb.Append($"{item.Key}: {item.Value}".ToString(CultureInfo.CurrentCulture));
 		}
 
-		base.Consume(sb.ToString());
+		this.Consume(sb.ToString());
 	}
 
 }

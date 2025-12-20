@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Runtime.Versioning;
 using System.Security.AccessControl;
 using System.Threading;
@@ -37,44 +37,20 @@ public class DirectoryHelperTests
 	private const int RetryCount = 5;
 
 	[TestMethod]
-	public void AppDataFolder_ReturnsCorrectPathOnMacOS()
+	public void AppDataFolder_ReturnsPathWithCompanyName()
 	{
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-		{
-			// Arrange
-			var expectedPathStart = Environment.GetEnvironmentVariable("HOME");
+		// Arrange
+		var entryAssembly = Assembly.GetEntryAssembly();
+		var companyName = entryAssembly?.GetCustomAttributes<AssemblyCompanyAttribute>().FirstOrDefault()?.Company?.Trim();
 
-			// Act
-			var result = DirectoryHelper.AppDataFolder();
+		// Act
+		var result = DirectoryHelper.AppDataFolder();
 
-			// Assert
-			Assert.IsTrue(result.StartsWith(expectedPathStart), "The path should start with the HOME environment variable value.");
-		}
-		else
-		{
-			Assert.Inconclusive("This test is designed to run on macOS.");
-		}
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.EndsWith(companyName), $"The path should end with the company name: {companyName}");
 	}
 
-	[TestMethod]
-	public void AppDataFolder_ReturnsCorrectPathOnWindows()
-	{
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-		{
-			// Arrange
-			var expectedPathStart = Environment.GetEnvironmentVariable("LOCALAPPDATA");
-
-			// Act
-			var result = DirectoryHelper.AppDataFolder();
-
-			// Assert
-			Assert.IsTrue(result.StartsWith(expectedPathStart), "The path should start with the LOCALAPPDATA environment variable value.");
-		}
-		else
-		{
-			Assert.Inconclusive("This test is designed to run on Windows.");
-		}
-	}
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]

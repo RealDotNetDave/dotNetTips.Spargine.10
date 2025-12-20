@@ -45,7 +45,7 @@ public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this._personRefHashSet = [.. this.GetPersonRefArray()];
-		this._peopleRefToAdd = this._personRefHashSet.Take(this.Count / 2).ToHashSet();
+		this._peopleRefToAdd = [.. this._personRefHashSet.Take(this.Count / 2)];
 		this._personRefToAdd = this._personRefHashSet.Last();
 
 	}

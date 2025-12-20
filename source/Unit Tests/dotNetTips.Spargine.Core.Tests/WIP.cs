@@ -16,10 +16,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Devices;
-using DotNetTips.Spargine.Extensions;
-using DotNetTips.Spargine.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -30,22 +27,6 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class WIP
 {
-
-	[TestMethod]
-	public void TEST01()
-	{
-		var result = PathHelper.PathSeparators;
-
-		Assert.IsNotNull(result);
-	}
-
-	[TestMethod]
-	public void TEST02()
-	{
-		var result = PathHelper.InvalidPathNameChars().ToList().ToDelimitedString();
-
-		Assert.IsNotNull(result);
-	}
 
 	[TestMethod]
 	public void TEST03()

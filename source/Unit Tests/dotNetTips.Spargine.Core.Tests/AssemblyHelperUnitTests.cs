@@ -20,7 +20,6 @@ using System.Reflection;
 using System.Text;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
-using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -160,7 +159,7 @@ public class AssemblyHelperUnitTests : UnitTester
 
 		var dir = new DirectoryInfo("C:\\Windows\\assembly\\NativeImages_v4.0.30319_64");
 
-		var files = DirectoryHelper.SafeFileSearch(dir, "*.dll", SearchOption.AllDirectories).Where(p => AssemblyHelper.IsDotNetAssembly(p)).ToArray();
+		var files = Directory.GetFiles(dir.FullName, "*.dll", SearchOption.AllDirectories).Where(p => AssemblyHelper.IsDotNetAssembly(new FileInfo(p))).ToArray();
 
 		//		var assembly = Assembly.LoadFile(Path.Combine(App.ProcessPath, "DotNetTips.Spargine.8.Benchmarking.dll"));
 	}

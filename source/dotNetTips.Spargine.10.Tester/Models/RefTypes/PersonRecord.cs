@@ -99,17 +99,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator <(in PersonRecord? left, in PersonRecord? right)
 	{
-		if (left is null)
-		{
-			return right is not null;
-		}
-
-		if (right is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) < 0;
+		return left is null ? right is not null : right is null ? false : left.CompareTo(right) < 0;
 	}
 
 	/// <summary>
@@ -122,12 +112,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator <=(in PersonRecord? left, in PersonRecord? right)
 	{
-		if (left is null)
-		{
-			return true;
-		}
-
-		return right is null ? false : left.CompareTo(right) <= 0;
+		return left is null ? true : right is null ? false : left.CompareTo(right) <= 0;
 	}
 
 	/// <summary>
@@ -140,17 +125,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator >(in PersonRecord? left, in PersonRecord? right)
 	{
-		if (left is null)
-		{
-			return false;
-		}
-
-		if (right is null)
-		{
-			return true;
-		}
-
-		return left.CompareTo(right) > 0;
+		return left is null ? false : right is null ? true : left.CompareTo(right) > 0;
 	}
 
 	/// <summary>
@@ -163,17 +138,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator >=(in PersonRecord? left, in PersonRecord? right)
 	{
-		if (right is null)
-		{
-			return true;
-		}
-
-		if (left is null)
-		{
-			return false;
-		}
-
-		return left.CompareTo(right) >= 0;
+		return right is null ? true : left is null ? false : left.CompareTo(right) >= 0;
 	}
 
 	/// <summary>
@@ -190,17 +155,11 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	int IComparable.CompareTo(object? obj)
 	{
-		if (obj is null)
-		{
-			return 1;
-		}
-
-		if (obj is PersonRecord other)
-		{
-			return this.CompareTo(other);
-		}
-
-		throw new ArgumentException($"Object must be of type {nameof(PersonRecord)}", nameof(obj));
+		return obj is null
+			? 1
+			: obj is PersonRecord other
+			? this.CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(PersonRecord)}", nameof(obj));
 	}
 
 	/// <summary>
@@ -254,12 +213,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// <returns>True if equal, otherwise false.</returns>
 	public bool Equals(in PersonRecord? other)
 	{
-		if (ReferenceEquals(this, other))
-		{
-			return true;
-		}
-
-		return other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
+		return ReferenceEquals(this, other) ? true : other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
 	}
 
 	/// <inheritdoc />

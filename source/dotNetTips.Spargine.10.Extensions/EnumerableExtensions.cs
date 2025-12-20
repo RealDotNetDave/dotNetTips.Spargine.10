@@ -1121,12 +1121,7 @@ public static class EnumerableExtensions
 		[Information(nameof(IsNullOrEmpty), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsNullOrEmpty()
 		{
-			if (collection == null)
-			{
-				return true;
-			}
-
-			return collection.Any() == false;
+			return collection == null ? true : collection.Any() == false;
 		}
 
 		/// <summary>

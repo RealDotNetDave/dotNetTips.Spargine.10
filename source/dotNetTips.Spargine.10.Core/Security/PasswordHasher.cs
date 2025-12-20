@@ -322,7 +322,7 @@ public static class PasswordHasher
 	/// <param name="algorithmType">The hashing algorithm to use.</param>
 	/// <returns>System.String.</returns>
 	[Pure]
-	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string HashPassword([DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
 	{
 		password = password.ArgumentNotNull();

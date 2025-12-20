@@ -23,7 +23,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
-using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -372,7 +371,7 @@ public class ValidatorTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDirectoryInfo.ArgumentExists());
 
 		var fakeDirectory = new DirectoryInfo("fakefile");
-		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => DirectoryHelper.DeleteDirectory(fakeDirectory));
+		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => Directory.Delete(fakeDirectory.FullName));
 	}
 
 	[TestMethod]

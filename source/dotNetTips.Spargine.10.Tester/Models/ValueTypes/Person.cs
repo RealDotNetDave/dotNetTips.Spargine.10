@@ -170,17 +170,11 @@ public struct Person() : IPerson<Person, Address>
 	/// </exception>
 	readonly int IComparable.CompareTo(object? obj)
 	{
-		if (obj is null)
-		{
-			return 1;
-		}
-
-		if (obj is Person other)
-		{
-			return this.CompareTo(other);
-		}
-
-		throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
+		return obj is null
+			? 1
+			: obj is Person other
+			? this.CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
 	}
 
 	/// <summary>

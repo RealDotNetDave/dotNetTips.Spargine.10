@@ -48,7 +48,7 @@ public class SerializationBenchmark : Benchmark
 	public void Deserialize_Json_JsonSerializer_Generator_Person()
 	{
 		var result = JsonSerializer.Deserialize(this._jsonPersonRef, typeof(Person), PersonRefJsonSerializerContext.Default) as Person;
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Deserialize JSON: JsonSerializer + Generator - List<Person>")]
@@ -56,7 +56,7 @@ public class SerializationBenchmark : Benchmark
 	public void Deserialize_Json_JsonSerializer_Generator_Person_List()
 	{
 		var result = JsonSerializer.Deserialize(this._jsonPersonRefList, typeof(List<Person>), PersonRefJsonSerializerContext.Default) as List<Person>;
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	/// <summary>
@@ -116,7 +116,7 @@ public class SerializationBenchmark : Benchmark
 		// Act
 		var result = JsonSerialization.JsonEqual(actual, expected);
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(JsonSerialization.LoadCollectionFromJson) + ": JSON=People")]
@@ -141,9 +141,9 @@ public class SerializationBenchmark : Benchmark
 	[BenchmarkCategory(Categories.JSON, Categories.New, "JsonSerializer")]
 	public void Serialize_Json_JsonSerializer_Generator_Person()
 	{
-		var result = JsonSerializer.Serialize(base.PersonRef01, typeof(Person), PersonRefJsonSerializerContext.Default);
+		var result = JsonSerializer.Serialize(this.PersonRef01, typeof(Person), PersonRefJsonSerializerContext.Default);
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Serialize JSON: JsonSerializer + Generator - List<Person>")]
@@ -151,7 +151,7 @@ public class SerializationBenchmark : Benchmark
 	public void Serialize_Json_JsonSerializer_Generator_Person_List()
 	{
 		var result = JsonSerializer.Serialize(this._personRefList, typeof(List<Person>), PersonRefJsonSerializerContext.Default);
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	/// <summary>
@@ -209,10 +209,10 @@ public class SerializationBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._jsonPersonRef = JsonSerialization.Serialize(base.PersonRef01);
-		this._jsonPersonRecord = JsonSerialization.Serialize(base.PersonRecord01);
-		this._xmlPersonRef = XmlSerialization.Serialize(base.PersonRef01);
-		this._xmlPersonRecord = XmlSerialization.Serialize(base.PersonRecord01);
+		this._jsonPersonRef = JsonSerialization.Serialize(this.PersonRef01);
+		this._jsonPersonRecord = JsonSerialization.Serialize(this.PersonRecord01);
+		this._xmlPersonRef = XmlSerialization.Serialize(this.PersonRef01);
+		this._xmlPersonRecord = XmlSerialization.Serialize(this.PersonRecord01);
 		this._jsonPersonRefList = RandomData.GeneratePersonRefCollection(Count).ToJson();
 		this._personRefList = [.. RandomData.GeneratePersonRefCollection(100)];
 	}

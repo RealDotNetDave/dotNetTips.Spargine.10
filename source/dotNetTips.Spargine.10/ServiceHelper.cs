@@ -103,10 +103,7 @@ public static class ServiceHelper
 			{
 				serviceDependsOn.Start();
 
-				if (logger is not null)
-				{
-					logger.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStarted, serviceDependsOn.ServiceName, Clock.UtcTime));
-				}
+				logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStarted, serviceDependsOn.ServiceName, Clock.UtcTime));
 			}
 		}
 	}
@@ -140,10 +137,7 @@ public static class ServiceHelper
 				serviceDependsOn.Stop();
 
 
-				if (logger is not null)
-				{
-					logger.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStopped, serviceDependsOn.ServiceName, Clock.UtcTime));
-				}
+				logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStopped, serviceDependsOn.ServiceName, Clock.UtcTime));
 			}
 		}
 	}
@@ -211,10 +205,7 @@ public static class ServiceHelper
 			app.Kill();
 			_ = app.WaitForExit(milliseconds: waitForExitMilliseconds);
 
-			if (logger is not null)
-			{
-				logger.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _processHasBeenKilled, processName, Clock.UtcTime));
-			}
+			logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _processHasBeenKilled, processName, Clock.UtcTime));
 
 		}
 	}
@@ -323,10 +314,7 @@ public static class ServiceHelper
 
 			service.Start();
 
-			if (logger is not null)
-			{
-				logger.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStarted, serviceName, Clock.UtcTime));
-			}
+			logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStarted, serviceName, Clock.UtcTime));
 
 			statusResult = ServiceActionResult.Running;
 
@@ -513,10 +501,7 @@ public static class ServiceHelper
 
 			service.Stop();
 
-			if (logger is not null)
-			{
-				logger.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStopped, serviceName, Clock.UtcTime));
-			}
+			logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStopped, serviceName, Clock.UtcTime));
 
 
 			statusResult = ServiceActionResult.Stopped;

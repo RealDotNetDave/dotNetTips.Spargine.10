@@ -14,7 +14,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using DotNetTips.Spargine.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -36,7 +35,8 @@ public class ExecutionHelperTests
 		{
 			var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
 			{
-				var drives = DriveHelper.GetRemovableDrives();
+
+				var types = TypeHelper.BuiltInTypeNames();
 				return Task.CompletedTask;
 
 			}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
@@ -56,7 +56,7 @@ public class ExecutionHelperTests
 		{
 			var result = ExecutionHelper.ProgressiveRetry(() =>
 			  {
-				  var drives = DriveHelper.GetRemovableDrives();
+				  var types = TypeHelper.BuiltInTypeNames();
 			  }, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
 
 			Assert.IsTrue(result.Value > 0);

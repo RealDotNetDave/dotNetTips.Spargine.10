@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Strings)]
 public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 {
-	private static readonly char[] _charList = new[] { 'a', 'z' };
+	private static readonly char[] _charList = ['a', 'z'];
 	private string _base64String;
 	private string _brotilString;
 	private string _crlfCompareString;

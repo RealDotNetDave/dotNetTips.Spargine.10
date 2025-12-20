@@ -45,7 +45,7 @@
 	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	<ServerGarbageCollection>true</ServerGarbageCollection>
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<TargetFrameworks>net10.0;net10.0-windows</TargetFrameworks>
+	<TargetFramework>net10.0-windows</TargetFramework>
 	<Title>DotNetTips.Spargine.10</Title>
 	<Version>2025.10.12.1</Version>
   </PropertyGroup>
@@ -66,9 +66,6 @@
 	<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net10.0-windows'">
-	<Compile Remove="**\RegistryHelper.cs" />
-  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<OutputPath>..\..\AppBin\</OutputPath>
@@ -81,12 +78,6 @@
 	<Compile Remove="IO\FilePropertyReader.cs" />
 	<Compile Remove="IO\FilePropertyWriter.cs" />
 	<Compile Remove="IO\IPropertyStore.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(OS)'!='Windows_NT'">
-	<Compile Remove="WinData\**" />
-	<EmbeddedResource Remove="WinData\**" />
-	<None Remove="WinData\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -149,10 +140,4 @@
 	  <HintPath>$(SystemRoot)\System32\WinMetadata\Windows.winmd</HintPath>
 	</Reference>
   </ItemGroup>-->
-
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-	<DefineConstants>$(DefineConstants);WINDOWS</DefineConstants>
-  </PropertyGroup>
-
-
 </Project>

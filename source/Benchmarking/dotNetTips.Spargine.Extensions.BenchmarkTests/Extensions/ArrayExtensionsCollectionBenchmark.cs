@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 12-20-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -165,6 +165,17 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
+	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	public void FastSelectItems()
+	{
+		//TODO: ADD FASTEST METHOD FROM PERF BOOK.
+
+		var result = this._personRefArray.FastSelectItems(0, this._personRefArray.Length / 2);
+
+		this.Consume(result.Length);
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void GenerateHashCode_Ref()
@@ -284,10 +295,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefArray;
 		var sb = new StringBuilder();
 
-		people.PerformAction((person) =>
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-");
-		});
+		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
 
 		this.Consume(sb.ToString());
 	}
@@ -314,10 +322,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personValArray;
 		var sb = new StringBuilder();
 
-		people.PerformAction((person) =>
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-");
-		});
+		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
 
 		this.Consume(sb.ToString());
 	}

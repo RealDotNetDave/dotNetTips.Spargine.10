@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 public class EnumHelperBenchmark : Benchmark
 {
 
-	private string GetDescriptionNoCache(Enum input)
+	private static string GetDescriptionNoCache(Enum input)
 	{
 		input = input.ArgumentNotNull();
 
@@ -85,7 +85,7 @@ public class EnumHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New, Categories.ForComparison)]
 	public void GetDescription_NoCache()
 	{
-		var result = this.GetDescriptionNoCache(Tester.Data.CountryName.Japan);
+		var result = GetDescriptionNoCache(Tester.Data.CountryName.Japan);
 
 		this.Consume(result);
 	}

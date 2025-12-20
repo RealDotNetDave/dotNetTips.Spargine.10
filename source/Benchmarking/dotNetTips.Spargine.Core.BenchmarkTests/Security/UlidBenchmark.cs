@@ -22,6 +22,19 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 public class UlidBenchmark : Benchmark
 {
 
+	[Benchmark(Description = nameof(Ulid.GetTimeStamp))]
+	[BenchmarkCategory(Categories.New)]
+	public void GetTimeStamp()
+	{
+		// Arrange
+		var ulid = Ulid.NewUlid();
+
+		// Act
+		var result = ulid.GetTimeStamp();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(Ulid.NewUlid))]
 	[BenchmarkCategory(Categories.New)]
 	public void NewUlid()
@@ -43,18 +56,5 @@ public class UlidBenchmark : Benchmark
 		var result = Ulid.NewUlid;
 
 		this.Consume(result.GetHashCode());
-	}
-
-	[Benchmark(Description = nameof(Ulid.GetTimeStamp))]
-	[BenchmarkCategory(Categories.New)]
-	public void GetTimeStamp()
-	{
-		// Arrange
-		var ulid = Ulid.NewUlid();
-
-		// Act
-		var result = ulid.GetTimeStamp();
-
-		this.Consume(result);
 	}
 }

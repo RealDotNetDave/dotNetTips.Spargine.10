@@ -15,7 +15,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using DotNetTips.Spargine.Extensions;
-using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -97,7 +96,7 @@ public class InformationAttributeDocGeneratorTests
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_ToFile()
 	{
 		// Arrange
-		var assembly = Assembly.GetAssembly(typeof(DriveHelper));
+		var assembly = Assembly.GetAssembly(typeof(TypeHelper));
 
 		// Act
 		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, @"C:\dotNetTips.com");

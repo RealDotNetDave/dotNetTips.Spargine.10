@@ -186,12 +186,9 @@ public struct Address : IAddress<Address>
 	/// </exception>
 	readonly int IComparable.CompareTo(object? obj)
 	{
-		if (obj is null)
-		{
-			return 1;
-		}
-
-		return obj is Address other
+		return obj is null
+			? 1
+			: obj is Address other
 			? this.CompareTo(other)
 			: throw new ArgumentException($"Object must be of type {nameof(Address)}", nameof(obj));
 	}

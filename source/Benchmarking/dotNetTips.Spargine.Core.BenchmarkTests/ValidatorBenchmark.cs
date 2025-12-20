@@ -20,6 +20,7 @@ using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
+
 public class ValidatorBenchmark : Benchmark
 {
 
@@ -83,6 +84,17 @@ public class ValidatorBenchmark : Benchmark
 		return result;
 	}
 
+	[Benchmark(Description = nameof(Validator.ArgumentDefined))]
+	[BenchmarkCategory(Categories.Validation, Categories.New)]
+	public void ArgumentDefined()
+	{
+		var value = Status.Available;
+
+		var result = value.ArgumentDefined();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = "Validating Empty/Null String: No Validation")]
 	[BenchmarkCategory(Categories.Validation, Categories.New, Categories.ForComparison)]
 	public void ArgumentNotNullOrEmpty_NoValidation()
@@ -123,17 +135,6 @@ public class ValidatorBenchmark : Benchmark
 	public void CheckItemsExists_Validation_Inlining()
 	{
 		_ = this.ValidateItemsExist_Validation_Inlining(this._people);
-	}
-
-	[Benchmark(Description = nameof(Validator.ArgumentDefined))]
-	[BenchmarkCategory(Categories.Validation, Categories.New)]
-	public void ArgumentDefined()
-	{
-		var value = Status.Available;
-
-		var result = value.ArgumentDefined();
-
-		this.Consume(result);
 	}
 
 }

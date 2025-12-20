@@ -39,7 +39,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._peopleRefList;
 
-		_ = people.AddRange<Person>(this.GetPersonRefCollectionToInsert(), true);
+		_ = people.AddRange(this.GetPersonRefCollectionToInsert(), true);
 
 		this.Consume(people);
 	}

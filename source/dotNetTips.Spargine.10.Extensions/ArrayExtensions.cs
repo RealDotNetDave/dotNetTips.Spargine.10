@@ -160,7 +160,9 @@ public static class ArrayExtensions
 			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
 			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
 
-			var result = new ArraySegment<T>(array).Slice(startIndex, count);
+			var segment = new ArraySegment<T>(array);
+
+			var result = segment.Slice(startIndex, count);
 
 			return [.. result];
 		}

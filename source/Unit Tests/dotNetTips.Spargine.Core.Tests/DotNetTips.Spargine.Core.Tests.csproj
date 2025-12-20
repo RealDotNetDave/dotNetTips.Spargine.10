@@ -43,7 +43,6 @@
 	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\dotNetTips.Spargine.10.Core.csproj" />
 	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\dotNetTips.Spargine.10.Extensions.csproj" />
 	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\dotNetTips.Spargine.10.Tester.csproj" />
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10\dotNetTips.Spargine.10.csproj" />
   </ItemGroup>
 
   <ItemGroup>

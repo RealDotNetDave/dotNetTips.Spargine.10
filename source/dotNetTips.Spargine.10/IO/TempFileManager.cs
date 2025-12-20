@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-05-2025
+// Last Modified On : 12-20-2025
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -166,7 +166,6 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <summary>
 	/// Deletes all temporary files.
 	/// </summary>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void DeleteAllFiles()
@@ -192,7 +191,6 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="fileName"/> is null.</exception>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="fileName"/> is empty.</exception>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void DeleteFile(string fileName)

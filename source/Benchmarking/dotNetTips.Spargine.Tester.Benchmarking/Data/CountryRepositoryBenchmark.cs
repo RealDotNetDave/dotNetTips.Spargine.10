@@ -35,7 +35,7 @@ public class CountryRepositoryBenchmark : Benchmark
 	public void GetCountry()
 	{
 		var result = CountryRepository.GetCountry("US");
-		
+
 		this.Consume(result);
 	}
 

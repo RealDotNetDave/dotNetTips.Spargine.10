@@ -231,10 +231,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._peopleRefList;
 		var sb = new StringBuilder();
 
-		people.PerformAction((person) =>
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.ToString()}|");
-		});
+		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.ToString()}|"));
 
 		this.Consume(sb.ToString());
 	}

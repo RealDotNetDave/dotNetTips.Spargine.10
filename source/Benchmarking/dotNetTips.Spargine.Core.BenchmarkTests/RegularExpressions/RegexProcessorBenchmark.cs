@@ -19,6 +19,7 @@ using DotNetTips.Spargine.Tester;
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.RegularExpressions;
+
 public class RegexProcessorBenchmark : Benchmark
 {
 
@@ -45,24 +46,6 @@ public class RegexProcessorBenchmark : Benchmark
 	public void GetNumbers()
 	{
 		var result = RegexProcessor.GetNumbers("97988AAAAA!78213479");
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RegexProcessor.IsOneToSevenAlpha))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void IsOneToSevenAlpha()
-	{
-		var result = RegexProcessor.GetNumbers("abcdefg");
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RegexProcessor.IsScientific))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void IsScientific()
-	{
-		var result = RegexProcessor.IsScientific("1.23E+10");
 
 		this.Consume(result);
 	}
@@ -135,6 +118,24 @@ public class RegexProcessorBenchmark : Benchmark
 	public void IsMACAddress()
 	{
 		var result = RegexProcessor.IsMACAddress("00:1A:2B:3C:4D:5E");
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RegexProcessor.IsOneToSevenAlpha))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void IsOneToSevenAlpha()
+	{
+		var result = RegexProcessor.GetNumbers("abcdefg");
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RegexProcessor.IsScientific))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void IsScientific()
+	{
+		var result = RegexProcessor.IsScientific("1.23E+10");
 
 		this.Consume(result);
 	}

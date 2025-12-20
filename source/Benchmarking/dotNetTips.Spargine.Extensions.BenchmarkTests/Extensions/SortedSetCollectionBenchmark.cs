@@ -55,7 +55,7 @@ public class SortedSetCollectionBenchmark : LargeCollectionBenchmark
 	{
 		base.Setup();
 
-		this._personRefSortedSet = new SortedSet<Person>(this.GetPersonRefArray());
+		this._personRefSortedSet = [.. this.GetPersonRefArray()];
 	}
 
 	[Benchmark(Description = nameof(SortedSetExtensions.ToImmutableSortedSet))]

@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 12-20-2025
 // ***********************************************************************
 // <copyright file="DriveHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,7 +44,6 @@ public static class DriveHelper
 	/// <param name="drive">The drive letter (e.g., "C:"). Must not be null or empty.</param>
 	/// <returns>The file system format of the drive as a string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetDriveFormat), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetDriveFormat([DisallowNull] string drive)
@@ -62,7 +61,6 @@ public static class DriveHelper
 	/// <param name="drive">The drive letter (e.g., "C:"). Must not be null or empty.</param>
 	/// <returns>The free space available on the drive in bytes.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetDriveFreeSpace), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static long GetDriveFreeSpace([DisallowNull] string drive)
@@ -80,7 +78,6 @@ public static class DriveHelper
 	/// <param name="drive">The drive letter (e.g., "C:"). Must not be null or empty.</param>
 	/// <returns>The volume label of the drive as a string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetDriveLabel), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetDriveLabel([DisallowNull] string drive)
@@ -102,7 +99,6 @@ public static class DriveHelper
 	/// This method utilizes the <see cref="ManagementObjectSearcher"/> to query the system for the drive's serial number.
 	/// It's important to ensure that the <paramref name="drive"/> parameter is not null or empty to avoid runtime errors.
 	/// </remarks>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetDriveSerialNumber), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://dotnettips.wordpress.com/2007/12/14/finding-a-drives-serial-number/", Status = Status.Available)]
 	public static string? GetDriveSerialNumber([DisallowNull] string drive)
@@ -136,7 +132,6 @@ public static class DriveHelper
 	/// <param name="drive">The drive letter (e.g., "C:"). Must not be null or empty.</param>
 	/// <returns>The total size of the drive in bytes.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetDriveTotalSize), author: "David McCarter", createdOn: "10/10/2023", OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static long GetDriveTotalSize([DisallowNull] string drive)
@@ -157,7 +152,6 @@ public static class DriveHelper
 	/// This method filters the drives returned by <see cref="DriveInfo.GetDrives"/> to include only those that are fixed and ready.
 	/// </remarks>
 	/// <example>Result Example - [0]: {C:\}</example>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetFixedDrives), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetFixedDrives()
@@ -173,7 +167,6 @@ public static class DriveHelper
 	/// <remarks>
 	/// This method filters the drives returned by <see cref="DriveInfo.GetDrives"/> to include only those that are removable and ready.
 	/// </remarks>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetRemovableDrives), author: "David McCarter", createdOn: "9/6/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetRemovableDrives()

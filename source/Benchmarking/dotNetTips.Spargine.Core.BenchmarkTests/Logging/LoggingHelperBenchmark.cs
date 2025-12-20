@@ -51,7 +51,7 @@ public class LoggingHelperBenchmark : Benchmark
 
 		var result = LoggingHelper.RetrieveAllExceptionMessages(testException);
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(LoggingHelper.RetrieveAllExceptions))]
@@ -62,7 +62,7 @@ public class LoggingHelperBenchmark : Benchmark
 
 		var result = LoggingHelper.RetrieveAllExceptions(testException);
 
-		base.Consume(result);
+		this.Consume(result);
 	}
 
 	public override void Setup()
