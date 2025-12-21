@@ -55,9 +55,8 @@ public class AddressRefTests
 		// Arrange
 		var address = RandomData.GenerateAddress<Address>();
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+
 		var result = address.CompareTo(null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
 		// Assert
 		Assert.IsTrue(result > 0, "Expected CompareTo to return a positive value when comparing with null.");

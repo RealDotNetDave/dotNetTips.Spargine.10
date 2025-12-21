@@ -276,7 +276,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void ShuffleShuffle()
 	{
-		var result = this._peopleRefList.Shuffle();
+		var result = this._peopleRefList.Shuffle().Last();
 
 		this.Consume(result);
 	}

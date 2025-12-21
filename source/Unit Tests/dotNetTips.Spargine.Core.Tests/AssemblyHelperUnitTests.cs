@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Tests;
 public class AssemblyHelperUnitTests : UnitTester
 {
 
-	const string SDKVersion = "10.0.1";
+	private const string SDKVersion = "10.0.1";
 
 	private string _testOutputDirectory;
 	private TestUnitTester _unitTester;
