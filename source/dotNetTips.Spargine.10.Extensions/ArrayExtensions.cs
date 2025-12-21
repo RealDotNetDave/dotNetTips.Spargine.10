@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary>Extensions methods for the Array type.</summary>
 // ***********************************************************************
 using System.Collections.Frozen;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
@@ -85,7 +84,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddFirst([AllowNull] in T item)
 		{
 			if (item is null)
@@ -98,7 +97,8 @@ public static class ArrayExtensions
 			var result = new T[array.LongLength + 1];
 			result[0] = item;
 
-			Array.Copy(array, 0, result, 1, array.LongLength);
+			//TODO: TRYING THIS. BACKOUT IF SLOWER.
+			array.AsSpan().CopyTo(result.AsSpan(1));
 
 			return result;
 		}
@@ -160,9 +160,7 @@ public static class ArrayExtensions
 			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
 			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
 
-			var segment = new ArraySegment<T>(array);
-
-			var result = segment.Slice(startIndex, count);
+			var result = new ArraySegment<T>(array, startIndex, count);
 
 			return [.. result];
 		}
@@ -176,7 +174,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			if (item is null)
@@ -187,7 +185,10 @@ public static class ArrayExtensions
 			array = array.ArgumentNotNull();
 
 			var newArray = new T[array.LongLength + 1];
-			Array.Copy(array, newArray, array.LongLength);
+
+			//TODO: TRYING THIS. BACKOUT IF SLOWER.
+			array.AsSpan().CopyTo(newArray.AsSpan());
+
 			newArray[array.LongLength] = item;
 
 			return newArray;
@@ -199,10 +200,14 @@ public static class ArrayExtensions
 		/// <param name="arrayToCheck">The array to check.</param>
 		/// <returns><c>true</c> if the arrays are equal; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
-			return array is null || arrayToCheck is null ? false : array.Length != arrayToCheck.Length ? false : array.AsSpan().SequenceEqual(arrayToCheck);
+			//TODO: SUGGESTION FROM COPILOT SLOWER. CHECK PERFORMANCE
+
+			return array is null || arrayToCheck is null
+				? false
+				: array.LongLength != arrayToCheck.LongLength ? false : array.AsSpan().SequenceEqual(arrayToCheck);
 		}
 
 		/// <summary>
@@ -226,12 +231,12 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Clone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Clone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] Clone()
 		{
 			array = array.ArgumentNotNull();
 
-			return (T[])array.Clone();
+			return array.FastBinaryClone<T[]>();
 		}
 
 		/// <summary>
@@ -430,9 +435,18 @@ public static class ArrayExtensions
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			foreach (var value in array)
+			//TODO: BACKED OUT CHANGES SUGGESTED BY COPILOT. CHECK PERFORMANCE.
+
+			if (typeof(T).IsValueType)
 			{
-				action.Invoke(value);
+				foreach (var value in array)
+				{
+					action.Invoke(value);
+				}
+			}
+			else
+			{
+				_ = Parallel.For(0, array.LongLength, index => action(array[index]));
 			}
 		}
 
@@ -461,13 +475,16 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] RemoveLast()
 		{
 			array = array.ArgumentItemsExists();
 
 			var result = new T[array.LongLength - 1];
-			Array.Copy(array, result, array.LongLength - 1);
+
+			//TODO: TRYING THIS. BACKOUT IF SLOWER.
+			array.AsSpan(0, (int)array.LongLength - 1).CopyTo(result);
+
 			return result;
 		}
 
@@ -517,15 +534,21 @@ public static class ArrayExtensions
 				return array;
 			}
 
-			//Recommendation from CoPilot slower.
-			if (array.Contains(item))
-			{
-				Array.Fill(array, item);
 
-				return array;
+			//TODO: FIXED LOGIC BUG. ORIGINAL REPLACED ALL ITEMS WITH THE SAME ITEM!
+			var index = Array.IndexOf(array, item);
+
+			if (index >= 0)
+			{
+				// Item exists - replace it (creates a copy to maintain immutability)
+				var result = new T[array.LongLength];
+				array.AsSpan().CopyTo(result);
+				result[index] = item;
+				return result;
 			}
 			else
 			{
+				// Item doesn't exist - add it
 				return array.AddLast(item);
 			}
 		}

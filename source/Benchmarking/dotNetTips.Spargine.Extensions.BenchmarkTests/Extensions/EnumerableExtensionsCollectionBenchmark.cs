@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -155,9 +155,9 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty))]
-	public void DoesNotHaveItems()
+	public void DoesNotHaveItemsIsEmpty()
 	{
-		var result = new List<Person>().AsEnumerable().IsEmpty();
+		var result = this._personRefEnumerable.IsEmpty();
 
 		this.Consume(result);
 	}
@@ -257,9 +257,16 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.IsNullOrEmpty))]
 	public void IsNullOrEmpty()
 	{
-		var people = new List<Person>().AsEnumerable();
+		var result = this._personRefEnumerable.IsNullOrEmpty();
 
-		var result = people.IsNullOrEmpty();
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "IsNullOrEmpty: Comparison using ? and Any()")]
+	[BenchmarkCategory(Categories.Collections, Categories.LINQ, Categories.ForComparison)]
+	public void IsNullOrEmptyComparison()
+	{
+		var result = this._personRefEnumerable?.Any() != true;
 
 		this.Consume(result);
 	}
@@ -270,6 +277,16 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefEnumerable;
 
 		var result = people.Join();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "LINQ Sequence Equal")]
+	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
+	public void LINQSequenceEqual()
+	{
+		var people = this._personRefEnumerable;
+		var result = people.SequenceEqual(this._personRefEnumerableToAdd);
 
 		this.Consume(result);
 	}
@@ -475,7 +492,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void StructuralSequenceEqual()
 	{
 		var people = this._personRefEnumerable;
-		var result = people.StructuralSequenceEqual(people.TakeLast(10));
+		var result = people.StructuralSequenceEqual(this._personRefEnumerableToAdd);
 
 		this.Consume(result);
 	}

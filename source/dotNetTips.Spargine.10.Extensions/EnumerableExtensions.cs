@@ -516,7 +516,7 @@ public static class EnumerableExtensions
 		/// <returns>true if the two collection sequences are of equal length and their corresponding elements are equal according to the default equality comparer for their type; otherwise, false.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool StructuralSequenceEqual([AllowNull] IEnumerable<T> second)
 		{
 			if (collection is null || second is null)
@@ -1118,10 +1118,10 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNullOrEmpty), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNullOrEmpty), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsNullOrEmpty()
 		{
-			return collection == null ? true : collection.Any() == false;
+			return collection?.Any() != true;
 		}
 
 		/// <summary>
@@ -1193,24 +1193,31 @@ public static class EnumerableExtensions
 		/// <returns>An <see cref="IEnumerable{T}"/> where each item is a page of the original collection containing up to <paramref name="pageSize"/> elements.</returns>
 		/// <remarks>
 		/// This method uses deferred execution to generate pages only when they are enumerated.
+		/// Optimized to avoid enumerator disposal issues with yield return and provides better performance
+		/// by pre-sizing the List capacity to match the page size.
 		/// </remarks>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Page), "David McCarter", "11/21/2010", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(Page), "David McCarter", "11/21/2010", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public IEnumerable<IEnumerable<T>> Page(int pageSize)
 		{
 			collection = collection.ArgumentNotNull();
 			pageSize = pageSize.EnsureMinimum(1);
 
-			using (var enumerator = collection.GetEnumerator())
+			// FIXED: Don't use 'using' with yield return - it disposes the enumerator prematurely
+			// TODO: ANALYZE BENCHMARK RESULTS
+			var enumerator = collection.GetEnumerator();
+
+			try
 			{
 				while (enumerator.MoveNext())
 				{
+					// Pre-size the list for better performance
 					var currentPage = new List<T>(pageSize)
-					{
-						enumerator.Current
-					};
+			{
+				enumerator.Current
+			};
 
 					while (currentPage.Count < pageSize && enumerator.MoveNext())
 					{
@@ -1219,6 +1226,11 @@ public static class EnumerableExtensions
 
 					yield return currentPage;
 				}
+			}
+			finally
+			{
+				// Ensure proper disposal after all iterations complete
+				enumerator?.Dispose();
 			}
 		}
 

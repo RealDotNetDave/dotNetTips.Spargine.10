@@ -4,7 +4,7 @@
 // Created          : 09-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="LoggingHelper.cs" company="McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -411,24 +411,37 @@ public static class LoggingHelper
 	/// AppInfo:SystemDirectory - C:\\WINDOWS\\system32
 	/// AppInfo:HasShutdownStarted - False
 	/// </example>
-	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void LogComputerInformation([DisallowNull] ILogger logger)
 	{
 		logger = logger.ArgumentNotNull();
 
+		//TODO: ANALYZE COPILOT CHANGES
+
+		// OPTIMIZATION 1: Guard against disabled log levels FIRST before expensive operations
+		// This is Microsoft's #1 best practice - check IsEnabled before doing ANY work
+		if (!logger.IsEnabled(LogLevel.Information))
+		{
+			return;
+		}
+
+		// OPTIMIZATION 2: Only create ComputerInfo if logging is enabled
+		// Creating ComputerInfo is expensive (reflection, system calls, network queries, etc.)
 		var values = TypeHelper.GetPropertyValues(new ComputerInfo());
 
-		if (values?.Count > 0)
+		// OPTIMIZATION 3: Early return if no values to log
+		if (values is null || values.Count == 0)
 		{
-			if (logger.IsEnabled(LogLevel.Information))
-			{
+			return;
+		}
 
-				//FrozenSet is slower.
-				foreach (var item in values.OrderBy(p => p.Key).ToArray())
-				{
-					logger.LogInformationMessage($"{nameof(ComputerInfo)}:{item.Key} - {item.Value}");
-				}
-			}
+		// OPTIMIZATION 4: Use static lambda and materialize once to avoid multiple enumerations
+		var sortedItems = values.OrderBy(static p => p.Key).ToArray();
+
+		// OPTIMIZATION 5: Use source-generated logging for better performance
+		foreach (var item in sortedItems)
+		{
+			logger.LogComputerInfoItem(item.Key, item.Value);
 		}
 	}
 

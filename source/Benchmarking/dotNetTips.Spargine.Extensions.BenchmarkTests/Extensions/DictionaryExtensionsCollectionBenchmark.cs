@@ -4,7 +4,7 @@
 // Created          : 01-09-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-28-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsCollectionBenchmark.cs" company="DotNetTips.Spargine.Extensions.BenchmarkTests">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -109,14 +109,6 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.ToImmutableSortedDictionary))]
-	public void ToImmutableSortedDictionary()
-	{
-		var people = this._personRefDictionary.ToReadOnlyCollection();
-
-		this.Consume(people);
-	}
-
 	[Benchmark(Description = nameof(DictionaryExtensions.ToLookupWithDefault))]
 	[BenchmarkCategory(Categories.New)]
 	public void ToLookupWithDefault()
@@ -131,7 +123,7 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(DictionaryExtensions.ToReadOnlyCollection))]
 	public void ToReadOnlyCollection()
 	{
-		var people = this._personRefDictionary.ToImmutableSortedDictionary();
+		var people = this._personRefDictionary.ToReadOnlyCollection();
 
 		this.Consume(people);
 	}

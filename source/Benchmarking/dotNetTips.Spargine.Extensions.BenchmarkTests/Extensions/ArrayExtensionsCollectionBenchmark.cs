@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private byte[] _byteArray;
+	private int _halfCount;
 
 	private PersonRecord[] _personRecordArray;
 	private Person[] _personRefArray;
@@ -170,17 +172,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._personValArray.IsEmpty();
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void FastSelectItems()
-	{
-		//TODO: ADD FASTEST METHOD FROM PERF BOOK.
-
-		var result = this._personRefArray.FastSelectItems(0, this._personRefArray.Length / 2);
-
-		this.Consume(result.Length);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Reference")]
@@ -408,6 +399,24 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = "Select Items: ArraySegment")]
+	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
+	public void SelectItemsArraySegment()
+	{
+		var result = new ArraySegment<Person>(this._personRefArray, 0, this._halfCount);
+
+		this.Consume(result.Count);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
+	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	public void SelectItemsFastSelectItems()
+	{
+		var result = this._personRefArray.FastSelectItems(0, this._halfCount);
+
+		this.Consume(result.Length);
+	}
+
 	public override void Setup()
 	{
 		base.Setup();
@@ -416,6 +425,8 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personRefArray = this.GetPersonRefArray();
 		this._personValArray = this.GetPersonValArray();
 		this._byteArray = this.GetByteArray(this.Count);
+
+		this._halfCount = this._personRefArray.Length / 2;
 
 		LogInfo($"PersonRecordArray: {this._personRecordArray.Length}");
 		LogInfo($"PersonRefArray: {this._personRefArray.Length}");

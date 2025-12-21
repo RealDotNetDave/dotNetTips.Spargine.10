@@ -9,17 +9,17 @@ if (-not (Test-Path -Path $DestinationPath)) {
 # -------- .NET 8 --------
 $SourcePath8 = "D:\src\GitHub\dotNetTips.Spargine.8\docs\Benchmark Results"
 
-Get-ChildItem -Path $SourcePath8 -Filter "*-report.csv" -File |
+Get-ChildItem -Path $SourcePath8 -Filter "*-report.json" -File |
     ForEach-Object {
-        $NewName = $_.Name -replace '-report\.csv$', '-report.8.csv'
+        $NewName = $_.Name -replace '-report\.json$', '-report.8.json'
         Copy-Item -Path $_.FullName -Destination (Join-Path $DestinationPath $NewName) -Force
     }
 
 # -------- .NET 10 --------
 $SourcePath10 = "D:\src\GitHub\dotNetTips.Spargine.10\docs\Benchmark Results"
 
-Get-ChildItem -Path $SourcePath10 -Filter "*-report.csv" -File |
+Get-ChildItem -Path $SourcePath10 -Filter "*-report.json" -File |
     ForEach-Object {
-        $NewName = $_.Name -replace '-report\.csv$', '-report.10.csv'
+        $NewName = $_.Name -replace '-report\.json$', '-report.10.json'
         Copy-Item -Path $_.FullName -Destination (Join-Path $DestinationPath $NewName) -Force
     }

@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1018,7 +1018,7 @@ public static class TypeHelper
 	/// <param name="instance">The instance to compute the hash code for.</param>
 	/// <returns>The computed hash code.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="instance"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static int GetInstanceHashCode([DisallowNull] object instance)
 	{
 		instance = instance.ArgumentNotNull();
@@ -1458,10 +1458,27 @@ public static class TypeHelper
 	/// </summary>
 	/// <param name="type">The type to check.</param>
 	/// <returns><c>true</c> if the type is a built-in .NET type; otherwise, <c>false</c>.</returns>
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	/// <remarks>
+	/// This method uses a cached dictionary of built-in types for O(1) lookup performance.
+	/// The cache is lazily initialized on first access and reused for all subsequent calls.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)] // Inline for maximum performance
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
-		return type != null && BuiltInTypeNames().ContainsKey(type);
+		if (type == null)
+		{
+			return false;
+		}
+
+		// Ensure cache is initialized (only on first call)
+		if (_cachedBuiltInTypes == null)
+		{
+			_ = BuiltInTypeNames(); // Initialize cache
+		}
+
+		// Direct dictionary lookup (no null check overhead on hot path)
+		return _cachedBuiltInTypes!.ContainsKey(type);
 	}
 
 	/// <summary>

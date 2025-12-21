@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-22-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="FastLoggerExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -25,6 +25,42 @@ namespace DotNetTips.Spargine.Core.Logging;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFastLoggerExtensions")]
 public static partial class FastLoggerExtensions
 {
+	/// <summary>
+	/// Logs a single computer information item as a structured log entry using source-generated logging.
+	/// </summary>
+	/// <param name="logger">The <see cref="ILogger"/> instance to use for logging.</param>
+	/// <param name="key">The property name or key of the computer information item.</param>
+	/// <param name="value">The value associated with the computer information key.</param>
+	/// <param name="category">The category name for grouping related log entries. Defaults to <c>ComputerInfo</c>.</param>
+	/// <remarks>
+	/// This method uses compile-time source generation for optimal performance, avoiding runtime allocations
+	/// and string interpolation overhead. It is designed for high-throughput logging scenarios where
+	/// performance is critical.
+	/// <para>
+	/// The method follows Microsoft's recommended logging practices by using <see cref="LoggerMessageAttribute"/>
+	/// for compile-time code generation, which provides:
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description>Zero allocation logging - no boxing or string interpolation at runtime</description></item>
+	/// <item><description>Strongly-typed parameters with compile-time validation</description></item>
+	/// <item><description>Structured logging support for log aggregation and searching</description></item>
+	/// <item><description>3-6x performance improvement over traditional logging extension methods</description></item>
+	/// </list>
+	/// <para>
+	/// This method is typically called from <see cref="LoggingHelper.LogComputerInformation"/> to log
+	/// individual computer information properties such as OS version, architecture, memory usage, and other
+	/// system details.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// ILogger logger = loggerFactory.CreateLogger&lt;MyClass&gt;();
+	/// logger.LogComputerInfoItem("OSVersion", "Windows 11", "ComputerInfo");
+	/// // Logs: ComputerInfo:OSVersion - Windows 11
+	/// </code>
+	/// </example>
+	[LoggerMessage(EventId = 401, Level = LogLevel.Information, EventName = "ComputerInfo", Message = "{category}:{key} - {value}")]
+	internal static partial void LogComputerInfoItem(this ILogger logger, string key, string value, string category = nameof(ComputerInfo));
 
 	/// <summary>
 	/// Logs a critical level message along with an exception using the specified <see cref="ILogger"/>.

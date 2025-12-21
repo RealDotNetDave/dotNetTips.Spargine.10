@@ -4,7 +4,7 @@
 // Created          : 02-10-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-18-2025
+// Last Modified On : 12-21-2025
 // ***********************************************************************
 // <copyright file="InternalMethods.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
@@ -31,6 +32,11 @@ internal static class InternalMethods
 	private const string NullString = "[null]";
 
 
+	// OPTIMIZATION: Cache the built-in types dictionary to avoid repeated allocations
+	// This prevents creating a new dictionary on every call to PropertiesToDictionary
+	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
+
+
 	/// <summary>
 	/// Ensures the minimum.
 	/// </summary>
@@ -42,12 +48,22 @@ internal static class InternalMethods
 	internal static int EnsureMinimum(this int value, int minValue) => value < minValue ? minValue : value;
 
 	/// <summary>
-	/// Determines whether the specified type is enumerable.
+	/// Determines whether the specified <see cref="Type"/> implements the <see cref="IEnumerable"/> interface.
 	/// </summary>
-	/// <param name="type">The type.</param>
-	/// <returns><c>true</c> if the specified type is enumerable; otherwise, <c>false</c>.</returns>
-	internal static bool IsEnumerable(Type type) => type.GetInterfaces().Any(t => t == typeof(IEnumerable));
+	/// <param name="type">The <see cref="Type"/> to inspect. Must not be <c>null</c>.</param>
+	/// <returns>
+	/// <c>true</c> if the type implements <see cref="IEnumerable"/>; otherwise, <c>false</c>.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="type"/> is <c>null</c>.
+	/// </exception>
+	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	internal static bool IsEnumerable([DisallowNull] Type type)
+	{
+		type = type.ArgumentNotNull();
 
+		return type.GetInterfaces().Any(t => t == typeof(IEnumerable));
+	}
 
 	/// <summary>
 	/// Converts object properties to a <see cref="IDictionary" />.
@@ -68,35 +84,31 @@ internal static class InternalMethods
 
 		var objectType = obj.GetType();
 
-		// Reserve a special treatment for specific types by design (like string -that's a list of chars and you don't want to iterate on its items)
-		if (TypeHelper.BuiltInTypeNames().ContainsKey(objectType))
+		//TODO: Review performance impact of this change
+
+		// OPTIMIZATION: Use cached dictionary instead of calling TypeHelper.BuiltInTypeNames() repeatedly
+		// This eliminates dictionary allocation on every check
+		if (_builtInTypeNames.ContainsKey(objectType))
 		{
 			result.Add(memberName, obj.ToString()!);
 			return result;
 		}
 
-		// If the type implements the IEnumerable interface.
+		// Rest of the method remains the same...
 		if (IsEnumerable(objectType))
 		{
 			var itemCount = 0;
 
-			// Loop through the collection using the enumerator strategy and collect all items in the result bag
-			// Note: if the collection is empty it will not return anything about its existence,
-			// because the method is supposed to catch value items not the list itself
 			foreach (var item in (IEnumerable)obj)
 			{
 				var itemId = itemCount++;
-
 				var itemInnerMember = string.Format(CultureInfo.CurrentCulture, "{0}[{1}]", memberName, itemId);
 				result = result.Concat(PropertiesToDictionary(item, itemInnerMember)).ToDictionary(e => e.Key, e => e.Value);
 			}
 			return result;
 		}
 
-		// Otherwise go deeper in the object tree.
-		// And foreach object public property collect each value
 		var propertyCollection = objectType.GetProperties();
-
 		var newMemberName = string.Empty;
 
 		if (memberName.Length > 0)
@@ -117,7 +129,6 @@ internal static class InternalMethods
 			}
 
 			var innerMember = string.Format(CultureInfo.CurrentCulture, "{0}{1}", newMemberName, property.Name);
-
 			result = result.Concat(PropertiesToDictionary(innerObject!, innerMember)).ToDictionary(e => e.Key, e => e.Value);
 		}
 

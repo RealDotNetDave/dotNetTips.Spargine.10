@@ -43,11 +43,16 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Documentation = "https://bit.ly/SpargineObjectExtensions", Status = Status.UpdateDocumentation)]
 public static class ObjectExtensions
 {
+
+	// OPTIMIZATION: Cache the built-in types dictionary to avoid repeated method calls
+	// This is particularly important in PropertiesToDictionary which may be called recursively
+	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
 	/// <summary>
 	/// The string builder pool for efficient string building operations.
 	/// </summary>
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
+
 
 	/// <summary>
 	/// Processes the <see cref="IEnumerable" /> to dispose items if they implement <see cref="IDisposable" />.
@@ -466,7 +471,7 @@ public static class ObjectExtensions
 		}
 
 		/// <summary>
-		/// Converts an object’s properties into a dictionary, with property names as keys and their values as dictionary values.
+		/// Converts an object's properties into a dictionary, with property names as keys and their values as dictionary values.
 		/// </summary>
 		/// <param name="memberName">The name of a specific member to convert. If empty, all properties are converted.</param>
 		/// <param name="ignoreNulls">Specifies whether to ignore properties with null values.</param>
@@ -474,7 +479,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -489,8 +494,11 @@ public static class ObjectExtensions
 
 			var result = new Dictionary<string, string>();
 
-			// Reserve a special treatment for specific types by design (like string -that's a list of chars and you don't want to iterate on its items)
-			if (TypeHelper.BuiltInTypeNames().ContainsKey(objectType))
+			//TODO: Review performance implications of this method due to reflection usage
+
+			// OPTIMIZATION: Use cached dictionary instead of calling TypeHelper.BuiltInTypeNames() repeatedly
+			// This eliminates method call overhead and potential dictionary creation on every recursive call
+			if (_builtInTypeNames.ContainsKey(objectType))
 			{
 				result.Add(memberName, obj!.ToString()!);
 				return result;
@@ -630,7 +638,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
 		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -638,8 +646,11 @@ public static class ObjectExtensions
 
 			var result = new Dictionary<string, string>();
 
-			// Special treatment for built-in types
-			if (TypeHelper.BuiltInTypeNames().ContainsKey(objectType))
+			//TODO: Review performance implications of this method due to reflection usage
+
+			// OPTIMIZATION: Use cached dictionary instead of calling TypeHelper.BuiltInTypeNames()
+			// This eliminates method call overhead and potential dictionary creation on every recursive call
+			if (_builtInTypeNames.ContainsKey(objectType))
 			{
 				result.Add(memberName, obj.ToString()!);
 				return result;
