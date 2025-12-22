@@ -353,6 +353,29 @@ public class DictionaryExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToImmutableDictionaryTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+
+		var result = people.ToImmutableDictionary();
+
+		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	/// <summary>
+	/// Defines the test method ToImmutableTest.
+	/// </summary>
+	[TestMethod]
+	public void ToImmutableListTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+
+		var result = people.ToImmutableList();
+
+		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	[TestMethod]
 	public void ToImmutableSortedDictionaryTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
@@ -385,19 +408,6 @@ public class DictionaryExtensionsTests
 		Dictionary<string, Person> nullDictionary = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToImmutableSortedDictionary());
-	}
-
-	/// <summary>
-	/// Defines the test method ToImmutableTest.
-	/// </summary>
-	[TestMethod]
-	public void ToImmutableTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
-
-		var result = people.ToImmutableList();
-
-		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -652,6 +662,9 @@ public class DictionaryExtensionsTests
 		Assert.IsTrue(people.Count == CollectionCount + 1);
 
 		people.Upsert(personFromCollection.Value.Id, personFromCollection.Value);
+		Assert.IsTrue(people.Count == CollectionCount + 1);
+
+		people.Upsert(personFromCollection.Value.Id, null);
 		Assert.IsTrue(people.Count == CollectionCount + 1);
 	}
 }

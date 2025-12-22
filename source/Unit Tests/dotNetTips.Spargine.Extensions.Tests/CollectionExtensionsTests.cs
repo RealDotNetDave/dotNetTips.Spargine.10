@@ -67,6 +67,18 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddIfNullTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		Person nullPerson = null;
+
+		// TEST
+		people.AddIf(nullPerson, people.Count == Count);
+
+		Assert.IsTrue(people.Count == 10);
+	}
+
+	[TestMethod]
 	public void AddIfTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
@@ -152,6 +164,20 @@ public class CollectionExtensionsTests
 		{
 			Assert.IsTrue(frozenSet.Contains(person));
 		}
+	}
+
+	[TestMethod]
+	public void UpsertNullTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		people.FastShuffle();
+		var personFromCollection = people.First();
+		Person nullPerson = null;
+
+		// TEST
+		people.Upsert(nullPerson);
+
+		Assert.IsTrue(people.Count == 10);
 	}
 
 

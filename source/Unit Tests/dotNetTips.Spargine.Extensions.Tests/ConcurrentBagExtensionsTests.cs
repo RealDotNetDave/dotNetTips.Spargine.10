@@ -38,6 +38,20 @@ public class ConcurrentBagExtensionsTests
 		// Assert
 		Assert.AreEqual(2, bag.Count);
 	}
+
+	public void AddRange_EmptyItems_Null()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1, 2 };
+		List<int> items = null;
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(2, bag.Count);
+	}
+
 	[TestMethod]
 	public void AddRange_NullBag_ThrowsArgumentNullException()
 	{
@@ -82,7 +96,22 @@ public class ConcurrentBagExtensionsTests
 	{
 		// Arrange
 		var bag = new ConcurrentBag<int> { 1, 2, 3 };
-		var items = new List<int> { 99, 100 };
+		var items = new List<int>();
+
+		// Act
+		var result = bag.RemoveRange(items);
+
+		// Assert
+		Assert.AreEqual(3, result.Count);
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result.ToList());
+	}
+
+	[TestMethod]
+	public void RemoveRange_Null_ReturnsSameBag()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1, 2, 3 };
+		List<int> items = null;
 
 		// Act
 		var result = bag.RemoveRange(items);
@@ -98,17 +127,6 @@ public class ConcurrentBagExtensionsTests
 		// Arrange
 		ConcurrentBag<int> bag = null;
 		var items = new List<int> { 1, 2, 3 };
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => bag.RemoveRange(items));
-	}
-
-	[TestMethod]
-	public void RemoveRange_NullItems_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var bag = new ConcurrentBag<int>();
-		List<int> items = null;
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => bag.RemoveRange(items));

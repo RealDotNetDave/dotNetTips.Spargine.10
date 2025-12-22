@@ -185,9 +185,9 @@ public static class ArrayExtensions
 
 			var newArray = new T[array.LongLength + 1];
 
-			array.CopyTo(newArray.AsSpan());
+			array.AsSpan().CopyTo(newArray);
 
-			newArray[array.LongLength] = item;
+			newArray[^1] = item;
 
 			return newArray;
 		}

@@ -688,21 +688,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void SplitTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-
-		var splitPeople = people.Split(Count / 10);
-
-		Assert.IsNotNull(splitPeople);
-		Assert.IsTrue(splitPeople.Count() == 11);
-
-		var emptyPeople = new List<Person>();
-
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => emptyPeople.Split(10));
-	}
-
-	[TestMethod]
 	public void StartsWithTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);

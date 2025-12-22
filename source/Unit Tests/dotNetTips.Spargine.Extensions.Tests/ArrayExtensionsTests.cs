@@ -91,10 +91,10 @@ public class ArrayExtensionsTests
 
 		var result = people.AddLast(person);
 
-		Assert.IsTrue(result.FastLongCount() == 11);
+		Assert.IsTrue(result.Length == 11);
 		Assert.IsTrue(result.Last() == person);
 
-		Assert.IsTrue(result.AddLast(null).FastLongCount() == 11);
+		Assert.IsTrue(result.AddLast(null).Length == 11);
 	}
 
 	[TestMethod]
@@ -390,13 +390,6 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
-	public void FastCount_ReturnsCorrectLength()
-	{
-		var arr = new[] { 1, 2, 3, 4, 5 };
-		Assert.AreEqual(5, arr.FastLongCount());
-	}
-
-	[TestMethod]
 	public void FastHashData_ValidData_ReturnsHash()
 	{
 		// Arrange
@@ -408,6 +401,13 @@ public class ArrayExtensionsTests
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsTrue(result.Length > 0);
+	}
+
+	[TestMethod]
+	public void FastLongCount_ReturnsCorrectLength()
+	{
+		var arr = new[] { 1, 2, 3, 4, 5 };
+		Assert.AreEqual(5, arr.FastLongCount());
 	}
 
 	/// <summary>
@@ -733,7 +733,7 @@ public class ArrayExtensionsTests
 
 		words = words.AddLast(words.First());
 
-		Assert.IsTrue(words.ToDistinct().FastLongCount() == 10);
+		Assert.IsTrue(words.ToDistinct().Length == 10);
 	}
 
 	[TestMethod]
