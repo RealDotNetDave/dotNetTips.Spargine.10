@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -292,7 +292,7 @@ public static class ListExtensions
 		/// </summary>
 		/// <param name="action">The action to perform on each item.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed)]
+		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed)]
 		public void PerformAction([DisallowNull] Action<T> action)
 		{
 			list = list.ArgumentNotNull();
@@ -303,8 +303,7 @@ public static class ListExtensions
 				return;
 			}
 
-			// USING ASSPAN AND USING FOR SLOWED PERFORMANCE
-			foreach (var item in list)
+			foreach (var item in list.AsSpan())
 			{
 				action.Invoke(item);
 			}

@@ -416,7 +416,7 @@ public class ArrayExtensionsTests
 	[TestMethod]
 	public void FastProcessorTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(100).ToArray();
+		var people = RandomData.GeneratePersonRefCollection(10000).ToArray();
 
 		people.FastProcessor((Person person) => person.LastName = "TEST NAME");
 	}
@@ -595,7 +595,7 @@ public class ArrayExtensionsTests
 	[TestMethod]
 	public void PerformActionTest_Ref()
 	{
-		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+		var people = RandomData.GeneratePersonRefCollection(10000).ToArray();
 		var sb = new StringBuilder();
 
 		people.PerformAction((person) => _ = sb.Append($"{person.ToString()}|"));
@@ -609,7 +609,7 @@ public class ArrayExtensionsTests
 	[TestMethod]
 	public void PerformActionTest_Val()
 	{
-		var people = RandomData.GeneratePersonValCollection(10).ToArray();
+		var people = RandomData.GeneratePersonValCollection(10000).ToArray();
 		var sb = new StringBuilder();
 
 		people.PerformAction((person) => _ = sb.Append($"{person.ToString()}|"));
