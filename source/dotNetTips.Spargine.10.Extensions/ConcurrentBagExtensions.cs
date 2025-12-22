@@ -4,7 +4,7 @@
 // Created          : 02-24-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-21-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,35 +45,16 @@ public static class ConcurrentBagExtensions
 		[Information(nameof(AddRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void AddRange([DisallowNull] in IEnumerable<T> items)
 		{
-			_ = items.ArgumentNotNull();
+			if (items is null)
+			{
+				return;
+			}
+
 			bag = bag.ArgumentNotNull();
 
-			//TODO: CHECK PERFORMANCE IMPROVEMENT SUGGESTION FROM COPILOT
-
-			// Adaptive strategy based on collection size
-			if (items is ICollection<T> collection)
+			foreach (var item in items)
 			{
-				// For small collections (< 100), sequential is faster due to overhead
-				if (collection.Count < 100)
-				{
-					foreach (var item in items)
-					{
-						bag.Add(item);
-					}
-				}
-				else
-				{
-					// For larger collections, parallel adds leverage ConcurrentBag's thread-safe design
-					_ = Parallel.ForEach(items, item => bag.Add(item));
-				}
-			}
-			else
-			{
-				// For non-collection IEnumerable, use sequential to avoid materializing twice
-				foreach (var item in items)
-				{
-					bag.Add(item);
-				}
+				bag.Add(item);
 			}
 		}
 
@@ -87,10 +68,12 @@ public static class ConcurrentBagExtensions
 		[Information(nameof(RemoveRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ConcurrentBag<T> RemoveRange([DisallowNull] IEnumerable<T> items)
 		{
-			bag = bag.ArgumentNotNull();
-			items = items.ArgumentNotNull();
+			if (items is null)
+			{
+				return bag;
+			}
 
-			//TODO: CHECK PERFORMANCE IMPROVEMENT SUGGESTION FROM COPILOT	
+			bag = bag.ArgumentNotNull();
 
 			var itemsToRemove = new HashSet<T>(items);
 
@@ -101,26 +84,12 @@ public static class ConcurrentBagExtensions
 
 			var tempBag = new ConcurrentBag<T>();
 
-			// Adaptive: use sequential for small bags to avoid parallelization overhead
-			if (bag.Count < 1000)
+			foreach (var item in bag)
 			{
-				foreach (var item in bag)
+				if (!itemsToRemove.Contains(item))
 				{
-					if (!itemsToRemove.Contains(item))
-					{
-						tempBag.Add(item);
-					}
+					tempBag.Add(item);
 				}
-			}
-			else
-			{
-				_ = Parallel.ForEach(bag, item =>
-				{
-					if (!itemsToRemove.Contains(item))
-					{
-						tempBag.Add(item);
-					}
-				});
 			}
 
 			return tempBag;
@@ -138,11 +107,7 @@ public static class ConcurrentBagExtensions
 			bag = bag.ArgumentNotNull();
 
 			//TODO: CHECK SUGGESTION FROM COPILOT FOR PERFORMANCE IMPROVEMENT
-
-			// Use ToArray() first - ConcurrentBag.ToArray() is highly optimized
-			// Then create List with exact capacity to avoid resizing
-			var array = bag.ToArray();
-			return [.. array];
+			return new List<T>(bag);
 		}
 	}
 }

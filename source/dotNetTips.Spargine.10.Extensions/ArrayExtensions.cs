@@ -97,8 +97,7 @@ public static class ArrayExtensions
 			var result = new T[array.LongLength + 1];
 			result[0] = item;
 
-			//TODO: TRYING THIS. BACKOUT IF SLOWER.
-			array.AsSpan().CopyTo(result.AsSpan(1));
+			array.CopyTo(result.AsSpan(1));
 
 			return result;
 		}
@@ -186,8 +185,7 @@ public static class ArrayExtensions
 
 			var newArray = new T[array.LongLength + 1];
 
-			//TODO: TRYING THIS. BACKOUT IF SLOWER.
-			array.AsSpan().CopyTo(newArray.AsSpan());
+			array.CopyTo(newArray.AsSpan());
 
 			newArray[array.LongLength] = item;
 
@@ -236,7 +234,10 @@ public static class ArrayExtensions
 		{
 			array = array.ArgumentNotNull();
 
-			return array.FastBinaryClone<T[]>();
+			var result = new T[array.Length];
+
+			array.AsSpan().CopyTo(result);
+			return result;
 		}
 
 		/// <summary>
@@ -309,7 +310,7 @@ public static class ArrayExtensions
 		/// <returns>A hash code representing the contents of the array.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public int GenerateHashCode()
 		{
 			return array.ArgumentNotNull().Where(t => t is not null).Aggregate(6551, (accumulator, t) => accumulator ^= (accumulator << 5) ^ EqualityComparer<T>.Default.GetHashCode(t));
@@ -570,23 +571,19 @@ public static class ArrayExtensions
 				return array;
 			}
 
-
-			//TODO: FIXED LOGIC BUG. ORIGINAL REPLACED ALL ITEMS WITH THE SAME ITEM!
 			var index = Array.IndexOf(array, item);
 
 			if (index >= 0)
 			{
 				// Item exists - replace it (creates a copy to maintain immutability)
-				var result = new T[array.LongLength];
+				var result = new T[array.Length];
 				array.AsSpan().CopyTo(result);
 				result[index] = item;
 				return result;
 			}
-			else
-			{
-				// Item doesn't exist - add it
-				return array.AddLast(item);
-			}
+
+			// Item doesn't exist - add it
+			return array.AddLast(item);
 		}
 	}
 }

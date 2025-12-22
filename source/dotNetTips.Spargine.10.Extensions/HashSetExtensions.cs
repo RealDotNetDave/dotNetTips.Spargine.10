@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-30-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="HashSetExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -41,7 +41,7 @@ public static class HashSetExtensions
 		/// <param name="item">The item to add to the hash set.</param>
 		/// <param name="condition">The condition that determines whether the item should be added.</param>
 		[Pure]
-		[Information(nameof(AddIf), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+		[Information(nameof(AddIf), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void AddIf([DisallowNull] T item, bool condition)
 		{
 			collection = collection.ArgumentNotNull();
@@ -65,7 +65,7 @@ public static class HashSetExtensions
 		/// </exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJan2022")]
+		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ConcurrentHashSet<T> ToConcurrentHashSet()
 		{
 			return [.. collection.ArgumentNotNull()];
@@ -93,7 +93,7 @@ public static class HashSetExtensions
 		/// </summary>
 		/// <param name="item">The item to upsert into the hash set.</param>
 		[Pure]
-		[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+		[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void Upsert([DisallowNull] T item)
 		{
 			collection = collection.ArgumentNotNull();

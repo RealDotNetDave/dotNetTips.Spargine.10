@@ -107,7 +107,7 @@ public class HashSetTests
 	[TestMethod]
 	public void ToImmutableTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToImmutable();
+		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToImmutableList();
 
 		Assert.IsTrue(people.Count == 10);
 	}

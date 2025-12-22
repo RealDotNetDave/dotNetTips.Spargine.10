@@ -395,7 +395,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
 
-		var result = people.ToImmutable();
+		var result = people.ToImmutableList();
 
 		Assert.IsTrue(result.IsNotEmpty());
 	}

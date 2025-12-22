@@ -31,7 +31,7 @@ public class ImmutableArrayTests
 	[TestMethod]
 	public void ImmutableArrayTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToHashSet().ToImmutable();
+		var people = RandomData.GeneratePersonRefCollection(Count).ToHashSet().ToImmutableList();
 		var copyPeople = people;
 		Assert.IsTrue(people == copyPeople);
 		Assert.IsFalse(people == copyPeople.Shuffle());

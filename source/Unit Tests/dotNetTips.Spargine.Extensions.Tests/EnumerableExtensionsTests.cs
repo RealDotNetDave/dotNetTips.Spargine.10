@@ -771,7 +771,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.ToImmutable().IsNotEmpty());
+		Assert.IsTrue(people.ToImmutableList().IsNotEmpty());
 	}
 
 	[TestMethod]

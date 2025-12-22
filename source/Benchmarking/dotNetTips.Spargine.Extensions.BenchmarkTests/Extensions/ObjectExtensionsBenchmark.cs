@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-12-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter

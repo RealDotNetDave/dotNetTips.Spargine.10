@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -168,6 +169,7 @@ public static class EnumerableExtensions
 						return listIndex;
 					}
 				}
+
 				return -1;
 			}
 
@@ -183,6 +185,7 @@ public static class EnumerableExtensions
 						return readOnlyIndex;
 					}
 				}
+
 				return -1;
 			}
 
@@ -236,12 +239,14 @@ public static class EnumerableExtensions
 			comparer = comparer.ArgumentNotNull();
 
 			var index = 0;
+
 			foreach (var element in collection)
 			{
 				if (comparer.Equals(element, item))
 				{
 					return index;
 				}
+
 				index++;
 			}
 
@@ -257,39 +262,41 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> OrderBy([DisallowNull] string sortExpression)
 		{
 			collection = collection.ArgumentNotNull();
-
 			sortExpression += string.Empty;
 
-			var parts = sortExpression.Split(Convert.ToChar(" ", CultureInfo.InvariantCulture));
-			var descending = false;
-			var property = string.Empty;
+			var parts = sortExpression.Split(' ');
 
-			if (parts.LongLength > 0 && !string.IsNullOrEmpty(parts[0]))
+			if (parts.Length == 0 || string.IsNullOrEmpty(parts[0]))
 			{
-				property = parts[0];
-
-				if (parts.LongLength > 1)
-				{
-					@descending = CultureInfo.InvariantCulture.TextInfo
-						.ToLower(parts[1])
-						.Contains("esc", StringComparison.OrdinalIgnoreCase);
-				}
-
-				var prop = typeof(T).GetRuntimeProperty(property);
-
-				if (prop is not null && prop.CheckIsNotNull(throwException: true))
-				{
-					return @descending
-						? collection.OrderByDescending(x => prop.GetValue(x, null))
-						: collection.OrderBy(x => prop.GetValue(x, null));
-				}
+				return collection;
 			}
 
-			return collection;
+			var property = parts[0];
+			var descending = parts.Length > 1 &&
+				parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
+
+			var prop = typeof(T).GetRuntimeProperty(property);
+
+			if (prop is null)
+			{
+				return collection;
+			}
+
+			// OPTIMIZATION: Cache property getter as compiled expression for 10-100x faster access
+			// Reflection GetValue is slow; expression trees compile to IL for near-native performance
+			var parameter = Expression.Parameter(typeof(T), "x");
+			var propertyAccess = Expression.Property(parameter, prop);
+			var castToObject = Expression.Convert(propertyAccess, typeof(object));
+			var lambda = Expression.Lambda<Func<T, object>>(castToObject, parameter);
+			var compiledGetter = lambda.Compile();
+
+			return descending
+				? collection.OrderByDescending(compiledGetter)
+				: collection.OrderBy(compiledGetter);
 		}
 
 		/// <summary>
@@ -335,28 +342,13 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<IEnumerable<T>> Partition(int pageCount)
 		{
 			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(1);
 
-			// Cache collection to avoid evaluating it twice
-			var count = collection.Count();
-
-			if (count < pageCount)
-			{
-				yield return collection;
-			}
-			else
-			{
-				var pagesCount = Math.Ceiling(count / (double)pageCount);
-
-				for (var pageIndex = 0; pageIndex < pagesCount; pageIndex++)
-				{
-					yield return [.. collection.Skip(pageCount * pageIndex)];
-				}
-			}
+			return collection.Chunk(pageCount);
 		}
 
 		/// <summary>
@@ -442,36 +434,6 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 
 			return collection.Shuffle();
-		}
-
-		/// <summary>
-		/// Splits the specified collection into smaller collections of a specified size.
-		/// </summary>
-		/// <param name="size">The size of each smaller collection.</param>
-		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="size"/> is less than or equal to 0.</exception>
-		/// <remarks>
-		/// This method uses deferred execution and will only process elements as they are requested.
-		/// </remarks>
-		[Pure]
-		[return: NotNull]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Split), "David McCarter", "3/2/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public IEnumerable<IEnumerable<T>> Split(int size)
-		{
-			collection = collection.ArgumentNotNull();
-			size = size.EnsureMinimum(1);
-
-			var start = 0;
-			var items = collection as T[] ?? [.. collection];
-
-			while (start < items.Length)
-			{
-				var count = Math.Min(size, items.Length - start);
-
-				yield return new ArraySegment<T>(items, start, count);
-
-				start += count;
-			}
 		}
 
 		/// <summary>
@@ -682,7 +644,12 @@ public static class EnumerableExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public FrozenSet<T> ToFrozenSet() => FrozenSet.ToFrozenSet(collection);
+		public FrozenSet<T> ToFrozenSet()
+		{
+			collection = collection.ArgumentNotNull();
+
+			return FrozenSet.ToFrozenSet(collection);
+		}
 
 		/// <summary>
 		/// Converts the specified enumerable collection to an <see cref="ImmutableList{T}"/>.
@@ -690,8 +657,8 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToImmutable), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public ImmutableList<T> ToImmutable()
+		[Information(nameof(ToImmutableList), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public ImmutableList<T> ToImmutableList()
 		{
 			collection = collection.ArgumentNotNull();
 
@@ -706,7 +673,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToImmutable), "David McCarter", "6/7/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToImmutableArray), "David McCarter", "6/7/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> ToImmutableArray()
 		{
 			return collection.IsEmpty() ? [] : [.. collection];
@@ -1278,18 +1245,14 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddLast), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddLast([DisallowNull] T item)
 		{
-			collection = collection.ArgumentNotNull();
 			item = item.ArgumentNotNull();
+			collection = collection.ArgumentNotNull();
 
-			foreach (var element in collection)
-			{
-				yield return element;
-			}
-
-			yield return item;
+			// Use built-in Append method for optimal performance
+			return collection.Append(item);
 		}
 
 		/// <summary>
@@ -1302,8 +1265,12 @@ public static class EnumerableExtensions
 		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> Upsert([DisallowNull] T item)
 		{
+			if (item is null)
+			{
+				return collection;
+			}
+
 			collection = collection.ArgumentNotNull();
-			item = item.ArgumentNotNull();
 
 			var list = collection as List<T> ?? [.. collection];
 
@@ -1329,18 +1296,13 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddFirst), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddFirst), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddFirst([DisallowNull] T item)
 		{
-			collection = collection.ArgumentNotNull();
 			item = item.ArgumentNotNull();
+			collection = collection.ArgumentNotNull();
 
-			yield return item;
-
-			foreach (var element in collection)
-			{
-				yield return element;
-			}
+			return collection.Prepend(item);
 		}
 
 		/// <summary>

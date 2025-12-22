@@ -747,7 +747,7 @@ public class ListExtensionsTests
 	[TestMethod]
 	public void ShuffleImmutableArrayTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToImmutable();
+		var people = RandomData.GeneratePersonRefCollection(Count).ToImmutableList();
 		List<Person> nullList = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);

@@ -13,7 +13,9 @@
 // ***********************************************************************
 
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester;
@@ -109,33 +111,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result.ToArray());
 	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.AsSpan) + " : Reference")]
-	//[BenchmarkCategory(Categories.Span, Categories.ReferenceType)]
-	//public void AsSpan_Ref()
-	//{
-	//	var result = this._personRefArray.AsSpan();
-
-	//	this.Consume(result.ToArray());
-	//}
-
-	//TODO:FIGURE OUT WHY THIS DOES NOT WORK
-	//[Benchmark(Description = "As<>()")]
-	//public void As01()
-	//{
-	//	var people1 = this._personRefArray.FastClone<PersonProper>();
-	//	var result = people1.As<List<IPerson>>();
-	//	base.Consume(result);
-	//}
-
-	//[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Reference")]
-	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	//public void ClonePerson_Ref()
-	//{
-	//	var result = this._personRefArray.FastClone();
-
-	//	this.Consume(result);
-	//}
-
 	[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void ClonePerson_Val()
@@ -145,14 +120,22 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Record")]
-	//[BenchmarkCategory(Categories.Array, Categories.RecordType)]
-	//public void ClonePersonRecord_Record()
-	//{
-	//	var result = this._personRecordArray.FastClone();
+	[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Record")]
+	[BenchmarkCategory(Categories.Array, Categories.RecordType)]
+	public void ClonePersonRecordRecord()
+	{
+		var result = this._personRecordArray.Clone();
 
-	//	this.Consume(result);
-	//}
+		this.Consume(result);
+	}
+	[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void ClonePersonRef()
+	{
+		var result = this._personRefArray.Clone();
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.IsEmpty) + ": as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
@@ -253,90 +236,89 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	//TODO: FIGURE OUT WHY THIS FAILS.
-	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record")]
-	//[BenchmarkCategory(Categories.ReferenceType)]
-	//public void PerformAction_Record()
-	//{
-	//	var byteArray = this._personRecordArray;
-	//	var sb = new StringBuilder();
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record (Comparison)")]
+	[BenchmarkCategory(Categories.Array, Categories.RecordType, Categories.ForComparison)]
+	public void PerformAction_Record_Comparison()
+	{
+		var people = this._personRecordArray;
+		var sb = new StringBuilder();
 
-	//	byteArray.PerformAction((person) =>
-	//	{
-	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{person.PropertiesToString()}|");
-	//	});
+		for (var index = 0; index < people.LongLength; index++)
+		{
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
+		}
 
-	//	this.Consume(sb.ToString());
-	//}
+		this.Consume(sb.ToString());
+	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record (Comparison)")]
-	//[BenchmarkCategory(Categories.Array, Categories.RecordType, Categories.ForComparison)]
-	//public void PerformAction_Record_Comparison()
-	//{
-	//	var people = this._personRecordArray;
-	//	var sb = new StringBuilder();
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void PerformAction_Ref()
+	{
+		var people = this._personRefArray;
+		var sb = new StringBuilder();
 
-	//	for (var index = 0; index < people.LongLength; index++)
-	//	{
-	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
-	//	}
+		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
 
-	//	this.Consume(sb.ToString());
-	//}
+		this.Consume(sb.ToString());
+	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref")]
-	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	//public void PerformAction_Ref()
-	//{
-	//	var people = this._personRefArray;
-	//	var sb = new StringBuilder();
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref (Comparison)")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
+	public void PerformAction_Ref_Comparison()
+	{
+		var people = this._personRefArray;
+		var sb = new StringBuilder();
 
-	//	people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
+		for (var index = 0; index < people.LongLength; index++)
+		{
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
+		}
 
-	//	this.Consume(sb.ToString());
-	//}
+		this.Consume(sb.ToString());
+	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref (Comparison)")]
-	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	//public void PerformAction_Ref_Comparison()
-	//{
-	//	var people = this._personRefArray;
-	//	var sb = new StringBuilder();
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void PerformAction_Val()
+	{
+		var people = this._personValArray;
+		var sb = new StringBuilder();
 
-	//	for (var index = 0; index < people.LongLength; index++)
-	//	{
-	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
-	//	}
+		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
 
-	//	this.Consume(sb.ToString());
-	//}
+		this.Consume(sb.ToString());
+	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val")]
-	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	//public void PerformAction_Val()
-	//{
-	//	var people = this._personValArray;
-	//	var sb = new StringBuilder();
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val (Comparison)")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType, Categories.ForComparison)]
+	public void PerformAction_Val_Comparison()
+	{
+		var people = this._personValArray;
+		var sb = new StringBuilder();
 
-	//	people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
+		for (var index = 0; index < people.LongLength; index++)
+		{
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
+		}
 
-	//	this.Consume(sb.ToString());
-	//}
+		this.Consume(sb.ToString());
+	}
 
-	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val (Comparison)")]
-	//[BenchmarkCategory(Categories.Array, Categories.ValueType, Categories.ForComparison)]
-	//public void PerformAction_Val_Comparison()
-	//{
-	//	var people = this._personValArray;
-	//	var sb = new StringBuilder();
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void PerformActionRecord()
+	{
+		var byteArray = this._personRecordArray;
+		var sb = new StringBuilder();
 
-	//	for (var index = 0; index < people.LongLength; index++)
-	//	{
-	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
-	//	}
+		byteArray.PerformAction((person) =>
+		{
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.PropertiesToString()}|");
+		});
 
-	//	this.Consume(sb.ToString());
-	//}
+		this.Consume(sb.ToString());
+	}
 
 	[Benchmark(Description = "Process Collection: FastProcessor()")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]

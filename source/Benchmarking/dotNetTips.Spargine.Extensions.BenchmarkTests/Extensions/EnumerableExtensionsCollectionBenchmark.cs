@@ -408,17 +408,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	//[Benchmark(Description = nameof(EnumerableExtensions.Scan))]
-	//[BenchmarkCategory(Categories.New)]
-	//public void Scan()
-	//{
-	//	var people = this._personRefEnumerable;
-
-	//	// Fix: Update the lambda to match the expected signature of the Scan method
-	//	var result = people.Scan(new Person(), (p) => p);
-
-	//	this.Consume(result);
-	//}
 
 	public override void Setup()
 	{
@@ -465,18 +454,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.Shuffle().Last();
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.Split))]
-	public void Split()
-	{
-		foreach (var chunk in this._personRefEnumerable.Split(10))
-		{
-			foreach (var person in chunk)
-			{
-				this.Consume(person);
-			}
-		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.StartsWith))]

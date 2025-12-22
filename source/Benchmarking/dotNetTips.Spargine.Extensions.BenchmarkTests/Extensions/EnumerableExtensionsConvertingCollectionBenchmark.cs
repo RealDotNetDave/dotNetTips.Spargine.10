@@ -68,10 +68,10 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.ToImmutable))]
+	[Benchmark(Description = nameof(EnumerableExtensions.ToImmutableList))]
 	public void ToImmutable()
 	{
-		var result = this._personRefEnumerable.AsEnumerable().ToImmutable();
+		var result = this._personRefEnumerable.AsEnumerable().ToImmutableList();
 
 		this.Consume(result);
 	}

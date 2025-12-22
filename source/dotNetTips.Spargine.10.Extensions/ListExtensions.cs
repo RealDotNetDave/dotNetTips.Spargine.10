@@ -94,9 +94,74 @@ public static class ListExtensions
 			list = list.ArgumentNotNull();
 			items = items.ArgumentNotNull();
 
+			// Only create HashSet if it's worth it
+			if (list.Count > 100)  // Threshold for HashSet benefit
+			{
+				var existingItems = new HashSet<T>(list);
+
+				foreach (var item in items)
+				{
+					if (existingItems.Add(item))
+					{
+						list.Add(item);
+					}
+				}
+			}
+			else
+			{
+				// For small lists, Contains is fine
+				foreach (var item in items)
+				{
+					if (!list.Contains(item))
+					{
+						list.Add(item);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Adds a range of items to the list if they do not already exist in the list, using a custom equality comparer.
+		/// </summary>
+		/// <param name="items">The items to add if not already present.</param>
+		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> to use for comparing elements for equality.</param>
+		/// <remarks>
+		/// <para>
+		/// This method uses a <see cref="HashSet{T}"/> for O(1) lookups to efficiently determine which items are new.
+		/// The custom comparer is used both for the HashSet and for equality comparisons.
+		/// </para>
+		/// <para>
+		/// <b>Performance characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description>Time complexity: O(n + m) where n is the list size and m is the number of items to add</description></item>
+		/// <item><description>Space complexity: O(n) for the temporary HashSet</description></item>
+		/// <item><description>Significantly faster than repeated Contains() calls for large collections</description></item>
+		/// </list>
+		/// </remarks>
+		/// <example>
+		/// This example shows how to add items with a case-insensitive string comparer:
+		/// <code>
+		/// var names = new List&lt;string&gt; { "Alice", "Bob" };
+		/// var newNames = new[] { "alice", "Charlie", "ALICE" };
+		/// names.AddRangeIfNotExists(newNames, StringComparer.OrdinalIgnoreCase);
+		/// // Result: names contains { "Alice", "Bob", "Charlie" }
+		/// // "alice" and "ALICE" are not added because they match "Alice" using the comparer
+		/// </code>
+		/// </example>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.None, UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [DisallowNull] IEqualityComparer<T> comparer)
+		{
+			list = list.ArgumentNotNull();
+			items = items.ArgumentNotNull();
+			comparer = comparer.ArgumentNotNull();
+
+			var existingItems = new HashSet<T>(list, comparer);
+
 			foreach (var item in items)
 			{
-				if (!list.Contains(item))
+				if (existingItems.Add(item))
 				{
 					list.Add(item);
 				}
