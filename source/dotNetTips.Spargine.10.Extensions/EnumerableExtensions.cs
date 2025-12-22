@@ -1381,12 +1381,7 @@ public static class EnumerableExtensions
 
 			collection = collection.ArgumentNotNull();
 
-			if (condition)
-			{
-				collection = collection.AddLast(item);
-			}
-
-			return collection;
+			return condition ? collection.Append(item) : collection;
 		}
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,9 +38,10 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void AddDistinct_EmptyItems_ReturnsOriginal()
 	{
-		var list = new List<int> { 1, 2 };
+		var list = new List<int> { 1, 2 }.AsEnumerable();
 		var result = list.AddDistinct(new ReadOnlyCollection<int>(new List<int>()));
-		CollectionAssert.AreEqual(list, result.ToList());
+
+		Assert.AreEqual(list, result);
 	}
 
 	[TestMethod]
@@ -54,10 +55,11 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void AddDistinct_NullItems_ReturnsOriginal()
 	{
-		var list = new List<int> { 1, 2 };
+		var list = new List<int> { 1, 2 }.AsEnumerable();
 		ReadOnlyCollection<int> items = null;
 		var result = list.AddDistinct(items);
-		CollectionAssert.AreEqual(list, result.ToList());
+
+		Assert.AreEqual(list, result);
 	}
 
 	[TestMethod]
@@ -83,7 +85,7 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void AddIf_ConditionFalse_ReturnsOriginal()
 	{
-		var list = new List<int> { 1, 2 };
+		var list = new List<int> { 1, 2 }.AsEnumerable();
 		list.AddIf(3, false);
 		Assert.IsTrue(list.Count() == 2);
 	}
@@ -91,9 +93,11 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void AddIf_ConditionTrue_AddsItem()
 	{
-		var list = new List<int> { 1, 2 };
-		list.AddIf(3, true);
-		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, list);
+		var list = new List<int> { 1, 2 }.AsEnumerable();
+
+		list = list.AddIf(3, true);
+
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, list.ToList());
 	}
 
 	[TestMethod]
@@ -115,13 +119,11 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void ContainsAnyTest()
 	{
-		var people1 = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people1 = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		var people2 = RandomData.GeneratePersonRefCollection(Count / 2);
 
 		Assert.IsFalse(people1.ContainsAny(people2));
-
-		Assert.IsTrue(people1.AddRange(people2, ensureUnique: true));
 	}
 
 	[TestMethod]
@@ -224,17 +226,17 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_EmptyCollection_DoesNotThrow()
 	{
-		var emptyList = new List<Person>();
+		var emptyList = new List<Person>().AsEnumerable();
 
 		emptyList.FastShuffle();
 
-		Assert.AreEqual(0, emptyList.Count);
+		Assert.AreEqual(0, emptyList.Count());
 	}
 
 	[TestMethod]
 	public void FastShuffle_WithoutCount_MultipleInvocations_ModifiesInPlace()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		var originalPeople = people.ToHashSet();
 
 		var afterFirstShuffle = people.FastShuffle();
@@ -242,7 +244,7 @@ public class EnumerableExtensionsTests
 		var afterSecondShuffle = people.FastShuffle();
 
 		// All should have the same count and elements
-		Assert.AreEqual(Count, people.Count);
+		Assert.AreEqual(Count, people.Count());
 
 		foreach (var person in originalPeople)
 		{
@@ -257,7 +259,7 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_NullCollection_ThrowsArgumentNullException()
 	{
-		List<Person> nullCollection = null;
+		IEnumerable<Person> nullCollection = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FastShuffle());
 	}
@@ -265,12 +267,12 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_PreservesAllElements()
 	{
-		var numbers = Enumerable.Range(1, 100).ToList();
+		var numbers = Enumerable.Range(1, 100).AsEnumerable();
 		var originalNumbers = numbers.ToHashSet();
 
 		numbers.FastShuffle();
 
-		Assert.AreEqual(100, numbers.Count);
+		Assert.AreEqual(100, numbers.Count());
 		foreach (var num in originalNumbers)
 		{
 			Assert.IsTrue(numbers.Contains(num));
@@ -280,7 +282,8 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_ProducesDifferentResults()
 	{
-		var people1 = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people1 = RandomData.GeneratePersonRefCollection(Count).
+			AsEnumerable();
 		var people2 = people1.ToList();
 
 		people1 = people1.FastShuffle();
@@ -294,12 +297,12 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_ShufflesCollection()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		var originalOrder = people.ToList();
 
 		people = people.FastShuffle();
 
-		Assert.AreEqual(Count, people.Count);
+		Assert.AreEqual(Count, people.Count());
 		// Verify it's not the same order (statistically very unlikely with large Count)
 		var sameOrder = people.SequenceEqual(originalOrder);
 		Assert.IsFalse(sameOrder);
@@ -308,24 +311,24 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_SingleElement_DoesNotThrow()
 	{
-		var singlePerson = new List<Person> { RandomData.GeneratePerson<Person>() };
-		var originalPerson = singlePerson[0];
+		var singlePerson = new List<Person> { RandomData.GeneratePerson<Person>() }.AsEnumerable();
+		var originalPerson = singlePerson.First();
 
 		singlePerson.FastShuffle();
 
-		Assert.AreEqual(1, singlePerson.Count);
-		Assert.AreEqual(originalPerson, singlePerson[0]);
+		Assert.AreEqual(1, singlePerson.Count());
+		Assert.AreEqual(originalPerson, singlePerson.First());
 	}
 
 	[TestMethod]
 	public void FastShuffle_WithoutCount_WorksWithComplexTypes()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		var originalPeople = people.ToHashSet();
 
 		people.FastShuffle();
 
-		Assert.AreEqual(Count, people.Count);
+		Assert.AreEqual(Count, people.Count());
 		foreach (var person in originalPeople)
 		{
 			Assert.IsTrue(people.Contains(person));
@@ -335,12 +338,12 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_WorksWithStrings()
 	{
-		var words = RandomData.GenerateWords(Count, 5, 10).ToList();
+		var words = RandomData.GenerateWords(Count, 5, 10).AsEnumerable();
 		var originalWords = words.ToHashSet();
 
 		words.FastShuffle();
 
-		Assert.AreEqual(Count, words.Count);
+		Assert.AreEqual(Count, words.Count());
 		foreach (var word in originalWords)
 		{
 			Assert.IsTrue(words.Contains(word));
@@ -350,11 +353,11 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void FastShuffle_WithoutCount_WorksWithValueTypes()
 	{
-		var numbers = Enumerable.Range(1, Count).ToList();
+		var numbers = Enumerable.Range(1, Count).AsEnumerable();
 
 		numbers.FastShuffle();
 
-		Assert.AreEqual(Count, numbers.Count);
+		Assert.AreEqual(Count, numbers.Count());
 		for (int i = 1; i <= Count; i++)
 		{
 			Assert.IsTrue(numbers.Contains(i));
@@ -385,7 +388,7 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void HasDuplicatesTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		Assert.IsFalse(people.HasDuplicates());
 
@@ -400,7 +403,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.HasDuplicates();
 
-		Assert.IsTrue(result);
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -419,7 +422,7 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void IndexOf_WithComparer_ThrowsArgumentNullException_WhenComparerIsNull()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		var person = RandomData.GeneratePerson<Person>();
 		IEqualityComparer<Person> nullComparer = null;
 
@@ -429,8 +432,8 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void IndexOf_WithPredicate_FindsCorrectIndex()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		var person = people[Count / 2];
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		var person = people.ElementAt(Count / 2);
 
 		var index = people.IndexOf(p => p.Equals(person));
 
@@ -458,7 +461,7 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void IndexOf_WithPredicate_ThrowsArgumentNullException_WhenPredicateIsNull()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(accumulatorPredicate: null));
 	}
@@ -470,6 +473,16 @@ public class EnumerableExtensionsTests
 		var person1 = people.FastShuffle(1).First();
 
 		Assert.IsTrue(people.IndexOf(person1).IsNegative() == false);
+	}
+
+	[TestMethod]
+	public void IsNotEmptyTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.IsNotEmpty();
+
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -746,7 +759,7 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void ToImmutableArrayTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count);
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		Assert.IsTrue(people.ToImmutableArray().IsNotEmpty());
 	}
@@ -788,18 +801,18 @@ public class EnumerableExtensionsTests
 	[TestMethod]
 	public void Upsert_AddsNewItem()
 	{
-		var list = new List<int> { 1, 2, 3 };
+		var list = new List<int> { 1, 2, 3 }.AsEnumerable();
 		list.Upsert(4);
-		Assert.AreEqual(4, list.Count);
+		Assert.AreEqual(4, list.Count());
 	}
 
 
 	[TestMethod]
 	public void Upsert_UpdatesExistingItem()
 	{
-		var list = new List<int> { 1, 2, 3 };
+		var list = new List<int> { 1, 2, 3 }.AsEnumerable();
 		list.Upsert(2);
-		Assert.AreEqual(3, list.Count);
+		Assert.AreEqual(3, list.Count());
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-22-2025
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -347,6 +347,28 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddRangeIfNotExistsLargeComparerTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+		var itemsToAdd = RandomData.GeneratePersonRefCollection(10).ToList();
+
+		list.AddRangeIfNotExists(itemsToAdd, new PersonEmailEqualityComparer());
+
+		Assert.AreEqual(1010, list.Count);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExistsLargeTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+		var itemsToAdd = RandomData.GeneratePersonRefCollection(10).ToList();
+
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		Assert.AreEqual(1010, list.Count);
+	}
+
+	[TestMethod]
 	public void AddRangeIfNotExistsTest()
 	{
 		var list = new List<int> { 1, 2, 3 };
@@ -599,6 +621,34 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsEqualToNullFirstListTest()
+	{
+		// Arrange
+		List<int> list1 = null;
+		var list2 = new List<int>();
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualToNullSecondListTest()
+	{
+		// Arrange
+		var list1 = new List<int>();
+		List<int> list2 = null;
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void IsEqualToWithBothEmptyListsTest()
 	{
 		// Arrange
@@ -653,6 +703,36 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result, "A non-empty list and an empty list should not be considered equal.");
+	}
+
+	[TestMethod]
+	public void IsNotEmptyCountTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+
+		var result = list.IsNotEmpty(1000);
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmptyPredicateTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+
+		var result = list.IsNotEmpty(p => p.Addresses.Count > 1);
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmptyTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+
+		var result = list.IsNotEmpty();
+
+		Assert.IsTrue(result);
 	}
 
 
@@ -712,6 +792,16 @@ public class ListExtensionsTests
 		var result = people.PickRandom();
 
 		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void RemoveFirstNullTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(10).ToList();
+
+		var result = list.RemoveFirst(null);
+
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -1040,6 +1130,109 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public async Task ToListAsync_MultipleCalls_ShouldReturnIndependentLists()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result1 = await list.ToListAsync();
+		var result2 = await list.ToListAsync();
+
+		// Assert
+		Assert.AreNotSame(result1, result2, "Multiple calls should return different list instances.");
+		CollectionAssert.AreEqual(result1, result2, "Both results should contain the same values.");
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithCancellation_ShouldThrowOperationCanceledException()
+	{
+		// Arrange
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+		using var cts = new CancellationTokenSource();
+
+		// Act
+		cts.Cancel(); // Cancel immediately
+
+		// Assert
+		await Assert.ThrowsExactlyAsync<OperationCanceledException>(async () =>
+		{
+			await list.ToListAsync(cts.Token);
+		}, "Should throw OperationCanceledException when token is already canceled.");
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithComplexObjects_ShouldPreserveReferences()
+	{
+		// Arrange
+		var addresses = RandomData.GeneratePersonRefCollection(10).ToList();
+		var list = addresses.ToList();
+
+		// Act
+		var result = await list.ToListAsync();
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.AreEqual(list.Count, result.Count, "Result should have the same count.");
+
+		for (int i = 0; i < list.Count; i++)
+		{
+			Assert.AreSame(list[i], result[i],
+				$"Address at index {i} should maintain the same object reference.");
+		}
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithDefaultCancellationToken_ShouldReturnCopiedList()
+	{
+		// Arrange
+		var list = RandomData.GeneratePersonRefCollection(100).ToList();
+		var expectedCount = list.Count;
+
+		// Act
+		var result = await list.ToListAsync();
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.AreEqual(expectedCount, result.Count, "Result should have the same count as the original list.");
+		Assert.AreNotSame(list, result, "Result should be a new list instance, not the same reference.");
+
+		for (int i = 0; i < list.Count; i++)
+		{
+			Assert.AreSame(list[i], result[i], $"Item at index {i} should be the same reference.");
+		}
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithEmptyList_ShouldReturnEmptyList()
+	{
+		// Arrange
+		var list = new List<Person>();
+
+		// Act
+		var result = await list.ToListAsync();
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.AreEqual(0, result.Count, "Result should be empty.");
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithLargeList_ShouldReturnAllElements()
+	{
+		// Arrange
+		var list = RandomData.GeneratePersonRefCollection(5000).ToList();
+		var expectedCount = list.Count;
+
+		// Act
+		var result = await list.ToListAsync(CancellationToken.None);
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.AreEqual(expectedCount, result.Count, "Result should contain all elements from the original list.");
+	}
+
+	[TestMethod]
 	public async Task ToListAsync_WithNullInput_ShouldThrowArgumentNullException()
 	{
 		// Arrange
@@ -1051,6 +1244,35 @@ public class ListExtensionsTests
 		{
 			await data.ToListAsync(cancellationToken);
 		});
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithNullList_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		List<Person> list = null;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await list.ToListAsync();
+		}, "Should throw ArgumentNullException when list is null.");
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithSingleElement_ShouldReturnListWithOneElement()
+	{
+		// Arrange
+		var person = RandomData.GeneratePersonRefCollection(1).First();
+		var list = new List<Person> { person };
+
+		// Act
+		var result = await list.ToListAsync();
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.AreEqual(1, result.Count, "Result should contain exactly one element.");
+		Assert.AreSame(person, result[0], "The element should be the same reference as the original.");
 	}
 
 	[TestMethod]
@@ -1070,6 +1292,22 @@ public class ListExtensionsTests
 		Assert.AreEqual(3, result[2]);
 		Assert.AreEqual(4, result[3]);
 		Assert.AreEqual(5, result[4]);
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithValueTypes_ShouldCopyAllValues()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+		// Act
+		var result = await list.ToListAsync();
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.AreEqual(list.Count, result.Count, "Result should have the same count as the original list.");
+		CollectionAssert.AreEqual(list, result, "Result should contain the same values as the original list.");
+		Assert.AreNotSame(list, result, "Result should be a different list instance.");
 	}
 
 	[TestMethod]
