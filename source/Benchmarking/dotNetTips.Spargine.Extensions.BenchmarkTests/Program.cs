@@ -9,7 +9,10 @@
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>Currently, these benchmark tests take about 12.5 hours to complete.</summary>
+// <summary>
+// Currently, these benchmark tests take about 12.5 hours to complete.
+// Benchmark count: 1,695
+// </summary>
 // ***********************************************************************
 using System;
 using BenchmarkDotNet.Configs;
@@ -46,13 +49,13 @@ internal sealed class Program
 
 			config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-			//_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+			_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
 			//_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<AssemblyExtensionsBenchmark>(config);
 			//_ = BenchmarkRunner.Run<CollectionExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<EnumExtensionsBenchmark>(config);
 			//_ = BenchmarkRunner.Run<ExceptionExtensionsBenchmark>(config);
 			//_ = BenchmarkRunner.Run<GeneralBenchmark>(config);

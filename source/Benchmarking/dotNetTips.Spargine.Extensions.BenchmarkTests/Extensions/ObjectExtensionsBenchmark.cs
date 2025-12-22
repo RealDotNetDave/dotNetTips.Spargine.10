@@ -109,7 +109,7 @@ public class ObjectExtensionsBenchmark : Benchmark
 	[Benchmark(Description = "PersonRecord: Duplication with new ID")]
 	public void Duplicate01()
 	{
-		var result = this.PersonRecord01 with { Id = "12345678" };
+		var result = this.PersonRecord01 with { Id = "123456781234567812345678" };
 
 		this.Consume(result);
 	}

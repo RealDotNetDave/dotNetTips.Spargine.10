@@ -13,9 +13,7 @@
 // ***********************************************************************
 
 using System;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester;
@@ -271,74 +269,74 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	//	this.Consume(sb.ToString());
 	//}
 
-	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record (Comparison)")]
-	[BenchmarkCategory(Categories.Array, Categories.RecordType, Categories.ForComparison)]
-	public void PerformAction_Record_Comparison()
-	{
-		var people = this._personRecordArray;
-		var sb = new StringBuilder();
+	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record (Comparison)")]
+	//[BenchmarkCategory(Categories.Array, Categories.RecordType, Categories.ForComparison)]
+	//public void PerformAction_Record_Comparison()
+	//{
+	//	var people = this._personRecordArray;
+	//	var sb = new StringBuilder();
 
-		for (var index = 0; index < people.LongLength; index++)
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
-		}
+	//	for (var index = 0; index < people.LongLength; index++)
+	//	{
+	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
+	//	}
 
-		this.Consume(sb.ToString());
-	}
+	//	this.Consume(sb.ToString());
+	//}
 
-	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void PerformAction_Ref()
-	{
-		var people = this._personRefArray;
-		var sb = new StringBuilder();
+	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref")]
+	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	//public void PerformAction_Ref()
+	//{
+	//	var people = this._personRefArray;
+	//	var sb = new StringBuilder();
 
-		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
+	//	people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
 
-		this.Consume(sb.ToString());
-	}
+	//	this.Consume(sb.ToString());
+	//}
 
-	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref (Comparison)")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void PerformAction_Ref_Comparison()
-	{
-		var people = this._personRefArray;
-		var sb = new StringBuilder();
+	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref (Comparison)")]
+	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
+	//public void PerformAction_Ref_Comparison()
+	//{
+	//	var people = this._personRefArray;
+	//	var sb = new StringBuilder();
 
-		for (var index = 0; index < people.LongLength; index++)
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
-		}
+	//	for (var index = 0; index < people.LongLength; index++)
+	//	{
+	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
+	//	}
 
-		this.Consume(sb.ToString());
-	}
+	//	this.Consume(sb.ToString());
+	//}
 
-	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void PerformAction_Val()
-	{
-		var people = this._personValArray;
-		var sb = new StringBuilder();
+	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val")]
+	//[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	//public void PerformAction_Val()
+	//{
+	//	var people = this._personValArray;
+	//	var sb = new StringBuilder();
 
-		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
+	//	people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.GetHashCode()}-"));
 
-		this.Consume(sb.ToString());
-	}
+	//	this.Consume(sb.ToString());
+	//}
 
-	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val (Comparison)")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType, Categories.ForComparison)]
-	public void PerformAction_Val_Comparison()
-	{
-		var people = this._personValArray;
-		var sb = new StringBuilder();
+	//[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val (Comparison)")]
+	//[BenchmarkCategory(Categories.Array, Categories.ValueType, Categories.ForComparison)]
+	//public void PerformAction_Val_Comparison()
+	//{
+	//	var people = this._personValArray;
+	//	var sb = new StringBuilder();
 
-		for (var index = 0; index < people.LongLength; index++)
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
-		}
+	//	for (var index = 0; index < people.LongLength; index++)
+	//	{
+	//		_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
+	//	}
 
-		this.Consume(sb.ToString());
-	}
+	//	this.Consume(sb.ToString());
+	//}
 
 	[Benchmark(Description = "Process Collection: FastProcessor()")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]

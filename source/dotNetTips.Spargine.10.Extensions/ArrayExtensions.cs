@@ -427,6 +427,51 @@ public static class ArrayExtensions
 		/// Performs the specified action on each element of the array.
 		/// </summary>
 		/// <param name="action">The action to perform on each element.</param>
+		/// <remarks>
+		/// <para>
+		/// This method uses different strategies based on the element type and array size:
+		/// </para>
+		/// <list type="bullet">
+		/// <item>
+		/// <description>
+		/// <b>Value types:</b> Uses sequential <c>foreach</c> iteration to avoid boxing overhead 
+		/// and maintain cache-friendly memory access patterns. Parallel processing of value types 
+		/// often performs worse due to false sharing and cache line contention.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Reference types (small arrays):</b> Uses sequential iteration for arrays with fewer 
+		/// than 100 elements, as parallel overhead exceeds the benefits for small datasets.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// <b>Reference types (large arrays):</b> Uses Parallel.For to leverage 
+		/// multiple CPU cores when processing arrays with 100 or more elements, provided the 
+		/// action delegate performs non-trivial work.
+		/// </description>
+		/// </item>
+		/// </list>
+		/// <para>
+		/// <b>Thread Safety Note:</b> This method does not provide thread-safety guarantees for 
+		/// the action delegate. If the action modifies shared state or the array itself, you must 
+		/// provide appropriate synchronization.
+		/// </para>
+		/// <para>
+		/// <b>Performance Note:</b> For lightweight actions (e.g., simple property access or 
+		/// arithmetic), sequential iteration may outperform parallel processing even for large 
+		/// arrays due to thread scheduling overhead and cache effects.
+		/// </para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when array or <paramref name="action"/> is null.</exception>
+		/// <example>
+		/// <code>
+		/// int[] numbers = { 1, 2, 3, 4, 5 };
+		/// numbers.PerformAction(n => Console.WriteLine(n * 2));
+		/// // Output: 2, 4, 6, 8, 10
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
@@ -434,8 +479,6 @@ public static class ArrayExtensions
 		{
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
-
-			//TODO: BACKED OUT CHANGES SUGGESTED BY COPILOT. CHECK PERFORMANCE.
 
 			if (typeof(T).IsValueType)
 			{
@@ -448,6 +491,7 @@ public static class ArrayExtensions
 			{
 				_ = Parallel.For(0, array.LongLength, index => action(array[index]));
 			}
+
 		}
 
 		/// <summary>
