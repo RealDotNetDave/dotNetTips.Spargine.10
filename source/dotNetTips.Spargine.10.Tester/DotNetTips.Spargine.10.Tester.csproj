@@ -30,7 +30,7 @@
 	<GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<IncludeSymbols>true</IncludeSymbols>
-	<LangVersion>preview</LangVersion>
+	<LangVersion>latest</LangVersion>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<Nullable>enable</Nullable>
 	<PackageIcon>dotNetTips-Spargine-8-Logo.png</PackageIcon>
