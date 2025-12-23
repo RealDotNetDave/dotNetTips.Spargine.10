@@ -3,7 +3,7 @@
 	<AllowUnsafeBlocks>false</AllowUnsafeBlocks>
 	<AnalysisLevel>latest-recommended</AnalysisLevel>
 	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
-	<ApplicationIcon>dotNetTips-Spargine-Logo.ico</ApplicationIcon>
+	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
 	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 	<AssemblyVersion>2025.12.12.1</AssemblyVersion>
 	<Authors>David McCarter</Authors>
@@ -33,7 +33,7 @@
 	<LangVersion>latest</LangVersion>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<Nullable>enable</Nullable>
-	<PackageIcon>dotNetTips-Spargine-8-Logo.png</PackageIcon>
+	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
 	<PackageProjectUrl>https://github.com/RealDotNetDave/DotNetTips.Spargine.8</PackageProjectUrl>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -89,7 +89,15 @@
   </ItemGroup>
 
   <ItemGroup>
-	<Content Include="dotNetTips-Spargine-Logo.ico" />
+	<Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<EmbeddedResource Include="SPARGINE-ICON-GRAPHIC-SMALL.png">
+	  <Pack>true</Pack>
+	  <PackagePath>\</PackagePath>
+	  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	</EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -103,15 +111,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Remove="dotNetTips-Spargine-8-Logo.png" />
 	<None Remove="dotNetTips.Spargine.Tester.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<EmbeddedResource Include="dotNetTips-Spargine-8-Logo.png">
-	  <Pack>true</Pack>
-	  <PackagePath>\</PackagePath>
-	</EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
