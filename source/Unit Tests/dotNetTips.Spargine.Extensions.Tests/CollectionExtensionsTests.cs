@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -199,6 +199,183 @@ public class CollectionExtensionsTests
 		personRecords.Upsert(personRecord);
 
 		Assert.IsTrue(personRecords.Count == 11);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_DuplicateIdWithDifferentData_ShouldUpdateExisting()
+	{
+		// Arrange
+		var models = new List<Person>();
+		for (int i = 0; i < Count; i++)
+		{
+			models.Add(RandomData.GeneratePerson<Person>());
+		}
+		var originalPerson = models[5];
+		var originalEmail = originalPerson.Email;
+
+		// Create person with same Id but different email
+		var updatedPerson = RandomData.GeneratePerson<Person>();
+		updatedPerson.CellPhone = "5555555555";
+		var newEmail = updatedPerson.Email;
+
+		Assert.AreNotEqual(originalEmail, newEmail);
+
+		// Act
+		models.Upsert(updatedPerson);
+
+		// Assert
+		Assert.AreEqual(Count, models.Count);
+		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(originalPerson.Id));
+		Assert.IsNotNull(foundPerson);
+		Assert.AreEqual(newEmail, foundPerson.Email);
+		Assert.AreNotEqual(originalEmail, foundPerson.Email);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_EmptyCollection_ShouldAddItem()
+	{
+		// Arrange
+		var models = new List<Person>();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		models.Upsert(newPerson);
+
+		// Assert
+		Assert.AreEqual(1, models.Count);
+		Assert.AreEqual(newPerson.Id, models.First().Id);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_ExistingItem_ShouldReplaceWithoutIncreasingCount()
+	{
+		// Arrange
+		var models = new List<Person>();
+		for (int i = 0; i < Count; i++)
+		{
+			models.Add(RandomData.GeneratePerson<Person>());
+		}
+		var existingPerson = models.First();
+		var initialCount = models.Count;
+
+		// Create updated version with same Id but different data
+		var updatedPerson = RandomData.GeneratePerson<Person>();
+		updatedPerson.CellPhone = "5555555555";
+
+		// Act
+		models.Upsert(updatedPerson);
+
+		// Assert
+		Assert.AreEqual(initialCount, models.Count);
+		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(updatedPerson.Id));
+		Assert.IsNotNull(foundPerson);
+		Assert.AreEqual(updatedPerson.Email, foundPerson.Email);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_LargeCollection_ShouldPerformCorrectly()
+	{
+		// Arrange
+		var largeCount = 1000;
+		var models = new List<Person>();
+		for (int i = 0; i < largeCount; i++)
+		{
+			models.Add(RandomData.GeneratePerson<Person>());
+		}
+		var personToUpdate = models[500];
+		var updatedPerson = RandomData.GeneratePerson<Person>();
+		updatedPerson.CellPhone = "5555555555";
+
+		// Act
+		models.Upsert(updatedPerson);
+
+		// Assert
+		Assert.AreEqual(largeCount, models.Count);
+		var found = models.FirstOrDefault(p => p.Id.Equals(personToUpdate.Id));
+		Assert.IsNotNull(found);
+		Assert.AreEqual(updatedPerson.Email, found.Email);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_MultipleUpserts_ShouldMaintainCorrectCount()
+	{
+		// Arrange
+		var models = new List<Person>();
+		var testPerson1 = RandomData.GeneratePerson<Person>();
+		var testPerson2 = RandomData.GeneratePerson<Person>();
+
+		// Act - Add first item
+		models.Upsert(testPerson1);
+		Assert.AreEqual(1, models.Count);
+
+		// Act - Add second item
+		models.Upsert(testPerson2);
+		Assert.AreEqual(2, models.Count);
+
+		// Act - Update first item
+		var updatedPerson1 = RandomData.GeneratePerson<Person>();
+		updatedPerson1.CellPhone = "5555555555";
+		models.Upsert(updatedPerson1);
+
+		// Assert
+		Assert.AreEqual(2, models.Count);
+		Assert.IsTrue(models.Any(p => p.Id.Equals(testPerson1.Id)));
+		Assert.IsTrue(models.Any(p => p.Id.Equals(testPerson2.Id)));
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_NewItem_ShouldAddToCollection()
+	{
+		// Arrange
+		var models = new List<Person>();
+		for (int i = 0; i < Count; i++)
+		{
+			models.Add(RandomData.GeneratePerson<Person>());
+		}
+		var newPerson = RandomData.GeneratePerson<Person>();
+		var initialCount = models.Count;
+
+		// Act
+		models.Upsert(newPerson);
+
+		// Assert
+		Assert.AreEqual(initialCount + 1, models.Count);
+		Assert.IsTrue(models.Any(p => p.Id.Equals(newPerson.Id)));
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_NullItem_ShouldNotModifyCollection()
+	{
+		// Arrange
+		var models = new List<Person>();
+		for (int i = 0; i < Count; i++)
+		{
+			models.Add(RandomData.GeneratePerson<Person>());
+		}
+		var initialCount = models.Count;
+		Person nullPerson = null;
+
+		// Act
+		models.Upsert(nullPerson);
+
+		// Assert
+		Assert.AreEqual(initialCount, models.Count);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_ReadOnlyCollection_ShouldThrowArgumentReadOnlyException()
+	{
+		// Arrange
+		var models = new List<Person>();
+		for (int i = 0; i < Count; i++)
+		{
+			models.Add(RandomData.GeneratePerson<Person>());
+		}
+		var readOnlyCollection = new ReadOnlyCollection<Person>(models);
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => readOnlyCollection.Upsert(newPerson));
 	}
 
 	[TestMethod]

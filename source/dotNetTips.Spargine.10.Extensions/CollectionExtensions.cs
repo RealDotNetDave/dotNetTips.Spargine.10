@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -64,6 +64,7 @@ public static class CollectionExtensions
 
 		// Find the existing item by ID and remove it if found
 		var existingItem = collection.FirstOrDefault(p => Equals(p.Id, item.Id));
+
 		if (existingItem != null)
 		{
 			_ = collection.Remove(existingItem);
