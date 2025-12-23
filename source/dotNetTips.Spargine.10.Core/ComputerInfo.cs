@@ -87,8 +87,8 @@ public sealed class ComputerInfo
 	/// Gets the current managed thread identifier.
 	/// </summary>
 	[DataMember]
-	[Information(nameof(CurrentManagedTreadId), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int CurrentManagedTreadId { get; private set; } = Thread.CurrentThread.ManagedThreadId;
+	[Information(nameof(CurrentManagedThreadId), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int CurrentManagedThreadId { get => Thread.CurrentThread.ManagedThreadId; }
 
 	/// <summary>
 	/// Gets the current stack trace information.

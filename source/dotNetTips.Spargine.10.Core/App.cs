@@ -745,12 +745,12 @@ public static class App
 	/// <value>The current thread identifier.</value>
 	/// <remarks>This property provides the unique identifier of the currently executing thread. It is useful for logging, debugging, or tracking thread-specific operations.</remarks>
 	[Pure]
-	[Information(nameof(CurrentThreadId), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CurrentThreadId), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static int CurrentThreadId
 	{
 		get
 		{
-			return _computerInfo.Value.CurrentManagedTreadId;
+			return _computerInfo.Value.CurrentManagedThreadId;
 		}
 	}
 

@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-21-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1023,23 +1023,30 @@ public static class TypeHelper
 	{
 		instance = instance.ArgumentNotNull();
 
-		//TODO: BACKED OUT CHANGES FROM COPIOT SINCE IT WAS MUCH SLOWER.
-		var hash = 0;
+		var type = instance.GetType();
+		var cacheKey = $"{type.FullName}.GetInstanceHashCode";
 
-		foreach (var property in instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).AsSpan())
+		// Cache the PropertyInfo array to avoid repeated reflection
+		if (!_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var properties))
 		{
-			if (property.CanRead)
-			{
-				var value = property.GetValue(instance);
+			properties = [.. type.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanRead)];
 
-				if (value != null)
-				{
-					hash = HashCode.Combine(hash, value.GetHashCode());
-				}
+			_commonCache.AddCacheItem(cacheKey, properties, TimeSpan.FromMinutes(TimeOutMinutes));
+		}
+
+		var hash = new HashCode();
+
+		foreach (var property in properties!)
+		{
+			var value = property.GetValue(instance);
+
+			if (value != null)
+			{
+				hash.Add(value);
 			}
 		}
 
-		return hash;
+		return hash.ToHashCode();
 	}
 
 	/// <summary>
@@ -1119,29 +1126,21 @@ public static class TypeHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetPropertyValues<T>(in T input)
 	{
 		_ = input.ArgumentNotNull();
 
 		var type = input!.GetType();
 
-		// Use caching to avoid repeated reflection
-		var cacheKey = $"{type.FullName}.GetPropertyValues";
-
-		if (!_commonCache.TryGetValue(cacheKey, out
-		PropertyInfo[]? properties))
-		{
-			// Get properties once and cache them
-			properties = [.. type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-				.Where(p => p.CanRead)
-				.OrderBy(p => p.Name)];
-
-			_commonCache.AddCacheItem(cacheKey, properties, TimeSpan.FromMinutes(TimeOutMinutes));
-		}
+		// Get properties directly without caching
+		var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+			.Where(p => p.CanRead)
+			.OrderBy(p => p.Name)
+			.ToArray();
 
 		// Pre-allocate dictionary with exact capacity
-		var returnValue = new Dictionary<string, string>(properties!.Length);
+		var returnValue = new Dictionary<string, string>(properties.Length);
 
 		// Process each property
 		foreach (var propertyInfo in properties.AsSpan())
@@ -1586,7 +1585,7 @@ public static class TypeHelper
 	/// <param name="genericArguments">The array of generic arguments for the type.</param>
 	/// <param name="length">The number of generic arguments to consider.</param>
 	/// <param name="options">Display name options to customize the output.</param>
-	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void ProcessGenericType([DisallowNull] StringBuilder builder, [DisallowNull] Type type, [DisallowNull] Type[] genericArguments, int length, DisplayNameOptions options)
 	{
 		builder = builder.ArgumentNotNull();
@@ -1597,7 +1596,17 @@ public static class TypeHelper
 
 		if (type.IsNested)
 		{
-			offset = type.DeclaringType!.GetGenericArguments().Length;
+			// Cache the declaring type's generic arguments length to avoid repeated calls
+			var declaringType = type.DeclaringType!;
+			var cacheKey = $"{declaringType.MetadataToken}.GenericArgsLength";
+
+			if (!_commonCache.TryGetValue<int>(cacheKey, out var cachedOffset))
+			{
+				cachedOffset = declaringType.GetGenericArguments().Length;
+				_commonCache.AddCacheItem(cacheKey, cachedOffset, TimeSpan.FromMinutes(TimeOutMinutes));
+			}
+
+			offset = cachedOffset;
 		}
 
 		if (options.FullName)
@@ -1614,32 +1623,44 @@ public static class TypeHelper
 			}
 		}
 
-		var genericPartIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
+		// Cache the generic backtick index to avoid repeated IndexOf calls
+		var nameKey = $"{type.MetadataToken}.GenericPartIndex";
+
+		if (!_commonCache.TryGetValue<int>(nameKey, out var genericPartIndex))
+		{
+			genericPartIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
+			_commonCache.AddCacheItem(nameKey, genericPartIndex, TimeSpan.FromMinutes(TimeOutMinutes));
+		}
+
 		if (genericPartIndex <= 0)
 		{
 			_ = builder.Append(type.Name);
 			return;
 		}
 
-		_ = builder.Append(type.Name, 0, genericPartIndex);
+		// Use ReadOnlySpan for substring to avoid allocations
+		_ = builder.Append(type.Name.AsSpan(0, genericPartIndex));
 
 		if (options.IncludeGenericParameters)
 		{
 			_ = builder.Append(ControlChars.StartAngleBracket);
 
+			// Pre-calculate to avoid repeated checks in the loop
+			var lastIndex = length - 1;
+
 			for (var typeCount = offset; typeCount < length; typeCount++)
 			{
 				ProcessType(builder, genericArguments[typeCount], options);
 
-				if (typeCount + 1 == length)
+				if (typeCount != lastIndex)
 				{
-					continue;
-				}
+					_ = builder.Append(ControlChars.Comma);
 
-				_ = builder.Append(ControlChars.Comma);
-				if (options.IncludeGenericParameterNames || !genericArguments[typeCount + 1].IsGenericParameter)
-				{
-					_ = builder.Append(ControlChars.Space);
+					// Optimize condition by checking once instead of twice
+					if (options.IncludeGenericParameterNames || !genericArguments[typeCount + 1].IsGenericParameter)
+					{
+						_ = builder.Append(ControlChars.Space);
+					}
 				}
 			}
 

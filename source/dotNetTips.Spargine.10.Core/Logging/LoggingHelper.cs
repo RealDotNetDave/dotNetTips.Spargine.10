@@ -358,7 +358,7 @@ public static class LoggingHelper
 	/// AppInfo:FileVersion - 15.0.0
 	/// AppInfo:Title - dotNetTips.Spargine
 	/// </example>
-	[Information(nameof(LogApplicationInformation), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(LogApplicationInformation), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void LogApplicationInformation([DisallowNull] ILogger logger)
 	{
 		logger = logger.ArgumentNotNull();
@@ -418,28 +418,16 @@ public static class LoggingHelper
 
 		//TODO: ANALYZE COPILOT CHANGES
 
-		// OPTIMIZATION 1: Guard against disabled log levels FIRST before expensive operations
-		// This is Microsoft's #1 best practice - check IsEnabled before doing ANY work
-		if (!logger.IsEnabled(LogLevel.Information))
-		{
-			return;
-		}
-
-		// OPTIMIZATION 2: Only create ComputerInfo if logging is enabled
-		// Creating ComputerInfo is expensive (reflection, system calls, network queries, etc.)
 		var values = TypeHelper.GetPropertyValues(new ComputerInfo());
 
-		// OPTIMIZATION 3: Early return if no values to log
 		if (values is null || values.Count == 0)
 		{
 			return;
 		}
 
-		// OPTIMIZATION 4: Use static lambda and materialize once to avoid multiple enumerations
 		var sortedItems = values.OrderBy(static p => p.Key).ToArray();
 
-		// OPTIMIZATION 5: Use source-generated logging for better performance
-		foreach (var item in sortedItems)
+		foreach (var item in sortedItems.AsSpan())
 		{
 			logger.LogComputerInfoItem(item.Key, item.Value);
 		}

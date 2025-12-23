@@ -76,7 +76,7 @@ public class ComputerInfoTests
 		var expectedThreadId = Environment.CurrentManagedThreadId;
 
 		// Act
-		var actualThreadId = computerInfo.CurrentManagedTreadId;
+		var actualThreadId = computerInfo.CurrentManagedThreadId;
 
 		// Assert
 		Assert.AreEqual(expectedThreadId, actualThreadId, "The CurrentManagedTreadId property should return the correct thread ID.");
@@ -458,7 +458,7 @@ public class ComputerInfoTests
 		// Assert
 		Assert.IsTrue(result.Contains(computerInfo.ComputerCulture), "The ToString method should contain the ComputerCulture property value.");
 		Assert.IsTrue(result.Contains(computerInfo.ComputerUICulture), "The ToString method should contain the ComputerUICulture property value.");
-		Assert.IsTrue(result.Contains(computerInfo.CurrentManagedTreadId.ToString()), "The ToString method should contain the CurrentManagedTreadId property value.");
+		Assert.IsTrue(result.Contains(computerInfo.CurrentManagedThreadId.ToString()), "The ToString method should contain the CurrentManagedTreadId property value.");
 		Assert.IsTrue(result.Contains(computerInfo.CurrentStackTrace), "The ToString method should contain the CurrentStackTrace property value.");
 		Assert.IsTrue(result.Contains(computerInfo.CurrentSystemTickCount.ToString()), "The ToString method should contain the CurrentSystemTickCount property value.");
 		Assert.IsTrue(result.Contains(computerInfo.CurrentWorkingDirectory), "The ToString method should contain the CurrentWorkingDirectory property value.");
