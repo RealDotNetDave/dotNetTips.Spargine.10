@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-02-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -304,21 +304,27 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
-		//TODO: WORK ON PERF. SLOWER THAN GUID.NewGuid()
-
 		// Allocate all required memory on the stack to avoid heap allocations
 		Span<char> ulidChars = stackalloc char[UlidLength];
 		Span<byte> timestampBytes = stackalloc byte[8];
 		Span<byte> randomBytes = stackalloc byte[10];
 
-		// Generate timestamp (48 bits = 6 bytes)
+		// Generate timestamp (48 bits = 6 bytes) - use unchecked for performance
 		var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-		_ = BitConverter.TryWriteBytes(timestampBytes, timestamp);
 
-		// Encode timestamp component (10 characters)
+		// Write timestamp directly using unsafe code for maximum performance
+		unsafe
+		{
+			fixed (byte* pTimestamp = timestampBytes)
+			{
+				*(long*)pTimestamp = timestamp;
+			}
+		}
+
+		// Encode timestamp component (10 characters) - only encode the 6 bytes we need
 		EncodeBase32(timestampBytes[..6], ulidChars, 0, TimestampLength);
 
 		// Generate cryptographically secure random bytes (80 bits = 10 bytes)
@@ -327,7 +333,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 		// Encode random component (16 characters)
 		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);
 
-		// Create and return the ULID
+		// Create and return the ULID - use string constructor that accepts ReadOnlySpan<char>
 		return new Ulid(new string(ulidChars));
 	}
 
