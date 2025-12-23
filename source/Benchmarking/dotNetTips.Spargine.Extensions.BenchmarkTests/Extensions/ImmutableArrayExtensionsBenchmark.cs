@@ -55,10 +55,10 @@ public class ImmutableArrayExtensionsBenchmark : LargeCollectionBenchmark
 		this._personRefImmutableArray = [.. this.GetPersonRefArray()];
 	}
 
-	[Benchmark(Description = nameof(ImmutableArrayExtensions.Shuffle))]
+	[Benchmark(Description = nameof(ImmutableArrayExtensions.FastShuffle))]
 	public void Shuffle()
 	{
-		var result = this._personRefImmutableArray.Shuffle();
+		var result = this._personRefImmutableArray.FastShuffle();
 
 		this.Consume(result);
 	}
