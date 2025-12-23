@@ -4,7 +4,7 @@
 // Created          : 01-04-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-25-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryTests.cs" company="DotNetTips.Spargine.Core.Tests">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -72,6 +72,100 @@ public class AutoDefaultDictionaryTests
 	}
 
 	[TestMethod]
+	public void ConstructorWithDictionaryAndDefaultValue_EmptyDictionary_ShouldInitializeWithDefaultValue()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string>();
+		var defaultValue = "default";
+
+		// Act
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, defaultValue);
+		var value = dictionary[1];
+
+		// Assert
+		Assert.AreEqual(0, initialDictionary.Count);
+		Assert.AreEqual(defaultValue, value);
+		Assert.AreEqual(1, dictionary.Count);
+	}
+
+	[TestMethod]
+	public void ConstructorWithDictionaryAndDefaultValue_NullDefaultValue_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(initialDictionary, (string)null!));
+	}
+
+	[TestMethod]
+	public void ConstructorWithDictionaryAndDefaultValue_ShouldAddDefaultValueOnlyOnAccess()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
+		var defaultValue = "default";
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, defaultValue);
+
+		// Act
+		var initialCount = dictionary.Count;
+		var missingValue = dictionary[99];
+		var afterAccessCount = dictionary.Count;
+
+		// Assert
+		Assert.AreEqual(1, initialCount);
+		Assert.AreEqual(defaultValue, missingValue);
+		Assert.AreEqual(2, afterAccessCount);
+	}
+
+	[TestMethod]
+	public void ConstructorWithDictionaryAndDefaultValue_ShouldInitializeWithProvidedValues()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" }, { 2, "two" } };
+		var defaultValue = "default";
+
+		// Act
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, defaultValue);
+
+		// Assert
+		Assert.AreEqual(2, dictionary.Count);
+		Assert.AreEqual("one", dictionary[1]);
+		Assert.AreEqual("two", dictionary[2]);
+	}
+
+	[TestMethod]
+	public void ConstructorWithDictionaryAndDefaultValue_ShouldPreserveExistingValues()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" }, { 2, "two" }, { 3, "three" } };
+		var defaultValue = "default";
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, defaultValue);
+
+		// Act & Assert
+		Assert.AreEqual("one", dictionary[1]);
+		Assert.AreEqual("two", dictionary[2]);
+		Assert.AreEqual("three", dictionary[3]);
+		Assert.AreEqual(3, dictionary.Count);
+	}
+
+	[TestMethod]
+	public void ConstructorWithDictionaryAndDefaultValue_ShouldReturnDefaultValueForMissingKey()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
+		var defaultValue = "default";
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, defaultValue);
+
+		// Act
+		var value = dictionary[99];
+
+		// Assert
+		Assert.AreEqual(defaultValue, value);
+		Assert.AreEqual(2, dictionary.Count);
+		Assert.IsTrue(dictionary.ContainsKey(99));
+	}
+
+	[TestMethod]
 	public void ConstructorWithDictionaryAndOnMissingKey_ShouldInitializeWithFunction()
 	{
 		// Arrange
@@ -133,6 +227,7 @@ public class AutoDefaultDictionaryTests
 		Assert.AreEqual("two", value2);
 		Assert.AreEqual("Missing: 3", value3);
 	}
+
 	[TestMethod]
 	public void ConstructorWithOnMissingKey_ShouldInitializeWithFunction()
 	{

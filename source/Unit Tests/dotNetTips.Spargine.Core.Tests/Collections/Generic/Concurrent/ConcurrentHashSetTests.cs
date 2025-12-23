@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
+using DotNetTips.Spargine.Tester;
+using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //`![Spargine 8 -  #RockYourCode](6219C891F6330C65927FA249E739AC1F.png;https://bit.ly/Spargine )
@@ -371,6 +373,17 @@ public class ConcurrentHashSetTests
 
 		Assert.AreEqual(3, items.Count, "The enumerator should iterate over all items.");
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, items, "The enumerated items should match the items in the set.");
+	}
+
+	[TestMethod]
+	public void Intialize_With_Collection()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10);
+		var hashSet = new ConcurrentHashSet<Person>(people);
+
+		Assert.IsNotNull(hashSet, "HashSet should be initialized with the provided collection.");
+
+		Assert.IsTrue(hashSet.Count == 10, "HashSet count should match the number of unique items in the initial collection.");
 	}
 
 	[TestMethod]
