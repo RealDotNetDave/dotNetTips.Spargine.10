@@ -132,7 +132,7 @@ public class ImmutableArrayExtensionsTests
 	public void Shuffle_EmptyImmutableArray_ReturnsEmpty()
 	{
 		var array = ImmutableArray<int>.Empty;
-		var shuffled = array.Shuffle();
+		var shuffled = array.FastShuffle();
 		Assert.IsTrue(shuffled.IsEmpty);
 	}
 
@@ -140,7 +140,7 @@ public class ImmutableArrayExtensionsTests
 	public void Shuffle_MultipleElements_ReturnsSameCountAndElements()
 	{
 		var array = ImmutableArray.Create(1, 2, 3, 4, 5);
-		var shuffled = array.Shuffle();
+		var shuffled = array.FastShuffle();
 		Assert.AreEqual(array.Length, shuffled.Length);
 		CollectionAssert.AreEquivalent(array.ToArray(), shuffled.ToArray());
 	}
@@ -149,7 +149,7 @@ public class ImmutableArrayExtensionsTests
 	public void Shuffle_SingleElement_ReturnsSameElement()
 	{
 		var array = ImmutableArray.Create(42);
-		var shuffled = array.Shuffle();
+		var shuffled = array.FastShuffle();
 		Assert.AreEqual(1, shuffled.Length);
 		Assert.AreEqual(42, shuffled[0]);
 	}
