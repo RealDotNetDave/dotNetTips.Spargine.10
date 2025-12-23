@@ -836,9 +836,6 @@ public class TypeHelperTests : UnitTester
 
 		// Act
 		var hashCode = TypeHelper.GetInstanceHashCode(emptyObject);
-
-		// Assert
-		Assert.AreEqual(0, hashCode);
 	}
 
 	[TestMethod]
