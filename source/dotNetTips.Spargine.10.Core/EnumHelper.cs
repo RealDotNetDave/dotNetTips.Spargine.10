@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,10 +15,10 @@
 // </summary>
 // ***********************************************************************
 using System.Collections.Concurrent;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -40,6 +40,11 @@ public static class EnumHelper
 	/// The description cache
 	/// </summary>
 	private static readonly ConcurrentDictionary<Enum, string> _descriptionCache = new();
+
+	/// <summary>
+	/// Cache for enum items to avoid repeated reflection and processing
+	/// </summary>
+	private static readonly ConcurrentDictionary<(Type, bool), ReadOnlyCollection<EnumValue>> _itemsCache = new();
 
 	/// <summary>
 	/// Regular expression used to identify camel case words within a string.
@@ -184,29 +189,41 @@ public static class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Documentation = "https://bit.ly/SpargineEnumerationHandling", Status = Status.Available)]
+	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<EnumValue> GetItems<T>(bool fixNames = true)
 		where T : Enum
 	{
 		var enumType = typeof(T);
+		var cacheKey = (enumType, fixNames);
 
-		// SUGGESTION FROM COPILOT SLIGHTLY SLOWER.
-		var allValues = ((int[])Enum.GetValues(enumType)).AsSpan();
-
-		// Retrieves a list of names for an enumeration type, converts it to an immutable array, and returns it as a span.
-		var enumNames = GetNames(enumType, fixNames).ToImmutableArray().AsSpan();
-
-		// Get list of names
-		// Add values to result
-		var result = new List<EnumValue>(allValues.Length);
-		var itemCount = allValues.Length;
-
-		for (var valueCount = 0; valueCount < itemCount; valueCount++)
+		// Check cache first
+		if (_itemsCache.TryGetValue(cacheKey, out var cachedResult))
 		{
-			result.Add(new EnumValue(allValues[valueCount], enumNames[valueCount]));
+			return cachedResult;
 		}
 
-		return result.AsReadOnly();
+		// Get enum values as Array (faster than casting to int[])
+		var enumValues = Enum.GetValues(enumType);
+		var length = enumValues.Length;
+
+		// Pre-allocate with exact capacity
+		var result = new EnumValue[length];
+
+		// Get names once and cache as array
+		var enumNames = GetNames(enumType, fixNames);
+
+		// Direct indexed access - no span overhead for small collections
+		for (var i = 0; i < length; i++)
+		{
+			var value = Convert.ToInt32(enumValues.GetValue(i), CultureInfo.InvariantCulture);
+			result[i] = new EnumValue(value, enumNames[i]);
+		}
+
+		// Create read-only collection and cache it
+		var readOnlyResult = Array.AsReadOnly(result);
+		_ = _itemsCache.TryAdd(cacheKey, readOnlyResult);
+
+		return readOnlyResult;
 	}
 
 	/// <summary>

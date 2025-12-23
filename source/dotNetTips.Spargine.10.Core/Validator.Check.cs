@@ -449,17 +449,38 @@ public static partial class Validator
 	/// <returns>True if the enumerable contains any items; otherwise, false.</returns>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="throwException" /> is true and the enumerable is empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckItemsExists), "David McCarter", "4/14/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CheckItemsExists), "David McCarter", "4/14/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool CheckItemsExists<T>(this IEnumerable<T> input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
-		var isValid = input?.Count() > 0;
+		// Early null check
+		if (input is null)
+		{
+			if (throwException)
+			{
+				ExceptionThrower.ThrowInvalidValueException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), input!);
+			}
+			return false;
+		}
 
-		if (isValid is false && throwException)
+		// Use TryGetNonEnumeratedCount for O(1) performance when possible
+		bool hasItems;
+		if (input.TryGetNonEnumeratedCount(out var count))
+		{
+			// Fast path: collection has a Count property (List, Array, etc.)
+			hasItems = count > 0;
+		}
+		else
+		{
+			// Slow path: use Any() which stops at first element (much faster than Count())
+			hasItems = input.Any();
+		}
+
+		if (hasItems is false && throwException)
 		{
 			ExceptionThrower.ThrowInvalidValueException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), input!);
 		}
 
-		return isValid;
+		return hasItems;
 	}
 
 	/// <summary>

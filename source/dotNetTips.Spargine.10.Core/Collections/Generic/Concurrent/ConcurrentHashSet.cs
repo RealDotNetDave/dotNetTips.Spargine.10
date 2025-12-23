@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -596,7 +596,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// This method acquires all locks to ensure thread safety during the clear operation.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clear), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Clear), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public void Clear()
 	{
 		var locksAcquired = 0;
@@ -605,9 +605,20 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		{
 			this.AcquireAllLocks(ref locksAcquired);
 
-			var newTables = new Tables(new Node[DefaultCapacity], this._tables._locks, new int[this._tables._countPerLock.Length]);
-			this._tables = newTables;
-			this._budget = Math.Max(1, newTables._buckets.Length / newTables._locks.Length);
+			// Cache current tables reference for better performance
+			var tables = this._tables;
+			var locks = tables._locks;
+			var lockCount = locks.Length;
+
+			// Clear counts efficiently using Array.Clear
+			Array.Clear(tables._countPerLock, 0, tables._countPerLock.Length);
+
+			// Clear all bucket references to null for GC
+			var buckets = tables._buckets;
+			Array.Clear(buckets, 0, buckets.Length);
+
+			// Reset budget
+			this._budget = Math.Max(1, buckets.Length / lockCount);
 		}
 		finally
 		{
@@ -800,7 +811,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </summary>
 	/// <value>The number of elements contained in the <see cref="ConcurrentHashSet{T}"/>.</value>
 	[Pure]
-	[Information(nameof(Count), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Count), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public int Count
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -812,7 +823,15 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			try
 			{
 				this.AcquireAllLocks(ref acquiredLocks);
-				count = this._tables._countPerLock.Aggregate(count, func: (accumulator, countPerLock) => accumulator += countPerLock);
+
+				// Use direct loop instead of LINQ Aggregate for better performance
+				var countPerLock = this._tables._countPerLock;
+				var length = countPerLock.Length;
+
+				for (var i = 0; i < length; i++)
+				{
+					count += countPerLock[i];
+				}
 			}
 			finally
 			{

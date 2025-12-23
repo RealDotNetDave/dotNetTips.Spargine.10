@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -32,6 +32,8 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFastSortedList")]
 public class FastSortedList<T> : List<T>
 {
+	//TODO: WORK ON ALLOCATIONS IN .NET 10
+
 	/// <summary>
 	/// The comparer used for sorting the list.
 	/// </summary>
