@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -304,7 +304,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Ulid NewUlid()
 	{
 		// Allocate all required memory on the stack to avoid heap allocations

@@ -4,7 +4,7 @@
 // Created          : 06-26-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="Validator.Check.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -449,7 +449,7 @@ public static partial class Validator
 	/// <returns>True if the enumerable contains any items; otherwise, false.</returns>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="throwException" /> is true and the enumerable is empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckItemsExists), "David McCarter", "4/14/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(CheckItemsExists), "David McCarter", "4/14/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool CheckItemsExists<T>(this IEnumerable<T> input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
 		// Early null check

@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1018,7 +1018,7 @@ public static class TypeHelper
 	/// <param name="instance">The instance to compute the hash code for.</param>
 	/// <returns>The computed hash code.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="instance"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int GetInstanceHashCode([DisallowNull] object instance)
 	{
 		instance = instance.ArgumentNotNull();
@@ -1126,7 +1126,7 @@ public static class TypeHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetPropertyValues<T>(in T input)
 	{
 		_ = input.ArgumentNotNull();
@@ -1462,7 +1462,7 @@ public static class TypeHelper
 	/// The cache is lazily initialized on first access and reused for all subsequent calls.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)] // Inline for maximum performance
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type == null)
@@ -1585,7 +1585,7 @@ public static class TypeHelper
 	/// <param name="genericArguments">The array of generic arguments for the type.</param>
 	/// <param name="length">The number of generic arguments to consider.</param>
 	/// <param name="options">Display name options to customize the output.</param>
-	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void ProcessGenericType([DisallowNull] StringBuilder builder, [DisallowNull] Type type, [DisallowNull] Type[] genericArguments, int length, DisplayNameOptions options)
 	{
 		builder = builder.ArgumentNotNull();
