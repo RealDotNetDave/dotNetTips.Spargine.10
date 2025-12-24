@@ -110,6 +110,7 @@ public sealed class ComputerInfo
 	[DataMember]
 	[Information(nameof(CurrentWorkingDirectory), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string CurrentWorkingDirectory { get; private set; } = CurrentDirectory;
+
 	/// <summary>
 	/// Gets the disk usage information for the computer.
 	/// </summary>

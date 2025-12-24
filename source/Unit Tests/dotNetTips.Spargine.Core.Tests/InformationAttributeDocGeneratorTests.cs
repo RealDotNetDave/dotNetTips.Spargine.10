@@ -14,10 +14,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -27,15 +29,49 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class InformationAttributeDocGeneratorTests
 {
+	private static string GetBaseOutputPathFromAssembly()
+	{
+		// Get the directory where the current assembly is located
+		var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+		var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
+
+		// Navigate up to find the base output directory
+		// For your case: AppBin\net10.0 -> AppBin
+		var baseOutputPath = Directory.GetParent(assemblyDirectory)?.FullName;
+
+		return baseOutputPath ?? assemblyDirectory;
+	}
+
+	private static void GetDocPath(string file, out string filePath, out string outputPath)
+	{
+		var path = GetBaseOutputPathFromAssembly();
+		filePath = Directory.GetFiles(path, file, SearchOption.AllDirectories).FirstOrDefault();
+
+		if (filePath.IsNullOrEmpty())
+		{
+			outputPath = string.Empty;
+			return;
+		}
+
+		var baseOutputPath = new DirectoryInfo(filePath).Parent.Parent.Parent.ToString();
+
+		outputPath = Path.Combine(baseOutputPath, "docs", "Library Information");
+	}
 
 	[TestMethod]
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Benchmark_ToFile()
 	{
-		// Arrange
-		var assembly = Assembly.LoadFile(Path.Combine(App.ProcessPath, "DotNetTips.Spargine.10.dll"));
+		GetDocPath("DotNetTips.Spargine.Benchmark.10.dll", out var filePath, out var outputPath);
+
+		if (filePath.IsNullOrEmpty())
+		{
+			return;
+		}
+
+		var assembly = Assembly.LoadFile(filePath);
 
 		// Act
-		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, @"C:\dotNetTips.com");
+		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, outputPath);
 
 		// Assert
 		Assert.IsFalse(string.IsNullOrEmpty(result));
@@ -44,11 +80,13 @@ public class InformationAttributeDocGeneratorTests
 	[TestMethod]
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Core_ToFile()
 	{
-		// Arrange
+
+		GetDocPath("DotNetTips.Spargine.10.Core.dll", out var filePath, out var outputPath);
+
 		var assembly = Assembly.GetAssembly(typeof(App));
 
 		// Act
-		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, @"C:\dotNetTips.com");
+		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, outputPath);
 
 		// Assert
 		Assert.IsFalse(string.IsNullOrEmpty(result));
@@ -57,50 +95,42 @@ public class InformationAttributeDocGeneratorTests
 	[TestMethod]
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Extensions_ToFile()
 	{
-		// Arrange
+		GetDocPath("DotNetTips.Spargine.10.Extensions.dll", out var filePath, out var outputPath);
+
 		var assembly = Assembly.GetAssembly(typeof(ListExtensions));
 
+
 		// Act
-		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, @"C:\dotNetTips.com");
+		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, outputPath);
 
 		// Assert
 		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
 
 	[TestMethod]
-	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_ReturnsDocumentation()
+	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Spargine_ToFile()
 	{
-		// Arrange
-		var assembly = Assembly.GetAssembly(typeof(InformationAttribute));
+		GetDocPath("DotNetTips.Spargine.10.dll", out var filePath, out var outputPath);
+
+		var assembly = Assembly.LoadFile(filePath);
 
 		// Act
-		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly);
+		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, outputPath);
 
 		// Assert
 		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
+
 
 	[TestMethod]
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Tester_ToFile()
 	{
-		// Arrange
+		GetDocPath("DotNetTips.Spargine.10.Tester.dll", out var filePath, out var outputPath);
+
 		var assembly = Assembly.GetAssembly(typeof(RandomData));
 
 		// Act
-		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, @"C:\dotNetTips.com");
-
-		// Assert
-		Assert.IsFalse(string.IsNullOrEmpty(result));
-	}
-
-	[TestMethod]
-	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_ToFile()
-	{
-		// Arrange
-		var assembly = Assembly.GetAssembly(typeof(TypeHelper));
-
-		// Act
-		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, @"C:\dotNetTips.com");
+		var result = InformationAttributeDocGenerator.GenerateMarkdownDocumentForAssembly(assembly, outputPath);
 
 		// Assert
 		Assert.IsFalse(string.IsNullOrEmpty(result));

@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -84,47 +85,54 @@ public static class InformationAttributeDocGenerator
 
 		if (memberInfo.MemberType != MemberTypes.TypeInfo)
 		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"### {GetMemberSignature(memberInfo)}");
+			try
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"### {GetMemberSignature(memberInfo)}");
+				_ = sb.AppendLine();
+			}
+			catch (Exception ex)
+			{
+				Trace.Write(ex.Message);
+			}
+
+			// Display main statuses first
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Status:** {info.Status.GetDescription()}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Optimization Status:** {info.OptimizationStatus.GetDescription()}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **BenchMarkStatus:** {info.BenchmarkStatus.GetDescription()}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Unit Test Status:** {info.UnitTestStatus.GetDescription()}");
+
+			if (info.Author.HasValue() && !string.Equals(info.Author, "UNKNOWN", StringComparison.Ordinal))
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Author:** {info.Author}");
+			}
+
+			if (info.CreatedOn != DateTimeOffset.MinValue)
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **CreatedOn:** {info.CreatedOn?.ToString("d", CultureInfo.CurrentCulture)}");
+			}
+
+			if (info.Description.HasValue())
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Description:** {info.Description}");
+			}
+
+			if (info.Documentation.HasValue())
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Documentation:** {info.Documentation}");
+			}
+
+			if (info.ModifiedBy.HasValue())
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified By:** {info.ModifiedBy}");
+			}
+
+			if (info.ModifiedOn != DateTimeOffset.MinValue)
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified On:** {info.ModifiedOn?.ToString("d", CultureInfo.CurrentCulture)}");
+			}
+
 			_ = sb.AppendLine();
 		}
-
-		// Display main statuses first
-		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Status:** {info.Status.GetDescription()}");
-		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Optimization Status:** {info.OptimizationStatus.GetDescription()}");
-		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **BenchMarkStatus:** {info.BenchmarkStatus.GetDescription()}");
-		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Unit Test Status:** {info.UnitTestStatus.GetDescription()}");
-
-		if (info.Author.HasValue() && !string.Equals(info.Author, "UNKNOWN", StringComparison.Ordinal))
-		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Author:** {info.Author}");
-		}
-
-		if (info.CreatedOn != DateTimeOffset.MinValue)
-		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **CreatedOn:** {info.CreatedOn?.ToString("d", CultureInfo.CurrentCulture)}");
-		}
-
-		if (info.Description.HasValue())
-		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Description:** {info.Description}");
-		}
-
-		if (info.Documentation.HasValue())
-		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Documentation:** {info.Documentation}");
-		}
-
-		if (info.ModifiedBy.HasValue())
-		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified By:** {info.ModifiedBy}");
-		}
-
-		if (info.ModifiedOn != DateTimeOffset.MinValue)
-		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified On:** {info.ModifiedOn?.ToString("d", CultureInfo.CurrentCulture)}");
-		}
-
-		_ = sb.AppendLine();
 	}
 
 	/// <summary>
