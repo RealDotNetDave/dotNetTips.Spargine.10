@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-19-2025
 // ***********************************************************************
-// <copyright file="NumericExtensions.cs" company="McCarter Consulting">
+// <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>Extension methods designed for numbers.</summary>

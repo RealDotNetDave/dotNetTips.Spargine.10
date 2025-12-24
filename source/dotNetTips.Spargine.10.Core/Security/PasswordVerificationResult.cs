@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 03-23-2025
 // ***********************************************************************
-// <copyright file="PasswordVerificationResult.cs" company="McCarter Consulting">
+// <copyright file="PasswordVerificationResult.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Enumeration used in password verification.</summary>

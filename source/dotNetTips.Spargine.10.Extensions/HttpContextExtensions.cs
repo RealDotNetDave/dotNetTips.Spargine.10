@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-19-2025
 // ***********************************************************************
-// <copyright file="HttpContextExtensions.cs" company="McCarter Consulting">
+// <copyright file="HttpContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods designed for HttpContext.</summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-17-2025
 // ***********************************************************************
-// <copyright file="Person.cs" company="McCarter Consulting">
+// <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

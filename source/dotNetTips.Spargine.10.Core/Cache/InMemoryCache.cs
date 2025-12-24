@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-11-2025
 // ***********************************************************************
-// <copyright file="InMemoryCache.cs" company="McCarter Consulting">
+// <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

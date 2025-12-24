@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-20-2025
 // ***********************************************************************
-// <copyright file="HttpHandlerDiagnosticListener.cs" company="McCarter Consulting">
+// <copyright file="HttpHandlerDiagnosticListener.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

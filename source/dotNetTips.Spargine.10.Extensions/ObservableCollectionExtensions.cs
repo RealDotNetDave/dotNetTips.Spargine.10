@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-15-2025
 // ***********************************************************************
-// <copyright file="ObservableCollectionExtensions.cs" company="McCarter Consulting">
+// <copyright file="ObservableCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods tailored for ObservableCollection.</summary>

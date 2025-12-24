@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-10-2025
 // ***********************************************************************
-// <copyright file="HttpClientHelper.cs" company="McCarter Consulting">
+// <copyright file="HttpClientHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>Utility methods for HttpClient.</summary>

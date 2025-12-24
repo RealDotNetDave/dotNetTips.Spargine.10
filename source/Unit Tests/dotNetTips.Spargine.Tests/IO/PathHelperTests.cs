@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 03-14-2025
 // ***********************************************************************
-// <copyright file="PathHelperTests.cs" company="McCarter Consulting">
+// <copyright file="PathHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>

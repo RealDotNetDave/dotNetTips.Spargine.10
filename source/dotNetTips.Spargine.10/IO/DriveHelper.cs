@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-20-2025
 // ***********************************************************************
-// <copyright file="DriveHelper.cs" company="McCarter Consulting">
+// <copyright file="DriveHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Provides common methods for working with disk drives on Windows.</summary>

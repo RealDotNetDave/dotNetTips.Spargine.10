@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 03-28-2025
 // ***********************************************************************
-// <copyright file="InformationAttributeDocGenerator.cs" company="McCarter Consulting">
+// <copyright file="InformationAttributeDocGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

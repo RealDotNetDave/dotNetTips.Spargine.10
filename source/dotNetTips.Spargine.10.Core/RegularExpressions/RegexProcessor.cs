@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 01-27-2025
 // ***********************************************************************
-// <copyright file="RegexProcessor.cs" company="McCarter Consulting">
+// <copyright file="RegexProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

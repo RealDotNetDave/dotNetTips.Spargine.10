@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-20-2025
 // ***********************************************************************
-// <copyright file="StreamExtensions.cs" company="McCarter Consulting">
+// <copyright file="StreamExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods designed for Stream.</summary>

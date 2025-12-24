@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-17-2025
 // ***********************************************************************
-// <copyright file="PerformanceStopwatch.cs" company="McCarter Consulting">
+// <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>

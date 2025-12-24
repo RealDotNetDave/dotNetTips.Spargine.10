@@ -1,16 +1,17 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Core.BenchmarkTests
 // Author           : David McCarter
-// Created          : 02-19-2021
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-17-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
-// <copyright file="Program.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
-//     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
+// <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
+//     David McCarter
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-24-2025
 // ***********************************************************************
-// <copyright file="Categories.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="Categories.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Common values to be used in the BenchmarkCategory attribute.</summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 07-18-2024
 // ***********************************************************************
-// <copyright file="HtmlElement.cs" company="McCarter Consulting">
+// <copyright file="HtmlElement.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Common HTML elements and characters</summary>

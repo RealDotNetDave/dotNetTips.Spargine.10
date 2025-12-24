@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 07-15-2024
 // ***********************************************************************
-// <copyright file="ObservableHashSetSingletons.cs" company="McCarter Consulting">
+// <copyright file="ObservableHashSetSingletons.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

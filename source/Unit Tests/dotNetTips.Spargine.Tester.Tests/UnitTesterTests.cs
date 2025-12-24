@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-18-2025
 // ***********************************************************************
-// <copyright file="UnitTesterTests.cs" company="McCarter Consulting">
+// <copyright file="UnitTesterTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary></summary>

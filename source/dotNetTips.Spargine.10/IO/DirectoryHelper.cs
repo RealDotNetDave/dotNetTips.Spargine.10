@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-20-2025
 // ***********************************************************************
-// <copyright file="DirectoryHelper.cs" company="McCarter Consulting">
+// <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Common methods for working with path directories.</summary>

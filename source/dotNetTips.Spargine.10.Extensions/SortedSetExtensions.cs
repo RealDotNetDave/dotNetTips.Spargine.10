@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-24-2025
 // ***********************************************************************
-// <copyright file="SortedSetExtensions.cs" company="McCarter Consulting">
+// <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>Extension methods designed for SortedSet.</summary>

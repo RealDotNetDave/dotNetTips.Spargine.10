@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-14-2025
 // ***********************************************************************
-// <copyright file="NumericExtensionsTests.cs" company="McCarter Consulting">
+// <copyright file="NumericExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary></summary>

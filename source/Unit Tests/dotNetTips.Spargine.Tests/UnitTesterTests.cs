@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-18-2025
 // ***********************************************************************
-// <copyright file="UnitTesterTests.cs" company="DotNetTips.Spargine.Tests">
+// <copyright file="UnitTesterTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-14-2025
 // ***********************************************************************
-// <copyright file="ServiceAction.cs" company="McCarter Consulting">
+// <copyright file="ServiceAction.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

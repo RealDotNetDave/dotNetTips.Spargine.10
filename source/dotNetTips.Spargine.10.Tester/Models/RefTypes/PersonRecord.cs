@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-15-2025
 // ***********************************************************************
-// <copyright file="PersonRecord.cs" company="McCarter Consulting">
+// <copyright file="PersonRecord.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
@@ -17,6 +17,7 @@
 // and value types to PersonRecord.
 // </summary>
 // ***********************************************************************
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

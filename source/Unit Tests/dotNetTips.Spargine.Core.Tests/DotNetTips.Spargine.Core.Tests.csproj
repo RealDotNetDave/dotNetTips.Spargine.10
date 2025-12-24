@@ -8,6 +8,9 @@
 	<FileVersion>2025.8.5.1</FileVersion>
 	<IsPackable>false</IsPackable>
 	<NeutralLanguage>en-US</NeutralLanguage>
+	<Company>dotNetTips.com - McCarter Consulting</Company>
+	<Configurations>Debug;Release</Configurations>
+	<Copyright>McCarter Consulting (David McCarter)</Copyright>
 	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>

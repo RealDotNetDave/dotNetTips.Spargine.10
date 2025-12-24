@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-14-2025
 // ***********************************************************************
-// <copyright file="PasswordGeneratorTests.cs" company="McCarter Consulting">
+// <copyright file="PasswordGeneratorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
 // </copyright>
 // <summary></summary>

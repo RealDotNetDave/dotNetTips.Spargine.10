@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-01-2025
 // ***********************************************************************
-// <copyright file="PersonDataTests.cs" company="DotNetTips.Spargine.Tester.Tests">
+// <copyright file="PersonDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-21-2025
 // ***********************************************************************
-// <copyright file="InvalidEnumTypeException.cs" company="McCarter Consulting">
+// <copyright file="InvalidEnumTypeException.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Custom exception to be utilized when a value for an Enum is invalid.</summary>

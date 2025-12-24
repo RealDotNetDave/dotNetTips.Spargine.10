@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-20-2025
 // ***********************************************************************
-// <copyright file="FastStringBuilder.cs" company="McCarter Consulting">
+// <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

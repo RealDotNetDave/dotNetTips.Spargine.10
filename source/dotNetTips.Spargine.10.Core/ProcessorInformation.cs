@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 03-18-2025
 // ***********************************************************************
-// <copyright file="ProcessorInformation.cs" company="McCarter Consulting">
+// <copyright file="ProcessorInformation.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Utility to retrieve information about the computer processor.</summary>

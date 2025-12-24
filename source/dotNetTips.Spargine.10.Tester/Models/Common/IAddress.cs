@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 08-12-2025
 // ***********************************************************************
-// <copyright file="IAddress.cs" company="McCarter Consulting">
+// <copyright file="IAddress.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

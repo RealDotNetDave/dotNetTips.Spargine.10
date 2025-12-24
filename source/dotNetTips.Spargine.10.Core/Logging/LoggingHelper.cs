@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-21-2025
 // ***********************************************************************
-// <copyright file="LoggingHelper.cs" company="McCarter Consulting">
+// <copyright file="LoggingHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary>

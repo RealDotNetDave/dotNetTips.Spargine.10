@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 08-25-2025
 // ***********************************************************************
-// <copyright file="PROPERTYKEY.cs" company="McCarter Consulting">
+// <copyright file="PROPERTYKEY.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Defines the PROPERTYKEY struct used for property identification in Windows Shell.</summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-21-2025
 // ***********************************************************************
-// <copyright file="GuidExtensions.cs" company="McCarter Consulting">
+// <copyright file="GuidExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods tailored for Guid.</summary>

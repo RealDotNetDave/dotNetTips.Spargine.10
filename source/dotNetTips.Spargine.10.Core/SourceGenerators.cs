@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-15-2025
 // ***********************************************************************
-// <copyright file="SourceGenerators.cs" company="McCarter Consulting">
+// <copyright file="SourceGenerators.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

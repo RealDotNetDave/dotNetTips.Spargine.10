@@ -1,13 +1,13 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Core.BenchmarkTests
 // Author           : David McCarter
-// Created          : 02-19-2021
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
-// <copyright file="ConcurrentHashSetCollectionBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
-//     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
+// <copyright file="ConcurrentHashSetCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+//     David McCarter
 // </copyright>
 // <summary></summary>
 // ***********************************************************************

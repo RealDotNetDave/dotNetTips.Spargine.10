@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-21-2025
 // ***********************************************************************
-// <copyright file="FastLoggerExtensions.cs" company="McCarter Consulting">
+// <copyright file="FastLoggerExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods designed for FastLogger.</summary>

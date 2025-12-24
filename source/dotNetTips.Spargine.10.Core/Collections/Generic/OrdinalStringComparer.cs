@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 01-17-2025
 // ***********************************************************************
-// <copyright file="OrdinalStringComparer.cs" company="McCarter Consulting">
+// <copyright file="OrdinalStringComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

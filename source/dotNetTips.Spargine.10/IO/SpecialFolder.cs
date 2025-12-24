@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 05-22-2025
 // ***********************************************************************
-// <copyright file="SpecialFolder.cs" company="McCarter Consulting">
+// <copyright file="SpecialFolder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Current Not Used</summary>

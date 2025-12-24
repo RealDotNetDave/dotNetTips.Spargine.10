@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-15-2025
 // ***********************************************************************
-// <copyright file="StringExtensions.cs" company="McCarter Consulting">
+// <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
 // <summary>Common String Extensions.</summary>

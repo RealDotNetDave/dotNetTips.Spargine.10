@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-01-2025
 // ***********************************************************************
-// <copyright file="DistinctBlockingCollection.cs" company="McCarter Consulting">
+// <copyright file="DistinctBlockingCollection.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>

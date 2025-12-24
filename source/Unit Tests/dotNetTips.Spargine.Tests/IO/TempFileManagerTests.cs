@@ -6,11 +6,12 @@
 // Last Modified By : David McCarter
 // Last Modified On : 02-23-2025
 // ***********************************************************************
-// <copyright file="TempFileManagerTests.cs" company="DotNetTips.Spargine.Tests">
+// <copyright file="TempFileManagerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;

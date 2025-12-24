@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 08-09-2023
 // ***********************************************************************
-// <copyright file="SingletonTests.cs" company="McCarter Consulting">
+// <copyright file="SingletonTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
 // </copyright>
 // <summary></summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 01-29-2025
 // ***********************************************************************
-// <copyright file="AddressRefTests.cs" company="DotNetTips.Spargine.Tester.Tests">
+// <copyright file="AddressRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>

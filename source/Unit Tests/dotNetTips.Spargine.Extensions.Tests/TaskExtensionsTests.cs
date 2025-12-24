@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 07-06-2024
 // ***********************************************************************
-// <copyright file="TaskExtensionsTests.cs" company="McCarter Consulting">
+// <copyright file="TaskExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
 // </copyright>
 // <summary></summary>

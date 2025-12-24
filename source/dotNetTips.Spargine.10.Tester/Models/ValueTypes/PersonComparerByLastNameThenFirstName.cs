@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 02-21-2025
 // ***********************************************************************
-// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="McCarter Consulting">
+// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

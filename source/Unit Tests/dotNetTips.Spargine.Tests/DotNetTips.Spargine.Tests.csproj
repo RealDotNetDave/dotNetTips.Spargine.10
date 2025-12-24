@@ -4,6 +4,9 @@
 	<AnalysisLevel>none</AnalysisLevel>
 	<AssemblyVersion>2024.8.3.1</AssemblyVersion>
 	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
+	<Company>dotNetTips.com - McCarter Consulting</Company>
+	<Configurations>Debug;Release</Configurations>
+	<Copyright>McCarter Consulting (David McCarter)</Copyright>
 	<EnableNETAnalyzers>false</EnableNETAnalyzers>
 	<FileVersion>2025.8.5.1</FileVersion>
 	<IsPackable>false</IsPackable>

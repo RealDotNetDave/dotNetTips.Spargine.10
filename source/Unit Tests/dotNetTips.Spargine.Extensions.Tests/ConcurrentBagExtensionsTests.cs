@@ -1,13 +1,13 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Extensions.Tests
 // Author           : David McCarter
-// Created          : 02-24-2025
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
-// <copyright file="ConcurrentBagExtensionsTests.cs" company="DotNetTips.Spargine.Extensions.Tests">
-//     Copyright (c) McCarter Consulting. All rights reserved.
+// <copyright file="ConcurrentBagExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************

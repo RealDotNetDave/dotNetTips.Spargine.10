@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-18-2025
 // ***********************************************************************
-// <copyright file="UnitTester.cs" company="McCarter Consulting">
+// <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
@@ -15,6 +15,7 @@
 // and saving object properties.
 // </summary>
 // ***********************************************************************
+
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-23-2025
 // ***********************************************************************
-// <copyright file="FastSortedList.cs" company="McCarter Consulting">
+// <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>

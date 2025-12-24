@@ -1,16 +1,17 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Core.BenchmarkTests
 // Author           : David McCarter
-// Created          : 04-26-2022
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-22-2024
+// Last Modified On : 12-24-2025
 // ***********************************************************************
-// <copyright file="LoggingHelperBenchmark.cs" company="DotNetTips.Spargine.Core.BenchmarkTests">
-//     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
+// <copyright file="LoggingHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+//     David McCarter
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;

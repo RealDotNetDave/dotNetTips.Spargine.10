@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 10-15-2025
 // ***********************************************************************
-// <copyright file="ServiceHelper.cs" company="McCarter Consulting">
+// <copyright file="ServiceHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Convenient helper methods for seamless management of Windows requests, offering key features such as loading a service, checking its running status, starting and stopping requests, and more.</summary>

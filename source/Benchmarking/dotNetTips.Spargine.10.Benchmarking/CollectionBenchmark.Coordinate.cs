@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 10-07-2025
 // ***********************************************************************
-// <copyright file="CollectionBenchmark.Coordinate.cs" company="David McCarter - dotNetTips.com">
+// <copyright file="CollectionBenchmark.Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 09-01-2025
 // ***********************************************************************
-// <copyright file="PostalCodeState.cs" company="McCarter Consulting">
+// <copyright file="PostalCodeState.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Extensions.BenchmarkTests
 // Author           : David McCarter
-// Created          : 07-11-2024
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-05-2024
+// Last Modified On : 12-24-2025
 // ***********************************************************************
-// <copyright file="ReadOnlySpanBenchmark.cs" company="McCarter Consulting">
+// <copyright file="ReadOnlySpanBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary></summary>

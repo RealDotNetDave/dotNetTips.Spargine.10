@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-10-2025
 // ***********************************************************************
-// <copyright file="RandomCreditCardNumberGenerator.cs" company="McCarter Consulting">
+// <copyright file="RandomCreditCardNumberGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Generates random credit card numbers.</summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-23-2025
 // ***********************************************************************
-// <copyright file="CollectionExtensions.cs" company="McCarter Consulting">
+// <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods for the ICollection types.</summary>

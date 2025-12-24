@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-22-2025
 // ***********************************************************************
-// <copyright file="NetworkHelperTests.cs" company="McCarter Consulting">
+// <copyright file="NetworkHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>

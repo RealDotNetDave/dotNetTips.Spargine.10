@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-22-2025
 // ***********************************************************************
-// <copyright file="DictionaryExtensions.cs" company="McCarter Consulting">
+// <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>Extension methods for IDictionary types.</summary>

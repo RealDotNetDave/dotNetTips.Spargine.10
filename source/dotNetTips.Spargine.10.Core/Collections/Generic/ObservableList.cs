@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 08-19-2025
 // ***********************************************************************
-// <copyright file="ObservableList.cs" company="McCarter Consulting">
+// <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-21-2025
 // ***********************************************************************
-// <copyright file="PreserveAttribute.cs" company="McCarter Consulting">
+// <copyright file="PreserveAttribute.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary>

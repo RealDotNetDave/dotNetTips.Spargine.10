@@ -1,13 +1,13 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Extensions.Tests
-// Author           : david
-// Created          : 10-09-2024
+// Author           : David McCarter
+// Created          : 05-01-2025
 //
-// Last Modified By : david
-// Last Modified On : 11-14-2025
+// Last Modified By : David McCarter
+// Last Modified On : 12-23-2025
 // ***********************************************************************
-// <copyright file="StreamExtensionsTests.cs" company="DotNetTips.Spargine.Extensions.Tests">
-//     Copyright (c) . All rights reserved.
+// <copyright file="StreamExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************

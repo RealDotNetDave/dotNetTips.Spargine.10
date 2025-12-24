@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 03-13-2025
 // ***********************************************************************
-// <copyright file="ControlChars.cs" company="McCarter Consulting">
+// <copyright file="ControlChars.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary>

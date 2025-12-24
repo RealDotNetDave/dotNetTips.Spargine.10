@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 07-21-2025
 // ***********************************************************************
-// <copyright file="ComputerInfo.cs" company="McCarter Consulting">
+// <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Used to retrieve common computer information.</summary>

@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 10-03-2024
 // ***********************************************************************
-// <copyright file="UnhandledExceptionEventInformation.cs" company="McCarter Consulting">
+// <copyright file="UnhandledExceptionEventInformation.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>

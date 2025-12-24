@@ -1,27 +1,12 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.10.Tester
 // Author           : David McCarter
-// Created          : 01-23-2025
+// Created          : 06-13-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-21-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
-// <copyright file="PersonRecordEmailEqualityComparer.cs" company="McCarter Consulting">
-//     McCarter Consulting (David McCarter)
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-
-// ***********************************************************************
-// Assembly         : DotNetTips.Spargine.10.Tester
-// Author           : David McCarter
-// Created          : 01-23-2025
-//
-// Last Modified By : David McCarter
-// Last Modified On : 02-21-2025
-// ***********************************************************************
-// <copyright file="PersonRecordEmailEqualityComparer.cs" company="McCarter Consulting">
+// <copyright file="PersonRecordEmailEqualityComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

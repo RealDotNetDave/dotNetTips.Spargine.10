@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-18-2025
 // ***********************************************************************
-// <copyright file="ValidatorCheckTests.cs" company="McCarter Consulting">
+// <copyright file="ValidatorCheckTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
 // </copyright>
 // <summary></summary>

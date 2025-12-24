@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-21-2025
 // ***********************************************************************
-// <copyright file="NetworkConnectionException.cs" company="McCarter Consulting">
+// <copyright file="NetworkConnectionException.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Custom exception to be used when there is a network networkInterface error.</summary>

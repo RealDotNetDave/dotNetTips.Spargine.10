@@ -1,16 +1,17 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Core.Tests
 // Author           : David McCarter
-// Created          : 07-11-2022
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-04-2023
+// Last Modified On : 12-23-2025
 // ***********************************************************************
-// <copyright file="HttpEventListenerTests.cs" company="McCarter Consulting">
-//     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
+// <copyright file="HttpEventListenerTests.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;

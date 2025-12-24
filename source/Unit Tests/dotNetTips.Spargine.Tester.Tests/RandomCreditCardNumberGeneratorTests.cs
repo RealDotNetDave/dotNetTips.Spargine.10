@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-10-2025
 // ***********************************************************************
-// <copyright file="RandomCreditCardNumberGeneratorTests.cs" company="DotNetTips.Spargine.Tester.Tests">
+// <copyright file="RandomCreditCardNumberGeneratorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>

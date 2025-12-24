@@ -4,13 +4,14 @@
 // Created          : 05-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-23-2025
 // ***********************************************************************
-// <copyright file="PasswordHasherTests.cs" company="DotNetTips.Spargine.Core.Tests">
-//     Copyright (c) McCarter Consulting. All rights reserved.
+// <copyright file="PasswordHasherTests.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using DotNetTips.Spargine.Core.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

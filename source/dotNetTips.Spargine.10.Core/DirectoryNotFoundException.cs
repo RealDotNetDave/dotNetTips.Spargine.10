@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-21-2025
 // ***********************************************************************
-// <copyright file="DirectoryNotFoundException.cs" company="McCarter Consulting">
+// <copyright file="DirectoryNotFoundException.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary>Custom exception to be utilized when a directory cannot be found.</summary>

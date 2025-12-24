@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 07-11-2024
 // ***********************************************************************
-// <copyright file="SortedSetExtensionsTest.cs" company="McCarter Consulting">
+// <copyright file="SortedSetExtensionsTest.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary></summary>

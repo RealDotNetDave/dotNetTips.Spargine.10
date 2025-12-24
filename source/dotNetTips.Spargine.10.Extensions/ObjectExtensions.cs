@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-18-2025
 // ***********************************************************************
-// <copyright file="ObjectExtensions.cs" company="McCarter Consulting">
+// <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
 // <summary>Extension methods designed for the Object type.</summary>

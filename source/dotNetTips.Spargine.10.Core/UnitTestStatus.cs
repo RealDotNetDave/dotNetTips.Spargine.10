@@ -7,7 +7,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 03-23-2025
 // ***********************************************************************
-// <copyright file="UnitTestStatus.cs" company="McCarter Consulting">
+// <copyright file="UnitTestStatus.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>

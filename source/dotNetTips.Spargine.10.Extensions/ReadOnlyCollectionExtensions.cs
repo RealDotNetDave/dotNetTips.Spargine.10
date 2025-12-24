@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 11-24-2025
 // ***********************************************************************
-// <copyright file="ReadOnlyCollectionExtensions.cs" company="McCarter Consulting">
+// <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods tailored for ReadOnlyCollection.</summary>

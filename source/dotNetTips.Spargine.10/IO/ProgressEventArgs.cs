@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-14-2025
 // ***********************************************************************
-// <copyright file="ProgressEventArgs.cs" company="McCarter Consulting">
+// <copyright file="ProgressEventArgs.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Arguments for FileProcessor.cs</summary>

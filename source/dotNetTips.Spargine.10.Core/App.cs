@@ -1,16 +1,17 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.10.Core
 // Author           : David McCarter
-// Created          : 11-11-2020
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
 // Last Modified On : 12-24-2025
 // ***********************************************************************
-// <copyright file="App.cs" company="McCarter Consulting">
-//     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
+// <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Application Information and Utility Methods.</summary>
+// <summary></summary>
 // ***********************************************************************
+
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;

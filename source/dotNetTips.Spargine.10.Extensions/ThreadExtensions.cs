@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 06-20-2025
 // ***********************************************************************
-// <copyright file="ThreadExtensions.cs" company="McCarter Consulting">
+// <copyright file="ThreadExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
 // <summary>Extension methods designed for Thread.</summary>
