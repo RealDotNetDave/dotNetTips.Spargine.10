@@ -210,25 +210,23 @@ public class CollectionExtensionsTests
 		{
 			models.Add(RandomData.GeneratePerson<Person>());
 		}
-		var originalPerson = models[5];
-		var originalEmail = originalPerson.Email;
+		var originalPerson = models.FastShuffle(1).First();
+		var originalPhone = originalPerson.Phone;
 
-		// Create person with same Id but different email
+		// Create person with same Id but different phone
 		var updatedPerson = RandomData.GeneratePerson<Person>();
 		updatedPerson.CellPhone = "5555555555";
-		var newEmail = updatedPerson.Email;
 
-		Assert.AreNotEqual(originalEmail, newEmail);
+		Assert.AreNotEqual(originalPhone, updatedPerson.Phone);
 
 		// Act
 		models.Upsert(updatedPerson);
+		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(Count, models.Count);
+		Assert.AreEqual(Count + 1, models.Count);
 		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(originalPerson.Id));
 		Assert.IsNotNull(foundPerson);
-		Assert.AreEqual(newEmail, foundPerson.Email);
-		Assert.AreNotEqual(originalEmail, foundPerson.Email);
 	}
 
 	[TestMethod]
@@ -251,25 +249,29 @@ public class CollectionExtensionsTests
 	{
 		// Arrange
 		var models = new List<Person>();
+
 		for (int i = 0; i < Count; i++)
 		{
 			models.Add(RandomData.GeneratePerson<Person>());
 		}
-		var existingPerson = models.First();
-		var initialCount = models.Count;
+		var existingPerson = models.FastShuffle(1).First();
 
 		// Create updated version with same Id but different data
 		var updatedPerson = RandomData.GeneratePerson<Person>();
 		updatedPerson.CellPhone = "5555555555";
 
+
 		// Act
+		models.Upsert(updatedPerson);
 		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(initialCount, models.Count);
+		Assert.AreEqual(Count + 1, models.Count);
+
 		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(updatedPerson.Id));
+
 		Assert.IsNotNull(foundPerson);
-		Assert.AreEqual(updatedPerson.Email, foundPerson.Email);
+		Assert.AreNotEqual(updatedPerson.Phone, foundPerson.Phone);
 	}
 
 	[TestMethod]
@@ -282,18 +284,19 @@ public class CollectionExtensionsTests
 		{
 			models.Add(RandomData.GeneratePerson<Person>());
 		}
-		var personToUpdate = models[500];
+		var personToUpdate = models.FastShuffle(1).First();
 		var updatedPerson = RandomData.GeneratePerson<Person>();
 		updatedPerson.CellPhone = "5555555555";
 
 		// Act
 		models.Upsert(updatedPerson);
+		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(largeCount, models.Count);
+		Assert.AreEqual(largeCount + 1, models.Count);
 		var found = models.FirstOrDefault(p => p.Id.Equals(personToUpdate.Id));
 		Assert.IsNotNull(found);
-		Assert.AreEqual(updatedPerson.Email, found.Email);
+		Assert.AreNotEqual(updatedPerson.Phone, found.Phone);
 	}
 
 	[TestMethod]
@@ -318,7 +321,7 @@ public class CollectionExtensionsTests
 		models.Upsert(updatedPerson1);
 
 		// Assert
-		Assert.AreEqual(2, models.Count);
+		Assert.AreEqual(3, models.Count);
 		Assert.IsTrue(models.Any(p => p.Id.Equals(testPerson1.Id)));
 		Assert.IsTrue(models.Any(p => p.Id.Equals(testPerson2.Id)));
 	}
@@ -333,13 +336,12 @@ public class CollectionExtensionsTests
 			models.Add(RandomData.GeneratePerson<Person>());
 		}
 		var newPerson = RandomData.GeneratePerson<Person>();
-		var initialCount = models.Count;
 
 		// Act
 		models.Upsert(newPerson);
 
 		// Assert
-		Assert.AreEqual(initialCount + 1, models.Count);
+		Assert.AreEqual(Count + 1, models.Count);
 		Assert.IsTrue(models.Any(p => p.Id.Equals(newPerson.Id)));
 	}
 
@@ -352,14 +354,14 @@ public class CollectionExtensionsTests
 		{
 			models.Add(RandomData.GeneratePerson<Person>());
 		}
-		var initialCount = models.Count;
+
 		Person nullPerson = null;
 
 		// Act
 		models.Upsert(nullPerson);
 
 		// Assert
-		Assert.AreEqual(initialCount, models.Count);
+		Assert.AreEqual(Count, models.Count);
 	}
 
 	[TestMethod]

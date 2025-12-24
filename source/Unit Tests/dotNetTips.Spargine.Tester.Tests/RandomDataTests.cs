@@ -197,11 +197,11 @@ public class RandomDataTests
 	public void GenerateAddress_ReturnsAddress_ForRefType()
 	{
 		var address = RandomData.GenerateAddress<Address>();
+
 		Assert.IsNotNull(address);
 		Assert.IsFalse(string.IsNullOrEmpty(address.Id));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address1));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Address2));
-		//Assert.IsFalse(string.IsNullOrEmpty(address.City));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
