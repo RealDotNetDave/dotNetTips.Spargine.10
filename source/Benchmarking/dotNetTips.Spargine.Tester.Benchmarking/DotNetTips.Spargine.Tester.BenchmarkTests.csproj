@@ -7,8 +7,7 @@
 		<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
 		<Company>dotNetTips.com - McCarter Consulting</Company>
 		<Configurations>Release</Configurations>
-		<Copyright>2021: David McCarter - McCarter Consulting</Copyright>
-		<Copyright>David McCarter</Copyright>
+		<Copyright>McCarter Consulting (David McCarter)</Copyright>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>none</DebugType>
 		<Description>DotNetTips.Spargine.Tester.BenchmarkTests</Description>
