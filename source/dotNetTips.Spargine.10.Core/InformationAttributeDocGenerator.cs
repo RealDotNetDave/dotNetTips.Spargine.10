@@ -4,7 +4,7 @@
 // Created          : 11-16-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-28-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="InformationAttributeDocGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,8 +29,6 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.Available)]
 public static class InformationAttributeDocGenerator
 {
-	//TODO: ADD NEW PROPERTIES TO INFO GENERATION.
-
 	/// <summary>
 	/// The string builder pool
 	/// </summary>
@@ -131,6 +129,16 @@ public static class InformationAttributeDocGenerator
 				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified On:** {info.ModifiedOn?.ToString("d", CultureInfo.CurrentCulture)}");
 			}
 
+			if (info.Tags.CheckIsNotEmpty())
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Tags:** {string.Join(", ", info.Tags)}");
+			}
+
+			if (info.Version.HasValue())
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Version:** {info.Version}");
+			}
+
 			_ = sb.AppendLine();
 		}
 	}
@@ -206,7 +214,7 @@ public static class InformationAttributeDocGenerator
 	/// </summary>
 	/// <param name="assembly">The assembly for which to generate documentation.</param>
 	/// <returns>A string containing the generated documentation for the entire assembly.</returns>
-	[Information(nameof(GenerateMarkdownDocumentForAssembly), "David McCarter", "11/18/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateMarkdownDocumentForAssembly), "David McCarter", "11/18/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Version = "2", Status = Status.Available)]
 	public static string GenerateMarkdownDocumentForAssembly(Assembly assembly)
 	{
 		assembly = assembly.ArgumentNotNull();
@@ -243,7 +251,7 @@ public static class InformationAttributeDocGenerator
 	/// <param name="path">The path where the documentation file will be saved.</param>
 	/// <returns>The name of the file to which the documentation was written.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="assembly"/> is null.</exception>
-	[Information(nameof(GenerateMarkdownDocumentForAssembly), "David McCarter", "11/18/2024", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateMarkdownDocumentForAssembly), "David McCarter", "11/18/2024", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Version = "2", Status = Status.Available)]
 	public static string GenerateMarkdownDocumentForAssembly(Assembly assembly, string path)
 	{
 		var result = GenerateMarkdownDocumentForAssembly(assembly);

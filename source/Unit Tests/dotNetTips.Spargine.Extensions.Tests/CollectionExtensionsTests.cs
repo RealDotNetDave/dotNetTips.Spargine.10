@@ -271,7 +271,7 @@ public class CollectionExtensionsTests
 		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(updatedPerson.Id));
 
 		Assert.IsNotNull(foundPerson);
-		Assert.AreNotEqual(updatedPerson.Phone, foundPerson.Phone);
+		Assert.AreEqual(updatedPerson.Phone, foundPerson.Phone);
 	}
 
 	[TestMethod]
