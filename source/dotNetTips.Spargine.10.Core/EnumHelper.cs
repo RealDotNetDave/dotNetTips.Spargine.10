@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -189,7 +189,7 @@ public static class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<EnumValue> GetItems<T>(bool fixNames = true)
 		where T : Enum
 	{

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.KeyGeneratorBenchmark-20251222-221013</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.KeyGeneratorBenchmark-20251223-152412</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -24,12 +24,12 @@ Categories=**NEW**
 </code></pre>
 
 <table>
-<thead><tr><th>Method                      </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method                      </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GenerateKey: With Prefix&#39;</td><td>98.20 ns</td><td>0.732 ns</td><td>0.612 ns</td><td>0.170 ns</td><td>96.60 ns</td><td>97.98 ns</td><td>98.51 ns</td><td>98.64 ns</td><td>98.80 ns</td><td>10,183,278.3</td><td>6.415 ns</td><td>13.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>0.0063</td><td>-</td><td>724 B</td><td>0.0002</td><td>0.0002</td><td>184 B</td>
-</tr><tr><td>&#39;GenerateSortableKey: With Prefix&#39;</td><td>98.19 ns</td><td>0.455 ns</td><td>0.425 ns</td><td>0.110 ns</td><td>97.51 ns</td><td>97.83 ns</td><td>98.18 ns</td><td>98.60 ns</td><td>98.75 ns</td><td>10,184,394.0</td><td>7.445 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>0.0061</td><td>-</td><td>724 B</td><td>0.0002</td><td>0.0002</td><td>184 B</td>
-</tr><tr><td>GenerateKey</td><td>85.99 ns</td><td>0.443 ns</td><td>0.415 ns</td><td>0.107 ns</td><td>85.33 ns</td><td>85.67 ns</td><td>85.93 ns</td><td>86.35 ns</td><td>86.61 ns</td><td>11,629,931.4</td><td>7.446 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0029</td><td>-</td><td>802 B</td><td>-</td><td>-</td><td>88 B</td>
-</tr><tr><td>GenerateSortableKey</td><td>108.80 ns</td><td>1.164 ns</td><td>1.088 ns</td><td>0.281 ns</td><td>107.19 ns</td><td>108.12 ns</td><td>108.40 ns</td><td>109.66 ns</td><td>110.77 ns</td><td>9,191,348.3</td><td>7.359 ns</td><td>15.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>0.0043</td><td>-</td><td>1,480 B</td><td>0.0002</td><td>0.0002</td><td>233 B</td>
+</thead><tbody><tr><td>&#39;GenerateKey: With Prefix&#39;</td><td>98.10 ns</td><td>0.637 ns</td><td>0.596 ns</td><td>0.154 ns</td><td>97.12 ns</td><td>97.66 ns</td><td>97.95 ns</td><td>98.67 ns</td><td>98.93 ns</td><td>10,194,178.8</td><td>7.423 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>0.0063</td><td>724 B</td><td>-</td><td>-</td><td>0.0002</td><td>0.0002</td><td>184 B</td>
+</tr><tr><td>&#39;GenerateSortableKey: With Prefix&#39;</td><td>98.41 ns</td><td>0.765 ns</td><td>0.715 ns</td><td>0.185 ns</td><td>96.49 ns</td><td>98.15 ns</td><td>98.57 ns</td><td>98.83 ns</td><td>99.36 ns</td><td>10,161,640.9</td><td>7.408 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>0.0063</td><td>724 B</td><td>-</td><td>-</td><td>0.0002</td><td>0.0002</td><td>184 B</td>
+</tr><tr><td>GenerateKey</td><td>86.64 ns</td><td>0.748 ns</td><td>0.699 ns</td><td>0.181 ns</td><td>85.60 ns</td><td>86.14 ns</td><td>86.39 ns</td><td>87.30 ns</td><td>87.67 ns</td><td>11,541,580.1</td><td>7.410 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>0.0025</td><td>802 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
+</tr><tr><td>GenerateSortableKey</td><td>109.14 ns</td><td>0.871 ns</td><td>0.815 ns</td><td>0.210 ns</td><td>107.99 ns</td><td>108.45 ns</td><td>109.12 ns</td><td>109.62 ns</td><td>110.69 ns</td><td>9,162,682.3</td><td>7.395 ns</td><td>15.00</td><td>3</td><td>No</td><td>-</td><td>0.0036</td><td>1,480 B</td><td>-</td><td>-</td><td>0.0001</td><td>0.0001</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

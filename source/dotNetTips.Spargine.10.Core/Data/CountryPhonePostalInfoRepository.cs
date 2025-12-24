@@ -313,7 +313,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="GetCountryPhonePostalInfo(string)"/>
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool ValidatePhoneNumber(string countryNameOrIso, string phoneNumber, bool validateCountryCode = false)
 	{
 		var country = GetCountryPhonePostalInfo(countryNameOrIso.ArgumentNotNull());
@@ -427,7 +427,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="PostalCodeState"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static PostalCodeState ValidatePostalCode(string countryNameOrIso, string postalCode)
 	{
 		var country = GetCountryPhonePostalInfo(countryNameOrIso.ArgumentNotNull());

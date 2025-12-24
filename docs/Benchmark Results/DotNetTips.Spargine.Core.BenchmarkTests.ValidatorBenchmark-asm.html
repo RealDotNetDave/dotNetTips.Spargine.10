@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Core.BenchmarkTests.ValidatorBenchmark-20251222-223440</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Core.BenchmarkTests.ValidatorBenchmark-20251223-154721</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -101,9 +101,21 @@
 </tr><tr class="">
 <td></td><td id="2" class="reference" data-reference="2_M00_L00"><a href="#2_M00_L00"><pre><code>je        short M00_L00</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CACB40]; DotNetTips.Spargine.Core.Extensions.Count(System.Collections.IEnumerable)</pre></code></td>
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.ICollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF91A21F5B8]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M00_L02"><a href="#2_M00_L02"><pre><code>je        short M00_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rax],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M00_L01"><a href="#2_M00_L01"><pre><code>jne       short M00_L01</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="2_M00_L00" class="label" data-label="2_M00_L00"><pre><code>M00_L00</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -129,41 +141,259 @@
 <td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>ret</pre></code></td>
-</tr><tr><td colspan="{2}">&nbsp;</td></tr>
-<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Core.Extensions.Count(System.Collections.IEnumerable)</th><th></th></tr>
+</tr><tr class="">
+<td id="2_M00_L01" class="label" data-label="2_M00_L01"><pre><code>M00_L01</pre></code></td>
+<td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>		if (collection is null)
-		^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			return 0;
-			^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       r11,7FF919FC09D8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		if (collection is ICollection col)
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			return col.Count;
-			^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td id="2" class="reference" data-reference="2_M00_L00"><a href="#2_M00_L00"><pre><code>jmp       short M00_L00</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="2_M00_L02" class="label" data-label="2_M00_L02"><pre><code>M00_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Linq.Enumerable+Iterator<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF91A076850]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M00_L03"><a href="#2_M00_L03"><pre><code>je        short M00_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+50]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M00_L00"><a href="#2_M00_L00"><pre><code>jge       short M00_L00</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>		else if (collection is ICollection<object> colT)
-		     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td id="2_M00_L03" class="label" data-label="2_M00_L03"><pre><code>M00_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			return colT.Count;
-			^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.ICollection</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		var count = 0;
-		^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A21F5B8]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		var enumerator = collection.GetEnumerator();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			count++;
-			^^^^^^^^</pre></code></td>
+<td></td><td id="2" class="reference" data-reference="2_M00_L04"><a href="#2_M00_L04"><pre><code>je        short M00_L04</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>		while (enumerator.MoveNext())
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		return count;
-		^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       r11,7FF919FC09D0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M00_L00"><a href="#2_M00_L00"><pre><code>jmp       near ptr M00_L00</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="2_M00_L04" class="label" data-label="2_M00_L04"><pre><code>M00_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FF91A808570</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF91A62CAE0]; System.Linq.Enumerable.Any[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M00_L00"><a href="#2_M00_L00"><pre><code>jmp       near ptr M00_L00</pre></code></a></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>test      rdx,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rdx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     r8d,word ptr [rax+0E]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r8,r8</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L05"><a href="#3_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r10,[rax+38]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r8,4</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L04"><a href="#3_M01_L04"><pre><code>jl        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [r10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="3_M01_L00" class="label" data-label="3_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>cmp       [r10+8],rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="3" class="reference" data-reference="3_M01_L03"><a href="#3_M01_L03"><pre><code>jne       short M01_L03</pre></code></a></td>
+</tr><tr class="">
+<td id="3_M01_L01" class="label" data-label="3_M01_L01"><pre><code>M01_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="evenMap">
+<td id="3_M01_L02" class="label" data-label="3_M01_L02"><pre><code>M01_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>cmp       [r10],rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td id="3" class="reference" data-reference="3_M01_L00"><a href="#3_M01_L00"><pre><code>jmp       short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td id="3_M01_L03" class="label" data-label="3_M01_L03"><pre><code>M01_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>cmp       [r10+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [r10+18],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       r10,20</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       r8,0FFFFFFFFFFFFFFFC</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r8,4</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L02"><a href="#3_M01_L02"><pre><code>jge       short M01_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r8,r8</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L05"><a href="#3_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="3_M01_L04" class="label" data-label="3_M01_L04"><pre><code>M01_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>cmp       [r10],rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       r10,8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>dec       r8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      r8,r8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="3" class="reference" data-reference="3_M01_L04"><a href="#3_M01_L04"><pre><code>jg        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td id="3_M01_L05" class="label" data-label="3_M01_L05"><pre><code>M01_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>test      dword ptr [rax],500C0000</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L06"><a href="#3_M01_L06"><pre><code>jne       short M01_L06</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       edx,edx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>jmp       short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="3_M01_L06" class="label" data-label="3_M01_L06"><pre><code>M01_L06</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FF91A6D7078]; System.Runtime.CompilerServices.CastHelpers.IsInstance_Helper(Void*, System.Object)</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>test      rdx,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rdx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="4_M02_L00" class="label" data-label="4_M02_L00"><pre><code>M02_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="4" class="reference" data-reference="4_M02_L01"><a href="#4_M02_L01"><pre><code>je        short M02_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="4" class="reference" data-reference="4_M02_L01"><a href="#4_M02_L01"><pre><code>je        short M02_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="4" class="reference" data-reference="4_M02_L03"><a href="#4_M02_L03"><pre><code>jne       short M02_L03</pre></code></a></td>
+</tr><tr class="">
+<td id="4_M02_L01" class="label" data-label="4_M02_L01"><pre><code>M02_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>xor       edx,edx</pre></code></td>
+</tr><tr class="evenMap">
+<td id="4_M02_L02" class="label" data-label="4_M02_L02"><pre><code>M02_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rax,rdx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td id="4_M02_L03" class="label" data-label="4_M02_L03"><pre><code>M02_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L01"><a href="#4_M02_L01"><pre><code>je        short M02_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L02"><a href="#4_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td id="4" class="reference" data-reference="4_M02_L00"><a href="#4_M02_L00"><pre><code>jmp       short M02_L00</pre></code></a></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">System.Linq.Enumerable.Any[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>push      rdi</pre></code></td>
 </tr><tr class="">
@@ -171,211 +401,177 @@
 </tr><tr class="">
 <td></td><td><pre><code>push      rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>sub       rsp,20</pre></code></td>
+<td></td><td><pre><code>sub       rsp,38</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+50]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-20],rcx</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rbx,rbx</pre></code></td>
+<td></td><td><pre><code>mov       rsi,rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L01"><a href="#3_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M03_L06"><a href="#5_M03_L06"><pre><code>je        near ptr M03_L06</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9907A7388]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       [rcx],rdx</pre></code></td>
-</tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L02"><a href="#3_M01_L02"><pre><code>jne       short M01_L02</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="3_M01_L00" class="label" data-label="3_M01_L00"><pre><code>M01_L00</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>test      rcx,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L04"><a href="#3_M01_L04"><pre><code>je        short M01_L04</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       [rcx],rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L03"><a href="#3_M01_L03"><pre><code>jne       short M01_L03</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       eax,[rcx+10]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="">
-<td id="3_M01_L01" class="label" data-label="3_M01_L01"><pre><code>M01_L01</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>xor       eax,eax</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="evenMap">
-<td id="3_M01_L02" class="label" data-label="3_M01_L02"><pre><code>M01_L02</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.ICollection</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L00"><a href="#3_M01_L00"><pre><code>jmp       short M01_L00</pre></code></a></td>
 </tr><tr class="">
-<td id="3_M01_L03" class="label" data-label="3_M01_L03"><pre><code>M01_L03</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       r11,7FFEA96409D8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>jmp       qword ptr [r11]</pre></code></td>
-</tr><tr class="evenMap">
-<td id="3_M01_L04" class="label" data-label="3_M01_L04"><pre><code>M01_L04</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,offset MT_System.Linq.Enumerable+IEnumerableWhereIterator<DotNetTips.Spargine.Tester.Models.RefTypes.Address></pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       [rcx],rdx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L05"><a href="#3_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.ICollection<System.Object></pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L06"><a href="#3_M01_L06"><pre><code>jmp       short M01_L06</pre></code></a></td>
-</tr><tr class="">
-<td id="3_M01_L05" class="label" data-label="3_M01_L05"><pre><code>M01_L05</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>xor       ecx,ecx</pre></code></td>
-</tr><tr class="evenMap">
-<td id="3_M01_L06" class="label" data-label="3_M01_L06"><pre><code>M01_L06</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>test      rcx,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L07"><a href="#3_M01_L07"><pre><code>je        short M01_L07</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r11,7FFEA96409D0</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [r11]</pre></code></td>
-</tr><tr class="">
-<td id="3_M01_L07" class="label" data-label="3_M01_L07"><pre><code>M01_L07</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>xor       esi,esi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Linq.Enumerable+IEnumerableWhereIterator<DotNetTips.Spargine.Tester.Models.RefTypes.Address></pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       [rbx],rcx</pre></code></td>
-</tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L08"><a href="#3_M01_L08"><pre><code>jne       short M01_L08</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CACB58]; System.Linq.Enumerable+Iterator`1[[System.__Canon, System.Private.CoreLib]].GetEnumerator()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9907A56E8]; Precode of System.Runtime.CompilerServices.CastHelpers.IsInstanceOfAny(Void*, System.Object)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L09"><a href="#3_M01_L09"><pre><code>jmp       short M01_L09</pre></code></a></td>
+<td></td><td><pre><code>test      rdi,rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M03_L04"><a href="#5_M03_L04"><pre><code>jne       near ptr M03_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9907A5730]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       byte ptr [rax],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M03_L00"><a href="#5_M03_L00"><pre><code>jne       short M03_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9907A7380]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9907A56E8]; Precode of System.Runtime.CompilerServices.CastHelpers.IsInstanceOfAny(Void*, System.Object)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdi,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rdi,rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M03_L02"><a href="#5_M03_L02"><pre><code>jne       short M03_L02</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="3_M01_L08" class="label" data-label="3_M01_L08"><pre><code>M01_L08</pre></code></td>
+<td id="5_M03_L00" class="label" data-label="5_M03_L00"><pre><code>M03_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF9907A8AF0]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M03_L01"><a href="#5_M03_L01"><pre><code>jne       short M03_L01</pre></code></a></td>
+</tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r11,7FFEA96409C0</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9907A83B0]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r11,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-30],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdi,rax</pre></code></td>
+<td></td><td><pre><code>mov       esi,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M03_L05"><a href="#5_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
 </tr><tr class="">
-<td id="3_M01_L09" class="label" data-label="3_M01_L09"><pre><code>M01_L09</pre></code></td>
+<td id="5_M03_L01" class="label" data-label="5_M03_L01"><pre><code>M03_L01</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L11"><a href="#3_M01_L11"><pre><code>jmp       short M01_L11</pre></code></a></td>
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>setne     sil</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     esi,sil</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M03_L05"><a href="#5_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="3_M01_L10" class="label" data-label="3_M01_L10"><pre><code>M01_L10</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>add       esi,1</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="3" class="reference" data-reference="3_M01_L14"><a href="#3_M01_L14"><pre><code>jo        short M01_L14</pre></code></a></td>
-</tr><tr class="">
-<td id="3_M01_L11" class="label" data-label="3_M01_L11"><pre><code>M01_L11</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Linq.Enumerable+IEnumerableWhereIterator<DotNetTips.Spargine.Tester.Models.RefTypes.Address></pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       [rdi],rcx</pre></code></td>
-</tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L12"><a href="#3_M01_L12"><pre><code>jne       short M01_L12</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CDCC78]; Precode of System.Linq.Enumerable+IEnumerableWhereIterator`1[[System.__Canon, System.Private.CoreLib]].MoveNext()</pre></code></td>
-</tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L13"><a href="#3_M01_L13"><pre><code>jmp       short M01_L13</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="3_M01_L12" class="label" data-label="3_M01_L12"><pre><code>M01_L12</pre></code></td>
+<td id="5_M03_L02" class="label" data-label="5_M03_L02"><pre><code>M03_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r11,7FFEA96409C8</pre></code></td>
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,1</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M03_L03"><a href="#5_M03_L03"><pre><code>jge       short M03_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       rdx,[rbp-28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     esi,byte ptr [rbp-28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M03_L05"><a href="#5_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
 </tr><tr class="">
-<td id="3_M01_L13" class="label" data-label="3_M01_L13"><pre><code>M01_L13</pre></code></td>
+<td id="5_M03_L03" class="label" data-label="5_M03_L03"><pre><code>M03_L03</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="3" class="reference" data-reference="3_M01_L10"><a href="#3_M01_L10"><pre><code>jne       short M01_L10</pre></code></a></td>
+<td></td><td><pre><code>setne     sil</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,esi</pre></code></td>
+<td></td><td><pre><code>movzx     esi,sil</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
+<td></td><td id="5" class="reference" data-reference="5_M03_L05"><a href="#5_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="5_M03_L04" class="label" data-label="5_M03_L04"><pre><code>M03_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF9907A83A8]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r11,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>setne     sil</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     esi,sil</pre></code></td>
+</tr><tr class="">
+<td id="5_M03_L05" class="label" data-label="5_M03_L05"><pre><code>M03_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>movzx     eax,sil</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,38</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>pop       rbx</pre></code></td>
 </tr><tr class="">
@@ -383,14 +579,39 @@
 </tr><tr class="">
 <td></td><td><pre><code>pop       rdi</pre></code></td>
 </tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
-<td id="3_M01_L14" class="label" data-label="3_M01_L14"><pre><code>M01_L14</pre></code></td>
+<td id="5_M03_L06" class="label" data-label="5_M03_L06"><pre><code>M03_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      CORINFO_HELP_OVERFLOW</pre></code></td>
+<td></td><td><pre><code>mov       ecx,11</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF9907A95A8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rcx,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M03_L07"><a href="#5_M03_L07"><pre><code>je        short M03_L07</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="">
+<td id="5_M03_L07" class="label" data-label="5_M03_L07"><pre><code>M03_L07</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3</h2>
@@ -413,13 +634,25 @@
 </tr><tr class="">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td id="4" class="reference" data-reference="4_M00_L00"><a href="#4_M00_L00"><pre><code>je        short M00_L00</pre></code></a></td>
+<td></td><td id="6" class="reference" data-reference="6_M00_L00"><a href="#6_M00_L00"><pre><code>je        short M00_L00</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CBCB40]; DotNetTips.Spargine.Core.Extensions.Count(System.Collections.IEnumerable)</pre></code></td>
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.ICollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF91A23F5B8]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="6" class="reference" data-reference="6_M00_L02"><a href="#6_M00_L02"><pre><code>je        short M00_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rax],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="6" class="reference" data-reference="6_M00_L01"><a href="#6_M00_L01"><pre><code>jne       short M00_L01</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="4_M00_L00" class="label" data-label="4_M00_L00"><pre><code>M00_L00</pre></code></td>
+<td id="6_M00_L00" class="label" data-label="6_M00_L00"><pre><code>M00_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       [rsp+20],rsi</pre></code></td>
@@ -443,41 +676,259 @@
 <td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>ret</pre></code></td>
-</tr><tr><td colspan="{2}">&nbsp;</td></tr>
-<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Core.Extensions.Count(System.Collections.IEnumerable)</th><th></th></tr>
+</tr><tr class="">
+<td id="6_M00_L01" class="label" data-label="6_M00_L01"><pre><code>M00_L01</pre></code></td>
+<td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>		if (collection is null)
-		^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			return 0;
-			^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       r11,7FF919FE09D8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		if (collection is ICollection col)
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			return col.Count;
-			^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td id="6" class="reference" data-reference="6_M00_L00"><a href="#6_M00_L00"><pre><code>jmp       short M00_L00</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="6_M00_L02" class="label" data-label="6_M00_L02"><pre><code>M00_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Linq.Enumerable+Iterator<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF91A096850]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="6" class="reference" data-reference="6_M00_L03"><a href="#6_M00_L03"><pre><code>je        short M00_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+50]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="6" class="reference" data-reference="6_M00_L00"><a href="#6_M00_L00"><pre><code>jge       short M00_L00</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>		else if (collection is ICollection<object> colT)
-		     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td id="6_M00_L03" class="label" data-label="6_M00_L03"><pre><code>M00_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			return colT.Count;
-			^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.ICollection</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		var count = 0;
-		^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A23F5B8]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		var enumerator = collection.GetEnumerator();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>			count++;
-			^^^^^^^^</pre></code></td>
+<td></td><td id="6" class="reference" data-reference="6_M00_L04"><a href="#6_M00_L04"><pre><code>je        short M00_L04</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>		while (enumerator.MoveNext())
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		return count;
-		^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       r11,7FF919FE09D0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="">
+<td></td><td id="6" class="reference" data-reference="6_M00_L00"><a href="#6_M00_L00"><pre><code>jmp       near ptr M00_L00</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="6_M00_L04" class="label" data-label="6_M00_L04"><pre><code>M00_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FF91A829378</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF91A64C9F0]; System.Linq.Enumerable.Any[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="6" class="reference" data-reference="6_M00_L00"><a href="#6_M00_L00"><pre><code>jmp       near ptr M00_L00</pre></code></a></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>test      rdx,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rdx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     r8d,word ptr [rax+0E]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r8,r8</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L05"><a href="#7_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r10,[rax+38]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r8,4</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L04"><a href="#7_M01_L04"><pre><code>jl        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [r10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="7_M01_L00" class="label" data-label="7_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>cmp       [r10+8],rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="7" class="reference" data-reference="7_M01_L03"><a href="#7_M01_L03"><pre><code>jne       short M01_L03</pre></code></a></td>
+</tr><tr class="">
+<td id="7_M01_L01" class="label" data-label="7_M01_L01"><pre><code>M01_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="evenMap">
+<td id="7_M01_L02" class="label" data-label="7_M01_L02"><pre><code>M01_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>cmp       [r10],rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td id="7" class="reference" data-reference="7_M01_L00"><a href="#7_M01_L00"><pre><code>jmp       short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td id="7_M01_L03" class="label" data-label="7_M01_L03"><pre><code>M01_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>cmp       [r10+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [r10+18],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       r10,20</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       r8,0FFFFFFFFFFFFFFFC</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r8,4</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L02"><a href="#7_M01_L02"><pre><code>jge       short M01_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r8,r8</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L05"><a href="#7_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="7_M01_L04" class="label" data-label="7_M01_L04"><pre><code>M01_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>cmp       [r10],rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       r10,8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>dec       r8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      r8,r8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="7" class="reference" data-reference="7_M01_L04"><a href="#7_M01_L04"><pre><code>jg        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td id="7_M01_L05" class="label" data-label="7_M01_L05"><pre><code>M01_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>test      dword ptr [rax],500C0000</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L06"><a href="#7_M01_L06"><pre><code>jne       short M01_L06</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       edx,edx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M01_L01"><a href="#7_M01_L01"><pre><code>jmp       short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="7_M01_L06" class="label" data-label="7_M01_L06"><pre><code>M01_L06</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FF91A6F7048]; System.Runtime.CompilerServices.CastHelpers.IsInstance_Helper(Void*, System.Object)</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>test      rdx,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rdx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="8_M02_L00" class="label" data-label="8_M02_L00"><pre><code>M02_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="8" class="reference" data-reference="8_M02_L01"><a href="#8_M02_L01"><pre><code>je        short M02_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="8" class="reference" data-reference="8_M02_L01"><a href="#8_M02_L01"><pre><code>je        short M02_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="8" class="reference" data-reference="8_M02_L03"><a href="#8_M02_L03"><pre><code>jne       short M02_L03</pre></code></a></td>
+</tr><tr class="">
+<td id="8_M02_L01" class="label" data-label="8_M02_L01"><pre><code>M02_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>xor       edx,edx</pre></code></td>
+</tr><tr class="evenMap">
+<td id="8_M02_L02" class="label" data-label="8_M02_L02"><pre><code>M02_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rax,rdx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td id="8_M02_L03" class="label" data-label="8_M02_L03"><pre><code>M02_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L01"><a href="#8_M02_L01"><pre><code>je        short M02_L01</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L02"><a href="#8_M02_L02"><pre><code>je        short M02_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td id="8" class="reference" data-reference="8_M02_L00"><a href="#8_M02_L00"><pre><code>jmp       short M02_L00</pre></code></a></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">System.Linq.Enumerable.Any[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>push      rdi</pre></code></td>
 </tr><tr class="">
@@ -485,211 +936,177 @@
 </tr><tr class="">
 <td></td><td><pre><code>push      rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>sub       rsp,20</pre></code></td>
+<td></td><td><pre><code>sub       rsp,38</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+50]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-20],rcx</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rbx,rbx</pre></code></td>
+<td></td><td><pre><code>mov       rsi,rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L01"><a href="#5_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td id="9" class="reference" data-reference="9_M03_L06"><a href="#9_M03_L06"><pre><code>je        near ptr M03_L06</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9907A7388]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       [rcx],rdx</pre></code></td>
-</tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L02"><a href="#5_M01_L02"><pre><code>jne       short M01_L02</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="5_M01_L00" class="label" data-label="5_M01_L00"><pre><code>M01_L00</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>test      rcx,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L04"><a href="#5_M01_L04"><pre><code>je        short M01_L04</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person></pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       [rcx],rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L03"><a href="#5_M01_L03"><pre><code>jne       short M01_L03</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       eax,[rcx+10]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="">
-<td id="5_M01_L01" class="label" data-label="5_M01_L01"><pre><code>M01_L01</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>xor       eax,eax</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="evenMap">
-<td id="5_M01_L02" class="label" data-label="5_M01_L02"><pre><code>M01_L02</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.ICollection</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L00"><a href="#5_M01_L00"><pre><code>jmp       short M01_L00</pre></code></a></td>
 </tr><tr class="">
-<td id="5_M01_L03" class="label" data-label="5_M01_L03"><pre><code>M01_L03</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       r11,7FFEA96509D8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>jmp       qword ptr [r11]</pre></code></td>
-</tr><tr class="evenMap">
-<td id="5_M01_L04" class="label" data-label="5_M01_L04"><pre><code>M01_L04</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,offset MT_System.Linq.Enumerable+IEnumerableWhereIterator<DotNetTips.Spargine.Tester.Models.RefTypes.Address></pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       [rcx],rdx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L05"><a href="#5_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.ICollection<System.Object></pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfInterface(Void*, System.Object)</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L06"><a href="#5_M01_L06"><pre><code>jmp       short M01_L06</pre></code></a></td>
-</tr><tr class="">
-<td id="5_M01_L05" class="label" data-label="5_M01_L05"><pre><code>M01_L05</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>xor       ecx,ecx</pre></code></td>
-</tr><tr class="evenMap">
-<td id="5_M01_L06" class="label" data-label="5_M01_L06"><pre><code>M01_L06</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>test      rcx,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L07"><a href="#5_M01_L07"><pre><code>je        short M01_L07</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r11,7FFEA96509D0</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [r11]</pre></code></td>
-</tr><tr class="">
-<td id="5_M01_L07" class="label" data-label="5_M01_L07"><pre><code>M01_L07</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>xor       esi,esi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Linq.Enumerable+IEnumerableWhereIterator<DotNetTips.Spargine.Tester.Models.RefTypes.Address></pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       [rbx],rcx</pre></code></td>
-</tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L08"><a href="#5_M01_L08"><pre><code>jne       short M01_L08</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CBCB58]; System.Linq.Enumerable+Iterator`1[[System.__Canon, System.Private.CoreLib]].GetEnumerator()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9907A56E8]; Precode of System.Runtime.CompilerServices.CastHelpers.IsInstanceOfAny(Void*, System.Object)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L09"><a href="#5_M01_L09"><pre><code>jmp       short M01_L09</pre></code></a></td>
+<td></td><td><pre><code>test      rdi,rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td id="9" class="reference" data-reference="9_M03_L04"><a href="#9_M03_L04"><pre><code>jne       near ptr M03_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9907A5730]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       byte ptr [rax],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="9" class="reference" data-reference="9_M03_L00"><a href="#9_M03_L00"><pre><code>jne       short M03_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9907A7380]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9907A56E8]; Precode of System.Runtime.CompilerServices.CastHelpers.IsInstanceOfAny(Void*, System.Object)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdi,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rdi,rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td id="9" class="reference" data-reference="9_M03_L02"><a href="#9_M03_L02"><pre><code>jne       short M03_L02</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="5_M01_L08" class="label" data-label="5_M01_L08"><pre><code>M01_L08</pre></code></td>
+<td id="9_M03_L00" class="label" data-label="9_M03_L00"><pre><code>M03_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF9907A8AF0]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rax,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="9" class="reference" data-reference="9_M03_L01"><a href="#9_M03_L01"><pre><code>jne       short M03_L01</pre></code></a></td>
+</tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r11,7FFEA96509C0</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9907A83B0]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r11,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-30],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdi,rax</pre></code></td>
+<td></td><td><pre><code>mov       esi,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="9" class="reference" data-reference="9_M03_L05"><a href="#9_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
 </tr><tr class="">
-<td id="5_M01_L09" class="label" data-label="5_M01_L09"><pre><code>M01_L09</pre></code></td>
+<td id="9_M03_L01" class="label" data-label="9_M03_L01"><pre><code>M03_L01</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L11"><a href="#5_M01_L11"><pre><code>jmp       short M01_L11</pre></code></a></td>
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>setne     sil</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     esi,sil</pre></code></td>
+</tr><tr class="">
+<td></td><td id="9" class="reference" data-reference="9_M03_L05"><a href="#9_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="5_M01_L10" class="label" data-label="5_M01_L10"><pre><code>M01_L10</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>add       esi,1</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="5" class="reference" data-reference="5_M01_L14"><a href="#5_M01_L14"><pre><code>jo        short M01_L14</pre></code></a></td>
-</tr><tr class="">
-<td id="5_M01_L11" class="label" data-label="5_M01_L11"><pre><code>M01_L11</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       rcx,offset MT_System.Linq.Enumerable+IEnumerableWhereIterator<DotNetTips.Spargine.Tester.Models.RefTypes.Address></pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       [rdi],rcx</pre></code></td>
-</tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L12"><a href="#5_M01_L12"><pre><code>jne       short M01_L12</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CED470]; Precode of System.Linq.Enumerable+IEnumerableWhereIterator`1[[System.__Canon, System.Private.CoreLib]].MoveNext()</pre></code></td>
-</tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L13"><a href="#5_M01_L13"><pre><code>jmp       short M01_L13</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="5_M01_L12" class="label" data-label="5_M01_L12"><pre><code>M01_L12</pre></code></td>
+<td id="9_M03_L02" class="label" data-label="9_M03_L02"><pre><code>M03_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r11,7FFEA96509C8</pre></code></td>
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,1</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="9" class="reference" data-reference="9_M03_L03"><a href="#9_M03_L03"><pre><code>jge       short M03_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       rdx,[rbp-28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     esi,byte ptr [rbp-28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="9" class="reference" data-reference="9_M03_L05"><a href="#9_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
 </tr><tr class="">
-<td id="5_M01_L13" class="label" data-label="5_M01_L13"><pre><code>M01_L13</pre></code></td>
+<td id="9_M03_L03" class="label" data-label="9_M03_L03"><pre><code>M03_L03</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="5" class="reference" data-reference="5_M01_L10"><a href="#5_M01_L10"><pre><code>jne       short M01_L10</pre></code></a></td>
+<td></td><td><pre><code>setne     sil</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,esi</pre></code></td>
+<td></td><td><pre><code>movzx     esi,sil</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>add       rsp,20</pre></code></td>
+<td></td><td id="9" class="reference" data-reference="9_M03_L05"><a href="#9_M03_L05"><pre><code>jmp       short M03_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="9_M03_L04" class="label" data-label="9_M03_L04"><pre><code>M03_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF9907A83A8]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r11,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>setne     sil</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     esi,sil</pre></code></td>
+</tr><tr class="">
+<td id="9_M03_L05" class="label" data-label="9_M03_L05"><pre><code>M03_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>movzx     eax,sil</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,38</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>pop       rbx</pre></code></td>
 </tr><tr class="">
@@ -697,14 +1114,39 @@
 </tr><tr class="">
 <td></td><td><pre><code>pop       rdi</pre></code></td>
 </tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
-<td id="5_M01_L14" class="label" data-label="5_M01_L14"><pre><code>M01_L14</pre></code></td>
+<td id="9_M03_L06" class="label" data-label="9_M03_L06"><pre><code>M03_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      CORINFO_HELP_OVERFLOW</pre></code></td>
+<td></td><td><pre><code>mov       ecx,11</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FF9907A95A8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      rcx,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="9" class="reference" data-reference="9_M03_L07"><a href="#9_M03_L07"><pre><code>je        short M03_L07</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r11,[System.Linq.Enumerable.Select[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>, System.Func`2<System.__Canon,System.__Canon>)]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [r11]</pre></code></td>
+</tr><tr class="">
+<td id="9_M03_L07" class="label" data-label="9_M03_L07"><pre><code>M03_L07</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3</h2>
@@ -715,7 +1157,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>sub       rsp,10</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,1EBD24506A0</pre></code></td>
+<td></td><td><pre><code>mov       rdx,31EAAD206A0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+8],rdx</pre></code></td>
 </tr><tr class="">
@@ -750,7 +1192,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+8],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,188F27406A0</pre></code></td>
+<td></td><td><pre><code>mov       rdx,20B8B9306A0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+8],rdx</pre></code></td>
 </tr><tr class="">
@@ -785,7 +1227,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+8],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,212010D06A0</pre></code></td>
+<td></td><td><pre><code>mov       rdx,28F23E406A0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+8],rdx</pre></code></td>
 </tr><tr class="">
@@ -828,13 +1270,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A76A06A0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC7306A0</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA963A5D0]; System.RuntimeType.IsEnumDefined(System.Object)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF919FEA5D0]; System.RuntimeType.IsEnumDefined(System.Object)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="9" class="reference" data-reference="9_M00_L00"><a href="#9_M00_L00"><pre><code>je        short M00_L00</pre></code></a></td>
+<td></td><td id="13" class="reference" data-reference="13_M00_L00"><a href="#13_M00_L00"><pre><code>je        short M00_L00</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       dword ptr [rsp+20],2</pre></code></td>
 </tr><tr class="">
@@ -844,7 +1286,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DE73D8]; BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[DotNetTips.Spargine.Core.Status, DotNetTips.Spargine.10.Core]](DotNetTips.Spargine.Core.Status ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A7974B0]; BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[DotNetTips.Spargine.Core.Status, DotNetTips.Spargine.10.Core]](DotNetTips.Spargine.Core.Status ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -856,22 +1298,22 @@
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
-<td id="9_M00_L00" class="label" data-label="9_M00_L00"><pre><code>M00_L00</pre></code></td>
+<td id="13_M00_L00" class="label" data-label="13_M00_L00"><pre><code>M00_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DE72D0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A7973A8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      rbx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="9" class="reference" data-reference="9_M00_L01"><a href="#9_M00_L01"><pre><code>jne       short M00_L01</pre></code></a></td>
+<td></td><td id="13" class="reference" data-reference="13_M00_L01"><a href="#13_M00_L01"><pre><code>jne       short M00_L01</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4900]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A864768]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
-<td id="9_M00_L01" class="label" data-label="9_M00_L01"><pre><code>M00_L01</pre></code></td>
+<td id="13_M00_L01" class="label" data-label="13_M00_L01"><pre><code>M00_L01</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.ArgumentOutOfRangeException</pre></code></td>
@@ -884,9 +1326,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,2A3A7694EE8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,197EC724EE8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9BCF840]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A57F810]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
@@ -910,18 +1352,18 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rdx</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L00" class="label" data-label="10_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td id="14_M01_L00" class="label" data-label="14_M01_L00"><pre><code>M01_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L22"><a href="#10_M01_L22"><pre><code>je        near ptr M01_L22</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L22"><a href="#14_M01_L22"><pre><code>je        near ptr M01_L22</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbx+18]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      cl,2</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L14"><a href="#10_M01_L14"><pre><code>jne       near ptr M01_L14</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L14"><a href="#14_M01_L14"><pre><code>jne       near ptr M01_L14</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rcx+10]</pre></code></td>
 </tr><tr class="evenMap">
@@ -933,16 +1375,16 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>movzx     ecx,cl</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L01" class="label" data-label="10_M01_L01"><pre><code>M01_L01</pre></code></td>
+<td id="14_M01_L01" class="label" data-label="14_M01_L01"><pre><code>M01_L01</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>test      ecx,ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L24"><a href="#10_M01_L24"><pre><code>je        near ptr M01_L24</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L24"><a href="#14_M01_L24"><pre><code>je        near ptr M01_L24</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA96FC9F0]; System.Object.GetType()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A0AC9A8]; System.Object.GetType()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
@@ -950,7 +1392,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>test      cl,2</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L15"><a href="#10_M01_L15"><pre><code>jne       near ptr M01_L15</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L15"><a href="#14_M01_L15"><pre><code>jne       near ptr M01_L15</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx+10]</pre></code></td>
 </tr><tr class="">
@@ -962,18 +1404,18 @@
 </tr><tr class="">
 <td></td><td><pre><code>movzx     ecx,cl</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L02" class="label" data-label="10_M01_L02"><pre><code>M01_L02</pre></code></td>
+<td id="14_M01_L02" class="label" data-label="14_M01_L02"><pre><code>M01_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>test      ecx,ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L05"><a href="#10_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L05"><a href="#14_M01_L05"><pre><code>je        short M01_L05</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L23"><a href="#10_M01_L23"><pre><code>jne       near ptr M01_L23</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L23"><a href="#14_M01_L23"><pre><code>jne       near ptr M01_L23</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L03" class="label" data-label="10_M01_L03"><pre><code>M01_L03</pre></code></td>
+<td id="14_M01_L03" class="label" data-label="14_M01_L03"><pre><code>M01_L03</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rdi+18]</pre></code></td>
@@ -982,7 +1424,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>test      al,2</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L16"><a href="#10_M01_L16"><pre><code>jne       near ptr M01_L16</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L16"><a href="#14_M01_L16"><pre><code>jne       near ptr M01_L16</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
 </tr><tr class="">
@@ -994,22 +1436,22 @@
 </tr><tr class="">
 <td></td><td><pre><code>movzx     eax,al</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L04" class="label" data-label="10_M01_L04"><pre><code>M01_L04</pre></code></td>
+<td id="14_M01_L04" class="label" data-label="14_M01_L04"><pre><code>M01_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L24"><a href="#10_M01_L24"><pre><code>je        near ptr M01_L24</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L24"><a href="#14_M01_L24"><pre><code>je        near ptr M01_L24</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      00007FFF09309050</pre></code></td>
+<td></td><td><pre><code>call      00007FF979C89050</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,263128009D8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,157578009D8</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       eax,1A</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L60"><a href="#10_M01_L60"><pre><code>jae       near ptr M01_L60</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L60"><a href="#14_M01_L60"><pre><code>jae       near ptr M01_L60</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ecx,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1017,35 +1459,35 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdi,rcx</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L05" class="label" data-label="10_M01_L05"><pre><code>M01_L05</pre></code></td>
+<td id="14_M01_L05" class="label" data-label="14_M01_L05"><pre><code>M01_L05</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7690020</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC720020</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L25"><a href="#10_M01_L25"><pre><code>je        near ptr M01_L25</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L25"><a href="#14_M01_L25"><pre><code>je        near ptr M01_L25</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7693120</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC723120</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L26"><a href="#10_M01_L26"><pre><code>jne       near ptr M01_L26</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L26"><a href="#14_M01_L26"><pre><code>jne       near ptr M01_L26</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L06" class="label" data-label="10_M01_L06"><pre><code>M01_L06</pre></code></td>
+<td id="14_M01_L06" class="label" data-label="14_M01_L06"><pre><code>M01_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbx+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      00007FFF09309050</pre></code></td>
+<td></td><td><pre><code>call      00007FF979C89050</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,263128009D8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,157578009D8</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       eax,1A</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L60"><a href="#10_M01_L60"><pre><code>jae       near ptr M01_L60</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L60"><a href="#14_M01_L60"><pre><code>jae       near ptr M01_L60</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ecx,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1053,43 +1495,43 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L27"><a href="#10_M01_L27"><pre><code>jne       near ptr M01_L27</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L27"><a href="#14_M01_L27"><pre><code>jne       near ptr M01_L27</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rdi+10]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      rcx,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L17"><a href="#10_M01_L17"><pre><code>je        near ptr M01_L17</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L17"><a href="#14_M01_L17"><pre><code>je        near ptr M01_L17</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      rax,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L17"><a href="#10_M01_L17"><pre><code>je        near ptr M01_L17</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L17"><a href="#14_M01_L17"><pre><code>je        near ptr M01_L17</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L07" class="label" data-label="10_M01_L07"><pre><code>M01_L07</pre></code></td>
+<td id="14_M01_L07" class="label" data-label="14_M01_L07"><pre><code>M01_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       ebp,[rax+98]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      ebp,ebp</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L28"><a href="#10_M01_L28"><pre><code>je        near ptr M01_L28</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L28"><a href="#14_M01_L28"><pre><code>je        near ptr M01_L28</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L08" class="label" data-label="10_M01_L08"><pre><code>M01_L08</pre></code></td>
+<td id="14_M01_L08" class="label" data-label="14_M01_L08"><pre><code>M01_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>add       ebp,0FFFFFFFC</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       ebp,5</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L48"><a href="#10_M01_L48"><pre><code>jne       near ptr M01_L48</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L48"><a href="#14_M01_L48"><pre><code>jne       near ptr M01_L48</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,offset MT_System.Int32</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rsi],rdx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L09"><a href="#10_M01_L09"><pre><code>je        short M01_L09</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L09"><a href="#14_M01_L09"><pre><code>je        short M01_L09</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1097,7 +1539,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L09" class="label" data-label="10_M01_L09"><pre><code>M01_L09</pre></code></td>
+<td id="14_M01_L09" class="label" data-label="14_M01_L09"><pre><code>M01_L09</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       esi,[rsi+8]</pre></code></td>
@@ -1106,46 +1548,46 @@
 </tr><tr class="">
 <td></td><td><pre><code>test      rcx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L18"><a href="#10_M01_L18"><pre><code>je        short M01_L18</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L18"><a href="#14_M01_L18"><pre><code>je        short M01_L18</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rax,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L18"><a href="#10_M01_L18"><pre><code>je        short M01_L18</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L18"><a href="#14_M01_L18"><pre><code>je        short M01_L18</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L10" class="label" data-label="10_M01_L10"><pre><code>M01_L10</pre></code></td>
+<td id="14_M01_L10" class="label" data-label="14_M01_L10"><pre><code>M01_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rax+80]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      rcx,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L20"><a href="#10_M01_L20"><pre><code>je        near ptr M01_L20</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L20"><a href="#14_M01_L20"><pre><code>je        near ptr M01_L20</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,offset MT_System.Enum+EnumInfo<System.UInt32></pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rcx],rdx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L19"><a href="#10_M01_L19"><pre><code>jne       short M01_L19</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L19"><a href="#14_M01_L19"><pre><code>jne       short M01_L19</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rax,rcx</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L11" class="label" data-label="10_M01_L11"><pre><code>M01_L11</pre></code></td>
+<td id="14_M01_L11" class="label" data-label="14_M01_L11"><pre><code>M01_L11</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>test      rax,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L21"><a href="#10_M01_L21"><pre><code>je        short M01_L21</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L21"><a href="#14_M01_L21"><pre><code>je        short M01_L21</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L12" class="label" data-label="10_M01_L12"><pre><code>M01_L12</pre></code></td>
+<td id="14_M01_L12" class="label" data-label="14_M01_L12"><pre><code>M01_L12</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rax+8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       byte ptr [rax+19],0</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L50"><a href="#10_M01_L50"><pre><code>je        near ptr M01_L50</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L50"><a href="#14_M01_L50"><pre><code>je        near ptr M01_L50</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,esi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1157,7 +1599,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>movzx     eax,al</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L13" class="label" data-label="10_M01_L13"><pre><code>M01_L13</pre></code></td>
+<td id="14_M01_L13" class="label" data-label="14_M01_L13"><pre><code>M01_L13</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>add       rsp,28</pre></code></td>
@@ -1172,103 +1614,103 @@
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L14" class="label" data-label="10_M01_L14"><pre><code>M01_L14</pre></code></td>
+<td id="14_M01_L14" class="label" data-label="14_M01_L14"><pre><code>M01_L14</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>xor       ecx,ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L01"><a href="#10_M01_L01"><pre><code>jmp       near ptr M01_L01</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L01"><a href="#14_M01_L01"><pre><code>jmp       near ptr M01_L01</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L15" class="label" data-label="10_M01_L15"><pre><code>M01_L15</pre></code></td>
+<td id="14_M01_L15" class="label" data-label="14_M01_L15"><pre><code>M01_L15</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>xor       ecx,ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L02"><a href="#10_M01_L02"><pre><code>jmp       near ptr M01_L02</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L02"><a href="#14_M01_L02"><pre><code>jmp       near ptr M01_L02</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L16" class="label" data-label="10_M01_L16"><pre><code>M01_L16</pre></code></td>
+<td id="14_M01_L16" class="label" data-label="14_M01_L16"><pre><code>M01_L16</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>xor       eax,eax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L04"><a href="#10_M01_L04"><pre><code>jmp       near ptr M01_L04</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L04"><a href="#14_M01_L04"><pre><code>jmp       near ptr M01_L04</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L17" class="label" data-label="10_M01_L17"><pre><code>M01_L17</pre></code></td>
+<td id="14_M01_L17" class="label" data-label="14_M01_L17"><pre><code>M01_L17</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA96F7C90]; System.RuntimeType.InitializeCache()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A0A7C48]; System.RuntimeType.InitializeCache()</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L07"><a href="#10_M01_L07"><pre><code>jmp       near ptr M01_L07</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L07"><a href="#14_M01_L07"><pre><code>jmp       near ptr M01_L07</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L18" class="label" data-label="10_M01_L18"><pre><code>M01_L18</pre></code></td>
+<td id="14_M01_L18" class="label" data-label="14_M01_L18"><pre><code>M01_L18</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA96F7C90]; System.RuntimeType.InitializeCache()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A0A7C48]; System.RuntimeType.InitializeCache()</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L10"><a href="#10_M01_L10"><pre><code>jmp       short M01_L10</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L10"><a href="#14_M01_L10"><pre><code>jmp       short M01_L10</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L19" class="label" data-label="10_M01_L19"><pre><code>M01_L19</pre></code></td>
+<td id="14_M01_L19" class="label" data-label="14_M01_L19"><pre><code>M01_L19</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rdx,offset MT_System.RuntimeType+CompositeCacheEntry</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L20"><a href="#10_M01_L20"><pre><code>jne       short M01_L20</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L20"><a href="#14_M01_L20"><pre><code>jne       short M01_L20</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rcx+28]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L11"><a href="#10_M01_L11"><pre><code>jmp       short M01_L11</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L11"><a href="#14_M01_L11"><pre><code>jmp       short M01_L11</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L20" class="label" data-label="10_M01_L20"><pre><code>M01_L20</pre></code></td>
+<td id="14_M01_L20" class="label" data-label="14_M01_L20"><pre><code>M01_L20</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>xor       eax,eax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L11"><a href="#10_M01_L11"><pre><code>jmp       short M01_L11</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L11"><a href="#14_M01_L11"><pre><code>jmp       short M01_L11</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L21" class="label" data-label="10_M01_L21"><pre><code>M01_L21</pre></code></td>
+<td id="14_M01_L21" class="label" data-label="14_M01_L21"><pre><code>M01_L21</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CAD0C8]; System.Enum.<GetEnumInfo>g__InitializeEnumInfo|5_0[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A65D140]; System.Enum.<GetEnumInfo>g__InitializeEnumInfo|5_0[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, Boolean)</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L12"><a href="#10_M01_L12"><pre><code>jmp       short M01_L12</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L12"><a href="#14_M01_L12"><pre><code>jmp       short M01_L12</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L22" class="label" data-label="10_M01_L22"><pre><code>M01_L22</pre></code></td>
+<td id="14_M01_L22" class="label" data-label="14_M01_L22"><pre><code>M01_L22</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       ecx,3AD</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFEA9634000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF919FE4000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9977768]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A327738]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE10]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F8E8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L23" class="label" data-label="10_M01_L23"><pre><code>M01_L23</pre></code></td>
+<td id="14_M01_L23" class="label" data-label="14_M01_L23"><pre><code>M01_L23</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEF810]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FDB0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L03"><a href="#10_M01_L03"><pre><code>jne       near ptr M01_L03</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L03"><a href="#14_M01_L03"><pre><code>jne       near ptr M01_L03</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.ArgumentException</pre></code></td>
 </tr><tr class="">
@@ -1276,7 +1718,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4240]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD50]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
@@ -1284,13 +1726,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4258]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD68]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbp</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CAEBE0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A65EC58]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbp</pre></code></td>
 </tr><tr class="">
@@ -1298,19 +1740,19 @@
 </tr><tr class="">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L24" class="label" data-label="10_M01_L24"><pre><code>M01_L24</pre></code></td>
+<td id="14_M01_L24" class="label" data-label="14_M01_L24"><pre><code>M01_L24</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD38]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L25" class="label" data-label="10_M01_L25"><pre><code>M01_L25</pre></code></td>
+<td id="14_M01_L25" class="label" data-label="14_M01_L25"><pre><code>M01_L25</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DE53C8]; System.Enum.GetNamesNoCopy(System.RuntimeType)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A7954A0]; System.Enum.GetNamesNoCopy(System.RuntimeType)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -1324,9 +1766,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,7FFEA9E47C60</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FF91A7F86D0</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DE72E8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A7973C0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>not       eax</pre></code></td>
 </tr><tr class="">
@@ -1344,56 +1786,56 @@
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L26" class="label" data-label="10_M01_L26"><pre><code>M01_L26</pre></code></td>
+<td id="14_M01_L26" class="label" data-label="14_M01_L26"><pre><code>M01_L26</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A76953E0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC7253E0</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7693070</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692ED0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC723070</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A76953B8</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692E58</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC722ED0</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7695408</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692C50</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC7253B8</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7695390</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC722E58</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L06"><a href="#10_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,197EC725408</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,197EC722C50</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,197EC725390</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rdi,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="14" class="reference" data-reference="14_M01_L06"><a href="#14_M01_L06"><pre><code>je        near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_System.InvalidOperationException</pre></code></td>
 </tr><tr class="evenMap">
@@ -1401,13 +1843,13 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4270]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD80]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CAFE58]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A65FED0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
@@ -1415,7 +1857,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L27" class="label" data-label="10_M01_L27"><pre><code>M01_L27</pre></code></td>
+<td id="14_M01_L27" class="label" data-label="14_M01_L27"><pre><code>M01_L27</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.ArgumentException</pre></code></td>
@@ -1424,7 +1866,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4288]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD98]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
@@ -1432,13 +1874,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbp</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4258]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD68]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CAEBE0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A65EC58]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
@@ -1446,34 +1888,34 @@
 </tr><tr class="">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L28" class="label" data-label="10_M01_L28"><pre><code>M01_L28</pre></code></td>
+<td id="14_M01_L28" class="label" data-label="14_M01_L28"><pre><code>M01_L28</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,rdi</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbp</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA989F2B8]; System.RuntimeType.get_IsActualEnum()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A24F288]; System.RuntimeType.get_IsActualEnum()</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L29"><a href="#10_M01_L29"><pre><code>je        short M01_L29</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L29"><a href="#14_M01_L29"><pre><code>je        short M01_L29</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA963A588]; Precode of System.RuntimeType.GetEnumUnderlyingType()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF919FEA588]; Precode of System.RuntimeType.GetEnumUnderlyingType()</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      rbp,rbp</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L29"><a href="#10_M01_L29"><pre><code>je        short M01_L29</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L29"><a href="#14_M01_L29"><pre><code>je        short M01_L29</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_System.RuntimeType</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rbp],rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L29"><a href="#10_M01_L29"><pre><code>je        short M01_L29</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L29"><a href="#14_M01_L29"><pre><code>je        short M01_L29</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1481,205 +1923,205 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L29" class="label" data-label="10_M01_L29"><pre><code>M01_L29</pre></code></td>
+<td id="14_M01_L29" class="label" data-label="14_M01_L29"><pre><code>M01_L29</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A76953B8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC7253B8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L30"><a href="#10_M01_L30"><pre><code>jne       short M01_L30</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L30"><a href="#14_M01_L30"><pre><code>jne       short M01_L30</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,5</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L30" class="label" data-label="10_M01_L30"><pre><code>M01_L30</pre></code></td>
+<td id="14_M01_L30" class="label" data-label="14_M01_L30"><pre><code>M01_L30</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692ED0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC722ED0</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L31"><a href="#10_M01_L31"><pre><code>jne       short M01_L31</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L31"><a href="#14_M01_L31"><pre><code>jne       short M01_L31</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,6</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L31" class="label" data-label="10_M01_L31"><pre><code>M01_L31</pre></code></td>
+<td id="14_M01_L31" class="label" data-label="14_M01_L31"><pre><code>M01_L31</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A76953E0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC7253E0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L32"><a href="#10_M01_L32"><pre><code>jne       short M01_L32</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L32"><a href="#14_M01_L32"><pre><code>jne       short M01_L32</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,7</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L32" class="label" data-label="10_M01_L32"><pre><code>M01_L32</pre></code></td>
+<td id="14_M01_L32" class="label" data-label="14_M01_L32"><pre><code>M01_L32</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7693070</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC723070</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L33"><a href="#10_M01_L33"><pre><code>jne       short M01_L33</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L33"><a href="#14_M01_L33"><pre><code>jne       short M01_L33</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,8</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L33" class="label" data-label="10_M01_L33"><pre><code>M01_L33</pre></code></td>
+<td id="14_M01_L33" class="label" data-label="14_M01_L33"><pre><code>M01_L33</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7693120</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC723120</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L34"><a href="#10_M01_L34"><pre><code>jne       short M01_L34</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L34"><a href="#14_M01_L34"><pre><code>jne       short M01_L34</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,9</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L34" class="label" data-label="10_M01_L34"><pre><code>M01_L34</pre></code></td>
+<td id="14_M01_L34" class="label" data-label="14_M01_L34"><pre><code>M01_L34</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692E58</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC722E58</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L35"><a href="#10_M01_L35"><pre><code>jne       short M01_L35</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L35"><a href="#14_M01_L35"><pre><code>jne       short M01_L35</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,0A</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L35" class="label" data-label="10_M01_L35"><pre><code>M01_L35</pre></code></td>
+<td id="14_M01_L35" class="label" data-label="14_M01_L35"><pre><code>M01_L35</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7695408</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC725408</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L36"><a href="#10_M01_L36"><pre><code>jne       short M01_L36</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L36"><a href="#14_M01_L36"><pre><code>jne       short M01_L36</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,0B</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L36" class="label" data-label="10_M01_L36"><pre><code>M01_L36</pre></code></td>
+<td id="14_M01_L36" class="label" data-label="14_M01_L36"><pre><code>M01_L36</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692C50</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC722C50</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L37"><a href="#10_M01_L37"><pre><code>jne       short M01_L37</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L37"><a href="#14_M01_L37"><pre><code>jne       short M01_L37</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,0C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L37" class="label" data-label="10_M01_L37"><pre><code>M01_L37</pre></code></td>
+<td id="14_M01_L37" class="label" data-label="14_M01_L37"><pre><code>M01_L37</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7695368</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC725368</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L38"><a href="#10_M01_L38"><pre><code>jne       short M01_L38</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L38"><a href="#14_M01_L38"><pre><code>jne       short M01_L38</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,3</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L38" class="label" data-label="10_M01_L38"><pre><code>M01_L38</pre></code></td>
+<td id="14_M01_L38" class="label" data-label="14_M01_L38"><pre><code>M01_L38</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7695390</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC725390</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L39"><a href="#10_M01_L39"><pre><code>jne       short M01_L39</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L39"><a href="#14_M01_L39"><pre><code>jne       short M01_L39</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       near ptr M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L39" class="label" data-label="10_M01_L39"><pre><code>M01_L39</pre></code></td>
+<td id="14_M01_L39" class="label" data-label="14_M01_L39"><pre><code>M01_L39</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7695430</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC725430</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L40"><a href="#10_M01_L40"><pre><code>jne       short M01_L40</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L40"><a href="#14_M01_L40"><pre><code>jne       short M01_L40</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,0D</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L40" class="label" data-label="10_M01_L40"><pre><code>M01_L40</pre></code></td>
+<td id="14_M01_L40" class="label" data-label="14_M01_L40"><pre><code>M01_L40</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7695458</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC725458</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L41"><a href="#10_M01_L41"><pre><code>jne       short M01_L41</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L41"><a href="#14_M01_L41"><pre><code>jne       short M01_L41</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,0E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L41" class="label" data-label="10_M01_L41"><pre><code>M01_L41</pre></code></td>
+<td id="14_M01_L41" class="label" data-label="14_M01_L41"><pre><code>M01_L41</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A76962E0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC7262E0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L42"><a href="#10_M01_L42"><pre><code>jne       short M01_L42</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L42"><a href="#14_M01_L42"><pre><code>jne       short M01_L42</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,0F</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L42" class="label" data-label="10_M01_L42"><pre><code>M01_L42</pre></code></td>
+<td id="14_M01_L42" class="label" data-label="14_M01_L42"><pre><code>M01_L42</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A7692AC8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC722AC8</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L43"><a href="#10_M01_L43"><pre><code>jne       short M01_L43</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L43"><a href="#14_M01_L43"><pre><code>jne       short M01_L43</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,10</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L43" class="label" data-label="10_M01_L43"><pre><code>M01_L43</pre></code></td>
+<td id="14_M01_L43" class="label" data-label="14_M01_L43"><pre><code>M01_L43</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,2A3A7690020</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC720020</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rbp,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L44"><a href="#10_M01_L44"><pre><code>jne       short M01_L44</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L44"><a href="#14_M01_L44"><pre><code>jne       short M01_L44</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebp,12</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L45"><a href="#10_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L45"><a href="#14_M01_L45"><pre><code>jmp       short M01_L45</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L44" class="label" data-label="10_M01_L44"><pre><code>M01_L44</pre></code></td>
+<td id="14_M01_L44" class="label" data-label="14_M01_L44"><pre><code>M01_L44</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2A3A76A0708</pre></code></td>
+<td></td><td><pre><code>mov       rcx,197EC730708</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       eax,1</pre></code></td>
 </tr><tr class="evenMap">
@@ -1691,66 +2133,66 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ebp,eax</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L45" class="label" data-label="10_M01_L45"><pre><code>M01_L45</pre></code></td>
+<td id="14_M01_L45" class="label" data-label="14_M01_L45"><pre><code>M01_L45</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rdi+10]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rcx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L46"><a href="#10_M01_L46"><pre><code>je        short M01_L46</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L46"><a href="#14_M01_L46"><pre><code>je        short M01_L46</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rax,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L46"><a href="#10_M01_L46"><pre><code>je        short M01_L46</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L46"><a href="#14_M01_L46"><pre><code>je        short M01_L46</pre></code></a></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L47"><a href="#10_M01_L47"><pre><code>jmp       short M01_L47</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L47"><a href="#14_M01_L47"><pre><code>jmp       short M01_L47</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L46" class="label" data-label="10_M01_L46"><pre><code>M01_L46</pre></code></td>
+<td id="14_M01_L46" class="label" data-label="14_M01_L46"><pre><code>M01_L46</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA96F7C90]; System.RuntimeType.InitializeCache()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A0A7C48]; System.RuntimeType.InitializeCache()</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L47" class="label" data-label="10_M01_L47"><pre><code>M01_L47</pre></code></td>
+<td id="14_M01_L47" class="label" data-label="14_M01_L47"><pre><code>M01_L47</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       [rax+98],ebp</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L08"><a href="#10_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L08"><a href="#14_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L48" class="label" data-label="10_M01_L48"><pre><code>M01_L48</pre></code></td>
+<td id="14_M01_L48" class="label" data-label="14_M01_L48"><pre><code>M01_L48</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>cmp       ebp,0A</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L49"><a href="#10_M01_L49"><pre><code>ja        short M01_L49</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L49"><a href="#14_M01_L49"><pre><code>ja        short M01_L49</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,ebp</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>lea       rcx,[7FFEA97BDBB0]</pre></code></td>
+<td></td><td><pre><code>lea       rcx,[7FF91A16D880]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       ecx,[rcx+rdx*4]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L00"><a href="#10_M01_L00"><pre><code>lea       rax,[M01_L00]</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L00"><a href="#14_M01_L00"><pre><code>lea       rax,[M01_L00]</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>add       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>jmp       rcx</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L49" class="label" data-label="10_M01_L49"><pre><code>M01_L49</pre></code></td>
+<td id="14_M01_L49" class="label" data-label="14_M01_L49"><pre><code>M01_L49</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rdx,2A3A7693048</pre></code></td>
+<td></td><td><pre><code>mov       rdx,197EC723048</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       rdi,rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L58"><a href="#10_M01_L58"><pre><code>je        near ptr M01_L58</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L58"><a href="#14_M01_L58"><pre><code>je        near ptr M01_L58</pre></code></a></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L56"><a href="#10_M01_L56"><pre><code>jmp       near ptr M01_L56</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L56"><a href="#14_M01_L56"><pre><code>jmp       near ptr M01_L56</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
@@ -1762,9 +2204,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFEA0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F978]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
@@ -1776,9 +2218,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFEA0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F978]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
@@ -1790,9 +2232,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE88]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F960]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
@@ -1804,36 +2246,36 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE88]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F960]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L50" class="label" data-label="10_M01_L50"><pre><code>M01_L50</pre></code></td>
+<td id="14_M01_L50" class="label" data-label="14_M01_L50"><pre><code>M01_L50</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>test      rcx,rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L51"><a href="#10_M01_L51"><pre><code>jne       short M01_L51</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L51"><a href="#14_M01_L51"><pre><code>jne       short M01_L51</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       eax,eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L52"><a href="#10_M01_L52"><pre><code>jmp       short M01_L52</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L52"><a href="#14_M01_L52"><pre><code>jmp       short M01_L52</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L51" class="label" data-label="10_M01_L51"><pre><code>M01_L51</pre></code></td>
+<td id="14_M01_L51" class="label" data-label="14_M01_L51"><pre><code>M01_L51</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>lea       rax,[rcx+10]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8d,[rcx+8]</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L52" class="label" data-label="10_M01_L52"><pre><code>M01_L52</pre></code></td>
+<td id="14_M01_L52" class="label" data-label="14_M01_L52"><pre><code>M01_L52</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>cmp       dword ptr [rcx+8],20</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L53"><a href="#10_M01_L53"><pre><code>jle       short M01_L53</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L53"><a href="#14_M01_L53"><pre><code>jle       short M01_L53</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1841,27 +2283,27 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8d,esi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFAC8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A864030]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L54"><a href="#10_M01_L54"><pre><code>jmp       short M01_L54</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L54"><a href="#14_M01_L54"><pre><code>jmp       short M01_L54</pre></code></a></td>
 </tr><tr class="">
-<td id="10_M01_L53" class="label" data-label="10_M01_L53"><pre><code>M01_L53</pre></code></td>
+<td id="14_M01_L53" class="label" data-label="14_M01_L53"><pre><code>M01_L53</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,esi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFDE0]; System.SpanHelpers.NonPackedIndexOfValueType[[System.Int32, System.Private.CoreLib],[System.SpanHelpers+DontNegate`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]](Int32 ByRef, Int32, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A864348]; System.SpanHelpers.NonPackedIndexOfValueType[[System.Int32, System.Private.CoreLib],[System.SpanHelpers+DontNegate`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]](Int32 ByRef, Int32, Int32)</pre></code></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L54" class="label" data-label="10_M01_L54"><pre><code>M01_L54</pre></code></td>
+<td id="14_M01_L54" class="label" data-label="14_M01_L54"><pre><code>M01_L54</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>not       eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>shr       eax,1F</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1873,9 +2315,9 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DE7348]; System.Enum.IsDefinedPrimitive[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, UInt32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A797420]; System.Enum.IsDefinedPrimitive[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, UInt32)</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1887,9 +2329,9 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE70]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F948]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1901,9 +2343,9 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE70]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F948]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1915,9 +2357,9 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE58]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F930]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1929,39 +2371,39 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE40]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F918]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_System.Char</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rsi],rcx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L55"><a href="#10_M01_L55"><pre><code>je        short M01_L55</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L55"><a href="#14_M01_L55"><pre><code>je        short M01_L55</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L55" class="label" data-label="10_M01_L55"><pre><code>M01_L55</pre></code></td>
+<td id="14_M01_L55" class="label" data-label="14_M01_L55"><pre><code>M01_L55</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>movzx     edx,word ptr [rsi+8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFEB8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F990]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L56" class="label" data-label="10_M01_L56"><pre><code>M01_L56</pre></code></td>
+<td id="14_M01_L56" class="label" data-label="14_M01_L56"><pre><code>M01_L56</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,2A3A7695480</pre></code></td>
+<td></td><td><pre><code>mov       rdx,197EC725480</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       rdi,rdx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="10" class="reference" data-reference="10_M01_L57"><a href="#10_M01_L57"><pre><code>je        short M01_L57</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L57"><a href="#14_M01_L57"><pre><code>je        short M01_L57</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_System.InvalidOperationException</pre></code></td>
 </tr><tr class="evenMap">
@@ -1969,13 +2411,13 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9EB4270]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79FD80]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9CAFE58]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A65FED0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -1983,7 +2425,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L57" class="label" data-label="10_M01_L57"><pre><code>M01_L57</pre></code></td>
+<td id="14_M01_L57" class="label" data-label="14_M01_L57"><pre><code>M01_L57</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
@@ -1996,11 +2438,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE28]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F900]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L59"><a href="#10_M01_L59"><pre><code>jmp       short M01_L59</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L59"><a href="#14_M01_L59"><pre><code>jmp       short M01_L59</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L58" class="label" data-label="10_M01_L58"><pre><code>M01_L58</pre></code></td>
+<td id="14_M01_L58" class="label" data-label="14_M01_L58"><pre><code>M01_L58</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
@@ -2013,14 +2455,14 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFEA9DEFE28]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF91A79F900]</pre></code></td>
 </tr><tr class="">
-<td id="10_M01_L59" class="label" data-label="10_M01_L59"><pre><code>M01_L59</pre></code></td>
+<td id="14_M01_L59" class="label" data-label="14_M01_L59"><pre><code>M01_L59</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td id="10" class="reference" data-reference="10_M01_L13"><a href="#10_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="14" class="reference" data-reference="14_M01_L13"><a href="#14_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="10_M01_L60" class="label" data-label="10_M01_L60"><pre><code>M01_L60</pre></code></td>
+<td id="14_M01_L60" class="label" data-label="14_M01_L60"><pre><code>M01_L60</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>call      CORINFO_HELP_RNGCHKFAIL</pre></code></td>

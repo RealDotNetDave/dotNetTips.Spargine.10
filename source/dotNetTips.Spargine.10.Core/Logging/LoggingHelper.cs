@@ -411,12 +411,10 @@ public static class LoggingHelper
 	/// AppInfo:SystemDirectory - C:\\WINDOWS\\system32
 	/// AppInfo:HasShutdownStarted - False
 	/// </example>
-	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void LogComputerInformation([DisallowNull] ILogger logger)
 	{
 		logger = logger.ArgumentNotNull();
-
-		//TODO: ANALYZE COPILOT CHANGES
 
 		var values = TypeHelper.GetPropertyValues(new ComputerInfo());
 
@@ -425,9 +423,9 @@ public static class LoggingHelper
 			return;
 		}
 
-		var sortedItems = values.OrderBy(static p => p.Key).ToArray();
+		var sortedItems = values.OrderBy(static p => p.Key);
 
-		foreach (var item in sortedItems.AsSpan())
+		foreach (var item in sortedItems)
 		{
 			logger.LogComputerInfoItem(item.Key, item.Value);
 		}
