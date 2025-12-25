@@ -26,30 +26,103 @@ public class ConcurrentBagExtensionsTests
 {
 
 	[TestMethod]
-	public void AddRange_EmptyItems_DoesNothing()
+	public void AddRange_Array_AddsAllItems()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1 };
+		var items = new int[] { 2, 3, 4 };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(4, bag.Count);
+		CollectionAssert.Contains(bag.ToList(), 2);
+		CollectionAssert.Contains(bag.ToList(), 3);
+		CollectionAssert.Contains(bag.ToList(), 4);
+	}
+
+	[TestMethod]
+	public void AddRange_DuplicateItems_AddsAllDuplicates()
 	{
 		// Arrange
 		var bag = new ConcurrentBag<int> { 1, 2 };
+		var items = new List<int> { 1, 2, 3 };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(5, bag.Count);
+		var bagList = bag.ToList();
+		Assert.AreEqual(2, bagList.FindAll(x => x == 1).Count);
+		Assert.AreEqual(2, bagList.FindAll(x => x == 2).Count);
+	}
+
+	[TestMethod]
+	public void AddRange_EmptyBag_AddsAllItems()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int>();
+		var items = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(5, bag.Count);
+		CollectionAssert.AreEquivalent(items, bag.ToList());
+	}
+
+	[TestMethod]
+	public void AddRange_EmptyCollection_DoesNotModifyBag()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1, 2, 3 };
 		var items = new List<int>();
 
 		// Act
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(2, bag.Count);
+		Assert.AreEqual(3, bag.Count);
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, bag.ToList());
 	}
 
-	public void AddRange_EmptyItems_Null()
+	[TestMethod]
+	public void AddRange_ItemsWithNull_AddsNullValues()
 	{
 		// Arrange
-		var bag = new ConcurrentBag<int> { 1, 2 };
-		List<int> items = null;
+		var bag = new ConcurrentBag<string> { "a" };
+		var items = new List<string> { "b", null, "c" };
 
 		// Act
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(2, bag.Count);
+		Assert.AreEqual(4, bag.Count);
+		CollectionAssert.Contains(bag.ToList(), null);
+		CollectionAssert.Contains(bag.ToList(), "b");
+		CollectionAssert.Contains(bag.ToList(), "c");
+	}
+
+	[TestMethod]
+	public void AddRange_LargeCollection_AddsAllItems()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int>();
+		var items = new List<int>();
+		for (var i = 0; i < 1000; i++)
+		{
+			items.Add(i);
+		}
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(1000, bag.Count);
+		CollectionAssert.AreEquivalent(items, bag.ToList());
 	}
 
 	[TestMethod]
@@ -64,17 +137,84 @@ public class ConcurrentBagExtensionsTests
 	}
 
 	[TestMethod]
-	public void AddRange_ValidParameters_AddsItems()
+	public void AddRange_NullItems_DoesNotModifyBag()
 	{
 		// Arrange
-		var bag = new ConcurrentBag<int>();
-		var items = new List<int> { 1, 2, 3 };
+		var bag = new ConcurrentBag<int> { 1, 2, 3 };
+		List<int> items = null;
 
 		// Act
 		bag.AddRange(items);
 
 		// Assert
 		Assert.AreEqual(3, bag.Count);
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, bag.ToList());
+	}
+
+	[TestMethod]
+	public void AddRange_ReferenceTypeItems_AddsAllItemsToBag()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<object>();
+		var items = new List<object> { new object(), new object(), new object() };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, bag.Count);
+		foreach (var item in items)
+		{
+			CollectionAssert.Contains(bag.ToList(), item);
+		}
+	}
+
+	[TestMethod]
+	public void AddRange_SingleItem_AddsItemToBag()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1, 2 };
+		var items = new List<int> { 3 };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, bag.Count);
+		CollectionAssert.Contains(bag.ToList(), 3);
+	}
+
+	[TestMethod]
+	public void AddRange_StringItems_AddsAllStringsToBag()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<string> { "a", "b" };
+		var items = new List<string> { "c", "d", "e" };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(5, bag.Count);
+		CollectionAssert.Contains(bag.ToList(), "c");
+		CollectionAssert.Contains(bag.ToList(), "d");
+		CollectionAssert.Contains(bag.ToList(), "e");
+	}
+	[TestMethod]
+	public void AddRange_ValidItems_AddsAllItemsToBag()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1, 2, 3 };
+		var items = new List<int> { 4, 5, 6 };
+
+		// Act
+		bag.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(6, bag.Count);
+		CollectionAssert.Contains(bag.ToList(), 4);
+		CollectionAssert.Contains(bag.ToList(), 5);
+		CollectionAssert.Contains(bag.ToList(), 6);
 	}
 
 	[TestMethod]

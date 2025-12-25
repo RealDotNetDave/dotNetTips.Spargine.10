@@ -631,52 +631,189 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void ReplaceIf_ReplacesElementsCorrectly()
+	public void ReplaceIf_AllItemsMatch_ReplacesAll()
 	{
-		var numbers = new List<int> { 1, 2, 3, 4, 5 };
-		var result = numbers.ReplaceIf((x, index) => x % 2 == 0, 0).ToList();
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
 
-		var expected = new List<int> { 1, 0, 3, 0, 5 };
-		CollectionAssert.AreEqual(expected, result);
+		var result = numbers.ReplaceIf((n, i) => true, 99).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 99, 99, 99 }, result);
 	}
 
 	[TestMethod]
-	public void ReplaceIf_ThrowsArgumentNullException_WhenCollectionIsNull()
+	public void ReplaceIf_ComplexPredicate_ReplacesCorrectly()
 	{
-		List<int> nullCollection = null;
+		var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }.AsEnumerable();
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.ReplaceIf((x, index) => x % 2 == 0, 0).ToList());
+		var result = numbers.ReplaceIf((n, i) => n % 2 == 0 && i < 5, -1).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 1, -1, 3, -1, 5, 6, 7, 8, 9, 10 }, result);
 	}
 
 	[TestMethod]
-	public void ReplaceIf_ThrowsArgumentNullException_WhenPredicateIsNull()
+	public void ReplaceIf_EmptyCollection_ReturnsEmpty()
 	{
-		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+		var emptyList = new List<int>().AsEnumerable();
+
+		var result = emptyList.ReplaceIf((item, index) => true, 99).ToList();
+
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_LargeCollection_PerformanceTest()
+	{
+		var numbers = Enumerable.Range(1, Count).AsEnumerable();
+
+		var result = numbers.ReplaceIf((n, i) => n % 100 == 0, 0).ToList();
+
+		Assert.AreEqual(Count, result.Count);
+		Assert.AreEqual(0, result[99]); // 100th element (index 99) should be replaced
+	}
+
+	[TestMethod]
+	public void ReplaceIf_NoMatchingItems_ReturnsOriginal()
+	{
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		var result = numbers.ReplaceIf((n, i) => n > 10, 0).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_NullCollection_ThrowsArgumentNullException()
+	{
+		IEnumerable<int> nullCollection = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.ReplaceIf((item, index) => true, 0).ToList());
+	}
+
+	[TestMethod]
+	public void ReplaceIf_NullPredicate_ThrowsArgumentNullException()
+	{
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => numbers.ReplaceIf(null, 0).ToList());
 	}
 
 	[TestMethod]
-	public void ReplaceIf_WithComplexType_ReplacesElementsCorrectly()
+	public void ReplaceIf_PreservesOriginalCollection()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		var replacementPerson = RandomData.GeneratePerson<Person>();
-		var result = people.ReplaceIf((p, index) => index % 2 == 0, replacementPerson).ToList();
+		var originalNumbers = new List<int> { 1, 2, 3, 4, 5 };
+		var numbers = originalNumbers.AsEnumerable();
 
-		for (int i = 0; i < result.Count; i += 2)
-		{
-			Assert.AreEqual(replacementPerson, result[i]);
-		}
+		var result = numbers.ReplaceIf((n, i) => n > 3, 0).ToList();
+
+		// Original collection should be unchanged
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 4, 5 }, originalNumbers);
+		// Result should have replacements
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 0, 0 }, result);
 	}
 
 	[TestMethod]
-	public void ReplaceIf_WithEmptyCollection_ReturnsEmptyCollection()
+	public void ReplaceIf_ReplaceBasedOnIndex_ReplacesCorrectly()
 	{
-		var emptyList = new List<int>();
-		var result = emptyList.ReplaceIf((x, index) => x % 2 == 0, 0).ToList();
+		var numbers = new List<int> { 10, 20, 30, 40, 50 }.AsEnumerable();
 
-		Assert.AreEqual(0, result.Count);
+		var result = numbers.ReplaceIf((n, i) => i % 2 == 0, -1).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { -1, 20, -1, 40, -1 }, result);
 	}
+
+	[TestMethod]
+	public void ReplaceIf_ReplaceItemsGreaterThanThreshold_ReplacesCorrectly()
+	{
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		var result = numbers.ReplaceIf((n, i) => n > 3, 0).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 0, 0 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_SingleElement_DoesNotReplaceIfNoMatch()
+	{
+		var numbers = new List<int> { 42 }.AsEnumerable();
+
+		var result = numbers.ReplaceIf((n, i) => n != 42, 0).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 42 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_SingleElement_ReplacesIfMatches()
+	{
+		var numbers = new List<int> { 42 }.AsEnumerable();
+
+		var result = numbers.ReplaceIf((n, i) => n == 42, 0).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 0 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_WithArray_ReplacesCorrectly()
+	{
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		var result = numbers.ReplaceIf((n, i) => n % 2 == 0, 0).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 1, 0, 3, 0, 5 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_WithIList_ReplacesCorrectly()
+	{
+		IList<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+		var result = numbers.ReplaceIf((n, i) => n == 3, 99).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 99, 4, 5 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_WithList_ReplacesCorrectly()
+	{
+		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+		var result = numbers.ReplaceIf((n, i) => n > 2, 0).ToList();
+
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 0, 0, 0 }, result);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_WithNullReplacement_ReplacesWithNull()
+	{
+		var words = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
+
+		var result = words.ReplaceIf((s, i) => s == "banana", null).ToList();
+
+		Assert.AreEqual(3, result.Count);
+		Assert.IsNull(result[1]);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_WithReferenceTypes_ReplacesCorrectly()
+	{
+		var people = RandomData.GeneratePersonRefCollection(5).AsEnumerable();
+		var replacementPerson = RandomData.GeneratePerson<Person>();
+
+		var result = people.ReplaceIf((p, i) => i == 2, replacementPerson).ToList();
+
+		Assert.AreEqual(5, result.Count);
+		Assert.AreEqual(replacementPerson, result[2]);
+	}
+
+	[TestMethod]
+	public void ReplaceIf_WithStrings_ReplacesCorrectly()
+	{
+		var words = new List<string> { "apple", "banana", "cherry", "date" }.AsEnumerable();
+
+		var result = words.ReplaceIf((s, i) => s.Contains('a'), "REPLACED").ToList();
+
+		CollectionAssert.AreEqual(new List<string> { "REPLACED", "REPLACED", "cherry", "REPLACED" }, result);
+	}
+
 
 	[TestMethod]
 	public void ShuffleTest()
