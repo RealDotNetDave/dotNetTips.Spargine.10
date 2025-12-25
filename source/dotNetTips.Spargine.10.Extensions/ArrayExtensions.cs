@@ -11,6 +11,7 @@
 // </copyright>
 // <summary>Extensions methods for the Array type.</summary>
 // ***********************************************************************
+using System;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -84,7 +85,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] AddFirst([AllowNull] in T item)
 		{
 			if (item is null)
@@ -161,7 +162,7 @@ public static class ArrayExtensions
 
 			var result = new ArraySegment<T>(array, startIndex, count);
 
-			return [.. result];
+			return result.ToArray();
 		}
 
 		/// <summary>
@@ -173,7 +174,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			if (item is null)
@@ -198,11 +199,9 @@ public static class ArrayExtensions
 		/// <param name="arrayToCheck">The array to check.</param>
 		/// <returns><c>true</c> if the arrays are equal; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
-			//TODO: SUGGESTION FROM COPILOT SLOWER. CHECK PERFORMANCE
-
 			return array is null || arrayToCheck is null
 				? false
 				: array.LongLength != arrayToCheck.LongLength ? false : array.AsSpan().SequenceEqual(arrayToCheck);
@@ -310,7 +309,7 @@ public static class ArrayExtensions
 		/// <returns>A hash code representing the contents of the array.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public int GenerateHashCode()
 		{
 			return array.ArgumentNotNull().Where(t => t is not null).Aggregate(6551, (accumulator, t) => accumulator ^= (accumulator << 5) ^ EqualityComparer<T>.Default.GetHashCode(t));
@@ -571,14 +570,17 @@ public static class ArrayExtensions
 				return array;
 			}
 
-			var index = Array.IndexOf(array, item);
+			var index = array.AsSpan().IndexOf(item);
 
 			if (index >= 0)
 			{
 				// Item exists - replace it (creates a copy to maintain immutability)
 				var result = new T[array.Length];
+
 				array.AsSpan().CopyTo(result);
+
 				result[index] = item;
+
 				return result;
 			}
 

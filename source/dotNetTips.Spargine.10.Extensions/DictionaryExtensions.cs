@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 12-25-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -44,7 +44,7 @@ public static class DictionaryExtensions
 	/// <param name="value">The value of the element to add. It must not be null.</param>
 	/// <returns>true if the key/value pair was added to the dictionary successfully; otherwise, false.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection" />, <paramref name="key" />, or <paramref name="value" /> is null.</exception>
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static bool AddIfNotExists<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [AllowNull] in TValue value)
 		where TKey : notnull
 		where TValue : notnull
@@ -79,7 +79,7 @@ public static class DictionaryExtensions
 	/// <returns><c>true</c> if at least one item was added to the dictionary; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/>, <paramref name="items"/>, <paramref name="keyFunction"/>, or <paramref name="valueFunction"/> is null.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(AddRange), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(AddRange), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static bool AddRange<T, TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IEnumerable<T> items, [DisallowNull] Func<T, TKey> keyFunction, Func<T, TValue> valueFunction)
 		where TKey : notnull
 		where TValue : notnull
@@ -144,18 +144,61 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Gets the valueFunction associated with the specified keyFunction or adds it if the keyFunction does not exist.
+	/// Gets the value associated with the specified key or adds it if the key does not exist.
 	/// </summary>
 	/// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
 	/// <param name="collection">The dictionary to search or add to.</param>
-	/// <param name="key">The keyFunction of the valueFunction to get or add.</param>
-	/// <param name="value">The valueFunction to add if the keyFunction does not exist.</param>
-	/// <returns>The valueFunction associated with the specified keyFunction.</returns>
+	/// <param name="key">The key of the value to get or add.</param>
+	/// <param name="value">The value to add if the key does not exist.</param>
+	/// <returns>The value associated with the specified key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection" />, <paramref name="key" />, or <paramref name="value" /> is null.</exception>
+	/// <remarks>
+	/// <para>
+	/// This method provides a "get-or-add" operation that retrieves an existing value or adds a new one atomically.
+	/// </para>
+	/// <para>
+	/// <b>Performance Optimization:</b> Uses <see cref="IDictionary{TKey, TValue}.TryAdd"/> which is a single 
+	/// O(1) operation in .NET 10, avoiding the need for separate ContainsKey + Add operations. If the key already 
+	/// exists, <c>TryAdd</c> returns false and we retrieve the existing value with a second <c>TryGetValue</c> call.
+	/// </para>
+	/// <para>
+	/// <b>Thread Safety:</b> This method is not atomic for regular <see cref="Dictionary{TKey, TValue}"/>. 
+	/// For thread-safe operations, use <see cref="ConcurrentDictionary{TKey, TValue}.GetOrAdd(TKey, TValue)"/> instead.
+	/// </para>
+	/// <para>
+	/// <b>Comparison to ConcurrentDictionary:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// This extension mimics <see cref="ConcurrentDictionary{TKey, TValue}.GetOrAdd(TKey, TValue)"/> 
+	/// behavior for regular dictionaries.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// Unlike <c>ConcurrentDictionary.GetOrAdd</c>, this is not thread-safe - use appropriate 
+	/// synchronization if called from multiple threads.
+	/// </description>
+	/// </item>
+	/// </list>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var cache = new Dictionary&lt;string, ExpensiveObject&gt;();
+	/// 
+	/// // Get existing value or add new one
+	/// var obj = cache.GetOrAdd("key1", new ExpensiveObject());
+	/// 
+	/// // Second call returns the cached instance
+	/// var sameObj = cache.GetOrAdd("key1", new ExpensiveObject()); // obj == sameObj
+	/// </code>
+	/// </example>
 	[Pure]
 	[return: NotNull]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetOrAdd), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static TValue GetOrAdd<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] TValue value)
 		where TKey : notnull
 		where TValue : notnull
@@ -164,13 +207,13 @@ public static class DictionaryExtensions
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
-		if (!collection.TryGetValue(key, out var item))
+		if (collection.TryAdd(key, value))
 		{
-			collection.Add(key, value);
+			// Key was added successfully, return the new value
 			return value;
 		}
 
-		return item;
+		return collection[key];
 	}
 
 	/// <summary>
@@ -190,18 +233,101 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Converts to a <see cref="IDictionary{TKey, TValue}" /> to a <see cref="ConcurrentDictionary{TKey, TValue}" />.
+	/// Converts an <see cref="IDictionary{TKey, TValue}" /> to a <see cref="ConcurrentDictionary{TKey, TValue}" />.
 	/// </summary>
-	/// <typeparam name="TKey">The type of the t keyFunction.</typeparam>
-	/// <typeparam name="TValue">The type of the t valueFunction.</typeparam>
-	/// <param name="collection">The collection.</param>
-	/// <returns>ConcurrentDictionary&lt;TKey, TValue&gt;.</returns>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="collection">The dictionary to convert. Must not be null.</param>
+	/// <returns>
+	/// A new <see cref="ConcurrentDictionary{TKey, TValue}"/> containing all key-value pairs from the source dictionary.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	/// <remarks>
+	/// <para>
+	/// This method creates a thread-safe concurrent dictionary from a regular dictionary by copying all elements.
+	/// The resulting <see cref="ConcurrentDictionary{TKey, TValue}"/> can be safely accessed by multiple threads concurrently.
+	/// </para>
+	/// <para>
+	/// <b>Performance Characteristics:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// <b>Constructor optimization:</b> Uses the <c>ConcurrentDictionary(IEnumerable&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;)</c> 
+	/// constructor which is optimized for bulk initialization from existing collections.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>Default concurrency level:</b> Automatically set to the number of CPU cores, providing optimal 
+	/// performance for most scenarios without manual tuning.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>Initial capacity:</b> Automatically sized based on the source collection count, preventing 
+	/// resize operations during initialization.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>Time complexity:</b> O(n) where n is the number of elements in the source dictionary.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>Space complexity:</b> O(n) - creates a new dictionary with all elements copied.
+	/// </description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// <b>Use Cases:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>Converting a regular dictionary to a thread-safe version for concurrent access.</description>
+	/// </item>
+	/// <item>
+	/// <description>Preparing data for multi-threaded scenarios where frequent reads and updates occur.</description>
+	/// </item>
+	/// <item>
+	/// <description>Scenarios with many reads and many updates where <see cref="ConcurrentDictionary{TKey, TValue}"/> 
+	/// significantly outperforms locked <see cref="Dictionary{TKey, TValue}"/> access.</description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// <b>Thread Safety:</b> The resulting <see cref="ConcurrentDictionary{TKey, TValue}"/> provides 
+	/// thread-safe operations for all public members. However, the conversion itself is not thread-safe - 
+	/// ensure the source dictionary is not modified during conversion.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var regularDict = new Dictionary&lt;string, int&gt;
+	/// {
+	///     ["one"] = 1,
+	///     ["two"] = 2,
+	///     ["three"] = 3
+	/// };
+	/// 
+	/// // Convert to thread-safe concurrent dictionary
+	/// var concurrentDict = regularDict.ToConcurrentDictionary();
+	/// 
+	/// // Now safe for concurrent access
+	/// Parallel.For(0, 1000, i =>
+	/// {
+	///     concurrentDict.TryAdd($"key{i}", i);
+	///     concurrentDict.TryGetValue("one", out var value);
+	/// });
+	/// </code>
+	/// </example>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToSortedDictionary), "David McCarter", "7/23/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToConcurrentDictionary), "David McCarter", "7/23/2022", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		return new(collection.ArgumentNotNull());
+		return new ConcurrentDictionary<TKey, TValue>(collection.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -312,18 +438,130 @@ public static class DictionaryExtensions
 
 	/// <summary>
 	/// Converts <see cref="IDictionary{TKey, TValue}" /> to <see cref="ReadOnlyDictionary{TKey, TValue}" />.
-	/// Validates that <paramref name="collection" /> is not null.
 	/// </summary>
-	/// <typeparam name="TKey">The type of the t keyFunction.</typeparam>
-	/// <typeparam name="TValue">The type of the t valueFunction.</typeparam>
-	/// <param name="collection">The values.</param>
-	/// <returns>ReadOnlyDictionary&lt;TKey, TValue&gt;.</returns>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="collection">The dictionary to convert. Must not be null.</param>
+	/// <returns>A <see cref="ReadOnlyDictionary{TKey, TValue}"/> that wraps the original dictionary.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	/// <remarks>
+	/// <para>
+	/// This method creates a read-only wrapper around an existing dictionary. The wrapper provides
+	/// a read-only view of the underlying dictionary - modifications to the source dictionary will
+	/// be visible through the read-only wrapper.
+	/// </para>
+	/// <para>
+	/// <b>Performance Characteristics:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// <b>Wrapper pattern:</b> <see cref="ReadOnlyDictionary{TKey, TValue}"/> is a thin wrapper
+	/// that does not copy elements. It provides O(1) construction time regardless of dictionary size.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>No data duplication:</b> The wrapper references the original dictionary, so memory
+	/// usage is minimal (just the wrapper object overhead, ~24-32 bytes).
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>Lookup performance:</b> All read operations (TryGetValue, ContainsKey, indexer) delegate
+	/// directly to the underlying dictionary with O(1) complexity.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>Live view:</b> Changes to the source dictionary are immediately visible through the
+	/// read-only wrapper. This is different from immutable collections which create independent copies.
+	/// </description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// <b>Comparison to Other Read-Only Collections:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// <see cref="ReadOnlyDictionary{TKey, TValue}"/> - Mutable source, read-only wrapper (this method)
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <see cref="IReadOnlyDictionary{TKey, TValue}"/> - Interface that provides read-only semantics
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <see cref="FrozenDictionary{TKey, TValue}"/> - Immutable, optimized for fast lookups (50-80% faster)
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <see cref="ImmutableDictionary{TKey, TValue}"/> - Fully immutable, copy-on-write semantics
+	/// </description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// <b>When to Use Each Collection Type:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// <b>ReadOnlyDictionary:</b> When you need to expose a dictionary publicly but prevent modifications,
+	/// while keeping the source mutable internally.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>FrozenDictionary:</b> When the dictionary never changes after initialization and maximum
+	/// lookup performance is critical (use <see cref="ToFrozenDictionary{TKey, TValue}"/> instead).
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <b>ImmutableDictionary:</b> When you need true immutability with structural sharing for
+	/// efficient updates (use <see cref="ToImmutableDictionary{TKey, TValue}"/> instead).
+	/// </description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// <b>Thread Safety:</b> <see cref="ReadOnlyDictionary{TKey, TValue}"/> itself is thread-safe
+	/// for read operations. However, if the underlying dictionary is modified concurrently, you must
+	/// provide external synchronization.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var mutableDict = new Dictionary&lt;string, int&gt;
+	/// {
+	///     ["one"] = 1,
+	///     ["two"] = 2
+	/// };
+	/// 
+	/// // Create read-only wrapper
+	/// var readOnlyDict = mutableDict.ToReadOnlyDictionary();
+	/// 
+	/// // Reads work fine
+	/// var value = readOnlyDict["one"]; // value = 1
+	/// 
+	/// // Modifications throw NotSupportedException
+	/// // readOnlyDict["three"] = 3; // ❌ Throws at runtime
+	/// 
+	/// // Changes to source are visible
+	/// mutableDict["three"] = 3;
+	/// Console.WriteLine(readOnlyDict.Count); // Outputs: 3
+	/// </code>
+	/// </example>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		return new(collection.ArgumentNotNull());
+		return new ReadOnlyDictionary<TKey, TValue>(collection.ArgumentNotNull());
 	}
 
 
@@ -361,18 +599,70 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Tries to get the valueFunction associated with the specified keyFunction. If the keyFunction does not exist, the specified valueFunction is used to generate a valueFunction, which is then added to the dictionary.
+	/// Tries to get the value associated with the specified key. If the key does not exist, 
+	/// uses the specified function to generate a value, which is then added to the dictionary.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 	/// <param name="collection">The dictionary to search or add to.</param>
-	/// <param name="key">The keyFunction of the valueFunction to get or add.</param>
-	/// <param name="valueFunction">The valueFunction to generate a valueFunction if the keyFunction does not exist.</param>
-	/// <returns>The valueFunction associated with the specified keyFunction, or the valueFunction generated by the valueFunction if the keyFunction does not exist.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="valueFunction"/> is null.</exception>
+	/// <param name="key">The key of the value to get or add.</param>
+	/// <param name="valueFunction">The function to generate a value if the key does not exist.</param>
+	/// <returns>The value associated with the specified key, or the value generated by the function if the key does not exist.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/>, <paramref name="key"/>, or <paramref name="valueFunction"/> is null.</exception>
+	/// <remarks>
+	/// <para>
+	/// This method provides a "get-or-compute-and-add" operation that retrieves an existing value 
+	/// or computes and adds a new one. This is particularly useful for lazy initialization patterns.
+	/// </para>
+	/// <para>
+	/// <b>Performance Optimization:</b> This method checks for the key's existence first using 
+	/// <see cref="IDictionary{TKey, TValue}.TryGetValue"/>. The <paramref name="valueFunction"/> 
+	/// is only invoked if the key doesn't exist, avoiding unnecessary computation. After computing 
+	/// the value, it uses the dictionary indexer for the add operation, which is more efficient 
+	/// than <c>Add</c> in this context.
+	/// </para>
+	/// <para>
+	/// <b>Comparison to Similar Methods:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// <see cref="GetOrAdd{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> - Takes a pre-computed value
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <see cref="TryGetValue{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue})"/> - 
+	/// Lazy evaluation with a factory function (this method)
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <see cref="ConcurrentDictionary{TKey, TValue}.GetOrAdd(TKey, Func{TKey, TValue})"/> - 
+	/// Thread-safe version for concurrent scenarios
+	/// </description>
+	/// </item>
+	/// </list>
+	/// <para>
+	/// <b>Thread Safety:</b> This method is not thread-safe. Use appropriate synchronization 
+	/// if calling from multiple threads, or use <see cref="ConcurrentDictionary{TKey, TValue}"/> instead.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var cache = new Dictionary&lt;string, ExpensiveObject&gt;();
+	/// 
+	/// // Factory function is only called if key doesn't exist
+	/// var obj = cache.TryGetValue("key1", key => new ExpensiveObject(key));
+	/// 
+	/// // Second call returns cached instance without calling the factory
+	/// var sameObj = cache.TryGetValue("key1", key => new ExpensiveObject(key)); // obj == sameObj
+	/// </code>
+	/// </example>
 	[Pure]
 	[return: NotNull]
-	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TValue TryGetValue<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFunction)
 		where TKey : notnull
 		where TValue : notnull
@@ -386,9 +676,9 @@ public static class DictionaryExtensions
 		}
 
 		valueFunction = valueFunction.ArgumentNotNull();
-
 		var newValue = valueFunction.Invoke(key);
-		collection.Add(key, newValue);
+
+		collection[key] = newValue;
 
 		return newValue;
 	}
@@ -406,7 +696,7 @@ public static class DictionaryExtensions
 	/// instead of the previous ContainsKey + Remove + Add pattern which required three O(1) operations.
 	/// The indexer automatically handles both insert and update scenarios efficiently in .NET 10.
 	/// </remarks>
-	[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static void Upsert<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [AllowNull] in TValue item) where TValue : IDataModel<TValue, TKey> where TKey : notnull
 	{
 		if (item is null)
@@ -438,7 +728,7 @@ public static class DictionaryExtensions
 	/// instead of the previous ContainsKey + Remove + Add pattern which required three O(1) operations.
 	/// The indexer automatically handles both insert and update scenarios efficiently in .NET 10.
 	/// </remarks>
-	[Information(nameof(Upsert), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(Upsert), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static void Upsert<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [AllowNull] in TValue item)
 	{
 		if (item is null)

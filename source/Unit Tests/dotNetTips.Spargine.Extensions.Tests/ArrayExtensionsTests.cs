@@ -778,6 +778,7 @@ public class ArrayExtensionsTests
 
 		// Assert
 		Assert.AreEqual(people.Length, result.Length, "The length of the array should remain unchanged when upserting an existing item.");
+
 		Assert.AreEqual("1234567890", result.First().Phone, "The existing item should be updated in the array.");
 	}
 

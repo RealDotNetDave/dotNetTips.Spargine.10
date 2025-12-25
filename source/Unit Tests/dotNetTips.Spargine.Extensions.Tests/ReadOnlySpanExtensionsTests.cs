@@ -63,6 +63,7 @@ public class ReadOnlySpanExtensionsTests
 		ReadOnlySpan<int> span = new ReadOnlySpan<int>(this.CreateArray());
 		var result1 = span.PickRandom();
 		var result2 = span.PickRandom();
+
 		// Note: This test might occasionally fail due to the random nature of the method, but it's unlikely.
 		Assert.AreNotEqual(result1, result2);
 	}

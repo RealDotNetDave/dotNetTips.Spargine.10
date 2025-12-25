@@ -4,7 +4,7 @@
 // Created          : 02-24-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 12-25-2025
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ public static class ConcurrentBagExtensions
 		/// </list>
 		/// <see cref="ConcurrentBag{T}.Add"/> is thread-safe and optimized for concurrent operations.
 		/// </remarks>
-		[Information(nameof(AddRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void AddRange([DisallowNull] in IEnumerable<T> items)
 		{
 			if (items is null)
@@ -65,7 +65,7 @@ public static class ConcurrentBagExtensions
 		/// <returns>A new <see cref="ConcurrentBag{T}"/> with the specified items removed.</returns>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(RemoveRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ConcurrentBag<T> RemoveRange([DisallowNull] IEnumerable<T> items)
 		{
 			if (items is null)
@@ -101,7 +101,7 @@ public static class ConcurrentBagExtensions
 		/// <returns>A <see cref="List{T}"/> containing the elements of the bag.</returns>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public List<T> ToList()
 		{
 			bag = bag.ArgumentNotNull();
