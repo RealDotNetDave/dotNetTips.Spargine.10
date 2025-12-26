@@ -164,6 +164,7 @@ public static class EnumerableExtensions
 						return arrayIndex;
 					}
 				}
+
 				return -1;
 			}
 

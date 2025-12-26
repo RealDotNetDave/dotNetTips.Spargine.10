@@ -42,6 +42,9 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.UpdateDocumentation)]
 public static class StringExtensions
 {
+	/// <summary>
+	/// The URL separator
+	/// </summary>
 	private const string UrlSeparator = "://";
 
 	/// <summary>
@@ -57,21 +60,21 @@ public static class StringExtensions
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
 	/// <summary>
-	/// Computes the hash of the given input string using the specified hash algorithm.
+	/// Computes the hashType of the given input string using the specified hashType algorithm.
 	/// </summary>
-	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
-	/// <param name="hash">The hash algorithm type to use for computing the hash.</param>
-	/// <returns>A byte array containing the computed hash of the input string.</returns>
+	/// <param name="input">The input string to compute the hashType for. Must not be null.</param>
+	/// <param name="hashType">The hashType algorithm type to use for computing the hashType.</param>
+	/// <returns>A byte array containing the computed hashType of the input string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
-	/// <exception cref="InvalidOperationException">Thrown if the specified hash algorithm is not supported.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the specified hashType algorithm is not supported.</exception>
 	/// <remarks>
-	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hash.
+	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hashType.
 	/// </remarks>
-	private static byte[] GetHash(string input, HashType hash)
+	private static byte[] GetHash(string input, HashType hashType)
 	{
 		var inputBytes = Encoding.ASCII.GetBytes(input);
 
-		return hash switch
+		return hashType switch
 		{
 			HashType.SHA256 => SHA256.HashData(inputBytes),
 			HashType.SHA384 => SHA384.HashData(inputBytes),
@@ -92,7 +95,28 @@ public static class StringExtensions
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
-		return input.IsNullOrEmpty() ? 0 : input.Length * 3 / 4;
+		var length = input.Length;
+
+		if (length == 0)
+		{
+			return 0;
+		}
+
+		// Base64 uses 4 chars to encode 3 bytes, so decoded size is approximately (length / 4) * 3
+		// Account for padding characters ('=') which don't contribute to output
+		var paddingCount = 0;
+
+		if (input[length - 1] == '=')
+		{
+			paddingCount++;
+
+			if (length > 1 && input[length - 2] == '=')
+			{
+				paddingCount++;
+			}
+		}
+
+		return (length / 4 * 3) - paddingCount;
 	}
 
 	/// <summary>
@@ -109,11 +133,11 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the hash of the given input string using the specified hash algorithm.
+	/// Computes the hashType of the given input string using the specified hashType algorithm.
 	/// </summary>
-	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
-	/// <param name="hashType">The type of hash algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
-	/// <returns>A string representation of the computed hash.</returns>
+	/// <param name="input">The input string to compute the hashType for. Must not be null.</param>
+	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
+	/// <returns>A string representation of the computed hashType.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
@@ -140,12 +164,12 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the SHA256 hash of the given input string.
+	/// Computes the SHA256 hashType of the given input string.
 	/// </summary>
-	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
-	/// <returns>A string representation of the SHA256 hash.</returns>
+	/// <param name="input">The input string to compute the hashType for. Must not be null.</param>
+	/// <returns>A string representation of the SHA256 hashType.</returns>
 	/// <remarks>
-	/// This method uses the <see cref="SHA256"/> class to compute the hash.
+	/// This method uses the <see cref="SHA256"/> class to compute the hashType.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ComputeSHA256Hash), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -637,7 +661,7 @@ public static class StringExtensions
 	/// <summary>
 	/// Hashes the input string using the specified hashing algorithm.
 	/// </summary>
-	/// <param name="input">The input string to hash. Must not be null.</param>
+	/// <param name="input">The input string to hashType. Must not be null.</param>
 	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
 	/// <returns>A base64-encoded string representing the hashed password.</returns>
 	[return: NotNull]
@@ -1001,10 +1025,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the specified string is a valid SHA1 hash.
+	/// Determines whether the specified string is a valid SHA1 hashType.
 	/// </summary>
 	/// <param name="input">The string to validate.</param>
-	/// <returns><c>true</c> if the string is a valid SHA1 hash; otherwise, <c>false</c>.</returns>
+	/// <returns><c>true</c> if the string is a valid SHA1 hashType; otherwise, <c>false</c>.</returns>
 	/// <remarks>
 	/// This method uses a regular expression to validate the input string.
 	/// </remarks>
