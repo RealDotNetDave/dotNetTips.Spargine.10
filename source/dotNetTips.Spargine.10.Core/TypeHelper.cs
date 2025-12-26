@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 12-26-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -50,6 +50,9 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTypeHelper")]
 public static class TypeHelper
 {
+	/// <summary>
+	/// The time out minutes
+	/// </summary>
 	private const int TimeOutMinutes = 5;
 
 	/// <summary>
@@ -1585,7 +1588,7 @@ public static class TypeHelper
 	/// <param name="genericArguments">The array of generic arguments for the type.</param>
 	/// <param name="length">The number of generic arguments to consider.</param>
 	/// <param name="options">Display name options to customize the output.</param>
-	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void ProcessGenericType([DisallowNull] StringBuilder builder, [DisallowNull] Type type, [DisallowNull] Type[] genericArguments, int length, DisplayNameOptions options)
 	{
 		builder = builder.ArgumentNotNull();
@@ -1596,17 +1599,9 @@ public static class TypeHelper
 
 		if (type.IsNested)
 		{
-			// Cache the declaring type's generic arguments length to avoid repeated calls
-			var declaringType = type.DeclaringType!;
-			var cacheKey = $"{declaringType.MetadataToken}.GenericArgsLength";
-
-			if (!_commonCache.TryGetValue<int>(cacheKey, out var cachedOffset))
-			{
-				cachedOffset = declaringType.GetGenericArguments().Length;
-				_commonCache.AddCacheItem(cacheKey, cachedOffset, TimeSpan.FromMinutes(TimeOutMinutes));
-			}
-
-			offset = cachedOffset;
+			// OPTIMIZATION: Direct call eliminates cache overhead - MetadataToken is constant per type
+			// Caching adds more overhead than it saves for this simple operation
+			offset = type.DeclaringType!.GetGenericArguments().Length;
 		}
 
 		if (options.FullName)
@@ -1623,14 +1618,9 @@ public static class TypeHelper
 			}
 		}
 
-		// Cache the generic backtick index to avoid repeated IndexOf calls
-		var nameKey = $"{type.MetadataToken}.GenericPartIndex";
-
-		if (!_commonCache.TryGetValue<int>(nameKey, out var genericPartIndex))
-		{
-			genericPartIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
-			_commonCache.AddCacheItem(nameKey, genericPartIndex, TimeSpan.FromMinutes(TimeOutMinutes));
-		}
+		// OPTIMIZATION: Direct IndexOf call - caching string operations is slower than the operation itself
+		// String.IndexOf is highly optimized in .NET 10 with SIMD acceleration
+		var genericPartIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
 
 		if (genericPartIndex <= 0)
 		{

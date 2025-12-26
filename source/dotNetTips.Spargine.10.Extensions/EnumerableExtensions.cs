@@ -147,6 +147,8 @@ public static class EnumerableExtensions
 		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item)
 		{
+			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
+
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
@@ -551,34 +553,32 @@ public static class EnumerableExtensions
 		/// which is highly optimized in .NET 10 with built-in intelligence for different collection types.
 		/// </para>
 		/// <para>
-		/// <b>Why delegate to Chunk:</b>
+		/// <b>Internal Optimizations in Enumerable.Chunk:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>Framework optimizations:</b> <see cref="Enumerable.Chunk{TSource}(IEnumerable{TSource}, int)"/> internally optimizes for List, Array, IList, and ICollection types.</description></item>
-		/// <item><description><b>Deferred execution:</b> Built-in support for LINQ's deferred execution model.</description></item>
-		/// <item><description><b>Memory efficiency:</b> Returns arrays (<typeparamref name="T"/>[]) instead of List, reducing allocation overhead.</description></item>
-		/// <item><description><b>Future-proof:</b> Automatically benefits from future runtime improvements.</description></item>
-		/// <item><description><b>Correctness:</b> Framework implementation is extensively tested and maintained.</description></item>
+		/// <item><description><b>List&lt;T&gt;:</b> Uses indexed access without enumerator allocation.</description></item>
+		/// <item><description><b>Arrays:</b> Direct indexed access with bounds check elimination.</description></item>
+		/// <item><description><b>IList&lt;T&gt;:</b> Indexed access optimization.</description></item>
+		/// <item><description><b>ICollection&lt;T&gt;:</b> Pre-sizes chunks based on known count.</description></item>
+		/// <item><description><b>IEnumerable&lt;T&gt;:</b> Adaptive chunking with deferred execution.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Why Not Custom Span Optimizations:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><see cref="Span{T}"/> is a ref struct that <b>cannot cross yield return boundaries</b>.</description></item>
+		/// <item><description>The framework's implementation already includes equivalent optimizations internally.</description></item>
+		/// <item><description>Custom implementations duplicate framework logic and add maintenance burden.</description></item>
+		/// <item><description>Framework implementation is extensively tested and benefits from future runtime improvements.</description></item>
 		/// </list>
 		/// <para>
 		/// <b>Performance Characteristics:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>List/Array:</b> O(n) with optimized chunking logic and direct indexed access.</description></item>
+		/// <item><description><b>List/Array:</b> O(n) with optimized chunking and direct indexed access (no enumerator).</description></item>
 		/// <item><description><b>ICollection:</b> O(n) with pre-sized chunks based on known count.</description></item>
-		/// <item><description><b>IEnumerable:</b> O(n) with adaptive chunking.</description></item>
+		/// <item><description><b>IEnumerable:</b> O(n) with adaptive chunking and deferred execution.</description></item>
 		/// </list>
-		/// <para>
-		/// <b>Note:</b> Previous custom implementations with <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> were removed because:
-		/// </para>
-		/// <list type="number">
-		/// <item><description><see cref="Span{T}"/> cannot be preserved across <c>yield return</c> boundaries (ref struct limitation).</description></item>
-		/// <item><description>The framework's <see cref="Enumerable.Chunk{TSource}(IEnumerable{TSource}, int)"/> already includes similar optimizations internally.</description></item>
-		/// <item><description>Custom implementations duplicate framework logic and add maintenance burden.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Comparison with custom implementations:</b>
-		/// </para>
 		/// </remarks>
 		/// <example>
 		/// This example shows how to use the <see cref="Partition{T}"/> method to split a list of integers into smaller chunks of a specified size.
@@ -605,68 +605,9 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(2);
 
-			// OPTIMIZATION: Fast path for List<T> using CollectionsMarshal
-			if (collection is List<T> list)
-			{
-				var span = CollectionsMarshal.AsSpan(list);
-				var totalCount = span.Length;
-				var fullChunks = totalCount / pageCount;
-				var remainder = totalCount % pageCount;
-
-				for (var chunkIndex = 0; chunkIndex < fullChunks; chunkIndex++)
-				{
-					var chunk = new T[pageCount];
-					var sourceIndex = chunkIndex * pageCount;
-
-					for (var i = 0; i < pageCount; i++)
-					{
-						chunk[i] = span[sourceIndex + i];
-					}
-
-					yield return chunk;
-				}
-
-				if (remainder > 0)
-				{
-					var lastChunk = new T[remainder];
-					var lastSourceIndex = fullChunks * pageCount;
-
-					for (var i = 0; i < remainder; i++)
-					{
-						lastChunk[i] = span[lastSourceIndex + i];
-					}
-
-					yield return lastChunk;
-				}
-
-				yield break;
-			}
-
-			// OPTIMIZATION: Fast path for arrays
-			if (collection is T[] array)
-			{
-				var totalCount = array.Length;
-				var fullChunks = totalCount / pageCount;
-				var remainder = totalCount % pageCount;
-
-				for (var chunkIndex = 0; chunkIndex < fullChunks; chunkIndex++)
-				{
-					var chunk = new T[pageCount];
-					Array.Copy(array, chunkIndex * pageCount, chunk, 0, pageCount);
-					yield return chunk;
-				}
-
-				if (remainder > 0)
-				{
-					var lastChunk = new T[remainder];
-					Array.Copy(array, fullChunks * pageCount, lastChunk, 0, remainder);
-					yield return lastChunk;
-				}
-
-				yield break;
-			}
-
-			// Fallback to built-in Chunk for other types
+			// OPTIMIZATION: Delegate to Enumerable.Chunk which has internal optimizations
+			// for List<T>, arrays, IList<T>, and ICollection<T> types.
+			// This avoids the ref struct limitation and leverages framework optimizations.
 			foreach (var chunk in collection.Chunk(pageCount))
 			{
 				yield return chunk;
@@ -771,6 +712,8 @@ public static class EnumerableExtensions
 		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool StructuralSequenceEqual([AllowNull] IEnumerable<T> second)
 		{
+			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
+
 			if (collection is null || second is null)
 			{
 				return false;
@@ -1827,6 +1770,8 @@ public static class EnumerableExtensions
 		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<T> ToReadOnlyCollection()
 		{
+			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
+
 			collection = collection.ArgumentNotNull();
 
 			// Fast path: Already an IList<T>, wrap directly
