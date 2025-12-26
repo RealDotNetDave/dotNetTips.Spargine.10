@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-21-2025
+// Last Modified On : 12-26-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -202,24 +202,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void HasDuplicates()
 	{
 		var result = this._personRefListDups.HasDuplicates();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.IsNotEmpty))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void HasItems()
-	{
-		var result = this._personRefEnumerable.IsNotEmpty();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.IsNotEmpty) + ": With Count")]
-	[BenchmarkCategory(Categories.Collections)]
-	public void HasItemsWithCount()
-	{
-		var result = this._personRefEnumerable.IsNotEmpty(this.Count);
 
 		this.Consume(result);
 	}

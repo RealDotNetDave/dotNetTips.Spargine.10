@@ -10,6 +10,6 @@ EvaluateOverhead=True  Runtime=.NET 10.0  Server=True
 Categories=**FOR COMPARISON**  
 
 ```
-| Method         | Mean      | Error     | StdDev    | StdErr    | Min       | Q1        | Median    | Q3        | Max       | Op/s            | CI99.9% Margin | Iterations | Rank | Baseline | Completed Work Items | Lock Contentions | Exceptions | Code Size | Allocated |
-|--------------- |----------:|----------:|----------:|----------:|----------:|----------:|----------:|----------:|----------:|----------------:|---------------:|-----------:|-----:|--------- |---------------------:|-----------------:|-----------:|----------:|----------:|
-| &#39;Equals: Guid&#39; | 0.2525 ns | 0.0080 ns | 0.0067 ns | 0.0019 ns | 0.2409 ns | 0.2491 ns | 0.2543 ns | 0.2568 ns | 0.2654 ns | 3,959,863,427.0 |       6.499 ns |      13.00 |    1 | No       |                    - |                - |          - |      39 B |         - |
+| Method         | Mean      | Error     | StdDev    | StdErr    | Min       | Q1        | Median    | Q3        | Max       | Op/s             | CI99.9% Margin | Iterations | Rank | Baseline | Exceptions | Completed Work Items | Lock Contentions | Code Size | Allocated |
+|--------------- |----------:|----------:|----------:|----------:|----------:|----------:|----------:|----------:|----------:|-----------------:|---------------:|-----------:|-----:|--------- |-----------:|---------------------:|-----------------:|----------:|----------:|
+| &#39;Equals: Guid&#39; | 0.0180 ns | 0.0104 ns | 0.0097 ns | 0.0025 ns | 0.0014 ns | 0.0145 ns | 0.0164 ns | 0.0244 ns | 0.0375 ns | 55,662,824,605.1 |       7.499 ns |      15.00 |    1 | No       |          - |                    - |                - |      39 B |         - |

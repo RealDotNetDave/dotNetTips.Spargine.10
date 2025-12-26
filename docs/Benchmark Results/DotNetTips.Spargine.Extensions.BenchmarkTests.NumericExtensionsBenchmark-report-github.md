@@ -10,6 +10,6 @@ EvaluateOverhead=True  Runtime=.NET 10.0  Server=True
 Categories=**NEW**  
 
 ```
-| Method  | Mean       | Error    | StdDev   | StdErr  | Min        | Q1         | Median     | Q3         | Max        | Op/s      | CI99.9% Margin | Iterations | Rank | Baseline | Completed Work Items | Lock Contentions | Code Size | Exceptions | Allocated |
-|-------- |-----------:|---------:|---------:|--------:|-----------:|-----------:|-----------:|-----------:|-----------:|----------:|---------------:|-----------:|-----:|--------- |---------------------:|-----------------:|----------:|-----------:|----------:|
-| ToWords | 4,589.1 ns | 37.16 ns | 34.76 ns | 8.98 ns | 4,545.6 ns | 4,556.1 ns | 4,586.3 ns | 4,622.0 ns | 4,638.5 ns | 217,909.3 |       3.012 ns |      15.00 |    1 | No       |                    - |                - |  26,607 B |          - |     200 B |
+| Method  | Mean       | Error    | StdDev   | StdErr  | Min        | Q1         | Median     | Q3         | Max        | Op/s      | CI99.9% Margin | Iterations | Rank | Baseline | Code Size | Exceptions | Completed Work Items | Lock Contentions | Allocated |
+|-------- |-----------:|---------:|---------:|--------:|-----------:|-----------:|-----------:|-----------:|-----------:|----------:|---------------:|-----------:|-----:|--------- |----------:|-----------:|---------------------:|-----------------:|----------:|
+| ToWords | 4,566.4 ns | 34.40 ns | 32.18 ns | 8.31 ns | 4,524.8 ns | 4,543.5 ns | 4,560.6 ns | 4,585.2 ns | 4,640.8 ns | 218,990.2 |       3.346 ns |      15.00 |    1 | No       |  26,627 B |          - |                    - |                - |     200 B |

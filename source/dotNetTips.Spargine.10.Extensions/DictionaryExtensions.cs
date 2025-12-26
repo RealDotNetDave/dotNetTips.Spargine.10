@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-25-2025
+// Last Modified On : 12-26-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -200,20 +201,33 @@ public static class DictionaryExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetOrAdd), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static TValue GetOrAdd<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] TValue value)
-		where TKey : notnull
-		where TValue : notnull
+	where TKey : notnull
+	where TValue : notnull
 	{
 		value = value.ArgumentNotNull();
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
-		if (collection.TryAdd(key, value))
+		// Fast path for Dictionary<TKey, TValue>
+		if (collection is Dictionary<TKey, TValue> dict)
 		{
-			// Key was added successfully, return the new value
+			// Use ref-based lookup for maximum performance
+			ref var valueRef = ref CollectionsMarshal.GetValueRefOrAddDefault(dict, key, out var exists);
+			if (!exists)
+			{
+				valueRef = value;
+			}
+			return valueRef!;
+		}
+
+		// Fallback for other IDictionary implementations
+		if (!collection.TryGetValue(key, out var existingValue))
+		{
+			collection[key] = value;
 			return value;
 		}
 
-		return collection[key];
+		return existingValue;
 	}
 
 	/// <summary>
@@ -324,7 +338,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToConcurrentDictionary), "David McCarter", "7/23/2022", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToConcurrentDictionary), "David McCarter", "7/23/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return new ConcurrentDictionary<TKey, TValue>(collection.ArgumentNotNull());
@@ -561,7 +575,17 @@ public static class DictionaryExtensions
 	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		return new ReadOnlyDictionary<TKey, TValue>(collection.ArgumentNotNull());
+		collection = collection.ArgumentNotNull();
+
+		// Fast path: if already ReadOnlyDictionary, return it
+		if (collection is ReadOnlyDictionary<TKey, TValue> readOnlyDict)
+		{
+			return readOnlyDict;
+		}
+
+		// Fast path: if source implements IReadOnlyDictionary, it's already conceptually read-only
+		// Just wrap it to enforce the type
+		return new ReadOnlyDictionary<TKey, TValue>(collection);
 	}
 
 
@@ -662,25 +686,40 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TValue TryGetValue<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFunction)
-		where TKey : notnull
-		where TValue : notnull
+	where TKey : notnull
+	where TValue : notnull
 	{
 		collection = collection.ArgumentNotNull();
 		key = key.ArgumentNotNull();
 
-		if (collection.TryGetValue(key, out var value))
+		// Fast path for Dictionary<TKey, TValue>
+		if (collection is Dictionary<TKey, TValue> dict)
 		{
-			return value;
+			ref var valueRef = ref CollectionsMarshal.GetValueRefOrAddDefault(dict, key, out var exists);
+
+			if (!exists)
+			{
+				// Only validate and invoke factory if key doesn't exist
+				valueRef = valueFunction.ArgumentNotNull().Invoke(key);
+			}
+
+			return valueRef!;
 		}
 
-		valueFunction = valueFunction.ArgumentNotNull();
-		var newValue = valueFunction.Invoke(key);
+		// Standard path for other IDictionary types
+		if (!collection.TryGetValue(key, out var value))
+		{
+			// Key doesn't exist - compute and add
+			var newValue = valueFunction.ArgumentNotNull().Invoke(key);
 
-		collection[key] = newValue;
+			collection[key] = newValue;
 
-		return newValue;
+			return newValue;
+		}
+
+		return value;
 	}
 
 	/// <summary>

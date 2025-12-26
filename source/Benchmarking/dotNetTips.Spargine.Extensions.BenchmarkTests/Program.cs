@@ -10,8 +10,8 @@
 //     David McCarter
 // </copyright>
 // <summary>
-// Currently, these benchmark tests take about 12.5 hours to complete.
-// Benchmark count: 1,695
+// Benchmark Runtime: 16 hours
+// Benchmark count: 1,703
 // </summary>
 // ***********************************************************************
 using System;

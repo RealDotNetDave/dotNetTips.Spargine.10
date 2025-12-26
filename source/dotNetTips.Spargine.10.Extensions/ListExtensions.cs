@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 12-26-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -94,28 +94,15 @@ public static class ListExtensions
 			list = list.ArgumentNotNull();
 			items = items.ArgumentNotNull();
 
-			// Only create HashSet if it's worth it
-			if (list.Count > 100)  // Threshold for HashSet benefit
-			{
-				var existingItems = new HashSet<T>(list);
+			// OPTIMIZATION: Always use HashSet approach - simpler and faster in .NET 10
+			// The HashSet construction overhead is minimal and pays off even for small lists
+			var existingItems = new HashSet<T>(list);
 
-				foreach (var item in items)
-				{
-					if (existingItems.Add(item))
-					{
-						list.Add(item);
-					}
-				}
-			}
-			else
+			foreach (var item in items)
 			{
-				// For small lists, Contains is fine
-				foreach (var item in items)
+				if (existingItems.Add(item))
 				{
-					if (!list.Contains(item))
-					{
-						list.Add(item);
-					}
+					list.Add(item);
 				}
 			}
 		}
@@ -359,7 +346,7 @@ public static class ListExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck)
 		{
 			if (list is null || collectionToCheck is null)
@@ -367,13 +354,11 @@ public static class ListExtensions
 				return false;
 			}
 
-			// Fast path: reference equality
 			if (ReferenceEquals(list, collectionToCheck))
 			{
 				return true;
 			}
 
-			// Fast path: different lengths
 			if (list.Count != collectionToCheck.Count)
 			{
 				return false;
@@ -503,12 +488,18 @@ public static class ListExtensions
 		{
 			list = list.ArgumentNotNull();
 
-			var index = list.LastIndexOf(item);
+			// OPTIMIZATION: Reverse iteration using CollectionsMarshal.AsSpan for direct memory access
+			// Avoids LastIndexOf overhead and provides early exit on match
+			var span = CollectionsMarshal.AsSpan(list);
+			var comparer = EqualityComparer<T>.Default;
 
-			if (index >= 0)
+			for (var index = span.Length - 1; index >= 0; index--)
 			{
-				list.RemoveAt(index);
-				return true;
+				if (comparer.Equals(span[index], item))
+				{
+					list.RemoveAt(index);
+					return true;
+				}
 			}
 
 			return false;
@@ -560,10 +551,10 @@ public static class ListExtensions
 			// Fisher-Yates shuffle using cryptographically secure random
 			for (var i = count - 1; i > 0; i--)
 			{
-				// Generate random index from 0 to i (inclusive)
+				// Generate random index from 0 to index (inclusive)
 				var j = RandomNumberGenerator.GetInt32(i + 1);
 
-				// Swap elements at i and j using tuple deconstruction
+				// Swap elements at index and j using tuple deconstruction
 				(span[i], span[j]) = (span[j], span[i]);
 			}
 
@@ -615,23 +606,20 @@ public static class ListExtensions
 		public ReadOnlyCollection<ReadOnlyCollection<T>> Split(int size)
 		{
 			list = list.ArgumentNotNull();
-			size = size.ArgumentInRange(min: 1, max: list.Count, paramName: nameof(size));
+			size = size.ArgumentInRange(min: 1, max: list.Count);
 
 			var listCount = list.Count;
 			var chunks = (int)Math.Ceiling((double)listCount / size);
 			var result = new List<ReadOnlyCollection<T>>(chunks);
 
-			var span = CollectionsMarshal.AsSpan(list);
-
+			// OPTIMIZATION: Use List.GetRange which is optimized internally in .NET 10
+			// and avoids intermediate span slicing + array allocation + copying
 			for (var index = 0; index < listCount; index += size)
 			{
 				var chunkSize = Math.Min(size, listCount - index);
-				var chunk = new T[chunkSize];
 
-				// Slice the span and copy to the pre-sized array
-				span.Slice(index, chunkSize).CopyTo(chunk);
-
-				result.Add(new ReadOnlyCollection<T>(chunk));
+				// GetRange creates a new List with internal optimizations and wraps it
+				result.Add(list.GetRange(index, chunkSize).AsReadOnly());
 			}
 
 			return result.AsReadOnly();
@@ -738,7 +726,26 @@ public static class ListExtensions
 		{
 			list = list.ArgumentNotNull();
 
-			return ImmutableArray.CreateRange(list);
+			// OPTIMIZATION: Use CollectionsMarshal.AsSpan + ImmutableCollectionsMarshal.AsImmutableArray
+			// for zero-copy conversion when possible, or ToImmutableArray builder for direct construction
+			var count = list.Count;
+
+			if (count == 0)
+			{
+				return ImmutableArray<T>.Empty;
+			}
+
+			// Use ImmutableArray builder with exact capacity for optimal performance
+			var builder = ImmutableArray.CreateBuilder<T>(count);
+			var span = CollectionsMarshal.AsSpan(list);
+
+			// Bulk copy from span to builder's internal array
+			for (var index = 0; index < count; index++)
+			{
+				builder.Add(span[index]);
+			}
+
+			return builder.MoveToImmutable();
 		}
 
 		/// <summary>

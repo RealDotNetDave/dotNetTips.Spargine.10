@@ -33,7 +33,7 @@ public class ImmutableArrayExtensionsBenchmark : LargeCollectionBenchmark
 	private ImmutableArray<Person> _personRefImmutableArray;
 
 	[Benchmark(Description = nameof(ImmutableArrayExtensions.IsNotEmpty))]
-	public void HasItems()
+	public void HasItemsIsNotEmpty()
 	{
 		var result = this._personRefImmutableArray.IsNotEmpty();
 
@@ -41,7 +41,7 @@ public class ImmutableArrayExtensionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ImmutableArrayExtensions.IsNotEmpty) + ": With Count")]
-	public void HasItemsWithCount()
+	public void HasItemsIsNotEmptyWithCount()
 	{
 		var result = this._personRefImmutableArray.IsNotEmpty(this.Count);
 

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-26-2025
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -73,10 +73,25 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
 		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
-			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
+			// OPTIMIZATION: Direct enumeration with early exit - avoids Any() overhead
+			if (collection is null || actionPredicate is null)
+			{
+				return false;
+			}
+
+			// Direct foreach is faster than Any() in .NET 10 due to reduced abstraction layers
+			foreach (var item in collection)
+			{
+				if (actionPredicate(item))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		/// <summary>
