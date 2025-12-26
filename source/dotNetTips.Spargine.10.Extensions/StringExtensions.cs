@@ -60,11 +60,11 @@ public static class StringExtensions
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
 	/// <summary>
-	/// Computes the hashType of the given input string using the specified hashType algorithm.
+	/// Computes the hashType of the given base64Input string using the specified hashType algorithm.
 	/// </summary>
-	/// <param name="input">The input string to compute the hashType for. Must not be null.</param>
+	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
 	/// <param name="hashType">The hashType algorithm type to use for computing the hashType.</param>
-	/// <returns>A byte array containing the computed hashType of the input string.</returns>
+	/// <returns>A byte array containing the computed hashType of the base64Input string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
 	/// <exception cref="InvalidOperationException">Thrown if the specified hashType algorithm is not supported.</exception>
 	/// <remarks>
@@ -84,33 +84,44 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Calculates the size of a byte array needed to store the Base64 encoded version of the input string.
+	/// Calculates the size of the byte array that will result from decoding the Base64 encoded base64Input string.
 	/// </summary>
-	/// <param name="input">The input string to be encoded.</param>
-	/// <returns>The size of the byte array needed to store the Base64 encoded string, or 0 if the input is null or empty.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the input string is null.</exception>
+	/// <param name="base64Input">The Base64 encoded string. Must be a valid Base64 string.</param>
+	/// <returns>The size of the byte array needed to store the decoded data, or 0 if the base64Input is empty.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null.</exception>
+	/// <exception cref="FormatException">Thrown when the base64Input string is not a valid Base64 string.</exception>
+	/// <remarks>
+	/// This method calculates the decoded size using the Base64 formula: (length / 4) * 3 - paddingCount.
+	/// Base64 encoding uses 4 characters to represent 3 bytes of data.
+	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	public static int CalculateByteArraySize([DisallowNull] this string input)
+	public static int CalculateByteArraySize([DisallowNull] this string base64Input)
 	{
-		input = input.ArgumentNotNullOrEmpty();
+		base64Input = base64Input.ArgumentNotNullOrEmpty();
 
-		var length = input.Length;
+		var length = base64Input.Length;
 
 		if (length == 0)
 		{
 			return 0;
 		}
 
-		// Base64 uses 4 chars to encode 3 bytes, so decoded size is approximately (length / 4) * 3
-		// Account for padding characters ('=') which don't contribute to output
+		// Base64 strings must have length divisible by 4
+		if (length % 4 != 0)
+		{
+			throw new FormatException("Input string is not a valid Base64 string. Length must be divisible by 4.");
+		}
+
+		// Base64 uses 4 chars to encode 3 bytes, so decoded size is (length / 4) * 3
+		// Account for padding characters ('=') which don't contribute to decoded output
 		var paddingCount = 0;
 
-		if (input[length - 1] == '=')
+		if (base64Input[length - 1] == '=')
 		{
 			paddingCount++;
 
-			if (length > 1 && input[length - 2] == '=')
+			if (length > 1 && base64Input[length - 2] == '=')
 			{
 				paddingCount++;
 			}
@@ -133,9 +144,9 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the hashType of the given input string using the specified hashType algorithm.
+	/// Computes the hashType of the given base64Input string using the specified hashType algorithm.
 	/// </summary>
-	/// <param name="input">The input string to compute the hashType for. Must not be null.</param>
+	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
 	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
 	/// <returns>A string representation of the computed hashType.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -164,9 +175,9 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the SHA256 hashType of the given input string.
+	/// Computes the SHA256 hashType of the given base64Input string.
 	/// </summary>
-	/// <param name="input">The input string to compute the hashType for. Must not be null.</param>
+	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
 	/// <returns>A string representation of the SHA256 hashType.</returns>
 	/// <remarks>
 	/// This method uses the <see cref="SHA256"/> class to compute the hashType.
@@ -239,16 +250,16 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the input string contains any of the specified characters, using the specified string comparison option.
+	/// Determines whether the base64Input string contains any of the specified characters, using the specified string comparison option.
 	/// </summary>
-	/// <param name="input">The input string to check. Must not be null.</param>
+	/// <param name="input">The base64Input string to check. Must not be null.</param>
 	/// <param name="stringComparison">
 	/// The string comparison option to use. Defaults to <see cref="StringComparison.OrdinalIgnoreCase"/>.
 	/// </param>
-	/// <param name="characters">The collection of characters to check for in the input string. Must not be null.</param>
+	/// <param name="characters">The collection of characters to check for in the base64Input string. Must not be null.</param>
 	/// <returns>
-	/// <c>true</c> if the input string contains any of the specified characters; otherwise, <c>false</c>.
-	/// Returns <c>false</c> if the input string or the characters collection is null or empty.
+	/// <c>true</c> if the base64Input string contains any of the specified characters; otherwise, <c>false</c>.
+	/// Returns <c>false</c> if the base64Input string or the characters collection is null or empty.
 	/// </returns>
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> or <paramref name="characters"/> is null.
@@ -313,7 +324,7 @@ public static class StringExtensions
 	/// <summary>
 	/// Splits a delimited string into an array of strings, removing empty entries.
 	/// </summary>
-	/// <param name="input">The input string to split.</param>
+	/// <param name="input">The base64Input string to split.</param>
 	/// <param name="delimiter">The character delimiter to split the string by. Default is a comma.</param>
 	/// <returns>An array of strings that were delimited by the specified character.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -326,8 +337,8 @@ public static class StringExtensions
 	/// <summary>
 	/// Determines whether the end of this string instance matches the specified string when compared using the specified comparison option.
 	/// </summary>
-	/// <param name="input">The input string to compare.</param>
-	/// <param name="inputToCompare">The string to compare to the end of the input string.</param>
+	/// <param name="input">The base64Input string to compare.</param>
+	/// <param name="inputToCompare">The string to compare to the end of the base64Input string.</param>
 	/// <returns><c>true</c> if <paramref name="inputToCompare"/> matches the end of this string; otherwise, <c>false</c>.</returns>
 	/// <remarks>
 	/// This method uses <see cref="string.Equals(string, string, StringComparison)"/> for comparison.
@@ -356,13 +367,13 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Extracts a substring from the input string that is between the specified start and end strings.
+	/// Extracts a substring from the base64Input string that is between the specified start and end strings.
 	/// </summary>
-	/// <param name="input">The input string to extract from.</param>
+	/// <param name="input">The base64Input string to extract from.</param>
 	/// <param name="start">The starting string to look for.</param>
 	/// <param name="end">The ending string to look for.</param>
 	/// <returns>The extracted substring between the start and end strings.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the input, start, or end string is null or empty.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when the base64Input, start, or end string is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Extract), "David McCarter", "10/8/2020", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Extract([DisallowNull] this string input, [DisallowNull] string start, [DisallowNull] string end)
@@ -471,13 +482,13 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Replaces all occurrences of a specified string in the input string with another specified string, using ordinal comparison.
+	/// Replaces all occurrences of a specified string in the base64Input string with another specified string, using ordinal comparison.
 	/// </summary>
 	/// <param name="input">The string to perform replacements on. Must not be null or empty.</param>
 	/// <param name="oldValue">The string to be replaced. If this string is not found, the original string is returned unchanged.</param>
 	/// <param name="newValue">The string to replace all occurrences of <paramref name="oldValue"/>.</param>
 	/// <returns>
-	/// A new string that is equivalent to the input string except that all instances of <paramref name="oldValue"/> are replaced with <paramref name="newValue"/>.
+	/// A new string that is equivalent to the base64Input string except that all instances of <paramref name="oldValue"/> are replaced with <paramref name="newValue"/>.
 	/// </returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null or empty.</exception>
 	/// <remarks>
@@ -659,9 +670,9 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Hashes the input string using the specified hashing algorithm.
+	/// Hashes the base64Input string using the specified hashing algorithm.
 	/// </summary>
-	/// <param name="input">The input string to hashType. Must not be null.</param>
+	/// <param name="input">The base64Input string to hashType. Must not be null.</param>
 	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
 	/// <returns>A base64-encoded string representing the hashed password.</returns>
 	[return: NotNull]
@@ -710,14 +721,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Checks if the input string has the specified value.
+	/// Checks if the base64Input string has the specified value.
 	/// </summary>
-	/// <param name="input">The input string to check.</param>
-	/// <param name="value">The value to compare with the input string.</param>
-	/// <returns><c>true</c> if the input string has the specified value; otherwise, <c>false</c>.</returns>
+	/// <param name="input">The base64Input string to check.</param>
+	/// <param name="value">The value to compare with the base64Input string.</param>
+	/// <returns><c>true</c> if the base64Input string has the specified value; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method first checks if the input string has any value using <see cref="HasValue(string)"/> method.
-	/// Then, it compares the input string with the specified value using <see cref="string.Equals(string, string, StringComparison)"/>
+	/// This method first checks if the base64Input string has any value using <see cref="HasValue(string)"/> method.
+	/// Then, it compares the base64Input string with the specified value using <see cref="string.Equals(string, string, StringComparison)"/>
 	/// with <see cref="StringComparison.Ordinal"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -728,14 +739,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Checks if the input string matches the specified regular expression pattern.
+	/// Checks if the base64Input string matches the specified regular expression pattern.
 	/// </summary>
-	/// <param name="input">The input string to check.</param>
-	/// <param name="expression">The regular expression pattern to match against the input string. Uses <see cref="Regex"/> for matching.</param>
+	/// <param name="input">The base64Input string to check.</param>
+	/// <param name="expression">The regular expression pattern to match against the base64Input string. Uses <see cref="Regex"/> for matching.</param>
 	/// <param name="options">The options for the regular expression match. See <see cref="RegexOptions"/> for details.</param>
-	/// <returns><c>true</c> if the input string matches the regular expression pattern; otherwise, <c>false</c>.</returns>
+	/// <returns><c>true</c> if the base64Input string matches the regular expression pattern; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method first checks if the input string has any value using <see cref="HasValue(string)"/> method.
+	/// This method first checks if the base64Input string has any value using <see cref="HasValue(string)"/> method.
 	/// Then, it creates a new <see cref="Regex"/> instance with the specified pattern and options to perform the match.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -746,9 +757,9 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Checks if the input string has a value within the specified length range.
+	/// Checks if the base64Input string has a value within the specified length range.
 	/// </summary>
-	/// <param name="input">The input string to check.</param>
+	/// <param name="input">The base64Input string to check.</param>
 	/// <param name="minLength">The minimum length of the string.</param>
 	/// <param name="maxLength">The maximum length of the string.</param>
 	/// <returns><c>true</c> if the string's length is within the specified range; otherwise, <c>false</c>.</returns>
@@ -792,13 +803,13 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Indents each line of the input string by the specified length using the specified indentation character.
+	/// Indents each line of the base64Input string by the specified length using the specified indentation character.
 	/// </summary>
-	/// <param name="input">The input string to indent.</param>
+	/// <param name="input">The base64Input string to indent.</param>
 	/// <param name="length">The number of indentation characters to add to each line.</param>
 	/// <param name="indentationCharacter">The character to use for indentation.</param>
 	/// <returns>The indented string.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the input string is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Indent([DisallowNull] this string input, in int length, [ConstantExpected] char indentationCharacter)
@@ -988,7 +999,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string matches the pattern; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the input string.
+	/// This method uses a regular expression to validate the base64Input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsOneToSevenAlpha), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1003,7 +1014,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string is in scientific notation; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the input string.
+	/// This method uses a regular expression to validate the base64Input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsScientific), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1030,7 +1041,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string is a valid SHA1 hashType; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the input string.
+	/// This method uses a regular expression to validate the base64Input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsStringSHA1Hash), "David McCarter", "5/31/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1045,7 +1056,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string is a valid URL; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the input string.
+	/// This method uses a regular expression to validate the base64Input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsUrl), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1094,14 +1105,14 @@ public static class StringExtensions
 
 
 	/// <summary>
-	/// Splits the input string into a <see cref="ReadOnlyCollection{T}"/> of strings,
+	/// Splits the base64Input string into a <see cref="ReadOnlyCollection{T}"/> of strings,
 	/// separated by the specified <paramref name="delimiter"/>.
 	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
 	/// </summary>
 	/// <param name="input">The string to split.</param>
 	/// <param name="options">Options for controlling the splitting operation.</param>
 	/// <param name="delimiter">The character to use as a delimiter. <see cref="ControlChars.Comma"/> is the default.</param>
-	/// <returns>A <see cref="ReadOnlyCollection{T}"/> of strings that has been split from the input string.</returns>
+	/// <returns>A <see cref="ReadOnlyCollection{T}"/> of strings that has been split from the base64Input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, StringSplitOptions options, [ConstantExpected] char delimiter = ControlChars.Comma)
@@ -1113,7 +1124,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits the input string into a <see cref="ReadOnlyCollection{String}"/> of strings,
+	/// Splits the base64Input string into a <see cref="ReadOnlyCollection{String}"/> of strings,
 	/// separated by the specified <paramref name="delimiter"/>.
 	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
 	/// The <paramref name="count"/> parameter specifies the maximum number of substrings to return.
@@ -1122,7 +1133,7 @@ public static class StringExtensions
 	/// <param name="options">Options for controlling the splitting operation, such as removing empty entries.</param>
 	/// <param name="count">The maximum number of substrings to return.</param>
 	/// <param name="delimiter">The character to use as a delimiter. Defaults to <see cref="ControlChars.Comma"/>.</param>
-	/// <returns>A <see cref="ReadOnlyCollection{String}"/> of strings that has been split from the input string.</returns>
+	/// <returns>A <see cref="ReadOnlyCollection{String}"/> of strings that has been split from the base64Input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] char delimiter = ControlChars.Comma)
@@ -1135,7 +1146,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits the input string into a ReadOnlyCollection{string} of strings,
+	/// Splits the base64Input string into a ReadOnlyCollection{string} of strings,
 	/// separated by the specified <paramref name="separator"/>.
 	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
 	/// The <paramref name="count"/> parameter specifies the maximum number of substrings to return.
@@ -1144,7 +1155,7 @@ public static class StringExtensions
 	/// <param name="options">Options for controlling the splitting operation, such as removing empty entries.</param>
 	/// <param name="count">The maximum number of substrings to return.</param>
 	/// <param name="separator">The string to use as a delimiter. Defaults to <see cref="ControlChars.DefaultSeparator"/>.</param>
-	/// <returns>A ReadOnlyCollection{string} of strings that has been split from the input string.</returns>
+	/// <returns>A ReadOnlyCollection{string} of strings that has been split from the base64Input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] string separator = ControlChars.DefaultSeparator)
@@ -1157,10 +1168,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits the input string into a sequence of lines.
+	/// Splits the base64Input string into a sequence of lines.
 	/// </summary>
 	/// <param name="input">The string to split into lines.</param>
-	/// <returns>A <see cref="LineSplitEnumerator"/> that can iterate over each line in the input string.</returns>
+	/// <returns>A <see cref="LineSplitEnumerator"/> that can iterate over each line in the base64Input string.</returns>
 	/// <remarks>
 	/// This method is an extension method and can be called directly on any string instance.
 	/// It is particularly useful for processing multi-line strings.
@@ -1177,7 +1188,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits the input string by commas and removes any empty entries from the resulting array.
+	/// Splits the base64Input string by commas and removes any empty entries from the resulting array.
 	/// </summary>
 	/// <param name="input">The string to split. This string cannot be null.</param>
 	/// <returns>A ReadOnlyCollection{string} containing the non-empty elements from the split string.</returns>
@@ -1231,12 +1242,12 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Trims whitespace from the start and end of the substring extracted from the specified range of the input string.
+	/// Trims whitespace from the start and end of the substring extracted from the specified range of the base64Input string.
 	/// </summary>
-	/// <param name="input">The input string from which to extract and trim the substring.</param>
+	/// <param name="input">The base64Input string from which to extract and trim the substring.</param>
 	/// <param name="startIndex">The zero-based starting character position of a substring in this instance.</param>
 	/// <param name="length">The number of characters in the substring.</param>
-	/// <returns>A string that is equivalent to the substring of length that begins at startIndex in input, but with white-space characters removed from the start and end.</returns>
+	/// <returns>A string that is equivalent to the substring of length that begins at startIndex in base64Input, but with white-space characters removed from the start and end.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="startIndex"/> or <paramref name="length"/> is less than zero, or <paramref name="startIndex"/> + <paramref name="length"/> is greater than the length of <paramref name="input"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[return: NotNull]
@@ -1258,7 +1269,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Converts the input string to its Base64 encoded form.
+	/// Converts the base64Input string to its Base64 encoded form.
 	/// </summary>
 	/// <param name="input">The string to encode.</param>
 	/// <returns>A Base64 encoded string.</returns>
@@ -1277,7 +1288,7 @@ public static class StringExtensions
 	/// </summary>
 	/// <param name="input">The Base64 encoded string.</param>
 	/// <returns>A span of bytes representing the decoded Base64 string.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the input string is null or empty.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToBase64ByteSpan), "David McCarter", "11/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Span<byte> ToBase64ByteSpan([DisallowNull] this string input)
@@ -1349,7 +1360,7 @@ public static class StringExtensions
 	/// </summary>
 	/// <param name="base64String">The Base64 encoded string.</param>
 	/// <returns>The byte array representation of the Base64 encoded string.</returns>
-	/// <exception cref="FormatException">Thrown when the input string is not a valid Base64 string.</exception>
+	/// <exception cref="FormatException">Thrown when the base64Input string is not a valid Base64 string.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToByteArrayFromBase64), "David McCarter", "4/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] ToByteArrayFromBase64(this string base64String)
@@ -1442,10 +1453,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Trims the specified string, removing all leading and trailing white-space characters. If the input is null, an empty string is returned.
+	/// Trims the specified string, removing all leading and trailing white-space characters. If the base64Input is null, an empty string is returned.
 	/// </summary>
 	/// <param name="input">The string to trim. If this string is null, an empty string is returned.</param>
-	/// <returns>A trimmed string, or an empty string if the input is null.</returns>
+	/// <returns>A trimmed string, or an empty string if the base64Input is null.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToTrimmed), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string? ToTrimmed([AllowNull] this string input)
@@ -1484,10 +1495,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Verifies the hashed password against the input string using the specified hashing algorithm.
+	/// Verifies the hashed password against the base64Input string using the specified hashing algorithm.
 	/// </summary>
 	/// <param name="hashedPassword">The hashed password to verify. Must not be null.</param>
-	/// <param name="input">The input string to compare against the hashed password. Must not be null.</param>
+	/// <param name="input">The base64Input string to compare against the hashed password. Must not be null.</param>
 	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
 	/// <returns>A <see cref="PasswordVerificationResult"/> indicating whether the verification succeeded or failed.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

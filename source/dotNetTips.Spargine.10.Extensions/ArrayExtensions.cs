@@ -11,7 +11,6 @@
 // </copyright>
 // <summary>Extensions methods for the Array type.</summary>
 // ***********************************************************************
-using System;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;

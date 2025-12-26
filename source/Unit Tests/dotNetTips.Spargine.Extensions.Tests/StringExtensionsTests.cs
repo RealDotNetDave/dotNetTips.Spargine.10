@@ -54,7 +54,74 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void CalculateByteArraySize_NullOrEmptyString_ReturnsZero()
+	public void CalculateByteArraySize_Base64NoPadding_ReturnsCorrectSize()
+	{
+		// Arrange
+		string base64String = "AQIDBA=="; // 4 bytes with padding
+		string base64NoPadding = "AQIDBAU="; // 5 bytes with padding
+
+		// Act
+		var result1 = base64String.CalculateByteArraySize();
+		var result2 = base64NoPadding.CalculateByteArraySize();
+
+		// Assert
+		Assert.AreEqual(4, result1, "Should calculate correct size for 4 bytes.");
+		Assert.AreEqual(5, result2, "Should calculate correct size for 5 bytes.");
+	}
+
+	[TestMethod]
+	public void CalculateByteArraySize_Base64WithOnePadding_ReturnsCorrectSize()
+	{
+		// Arrange
+		string base64String = "VGVzdA=="; // "Test" -> 4 bytes
+
+		// Act
+		var result = base64String.CalculateByteArraySize();
+
+		// Assert
+		Assert.AreEqual(4, result, "Should correctly calculate size with 1 padding character.");
+	}
+
+	[TestMethod]
+	public void CalculateByteArraySize_Base64WithTwoPadding_ReturnsCorrectSize()
+	{
+		// Arrange
+		string base64String = "VGU="; // "Te" -> 2 bytes
+
+		// Act
+		var result = base64String.CalculateByteArraySize();
+
+		// Assert
+		Assert.AreEqual(2, result, "Should correctly calculate size with 2 padding characters.");
+	}
+
+	[TestMethod]
+	public void CalculateByteArraySize_InvalidBase64Length_ThrowsFormatException()
+	{
+		// Arrange
+		string input = "ABC"; // Not divisible by 4
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FormatException>(() => input.CalculateByteArraySize());
+	}
+
+	[TestMethod]
+	public void CalculateByteArraySize_LargeBase64String_ReturnsCorrectSize()
+	{
+		// Arrange
+		var originalBytes = new byte[1000];
+		RandomData.GenerateByteArray(1000).CopyTo(originalBytes, 0);
+		string base64String = Convert.ToBase64String(originalBytes);
+
+		// Act
+		var result = base64String.CalculateByteArraySize();
+
+		// Assert
+		Assert.AreEqual(1000, result, "Should correctly calculate size for large byte array.");
+	}
+
+	[TestMethod]
+	public void CalculateByteArraySize_NullOrEmptyString_ThrowsArgumentNullException()
 	{
 		// Arrange
 		string nullString = null;
@@ -64,31 +131,17 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void CalculateByteArraySize_SpecialCharacters_ReturnsCorrectSize()
+	public void CalculateByteArraySize_ValidBase64String_ReturnsCorrectSize()
 	{
 		// Arrange
-		string input = "TëstStrîng";
+		string originalText = "TestString";
+		string base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(originalText)); // "VGVzdFN0cmluZw=="
 
 		// Act
-		var result = StringExtensions.CalculateByteArraySize(input);
+		var result = base64String.CalculateByteArraySize();
 
 		// Assert
-		var expectedSize = input.Length * 3 / 4;
-		Assert.AreEqual(expectedSize, result, "Byte array size for string with special characters is incorrect.");
-	}
-
-	[TestMethod]
-	public void CalculateByteArraySize_ValidString_ReturnsCorrectSize()
-	{
-		// Arrange
-		string input = "TestString";
-
-		// Act
-		var result = StringExtensions.CalculateByteArraySize(input);
-
-		// Assert
-		var expectedSize = input.Length * 3 / 4;
-		Assert.AreEqual(expectedSize, result, "Byte array size for valid string is incorrect.");
+		Assert.AreEqual(originalText.Length, result, "Byte array size should match original text length.");
 	}
 
 
