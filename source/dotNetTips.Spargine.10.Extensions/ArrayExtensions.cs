@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -173,7 +173,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			if (item is null)
@@ -227,8 +227,7 @@ public static class ArrayExtensions
 		{
 			array = array.ArgumentNotNull();
 
-			//TODO: ADD TO PERF BOOK?
-			return [.. array];
+			return (T[])array.Clone();
 		}
 
 		/// <summary>
@@ -240,7 +239,7 @@ public static class ArrayExtensions
 		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsEmpty()
 		{
-			return array == null || array.LongLength == 0;
+			return array == null || array.Length == 0;
 		}
 
 		/// <summary>
@@ -337,10 +336,10 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsNotEmpty()
 		{
-			return array is null ? false : array.LongLength > 0;
+			return array is null ? false : array.Length > 0;
 		}
 
 		/// <summary>
@@ -412,7 +411,7 @@ public static class ArrayExtensions
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(in int count)
 		{
-			return array is null ? false : array.LongLength == count;
+			return array is null ? false : array.Length == count;
 		}
 
 		/// <summary>
@@ -562,22 +561,18 @@ public static class ArrayExtensions
 				return array;
 			}
 
-			var index = Array.IndexOf(array, item);
-
-			if (index >= 0)
+			//Recommendation from CoPilot slower.
+			if (array.Contains(item))
 			{
-				// Item exists - replace it (creates a copy to maintain immutability)
-				var result = new T[array.Length];
+				Array.Fill(array, item);
 
-				Array.Copy(array, 0, result, 0, array.Length);
-
-				result[index] = item;
-
-				return result;
+				return array;
 			}
-
-			// Item doesn't exist - add it
-			return array.AddLast(item);
+			else
+			{
+				return array.AddLast(item);
+			}
 		}
+
 	}
 }

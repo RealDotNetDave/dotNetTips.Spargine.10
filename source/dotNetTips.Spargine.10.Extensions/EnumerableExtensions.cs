@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -19,7 +19,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -41,14 +40,6 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
 {
-
-	/// <summary>
-	/// Cache for compiled property accessors to avoid repeated reflection and compilation.
-	/// Key format: "{TypeFullName}_{PropertyName}"
-	/// </summary>
-	private static readonly ConcurrentDictionary<string, object> _orderByCache =
-		new ConcurrentDictionary<string, object>();
-
 	/// <summary>
 	/// A pool of <see cref="StringBuilder"/> objects to minimize memory allocations.
 	/// </summary>
@@ -147,70 +138,50 @@ public static class EnumerableExtensions
 		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item)
 		{
-			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
-
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
+			var index = 0;
 			var comparer = EqualityComparer<T>.Default;
-
-			// Special case for arrays for better performance
-			if (collection is T[] array)
-			{
-				for (var arrayIndex = 0; arrayIndex < array.Length; arrayIndex++)
-				{
-					if (comparer.Equals(array[arrayIndex], item))
-					{
-						return arrayIndex;
-					}
-				}
-
-				return -1;
-			}
-
-			// Special case for List<T> using Span for better performance
-			if (collection is List<T> list)
-			{
-				var span = CollectionsMarshal.AsSpan(list);
-
-				for (var listIndex = 0; listIndex < span.Length; listIndex++)
-				{
-					if (comparer.Equals(span[listIndex], item))
-					{
-						return listIndex;
-					}
-				}
-
-				return -1;
-			}
-
-			// Special case for any indexed collection
-			if (collection is IReadOnlyList<T> readOnlyList)
-			{
-				var count = readOnlyList.Count;
-
-				for (var readOnlyIndex = 0; readOnlyIndex < count; readOnlyIndex++)
-				{
-					if (comparer.Equals(readOnlyList[readOnlyIndex], item))
-					{
-						return readOnlyIndex;
-					}
-				}
-
-				return -1;
-			}
-
-			// Fall back to enumeration for other collection types
-			var otherIndex = 0;
 
 			foreach (var element in collection)
 			{
 				if (comparer.Equals(element, item))
 				{
-					return otherIndex;
+					return index;
 				}
 
-				otherIndex++;
+				index++;
+			}
+
+			return -1;
+		}
+
+		/// <summary>
+		/// Finds the otherIndex of the first occurrence of an item in the collection.
+		/// </summary>
+		/// <param name="item">The item to find in the collection.</param>
+		/// <returns>The zero-based otherIndex of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
+		/// <remarks>
+		/// This method uses <see cref="EqualityComparer{T}.Default"/> to compare elements.
+		/// </remarks>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		public int IndexOf([DisallowNull] T item, [DisallowNull] IEqualityComparer<T> comparer)
+		{
+			collection = collection.ArgumentItemsExists();
+			item = item.ArgumentNotNull();
+			comparer = comparer.ArgumentNotNull();
+
+			var index = 0;
+			foreach (var element in collection)
+			{
+				if (comparer.Equals(element, item))
+				{
+					return index;
+				}
+				index++;
 			}
 
 			return -1;
@@ -234,36 +205,6 @@ public static class EnumerableExtensions
 			foreach (var item in collection)
 			{
 				if (accumulatorPredicate(item))
-				{
-					return index;
-				}
-
-				index++;
-			}
-
-			return -1;
-		}
-
-		/// <summary>
-		/// Finds the otherIndex of the first occurrence of an item in the collection using a specified comparer.
-		/// </summary>
-		/// <param name="item">The item to find in the collection.</param>
-		/// <param name="comparer">The equality comparer to use for comparing items.</param>
-		/// <returns>The zero-based otherIndex of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public int IndexOf([DisallowNull] T item, [DisallowNull] IEqualityComparer<T> comparer)
-		{
-			collection = collection.ArgumentItemsExists();
-			item = item.ArgumentNotNull();
-			comparer = comparer.ArgumentNotNull();
-
-			var index = 0;
-
-			foreach (var element in collection)
-			{
-				if (comparer.Equals(element, item))
 				{
 					return index;
 				}
@@ -324,64 +265,35 @@ public static class EnumerableExtensions
 		public IEnumerable<T> OrderBy([DisallowNull] string sortExpression)
 		{
 			collection = collection.ArgumentNotNull();
+
 			sortExpression += string.Empty;
 
-			var parts = sortExpression.Split(' ');
+			var parts = sortExpression.Split(Convert.ToChar(" ", CultureInfo.InvariantCulture));
+			var descending = false;
+			var property = string.Empty;
 
-			if (parts.Length == 0 || string.IsNullOrEmpty(parts[0]))
+			if (parts.LongLength > 0 && !string.IsNullOrEmpty(parts[0]))
 			{
-				return collection;
-			}
+				property = parts[0];
 
-			var property = parts[0];
-			var descending = parts.Length > 1 && parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
-
-			var cacheKey = $"{typeof(T).FullName}_{property}";
-
-			if (!_orderByCache.TryGetValue(cacheKey, out var cachedDelegate))
-			{
-				var prop = typeof(T).GetRuntimeProperty(property);
-
-				if (prop is null)
+				if (parts.LongLength > 1)
 				{
-					return collection;
+					@descending = CultureInfo.InvariantCulture.TextInfo
+						.ToLower(parts[1])
+						.Contains("esc", StringComparison.OrdinalIgnoreCase);
 				}
 
-				// OPTIMIZATION: Create strongly-typed delegate to avoid boxing
-				var delegateType = typeof(Func<,>).MakeGenericType(typeof(T), prop.PropertyType);
-				var parameter = Expression.Parameter(typeof(T), "x");
-				var propertyAccess = Expression.Property(parameter, prop);
-				var lambda = Expression.Lambda(delegateType, propertyAccess, parameter);
-				var compiledGetter = lambda.Compile();
+				var prop = typeof(T).GetRuntimeProperty(property);
 
-				// Cache the compiled delegate
-				_ = _orderByCache.TryAdd(cacheKey, compiledGetter);
-
-				// Use reflection to call OrderBy<T, TKey> with the correct TKey type
-				var orderByMethod = descending
-					? typeof(Enumerable).GetMethods()
-						.First(m => m.Name == nameof(Enumerable.OrderByDescending) && m.GetParameters().Length == 2)
-					: typeof(Enumerable).GetMethods()
-						.First(m => m.Name == nameof(Enumerable.OrderBy) && m.GetParameters().Length == 2);
-
-				var genericOrderBy = orderByMethod.MakeGenericMethod(typeof(T), prop.PropertyType);
-
-				return (IEnumerable<T>)genericOrderBy.Invoke(null, [collection, compiledGetter])!;
+				if (prop is not null && prop.CheckIsNotNull(throwException: true))
+				{
+					return @descending
+						? collection.OrderByDescending(x => prop.GetValue(x, null))
+						: collection.OrderBy(x => prop.GetValue(x, null));
+				}
 			}
 
-			// Retrieve from cache and use reflection to invoke
-			var getter = cachedDelegate;
-			var propType = getter.GetType().GetGenericArguments()[1];
-
-			var orderByMethodCached = descending
-				? typeof(Enumerable).GetMethods()
-					.First(m => m.Name == nameof(Enumerable.OrderByDescending) && m.GetParameters().Length == 2)
-				: typeof(Enumerable).GetMethods()
-					.First(m => m.Name == nameof(Enumerable.OrderBy) && m.GetParameters().Length == 2);
-
-			var genericOrderByCached = orderByMethodCached.MakeGenericMethod(typeof(T), propType);
-
-			return (IEnumerable<T>)genericOrderByCached.Invoke(null, [collection, getter])!;
+			return collection;
 		}
 
 
@@ -427,7 +339,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			accumulatorFunction = accumulatorFunction.ArgumentNotNull();
 
-			return collection.Order(new OrdinalStringKeyComparer<T>(accumulatorFunction));
+			return collection.OrderBy(accumulatorFunction, StringComparer.Ordinal);
 		}
 
 
@@ -493,53 +405,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			// OPTIMIZATION: For List<T>, use CollectionsMarshal.AsSpan for direct memory access
-			if (collection is List<T> list)
-			{
-				var span = CollectionsMarshal.AsSpan(list);
-				var length = span.Length;
-				var result = new T[length];
-
-				for (var index = 0; index < length; index++)
-				{
-					result[index] = accumulatorPredicate(span[index], index) ? replacement : span[index];
-				}
-
-				return result;
-			}
-
-			// OPTIMIZATION: For arrays, use MemoryMarshal for ref-based access
-			if (collection is T[] array)
-			{
-				var length = array.Length;
-				var result = new T[length];
-				ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
-
-				for (var index = 0; index < length; index++)
-				{
-					ref readonly var element = ref Unsafe.Add(ref arrayStart, index);
-					result[index] = accumulatorPredicate(element, index) ? replacement : element;
-				}
-
-				return result;
-			}
-
-			// For IList<T>, use indexed access with known count
-			if (collection is IList<T> ilist)
-			{
-				var count = ilist.Count;
-				var result = new T[count];
-
-				for (var index = 0; index < count; index++)
-				{
-					result[index] = accumulatorPredicate(ilist[index], index) ? replacement : ilist[index];
-				}
-
-				return result;
-			}
-
-			// Fall back to LINQ Select for other enumerable types (maintains deferred execution)
-			return collection.Select((obj, pos) => accumulatorPredicate(obj, pos) ? replacement : obj);
+			return collection.Select((obj, pos) => accumulatorPredicate.Invoke(obj, pos) ? replacement : obj);
 		}
 
 		/// <summary>
@@ -606,12 +472,21 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(2);
 
-			// OPTIMIZATION: Delegate to Enumerable.Chunk which has internal optimizations
-			// for List<T>, arrays, IList<T>, and ICollection<T> types.
-			// This avoids the ref struct limitation and leverages framework optimizations.
-			foreach (var chunk in collection.Chunk(pageCount))
+			// Cache collection to avoid evaluating it twice
+			var count = collection.Count();
+
+			if (count < pageCount)
 			{
-				yield return chunk;
+				yield return collection;
+			}
+			else
+			{
+				var pagesCount = Math.Ceiling(count / (double)pageCount);
+
+				for (var pageIndex = 0; pageIndex < pagesCount; pageIndex++)
+				{
+					yield return [.. collection.Skip(pageCount * pageIndex)];
+				}
 			}
 		}
 
@@ -710,7 +585,7 @@ public static class EnumerableExtensions
 		/// <returns>true if the two collection sequences are of equal length and their corresponding elements are equal according to the default equality comparer for their type; otherwise, false.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool StructuralSequenceEqual([AllowNull] IEnumerable<T> second)
 		{
 			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
@@ -1266,7 +1141,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool FastAny([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1309,29 +1184,9 @@ public static class EnumerableExtensions
 				return false;
 			}
 
-			// OPTIMIZATION: Convert items to HashSet for O(1) lookup instead of O(n*m) with Any(Contains)
-			var itemsToFind = new HashSet<T>();
-
 			foreach (var itemCollection in items)
 			{
-				if (itemCollection is not null && itemCollection.Count > 0)
-				{
-					foreach (var item in itemCollection)
-					{
-						_ = itemsToFind.Add(item);
-					}
-				}
-			}
-
-			if (itemsToFind.Count == 0)
-			{
-				return false;
-			}
-
-			// Single pass through collection with O(1) lookup per item
-			foreach (var item in collection)
-			{
-				if (itemsToFind.Contains(item))
+				if (itemCollection is not null && itemCollection.Count > 0 && collection.Any(itemCollection.Contains))
 				{
 					return true;
 				}
@@ -1574,14 +1429,15 @@ public static class EnumerableExtensions
 		[Information(nameof(AddLast), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddLast([DisallowNull] T item)
 		{
-			if (item is null)
+			collection = collection.ArgumentNotNull();
+			item = item.ArgumentNotNull();
+
+			foreach (var element in collection)
 			{
-				return collection;
+				yield return element;
 			}
 
-			collection = collection.ArgumentNotNull();
-
-			return collection.Append(item);
+			yield return item;
 		}
 
 		/// <summary>
@@ -1594,42 +1450,23 @@ public static class EnumerableExtensions
 		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> Upsert([DisallowNull] T item)
 		{
-			if (item is null)
-			{
-				return collection;
-			}
-
 			collection = collection.ArgumentNotNull();
+			item = item.ArgumentNotNull();
 
-			// OPTIMIZATION: Fast path for List<T> - avoid materialization and use direct access
-			if (collection is List<T> list)
+			var list = collection as List<T> ?? [.. collection];
+
+			var index = list.IndexOf(item);
+
+			if (index >= 0)
 			{
-				var index = list.IndexOf(item);
-
-				if (index >= 0)
-				{
-					list[index] = item; // Update in-place
-				}
-				else
-				{
-					list.Add(item); // Add to existing list
-				}
-
-				return list;
+				list[index] = item; // Update the existing item.
+			}
+			else
+			{
+				list.Add(item); // Add the new item.
 			}
 
-			// OPTIMIZATION: For other types, use HashSet for O(1) lookup + single materialization
-			var hashSet = new HashSet<T>(collection);
-
-			// HashSet.Add returns false if item already exists
-			if (!hashSet.Add(item))
-			{
-				// Item exists, remove and re-add to update
-				hashSet.Remove(item);
-				hashSet.Add(item);
-			}
-
-			return hashSet;
+			return list;
 		}
 
 		/// <summary>
@@ -1668,14 +1505,15 @@ public static class EnumerableExtensions
 		[Information(nameof(AddFirst), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddFirst([DisallowNull] T item)
 		{
-			if (item is null)
-			{
-				return collection;
-			}
-
 			collection = collection.ArgumentNotNull();
+			item = item.ArgumentNotNull();
 
-			return collection.Prepend(item);
+			yield return item;
+
+			foreach (var element in collection)
+			{
+				yield return element;
+			}
 		}
 
 		/// <summary>
@@ -1768,7 +1606,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<T> ToReadOnlyCollection()
 		{
 			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
@@ -1855,12 +1693,12 @@ public static class EnumerableExtensions
 
 			collection = collection.ArgumentNotNull();
 
-			if (!condition)
+			if (condition)
 			{
-				return collection;
+				collection = collection.AddLast(item);
 			}
 
-			return collection.Append(item);
+			return collection;
 		}
 	}
 }

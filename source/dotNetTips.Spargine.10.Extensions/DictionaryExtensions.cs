@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -208,26 +207,14 @@ public static class DictionaryExtensions
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
-		// Fast path for Dictionary<TKey, TValue>
-		if (collection is Dictionary<TKey, TValue> dict)
+
+		if (collection.TryGetValue(key, out var item) is false)
 		{
-			// Use ref-based lookup for maximum performance
-			ref var valueRef = ref CollectionsMarshal.GetValueRefOrAddDefault(dict, key, out var exists);
-			if (!exists)
-			{
-				valueRef = value;
-			}
-			return valueRef!;
+			collection.Add(key, value);
+			item = value;
 		}
 
-		// Fallback for other IDictionary implementations
-		if (!collection.TryGetValue(key, out var existingValue))
-		{
-			collection[key] = value;
-			return value;
-		}
-
-		return existingValue;
+		return item;
 	}
 
 	/// <summary>
@@ -575,17 +562,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		collection = collection.ArgumentNotNull();
-
-		// Fast path: if already ReadOnlyDictionary, return it
-		if (collection is ReadOnlyDictionary<TKey, TValue> readOnlyDict)
-		{
-			return readOnlyDict;
-		}
-
-		// Fast path: if source implements IReadOnlyDictionary, it's already conceptually read-only
-		// Just wrap it to enforce the type
-		return new ReadOnlyDictionary<TKey, TValue>(collection);
+		return new(collection.ArgumentNotNull());
 	}
 
 
@@ -694,32 +671,17 @@ public static class DictionaryExtensions
 		collection = collection.ArgumentNotNull();
 		key = key.ArgumentNotNull();
 
-		// Fast path for Dictionary<TKey, TValue>
-		if (collection is Dictionary<TKey, TValue> dict)
+		if (collection.TryGetValue(key, out var value))
 		{
-			ref var valueRef = ref CollectionsMarshal.GetValueRefOrAddDefault(dict, key, out var exists);
-
-			if (!exists)
-			{
-				// Only validate and invoke factory if key doesn't exist
-				valueRef = valueFunction.ArgumentNotNull().Invoke(key);
-			}
-
-			return valueRef!;
+			return value;
 		}
 
-		// Standard path for other IDictionary types
-		if (!collection.TryGetValue(key, out var value))
-		{
-			// Key doesn't exist - compute and add
-			var newValue = valueFunction.ArgumentNotNull().Invoke(key);
+		valueFunction = valueFunction.ArgumentNotNull();
 
-			collection[key] = newValue;
+		var newValue = valueFunction.Invoke(key);
+		collection.Add(key, newValue);
 
-			return newValue;
-		}
-
-		return value;
+		return newValue;
 	}
 
 	/// <summary>

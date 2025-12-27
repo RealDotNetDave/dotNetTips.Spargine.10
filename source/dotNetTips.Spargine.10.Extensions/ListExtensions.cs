@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -94,13 +94,9 @@ public static class ListExtensions
 			list = list.ArgumentNotNull();
 			items = items.ArgumentNotNull();
 
-			// OPTIMIZATION: Always use HashSet approach - simpler and faster in .NET 10
-			// The HashSet construction overhead is minimal and pays off even for small lists
-			var existingItems = new HashSet<T>(list);
-
 			foreach (var item in items)
 			{
-				if (existingItems.Add(item))
+				if (!list.Contains(item))
 				{
 					list.Add(item);
 				}
@@ -432,9 +428,22 @@ public static class ListExtensions
 		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool RemoveFirst(T item)
 		{
+			if (item is null)
+			{
+				return false;
+			}
+
 			list = list.ArgumentNotNull();
 
-			return list.Remove(item);
+			var index = list.IndexOf(item);
+
+			if (index >= 0)
+			{
+				list.RemoveAt(index);
+				return true;
+			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -486,20 +495,19 @@ public static class ListExtensions
 		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool RemoveLast(T item)
 		{
+			if (item is null)
+			{
+				return false;
+			}
+
 			list = list.ArgumentNotNull();
 
-			// OPTIMIZATION: Reverse iteration using CollectionsMarshal.AsSpan for direct memory access
-			// Avoids LastIndexOf overhead and provides early exit on match
-			var span = CollectionsMarshal.AsSpan(list);
-			var comparer = EqualityComparer<T>.Default;
+			var index = list.LastIndexOf(item);
 
-			for (var index = span.Length - 1; index >= 0; index--)
+			if (index >= 0)
 			{
-				if (comparer.Equals(span[index], item))
-				{
-					list.RemoveAt(index);
-					return true;
-				}
+				list.RemoveAt(index);
+				return true;
 			}
 
 			return false;
@@ -602,7 +610,7 @@ public static class ListExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Split), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+		[Information(nameof(Split), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 		public ReadOnlyCollection<ReadOnlyCollection<T>> Split(int size)
 		{
 			list = list.ArgumentNotNull();
@@ -726,26 +734,7 @@ public static class ListExtensions
 		{
 			list = list.ArgumentNotNull();
 
-			// OPTIMIZATION: Use CollectionsMarshal.AsSpan + ImmutableCollectionsMarshal.AsImmutableArray
-			// for zero-copy conversion when possible, or ToImmutableArray builder for direct construction
-			var count = list.Count;
-
-			if (count == 0)
-			{
-				return ImmutableArray<T>.Empty;
-			}
-
-			// Use ImmutableArray builder with exact capacity for optimal performance
-			var builder = ImmutableArray.CreateBuilder<T>(count);
-			var span = CollectionsMarshal.AsSpan(list);
-
-			// Bulk copy from span to builder's internal array
-			for (var index = 0; index < count; index++)
-			{
-				builder.Add(span[index]);
-			}
-
-			return builder.MoveToImmutable();
+			return [.. list];
 		}
 
 		/// <summary>

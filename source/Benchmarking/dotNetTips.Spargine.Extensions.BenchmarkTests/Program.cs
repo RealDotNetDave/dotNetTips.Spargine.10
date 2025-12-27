@@ -54,7 +54,6 @@ internal sealed class Program
 			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<ImmutableArrayExtensionsBenchmark>(config);
 			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<ObservableCollectionExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);

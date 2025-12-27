@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -150,14 +150,14 @@ public static class StringExtensions
 	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
 	/// <returns>A string representation of the computed hashType.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
 		var hash = GetHash(input, hashType);
 
-		var sb = _stringBuilderPool.Value.Get();
+		var sb = _stringBuilderPool.Value.Get().Clear();
 
 		try
 		{
@@ -170,7 +170,7 @@ public static class StringExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb.Clear());
+			_stringBuilderPool.Value.Return(sb);
 		}
 	}
 
@@ -183,17 +183,21 @@ public static class StringExtensions
 	/// This method uses the <see cref="SHA256"/> class to compute the hashType.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeSHA256Hash), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ComputeSHA256Hash), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string ComputeSHA256Hash([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
-		// Create a SHA256
-		// ComputeHash - returns byte array
-		var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(input));
+		// OPTIMIZATION: Pre-allocate buffer and use span-based encoding for .NET 10
+		// Avoids intermediate allocation from Encoding.UTF8.GetBytes(string)
+		var buffer = new byte[(Encoding.UTF8.GetByteCount(input))];
 
-		// Convert byte array to a string
+		_ = Encoding.UTF8.GetBytes(input.AsSpan(), buffer);
+
+		var bytes = SHA256.HashData(buffer);
+
 		return FastStringBuilder.BytesToString(ref bytes);
+
 	}
 
 	/// <summary>
@@ -225,7 +229,7 @@ public static class StringExtensions
 			return input;
 		}
 
-		var sb = _stringBuilderPool.Value.Get();
+		var sb = _stringBuilderPool.Value.Get().Clear();
 
 		try
 		{
@@ -245,7 +249,7 @@ public static class StringExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb.Clear());
+			_stringBuilderPool.Value.Return(sb);
 		}
 	}
 
@@ -265,7 +269,7 @@ public static class StringExtensions
 	/// Thrown if <paramref name="input"/> or <paramref name="characters"/> is null.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase, [DisallowNull] params ReadOnlyCollection<string> characters)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -273,7 +277,7 @@ public static class StringExtensions
 
 		stringComparison = stringComparison.ArgumentDefined();
 
-		return characters.Count != 0 && characters.FastAny(character => input.Contains(character, stringComparison));
+		return characters.Count != 0 && characters.Any(character => input.Contains(character, stringComparison));
 	}
 
 	/// <summary>
@@ -451,7 +455,7 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static (string Scheme, string Host, string Port, string Path) FastParseUrl([NotNull] this string url)
 	{
 		url = url.ArgumentNotNullOrEmpty();
@@ -495,7 +499,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Replace(string, string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for optimal performance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FastReplace([DisallowNull] this string input, string oldValue, string newValue)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -918,10 +922,10 @@ public static class StringExtensions
 	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is empty.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool IsEmpty([NotNullWhen(false)] this string? input)
 	{
-		return input is null || input.Length == 0;
+		return string.IsNullOrEmpty(input);
 	}
 
 	/// <summary>
@@ -1233,7 +1237,7 @@ public static class StringExtensions
 	/// This method performs a comparison using <see cref="StringComparison.OrdinalIgnoreCase"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static bool StartsWithOrdinalIgnoreCase([DisallowNull] this string input, string inputToCompare)
 	{
 		return string.IsNullOrEmpty(input) || string.IsNullOrEmpty(inputToCompare)
@@ -1346,13 +1350,20 @@ public static class StringExtensions
 	/// <param name="encoding">The encoding to use for the conversion. This cannot be null. See <see cref="Encoding"/> for encoding types.</param>
 	/// <returns>A byte array representing the encoded string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToByteArray), "David McCarter", "12/21/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToByteArray), "David McCarter", "12/21/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static byte[] ToByteArray([DisallowNull] this string input, [DisallowNull] Encoding encoding)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 		encoding = encoding.ArgumentNotNull();
 
-		return encoding.GetBytes(input);
+		// OPTIMIZATION: Pre-allocate exact buffer size using GetByteCount for .NET 10
+		// Reduces allocations and improves performance with span-based encoding
+		var byteCount = encoding.GetByteCount(input);
+		var buffer = new byte[byteCount];
+
+		_ = encoding.GetBytes(input.AsSpan(), buffer);
+
+		return buffer;
 	}
 
 	/// <summary>
