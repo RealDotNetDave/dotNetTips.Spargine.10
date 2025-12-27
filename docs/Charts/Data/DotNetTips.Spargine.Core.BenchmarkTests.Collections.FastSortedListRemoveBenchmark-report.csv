@@ -1,0 +1,49 @@
+Method,Count,Mean,Allocated
+'Remove: FastSortedList<ref>',2,44.55,0 B
+'Remove: FastSortedList<ref>',4,61.47,152 B
+'Remove: FastSortedList<ref>',8,98.59,184 B
+'Remove: FastSortedList<ref>',16,166.84,248 B
+'Remove: FastSortedList<ref>',32,300.3,0 B
+'Remove: FastSortedList<ref>',64,537.07,0 B
+'Remove: FastSortedList<ref>',128,"1,050.64",1144 B
+'Remove: FastSortedList<ref>',256,"2,139.14",2168 B
+'Remove: SortedList<ref>',2,158.01,80 B
+'Remove: SortedList<ref>',4,333.37,0 B
+'Remove: SortedList<ref>',8,684.42,176 B
+'Remove: SortedList<ref>',16,"1,379.01",304 B
+'Remove: SortedList<ref>',32,"3,786.18",560 B
+'Remove: SortedList<ref>',64,"9,926.73",1072 B
+'Remove: SortedList<ref>',128,"23,204.37",2096 B
+'Remove: SortedList<ref>',256,"58,434.33",4144 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',2,34.69,0 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',4,39.15,1039 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',8,40.4,208 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',16,50.69,272 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',32,66.95,400 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',64,87.49,656 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',128,146.73,1168 B
+'RemoveAt: Comparer(LastName) - FastSortedList<ref>',256,270.43,2192 B
+'RemoveAt: FastSortedList<ref>',2,31.61,136 B
+'RemoveAt: FastSortedList<ref>',4,33.56,152 B
+'RemoveAt: FastSortedList<ref>',8,39.53,184 B
+'RemoveAt: FastSortedList<ref>',16,49.03,3184 B
+'RemoveAt: FastSortedList<ref>',32,56.28,0 B
+'RemoveAt: FastSortedList<ref>',64,84.26,632 B
+'RemoveAt: FastSortedList<ref>',128,141.28,1144 B
+'RemoveAt: FastSortedList<ref>',256,262.76,2168 B
+'RemoveAt: FastSortedList<ref>',2,31.22,0 B
+'RemoveAt: FastSortedList<ref>',4,33.12,152 B
+'RemoveAt: FastSortedList<ref>',8,39.96,184 B
+'RemoveAt: FastSortedList<ref>',16,43.78,248 B
+'RemoveAt: FastSortedList<ref>',32,55.55,3089 B
+'RemoveAt: FastSortedList<ref>',64,80.87,632 B
+'RemoveAt: FastSortedList<ref>',128,145.48,1144 B
+'RemoveAt: FastSortedList<ref>',256,258.86,2168 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',2,39.53,104 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',4,58.5,116 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',8,89.07,200 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',16,163.81,291 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',32,399.82,584 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',64,995.98,1096 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',128,"2,123.83",2120 B
+'RemoveAt: With Comparer(LastName) - SortedList<ref>',256,"4,853.99",4168 B

@@ -84,17 +84,12 @@ internal static class InternalMethods
 
 		var objectType = obj.GetType();
 
-		//TODO: Review performance impact of this change
-
-		// OPTIMIZATION: Use cached dictionary instead of calling TypeHelper.BuiltInTypeNames() repeatedly
-		// This eliminates dictionary allocation on every check
 		if (_builtInTypeNames.ContainsKey(objectType))
 		{
 			result.Add(memberName, obj.ToString()!);
 			return result;
 		}
 
-		// Rest of the method remains the same...
 		if (IsEnumerable(objectType))
 		{
 			var itemCount = 0;

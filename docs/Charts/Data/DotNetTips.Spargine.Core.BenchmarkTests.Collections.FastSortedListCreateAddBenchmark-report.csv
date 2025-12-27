@@ -1,0 +1,105 @@
+Method,Count,Mean,Allocated
+'Add: FastSortedList<ref>',64,189.39,632 B
+'Add: FastSortedList<ref>',128,345.18,1144 B
+'Add: FastSortedList<ref>',256,664.89,2168 B
+'Add: FastSortedList<ref>',512,"1,311.07",4216 B
+'Add: FastSortedList<ref>',1024,"2,689.00",8312 B
+'Add: FastSortedList<ref>',2048,"5,318.45",112949 B
+'Add: FastSortedList<ref>',4096,"9,519.67",32888 B
+'Add: FastSortedList<ref>',8192,"19,420.33",65656 B
+'Add: SortedList<ref> with Tuple',64,"13,752.96",1136 B
+'Add: SortedList<ref> with Tuple',128,"34,109.81",2160 B
+'Add: SortedList<ref> with Tuple',256,"90,100.87",4208 B
+'Add: SortedList<ref> with Tuple',512,"199,521.53",8304 B
+'Add: SortedList<ref> with Tuple',1024,"499,366.66",16496 B
+'Add: SortedList<ref> with Tuple',2048,"1,238,557.04",32880 B
+'Add: SortedList<ref> with Tuple',4096,"3,546,408.58",65648 B
+'Add: SortedList<ref> with Tuple',8192,"11,062,704.15",131184 B
+'Add: SortedList<ref>',64,"13,712.17",1136 B
+'Add: SortedList<ref>',128,"34,091.84",2160 B
+'Add: SortedList<ref>',256,"83,209.27",4208 B
+'Add: SortedList<ref>',512,"198,609.34",8304 B
+'Add: SortedList<ref>',1024,"503,790.21",16496 B
+'Add: SortedList<ref>',2048,"1,246,430.23",32880 B
+'Add: SortedList<ref>',4096,"3,472,664.65",65648 B
+'Add: SortedList<ref>',8192,"10,973,996.76",131184 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',64,193.86,656 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',128,355.47,0 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',256,676.71,2192 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',512,"1,351.05",4240 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',1024,"2,684.90",8336 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',2048,"5,309.14",0 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',4096,"9,435.75",32912 B
+'Add: with Comparer(LastName)  - FastSortedList<ref>',8192,"19,126.37",65680 B
+'Add: with OrdinalStringComparer',64,"2,338.72",1160 B
+'Add: with OrdinalStringComparer',128,"8,138.43",2184 B
+'Add: with OrdinalStringComparer',256,"25,804.75",4232 B
+'Add: with OrdinalStringComparer',512,"71,302.68",8328 B
+'Add: with OrdinalStringComparer',1024,"202,785.26",16520 B
+'Add: with OrdinalStringComparer',2048,"582,299.25",32904 B
+'Add: with OrdinalStringComparer',4096,"1,965,926.98",65672 B
+'Add: with OrdinalStringComparer',8192,"7,412,057.37",131208 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',64,"8,386.76",7872 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',128,"20,236.31",16512 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',256,"52,019.42",34776 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',512,"128,979.15",72848 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',1024,"320,984.32",151544 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',2048,"905,179.52",314140 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',4096,"2,639,741.52",648233 B
+'AddRange:  with OrdinalStringComparer - SortedList<ref>',8192,"8,308,706.58",844816 B
+'AddRange: FastSortedList<ref>',64,82.15,632 B
+'AddRange: FastSortedList<ref>',128,140.87,1144 B
+'AddRange: FastSortedList<ref>',256,256.52,2168 B
+'AddRange: FastSortedList<ref>',512,507.62,4216 B
+'AddRange: FastSortedList<ref>',1024,"1,061.32",8312 B
+'AddRange: FastSortedList<ref>',2048,"2,111.08",16504 B
+'AddRange: FastSortedList<ref>',4096,"3,257.62",32888 B
+'AddRange: FastSortedList<ref>',8192,"7,035.59",65656 B
+'AddRange: SortedList<ref>',64,"20,299.73",7848 B
+'AddRange: SortedList<ref>',128,"48,753.52",16488 B
+'AddRange: SortedList<ref>',256,"112,994.44",34752 B
+'AddRange: SortedList<ref>',512,"266,270.86",72824 B
+'AddRange: SortedList<ref>',1024,"627,154.64",151520 B
+'AddRange: SortedList<ref>',2048,"1,568,912.45",314103 B
+'AddRange: SortedList<ref>',4096,"4,076,674.22",648184 B
+'AddRange: SortedList<ref>',8192,"11,892,644.11",844792 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',64,88.14,656 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',128,143.64,1168 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',256,265.06,2192 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',512,504.76,4240 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',1024,"1,053.74",8336 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',2048,"2,110.64",16528 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',4096,"3,309.20",32912 B
+'AddRange: with Comparer(LastName) - FastSortedList<ref>',8192,"7,031.36",65680 B
+'New: add collection in constructor - FastSortedList<ref>',64,93.23,0 B
+'New: add collection in constructor - FastSortedList<ref>',128,149.25,1144 B
+'New: add collection in constructor - FastSortedList<ref>',256,270.24,2168 B
+'New: add collection in constructor - FastSortedList<ref>',512,514.42,4216 B
+'New: add collection in constructor - FastSortedList<ref>',1024,"1,062.70",8312 B
+'New: add collection in constructor - FastSortedList<ref>',2048,"2,105.42",16504 B
+'New: add collection in constructor - FastSortedList<ref>',4096,"3,310.17",32888 B
+'New: add collection in constructor - FastSortedList<ref>',8192,"6,990.47",65656 B
+'New: add collection in constructor - SortedList<ref>',64,"16,781.57",1072 B
+'New: add collection in constructor - SortedList<ref>',128,"42,599.79",2096 B
+'New: add collection in constructor - SortedList<ref>',256,"101,255.91",4144 B
+'New: add collection in constructor - SortedList<ref>',512,"243,025.54",8240 B
+'New: add collection in constructor - SortedList<ref>',1024,"503,238.28",16432 B
+'New: add collection in constructor - SortedList<ref>',2048,"1,250,249.18",32816 B
+'New: add collection in constructor - SortedList<ref>',4096,"2,572,875.31",65584 B
+'New: add collection in constructor - SortedList<ref>',8192,"5,828,640.39",131120 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',64,89.32,0 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',128,150.9,1168 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',256,266.04,2192 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',512,525.58,4240 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',1024,"1,095.40",8336 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',2048,"2,107.42",0 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',4096,"3,312.98",32912 B
+'New: add items in constructor + Comparer(LastName) - FastSortedList<ref>',8192,"6,953.12",65680 B
+'New: with OrdinalStringComparer - SortedList<ref>',64,"2,355.33",1096 B
+'New: with OrdinalStringComparer - SortedList<ref>',128,"5,513.95",2120 B
+'New: with OrdinalStringComparer - SortedList<ref>',256,"12,649.29",4168 B
+'New: with OrdinalStringComparer - SortedList<ref>',512,"40,621.36",8264 B
+'New: with OrdinalStringComparer - SortedList<ref>',1024,"122,703.82",16456 B
+'New: with OrdinalStringComparer - SortedList<ref>',2048,"284,686.53",32840 B
+'New: with OrdinalStringComparer - SortedList<ref>',4096,"656,241.60",65608 B
+'New: with OrdinalStringComparer - SortedList<ref>',8192,"1,498,458.44",131144 B

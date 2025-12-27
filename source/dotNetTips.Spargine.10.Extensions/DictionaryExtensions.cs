@@ -57,10 +57,6 @@ public static class DictionaryExtensions
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
-		//TODO: Review for Copilot enhancements
-
-		// OPTIMIZATION: Use TryAdd instead of ContainsKey + Add
-		// TryAdd is a single O(1) operation in .NET 10
 		return collection.TryAdd(key, value);
 	}
 
@@ -99,10 +95,6 @@ public static class DictionaryExtensions
 
 		var added = false;
 
-		//TODO: Review for Copilot enhancements
-
-		// OPTIMIZATION: Use TryAdd instead of ContainsKey + Add
-		// TryAdd is a single O(1) operation in .NET 10
 		foreach (var item in items)
 		{
 			var itemKey = keyFunction.Invoke(item);
@@ -707,10 +699,6 @@ public static class DictionaryExtensions
 
 		collection = collection.ArgumentNotNull();
 
-		//TODO: Review for Copilot enhancements
-
-		// OPTIMIZATION: Use indexer for upsert - single O(1) operation
-		// Automatically handles both insert (if key doesn't exist) and update (if key exists)
 		collection[item.Id] = item;
 	}
 
@@ -740,11 +728,6 @@ public static class DictionaryExtensions
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
-		//TODO: Review for Copilot enhancements
-
-		// OPTIMIZATION: Use indexer for upsert - single O(1) operation
-		// Automatically handles both insert (if key doesn't exist) and update (if key exists)
 		collection[key] = item;
 	}
-
 }

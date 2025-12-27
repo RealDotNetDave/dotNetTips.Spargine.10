@@ -152,9 +152,6 @@ public static class ArrayExtensions
 		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public T[] FastSelectItems(int startIndex, int count)
 		{
-			//TODO: CHECK ALLOCATIONS
-			//TODO: ADD TO PERF BOOK?
-
 			array = array.ArgumentNotNull();
 			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
 			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
@@ -509,7 +506,6 @@ public static class ArrayExtensions
 
 			var result = new T[array.LongLength - 1];
 
-			//TODO: TRYING THIS. BACKOUT IF SLOWER.
 			array.AsSpan(0, (int)array.LongLength - 1).CopyTo(result);
 
 			return result;

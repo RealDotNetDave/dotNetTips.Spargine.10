@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -494,10 +494,6 @@ public static class ObjectExtensions
 
 			var result = new Dictionary<string, string>();
 
-			//TODO: Review performance implications of this method due to reflection usage
-
-			// OPTIMIZATION: Use cached dictionary instead of calling TypeHelper.BuiltInTypeNames() repeatedly
-			// This eliminates method call overhead and potential dictionary creation on every recursive call
 			if (_builtInTypeNames.ContainsKey(objectType))
 			{
 				result.Add(memberName, obj!.ToString()!);
@@ -646,10 +642,6 @@ public static class ObjectExtensions
 
 			var result = new Dictionary<string, string>();
 
-			//TODO: Review performance implications of this method due to reflection usage
-
-			// OPTIMIZATION: Use cached dictionary instead of calling TypeHelper.BuiltInTypeNames()
-			// This eliminates method call overhead and potential dictionary creation on every recursive call
 			if (_builtInTypeNames.ContainsKey(objectType))
 			{
 				result.Add(memberName, obj.ToString()!);
@@ -676,6 +668,7 @@ public static class ObjectExtensions
 						result[kvp.Key] = kvp.Value;
 					}
 				}
+
 				return result;
 			}
 

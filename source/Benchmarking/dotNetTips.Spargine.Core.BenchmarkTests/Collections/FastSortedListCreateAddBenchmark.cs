@@ -4,7 +4,7 @@
 // Created          : 03-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-17-2025
+// Last Modified On : 12-27-2025
 // ***********************************************************************
 // <copyright file="FastSortedListCreateAddBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -68,8 +68,6 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	{
 		var people = new SortedList<string, Person>(this.Count);
 
-		//TODO: WRITE ARTICLE ABOUT THIS SYNTAX?
-
 		foreach (var person in this._peopleRefDictionaryToInsert)
 		{
 			people.Add(person.Key, person.Value);
@@ -97,8 +95,6 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	public void Add_Tuple_SortedList()
 	{
 		var people = new SortedList<string, Person>(this.Count);
-
-		//TODO: WRITE ARTICLE ABOUT THIS SYNTAX? Faster using tuple?
 
 		foreach (var (key, value) in this._peopleRefDictionaryToInsert)
 		{
