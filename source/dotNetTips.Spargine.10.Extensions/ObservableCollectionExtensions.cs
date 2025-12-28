@@ -82,16 +82,7 @@ public static class ObservableCollectionExtensions
 				return false;
 			}
 
-			// Direct foreach is faster than Any() in .NET 10 due to reduced abstraction layers
-			foreach (var item in collection)
-			{
-				if (actionPredicate(item))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return collection.Count(actionPredicate) > 0;
 		}
 
 		/// <summary>

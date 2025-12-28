@@ -51,10 +51,10 @@ internal sealed class Program
 
 			//_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
+			//_= BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<ObservableCollectionExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
