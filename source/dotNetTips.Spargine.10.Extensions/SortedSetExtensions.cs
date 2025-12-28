@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 12-28-2025
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -92,7 +92,15 @@ public static class SortedSetExtensions
 		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
-			return collection is null ? [] : [.. collection];
+			if (collection is null)
+			{
+				return ImmutableSortedSet<T>.Empty;
+			}
+
+			// OPTIMIZATION: Use CreateRange which is optimized for bulk operations
+			// Preserves the comparer from the original SortedSet
+			return ImmutableSortedSet.CreateRange(collection.Comparer, collection);
+
 		}
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 06-10-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-22-2024
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter

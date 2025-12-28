@@ -45,15 +45,6 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.ComputeSHA256Hash))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void ComputeSHA256Hash()
-	{
-		var result = this._crlfString.ComputeSha256Hash();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(StringExtensions.ContainsAny))]
 	[BenchmarkCategory(Categories.Strings)]
 	public void ContainsAny()

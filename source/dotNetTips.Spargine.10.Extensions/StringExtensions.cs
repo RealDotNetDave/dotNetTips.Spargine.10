@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 12-28-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -150,7 +150,7 @@ public static class StringExtensions
 	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
 	/// <returns>A string representation of the computed hashType.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -175,32 +175,6 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the SHA256 hashType of the given base64Input string.
-	/// </summary>
-	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
-	/// <returns>A string representation of the SHA256 hashType.</returns>
-	/// <remarks>
-	/// This method uses the <see cref="SHA256"/> class to compute the hashType.
-	/// </remarks>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeSHA256Hash), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	public static string ComputeSHA256Hash([DisallowNull] this string input)
-	{
-		input = input.ArgumentNotNullOrEmpty();
-
-		// OPTIMIZATION: Pre-allocate buffer and use span-based encoding for .NET 10
-		// Avoids intermediate allocation from Encoding.UTF8.GetBytes(string)
-		var buffer = new byte[(Encoding.UTF8.GetByteCount(input))];
-
-		_ = Encoding.UTF8.GetBytes(input.AsSpan(), buffer);
-
-		var bytes = SHA256.HashData(buffer);
-
-		return FastStringBuilder.BytesToString(ref bytes);
-
-	}
-
-	/// <summary>
 	/// Concatenates the given strings using the specified delimiter, with an option to add a line feed after each string.
 	/// </summary>
 	/// <param name="input">The initial string to start the concatenation. Must not be null or empty.</param>
@@ -218,38 +192,68 @@ public static class StringExtensions
 	/// This method uses a pooled <see cref="StringBuilder"/> to optimize memory usage during concatenation.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 		delimiter = delimiter.ArgumentNotNullOrEmpty();
 
-		if (args is null)
+		if (args is null || args.Count == 0)
 		{
 			return input;
 		}
 
-		var sb = _stringBuilderPool.Value.Get().Clear();
-
-		try
+		// OPTIMIZATION: For small concatenations, pool overhead exceeds benefit
+		// Use direct StringBuilder with capacity hint for better .NET 10 performance
+		if (args.Count <= 3)
 		{
-			sb = sb.Append(input);
+			// Estimate capacity: input + (avg 20 chars per arg + delimiter) * count
+			var estimatedCapacity = input.Length + ((20 + delimiter.Length) * args.Count);
+			var sb = new StringBuilder(estimatedCapacity);
 
-			if (args.IsNotEmpty())
+			_ = sb.Append(input);
+
+			foreach (var arg in args)
 			{
-				foreach (var arg in args)
+				if (addLineFeed)
 				{
-					_ = addLineFeed
-						? sb.AppendLine(arg)
-						: sb.Append(string.Concat(arg, delimiter));
+					_ = sb.AppendLine(arg);
+				}
+				else
+				{
+					_ = sb.Append(arg);
+					_ = sb.Append(delimiter);
 				}
 			}
 
 			return sb.ToString();
 		}
+
+		// For larger concatenations, use the pool
+		var pooledSb = _stringBuilderPool.Value.Get().Clear();
+
+		try
+		{
+			_ = pooledSb.Append(input);
+
+			foreach (var arg in args)
+			{
+				if (addLineFeed)
+				{
+					_ = pooledSb.AppendLine(arg);
+				}
+				else
+				{
+					_ = pooledSb.Append(arg);
+					_ = pooledSb.Append(delimiter);
+				}
+			}
+
+			return pooledSb.ToString();
+		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb);
+			_stringBuilderPool.Value.Return(pooledSb);
 		}
 	}
 
@@ -270,14 +274,21 @@ public static class StringExtensions
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	public static bool ContainsAny([DisallowNull] this string input, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase, [DisallowNull] params ReadOnlyCollection<string> characters)
+	public static bool ContainsAny([DisallowNull] this string input, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase, params ReadOnlySpan<string> characters)
 	{
 		input = input.ArgumentNotNullOrEmpty();
-		characters = characters.ArgumentNotNull();
-
 		stringComparison = stringComparison.ArgumentDefined();
 
-		return characters.Count != 0 && characters.Any(character => input.Contains(character, stringComparison));
+		// OPTIMIZATION: ReadOnlySpan enumeration is zero-allocation
+		foreach (var character in characters)
+		{
+			if (input.Contains(character, stringComparison))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/// <summary>
@@ -428,7 +439,7 @@ public static class StringExtensions
 	[Information(nameof(FastIsNullOrEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool FastIsNullOrEmpty([AllowNull] this string input)
 	{
-		return input is null || input == string.Empty;
+		return input is null || input.Length == 0;
 	}
 
 	/// <summary>
@@ -925,7 +936,7 @@ public static class StringExtensions
 	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool IsEmpty([NotNullWhen(false)] this string? input)
 	{
-		return string.IsNullOrEmpty(input);
+		return input is null || input.Length == 0;
 	}
 
 	/// <summary>
@@ -1240,9 +1251,13 @@ public static class StringExtensions
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static bool StartsWithOrdinalIgnoreCase([DisallowNull] this string input, string inputToCompare)
 	{
-		return string.IsNullOrEmpty(input) || string.IsNullOrEmpty(inputToCompare)
-					? false
-					: input.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase);
+		if (input is null || inputToCompare is null)
+		{
+			return false;
+		}
+
+		return input.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase);
+
 	}
 
 	/// <summary>
@@ -1356,14 +1371,18 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		encoding = encoding.ArgumentNotNull();
 
-		// OPTIMIZATION: Pre-allocate exact buffer size using GetByteCount for .NET 10
-		// Reduces allocations and improves performance with span-based encoding
-		var byteCount = encoding.GetByteCount(input);
-		var buffer = new byte[byteCount];
+		// OPTIMIZATION: Use GetMaxByteCount to avoid double-scanning the string
+		// Trade-off: slight over-allocation vs. 2x faster execution
+		var maxByteCount = encoding.GetMaxByteCount(input.Length);
+		var buffer = new byte[maxByteCount];
 
-		_ = encoding.GetBytes(input.AsSpan(), buffer);
+		// GetBytes returns actual bytes written
+		var actualByteCount = encoding.GetBytes(input.AsSpan(), buffer);
 
-		return buffer;
+		// Trim to actual size if needed (optional - depends on usage pattern)
+		return actualByteCount == maxByteCount
+			? buffer
+			: buffer[..actualByteCount];
 	}
 
 	/// <summary>

@@ -43,7 +43,7 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _delimitedString = RandomData.GenerateWords(100).ToDelimitedString();
 	private readonly string _domainAddress = "www.dotnettips.com";
 	private readonly string _emailAddress = RandomData.GenerateEmailAddress();
-	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeSHA256Hash();
+	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeHash();
 	private readonly string _isbn = "0525505997";
 	private readonly string _nullTestString = null;
 	private readonly string _oneToSevenAlpha = RandomData.GenerateWord(7);
@@ -71,17 +71,6 @@ public class StringExtensionsBenchmark : Benchmark
 		var testString = this.LongTestString;
 
 		var result = testString.ComputeHash();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(StringExtensions.ComputeSHA256Hash))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void ComputeSHA256Hash()
-	{
-		var testString = this.LongTestString;
-
-		var result = testString.ComputeSHA256Hash();
 
 		this.Consume(result);
 	}

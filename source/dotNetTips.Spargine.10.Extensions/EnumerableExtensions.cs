@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 12-28-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -40,6 +41,12 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
 {
+	/// <summary>
+	/// Cache for compiled property accessor delegates to avoid repeated reflection and compilation overhead.
+	/// Key format: "TypeFullName.PropertyName" (e.g., "MyApp.Person.Age")
+	/// </summary>
+	private static readonly ConcurrentDictionary<string, Delegate> _orderByPropertyCache = new();
+
 	/// <summary>
 	/// A pool of <see cref="StringBuilder"/> objects to minimize memory allocations.
 	/// </summary>
@@ -141,12 +148,43 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
+			// OPTIMIZATION: Fast path for common collection types with indexed access
+			if (collection is List<T> list)
+			{
+				// Use List<T>.IndexOf which is highly optimized in the framework
+				return list.IndexOf(item);
+			}
+
+			if (collection is T[] array)
+			{
+				// Use Array.IndexOf which is highly optimized
+				return Array.IndexOf(array, item);
+			}
+
+			if (collection is IList<T> ilist)
+			{
+				// Use indexed access to avoid enumerator allocation
+				var count = ilist.Count;
+				var comparer = EqualityComparer<T>.Default;
+
+				for (var itemIndex = 0; itemIndex < count; itemIndex++)
+				{
+					if (comparer.Equals(ilist[itemIndex], item))
+					{
+						return itemIndex;
+					}
+				}
+
+				return -1;
+			}
+
+			// Fallback: Generic enumeration path
 			var index = 0;
-			var comparer = EqualityComparer<T>.Default;
+			var defaultComparer = EqualityComparer<T>.Default;
 
 			foreach (var element in collection)
 			{
-				if (comparer.Equals(element, item))
+				if (defaultComparer.Equals(element, item))
 				{
 					return index;
 				}
@@ -167,7 +205,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item, [DisallowNull] IEqualityComparer<T> comparer)
 		{
 			collection = collection.ArgumentItemsExists();
@@ -194,7 +232,7 @@ public static class EnumerableExtensions
 		/// <returns>The zero-based otherIndex of the first occurrence of an item that matches the accumulatorFunction within the entire collection, if found; otherwise, -1.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -214,6 +252,7 @@ public static class EnumerableExtensions
 
 			return -1;
 		}
+
 
 		/// <summary>
 		/// Orders the elements of a collection according to a specified sort expression.
@@ -265,37 +304,59 @@ public static class EnumerableExtensions
 		public IEnumerable<T> OrderBy([DisallowNull] string sortExpression)
 		{
 			collection = collection.ArgumentNotNull();
+			sortExpression = sortExpression?.Trim() ?? string.Empty;
 
-			sortExpression += string.Empty;
-
-			var parts = sortExpression.Split(Convert.ToChar(" ", CultureInfo.InvariantCulture));
-			var descending = false;
-			var property = string.Empty;
-
-			if (parts.LongLength > 0 && !string.IsNullOrEmpty(parts[0]))
+			if (string.IsNullOrEmpty(sortExpression))
 			{
-				property = parts[0];
-
-				if (parts.LongLength > 1)
-				{
-					@descending = CultureInfo.InvariantCulture.TextInfo
-						.ToLower(parts[1])
-						.Contains("esc", StringComparison.OrdinalIgnoreCase);
-				}
-
-				var prop = typeof(T).GetRuntimeProperty(property);
-
-				if (prop is not null && prop.CheckIsNotNull(throwException: true))
-				{
-					return @descending
-						? collection.OrderByDescending(x => prop.GetValue(x, null))
-						: collection.OrderBy(x => prop.GetValue(x, null));
-				}
+				return collection;
 			}
 
-			return collection;
-		}
+			var parts = sortExpression.Split(ControlChars.Space, StringSplitOptions.RemoveEmptyEntries);
 
+			if (parts.Length == 0 || string.IsNullOrEmpty(parts[0]))
+			{
+				return collection;
+			}
+
+			var property = parts[0];
+			var descending = parts.Length > 1 && parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
+
+			// OPTIMIZATION: Build cache key for this type + property combination
+			var cacheKey = $"{typeof(T).FullName}.{property}";
+
+			// OPTIMIZATION: Retrieve or compile the property accessor delegate
+			var accessor = _orderByPropertyCache.GetOrAdd(cacheKey, _ =>
+			{
+				var prop = typeof(T).GetRuntimeProperty(property);
+
+				if (prop is null)
+				{
+					// Return a null-safe delegate that returns null for invalid properties
+					return new Func<T, object?>(_ => null);
+				}
+
+				// Build expression tree: x => x.Property
+				var parameter = Expression.Parameter(typeof(T), "x");
+				var propertyAccess = Expression.Property(parameter, prop);
+
+				// Box value types to object for consistent comparison
+				var conversion = Expression.Convert(propertyAccess, typeof(object));
+
+				// Compile to a strongly-typed delegate
+				var lambda = Expression.Lambda<Func<T, object?>>(conversion, parameter);
+				return lambda.Compile();
+			});
+
+			if (accessor is not Func<T, object?> typedAccessor)
+			{
+				throw new InvalidOperationException($"Cached delegate for property accessor is not of expected type Func<{typeof(T).Name}, object?>.");
+			}
+
+			// OPTIMIZATION: Use the compiled accessor instead of reflection
+			return descending
+				? collection.OrderByDescending(typedAccessor)
+				: collection.OrderBy(typedAccessor);
+		}
 
 		/// <summary>
 		/// Orders the elements of a collection by a key selected from each element using ordinal string comparison.
@@ -341,7 +402,6 @@ public static class EnumerableExtensions
 
 			return collection.OrderBy(accumulatorFunction, StringComparer.Ordinal);
 		}
-
 
 		/// <summary>
 		/// Removes duplicate elements from the specified collection.
@@ -389,10 +449,10 @@ public static class EnumerableExtensions
 		/// <example>
 		/// <code>
 		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
-		/// var result = numbers.ReplaceIf((n, i) => n > 3, 0);
+		/// var result = numbers.ReplaceIf((n, itemIndex) => n > 3, 0);
 		/// // Result: { 1, 2, 3, 0, 0 }
 		/// 
-		/// var evens = numbers.ReplaceIf((n, i) => i % 2 == 0, -1);
+		/// var evens = numbers.ReplaceIf((n, itemIndex) => itemIndex % 2 == 0, -1);
 		/// // Result: { -1, 2, -1, 4, -1 } (replace at even indices)
 		/// </code>
 		/// </example>
