@@ -1237,16 +1237,16 @@ public static class EnumerableExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool ContainsAny([AllowNull] params IReadOnlyCollection<T>[] items)
+		public bool ContainsAny([AllowNull] params ReadOnlyCollection<T> items)
 		{
-			if (collection is null || items is null || items.Length == 0)
+			if (collection is null || items is null || items.Count == 0)
 			{
 				return false;
 			}
 
-			foreach (var itemCollection in items)
+			foreach (var item in items)
 			{
-				if (itemCollection is not null && itemCollection.Count > 0 && collection.Any(itemCollection.Contains))
+				if(collection.Contains(item))
 				{
 					return true;
 				}

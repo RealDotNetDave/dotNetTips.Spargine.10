@@ -174,7 +174,7 @@ public class StringExtensionsTests
 	{
 		var testValue = RandomData.GenerateWord(10);
 
-		Assert.IsTrue(string.IsNullOrEmpty(testValue.ComputeSHA256Hash()) is false);
+		Assert.IsTrue(string.IsNullOrEmpty(testValue.ComputeHash()) is false);
 	}
 
 	[TestMethod]

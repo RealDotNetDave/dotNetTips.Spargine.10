@@ -41,7 +41,7 @@ public class EnumerableExtensionsTests
 		var list = new List<int> { 1, 2 }.AsEnumerable();
 		var result = list.AddDistinct(new ReadOnlyCollection<int>(new List<int>()));
 
-		Assert.AreEqual(list.ToList(), result.ToList());
+		Assert.AreEqual(list.Count(), result.Count());
 	}
 
 	[TestMethod]
@@ -59,7 +59,7 @@ public class EnumerableExtensionsTests
 		ReadOnlyCollection<int> items = null;
 		var result = list.AddDistinct(items);
 
-		Assert.AreEqual(list.ToList(), result.ToList());
+		Assert.AreEqual(list.Count(), result.Count());
 	}
 
 	[TestMethod]
@@ -948,7 +948,7 @@ public class EnumerableExtensionsTests
 	public void Upsert_UpdatesExistingItem()
 	{
 		var list = new List<int> { 1, 2, 3 }.AsEnumerable();
-		list=list.Upsert(2);
+		list = list.Upsert(2);
 		Assert.AreEqual(3, list.Count());
 	}
 

@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="EncryptionHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -101,7 +101,27 @@ public class EncryptionHelperTests
 	{
 		var testString = RandomData.GenerateWord(15);
 
-		var result = testString.ComputeSHA256Hash();
+		var result = testString.ComputeHash();
+
+		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
+	}
+
+	[TestMethod]
+	public void ComputeSHA384HashTest()
+	{
+		var testString = RandomData.GenerateWord(15);
+
+		var result = testString.ComputeHash(HashType.SHA384);
+
+		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
+	}
+
+	[TestMethod]
+	public void ComputeSHA512HashTest()
+	{
+		var testString = RandomData.GenerateWord(15);
+
+		var result = testString.ComputeHash(HashType.SHA512);
 
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}

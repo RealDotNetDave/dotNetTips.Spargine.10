@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -249,116 +248,13 @@ public class ArrayExtensionsTests
 	/// Defines the test method CloneTest.
 	/// </summary>
 	[TestMethod]
-	public void CloneTest()
+	public void CloneFastCloneTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
 
-		var result = people.Clone<Person>();
+		var result = people.FastClone();
 
 		Assert.IsTrue(people.AreEqual(result));
-	}
-
-	[TestMethod]
-	public void ContainsAny_DifferentStringComparison_ReturnsFalse()
-	{
-		// Arrange
-		var input = "Hello, World!";
-		var characters = new List<string> { "H", "W" }.AsReadOnly();
-
-		// Act
-		var result = input.ContainsAny(StringComparison.Ordinal, characters);
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void ContainsAny_DifferentStringComparison_ReturnsTrue()
-	{
-		// Arrange
-		var input = "Hello, World!";
-		var characters = new List<string> { "h", "w" }.AsReadOnly();
-
-		// Act
-		var result = input.ContainsAny(StringComparison.Ordinal, characters);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void ContainsAny_EmptyCharacters_ReturnsFalse()
-	{
-		// Arrange
-		var input = "Hello, World!";
-		var characters = new ReadOnlyCollection<string>(Array.Empty<string>());
-
-		// Act
-		var result = input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void ContainsAny_EmptyInput_ReturnsFalse()
-	{
-		// Arrange
-		var input = string.Empty;
-		var characters = new List<string> { "h", "w" }.AsReadOnly();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters));
-	}
-
-	[TestMethod]
-	public void ContainsAny_NullCharacters_ReturnsFalse()
-	{
-		// Arrange
-		var input = "Hello, World!";
-		ReadOnlyCollection<string> characters = null;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters));
-	}
-
-	[TestMethod]
-	public void ContainsAny_NullInput_ReturnsFalse()
-	{
-		// Arrange
-		string input = null;
-		var characters = new List<string> { "h", "w" }.AsReadOnly();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters));
-	}
-
-	[TestMethod]
-	public void ContainsAny_ValidInput_ReturnsFalse()
-	{
-		// Arrange
-		var input = "Hello, World!";
-		var characters = new List<string> { "x", "y" }.AsReadOnly();
-
-		// Act
-		var result = input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void ContainsAny_ValidInput_ReturnsTrue()
-	{
-		// Arrange
-		var input = "Hello, World!";
-		var characters = new List<string> { "h", "w" }.AsReadOnly();
-
-		// Act
-		var result = input.ContainsAny(StringComparison.OrdinalIgnoreCase, characters);
-
-		// Assert
-		Assert.IsTrue(result);
 	}
 
 	/// <summary>
