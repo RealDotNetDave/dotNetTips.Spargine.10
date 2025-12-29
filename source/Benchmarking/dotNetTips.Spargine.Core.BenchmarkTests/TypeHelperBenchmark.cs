@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -458,7 +458,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = this.GetAllConstructorsNoCache(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": Cached")]
@@ -467,7 +470,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllConstructors(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields))]
@@ -476,7 +482,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = this.GetAllDeclaredFieldsNoCache(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": Cached")]
@@ -494,7 +503,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = this.GetAllDeclaredMethodsNoCache(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 
@@ -504,7 +516,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllDeclaredMethods(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllFields))]
@@ -513,7 +528,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = this.GetAllFieldsNoCache(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 
@@ -523,7 +541,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllFields(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
@@ -541,7 +562,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = this.GetAllMethodsNoCache(typeof(StringBuilder));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": Cached")]
@@ -550,7 +574,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllProperties))]
@@ -559,7 +586,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = this.GetAllPropertiesNoCache(typeof(Person));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 
@@ -569,7 +599,10 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllProperties(typeof(Person));
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
@@ -660,7 +693,10 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = this.GetMembersWithAttributeNoCache<InformationAttribute>(type);
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute) + ": Cached")]
@@ -671,7 +707,10 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type);
 
-		this.Consume(result.Count());
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetPropertyValues))]

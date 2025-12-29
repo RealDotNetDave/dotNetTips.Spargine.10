@@ -4,7 +4,7 @@
 // Created          : 10-07-2024
 //
 // Last Modified By : david
-// Last Modified On : 10-07-2024
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="EnumerationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -42,8 +42,11 @@ public class EnumerationBenchmark : Benchmark
 	[Benchmark(Description = nameof(Enumeration.GetAll))]
 	public void GetAll()
 	{
-		var result = Enumeration.GetAll<NumericFormat>().ToList();
+		var result = Enumeration.GetAll<NumericFormat>();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 }
