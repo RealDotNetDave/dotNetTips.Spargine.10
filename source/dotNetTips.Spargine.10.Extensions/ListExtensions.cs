@@ -24,6 +24,7 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 using DotNetTips.Spargine.Extensions.Properties;
+using Microsoft.VisualBasic;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -112,12 +113,9 @@ public static class ListExtensions
 
 			list = list.ArgumentNotNull();
 
-			// OPTIMIZATION: Use HashSet for O(1) lookups instead of O(n) Contains calls
-			var existingItems = new HashSet<T>(list);
-
 			foreach (var item in items)
 			{
-				if (existingItems.Add(item))
+				if (!list.Contains(item))
 				{
 					list.Add(item);
 				}
@@ -450,7 +448,7 @@ public static class ListExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool RemoveFirst(T item)
 		{
 			if (item is null)
@@ -517,7 +515,7 @@ public static class ListExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool RemoveLast(T item)
 		{
 			if (item is null)
@@ -759,8 +757,7 @@ public static class ListExtensions
 		{
 			list = list.ArgumentNotNull();
 
-			var span = CollectionsMarshal.AsSpan(list);
-			return ImmutableArray.Create(span);
+			return ImmutableCollectionsMarshal.AsImmutableArray(list.ToArray());
 		}
 
 		/// <summary>

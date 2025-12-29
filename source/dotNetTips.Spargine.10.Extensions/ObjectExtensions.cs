@@ -1008,7 +1008,7 @@ public static class ObjectExtensions
 		/// <code>
 		/// var person = new Person { Name = "John", Age = 30 };
 		/// 
-		/// // Clone with custom security settings
+		/// // FastClone with custom security settings
 		/// var options = MessagePackSerializerOptions.Standard
 		///     .WithResolver(MessagePack.Resolvers.StandardResolver.Instance)
 		///     .WithSecurity(MessagePack.MessagePackSecurity.UntrustedData);

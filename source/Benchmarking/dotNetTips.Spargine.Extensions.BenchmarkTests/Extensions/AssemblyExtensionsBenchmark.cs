@@ -52,7 +52,10 @@ public class AssemblyExtensionsBenchmark : Benchmark
 	{
 		var result = Assembly.GetExecutingAssembly().GetInstances<AssemblyExtensionsBenchmark>();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(AssemblyExtensions.GetTypes))]

@@ -30,7 +30,10 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllDeclaredFields();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllDeclaredMethods))]
@@ -39,7 +42,10 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllDeclaredMethods();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllFields))]
@@ -48,7 +54,10 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllFields();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllMethods))]
@@ -57,7 +66,10 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllMethods();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllProperties))]
@@ -66,7 +78,10 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllProperties();
 
-		this.Consume(result);
+		foreach (var item in result)
+		{
+			this.Consume(item);
+		}
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetTypeMembersWithAttribute))]

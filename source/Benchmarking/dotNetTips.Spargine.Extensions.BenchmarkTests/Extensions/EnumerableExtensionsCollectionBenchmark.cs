@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-28-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	//TODO: BREAK UP. TAKES OVER 4 HOURS TO RUN ALL TESTS!	
+	//TODO: BREAK UP AFTER JAN RELEASE. TAKES OVER 4 HOURS TO RUN ALL TESTS!	
 
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
 	private List<PersonRecord> _personRecordList;
@@ -52,35 +52,46 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
 	public void AddDistinct()
 	{
-		var result = this._personRefEnumerable.AddDistinct(this._personRefEnumerableToAdd).ToList();
+		var result = this._personRefEnumerable.AddDistinct(this._personRefEnumerableToAdd);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddFirst))]
 	public void AddFirst()
 	{
-		var result = this._personRefEnumerable.AddFirst(this.PersonRef01).ToList();
+		var result = this._personRefEnumerable.AddFirst(this.PersonRef01);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddIf))]
 	public void AddIf()
 	{
 
-		var result = this._personRefEnumerable.AddIf(this.PersonRef01, true).ToList();
+		var result = this._personRefEnumerable.AddIf(this.PersonRef01, true);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddLast))]
 	public void AddLast()
 	{
+		var result = this._personRefEnumerable.AddLast(this.PersonRef01);
 
-		var result = this._personRefEnumerable.AddLast(this.PersonRef01).ToList();
-
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastAny) + ": With Predicate")]
@@ -168,9 +179,12 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
-		var result = people.EnsureUnique().ToList();
+		var result = people.EnsureUnique();
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrDefault) + ": With Alternate")]
@@ -304,25 +318,34 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.OrderBy))]
 	public void OrderBy()
 	{
-		var result = this._personRefEnumerable.OrderBy(p => p.Email).ToList();
+		var result = this._personRefEnumerable.OrderBy(p => p.Email);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.OrderByOrdinal))]
 	public void OrderByOrdinal()
 	{
-		var result = this._personRefEnumerable.OrderByOrdinal(p => p.Email).ToList();
+		var result = this._personRefEnumerable.OrderByOrdinal(p => p.Email);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.OrderBy) + ": With Sort Expression")]
 	public void OrderBySortExpression()
 	{
-		var result = this._personRefEnumerable.OrderBy("Email desc").ToList();
+		var result = this._personRefEnumerable.OrderBy("Email desc");
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.Page))]
@@ -361,24 +384,30 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveDuplicates()
 	{
-		var result = this._personRefListDups.RemoveDuplicates().Value.ToList();
+		var result = this._personRefListDups.RemoveDuplicates().Value;
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.RemoveNulls))]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
 	public void RemoveNulls()
 	{
-		var collection = this._personRefEnumerable.ToList();
+		var collection = this._personRefEnumerable;
 
 		// Add a null to the collection
-		collection.AddFirst(null);
-		collection.AddLast(null);
+		collection = collection.AddFirst(null);
+		collection = collection.AddLast(null);
 
-		var result = collection.RemoveDuplicates().Value.ToList();
+		var result = collection.RemoveDuplicates().Value;
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ReplaceIf))]
@@ -386,9 +415,12 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void ReplaceIf()
 	{
 		var people = this._personRefEnumerable;
-		var result = people.ReplaceIf((p, index) => string.Equals(p.Id, this._personRefId, StringComparison.Ordinal), this._personRefLast).ToList();
+		var result = people.ReplaceIf((p, index) => string.Equals(p.Id, this._personRefId, StringComparison.Ordinal), this._personRefLast);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	public override void Setup()
@@ -420,22 +452,34 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle))]
 	public void ShuffleFastShuffle()
 	{
-		var result = this._personRefEnumerable.FastShuffle().ToList();
-		this.Consume(result);
+		var result = this._personRefEnumerable.FastShuffle();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
 	public void ShuffleFastShuffleWithCount()
 	{
-		var result = this._personRefEnumerable.FastShuffle(this.Count / 2).ToList();
-		this.Consume(result);
+		var result = this._personRefEnumerable.FastShuffle(this.Count / 2);
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = "Shuffle")]
 	public void ShuffleShuffle()
 	{
-		var result = this._personRefEnumerable.Shuffle().ToList();
-		this.Consume(result);
+		var result = this._personRefEnumerable.Shuffle();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.StartsWith))]
@@ -463,7 +507,10 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		var result = people.Upsert(this.PersonRef01);
 
-		this.Consume(result);
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
 	}
 
 }

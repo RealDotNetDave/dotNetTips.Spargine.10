@@ -110,28 +110,30 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result.ToArray());
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Value")]
+	[Benchmark(Description = nameof(ArrayExtensions.FastClone) + ": Array as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void ClonePerson_Val()
 	{
-		var result = this._personValArray.Clone<Spargine.Tester.Models.ValueTypes.Person>();
+		//TODO: COMPARE WITH Array.Clone()
+
+		var result = this._personValArray.FastClone();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Record")]
+	[Benchmark(Description = nameof(ArrayExtensions.FastClone) + ": Array as Record")]
 	[BenchmarkCategory(Categories.Array, Categories.RecordType)]
 	public void ClonePersonRecordRecord()
 	{
-		var result = this._personRecordArray.Clone();
+		var result = this._personRecordArray.FastClone();
 
 		this.Consume(result);
 	}
-	[Benchmark(Description = nameof(ArrayExtensions.Clone) + ": Array as Reference")]
+	[Benchmark(Description = nameof(ArrayExtensions.FastClone) + ": Array as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ClonePersonRef()
 	{
-		var result = this._personRefArray.Clone();
+		var result = this._personRefArray.FastClone();
 
 		this.Consume(result);
 	}
