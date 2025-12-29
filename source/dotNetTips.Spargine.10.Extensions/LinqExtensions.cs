@@ -64,7 +64,7 @@ public static class LinqExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original code from https://github.com/exceptionnotfound/ConditionalLinqQueryEngine", "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information("Original code from https://github.com/exceptionnotfound/ConditionalLinqQueryEngine", "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static IEnumerable<T> If<T>([DisallowNull] this IEnumerable<T> input, bool should, [DisallowNull] params Func<IEnumerable<T>, IEnumerable<T>>[] transformsFunction)
 	{
 		input = input.ArgumentNotNull();
