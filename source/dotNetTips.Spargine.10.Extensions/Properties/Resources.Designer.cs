@@ -19,7 +19,7 @@ namespace DotNetTips.Spargine.Extensions.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -282,6 +282,15 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         internal static string Hundred {
             get {
                 return ResourceManager.GetString("Hundred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input string is not a valid Base64 string. Length must be divisible by 4..
+        /// </summary>
+        internal static string InputStringIsNotAValidBase64StringLength {
+            get {
+                return ResourceManager.GetString("InputStringIsNotAValidBase64StringLength", resourceCulture);
             }
         }
         

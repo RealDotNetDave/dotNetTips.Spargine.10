@@ -13,6 +13,8 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -35,6 +37,25 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	private string _crlfCompareString;
 	private string _crlfString;
 	private string _gzipString;
+	private string[] _wordCollection;
+
+	[Benchmark(Description = nameof(StringExtensions.CalculateByteArraySize))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void CalculateByteArraySize()
+	{
+		var result = this._base64String.CalculateByteArraySize();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.CalculateStringCount))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void CalculateStringCount()
+	{
+		var result = this._wordCollection.CalculateStringCount();
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(StringExtensions.ComputeHash) + ": SHA256")]
 	[BenchmarkCategory(Categories.Strings)]
@@ -50,7 +71,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	public void ContainsAny()
 	{
 		// Fix: Pass a ReadOnlyCollection<char> as required by the method signature.
-		var charsToCheck = new System.Collections.ObjectModel.ReadOnlyCollection<char>(
+		var charsToCheck = new ReadOnlyCollection<char>(
 			_charList
 		);
 
@@ -165,6 +186,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this._brotilString = this._crlfString.ToBrotliStringAsync().Result;
 		this._gzipString = this._crlfString.ToGZipStringAsync().GetAwaiter().GetResult();
 		this._base64String = this._crlfString.ToBase64();
+		this._wordCollection = [.. RandomData.GenerateWords(this.Count)];
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": Char Separator + Count")]

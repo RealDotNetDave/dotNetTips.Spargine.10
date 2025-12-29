@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-28-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -95,7 +95,7 @@ public static class StringExtensions
 	/// Base64 encoding uses 4 characters to represent 3 bytes of data.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
 	public static int CalculateByteArraySize([DisallowNull] this string base64Input)
 	{
 		base64Input = base64Input.ArgumentNotNullOrEmpty();
@@ -110,7 +110,7 @@ public static class StringExtensions
 		// Base64 strings must have length divisible by 4
 		if (length % 4 != 0)
 		{
-			throw new FormatException("Input string is not a valid Base64 string. Length must be divisible by 4.");
+			throw new FormatException(Resources.InputStringIsNotAValidBase64StringLength);
 		}
 
 		// Base64 uses 4 chars to encode 3 bytes, so decoded size is (length / 4) * 3
@@ -128,6 +128,69 @@ public static class StringExtensions
 		}
 
 		return (length / 4 * 3) - paddingCount;
+	}
+
+	/// <summary>
+	/// Calculates the total character count from an array of strings.
+	/// </summary>
+	/// <param name="args">The array of strings to calculate the character count from. Can be <c>null</c>.</param>
+	/// <returns>
+	/// The total character count of all non-null strings in the array.
+	/// Returns <c>0</c> if <paramref name="args"/> is <c>null</c> or empty.
+	/// </returns>
+	/// <remarks>
+	/// This method uses <see cref="ReadOnlySpan{T}"/> for optimized iteration without bounds checking,
+	/// providing improved performance compared to traditional array enumeration.
+	/// <para>
+	/// <strong>Performance Characteristics:</strong>
+	/// <list type="bullet">
+	/// <item><description>Time Complexity: O(n) where n = number of strings in the array</description></item>
+	/// <item><description>Space Complexity: O(1) - uses stack-allocated span with no heap allocations</description></item>
+	/// <item><description>Null strings are safely skipped without throwing exceptions</description></item>
+	/// </list>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Example usage:
+	/// <code>
+	/// // Calculate total length of multiple strings
+	/// string[] words = { "Hello", "World", "!" };
+	/// int totalLength = words.CalculateStringCount();
+	/// // Returns: 11 (5 + 5 + 1)
+	/// 
+	/// // Handles null strings gracefully
+	/// string[] mixedArray = { "Test", null, "Data" };
+	/// int length = mixedArray.CalculateStringCount();
+	/// // Returns: 8 (4 + 0 + 4)
+	/// 
+	/// // Returns 0 for null or empty arrays
+	/// string[] nullArray = null;
+	/// int zeroLength = nullArray.CalculateStringCount();
+	/// // Returns: 0
+	/// </code>
+	/// </example>
+	/// <seealso cref="string.Length"/>
+	/// <seealso cref="ReadOnlySpan{T}"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CalculateStringCount), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	public static int CalculateStringCount(this string[] args)
+	{
+		if (args == null)
+		{
+			return 0;
+		}
+
+		var totalLength = 0;
+
+		foreach (var arg in args.AsSpan())
+		{
+			if (arg != null)
+			{
+				totalLength += arg.Length;
+			}
+		}
+
+		return totalLength;
 	}
 
 	/// <summary>

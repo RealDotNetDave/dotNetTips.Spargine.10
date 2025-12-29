@@ -459,7 +459,7 @@ public static class FastStringBuilder
 
 		// Pre-allocate capacity to minimize reallocations during formatting
 		// Estimate: format string length + (average 10 chars per argument)
-		var estimatedCapacity = format.Length + (args.Length * 10);
+		var estimatedCapacity = args.CalculateStringCount();
 		var sb = _stringBuilderPool.Get().SetCapacity(estimatedCapacity);
 
 		try

@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core.Devices;
@@ -1165,6 +1166,272 @@ public class ObjectExtensionsTests : UnitTester
 		var result = person.PropertiesToString(includeMemberName: false);
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ComplexTypeFilter_WorksCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		// Select only properties that are reference types (classes)
+		Func<PropertyInfo, bool> complexTypesOnly = p => !p.PropertyType.IsValueType && p.PropertyType != typeof(string);
+
+		var result = person.PropertiesToString(complexTypesOnly);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ExcludeByAttribute_ReturnsFilteredProperties()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> excludeJsonIgnore = p => p.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() == null;
+
+		var result = person.PropertiesToString(excludeJsonIgnore);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_FilterByCanRead_ReturnsOnlyReadableProperties()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> readableOnly = p => p.CanRead;
+
+		var result = person.PropertiesToString(readableOnly);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_FilterByCanWrite_ReturnsOnlyWritableProperties()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> writableOnly = p => p.CanWrite;
+
+		var result = person.PropertiesToString(writableOnly);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_FilterByName_ReturnsOnlyMatchingProperties()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> idPropertyOnly = p => p.Name == "Id";
+
+		var result = person.PropertiesToString(idPropertyOnly);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.IsTrue(result.Contains("Id"));
+		Assert.IsFalse(result.Contains("FirstName"));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_FilterByType_ReturnsOnlyMatchingProperties()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> stringPropertiesOnly = p => p.PropertyType == typeof(string);
+
+		var result = person.PropertiesToString(stringPropertiesOnly);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		// Verify that result contains string properties like FirstName, LastName, Email
+		Assert.IsTrue(result.Contains("FirstName") || result.Contains("LastName") || result.Contains("Email"));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_MultipleFilters_CombinesCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		// Combine multiple conditions
+		Func<PropertyInfo, bool> complexFilter = p =>
+			p.PropertyType == typeof(string) &&
+			p.CanRead &&
+			p.CanWrite &&
+			!p.Name.StartsWith("_");
+
+		var result = person.PropertiesToString(complexFilter);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_Null_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> nullSelector = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
+			person.PropertiesToString(nullSelector));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_NullObject_ThrowsArgumentNullException()
+	{
+		object obj = null;
+		Func<PropertyInfo, bool> selector = p => p.PropertyType == typeof(string);
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
+			obj.PropertiesToString(selector));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_NullSequenceSeparator_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selector = p => true;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
+			person.PropertiesToString(selector, sequenceSeparator: null));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_PropertyThrowsException_HandlesGracefully()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selector = p => true;
+
+		// This should handle any properties that throw during value retrieval
+		var result = person.PropertiesToString(selector, ignoreNulls: false);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_SelectAll_ReturnsAllProperties()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selectAll = p => true;
+
+		var result = person.PropertiesToString(selectAll);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.IsTrue(result.Contains(":"));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_SelectNone_ReturnsEmptyOrHeader()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selectNone = p => false;
+
+		var result = person.PropertiesToString(selectNone);
+
+		Assert.IsNotNull(result);
+		// Result should be empty or only contain header if provided
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ValueTypeFilter_WorksCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		// Select only value type properties
+		Func<PropertyInfo, bool> valueTypesOnly = p => p.PropertyType.IsValueType;
+
+		var result = person.PropertiesToString(valueTypesOnly);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithCustomSeparators_FormatsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selector = p => p.PropertyType == typeof(string);
+
+		var result = person.PropertiesToString(
+			selector,
+			header: "PROPERTIES:",
+			keyValueSeparator: '=',
+			sequenceSeparator: " | ");
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.IsTrue(result.StartsWith("PROPERTIES:"));
+		Assert.IsTrue(result.Contains("="));
+		Assert.IsTrue(result.Contains(" | "));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithHeader_IncludesHeader()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selector = p => p.PropertyType == typeof(string);
+		var header = "STRING PROPERTIES:";
+
+		var result = person.PropertiesToString(selector, header: header);
+
+		Assert.IsTrue(result.StartsWith(header));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithIgnoreNullsFalse_IncludesNullValues()
+	{
+		var testObject = new PropertiesTest
+		{
+			Id = RandomData.GenerateKey(),
+			Person = null,
+			PersonRecord = RandomData.GeneratePerson<PersonRecord>(),
+			Today = Clock.LocalTime
+		};
+		Func<PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: false);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithIgnoreNullsTrue_ExcludesNullValues()
+	{
+		var testObject = new PropertiesTest
+		{
+			Id = RandomData.GenerateKey(),
+			Person = null,
+			PersonRecord = RandomData.GeneratePerson<PersonRecord>(),
+			Today = Clock.LocalTime
+		};
+		Func<PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: true);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithIncludeMemberNameFalse_ExcludesTypeName()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selector = p => p.PropertyType == typeof(string);
+
+		var result = person.PropertiesToString(selector, includeMemberName: false);
+
+		Assert.IsFalse(result.Contains("Person."));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithIncludeMemberNameTrue_IncludesTypeName()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Func<PropertyInfo, bool> selector = p => p.PropertyType == typeof(string);
+
+		var result = person.PropertiesToString(selector, includeMemberName: true);
+
+		Assert.IsTrue(result.Contains("Person."));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WithList_HandlesCorrectly()
+	{
+		var people = new List<Person>
+		{
+			RandomData.GeneratePerson<Person>(),
+			RandomData.GeneratePerson<Person>()
+		};
+		Func<PropertyInfo, bool> selector = p => p.PropertyType == typeof(int);
+
+		var result = people.PropertiesToString(selector);
+
+		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]

@@ -292,4 +292,7 @@
   <data name="CollectionIsEmpty" xml:space="preserve">
     <value>Collection is empty.</value>
   </data>
+  <data name="InputStringIsNotAValidBase64StringLength" xml:space="preserve">
+    <value>Input string is not a valid Base64 string. Length must be divisible by 4.</value>
+  </data>
 </root>

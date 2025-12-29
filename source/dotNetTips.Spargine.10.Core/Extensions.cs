@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-19-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="Extensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -62,6 +62,34 @@ internal static partial class Extensions
 		collection.Add(item);
 
 		return true;
+	}
+
+	/// <summary>
+	/// Calculates the total character count from a string array.
+	/// </summary>
+	/// <param name="args">The array of strings to calculate the character count from.</param>
+	/// <returns>The total character count of all strings in the array.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="args"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CalculateStringCount), "David McCarter", "11/14/2024")]
+	internal static int CalculateStringCount(this string[] args)
+	{
+		if (args == null)
+		{
+			return 0;
+		}
+
+		var totalLength = 0;
+
+		foreach (var arg in args.AsSpan())
+		{
+			if (arg != null)
+			{
+				totalLength += arg.Length;
+			}
+		}
+
+		return totalLength;
 	}
 
 	/// <summary>
@@ -417,33 +445,6 @@ internal static partial class Extensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int CalculateByteArraySize([NotNull] this string input) => string.IsNullOrEmpty(input) ? 0 : input.Length * 3 / 4;
 
-	/// <summary>
-	/// Calculates the total character count from a string array.
-	/// </summary>
-	/// <param name="args">The array of strings to calculate the character count from.</param>
-	/// <returns>The total character count of all strings in the array.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="args"/> is null.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateStringCount), "David McCarter", "11/14/2024")]
-	public static int CalculateStringCount(this string[] args)
-	{
-		if (args == null)
-		{
-			return 0;
-		}
-
-		var totalLength = 0;
-
-		foreach (var arg in args)
-		{
-			if (arg != null)
-			{
-				totalLength += arg.Length;
-			}
-		}
-
-		return totalLength;
-	}
 	/// <summary>
 	/// Formats the time as a human-readable string (e.g., "5 hours 10 minutes 20 seconds" or "20 milliseconds" for values less than 1000).
 	/// </summary>

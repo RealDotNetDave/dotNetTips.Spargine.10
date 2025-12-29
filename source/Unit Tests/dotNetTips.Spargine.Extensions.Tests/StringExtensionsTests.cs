@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-26-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -144,6 +144,193 @@ public class StringExtensionsTests
 		Assert.AreEqual(originalText.Length, result, "Byte array size should match original text length.");
 	}
 
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithAllNulls_ReturnsZero()
+	{
+		// Arrange
+		string[] allNulls = [null, null, null];
+
+		// Act
+		var result = allNulls.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(0, result, "Expected to return 0 when all strings are null.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithEmptyStrings_CountsZero()
+	{
+		// Arrange
+		string[] arrayWithEmpty = ["Test", string.Empty, "Data"];
+		var expectedTotal = 8; // 4 + 0 + 4
+
+		// Act
+		var result = arrayWithEmpty.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to count empty strings as zero length.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithMixedContent_ReturnsCorrectTotal()
+	{
+		// Arrange
+		string[] mixedArray = [
+			RandomData.GenerateWord(10),
+			null,
+			string.Empty,
+			"   ",
+			RandomData.GenerateWord(15),
+			null
+		];
+		var expectedTotal = 10 + 0 + 0 + 3 + 15 + 0;
+
+		// Act
+		var result = mixedArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to correctly handle mixed content array.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithNullStrings_SkipsNulls()
+	{
+		// Arrange
+		string[] mixedArray = ["Test", null, "Data", null];
+		var expectedTotal = 8; // 4 + 0 + 4 + 0
+
+		// Act
+		var result = mixedArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to skip null strings and return the sum of non-null string lengths.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithSingleString_ReturnsStringLength()
+	{
+		// Arrange
+		var testWord = RandomData.GenerateWord(25);
+		string[] singleString = [testWord];
+
+		// Act
+		var result = singleString.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(25, result, "Expected to return the length of the single string.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithSpecialCharacters_ReturnsCorrectTotal()
+	{
+		// Arrange
+		string[] specialChars = ["!@#$%", "^&*()", "[]{}"];
+		var expectedTotal = 5 + 5 + 4;
+
+		// Act
+		var result = specialChars.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to correctly count special characters.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithUnicodeStrings_ReturnsCorrectTotal()
+	{
+		// Arrange
+		string[] unicodeArray = ["Hello", "世界", "🌍"];
+		var expectedTotal = "Hello".Length + "世界".Length + "🌍".Length;
+
+		// Act
+		var result = unicodeArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to correctly count Unicode character lengths.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithValidStrings_ReturnsCorrectTotal()
+	{
+		// Arrange
+		string[] words = ["Hello", "World", "!"];
+		var expectedTotal = 11; // 5 + 5 + 1
+
+		// Act
+		var result = words.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to return the sum of all string lengths.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ArrayWithWhitespace_CountsWhitespace()
+	{
+		// Arrange
+		string[] arrayWithWhitespace = ["   ", "Test", "  Data  "];
+		var expectedTotal = 15;
+
+		// Act
+		var result = arrayWithWhitespace.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to count whitespace characters.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_ConsecutiveCalls_ReturnsSameResult()
+	{
+		// Arrange
+		string[] testArray = [RandomData.GenerateWord(10), RandomData.GenerateWord(15), RandomData.GenerateWord(20)];
+
+		// Act
+		var result1 = testArray.CalculateStringCount();
+		var result2 = testArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(result1, result2, "Expected consecutive calls to return the same result.");
+		Assert.AreEqual(45, result1, "Expected total to be 45 (10 + 15 + 20).");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_EmptyArray_ReturnsZero()
+	{
+		// Arrange
+		var emptyArray = Array.Empty<string>();
+
+		// Act
+		var result = emptyArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(0, result, "Expected to return 0 for an empty array.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_LargeArray_ReturnsCorrectTotal()
+	{
+		// Arrange
+		var words = RandomData.GenerateWords(100, 5, 10);
+		string[] largeArray = words.ToArray();
+		var expectedTotal = words.Sum(w => w.Length);
+
+		// Act
+		var result = largeArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(expectedTotal, result, "Expected to correctly calculate total for large array.");
+	}
+
+	[TestMethod]
+	public void CalculateStringCount_NullArray_ReturnsZero()
+	{
+		// Arrange
+		string[] nullArray = null;
+
+		// Act
+		var result = nullArray.CalculateStringCount();
+
+		// Assert
+		Assert.AreEqual(0, result, "Expected to return 0 for a null array.");
+	}
 
 	[TestMethod]
 	public void CombineToStringTest()
