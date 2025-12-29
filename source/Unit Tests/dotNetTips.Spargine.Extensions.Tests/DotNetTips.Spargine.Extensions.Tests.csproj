@@ -2,13 +2,13 @@
 
   <PropertyGroup>
 	<AnalysisLevel>none</AnalysisLevel>
-	<AssemblyVersion>2025.8.5.1</AssemblyVersion>
+	<AssemblyVersion>2025.10.12.29</AssemblyVersion>
 	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
 	<Company>dotNetTips.com - McCarter Consulting</Company>
 	<Configurations>Debug;Release</Configurations>
 	<Copyright>McCarter Consulting (David McCarter)</Copyright>
 	<EnableNETAnalyzers>false</EnableNETAnalyzers>
-	<FileVersion>2025.8.5.1</FileVersion>
+	<FileVersion>2025.10.12.29</FileVersion>
 	<IsPackable>false</IsPackable>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
@@ -16,7 +16,7 @@
 	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
 	<TargetFramework>net10.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
-	<Version>2025.8.5.1</Version>
+	<Version>2025.10.12.29</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	<OutputPath>..\..\..\AppBin</OutputPath>

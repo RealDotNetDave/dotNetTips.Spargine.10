@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <AnalysisLevel>latest-recommended</AnalysisLevel>
-		<AssemblyVersion>2024.8.8.18</AssemblyVersion>
+		<AssemblyVersion>2025.10.12.29</AssemblyVersion>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
 		<Company>dotNetTips.com - McCarter Consulting</Company>
@@ -13,7 +13,7 @@
 		<DebugType>none</DebugType>
 		<Description>DotNetTips.Spargine.Extensions.BenchmarkTests</Description>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-		<FileVersion>2024.8.8.18</FileVersion>
+		<FileVersion>2025.10.12.29</FileVersion>
 		<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 		<IsPublishable>False</IsPublishable>
 		<NeutralLanguage>en</NeutralLanguage>
@@ -26,7 +26,7 @@
 		<ServerGarbageCollection>true</ServerGarbageCollection>
 		<SignAssembly>False</SignAssembly>
 		<TargetFramework>net10.0</TargetFramework>
-		<Version>2024.8.8.18</Version>
+		<Version>2025.10.12.29</Version>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 	</PropertyGroup>
 
