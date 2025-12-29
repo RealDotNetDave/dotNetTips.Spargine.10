@@ -153,6 +153,7 @@ public class Enumeration : IComparable
 	/// Less than zero: This instance precedes <paramref name="obj"/> in the sort order.
 	/// Zero: This instance occurs in the same position in the sort order as <paramref name="obj"/>.
 	/// Greater than zero: This instance follows <paramref name="obj"/> in the sort order.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public int CompareTo(object? obj)
 	{
 		return obj is null

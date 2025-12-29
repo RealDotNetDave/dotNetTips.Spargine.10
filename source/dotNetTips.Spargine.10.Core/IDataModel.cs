@@ -4,7 +4,7 @@
 // Created          : 02-05-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-12-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="IDataModel.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -68,6 +68,7 @@ public interface IDataModel<TSelf, TKey> :
 	/// Returns a string suitable for debugging that displays the type name and <see cref="Id"/> value.
 	/// </summary>
 	/// <returns>A string representation for debugging purposes.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	string DebugDisplay() => $"{typeof(TSelf).Name}({this.Id})";
 
 	/// <summary>
@@ -78,6 +79,7 @@ public interface IDataModel<TSelf, TKey> :
 	/// <summary>
 	/// Gets a value indicating whether this instance is transient (i.e., has the default <see cref="Id"/> value).
 	/// </summary>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	bool IsTransient => EqualityComparer<TKey>.Default.Equals(this.Id, default!);
 }
 #pragma warning restore IDE0040

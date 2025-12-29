@@ -36,6 +36,7 @@ public static partial class Validator
 	/// <param name="message">The message.</param>
 	/// <param name="messageFromResource">The message from resource.</param>
 	/// <returns>System.String.</returns>
+	[ExcludeFromCodeCoverage]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string CreateExceptionMessage(string message, string messageFromResource) => string.IsNullOrEmpty(message) ? messageFromResource : message;
 
@@ -459,6 +460,7 @@ public static partial class Validator
 			{
 				ExceptionThrower.ThrowInvalidValueException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), input!);
 			}
+
 			return false;
 		}
 

@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-19-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -88,6 +88,7 @@ public class SimpleResult<T>
 	/// </summary>
 	/// <param name="result">The result object containing the value.</param>
 	/// <returns>A reference to the value of type <typeparamref name="T"/>.</returns>
+	[ExcludeFromCodeCoverage]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static ref readonly T GetReference([DisallowNull] in SimpleResult<T> result)
 	{

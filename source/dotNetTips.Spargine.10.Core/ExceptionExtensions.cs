@@ -204,7 +204,7 @@ public static class ExceptionExtensions
 		/// Extracts metadata associated with the exception.
 		/// </summary>
 		/// <returns>A dictionary containing metadata key-value pairs.</returns>
-		[Information(nameof(GetMetadata), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(GetMetadata), UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
 		public IReadOnlyDictionary<string, object> GetMetadata()
 		{
 			ArgumentNullException.ThrowIfNull(exception);
@@ -254,7 +254,7 @@ public static class ExceptionExtensions
 		/// </summary>
 		/// <returns>A JSON string representing the exception.</returns>
 		[return: NotNull]
-		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
 		public string ToJson()
 		{
 			if (exception is null)
@@ -278,7 +278,7 @@ public static class ExceptionExtensions
 		/// </summary>
 		/// <param name="logger">The logger to use for logging.</param>
 		/// <param name="logLevel">The log level to use. Defaults to Error.</param>
-		[Information(nameof(LogException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(LogException), UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
 		public void LogException([DisallowNull] ILogger logger, LogLevel logLevel = LogLevel.Error)
 		{
 			logger = logger.ArgumentNotNull();
@@ -374,7 +374,7 @@ public static class ExceptionExtensions
 		/// </list>
 		/// </remarks>
 		[return: NotNull]
-		[Information(nameof(FormatForDisplay), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(FormatForDisplay), UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
 		public string FormatForDisplay()
 		{
 			if (exception is null)

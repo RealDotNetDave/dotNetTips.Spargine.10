@@ -40,6 +40,7 @@ public ref struct LineSplitEnumerator(ReadOnlySpan<char> input)
 	/// Advances the enumerator to the next line in the input string.
 	/// </summary>
 	/// <returns><c>true</c> if the enumerator was successfully advanced to the next line; <c>false</c> if the enumerator has passed the end of the collection.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public bool MoveNext()
 	{
 		var span = this._string;

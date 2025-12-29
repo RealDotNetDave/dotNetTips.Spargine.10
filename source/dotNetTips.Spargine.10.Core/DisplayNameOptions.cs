@@ -4,7 +4,7 @@
 // Created          : 03-11-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="DisplayNameOptions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
+
+using System.Diagnostics.CodeAnalysis;
 
 namespace DotNetTips.Spargine.Core;
 
@@ -48,6 +50,7 @@ public readonly struct DisplayNameOptions(bool fullName, bool includeGenericPara
 	/// </summary>
 	/// <param name="obj">The object to compare with the current object.</param>
 	/// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public override bool Equals(object? obj) => obj is DisplayNameOptions other && this.Equals(other);
 
 	/// <summary>
@@ -55,6 +58,7 @@ public readonly struct DisplayNameOptions(bool fullName, bool includeGenericPara
 	/// </summary>
 	/// <param name="other">The <see cref="DisplayNameOptions"/> instance to compare with the current instance.</param>
 	/// <returns><c>true</c> if the specified <see cref="DisplayNameOptions"/> instance is equal to the current instance; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public bool Equals(DisplayNameOptions other) => this.FullName == other.FullName &&
 			   this.IncludeGenericParameterNames == other.IncludeGenericParameterNames &&
 			   this.IncludeGenericParameters == other.IncludeGenericParameters &&
@@ -64,13 +68,19 @@ public readonly struct DisplayNameOptions(bool fullName, bool includeGenericPara
 	/// Returns the hash code for the current object.
 	/// </summary>
 	/// <returns>A hash code for the current object.</returns>
+	[ExcludeFromCodeCoverage]
+	[Information(UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public override int GetHashCode() => base.GetHashCode();
+
 	/// <summary>
 	/// Returns a string that represents the current object.
 	/// </summary>
 	/// <returns>A string that represents the current object.</returns>
-	public override string ToString() =>
-		$"{nameof(this.FullName)}: {this.FullName}, {nameof(this.IncludeGenericParameterNames)}: {this.IncludeGenericParameterNames}, {nameof(this.IncludeGenericParameters)}: {this.IncludeGenericParameters}, {nameof(this.NestedTypeDelimiter)}: {this.NestedTypeDelimiter}";
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	public override string ToString()
+	{
+		return $"{nameof(this.FullName)}: {this.FullName}, {nameof(this.IncludeGenericParameterNames)}: {this.IncludeGenericParameterNames}, {nameof(this.IncludeGenericParameters)}: {this.IncludeGenericParameters}, {nameof(this.NestedTypeDelimiter)}: {this.NestedTypeDelimiter}";
+	}
 
 	/// <summary>
 	/// Gets a value indicating whether the full name of the type is used.

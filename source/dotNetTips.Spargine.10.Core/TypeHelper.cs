@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -297,7 +297,7 @@ public static class TypeHelper
 	/// <returns>An instance of type <typeparamref name="T"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="paramArray"/> is null.</exception>
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T Create<T>([DisallowNull] params object[] paramArray)
 		where T : class
 	{
@@ -346,7 +346,7 @@ public static class TypeHelper
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
 	{
 		currentDomain = currentDomain.ArgumentNotNull();
@@ -394,7 +394,7 @@ public static class TypeHelper
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] DirectoryInfo path, SearchOption fileSearchType, [DisallowNull] Type baseType, bool classOnly)
 	{
 		fileSearchType = fileSearchType.ArgumentDefined();
@@ -501,7 +501,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ReadOnlyCollection<MethodInfo> GetAllAbstractMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -1185,7 +1185,7 @@ public static class TypeHelper
 	/// <param name="item">The object to get the type display name for.</param>
 	/// <param name="fullName">If true, the full name of the type is returned; otherwise, the short name is returned.</param>
 	/// <returns>The display name of the type of the specified object.</returns>
-	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string? GetTypeDisplayName(in object item, bool fullName = true)
 	{
 		return item is null ? null : GetTypeDisplayName(item.GetType(), fullName);
@@ -1299,7 +1299,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="baseClass"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(HasBaseClass), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(HasBaseClass), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool HasBaseClass(Type type, Type baseClass)
 	{
 		type = type.ArgumentNotNull();
@@ -1407,7 +1407,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="interfaceType"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool ImplementsInterface([DisallowNull] Type type, [DisallowNull] Type interfaceType)
 	{
 		type = type.ArgumentNotNull();
@@ -1465,7 +1465,7 @@ public static class TypeHelper
 	/// The cache is lazily initialized on first access and reused for all subsequent calls.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)] // Inline for maximum performance
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type == null)
@@ -1493,7 +1493,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool IsClosedGeneric([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -1556,7 +1556,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="property"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsStatic), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(IsStatic), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static bool IsStatic([DisallowNull] PropertyInfo property)
 	{
 		property = property.ArgumentNotNull();

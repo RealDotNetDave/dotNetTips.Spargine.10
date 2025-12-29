@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -102,7 +102,7 @@ public static class FastStringBuilder
 	/// <returns>A hexadecimal string representation of the byte array, prefixed with '0x'.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "3/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "3/7/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string BytesToString([DisallowNull] ref readonly byte[] bytes)
 	{
 		if (bytes is null)
@@ -233,7 +233,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">This exception is not thrown by this overload since ReadOnlySpan cannot be null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Combine), "David McCarter", "12/23/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(Combine), "David McCarter", "12/23/2022", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 	public static string Combine(in bool addLineFeed = false, [DisallowNull] params ReadOnlySpan<string> args)
 	{
 		// Early exit for empty collection - avoids StringBuilder acquisition
@@ -285,7 +285,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="args"/> is null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 	public static string CombineWithSpace([DisallowNull] params ReadOnlySpan<string> args)
 	{
 		if (args.Length == 0)
@@ -865,7 +865,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed)]
 	public static string ToDelimitedString<TKey, TValue>([DisallowNull] Dictionary<TKey, TValue> collection, [ConstantExpected] char delimiter = ControlChars.Comma) where TKey : notnull
 	{
 		if ((collection is null) || (collection.Count == 0))

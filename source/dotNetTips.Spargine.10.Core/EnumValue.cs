@@ -31,6 +31,7 @@ public record EnumValue
 	/// <param name="value">The integer value of the enumeration.</param>
 	/// <param name="name">The name of the enumeration. This cannot be null.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/> is null or empty.</exception>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public EnumValue(in int value, [NotNull] string name)
 	{
 		this.Value = value;

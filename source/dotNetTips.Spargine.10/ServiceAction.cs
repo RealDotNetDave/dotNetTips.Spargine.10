@@ -4,7 +4,7 @@
 // Created          : 03-15-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="ServiceAction.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,11 +14,14 @@
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace DotNetTips.Spargine;
 
 /// <summary>
 /// Represents a service action, encapsulating both the request and the result of the service action, along with the service name.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed class ServiceAction
 {
 

@@ -4,7 +4,7 @@
 // Created          : 05-30-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="KeyGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,6 +34,7 @@ public static class KeyGenerator
 	/// <remarks>
 	/// Useful for generating time-based values for keys or tokens.
 	/// </remarks>
+	[ExcludeFromCodeCoverage]
 	[Information(nameof(GenerateTimeStamp), Status = Status.Available)]
 	private static byte[] GenerateTimeStamp()
 	{

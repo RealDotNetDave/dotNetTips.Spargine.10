@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -193,6 +193,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// The random bytes are used as part of the ULID's unique identifier.
 	/// </remarks>
 	/// <returns>A byte array containing 10 random bytes.</returns>
+	[ExcludeFromCodeCoverage]
 	[Information(nameof(GenerateRandomBytes), Status = Status.New)]
 	private static byte[] GenerateRandomBytes()
 	{
@@ -209,6 +210,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// This ensures that ULIDs are lexicographically sortable based on their creation time.
 	/// </remarks>
 	/// <returns>A byte array representing the current timestamp in milliseconds since the Unix epoch.</returns>
+	[ExcludeFromCodeCoverage]
 	[Information(nameof(GenerateTimeStamp), Status = Status.New)]
 	private static byte[] GenerateTimeStamp() => BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 

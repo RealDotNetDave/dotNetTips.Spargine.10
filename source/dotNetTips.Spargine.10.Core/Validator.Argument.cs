@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-24-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,6 +34,8 @@ namespace DotNetTips.Spargine.Core;
 public static partial class Validator
 {
 
+	//TODO: FIX : Review all Argument methods to ensure they follow the same pattern for default values.
+
 	/// <summary>
 	/// The invalid string length format
 	/// </summary>
@@ -46,6 +48,7 @@ public static partial class Validator
 	/// <param name="paramName">Name of the parameter.</param>
 	/// <param name="messageFromResource">The message from resource.</param>
 	/// <returns>System.String.</returns>
+	[ExcludeFromCodeCoverage]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string CreateParamExceptionMessage(string message, string paramName, string messageFromResource)
 	{
@@ -667,14 +670,14 @@ public static partial class Validator
 	[Information(nameof(ArgumentMatched), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ArgumentMatched([DisallowNull] this string input, [DisallowNull] Regex match, bool trim = true, string? defaultValue = null, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
-		input = input!.ArgumentNotNullOrEmpty();
+		input = input!.ArgumentNotNullOrEmpty(trim: trim);
 		match = match.ArgumentNotNull();
 
 		var isValid = match!.IsMatch(input);
 
 		if (isValid is false && string.IsNullOrEmpty(defaultValue) is false)
 		{
-			input = defaultValue; // Not being tested 
+			input = defaultValue;
 		}
 		else if (isValid is false)
 		{
@@ -685,28 +688,47 @@ public static partial class Validator
 	}
 
 	/// <summary>
-	/// Checks a condition against the input.
+	/// Checks a condition against the input with a default value.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="input">The input to validate.</param>
 	/// <param name="condition">if set to <c>true</c> [condition].</param>
 	/// <param name="defaultValue">The default value to be returned if condition failed.</param>
-	/// <param name="errorMessage">The error message to be used in the Exception message.</param>
-	/// <param name="paramName">Name of the parameter.</param>
 	/// <returns>T.</returns>
-	/// <exception cref="ArgumentInvalidException">Codition failed.</exception>
+	/// <exception cref="ArgumentInvalidException">Condition failed.</exception>
 	/// <remarks>This also checks the input for null.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentMeetsCondition), "David McCarter", "4/4/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static T ArgumentMeetsCondition<T>(this T input, in bool condition, T? defaultValue = default, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
+	[Information(nameof(ArgumentMeetsCondition), "David McCarter", "4/4/2022", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static T ArgumentMeetsCondition<T>(this T input, in bool condition, [DisallowNull] T defaultValue)
 	{
 		var isValid = input is not null && condition;
 
-		if (isValid is false && defaultValue is not null)
+		if (isValid is false)
 		{
-			input = defaultValue!;
+			return defaultValue;
 		}
-		else if (isValid is false)
+
+		return input!;
+	}
+
+	/// <summary>
+	/// Checks a condition against the input.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="input">The input to validate.</param>
+	/// <param name="condition">if set to <c>true</c> [condition].</param>
+	/// <param name="errorMessage">The error message to be used in the Exception message.</param>
+	/// <param name="paramName">Name of the parameter.</param>
+	/// <returns>T.</returns>
+	/// <exception cref="ArgumentInvalidException">Condition failed.</exception>
+	/// <remarks>This also checks the input for null.</remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ArgumentMeetsCondition), "David McCarter", "4/4/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static T ArgumentMeetsCondition<T>(this T input, in bool condition, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
+	{
+		var isValid = input is not null && condition;
+
+		if (isValid is false)
 		{
 			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.ErrorInvalidValue), paramName);
 		}

@@ -4,7 +4,7 @@
 // Created          : 07-25-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="TaskHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -56,7 +56,7 @@ public static class TaskHelper
 	/// var result = TaskHelper.RunSync(() => SomeType.CalculateAsync());
 	/// </example>
 	[return: NotNull]
-	[Information("Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineSep2022")]
+	[Information("Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Update, Status = Status.Available, Documentation = "https://bit.ly/SpargineSep2022")]
 	public static TResult RunSync<TResult>([DisallowNull] this Func<Task<TResult>> taskFunction)
 	{
 		taskFunction = taskFunction.ArgumentNotNull();
@@ -90,7 +90,7 @@ public static class TaskHelper
 	/// var result = TaskHelper.RunSync(() => SomeType.CalculateAsync(), cancelToken);
 	/// </example>
 	[return: NotNull]
-	[Information("Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineSep2022")]
+	[Information("Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Update, Status = Status.Available, Documentation = "https://bit.ly/SpargineSep2022")]
 	public static TResult RunSync<TResult>([DisallowNull] Func<Task<TResult>> taskFunction, CancellationToken cancellationToken, TaskCreationOptions taskCreation = TaskCreationOptions.None, TaskContinuationOptions taskContinuation = TaskContinuationOptions.None, TaskScheduler? taskScheduler = null)
 	{
 		taskFunction = taskFunction.ArgumentNotNull();

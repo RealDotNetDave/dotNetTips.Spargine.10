@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="Config.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -57,6 +57,7 @@ public class Config<T> where T : class, new()
 	/// This method attempts to deserialize the configuration object from a file specified by <see cref="ConfigFileName"/>.
 	/// If the file does not exist, the method returns <c>false</c>.
 	/// </remarks>
+	[Information(nameof(Load), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual bool Load()
 	{
 		if (File.Exists(this.ConfigFileName))

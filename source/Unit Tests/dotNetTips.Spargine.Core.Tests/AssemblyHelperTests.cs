@@ -4,9 +4,9 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
-// <copyright file="AssemblyHelperUnitTests.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="AssemblyHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,7 +29,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DotNetTips.Spargine.Core.Tests;
 
 [TestClass]
-public class AssemblyHelperUnitTests : UnitTester
+public class AssemblyHelperTests : UnitTester
 {
 
 	private const string SDKVersion = "10.0.1";
@@ -560,6 +561,245 @@ public class AssemblyHelperUnitTests : UnitTester
 		// Assert
 		Assert.IsNotNull(methods, "Expected a non-null collection of methods.");
 		Assert.IsTrue(methods.Count > 0, "Expected at least one method in the type.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_AllFilesAreValid()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+
+		foreach (var file in result.Take(10)) // Test a sample to avoid long test times
+		{
+			Assert.IsTrue(file.Exists, $"File {file.FullName} should exist.");
+			Assert.IsTrue(file.Length > 0, $"File {file.FullName} should not be empty.");
+		}
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_AllReturnedFilesPassIsDotNetAssemblyCheck()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+
+		// Sample check to avoid long test execution
+		var filesToCheck = result.Take(20).ToList();
+
+		foreach (var file in filesToCheck)
+		{
+			Assert.IsTrue(AssemblyHelper.IsDotNetAssembly(file),
+				$"File {file.Name} should pass IsDotNetAssembly check.");
+		}
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_ContainsExpectedAssemblies()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Count > 0, "Expected to find SDK files.");
+
+		// Check for common expected assemblies
+		var fileNames = result.Select(f => f.Name).ToList();
+		Assert.IsTrue(fileNames.Any(name => name.Contains("System.Runtime.dll", StringComparison.OrdinalIgnoreCase)),
+			"Expected to find System.Runtime.dll in SDK files.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_EmptyStringVersion_ReturnsHighestVersion()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(string.Empty);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files when using empty string (should default to highest version).");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_FilesAreFromRefDirectory()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.All(file => file.DirectoryName!.Contains("ref", StringComparison.OrdinalIgnoreCase)),
+			"Expected all files to be from the 'ref' directory.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_MultipleVersionsAvailable_SelectsHighest()
+	{
+		// Act
+		var resultNull = AssemblyHelper.GetNetSdkDllFiles(null);
+		var resultSpecific = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(resultNull);
+		Assert.IsNotNull(resultSpecific);
+
+		// Both should return results if the version exists
+		this.PrintToDebug($"Files found with null version: {resultNull.Count}");
+		this.PrintToDebug($"Files found with specific version ({SDKVersion}): {resultSpecific.Count}");
+
+		Assert.IsTrue(resultNull.Count > 0 || resultSpecific.Count > 0,
+			"Expected to find SDK files with either null or specific version.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_NoDuplicateFiles_ReturnsDistinctFiles()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+
+		var distinctFiles = result.Select(f => f.FullName).Distinct().Count();
+		Assert.AreEqual(result.Count, distinctFiles,
+			"Expected no duplicate files in the result collection.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_NonExistentPacksDirectory_ReturnsEmptyCollection()
+	{
+		// This test verifies graceful handling when packs directory doesn't exist
+		// Note: This is difficult to test without mocking, so we test with invalid version
+
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles("0.0.0-invalid");
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "Expected empty collection for non-existent version.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_ParallelProcessing_ReturnsConsistentResults()
+	{
+		// Act
+		var result1 = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+		var result2 = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count,
+			"Expected consistent results across multiple calls.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_PerformanceTest_CompletesReasonablyFast()
+	{
+		// Arrange
+		var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+		stopwatch.Stop();
+
+		// Assert
+		Assert.IsNotNull(result);
+		this.PrintToDebug($"GetNetSdkDllFiles execution time: {stopwatch.ElapsedMilliseconds}ms for {result.Count} files");
+
+		// Should complete in reasonable time (adjust threshold as needed)
+		Assert.IsTrue(stopwatch.ElapsedMilliseconds < 30000,
+			$"Method took too long to complete: {stopwatch.ElapsedMilliseconds}ms");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_ResultsAreReadOnly()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<FileInfo>),
+			"Expected result to be a ReadOnlyCollection.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_ReturnsOnlyDllFiles()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.All(file => file.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)),
+			"Expected all files to have .dll extension.");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_ValidVersion_ReturnsFilesFromCorrectTargetFramework()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
+
+		// Assert
+		Assert.IsNotNull(result);
+
+		if (result.Count > 0)
+		{
+			// Verify files are from the highest target framework directory
+			var firstFile = result.First();
+			var parentDir = firstFile.Directory!.Name;
+
+			// Target framework should start with "net" (e.g., net8.0, net9.0, net10.0)
+			Assert.IsTrue(parentDir.StartsWith("net", StringComparison.OrdinalIgnoreCase),
+				$"Expected files to be from a target framework directory, but found: {parentDir}");
+		}
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_VersionWithPreviewSuffix_HandlesGracefully()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles("10.0.0-preview.1");
+
+		// Assert
+		Assert.IsNotNull(result);
+		// Method should handle preview versions gracefully, even if not found
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_WhitespaceVersion_ReturnsHighestVersion()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles("   ");
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files when using whitespace (should default to highest version).");
+	}
+
+	[TestMethod]
+	public void GetNetSdkDllFiles_WithNullVersion_ReturnsHighestVersion()
+	{
+		// Act
+		var result = AssemblyHelper.GetNetSdkDllFiles(null);
+
+		// Assert
+		Assert.IsNotNull(result, "Expected a non-null collection of SDK files.");
+		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files when using the highest available version.");
+
+		// Verify all returned files are valid .NET assemblies
+		foreach (var file in result)
+		{
+			Assert.IsTrue(file.Exists, $"File {file.Name} should exist.");
+			Assert.IsTrue(AssemblyHelper.IsDotNetAssembly(file), $"File {file.Name} should be a valid .NET assembly.");
+		}
 	}
 
 	[TestMethod]

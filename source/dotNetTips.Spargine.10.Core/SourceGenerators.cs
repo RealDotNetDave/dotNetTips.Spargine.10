@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -48,6 +49,7 @@ internal static partial class SourceGenerators
 	/// </summary>
 	/// <param name="processorArchitecture">The processor architecture as an integer. Expected values are from the PROCESSOR_ARCHITECTURE_* constants.</param>
 	/// <returns>The <see cref="Architecture"/> enum value that corresponds to the given processor architecture integer.</returns>
+	[ExcludeFromCodeCoverage]
 	internal static Architecture ConvertProcessorArchitecture(in int processorArchitecture) => processorArchitecture switch
 	{
 		PROCESSOR_ARCHITECTURE_ARM64 => Architecture.Arm64,
