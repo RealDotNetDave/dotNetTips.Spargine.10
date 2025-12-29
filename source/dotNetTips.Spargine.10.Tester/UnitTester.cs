@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -258,7 +258,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </code>
 	/// </example>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public string SaveToFile([NotNull] string input, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		if (input.IsNullOrEmpty())

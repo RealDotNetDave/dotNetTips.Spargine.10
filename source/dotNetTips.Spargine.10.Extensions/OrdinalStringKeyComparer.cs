@@ -4,9 +4,9 @@
 // Created          : 12-26-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-26-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
-// <copyright file="OrdinalStringKeyComparer`1.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="OrdinalStringKeyComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Provides optimized ordinal string comparison for sorting collections.</summary>
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// interface dispatch overhead that was added in .NET 10's LINQ implementation.
 /// </para>
 /// </remarks>
-[Information(nameof(OrdinalStringKeyComparer<T>), "David McCarter", "12/26/2025", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, UnitTestStatus = UnitTestStatus.None)]
+[Information(nameof(OrdinalStringKeyComparer<>), "David McCarter", "12/26/2025", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 internal sealed class OrdinalStringKeyComparer<T> : IComparer<T>
 {
 	/// <summary>

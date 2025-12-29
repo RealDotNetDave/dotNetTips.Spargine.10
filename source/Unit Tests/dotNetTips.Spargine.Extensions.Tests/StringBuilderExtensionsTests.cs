@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 12-29-2025
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -243,6 +243,179 @@ public class StringBuilderExtensionsTests
 
 		// Verify the capacity is set correctly
 		Assert.AreEqual(16, sb.Capacity, "StringBuilder capacity should be set to zero.");
+	}
+
+	[TestMethod]
+	public void SetCapacityAfterAppendOperationsTest()
+	{
+		var sb = new StringBuilder();
+
+		// Perform multiple append operations
+		for (int i = 0; i < 10; i++)
+		{
+			sb.Append(RandomData.GenerateWord(10));
+		}
+
+		var contentBeforeCapacity = sb.ToString();
+		var lengthBeforeCapacity = sb.Length;
+
+		// Set larger capacity
+		sb.SetCapacity(500);
+
+		// Verify content and length are preserved
+		Assert.AreEqual(contentBeforeCapacity, sb.ToString(), "Content should be preserved after SetCapacity.");
+		Assert.AreEqual(lengthBeforeCapacity, sb.Length, "Length should be preserved after SetCapacity.");
+		Assert.IsTrue(sb.Capacity >= 500, "Capacity should be at least 500.");
+	}
+
+	[TestMethod]
+	public void SetCapacityComparisonWithClearSetCapacityTest()
+	{
+		var sb1 = new StringBuilder("Test Content");
+		var sb2 = new StringBuilder("Test Content");
+
+		// Use SetCapacity (preserves content)
+		sb1.SetCapacity(100);
+		Assert.AreEqual("Test Content", sb1.ToString(), "SetCapacity should preserve content.");
+		Assert.IsTrue(sb1.Capacity >= 100, "Capacity should be set correctly.");
+
+		// Use ClearSetCapacity (clears content)
+		sb2.ClearSetCapacity(100);
+		Assert.AreEqual(string.Empty, sb2.ToString(), "ClearSetCapacity should clear content.");
+		Assert.AreEqual(100, sb2.Capacity, "Capacity should be set correctly.");
+	}
+
+	[TestMethod]
+	public void SetCapacityMethodChainingTest()
+	{
+		var sb = new StringBuilder();
+		var testString = "Test chaining";
+
+		// Test method chaining: SetCapacity -> Append -> SetCapacity
+		var result = sb.SetCapacity(100)
+			.Append(testString)
+			.SetCapacity(200);
+
+		Assert.AreSame(sb, result, "Method chaining should return the same StringBuilder instance.");
+		Assert.AreEqual(testString, sb.ToString(), "Content should match after chained operations.");
+		Assert.IsTrue(sb.Capacity >= 200, "Final capacity should be at least 200.");
+	}
+
+	[TestMethod]
+	public void SetCapacityMultipleCallsTest()
+	{
+		var sb = new StringBuilder("Initial");
+
+		// Call SetCapacity multiple times with increasing capacities
+		sb.SetCapacity(50);
+		Assert.IsTrue(sb.Capacity >= 50, "First capacity should be at least 50.");
+
+		sb.SetCapacity(100);
+		Assert.IsTrue(sb.Capacity >= 100, "Second capacity should be at least 100.");
+
+		sb.SetCapacity(200);
+		Assert.IsTrue(sb.Capacity >= 200, "Third capacity should be at least 200.");
+
+		// Content should be preserved through all calls
+		Assert.AreEqual("Initial", sb.ToString(), "Content should be preserved after multiple SetCapacity calls.");
+	}
+
+	[TestMethod]
+	public void SetCapacityNegativeCapacityTest()
+	{
+		var sb = new StringBuilder("Test");
+
+		// Attempt to set negative capacity should throw ArgumentOutOfRangeException
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => sb.SetCapacity(-1));
+	}
+
+	[TestMethod]
+	public void SetCapacityNullStringBuilderTest()
+	{
+		StringBuilder sb = null;
+
+		// Attempt to call SetCapacity on null StringBuilder should throw ArgumentNullException
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.SetCapacity(100));
+	}
+
+	[TestMethod]
+	public void SetCapacityPreservesContentTest()
+	{
+		var sb = new StringBuilder();
+		var testString = RandomData.GenerateWord(50);
+		sb.Append(testString);
+
+		var originalContent = sb.ToString();
+		var newCapacity = 200;
+
+		// Call SetCapacity
+		sb.SetCapacity(newCapacity);
+
+		// Verify content is preserved
+		Assert.AreEqual(originalContent, sb.ToString(), "StringBuilder content should be preserved after SetCapacity.");
+		Assert.AreEqual(testString.Length, sb.Length, "StringBuilder length should remain unchanged.");
+	}
+
+	[TestMethod]
+	public void SetCapacityTest()
+	{
+		var sb = new StringBuilder("Hello World");
+		var originalLength = sb.Length;
+		var newCapacity = 100;
+
+		// Call SetCapacity
+		var result = sb.SetCapacity(newCapacity);
+
+		// Verify the content is preserved
+		Assert.AreEqual(originalLength, sb.Length, "StringBuilder length should remain unchanged.");
+		Assert.AreEqual("Hello World", sb.ToString(), "StringBuilder content should be preserved.");
+
+		// Verify the capacity is set correctly
+		Assert.IsTrue(sb.Capacity >= newCapacity, "StringBuilder capacity should be at least the requested capacity.");
+
+		// Verify method chaining works
+		Assert.AreSame(sb, result, "SetCapacity should return the same StringBuilder instance for chaining.");
+	}
+
+	[TestMethod]
+	public void SetCapacityWithEmptyStringBuilderTest()
+	{
+		var sb = new StringBuilder();
+		var newCapacity = 50;
+
+		// Call SetCapacity on empty StringBuilder
+		sb.SetCapacity(newCapacity);
+
+		// Verify the capacity is set correctly
+		Assert.IsTrue(sb.Capacity >= newCapacity, "StringBuilder capacity should be at least the requested capacity.");
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty.");
+	}
+
+	[TestMethod]
+	public void SetCapacityWithMaxCapacityTest()
+	{
+		var sb = new StringBuilder(capacity: 10, maxCapacity: 50);
+		sb.Append("Hello");
+
+		// Set capacity within max capacity
+		sb.SetCapacity(40);
+		Assert.IsTrue(sb.Capacity >= 40 && sb.Capacity <= 50, "Capacity should be within max capacity limits.");
+
+		// Attempt to exceed max capacity should throw ArgumentOutOfRangeException
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => sb.SetCapacity(100));
+	}
+
+	[TestMethod]
+	public void SetCapacityZeroCapacityTest()
+	{
+		var sb = new StringBuilder();
+
+		// Call SetCapacity with zero
+		sb.SetCapacity(0);
+
+		// Verify the StringBuilder remains valid
+		Assert.AreEqual(0, sb.Length, "StringBuilder length should be zero.");
+		Assert.IsTrue(sb.Capacity >= 0, "StringBuilder capacity should be non-negative.");
 	}
 
 }
