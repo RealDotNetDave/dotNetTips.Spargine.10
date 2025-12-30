@@ -565,13 +565,13 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.ToBase64ByteSpan))]
+	[Benchmark(Description = nameof(StringExtensions.ToBase64Bytes))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void ToBase64ToBase64ByteSpan()
 	{
-		var result = this.LongTestString.ToBase64ByteSpan();
+		var result = this.LongTestString.ToBase64Bytes();
 
-		this.Consume(result.ToArray());
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArrayFromBase64))]

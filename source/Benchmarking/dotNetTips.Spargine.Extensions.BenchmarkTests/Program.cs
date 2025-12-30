@@ -21,6 +21,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
+using DotNetTips.Spargine.Benchmarking;
 using Perfolizer.Horology;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -49,7 +50,7 @@ internal sealed class Program
 
 			config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-			//_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
 			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);
@@ -57,17 +58,14 @@ internal sealed class Program
 			_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine(CompleteMessage);
-			Console.Beep();
-			Console.Beep(frequency: 500, duration: 1000);
-			Console.Beep(frequency: 750, duration: 2000);
-			Console.Beep(frequency: 800, duration: 3000);
+			Benchmark.PlaySuccessBeep();
 			_ = Console.ReadLine();
 		}
 		catch (Exception ex)
 		{
 			ConsoleLogger.Default.WriteLine(ErrorMessage);
 			ConsoleLogger.Default.WriteLine(ex.Message);
-			Console.Beep(frequency: 5000, duration: 6000);
+			Benchmark.PlayErrorBeep();
 			_ = Console.ReadLine();
 		}
 	}

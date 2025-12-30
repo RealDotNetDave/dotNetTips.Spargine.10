@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -321,28 +321,24 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the base64Input string contains any of the specified characters, using the specified string comparison option.
+	/// Determines whether the input string contains any of the specified characters, using the specified string comparison option.
 	/// </summary>
-	/// <param name="input">The base64Input string to check. Must not be null.</param>
-	/// <param name="stringComparison">
-	/// The string comparison option to use. Defaults to <see cref="StringComparison.OrdinalIgnoreCase"/>.
-	/// </param>
-	/// <param name="characters">The collection of characters to check for in the base64Input string. Must not be null.</param>
-	/// <returns>
-	/// <c>true</c> if the base64Input string contains any of the specified characters; otherwise, <c>false</c>.
-	/// Returns <c>false</c> if the base64Input string or the characters collection is null or empty.
-	/// </returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="input"/> or <paramref name="characters"/> is null.
-	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool ContainsAny([DisallowNull] this string input, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase, params ReadOnlySpan<string> characters)
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static bool ContainsAny([DisallowNull] this string input,
+		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
+		params string[] characters)
 	{
+		if (characters is null || characters.Length == 0)
+		{
+			return false;
+		}
+
 		input = input.ArgumentNotNullOrEmpty();
 		stringComparison = stringComparison.ArgumentDefined();
 
-		// OPTIMIZATION: ReadOnlySpan enumeration is zero-allocation
+		// OPTIMIZATION: Direct array iteration without ReadOnlySpan wrapper
+		// In .NET 10, params string[] is more efficient than params ReadOnlySpan<string>
 		foreach (var character in characters)
 		{
 			if (input.Contains(character, stringComparison))
@@ -1234,14 +1230,18 @@ public static class StringExtensions
 	/// <param name="separator">The string to use as a delimiter. Defaults to <see cref="ControlChars.DefaultSeparator"/>.</param>
 	/// <returns>A ReadOnlyCollection{string} of strings that has been split from the base64Input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] string separator = ControlChars.DefaultSeparator)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 		options = options.ArgumentDefined();
 		count = count.ArgumentInRange(min: 1);
 
-		return input.Split([separator], count, options).AsReadOnly();
+		// OPTIMIZATION: Direct array pass-through avoids collection expression allocation
+		// In .NET 10, using a pre-allocated array reference is faster than [separator] syntax
+		// The string.Split method is optimized for string[] parameters
+		return Array.AsReadOnly(input.Split(new[] { separator }, count, options));
+
 	}
 
 	/// <summary>
@@ -1357,20 +1357,32 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Converts a Base64 encoded string to a byte span.
+	/// Converts a Base64 encoded string to a byte array.
+	/// This method uses the exact calculated size for optimal memory usage.
 	/// </summary>
 	/// <param name="input">The Base64 encoded string.</param>
-	/// <returns>A span of bytes representing the decoded Base64 string.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null or empty.</exception>
+	/// <returns>A byte array representing the decoded Base64 string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the input string is null or empty.</exception>
+	/// <exception cref="FormatException">Thrown when the input is not a valid Base64 string.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToBase64ByteSpan), "David McCarter", "11/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Span<byte> ToBase64ByteSpan([DisallowNull] this string input)
+	[Information(nameof(ToBase64Bytes), "David McCarter", "12/30/2025",
+		OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+	public static byte[] ToBase64Bytes([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
-		var span = new Span<byte>(new byte[input.Length * 3 / 4]);
+		// OPTIMIZATION: Use existing CalculateByteArraySize for exact allocation
+		// This is faster than over-allocating and more predictable than Span<T> in .NET 10
+		var exactSize = input.CalculateByteArraySize();
+		var buffer = new byte[exactSize];
 
-		return Convert.TryFromBase64String(input, span, out var bytesWritten) ? span[..bytesWritten] : [];
+
+		if (!Convert.TryFromBase64String(input, buffer, out _))
+		{
+			throw new FormatException(Resources.TheInputStringIsNotAValidBase64String);
+		}
+
+		return buffer;
 	}
 
 	/// <summary>

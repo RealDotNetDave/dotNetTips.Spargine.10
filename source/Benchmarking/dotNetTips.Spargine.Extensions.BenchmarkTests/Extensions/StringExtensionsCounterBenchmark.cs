@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-05-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -287,11 +286,11 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this.Consume(result.Length);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.ToBase64ByteSpan))]
+	[Benchmark(Description = nameof(StringExtensions.ToBase64Bytes))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void ToBase64ByteSpan()
 	{
-		var result = this._crlfString.ToBase64ByteSpan();
+		var result = this._crlfString.ToBase64Bytes();
 		this.Consume(result.Length);
 	}
 
