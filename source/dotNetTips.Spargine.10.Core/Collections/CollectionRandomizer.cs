@@ -4,7 +4,7 @@
 // Created          : 11-06-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-25-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="CollectionRandomizer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,6 +15,7 @@
 // </summary>
 // ***********************************************************************
 
+using System.Collections;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -35,10 +36,15 @@ namespace DotNetTips.Spargine.Core.Collections;
 /// <remarks>
 /// The <see cref="CollectionRandomizer{T}"/> is designed to shuffle a collection and allow retrieving items sequentially with the option to repeat and reshuffle.
 /// </remarks>
-[DebuggerDisplay("Count = {Count}, HasRemainingItems = {HasRemainingItems}")]
+[DebuggerDisplay("Count = {Count}, CurrentIndex = {CurrentIndex}, HasRemainingItems = {HasRemainingItems}")]
 [Information(nameof(CollectionRandomizer<>), author: "David McCarter and Kristine Tran", createdOn: "8/26/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineCollectionRandomizer")]
-public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> collection, bool repeat = false)
+public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> collection, bool repeat = false) : IEnumerable<T>
 {
+
+	/// <summary>
+	/// The thread lock used to ensure thread safety when accessing the collection.
+	/// </summary>
+	private readonly Lock _threadLock = new();
 
 	/// <summary>
 	/// The collection to be randomized. This collection is converted to an <see cref="ImmutableArray{T}"/> to ensure thread-safety and immutability.
@@ -46,17 +52,12 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	private ImmutableArray<T> _collection = [.. collection];
 
 	/// <summary>
-	/// The enumerator for the randomized collection. This enumerator is used internally to iterate through the <see cref="ImmutableArray{T}"/> of randomized items.
-	/// </summary>
-	private ImmutableArray<T>.Enumerator _collectionEnumerator;
-
-	/// <summary>
 	/// The current index in the randomized collection sequence.
 	/// </summary>
 	/// <remarks>
 	/// The index is zero-based and indicates the position of the current item in the randomized collection.
 	/// </remarks>
-	private readonly int _currentIndex = -1;
+	private int _currentIndex = -1;
 
 	/// <summary>
 	/// Backing field for the <see cref="HasRemainingItems"/> property.
@@ -71,9 +72,260 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	private bool _initialized;
 
 	/// <summary>
-	/// The thread lock used to ensure thread safety when accessing the collection.
+	/// Gets the total count of items in the collection.
 	/// </summary>
-	private readonly Lock _threadLock = new();
+	[Information(nameof(Count), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public int Count
+	{
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			lock (this._threadLock)
+			{
+				return this._collection.Length;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Gets the current index in the randomized collection sequence.
+	/// </summary>
+	/// <remarks>
+	/// The index is zero-based and indicates the position of the current item in the randomized collection.
+	/// Returns -1 if no items have been retrieved yet.
+	/// </remarks>
+	[Information(nameof(CurrentIndex), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public int CurrentIndex
+	{
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			lock (this._threadLock)
+			{
+				return this._currentIndex;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether this instance has remaining items to be retrieved by <see cref="GetNext"/>.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if this instance has remaining items; otherwise, <c>false</c>. This value will be <c>false</c>
+	/// until the first time <see cref="GetNext"/> is called and the collection is shuffled.
+	/// </value>
+	[Pure]
+	[Information(nameof(HasRemainingItems), "David McCarter", "4/21/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool HasRemainingItems
+	{
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			lock (this._threadLock)
+			{
+				return this._hasRemainingItems;
+			}
+		}
+
+		private set => this._hasRemainingItems = value;
+	}
+
+	/// <summary>
+	/// Gets the percentage of items already retrieved from the collection.
+	/// </summary>
+	/// <remarks>
+	/// Returns 0.0 if the collection has not been initialized or is empty.
+	/// Returns 100.0 when all items have been retrieved (and repeat is false).
+	/// </remarks>
+	[Information(nameof(PercentageComplete), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public double PercentageComplete
+	{
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			lock (this._threadLock)
+			{
+				if (!this._initialized || this._collection.Length == 0)
+				{
+					return 0.0;
+				}
+
+				return (this._currentIndex + 1) / (double)this._collection.Length * 100.0;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Returns an enumerator that iterates through a collection.
+	/// </summary>
+	/// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+	IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+	/// <summary>
+	/// Returns an enumerator that iterates through the randomized collection.
+	/// </summary>
+	/// <returns>An <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.</returns>
+	/// <remarks>
+	/// When used with repeat mode enabled, this creates an infinite sequence. 
+	/// Exercise caution with operations that materialize the entire sequence (like ToList() or ToArray()).
+	/// </remarks>
+	[Information(nameof(GetEnumerator), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public IEnumerator<T> GetEnumerator()
+	{
+		while (this.HasRemainingItems || repeat)
+		{
+			yield return this.GetNext();
+		}
+	}
+
+	/// <summary>
+	/// Gets the next item in the collection. If the collection is set to repeat, it will reshuffle once all items have been retrieved.
+	/// </summary>
+	/// <returns>The next item of type <typeparamref name="T"/> from the collection.</returns>
+	/// <exception cref="InvalidOperationException">Thrown if the collection is empty or all items have been retrieved and the collection is not set to repeat.</exception>
+	/// <seealso cref="Init"/>
+	[return: NotNull]
+	[DebuggerStepThrough]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetNext), "David McCarter", "4/21/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public T GetNext()
+	{
+		lock (this._threadLock)
+		{
+			if (!this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat))
+			{
+				this.Init();
+			}
+			else if (this._currentIndex >= this._collection.Length - 1)
+			{
+				ExceptionThrower.ThrowInvalidOperationException(Resources.NoMoreItemsToRetrieveAndTheCollectionIsNot);
+			}
+
+			this._currentIndex++;
+			this.HasRemainingItems = this._currentIndex < this._collection.Length - 1;
+
+			return this._collection[this._currentIndex]!;
+		}
+	}
+
+	/// <summary>
+	/// Returns the number of items remaining to be retrieved.
+	/// </summary>
+	/// <returns>The count of remaining items.</returns>
+	/// <remarks>
+	/// If the collection has not been initialized, returns the total count.
+	/// If the collection is exhausted, returns 0.
+	/// </remarks>
+	[Information(nameof(GetRemaining), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public int GetRemaining()
+	{
+		lock (this._threadLock)
+		{
+			if (!this._initialized)
+			{
+				return this._collection.Length;
+			}
+
+			if (!this.HasRemainingItems)
+			{
+				return 0;
+			}
+
+			return this._collection.Length - this._currentIndex - 1;
+		}
+	}
+
+	/// <summary>
+	/// Returns the next item in the collection without advancing the index.
+	/// If the collection is not initialized or exhausted (and <c>repeat</c> is true), it will be reshuffled.
+	/// </summary>
+	/// <returns>The next item of type <typeparamref name="T"/> in the collection.</returns>
+	/// <exception cref="InvalidOperationException">Thrown if the collection is empty or all items have been retrieved and the collection is not set to repeat.</exception>
+	[return: NotNull]
+	[DebuggerStepThrough]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(PeekNext), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public T PeekNext()
+	{
+		lock (this._threadLock)
+		{
+			if (!this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat))
+			{
+				this.Init();
+			}
+			else if (this._currentIndex >= this._collection.Length - 1)
+			{
+				ExceptionThrower.ThrowInvalidOperationException(Resources.NoMoreItemsToRetrieveAndTheCollectionIsNot);
+			}
+
+			// Return the next item without advancing the index
+			return this._collection[this._currentIndex + 1]!;
+		}
+	}
+
+	/// <summary>
+	/// Resets the <see cref="CollectionRandomizer{T}"/> to its initial state, reshuffling the collection and restarting the sequence.
+	/// </summary>
+	[DebuggerStepThrough]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Reset), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public void Reset()
+	{
+		lock (this._threadLock)
+		{
+			this._initialized = false;
+			this.Init();
+		}
+	}
+
+	/// <summary>
+	/// Skips the next item in the collection without returning it.
+	/// </summary>
+	/// <returns><c>true</c> if an item was skipped; otherwise, <c>false</c>.</returns>
+	/// <remarks>
+	/// If the collection is set to repeat and is exhausted, it will be reshuffled before skipping.
+	/// </remarks>
+	[Information(nameof(SkipNext), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public bool SkipNext()
+	{
+		lock (this._threadLock)
+		{
+			if (!this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat))
+			{
+				this.Init();
+			}
+			else if (this._currentIndex >= this._collection.Length - 1)
+			{
+				return false;
+			}
+
+			this._currentIndex++;
+			this.HasRemainingItems = this._currentIndex < this._collection.Length - 1;
+			return true;
+		}
+	}
+
+	/// <summary>
+	/// Returns a snapshot of the current shuffled collection as an array.
+	/// </summary>
+	/// <returns>An array containing the shuffled items.</returns>
+	/// <remarks>
+	/// This returns a copy of the entire collection in its current shuffled state,
+	/// not just the remaining items.
+	/// </remarks>
+	[return: NotNull]
+	[Information(nameof(ToArray), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public T[] ToArray()
+	{
+		lock (this._threadLock)
+		{
+			return [.. this._collection];
+		}
+	}
 
 	/// <summary>
 	/// Initializes this instance of <see cref="CollectionRandomizer{T}"/>.
@@ -101,133 +353,9 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 		//Shuffle Collection
 		this._collection = [.. this._collection.Shuffle()];
 
-		//Setup enumerator
-		this._collectionEnumerator = this._collection.GetEnumerator();
-
-		//Move to first item
-		this.HasRemainingItems = this._collectionEnumerator.MoveNext();
-
+		//Reset index to start (-1 so GetNext() will increment to 0)
+		this._currentIndex = -1;
+		this.HasRemainingItems = this._collection.Length > 0;
 		this._initialized = true;
-	}
-
-	/// <summary>
-	/// Gets the next item in the collection. If the collection is set to repeat, it will reshuffle once all items have been retrieved.
-	/// </summary>
-	/// <returns>The next item of type <typeparamref name="T"/> from the collection.</returns>
-	/// <exception cref="InvalidOperationException">Thrown if the collection is empty or all items have been retrieved and the collection is not set to repeat.</exception>
-	/// <seealso cref="Init"/>
-	[return: NotNull]
-	[DebuggerStepThrough]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetNext), "David McCarter", "4/21/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public T GetNext()
-	{
-		lock (this._threadLock)
-		{
-			if (!this._initialized || (!this.HasRemainingItems && repeat))
-			{
-				this.Init();
-			}
-			else if (!this.HasRemainingItems)
-			{
-				ExceptionThrower.ThrowInvalidOperationException(Resources.NoMoreItemsToRetrieveAndTheCollectionIsNot);
-			}
-
-			var collectionItem = this._collectionEnumerator.Current;
-
-			this.HasRemainingItems = this._collectionEnumerator.MoveNext();
-
-			return collectionItem!;
-		}
-	}
-
-	/// <summary>
-	/// Returns the next item in the collection without advancing the enumerator.
-	/// If the collection is not initialized or exhausted (and <c>repeat</c> is true), it will be reshuffled.
-	/// </summary>
-	/// <returns>The next item of type <typeparamref name="T"/> in the collection.</returns>
-	/// <exception cref="InvalidOperationException">Thrown if the collection is empty or all items have been retrieved and the collection is not set to repeat.</exception>
-	[return: NotNull]
-	[DebuggerStepThrough]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(PeekNext), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public T PeekNext()
-	{
-		lock (this._threadLock)
-		{
-			if (!this._initialized || (!this.HasRemainingItems && repeat))
-			{
-				this.Init();
-			}
-			else if (!this.HasRemainingItems)
-			{
-				ExceptionThrower.ThrowInvalidOperationException(Resources.NoMoreItemsToRetrieveAndTheCollectionIsNot);
-			}
-			return this._collectionEnumerator.Current!;
-		}
-	}
-
-	/// <summary>
-	/// Resets the <see cref="CollectionRandomizer{T}"/> to its initial state, reshuffling the collection and restarting the sequence.
-	/// </summary>
-	[DebuggerStepThrough]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Reset), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public void Reset()
-	{
-		lock (this._threadLock)
-		{
-			this._initialized = false;
-			this.Init();
-		}
-	}
-
-	/// <summary>
-	/// Gets the current index in the randomized collection sequence.
-	/// </summary>
-	/// <remarks>
-	/// The index is zero-based and indicates the position of the current item in the randomized collection.
-	/// </remarks>
-	[Information(nameof(CurrentIndex), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public int CurrentIndex
-	{
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			lock (this._threadLock)
-			{
-				return this._currentIndex;
-			}
-		}
-	}
-
-	/// <summary>
-	/// Gets a value indicating whether this instance has remaining items to be retrieved by <see cref="GetNext"/>.
-	/// </summary>
-	/// <value>
-	/// <c>true</c> if this instance has remaining items; otherwise, <c>false</c>. This value will be <c>false</c>
-	/// until the first time <see cref="GetNext"/> is called and the collection is shuffled.
-	/// </value>
-	[Pure]
-	[Information(nameof(HasRemainingItems), "David McCarter", "4/21/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.NotRequired)]
-	public bool HasRemainingItems
-	{
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			lock (this._threadLock)
-			{
-				return this._hasRemainingItems;
-			}
-		}
-		private set
-		{
-			lock (this._threadLock)
-			{
-				this._hasRemainingItems = value;
-			}
-		}
 	}
 }

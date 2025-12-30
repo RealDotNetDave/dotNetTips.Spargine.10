@@ -4,7 +4,7 @@
 // Created          : 07-12-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="CollectionRandomizerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -29,6 +29,17 @@ public class CollectionRandomizerTests
 {
 
 	[TestMethod]
+	public void Constructor_WithEmptyCollection_ThrowsOnGetNext()
+	{
+		// Arrange
+		var collection = new List<int>();
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => randomizer.GetNext());
+	}
+
+	[TestMethod]
 	public void Constructor_WithNullCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange, Act & Assert
@@ -46,6 +57,33 @@ public class CollectionRandomizerTests
 	}
 
 	[TestMethod]
+	public void Count_RemainsConstant()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		var countBefore = randomizer.Count;
+		randomizer.GetNext();
+		randomizer.GetNext();
+		var countAfter = randomizer.Count;
+
+		// Assert
+		Assert.AreEqual(5, countBefore, "Count should be 5 initially.");
+		Assert.AreEqual(5, countAfter, "Count should remain 5 after retrieving items.");
+	}
+
+	[TestMethod]
+	public void Count_ReturnsCorrectCount()
+	{
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		Assert.AreEqual(5, randomizer.Count);
+	}
+
+	[TestMethod]
 	public void CurrentIndex_AlwaysReturnsMinusOne()
 	{
 		// Arrange
@@ -55,9 +93,68 @@ public class CollectionRandomizerTests
 		// Act & Assert
 		Assert.AreEqual(-1, randomizer.CurrentIndex, "CurrentIndex should always return -1 as per implementation.");
 		randomizer.GetNext();
-		Assert.AreEqual(-1, randomizer.CurrentIndex, "CurrentIndex should remain -1 after GetNext.");
+		Assert.AreEqual(0, randomizer.CurrentIndex, "CurrentIndex should remain -1 after GetNext.");
 		randomizer.Reset();
 		Assert.AreEqual(-1, randomizer.CurrentIndex, "CurrentIndex should remain -1 after Reset.");
+	}
+
+	[TestMethod]
+	public void CurrentIndex_TracksPositionCorrectly()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act & Assert
+		Assert.AreEqual(-1, randomizer.CurrentIndex, "CurrentIndex should be -1 before first GetNext.");
+
+		randomizer.GetNext();
+		Assert.AreEqual(0, randomizer.CurrentIndex, "CurrentIndex should be 0 after first GetNext.");
+
+		randomizer.GetNext();
+		Assert.AreEqual(1, randomizer.CurrentIndex, "CurrentIndex should be 1 after second GetNext.");
+
+		randomizer.GetNext();
+		Assert.AreEqual(2, randomizer.CurrentIndex, "CurrentIndex should be 2 after third GetNext.");
+	}
+
+	[TestMethod]
+	public void GetEnumerator_IteratesAllItems()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+		var retrieved = new List<int>();
+
+		// Act
+		foreach (var item in randomizer)
+		{
+			retrieved.Add(item);
+		}
+
+		// Assert
+		Assert.AreEqual(5, retrieved.Count, "Should iterate through all items.");
+		CollectionAssert.AreEquivalent(collection, retrieved, "Should retrieve all original items.");
+	}
+
+	[TestMethod]
+	public void GetEnumerator_WithRepeat_IteratesMultipleTimes()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var randomizer = new CollectionRandomizer<int>(collection, true);
+		var retrieved = new List<int>();
+
+		// Act - Take double the collection count
+		using var enumerator = randomizer.GetEnumerator();
+		for (int i = 0; i < collection.Count * 2; i++)
+		{
+			Assert.IsTrue(enumerator.MoveNext(), $"Should have item at iteration {i}");
+			retrieved.Add(enumerator.Current);
+		}
+
+		// Assert
+		Assert.IsTrue(retrieved.Count == collection.Count * 2, "Should iterate through items multiple times with repeat.");
 	}
 
 	[TestMethod]
@@ -94,6 +191,113 @@ public class CollectionRandomizerTests
 		// Assert
 		Assert.IsTrue(retrievedItems.Count > collection.Count); // Ensure more items were retrieved than in the original collection
 		Assert.IsTrue(retrievedItems.Distinct().Count() == collection.Count); // Ensure all original items were retrieved
+	}
+
+	[TestMethod]
+	public void GetRemaining_AfterResetReturnsFullCount()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+		randomizer.GetNext();
+		randomizer.Reset();
+
+		// Assert - After reset and before GetNext, GetRemaining should return full count
+		randomizer.GetNext(); // Initialize
+		Assert.AreEqual(3, randomizer.GetRemaining(), "Should return full count minus one after reset and one GetNext.");
+	}
+
+	[TestMethod]
+	public void GetRemaining_ReturnsCorrectCount()
+	{
+		var collection = new List<int> { 1, 2, 3 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		Assert.AreEqual(3, randomizer.GetRemaining(), "Should have 3 items before initialization");
+
+		randomizer.GetNext();
+		Assert.AreEqual(2, randomizer.GetRemaining(), "Should have 2 items remaining");
+
+		randomizer.GetNext();
+		Assert.AreEqual(1, randomizer.GetRemaining(), "Should have 1 item remaining");
+
+		randomizer.GetNext();
+		Assert.AreEqual(0, randomizer.GetRemaining(), "Should have 0 items remaining");
+	}
+
+	[TestMethod]
+	public void GetRemaining_ReturnsZeroWhenExhausted()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+		randomizer.GetNext();
+
+		// Assert
+		Assert.AreEqual(0, randomizer.GetRemaining(), "Should return 0 when collection is exhausted.");
+	}
+
+	[TestMethod]
+	public void HasRemainingItems_ReturnsFalseBeforeInitialization()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act & Assert
+		Assert.IsFalse(randomizer.HasRemainingItems, "HasRemainingItems should be false before initialization.");
+	}
+
+	[TestMethod]
+	public void HasRemainingItems_ReturnsFalseWhenExhausted()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+		randomizer.GetNext();
+
+		// Assert
+		Assert.IsFalse(randomizer.HasRemainingItems, "HasRemainingItems should be false when all items are consumed.");
+	}
+
+	[TestMethod]
+	public void HasRemainingItems_ReturnsTrueAfterFirstGetNext()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+
+		// Assert
+		Assert.IsTrue(randomizer.HasRemainingItems, "HasRemainingItems should be true after first GetNext with items remaining.");
+	}
+
+	[TestMethod]
+	public void PeekNext_DoesNotChangeCurrentIndex()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext(); // Index 0
+		var indexBefore = randomizer.CurrentIndex;
+		randomizer.PeekNext();
+		var indexAfter = randomizer.CurrentIndex;
+
+		// Assert
+		Assert.AreEqual(indexBefore, indexAfter, "PeekNext should not change CurrentIndex.");
 	}
 
 	[TestMethod]
@@ -149,6 +353,55 @@ public class CollectionRandomizerTests
 	}
 
 	[TestMethod]
+	public void PercentageComplete_CalculatesCorrectly()
+	{
+		var collection = new List<int> { 1, 2, 3, 4 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		Assert.AreEqual(0.0, randomizer.PercentageComplete, "Should be 0% before initialization");
+
+		randomizer.GetNext(); // 1 of 4
+		Assert.AreEqual(25.0, randomizer.PercentageComplete, 0.1);
+
+		randomizer.GetNext(); // 2 of 4
+		Assert.AreEqual(50.0, randomizer.PercentageComplete, 0.1);
+	}
+
+	[TestMethod]
+	public void PercentageComplete_CalculatesCorrectlyForLargeCollection()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 100).ToList();
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		for (int i = 0; i < 50; i++)
+		{
+			randomizer.GetNext();
+		}
+
+		// Assert
+		Assert.AreEqual(50.0, randomizer.PercentageComplete, 0.1, "Should be 50% after retrieving half the items.");
+	}
+
+	[TestMethod]
+	public void PercentageComplete_Returns100WhenExhausted()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		for (int i = 0; i < collection.Count; i++)
+		{
+			randomizer.GetNext();
+		}
+
+		// Assert
+		Assert.AreEqual(100.0, randomizer.PercentageComplete, 0.1, "Should be 100% when all items are consumed.");
+	}
+
+	[TestMethod]
 	public void Reset_AllowsGetNextAfterExhaustion()
 	{
 		// Arrange
@@ -163,6 +416,44 @@ public class CollectionRandomizerTests
 		randomizer.Reset();
 		var next = randomizer.GetNext();
 		Assert.IsTrue(collection.Contains(next), "After reset, GetNext should return a valid item from the collection.");
+	}
+
+	[TestMethod]
+	public void Reset_ResetsCurrentIndex()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+		randomizer.GetNext();
+		var indexBefore = randomizer.CurrentIndex;
+		randomizer.Reset();
+		var indexAfter = randomizer.CurrentIndex;
+
+		// Assert
+		Assert.AreEqual(1, indexBefore, "CurrentIndex should be 1 before reset.");
+		Assert.AreEqual(-1, indexAfter, "CurrentIndex should be -1 after reset.");
+	}
+
+	[TestMethod]
+	public void Reset_ResetsHasRemainingItems()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+		randomizer.GetNext();
+		Assert.IsFalse(randomizer.HasRemainingItems, "Should have no remaining items.");
+
+		randomizer.Reset();
+		randomizer.GetNext(); // Initialize
+
+		// Assert
+		Assert.IsTrue(randomizer.HasRemainingItems, "Should have remaining items after reset and one GetNext.");
 	}
 
 	[TestMethod]
@@ -189,6 +480,161 @@ public class CollectionRandomizerTests
 		// The order after reset is likely different from the first run (not guaranteed, but likely)
 		// If you want to enforce difference, uncomment the next line:
 		// CollectionAssert.AreNotEqual(firstRun, secondRun);
+	}
+
+	[TestMethod]
+	public void SkipNext_ReshufflesWhenRepeating()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var randomizer = new CollectionRandomizer<int>(collection, true);
+
+		// Act - Exhaust the collection
+		randomizer.GetNext();
+		randomizer.GetNext();
+		randomizer.GetNext();
+
+		// Now skip on an exhausted repeating collection
+		var result = randomizer.SkipNext();
+
+		// Assert
+		Assert.IsTrue(result, "SkipNext should return true after reshuffling on repeat.");
+		Assert.IsTrue(randomizer.HasRemainingItems, "Should have remaining items after reshuffle.");
+	}
+
+	[TestMethod]
+	public void SkipNext_ReturnsFalseWhenExhausted()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext();
+		randomizer.GetNext();
+		var result = randomizer.SkipNext();
+
+		// Assert
+		Assert.IsFalse(result, "SkipNext should return false when collection is exhausted.");
+	}
+
+	[TestMethod]
+	public void SkipNext_SkipsItemSuccessfully()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		var first = randomizer.GetNext();
+		var skipped = randomizer.SkipNext();
+		var third = randomizer.GetNext();
+
+		// Assert
+		Assert.IsTrue(skipped, "SkipNext should return true.");
+		Assert.AreNotEqual(first, third, "Third item should be different from first due to skip.");
+		Assert.AreEqual(2, randomizer.CurrentIndex, "CurrentIndex should be 2 after GetNext, SkipNext, GetNext.");
+	}
+
+	[TestMethod]
+	public void SkipNext_UpdatesCurrentIndex()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		randomizer.GetNext(); // Index 0
+		var indexBefore = randomizer.CurrentIndex;
+		randomizer.SkipNext(); // Index 1
+		var indexAfter = randomizer.CurrentIndex;
+
+		// Assert
+		Assert.AreEqual(0, indexBefore, "CurrentIndex should be 0 before skip.");
+		Assert.AreEqual(1, indexAfter, "CurrentIndex should be 1 after skip.");
+	}
+
+	[TestMethod]
+	public void ThreadSafety_ConcurrentGetNext()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 1000).ToList();
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+		var retrieved = new System.Collections.Concurrent.ConcurrentBag<int>();
+		var tasks = new List<System.Threading.Tasks.Task>();
+
+		// Act
+		for (int i = 0; i < 10; i++)
+		{
+			tasks.Add(System.Threading.Tasks.Task.Run(() =>
+			{
+				try
+				{
+					for (int j = 0; j < 100; j++)
+					{
+						var item = randomizer.GetNext();
+						retrieved.Add(item);
+					}
+				}
+				catch (InvalidOperationException)
+				{
+					// Expected when collection is exhausted
+				}
+			}));
+		}
+
+		System.Threading.Tasks.Task.WaitAll(tasks.ToArray());
+
+		// Assert
+		Assert.IsTrue(retrieved.Count <= collection.Count, "Should not retrieve more items than available.");
+		Assert.IsTrue(retrieved.Count > 0, "Should retrieve at least some items.");
+	}
+
+	[TestMethod]
+	public void ToArray_ReturnsCorrectCountBeforeInitialization()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Act
+		var snapshot = randomizer.ToArray();
+
+		// Assert
+		Assert.AreEqual(5, snapshot.Length, "ToArray should return all items even before initialization.");
+		CollectionAssert.AreEquivalent(collection, snapshot, "ToArray should contain all original items.");
+	}
+
+	[TestMethod]
+	public void ToArray_ReturnsDifferentInstanceEachTime()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+		randomizer.GetNext();
+
+		// Act
+		var snapshot1 = randomizer.ToArray();
+		var snapshot2 = randomizer.ToArray();
+
+		// Assert
+		Assert.AreNotSame(snapshot1, snapshot2, "ToArray should return a new array instance each time.");
+		CollectionAssert.AreEqual(snapshot1, snapshot2, "Contents should be the same.");
+	}
+
+	[TestMethod]
+	public void ToArray_ReturnsShuffledSnapshot()
+	{
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var randomizer = new CollectionRandomizer<int>(collection, false);
+
+		// Force initialization
+		randomizer.GetNext();
+
+		var snapshot = randomizer.ToArray();
+
+		Assert.AreEqual(5, snapshot.Length);
+		CollectionAssert.AreEquivalent(collection, snapshot);
 	}
 
 }
