@@ -61,7 +61,7 @@ public static class SortedSetExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
 		public bool IsNotEmpty()
 		{
 			return collection is null ? false : collection.Count > 0;
@@ -76,7 +76,7 @@ public static class SortedSetExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
 		public bool IsNotEmpty([AllowNull] Func<T, bool> actionPredicate)
 		{
 			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
@@ -89,7 +89,7 @@ public static class SortedSetExtensions
 		/// An <see cref="ImmutableSortedSet{T}"/> containing the elements of the original set.
 		/// </returns>
 		[Pure]
-		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
 			if (collection is null)
@@ -97,9 +97,7 @@ public static class SortedSetExtensions
 				return ImmutableSortedSet<T>.Empty;
 			}
 
-			// OPTIMIZATION: Use CreateRange which is optimized for bulk operations
-			// Preserves the comparer from the original SortedSet
-			return ImmutableSortedSet.CreateRange(collection.Comparer, collection);
+			return ImmutableSortedSet.CreateRange(collection);
 
 		}
 	}

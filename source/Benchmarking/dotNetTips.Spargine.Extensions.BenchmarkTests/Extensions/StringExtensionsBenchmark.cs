@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-25-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -574,9 +574,18 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result.ToArray());
 	}
 
+	[Benchmark(Description = nameof(StringExtensions.ToByteArrayFromBase64))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void ToByteArrayFromBase64()
+	{
+		var result = this.Base64String.ToByteArrayFromBase64();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": ASCII")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_ASCII()
+	public void ToByteArrayStringASCII()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.ASCII);
 
@@ -585,7 +594,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": BigEndianUnicode")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_BigEndianUnicode()
+	public void ToByteArrayStringBigEndianUnicode()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.BigEndianUnicode);
 
@@ -594,7 +603,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": Default")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_Default()
+	public void ToByteArrayStringDefault()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.Default);
 
@@ -603,7 +612,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": Latin1")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_Latin1()
+	public void ToByteArrayStringLatin1()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.Latin1);
 
@@ -612,7 +621,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": Unicode")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_Unicode()
+	public void ToByteArrayStringUnicode()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.Unicode);
 
@@ -621,7 +630,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": UTF32")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_UTF32()
+	public void ToByteArrayStringUTF32()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.UTF32);
 
@@ -630,18 +639,9 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArray) + ": UTF8")]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToByteArray_UTF8()
+	public void ToByteArrayStringUTF8()
 	{
 		var result = this.LongTestString.ToByteArray(Encoding.UTF8);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(StringExtensions.ToByteArrayFromBase64))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void ToByteArrayFromBase64()
-	{
-		var result = this.Base64String.ToByteArrayFromBase64();
 
 		this.Consume(result);
 	}

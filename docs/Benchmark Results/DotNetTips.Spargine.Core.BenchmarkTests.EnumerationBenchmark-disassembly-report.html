@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.EnumerationBenchmark-20251223-135246</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.EnumerationBenchmark-20251229-163514</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="3">DotNetTips.Spargine.Core.BenchmarkTests.EnumerationBenchmark-20251223-135246</th></tr>
+<tr><th colspan="3">DotNetTips.Spargine.Core.BenchmarkTests.EnumerationBenchmark-20251229-163514</th></tr>
 <tr>
 <th>FromDisplayName .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3</th>
 <th>FromName .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3</th>
@@ -45,7 +45,7 @@ mov       [rbp+10],rcx
 mov       rcx,offset MT_DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass13_0<DotNetTips.Spargine.Extensions.NumericFormat>
 call      CORINFO_HELP_NEWSFAST
 mov       rbx,rax
-mov       rsi,2005DF306A0
+mov       rsi,285280406C8
 mov       [rbx+8],rsi
 mov       rdx,rsi
 mov       ecx,[rdx+8]
@@ -53,7 +53,7 @@ test      ecx,ecx
 sete      al
 movzx     eax,al
 cmp       eax,ecx
-jae       near ptr 00007FF91A912BB4
+jae       near ptr 00007FFE25B73280
 lea       rcx,[rbx+8]
 call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Extensions.NumericFormat, System.Boolean>
@@ -73,66 +73,62 @@ mov       dword ptr [rsi+18],0FFFFFFFE
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
 mov       [rsi+1C],eax
 cmp       dword ptr [rsi+18],0FFFFFFFE
-jne       near ptr 00007FF91A912ADC
+jne       near ptr 00007FFE25B731A8
 mov       r14d,[rsi+1C]
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
 cmp       r14d,eax
-jne       near ptr 00007FF91A912ADC
+jne       near ptr 00007FFE25B731A8
 xor       ecx,ecx
 mov       [rsi+18],ecx
 mov       rcx,rsi
 mov       [rbp-0A8],rcx
 mov       rax,offset DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass13_0`1[[System.__Canon, System.Private.CoreLib]].<FromDisplayName>b__0(System.__Canon)
 cmp       [rdi+18],rax
-jne       near ptr 00007FF91A9127C7
+jne       near ptr 00007FFE25B72E75
 mov       rcx,[rbp-0A8]
 mov       rbx,rcx
 mov       esi,[rbx+18]
 test      esi,esi
-jne       near ptr 00007FF91A9128EC
+jne       near ptr 00007FFE25B72FCC
 mov       dword ptr [rbx+18],0FFFFFFFF
-mov       rax,1BFC7331178
+mov       rax,24492CE1168
 mov       r14,[rax]
 test      r14,r14
-jne       short 00007FF91A912690
-mov       rcx,2005DF30768
-call      qword ptr [7FF91A3156C8]
-jmp       short 00007FF91A912693
-mov       rax,r14
-mov       rcx,rax
+je        near ptr 00007FFE25B72FD6
+mov       rcx,r14
 xor       edx,edx
 xor       r8d,r8d
 cmp       [rcx],ecx
-call      qword ptr [7FF91A87C318]
+call      qword ptr [7FFE25ADEA90]
 mov       rsi,rax
 mov       r14d,[rsi+8]
 mov       r8d,r14d
 lea       rcx,[rbp-90]
 mov       r15,offset MT_System.RuntimeType+ListBuilder<System.Reflection.FieldInfo>
 mov       rdx,r15
-call      qword ptr [7FF91A87C330]
+call      qword ptr [7FFE25ADEAA8]
 test      r14d,r14d
-jle       short 00007FF91A9126F9
+jle       short 00007FFE25B72DA8
 add       rsi,10
 mov       r8,[rsi]
 mov       ecx,[r8+18]
 mov       edx,ecx
 and       edx,18
 cmp       edx,ecx
-jne       short 00007FF91A9126F0
+jne       short 00007FFE25B72D9F
 lea       rcx,[rbp-90]
 mov       rdx,r15
-call      qword ptr [7FF91A316AC0]
+call      qword ptr [7FFE2538D4B8]
 add       rsi,8
 dec       r14d
-jne       short 00007FF91A9126D0
+jne       short 00007FFE25B72D7F
 vmovdqu   xmm0,xmmword ptr [rbp-90]
 vmovdqu   xmmword ptr [rbp-78],xmm0
 mov       rcx,[rbp-80]
 mov       [rbp-68],rcx
 lea       rcx,[rbp-78]
 mov       rdx,r15
-call      qword ptr [7FF91A316B38]
+call      qword ptr [7FFE2538D560]
 lea       rcx,[rbx+10]
 mov       rdx,rax
 call      CORINFO_HELP_ASSIGN_REF
@@ -141,24 +137,24 @@ mov       [rbx+20],ecx
 mov       eax,[rbx+20]
 mov       r8,[rbx+10]
 cmp       eax,[r8+8]
-jge       near ptr 00007FF91A912A85
+jge       near ptr 00007FFE25B73151
 cmp       eax,[r8+8]
-jae       near ptr 00007FF91A912A7F
+jae       near ptr 00007FFE25B7314B
 mov       edx,eax
 mov       r10,[r8+rdx*8+10]
 mov       rdx,offset MT_System.Reflection.RtFieldInfo
 cmp       [r10],rdx
-jne       near ptr 00007FF91A9128F6
+jne       near ptr 00007FFE25B72FEE
 mov       rcx,r10
 xor       edx,edx
-call      qword ptr [7FF91A3FE728]
+call      qword ptr [7FFE255CDF98]
 mov       rdx,rax
 mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
-call      qword ptr [7FF91A0A6850]
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
 mov       r14,rax
 mov       rdx,r14
 test      rdx,rdx
-je        near ptr 00007FF91A912910
+je        near ptr 00007FFE25B73008
 lea       rcx,[rbx+8]
 call      CORINFO_HELP_ASSIGN_REF
 mov       dword ptr [rbx+18],1
@@ -166,173 +162,82 @@ mov       r15,[rdi+8]
 mov       r13,[r14+8]
 mov       rdx,[r15+8]
 cmp       r13,rdx
-jne       near ptr 00007FF91A912890
+jne       near ptr 00007FFE25B72F70
 mov       r12d,1
 test      r12d,r12d
-je        near ptr 00007FF91A912650
-jmp       near ptr 00007FF91A912A8D
+je        near ptr 00007FFE25B72D10
+jmp       near ptr 00007FFE25B73159
 mov       rcx,[rbp-0A8]
 mov       rbx,rcx
 mov       esi,[rbx+18]
 test      esi,esi
-je        near ptr 00007FF91A912918
-jmp       near ptr 00007FF91A9129E6
-mov       eax,[rbx+20]
-mov       r8,[rbx+10]
-cmp       eax,[r8+8]
-jge       near ptr 00007FF91A912A85
-cmp       eax,[r8+8]
-jae       near ptr 00007FF91A912A7F
-mov       edx,eax
-mov       r10,[r8+rdx*8+10]
-mov       rdx,offset MT_System.Reflection.RtFieldInfo
-cmp       [r10],rdx
-jne       near ptr 00007FF91A9129FE
-mov       rcx,r10
-xor       edx,edx
-call      qword ptr [7FF91A3FE728]
-mov       rdx,rax
-mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
-call      qword ptr [7FF91A0A6850]
-mov       r14,rax
-mov       rdx,r14
-test      rdx,rdx
-je        near ptr 00007FF91A9129F6
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-mov       dword ptr [rbx+18],1
-mov       rcx,offset DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass13_0`1[[System.__Canon, System.Private.CoreLib]].<FromDisplayName>b__0(System.__Canon)
-cmp       [rdi+18],rcx
-jne       near ptr 00007FF91A912A11
-mov       r15,[rdi+8]
-mov       r13,[r14+8]
-mov       rdx,[r15+8]
-cmp       r13,rdx
-jne       near ptr 00007FF91A912A23
-mov       r12d,1
-test      r12d,r12d
-je        near ptr 00007FF91A9127C7
-jmp       near ptr 00007FF91A912A8D
-test      r13,r13
-je        short 00007FF91A91289A
-test      rdx,rdx
-jne       short 00007FF91A9128A2
-xor       r12d,r12d
-jmp       near ptr 00007FF91A9127B9
-mov       ecx,[r13+8]
-cmp       ecx,[rdx+8]
-jne       short 00007FF91A91289A
-lea       rcx,[r13+0C]
-add       rdx,0C
-mov       r8d,[r13+8]
-add       r8d,r8d
-cmp       r8,0A
-jne       short 00007FF91A9128DE
-mov       rax,[rcx]
-mov       rcx,[rcx+2]
-mov       r8,[rdx]
-xor       rax,r8
-xor       rcx,[rdx+2]
-or        rcx,rax
-sete      r12b
-movzx     r12d,r12b
-jmp       short 00007FF91A9128E7
-call      qword ptr [7FF91A0AC330]
-mov       r12d,eax
-jmp       near ptr 00007FF91A9127B9
-cmp       esi,1
-je        short 00007FF91A912909
-jmp       near ptr 00007FF91A912AFE
-mov       rcx,r10
-xor       edx,edx
-mov       rax,[r10]
-mov       rax,[rax+58]
-call      qword ptr [rax]
-jmp       near ptr 00007FF91A91276C
-mov       dword ptr [rbx+18],0FFFFFFFF
-inc       dword ptr [rbx+20]
-jmp       near ptr 00007FF91A91272C
-mov       dword ptr [rbx+18],0FFFFFFFF
-mov       rax,1BFC7331178
-mov       r14,[rax]
-test      r14,r14
-jne       short 00007FF91A912943
-mov       rcx,2005DF30768
-call      qword ptr [7FF91A3156C8]
-jmp       short 00007FF91A912946
-mov       rax,r14
-mov       rcx,rax
-xor       edx,edx
-xor       r8d,r8d
-cmp       [rcx],ecx
-call      qword ptr [7FF91A87C318]
-mov       rsi,rax
-mov       r8d,[rsi+8]
-lea       rcx,[rbp-90]
-mov       r15,offset MT_System.RuntimeType+ListBuilder<System.Reflection.FieldInfo>
-mov       rdx,r15
-call      qword ptr [7FF91A87C330]
-xor       r13d,r13d
-cmp       dword ptr [rsi+8],0
-jle       short 00007FF91A9129AE
+je        near ptr 00007FFE25B73010
+jmp       near ptr 00007FFE25B730B2
 mov       ecx,r13d
 mov       r8,[rsi+rcx*8+10]
 mov       ecx,[r8+18]
 mov       edx,ecx
 and       edx,18
 cmp       edx,ecx
-jne       short 00007FF91A9129A5
+jne       short 00007FFE25B72EB4
 lea       rcx,[rbp-90]
 mov       rdx,r15
-call      qword ptr [7FF91A316AC0]
+call      qword ptr [7FFE2538D4B8]
 inc       r13d
 cmp       [rsi+8],r13d
-jg        short 00007FF91A912980
-vmovdqu   xmm0,xmmword ptr [rbp-90]
-vmovdqu   xmmword ptr [rbp-78],xmm0
-mov       rcx,[rbp-80]
-mov       [rbp-68],rcx
-lea       rcx,[rbp-78]
-mov       rdx,r15
-call      qword ptr [7FF91A316B38]
-lea       rcx,[rbx+10]
-mov       rdx,rax
-call      CORINFO_HELP_ASSIGN_REF
-xor       ecx,ecx
-mov       [rbx+20],ecx
-jmp       near ptr 00007FF91A9127E1
-cmp       esi,1
-jne       near ptr 00007FF91A912AFE
-mov       dword ptr [rbx+18],0FFFFFFFF
-inc       dword ptr [rbx+20]
-jmp       near ptr 00007FF91A9127E1
+jg        short 00007FFE25B72E8F
+jmp       near ptr 00007FFE25B7307A
+mov       eax,[rbx+20]
+mov       r8,[rbx+10]
+cmp       eax,[r8+8]
+jge       near ptr 00007FFE25B73151
+cmp       eax,[r8+8]
+jae       near ptr 00007FFE25B7314B
+mov       edx,eax
+mov       r10,[r8+rdx*8+10]
+mov       rdx,offset MT_System.Reflection.RtFieldInfo
+cmp       [r10],rdx
+jne       near ptr 00007FFE25B730CA
 mov       rcx,r10
 xor       edx,edx
-mov       rax,[r10]
-mov       rax,[rax+58]
-call      qword ptr [rax]
-jmp       near ptr 00007FF91A912821
+call      qword ptr [7FFE255CDF98]
+mov       rdx,rax
+mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       r14,rax
 mov       rdx,r14
-mov       rcx,[rdi+8]
-call      qword ptr [rdi+18]
-mov       r12d,eax
-jmp       near ptr 00007FF91A912882
-test      r13,r13
-je        short 00007FF91A912A77
 test      rdx,rdx
-je        short 00007FF91A912A77
+je        near ptr 00007FFE25B730C2
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       dword ptr [rbx+18],1
+mov       rcx,offset DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass13_0`1[[System.__Canon, System.Private.CoreLib]].<FromDisplayName>b__0(System.__Canon)
+cmp       [rdi+18],rcx
+jne       near ptr 00007FFE25B730DD
+mov       r15,[rdi+8]
+mov       r13,[r14+8]
+mov       rdx,[r15+8]
+cmp       r13,rdx
+jne       near ptr 00007FFE25B730EF
+mov       r12d,1
+test      r12d,r12d
+je        near ptr 00007FFE25B72E75
+jmp       near ptr 00007FFE25B73159
+test      r13,r13
+je        short 00007FFE25B72F7A
+test      rdx,rdx
+jne       short 00007FFE25B72F82
+xor       r12d,r12d
+jmp       near ptr 00007FFE25B72E67
 mov       ecx,[r13+8]
 cmp       ecx,[rdx+8]
-jne       short 00007FF91A912A77
+jne       short 00007FFE25B72F7A
 lea       rcx,[r13+0C]
 add       rdx,0C
 mov       r8d,[r13+8]
 add       r8d,r8d
 cmp       r8,0A
-je        short 00007FF91A912A56
-call      qword ptr [7FF91A0AC330]
-mov       r12d,eax
-jmp       short 00007FF91A912A72
+jne       short 00007FFE25B72FBE
 mov       rax,[rcx]
 mov       rcx,[rcx+2]
 mov       r8,[rdx]
@@ -341,25 +246,120 @@ xor       rcx,[rdx+2]
 or        rcx,rax
 sete      r12b
 movzx     r12d,r12b
-jmp       near ptr 00007FF91A912882
+jmp       short 00007FFE25B72FC7
+call      qword ptr [7FFE2538FB70]
+mov       r12d,eax
+jmp       near ptr 00007FFE25B72E67
+cmp       esi,1
+je        short 00007FFE25B73001
+jmp       near ptr 00007FFE25B731CA
+mov       rcx,28528040790
+call      qword ptr [7FFE25387C48]
+mov       r14,rax
+jmp       near ptr 00007FFE25B72D42
+mov       rcx,r10
+xor       edx,edx
+mov       rax,[r10]
+mov       rax,[rax+58]
+call      qword ptr [rax]
+jmp       near ptr 00007FFE25B72E1B
+mov       dword ptr [rbx+18],0FFFFFFFF
+inc       dword ptr [rbx+20]
+jmp       near ptr 00007FFE25B72DDB
+mov       dword ptr [rbx+18],0FFFFFFFF
+mov       rax,24492CE1168
+mov       r14,[rax]
+test      r14,r14
+jne       short 00007FFE25B7303C
+mov       rcx,28528040790
+call      qword ptr [7FFE25387C48]
+mov       r14,rax
+mov       rcx,r14
+xor       edx,edx
+xor       r8d,r8d
+cmp       [rcx],ecx
+call      qword ptr [7FFE25ADEA90]
+mov       rsi,rax
+mov       r8d,[rsi+8]
+lea       rcx,[rbp-90]
+mov       r15,offset MT_System.RuntimeType+ListBuilder<System.Reflection.FieldInfo>
+mov       rdx,r15
+call      qword ptr [7FFE25ADEAA8]
+xor       r13d,r13d
+cmp       dword ptr [rsi+8],0
+jg        near ptr 00007FFE25B72E8F
+vmovdqu   xmm0,xmmword ptr [rbp-90]
+vmovdqu   xmmword ptr [rbp-78],xmm0
+mov       rcx,[rbp-80]
+mov       [rbp-68],rcx
+lea       rcx,[rbp-78]
+mov       rdx,r15
+call      qword ptr [7FFE2538D560]
+lea       rcx,[rbx+10]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rbx+20],ecx
+jmp       near ptr 00007FFE25B72EC2
+cmp       esi,1
+jne       near ptr 00007FFE25B731CA
+mov       dword ptr [rbx+18],0FFFFFFFF
+inc       dword ptr [rbx+20]
+jmp       near ptr 00007FFE25B72EC2
+mov       rcx,r10
+xor       edx,edx
+mov       rax,[r10]
+mov       rax,[rax+58]
+call      qword ptr [rax]
+jmp       near ptr 00007FFE25B72F02
+mov       rdx,r14
+mov       rcx,[rdi+8]
+call      qword ptr [rdi+18]
+mov       r12d,eax
+jmp       near ptr 00007FFE25B72F62
+test      r13,r13
+je        short 00007FFE25B73143
+test      rdx,rdx
+je        short 00007FFE25B73143
+mov       ecx,[r13+8]
+cmp       ecx,[rdx+8]
+jne       short 00007FFE25B73143
+lea       rcx,[r13+0C]
+add       rdx,0C
+mov       r8d,[r13+8]
+add       r8d,r8d
+cmp       r8,0A
+je        short 00007FFE25B73122
+call      qword ptr [7FFE2538FB70]
+mov       r12d,eax
+jmp       short 00007FFE25B7313E
+mov       rax,[rcx]
+mov       rcx,[rcx+2]
+mov       r8,[rdx]
+xor       rax,r8
+xor       rcx,[rdx+2]
+or        rcx,rax
+sete      r12b
+movzx     r12d,r12b
+jmp       near ptr 00007FFE25B72F62
 xor       r12d,r12d
-jmp       near ptr 00007FF91A912882
+jmp       near ptr 00007FFE25B72F62
 call      CORINFO_HELP_RNGCHKFAIL
 int       3
 xor       eax,eax
 mov       [rbx+10],rax
-jmp       short 00007FF91A912AFE
+jmp       short 00007FFE25B731CA
 mov       rcx,[rbp-0A8]
-call      qword ptr [7FF91A85CDC0]
+call      qword ptr [7FFE25AB3848]
 test      r14,r14
-je        short 00007FF91A912B05
+je        short 00007FFE25B731D1
 mov       [rbp-98],r14
 mov       rcx,[rbp+10]
 mov       rcx,[rcx+18]
 lea       r8,[rbp-98]
-mov       rdx,7FF91A85E070
+mov       rdx,7FFE25AB4AF8
 cmp       [rcx],ecx
-call      qword ptr [7FF91A7CF0F0]
+call      qword ptr [7FFE25A3EDC0]
 nop
 add       rsp,98
 pop       rbx
@@ -378,46 +378,46 @@ xor       eax,eax
 mov       [rsi+18],eax
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
 mov       [rsi+1C],eax
-jmp       near ptr 00007FF91A912632
+jmp       near ptr 00007FFE25B72CF2
 xor       r14d,r14d
-jmp       short 00007FF91A912A9A
-call      00007FF91A912BBA
-jmp       short 00007FF91A912AF9
+jmp       short 00007FFE25B73166
+call      00007FFE25B73286
+jmp       short 00007FFE25B731C5
 lea       rcx,[rbp-60]
 mov       edx,14
 mov       r8d,2
-call      qword ptr [7FF91A0AC270]
+call      qword ptr [7FFE25604E10]
 lea       rcx,[rbp-60]
-mov       rdx,2005DF306E8
-call      qword ptr [7FF91A0AC288]
+mov       rdx,28528040710
+call      qword ptr [7FFE25604E28]
 lea       rcx,[rbp-60]
 mov       rdx,[rbp-0A0]
-call      qword ptr [7FF91A40E028]
+call      qword ptr [7FFE2560ED60]
 lea       rcx,[rbp-60]
-mov       rdx,2005DF30720
-call      qword ptr [7FF91A0AC288]
+mov       rdx,28528040748
+call      qword ptr [7FFE25604E28]
 lea       rcx,[rbp-60]
-mov       rdx,7FF91A85C568
-mov       r8,2005DF30768
-call      qword ptr [7FF91A40DFC8]
+mov       rdx,7FFE25AB2FF0
+mov       r8,28528040790
+call      qword ptr [7FFE2560ED00]
 lea       rcx,[rbp-60]
-mov       rdx,2005DF20C80
-call      qword ptr [7FF91A0AC288]
+mov       rdx,28528030658
+call      qword ptr [7FFE25604E28]
 lea       rcx,[rbp-60]
-call      qword ptr [7FF91A0AC2A0]
+call      qword ptr [7FFE25604E40]
 mov       rbx,rax
 mov       ecx,1C29
-mov       rdx,7FF91A445610
-call      qword ptr [7FF91A0AF210]
+mov       rdx,7FFE256C5D88
+call      qword ptr [7FFE25607738]
 mov       rdx,rax
 mov       rcx,rbx
-call      qword ptr [7FF91A4FFF60]
+call      qword ptr [7FFE25824D80]
 int       3
 call      CORINFO_HELP_RNGCHKFAIL
 int       3
 sub       rsp,28
 mov       rcx,[rbp-0A8]
-call      qword ptr [7FF91A85CDC0]
+call      qword ptr [7FFE25AB3848]
 nop
 add       rsp,28
 ret
@@ -430,20 +430,20 @@ sub       rsp,20
 mov       rdx,[rdx+8]
 mov       rcx,[rcx+8]
 cmp       rdx,rcx
-jne       short 00007FF91A914F7D
+jne       short 00007FFE25B7565D
 mov       eax,1
 add       rsp,20
 pop       rbx
 ret
 test      rdx,rdx
-je        short 00007FF91A914F87
+je        short 00007FFE25B75667
 test      rcx,rcx
-jne       short 00007FF91A914F8B
+jne       short 00007FFE25B7566B
 xor       eax,eax
-jmp       short 00007FF91A914F77
+jmp       short 00007FFE25B75657
 mov       r8d,[rdx+8]
 cmp       r8d,[rcx+8]
-jne       short 00007FF91A914F87
+jne       short 00007FFE25B75667
 lea       rax,[rdx+0C]
 add       rcx,0C
 mov       rbx,rcx
@@ -451,7 +451,7 @@ mov       ecx,[rdx+8]
 add       ecx,ecx
 mov       r8d,ecx
 cmp       r8,0A
-jne       short 00007FF91A914FCA
+jne       short 00007FFE25B756AA
 mov       rcx,[rax]
 mov       rax,[rax+2]
 mov       rdx,[rbx]
@@ -460,11 +460,606 @@ xor       rax,[rbx+2]
 or        rax,rcx
 sete      al
 movzx     eax,al
-jmp       short 00007FF91A914FD6
+jmp       short 00007FFE25B756B6
 mov       rcx,rax
 mov       rdx,rbx
-call      qword ptr [7FF91A0AC330]
-jmp       short 00007FF91A914F77
+call      qword ptr [7FFE2538FB70]
+jmp       short 00007FFE25B75657
+
+System.RuntimeType+RuntimeTypeCache.GetFieldList(MemberListType, System.String)
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,28
+mov       rsi,rcx
+mov       ebx,edx
+mov       rdi,r8
+lea       rbp,[rsi+50]
+mov       r14,[rbp]
+test      r14,r14
+je        short 00007FFE25B76A8E
+cmp       [r14],r14b
+cmp       ebx,1
+je        short 00007FFE25B76AC6
+cmp       ebx,2
+je        near ptr 00007FFE25B76B0B
+cmp       byte ptr [r14+18],0
+je        near ptr 00007FFE25B76B50
+mov       rax,[r14+8]
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache+MemberInfoCache<System.Reflection.RuntimeFieldInfo>
+call      CORINFO_HELP_NEWSFAST
+mov       r15,rax
+lea       rcx,[r15+10]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,rbp
+mov       rdx,r15
+xor       r8d,r8d
+call      00007FFE84F7FBA0
+mov       r14,rax
+test      r14,r14
+cmove     r14,r15
+jmp       short 00007FFE25B76A61
+lea       rcx,[r14+20]
+mov       r8,rdi
+mov       rdx,offset MT_System.Reflection.CerHashtable<System.String, System.Reflection.RuntimeFieldInfo[]>
+call      qword ptr [7FFE2538F3C0]
+test      rax,rax
+jne       short 00007FFE25B76B06
+mov       rcx,r14
+mov       rdx,rdi
+mov       r8d,1
+mov       r9d,2
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+jmp       qword ptr [7FFE2538D2C0]
+jmp       near ptr 00007FFE25B76A81
+lea       rcx,[r14+28]
+mov       r8,rdi
+mov       rdx,offset MT_System.Reflection.CerHashtable<System.String, System.Reflection.RuntimeFieldInfo[]>
+call      qword ptr [7FFE2538F3C0]
+test      rax,rax
+jne       short 00007FFE25B76B4B
+mov       rcx,r14
+mov       rdx,rdi
+mov       r8d,2
+mov       r9d,2
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+jmp       qword ptr [7FFE2538D2C0]
+jmp       near ptr 00007FFE25B76A81
+mov       rcx,r14
+mov       r8d,ebx
+xor       edx,edx
+mov       r9d,2
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+jmp       qword ptr [7FFE2538D2C0]
+
+System.RuntimeType+ListBuilder`1[[System.__Canon, System.Private.CoreLib]]..ctor(Int32)
+xor       eax,eax
+mov       [rcx],rax
+mov       [rcx+8],rax
+mov       [rcx+10],eax
+mov       [rcx+14],r8d
+ret
+
+System.RuntimeType+ListBuilder`1[[System.__Canon, System.Private.CoreLib]].Add(System.__Canon)
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,30
+mov       [rsp+28],rdx
+mov       rbx,rcx
+mov       rcx,rdx
+mov       rsi,r8
+mov       edx,[rbx+10]
+test      edx,edx
+je        near ptr 00007FFE25B71181
+cmp       edx,1
+je        short 00007FFE25B71128
+cmp       [rbx+14],edx
+je        near ptr 00007FFE25B71198
+movsxd    rdx,dword ptr [rbx+10]
+mov       rcx,[rbx]
+mov       r8,rsi
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+inc       dword ptr [rbx+10]
+add       rsp,30
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+cmp       dword ptr [rbx+14],2
+jl        short 00007FFE25B7118F
+mov       rdx,[rcx+30]
+mov       rdx,[rdx]
+cmp       qword ptr [rdx+8],40
+jle       short 00007FFE25B7116C
+mov       rax,[rdx+40]
+test      rax,rax
+je        short 00007FFE25B7116C
+mov       rcx,rax
+movsxd    rdx,dword ptr [rbx+14]
+call      CORINFO_HELP_NEWARR_1_PTR
+mov       rcx,rbx
+mov       rdx,rax
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+mov       rcx,[rbx]
+mov       r8,[rbx+8]
+xor       edx,edx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+jmp       short 00007FFE25B7110E
+mov       rdx,7FFE25AC9CE0
+call      qword ptr [7FFE2538C5B8]
+mov       rcx,rax
+jmp       short 00007FFE25B71148
+lea       rcx,[rbx+8]
+mov       rdx,rsi
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       short 00007FFE25B7111D
+mov       dword ptr [rbx+14],4
+jmp       short 00007FFE25B7112E
+mov       edi,[rbx+14]
+add       edi,edi
+mov       rdx,[rcx+30]
+mov       rdx,[rdx]
+cmp       qword ptr [rdx+8],38
+jle       short 00007FFE25B711B9
+mov       rax,[rdx+38]
+test      rax,rax
+je        short 00007FFE25B711B9
+mov       rcx,rax
+jmp       short 00007FFE25B711CC
+mov       rdx,7FFE25AC9CC0
+call      qword ptr [7FFE2538C5B8]
+mov       rcx,rax
+mov       rdx,rbx
+mov       r8d,edi
+call      qword ptr [7FFE2538D4E8]
+mov       [rbx+14],edi
+jmp       near ptr 00007FFE25B7110E
+
+System.RuntimeType+ListBuilder`1[[System.__Canon, System.Private.CoreLib]].ToArray()
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,28
+mov       [rsp+20],rdx
+mov       rbx,rcx
+mov       rcx,rdx
+mov       esi,[rbx+10]
+test      esi,esi
+je        short 00007FFE25B713FE
+cmp       esi,1
+je        near ptr 00007FFE25B71464
+mov       rdx,[rcx+30]
+mov       rdx,[rdx]
+cmp       qword ptr [rdx+8],38
+jle       short 00007FFE25B713E9
+mov       rdx,[rdx+38]
+test      rdx,rdx
+je        short 00007FFE25B713E9
+test      esi,esi
+jl        near ptr 00007FFE25B714BA
+mov       rdi,[rbx]
+test      rdi,rdi
+je        near ptr 00007FFE25B714CB
+cmp       [rdi+8],esi
+jne       near ptr 00007FFE25B71507
+mov       eax,[rbx+10]
+mov       [rbx+14],eax
+mov       rax,[rbx]
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+mov       rdx,7FFE25AC9CC0
+call      qword ptr [7FFE2538C5B8]
+mov       rdx,rax
+jmp       short 00007FFE25B713BA
+mov       rdx,[rcx+30]
+mov       rdx,[rdx]
+cmp       qword ptr [rdx+8],48
+jle       short 00007FFE25B7141A
+mov       rax,[rdx+48]
+test      rax,rax
+je        short 00007FFE25B7141A
+mov       rcx,rax
+jmp       short 00007FFE25B7142D
+mov       rdx,7FFE25B11210
+call      qword ptr [7FFE2538C5B8]
+mov       rcx,rax
+mov       rdx,[rcx+18]
+mov       rdx,[rdx+18]
+test      rdx,rdx
+je        short 00007FFE25B7143C
+jmp       short 00007FFE25B7144F
+mov       rdx,7FFE25B11230
+call      qword ptr [7FFE25607AF8]
+mov       rdx,rax
+mov       rcx,rdx
+call      qword ptr [7FFE25385728]
+mov       rax,[rax]
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+mov       rdx,[rcx+30]
+mov       rdx,[rdx]
+cmp       qword ptr [rdx+8],40
+jle       short 00007FFE25B71480
+mov       rax,[rdx+40]
+test      rax,rax
+je        short 00007FFE25B71480
+mov       rcx,rax
+jmp       short 00007FFE25B71493
+mov       rdx,7FFE25AC9CE0
+call      qword ptr [7FFE2538C5B8]
+mov       rcx,rax
+mov       edx,1
+call      CORINFO_HELP_NEWARR_1_PTR
+mov       rsi,rax
+mov       r8,[rbx+8]
+mov       rcx,rsi
+xor       edx,edx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+mov       ecx,45
+mov       edx,0D
+call      qword ptr [7FFE259A6640]
+int       3
+mov       rcx,[rdx+18]
+mov       rcx,[rcx+18]
+test      rcx,rcx
+je        short 00007FFE25B714DA
+jmp       short 00007FFE25B714F0
+mov       rcx,rdx
+mov       rdx,7FFE25ACA2D0
+call      qword ptr [7FFE25607AF8]
+mov       rcx,rax
+mov       edx,esi
+call      CORINFO_HELP_NEWARR_1_PTR
+mov       rdx,rax
+mov       rcx,rbx
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       near ptr 00007FFE25B713D7
+mov       rcx,[rdx+18]
+mov       rcx,[rcx+18]
+test      rcx,rcx
+je        short 00007FFE25B71516
+jmp       short 00007FFE25B7152C
+mov       rcx,rdx
+mov       rdx,7FFE25ACA2D0
+call      qword ptr [7FFE25607AF8]
+mov       rcx,rax
+mov       edx,esi
+call      CORINFO_HELP_NEWARR_1_PTR
+mov       rbp,rax
+lea       rcx,[rbp+10]
+lea       rdx,[rdi+10]
+mov       r8d,[rdi+8]
+cmp       esi,r8d
+cmovg     esi,r8d
+mov       r8d,esi
+shl       r8,3
+call      qword ptr [7FFE253857A0]
+mov       rcx,rbx
+mov       rdx,rbp
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       near ptr 00007FFE25B713D7
+
+System.Reflection.RtFieldInfo.GetValue(System.Object)
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,20
+mov       rbx,rcx
+mov       rsi,rdx
+cmp       qword ptr [rbx+30],0
+jne       near ptr 00007FFE25B7259A
+mov       rcx,offset MT_System.Reflection.FieldAccessor
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,[rdi+8]
+mov       rcx,[rcx+10]
+cmp       [rcx],cl
+call      qword ptr [7FFE2538C6C0]
+mov       rcx,rax
+mov       rax,offset MT_System.RuntimeType
+cmp       [rcx],rax
+jne       short 00007FFE25B725B0
+test      rcx,rcx
+je        short 00007FFE25B725C2
+call      00007FFE84F82E70
+test      eax,eax
+jne       near ptr 00007FFE25B725F5
+mov       rcx,[rdi+8]
+mov       rcx,[rcx+10]
+mov       rdx,[rcx+18]
+test      dl,2
+jne       near ptr 00007FFE25B725F1
+mov       edx,[rdx]
+and       edx,0F0000
+cmp       edx,50000
+sete      dl
+movzx     edx,dl
+test      edx,edx
+jne       short 00007FFE25B725F5
+mov       dword ptr [rdi+20],0F
+lea       rcx,[rbx+30]
+mov       rdx,rdi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,[rbx+30]
+mov       rdx,rsi
+cmp       [rcx],ecx
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rdi
+jmp       qword ptr [7FFE2577C600]
+mov       rax,[rcx]
+mov       rax,[rax+98]
+call      qword ptr [rax+8]
+mov       rcx,rax
+jmp       short 00007FFE25B72548
+mov       rcx,offset MT_System.ArgumentNullException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+call      qword ptr [7FFE25AD44B0]
+mov       r8,rax
+mov       rcx,rbx
+xor       edx,edx
+call      qword ptr [7FFE25AD44C8]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+xor       edx,edx
+jmp       short 00007FFE25B72583
+mov       dword ptr [rdi+20],11
+jmp       short 00007FFE25B7258E
+
+System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+test      rdx,rdx
+je        short 00007FFE25B6694A
+cmp       [rdx],rcx
+jne       short 00007FFE25B6694E
+mov       rax,rdx
+ret
+mov       rax,[rdx]
+mov       rax,[rax+10]
+cmp       rax,rcx
+je        short 00007FFE25B6694A
+test      rax,rax
+je        short 00007FFE25B66994
+mov       rax,[rax+10]
+cmp       rax,rcx
+je        short 00007FFE25B6694A
+test      rax,rax
+je        short 00007FFE25B66994
+mov       rax,[rax+10]
+cmp       rax,rcx
+je        short 00007FFE25B6694A
+test      rax,rax
+je        short 00007FFE25B66994
+mov       rax,[rax+10]
+cmp       rax,rcx
+je        short 00007FFE25B6694A
+test      rax,rax
+je        short 00007FFE25B66994
+mov       rax,[rax+10]
+cmp       rax,rcx
+je        short 00007FFE25B6694A
+jmp       short 00007FFE25B6695A
+xor       edx,edx
+jmp       short 00007FFE25B6694A
+
+System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rsi,rcx
+mov       rdi,rdx
+mov       rbx,r8
+cmp       rbx,8
+jb        near ptr 00007FFE2544FD1F
+cmp       rsi,rdi
+je        near ptr 00007FFE2544FC1E
+cmp       rbx,20
+jae       near ptr 00007FFE2544FC51
+mov       rcx,7FFE25AE3E68
+call      CORINFO_HELP_COUNTPROFILE32
+cmp       rbx,10
+jae       short 00007FFE2544FBBD
+mov       rcx,7FFE25AE3E80
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFE25AE3E84
+call      CORINFO_HELP_COUNTPROFILE32
+add       rbx,0FFFFFFFFFFFFFFF8
+mov       rcx,[rsi]
+sub       rcx,[rdi]
+mov       rax,[rsi+rbx]
+sub       rax,[rdi+rbx]
+or        rcx,rax
+sete      bl
+movzx     ebx,bl
+mov       rcx,7FFE25AE3E4C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       eax,ebx
+vzeroupper
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       ebp,ebp
+add       rbx,0FFFFFFFFFFFFFFF0
+je        short 00007FFE2544FBF5
+vmovups   xmm0,[rsi]
+vpcmpeqb  xmm0,xmm0,[rdi]
+vpmovmskb ecx,xmm0
+cmp       ecx,0FFFF
+jne       short 00007FFE2544FC40
+add       rbp,10
+cmp       rbx,rbp
+ja        near ptr 00007FFE2544FDA0
+mov       rcx,7FFE25AE3E6C
+call      CORINFO_HELP_COUNTPROFILE32
+vmovups   xmm0,[rsi+rbx]
+vpcmpeqb  xmm0,xmm0,[rdi+rbx]
+vpmovmskb ecx,xmm0
+cmp       ecx,0FFFF
+jne       near ptr 00007FFE2544FCC7
+mov       rcx,7FFE25AE3E70
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFE25AE3E50
+call      CORINFO_HELP_COUNTPROFILE32
+mov       eax,1
+vzeroupper
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+mov       rcx,7FFE25AE3E7C
+call      CORINFO_HELP_COUNTPROFILE32
+jmp       short 00007FFE2544FCA8
+xor       ebp,ebp
+add       rbx,0FFFFFFFFFFFFFFE0
+je        near ptr 00007FFE2544FCE7
+vmovups   ymm0,[rsi]
+vpcmpeqb  ymm0,ymm0,[rdi]
+vpmovmskb ecx,ymm0
+cmp       ecx,0FFFFFFFF
+jne       short 00007FFE2544FC99
+add       rbp,20
+cmp       rbx,rbp
+jbe       short 00007FFE2544FCD8
+mov       rcx,7FFE25AE3E60
+call      CORINFO_HELP_COUNTPROFILE32
+vmovups   ymm0,[rsi+rbp]
+vpcmpeqb  ymm0,ymm0,[rdi+rbp]
+vpmovmskb ecx,ymm0
+cmp       ecx,0FFFFFFFF
+je        short 00007FFE2544FC6E
+mov       rcx,7FFE25AE3E64
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFE25AE3E88
+call      CORINFO_HELP_COUNTPROFILE32
+xor       eax,eax
+vzeroupper
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+mov       rcx,7FFE25AE3E74
+call      CORINFO_HELP_COUNTPROFILE32
+jmp       short 00007FFE2544FCA8
+mov       rcx,7FFE25AE3E54
+call      CORINFO_HELP_COUNTPROFILE32
+vmovups   ymm0,[rsi+rbx]
+vpcmpeqb  ymm0,ymm0,[rdi+rbx]
+vpmovmskb ecx,ymm0
+cmp       ecx,0FFFFFFFF
+jne       short 00007FFE2544FD0E
+mov       rcx,7FFE25AE3E58
+call      CORINFO_HELP_COUNTPROFILE32
+jmp       near ptr 00007FFE2544FC1E
+mov       rcx,7FFE25AE3E5C
+call      CORINFO_HELP_COUNTPROFILE32
+jmp       short 00007FFE2544FCA8
+cmp       rbx,4
+jb        short 00007FFE2544FD4F
+mov       rcx,7FFE25AE3E48
+call      CORINFO_HELP_COUNTPROFILE32
+lea       rcx,[rbx-4]
+mov       eax,[rsi]
+sub       eax,[rdi]
+mov       edx,[rsi+rcx]
+sub       edx,[rdi+rcx]
+or        eax,edx
+sete      bl
+movzx     ebx,bl
+jmp       near ptr 00007FFE2544FB9E
+xor       ebp,ebp
+mov       r14,rbx
+and       r14,2
+je        short 00007FFE2544FD71
+mov       rcx,7FFE25AE3E40
+call      CORINFO_HELP_COUNTPROFILE32
+movzx     ebp,word ptr [rsi]
+movzx     ecx,word ptr [rdi]
+sub       ebp,ecx
+test      bl,1
+je        short 00007FFE2544FD93
+mov       rcx,7FFE25AE3E44
+call      CORINFO_HELP_COUNTPROFILE32
+movzx     ecx,byte ptr [rsi+r14]
+movzx     eax,byte ptr [rdi+r14]
+sub       ecx,eax
+or        ebp,ecx
+test      ebp,ebp
+sete      bl
+movzx     ebx,bl
+jmp       near ptr 00007FFE2544FB9E
+mov       rcx,7FFE25AE3E78
+call      CORINFO_HELP_COUNTPROFILE32
+vmovups   xmm0,[rsi+rbp]
+vpcmpeqb  xmm0,xmm0,[rdi+rbp]
+vpmovmskb ecx,xmm0
+cmp       ecx,0FFFF
+jne       near ptr 00007FFE2544FC40
+jmp       near ptr 00007FFE2544FBD9
 
 System.RuntimeType.InitializeCache()
 push      rbp
@@ -491,17 +1086,17 @@ mov       [rbp-70],rcx
 mov       rcx,rbp
 mov       [rbp-60],rcx
 cmp       qword ptr [rbx+10],0
-je        near ptr 00007FF91A918915
+je        near ptr 00007FFE25B79285
 mov       rcx,[rbx+10]
 mov       rdx,[rcx]
 mov       rdi,rdx
 test      rdi,rdi
-je        short 00007FF91A9187BA
+je        short 00007FFE25B7912A
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 cmp       [rdi],rcx
-jne       near ptr 00007FF91A91894E
+jne       near ptr 00007FFE25B792BE
 test      rdi,rdi
-jne       near ptr 00007FF91A9188FE
+jne       near ptr 00007FFE25B7926E
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
@@ -512,13 +1107,13 @@ lea       rcx,[rdi+8]
 mov       rdx,rbx
 call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,rbx
-call      00007FF979C81870
+call      00007FFE84F81870
 mov       r14,rax
 test      r14,r14
-je        near ptr 00007FF91A918954
+je        near ptr 00007FFE25B792C4
 mov       rax,[r14+8]
 test      rax,rax
-jne       near ptr 00007FF91A9188BE
+jne       near ptr 00007FFE25B7922E
 mov       [rbp+10],rbx
 mov       [rbp-0A8],r14
 mov       [rbp-50],r14
@@ -531,19 +1126,19 @@ mov       [rbp-98],rdx
 mov       [rbp-90],rcx
 lea       rcx,[rbp-98]
 lea       rdx,[rbp-48]
-mov       rax,7FF91A34C5A0
+mov       rax,7FFE254E6D90
 mov       [rbp-78],rax
-lea       rax,[7FF91A91887F]
+lea       rax,[7FFE25B791EF]
 mov       [rbp-68],rax
 lea       rax,[rbp-88]
 mov       [rsi+8],rax
 mov       byte ptr [rsi+4],0
-mov       rax,7FF979C12C30
+mov       rax,7FFE84F12C30
 call      rax
 mov       byte ptr [rsi+4],1
-cmp       dword ptr [7FF979FDF778],0
-je        short 00007FF91A918892
-call      qword ptr [7FF979FCD608]
+cmp       dword ptr [7FFE852DF778],0
+je        short 00007FFE25B79202
+call      qword ptr [7FFE852CD608]
 mov       rcx,[rbp-80]
 mov       [rsi+8],rcx
 mov       rbx,[rbp-48]
@@ -562,13 +1157,13 @@ mov       [rdi+9C],cl
 mov       rcx,[rbx+10]
 mov       rdx,rdi
 xor       r8d,r8d
-call      00007FF979C904E0
+call      00007FFE84F904E0
 mov       rdx,rax
 test      rdx,rdx
-je        short 00007FF91A9188F7
+je        short 00007FFE25B79267
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 cmp       [rdx],rcx
-jne       short 00007FF91A91896D
+jne       short 00007FFE25B792DD
 test      rdx,rdx
 cmovne    rdi,rdx
 mov       rax,rdi
@@ -585,622 +1180,27 @@ ret
 mov       [rbp-40],rbx
 lea       rcx,[rbp-40]
 mov       edx,1
-call      qword ptr [7FF91A87C870]
+call      qword ptr [7FFE25ADEC70]
 mov       rdx,rax
 lea       rcx,[rbx+10]
 xor       eax,eax
 lock cmpxchg [rcx],rdx
 test      rax,rax
-je        near ptr 00007FF91A918798
+je        near ptr 00007FFE25B79108
 lea       rcx,[rbp-40]
-call      qword ptr [7FF91A877150]
-jmp       near ptr 00007FF91A918798
+call      qword ptr [7FFE25AD51E8]
+jmp       near ptr 00007FFE25B79108
 call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
 int       3
 mov       [rbp+10],rbx
 mov       rcx,rbx
-call      qword ptr [7FF91A315710]
+call      qword ptr [7FFE25387C90]
 mov       r14,rax
 mov       rbx,[rbp+10]
-jmp       near ptr 00007FF91A918804
+jmp       near ptr 00007FFE25B79174
 mov       rdx,rax
 call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
 int       3
-
-System.RuntimeType+RuntimeTypeCache.GetFieldList(MemberListType, System.String)
-push      r15
-push      r14
-push      rdi
-push      rsi
-push      rbp
-push      rbx
-sub       rsp,28
-mov       rsi,rcx
-mov       ebx,edx
-mov       rdi,r8
-lea       rbp,[rsi+50]
-mov       r14,[rbp]
-test      r14,r14
-je        short 00007FF91A91784E
-cmp       [r14],r14b
-cmp       ebx,1
-je        short 00007FF91A917886
-cmp       ebx,2
-je        near ptr 00007FF91A9178CB
-cmp       byte ptr [r14+18],0
-je        near ptr 00007FF91A917910
-mov       rax,[r14+8]
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-pop       r15
-ret
-mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache+MemberInfoCache<System.Reflection.RuntimeFieldInfo>
-call      CORINFO_HELP_NEWSFAST
-mov       r15,rax
-lea       rcx,[r15+10]
-mov       rdx,rsi
-call      CORINFO_HELP_ASSIGN_REF
-mov       rcx,rbp
-mov       rdx,r15
-xor       r8d,r8d
-call      00007FF979C7FBA0
-mov       r14,rax
-test      r14,r14
-cmove     r14,r15
-jmp       short 00007FF91A917821
-lea       rcx,[r14+20]
-mov       r8,rdi
-mov       rdx,offset MT_System.Reflection.CerHashtable<System.String, System.Reflection.RuntimeFieldInfo[]>
-call      qword ptr [7FF91A317C90]
-test      rax,rax
-jne       short 00007FF91A9178C6
-mov       rcx,r14
-mov       rdx,rdi
-mov       r8d,1
-mov       r9d,2
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-pop       r15
-jmp       qword ptr [7FF91A316910]
-jmp       near ptr 00007FF91A917841
-lea       rcx,[r14+28]
-mov       r8,rdi
-mov       rdx,offset MT_System.Reflection.CerHashtable<System.String, System.Reflection.RuntimeFieldInfo[]>
-call      qword ptr [7FF91A317C90]
-test      rax,rax
-jne       short 00007FF91A91790B
-mov       rcx,r14
-mov       rdx,rdi
-mov       r8d,2
-mov       r9d,2
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-pop       r15
-jmp       qword ptr [7FF91A316910]
-jmp       near ptr 00007FF91A917841
-mov       rcx,r14
-mov       r8d,ebx
-xor       edx,edx
-mov       r9d,2
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-pop       r15
-jmp       qword ptr [7FF91A316910]
-
-System.RuntimeType+ListBuilder`1[[System.__Canon, System.Private.CoreLib]]..ctor(Int32)
-xor       eax,eax
-mov       [rcx],rax
-mov       [rcx+8],rax
-mov       [rcx+10],eax
-mov       [rcx+14],r8d
-ret
-
-System.RuntimeType+ListBuilder`1[[System.__Canon, System.Private.CoreLib]].Add(System.__Canon)
-push      rdi
-push      rsi
-push      rbx
-sub       rsp,30
-mov       [rsp+28],rdx
-mov       rbx,rcx
-mov       rcx,rdx
-mov       rsi,r8
-mov       edx,[rbx+10]
-test      edx,edx
-je        near ptr 00007FF91A911401
-cmp       edx,1
-je        short 00007FF91A9113A8
-cmp       [rbx+14],edx
-je        near ptr 00007FF91A911418
-movsxd    rdx,dword ptr [rbx+10]
-mov       rcx,[rbx]
-mov       r8,rsi
-call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-inc       dword ptr [rbx+10]
-add       rsp,30
-pop       rbx
-pop       rsi
-pop       rdi
-ret
-cmp       dword ptr [rbx+14],2
-jl        short 00007FF91A91140F
-mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-cmp       qword ptr [rdx+8],40
-jle       short 00007FF91A9113EC
-mov       rax,[rdx+40]
-test      rax,rax
-je        short 00007FF91A9113EC
-mov       rcx,rax
-movsxd    rdx,dword ptr [rbx+14]
-call      CORINFO_HELP_NEWARR_1_PTR
-mov       rcx,rbx
-mov       rdx,rax
-call      CORINFO_HELP_CHECKED_ASSIGN_REF
-mov       rcx,[rbx]
-mov       r8,[rbx+8]
-xor       edx,edx
-call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-jmp       short 00007FF91A91138E
-mov       rdx,7FF91A8C0C00
-call      qword ptr [7FF91A0AF4B0]
-mov       rcx,rax
-jmp       short 00007FF91A9113C8
-lea       rcx,[rbx+8]
-mov       rdx,rsi
-call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       short 00007FF91A91139D
-mov       dword ptr [rbx+14],4
-jmp       short 00007FF91A9113AE
-mov       edi,[rbx+14]
-add       edi,edi
-mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-cmp       qword ptr [rdx+8],38
-jle       short 00007FF91A911439
-mov       rax,[rdx+38]
-test      rax,rax
-je        short 00007FF91A911439
-mov       rcx,rax
-jmp       short 00007FF91A91144C
-mov       rdx,7FF91A8C0BE0
-call      qword ptr [7FF91A0AF4B0]
-mov       rcx,rax
-mov       rdx,rbx
-mov       r8d,edi
-call      qword ptr [7FF91A316AD8]
-mov       [rbx+14],edi
-jmp       near ptr 00007FF91A91138E
-
-System.RuntimeType+ListBuilder`1[[System.__Canon, System.Private.CoreLib]].ToArray()
-push      rdi
-push      rsi
-push      rbp
-push      rbx
-sub       rsp,28
-mov       [rsp+20],rdx
-mov       rbx,rcx
-mov       rcx,rdx
-mov       esi,[rbx+10]
-test      esi,esi
-je        short 00007FF91A91189E
-cmp       esi,1
-je        near ptr 00007FF91A911904
-mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-cmp       qword ptr [rdx+8],38
-jle       short 00007FF91A911889
-mov       rdx,[rdx+38]
-test      rdx,rdx
-je        short 00007FF91A911889
-test      esi,esi
-jl        near ptr 00007FF91A91195A
-mov       rdi,[rbx]
-test      rdi,rdi
-je        near ptr 00007FF91A91196B
-cmp       [rdi+8],esi
-jne       near ptr 00007FF91A9119A7
-mov       eax,[rbx+10]
-mov       [rbx+14],eax
-mov       rax,[rbx]
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-ret
-mov       rdx,7FF91A8C0BE0
-call      qword ptr [7FF91A0AF4B0]
-mov       rdx,rax
-jmp       short 00007FF91A91185A
-mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-cmp       qword ptr [rdx+8],48
-jle       short 00007FF91A9118BA
-mov       rax,[rdx+48]
-test      rax,rax
-je        short 00007FF91A9118BA
-mov       rcx,rax
-jmp       short 00007FF91A9118CD
-mov       rdx,7FF91A8C1538
-call      qword ptr [7FF91A0AF4B0]
-mov       rcx,rax
-mov       rdx,[rcx+18]
-mov       rdx,[rdx+18]
-test      rdx,rdx
-je        short 00007FF91A9118DC
-jmp       short 00007FF91A9118EF
-mov       rdx,7FF91A8C1558
-call      qword ptr [7FF91A0AF630]
-mov       rdx,rax
-mov       rcx,rdx
-call      qword ptr [7FF91A0A5728]
-mov       rax,[rax]
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-ret
-mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-cmp       qword ptr [rdx+8],40
-jle       short 00007FF91A911920
-mov       rax,[rdx+40]
-test      rax,rax
-je        short 00007FF91A911920
-mov       rcx,rax
-jmp       short 00007FF91A911933
-mov       rdx,7FF91A8C0C00
-call      qword ptr [7FF91A0AF4B0]
-mov       rcx,rax
-mov       edx,1
-call      CORINFO_HELP_NEWARR_1_PTR
-mov       rsi,rax
-mov       r8,[rbx+8]
-mov       rcx,rsi
-xor       edx,edx
-call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-mov       rax,rsi
-add       rsp,28
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-ret
-mov       ecx,45
-mov       edx,0D
-call      qword ptr [7FF91A715830]
-int       3
-mov       rcx,[rdx+18]
-mov       rcx,[rcx+18]
-test      rcx,rcx
-je        short 00007FF91A91197A
-jmp       short 00007FF91A911990
-mov       rcx,rdx
-mov       rdx,7FF91A8C0E30
-call      qword ptr [7FF91A0AF630]
-mov       rcx,rax
-mov       edx,esi
-call      CORINFO_HELP_NEWARR_1_PTR
-mov       rdx,rax
-mov       rcx,rbx
-call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       near ptr 00007FF91A911877
-mov       rcx,[rdx+18]
-mov       rcx,[rcx+18]
-test      rcx,rcx
-je        short 00007FF91A9119B6
-jmp       short 00007FF91A9119CC
-mov       rcx,rdx
-mov       rdx,7FF91A8C0E30
-call      qword ptr [7FF91A0AF630]
-mov       rcx,rax
-mov       edx,esi
-call      CORINFO_HELP_NEWARR_1_PTR
-mov       rbp,rax
-lea       rcx,[rbp+10]
-lea       rdx,[rdi+10]
-mov       r8d,[rdi+8]
-cmp       esi,r8d
-cmovg     esi,r8d
-mov       r8d,esi
-shl       r8,3
-call      qword ptr [7FF91A0A57A0]
-mov       rcx,rbx
-mov       rdx,rbp
-call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       near ptr 00007FF91A911877
-
-System.Reflection.RtFieldInfo.GetValue(System.Object)
-push      rdi
-push      rsi
-push      rbx
-sub       rsp,20
-mov       rbx,rcx
-mov       rsi,rdx
-cmp       qword ptr [rbx+30],0
-jne       near ptr 00007FF91A911EEA
-mov       rcx,offset MT_System.Reflection.FieldAccessor
-call      CORINFO_HELP_NEWSFAST
-mov       rdi,rax
-lea       rcx,[rdi+8]
-mov       rdx,rbx
-call      CORINFO_HELP_ASSIGN_REF
-mov       rcx,[rdi+8]
-mov       rcx,[rcx+10]
-cmp       [rcx],cl
-call      qword ptr [7FF91A314B58]
-mov       rcx,rax
-mov       rax,offset MT_System.RuntimeType
-cmp       [rcx],rax
-jne       short 00007FF91A911F00
-test      rcx,rcx
-je        short 00007FF91A911F12
-call      00007FF979C82E70
-test      eax,eax
-jne       near ptr 00007FF91A911F45
-mov       rcx,[rdi+8]
-mov       rcx,[rcx+10]
-mov       rdx,[rcx+18]
-test      dl,2
-jne       near ptr 00007FF91A911F41
-mov       edx,[rdx]
-and       edx,0F0000
-cmp       edx,50000
-sete      dl
-movzx     edx,dl
-test      edx,edx
-jne       short 00007FF91A911F45
-mov       dword ptr [rdi+20],0F
-lea       rcx,[rbx+30]
-mov       rdx,rdi
-call      CORINFO_HELP_ASSIGN_REF
-mov       rcx,[rbx+30]
-mov       rdx,rsi
-cmp       [rcx],ecx
-add       rsp,20
-pop       rbx
-pop       rsi
-pop       rdi
-jmp       qword ptr [7FF91A4F78B8]
-mov       rax,[rcx]
-mov       rax,[rax+98]
-call      qword ptr [rax+8]
-mov       rcx,rax
-jmp       short 00007FF91A911E98
-mov       rcx,offset MT_System.ArgumentNullException
-call      CORINFO_HELP_NEWSFAST
-mov       rbx,rax
-call      qword ptr [7FF91A876D78]
-mov       r8,rax
-mov       rcx,rbx
-xor       edx,edx
-call      qword ptr [7FF91A876D90]
-mov       rcx,rbx
-call      CORINFO_HELP_THROW
-int       3
-xor       edx,edx
-jmp       short 00007FF91A911ED3
-mov       dword ptr [rdi+20],11
-jmp       short 00007FF91A911EDE
-
-System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
-test      rdx,rdx
-je        short 00007FF91A9151EA
-cmp       [rdx],rcx
-jne       short 00007FF91A9151EE
-mov       rax,rdx
-ret
-mov       rax,[rdx]
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A9151EA
-test      rax,rax
-je        short 00007FF91A915234
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A9151EA
-test      rax,rax
-je        short 00007FF91A915234
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A9151EA
-test      rax,rax
-je        short 00007FF91A915234
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A9151EA
-test      rax,rax
-je        short 00007FF91A915234
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A9151EA
-jmp       short 00007FF91A9151FA
-xor       edx,edx
-jmp       short 00007FF91A9151EA
-
-System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
-push      r14
-push      rdi
-push      rsi
-push      rbp
-push      rbx
-sub       rsp,20
-mov       rsi,rcx
-mov       rdi,rdx
-mov       rbx,r8
-cmp       rbx,8
-jb        near ptr 00007FF91A17003F
-cmp       rsi,rdi
-je        near ptr 00007FF91A16FF3E
-cmp       rbx,20
-jae       near ptr 00007FF91A16FF71
-mov       rcx,7FF91A862860
-call      CORINFO_HELP_COUNTPROFILE32
-cmp       rbx,10
-jae       short 00007FF91A16FEDD
-mov       rcx,7FF91A862878
-call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF91A86287C
-call      CORINFO_HELP_COUNTPROFILE32
-add       rbx,0FFFFFFFFFFFFFFF8
-mov       rcx,[rsi]
-sub       rcx,[rdi]
-mov       rax,[rsi+rbx]
-sub       rax,[rdi+rbx]
-or        rcx,rax
-sete      bl
-movzx     ebx,bl
-mov       rcx,7FF91A862844
-call      CORINFO_HELP_COUNTPROFILE32
-mov       eax,ebx
-vzeroupper
-add       rsp,20
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-ret
-xor       ebp,ebp
-add       rbx,0FFFFFFFFFFFFFFF0
-je        short 00007FF91A16FF15
-vmovups   xmm0,[rsi]
-vpcmpeqb  xmm0,xmm0,[rdi]
-vpmovmskb ecx,xmm0
-cmp       ecx,0FFFF
-jne       short 00007FF91A16FF60
-add       rbp,10
-cmp       rbx,rbp
-ja        near ptr 00007FF91A1700C0
-mov       rcx,7FF91A862864
-call      CORINFO_HELP_COUNTPROFILE32
-vmovups   xmm0,[rsi+rbx]
-vpcmpeqb  xmm0,xmm0,[rdi+rbx]
-vpmovmskb ecx,xmm0
-cmp       ecx,0FFFF
-jne       near ptr 00007FF91A16FFE7
-mov       rcx,7FF91A862868
-call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF91A862848
-call      CORINFO_HELP_COUNTPROFILE32
-mov       eax,1
-vzeroupper
-add       rsp,20
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-ret
-mov       rcx,7FF91A862874
-call      CORINFO_HELP_COUNTPROFILE32
-jmp       short 00007FF91A16FFC8
-xor       ebp,ebp
-add       rbx,0FFFFFFFFFFFFFFE0
-je        near ptr 00007FF91A170007
-vmovups   ymm0,[rsi]
-vpcmpeqb  ymm0,ymm0,[rdi]
-vpmovmskb ecx,ymm0
-cmp       ecx,0FFFFFFFF
-jne       short 00007FF91A16FFB9
-add       rbp,20
-cmp       rbx,rbp
-jbe       short 00007FF91A16FFF8
-mov       rcx,7FF91A862858
-call      CORINFO_HELP_COUNTPROFILE32
-vmovups   ymm0,[rsi+rbp]
-vpcmpeqb  ymm0,ymm0,[rdi+rbp]
-vpmovmskb ecx,ymm0
-cmp       ecx,0FFFFFFFF
-je        short 00007FF91A16FF8E
-mov       rcx,7FF91A86285C
-call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF91A862880
-call      CORINFO_HELP_COUNTPROFILE32
-xor       eax,eax
-vzeroupper
-add       rsp,20
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r14
-ret
-mov       rcx,7FF91A86286C
-call      CORINFO_HELP_COUNTPROFILE32
-jmp       short 00007FF91A16FFC8
-mov       rcx,7FF91A86284C
-call      CORINFO_HELP_COUNTPROFILE32
-vmovups   ymm0,[rsi+rbx]
-vpcmpeqb  ymm0,ymm0,[rdi+rbx]
-vpmovmskb ecx,ymm0
-cmp       ecx,0FFFFFFFF
-jne       short 00007FF91A17002E
-mov       rcx,7FF91A862850
-call      CORINFO_HELP_COUNTPROFILE32
-jmp       near ptr 00007FF91A16FF3E
-mov       rcx,7FF91A862854
-call      CORINFO_HELP_COUNTPROFILE32
-jmp       short 00007FF91A16FFC8
-cmp       rbx,4
-jb        short 00007FF91A17006F
-mov       rcx,7FF91A862840
-call      CORINFO_HELP_COUNTPROFILE32
-lea       rcx,[rbx-4]
-mov       eax,[rsi]
-sub       eax,[rdi]
-mov       edx,[rsi+rcx]
-sub       edx,[rdi+rcx]
-or        eax,edx
-sete      bl
-movzx     ebx,bl
-jmp       near ptr 00007FF91A16FEBE
-xor       ebp,ebp
-mov       r14,rbx
-and       r14,2
-je        short 00007FF91A170091
-mov       rcx,7FF91A862838
-call      CORINFO_HELP_COUNTPROFILE32
-movzx     ebp,word ptr [rsi]
-movzx     ecx,word ptr [rdi]
-sub       ebp,ecx
-test      bl,1
-je        short 00007FF91A1700B3
-mov       rcx,7FF91A86283C
-call      CORINFO_HELP_COUNTPROFILE32
-movzx     ecx,byte ptr [rsi+r14]
-movzx     eax,byte ptr [rdi+r14]
-sub       ecx,eax
-or        ebp,ecx
-test      ebp,ebp
-sete      bl
-movzx     ebx,bl
-jmp       near ptr 00007FF91A16FEBE
-mov       rcx,7FF91A862870
-call      CORINFO_HELP_COUNTPROFILE32
-vmovups   xmm0,[rsi+rbp]
-vpcmpeqb  xmm0,xmm0,[rdi+rbp]
-vpmovmskb ecx,xmm0
-cmp       ecx,0FFFF
-jne       near ptr 00007FF91A16FF60
-jmp       near ptr 00007FF91A16FEF9
 
 DotNetTips.Spargine.Core.Enumeration+<GetAll>d__15`1[[System.__Canon, System.Private.CoreLib]].System.IDisposable.Dispose()
 xor       eax,eax
@@ -1229,7 +1229,7 @@ mov       esi,edx
 mov       edi,r8d
 xor       eax,eax
 mov       [rbx],rax
-call      qword ptr [7FF9465E9080]
+call      qword ptr [7FFE63689080]
 mov       rcx,[rax]
 imul      edx,edi,0B
 add       edx,esi
@@ -1237,10 +1237,10 @@ mov       eax,100
 cmp       edx,100
 cmovle    edx,eax
 cmp       [rcx],ecx
-call      qword ptr [7FF946608958]
+call      qword ptr [7FFE636A8958]
 mov       [rbx+8],rax
 test      rax,rax
-je        short 00007FF945B8BAB0
+je        short 00007FFE62C2BAB0
 lea       rcx,[rax+10]
 mov       eax,[rax+8]
 mov       [rbx+18],rcx
@@ -1255,43 +1255,51 @@ pop       rdi
 ret
 xor       ecx,ecx
 xor       eax,eax
-jmp       short 00007FF945B8BA98
+jmp       short 00007FFE62C2BA98
 
 System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendLiteral(System.String)
+push      rdi
 push      rsi
 push      rbx
-sub       rsp,28
+sub       rsp,20
 mov       rbx,rcx
+mov       rsi,rdx
 lea       r8,[rbx+18]
-mov       ecx,[rbx+10]
-mov       eax,[r8+8]
-cmp       ecx,eax
-ja        short 00007FF945B8BD98
+mov       edx,[rbx+10]
+mov       ecx,[r8+8]
+cmp       edx,ecx
+ja        short 00007FFE25450B3B
 mov       r8,[r8]
-mov       r10d,ecx
-lea       r10,[r8+r10*2]
-sub       eax,ecx
-mov       esi,[rdx+8]
-cmp       esi,eax
-ja        short 00007FF945B8BD9F
-mov       r8d,esi
+mov       eax,edx
+lea       rax,[r8+rax*2]
+sub       ecx,edx
+mov       edi,[rsi+8]
+cmp       edi,ecx
+ja        short 00007FFE25450B42
+mov       r8d,edi
 add       r8,r8
-add       rdx,0C
-mov       rcx,r10
-call      qword ptr [7FF9465FC980]
-add       [rbx+10],esi
-add       rsp,28
+lea       rdx,[rsi+0C]
+mov       rcx,rax
+call      qword ptr [7FFE25385818]
+mov       rcx,7FFE25AE4498
+call      CORINFO_HELP_COUNTPROFILE32
+add       [rbx+10],edi
+add       rsp,20
 pop       rbx
 pop       rsi
+pop       rdi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE25527138]
 int       3
+mov       rcx,7FFE25AE449C
+call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,rbx
-lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
-add       rsp,28
+mov       rdx,rsi
+add       rsp,20
 pop       rbx
 pop       rsi
-jmp       qword ptr [rax]
+pop       rdi
+jmp       qword ptr [7FFE25A3C528]
 
 System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted(System.String)
 push      rsi
@@ -1299,32 +1307,32 @@ push      rbx
 sub       rsp,28
 mov       rbx,rcx
 cmp       byte ptr [rbx+14],0
-jne       short 00007FF945B8C00A
+jne       short 00007FFE62C2C00A
 test      rdx,rdx
-je        short 00007FF945B8C00A
+je        short 00007FFE62C2C00A
 lea       r8,[rbx+18]
 mov       ecx,[rbx+10]
 mov       eax,[r8+8]
 cmp       ecx,eax
-ja        short 00007FF945B8C003
+ja        short 00007FFE62C2C003
 mov       r8,[r8]
 mov       r10d,ecx
 lea       r10,[r8+r10*2]
 sub       eax,ecx
 mov       esi,[rdx+8]
 cmp       esi,eax
-ja        short 00007FF945B8C00A
+ja        short 00007FFE62C2C00A
 mov       r8d,esi
 add       r8,r8
 add       rdx,0C
 mov       rcx,r10
-call      qword ptr [7FF9465FC980]
+call      qword ptr [7FFE6369C980]
 add       [rbx+10],esi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 mov       rcx,rbx
 lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
@@ -1347,51 +1355,51 @@ mov       rbx,rcx
 mov       rcx,rdx
 mov       rsi,r8
 cmp       byte ptr [rbx+14],0
-jne       near ptr 00007FF945F4104B
+jne       near ptr 00007FFE62FE104B
 test      rsi,rsi
-je        near ptr 00007FF945F41063
+je        near ptr 00007FFE62FE1063
 mov       rcx,rsi
-call      qword ptr [7FF9465F61F0]
+call      qword ptr [7FFE636961F0]
 test      rax,rax
-jne       short 00007FF945F40F97
+jne       short 00007FFE62FE0F97
 mov       rcx,rsi
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 call      qword ptr [r11]
 mov       rdx,rax
 test      rdx,rdx
-je        near ptr 00007FF945F41063
+je        near ptr 00007FFE62FE1063
 lea       r8,[rbx+18]
 mov       ecx,[rbx+10]
 mov       eax,[r8+8]
 cmp       ecx,eax
-ja        near ptr 00007FF945F4106B
+ja        near ptr 00007FFE62FE106B
 mov       r8,[r8]
 mov       r10d,ecx
 lea       r10,[r8+r10*2]
 sub       eax,ecx
 mov       esi,[rdx+8]
 cmp       esi,eax
-ja        near ptr 00007FF945F41072
+ja        near ptr 00007FFE62FE1072
 mov       r8d,esi
 add       r8,r8
 add       rdx,0C
 mov       rcx,r10
-call      qword ptr [7FF9465FC980]
+call      qword ptr [7FFE6369C980]
 add       [rbx+10],esi
-jmp       near ptr 00007FF945F41063
+jmp       near ptr 00007FFE62FE1063
 mov       rcx,rsi
-call      qword ptr [7FF9465F6228]
+call      qword ptr [7FFE63696228]
 test      rax,rax
-je        near ptr 00007FF945F41028
+je        near ptr 00007FFE62FE1028
 mov       rcx,rsi
-call      qword ptr [7FF9465F7468]
+call      qword ptr [7FFE63697468]
 mov       rsi,rax
 mov       rcx,rsi
 lea       rdx,[rbx+18]
 mov       r9d,[rbx+10]
 mov       r8d,[rdx+8]
 cmp       r9d,r8d
-ja        near ptr 00007FF945F4106B
+ja        near ptr 00007FFE62FE106B
 mov       rdx,[rdx]
 mov       r11d,r9d
 lea       rdx,[rdx+r11*2]
@@ -1409,38 +1417,38 @@ lea       r8,[rsp+48]
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 call      qword ptr [r11]
 test      eax,eax
-jne       short 00007FF945F4101F
+jne       short 00007FFE62FE101F
 mov       rcx,rbx
-call      qword ptr [7FF946604070]
-jmp       short 00007FF945F40FB5
+call      qword ptr [7FFE636A4070]
+jmp       short 00007FFE62FE0FB5
 mov       ecx,[rsp+48]
 add       [rbx+10],ecx
-jmp       short 00007FF945F41063
+jmp       short 00007FFE62FE1063
 mov       rcx,rsi
-call      qword ptr [7FF9465F7460]
+call      qword ptr [7FFE63697460]
 mov       rcx,rax
 mov       r8,[rbx]
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 xor       edx,edx
 call      qword ptr [r11]
 mov       rdx,rax
-jmp       near ptr 00007FF945F40F49
-call      qword ptr [7FF9465EF130]
+jmp       near ptr 00007FFE62FE0F49
+call      qword ptr [7FFE6368F130]
 mov       rdx,rax
 mov       rcx,rbx
 mov       r8,rsi
 xor       r9d,r9d
-call      qword ptr [7FF946613778]
+call      qword ptr [7FFE636B3778]
 nop
 add       rsp,58
 pop       rbx
 pop       rsi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 mov       rcx,rbx
-call      qword ptr [7FF946604048]
-jmp       short 00007FF945F41063
+call      qword ptr [7FFE636A4048]
+jmp       short 00007FFE62FE1063
 
 System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.ToStringAndClear()
 push      rdi
@@ -1455,12 +1463,12 @@ lea       rsi,[rbx+18]
 mov       rcx,rsi
 mov       eax,[rbx+10]
 cmp       eax,[rcx+8]
-ja        short 00007FF945B8BCC7
+ja        short 00007FFE62C2BCC7
 mov       rcx,[rcx]
 mov       [rsp+28],rcx
 mov       [rsp+30],eax
 lea       rcx,[rsp+28]
-call      qword ptr [7FF9465FAB88]
+call      qword ptr [7FFE6369AB88]
 mov       rdi,rax
 mov       rbp,[rbx+8]
 xor       eax,eax
@@ -1469,13 +1477,13 @@ mov       [rsi],rax
 mov       [rsi+8],rax
 mov       [rbx+10],eax
 test      rbp,rbp
-je        short 00007FF945B8BCBB
-call      qword ptr [7FF9465E9080]
+je        short 00007FFE62C2BCBB
+call      qword ptr [7FFE63689080]
 mov       rcx,[rax]
 mov       rdx,rbp
 xor       r8d,r8d
 cmp       [rcx],ecx
-call      qword ptr [7FF946608960]
+call      qword ptr [7FFE636A8960]
 mov       rax,rdi
 add       rsp,38
 pop       rbx
@@ -1483,7 +1491,7 @@ pop       rbp
 pop       rsi
 pop       rdi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 
 </code></pre></td>
@@ -1514,33 +1522,33 @@ lea       rsi,[rbx+8]
 mov       rcx,gs:[58]
 mov       rcx,[rcx+30]
 cmp       dword ptr [rcx+238],2
-jle       near ptr 00007FF91A9032C8
+jle       near ptr 00007FFE25BB3164
 mov       rcx,[rcx+240]
 mov       rax,[rcx+10]
 test      rax,rax
-je        near ptr 00007FF91A9032C8
+je        near ptr 00007FFE25BB3164
 mov       rcx,[rax+10]
 test      rcx,rcx
-jne       short 00007FF91A902C37
-mov       rcx,1ED6A800190
+jne       short 00007FFE25BB2AF7
+mov       rcx,1AA92000110
 mov       rcx,[rcx]
 test      rcx,rcx
-jne       short 00007FF91A902C37
-mov       rcx,1ED6A800170
+jne       short 00007FFE25BB2AF7
+mov       rcx,1AA920000F0
 mov       rcx,[rcx]
 test      rcx,rcx
-je        near ptr 00007FF91A9032D8
+je        near ptr 00007FFE25BB3174
 mov       esi,[rsi]
 test      esi,esi
-jl        near ptr 00007FF91A9032E6
+jl        near ptr 00007FFE25BB3182
 cmp       esi,12C
-jae       near ptr 00007FF91A903322
-mov       rcx,1ED6A8002B8
+jae       near ptr 00007FFE25BB31BE
+mov       rcx,1AA92000168
 mov       rcx,[rcx]
 mov       eax,esi
 mov       rdi,[rcx+rax*8+10]
 test      rdi,rdi
-je        near ptr 00007FF91A903312
+je        near ptr 00007FFE25BB31AE
 mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Extensions.NumericFormat, System.Boolean>
 call      CORINFO_HELP_NEWSFAST
 mov       rsi,rax
@@ -1558,74 +1566,74 @@ mov       dword ptr [rdi+18],0FFFFFFFE
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
 mov       [rdi+1C],eax
 cmp       dword ptr [rdi+18],0FFFFFFFE
-jne       near ptr 00007FF91A9032AB
+jne       near ptr 00007FFE25BB31D6
 mov       r14d,[rdi+1C]
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
 cmp       r14d,eax
-jne       near ptr 00007FF91A9032AB
+jne       near ptr 00007FFE25BB31D6
 xor       ecx,ecx
 mov       [rdi+18],ecx
 mov       [rbp-0A8],rdi
 mov       rcx,offset DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass14_0`1[[System.__Canon, System.Private.CoreLib]].<FromValue>b__0(System.__Canon)
 cmp       [rsi+18],rcx
-jne       near ptr 00007FF91A902F07
+jne       near ptr 00007FFE25BB2DC7
 mov       rdi,[rbp-0A8]
 mov       rbx,rdi
 mov       r14d,[rbx+18]
 test      r14d,r14d
-je        near ptr 00007FF91A902DA9
+je        near ptr 00007FFE25BB2C69
 cmp       r14d,1
-jne       near ptr 00007FF91A90333A
+jne       near ptr 00007FFE25BB31F3
 mov       dword ptr [rbx+18],0FFFFFFFF
 inc       dword ptr [rbx+20]
 mov       eax,[rbx+20]
 mov       r8,[rbx+10]
 cmp       eax,[r8+8]
-jge       near ptr 00007FF91A903251
+jge       near ptr 00007FFE25BB310A
 cmp       eax,[r8+8]
-jae       near ptr 00007FF91A90324B
+jae       near ptr 00007FFE25BB3104
 mov       ecx,eax
 mov       rcx,[r8+rcx*8+10]
 mov       rdx,offset MT_System.Reflection.RtFieldInfo
 cmp       [rcx],rdx
-jne       near ptr 00007FF91A9030D1
+jne       near ptr 00007FFE25BB2F97
 xor       edx,edx
-call      qword ptr [7FF91A3EE728]
+call      qword ptr [7FFE255DDF98]
 mov       rdx,rax
 mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
-call      qword ptr [7FF91A096850]
+call      qword ptr [7FFE25396850]
 mov       r14,rax
 mov       rdx,r14
 test      rdx,rdx
-je        short 00007FF91A902D25
+je        short 00007FFE25BB2BE5
 lea       rcx,[rbx+8]
 call      CORINFO_HELP_ASSIGN_REF
 mov       dword ptr [rbx+18],1
 mov       ecx,[r14+10]
 mov       rax,[rsi+8]
 cmp       ecx,[rax+8]
-jne       near ptr 00007FF91A902CFD
-jmp       near ptr 00007FF91A90325C
+jne       near ptr 00007FFE25BB2BBD
+jmp       near ptr 00007FFE25BB3115
 mov       dword ptr [rbx+18],0FFFFFFFF
-mov       rcx,1ED688A1178
+mov       rcx,1AA91B11168
 mov       r15,[rcx]
 test      r15,r15
-jne       short 00007FF91A902DD7
-mov       rcx,22DFF7D0720
-call      qword ptr [7FF91A3056C8]
+jne       short 00007FFE25BB2C97
+mov       rcx,1EB26F20748
+call      qword ptr [7FFE25397C48]
 mov       r13,rax
-jmp       short 00007FF91A902DDA
+jmp       short 00007FFE25BB2C9A
 mov       r13,r15
 cmp       [r13],r13b
 lea       r12,[r13+50]
 mov       rcx,[r12]
 test      rcx,rcx
-je        near ptr 00007FF91A90305B
+je        near ptr 00007FFE25BB2F21
 xor       edx,edx
 xor       r8d,r8d
 mov       r9d,2
 cmp       [rcx],ecx
-call      qword ptr [7FF91A3068F8]
+call      qword ptr [7FFE2539D2A8]
 mov       r14,rax
 mov       r15d,[r14+8]
 mov       eax,r15d
@@ -1635,21 +1643,21 @@ mov       [rbp-88],rdx
 mov       [rbp-80],edx
 mov       [rbp-7C],eax
 test      r15d,r15d
-jle       short 00007FF91A902E7E
+jle       short 00007FFE25BB2D3E
 add       r14,10
 mov       r13,[r14]
 mov       edx,[r13+18]
 mov       r8d,edx
 and       r8d,18
 cmp       r8d,edx
-jne       short 00007FF91A902E75
+jne       short 00007FFE25BB2D35
 cmp       dword ptr [rbp-80],0
-je        near ptr 00007FF91A902EFB
+je        near ptr 00007FFE25BB2DBB
 cmp       dword ptr [rbp-80],1
-je        short 00007FF91A902EBD
+je        short 00007FFE25BB2D7D
 mov       edx,[rbp-7C]
 cmp       edx,[rbp-80]
-je        near ptr 00007FF91A9030A7
+je        near ptr 00007FFE25BB2F6D
 movsxd    rdx,dword ptr [rbp-80]
 mov       rcx,[rbp-90]
 mov       r8,r13
@@ -1659,22 +1667,22 @@ inc       ecx
 mov       [rbp-80],ecx
 add       r14,8
 dec       r15d
-jne       short 00007FF91A902E2B
+jne       short 00007FFE25BB2CEB
 vmovdqu   xmm0,xmmword ptr [rbp-90]
 vmovdqu   xmmword ptr [rbp-78],xmm0
 mov       rcx,[rbp-80]
 mov       [rbp-68],rcx
 lea       rcx,[rbp-78]
 mov       rdx,offset MT_System.RuntimeType+ListBuilder<System.Reflection.FieldInfo>
-call      qword ptr [7FF91A306B38]
+call      qword ptr [7FFE2539D560]
 lea       rcx,[rbx+10]
 mov       rdx,rax
 call      CORINFO_HELP_ASSIGN_REF
 xor       ecx,ecx
 mov       [rbx+20],ecx
-jmp       near ptr 00007FF91A902D28
+jmp       near ptr 00007FFE25BB2BE8
 cmp       dword ptr [rbp-7C],2
-jl        near ptr 00007FF91A90309B
+jl        near ptr 00007FFE25BB2F61
 movsxd    rdx,dword ptr [rbp-7C]
 mov       rcx,offset MT_System.Reflection.FieldInfo[]
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -1683,18 +1691,52 @@ mov       rcx,[rbp-90]
 mov       r8,[rbp-88]
 xor       edx,edx
 call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-jmp       near ptr 00007FF91A902E5A
+jmp       near ptr 00007FFE25BB2D1A
 mov       [rbp-88],r13
-jmp       near ptr 00007FF91A902E6D
+jmp       near ptr 00007FFE25BB2D2D
 mov       rdi,[rbp-0A8]
 mov       rbx,rdi
 mov       r14d,[rbx+18]
 test      r14d,r14d
-je        near ptr 00007FF91A9030E1
-jmp       near ptr 00007FF91A90320E
+je        near ptr 00007FFE25BB2FA7
+cmp       r14d,1
+jne       near ptr 00007FFE25BB31F3
+mov       dword ptr [rbx+18],0FFFFFFFF
+inc       dword ptr [rbx+20]
+mov       eax,[rbx+20]
+mov       r8,[rbx+10]
+cmp       eax,[r8+8]
+jge       near ptr 00007FFE25BB310A
+cmp       eax,[r8+8]
+jae       near ptr 00007FFE25BB3104
+mov       ecx,eax
+mov       rcx,[r8+rcx*8+10]
+mov       rdx,offset MT_System.Reflection.RtFieldInfo
+cmp       [rcx],rdx
+jne       near ptr 00007FFE25BB30E0
+xor       edx,edx
+call      qword ptr [7FFE255DDF98]
+mov       rdx,rax
+mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
+call      qword ptr [7FFE25396850]
+mov       r14,rax
+mov       rdx,r14
+test      rdx,rdx
+je        short 00007FFE25BB2DEF
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       dword ptr [rbx+18],1
+mov       rdx,offset DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass14_0`1[[System.__Canon, System.Private.CoreLib]].<FromValue>b__0(System.__Canon)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FFE25BB30F0
+mov       edx,[r14+10]
+mov       rcx,[rsi+8]
+cmp       edx,[rcx+8]
+jne       near ptr 00007FFE25BB2DC7
+jmp       near ptr 00007FFE25BB3115
 mov       edx,[rbp-7C]
 cmp       edx,[rbp-80]
-je        near ptr 00007FF91A903199
+je        near ptr 00007FFE25BB305F
 movsxd    rdx,dword ptr [rbp-80]
 mov       rcx,[rbp-90]
 mov       r8,r13
@@ -1704,20 +1746,20 @@ inc       ecx
 mov       [rbp-80],ecx
 inc       r15d
 cmp       [r14+8],r15d
-jle       near ptr 00007FF91A9031CF
+jle       near ptr 00007FFE25BB30A1
 mov       edx,r15d
 mov       r13,[r14+rdx*8+10]
 mov       edx,[r13+18]
 mov       r8d,edx
 and       r8d,18
 cmp       r8d,edx
-jne       short 00007FF91A902F4A
+jne       short 00007FFE25BB2EAE
 cmp       dword ptr [rbp-80],0
-je        short 00007FF91A902FB9
+je        near ptr 00007FFE25BB3095
 cmp       dword ptr [rbp-80],1
-jne       short 00007FF91A902F23
+jne       short 00007FFE25BB2E87
 cmp       dword ptr [rbp-7C],2
-jl        near ptr 00007FF91A9031C3
+jl        near ptr 00007FFE25BB3089
 movsxd    rdx,dword ptr [rbp-7C]
 mov       rcx,offset MT_System.Reflection.FieldInfo[]
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -1726,40 +1768,7 @@ mov       rcx,[rbp-90]
 mov       r8,[rbp-88]
 xor       edx,edx
 call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-jmp       near ptr 00007FF91A902F2F
-mov       [rbp-88],r13
-jmp       short 00007FF91A902F42
-mov       eax,[rbx+20]
-mov       r8,[rbx+10]
-cmp       eax,[r8+8]
-jge       near ptr 00007FF91A903251
-cmp       eax,[r8+8]
-jae       near ptr 00007FF91A90324B
-mov       ecx,eax
-mov       rcx,[r8+rcx*8+10]
-mov       rdx,offset MT_System.Reflection.RtFieldInfo
-cmp       [rcx],rdx
-jne       near ptr 00007FF91A903227
-xor       edx,edx
-call      qword ptr [7FF91A3EE728]
-mov       rdx,rax
-mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
-call      qword ptr [7FF91A096850]
-mov       r14,rax
-mov       rdx,r14
-test      rdx,rdx
-je        near ptr 00007FF91A90321F
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-mov       dword ptr [rbx+18],1
-mov       rdx,offset DotNetTips.Spargine.Core.Enumeration+<>c__DisplayClass14_0`1[[System.__Canon, System.Private.CoreLib]].<FromValue>b__0(System.__Canon)
-cmp       [rsi+18],rdx
-jne       near ptr 00007FF91A903237
-mov       edx,[r14+10]
-mov       rcx,[rsi+8]
-cmp       edx,[rcx+8]
-jne       near ptr 00007FF91A902F07
-jmp       near ptr 00007FF91A90325C
+jmp       near ptr 00007FFE25BB2E93
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache+MemberInfoCache<System.Reflection.RuntimeFieldInfo>
 call      CORINFO_HELP_NEWSFAST
 mov       r15,rax
@@ -1769,42 +1778,42 @@ call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,r12
 mov       rdx,r15
 xor       r8d,r8d
-call      00007FF979C7FBA0
+call      00007FFE84F7FBA0
 mov       rcx,rax
 test      rcx,rcx
-jne       near ptr 00007FF91A902DEF
+jne       near ptr 00007FFE25BB2CAF
 mov       rcx,r15
-jmp       near ptr 00007FF91A902DEF
+jmp       near ptr 00007FFE25BB2CAF
 mov       dword ptr [rbp-7C],4
-jmp       near ptr 00007FF91A902EC7
+jmp       near ptr 00007FFE25BB2D87
 mov       r12d,[rbp-7C]
 add       r12d,r12d
 lea       rdx,[rbp-90]
 mov       r8d,r12d
-mov       rcx,7FF91A3621F0
-call      qword ptr [7FF91A306AD8]
+mov       rcx,7FFE25548150
+call      qword ptr [7FFE2539D4E8]
 mov       [rbp-7C],r12d
-jmp       near ptr 00007FF91A902E5A
+jmp       near ptr 00007FFE25BB2D1A
 xor       edx,edx
 mov       rax,[rcx]
 mov       rax,[rax+58]
 call      qword ptr [rax]
-jmp       near ptr 00007FF91A902D65
+jmp       near ptr 00007FFE25BB2C25
 mov       dword ptr [rbx+18],0FFFFFFFF
-mov       rcx,1ED688A1178
+mov       rcx,1AA91B11168
 mov       r15,[rcx]
 test      r15,r15
-jne       short 00007FF91A90310F
-mov       rcx,22DFF7D0720
-call      qword ptr [7FF91A3056C8]
+jne       short 00007FFE25BB2FD5
+mov       rcx,1EB26F20748
+call      qword ptr [7FFE25397C48]
 mov       r13,rax
-jmp       short 00007FF91A903112
+jmp       short 00007FFE25BB2FD8
 mov       r13,r15
 cmp       [r13],r13b
 lea       r12,[r13+50]
 mov       rcx,[r12]
 test      rcx,rcx
-jne       short 00007FF91A90315A
+jne       short 00007FFE25BB3020
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache+MemberInfoCache<System.Reflection.RuntimeFieldInfo>
 call      CORINFO_HELP_NEWSFAST
 mov       r15,rax
@@ -1814,16 +1823,16 @@ call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,r12
 mov       rdx,r15
 xor       r8d,r8d
-call      00007FF979C7FBA0
+call      00007FFE84F7FBA0
 mov       rcx,rax
 test      rcx,rcx
-jne       short 00007FF91A90315A
+jne       short 00007FFE25BB3020
 mov       rcx,r15
 xor       edx,edx
 xor       r8d,r8d
 mov       r9d,2
 cmp       [rcx],ecx
-call      qword ptr [7FF91A3068F8]
+call      qword ptr [7FFE2539D2A8]
 mov       r14,rax
 mov       eax,[r14+8]
 xor       edx,edx
@@ -1833,63 +1842,60 @@ mov       [rbp-80],edx
 mov       [rbp-7C],eax
 xor       r15d,r15d
 cmp       dword ptr [r14+8],0
-jle       short 00007FF91A9031CF
-jmp       near ptr 00007FF91A902F57
+jle       short 00007FFE25BB30A1
+jmp       near ptr 00007FFE25BB2EBB
 mov       r12d,[rbp-7C]
 add       r12d,r12d
 lea       rdx,[rbp-90]
 mov       r8d,r12d
-mov       rcx,7FF91A3621F0
-call      qword ptr [7FF91A306AD8]
+mov       rcx,7FFE25548150
+call      qword ptr [7FFE2539D4E8]
 mov       [rbp-7C],r12d
-jmp       near ptr 00007FF91A902F2F
+jmp       near ptr 00007FFE25BB2E93
 mov       dword ptr [rbp-7C],4
-jmp       near ptr 00007FF91A902F85
+jmp       near ptr 00007FFE25BB2EED
+mov       [rbp-88],r13
+jmp       near ptr 00007FFE25BB2EA6
 vmovdqu   xmm0,xmmword ptr [rbp-90]
 vmovdqu   xmmword ptr [rbp-78],xmm0
 mov       rcx,[rbp-80]
 mov       [rbp-68],rcx
 lea       rcx,[rbp-78]
 mov       rdx,offset MT_System.RuntimeType+ListBuilder<System.Reflection.FieldInfo>
-call      qword ptr [7FF91A306B38]
+call      qword ptr [7FFE2539D560]
 lea       rcx,[rbx+10]
 mov       rdx,rax
 call      CORINFO_HELP_ASSIGN_REF
 xor       ecx,ecx
 mov       [rbx+20],ecx
-jmp       near ptr 00007FF91A902FC2
-cmp       r14d,1
-jne       near ptr 00007FF91A90333A
-mov       dword ptr [rbx+18],0FFFFFFFF
-inc       dword ptr [rbx+20]
-jmp       near ptr 00007FF91A902FC2
+jmp       near ptr 00007FFE25BB2DF2
 xor       edx,edx
 mov       rax,[rcx]
 mov       rax,[rax+58]
 call      qword ptr [rax]
-jmp       near ptr 00007FF91A902FFF
+jmp       near ptr 00007FFE25BB2E2F
 mov       rdx,r14
 mov       rcx,[rsi+8]
 call      qword ptr [rsi+18]
 test      eax,eax
-je        near ptr 00007FF91A902F07
-jmp       short 00007FF91A90325C
+je        near ptr 00007FFE25BB2DC7
+jmp       short 00007FFE25BB3115
 call      CORINFO_HELP_RNGCHKFAIL
 int       3
 xor       ecx,ecx
 mov       [rbx+10],rcx
-jmp       near ptr 00007FF91A90333A
+jmp       near ptr 00007FFE25BB31F3
 mov       rcx,rdi
-call      qword ptr [7FF91A84CD60]
+call      qword ptr [7FFE25AEFB50]
 test      r14,r14
-je        near ptr 00007FF91A903341
+je        near ptr 00007FFE25BB31FA
 mov       [rbp-98],r14
 mov       rcx,[rbp+10]
 mov       rcx,[rcx+18]
 lea       r8,[rbp-98]
-mov       rdx,7FF91A84E010
+mov       rdx,7FFE25AF0E78
 cmp       [rcx],ecx
-call      qword ptr [7FF91A7BF168]
+call      qword ptr [7FFE25A5F258]
 nop
 add       rsp,98
 pop       rbx
@@ -1901,6 +1907,33 @@ pop       r14
 pop       r15
 pop       rbp
 ret
+mov       ecx,2
+call      qword ptr [7FFE25B066B8]
+jmp       near ptr 00007FFE25BB2AC6
+call      qword ptr [7FFE25615DA0]
+mov       rcx,rax
+jmp       near ptr 00007FFE25BB2AF7
+test      rcx,rcx
+je        short 00007FFE25BB318F
+call      qword ptr [7FFE259A4918]
+jmp       short 00007FFE25BB3195
+call      qword ptr [7FFE25615D70]
+mov       r8,[rax+28]
+mov       ecx,esi
+mov       edx,0FFFFFFFF
+call      qword ptr [7FFE25B072B8]
+mov       rdi,rax
+jmp       near ptr 00007FFE25BB2B2A
+mov       ecx,esi
+call      qword ptr [7FFE25397A50]
+mov       rdi,rax
+jmp       near ptr 00007FFE25BB2B2A
+mov       ecx,esi
+call      qword ptr [7FFE25397A68]
+mov       rdi,rax
+jmp       near ptr 00007FFE25BB2B2A
+xor       r14d,r14d
+jmp       near ptr 00007FFE25BB311E
 mov       rcx,rbx
 call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
@@ -1908,69 +1941,42 @@ xor       eax,eax
 mov       [rdi+18],eax
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
 mov       [rdi+1C],eax
-jmp       near ptr 00007FF91A902CE2
-mov       ecx,2
-call      qword ptr [7FF91A866550]
-jmp       near ptr 00007FF91A902C06
-call      qword ptr [7FF91A09D4B8]
-mov       rcx,rax
-jmp       near ptr 00007FF91A902C37
-test      rcx,rcx
-je        short 00007FF91A9032F3
-call      qword ptr [7FF91A704870]
-jmp       short 00007FF91A9032F9
-call      qword ptr [7FF91A09D2A8]
-mov       r8,[rax+28]
-mov       ecx,esi
-mov       edx,0FFFFFFFF
-call      qword ptr [7FF91A867390]
-mov       rdi,rax
-jmp       near ptr 00007FF91A902C6A
-mov       ecx,esi
-call      qword ptr [7FF91A3054D0]
-mov       rdi,rax
-jmp       near ptr 00007FF91A902C6A
-mov       ecx,esi
-call      qword ptr [7FF91A3054E8]
-mov       rdi,rax
-jmp       near ptr 00007FF91A902C6A
-xor       r14d,r14d
-jmp       near ptr 00007FF91A903265
-call      00007FF91A9033F0
-jmp       short 00007FF91A903332
+jmp       near ptr 00007FFE25BB2BA2
+call      00007FFE25BB32A9
+jmp       short 00007FFE25BB31CE
 lea       rcx,[rbp-60]
 mov       edx,14
 mov       r8d,2
-call      qword ptr [7FF91A09C270]
+call      qword ptr [7FFE25614E10]
 lea       rcx,[rbp-60]
-mov       rdx,22DFF7D06A0
-call      qword ptr [7FF91A09C288]
+mov       rdx,1EB26F206C8
+call      qword ptr [7FFE25614E28]
 lea       rcx,[rbp-60]
 mov       rdx,[rbp-0A0]
-call      qword ptr [7FF91A3FE088]
+call      qword ptr [7FFE2561E028]
 lea       rcx,[rbp-60]
-mov       rdx,22DFF7D06D8
-call      qword ptr [7FF91A09C288]
+mov       rdx,1EB26F20700
+call      qword ptr [7FFE25614E28]
 lea       rcx,[rbp-60]
-mov       rdx,7FF91A84C508
-mov       r8,22DFF7D0720
-call      qword ptr [7FF91A3FE028]
+mov       rdx,7FFE25AEF2F8
+mov       r8,1EB26F20748
+call      qword ptr [7FFE2561DFC8]
 lea       rcx,[rbp-60]
-mov       rdx,22DFF7C0C80
-call      qword ptr [7FF91A09C288]
+mov       rdx,1EB26F10658
+call      qword ptr [7FFE25614E28]
 lea       rcx,[rbp-60]
-call      qword ptr [7FF91A09C2A0]
+call      qword ptr [7FFE25614E40]
 mov       rbx,rax
 mov       ecx,1C29
-mov       rdx,7FF91A435768
-call      qword ptr [7FF91A09F210]
+mov       rdx,7FFE256D5D88
+call      qword ptr [7FFE25617738]
 mov       rdx,rax
 mov       rcx,rbx
-call      qword ptr [7FF91A4EFF90]
+call      qword ptr [7FFE25824048]
 int       3
 sub       rsp,28
 mov       rcx,[rbp-0A8]
-call      qword ptr [7FF91A84CD60]
+call      qword ptr [7FFE25AEFB50]
 nop
 add       rsp,28
 ret
@@ -1992,7 +1998,7 @@ sub       rsp,20
 mov       rbx,rcx
 mov       rsi,rdx
 cmp       qword ptr [rbx+30],0
-jne       near ptr 00007FF91A901A57
+jne       near ptr 00007FFE25BB1997
 mov       rcx,offset MT_System.Reflection.FieldAccessor
 call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
@@ -2002,25 +2008,25 @@ call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,[rdi+8]
 mov       rcx,[rcx+10]
 cmp       [rcx],cl
-call      qword ptr [7FF91A304B58]
+call      qword ptr [7FFE2539C6C0]
 mov       rcx,rax
 mov       rax,[rax]
 mov       rax,[rax+98]
 call      qword ptr [rax+8]
 test      rax,rax
-je        short 00007FF91A901A6D
+je        short 00007FFE25BB19AD
 mov       rcx,rax
-call      00007FF979C82E70
+call      00007FFE84F82E70
 test      eax,eax
-jne       short 00007FF91A901A44
+jne       short 00007FFE25BB1984
 mov       rcx,[rdi+8]
 mov       rcx,[rcx+10]
 cmp       [rcx],ecx
-call      qword ptr [7FF91A30D4A0]
+call      qword ptr [7FFE25535398]
 test      eax,eax
-jne       short 00007FF91A901A44
+jne       short 00007FFE25BB1984
 mov       dword ptr [rdi+20],0F
-jmp       short 00007FF91A901A4B
+jmp       short 00007FFE25BB198B
 mov       dword ptr [rdi+20],11
 lea       rcx,[rbx+30]
 mov       rdx,rdi
@@ -2032,53 +2038,53 @@ add       rsp,20
 pop       rbx
 pop       rsi
 pop       rdi
-jmp       qword ptr [7FF91A4E78E8]
+jmp       qword ptr [7FFE257878B8]
 mov       rcx,offset MT_System.ArgumentNullException
 call      CORINFO_HELP_NEWSFAST
 mov       rbx,rax
-call      qword ptr [7FF91A866B20]
+call      qword ptr [7FFE25B06CB8]
 mov       r8,rax
 mov       rcx,rbx
 xor       edx,edx
-call      qword ptr [7FF91A866B38]
+call      qword ptr [7FFE25B06CD0]
 mov       rcx,rbx
 call      CORINFO_HELP_THROW
 int       3
 
 System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
 test      rdx,rdx
-je        short 00007FF91A90580A
+je        short 00007FFE25BB5B6A
 cmp       [rdx],rcx
-jne       short 00007FF91A90580E
+jne       short 00007FFE25BB5B6E
 mov       rax,rdx
 ret
 mov       rax,[rdx]
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A90580A
+je        short 00007FFE25BB5B6A
 test      rax,rax
-je        short 00007FF91A905854
+je        short 00007FFE25BB5BB4
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A90580A
+je        short 00007FFE25BB5B6A
 test      rax,rax
-je        short 00007FF91A905854
+je        short 00007FFE25BB5BB4
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A90580A
+je        short 00007FFE25BB5B6A
 test      rax,rax
-je        short 00007FF91A905854
+je        short 00007FFE25BB5BB4
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A90580A
+je        short 00007FFE25BB5B6A
 test      rax,rax
-je        short 00007FF91A905854
+je        short 00007FFE25BB5BB4
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A90580A
-jmp       short 00007FF91A90581A
+je        short 00007FFE25BB5B6A
+jmp       short 00007FFE25BB5B7A
 xor       edx,edx
-jmp       short 00007FF91A90580A
+jmp       short 00007FFE25BB5B6A
 
 System.RuntimeType.InitializeCache()
 push      rbp
@@ -2105,17 +2111,17 @@ mov       [rbp-70],rcx
 mov       rcx,rbp
 mov       [rbp-60],rcx
 cmp       qword ptr [rbx+10],0
-je        near ptr 00007FF91A908A75
+je        near ptr 00007FFE25BB8D05
 mov       rcx,[rbx+10]
 mov       rdx,[rcx]
 mov       rdi,rdx
 test      rdi,rdi
-je        short 00007FF91A90891A
+je        short 00007FFE25BB8BAA
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 cmp       [rdi],rcx
-jne       near ptr 00007FF91A908AAE
+jne       near ptr 00007FFE25BB8D3E
 test      rdi,rdi
-jne       near ptr 00007FF91A908A5E
+jne       near ptr 00007FFE25BB8CEE
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
@@ -2126,13 +2132,13 @@ lea       rcx,[rdi+8]
 mov       rdx,rbx
 call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,rbx
-call      00007FF979C81870
+call      00007FFE84F81870
 mov       r14,rax
 test      r14,r14
-je        near ptr 00007FF91A908AB4
+je        near ptr 00007FFE25BB8D44
 mov       rax,[r14+8]
 test      rax,rax
-jne       near ptr 00007FF91A908A1E
+jne       near ptr 00007FFE25BB8CAE
 mov       [rbp+10],rbx
 mov       [rbp-0A8],r14
 mov       [rbp-50],r14
@@ -2145,19 +2151,19 @@ mov       [rbp-98],rdx
 mov       [rbp-90],rcx
 lea       rcx,[rbp-98]
 lea       rdx,[rbp-48]
-mov       rax,7FF91A33C5A0
+mov       rax,7FFE254F6D90
 mov       [rbp-78],rax
-lea       rax,[7FF91A9089DF]
+lea       rax,[7FFE25BB8C6F]
 mov       [rbp-68],rax
 lea       rax,[rbp-88]
 mov       [rsi+8],rax
 mov       byte ptr [rsi+4],0
-mov       rax,7FF979C12C30
+mov       rax,7FFE84F12C30
 call      rax
 mov       byte ptr [rsi+4],1
-cmp       dword ptr [7FF979FDF778],0
-je        short 00007FF91A9089F2
-call      qword ptr [7FF979FCD608]
+cmp       dword ptr [7FFE852DF778],0
+je        short 00007FFE25BB8C82
+call      qword ptr [7FFE852CD608]
 mov       rcx,[rbp-80]
 mov       [rsi+8],rcx
 mov       rbx,[rbp-48]
@@ -2176,13 +2182,13 @@ mov       [rdi+9C],cl
 mov       rcx,[rbx+10]
 mov       rdx,rdi
 xor       r8d,r8d
-call      00007FF979C904E0
+call      00007FFE84F904E0
 mov       rdx,rax
 test      rdx,rdx
-je        short 00007FF91A908A57
+je        short 00007FFE25BB8CE7
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 cmp       [rdx],rcx
-jne       short 00007FF91A908ACD
+jne       short 00007FFE25BB8D5D
 test      rdx,rdx
 cmovne    rdi,rdx
 mov       rax,rdi
@@ -2199,24 +2205,24 @@ ret
 mov       [rbp-40],rbx
 lea       rcx,[rbp-40]
 mov       edx,1
-call      qword ptr [7FF91A86C8E8]
+call      qword ptr [7FFE25B0C9F0]
 mov       rdx,rax
 lea       rcx,[rbx+10]
 xor       eax,eax
 lock cmpxchg [rcx],rdx
 test      rax,rax
-je        near ptr 00007FF91A9088F8
+je        near ptr 00007FFE25BB8B88
 lea       rcx,[rbp-40]
-call      qword ptr [7FF91A867180]
-jmp       near ptr 00007FF91A9088F8
+call      qword ptr [7FFE25B07420]
+jmp       near ptr 00007FFE25BB8B88
 call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
 int       3
 mov       [rbp+10],rbx
 mov       rcx,rbx
-call      qword ptr [7FF91A305710]
+call      qword ptr [7FFE25397C90]
 mov       r14,rax
 mov       rbx,[rbp+10]
-jmp       near ptr 00007FF91A908964
+jmp       near ptr 00007FFE25BB8BF4
 mov       rdx,rax
 call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
 int       3
@@ -2231,11 +2237,11 @@ mov       rbx,rcx
 mov       rsi,r8
 mov       edi,r9d
 cmp       edx,1
-je        short 00007FF91A9021F5
+je        short 00007FFE25BB2135
 cmp       edx,2
-je        short 00007FF91A902253
+je        short 00007FFE25BB2193
 cmp       byte ptr [rbx+18],0
-je        near ptr 00007FF91A9022B1
+je        near ptr 00007FFE25BB21F1
 mov       rax,[rbx+8]
 add       rsp,30
 pop       rbx
@@ -2247,16 +2253,16 @@ mov       rdx,[rcx+30]
 mov       rdx,[rdx]
 mov       rdx,[rdx+40]
 test      rdx,rdx
-je        short 00007FF91A90220A
-jmp       short 00007FF91A90221D
-mov       rdx,7FF91A8B1960
-call      qword ptr [7FF91A09F4B0]
+je        short 00007FFE25BB214A
+jmp       short 00007FFE25BB215D
+mov       rdx,7FFE25B51978
+call      qword ptr [7FFE2539C5B8]
 mov       rdx,rax
 lea       rcx,[rbx+20]
 mov       r8,rsi
-call      qword ptr [7FF91A307C90]
+call      qword ptr [7FFE2539F3C0]
 test      rax,rax
-jne       short 00007FF91A90224B
+jne       short 00007FFE25BB218B
 mov       rcx,rbx
 mov       rdx,rsi
 mov       r9d,edi
@@ -2265,7 +2271,7 @@ add       rsp,30
 pop       rbx
 pop       rsi
 pop       rdi
-jmp       qword ptr [7FF91A306910]
+jmp       qword ptr [7FFE2539D2C0]
 add       rsp,30
 pop       rbx
 pop       rsi
@@ -2276,16 +2282,16 @@ mov       rdx,[rcx+30]
 mov       rdx,[rdx]
 mov       rdx,[rdx+40]
 test      rdx,rdx
-je        short 00007FF91A902268
-jmp       short 00007FF91A90227B
-mov       rdx,7FF91A8B1960
-call      qword ptr [7FF91A09F4B0]
+je        short 00007FFE25BB21A8
+jmp       short 00007FFE25BB21BB
+mov       rdx,7FFE25B51978
+call      qword ptr [7FFE2539C5B8]
 mov       rdx,rax
 lea       rcx,[rbx+28]
 mov       r8,rsi
-call      qword ptr [7FF91A307C90]
+call      qword ptr [7FFE2539F3C0]
 test      rax,rax
-jne       short 00007FF91A9022A9
+jne       short 00007FFE25BB21E9
 mov       rcx,rbx
 mov       rdx,rsi
 mov       r9d,edi
@@ -2294,7 +2300,7 @@ add       rsp,30
 pop       rbx
 pop       rsi
 pop       rdi
-jmp       qword ptr [7FF91A306910]
+jmp       qword ptr [7FFE2539D2C0]
 add       rsp,30
 pop       rbx
 pop       rsi
@@ -2308,32 +2314,32 @@ add       rsp,30
 pop       rbx
 pop       rsi
 pop       rdi
-jmp       qword ptr [7FF91A306910]
+jmp       qword ptr [7FFE2539D2C0]
 
 System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
 sub       rsp,28
 mov       eax,[rcx+8]
 cmp       rax,rdx
-jbe       short 00007FF91A177CEE
+jbe       short 00007FFE254781EE
 lea       rax,[rcx+rdx*8+10]
 mov       rcx,[rcx]
 mov       rdx,[rcx+30]
 test      r8,r8
-je        short 00007FF91A177D04
+je        short 00007FFE25478204
 cmp       rdx,[r8]
-je        short 00007FF91A177CF5
+je        short 00007FFE254781F5
 mov       r10,offset MT_System.Object[]
 cmp       rcx,r10
-je        short 00007FF91A177CF5
+je        short 00007FFE254781F5
 mov       rcx,rax
 add       rsp,28
-jmp       qword ptr [7FF91A306EC8]
-call      qword ptr [7FF91A864510]
+jmp       qword ptr [7FFE2539D8F0]
+call      qword ptr [7FFE25B045E8]
 int       3
 mov       rcx,rax
 mov       rdx,r8
 add       rsp,28
-jmp       near ptr 00007FF979CC7B10
+jmp       near ptr 00007FFE84FC7B10
 xor       ecx,ecx
 mov       [rax],rcx
 add       rsp,28
@@ -2350,23 +2356,23 @@ mov       rbx,rcx
 mov       rcx,rdx
 mov       esi,[rbx+10]
 test      esi,esi
-je        short 00007FF91A90236E
+je        short 00007FFE25BB22AE
 cmp       esi,1
-je        near ptr 00007FF91A9023D4
+je        near ptr 00007FFE25BB2314
 mov       rdx,[rcx+30]
 mov       rdx,[rdx]
 cmp       qword ptr [rdx+8],38
-jle       short 00007FF91A902359
+jle       short 00007FFE25BB2299
 mov       rdx,[rdx+38]
 test      rdx,rdx
-je        short 00007FF91A902359
+je        short 00007FFE25BB2299
 test      esi,esi
-jl        near ptr 00007FF91A90242A
+jl        near ptr 00007FFE25BB236A
 mov       rdi,[rbx]
 test      rdi,rdi
-je        near ptr 00007FF91A90243B
+je        near ptr 00007FFE25BB237B
 cmp       [rdi+8],esi
-jne       near ptr 00007FF91A902477
+jne       near ptr 00007FFE25BB23B7
 mov       eax,[rbx+10]
 mov       [rbx+14],eax
 mov       rax,[rbx]
@@ -2376,32 +2382,32 @@ pop       rbp
 pop       rsi
 pop       rdi
 ret
-mov       rdx,7FF91A8B0C68
-call      qword ptr [7FF91A09F4B0]
+mov       rdx,7FFE25B50C80
+call      qword ptr [7FFE2539C5B8]
 mov       rdx,rax
-jmp       short 00007FF91A90232A
+jmp       short 00007FFE25BB226A
 mov       rdx,[rcx+30]
 mov       rdx,[rdx]
 cmp       qword ptr [rdx+8],48
-jle       short 00007FF91A90238A
+jle       short 00007FFE25BB22CA
 mov       rax,[rdx+48]
 test      rax,rax
-je        short 00007FF91A90238A
+je        short 00007FFE25BB22CA
 mov       rcx,rax
-jmp       short 00007FF91A90239D
-mov       rdx,7FF91A8B1AA0
-call      qword ptr [7FF91A09F4B0]
+jmp       short 00007FFE25BB22DD
+mov       rdx,7FFE25B51AB8
+call      qword ptr [7FFE2539C5B8]
 mov       rcx,rax
 mov       rdx,[rcx+18]
 mov       rdx,[rdx+18]
 test      rdx,rdx
-je        short 00007FF91A9023AC
-jmp       short 00007FF91A9023BF
-mov       rdx,7FF91A8B1AC0
-call      qword ptr [7FF91A09F630]
+je        short 00007FFE25BB22EC
+jmp       short 00007FFE25BB22FF
+mov       rdx,7FFE25B51AD8
+call      qword ptr [7FFE25617AF8]
 mov       rdx,rax
 mov       rcx,rdx
-call      qword ptr [7FF91A095728]
+call      qword ptr [7FFE25395728]
 mov       rax,[rax]
 add       rsp,28
 pop       rbx
@@ -2412,14 +2418,14 @@ ret
 mov       rdx,[rcx+30]
 mov       rdx,[rdx]
 cmp       qword ptr [rdx+8],40
-jle       short 00007FF91A9023F0
+jle       short 00007FFE25BB2330
 mov       rax,[rdx+40]
 test      rax,rax
-je        short 00007FF91A9023F0
+je        short 00007FFE25BB2330
 mov       rcx,rax
-jmp       short 00007FF91A902403
-mov       rdx,7FF91A8B0C88
-call      qword ptr [7FF91A09F4B0]
+jmp       short 00007FFE25BB2343
+mov       rdx,7FFE25B50CA0
+call      qword ptr [7FFE2539C5B8]
 mov       rcx,rax
 mov       edx,1
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -2437,31 +2443,31 @@ pop       rdi
 ret
 mov       ecx,45
 mov       edx,0D
-call      qword ptr [7FF91A705860]
+call      qword ptr [7FFE259A5908]
 int       3
 mov       rcx,[rdx+18]
 mov       rcx,[rcx+18]
 test      rcx,rcx
-je        short 00007FF91A90244A
-jmp       short 00007FF91A902460
+je        short 00007FFE25BB238A
+jmp       short 00007FFE25BB23A0
 mov       rcx,rdx
-mov       rdx,7FF91A8B1298
-call      qword ptr [7FF91A09F630]
+mov       rdx,7FFE25B512B0
+call      qword ptr [7FFE25617AF8]
 mov       rcx,rax
 mov       edx,esi
 call      CORINFO_HELP_NEWARR_1_PTR
 mov       rdx,rax
 mov       rcx,rbx
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       near ptr 00007FF91A902347
+jmp       near ptr 00007FFE25BB2287
 mov       rcx,[rdx+18]
 mov       rcx,[rcx+18]
 test      rcx,rcx
-je        short 00007FF91A902486
-jmp       short 00007FF91A90249C
+je        short 00007FFE25BB23C6
+jmp       short 00007FFE25BB23DC
 mov       rcx,rdx
-mov       rdx,7FF91A8B1298
-call      qword ptr [7FF91A09F630]
+mov       rdx,7FFE25B512B0
+call      qword ptr [7FFE25617AF8]
 mov       rcx,rax
 mov       edx,esi
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -2473,11 +2479,11 @@ cmp       esi,r8d
 cmovg     esi,r8d
 mov       r8d,esi
 shl       r8,3
-call      qword ptr [7FF91A0957A0]
+call      qword ptr [7FFE253957A0]
 mov       rcx,rbx
 mov       rdx,rbp
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       near ptr 00007FF91A902347
+jmp       near ptr 00007FFE25BB2287
 
 System.Array.Resize[[System.__Canon, System.Private.CoreLib]](System.__Canon[] ByRef, Int32)
 push      rdi
@@ -2489,12 +2495,12 @@ mov       [rsp+20],rcx
 mov       rsi,rdx
 mov       ebx,r8d
 test      ebx,ebx
-jl        short 00007FF91A901EED
+jl        short 00007FFE25BB1E2D
 mov       rdi,[rsi]
 test      rdi,rdi
-je        short 00007FF91A901EFE
+je        short 00007FFE25BB1E3E
 cmp       [rdi+8],ebx
-jne       short 00007FF91A901F37
+jne       short 00007FFE25BB1E77
 add       rsp,28
 pop       rbx
 pop       rbp
@@ -2503,31 +2509,31 @@ pop       rdi
 ret
 mov       ecx,45
 mov       edx,0D
-call      qword ptr [7FF91A705860]
+call      qword ptr [7FFE259A5908]
 int       3
 mov       rdx,[rcx+18]
 mov       rax,[rdx+18]
 test      rax,rax
-je        short 00007FF91A901F10
+je        short 00007FFE25BB1E50
 mov       rcx,rax
-jmp       short 00007FF91A901F23
-mov       rdx,7FF91A8B1298
-call      qword ptr [7FF91A09F630]
+jmp       short 00007FFE25BB1E63
+mov       rdx,7FFE25B512B0
+call      qword ptr [7FFE25617AF8]
 mov       rcx,rax
 mov       edx,ebx
 call      CORINFO_HELP_NEWARR_1_PTR
 mov       rdx,rax
 mov       rcx,rsi
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       short 00007FF91A901EE4
+jmp       short 00007FFE25BB1E24
 mov       rdx,[rcx+18]
 mov       rax,[rdx+18]
 test      rax,rax
-je        short 00007FF91A901F49
+je        short 00007FFE25BB1E89
 mov       rcx,rax
-jmp       short 00007FF91A901F5C
-mov       rdx,7FF91A8B1298
-call      qword ptr [7FF91A09F630]
+jmp       short 00007FFE25BB1E9C
+mov       rdx,7FFE25B512B0
+call      qword ptr [7FFE25617AF8]
 mov       rcx,rax
 mov       edx,ebx
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -2539,11 +2545,11 @@ cmp       ebx,r8d
 cmovg     ebx,r8d
 mov       r8d,ebx
 shl       r8,3
-call      qword ptr [7FF91A0957A0]
+call      qword ptr [7FFE253957A0]
 mov       rcx,rsi
 mov       rdx,rbp
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       near ptr 00007FF91A901EE4
+jmp       near ptr 00007FFE25BB1E24
 
 DotNetTips.Spargine.Core.Enumeration+<GetAll>d__15`1[[System.__Canon, System.Private.CoreLib]].System.IDisposable.Dispose()
 xor       eax,eax
@@ -2566,43 +2572,43 @@ System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(In
 push      rbx
 sub       rsp,20
 mov       ebx,ecx
-call      qword ptr [7FF946600D78]
+call      qword ptr [7FFE636A0D78]
 mov       ecx,ebx
 and       ecx,0FFFFFF
 mov       edx,ecx
 mov       r8d,ebx
 sar       r8d,18
-jne       short 00007FF945B89AD0
+jne       short 00007FFE62C29AD0
 cmp       [rax],ecx
-jle       short 00007FF945B89B01
+jle       short 00007FFE62C29B01
 mov       rax,[rax+8]
 cmp       [rax],al
 add       edx,0FFFFFFFE
 movsxd    rcx,edx
 mov       rax,[rax+rcx*8+10]
 test      rax,rax
-je        short 00007FF945B89B01
+je        short 00007FFE62C29B01
 add       rsp,20
 pop       rbx
 ret
 mov       ecx,ebx
 sar       ecx,18
 cmp       ecx,2
-jne       short 00007FF945B89AE2
+jne       short 00007FFE62C29AE2
 movsxd    rcx,edx
 add       rax,rcx
-jmp       short 00007FF945B89ACA
+jmp       short 00007FFE62C29ACA
 cmp       [rax+4],edx
-jle       short 00007FF945B89B01
+jle       short 00007FFE62C29B01
 mov       rcx,[rax+10]
 movsxd    rax,edx
 mov       rcx,[rcx+rax*8]
 test      rcx,rcx
-je        short 00007FF945B89B01
+je        short 00007FFE62C29B01
 mov       rax,[rcx]
 test      rax,rax
-je        short 00007FF945B89B01
-jmp       short 00007FF945B89ACA
+je        short 00007FFE62C29B01
+jmp       short 00007FFE62C29ACA
 mov       ecx,ebx
 lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 add       rsp,20
@@ -2613,22 +2619,22 @@ System.Globalization.CultureInfo.InitializeUserDefaultCulture()
 push      rsi
 push      rbx
 sub       rsp,28
-call      qword ptr [7FF9465E87D0]
+call      qword ptr [7FFE636887D0]
 mov       rbx,rax
 mov       rsi,rbx
-call      qword ptr [7FF9465FFA88]
+call      qword ptr [7FFE6369FA88]
 mov       rdx,rax
 test      rsi,rsi
-je        short 00007FF945AC8E56
+je        short 00007FFE62B68E56
 mov       rcx,rsi
 xor       r8d,r8d
-call      qword ptr [7FF946600C28]
+call      qword ptr [7FFE636A0C28]
 mov       rax,[rbx]
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-call      qword ptr [7FF9465FE468]
+call      qword ptr [7FFE6369E468]
 int       3
 
 System.Globalization.NumberFormatInfo.<GetInstance>g__GetProviderNonNull|58_0(System.IFormatProvider)
@@ -2637,10 +2643,10 @@ sub       rsp,20
 mov       rbx,rcx
 mov       rax,offset MT_System.Globalization.CultureInfo
 cmp       [rbx],rax
-jne       short 00007FF91A91AEB6
+jne       short 00007FFE25BC9F36
 mov       rax,[rbx+18]
 test      rax,rax
-je        short 00007FF91A91AEB6
+je        short 00007FFE25BC9F36
 add       rsp,20
 pop       rbx
 ret
@@ -2648,19 +2654,19 @@ mov       rdx,rbx
 mov       rcx,offset MT_System.Globalization.NumberFormatInfo
 call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
 test      rax,rax
-jne       short 00007FF91A91AF09
+jne       short 00007FFE25BC9F89
 mov       rcx,rbx
-mov       r11,7FF919FE0D38
-mov       rdx,22DFF7C1518
+mov       r11,7FFE252E0D20
+mov       rdx,1EB26F16A68
 call      qword ptr [r11]
 mov       rdx,rax
 mov       rcx,offset MT_System.Globalization.NumberFormatInfo
 call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
 test      rax,rax
-jne       short 00007FF91A91AF09
+jne       short 00007FFE25BC9F89
 add       rsp,20
 pop       rbx
-jmp       qword ptr [7FF91A09D2A8]
+jmp       qword ptr [7FFE25615D70]
 add       rsp,20
 pop       rbx
 ret
@@ -2668,24 +2674,24 @@ ret
 System.Globalization.NumberFormatInfo.get_CurrentInfo()
 push      rbx
 sub       rsp,20
-call      qword ptr [7FF9465FF9B0]
+call      qword ptr [7FFE6369F9B0]
 mov       rbx,rax
 cmp       byte ptr [rbx+61],0
-jne       short 00007FF945AE11C3
+jne       short 00007FFE62B811C3
 mov       rax,[rbx+18]
 test      rax,rax
-je        short 00007FF945AE11C3
+je        short 00007FFE62B811C3
 add       rsp,20
 pop       rbx
 ret
 mov       rcx,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
-call      qword ptr [7FF9465E8040]
+call      qword ptr [7FFE63688040]
 mov       rdx,rax
 mov       rcx,rbx
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 call      qword ptr [r11]
 mov       rcx,rax
-call      qword ptr [7FF9465F74D8]
+call      qword ptr [7FFE636974D8]
 nop
 add       rsp,20
 pop       rbx
@@ -2697,24 +2703,24 @@ push      rsi
 push      rbx
 sub       rsp,20
 mov       ebx,ecx
-call      qword ptr [7FF9465E86E8]
+call      qword ptr [7FFE636886E8]
 mov       rsi,[rax]
 mov       ecx,ebx
-call      qword ptr [7FF9465FC468]
+call      qword ptr [7FFE6369C468]
 mov       rdi,rax
 cmp       ebx,[rsi+8]
-jae       short 00007FF945A6286D
+jae       short 00007FFE62B0286D
 mov       ecx,ebx
 lea       rcx,[rsi+rcx*8+10]
 mov       rdx,rdi
-call      qword ptr [7FF9465E7FD0]
+call      qword ptr [7FFE63687FD0]
 mov       rax,rdi
 add       rsp,20
 pop       rbx
 pop       rsi
 pop       rdi
 ret
-call      qword ptr [7FF9465E7FC0]
+call      qword ptr [7FFE63687FC0]
 int       3
 
 System.Number.UInt32ToDecStr_NoSmallNumberCheck(UInt32)
@@ -2729,26 +2735,26 @@ or        ecx,1
 bsr       ecx,ecx
 mov       eax,ebx
 cmp       ecx,20
-jae       near ptr 00007FF945A60740
-lea       rdx,[7FF94597C108]
+jae       near ptr 00007FFE62B00740
+lea       rdx,[7FFE62A1C108]
 add       rax,[rdx+rcx*8]
 sar       rax,20
 movsxd    rsi,eax
 mov       rcx,rsi
-call      qword ptr [7FF9465FAA50]
+call      qword ptr [7FFE6369AA50]
 test      rax,rax
-je        short 00007FF945A606B2
+je        short 00007FFE62B006B2
 lea       rcx,[rax+0C]
 mov       [rsp+20],rcx
 mov       rcx,[rsp+20]
-jmp       short 00007FF945A606B6
+jmp       short 00007FFE62B006B6
 xor       eax,eax
 xor       ecx,ecx
 lea       rcx,[rcx+rsi*2]
 cmp       ebx,0A
-jb        short 00007FF945A60737
+jb        short 00007FFE62B00737
 cmp       ebx,64
-jb        short 00007FF945A60704
+jb        short 00007FFE62B00704
 mov       rdx,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 mov       rdx,[rdx]
 add       rdx,0C
@@ -2765,9 +2771,9 @@ mov       r10d,[r10+r9]
 mov       [rcx],r10d
 cmp       r8d,64
 mov       ebx,r8d
-jae       short 00007FF945A606D2
+jae       short 00007FFE62B006D2
 cmp       ebx,0A
-jb        short 00007FF945A60737
+jb        short 00007FFE62B00737
 add       rcx,0FFFFFFFFFFFFFFFC
 mov       rdx,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 mov       rdx,[rdx]
@@ -2783,8 +2789,8 @@ pop       rsi
 ret
 lea       edx,[rbx+30]
 mov       [rcx-2],dx
-jmp       short 00007FF945A60729
-call      qword ptr [7FF9465E7FC0]
+jmp       short 00007FFE62B00729
+call      qword ptr [7FFE63687FC0]
 int       3
 
 System.Runtime.CompilerServices.DefaultInterpolatedStringHandler..ctor(Int32, Int32)
@@ -2797,7 +2803,7 @@ mov       esi,edx
 mov       edi,r8d
 xor       eax,eax
 mov       [rbx],rax
-call      qword ptr [7FF9465E9080]
+call      qword ptr [7FFE63689080]
 mov       rcx,[rax]
 imul      edx,edi,0B
 add       edx,esi
@@ -2805,10 +2811,10 @@ mov       eax,100
 cmp       edx,100
 cmovle    edx,eax
 cmp       [rcx],ecx
-call      qword ptr [7FF946608958]
+call      qword ptr [7FFE636A8958]
 mov       [rbx+8],rax
 test      rax,rax
-je        short 00007FF945B8BAB0
+je        short 00007FFE62C2BAB0
 lea       rcx,[rax+10]
 mov       eax,[rax+8]
 mov       [rbx+18],rcx
@@ -2823,7 +2829,7 @@ pop       rdi
 ret
 xor       ecx,ecx
 xor       eax,eax
-jmp       short 00007FF945B8BA98
+jmp       short 00007FFE62C2BA98
 
 System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendLiteral(System.String)
 push      rsi
@@ -2834,25 +2840,25 @@ lea       r8,[rbx+18]
 mov       ecx,[rbx+10]
 mov       eax,[r8+8]
 cmp       ecx,eax
-ja        short 00007FF945B8BD98
+ja        short 00007FFE62C2BD98
 mov       r8,[r8]
 mov       r10d,ecx
 lea       r10,[r8+r10*2]
 sub       eax,ecx
 mov       esi,[rdx+8]
 cmp       esi,eax
-ja        short 00007FF945B8BD9F
+ja        short 00007FFE62C2BD9F
 mov       r8d,esi
 add       r8,r8
 add       rdx,0C
 mov       rcx,r10
-call      qword ptr [7FF9465FC980]
+call      qword ptr [7FFE6369C980]
 add       [rbx+10],esi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 mov       rcx,rbx
 lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
@@ -2867,32 +2873,32 @@ push      rbx
 sub       rsp,28
 mov       rbx,rcx
 cmp       byte ptr [rbx+14],0
-jne       short 00007FF945B8C00A
+jne       short 00007FFE62C2C00A
 test      rdx,rdx
-je        short 00007FF945B8C00A
+je        short 00007FFE62C2C00A
 lea       r8,[rbx+18]
 mov       ecx,[rbx+10]
 mov       eax,[r8+8]
 cmp       ecx,eax
-ja        short 00007FF945B8C003
+ja        short 00007FFE62C2C003
 mov       r8,[r8]
 mov       r10d,ecx
 lea       r10,[r8+r10*2]
 sub       eax,ecx
 mov       esi,[rdx+8]
 cmp       esi,eax
-ja        short 00007FF945B8C00A
+ja        short 00007FFE62C2C00A
 mov       r8d,esi
 add       r8,r8
 add       rdx,0C
 mov       rcx,r10
-call      qword ptr [7FF9465FC980]
+call      qword ptr [7FFE6369C980]
 add       [rbx+10],esi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 mov       rcx,rbx
 lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
@@ -2915,51 +2921,51 @@ mov       rbx,rcx
 mov       rcx,rdx
 mov       rsi,r8
 cmp       byte ptr [rbx+14],0
-jne       near ptr 00007FF945F4104B
+jne       near ptr 00007FFE62FE104B
 test      rsi,rsi
-je        near ptr 00007FF945F41063
+je        near ptr 00007FFE62FE1063
 mov       rcx,rsi
-call      qword ptr [7FF9465F61F0]
+call      qword ptr [7FFE636961F0]
 test      rax,rax
-jne       short 00007FF945F40F97
+jne       short 00007FFE62FE0F97
 mov       rcx,rsi
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 call      qword ptr [r11]
 mov       rdx,rax
 test      rdx,rdx
-je        near ptr 00007FF945F41063
+je        near ptr 00007FFE62FE1063
 lea       r8,[rbx+18]
 mov       ecx,[rbx+10]
 mov       eax,[r8+8]
 cmp       ecx,eax
-ja        near ptr 00007FF945F4106B
+ja        near ptr 00007FFE62FE106B
 mov       r8,[r8]
 mov       r10d,ecx
 lea       r10,[r8+r10*2]
 sub       eax,ecx
 mov       esi,[rdx+8]
 cmp       esi,eax
-ja        near ptr 00007FF945F41072
+ja        near ptr 00007FFE62FE1072
 mov       r8d,esi
 add       r8,r8
 add       rdx,0C
 mov       rcx,r10
-call      qword ptr [7FF9465FC980]
+call      qword ptr [7FFE6369C980]
 add       [rbx+10],esi
-jmp       near ptr 00007FF945F41063
+jmp       near ptr 00007FFE62FE1063
 mov       rcx,rsi
-call      qword ptr [7FF9465F6228]
+call      qword ptr [7FFE63696228]
 test      rax,rax
-je        near ptr 00007FF945F41028
+je        near ptr 00007FFE62FE1028
 mov       rcx,rsi
-call      qword ptr [7FF9465F7468]
+call      qword ptr [7FFE63697468]
 mov       rsi,rax
 mov       rcx,rsi
 lea       rdx,[rbx+18]
 mov       r9d,[rbx+10]
 mov       r8d,[rdx+8]
 cmp       r9d,r8d
-ja        near ptr 00007FF945F4106B
+ja        near ptr 00007FFE62FE106B
 mov       rdx,[rdx]
 mov       r11d,r9d
 lea       rdx,[rdx+r11*2]
@@ -2977,38 +2983,38 @@ lea       r8,[rsp+48]
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 call      qword ptr [r11]
 test      eax,eax
-jne       short 00007FF945F4101F
+jne       short 00007FFE62FE101F
 mov       rcx,rbx
-call      qword ptr [7FF946604070]
-jmp       short 00007FF945F40FB5
+call      qword ptr [7FFE636A4070]
+jmp       short 00007FFE62FE0FB5
 mov       ecx,[rsp+48]
 add       [rbx+10],ecx
-jmp       short 00007FF945F41063
+jmp       short 00007FFE62FE1063
 mov       rcx,rsi
-call      qword ptr [7FF9465F7460]
+call      qword ptr [7FFE63697460]
 mov       rcx,rax
 mov       r8,[rbx]
 lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
 xor       edx,edx
 call      qword ptr [r11]
 mov       rdx,rax
-jmp       near ptr 00007FF945F40F49
-call      qword ptr [7FF9465EF130]
+jmp       near ptr 00007FFE62FE0F49
+call      qword ptr [7FFE6368F130]
 mov       rdx,rax
 mov       rcx,rbx
 mov       r8,rsi
 xor       r9d,r9d
-call      qword ptr [7FF946613778]
+call      qword ptr [7FFE636B3778]
 nop
 add       rsp,58
 pop       rbx
 pop       rsi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 mov       rcx,rbx
-call      qword ptr [7FF946604048]
-jmp       short 00007FF945F41063
+call      qword ptr [7FFE636A4048]
+jmp       short 00007FFE62FE1063
 
 System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.ToStringAndClear()
 push      rdi
@@ -3023,12 +3029,12 @@ lea       rsi,[rbx+18]
 mov       rcx,rsi
 mov       eax,[rbx+10]
 cmp       eax,[rcx+8]
-ja        short 00007FF945B8BCC7
+ja        short 00007FFE62C2BCC7
 mov       rcx,[rcx]
 mov       [rsp+28],rcx
 mov       [rsp+30],eax
 lea       rcx,[rsp+28]
-call      qword ptr [7FF9465FAB88]
+call      qword ptr [7FFE6369AB88]
 mov       rdi,rax
 mov       rbp,[rbx+8]
 xor       eax,eax
@@ -3037,13 +3043,13 @@ mov       [rsi],rax
 mov       [rsi+8],rax
 mov       [rbx+10],eax
 test      rbp,rbp
-je        short 00007FF945B8BCBB
-call      qword ptr [7FF9465E9080]
+je        short 00007FFE62C2BCBB
+call      qword ptr [7FFE63689080]
 mov       rcx,[rax]
 mov       rdx,rbp
 xor       r8d,r8d
 cmp       [rcx],ecx
-call      qword ptr [7FF946608960]
+call      qword ptr [7FFE636A8960]
 mov       rax,rdi
 add       rsp,38
 pop       rbx
@@ -3051,7 +3057,7 @@ pop       rbp
 pop       rsi
 pop       rdi
 ret
-call      qword ptr [7FF9465FE310]
+call      qword ptr [7FFE6369E310]
 int       3
 
 </code></pre></td>
@@ -3065,66 +3071,63 @@ push      r12
 push      rdi
 push      rsi
 push      rbx
-sub       rsp,0C8
+sub       rsp,78
 vzeroupper
-lea       rbp,[rsp+100]
+lea       rbp,[rsp+0B0]
 xor       eax,eax
-mov       [rbp-0B8],rax
+mov       [rbp-58],rax
 vxorps    xmm4,xmm4,xmm4
-vmovdqu   ymmword ptr [rbp-0B0],ymm4
-vmovdqu   ymmword ptr [rbp-90],ymm4
-vmovdqu   ymmword ptr [rbp-70],ymm4
 vmovdqa   xmmword ptr [rbp-50],xmm4
+mov       [rbp-40],rax
 mov       [rbp+10],rcx
-mov       rax,offset MT_DotNetTips.Spargine.Core.Enumeration+<GetAll>d__15<DotNetTips.Spargine.Extensions.NumericFormat>
-mov       [rbp-90],rax
-mov       dword ptr [rbp-78],0FFFFFFFE
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rbp-74],eax
-mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Extensions.NumericFormat>
+mov       rsi,offset MT_DotNetTips.Spargine.Core.Enumeration+<GetAll>d__15<DotNetTips.Spargine.Extensions.NumericFormat>
+mov       rcx,rsi
 call      CORINFO_HELP_NEWSFAST
-mov       rsi,rax
-mov       [rbp-0C0],rsi
-mov       rcx,19E744000E0
-mov       rdx,[rcx]
-lea       rcx,[rsi+8]
-call      CORINFO_HELP_ASSIGN_REF
-cmp       dword ptr [rbp-78],0FFFFFFFE
-jne       near ptr 00007FF91A8F2BA9
-mov       edi,[rbp-74]
+mov       rdi,rax
+mov       dword ptr [rdi+18],0FFFFFFFE
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-cmp       edi,eax
-jne       near ptr 00007FF91A8F2BA9
-xor       eax,eax
-mov       [rbp-78],eax
-lea       rdi,[rbp-90]
-mov       [rbp-40],rdi
-mov       r14,rdi
-mov       ecx,[r14+18]
-test      ecx,ecx
-je        near ptr 00007FF91A8F2834
-cmp       ecx,1
-jne       near ptr 00007FF91A8F2B59
+mov       [rdi+1C],eax
+cmp       dword ptr [rdi+18],0FFFFFFFE
+jne       near ptr 00007FFE25B815D9
+mov       r14d,[rdi+1C]
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+cmp       r14d,eax
+jne       near ptr 00007FFE25B815D9
+xor       ecx,ecx
+mov       [rdi+18],ecx
+mov       rcx,rdi
+mov       [rbp-68],rcx
+mov       rdi,[rcx]
+cmp       rdi,rsi
+jne       near ptr 00007FFE25B81554
+mov       r14,rcx
+mov       [rbp-70],r14
+mov       eax,[r14+18]
+test      eax,eax
+je        near ptr 00007FFE25B81271
+cmp       eax,1
+jne       near ptr 00007FFE25B815B1
 mov       dword ptr [r14+18],0FFFFFFFF
+mov       r14,[rbp-70]
 inc       dword ptr [r14+20]
 mov       ecx,[r14+20]
 mov       rax,[r14+10]
 cmp       ecx,[rax+8]
-jge       near ptr 00007FF91A8F2994
+jge       near ptr 00007FFE25B813CC
 cmp       ecx,[rax+8]
-jae       near ptr 00007FF91A8F2B53
+jae       near ptr 00007FFE25B815AB
 mov       ecx,ecx
 mov       r15,[rax+rcx*8+10]
 mov       rcx,offset MT_System.Reflection.RtFieldInfo
 cmp       [r15],rcx
-jne       near ptr 00007FF91A8F2B00
-mov       [rbp-0C8],r15
+jne       near ptr 00007FFE25B81541
+mov       [rbp-78],r15
 cmp       qword ptr [r15+30],0
-jne       near ptr 00007FF91A8F27CA
+jne       near ptr 00007FFE25B811FB
 mov       rcx,offset MT_System.Reflection.FieldAccessor
 call      CORINFO_HELP_NEWSFAST
 mov       r13,rax
-mov       [rbp-0D0],r13
+mov       [rbp-80],r13
 lea       rcx,[r13+8]
 mov       rdx,r15
 call      CORINFO_HELP_ASSIGN_REF
@@ -3133,99 +3136,109 @@ mov       r12,[rcx+10]
 cmp       [r12],r12b
 mov       rcx,offset MT_System.RuntimeType
 cmp       [r12],rcx
-jne       near ptr 00007FF91A8F2AEC
-mov       [rbp-0D8],r12
+jne       near ptr 00007FFE25B8152C
+mov       [rbp-88],r12
 mov       rcx,[r12+18]
-mov       rax,7FF979C806C0
+mov       rax,7FFE84F806C0
 call      rax
 movzx     ebx,al
-mov       r12,[rbp-0D8]
-cmp       dword ptr [7FF979FDF778],0
-jne       near ptr 00007FF91A8F2AD8
+mov       r12,[rbp-88]
+cmp       dword ptr [7FFE852DF778],0
+jne       near ptr 00007FFE25B81517
 cmp       ebx,1D
-ja        short 00007FF91A8F2733
+ja        short 00007FFE25B8115D
 mov       ecx,1FEF7FFF
 bt        ecx,ebx
-jae       near ptr 00007FF91A8F2AE2
+jae       near ptr 00007FFE25B81521
 cmp       ebx,10
-sete      sil
-movzx     esi,sil
-test      esi,esi
-jne       near ptr 00007FF91A8F2AC2
+sete      r14b
+movzx     r14d,r14b
+test      r14d,r14d
+je        short 00007FFE25B81180
+mov       rcx,r12
+mov       rax,[r12]
+mov       rax,[rax+68]
+call      qword ptr [rax+8]
+mov       r12,rax
+jmp       short 00007FFE25B81107
 mov       rcx,r12
 mov       rax,[r12]
 mov       rax,[rax+98]
 call      qword ptr [rax+8]
 test      rax,rax
-je        near ptr 00007FF91A8F2B24
+je        near ptr 00007FFE25B8157C
 mov       rcx,rax
-call      00007FF979C82E70
+call      00007FFE84F82E70
 test      eax,eax
-jne       short 00007FF91A8F27A8
-mov       r13,[rbp-0D0]
+jne       short 00007FFE25B811DF
+mov       r13,[rbp-80]
 mov       rcx,[r13+8]
 mov       rcx,[rcx+10]
 mov       rdx,[rcx+18]
 test      dl,2
-je        short 00007FF91A8F2788
+je        short 00007FFE25B811BF
 xor       eax,eax
-jmp       short 00007FF91A8F279A
+jmp       short 00007FFE25B811D1
 mov       eax,[rdx]
 and       eax,0F0000
 cmp       eax,50000
 sete      al
 movzx     eax,al
 test      eax,eax
-jne       short 00007FF91A8F27A8
+jne       short 00007FFE25B811DF
 mov       dword ptr [r13+20],0F
-jmp       short 00007FF91A8F27B7
-mov       r13,[rbp-0D0]
+jmp       short 00007FFE25B811EB
+mov       r13,[rbp-80]
 mov       dword ptr [r13+20],11
-mov       r15,[rbp-0C8]
+mov       r15,[rbp-78]
 lea       rcx,[r15+30]
 mov       rdx,r13
 call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,[r15+30]
 xor       edx,edx
 cmp       [rcx],ecx
-call      qword ptr [7FF91A4C78B8]
+call      qword ptr [7FFE257678B8]
 mov       rdx,rax
 mov       rcx,offset MT_DotNetTips.Spargine.Extensions.NumericFormat
-call      qword ptr [7FF91A076850]
+call      qword ptr [7FFE25376850]
 test      rax,rax
-je        near ptr 00007FF91A8F2662
-mov       [r14+8],rax
+je        near ptr 00007FFE25B8108E
+mov       r14,[rbp-70]
+lea       rcx,[r14+8]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
 mov       dword ptr [r14+18],1
-mov       r8,[rdi+8]
-mov       rsi,[rbp-0C0]
-inc       dword ptr [rsi+14]
-mov       rcx,[rsi+8]
-mov       r14d,[rsi+10]
-cmp       [rcx+8],r14d
-jbe       near ptr 00007FF91A8F2983
-lea       edx,[r14+1]
-mov       [rsi+10],edx
-mov       edx,r14d
-call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-jmp       near ptr 00007FF91A8F2642
+mov       rcx,[rbp-68]
+mov       rdi,[rcx+8]
+mov       [rbp-40],rdi
+mov       rbx,[rbp+10]
+mov       r14,[rbx+18]
+mov       rdx,[rbp-40]
+lea       rcx,[r14+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [r14+8],rcx
+mov       [rbp+10],rbx
+mov       rcx,[rbp-68]
+jmp       near ptr 00007FFE25B8105E
 mov       dword ptr [r14+18],0FFFFFFFF
-mov       rcx,19E5C7F1178
-mov       r15,[rcx]
+mov       rax,2068C121168
+mov       r15,[rax]
 test      r15,r15
-jne       short 00007FF91A8F2863
-mov       rcx,1DEF35D06A0
-call      qword ptr [7FF91A2E56C8]
+jne       short 00007FFE25B812A0
+mov       rcx,24722D606C8
+call      qword ptr [7FFE25377C48]
 mov       r13,rax
-jmp       short 00007FF91A8F2866
+jmp       short 00007FFE25B812A3
 mov       r13,r15
 cmp       [r13],r13b
 lea       r15,[r13+50]
-mov       rcx,[r15]
-test      rcx,rcx
-je        near ptr 00007FF91A8F299F
-cmp       byte ptr [rcx+18],0
-je        near ptr 00007FF91A8F29E0
-mov       r15,[rcx+8]
+mov       rax,[r15]
+test      rax,rax
+je        near ptr 00007FFE25B813F4
+cmp       byte ptr [rax+18],0
+je        near ptr 00007FFE25B81432
+mov       r15,[rax+8]
 mov       r13d,[r15+8]
 mov       edx,r13d
 xor       r8d,r8d
@@ -3234,21 +3247,21 @@ mov       [rbp-50],r8
 mov       [rbp-48],r8d
 mov       [rbp-44],edx
 test      r13d,r13d
-jle       short 00007FF91A8F28FB
+jle       short 00007FFE25B8133C
 add       r15,10
 mov       r12,[r15]
 mov       edx,[r12+18]
 mov       r8d,edx
 and       r8d,18
 cmp       r8d,edx
-jne       short 00007FF91A8F28F2
+jne       short 00007FFE25B81333
 cmp       dword ptr [rbp-48],0
-je        near ptr 00007FF91A8F297A
+je        near ptr 00007FFE25B813C3
 cmp       dword ptr [rbp-48],1
-je        short 00007FF91A8F2945
+je        near ptr 00007FFE25B8138E
 mov       edx,[rbp-44]
 cmp       edx,[rbp-48]
-je        near ptr 00007FF91A8F2A05
+je        near ptr 00007FFE25B8145A
 movsxd    rdx,dword ptr [rbp-48]
 mov       rcx,[rbp-58]
 mov       r8,r12
@@ -3258,26 +3271,28 @@ inc       edx
 mov       [rbp-48],edx
 add       r15,8
 dec       r13d
-jne       short 00007FF91A8F28AA
+jne       short 00007FFE25B812E7
 mov       r15,[rbp-58]
 mov       r13,[rbp-50]
 mov       r12d,[rbp-48]
 test      r12d,r12d
-je        near ptr 00007FF91A8F2A2F
+je        near ptr 00007FFE25B81484
 cmp       r12d,1
-je        near ptr 00007FF91A8F2A41
+je        near ptr 00007FFE25B81496
 test      r12d,r12d
-jl        near ptr 00007FF91A8F2B13
+jl        near ptr 00007FFE25B8156B
 test      r15,r15
-je        near ptr 00007FF91A8F2A6A
+je        near ptr 00007FFE25B814BF
 cmp       [r15+8],r12d
-jne       near ptr 00007FF91A8F2A84
-mov       [r14+10],r15
+jne       near ptr 00007FFE25B814D9
+lea       rcx,[r14+10]
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
 xor       ecx,ecx
 mov       [r14+20],ecx
-jmp       near ptr 00007FF91A8F2666
+jmp       near ptr 00007FFE25B81096
 cmp       dword ptr [rbp-44],2
-jl        near ptr 00007FF91A8F29F9
+jl        near ptr 00007FFE25B8144E
 movsxd    rdx,dword ptr [rbp-44]
 mov       rcx,offset MT_System.Reflection.FieldInfo[]
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -3286,16 +3301,18 @@ mov       rcx,[rbp-58]
 mov       r8,[rbp-50]
 xor       edx,edx
 call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-jmp       near ptr 00007FF91A8F28DA
+jmp       near ptr 00007FFE25B8131B
 mov       [rbp-50],r12
-jmp       near ptr 00007FF91A8F28EA
-mov       rcx,rsi
-mov       rdx,r8
-call      qword ptr [7FF91A0771C8]
-jmp       near ptr 00007FF91A8F2642
+jmp       near ptr 00007FFE25B8132B
 xor       ecx,ecx
+mov       r14,[rbp-70]
 mov       [r14+10],rcx
-jmp       near ptr 00007FF91A8F2B59
+jmp       near ptr 00007FFE25B815B1
+mov       rcx,[rbp-68]
+mov       r11,7FFE252C0B08
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FFE25B81245
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache+MemberInfoCache<System.Reflection.RuntimeFieldInfo>
 call      CORINFO_HELP_NEWSFAST
 mov       r12,rax
@@ -3305,33 +3322,33 @@ call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,r15
 mov       rdx,r12
 xor       r8d,r8d
-call      00007FF979C7FBA0
+call      00007FFE84F7FBA0
+test      rax,rax
+jne       near ptr 00007FFE25B812B7
+mov       rax,r12
+jmp       near ptr 00007FFE25B812B7
 mov       rcx,rax
-test      rcx,rcx
-jne       near ptr 00007FF91A8F287A
-mov       rcx,r12
-jmp       near ptr 00007FF91A8F287A
 xor       edx,edx
 xor       r8d,r8d
 mov       r9d,2
-call      qword ptr [7FF91A2E6910]
+call      qword ptr [7FFE2537D2C0]
 mov       r15,rax
-jmp       near ptr 00007FF91A8F2888
+jmp       near ptr 00007FFE25B812C5
 mov       dword ptr [rbp-44],4
-jmp       near ptr 00007FF91A8F294F
+jmp       near ptr 00007FFE25B81398
 mov       eax,[rbp-44]
 add       eax,eax
 mov       [rbp-5C],eax
 lea       rdx,[rbp-58]
 mov       r8d,eax
-mov       rcx,7FF91A3421F0
-call      qword ptr [7FF91A2E6AD8]
+mov       rcx,7FFE25528150
+call      qword ptr [7FFE2537D4E8]
 mov       edx,[rbp-5C]
 mov       [rbp-44],edx
-jmp       near ptr 00007FF91A8F28DA
-mov       rcx,19E5E401BD0
-mov       r15,[rcx]
-jmp       near ptr 00007FF91A8F2936
+jmp       near ptr 00007FFE25B8131B
+mov       rdx,2068DC01BE0
+mov       r15,[rdx]
+jmp       near ptr 00007FFE25B81377
 mov       rcx,offset MT_System.Reflection.FieldInfo[]
 mov       edx,1
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -3340,12 +3357,12 @@ mov       rcx,r15
 mov       r8,r13
 xor       edx,edx
 call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-jmp       near ptr 00007FF91A8F2936
+jmp       near ptr 00007FFE25B81377
 mov       edx,r12d
 mov       rcx,offset MT_System.Reflection.FieldInfo[]
 call      CORINFO_HELP_NEWARR_1_PTR
 mov       r15,rax
-jmp       near ptr 00007FF91A8F2936
+jmp       near ptr 00007FFE25B81377
 mov       edx,r12d
 mov       rcx,offset MT_System.Reflection.FieldInfo[]
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -3354,67 +3371,58 @@ lea       rcx,[r13+10]
 lea       rdx,[r15+10]
 mov       r8d,[r15+8]
 cmp       r12d,r8d
-jle       short 00007FF91A8F2AAD
+jle       short 00007FFE25B81502
 mov       r12d,r8d
 mov       r8d,r12d
 shl       r8,3
-call      qword ptr [7FF91A0757A0]
+call      qword ptr [7FFE253757A0]
 mov       r15,r13
-jmp       near ptr 00007FF91A8F2936
-mov       rcx,r12
-mov       rax,[r12]
-mov       rax,[rax+68]
-call      qword ptr [rax+8]
-mov       r12,rax
-jmp       near ptr 00007FF91A8F26DD
+jmp       near ptr 00007FFE25B81377
 call      CORINFO_HELP_POLL_GC
-jmp       near ptr 00007FF91A8F2720
-mov       esi,1
-jmp       near ptr 00007FF91A8F273E
+jmp       near ptr 00007FFE25B8114A
+mov       r14d,1
+jmp       near ptr 00007FFE25B81168
 mov       rcx,r12
 mov       rax,[r12]
 mov       rax,[rax+68]
 call      qword ptr [rax]
-mov       esi,eax
-jmp       near ptr 00007FF91A8F273E
+mov       r14d,eax
+jmp       near ptr 00007FFE25B81168
 mov       rcx,r15
 xor       edx,edx
 mov       rax,[r15]
 mov       rax,[rax+58]
 call      qword ptr [rax]
-jmp       near ptr 00007FF91A8F27D8
+jmp       near ptr 00007FFE25B81209
+mov       r11,7FFE252C0B00
+call      qword ptr [r11]
+test      eax,eax
+jne       near ptr 00007FFE25B813DB
+jmp       short 00007FFE25B815B1
 mov       ecx,45
 mov       edx,0D
-call      qword ptr [7FF91A6E5830]
+call      qword ptr [7FFE25985908]
 int       3
 mov       rcx,offset MT_System.ArgumentNullException
 call      CORINFO_HELP_NEWSFAST
-mov       r14,rax
-call      qword ptr [7FF91A846988]
+mov       rsi,rax
+call      qword ptr [7FFE25AE6B20]
 mov       r8,rax
-mov       rcx,r14
+mov       rcx,rsi
 xor       edx,edx
-call      qword ptr [7FF91A8469A0]
-mov       rcx,r14
+call      qword ptr [7FFE25AE6B38]
+mov       rcx,rsi
 call      CORINFO_HELP_THROW
 int       3
 call      CORINFO_HELP_RNGCHKFAIL
 int       3
-test      rdi,rdi
-je        short 00007FF91A8F2B6B
-xor       ecx,ecx
-mov       [rdi+10],rcx
-mov       dword ptr [rdi+18],0FFFFFFFE
-mov       rsi,[rbp-0C0]
-mov       [rbp-68],rsi
-mov       rbx,[rbp+10]
-mov       rcx,[rbx+18]
-lea       r8,[rbp-68]
-mov       rdx,7FF91A8294B0
-cmp       [rcx],ecx
-call      qword ptr [7FF91A79EEB0]
-nop
-add       rsp,0C8
+cmp       rdi,rsi
+jne       short 00007FFE25B815F6
+xor       r11d,r11d
+mov       rcx,[rbp-68]
+mov       [rcx+10],r11
+mov       dword ptr [rcx+18],0FFFFFFFE
+add       rsp,78
 pop       rbx
 pop       rsi
 pop       rdi
@@ -3424,22 +3432,32 @@ pop       r14
 pop       r15
 pop       rbp
 ret
-mov       rax,offset MT_DotNetTips.Spargine.Core.Enumeration+<GetAll>d__15<DotNetTips.Spargine.Extensions.NumericFormat>
-mov       [rbp-0B8],rax
+mov       rcx,rsi
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
 xor       eax,eax
-mov       [rbp-0A0],eax
+mov       [rdi+18],eax
 call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rbp-9C],eax
-lea       rdi,[rbp-0B8]
-jmp       near ptr 00007FF91A8F263E
+mov       [rdi+1C],eax
+jmp       near ptr 00007FFE25B81057
+mov       rcx,[rbp-68]
+mov       r11,7FFE252C0B10
+call      qword ptr [r11]
+jmp       short 00007FFE25B815C8
 sub       rsp,28
 vzeroupper
-cmp       qword ptr [rbp-40],0
-je        short 00007FF91A8F2BF8
-xor       ecx,ecx
-mov       rdi,[rbp-40]
-mov       [rdi+10],rcx
-mov       dword ptr [rdi+18],0FFFFFFFE
+mov       rcx,[rbp-68]
+mov       rdi,[rcx]
+mov       rsi,offset MT_DotNetTips.Spargine.Core.Enumeration+<GetAll>d__15<DotNetTips.Spargine.Extensions.NumericFormat>
+cmp       rdi,rsi
+jne       short 00007FFE25B81636
+xor       r11d,r11d
+mov       [rcx+10],r11
+mov       dword ptr [rcx+18],0FFFFFFFE
+jmp       short 00007FFE25B81643
+mov       r11,7FFE252C0B10
+call      qword ptr [r11]
+nop
 add       rsp,28
 ret
 
@@ -3452,7 +3470,7 @@ mov       rbx,rcx
 mov       rsi,rdx
 mov       ecx,[rbx+20]
 cmp       ecx,7
-jne       short 00007FF91A8F1284
+jne       short 00007FFE25B80044
 mov       rax,[rbx+10]
 mov       rax,[rax]
 add       rsp,30
@@ -3461,11 +3479,11 @@ pop       rsi
 pop       rdi
 ret
 cmp       ecx,11
-ja        short 00007FF91A8F12A1
+ja        short 00007FFE25B80061
 mov       ecx,ecx
-lea       rax,[7FF91A8F15F8]
+lea       rax,[7FFE25B803B0]
 mov       eax,[rax+rcx*4]
-lea       rdx,[7FF91A8F126D]
+lea       rdx,[7FFE25B8002D]
 add       rax,rdx
 jmp       rax
 xor       eax,eax
@@ -3478,150 +3496,101 @@ mov       rcx,[rbx+8]
 mov       rcx,[rcx+10]
 mov       rdx,rsi
 cmp       [rcx],ecx
-call      qword ptr [7FF919FBA578]
+call      qword ptr [7FFE252BA578]
 test      eax,eax
-jne       short 00007FF91A8F12D0
+jne       short 00007FFE25B80090
 test      rsi,rsi
-jne       near ptr 00007FF91A8F14A5
-jmp       near ptr 00007FF91A8F149E
+jne       near ptr 00007FFE25B8025B
+jmp       near ptr 00007FFE25B80254
 cmp       [rsi],sil
 mov       rax,[rbx+10]
 mov       rax,[rsi+rax+8]
-jmp       short 00007FF91A8F127C
+jmp       short 00007FFE25B8003C
 mov       rcx,[rbx+8]
 mov       rcx,[rcx+10]
 mov       rdx,rsi
 cmp       [rcx],ecx
-call      qword ptr [7FF919FBA578]
+call      qword ptr [7FFE252BA578]
 test      eax,eax
-jne       short 00007FF91A8F1303
+jne       short 00007FFE25B800C3
 test      rsi,rsi
-jne       near ptr 00007FF91A8F14A5
-jmp       near ptr 00007FF91A8F149E
+jne       near ptr 00007FFE25B8025B
+jmp       near ptr 00007FFE25B80254
 cmp       [rsi],sil
 mov       rdx,[rbx+10]
 lea       rdx,[rsi+rdx+8]
 mov       rcx,[rbx+18]
-call      qword ptr [7FF91A8469D0]
-jmp       near ptr 00007FF91A8F127C
+call      qword ptr [7FFE25AE6B68]
+jmp       near ptr 00007FFE25B8003C
 mov       rcx,[rbx+8]
 mov       rcx,[rcx+10]
 mov       rdx,rsi
 cmp       [rcx],ecx
-call      qword ptr [7FF919FBA578]
+call      qword ptr [7FFE252BA578]
 test      eax,eax
-jne       short 00007FF91A8F1343
+jne       short 00007FFE25B80103
 test      rsi,rsi
-jne       near ptr 00007FF91A8F14A5
-jmp       near ptr 00007FF91A8F149E
+jne       near ptr 00007FFE25B8025B
+jmp       near ptr 00007FFE25B80254
 cmp       [rsi],sil
 mov       rcx,[rbx+10]
 mov       rsi,[rsi+rcx+8]
 mov       rcx,[rbx+8]
 mov       rdx,[rcx+28]
 test      rdx,rdx
-jne       short 00007FF91A8F1365
-call      qword ptr [7FF91A4C7840]
+jne       short 00007FFE25B80125
+call      qword ptr [7FFE25767840]
 mov       rdx,rax
 mov       rcx,rsi
-call      qword ptr [7FF91A8469B8]
-jmp       near ptr 00007FF91A8F127C
+call      qword ptr [7FFE25AE6B50]
+jmp       near ptr 00007FFE25B8003C
 mov       rcx,[rbx+18]
 mov       rdx,[rbx+10]
-call      qword ptr [7FF91A8469D0]
-jmp       near ptr 00007FF91A8F127C
+call      qword ptr [7FFE25AE6B68]
+jmp       near ptr 00007FFE25B8003C
 mov       rcx,[rbx+18]
 mov       rdx,[rbx+10]
 mov       rdx,[rdx]
 cmp       [rdx],dl
 add       rdx,8
-call      qword ptr [7FF91A8469D0]
-jmp       near ptr 00007FF91A8F127C
+call      qword ptr [7FFE25AE6B68]
+jmp       near ptr 00007FFE25B8003C
 mov       rcx,[rbx+10]
 mov       rsi,[rcx]
 mov       rcx,[rbx+8]
 mov       rdx,[rcx+28]
 test      rdx,rdx
-jne       short 00007FF91A8F13BF
-call      qword ptr [7FF91A4C7840]
+jne       short 00007FFE25B8017F
+call      qword ptr [7FFE25767840]
 mov       rdx,rax
 mov       rcx,rsi
-call      qword ptr [7FF91A8469B8]
-jmp       near ptr 00007FF91A8F127C
+call      qword ptr [7FFE25AE6B50]
+jmp       near ptr 00007FFE25B8003C
 mov       rcx,rbx
-call      qword ptr [7FF91A4C78D0]
+call      qword ptr [7FFE257678D0]
 test      eax,eax
-jne       short 00007FF91A8F13FF
+jne       short 00007FFE25B801BF
 mov       rcx,[rbx+8]
 mov       rcx,[rcx+10]
 mov       rdx,rsi
 cmp       [rcx],ecx
-call      qword ptr [7FF919FBA578]
+call      qword ptr [7FFE252BA578]
 test      eax,eax
-jne       short 00007FF91A8F13FF
+jne       short 00007FFE25B801BF
 test      rsi,rsi
-jne       near ptr 00007FF91A8F14A5
-jmp       near ptr 00007FF91A8F149E
+jne       near ptr 00007FFE25B8025B
+jmp       near ptr 00007FFE25B80254
 xor       ecx,ecx
 mov       [rsp+28],ecx
-mov       rcx,[rbx+8]
-mov       rdi,rcx
-mov       rdx,[rcx+28]
-test      rdx,rdx
-jne       short 00007FF91A8F141E
-call      qword ptr [7FF91A4C7840]
-mov       rdx,rax
-mov       r8,rdx
-test      r8,r8
-je        short 00007FF91A8F143C
-mov       rcx,offset MT_System.RuntimeType
-cmp       [r8],rcx
-je        short 00007FF91A8F143C
-call      qword ptr [7FF91A076328]
-int       3
-lea       r9,[rsp+28]
-mov       [rsp+20],r9
-mov       r9,[rbx+8]
-mov       r9,[r9+10]
-mov       rdx,rsi
-mov       rcx,rdi
-call      qword ptr [7FF91A4C78E8]
-mov       rsi,rax
-cmp       byte ptr [rsp+28],0
-je        short 00007FF91A8F146D
-mov       rcx,rbx
-call      qword ptr [7FF91A4C7900]
-mov       rax,rsi
-jmp       near ptr 00007FF91A8F127C
-mov       rcx,rbx
-call      qword ptr [7FF91A4C78D0]
-test      eax,eax
-jne       short 00007FF91A8F14B3
-mov       rcx,[rbx+8]
-mov       rcx,[rcx+10]
-mov       rdx,rsi
-cmp       [rcx],ecx
-call      qword ptr [7FF919FBA578]
-test      eax,eax
-jne       short 00007FF91A8F14B3
-test      rsi,rsi
-jne       short 00007FF91A8F14A5
-call      qword ptr [7FF91A8469E8]
-int       3
-mov       rdx,[rbx+8]
-mov       rcx,rsi
-call      qword ptr [7FF91A846A00]
-int       3
-mov       dword ptr [rsp+28],1
 mov       rdi,[rbx+8]
 mov       rcx,[rbx+8]
 mov       rdx,[rcx+28]
 test      rdx,rdx
-jne       short 00007FF91A8F14D5
-call      qword ptr [7FF91A4C7840]
+jne       short 00007FFE25B801DF
+call      qword ptr [7FFE25767840]
 mov       rdx,rax
 mov       rcx,offset MT_System.RuntimeType
-call      qword ptr [7FF91A076328]
+call      qword ptr [7FFE25376328]
 mov       r8,rax
 lea       r9,[rsp+28]
 mov       [rsp+20],r9
@@ -3629,55 +3598,99 @@ mov       r9,[rbx+8]
 mov       r9,[r9+10]
 mov       rdx,rsi
 mov       rcx,rdi
-call      qword ptr [7FF91A4C78E8]
-jmp       near ptr 00007FF91A8F127C
+call      qword ptr [7FFE257678E8]
+mov       rsi,rax
+cmp       byte ptr [rsp+28],0
+je        short 00007FFE25B80223
+mov       rcx,rbx
+call      qword ptr [7FFE25767900]
+mov       rax,rsi
+jmp       near ptr 00007FFE25B8003C
+mov       rcx,rbx
+call      qword ptr [7FFE257678D0]
+test      eax,eax
+jne       short 00007FFE25B80269
+mov       rcx,[rbx+8]
+mov       rcx,[rcx+10]
+mov       rdx,rsi
+cmp       [rcx],ecx
+call      qword ptr [7FFE252BA578]
+test      eax,eax
+jne       short 00007FFE25B80269
+test      rsi,rsi
+jne       short 00007FFE25B8025B
+call      qword ptr [7FFE25AE6B80]
+int       3
+mov       rdx,[rbx+8]
+mov       rcx,rsi
+call      qword ptr [7FFE25AE6B98]
+int       3
+mov       dword ptr [rsp+28],1
+mov       rdi,[rbx+8]
+mov       rcx,[rbx+8]
+mov       rdx,[rcx+28]
+test      rdx,rdx
+jne       short 00007FFE25B8028B
+call      qword ptr [7FFE25767840]
+mov       rdx,rax
+mov       rcx,offset MT_System.RuntimeType
+call      qword ptr [7FFE25376328]
+mov       r8,rax
+lea       r9,[rsp+28]
+mov       [rsp+20],r9
+mov       r9,[rbx+8]
+mov       r9,[r9+10]
+mov       rdx,rsi
+mov       rcx,rdi
+call      qword ptr [7FFE257678E8]
+jmp       near ptr 00007FFE25B8003C
 mov       rcx,[rbx+8]
 cmp       [rcx],ecx
-call      qword ptr [7FF91A341558]
+call      qword ptr [7FFE255274B8]
 test      rax,rax
-je        short 00007FF91A8F1568
+je        short 00007FFE25B8031E
 mov       rcx,[rbx+8]
 cmp       [rcx],ecx
-call      qword ptr [7FF91A341558]
+call      qword ptr [7FFE255274B8]
 mov       rcx,rax
 mov       rax,[rax]
 mov       rax,[rax+0B0]
 call      qword ptr [rax]
 test      eax,eax
-je        short 00007FF91A8F1568
+je        short 00007FFE25B8031E
 mov       rcx,offset MT_System.InvalidOperationException
 call      CORINFO_HELP_NEWSFAST
 mov       rbx,rax
-call      qword ptr [7FF91A846A18]
+call      qword ptr [7FFE25AE6BB0]
 mov       rdx,rax
 mov       rcx,rbx
-call      qword ptr [7FF91A4C5D28]
+call      qword ptr [7FFE25765D28]
 mov       rcx,rbx
 call      CORINFO_HELP_THROW
 int       3
 mov       rcx,[rbx+8]
 cmp       [rcx],ecx
-call      qword ptr [7FF91A341558]
+call      qword ptr [7FFE255274B8]
 test      rax,rax
-je        short 00007FF91A8F15D2
+je        short 00007FFE25B80388
 mov       rcx,[rbx+8]
 mov       rdx,[rcx+28]
 test      rdx,rdx
-jne       short 00007FF91A8F158F
-call      qword ptr [7FF91A4C7840]
+jne       short 00007FFE25B80345
+call      qword ptr [7FFE25767840]
 mov       rdx,rax
 mov       rcx,offset MT_System.RuntimeType
-call      qword ptr [7FF91A076328]
+call      qword ptr [7FFE25376328]
 mov       rcx,rax
 cmp       [rcx],ecx
-call      qword ptr [7FF91A2ED4A0]
+call      qword ptr [7FFE25515398]
 test      eax,eax
-je        short 00007FF91A8F15D2
+je        short 00007FFE25B80388
 mov       rcx,offset MT_System.NotSupportedException
 call      CORINFO_HELP_NEWSFAST
 mov       rbx,rax
 mov       rcx,rbx
-call      qword ptr [7FF91A846A30]
+call      qword ptr [7FFE25AE6BC8]
 mov       rcx,rbx
 call      CORINFO_HELP_THROW
 int       3
@@ -3685,73 +3698,43 @@ mov       rcx,offset MT_System.FieldAccessException
 call      CORINFO_HELP_NEWSFAST
 mov       rsi,rax
 mov       rcx,rsi
-call      qword ptr [7FF91A846A48]
+call      qword ptr [7FFE25AE6BE0]
 mov       rcx,rsi
 call      CORINFO_HELP_THROW
 int       3
 
 System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
 test      rdx,rdx
-je        short 00007FF91A8F2D0B
-mov       rax,[rdx]
-cmp       rax,rcx
-je        short 00007FF91A8F2D0B
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A8F2D0B
-test      rax,rax
-je        short 00007FF91A8F2D09
-mov       rax,[rax+10]
-cmp       rax,rcx
-je        short 00007FF91A8F2D0B
-test      rax,rax
-jne       short 00007FF91A8F2D0F
-xor       edx,edx
+je        short 00007FFE25B81B4A
+cmp       [rdx],rcx
+jne       short 00007FFE25B81B4E
 mov       rax,rdx
 ret
+mov       rax,[rdx]
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A8F2D0B
+je        short 00007FFE25B81B4A
 test      rax,rax
-je        short 00007FF91A8F2D09
+je        short 00007FFE25B81B8F
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A8F2D0B
+je        short 00007FFE25B81B4A
 test      rax,rax
-je        short 00007FF91A8F2D09
+je        short 00007FFE25B81B8F
 mov       rax,[rax+10]
 cmp       rax,rcx
-je        short 00007FF91A8F2D0B
-jmp       short 00007FF91A8F2CF6
-
-System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-sub       rsp,28
-mov       eax,[rcx+8]
-cmp       rax,rdx
-jbe       short 00007FF91A15865D
-lea       rax,[rcx+rdx*8+10]
-mov       rcx,[rcx]
-mov       rdx,[rcx+30]
-test      r8,r8
-je        short 00007FF91A158664
-cmp       rdx,[r8]
-jne       short 00007FF91A158641
-mov       rcx,rax
-mov       rdx,r8
-add       rsp,28
-jmp       near ptr 00007FF979CC7B10
-mov       r10,offset MT_System.Object[]
-cmp       rcx,r10
-je        short 00007FF91A158632
-mov       rcx,rax
-add       rsp,28
-jmp       qword ptr [7FF91A2E6EC8]
-call      qword ptr [7FF91A844330]
-int       3
-xor       ecx,ecx
-mov       [rax],rcx
-add       rsp,28
-ret
+je        short 00007FFE25B81B4A
+test      rax,rax
+je        short 00007FFE25B81B8F
+mov       rax,[rax+10]
+cmp       rax,rcx
+je        short 00007FFE25B81B4A
+test      rax,rax
+je        short 00007FFE25B81B8F
+mov       rax,[rax+10]
+jmp       short 00007FFE25B81B55
+xor       edx,edx
+jmp       short 00007FFE25B81B4A
 
 System.RuntimeType.InitializeCache()
 push      rbp
@@ -3778,17 +3761,17 @@ mov       [rbp-70],rcx
 mov       rcx,rbp
 mov       [rbp-60],rcx
 cmp       qword ptr [rbx+10],0
-je        near ptr 00007FF91A903E65
+je        near ptr 00007FFE25B854E5
 mov       rcx,[rbx+10]
 mov       rdx,[rcx]
 mov       rdi,rdx
 test      rdi,rdi
-je        short 00007FF91A903D0A
+je        short 00007FFE25B8538A
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 cmp       [rdi],rcx
-jne       near ptr 00007FF91A903E9E
+jne       near ptr 00007FFE25B8551E
 test      rdi,rdi
-jne       near ptr 00007FF91A903E4E
+jne       near ptr 00007FFE25B854CE
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
@@ -3799,13 +3782,13 @@ lea       rcx,[rdi+8]
 mov       rdx,rbx
 call      CORINFO_HELP_ASSIGN_REF
 mov       rcx,rbx
-call      00007FF979C81870
+call      00007FFE84F81870
 mov       r14,rax
 test      r14,r14
-je        near ptr 00007FF91A903EA5
+je        near ptr 00007FFE25B85524
 mov       rax,[r14+8]
 test      rax,rax
-jne       near ptr 00007FF91A903E0E
+jne       near ptr 00007FFE25B8548E
 mov       [rbp+10],rbx
 mov       [rbp-0A8],r14
 mov       [rbp-50],r14
@@ -3818,19 +3801,19 @@ mov       [rbp-98],rdx
 mov       [rbp-90],rcx
 lea       rcx,[rbp-98]
 lea       rdx,[rbp-48]
-mov       rax,7FF91A31C5A0
+mov       rax,7FFE254D6D90
 mov       [rbp-78],rax
-lea       rax,[7FF91A903DCF]
+lea       rax,[7FFE25B8544F]
 mov       [rbp-68],rax
 lea       rax,[rbp-88]
 mov       [rsi+8],rax
 mov       byte ptr [rsi+4],0
-mov       rax,7FF979C12C30
+mov       rax,7FFE84F12C30
 call      rax
 mov       byte ptr [rsi+4],1
-cmp       dword ptr [7FF979FDF778],0
-je        short 00007FF91A903DE2
-call      qword ptr [7FF979FCD608]
+cmp       dword ptr [7FFE852DF778],0
+je        short 00007FFE25B85462
+call      qword ptr [7FFE852CD608]
 mov       rcx,[rbp-80]
 mov       [rsi+8],rcx
 mov       rbx,[rbp-48]
@@ -3849,13 +3832,13 @@ mov       [rdi+9C],cl
 mov       rcx,[rbx+10]
 mov       rdx,rdi
 xor       r8d,r8d
-call      00007FF979C904E0
+call      00007FFE84F904E0
 mov       rdx,rax
 test      rdx,rdx
-je        short 00007FF91A903E47
+je        short 00007FFE25B854C7
 mov       rcx,offset MT_System.RuntimeType+RuntimeTypeCache
 cmp       [rdx],rcx
-jne       short 00007FF91A903EBE
+jne       short 00007FFE25B8553D
 test      rdx,rdx
 cmovne    rdi,rdx
 mov       rax,rdi
@@ -3872,172 +3855,60 @@ ret
 mov       [rbp-40],rbx
 lea       rcx,[rbp-40]
 mov       edx,1
-call      qword ptr [7FF91A84E0B8]
+call      qword ptr [7FFE25AEC630]
 mov       rdx,rax
 lea       rcx,[rbx+10]
 xor       eax,eax
 lock cmpxchg [rcx],rdx
 test      rax,rax
-je        near ptr 00007FF91A903CE8
+je        near ptr 00007FFE25B85368
 lea       rcx,[rbp-40]
-call      qword ptr [7FF91A8471B0]
-jmp       near ptr 00007FF91A903CE8
-call      qword ptr [7FF91A076328]
+call      qword ptr [7FFE25AE71F8]
+jmp       near ptr 00007FFE25B85368
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
 int       3
 mov       [rbp+10],rbx
 mov       rcx,rbx
-call      qword ptr [7FF91A2E5710]
+call      qword ptr [7FFE25377C90]
 mov       r14,rax
 mov       rbx,[rbp+10]
-jmp       near ptr 00007FF91A903D54
+jmp       near ptr 00007FFE25B853D4
 mov       rdx,rax
-call      qword ptr [7FF91A076328]
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
 int       3
 
-System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].AddWithResize(System.__Canon)
-push      r15
-push      r14
-push      r13
-push      rdi
-push      rsi
-push      rbp
-push      rbx
-sub       rsp,40
-mov       [rsp+38],rcx
-mov       rbx,rcx
-mov       rsi,rdx
-mov       edi,[rbx+10]
-mov       ebp,edi
-lea       ecx,[rbp+1]
-mov       r14,[rbx+8]
-cmp       dword ptr [r14+8],0
-jne       near ptr 00007FF91A8F1965
-mov       r15d,4
-mov       edx,7FFFFFC7
-cmp       r15d,7FFFFFC7
-cmova     r15d,edx
-cmp       r15d,ecx
-cmovl     r15d,ecx
-cmp       r15d,edi
-jl        near ptr 00007FF91A8F1989
-cmp       [r14+8],r15d
-je        near ptr 00007FF91A8F1940
-test      r15d,r15d
-jle       near ptr 00007FF91A8F19F9
-mov       rcx,[rbx]
+System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+sub       rsp,28
+mov       eax,[rcx+8]
+cmp       rax,rdx
+jbe       short 00007FFE2545791E
+lea       rax,[rcx+rdx*8+10]
+mov       rcx,[rcx]
 mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-mov       rax,[rdx+98]
-test      rax,rax
-je        near ptr 00007FF91A8F1971
+test      r8,r8
+je        short 00007FFE25457934
+cmp       rdx,[r8]
+je        short 00007FFE25457925
+mov       r10,offset MT_System.Object[]
+cmp       rcx,r10
+je        short 00007FFE25457925
 mov       rcx,rax
-mov       edx,r15d
-call      CORINFO_HELP_NEWARR_1_PTR
-mov       r15,rax
-test      edi,edi
-jle       short 00007FF91A8F1934
-test      r14,r14
-je        near ptr 00007FF91A8F19BA
-mov       rcx,[r14]
-cmp       rcx,[r15]
-jne       near ptr 00007FF91A8F19BF
-cmp       dword ptr [rcx+4],18
-jne       near ptr 00007FF91A8F19BF
-cmp       edi,[r14+8]
-ja        near ptr 00007FF91A8F19BF
-cmp       edi,[r15+8]
-ja        near ptr 00007FF91A8F19BF
-mov       r8d,edi
-movzx     edx,word ptr [rcx]
-imul      r8,rdx
-lea       rdx,[r14+10]
-lea       rax,[r15+10]
-test      dword ptr [rcx],1000000
-je        near ptr 00007FF91A8F19AC
-cmp       r8,4000
-ja        near ptr 00007FF91A8F19A1
-mov       rcx,rax
-call      00007FF979C75D60
-cmp       dword ptr [7FF979FDF778],0
-jne       short 00007FF91A8F199A
-lea       rcx,[rbx+8]
-mov       rdx,r15
-call      CORINFO_HELP_ASSIGN_REF
-lea       ecx,[rbp+1]
-mov       [rbx+10],ecx
-mov       rcx,[rbx+8]
-movsxd    rdx,ebp
-mov       r8,rsi
-call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
-nop
-add       rsp,40
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-pop       r13
-pop       r14
-pop       r15
-ret
-mov       r15d,[r14+8]
-add       r15d,r15d
-jmp       near ptr 00007FF91A8F1866
-mov       rdx,7FF91A80C238
-call      qword ptr [7FF91A07F4B0]
-mov       rcx,rax
-jmp       near ptr 00007FF91A8F18B6
-mov       ecx,7
-mov       edx,0F
-call      qword ptr [7FF91A6E5830]
+add       rsp,28
+jmp       qword ptr [7FFE2537D8F0]
+call      qword ptr [7FFE25AE4480]
 int       3
-call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF91A8F1934
 mov       rcx,rax
-call      qword ptr [7FF91A6EDAB8]
-jmp       short 00007FF91A8F1934
-mov       rcx,rax
-call      qword ptr [7FF91A075818]
-jmp       near ptr 00007FF91A8F1934
-xor       r13d,r13d
-jmp       short 00007FF91A8F19CD
-mov       rcx,r14
-xor       edx,edx
-call      qword ptr [7FF91A846A78]
-mov       r13d,eax
-mov       rcx,r15
-xor       edx,edx
-call      qword ptr [7FF91A846A78]
-mov       r9d,eax
-mov       [rsp+20],edi
+mov       rdx,r8
+add       rsp,28
+jmp       near ptr 00007FFE84FC7B10
 xor       ecx,ecx
-mov       [rsp+28],ecx
-mov       rcx,r14
-mov       edx,r13d
-mov       r8,r15
-call      qword ptr [7FF91A844C78]
-jmp       near ptr 00007FF91A8F1934
-mov       rcx,[rbx]
-mov       rdx,[rcx+30]
-mov       rdx,[rdx]
-mov       rdx,[rdx+0A0]
-test      rdx,rdx
-je        short 00007FF91A8F1A11
-jmp       short 00007FF91A8F1A24
-mov       rdx,7FF91A890C60
-call      qword ptr [7FF91A07F4B0]
-mov       rdx,rax
-mov       rcx,rdx
-call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-mov       rdx,[rax]
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-jmp       near ptr 00007FF91A8F1940
+mov       [rax],rcx
+add       rsp,28
+ret
 
 System.RuntimeType+RuntimeTypeCache+MemberInfoCache`1[[System.__Canon, System.Private.CoreLib]].Populate(System.String, MemberListType, CacheType)
 push      rbp
-push      r15
 push      r14
-push      r13
 push      rdi
 push      rsi
 push      rbx
@@ -4047,83 +3918,16 @@ vxorps    xmm4,xmm4,xmm4
 vmovdqu   xmmword ptr [rbp+8],xmm4
 xor       eax,eax
 mov       [rbp+18],rax
-mov       rax,0FDADDABAA90C
+mov       rax,0A5EEC067CEBB
 mov       [rbp],rax
 mov       rsi,rcx
 mov       rbx,rdx
 mov       edi,r8d
 mov       r14d,r9d
 test      rbx,rbx
-je        near ptr 00007FF91A911866
+je        short 00007FFE25B9C023
 cmp       dword ptr [rbx+8],0
-je        near ptr 00007FF91A911866
-cmp       r14d,1
-jne       short 00007FF91A91175F
-movzx     r15d,word ptr [rbx+0C]
-cmp       r15d,2E
-jne       short 00007FF91A9117B6
-mov       rcx,7FF91A9EB010
-call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,19E5E400108
-mov       r15,[rcx]
-mov       rcx,r15
-mov       rdx,7FF91A9EB018
-call      CORINFO_HELP_CLASSPROFILE32
-mov       rcx,r15
-mov       rdx,rbx
-mov       rax,[rcx]
-mov       rax,[rax+50]
-call      qword ptr [rax+18]
-mov       r15d,eax
-cmp       r15d,400
-jbe       short 00007FF91A9117D1
-movsxd    rdx,r15d
-mov       rcx,offset MT_System.Byte[]
-call      CORINFO_HELP_NEWARR_1_VC
-lea       r13,[rax+10]
-mov       r15d,[rax+8]
-jmp       short 00007FF91A911822
-cmp       r15d,2A
-jne       near ptr 00007FF91A911857
-mov       rcx,7FF91A9EB00C
-call      CORINFO_HELP_COUNTPROFILE32
-jmp       short 00007FF91A91175F
-mov       rcx,7FF91A9EB120
-call      CORINFO_HELP_COUNTPROFILE32
-mov       edx,r15d
-mov       r13,rdx
-test      r13,r13
-je        short 00007FF91A911822
-mov       rcx,r13
-add       rcx,0F
-and       rcx,0FFFFFFFFFFFFFFF0
-add       rsp,30
-neg       rcx
-add       rcx,rsp
-jb        short 00007FF91A911804
-xor       ecx,ecx
-test      [rsp],esp
-sub       rsp,1000
-cmp       rsp,rcx
-jae       short 00007FF91A911804
-mov       rsp,rcx
-test      [rsp],esp
-sub       rsp,30
-lea       r13,[rsp+30]
-mov       rcx,7FF91A9EB124
-call      CORINFO_HELP_COUNTPROFILE32
-mov       [rbp+8],r13
-mov       [rbp+10],r15d
-mov       [rsp+20],r14d
-lea       r8,[rbp+8]
-mov       rdx,rbx
-mov       rcx,rsi
-mov       r9d,edi
-call      qword ptr [7FF91A2E6928]
-mov       [rbp+18],rax
-jmp       short 00007FF91A911894
-mov       rcx,7FF91A9EB008
-call      CORINFO_HELP_COUNTPROFILE32
+jne       short 00007FFE25B9C089
 xor       r8d,r8d
 mov       [rbp+8],r8
 mov       [rbp+10],r8d
@@ -4131,31 +3935,74 @@ mov       [rsp+20],r14d
 lea       r8,[rbp+8]
 mov       rcx,rsi
 mov       r9d,edi
-mov       rdx,1DEF35C0008
-call      qword ptr [7FF91A2E6928]
+mov       rdx,24722D50008
+call      qword ptr [7FFE2537D320]
 mov       [rbp+18],rax
-mov       rcx,7FF91A9EB128
-call      CORINFO_HELP_COUNTPROFILE32
 lea       rdx,[rbp+18]
 mov       rcx,rsi
 mov       r8,rbx
 mov       r9d,edi
-call      qword ptr [7FF91A2E6B50]
+call      qword ptr [7FFE2537D578]
 mov       rax,[rbp+18]
-mov       r8,0FDADDABAA90C
+mov       r8,0A5EEC067CEBB
 cmp       [rbp],r8
-je        short 00007FF91A9118CF
+je        short 00007FFE25B9C07D
 call      CORINFO_HELP_FAIL_FAST
 nop
 lea       rsp,[rbp+20]
 pop       rbx
 pop       rsi
 pop       rdi
-pop       r13
 pop       r14
-pop       r15
 pop       rbp
 ret
+cmp       r14d,1
+jne       short 00007FFE25B9C09D
+cmp       word ptr [rbx+0C],2E
+je        short 00007FFE25B9C09D
+cmp       word ptr [rbx+0C],2A
+jne       short 00007FFE25B9C023
+mov       rcx,2068DC00220
+mov       rcx,[rcx]
+mov       rdx,rbx
+call      qword ptr [7FFE25504930]
+cmp       eax,400
+jbe       short 00007FFE25B9C0D5
+movsxd    rdx,eax
+mov       rcx,offset MT_System.Byte[]
+call      CORINFO_HELP_NEWARR_1_VC
+lea       r8,[rax+10]
+mov       eax,[rax+8]
+jmp       short 00007FFE25B9C114
+mov       r8d,eax
+test      r8,r8
+je        short 00007FFE25B9C114
+mov       rdx,r8
+add       rdx,0F
+and       rdx,0FFFFFFFFFFFFFFF0
+add       rsp,30
+neg       rdx
+add       rdx,rsp
+jb        short 00007FFE25B9C0F6
+xor       edx,edx
+test      [rsp],esp
+sub       rsp,1000
+cmp       rsp,rdx
+jae       short 00007FFE25B9C0F6
+mov       rsp,rdx
+test      [rsp],esp
+sub       rsp,30
+lea       r8,[rsp+30]
+mov       [rbp+8],r8
+mov       [rbp+10],eax
+mov       [rsp+20],r14d
+lea       r8,[rbp+8]
+mov       rdx,rbx
+mov       rcx,rsi
+mov       r9d,edi
+call      qword ptr [7FFE2537D320]
+mov       [rbp+18],rax
+jmp       near ptr 00007FFE25B9C051
 
 System.Array.Resize[[System.__Canon, System.Private.CoreLib]](System.__Canon[] ByRef, Int32)
 push      rdi
@@ -4167,12 +4014,12 @@ mov       [rsp+20],rcx
 mov       rsi,rdx
 mov       ebx,r8d
 test      ebx,ebx
-jl        short 00007FF91A8F1A8D
+jl        short 00007FFE25B8043D
 mov       rdi,[rsi]
 test      rdi,rdi
-je        short 00007FF91A8F1A9E
+je        short 00007FFE25B8044E
 cmp       [rdi+8],ebx
-jne       short 00007FF91A8F1AD7
+jne       short 00007FFE25B80487
 add       rsp,28
 pop       rbx
 pop       rbp
@@ -4181,31 +4028,31 @@ pop       rdi
 ret
 mov       ecx,45
 mov       edx,0D
-call      qword ptr [7FF91A6E5830]
+call      qword ptr [7FFE25985908]
 int       3
 mov       rdx,[rcx+18]
 mov       rax,[rdx+18]
 test      rax,rax
-je        short 00007FF91A8F1AB0
+je        short 00007FFE25B80460
 mov       rcx,rax
-jmp       short 00007FF91A8F1AC3
-mov       rdx,7FF91A890F60
-call      qword ptr [7FF91A07F630]
+jmp       short 00007FFE25B80473
+mov       rdx,7FFE25B30BE0
+call      qword ptr [7FFE255F7AF8]
 mov       rcx,rax
 mov       edx,ebx
 call      CORINFO_HELP_NEWARR_1_PTR
 mov       rdx,rax
 mov       rcx,rsi
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       short 00007FF91A8F1A84
+jmp       short 00007FFE25B80434
 mov       rdx,[rcx+18]
 mov       rax,[rdx+18]
 test      rax,rax
-je        short 00007FF91A8F1AE9
+je        short 00007FFE25B80499
 mov       rcx,rax
-jmp       short 00007FF91A8F1AFC
-mov       rdx,7FF91A890F60
-call      qword ptr [7FF91A07F630]
+jmp       short 00007FFE25B804AC
+mov       rdx,7FFE25B30BE0
+call      qword ptr [7FFE255F7AF8]
 mov       rcx,rax
 mov       edx,ebx
 call      CORINFO_HELP_NEWARR_1_PTR
@@ -4217,36 +4064,25 @@ cmp       ebx,r8d
 cmovg     ebx,r8d
 mov       r8d,ebx
 shl       r8,3
-call      qword ptr [7FF91A0757A0]
+call      qword ptr [7FFE253757A0]
 mov       rcx,rsi
 mov       rdx,rbp
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
-jmp       near ptr 00007FF91A8F1A84
+jmp       near ptr 00007FFE25B80434
 
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF91A147E37
-call      00007FF979C75D60
-cmp       dword ptr [7FF979FDF778],0
-jne       short 00007FF91A147E30
+ja        short 00007FFE2544A267
+call      00007FFE84F75D60
+cmp       dword ptr [7FFE852DF778],0
+jne       short 00007FFE2544A260
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF91A147E2B
+jmp       short 00007FFE2544A25B
 add       rsp,28
-jmp       qword ptr [7FF91A6EDAB8]
-
-BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
-push      rbx
-mov       rbx,rcx
-mov       rdx,[r8]
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-xor       eax,eax
-mov       [rbx+8],rax
-pop       rbx
-ret
+jmp       qword ptr [7FFE2598E040]
 
 </code></pre></td>
 </tr>

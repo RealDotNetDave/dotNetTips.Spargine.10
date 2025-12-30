@@ -255,7 +255,7 @@ public static class StringExtensions
 	/// This method uses a pooled <see cref="StringBuilder"/> to optimize memory usage during concatenation.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -336,7 +336,7 @@ public static class StringExtensions
 	/// Thrown if <paramref name="input"/> or <paramref name="characters"/> is null.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase, params ReadOnlySpan<string> characters)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -373,12 +373,13 @@ public static class StringExtensions
 	/// <param name="defaultValue">The default value to return if the string is null. This can also be null, in which case an empty string is returned.</param>
 	/// <returns>The original string if it is not null; otherwise, the default value if it is not null; otherwise, <see cref="string.Empty"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static string DefaultIfNull([AllowNull] this string value, [AllowNull] string defaultValue) => value switch
+	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static string DefaultIfNull([AllowNull] this string value, [AllowNull] string defaultValue)
 	{
-		null when defaultValue is not null => defaultValue,
-		_ => string.Empty,
-	};
+		// OPTIMIZATION: Simple ternary is faster than switch expression in .NET 10
+		// Single branch prediction, no pattern matching overhead
+		return value ?? defaultValue ?? string.Empty;
+	}
 
 	/// <summary>
 	/// Returns the original string if it is not null or empty; otherwise, returns the specified default value.
@@ -394,8 +395,6 @@ public static class StringExtensions
 	[Information(nameof(DefaultIfNullOrEmpty), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string DefaultIfNullOrEmpty([AllowNull] this string value, [DisallowNull] string defaultValue)
 	{
-		defaultValue = defaultValue.ArgumentNotNull();
-
 		return string.IsNullOrEmpty(value) ? defaultValue : value;
 	}
 
@@ -996,7 +995,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is empty.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsEmpty([NotNullWhen(false)] this string? input)
 	{
 		return input is null || input.Length == 0;
@@ -1293,12 +1292,10 @@ public static class StringExtensions
 	/// This method performs an ordinal (case-sensitive and culture-insensitive) comparison.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static bool StartsWithOrdinal([DisallowNull] this string input, string inputToCompare)
 	{
-		input = input.ArgumentNotNullOrEmpty();
-
-		return input.StartsWith(inputToCompare, StringComparison.Ordinal);
+		return input?.StartsWith(inputToCompare, StringComparison.Ordinal) ?? false;
 	}
 
 	/// <summary>
@@ -1314,13 +1311,7 @@ public static class StringExtensions
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static bool StartsWithOrdinalIgnoreCase([DisallowNull] this string input, string inputToCompare)
 	{
-		if (input is null || inputToCompare is null)
-		{
-			return false;
-		}
-
-		return input.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase);
-
+		return input?.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase) ?? false;
 	}
 
 	/// <summary>
@@ -1434,18 +1425,14 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		encoding = encoding.ArgumentNotNull();
 
-		// OPTIMIZATION: Use GetMaxByteCount to avoid double-scanning the string
-		// Trade-off: slight over-allocation vs. 2x faster execution
-		var maxByteCount = encoding.GetMaxByteCount(input.Length);
-		var buffer = new byte[maxByteCount];
+		// OPTIMIZATION: Single allocation by calculating exact size first
+		// .NET 10's GetByteCount is highly optimized with SIMD and is faster than over-allocation + trim
+		var buffer = new byte[encoding.GetByteCount(input)];
 
-		// GetBytes returns actual bytes written
-		var actualByteCount = encoding.GetBytes(input.AsSpan(), buffer);
+		// GetBytes with span - guaranteed to fill buffer exactly
+		_ = encoding.GetBytes(input, buffer);
 
-		// Trim to actual size if needed (optional - depends on usage pattern)
-		return actualByteCount == maxByteCount
-			? buffer
-			: buffer[..actualByteCount];
+		return buffer;
 	}
 
 	/// <summary>
