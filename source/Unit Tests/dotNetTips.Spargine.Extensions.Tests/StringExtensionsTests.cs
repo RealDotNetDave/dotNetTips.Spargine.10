@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1734,7 +1734,7 @@ public class StringExtensionsTests
 		string input = "VGhpcyBpcyBhIHRlc3Qgc3RyaW5nLg=="; // "This is a test string."
 
 		// Act
-		var result = StringExtensions.ToBase64ByteSpan(input);
+		var result = StringExtensions.ToBase64Bytes(input);
 
 		// Assert
 		var expectedBytes = Encoding.UTF8.GetBytes("This is a test string.");
