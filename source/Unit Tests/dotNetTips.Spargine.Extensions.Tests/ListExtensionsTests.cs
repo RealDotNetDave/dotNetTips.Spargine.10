@@ -755,25 +755,6 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void PagingTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count);
-		const int PageCount = 10;
-		var peopleCount = 0;
-		var loopedCount = 0;
-
-		foreach (var peoplePage in people.Page(PageCount))
-		{
-			loopedCount++;
-			peopleCount += peoplePage.Count();
-		}
-
-		Assert.IsTrue(peopleCount == Count);
-
-		Assert.IsTrue(loopedCount == 26);
-	}
-
-	[TestMethod]
 	public void PerformActionTest()
 	{
 		var words = RandomData.GenerateWords(10, 10, Count).ToList();

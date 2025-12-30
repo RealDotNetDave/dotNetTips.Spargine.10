@@ -1705,26 +1705,26 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToBase64ByteSpan_InvalidBase64String_ReturnsEmptySpan()
+	public void ToBase64Bytes_InvalidBase64String_ReturnsEmptySpan()
 	{
 		// Arrange
 		string input = "InvalidBase64String";
 
 		// Act
-		var result = StringExtensions.ToBase64ByteSpan(input);
+		var result = StringExtensions.ToBase64Bytes(input);
 
 		// Assert
 		Assert.AreEqual(0, result.Length, "The byte span should be empty for an invalid Base64 string.");
 	}
 
 	[TestMethod]
-	public void ToBase64ByteSpan_NullString_ThrowsArgumentNullException()
+	public void ToBase64Bytes_NullString_ThrowsArgumentNullException()
 	{
 		// Arrange
 		string input = null;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.ToBase64ByteSpan(input));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.ToBase64Bytes(input));
 	}
 
 	[TestMethod]

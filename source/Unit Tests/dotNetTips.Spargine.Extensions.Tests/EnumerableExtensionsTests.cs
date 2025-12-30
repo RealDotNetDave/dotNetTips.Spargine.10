@@ -530,16 +530,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void PageTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-
-		var result = people.Page(10);
-
-		Assert.IsTrue(result.IsNotEmpty());
-	}
-
-	[TestMethod]
 	public void PartitionTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
