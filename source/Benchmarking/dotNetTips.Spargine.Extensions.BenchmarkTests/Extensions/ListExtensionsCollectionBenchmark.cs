@@ -180,11 +180,11 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.IsNotEmpty(p => p.BornOn.Value.Date.Month > 0));
 	}
 
-	[Benchmark(Description = "Index []")]
+	[Benchmark(Description = "Index []: Compare with IndexAtLooped")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void Index()
 	{
-		var result = this._peopleRefList[this.Count / 2];
+		var result = this._peopleRefList[this.HalfCount];
 
 		this.Consume(result);
 	}
@@ -192,7 +192,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(ListExtensions.IndexAtLooped))]
 	public void IndexAtLooped()
 	{
-		var result = this._peopleRefList.IndexAtLooped(this.Count / 2);
+		var result = this._peopleRefList.IndexAtLooped(this.HalfCount);
 
 		this.Consume(result);
 	}

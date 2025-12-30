@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -350,7 +350,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames))]
+	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
 	public void BuiltInTypeNames_NoCache()
 	{
@@ -418,7 +418,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes))]
+	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void FindDerivedTypes()
 	{
@@ -434,7 +434,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllAbstractMethods()
 	{
@@ -452,7 +452,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllConstructors()
 	{
@@ -476,7 +476,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllDeclaredFields()
 	{
@@ -497,7 +497,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result.Count());
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllDeclaredMethods()
 	{
@@ -522,7 +522,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllFields))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllFields) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllFields()
 	{
@@ -556,7 +556,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllMethods))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllMethods()
 	{
@@ -580,7 +580,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetAllProperties))]
+	[Benchmark(Description = nameof(TypeHelper.GetAllProperties) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllProperties()
 	{
@@ -685,7 +685,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute))]
+	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetMembersWithAttribute()
 	{
@@ -746,7 +746,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.HasBaseClass))]
+	[Benchmark(Description = nameof(TypeHelper.HasBaseClass) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void HasBaseClass()
 	{
@@ -791,7 +791,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface))]
+	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void ImplementsInterface()
 	{

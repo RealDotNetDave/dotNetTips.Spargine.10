@@ -111,7 +111,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "Chunk (compare to Page and Partition)")]
+	[Benchmark(Description = "Chunk (compare to Partition)")]
 	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
 	public void Chunk()
 	{
@@ -348,22 +348,10 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.Page))]
-	public void Page()
-	{
-		foreach (var people in this._personRefEnumerable.Page(25))
-		{
-			foreach (var person in people)
-			{
-				this.Consume(person);
-			}
-		}
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.Partition))]
 	public void Partition()
 	{
-		foreach (var partition in this._personRefEnumerable.Partition(this.Count / 2))
+		foreach (var partition in this._personRefEnumerable.Partition(this.HalfCount))
 		{
 			foreach (var person in partition)
 			{

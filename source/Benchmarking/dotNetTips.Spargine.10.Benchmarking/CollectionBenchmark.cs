@@ -73,14 +73,14 @@ public partial class CollectionBenchmark : Benchmark
 	/// </summary>
 	private void LoadInsertCollections()
 	{
-		LogInfo($"Loading Insert Collections. Count={this._halfCount}: {nameof(CollectionBenchmark)}.");
+		LogInfo($"Loading Insert Collections. Count={this.HalfCount}: {nameof(CollectionBenchmark)}.");
 
 		// Load people objects
-		this._peopleRefToInsert = [.. RandomData.GeneratePersonRefCollection(this._halfCount)];
+		this._peopleRefToInsert = [.. RandomData.GeneratePersonRefCollection(this.HalfCount)];
 
-		this._peopleValToInsert = [.. RandomData.GeneratePersonValCollection(this._halfCount)];
+		this._peopleValToInsert = [.. RandomData.GeneratePersonValCollection(this.HalfCount)];
 
-		this._peopleRecordToInsert = [.. RandomData.GeneratePersonRecordCollection(this._halfCount)];
+		this._peopleRecordToInsert = [.. RandomData.GeneratePersonRecordCollection(this.HalfCount)];
 	}
 
 	/// <summary>
@@ -183,7 +183,7 @@ public partial class CollectionBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._halfCount = this.MaxCount / 2;
+		this.HalfCount = this.MaxCount / 2;
 
 		// Load collections.
 		// DO NOT ADD ANY COLLECTION GENERATION ABOVE THIS LINE
@@ -196,23 +196,29 @@ public partial class CollectionBenchmark : Benchmark
 		var personValArray = this.GetPersonValArray();
 
 		// Load lookup values
-		this.PersonEmailHalf = personRefArray[this._halfCount].Email;
+		this.PersonEmailHalf = personRefArray[this.HalfCount].Email;
 		this.PersonEmailLast = personRefArray.Last().Email;
-		this.PersonFirstNameHalf = personRefArray[this._halfCount].FirstName;
+		this.PersonFirstNameHalf = personRefArray[this.HalfCount].FirstName;
 		this.PersonFirstNameLast = personRefArray.Last().FirstName;
-		this.PersonLastNameHalf = personRefArray[this._halfCount].LastName;
+		this.PersonLastNameHalf = personRefArray[this.HalfCount].LastName;
 		this.PersonLastNameLast = personRefArray.Last().LastName;
-		this.PersonRecordLookupHalf = personRecordArray[this._halfCount];
+		this.PersonRecordLookupHalf = personRecordArray[this.HalfCount];
 		this.PersonRecordLookupLast = personRecordArray.Last();
-		this.PersonRefLookupHalf = personRefArray[this._halfCount];
+		this.PersonRefLookupHalf = personRefArray[this.HalfCount];
 		this.PersonRefLookupLast = personRefArray.Last();
-		this.PersonValLookupHalf = personValArray[this._halfCount];
+		this.PersonValLookupHalf = personValArray[this.HalfCount];
 		this.PersonValLookupLast = personValArray.Last();
 
 		// Load insert collections
 		this.LoadInsertCollections();
 
 	}
+
+	/// <summary>
+	/// Gets or sets the half count.
+	/// </summary>
+	/// <value>The half count.</value>
+	public int HalfCount { get => this._halfCount; set => this._halfCount = value; }
 
 	/// <summary>
 	/// Gets or sets the maximum count for the collections used in the benchmark.

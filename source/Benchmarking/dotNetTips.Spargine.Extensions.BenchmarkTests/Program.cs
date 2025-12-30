@@ -52,6 +52,8 @@ internal sealed class Program
 
 			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
+			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
+			_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);

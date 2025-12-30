@@ -526,27 +526,15 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<IEnumerable<T>> Partition(int pageCount)
 		{
 			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(2);
 
-			// Cache collection to avoid evaluating it twice
-			var count = collection.Count();
-
-			if (count < pageCount)
+			foreach (var people in collection.Chunk(pageCount))
 			{
-				yield return collection;
-			}
-			else
-			{
-				var pagesCount = Math.Ceiling(count / (double)pageCount);
-
-				for (var pageIndex = 0; pageIndex < pagesCount; pageIndex++)
-				{
-					yield return [.. collection.Skip(pageCount * pageIndex)];
-				}
+				yield return people;
 			}
 		}
 
@@ -1366,54 +1354,6 @@ public static class EnumerableExtensions
 
 			// Default implementation using HashSet for other collection types
 			return new HashSet<T>(collection, EqualityComparer<T>.Default);
-		}
-
-		/// <summary>
-		/// Pages the specified collection into a sequence of pages each containing a maximum of <paramref name="pageSize"/> elements.
-		/// </summary>
-		/// <param name="pageSize">Size of each page.</param>
-		/// <returns>An <see cref="IEnumerable{T}"/> where each item is a page of the original collection containing up to <paramref name="pageSize"/> elements.</returns>
-		/// <remarks>
-		/// This method uses deferred execution to generate pages only when they are enumerated.
-		/// Optimized to avoid enumerator disposal issues with yield return and provides better performance
-		/// by pre-sizing the List capacity to match the page size.
-		/// </remarks>
-		[Pure]
-		[return: NotNull]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Page), "David McCarter", "11/21/2010", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public IEnumerable<IEnumerable<T>> Page(int pageSize)
-		{
-			collection = collection.ArgumentNotNull();
-			pageSize = pageSize.EnsureMinimum(2);
-
-			// FIXED: Don't use 'using' with yield return - it disposes the enumerator prematurely
-			// TODO: ANALYZE BENCHMARK RESULTS
-			var enumerator = collection.GetEnumerator();
-
-			try
-			{
-				while (enumerator.MoveNext())
-				{
-					// Pre-size the list for better performance
-					var currentPage = new List<T>(pageSize)
-			{
-				enumerator.Current
-			};
-
-					while (currentPage.Count < pageSize && enumerator.MoveNext())
-					{
-						currentPage.Add(enumerator.Current);
-					}
-
-					yield return currentPage;
-				}
-			}
-			finally
-			{
-				// Ensure proper disposal after all iterations complete
-				enumerator?.Dispose();
-			}
 		}
 
 		/// <summary>

@@ -110,12 +110,37 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result.ToArray());
 	}
 
+	[Benchmark(Description = nameof(Array.Clone) + ": Array as Record")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
+	public void CloneArrayClonePersonRecord()
+	{
+		var result = this._personRecordArray.Clone();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Array.Clone) + ": Array as Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
+	public void CloneArrayClonePersonRef()
+	{
+		var result = this._personRefArray.Clone();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Array.Clone) + ": Array as Val")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
+	public void CloneArrayClonePersonVal()
+	{
+		var result = this._personValArray.Clone();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.FastClone) + ": Array as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void ClonePerson_Val()
 	{
-		//TODO: COMPARE WITH Array.Clone()
-
 		var result = this._personValArray.FastClone();
 
 		this.Consume(result);
@@ -129,6 +154,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this.Consume(result);
 	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.FastClone) + ": Array as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ClonePersonRef()
