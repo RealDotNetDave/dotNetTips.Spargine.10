@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2025.10.12.29
+# dotNetTips.Spargine.10.Core - 2025.10.12.29
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -612,7 +612,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemBatch
@@ -624,7 +624,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithCallback
@@ -636,7 +636,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithChangeToken
@@ -648,7 +648,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithCombinedExpiration
@@ -660,7 +660,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithDependency
@@ -672,7 +672,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithPriority
@@ -684,7 +684,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithSize
@@ -696,7 +696,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithSlidingExpiration
@@ -732,7 +732,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** Compact
@@ -768,7 +768,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** CreateCacheDependency
@@ -780,7 +780,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** CreateCacheWithLimit
@@ -828,7 +828,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** GetCacheItemBatch
@@ -840,7 +840,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** GetCacheStatistics
@@ -851,7 +851,7 @@
 
 * **Status:** New
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetOrCreateAsync
@@ -886,7 +886,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** InvalidateDependentCacheItems
@@ -898,7 +898,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** PeekCacheItem
@@ -910,7 +910,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** RefreshCacheItem
@@ -934,7 +934,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** RemoveCacheItemBatch
@@ -946,7 +946,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** ResetStatistics
@@ -957,7 +957,7 @@
 
 * **Status:** New
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryGetValue
@@ -1238,6 +1238,18 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Int32 AddRange(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddRange
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Void Clear()
 
 * **Status:** Available
@@ -1270,7 +1282,7 @@
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/28/2021
-* **Description:** Add
+* **Description:** CopyTo
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -1318,7 +1330,7 @@
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/28/2021
-* **Description:** Add
+* **Description:** Remove
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -1331,6 +1343,42 @@
 * **Author:** David McCarter
 * **CreatedOn:** 7/28/2021
 * **Description:** Add
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### T ToArray()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** ToArray
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean TryAdd(T item)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** TryAdd
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean TryPeek(T equalValue, T actualValue)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** TryPeek
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -7342,4 +7390,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 12/30/2025 7:32:26 PM UTC**
+**Generated by Spargine - dotNetTips.com on 12/30/2025 8:02:21 PM UTC**

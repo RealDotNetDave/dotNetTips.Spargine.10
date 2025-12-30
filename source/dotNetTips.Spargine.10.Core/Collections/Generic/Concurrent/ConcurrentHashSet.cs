@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 /// This implementation provides atomic operations for adding, removing, and checking for elements, making it suitable for concurrent scenarios.
 /// </remarks>
 [DebuggerDisplay("Count = {Count}")]
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineConcurrentHashSet")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineConcurrentHashSet")]
 public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T>
 {
 	/// <summary>
@@ -590,6 +590,31 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
+	/// Adds multiple items to the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="items">The collection of items to add. Cannot be null.</param>
+	/// <returns>The number of items successfully added (excluding duplicates).</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddRange), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public int AddRange(IEnumerable<T> items)
+	{
+		items = items.ArgumentNotNull();
+
+		var addedCount = 0;
+
+		foreach (var item in items)
+		{
+			if (item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true))
+			{
+				addedCount++;
+			}
+		}
+
+		return addedCount;
+	}
+
+	/// <summary>
 	/// Removes all items from the <see cref="ConcurrentHashSet{T}"/>.
 	/// </summary>
 	/// <remarks>
@@ -674,7 +699,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="arrayIndex"/> is less than 0.</exception>
 	/// <exception cref="ArgumentException">Thrown if the number of elements in the source <see cref="ConcurrentHashSet{T}"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Add), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void CopyTo([DisallowNull] T[] array, int arrayIndex)
 	{
 		array = array.ArgumentItemsExists(nameof(array));
@@ -734,10 +759,100 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="item">The item to remove.</param>
 	/// <returns><c>true</c> if the item was successfully removed; otherwise, <c>false</c>. This method also returns <c>false</c> if the item was not found in the original <see cref="ConcurrentHashSet{T}"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Add), author: "David McCarter", createdOn: "7/28/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Remove), author: "David McCarter", createdOn: "7/28/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool Remove(T item)
 	{
 		return item is null ? false : this.TryRemove(item);
+	}
+
+	/// <summary>
+	/// Copies the elements of the <see cref="ConcurrentHashSet{T}"/> to a new array.
+	/// </summary>
+	/// <returns>An array containing a snapshot of elements copied from the <see cref="ConcurrentHashSet{T}"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public T[] ToArray()
+	{
+		var locksAcquired = 0;
+
+		try
+		{
+			this.AcquireAllLocks(ref locksAcquired);
+
+			var count = 0;
+
+			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
+			{
+				count += this._tables._countPerLock[lockCount];
+			}
+
+			if (count == 0)
+			{
+				return Array.Empty<T>();
+			}
+
+			var array = new T[count];
+			this.CopyToItems(array, 0);
+
+			return array;
+		}
+		finally
+		{
+			this.ReleaseLocks(0, locksAcquired);
+		}
+	}
+
+	/// <summary>
+	/// Attempts to add the specified item to the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="item">The item to add to the set. The value cannot be null.</param>
+	/// <returns><c>true</c> if the item was added successfully; <c>false</c> if the item already exists in the set.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
+	[DefaultValue(false)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryAdd), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public bool TryAdd(T item)
+	{
+		item = item.ArgumentNotNull();
+
+		return this.AddInternal(item, this._comparer.GetHashCode(item!), acquireLock: true);
+	}
+
+	/// <summary>
+	/// Attempts to retrieve an item from the <see cref="ConcurrentHashSet{T}"/> that equals the specified value.
+	/// </summary>
+	/// <param name="equalValue">The value to search for.</param>
+	/// <param name="actualValue">When this method returns, contains the actual value from the set, if found; otherwise, the default value for the type.</param>
+	/// <returns><c>true</c> if an equal value was found in the set; otherwise, <c>false</c>.</returns>
+	[DefaultValue(false)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public bool TryPeek(T equalValue, [MaybeNullWhen(false)] out T actualValue)
+	{
+		if (equalValue is null)
+		{
+			actualValue = default;
+			return false;
+		}
+
+		var hashCode = this._comparer?.GetHashCode(equalValue) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+		var tables = this._tables;
+		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
+		var current = Volatile.Read(ref tables._buckets[bucketNo]);
+
+		while (current is not null)
+		{
+			if (hashCode == current._hashCode && this._comparer.Equals(current._item, equalValue))
+			{
+				actualValue = current._item;
+				return true;
+			}
+
+			current = current._next;
+		}
+
+		actualValue = default;
+		return false;
 	}
 
 	/// <summary>
