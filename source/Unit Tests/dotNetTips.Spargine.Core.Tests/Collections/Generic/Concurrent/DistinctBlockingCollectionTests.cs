@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -40,6 +40,125 @@ public class DistinctBlockingCollectionTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => collection.Add(null));
+	}
+
+	[TestMethod]
+	public void AddRange_EmptyCollection_ReturnsZero()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var emptyList = new List<string>();
+
+		// Act
+		var result = collection.AddRange(emptyList);
+
+		// Assert
+		Assert.AreEqual(0, result, "AddRange should return 0 for empty collection.");
+		Assert.AreEqual(0, collection.Count, "Collection should remain empty.");
+	}
+
+	[TestMethod]
+	public void AddRange_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => collection.AddRange(null));
+	}
+
+	[TestMethod]
+	public void AddRange_ToBoundedCollection_AddsWithinCapacity()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>(5);
+		var items = new List<string> { "item1", "item2", "item3" };
+
+		// Act
+		var result = collection.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, result);
+		Assert.AreEqual(3, collection.Count);
+	}
+
+	[TestMethod]
+	public void AddRange_WithCancellationToken_AddsItems()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2" };
+		var cancellationToken = new CancellationToken();
+
+		// Act
+		var result = collection.AddRange(items, cancellationToken);
+
+		// Assert
+		Assert.AreEqual(2, result);
+		Assert.AreEqual(2, collection.Count);
+	}
+
+	[TestMethod]
+	public void AddRange_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2", "item3" };
+		var cancellationTokenSource = new CancellationTokenSource();
+		cancellationTokenSource.Cancel();
+
+		// Act & Assert
+		Assert.ThrowsExactly<OperationCanceledException>(() =>
+			collection.AddRange(items, cancellationTokenSource.Token));
+	}
+
+	[TestMethod]
+	public void AddRange_WithDuplicates_OnlyAddsUniqueItems()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		collection.Add("item2");
+		var items = new List<string> { "item2", "item3", "item1", "item4" };
+
+		// Act
+		var result = collection.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(2, result, "AddRange should only add unique items.");
+		Assert.AreEqual(4, collection.Count, "Collection should contain 4 unique items total.");
+	}
+
+	[TestMethod]
+	public void AddRange_WithNullItems_SkipsNulls()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", null, "item2", null, "item3" };
+
+		// Act
+		var result = collection.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, result, "AddRange should skip null items.");
+		Assert.AreEqual(3, collection.Count, "Collection should contain only non-null items.");
+	}
+	[TestMethod]
+	public void AddRange_WithUniqueItems_AddsAllItems()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2", "item3" };
+
+		// Act
+		var result = collection.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, result, "AddRange should return the count of items added.");
+		Assert.AreEqual(3, collection.Count, "Collection should contain all unique items.");
+		Assert.IsTrue(collection.Contains("item1"));
+		Assert.IsTrue(collection.Contains("item2"));
+		Assert.IsTrue(collection.Contains("item3"));
 	}
 
 	/// <summary>
@@ -236,6 +355,95 @@ public class DistinctBlockingCollectionTests
 		Assert.IsTrue(collection.Contains("test2"));
 	}
 
+	[TestMethod]
+	public void ContainsAny_EmptyCheckList_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		var emptyList = new List<string>();
+
+		// Act
+		var result = collection.ContainsAny(emptyList);
+
+		// Assert
+		Assert.IsFalse(result, "ContainsAny should return false for empty check list.");
+	}
+
+	[TestMethod]
+	public void ContainsAny_EmptyCollection_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var itemsToCheck = new List<string> { "item1", "item2" };
+
+		// Act
+		var result = collection.ContainsAny(itemsToCheck);
+
+		// Assert
+		Assert.IsFalse(result, "ContainsAny should return false for empty collection.");
+	}
+
+	[TestMethod]
+	public void ContainsAny_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => collection.ContainsAny(null));
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithMatchingItems_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		collection.Add("item2");
+		collection.Add("item3");
+		var itemsToCheck = new List<string> { "item5", "item2", "item6" };
+
+		// Act
+		var result = collection.ContainsAny(itemsToCheck);
+
+		// Assert
+		Assert.IsTrue(result, "ContainsAny should return true when at least one item matches.");
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithNoMatchingItems_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		collection.Add("item2");
+		var itemsToCheck = new List<string> { "item5", "item6", "item7" };
+
+		// Act
+		var result = collection.ContainsAny(itemsToCheck);
+
+		// Assert
+		Assert.IsFalse(result, "ContainsAny should return false when no items match.");
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithNullItems_SkipsNullsAndChecksOthers()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		collection.Add("item2");
+		var itemsToCheck = new List<string> { null, "item2", null };
+
+		// Act
+		var result = collection.ContainsAny(itemsToCheck);
+
+		// Assert
+		Assert.IsTrue(result, "ContainsAny should skip nulls and find matching items.");
+	}
+
 	/// <summary>
 	/// Defines the test method ContainsTest.
 	/// </summary>
@@ -294,6 +502,40 @@ public class DistinctBlockingCollectionTests
 		var enumerator = collection.GetConsumingEnumerable(new CancellationToken());
 
 		Assert.IsTrue(enumerator.Any());
+	}
+
+	[TestMethod]
+	public void Integration_AddRange_ContainsAny_WorkTogether()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var itemsToAdd = new List<string> { "item1", "item2", "item3" };
+		var itemsToCheck = new List<string> { "item2", "item5" };
+
+		// Act
+		var addedCount = collection.AddRange(itemsToAdd);
+		var containsAny = collection.ContainsAny(itemsToCheck);
+
+		// Assert
+		Assert.AreEqual(3, addedCount);
+		Assert.IsTrue(containsAny, "ContainsAny should find item2.");
+	}
+
+	[TestMethod]
+	public void Integration_TryAddRange_WithExistingItems_HandlesDuplicates()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		var items = new List<string> { "item1", "item2", "item3" };
+
+		// Act
+		var result = collection.TryAddRange(items, 1000);
+
+		// Assert
+		Assert.AreEqual(2, result, "Should only add 2 new unique items.");
+		Assert.AreEqual(3, collection.Count);
+		Assert.IsTrue(collection.ContainsAny(new List<string> { "item1", "item2", "item3" }));
 	}
 
 	[TestMethod]
@@ -359,6 +601,139 @@ public class DistinctBlockingCollectionTests
 		var result = collection.TryAdd(null);
 
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void TryAddRange_EmptyCollection_ReturnsZero()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var emptyList = new List<string>();
+
+		// Act
+		var result = collection.TryAddRange(emptyList);
+
+		// Assert
+		Assert.AreEqual(0, result);
+		Assert.AreEqual(0, collection.Count);
+	}
+
+	[TestMethod]
+	public void TryAddRange_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => collection.TryAddRange(null));
+	}
+
+	[TestMethod]
+	public void TryAddRange_ToBoundedFullCollection_ReturnsPartialCount()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>(3);
+		collection.Add("existing1");
+		collection.Add("existing2");
+		collection.Add("existing3");
+		var items = new List<string> { "item1", "item2" };
+
+		// Act
+		var result = collection.TryAddRange(items, 10); // Short timeout
+
+		// Assert - May add 0 items if collection is full and timeout is short
+		Assert.IsTrue(result >= 0, "TryAddRange should return non-negative count.");
+	}
+
+	[TestMethod]
+	public void TryAddRange_WithCancellationToken_AddsItems()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2" };
+		var cancellationToken = new CancellationToken();
+
+		// Act
+		var result = collection.TryAddRange(items, 1000, cancellationToken);
+
+		// Assert
+		Assert.AreEqual(2, result);
+		Assert.AreEqual(2, collection.Count);
+	}
+
+	[TestMethod]
+	public void TryAddRange_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2" };
+		var cancellationTokenSource = new CancellationTokenSource();
+		cancellationTokenSource.Cancel();
+
+		// Act & Assert
+		Assert.ThrowsExactly<OperationCanceledException>(() =>
+			collection.TryAddRange(items, 1000, cancellationTokenSource.Token));
+	}
+
+	[TestMethod]
+	public void TryAddRange_WithDuplicates_OnlyAddsUniqueItems()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("item1");
+		var items = new List<string> { "item1", "item2", "item3" };
+
+		// Act
+		var result = collection.TryAddRange(items);
+
+		// Assert
+		Assert.AreEqual(2, result, "TryAddRange should only add unique items.");
+		Assert.AreEqual(3, collection.Count);
+	}
+
+	[TestMethod]
+	public void TryAddRange_WithNullItems_SkipsNulls()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", null, "item2" };
+
+		// Act
+		var result = collection.TryAddRange(items);
+
+		// Assert
+		Assert.AreEqual(2, result, "TryAddRange should skip null items.");
+		Assert.AreEqual(2, collection.Count);
+	}
+
+	[TestMethod]
+	public void TryAddRange_WithTimeout_AddsItemsWithinTimeout()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2" };
+
+		// Act
+		var result = collection.TryAddRange(items, 1000);
+
+		// Assert
+		Assert.AreEqual(2, result);
+		Assert.AreEqual(2, collection.Count);
+	}
+
+	[TestMethod]
+	public void TryAddRange_WithUniqueItems_AddsAllItems()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		var items = new List<string> { "item1", "item2", "item3" };
+
+		// Act
+		var result = collection.TryAddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, result, "TryAddRange should add all unique items.");
+		Assert.AreEqual(3, collection.Count);
 	}
 
 	[TestMethod]

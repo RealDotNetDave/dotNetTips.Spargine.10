@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollection.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -36,9 +36,10 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 /// This type implements IDisposable. Make sure to call .Dispose() or use the 'using' statement
 /// to remove from memory.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDistinctBlockingCollection")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDistinctBlockingCollection")]
 public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, ICloneable<DistinctBlockingCollection<T>>, ICollection<T>
 {
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DistinctBlockingCollection{T}" /> class.
 	/// </summary>
@@ -104,6 +105,32 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 			base.Add(item, cancellationToken);
 		}
 	}
+	/// <summary>
+	/// Adds multiple items to the <see cref="DistinctBlockingCollection{T}"/>, skipping duplicates.
+	/// </summary>
+	/// <param name="items">The collection of items to add. Cannot be null.</param>
+	/// <param name="cancellationToken">A cancellation token to observe while waiting for the operation to complete.</param>
+	/// <returns>The number of unique items successfully added.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public int AddRange(IEnumerable<T> items, CancellationToken cancellationToken = default)
+	{
+		items = items.ArgumentNotNull();
+
+		var addedCount = 0;
+
+		foreach (var item in items.Where(p => p is not null))
+		{
+			if (this.IsNotInCollection(item))
+			{
+				base.Add(item, cancellationToken);
+				addedCount++;
+			}
+		}
+
+		return addedCount;
+	}
 
 	/// <summary>
 	/// Removes all items from the <see cref="DistinctBlockingCollection{T}"/>.
@@ -154,6 +181,22 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 		}
 
 		return false;
+	}
+
+	/// <summary>
+	/// Determines whether the <see cref="DistinctBlockingCollection{T}"/> contains any of the specified items.
+	/// </summary>
+	/// <param name="items">The items to check for. Cannot be null.</param>
+	/// <returns><c>true</c> if any of the items are found; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public bool ContainsAny(IEnumerable<T> items)
+	{
+		items = items.ArgumentNotNull();
+
+		return items.Where(p => p is not null).Any(this.Contains);
 	}
 
 	/// <summary>
@@ -227,6 +270,33 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	public new bool TryAdd(T item, [ConstantExpected(Min = 1, Max = int.MaxValue)] int millisecondsTimeout, CancellationToken cancellationToken = default)
 	{
 		return item is null ? false : this.IsNotInCollection(item) && base.TryAdd(item, millisecondsTimeout, cancellationToken);
+	}
+
+	/// <summary>
+	/// Attempts to add multiple items to the <see cref="DistinctBlockingCollection{T}"/> without blocking, skipping duplicates.
+	/// </summary>
+	/// <param name="items">The collection of items to add. Cannot be null.</param>
+	/// <param name="millisecondsTimeout">The number of milliseconds to wait for each add operation, or <see cref="Timeout.Infinite"/> (-1) to wait indefinitely.</param>
+	/// <param name="cancellationToken">A cancellation token to observe.</param>
+	/// <returns>The number of unique items successfully added within the timeout period.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryAddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public int TryAddRange(IEnumerable<T> items, [ConstantExpected(Min = 1, Max = int.MaxValue)] int millisecondsTimeout = 0, CancellationToken cancellationToken = default)
+	{
+		items = items.ArgumentNotNull();
+
+		var addedCount = 0;
+
+		foreach (var item in items.Where(p => p is not null))
+		{
+			if (this.IsNotInCollection(item) && base.TryAdd(item, millisecondsTimeout, cancellationToken))
+			{
+				addedCount++;
+			}
+		}
+
+		return addedCount;
 	}
 
 	/// <summary>
