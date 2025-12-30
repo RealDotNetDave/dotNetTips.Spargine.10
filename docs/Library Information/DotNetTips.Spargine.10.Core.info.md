@@ -1,4 +1,4 @@
-# dotNetTips.Spargine.10.Core - 2025.10.12.29
+# DotNetTips.Spargine.10.Core - 2025.10.12.29
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -1129,11 +1129,151 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue, System.Int32 capacity)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey, System.Int32 capacity)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T AddOrUpdate(T key, T addValue, T updateValueFactory)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Void Clear()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Boolean ContainsValue(T value, T comparer)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T DefaultValue { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T GetOrAdd(T key, T value)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T GetOrAdd(T key, T valueFactory)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T GetValueOrDefault(T key)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
 ### T Item { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T OnMissingKeyFactory { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T ToImmutableDictionary()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T ToReadOnlyDictionary()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Boolean TryAdd(T key, T value)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Boolean TryUpdate(T key, T newValue, T comparisonValue)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1243,7 +1383,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** AddRange
@@ -1351,7 +1491,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** ToArray
@@ -1363,7 +1503,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** TryAdd
@@ -1375,7 +1515,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** TryPeek
@@ -1437,6 +1577,16 @@
 * **Description:** Add
 * **Modified On:** 
 
+### System.Int32 AddRange(T items, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** AddRange
+* **Modified On:** 
+
 ### System.Void Clear()
 
 * **Status:** Available
@@ -1465,6 +1615,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Contains
+* **Modified On:** 
+
+### System.Boolean ContainsAny(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ContainsAny
 * **Modified On:** 
 
 ### System.Boolean IsNotInCollection(T item)
@@ -1537,6 +1697,16 @@
 * **Description:** TryAdd
 * **Modified On:** 
 
+### System.Int32 TryAddRange(T items, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** TryAddRange
+* **Modified On:** 
+
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T>
 
@@ -1560,6 +1730,16 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (T comparer)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
 ### System.Void Add(T item)
 
 * **Status:** Available
@@ -1568,6 +1748,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Int32 AddRange(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** AddRange
 * **Modified On:** 
 
 ### System.Void Clear()
@@ -1588,6 +1778,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Boolean ContainsAny(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ContainsAny
 * **Modified On:** 
 
 ### System.Void CopyTo(T array, System.Int32 arrayIndex)
@@ -1620,6 +1820,16 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### System.Boolean IsEmpty { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** IsEmpty
+* **Modified On:** 
+
 ### System.Boolean IsReadOnly { get; set; }
 
 * **Status:** Available
@@ -1640,6 +1850,46 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### System.Int32 RemoveRange(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** RemoveRange
+* **Modified On:** 
+
+### T ToArray()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ToArray
+* **Modified On:** 
+
+### T ToFrozenSet()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ToFrozenSet
+* **Modified On:** 
+
+### T ToList()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ToList
+* **Modified On:** 
+
 ### System.Boolean TryAdd(T item)
 
 * **Status:** Available
@@ -1648,6 +1898,26 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Boolean TryGetValue(T equalValue, T actualValue)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** TryGetValue
+* **Modified On:** 
+
+### System.Boolean TryPeek(T equalValue, T actualValue)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** TryPeek
 * **Modified On:** 
 
 ### System.Boolean TryTake(T result)
@@ -1870,8 +2140,18 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Void AddRange(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -1880,7 +2160,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1900,7 +2180,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1910,7 +2190,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1920,7 +2200,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1930,7 +2210,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1946,12 +2226,42 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### System.Int32 EnsureCapacity(System.Int32 capacity)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
 ### System.Void ExceptWith(T other)
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T FindAll(T match)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T FirstOrDefault()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -1960,7 +2270,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2016,6 +2326,16 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### T LastOrDefault()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
 ### System.Boolean Overlaps(T other)
 
 * **Status:** Available
@@ -2030,8 +2350,18 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Int32 RemoveRange(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2040,8 +2370,18 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Void Reset(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2060,8 +2400,28 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T ToArray()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### T ToList()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2076,11 +2436,21 @@
 * **Modified By:** UNKNOWN
 * **Modified On:** 
 
+### System.Boolean TryGetValue(T equalValue, T actualValue)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
 ### System.Void UnionWith(T other)
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -7390,4 +7760,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 12/30/2025 8:02:21 PM UTC**
+**Generated by Spargine - dotNetTips.com on 12/30/2025 9:31:23 PM UTC**
