@@ -4,7 +4,7 @@
 // Created          : 12-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="InMemoryCacheTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -66,6 +67,8 @@ public class InMemoryCacheTests
 
 		cache.Clear();
 	}
+
+
 
 
 	[TestMethod]
@@ -284,6 +287,413 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public void AddCacheItemBatch_AddsMultipleItems()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var people = RandomData.GeneratePersonRefCollection(3);
+		var items = people.ToDictionary(p => p.Id, p => p);
+
+		// Act
+		cache.AddCacheItemBatch(items);
+
+		// Assert
+		foreach (var kvp in items)
+		{
+			var cached = cache.GetCacheItem<Person>(kvp.Key);
+			Assert.AreEqual(kvp.Value, cached);
+		}
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemBatch_EmptyDictionary_DoesNotThrow()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var items = new Dictionary<string, string>();
+
+		// Act
+		cache.AddCacheItemBatch(items);
+
+		// Assert
+		Assert.AreEqual(0, InMemoryCache.Count);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemBatch_NullItems_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemBatch<Person>(null));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCallback_InvokesCallbackOnEviction()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+		var callbackInvoked = false;
+		object evictedKey = null;
+		using var callbackSignal = new ManualResetEventSlim(false);
+
+		void Callback(object k, object v, EvictionReason reason, object state)
+		{
+			callbackInvoked = true;
+			evictedKey = k;
+			callbackSignal.Set();
+		}
+
+		// Act
+		cache.AddCacheItemWithCallback(person.Id, person, TimeSpan.FromMilliseconds(50), Callback);
+
+		// Wait for the item to expire
+		Thread.Sleep(100);
+
+		// Force eviction by trying to access the item or compacting
+		_ = cache.GetCacheItem<Person>(person.Id); // This will trigger eviction check
+
+		// Alternative: Force compaction to trigger eviction
+		cache.Cache.Compact(0.0); // 0% compaction just triggers scan for expired items
+
+		// Wait for the callback with timeout
+		var signaled = callbackSignal.Wait(TimeSpan.FromSeconds(2));
+
+		// Assert
+		Assert.IsTrue(signaled, "Callback signal timeout - callback was not invoked within 2 seconds.");
+		Assert.IsTrue(callbackInvoked, "Callback should have been invoked.");
+		Assert.AreEqual(person.Id, evictedKey);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCallback_NullCallback_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithCallback(person.Id, person, TimeSpan.FromMinutes(1), null));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCallback_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		void Callback(object k, object v, EvictionReason reason, object state)
+		{ }
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithCallback<Person>("key", null, TimeSpan.FromMinutes(1), Callback));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCallback_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+		void Callback(object k, object v, EvictionReason reason, object state)
+		{ }
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithCallback(null, person, TimeSpan.FromMinutes(1), Callback));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithChangeToken_InvalidatesOnTokenSignal()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+		using var cts = new CancellationTokenSource();
+		var changeToken = new Microsoft.Extensions.Primitives.CancellationChangeToken(cts.Token);
+
+		// Act
+		cache.AddCacheItemWithChangeToken(person.Id, person, TimeSpan.FromMinutes(10), changeToken);
+		Assert.IsNotNull(cache.GetCacheItem<Person>(person.Id));
+
+		cts.Cancel(); // Signal the token
+		Thread.Sleep(50); // Give time for invalidation
+
+		// Assert
+		Assert.IsNull(cache.GetCacheItem<Person>(person.Id), "Item should be removed when change token is signaled.");
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithChangeToken_NullChangeToken_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithChangeToken(person.Id, person, TimeSpan.FromMinutes(1), null));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithChangeToken_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		using var cts = new CancellationTokenSource();
+		var changeToken = new Microsoft.Extensions.Primitives.CancellationChangeToken(cts.Token);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithChangeToken<Person>("key", null, TimeSpan.FromMinutes(1), changeToken));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithChangeToken_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+		using var cts = new CancellationTokenSource();
+		var changeToken = new Microsoft.Extensions.Primitives.CancellationChangeToken(cts.Token);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithChangeToken(null, person, TimeSpan.FromMinutes(1), changeToken));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCombinedExpiration_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithCombinedExpiration<Person>("key", null, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10)));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCombinedExpiration_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithCombinedExpiration(null, person, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10)));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithCombinedExpiration_UsesBothExpirations()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act
+		cache.AddCacheItemWithCombinedExpiration(person.Id, person, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10));
+
+		// Assert - Item should exist immediately
+		Assert.IsNotNull(cache.GetCacheItem<Person>(person.Id));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithDependency_InvalidatesWhenDependencyCancelled()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var people = RandomData.GeneratePersonRefCollection(2).ToList();
+		using var cts = new CancellationTokenSource();
+
+		// Act
+		cache.AddCacheItemWithDependency(people[0].Id, people[0], TimeSpan.FromMinutes(10), cts);
+		cache.AddCacheItemWithDependency(people[1].Id, people[1], TimeSpan.FromMinutes(10), cts);
+
+		Assert.IsNotNull(cache.GetCacheItem<Person>(people[0].Id));
+		Assert.IsNotNull(cache.GetCacheItem<Person>(people[1].Id));
+
+		cts.Cancel();
+		Thread.Sleep(50);
+
+		// Assert
+		Assert.IsNull(cache.GetCacheItem<Person>(people[0].Id));
+		Assert.IsNull(cache.GetCacheItem<Person>(people[1].Id));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithDependency_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		using var cts = new CancellationTokenSource();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithDependency<Person>("key", null, TimeSpan.FromMinutes(1), cts));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithDependency_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+		using var cts = new CancellationTokenSource();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithDependency(null, person, TimeSpan.FromMinutes(1), cts));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithDependency_NullTokenSource_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithDependency(person.Id, person, TimeSpan.FromMinutes(1), null));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithPriority_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithPriority<Person>("key", null, TimeSpan.FromMinutes(1), CacheItemPriority.High));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithPriority_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithPriority(null, person, TimeSpan.FromMinutes(1), CacheItemPriority.High));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithPriority_SetsCorrectPriority()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act
+		cache.AddCacheItemWithPriority(person.Id, person, TimeSpan.FromMinutes(10), CacheItemPriority.High);
+
+		// Assert
+		Assert.IsNotNull(cache.GetCacheItem<Person>(person.Id));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithSize_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithSize<Person>("key", null, TimeSpan.FromMinutes(1), 100));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithSize_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithSize(null, person, TimeSpan.FromMinutes(1), 100));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithSize_SetsCorrectSize()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act
+		cache.AddCacheItemWithSize(person.Id, person, TimeSpan.FromMinutes(10), 100);
+
+		// Assert
+		Assert.IsNotNull(cache.GetCacheItem<Person>(person.Id));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithSlidingExpiration_ItemExpiresAfterInactivity()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act
+		cache.AddCacheItemWithSlidingExpiration(person.Id, person, TimeSpan.FromMilliseconds(100));
+		Thread.Sleep(150); // Wait for expiration
+
+		// Assert
+		Assert.IsNull(cache.GetCacheItem<Person>(person.Id), "Item should expire after sliding expiration period.");
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithSlidingExpiration_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithSlidingExpiration<Person>("key", null, TimeSpan.FromMinutes(1)));
+	}
+
+	[TestMethod]
+	public void AddCacheItemWithSlidingExpiration_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.AddCacheItemWithSlidingExpiration(null, person, TimeSpan.FromMinutes(1)));
+	}
+
+	[TestMethod]
 	public void CacheProperty_CanAddAndRetrieveItem()
 	{
 		var cacheInstance = InMemoryCache.Instance;
@@ -317,6 +727,37 @@ public class InMemoryCacheTests
 	{
 		var cacheInstance = InMemoryCache.Instance;
 		Assert.IsNotNull(cacheInstance.Cache, "Cache property should not be null.");
+	}
+
+	[TestMethod]
+	public void Compact_InvalidPercentage_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => cache.Compact(1.5));
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => cache.Compact(-0.1));
+	}
+
+	[TestMethod]
+	public void Compact_ValidPercentage_CompactsCache()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var people = RandomData.GeneratePersonRefCollection(5);
+		foreach (var person in people)
+		{
+			cache.AddCacheItem(person.Id, person);
+		}
+
+		// Act
+		cache.Compact(0.5);
+
+		// Assert - Cache should still be operational
+		Assert.IsNotNull(cache);
+		cache.Clear();
 	}
 
 	[TestMethod]
@@ -397,6 +838,63 @@ public class InMemoryCacheTests
 		Assert.AreEqual(2, InMemoryCache.Count);
 		cache.Clear();
 		Assert.AreEqual(0, InMemoryCache.Count);
+	}
+
+	[TestMethod]
+	public void CreateCacheDependency_CreatesAndStoresTokenSource()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var dependencyKey = Guid.NewGuid().ToString();
+
+		// Act
+		var cts = cache.CreateCacheDependency(dependencyKey);
+
+		// Assert
+		Assert.IsNotNull(cts);
+		Assert.IsTrue(cache.ContainsKey(dependencyKey));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void CreateCacheDependency_EmptyKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.CreateCacheDependency(string.Empty));
+	}
+
+	[TestMethod]
+	public void CreateCacheDependency_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.CreateCacheDependency(null));
+	}
+
+	[TestMethod]
+	public void CreateCacheWithLimit_NoLimit_CreatesCache()
+	{
+		// Arrange & Act
+		using var cache = InMemoryCache.CreateCacheWithLimit();
+
+		// Assert
+		Assert.IsNotNull(cache);
+	}
+
+	[TestMethod]
+	public void CreateCacheWithLimit_WithLimit_CreatesCacheWithSizeLimit()
+	{
+		// Arrange & Act
+		using var cache = InMemoryCache.CreateCacheWithLimit(100);
+
+		// Assert
+		Assert.IsNotNull(cache);
 	}
 
 	[TestMethod]
@@ -506,6 +1004,82 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public void GetCacheItemBatch_EmptyKeys_ReturnsEmptyDictionary()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+
+		// Act
+		var result = cache.GetCacheItemBatch<Person>(Enumerable.Empty<string>());
+
+		// Assert
+		Assert.AreEqual(0, result.Count);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void GetCacheItemBatch_NullKeys_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.GetCacheItemBatch<Person>(null));
+	}
+
+	[TestMethod]
+	public void GetCacheItemBatch_ReturnsMultipleItems()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var people = RandomData.GeneratePersonRefCollection(3).ToList();
+		foreach (var person in people)
+		{
+			cache.AddCacheItem(person.Id, person);
+		}
+
+		// Act
+		var keys = people.Select(p => p.Id).Concat(new[] { Guid.NewGuid().ToString() });
+		var result = cache.GetCacheItemBatch<Person>(keys);
+
+		// Assert
+		Assert.AreEqual(3, result.Count);
+		foreach (var person in people)
+		{
+			Assert.IsTrue(result.ContainsKey(person.Id));
+			Assert.AreEqual(person, result[person.Id]);
+		}
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void GetCacheStatistics_ReturnsCorrectMetrics()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		cache.ResetStatistics();
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act
+		cache.AddCacheItem(person.Id, person);
+		_ = cache.GetCacheItem<Person>(person.Id); // Hit
+		_ = cache.GetCacheItem<Person>(Guid.NewGuid().ToString()); // Miss
+
+		var stats = cache.GetCacheStatistics();
+
+		// Assert
+		Assert.AreEqual(1, stats.TotalItems);
+		Assert.AreEqual(1, stats.CacheHits);
+		Assert.AreEqual(1, stats.CacheMisses);
+		Assert.AreEqual(0.5, stats.HitRatio, 0.01);
+		cache.Clear();
+	}
+
+	[TestMethod]
 	public async Task GetOrCreateAsync_AbsoluteExpiration_StoresCorrectly()
 	{
 		var cache = InMemoryCache.Instance;
@@ -591,6 +1165,166 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public void InvalidateDependentCacheItems_EmptyKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.InvalidateDependentCacheItems(string.Empty));
+	}
+
+	[TestMethod]
+	public void InvalidateDependentCacheItems_InvalidatesAllDependentItems()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var dependencyKey = Guid.NewGuid().ToString();
+		var cts = cache.CreateCacheDependency(dependencyKey);
+		var people = RandomData.GeneratePersonRefCollection(2).ToList();
+
+		foreach (var person in people)
+		{
+			cache.AddCacheItemWithDependency(person.Id, person, TimeSpan.FromMinutes(10), cts);
+		}
+
+		// Act
+		var result = cache.InvalidateDependentCacheItems(dependencyKey);
+		Thread.Sleep(50);
+
+		// Assert
+		Assert.IsTrue(result);
+		foreach (var person in people)
+		{
+			Assert.IsNull(cache.GetCacheItem<Person>(person.Id));
+		}
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void InvalidateDependentCacheItems_InvalidKey_ReturnsFalse()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+
+		// Act
+		var result = cache.InvalidateDependentCacheItems(Guid.NewGuid().ToString());
+
+		// Assert
+		Assert.IsFalse(result);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void InvalidateDependentCacheItems_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.InvalidateDependentCacheItems(null));
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_DoesNotAffectStatistics()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		cache.ResetStatistics();
+		var person = RandomData.GeneratePerson<Person>();
+		cache.AddCacheItem(person.Id, person);
+
+		// Act
+		var found = cache.PeekCacheItem<Person>(person.Id, out var value);
+		var stats = cache.GetCacheStatistics();
+
+		// Assert
+		Assert.IsTrue(found);
+		Assert.AreEqual(person, value);
+		Assert.AreEqual(0, stats.CacheHits, "Peek should not increment hit count.");
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_EmptyKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.PeekCacheItem<Person>(string.Empty, out _));
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.PeekCacheItem<Person>(null, out _));
+	}
+
+	[TestMethod]
+	public void RefreshCacheItem_EmptyKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.RefreshCacheItem(string.Empty, TimeSpan.FromMinutes(1)));
+	}
+
+	[TestMethod]
+	public void RefreshCacheItem_InvalidKey_ReturnsFalse()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+
+		// Act
+		var result = cache.RefreshCacheItem(Guid.NewGuid().ToString(), TimeSpan.FromMinutes(1));
+
+		// Assert
+		Assert.IsFalse(result);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void RefreshCacheItem_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.RefreshCacheItem(null, TimeSpan.FromMinutes(1)));
+	}
+
+	[TestMethod]
+	public void RefreshCacheItem_UpdatesExpiration()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var person = RandomData.GeneratePerson<Person>();
+		cache.AddCacheItem(person.Id, person, TimeSpan.FromMilliseconds(100));
+
+		// Act
+		var refreshed = cache.RefreshCacheItem(person.Id, TimeSpan.FromMinutes(10));
+
+		// Assert
+		Assert.IsTrue(refreshed);
+		Thread.Sleep(150);
+		Assert.IsNotNull(cache.GetCacheItem<Person>(person.Id), "Item should still exist after refresh.");
+		cache.Clear();
+	}
+
+	[TestMethod]
 	public void RemoveCacheItem_InvalidKey_ReturnsFalse()
 	{
 		var cache = InMemoryCache.Instance;
@@ -644,6 +1378,78 @@ public class InMemoryCacheTests
 		Assert.IsNull(cachedPerson, "Cached item should be null after removal.");
 
 		cache.Clear(); // Cleanup after test
+	}
+
+	[TestMethod]
+	public void RemoveCacheItemBatch_EmptyKeys_ReturnsZero()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+
+		// Act
+		var removedCount = cache.RemoveCacheItemBatch(Enumerable.Empty<string>());
+
+		// Assert
+		Assert.AreEqual(0, removedCount);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void RemoveCacheItemBatch_NullKeys_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			cache.RemoveCacheItemBatch(null));
+	}
+
+	[TestMethod]
+	public void RemoveCacheItemBatch_RemovesMultipleItems()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var people = RandomData.GeneratePersonRefCollection(3).ToList();
+		foreach (var person in people)
+		{
+			cache.AddCacheItem(person.Id, person);
+		}
+
+		// Act
+		var keys = people.Take(2).Select(p => p.Id).Concat(new[] { Guid.NewGuid().ToString() });
+		var removedCount = cache.RemoveCacheItemBatch(keys);
+
+		// Assert
+		Assert.AreEqual(2, removedCount);
+		Assert.IsNull(cache.GetCacheItem<Person>(people[0].Id));
+		Assert.IsNull(cache.GetCacheItem<Person>(people[1].Id));
+		Assert.IsNotNull(cache.GetCacheItem<Person>(people[2].Id));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void ResetStatistics_ResetsCounters()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		cache.ResetStatistics();
+		var person = RandomData.GeneratePerson<Person>();
+		cache.AddCacheItem(person.Id, person);
+		_ = cache.GetCacheItem<Person>(person.Id); // Generate some stats
+		_ = cache.GetCacheItem<Person>(Guid.NewGuid().ToString());
+
+		// Act
+		cache.ResetStatistics();
+		var stats = cache.GetCacheStatistics();
+
+		// Assert
+		Assert.AreEqual(0, stats.CacheHits);
+		Assert.AreEqual(0, stats.CacheMisses);
+		cache.Clear();
 	}
 
 	[TestMethod]

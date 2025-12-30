@@ -19,7 +19,7 @@ namespace DotNetTips.Spargine.Core.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -571,6 +571,15 @@ namespace DotNetTips.Spargine.Core.Properties {
         internal static string NoMoreItemsToRetrieveAndTheCollectionIsNot {
             get {
                 return ResourceManager.GetString("NoMoreItemsToRetrieveAndTheCollectionIsNot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage must be between 0.0 and 1.0.
+        /// </summary>
+        internal static string PercentageMustBeBetween00And10 {
+            get {
+                return ResourceManager.GetString("PercentageMustBeBetween00And10", resourceCulture);
             }
         }
         

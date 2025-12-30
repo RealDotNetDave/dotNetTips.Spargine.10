@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-11-2025
+// Last Modified On : 12-30-2025
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,6 +21,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -32,26 +33,81 @@ namespace DotNetTips.Spargine.Core.Cache;
 /// <remarks>
 /// <para>This cache is built on top of <see cref="MemoryCache"/> and provides a simplified interface for adding, retrieving, and managing cached items with default and custom expiration times.</para>
 /// <para>The default expiration time for cached items is 20 minutes.</para>
+/// <para><strong>Thread Safety:</strong> This class is thread-safe. All operations can be safely called from multiple threads concurrently. The underlying <see cref="MemoryCache"/> is thread-safe, and all statistics tracking uses atomic operations.</para>
+/// <para><strong>Performance Monitoring:</strong> The cache tracks hit and miss statistics that can be accessed via <see cref="GetCacheStatistics"/> to monitor cache effectiveness.</para>
+/// <para><strong>Advanced Features:</strong></para>
+/// <list type="bullet">
+/// <item><description>Sliding expiration support for frequently accessed items</description></item>
+/// <item><description>Priority-based eviction control</description></item>
+/// <item><description>Size-aware caching with limits</description></item>
+/// <item><description>Change token support for dependency-based invalidation</description></item>
+/// <item><description>Linked cache dependencies for grouped invalidation</description></item>
+/// <item><description>Post-eviction callbacks for cleanup operations</description></item>
+/// <item><description>Single-flight pattern to prevent cache stampede</description></item>
+/// </list>
 /// </remarks>
 /// <example>
-/// Using the InMemoryCache to cache an object:
+/// Basic cache usage:
 /// <code>
-/// var cache = DotNetTips.Spargine.Core.Cache.InMemoryCache.Instance;
+/// var cache = InMemoryCache.Instance;
 /// var myObject = new MyObject();
 /// cache.AddCacheItem("myKey", myObject);
 ///
 /// // Retrieve the cached item
 /// var cachedObject = cache.GetCacheItem&lt;MyObject&gt;("myKey");
 /// </code>
+/// 
+/// Using sliding expiration for frequently accessed data:
+/// <code>
+/// cache.AddCacheItemWithSlidingExpiration("sessionKey", sessionData, TimeSpan.FromMinutes(5));
+/// </code>
+/// 
+/// Monitoring cache performance:
+/// <code>
+/// var stats = cache.GetCacheStatistics();
+/// Console.WriteLine($"Hit Ratio: {stats.HitRatio:P2}");
+/// Console.WriteLine($"Total Items: {stats.TotalItems}");
+/// Console.WriteLine($"Cache Hits: {stats.CacheHits}, Misses: {stats.CacheMisses}");
+/// </code>
+/// 
+/// Using cache dependencies for grouped invalidation:
+/// <code>
+/// var dependency = cache.CreateCacheDependency("user-data-dependency");
+/// cache.AddCacheItemWithDependency("user:1", userData1, TimeSpan.FromHours(1), dependency);
+/// cache.AddCacheItemWithDependency("user:2", userData2, TimeSpan.FromHours(1), dependency);
+/// 
+/// // Later, invalidate all dependent items at once
+/// cache.InvalidateDependentCacheItems("user-data-dependency");
+/// </code>
+/// 
+/// Using GetOrCreateAsync to prevent cache stampede:
+/// <code>
+/// // Multiple concurrent calls will only execute the factory once
+/// var data = await cache.GetOrCreateAsync(
+///     "expensive-data",
+///     async ct => await LoadExpensiveDataAsync(ct),
+///     TimeSpan.FromMinutes(30));
+/// </code>
 /// </example>
 /// <seealso cref="AddCacheItem{T}(string, T)"/>
-/// <seealso cref="AddCacheItem{T}(string, T, TimeSpan)"/>
-/// <seealso cref="AddCacheItem{T}(string, T, DateTimeOffset)"/>
 /// <seealso cref="GetCacheItem{T}(string)"/>
-/// <seealso cref="Clear"/>
+/// <seealso cref="GetOrCreateAsync{T}(string, Func{CancellationToken, Task{T}}, TimeSpan?, CancellationToken)"/>
+/// <seealso cref="GetCacheStatistics"/>
+/// <seealso cref="CacheStatistics"/>
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineInMemoryCache")]
 public sealed class InMemoryCache
 {
+	//TODO: UPDATE ARTICLE ON DOTNETTIPS.COM
+
+	/// <summary>
+	/// Tracks cache hit statistics for performance monitoring.
+	/// </summary>
+	private long _cacheHits;
+
+	/// <summary>
+	/// Tracks cache miss statistics for performance monitoring.
+	/// </summary>
+	private long _cacheMisses;
 
 	/// <summary>
 	/// Provides single-flight protection for concurrent cache population.
@@ -88,6 +144,7 @@ public sealed class InMemoryCache
 		{
 			CompactionPercentage = 0.5
 		};
+
 
 		return new MemoryCache(options);
 	}
@@ -126,8 +183,7 @@ public sealed class InMemoryCache
 		key = key.ArgumentNotNullOrEmpty();
 		item = item.ArgumentNotNull();
 
-		_ = this.Cache.Set(key, item, new MemoryCacheEntryOptions().SetAbsoluteExpiration(timeout)
- );
+		_ = this.Cache.Set(key, item, new MemoryCacheEntryOptions().SetAbsoluteExpiration(timeout));
 	}
 
 	/// <summary>
@@ -198,6 +254,198 @@ public sealed class InMemoryCache
 	}
 
 	/// <summary>
+	/// Adds multiple items to the cache at once with the default timeout.
+	/// </summary>
+	/// <typeparam name="T">The type of items to be added to the cache.</typeparam>
+	/// <param name="items">Dictionary of key-value pairs to add to the cache.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemBatch<T>([DisallowNull] IDictionary<string, T> items)
+	{
+		items = items.ArgumentNotNull();
+
+		foreach (var kvp in items)
+		{
+			this.AddCacheItem(kvp.Key, kvp.Value!);
+		}
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with a post-eviction callback.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="timeout">The expiration timeout.</param>
+	/// <param name="postEvictionCallback">Callback to execute when the item is evicted from cache.</param>
+	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithCallback), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithCallback<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, [DisallowNull] PostEvictionDelegate postEvictionCallback)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+		postEvictionCallback = postEvictionCallback.ArgumentNotNull();
+
+		var options = new MemoryCacheEntryOptions()
+			.SetAbsoluteExpiration(timeout)
+			.RegisterPostEvictionCallback(postEvictionCallback);
+
+		_ = this.Cache.Set(key, item, options);
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with a change token for dependency-based invalidation.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="timeout">The expiration timeout.</param>
+	/// <param name="changeToken">A change token that will trigger cache invalidation when signaled.</param>
+	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
+	/// <remarks>
+	/// Change tokens enable cache invalidation based on external dependencies like file changes or configuration updates.
+	/// When the change token signals a change, the cache entry is automatically removed.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithChangeToken), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithChangeToken<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, [DisallowNull] IChangeToken changeToken)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+		changeToken = changeToken.ArgumentNotNull();
+
+		var options = new MemoryCacheEntryOptions()
+			.SetAbsoluteExpiration(timeout)
+			.AddExpirationToken(changeToken);
+
+		_ = this.Cache.Set(key, item, options);
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with both sliding and absolute expiration for optimal control.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="slidingExpiration">The sliding expiration time.</param>
+	/// <param name="absoluteExpiration">The absolute expiration time.</param>
+	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithCombinedExpiration), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithCombinedExpiration<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan slidingExpiration, TimeSpan absoluteExpiration)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+
+		var options = new MemoryCacheEntryOptions()
+			.SetSlidingExpiration(slidingExpiration)
+			.SetAbsoluteExpiration(absoluteExpiration);
+
+		_ = this.Cache.Set(key, item, options);
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with a dependency on a CancellationTokenSource, allowing grouped invalidation.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="timeout">The expiration timeout.</param>
+	/// <param name="dependencyTokenSource">The CancellationTokenSource that controls this cache entry's lifetime.</param>
+	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
+	/// <remarks>
+	/// Multiple cache entries can share the same CancellationTokenSource, allowing them to be invalidated together
+	/// by cancelling the token source. Use CreateCacheDependency to create a managed dependency.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithDependency), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithDependency<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, [DisallowNull] CancellationTokenSource dependencyTokenSource)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+		dependencyTokenSource = dependencyTokenSource.ArgumentNotNull();
+
+		var options = new MemoryCacheEntryOptions()
+			.SetAbsoluteExpiration(timeout)
+			.AddExpirationToken(new CancellationChangeToken(dependencyTokenSource.Token));
+
+		_ = this.Cache.Set(key, item, options);
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with a specified priority level.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="timeout">The expiration timeout.</param>
+	/// <param name="priority">The cache item priority (affects eviction behavior under memory pressure).</param>
+	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithPriority), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithPriority<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, CacheItemPriority priority)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+
+		var options = new MemoryCacheEntryOptions()
+			.SetAbsoluteExpiration(timeout)
+			.SetPriority(priority);
+
+		_ = this.Cache.Set(key, item, options);
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with a specified size for size-aware caching.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="timeout">The expiration timeout.</param>
+	/// <param name="size">The size of the cache entry (used when MemoryCache has SizeLimit configured).</param>
+	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithSize), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithSize<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, long size)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+
+		var options = new MemoryCacheEntryOptions()
+			.SetAbsoluteExpiration(timeout)
+			.SetSize(size);
+
+		_ = this.Cache.Set(key, item, options);
+	}
+
+	/// <summary>
+	/// Adds an item to the cache with sliding expiration.
+	/// </summary>
+	/// <typeparam name="T">The type of the item to be added to the cache.</typeparam>
+	/// <param name="key">The key associated with the cache item.</param>
+	/// <param name="item">The item to add to the cache.</param>
+	/// <param name="slidingExpiration">The sliding expiration time - item expires if not accessed within this timespan.</param>
+	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(AddCacheItemWithSlidingExpiration), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void AddCacheItemWithSlidingExpiration<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan slidingExpiration)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+		item = item.ArgumentNotNull();
+
+		_ = this.Cache.Set(key, item, new MemoryCacheEntryOptions().SetSlidingExpiration(slidingExpiration));
+	}
+
+	/// <summary>
 	/// Clears all items from the cache.
 	/// </summary>
 	/// <remarks>This method is intended to remove all items from the cache, effectively resetting it.
@@ -205,6 +453,27 @@ public sealed class InMemoryCache
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Clear), "David McCarter", "6/12/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void Clear() => this.Cache.Compact(1.0);
+
+	/// <summary>
+	/// Compacts the cache by the specified percentage.
+	/// </summary>
+	/// <param name="percentage">The percentage of cache entries to remove (0.0 to 1.0).</param>
+	/// <remarks>
+	/// This method removes the specified percentage of cache entries based on their priority and expiration.
+	/// Use this to manually trigger cache compaction when memory pressure is detected.
+	/// </remarks>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="percentage"/> is not between 0.0 and 1.0.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Compact), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void Compact(double percentage)
+	{
+		if (percentage is < 0.0 or > 1.0)
+		{
+			ExceptionThrower.ThrowArgumentOutOfRangeException(Properties.Resources.PercentageMustBeBetween00And10, nameof(percentage));
+		}
+
+		this.Cache.Compact(percentage);
+	}
 
 	/// <summary>
 	/// Determines whether the cache contains an item with the specified key.
@@ -219,6 +488,54 @@ public sealed class InMemoryCache
 		key = key.ArgumentNotNullOrEmpty();
 
 		return this.Cache.TryGetValue(key, out _);
+	}
+
+	/// <summary>
+	/// Creates a CancellationTokenSource that can be used to link multiple cache entries together for grouped invalidation.
+	/// </summary>
+	/// <param name="dependencyKey">The key to store the cancellation token source under for later retrieval.</param>
+	/// <returns>A CancellationTokenSource that can be used with AddCacheItemWithDependency.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="dependencyKey"/> is null or empty.</exception>
+	/// <remarks>
+	/// This enables cache dependency management where multiple cache entries can be invalidated together by cancelling the token.
+	/// Store the dependency key and later call InvalidateDependentCacheItems to remove all linked entries.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateCacheDependency), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public CancellationTokenSource CreateCacheDependency([DisallowNull] string dependencyKey)
+	{
+		dependencyKey = dependencyKey.ArgumentNotNullOrEmpty();
+
+		var cts = new CancellationTokenSource();
+		this.AddCacheItem(dependencyKey, cts);
+
+		return cts;
+	}
+
+	/// <summary>
+	/// Creates the cache with a custom configuration including optional size limit.
+	/// </summary>
+	/// <param name="sizeLimit">Optional size limit for the cache in number of entries. If not specified, cache has no size limit.</param>
+	/// <returns>A new instance of <see cref="MemoryCache"/> configured with specified options.</returns>
+	/// <remarks>
+	/// The cache is configured to compact by 50% when the size limit is exceeded. 
+	/// When a size limit is set, you must specify the size of each cache entry using AddCacheItemWithSize.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateCacheWithLimit), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public static MemoryCache CreateCacheWithLimit(long? sizeLimit = null)
+	{
+		var options = new MemoryCacheOptions
+		{
+			CompactionPercentage = 0.5
+		};
+
+		if (sizeLimit.HasValue)
+		{
+			options.SizeLimit = sizeLimit.Value;
+		}
+
+		return new MemoryCache(options);
 	}
 
 	/// <summary>
@@ -253,9 +570,18 @@ public sealed class InMemoryCache
 	{
 		key = key.ArgumentNotNullOrEmpty();
 
-		_ = this.Cache.TryGetValue(key, out var item);
+		var found = this.Cache.TryGetValue<T>(key, out var item);
 
-		return (T)item!;
+		if (found)
+		{
+			_ = Interlocked.Increment(ref this._cacheHits);
+		}
+		else
+		{
+			_ = Interlocked.Increment(ref this._cacheMisses);
+		}
+
+		return item!;
 	}
 
 	/// <summary>
@@ -277,6 +603,57 @@ public sealed class InMemoryCache
 	}
 
 	/// <summary>
+	/// Gets multiple cache items at once.
+	/// </summary>
+	/// <typeparam name="T">The type of items stored in the cache.</typeparam>
+	/// <param name="keys">Collection of keys to retrieve from the cache.</param>
+	/// <returns>A dictionary containing the found cache items keyed by their cache key.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keys"/> is null.</exception>
+	/// <remarks>
+	/// This method efficiently retrieves multiple cache items in a single operation.
+	/// Only items that exist in the cache are included in the returned dictionary.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public IDictionary<string, T> GetCacheItemBatch<T>([DisallowNull] IEnumerable<string> keys)
+	{
+		keys = keys.ArgumentNotNull();
+
+		var result = new Dictionary<string, T>();
+
+		foreach (var key in keys)
+		{
+			if (this.TryGetValue<T>(key, out var value) && value is not null)
+			{
+				result[key] = value;
+			}
+		}
+
+		return result;
+	}
+
+	/// <summary>
+	/// Gets statistics about the current cache state.
+	/// </summary>
+	/// <returns>A CacheStatistics object containing current cache metrics.</returns>
+	/// <remarks>
+	/// This method provides insights into cache usage including total items, hit/miss ratios, and other metrics
+	/// useful for monitoring and optimization. Use this for diagnostics and performance tuning.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetCacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public CacheStatistics GetCacheStatistics()
+	{
+		return new CacheStatistics
+		{
+			TotalItems = this.Cache.Count,
+			CompactionPercentage = 0.5,
+			CacheHits = Interlocked.Read(ref this._cacheHits),
+			CacheMisses = Interlocked.Read(ref this._cacheMisses)
+		};
+	}
+
+	/// <summary>
 	/// Gets the cache item associated with the specified key, or creates and caches it asynchronously if it does not exist.
 	/// Ensures that only one factory delegate executes per key at a time (single-flight), preventing duplicate work.
 	/// </summary>
@@ -292,14 +669,14 @@ public sealed class InMemoryCache
 	/// <remarks>
 	/// If multiple callers attempt to create the same cache entry concurrently, only one factory delegate will execute and the result will be shared.
 	/// </remarks>
-	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public async Task<T> GetOrCreateAsync<T>([DisallowNull] string key, [DisallowNull] Func<CancellationToken, Task<T>> factory, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
 	{
 		key = key.ArgumentNotNullOrEmpty();
 		factory = factory.ArgumentNotNull();
 
 		// Fast path: already cached
-		if (this.Cache.TryGetValue(key, out var item) && item is T cached)
+		if (this.Cache.TryGetValue<T>(key, out var item) && item is T cached)
 		{
 			return cached;
 		}
@@ -362,6 +739,84 @@ public sealed class InMemoryCache
 	}
 
 	/// <summary>
+	/// Invalidates all cache entries that depend on the specified dependency key.
+	/// </summary>
+	/// <param name="dependencyKey">The key of the dependency to invalidate.</param>
+	/// <returns><c>true</c> if the dependency was found and cancelled; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="dependencyKey"/> is null or empty.</exception>
+	/// <remarks>
+	/// This method cancels the CancellationTokenSource associated with the dependency key,
+	/// causing all cache entries linked to that dependency to be automatically removed.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(InvalidateDependentCacheItems), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public bool InvalidateDependentCacheItems([DisallowNull] string dependencyKey)
+	{
+		dependencyKey = dependencyKey.ArgumentNotNullOrEmpty();
+
+		if (this.TryGetValue<CancellationTokenSource>(dependencyKey, out var cts) && cts is not null)
+		{
+			cts.Cancel();
+			cts.Dispose();
+			_ = this.RemoveCacheItem(dependencyKey);
+			return true;
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Peeks at a cache item without updating statistics or access time.
+	/// </summary>
+	/// <typeparam name="T">The type of the item stored in the cache.</typeparam>
+	/// <param name="key">The key of the item to peek at.</param>
+	/// <param name="value">When this method returns, contains the object from the cache if found; otherwise, the default value.</param>
+	/// <returns><c>true</c> if the item exists in cache; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
+	/// <remarks>
+	/// This method checks if an item exists in the cache without affecting hit/miss statistics
+	/// or sliding expiration timers. Useful for diagnostics and monitoring.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public bool PeekCacheItem<T>([DisallowNull] string key, out T? value)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+
+		if (this.Cache.TryGetValue(key, out var item) && item is T t)
+		{
+			value = t;
+			return true;
+		}
+
+		value = default;
+		return false;
+	}
+
+	/// <summary>
+	/// Refreshes the expiration time of an existing cache item.
+	/// </summary>
+	/// <param name="key">The key of the cache item to refresh.</param>
+	/// <param name="newTimeout">The new expiration timeout.</param>
+	/// <returns><c>true</c> if the item was found and refreshed; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RefreshCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public bool RefreshCacheItem([DisallowNull] string key, TimeSpan newTimeout)
+	{
+		key = key.ArgumentNotNullOrEmpty();
+
+		if (this.Cache.TryGetValue(key, out var item))
+		{
+			_ = this.Cache.Set(key, item!, new MemoryCacheEntryOptions().SetAbsoluteExpiration(newTimeout));
+			return true;
+		}
+
+		return false;
+	}
+
+	/// <summary>
 	/// Removes the cache item associated with the specified key.
 	/// </summary>
 	/// <param name="key">The key of the item to remove from the cache.</param>
@@ -383,6 +838,45 @@ public sealed class InMemoryCache
 	}
 
 	/// <summary>
+	/// Removes multiple items from the cache at once.
+	/// </summary>
+	/// <param name="keys">Collection of keys to remove from the cache.</param>
+	/// <returns>The number of items successfully removed.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keys"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RemoveCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public int RemoveCacheItemBatch([DisallowNull] IEnumerable<string> keys)
+	{
+		keys = keys.ArgumentNotNull();
+
+		var removedCount = 0;
+
+		foreach (var key in keys)
+		{
+			if (this.RemoveCacheItem(key))
+			{
+				removedCount++;
+			}
+		}
+
+		return removedCount;
+	}
+
+	/// <summary>
+	/// Resets the cache statistics counters to zero.
+	/// </summary>
+	/// <remarks>
+	/// This method resets the hit and miss counters, useful for monitoring cache performance over specific time periods.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ResetStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public void ResetStatistics()
+	{
+		_ = Interlocked.Exchange(ref this._cacheHits, 0);
+		_ = Interlocked.Exchange(ref this._cacheMisses, 0);
+	}
+
+	/// <summary>
 	/// Attempts to get the cache item associated with the specified key.
 	/// </summary>
 	/// <typeparam name="T">The type of the item stored in the cache.</typeparam>
@@ -397,7 +891,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public bool TryGetValue<T>([DisallowNull] string key, out T? value)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -448,5 +942,4 @@ public sealed class InMemoryCache
 
 	[Information(nameof(Instance), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public static InMemoryCache Instance { get; } = new();
-
 }

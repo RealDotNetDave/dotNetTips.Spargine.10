@@ -82,7 +82,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 6/26/2017
 * **Description:** ExecutingFolder
@@ -392,7 +392,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** FindAssembliesFromDirectory
 * **Modified On:** 
@@ -508,7 +508,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/20/2024
 * **Description:** Original code by GÉRALD BARRÉ
@@ -528,6 +528,9 @@
 
 *****
 ## DotNetTips.Spargine.Core.BenchmarkStatus
+
+*****
+## DotNetTips.Spargine.Core.Cache.CacheStatistics
 
 *****
 ## DotNetTips.Spargine.Core.Cache.InMemoryCache
@@ -604,6 +607,102 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Void AddCacheItemBatch(T items)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemBatch
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithCallback(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Caching.Memory.PostEvictionDelegate postEvictionCallback)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithCallback
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithChangeToken(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Primitives.IChangeToken changeToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithChangeToken
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithCombinedExpiration(System.String key, T item, System.TimeSpan slidingExpiration, System.TimeSpan absoluteExpiration)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithCombinedExpiration
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithDependency(System.String key, T item, System.TimeSpan timeout, System.Threading.CancellationTokenSource dependencyTokenSource)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithDependency
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithPriority(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Caching.Memory.CacheItemPriority priority)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithPriority
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithSize(System.String key, T item, System.TimeSpan timeout, System.Int64 size)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithSize
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void AddCacheItemWithSlidingExpiration(System.String key, T item, System.TimeSpan slidingExpiration)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** AddCacheItemWithSlidingExpiration
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### Microsoft.Extensions.Caching.Memory.MemoryCache Cache { get; set; }
 
 * **Status:** Available
@@ -628,6 +727,18 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Void Compact(System.Double percentage)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** Compact
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean ContainsKey(System.String key)
 
 * **Status:** Available
@@ -649,6 +760,30 @@
 * **Author:** David McCarter
 * **CreatedOn:** 1/16/2021
 * **Description:** Count
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Threading.CancellationTokenSource CreateCacheDependency(System.String dependencyKey)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** CreateCacheDependency
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### Microsoft.Extensions.Caching.Memory.MemoryCache CreateCacheWithLimit(System.Nullable<System.Int64> sizeLimit)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** CreateCacheWithLimit
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -688,6 +823,30 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### T GetCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** GetCacheItemBatch
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### DotNetTips.Spargine.Core.Cache.CacheStatistics GetCacheStatistics()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** GetCacheStatistics
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### T GetOrCreateAsync(System.String key, T factory, System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** New
@@ -722,6 +881,42 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Boolean InvalidateDependentCacheItems(System.String dependencyKey)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** InvalidateDependentCacheItems
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean PeekCacheItem(System.String key, T value)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** PeekCacheItem
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean RefreshCacheItem(System.String key, System.TimeSpan newTimeout)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** RefreshCacheItem
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean RemoveCacheItem(System.String key)
 
 * **Status:** Available
@@ -731,6 +926,30 @@
 * **Author:** David McCarter
 * **CreatedOn:** 1/20/2025
 * **Description:** RemoveCacheItem
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 RemoveCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** RemoveCacheItemBatch
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void ResetStatistics()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 12/30/2025
+* **Description:** ResetStatistics
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -5730,7 +5949,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/6/2023
 * **Description:** BuiltInTypeNames
@@ -6706,7 +6925,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/4/2022
 * **Description:** ArgumentItemsExists
@@ -6718,7 +6937,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentMatched
@@ -6730,7 +6949,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 4/4/2022
 * **Description:** ArgumentMeetsCondition
@@ -6898,7 +7117,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/10/2021
 * **Description:** CheckIsCondition
@@ -6910,7 +7129,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckIsDefined
@@ -6922,7 +7141,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckIsInRange
@@ -6934,7 +7153,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
@@ -6946,7 +7165,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
@@ -6970,7 +7189,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
@@ -6982,7 +7201,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
@@ -6994,7 +7213,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
@@ -7006,7 +7225,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckIsInRange
@@ -7018,7 +7237,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/26/2017
 * **Description:** CheckIsNotEmpty
@@ -7066,7 +7285,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/14/2022
 * **Description:** CheckItemsExists
@@ -7078,7 +7297,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckTypeEquals
@@ -7123,4 +7342,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 12/29/2025 9:49:40 PM UTC**
+**Generated by Spargine - dotNetTips.com on 12/30/2025 7:32:26 PM UTC**

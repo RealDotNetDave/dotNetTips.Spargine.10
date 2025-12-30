@@ -78,7 +78,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
@@ -258,7 +258,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/28/2021
@@ -333,7 +333,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
@@ -501,7 +501,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/28/2021
@@ -1740,7 +1740,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/24/2023
@@ -1752,7 +1752,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -1764,7 +1764,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/24/2023
@@ -1955,8 +1955,8 @@
 ### System.Int32 IndexOf(T collection, T item)
 
 * **Status:** Updated
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2050,7 +2050,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2062,23 +2062,11 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** OrderByOrdinal
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### T Page(T collection, System.Int32 pageSize)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 11/21/2010
-* **Description:** Page
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -2146,7 +2134,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Original code by Simon Painter.
@@ -2287,7 +2275,7 @@
 ### T Upsert(T collection, T item)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2330,7 +2318,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/24/2023
@@ -2342,7 +2330,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2354,7 +2342,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/24/2023
@@ -2545,8 +2533,8 @@
 ### System.Int32 IndexOf(T item)
 
 * **Status:** Updated
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2640,7 +2628,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2652,23 +2640,11 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** OrderByOrdinal
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### T Page(System.Int32 pageSize)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 11/21/2010
-* **Description:** Page
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -2724,7 +2700,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Original code by Simon Painter.
@@ -2865,7 +2841,7 @@
 ### T Upsert(T item)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3300,7 +3276,7 @@
 ### System.Void AddFirst(T list, T item)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3312,7 +3288,7 @@
 ### System.Void AddLast(T list, T item)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3324,7 +3300,7 @@
 ### System.Void AddRangeIfNotExists(T list, T items)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3385,7 +3361,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/12/2022
@@ -3421,7 +3397,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/17/2022
@@ -3611,7 +3587,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/3/2021
@@ -3685,7 +3661,7 @@
 ### System.Void AddFirst(T item)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3697,7 +3673,7 @@
 ### System.Void AddLast(T item)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3709,7 +3685,7 @@
 ### System.Void AddRangeIfNotExists(T items)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3770,7 +3746,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/12/2022
@@ -3806,7 +3782,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/17/2022
@@ -3996,7 +3972,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/3/2021
@@ -5929,7 +5905,7 @@
 ### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -5942,7 +5918,7 @@
 ### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -5955,7 +5931,7 @@
 ### T ToImmutableSortedSet(T collection)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -5983,7 +5959,7 @@
 ### System.Boolean IsNotEmpty()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -5996,7 +5972,7 @@
 ### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6009,7 +5985,7 @@
 ### T ToImmutableSortedSet()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6310,7 +6286,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -6318,7 +6294,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean ContainsAny(System.String input, System.StringComparison stringComparison, System.ReadOnlySpan<System.String> characters)
+### System.Boolean ContainsAny(System.String input, System.StringComparison stringComparison, System.String[] characters)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6345,8 +6321,8 @@
 ### System.String DefaultIfNull(System.String value, System.String defaultValue)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -6646,7 +6622,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/18/2020
@@ -6812,7 +6788,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6846,7 +6822,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6890,15 +6866,15 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Span<System.Byte> ToBase64ByteSpan(System.String input)
+### System.Byte[] ToBase64Bytes(System.String input)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/5/2024
-* **Description:** ToBase64ByteSpan
+* **CreatedOn:** 12/30/2025
+* **Description:** ToBase64Bytes
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -7652,4 +7628,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 12/29/2025 9:49:40 PM UTC**
+**Generated by Spargine - dotNetTips.com on 12/30/2025 7:32:26 PM UTC**
