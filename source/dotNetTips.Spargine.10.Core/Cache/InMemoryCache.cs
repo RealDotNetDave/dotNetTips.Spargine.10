@@ -97,17 +97,6 @@ namespace DotNetTips.Spargine.Core.Cache;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineInMemoryCache")]
 public sealed class InMemoryCache
 {
-	//TODO: UPDATE ARTICLE ON DOTNETTIPS.COM
-
-	/// <summary>
-	/// Tracks cache hit statistics for performance monitoring.
-	/// </summary>
-	private long _cacheHits;
-
-	/// <summary>
-	/// Tracks cache miss statistics for performance monitoring.
-	/// </summary>
-	private long _cacheMisses;
 
 	/// <summary>
 	/// Provides single-flight protection for concurrent cache population.
@@ -125,6 +114,17 @@ public sealed class InMemoryCache
 	/// See <see cref="AddCacheItem{T}(string, T)"/> and <see cref="CreateCache"/> for how this value is applied.  
 	/// </remarks>  
 	private readonly TimeSpan _timeoutInMinutes = TimeSpan.FromMinutes(20);
+	//TODO: UPDATE ARTICLE ON DOTNETTIPS.COM
+
+	/// <summary>
+	/// Tracks cache hit statistics for performance monitoring.
+	/// </summary>
+	private long _cacheHits;
+
+	/// <summary>
+	/// Tracks cache miss statistics for performance monitoring.
+	/// </summary>
+	private long _cacheMisses;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="InMemoryCache"/> class. The cache is created with default settings.
@@ -132,19 +132,64 @@ public sealed class InMemoryCache
 	private InMemoryCache() => this.Cache = CreateCache();
 
 	/// <summary>
-	/// Creates the cache with a default configuration.
+	/// Gets the count of items currently stored in the cache.
 	/// </summary>
-	/// <returns>A new instance of <see cref="MemoryCache"/> configured with a compaction percentage and a default expiration policy.</returns>
+	/// <value>The count of items in the cache.</value>
 	/// <remarks>
-	/// The cache is configured to compact by 50% when the size limit is exceeded. The default expiration time for each cache entry is set to 20 minutes.
+	/// This property provides the total number of items currently stored in the cache. It accesses the <see cref="MemoryCache.Count"/> property of the underlying <see cref="MemoryCache"/> instance used by the <see cref="InMemoryCache"/>.
 	/// </remarks>
-	private static MemoryCache CreateCache()
+	[Pure]
+	[Information(nameof(Count), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	public static int Count
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get => Instance.Cache.Count;
+	}
+
+	/// <summary>
+	/// Gets the singleton instance of <see cref="InMemoryCache"/>.
+	/// </summary>
+	/// <value>The singleton instance of the <see cref="InMemoryCache"/> class.</value>
+	/// <remarks>
+	/// This property provides a global access point to the single instance of the <see cref="InMemoryCache"/> class, ensuring that only one instance is used throughout the application.
+	/// </remarks>
+
+	[Information(nameof(Instance), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	public static InMemoryCache Instance { get; } = new();
+
+	/// <summary>
+	/// Gets the <see cref="MemoryCache"/> instance used by the <see cref="InMemoryCache"/>.
+	/// </summary>
+	/// <value>The <see cref="MemoryCache"/> instance.</value>
+	/// <remarks>
+	/// This property exposes the underlying <see cref="MemoryCache"/> used by the <see cref="InMemoryCache"/> class to store cached items.
+	/// </remarks>
+
+	[Information(nameof(Cache), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	public MemoryCache Cache { get; }
+
+	/// <summary>
+	/// Creates the cache with a custom configuration including optional size limit.
+	/// </summary>
+	/// <param name="sizeLimit">Optional size limit for the cache in number of entries. If not specified, cache has no size limit.</param>
+	/// <returns>A new instance of <see cref="MemoryCache"/> configured with specified options.</returns>
+	/// <remarks>
+	/// The cache is configured to compact by 50% when the size limit is exceeded. 
+	/// When a size limit is set, you must specify the size of each cache entry using AddCacheItemWithSize.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateCacheWithLimit), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	public static MemoryCache CreateCacheWithLimit(long? sizeLimit = null)
 	{
 		var options = new MemoryCacheOptions
 		{
 			CompactionPercentage = 0.5
 		};
 
+		if (sizeLimit.HasValue)
+		{
+			options.SizeLimit = sizeLimit.Value;
+		}
 
 		return new MemoryCache(options);
 	}
@@ -513,32 +558,6 @@ public sealed class InMemoryCache
 	}
 
 	/// <summary>
-	/// Creates the cache with a custom configuration including optional size limit.
-	/// </summary>
-	/// <param name="sizeLimit">Optional size limit for the cache in number of entries. If not specified, cache has no size limit.</param>
-	/// <returns>A new instance of <see cref="MemoryCache"/> configured with specified options.</returns>
-	/// <remarks>
-	/// The cache is configured to compact by 50% when the size limit is exceeded. 
-	/// When a size limit is set, you must specify the size of each cache entry using AddCacheItemWithSize.
-	/// </remarks>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateCacheWithLimit), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
-	public static MemoryCache CreateCacheWithLimit(long? sizeLimit = null)
-	{
-		var options = new MemoryCacheOptions
-		{
-			CompactionPercentage = 0.5
-		};
-
-		if (sizeLimit.HasValue)
-		{
-			options.SizeLimit = sizeLimit.Value;
-		}
-
-		return new MemoryCache(options);
-	}
-
-	/// <summary>
 	/// Gets all keys currently stored in the cache.
 	/// </summary>
 	/// <returns>An enumerable collection of keys in the cache.</returns>
@@ -572,14 +591,7 @@ public sealed class InMemoryCache
 
 		var found = this.Cache.TryGetValue<T>(key, out var item);
 
-		if (found)
-		{
-			_ = Interlocked.Increment(ref this._cacheHits);
-		}
-		else
-		{
-			_ = Interlocked.Increment(ref this._cacheMisses);
-		}
+		_ = found ? Interlocked.Increment(ref this._cacheHits) : Interlocked.Increment(ref this._cacheMisses);
 
 		return item!;
 	}
@@ -907,39 +919,20 @@ public sealed class InMemoryCache
 	}
 
 	/// <summary>
-	/// Gets the <see cref="MemoryCache"/> instance used by the <see cref="InMemoryCache"/>.
+	/// Creates the cache with a default configuration.
 	/// </summary>
-	/// <value>The <see cref="MemoryCache"/> instance.</value>
+	/// <returns>A new instance of <see cref="MemoryCache"/> configured with a compaction percentage and a default expiration policy.</returns>
 	/// <remarks>
-	/// This property exposes the underlying <see cref="MemoryCache"/> used by the <see cref="InMemoryCache"/> class to store cached items.
+	/// The cache is configured to compact by 50% when the size limit is exceeded. The default expiration time for each cache entry is set to 20 minutes.
 	/// </remarks>
-
-	[Information(nameof(Cache), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public MemoryCache Cache { get; }
-
-	/// <summary>
-	/// Gets the count of items currently stored in the cache.
-	/// </summary>
-	/// <value>The count of items in the cache.</value>
-	/// <remarks>
-	/// This property provides the total number of items currently stored in the cache. It accesses the <see cref="MemoryCache.Count"/> property of the underlying <see cref="MemoryCache"/> instance used by the <see cref="InMemoryCache"/>.
-	/// </remarks>
-	[Pure]
-	[Information(nameof(Count), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public static int Count
+	private static MemoryCache CreateCache()
 	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get => Instance.Cache.Count;
+		var options = new MemoryCacheOptions
+		{
+			CompactionPercentage = 0.5
+		};
+
+
+		return new MemoryCache(options);
 	}
-
-	/// <summary>
-	/// Gets the singleton instance of <see cref="InMemoryCache"/>.
-	/// </summary>
-	/// <value>The singleton instance of the <see cref="InMemoryCache"/> class.</value>
-	/// <remarks>
-	/// This property provides a global access point to the single instance of the <see cref="InMemoryCache"/> class, ensuring that only one instance is used throughout the application.
-	/// </remarks>
-
-	[Information(nameof(Instance), "David McCarter", "1/16/2021", Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public static InMemoryCache Instance { get; } = new();
 }

@@ -4,7 +4,7 @@
 // Created          : 11-06-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="CollectionRandomizer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -149,12 +149,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 		{
 			lock (this._threadLock)
 			{
-				if (!this._initialized || this._collection.Length == 0)
-				{
-					return 0.0;
-				}
-
-				return (this._currentIndex + 1) / (double)this._collection.Length * 100.0;
+				return !this._initialized || this._collection.Length == 0 ? 0.0 : (this._currentIndex + 1) / (double)this._collection.Length * 100.0;
 			}
 		}
 	}
@@ -162,7 +157,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// <summary>
 	/// Returns an enumerator that iterates through a collection.
 	/// </summary>
-	/// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+	/// <returns>An <see cref="IEnumerator" /> object that can be used to iterate through the collection.</returns>
 	IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 	/// <summary>
@@ -225,17 +220,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	{
 		lock (this._threadLock)
 		{
-			if (!this._initialized)
-			{
-				return this._collection.Length;
-			}
-
-			if (!this.HasRemainingItems)
-			{
-				return 0;
-			}
-
-			return this._collection.Length - this._currentIndex - 1;
+			return !this._initialized ? this._collection.Length : !this.HasRemainingItems ? 0 : this._collection.Length - this._currentIndex - 1;
 		}
 	}
 

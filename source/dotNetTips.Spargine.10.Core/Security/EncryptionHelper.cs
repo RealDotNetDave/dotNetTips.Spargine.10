@@ -44,28 +44,6 @@ public static class EncryptionHelper
 	private static readonly ArrayPool<byte> _byteArrayPool = ArrayPool<byte>.Shared;
 
 	/// <summary>
-	/// Generates AES key and initialization vector (IV) based on a SHA256 hash of the provided key.
-	/// </summary>
-	/// <param name="key">The input key from which to generate the AES key and IV.</param>
-	/// <returns>A tuple containing the AES key and IV.</returns>
-	/// <remarks>
-	/// This method hashes the input key using SHA256 and then uses the hash to generate
-	/// a 32-byte AES key and a 16-byte IV. It ensures that the key and IV are derived
-	/// from the input key in a consistent and secure manner.
-	/// </remarks>
-	private static (byte[] key, byte[] iv) GetSHA256HashKeys([NotNull] string key)
-	{
-		var hash = SHA256.HashData(Encoding.ASCII.GetBytes(key));
-		var aesKey = new byte[32];
-		var aesIV = new byte[16];
-
-		hash.AsSpan(0, aesKey.Length).CopyTo(aesKey);
-		hash.AsSpan(0, aesIV.Length).CopyTo(aesIV);
-
-		return (aesKey, aesIV);
-	}
-
-	/// <summary>
 	/// Decrypts a string using AES security.
 	/// </summary>
 	/// <param name="cipherText">The cipher text to decrypt.</param>
@@ -479,6 +457,28 @@ public static class EncryptionHelper
 	public static PasswordVerificationResult VerifySHA256HashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password)
 	{
 		return PasswordHasher.VerifyHashedPassword(hashedPassword.ArgumentNotNullOrEmpty(), password.ArgumentNotNullOrEmpty(), HashAlgorithmType.SHA256);
+	}
+
+	/// <summary>
+	/// Generates AES key and initialization vector (IV) based on a SHA256 hash of the provided key.
+	/// </summary>
+	/// <param name="key">The input key from which to generate the AES key and IV.</param>
+	/// <returns>A tuple containing the AES key and IV.</returns>
+	/// <remarks>
+	/// This method hashes the input key using SHA256 and then uses the hash to generate
+	/// a 32-byte AES key and a 16-byte IV. It ensures that the key and IV are derived
+	/// from the input key in a consistent and secure manner.
+	/// </remarks>
+	private static (byte[] key, byte[] iv) GetSHA256HashKeys([NotNull] string key)
+	{
+		var hash = SHA256.HashData(Encoding.ASCII.GetBytes(key));
+		var aesKey = new byte[32];
+		var aesIV = new byte[16];
+
+		hash.AsSpan(0, aesKey.Length).CopyTo(aesKey);
+		hash.AsSpan(0, aesIV.Length).CopyTo(aesIV);
+
+		return (aesKey, aesIV);
 	}
 
 }

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-28-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -143,16 +143,17 @@ public static class DictionaryExtensions
 	/// <param name="collection">The dictionary to search or add to.</param>
 	/// <param name="key">The key of the value to get or add.</param>
 	/// <param name="value">The value to add if the key does not exist.</param>
-	/// <returns>The value associated with the specified key.</returns>
+	/// <returns>The value associated with the specified key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection" />, <paramref name="key" />, or <paramref name="value" /> is null.</exception>
 	/// <remarks>
 	/// <para>
-	/// This method provides a "get-or-add" operation that retrieves an existing value or adds a new one atomically.
+	/// This method provides a "get-or-add" operation that retrieves an existing value or adds a new one.
 	/// </para>
 	/// <para>
-	/// <b>Performance Optimization:</b> Uses <see cref="IDictionary{TKey, TValue}.TryAdd"/> which is a single 
-	/// O(1) operation in .NET 10, avoiding the need for separate ContainsKey + Add operations. If the key already 
-	/// exists, <c>TryAdd</c> returns false and we retrieve the existing value with a second <c>TryGetValue</c> call.
+	/// <b>Performance Optimization:</b> Uses <see cref="IDictionary{TKey, TValue}.TryGetValue"/> followed by 
+	/// <see cref="IDictionary{TKey, TValue}.Add"/> when the key doesn't exist. This approach uses two O(1) operations: 
+	/// one to check for the key's existence and another to add it if absent. The <c>TryGetValue</c> method is the 
+	/// most efficient way to check for key existence in .NET 10 dictionaries.
 	/// </para>
 	/// <para>
 	/// <b>Thread Safety:</b> This method is not atomic for regular <see cref="Dictionary{TKey, TValue}"/>. 
@@ -172,6 +173,12 @@ public static class DictionaryExtensions
 	/// <description>
 	/// Unlike <c>ConcurrentDictionary.GetOrAdd</c>, this is not thread-safe - use appropriate 
 	/// synchronization if called from multiple threads.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// For concurrent scenarios, <see cref="ConcurrentDictionary{TKey, TValue}.GetOrAdd(TKey, TValue)"/> 
+	/// is optimized with fine-grained locking and lock-free read operations.
 	/// </description>
 	/// </item>
 	/// </list>

@@ -4,7 +4,7 @@
 // Created          : 05-04-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -100,6 +100,7 @@ public static class ExceptionExtensions
 	/// <remarks>
 	/// This class is used internally to store additional information about exceptions, such as their logged state.
 	/// </remarks>
+	[Preserve("Used in ExceptionExtensions")]
 	private sealed record ExceptionMetadata(bool IsLogged)
 	{
 		/// <summary>
@@ -109,13 +110,13 @@ public static class ExceptionExtensions
 		{
 		}
 
-		private string GetDebuggerDisplay() => this.ToString();
-
 		/// <summary>
 		/// Gets or sets a value indicating whether the exception has been logged.
 		/// </summary>
 		/// <value><c>true</c> if the exception has been logged; otherwise, <c>false</c>.</value>
 		public bool IsLogged { get; internal set; } = IsLogged;
+
+		private string GetDebuggerDisplay() => this.ToString();
 	}
 
 	///<summary></summary>

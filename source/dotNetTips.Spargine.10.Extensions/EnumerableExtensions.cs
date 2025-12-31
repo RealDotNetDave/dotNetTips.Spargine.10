@@ -196,13 +196,62 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Finds the otherIndex of the first occurrence of an item in the collection.
+		/// Finds the index of the first occurrence of an item in the collection using a custom equality comparer.
 		/// </summary>
 		/// <param name="item">The item to find in the collection.</param>
-		/// <returns>The zero-based otherIndex of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
+		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements, or null to use the default equality comparer <see cref="EqualityComparer{T}.Default"/>.</param>
+		/// <returns>The zero-based index of the first occurrence of <paramref name="item"/> within the entire collection if found; otherwise, -1.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> or <paramref name="comparer"/> is null.</exception>
 		/// <remarks>
-		/// This method uses <see cref="EqualityComparer{T}.Default"/> to compare elements.
+		/// <para>
+		/// This method performs a linear search using the specified <see cref="IEqualityComparer{T}"/> to determine equality between elements.
+		/// </para>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements in the collection.</description></item>
+		/// <item><description><b>Space complexity:</b> O(1) - no additional memory allocation beyond the enumerator.</description></item>
+		/// <item><description><b>Enumeration:</b> Single-pass forward enumeration from the beginning of the collection.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>When to Use Custom Comparers:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
+		/// <item><description><b>Custom object comparison:</b> When the default <see cref="Object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
+		/// <item><description><b>Reference equality:</b> Use <see cref="ReferenceEqualityComparer"/> to compare object references instead of values.</description></item>
+		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Related Methods:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><see cref="IndexOf(T)"/> - Uses <see cref="EqualityComparer{T}.Default"/> for comparison.</description></item>
+		/// <item><description><see cref="IndexOf(Func{T, bool})"/> - Uses a predicate function for matching.</description></item>
+		/// <item><description><see cref="Array.IndexOf{T}(T[], T)"/> - Optimized array-specific implementation.</description></item>
+		/// <item><description><see cref="List{T}.IndexOf(T)"/> - Optimized list-specific implementation.</description></item>
+		/// </list>
 		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var names = new List&lt;string&gt; { "Alice", "Bob", "Charlie" };
+		/// 
+		/// // Case-insensitive search
+		/// var index = names.IndexOf("alice", StringComparer.OrdinalIgnoreCase);
+		/// // Result: 0 (found "Alice")
+		/// 
+		/// // Custom comparer for Person objects
+		/// var people = new List&lt;Person&gt; 
+		/// { 
+		///     new Person { Id = 1, Name = "John" },
+		///     new Person { Id = 2, Name = "Jane" }
+		/// };
+		/// var personComparer = new PersonIdComparer();
+		/// var foundIndex = people.IndexOf(new Person { Id = 2 }, personComparer);
+		/// // Result: 1 (found person with Id = 2)
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
@@ -702,6 +751,7 @@ public static class EnumerableExtensions
 		/// <item><description><see cref="ICollection{T}"/> - Creates a pre-sized <see cref="List{T}"/> and copies elements once, then wraps it.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Uses collection expression to materialize and wrap the collection.</description></item>
 		/// </list>
+		/// <remarks>
 		/// Performance characteristics:
 		/// <list type="bullet">
 		/// <item><description><b>IList&lt;T&gt; input:</b> O(1) operation, no allocations beyond the Collection wrapper.</description></item>
@@ -726,6 +776,7 @@ public static class EnumerableExtensions
 		/// Collection&lt;int&gt; collection3 = enumerable.ToCollection();
 		/// </code>
 		/// </example>
+		/// </remarks>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1059,7 +1110,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			separator = separator.ArgumentNotNull();
 
-			//RECOMENDATION FROM COPILOT IS SLOWER
+			//RECOMENDATION FROM COPILOT SLOWER.
 			return collection.CheckItemsExists() is false
 				? string.Empty
 				: string.Join(separator.ArgumentNotNullOrEmpty(defaultValue: ControlChars.DefaultSeparator), collection);
@@ -1412,8 +1463,9 @@ public static class EnumerableExtensions
 		/// <b>Performance Characteristics:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>List/Array:</b> O(n) single copy operation with pre-allocated memory.</description></item>
-		/// <item><description><b>Other types:</b> O(n) with deferred execution via Append.</description></item>
+		/// <item><description><b>Condition false:</b> O(1) - Returns original collection.</description></item>
+		/// <item><description><b>Condition true (List/Array):</b> O(n) with pre-allocated memory.</description></item>
+		/// <item><description><b>Condition true (Other):</b> O(n) with deferred execution.</description></item>
 		/// </list>
 		/// </remarks>
 		/// <example>
