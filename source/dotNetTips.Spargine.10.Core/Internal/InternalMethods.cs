@@ -31,11 +31,7 @@ internal static class InternalMethods
 	/// </summary>
 	private const string NullString = "[null]";
 
-
-	// OPTIMIZATION: Cache the built-in types dictionary to avoid repeated allocations
-	// This prevents creating a new dictionary on every call to PropertiesToDictionary
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
-
 
 	/// <summary>
 	/// Ensures the minimum.

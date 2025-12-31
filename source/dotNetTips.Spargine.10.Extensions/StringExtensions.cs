@@ -128,10 +128,6 @@ public static class StringExtensions
 		// Default to UTF-8 if no encoding specified
 		encoding ??= Encoding.UTF8;
 
-		// OPTIMIZATION: Encoding.GetByteCount is highly optimized in .NET 10
-		// - UTF-8/ASCII use SIMD-accelerated vectorized operations
-		// - No allocations - just counts without creating buffers
-		// - JIT inlines this for constant encoding types
 		return encoding.GetByteCount(input);
 	}
 
@@ -258,50 +254,53 @@ public static class StringExtensions
 	/// </exception>
 	/// <remarks>
 	/// This method uses a pooled <see cref="StringBuilder"/> to optimize memory usage during concatenation.
+	/// The capacity is pre-calculated using <see cref="CalculateStringCount"/> to minimize internal buffer reallocations.
+	/// <para>
+	/// <strong>Performance Optimizations (.NET 10):</strong>
+	/// <list type="bullet">
+	/// <item><description>Always uses pooled StringBuilder (eliminates allocation overhead)</description></item>
+	/// <item><description>Pre-calculates exact capacity to avoid reallocation during building</description></item>
+	/// <item><description>Single code path regardless of collection size (improved JIT optimization)</description></item>
+	/// <item><description>Uses ReadOnlyCollection for better type safety and performance</description></item>
+	/// </list>
+	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 		delimiter = delimiter.ArgumentNotNullOrEmpty();
 
+		// Early exit: if no args, return input immediately
 		if (args is null || args.Count == 0)
 		{
 			return input;
 		}
 
-		if (args.Count <= 3)
-		{
-			// Estimate capacity: base64Input + (avg 20 chars per arg + delimiter) * count
-			var estimatedCapacity = input.Length + ((20 + delimiter.Length) * args.Count);
-			var sb = new StringBuilder(estimatedCapacity);
+		// Calculate exact capacity: input + all args + delimiters
+		// Add 1 for input string
+		var tempArray = new string[args.Count + 1];
+		tempArray[0] = input;
+		args.CopyTo(tempArray, 1);
 
-			_ = sb.Append(input);
+		var totalStringLength = tempArray.CalculateStringCount();
 
-			foreach (var arg in args)
-			{
-				if (addLineFeed)
-				{
-					_ = sb.AppendLine(arg);
-				}
-				else
-				{
-					_ = sb.Append(arg);
-					_ = sb.Append(delimiter);
-				}
-			}
+		// Add space for delimiters or line feeds
+		var delimiterLength = addLineFeed ? Environment.NewLine.Length : delimiter.Length;
+		var estimatedCapacity = totalStringLength + (args.Count * delimiterLength);
 
-			return sb.ToString();
-		}
-
-		// For larger concatenations, use the pool
 		var pooledSb = _stringBuilderPool.Value.Get().Clear();
 
 		try
 		{
+			// Set capacity once to avoid reallocations
+			_ = pooledSb.EnsureCapacity(estimatedCapacity);
+
+			// Append initial input
 			_ = pooledSb.Append(input);
 
+			// Append all args with delimiter or line feed
 			foreach (var arg in args)
 			{
 				if (addLineFeed)
@@ -310,8 +309,8 @@ public static class StringExtensions
 				}
 				else
 				{
-					_ = pooledSb.Append(arg);
 					_ = pooledSb.Append(delimiter);
+					_ = pooledSb.Append(arg);
 				}
 			}
 
@@ -340,8 +339,6 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		stringComparison = stringComparison.ArgumentDefined();
 
-		// OPTIMIZATION: Direct array iteration without ReadOnlySpan wrapper
-		// In .NET 10, params string[] is more efficient than params ReadOnlySpan<string>
 		foreach (var character in characters)
 		{
 			if (input.Contains(character, stringComparison))
@@ -1244,10 +1241,7 @@ public static class StringExtensions
 		options = options.ArgumentDefined();
 		count = count.ArgumentInRange(min: 1);
 
-		// OPTIMIZATION: Direct array pass-through avoids collection expression allocation
-		// In .NET 10, using a pre-allocated array reference is faster than [separator] syntax
-		// The string.Split method is optimized for string[] parameters
-		return Array.AsReadOnly(input.Split(new[] { separator }, count, options));
+		return Array.AsReadOnly(input.Split([separator], count, options));
 
 	}
 
@@ -1378,11 +1372,8 @@ public static class StringExtensions
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
-		// OPTIMIZATION: Use existing CalculateByteArraySize for exact allocation
-		// This is faster than over-allocating and more predictable than Span<T> in .NET 10
 		var exactSize = input.CalculateByteArraySize();
 		var buffer = new byte[exactSize];
-
 
 		return !Convert.TryFromBase64String(input, buffer, out _)
 			? throw new FormatException(Resources.TheInputStringIsNotAValidBase64String)
@@ -1441,8 +1432,6 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		encoding = encoding.ArgumentNotNull();
 
-		// OPTIMIZATION: Single allocation by calculating exact size first
-		// .NET 10's GetByteCount is highly optimized with SIMD and is faster than over-allocation + trim
 		var buffer = new byte[encoding.GetByteCount(input)];
 
 		// GetBytes with span - guaranteed to fill buffer exactly
@@ -1484,7 +1473,7 @@ public static class StringExtensions
 	/// Input: "dotNetTips.com"
 	/// Output
 	/// Fastest: SmHIZyhh8GNIZShhCGHIZChgKGbQY0hmyGfIZQAAAAD//w==
-	/// NoCompression: ABwA4/9kAG8AdABOAGUAdABUAGkAcABzAC4AYwBvAG0AAAAA//8=
+	/// NoCompression: ABwA4/9kAG8AdABOAGUAdABUAGkAcABzAC4AYwBvAG0AAA==
 	/// Optimal: SmHIZyhh8GNIBZIhDJkMBQzFDHoMyUDRXAYAAAAA//8=
 	/// SmallestSize: SmHIZyhh8GNIBZIhDJkMBQzFDHoMyUDRXAYAAAAA//8=
 	/// </example>

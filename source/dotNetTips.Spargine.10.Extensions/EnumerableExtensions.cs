@@ -150,7 +150,6 @@ public static class EnumerableExtensions
 
 			//TODO: ADD UNIT TESTS FOR ALL COLLECTION TYPES.
 
-			// OPTIMIZATION: Fast path for common collection types with indexed access
 			if (collection is List<T> list)
 			{
 				// Use List<T>.IndexOf which is highly optimized in the framework
@@ -372,10 +371,8 @@ public static class EnumerableExtensions
 			var property = parts[0];
 			var descending = parts.Length > 1 && parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
 
-			// OPTIMIZATION: Build cache key for this type + property combination
 			var cacheKey = $"{typeof(T).FullName}.{property}";
 
-			// OPTIMIZATION: Retrieve or compile the property accessor delegate
 			var accessor = _orderByPropertyCache.GetOrAdd(cacheKey, _ =>
 			{
 				var prop = typeof(T).GetRuntimeProperty(property);
@@ -403,7 +400,6 @@ public static class EnumerableExtensions
 				throw new InvalidOperationException($"Cached delegate for property accessor is not of expected type Func<{typeof(T).Name}, object?>.");
 			}
 
-			// OPTIMIZATION: Use the compiled accessor instead of reflection
 			return descending
 				? collection.OrderByDescending(typedAccessor)
 				: collection.OrderBy(typedAccessor);
@@ -699,7 +695,6 @@ public static class EnumerableExtensions
 				return true;
 			}
 
-			// OPTIMIZATION: Fast path for common collection types with known counts
 			if (collection is ICollection<T> col1 && second is ICollection<T> col2)
 			{
 				if (col1.Count != col2.Count)
@@ -708,7 +703,6 @@ public static class EnumerableExtensions
 				}
 			}
 
-			// OPTIMIZATION: Cache the structural comparer to avoid repeated lookups
 			var comparer = StructuralComparisons.StructuralEqualityComparer;
 
 			using var firstEnumerator = collection.GetEnumerator();

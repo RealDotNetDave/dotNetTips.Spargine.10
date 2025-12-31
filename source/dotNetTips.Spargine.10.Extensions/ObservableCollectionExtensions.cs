@@ -76,7 +76,6 @@ public static class ObservableCollectionExtensions
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
 		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
-			// OPTIMIZATION: Direct enumeration with early exit - avoids Any() overhead
 			return collection is null || actionPredicate is null ? false : collection.Count(actionPredicate) > 0;
 		}
 

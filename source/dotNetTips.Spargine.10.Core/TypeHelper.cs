@@ -56,16 +56,6 @@ public static class TypeHelper
 	private const int TimeOutMinutes = 5;
 
 	/// <summary>
-	/// A read-only collection of built-in .NET types. This collection is used internally to check if a type is a built-in .NET type.
-	/// </summary>
-	private static HashSet<Type>? _builtInTypes;
-
-	/// <summary>
-	/// A static field to cache the built-in .NET types.
-	/// </summary>
-	private static Dictionary<Type, string>? _cachedBuiltInTypes;
-
-	/// <summary>
 	/// Shared in-memory cache instance used for caching reflection results such as declared methods and abstract methods.
 	/// </summary>
 	private static readonly InMemoryCache _commonCache = InMemoryCache.Instance;
@@ -77,114 +67,31 @@ public static class TypeHelper
 	new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
-	/// Computes and initializes the list of built-in .NET types that are considered primitive for the purposes of this utility class.
-	/// This method populates the <see cref="_builtInTypes"/> collection with types that are commonly used and recognized as fundamental types within .NET applications.
+	/// A read-only collection of built-in .NET types. This collection is used internally to check if a type is a built-in .NET type.
 	/// </summary>
-	private static void ComputeBuiltInTypes()
-	{
-		// Use a HashSet to store the built-in types for faster lookups
-		var builtInTypes = new HashSet<Type>();
-
-		// Get all the assemblies loaded in the current app domain
-		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-		// Loop through each assembly
-		foreach (var assembly in assemblies)
-		{
-			// Get the types defined in the assembly
-			Type[] types;
-			try
-			{
-				types = assembly.GetTypes();
-			}
-			catch (ReflectionTypeLoadException ex)
-			{
-				types = [.. ex.Types.Where(t => t != null)!];
-			}
-
-			// Loop through each type
-			foreach (var type in types)
-			{
-				// Check if the type is a built-in type
-				if (IsBuiltinType(type))
-				{
-					// Add the type to the HashSet
-					_ = builtInTypes.Add(type);
-				}
-			}
-		}
-
-		// Convert the HashSet to a read-only collection
-		_builtInTypes = builtInTypes;
-	}
-
+	private static HashSet<Type>? _builtInTypes;
 
 	/// <summary>
-	/// Loads types derived from a specified base type from a collection of TypeInfo objects.
+	/// A static field to cache the built-in .NET types.
 	/// </summary>
-	/// <param name="types">The collection of TypeInfo objects to search through.</param>
-	/// <param name="baseType">The base type to find derived types of.</param>
-	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
-	/// <returns>An enumerable collection of types that are derived from the specified base type.</returns>
-	[Information(OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	private static IEnumerable<Type> LoadDerivedTypes(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
-	{
-		foreach (var type in types)
-		{
-			if (classOnly && !type.IsClass)
-			{
-				continue;
-			}
-
-			if (baseType.IsInterface)
-			{
-				if (type.ImplementedInterfaces.Contains(baseType))
-				{
-					yield return type.AsType();
-				}
-			}
-			else if (type.IsSubclassOf(baseType))
-			{
-				yield return type.AsType();
-			}
-		}
-	}
+	private static Dictionary<Type, string>? _cachedBuiltInTypes;
 
 	/// <summary>
-	/// Processes a given type to construct its display name, handling generic types and applying specified display options.
+	/// Gets a read-only collection of built-in .NET types.
 	/// </summary>
-	/// <param name="builder">The <see cref="StringBuilder"/> instance used to build the display name.</param>
-	/// <param name="type">The type to process for display.</param>
-	/// <param name="options">Options that specify how the display name should be formatted.</param>
-	[Information(OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	private static void ProcessType(in StringBuilder builder, in Type type, in DisplayNameOptions options)
+	public static ReadOnlyCollection<Type> BuiltInTypes
 	{
-		if (type.IsGenericType)
+		[return: NotNull]
+		get
 		{
-			var genericArguments = type.GetGenericArguments();
-			ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
-		}
-		else if (type.IsArray)
-		{
-			ProcessType(builder, type.GetElementType()!, options);
-			_ = builder.Append("[]");
-		}
-		else if (type.IsGenericParameter)
-		{
-			if (options.IncludeGenericParameterNames)
+			if (_builtInTypes == null)
 			{
-				_ = builder.Append(type.Name);
+				ComputeBuiltInTypes();
 			}
-		}
-		else
-		{
-			var name = options.FullName && type.FullName is not null ? type.FullName : type.Name;
-			_ = builder.Append(name);
 
-			if (options.NestedTypeDelimiter != ControlChars.Plus)
-			{
-				_ = builder.Replace(ControlChars.Plus, options.NestedTypeDelimiter, builder.Length - name.Length, name.Length);
-			}
+			return _builtInTypes == null
+				? new List<Type>().AsReadOnly()
+				: _builtInTypes.ToList().AsReadOnly();
 		}
 	}
 
@@ -1599,8 +1506,6 @@ public static class TypeHelper
 
 		if (type.IsNested)
 		{
-			// OPTIMIZATION: Direct call eliminates cache overhead - MetadataToken is constant per type
-			// Caching adds more overhead than it saves for this simple operation
 			offset = type.DeclaringType!.GetGenericArguments().Length;
 		}
 
@@ -1618,8 +1523,6 @@ public static class TypeHelper
 			}
 		}
 
-		// OPTIMIZATION: Direct IndexOf call - caching string operations is slower than the operation itself
-		// String.IndexOf is highly optimized in .NET 10 with SIMD acceleration
 		var genericPartIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
 
 		if (genericPartIndex <= 0)
@@ -1659,21 +1562,114 @@ public static class TypeHelper
 	}
 
 	/// <summary>
-	/// Gets a read-only collection of built-in .NET types.
+	/// Computes and initializes the list of built-in .NET types that are considered primitive for the purposes of this utility class.
+	/// This method populates the <see cref="_builtInTypes"/> collection with types that are commonly used and recognized as fundamental types within .NET applications.
 	/// </summary>
-	public static ReadOnlyCollection<Type> BuiltInTypes
+	private static void ComputeBuiltInTypes()
 	{
-		[return: NotNull]
-		get
+		// Use a HashSet to store the built-in types for faster lookups
+		var builtInTypes = new HashSet<Type>();
+
+		// Get all the assemblies loaded in the current app domain
+		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+		// Loop through each assembly
+		foreach (var assembly in assemblies)
 		{
-			if (_builtInTypes == null)
+			// Get the types defined in the assembly
+			Type[] types;
+			try
 			{
-				ComputeBuiltInTypes();
+				types = assembly.GetTypes();
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				types = [.. ex.Types.Where(t => t != null)!];
 			}
 
-			return _builtInTypes == null
-				? new List<Type>().AsReadOnly()
-				: _builtInTypes.ToList().AsReadOnly();
+			// Loop through each type
+			foreach (var type in types)
+			{
+				// Check if the type is a built-in type
+				if (IsBuiltinType(type))
+				{
+					// Add the type to the HashSet
+					_ = builtInTypes.Add(type);
+				}
+			}
+		}
+
+		// Convert the HashSet to a read-only collection
+		_builtInTypes = builtInTypes;
+	}
+
+
+	/// <summary>
+	/// Loads types derived from a specified base type from a collection of TypeInfo objects.
+	/// </summary>
+	/// <param name="types">The collection of TypeInfo objects to search through.</param>
+	/// <param name="baseType">The base type to find derived types of.</param>
+	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
+	/// <returns>An enumerable collection of types that are derived from the specified base type.</returns>
+	[Information(OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	private static IEnumerable<Type> LoadDerivedTypes(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
+	{
+		foreach (var type in types)
+		{
+			if (classOnly && !type.IsClass)
+			{
+				continue;
+			}
+
+			if (baseType.IsInterface)
+			{
+				if (type.ImplementedInterfaces.Contains(baseType))
+				{
+					yield return type.AsType();
+				}
+			}
+			else if (type.IsSubclassOf(baseType))
+			{
+				yield return type.AsType();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Processes a given type to construct its display name, handling generic types and applying specified display options.
+	/// </summary>
+	/// <param name="builder">The <see cref="StringBuilder"/> instance used to build the display name.</param>
+	/// <param name="type">The type to process for display.</param>
+	/// <param name="options">Options that specify how the display name should be formatted.</param>
+	[Information(OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	private static void ProcessType(in StringBuilder builder, in Type type, in DisplayNameOptions options)
+	{
+		if (type.IsGenericType)
+		{
+			var genericArguments = type.GetGenericArguments();
+			ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+		}
+		else if (type.IsArray)
+		{
+			ProcessType(builder, type.GetElementType()!, options);
+			_ = builder.Append("[]");
+		}
+		else if (type.IsGenericParameter)
+		{
+			if (options.IncludeGenericParameterNames)
+			{
+				_ = builder.Append(type.Name);
+			}
+		}
+		else
+		{
+			var name = options.FullName && type.FullName is not null ? type.FullName : type.Name;
+			_ = builder.Append(name);
+
+			if (options.NestedTypeDelimiter != ControlChars.Plus)
+			{
+				_ = builder.Replace(ControlChars.Plus, options.NestedTypeDelimiter, builder.Length - name.Length, name.Length);
+			}
 		}
 	}
 }

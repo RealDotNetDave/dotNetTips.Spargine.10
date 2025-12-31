@@ -61,10 +61,8 @@ internal sealed class Program
 			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
-
-			//_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
-			//_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
+			_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
+			_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine(CompleteMessage);
 			Benchmark.PlaySuccessBeep();

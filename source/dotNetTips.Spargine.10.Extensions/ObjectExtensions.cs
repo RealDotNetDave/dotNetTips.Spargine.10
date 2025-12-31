@@ -43,35 +43,16 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Documentation = "https://bit.ly/SpargineObjectExtensions", Status = Status.UpdateDocumentation)]
 public static class ObjectExtensions
 {
-
-	// OPTIMIZATION: Cache the built-in types dictionary to avoid repeated method calls
-	// This is particularly important in PropertiesToDictionary which may be called recursively
+	/// <summary>
+	/// The built in type names
+	/// </summary>
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
+
 	/// <summary>
 	/// The string builder pool for efficient string building operations.
 	/// </summary>
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
-
-
-	/// <summary>
-	/// Processes the <see cref="IEnumerable" /> to dispose items if they implement <see cref="IDisposable" />.
-	/// </summary>
-	/// <typeparam name="T">The type of the items in the collection, constrained to <see cref="IDisposable" />.</typeparam>
-	/// <param name="items">The collection of items to dispose.</param>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProcessCollectionToDispose), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void ProcessCollectionToDispose<T>([AllowNull] IEnumerable<T> items) where T : IDisposable
-	{
-		if (items!.IsNotEmpty())
-		{
-			foreach (var item in items!)
-			{
-				item?.Dispose();
-			}
-		}
-	}
 
 	/// <summary>
 	/// Tries to dispose items in the <see cref="IEnumerable" /> if the type implements <see cref="IDisposable" />.
@@ -257,6 +238,26 @@ public static class ObjectExtensions
 			if (throwException)
 			{
 				throw;
+			}
+		}
+	}
+
+
+	/// <summary>
+	/// Processes the <see cref="IEnumerable" /> to dispose items if they implement <see cref="IDisposable" />.
+	/// </summary>
+	/// <typeparam name="T">The type of the items in the collection, constrained to <see cref="IDisposable" />.</typeparam>
+	/// <param name="items">The collection of items to dispose.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ProcessCollectionToDispose), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void ProcessCollectionToDispose<T>([AllowNull] IEnumerable<T> items) where T : IDisposable
+	{
+		if (items!.IsNotEmpty())
+		{
+			foreach (var item in items!)
+			{
+				item?.Dispose();
 			}
 		}
 	}

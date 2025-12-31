@@ -557,8 +557,6 @@ public static class ArrayExtensions
 				return array;
 			}
 
-			// OPTIMIZATION: Use span-based search instead of LINQ Contains
-			// IndexOf is vectorized in .NET 10 and avoids LINQ enumeration overhead
 			var span = array.AsSpan();
 			var index = span.IndexOf(item);
 

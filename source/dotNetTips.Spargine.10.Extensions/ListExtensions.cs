@@ -101,7 +101,6 @@ public static class ListExtensions
 			list = list.ArgumentNotNull();
 			items = items.ArgumentNotNull();
 
-			// OPTIMIZATION: Use HashSet for O(1) lookup instead of O(n) List.Contains
 			var existingItems = new HashSet<T>(list);
 
 			foreach (var item in items)
@@ -307,9 +306,6 @@ public static class ListExtensions
 				ExceptionThrower.ThrowArgumentException(Resources.CollectionIsEmpty, nameof(list));
 			}
 
-			// OPTIMIZATION: Check if count is power of 2
-			// For power-of-2 sizes, we can use fast bitwise AND instead of modulo
-			// This is ~3x faster for counts like 4, 8, 16, 32, 64, 128, 256, etc.
 			var isPowerOfTwo = (count & (count - 1)) == 0;
 
 			int indexWrap;
@@ -330,19 +326,10 @@ public static class ListExtensions
 			}
 			else
 			{
-				// Standard path: Modulo operation
-				// OPTIMIZATION: Single modulo operation with conditional adjustment
 				indexWrap = index % count;
-
-				// OPTIMIZATION: Branchless negative handling using arithmetic
-				// If indexWrap < 0, add count; otherwise add 0
-				// This is faster than an if statement for the JIT to optimize
 				indexWrap += (indexWrap >> 31) & count;
 			}
 
-			// OPTIMIZATION: Direct list indexer access
-			// The JIT can eliminate bounds checks here because we've mathematically
-			// proven that 0 <= indexWrap < count
 			return list[indexWrap];
 		}
 
@@ -620,8 +607,6 @@ public static class ListExtensions
 			var chunks = (int)Math.Ceiling((double)listCount / size);
 			var result = new List<ReadOnlyCollection<T>>(chunks);
 
-			// OPTIMIZATION: Use List.GetRange which is optimized internally in .NET 10
-			// and avoids intermediate span slicing + array allocation + copying
 			for (var index = 0; index < listCount; index += size)
 			{
 				var chunkSize = Math.Min(size, listCount - index);
