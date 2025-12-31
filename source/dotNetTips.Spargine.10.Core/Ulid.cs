@@ -80,40 +80,13 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	}
 
 	/// <summary>
-	/// Determines whether two <see cref="Ulid"/> instances are not equal.
+	/// Determines whether one <see cref="Ulid"/> is greater than or equal to another.
 	/// </summary>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
-	/// <returns><c>true</c> if the ULIDs are not equal; otherwise, <c>false</c>.</returns>
-	[Information("!=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static bool operator !=(Ulid left, Ulid right) => !left.Equals(right);
-
-	/// <summary>
-	/// Determines whether one <see cref="Ulid"/> is less than another.
-	/// </summary>
-	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
-	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
-	/// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information("<", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static bool operator <(Ulid left, Ulid right) => left.CompareTo(right) < 0;
-
-	/// <summary>
-	/// Determines whether one <see cref="Ulid"/> is less than or equal to another.
-	/// </summary>
-	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
-	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
-	/// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information("<=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static bool operator <=(Ulid left, Ulid right) => left.CompareTo(right) <= 0;
-
-	/// <summary>
-	/// Determines whether two <see cref="Ulid"/> instances are equal.
-	/// </summary>
-	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
-	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
-	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
-	[Information("==", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static bool operator ==(Ulid left, Ulid right) => left.Equals(right);
+	/// <returns><c>true</c> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+	[Information(">=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool operator >=(Ulid left, Ulid right) => left.CompareTo(right) >= 0;
 
 	/// <summary>
 	/// Determines whether one <see cref="Ulid"/> is greater than another.
@@ -125,13 +98,202 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	public static bool operator >(Ulid left, Ulid right) => left.CompareTo(right) > 0;
 
 	/// <summary>
-	/// Determines whether one <see cref="Ulid"/> is greater than or equal to another.
+	/// Determines whether two <see cref="Ulid"/> instances are equal.
 	/// </summary>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
-	/// <returns><c>true</c> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information(">=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static bool operator >=(Ulid left, Ulid right) => left.CompareTo(right) >= 0;
+	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
+	[Information("==", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool operator ==(Ulid left, Ulid right) => left.Equals(right);
+
+	/// <summary>
+	/// Determines whether one <see cref="Ulid"/> is less than or equal to another.
+	/// </summary>
+	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
+	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
+	/// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+	[Information("<=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool operator <=(Ulid left, Ulid right) => left.CompareTo(right) <= 0;
+
+	/// <summary>
+	/// Determines whether one <see cref="Ulid"/> is less than another.
+	/// </summary>
+	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
+	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
+	/// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+	[Information("<", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool operator <(Ulid left, Ulid right) => left.CompareTo(right) < 0;
+
+	/// <summary>
+	/// Determines whether two <see cref="Ulid"/> instances are not equal.
+	/// </summary>
+	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
+	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
+	/// <returns><c>true</c> if the ULIDs are not equal; otherwise, <c>false</c>.</returns>
+	[Information("!=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool operator !=(Ulid left, Ulid right) => !left.Equals(right);
+
+	/// <summary>
+	/// Generates a new ULID (Universally Unique Lexicographically Sortable Identifier).
+	/// </summary>
+	/// <returns>A new <see cref="Ulid"/> instance with timestamp and random components.</returns>
+	/// <remarks>
+	/// <para>
+	/// This method generates a ULID that consists of:
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description>48-bit timestamp (milliseconds since Unix epoch) - 10 characters</description></item>
+	/// <item><description>80-bit cryptographically secure random data - 16 characters</description></item>
+	/// </list>
+	/// <para>
+	/// The implementation uses stack allocation to avoid heap allocations, providing optimal performance
+	/// for high-frequency ULID generation scenarios.
+	/// </para>
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	public static Ulid NewUlid()
+	{
+		// Allocate all required memory on the stack to avoid heap allocations
+		Span<char> ulidChars = stackalloc char[UlidLength];
+		Span<byte> timestampBytes = stackalloc byte[8];
+		Span<byte> randomBytes = stackalloc byte[10];
+
+		// Generate timestamp (48 bits = 6 bytes) - use unchecked for performance
+		var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+		// Write timestamp directly using unsafe code for maximum performance
+		unsafe
+		{
+			fixed (byte* pTimestamp = timestampBytes)
+			{
+				*(long*)pTimestamp = timestamp;
+			}
+		}
+
+		// Encode timestamp component (10 characters) - only encode the 6 bytes we need
+		EncodeBase32(timestampBytes[..6], ulidChars, 0, TimestampLength);
+
+		// Generate cryptographically secure random bytes (80 bits = 10 bytes)
+		RandomNumberGenerator.Fill(randomBytes);
+
+		// Encode random component (16 characters)
+		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);
+
+		// Create and return the ULID - use string constructor that accepts ReadOnlySpan<char>
+		return new Ulid(new string(ulidChars));
+	}
+
+	/// <summary>
+	/// Parses a string into a <see cref="Ulid"/> instance.
+	/// </summary>
+	/// <param name="value">The string representation of the ULID.</param>
+	/// <returns>A <see cref="Ulid"/> instance.</returns>
+	/// <exception cref="ArgumentException">Thrown if the value is not a valid ULID.</exception>
+	[return: NotNull]
+	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static Ulid Parse(string value) => new(value);
+
+	/// <summary>
+	/// Tries to parse a string into a <see cref="Ulid"/> instance.
+	/// </summary>
+	/// <param name="value">The string representation of the ULID.</param>
+	/// <param name="ulid">The resulting <see cref="Ulid"/> instance, if successful.</param>
+	/// <returns><c>true</c> if parsing was successful; otherwise, <c>false</c>.</returns>
+	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool TryParse(string value, out Ulid ulid)
+	{
+		if (!string.IsNullOrWhiteSpace(value) && value.Length == UlidLength)
+		{
+			ulid = new Ulid(value);
+			return true;
+		}
+
+		ulid = default;
+		return false;
+	}
+
+	/// <summary>
+	/// Compares this instance to another <see cref="Ulid"/> instance.
+	/// </summary>
+	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
+	/// <returns>An integer indicating the relative order of the ULIDs.</returns>
+	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public int CompareTo(Ulid other) => string.Compare(this._ulid, other._ulid, StringComparison.Ordinal);
+
+	/// <summary>
+	/// Determines whether this instance is equal to another <see cref="Ulid"/> instance.
+	/// </summary>
+	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
+	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public bool Equals(Ulid other) => string.Equals(this._ulid, other._ulid, StringComparison.Ordinal);
+
+	/// <summary>
+	/// Determines whether this instance is equal to another object.
+	/// </summary>
+	/// <param name="obj">The object to compare to.</param>
+	/// <returns><c>true</c> if the object is a <see cref="Ulid"/> and is equal to this instance; otherwise, <c>false</c>.</returns>
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public override bool Equals(object? obj) => obj is Ulid other && this.Equals(other);
+
+	/// <summary>
+	/// Gets the hash code for this instance.
+	/// </summary>
+	/// <returns>The hash code for this instance.</returns>
+	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public override int GetHashCode() => this._ulid.GetHashCode(StringComparison.Ordinal);
+
+	/// <summary>
+	/// Extracts the timestamp from the ULID.
+	/// </summary>
+	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
+	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	public DateTimeOffset GetTimeStamp()
+	{
+		var timestampChars = this._ulid.AsSpan(0, TimestampLength);
+		var timestampBytes = new byte[6]; // 48 bits for the timestamp
+
+		var bitIndex = 0;
+		var byteIndex = 0;
+
+		foreach (var c in timestampChars)
+		{
+			if (!Base32CharToValue.TryGetValue(c, out var value))
+			{
+				ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(Ulid));
+			}
+
+			for (var i = 4; i >= 0; i--)
+			{
+				if (bitIndex == 8)
+				{
+					bitIndex = 0;
+					byteIndex++;
+				}
+
+				if (byteIndex < timestampBytes.Length)
+				{
+					timestampBytes[byteIndex] |= (byte)((byte)((value >> i) & 1) << (7 - bitIndex));
+					bitIndex++;
+				}
+			}
+		}
+
+		var padded = new byte[8];
+		Buffer.BlockCopy(timestampBytes, 0, padded, 0, 6); // Copy to beginning, not offset 2
+		var timestampMilliseconds = BitConverter.ToInt64(padded, 0);
+		return DateTimeOffset.FromUnixTimeMilliseconds(timestampMilliseconds);
+	}
+
+	/// <summary>
+	/// Gets the string representation of the ULID.
+	/// </summary>
+	/// <returns>The string representation of the ULID.</returns>
+	[return: NotNull]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public override string ToString() => this._ulid;
 
 	/// <summary>
 	/// Encodes a byte span into a Base32 encoded character span using Crockford's Base32 alphabet.
@@ -213,166 +375,4 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	[ExcludeFromCodeCoverage]
 	[Information(nameof(GenerateTimeStamp), Status = Status.New)]
 	private static byte[] GenerateTimeStamp() => BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-
-	/// <summary>
-	/// Compares this instance to another <see cref="Ulid"/> instance.
-	/// </summary>
-	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
-	/// <returns>An integer indicating the relative order of the ULIDs.</returns>
-	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public int CompareTo(Ulid other) => string.Compare(this._ulid, other._ulid, StringComparison.Ordinal);
-
-	/// <summary>
-	/// Determines whether this instance is equal to another <see cref="Ulid"/> instance.
-	/// </summary>
-	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
-	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public bool Equals(Ulid other) => string.Equals(this._ulid, other._ulid, StringComparison.Ordinal);
-
-	/// <summary>
-	/// Determines whether this instance is equal to another object.
-	/// </summary>
-	/// <param name="obj">The object to compare to.</param>
-	/// <returns><c>true</c> if the object is a <see cref="Ulid"/> and is equal to this instance; otherwise, <c>false</c>.</returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public override bool Equals(object? obj) => obj is Ulid other && this.Equals(other);
-
-	/// <summary>
-	/// Gets the hash code for this instance.
-	/// </summary>
-	/// <returns>The hash code for this instance.</returns>
-	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public override int GetHashCode() => this._ulid.GetHashCode(StringComparison.Ordinal);
-
-	/// <summary>
-	/// Extracts the timestamp from the ULID.
-	/// </summary>
-	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
-	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
-	public DateTimeOffset GetTimeStamp()
-	{
-		var timestampChars = this._ulid.AsSpan(0, TimestampLength);
-		var timestampBytes = new byte[6]; // 48 bits for the timestamp
-
-		var bitIndex = 0;
-		var byteIndex = 0;
-
-		foreach (var c in timestampChars)
-		{
-			if (!Base32CharToValue.TryGetValue(c, out var value))
-			{
-				ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(Ulid));
-			}
-
-			for (var i = 4; i >= 0; i--)
-			{
-				if (bitIndex == 8)
-				{
-					bitIndex = 0;
-					byteIndex++;
-				}
-
-				if (byteIndex < timestampBytes.Length)
-				{
-					timestampBytes[byteIndex] |= (byte)((byte)((value >> i) & 1) << (7 - bitIndex));
-					bitIndex++;
-				}
-			}
-		}
-
-		var padded = new byte[8];
-		Buffer.BlockCopy(timestampBytes, 0, padded, 0, 6); // Copy to beginning, not offset 2
-		var timestampMilliseconds = BitConverter.ToInt64(padded, 0);
-		return DateTimeOffset.FromUnixTimeMilliseconds(timestampMilliseconds);
-	}
-
-	/// <summary>
-	/// Generates a new ULID (Universally Unique Lexicographically Sortable Identifier).
-	/// </summary>
-	/// <returns>A new <see cref="Ulid"/> instance with timestamp and random components.</returns>
-	/// <remarks>
-	/// <para>
-	/// This method generates a ULID that consists of:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>48-bit timestamp (milliseconds since Unix epoch) - 10 characters</description></item>
-	/// <item><description>80-bit cryptographically secure random data - 16 characters</description></item>
-	/// </list>
-	/// <para>
-	/// The implementation uses stack allocation to avoid heap allocations, providing optimal performance
-	/// for high-frequency ULID generation scenarios.
-	/// </para>
-	/// </remarks>
-	[return: NotNull]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
-	public static Ulid NewUlid()
-	{
-		// Allocate all required memory on the stack to avoid heap allocations
-		Span<char> ulidChars = stackalloc char[UlidLength];
-		Span<byte> timestampBytes = stackalloc byte[8];
-		Span<byte> randomBytes = stackalloc byte[10];
-
-		// Generate timestamp (48 bits = 6 bytes) - use unchecked for performance
-		var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-
-		// Write timestamp directly using unsafe code for maximum performance
-		unsafe
-		{
-			fixed (byte* pTimestamp = timestampBytes)
-			{
-				*(long*)pTimestamp = timestamp;
-			}
-		}
-
-		// Encode timestamp component (10 characters) - only encode the 6 bytes we need
-		EncodeBase32(timestampBytes[..6], ulidChars, 0, TimestampLength);
-
-		// Generate cryptographically secure random bytes (80 bits = 10 bytes)
-		RandomNumberGenerator.Fill(randomBytes);
-
-		// Encode random component (16 characters)
-		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);
-
-		// Create and return the ULID - use string constructor that accepts ReadOnlySpan<char>
-		return new Ulid(new string(ulidChars));
-	}
-
-	/// <summary>
-	/// Parses a string into a <see cref="Ulid"/> instance.
-	/// </summary>
-	/// <param name="value">The string representation of the ULID.</param>
-	/// <returns>A <see cref="Ulid"/> instance.</returns>
-	/// <exception cref="ArgumentException">Thrown if the value is not a valid ULID.</exception>
-	[return: NotNull]
-	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
-	public static Ulid Parse(string value) => new(value);
-
-	/// <summary>
-	/// Gets the string representation of the ULID.
-	/// </summary>
-	/// <returns>The string representation of the ULID.</returns>
-	[return: NotNull]
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public override string ToString() => this._ulid;
-
-	/// <summary>
-	/// Tries to parse a string into a <see cref="Ulid"/> instance.
-	/// </summary>
-	/// <param name="value">The string representation of the ULID.</param>
-	/// <param name="ulid">The resulting <see cref="Ulid"/> instance, if successful.</param>
-	/// <returns><c>true</c> if parsing was successful; otherwise, <c>false</c>.</returns>
-	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static bool TryParse(string value, out Ulid ulid)
-	{
-		if (!string.IsNullOrWhiteSpace(value) && value.Length == UlidLength)
-		{
-			ulid = new Ulid(value);
-			return true;
-		}
-
-		ulid = default;
-		return false;
-	}
 }
