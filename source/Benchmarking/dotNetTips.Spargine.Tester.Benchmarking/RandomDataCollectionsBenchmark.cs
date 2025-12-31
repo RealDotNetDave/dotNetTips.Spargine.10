@@ -30,10 +30,10 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 /// </summary>
 public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 {
+	private readonly Country DefaultCountry = CountryRepository.GetCountry(CountryName.UnitedStates);
 	private Collection<Models.ValueTypes.Coordinate> _coordinateCollection;
 	private Collection<PersonRecord> _personRecordCollection;
 	private Collection<Person> _personRefCollection;
-	private readonly Country DefaultCountry = CountryRepository.GetCountry(CountryName.UnitedStates);
 
 	[Benchmark(Description = nameof(RandomData.GenerateAddressCollection))]
 	[BenchmarkCategory(Categories.New)]
