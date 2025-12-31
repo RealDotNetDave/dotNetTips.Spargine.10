@@ -156,38 +156,40 @@ public static class StringExtensions
 	/// <code>
 	/// // Calculate total length of multiple strings
 	/// string[] words = { "Hello", "World", "!" };
-	/// int totalLength = words.CalculateStringCount();
+	/// int totalLength = words.CalculateTotalLength();
 	/// // Returns: 11 (5 + 5 + 1)
 	/// 
 	/// // Handles null strings gracefully
 	/// string[] mixedArray = { "Test", null, "Data" };
-	/// int length = mixedArray.CalculateStringCount();
+	/// int length = mixedArray.CalculateTotalLength();
 	/// // Returns: 8 (4 + 0 + 4)
 	/// 
 	/// // Returns 0 for null or empty arrays
 	/// string[] nullArray = null;
-	/// int zeroLength = nullArray.CalculateStringCount();
+	/// int zeroLength = nullArray.CalculateTotalLength();
 	/// // Returns: 0
 	/// </code>
 	/// </example>
 	/// <seealso cref="string.Length"/>
 	/// <seealso cref="ReadOnlySpan{T}"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateStringCount), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
-	public static int CalculateStringCount(this string[] args)
+	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	public static int CalculateTotalLength(this string[] args)
 	{
-		if (args == null)
+		if (args is null or { Length: 0 })
 		{
 			return 0;
 		}
 
 		var totalLength = 0;
+		var span = args.AsSpan();
 
-		foreach (var arg in args.AsSpan())
+		for (var charIndex = 0; charIndex < span.Length; charIndex++)
 		{
-			if (arg != null)
+			var current = span[charIndex];
+			if (current is not null)
 			{
-				totalLength += arg.Length;
+				totalLength += current.Length;
 			}
 		}
 
@@ -254,7 +256,7 @@ public static class StringExtensions
 	/// </exception>
 	/// <remarks>
 	/// This method uses a pooled <see cref="StringBuilder"/> to optimize memory usage during concatenation.
-	/// The capacity is pre-calculated using <see cref="CalculateStringCount"/> to minimize internal buffer reallocations.
+	/// The capacity is pre-calculated using <see cref="CalculateTotalLength"/> to minimize internal buffer reallocations.
 	/// <para>
 	/// <strong>Performance Optimizations (.NET 10):</strong>
 	/// <list type="bullet">
@@ -284,7 +286,7 @@ public static class StringExtensions
 		tempArray[0] = input;
 		args.CopyTo(tempArray, 1);
 
-		var totalStringLength = tempArray.CalculateStringCount();
+		var totalStringLength = tempArray.CalculateTotalLength();
 
 		// Add space for delimiters or line feeds
 		var delimiterLength = addLineFeed ? Environment.NewLine.Length : delimiter.Length;

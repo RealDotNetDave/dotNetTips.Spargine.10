@@ -47,11 +47,11 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.CalculateStringCount))]
+	[Benchmark(Description = nameof(StringExtensions.CalculateTotalLength))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void CalculateStringCount()
+	public void CalculateTotalLength()
 	{
-		var result = this._wordCollection.CalculateStringCount();
+		var result = this._wordCollection.CalculateTotalLength();
 
 		this.Consume(result);
 	}
