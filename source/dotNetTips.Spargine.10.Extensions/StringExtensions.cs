@@ -372,7 +372,7 @@ public static class StringExtensions
 	/// <param name="defaultValue">The default value to return if the string is null. This can also be null, in which case an empty string is returned.</param>
 	/// <returns>The original string if it is not null; otherwise, the default value if it is not null; otherwise, <see cref="string.Empty"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string DefaultIfNull([AllowNull] this string value, [AllowNull] string defaultValue)
 	{
 		return value ?? defaultValue ?? string.Empty;
@@ -569,14 +569,12 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Replace(string, string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for optimal performance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string FastReplace([DisallowNull] this string input, string oldValue, string newValue)
 	{
 		input = input.ArgumentNotNullOrEmpty();
 
-		// OPTIMIZATION: Direct string.Replace is faster in .NET 10 - eliminates StringBuilder overhead
-		// .NET 10's string.Replace uses optimized span-based operations internally
-		return input.Replace(oldValue, newValue, StringComparison.Ordinal).Trim();
+		return input.Replace(oldValue, newValue, StringComparison.Ordinal);
 	}
 
 	/// <summary>
@@ -769,10 +767,10 @@ public static class StringExtensions
 	/// Uses <see cref="string.IsNullOrWhiteSpace(string)"/> internally to check if the string is null or whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasValue(this string input)
 	{
-		return input is not null && (input.Trim().Length > 0);
+		return input is not null && (input.Length > 0);
 	}
 
 	/// <summary>

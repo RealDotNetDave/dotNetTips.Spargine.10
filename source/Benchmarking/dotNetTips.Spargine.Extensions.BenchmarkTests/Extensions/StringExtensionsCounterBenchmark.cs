@@ -242,7 +242,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitStringSeparator()
 	{
-		foreach (var line in this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, 2, ControlChars.CRLF))
+		foreach (var line in this._crlfString.Split(ControlChars.CRLF, 2, StringSplitOptions.RemoveEmptyEntries))
 		{
 			this.Consume(line);
 		}

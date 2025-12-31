@@ -46,11 +46,18 @@ public static class SortedSetExtensions
 		/// <returns>
 		/// <c>true</c> if the set is <c>null</c> or empty; otherwise, <c>false</c>.
 		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method uses the <see cref="SortedSet{T}.Count"/> property
+		/// which is O(1) as SortedSet maintains its count internally.
+		/// </para>
+		/// </remarks>
 		[Pure]
-		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsEmpty()
 		{
-			return collection is null ? true : collection.Count <= 0;
+			return collection is null || collection.Count == 0;
 		}
 
 		/// <summary>
@@ -59,12 +66,18 @@ public static class SortedSetExtensions
 		/// <returns>
 		/// <c>true</c> if the set is not <c>null</c> and contains at least one element; otherwise, <c>false</c>.
 		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method uses the <see cref="SortedSet{T}.Count"/> property
+		/// which is O(1) as SortedSet maintains its count internally.
+		/// </para>
+		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty()
 		{
-			return collection is null ? false : collection.Count > 0;
+			return collection is not null && collection.Count > 0;
 		}
 
 		/// <summary>
@@ -74,12 +87,34 @@ public static class SortedSetExtensions
 		/// <returns>
 		/// <c>true</c> if the set is not <c>null</c> and any elements match the predicate; otherwise, <c>false</c>.
 		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method uses LINQ's <c>Any</c> with a predicate,
+		/// which short-circuits on the first matching element, providing optimal performance.
+		/// </para>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Best case:</b> O(1) - First element matches the predicate</description></item>
+		/// <item><description><b>Average case:</b> O(n/2) - Match found halfway through</description></item>
+		/// <item><description><b>Worst case:</b> O(n) - No elements match or last element matches</description></item>
+		/// <item><description><b>Short-circuit behavior:</b> Stops immediately when first match is found</description></item>
+		/// </list>
+		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool IsNotEmpty([AllowNull] Func<T, bool> actionPredicate)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
-			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
+			if (collection is null)
+			{
+				return false;
+			}
+
+			actionPredicate = actionPredicate.ArgumentNotNull();
+
+			return collection.Any(actionPredicate);
 		}
 
 		/// <summary>
@@ -88,14 +123,28 @@ public static class SortedSetExtensions
 		/// <returns>
 		/// An <see cref="ImmutableSortedSet{T}"/> containing the elements of the original set.
 		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method uses <see cref="ImmutableSortedSet.CreateRange{T}(IEnumerable{T})"/>
+		/// which efficiently creates an immutable sorted set from the existing sorted collection.
+		/// </para>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Time complexity:</b> O(n) - Must copy all elements to the immutable structure</description></item>
+		/// <item><description><b>Space complexity:</b> O(n) - Creates a new immutable collection</description></item>
+		/// <item><description><b>Optimization:</b> Leverages the sorted nature of the input for efficient tree construction</description></item>
+		/// </list>
+		/// </remarks>
 		[Pure]
-		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
 			collection = collection.ArgumentNotNull();
 
 			return ImmutableSortedSet.CreateRange(collection);
-
 		}
 	}
 }

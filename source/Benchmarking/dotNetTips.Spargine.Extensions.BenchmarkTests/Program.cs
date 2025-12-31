@@ -20,6 +20,7 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
+using BenchmarkDotNet.Running;
 using DotNetTips.Spargine.Benchmarking;
 using Perfolizer.Horology;
 
@@ -49,7 +50,7 @@ internal sealed class Program
 
 			//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-			Benchmark.RunAllBenchmarks(config);
+			//Benchmark.RunAllBenchmarks(config);
 
 			//Benchmark.RunBenchmarks(config,
 			//	typeof(ArrayExtensionsCollectionBenchmark)
@@ -57,9 +58,10 @@ internal sealed class Program
 
 			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			//_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
+			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
+			_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
+			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
+
 			//_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
 			//_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
