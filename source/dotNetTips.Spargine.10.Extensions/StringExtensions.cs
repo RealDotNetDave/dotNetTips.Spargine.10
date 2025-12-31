@@ -418,10 +418,18 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Equals(string, string, StringComparison)"/> for comparison.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool EqualsIgnoreCase([DisallowNull] this string input, string inputToCompare)
+	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static bool EqualsIgnoreCase([DisallowNull] this string input, [DisallowNull] string inputToCompare)
 	{
-		return input is null || inputToCompare is null ? false : string.Equals(input, inputToCompare, StringComparison.OrdinalIgnoreCase);
+		input = input.ArgumentNotNull();
+		inputToCompare = inputToCompare.ArgumentNotNull();
+
+		if (ReferenceEquals(input, inputToCompare))
+		{
+			return true;
+		}
+
+		return input.AsSpan().Equals(inputToCompare.AsSpan(), StringComparison.OrdinalIgnoreCase);
 	}
 
 	/// <summary>
@@ -525,7 +533,7 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static (string Scheme, string Host, string Port, string Path) FastParseUrl([NotNull] this string url)
 	{
 		url = url.ArgumentNotNullOrEmpty();
@@ -990,7 +998,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is empty.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsEmpty([NotNullWhen(false)] this string? input)
 	{
 		return input is null || input.Length == 0;
@@ -1005,7 +1013,7 @@ public static class StringExtensions
 	/// This method uses a regular expression to validate the first and last name.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsFirstLastName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsFirstLastName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsFirstLastName([DisallowNull] this string input)
 	{
 		return RegexProcessor.ContainsFirstLastName(input);
@@ -1532,11 +1540,9 @@ public static class StringExtensions
 	/// <param name="input">The string to convert to title case. This string cannot be null.</param>
 	/// <returns>A string converted to title case using <see cref="CultureInfo.CurrentCulture"/> rules.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToTitleCase), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToTitleCase), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ToTitleCase([DisallowNull] this string input)
 	{
-		input = input.ArgumentNotNullOrEmpty(true);
-
 		return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input);
 	}
 
