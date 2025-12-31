@@ -77,12 +77,7 @@ public static class ObservableCollectionExtensions
 		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
 			// OPTIMIZATION: Direct enumeration with early exit - avoids Any() overhead
-			if (collection is null || actionPredicate is null)
-			{
-				return false;
-			}
-
-			return collection.Count(actionPredicate) > 0;
+			return collection is null || actionPredicate is null ? false : collection.Count(actionPredicate) > 0;
 		}
 
 		/// <summary>

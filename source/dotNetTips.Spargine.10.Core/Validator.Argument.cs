@@ -42,26 +42,6 @@ public static partial class Validator
 	private const string InvalidStringLengthFormat = "Invalid string length. Acceptable range is between {0} and {1}.";
 
 	/// <summary>
-	/// Creates the exception message.
-	/// </summary>
-	/// <param name="message">The message.</param>
-	/// <param name="paramName">Name of the parameter.</param>
-	/// <param name="messageFromResource">The message from resource.</param>
-	/// <returns>System.String.</returns>
-	[ExcludeFromCodeCoverage]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static string CreateParamExceptionMessage(string message, string paramName, string messageFromResource)
-	{
-		var returnMessage = $"{paramName}: ";
-
-		return message switch
-		{
-			null => $"{returnMessage}{messageFromResource}",
-			_ => $"{returnMessage}{message}"
-		};
-	}
-
-	/// <summary>
 	/// Validates that the <see cref="IEnumerable{T}" /> has a count within the specified minimum and maximum range.
 	/// </summary>
 	/// <typeparam name="T">The type of the elements in the collection.</typeparam>
@@ -703,12 +683,7 @@ public static partial class Validator
 	{
 		var isValid = input is not null && condition;
 
-		if (isValid is false)
-		{
-			return defaultValue;
-		}
-
-		return input!;
+		return isValid is false ? defaultValue : input!;
 	}
 
 	/// <summary>
@@ -997,6 +972,26 @@ public static partial class Validator
 		}
 
 		return input!;
+	}
+
+	/// <summary>
+	/// Creates the exception message.
+	/// </summary>
+	/// <param name="message">The message.</param>
+	/// <param name="paramName">Name of the parameter.</param>
+	/// <param name="messageFromResource">The message from resource.</param>
+	/// <returns>System.String.</returns>
+	[ExcludeFromCodeCoverage]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static string CreateParamExceptionMessage(string message, string paramName, string messageFromResource)
+	{
+		var returnMessage = $"{paramName}: ";
+
+		return message switch
+		{
+			null => $"{returnMessage}{messageFromResource}",
+			_ => $"{returnMessage}{message}"
+		};
 	}
 
 }

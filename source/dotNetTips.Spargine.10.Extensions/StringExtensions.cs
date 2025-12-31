@@ -1378,12 +1378,9 @@ public static class StringExtensions
 		var buffer = new byte[exactSize];
 
 
-		if (!Convert.TryFromBase64String(input, buffer, out _))
-		{
-			throw new FormatException(Resources.TheInputStringIsNotAValidBase64String);
-		}
-
-		return buffer;
+		return !Convert.TryFromBase64String(input, buffer, out _)
+			? throw new FormatException(Resources.TheInputStringIsNotAValidBase64String)
+			: buffer;
 	}
 
 	/// <summary>

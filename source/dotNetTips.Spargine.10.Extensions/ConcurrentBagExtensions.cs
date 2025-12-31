@@ -106,7 +106,6 @@ public static class ConcurrentBagExtensions
 		{
 			bag = bag.ArgumentNotNull();
 
-			//TODO: CHECK SUGGESTION FROM COPILOT FOR PERFORMANCE IMPROVEMENT
 			return new List<T>(bag);
 		}
 	}
