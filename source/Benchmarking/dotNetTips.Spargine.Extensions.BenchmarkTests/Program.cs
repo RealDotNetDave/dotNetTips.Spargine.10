@@ -20,7 +20,6 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
-using BenchmarkDotNet.Running;
 using DotNetTips.Spargine.Benchmarking;
 using Perfolizer.Horology;
 
@@ -48,11 +47,17 @@ internal sealed class Program
 				.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
 				.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
 
-			config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
+			//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
+
+			Benchmark.RunAllBenchmarks(config);
+
+			//Benchmark.RunBenchmarks(config,
+			//	typeof(ArrayExtensionsCollectionBenchmark)
+			//	);
 
 			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<EnumerableExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<SortedSetCollectionBenchmark>(config);

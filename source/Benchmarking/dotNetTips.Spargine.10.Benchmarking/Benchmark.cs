@@ -398,7 +398,7 @@ public class Benchmark
 	/// var config = DefaultConfig.Instance
 	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
 	/// 
-	/// Benchmark.RunAllBenchmarks(config);
+	/// Benchmark.RunBenchmarks(config);
 	/// </code>
 	/// <code>
 	/// // In dotNetTips.Spargine.Extensions.BenchmarkTests/Program.cs
@@ -410,7 +410,7 @@ public class Benchmark
 	///     .AddJob(Job.Default.WithWarmupCount(2))
 	///     .AddJob(Job.Default.WithIterationCount(5));
 	/// 
-	/// Benchmark.RunAllBenchmarks(config);
+	/// Benchmark.RunBenchmarks(config);
 	/// </code>
 	/// </example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="config"/> is null.</exception>
@@ -474,7 +474,7 @@ public class Benchmark
 	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
 	/// 
 	/// // Run any classes with [Benchmark] methods
-	/// Benchmark.RunAllBenchmarks(
+	/// Benchmark.RunBenchmarks(
 	///     config,
 	///     typeof(StringExtensionsBenchmark),
 	///     typeof(CollectionBenchmark),
@@ -498,12 +498,12 @@ public class Benchmark
 	/// 
 	/// if (benchmarksToRun.Count > 0)
 	/// {
-	///     Benchmark.RunAllBenchmarks(config, [.. benchmarksToRun]);
+	///     Benchmark.RunBenchmarks(config, [.. benchmarksToRun]);
 	/// }
 	/// else
 	/// {
 	///     // Run all benchmarks if no specific ones are requested
-	///     Benchmark.RunAllBenchmarks(config);
+	///     Benchmark.RunBenchmarks(config);
 	/// }
 	/// </code>
 	/// </example>
@@ -514,7 +514,7 @@ public class Benchmark
 	/// <seealso cref="BenchmarkAttribute"/>
 	/// <seealso cref="IConfig"/>
 	[Information(description: nameof(RunAllBenchmarks), Status = Status.New)]
-	public static void RunAllBenchmarks([DisallowNull] IConfig config, [DisallowNull] params Type[] benchmarks)
+	public static void RunBenchmarks([DisallowNull] IConfig config, [DisallowNull] params Type[] benchmarks)
 	{
 		config = config.ArgumentNotNull();
 		benchmarks = benchmarks.ArgumentNotNull();
