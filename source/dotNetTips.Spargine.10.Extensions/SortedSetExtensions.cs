@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-28-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -89,13 +89,10 @@ public static class SortedSetExtensions
 		/// An <see cref="ImmutableSortedSet{T}"/> containing the elements of the original set.
 		/// </returns>
 		[Pure]
-		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
-			if (collection is null)
-			{
-				return ImmutableSortedSet<T>.Empty;
-			}
+			collection = collection.ArgumentNotNull();
 
 			return ImmutableSortedSet.CreateRange(collection);
 

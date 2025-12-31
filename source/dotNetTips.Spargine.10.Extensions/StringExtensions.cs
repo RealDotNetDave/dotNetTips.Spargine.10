@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -60,74 +60,79 @@ public static class StringExtensions
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
 	/// <summary>
-	/// Computes the hashType of the given base64Input string using the specified hashType algorithm.
+	/// Calculates the size of the byte array that will result from encoding the string using the specified encoding.
 	/// </summary>
-	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
-	/// <param name="hashType">The hashType algorithm type to use for computing the hashType.</param>
-	/// <returns>A byte array containing the computed hashType of the base64Input string.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
-	/// <exception cref="InvalidOperationException">Thrown if the specified hashType algorithm is not supported.</exception>
-	/// <remarks>
-	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hashType.
-	/// </remarks>
-	private static byte[] GetHash(string input, HashType hashType)
-	{
-		var inputBytes = Encoding.ASCII.GetBytes(input);
-
-		return hashType switch
-		{
-			HashType.SHA256 => SHA256.HashData(inputBytes),
-			HashType.SHA384 => SHA384.HashData(inputBytes),
-			HashType.SHA512 => SHA512.HashData(inputBytes),
-			_ => [],
-		};
-	}
-
-	/// <summary>
-	/// Calculates the size of the byte array that will result from decoding the Base64 encoded base64Input string.
-	/// </summary>
-	/// <param name="base64Input">The Base64 encoded string. Must be a valid Base64 string.</param>
-	/// <returns>The size of the byte array needed to store the decoded data, or 0 if the base64Input is empty.</returns>
+	/// <param name="input">The string to calculate the byte array size for. Must not be null.</param>
+	/// <param name="encoding">The encoding to use for the calculation. Defaults to <see cref="Encoding.UTF8"/>.</param>
+	/// <returns>The size of the byte array needed to store the encoded string data.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null.</exception>
-	/// <exception cref="FormatException">Thrown when the base64Input string is not a valid Base64 string.</exception>
 	/// <remarks>
-	/// This method calculates the decoded size using the Base64 formula: (length / 4) * 3 - paddingCount.
-	/// Base64 encoding uses 4 characters to represent 3 bytes of data.
+	/// <para>
+	/// <b>Performance Optimization (.NET 10):</b> This method uses <see cref="Encoding.GetByteCount(string)"/> 
+	/// which is highly optimized in .NET 10 with SIMD acceleration for UTF-8 and ASCII encodings.
+	/// </para>
+	/// <para>
+	/// <b>Performance Characteristics:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description><b>Time complexity:</b> O(n) where n is the string length</description></item>
+	/// <item><description><b>Space complexity:</b> O(1) - No allocations, only counting</description></item>
+	/// <item><description><b>SIMD acceleration:</b> UTF-8 and ASCII use vectorized operations on .NET 10</description></item>
+	/// <item><description><b>Zero allocation:</b> No temporary buffers created during counting</description></item>
+	/// </list>
+	/// <para>
+	/// <b>Common Encodings:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description><see cref="Encoding.UTF8"/> - Variable length (1-4 bytes per character)</description></item>
+	/// <item><description><see cref="Encoding.ASCII"/> - Fixed 1 byte per character (0-127 range)</description></item>
+	/// <item><description><see cref="Encoding.Unicode"/> - Fixed 2 bytes per character (UTF-16LE)</description></item>
+	/// <item><description><see cref="Encoding.UTF32"/> - Fixed 4 bytes per character</description></item>
+	/// </list>
 	/// </remarks>
+	/// <example>
+	/// Calculate byte array sizes for different encodings:
+	/// <code>
+	/// string text = "Hello, 世界!";
+	/// 
+	/// // UTF-8: Variable length encoding
+	/// int utf8Size = text.CalculateByteArraySize();
+	/// // Returns: 13 bytes (ASCII chars = 8, Chinese chars = 6, exclamation = 1)
+	/// 
+	/// // Unicode (UTF-16): Fixed 2 bytes per character
+	/// int utf16Size = text.CalculateByteArraySize(Encoding.Unicode);
+	/// // Returns: 20 bytes (10 characters × 2 bytes)
+	/// 
+	/// // ASCII: Fixed 1 byte per character (non-ASCII replaced with '?')
+	/// int asciiSize = text.CalculateByteArraySize(Encoding.ASCII);
+	/// // Returns: 10 bytes (10 characters × 1 byte, Chinese chars replaced)
+	/// 
+	/// // UTF-32: Fixed 4 bytes per character
+	/// int utf32Size = text.CalculateByteArraySize(Encoding.UTF32);
+	/// // Returns: 40 bytes (10 characters × 4 bytes)
+	/// 
+	/// // Pre-allocate exact buffer size before encoding
+	/// byte[] buffer = new byte[text.CalculateByteArraySize(Encoding.UTF8)];
+	/// int written = Encoding.UTF8.GetBytes(text, buffer);
+	/// // buffer is exactly sized, no waste
+	/// </code>
+	/// </example>
+	/// <seealso cref="Encoding.GetByteCount(string)"/>
+	/// <seealso cref="ToByteArray(string, Encoding)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
-	public static int CalculateByteArraySize([DisallowNull] this string base64Input)
+	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+	public static int CalculateByteArraySize([DisallowNull] this string input, Encoding? encoding = null)
 	{
-		base64Input = base64Input.ArgumentNotNullOrEmpty();
+		input = input.ArgumentNotNullOrEmpty();
 
-		var length = base64Input.Length;
+		// Default to UTF-8 if no encoding specified
+		encoding ??= Encoding.UTF8;
 
-		if (length == 0)
-		{
-			return 0;
-		}
-
-		// Base64 strings must have length divisible by 4
-		if (length % 4 != 0)
-		{
-			throw new FormatException(Resources.InputStringIsNotAValidBase64StringLength);
-		}
-
-		// Base64 uses 4 chars to encode 3 bytes, so decoded size is (length / 4) * 3
-		// Account for padding characters ('=') which don't contribute to decoded output
-		var paddingCount = 0;
-
-		if (base64Input[length - 1] == '=')
-		{
-			paddingCount++;
-
-			if (length > 1 && base64Input[length - 2] == '=')
-			{
-				paddingCount++;
-			}
-		}
-
-		return (length / 4 * 3) - paddingCount;
+		// OPTIMIZATION: Encoding.GetByteCount is highly optimized in .NET 10
+		// - UTF-8/ASCII use SIMD-accelerated vectorized operations
+		// - No allocations - just counts without creating buffers
+		// - JIT inlines this for constant encoding types
+		return encoding.GetByteCount(input);
 	}
 
 	/// <summary>
@@ -255,7 +260,7 @@ public static class StringExtensions
 	/// This method uses a pooled <see cref="StringBuilder"/> to optimize memory usage during concatenation.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -266,11 +271,9 @@ public static class StringExtensions
 			return input;
 		}
 
-		// OPTIMIZATION: For small concatenations, pool overhead exceeds benefit
-		// Use direct StringBuilder with capacity hint for better .NET 10 performance
 		if (args.Count <= 3)
 		{
-			// Estimate capacity: input + (avg 20 chars per arg + delimiter) * count
+			// Estimate capacity: base64Input + (avg 20 chars per arg + delimiter) * count
 			var estimatedCapacity = input.Length + ((20 + delimiter.Length) * args.Count);
 			var sb = new StringBuilder(estimatedCapacity);
 
@@ -321,10 +324,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the input string contains any of the specified characters, using the specified string comparison option.
+	/// Determines whether the base64Input string contains any of the specified characters, using the specified string comparison option.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", "2/9/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input,
 		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
 		params string[] characters)
@@ -369,11 +372,9 @@ public static class StringExtensions
 	/// <param name="defaultValue">The default value to return if the string is null. This can also be null, in which case an empty string is returned.</param>
 	/// <returns>The original string if it is not null; otherwise, the default value if it is not null; otherwise, <see cref="string.Empty"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(DefaultIfNull), "David McCarter", "9/15/2017", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string DefaultIfNull([AllowNull] this string value, [AllowNull] string defaultValue)
 	{
-		// OPTIMIZATION: Simple ternary is faster than switch expression in .NET 10
-		// Single branch prediction, no pattern matching overhead
 		return value ?? defaultValue ?? string.Empty;
 	}
 
@@ -417,7 +418,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.Equals(string, string, StringComparison)"/> for comparison.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool EqualsIgnoreCase([DisallowNull] this string input, string inputToCompare)
 	{
 		return input is null || inputToCompare is null ? false : string.Equals(input, inputToCompare, StringComparison.OrdinalIgnoreCase);
@@ -581,18 +582,18 @@ public static class StringExtensions
 	/// <summary>
 	/// Decodes a string from Base64 encoding.
 	/// </summary>
-	/// <param name="input">The Base64 encoded string to decode.</param>
-	/// <returns>A decoded string from the Base64 encoded <paramref name="input"/>.</returns>
+	/// <param name="base64Input">The Base64 encoded string to decode.</param>
+	/// <returns>A decoded string from the Base64 encoded <paramref name="base64Input"/>.</returns>
 	/// <remarks>
 	/// This method decodes the string using <see cref="Convert.FromBase64String(string)"/> and then converts the byte array to a string using <see cref="Encoding.UTF8"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(FromBase64), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string FromBase64([DisallowNull] this string input)
+	public static string FromBase64([DisallowNull] this string base64Input)
 	{
-		input = input.ArgumentNotNullOrEmpty();
+		base64Input = base64Input.ArgumentNotNullOrEmpty();
 
-		return _encoding.GetString(Convert.FromBase64String(input));
+		return _encoding.GetString(Convert.FromBase64String(base64Input));
 	}
 
 	/// <summary>
@@ -768,7 +769,7 @@ public static class StringExtensions
 	/// Uses <see cref="string.IsNullOrWhiteSpace(string)"/> internally to check if the string is null or whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasValue(this string input)
 	{
 		return input is not null && (input.Trim().Length > 0);
@@ -991,7 +992,7 @@ public static class StringExtensions
 	/// This method uses <see cref="string.IsNullOrEmpty(string)"/> to check if the string is empty.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsEmpty), "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsEmpty([NotNullWhen(false)] this string? input)
 	{
 		return input is null || input.Length == 0;
@@ -1006,7 +1007,7 @@ public static class StringExtensions
 	/// This method uses a regular expression to validate the first and last name.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsFirstLastName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsFirstLastName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsFirstLastName([DisallowNull] this string input)
 	{
 		return RegexProcessor.ContainsFirstLastName(input);
@@ -1230,7 +1231,7 @@ public static class StringExtensions
 	/// <param name="separator">The string to use as a delimiter. Defaults to <see cref="ControlChars.DefaultSeparator"/>.</param>
 	/// <returns>A ReadOnlyCollection{string} of strings that has been split from the base64Input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] string separator = ControlChars.DefaultSeparator)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -1292,7 +1293,7 @@ public static class StringExtensions
 	/// This method performs an ordinal (case-sensitive and culture-insensitive) comparison.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static bool StartsWithOrdinal([DisallowNull] this string input, string inputToCompare)
 	{
 		return input?.StartsWith(inputToCompare, StringComparison.Ordinal) ?? false;
@@ -1308,7 +1309,7 @@ public static class StringExtensions
 	/// This method performs a comparison using <see cref="StringComparison.OrdinalIgnoreCase"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 	public static bool StartsWithOrdinalIgnoreCase([DisallowNull] this string input, string inputToCompare)
 	{
 		return input?.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase) ?? false;
@@ -1362,11 +1363,11 @@ public static class StringExtensions
 	/// </summary>
 	/// <param name="input">The Base64 encoded string.</param>
 	/// <returns>A byte array representing the decoded Base64 string.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the input string is null or empty.</exception>
-	/// <exception cref="FormatException">Thrown when the input is not a valid Base64 string.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null or empty.</exception>
+	/// <exception cref="FormatException">Thrown when the base64Input is not a valid Base64 string.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToBase64Bytes), "David McCarter", "12/30/2025",
-		OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 	public static byte[] ToBase64Bytes([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -1431,7 +1432,7 @@ public static class StringExtensions
 	/// <param name="encoding">The encoding to use for the conversion. This cannot be null. See <see cref="Encoding"/> for encoding types.</param>
 	/// <returns>A byte array representing the encoded string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToByteArray), "David McCarter", "12/21/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ToByteArray), "David McCarter", "12/21/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] ToByteArray([DisallowNull] this string input, [DisallowNull] Encoding encoding)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -1536,7 +1537,7 @@ public static class StringExtensions
 	/// <param name="input">The string to convert to title case. This string cannot be null.</param>
 	/// <returns>A string converted to title case using <see cref="CultureInfo.CurrentCulture"/> rules.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToTitleCase), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToTitleCase), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ToTitleCase([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty(true);
@@ -1601,6 +1602,30 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 
 		return PasswordHasher.VerifyHashedPassword(hashedPassword, input, algorithmType);
+	}
+
+	/// <summary>
+	/// Computes the hashType of the given base64Input string using the specified hashType algorithm.
+	/// </summary>
+	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
+	/// <param name="hashType">The hashType algorithm type to use for computing the hashType.</param>
+	/// <returns>A byte array containing the computed hashType of the base64Input string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the specified hashType algorithm is not supported.</exception>
+	/// <remarks>
+	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hashType.
+	/// </remarks>
+	private static byte[] GetHash(string input, HashType hashType)
+	{
+		var inputBytes = Encoding.ASCII.GetBytes(input);
+
+		return hashType switch
+		{
+			HashType.SHA256 => SHA256.HashData(inputBytes),
+			HashType.SHA384 => SHA384.HashData(inputBytes),
+			HashType.SHA512 => SHA512.HashData(inputBytes),
+			_ => [],
+		};
 	}
 
 }

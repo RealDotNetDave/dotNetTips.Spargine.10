@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -103,7 +103,7 @@ public static class ListExtensions
 		/// </list>
 		/// </remarks>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
 		{
 			if (items is null)
@@ -228,7 +228,7 @@ public static class ListExtensions
 		/// <returns>The number of elements in the list.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastCount), "David McCarter", "4/12/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastCount), "David McCarter", "4/12/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int FastCount()
 		{
 			return list.Count;
@@ -303,7 +303,7 @@ public static class ListExtensions
 		/// <exception cref="ArgumentException">Thrown if the list is empty.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T IndexAtLooped(in int index)
 		{
 			list = list.ArgumentNotNull();

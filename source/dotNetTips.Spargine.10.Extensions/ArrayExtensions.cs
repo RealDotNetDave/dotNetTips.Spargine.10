@@ -219,12 +219,12 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] FastClone()
 		{
 			array = array.ArgumentNotNull();
 
-			return array.FastBinaryClone<T[]>();
+			return (T[])array.Clone();
 		}
 
 		/// <summary>

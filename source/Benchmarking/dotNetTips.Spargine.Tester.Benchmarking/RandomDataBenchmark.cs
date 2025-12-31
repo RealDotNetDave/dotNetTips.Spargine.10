@@ -36,7 +36,10 @@ public class RandomDataBenchmark : Benchmark
 	{
 		base.Cleanup();
 
-		Directory.Delete(this._filePath);
+		if (Directory.Exists(this._filePath))
+		{
+			Directory.Delete(this._filePath, true);
+		}
 	}
 
 
@@ -110,24 +113,6 @@ public class RandomDataBenchmark : Benchmark
 		var result = RandomData.GenerateEmailAddress();
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateFile))]
-	[BenchmarkCategory(Categories.New)]
-	public void GenerateFile()
-	{
-		var fileName = RandomData.GenerateFile(Path.Combine(this._filePath, "UnitTest.test"));
-
-		this.Consume(fileName);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateFiles))]
-	[BenchmarkCategory(Categories.New)]
-	public void GenerateFiles()
-	{
-		var fileNames = RandomData.GenerateFiles(this._filePath, 2);
-
-		this.Consume(fileNames);
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateInteger))]

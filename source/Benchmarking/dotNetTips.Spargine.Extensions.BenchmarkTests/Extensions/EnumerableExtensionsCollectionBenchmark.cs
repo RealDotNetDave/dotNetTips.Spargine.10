@@ -46,8 +46,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private List<Person> _personRefListDups;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
-	private static bool AnyWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Any(predicate);
-
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
 	public void AddDistinct()
@@ -390,7 +388,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		collection = collection.AddFirst(null);
 		collection = collection.AddLast(null);
 
-		var result = collection.RemoveDuplicates().Value;
+		var result = collection.RemoveNulls();
 
 		foreach (var person in result)
 		{
@@ -500,5 +498,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 			this.Consume(person);
 		}
 	}
+
+	private static bool AnyWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Any(predicate);
 
 }
