@@ -4,7 +4,7 @@
 // Created          : 02-05-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="IDataModel.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,8 +16,6 @@
 // ***********************************************************************
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
-
-
 
 namespace DotNetTips.Spargine.Core;
 
@@ -35,6 +33,18 @@ public interface IDataModel<TSelf, TKey> :
 	where TSelf : IDataModel<TSelf, TKey>
 	where TKey : notnull
 {
+
+	/// <summary>
+	/// Gets the unique identifier for this model. The value is settable only at initialization.
+	/// </summary>
+	TKey Id { get; init; }
+
+	/// <summary>
+	/// Gets a value indicating whether this instance is transient (i.e., has the default <see cref="Id"/> value).
+	/// </summary>
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	bool IsTransient => EqualityComparer<TKey>.Default.Equals(this.Id, default!);
+
 	/// <summary>
 	/// Compares the current instance with another object of the same type based on <see cref="Id"/>.
 	/// </summary>
@@ -70,16 +80,5 @@ public interface IDataModel<TSelf, TKey> :
 	/// <returns>A string representation for debugging purposes.</returns>
 	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	string DebugDisplay() => $"{typeof(TSelf).Name}({this.Id})";
-
-	/// <summary>
-	/// Gets the unique identifier for this model. The value is settable only at initialization.
-	/// </summary>
-	TKey Id { get; init; }
-
-	/// <summary>
-	/// Gets a value indicating whether this instance is transient (i.e., has the default <see cref="Id"/> value).
-	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
-	bool IsTransient => EqualityComparer<TKey>.Default.Equals(this.Id, default!);
 }
 #pragma warning restore IDE0040

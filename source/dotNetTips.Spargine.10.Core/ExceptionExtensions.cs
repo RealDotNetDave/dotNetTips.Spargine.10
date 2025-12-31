@@ -101,7 +101,7 @@ public static class ExceptionExtensions
 	/// This class is used internally to store additional information about exceptions, such as their logged state.
 	/// </remarks>
 	[Preserve("Used in ExceptionExtensions")]
-	private sealed record ExceptionMetadata(bool IsLogged)
+	internal sealed record ExceptionMetadata(bool IsLogged)
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExceptionMetadata"/> class.

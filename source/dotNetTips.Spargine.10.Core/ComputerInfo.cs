@@ -45,29 +45,20 @@ public sealed class ComputerInfo
 	}
 
 	/// <summary>
-	/// Converts the current instance of <see cref="ComputerInfo"/> to a JSON string.
+	/// Gets the current CPU usage total time.
 	/// </summary>
-	/// <remarks>
-	/// This method serializes the current object into a JSON format string using <see cref="JsonSerializer"/>.
-	/// </remarks>
-	/// <returns>
-	/// A JSON string representation of the current <see cref="ComputerInfo"/> instance.
-	/// </returns>
-	[Pure]
-	[return: NotNull]
-	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public string ToJson()
-	{
-		return JsonSerializer.Serialize(this);
-	}
+	/// <returns>The total CPU usage time as a <see cref="TimeSpan"/>.</returns>
+	[DataMember]
+	[Information(nameof(GetCpuUsageTotalTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static TimeSpan GetCpuUsageTotalTime { get; private set; } = CpuUsage.TotalTime;
 
 	/// <summary>
-	/// Returns a string that represents the current object.
+	/// Gets the CPU usage user time.
 	/// </summary>
-	/// <returns>A string that represents the current object.</returns>
-	[Pure]
-	[return: NotNull]
-	public override string ToString() => this.PropertiesToString();
+	/// <returns>The user CPU usage time as a <see cref="TimeSpan"/>.</returns>
+	[DataMember]
+	[Information(nameof(GetCpuUsageUserTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static TimeSpan GetCpuUsageUserTime { get; private set; } = CpuUsage.UserTime;
 
 	/// <summary>
 	/// Gets the computer culture in three-letter ISO language name format.
@@ -151,22 +142,6 @@ public sealed class ComputerInfo
 	[DataMember]
 	[Information(nameof(GetCpuUsagePrivilegedTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public TimeSpan GetCpuUsagePrivilegedTime { get; private set; } = CpuUsage.PrivilegedTime;
-
-	/// <summary>
-	/// Gets the current CPU usage total time.
-	/// </summary>
-	/// <returns>The total CPU usage time as a <see cref="TimeSpan"/>.</returns>
-	[DataMember]
-	[Information(nameof(GetCpuUsageTotalTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static TimeSpan GetCpuUsageTotalTime { get; private set; } = CpuUsage.TotalTime;
-
-	/// <summary>
-	/// Gets the CPU usage user time.
-	/// </summary>
-	/// <returns>The user CPU usage time as a <see cref="TimeSpan"/>.</returns>
-	[DataMember]
-	[Information(nameof(GetCpuUsageUserTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static TimeSpan GetCpuUsageUserTime { get; private set; } = CpuUsage.UserTime;
 
 	/// <summary>
 	/// Gets a value indicating whether the shutdown process has started.
@@ -320,4 +295,29 @@ public sealed class ComputerInfo
 	[DataMember]
 	[Information(nameof(UserName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string UserName { get; private set; } = Environment.UserName;
+
+	/// <summary>
+	/// Converts the current instance of <see cref="ComputerInfo"/> to a JSON string.
+	/// </summary>
+	/// <remarks>
+	/// This method serializes the current object into a JSON format string using <see cref="JsonSerializer"/>.
+	/// </remarks>
+	/// <returns>
+	/// A JSON string representation of the current <see cref="ComputerInfo"/> instance.
+	/// </returns>
+	[Pure]
+	[return: NotNull]
+	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public string ToJson()
+	{
+		return JsonSerializer.Serialize(this);
+	}
+
+	/// <summary>
+	/// Returns a string that represents the current object.
+	/// </summary>
+	/// <returns>A string that represents the current object.</returns>
+	[Pure]
+	[return: NotNull]
+	public override string ToString() => this.PropertiesToString();
 }

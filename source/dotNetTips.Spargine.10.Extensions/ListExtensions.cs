@@ -53,14 +53,10 @@ public static class ListExtensions
 		/// </summary>
 		/// <param name="item">The item to add to the beginning of the list.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddFirst([DisallowNull] T item)
 		{
-			if (item is null)
-			{
-				return;
-			}
-
+			item = item.ArgumentNotNull();
 			list = list.ArgumentNotNull();
 
 			list.Insert(0, item);
@@ -71,14 +67,10 @@ public static class ListExtensions
 		/// </summary>
 		/// <param name="item">The item to add to the end of the list.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddLast([DisallowNull] T item)
 		{
-			if (item is null)
-			{
-				return;
-			}
-
+			item = item.ArgumentNotNull();
 			list = list.ArgumentNotNull();
 
 			list.Add(item);
@@ -103,19 +95,19 @@ public static class ListExtensions
 		/// </list>
 		/// </remarks>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
 		{
-			if (items is null)
-			{
-				return;
-			}
-
 			list = list.ArgumentNotNull();
+			items = items.ArgumentNotNull();
+
+			// OPTIMIZATION: Use HashSet for O(1) lookup instead of O(n) List.Contains
+			var existingItems = new HashSet<T>(list);
 
 			foreach (var item in items)
 			{
-				if (!list.Contains(item))
+				// HashSet.Add returns false if item already exists
+				if (existingItems.Add(item))
 				{
 					list.Add(item);
 				}
@@ -152,7 +144,7 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.None, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [DisallowNull] IEqualityComparer<T> comparer)
 		{
 			if (items is null)
@@ -477,25 +469,12 @@ public static class ListExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool RemoveFirst(T item)
 		{
-			if (item is null)
-			{
-				return false;
-			}
-
 			list = list.ArgumentNotNull();
 
-			var index = list.IndexOf(item);
-
-			if (index >= 0)
-			{
-				list.RemoveAt(index);
-				return true;
-			}
-
-			return false;
+			return list.Remove(item);
 		}
 
 		/// <summary>
@@ -544,14 +523,9 @@ public static class ListExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool RemoveLast(T item)
 		{
-			if (item is null)
-			{
-				return false;
-			}
-
 			list = list.ArgumentNotNull();
 
 			var index = list.LastIndexOf(item);

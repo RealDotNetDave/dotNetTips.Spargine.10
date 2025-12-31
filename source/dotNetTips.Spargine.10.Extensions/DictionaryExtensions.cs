@@ -662,23 +662,25 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TValue TryGetValue<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFunction)
 	where TKey : notnull
 	where TValue : notnull
 	{
+		// Validate all arguments upfront - this is more efficient than validating valueFunction conditionally
 		collection = collection.ArgumentNotNull();
 		key = key.ArgumentNotNull();
+		valueFunction = valueFunction.ArgumentNotNull();
 
+		// Fast path: if key exists, return value immediately
 		if (collection.TryGetValue(key, out var value))
 		{
 			return value;
 		}
 
-		valueFunction = valueFunction.ArgumentNotNull();
-
+		// Key doesn't exist, compute and add new value
 		var newValue = valueFunction.Invoke(key);
-		collection.Add(key, newValue);
+		collection[key] = newValue; // Use indexer which is faster than Add for this scenario
 
 		return newValue;
 	}

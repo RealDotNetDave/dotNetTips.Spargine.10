@@ -142,11 +142,13 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item)
 		{
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
+
+			//TODO: ADD UNIT TESTS FOR ALL COLLECTION TYPES.
 
 			// OPTIMIZATION: Fast path for common collection types with indexed access
 			if (collection is List<T> list)
@@ -1499,7 +1501,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> Upsert([DisallowNull] T item)
 		{
 			collection = collection.ArgumentNotNull();

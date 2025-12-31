@@ -159,9 +159,10 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefDictionary;
 
-		_ = people.TryGetValue(this._personRef.Key, out var person);
+		// Test the extension method with a factory function
+		var result = people.TryGetValue(this._personRef.Key, key => this.PersonRef01);
 
-		this.Consume(person);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.Upsert))]

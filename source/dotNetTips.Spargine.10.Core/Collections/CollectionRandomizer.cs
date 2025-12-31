@@ -208,23 +208,6 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	}
 
 	/// <summary>
-	/// Returns the number of items remaining to be retrieved.
-	/// </summary>
-	/// <returns>The count of remaining items.</returns>
-	/// <remarks>
-	/// If the collection has not been initialized, returns the total count.
-	/// If the collection is exhausted, returns 0.
-	/// </remarks>
-	[Information(nameof(GetRemaining), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public int GetRemaining()
-	{
-		lock (this._threadLock)
-		{
-			return !this._initialized ? this._collection.Length : !this.HasRemainingItems ? 0 : this._collection.Length - this._currentIndex - 1;
-		}
-	}
-
-	/// <summary>
 	/// Returns the next item in the collection without advancing the index.
 	/// If the collection is not initialized or exhausted (and <c>repeat</c> is true), it will be reshuffled.
 	/// </summary>
@@ -290,6 +273,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 
 			this._currentIndex++;
 			this.HasRemainingItems = this._currentIndex < this._collection.Length - 1;
+
 			return true;
 		}
 	}
