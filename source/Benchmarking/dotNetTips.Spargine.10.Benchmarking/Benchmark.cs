@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 12-31-2025
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -521,7 +521,7 @@ public class Benchmark
 
 		if (benchmarks.Length == 0)
 		{
-			ExceptionThrower.ThrowArgumentException("At least one benchmark type must be provided.", nameof(benchmarks));
+			ExceptionThrower.ThrowArgumentException(Resources.AtLeastOneBenchmarkTypeMustBeProvided, nameof(benchmarks));
 		}
 
 		// Use BenchmarkSwitcher.FromTypes for efficient multi-benchmark execution

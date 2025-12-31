@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -131,5 +131,8 @@
   </data>
   <data name="XmlTestDataPersonRecord" xml:space="preserve">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;PersonRecord xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://dotNetTips.Spargine.Tester.Models.RefTypes"&gt;&lt;Addresses&gt;&lt;Address1 xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;bshcfycetthlbpjykrfwlluyj&lt;/Address1&gt;&lt;Address2 xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;qnqcwccfyogsbatnduwdpalck&lt;/Address2&gt;&lt;City xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;Vasilikí&lt;/City&gt;&lt;Country xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;Greece&lt;/Country&gt;&lt;CountyProvince xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;qymsuydgisxkqgrdqxam&lt;/CountyProvince&gt;&lt;Id xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;879c4e1883d34f17adbbeedd5a1f8465&lt;/Id&gt;&lt;Phone xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;7856234266&lt;/Phone&gt;&lt;PostalCode xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;534 85&lt;/PostalCode&gt;&lt;State xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;Corfu Prefecture&lt;/State&gt;&lt;/Addresses&gt;&lt;Addresses&gt;&lt;Address1 xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;dgeajkwfsednyrohmdnuequxl&lt;/Address1&gt;&lt;Address2 xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;eqcfholsojjxpxicwgxoybaqb&lt;/Address2&gt;&lt;City xmlns="http://dotNetTips.Spargine.Tester.Models.Ref" /&gt;&lt;Country xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;Greece&lt;/Country&gt;&lt;CountyProvince xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;irbodumdivsiklqmbqkf&lt;/CountyProvince&gt;&lt;Id xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;357d196363954eec9d909a41da2293de&lt;/Id&gt;&lt;Phone xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;0152526581&lt;/Phone&gt;&lt;PostalCode xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;636 83&lt;/PostalCode&gt;&lt;State xmlns="http://dotNetTips.Spargine.Tester.Models.Ref"&gt;Kastoria Regional Unit&lt;/State&gt;&lt;/Addresses&gt;&lt;BornOn&gt;1977-01-13T12:37:20.0339701-08:00&lt;/BornOn&gt;&lt;CellPhone&gt;6808303375&lt;/CellPhone&gt;&lt;Email&gt;Elias.Do@qibcciceqdrm.foundation&lt;/Email&gt;&lt;FirstName&gt;Elias&lt;/FirstName&gt;&lt;HomePhone&gt;0604175585&lt;/HomePhone&gt;&lt;Id&gt;ab1ba37285f8467f92f2650f560b7fb3&lt;/Id&gt;&lt;LastName&gt;Do&lt;/LastName&gt;&lt;/PersonRecord&gt;</value>
+  </data>
+  <data name="AtLeastOneBenchmarkTypeMustBeProvided" xml:space="preserve">
+    <value>At least one benchmark type must be provided.</value>
   </data>
 </root>
