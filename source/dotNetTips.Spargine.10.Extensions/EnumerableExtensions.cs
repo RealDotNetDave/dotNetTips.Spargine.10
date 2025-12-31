@@ -219,7 +219,7 @@ public static class EnumerableExtensions
 		/// </para>
 		/// <list type="bullet">
 		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
-		/// <item><description><b>Custom object comparison:</b> When the default <see cref="Object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
+		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
 		/// <item><description><b>Reference equality:</b> Use <see cref="ReferenceEqualityComparer"/> to compare object references instead of values.</description></item>
 		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
 		/// </list>

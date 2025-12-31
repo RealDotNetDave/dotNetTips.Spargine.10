@@ -92,230 +92,6 @@ public sealed class Person : IPerson<Person, Address>
 	}
 
 	/// <summary>
-	/// Inequality operator (identity).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if not equal, otherwise false.</returns>
-	public static bool operator !=(in Person? left, in Person? right)
-	{
-		return !(left == right);
-	}
-
-	/// <summary>
-	/// Less-than operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is less than right.</returns>
-	public static bool operator <(in Person? left, in Person? right)
-	{
-		return left is null ? right is not null : right is null ? false : left.CompareTo(right) < 0;
-	}
-
-	/// <summary>
-	/// Less-than-or-equal operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is less than or equal to right.</returns>
-	public static bool operator <=(in Person? left, in Person? right)
-	{
-		return left is null ? true : right is null ? false : left.CompareTo(right) <= 0;
-	}
-
-	/// <summary>
-	/// Equality operator (identity).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if equal, otherwise false.</returns>
-	public static bool operator ==(in Person? left, in Person? right)
-	{
-		return EqualityComparer<Person>.Default.Equals(left, right);
-	}
-
-	/// <summary>
-	/// Greater-than operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is greater than right.</returns>
-	public static bool operator >(in Person? left, in Person? right)
-	{
-		return left is null ? false : right is null ? true : left.CompareTo(right) > 0;
-	}
-
-	/// <summary>
-	/// Greater-than-or-equal operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is greater than or equal to right.</returns>
-	public static bool operator >=(in Person? left, in Person? right)
-	{
-		return right is null ? true : left is null ? false : left.CompareTo(right) >= 0;
-	}
-
-	/// <summary>
-	/// Non-generic comparison required by <see cref="IComparable"/>.
-	/// </summary>
-	/// <param name="obj">Object to compare.</param>
-	/// <returns>
-	/// Value indicating the relative order of the objects.
-	/// </returns>
-	/// <exception cref="ArgumentException">
-	/// Thrown when <paramref name="obj"/> is not a <see cref="Person"/>.
-	/// </exception>
-	int IComparable.CompareTo(object? obj)
-	{
-		return obj is null
-			? 1
-			: obj is Person other
-			? this.CompareTo(other)
-			: throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
-	}
-
-	/// <summary>
-	/// Compares this instance with another <see cref="Person"/>
-	/// using ordinal <see cref="Id"/>.
-	/// </summary>
-	/// <param name="other">Other <see cref="Person"/>.</param>
-	/// <returns>
-	/// Value indicating the relative order of the objects.
-	/// </returns>
-	public int CompareTo(in Person? other)
-	{
-		return other is null ? 1 : string.Compare(this.Id, other.Id, StringComparison.Ordinal);
-	}
-
-	/// <summary>
-	/// Creates a new <see cref="Person"/> with the specified values.
-	/// </summary>
-	/// <param name="id">The unique identifier for the person.</param>
-	/// <param name="email">The email address of the person.</param>
-	/// <param name="firstName">The first name of the person.</param>
-	/// <param name="lastName">The last name of the person.</param>
-	/// <param name="bornOn">The birth date of the person.</param>
-	/// <param name="addresses">The collection of addresses.</param>
-	/// <param name="cellPhone">The cell phone number.</param>
-	/// <param name="phone">The home phone number.</param>
-	/// <returns>A new <see cref="Person"/> instance.</returns>
-	public static Person Create(string id, string email, string firstName, string lastName, DateTimeOffset? bornOn, Collection<Address>? addresses = null, string? cellPhone = null, string? phone = null)
-	{
-		return new Person(id, email)
-		{
-			FirstName = firstName ?? string.Empty,
-			LastName = lastName ?? string.Empty,
-			BornOn = bornOn,
-			Addresses = addresses ?? [],
-			CellPhone = cellPhone ?? string.Empty,
-			Phone = phone ?? string.Empty
-		};
-	}
-
-	/// <summary>
-	/// Determines equality with another <see cref="Person"/>
-	/// using ordinal <see cref="Id"/>.
-	/// </summary>
-	/// <param name="other">Other <see cref="Person"/>.</param>
-	/// <returns>True if equal, otherwise false.</returns>
-	public bool Equals(in Person? other)
-	{
-		return ReferenceEquals(this, other) ? true : other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
-	}
-
-	/// <inheritdoc />
-	public override bool Equals(object? obj)
-	{
-		return ReferenceEquals(this, obj) ? true : obj is Person other && this.Equals(other);
-	}
-
-	/// <inheritdoc />
-	public override int GetHashCode()
-	{
-		return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;
-	}
-
-
-	/// <summary>
-	/// Converts to <see cref="ValueTypes.Person"/> to <see cref="Person"/>.
-	/// </summary>
-	/// <param name="person">The person.</param>
-	/// <returns>DotNetTips.Spargine.Tester.Models.RefTypes.Person.</returns>
-	[return: NotNull]
-	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Person ToPerson(in ValueTypes.Person person)
-	{
-		_ = person.ArgumentNotNull();
-
-		Person newPerson = new()
-		{
-			Id = person.Id,
-			Email = person.Email,
-			FirstName = person.FirstName,
-			LastName = person.LastName,
-			BornOn = person.BornOn,
-			CellPhone = person.CellPhone,
-			Phone = person.Phone,
-		};
-
-		if (person.Addresses.IsNotEmpty())
-		{
-			foreach (var address in person.Addresses)
-			{
-				newPerson.Addresses.Add(Address.ToAddress(address));
-			}
-		}
-
-		return newPerson;
-	}
-
-	/// <summary>
-	/// Converts a <see cref="PersonRecord"/> to a <see cref="Person"/>.
-	/// </summary>
-	/// <param name="person">The <see cref="PersonRecord"/> to convert.</param>
-	/// <returns>A new instance of <see cref="Person"/> based on the provided <see cref="PersonRecord"/>.</returns>
-	[return: NotNull]
-	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Person ToPerson([NotNull] in PersonRecord person)
-	{
-		_ = person.ArgumentNotNull();
-
-		Person newPerson = new(person.Email, person.Id)
-		{
-			FirstName = person.FirstName,
-			LastName = person.LastName,
-			BornOn = person.BornOn,
-			CellPhone = person.CellPhone,
-			Phone = person.Phone,
-		};
-
-		if (person.Addresses.IsNotEmpty())
-		{
-			foreach (var address in person.Addresses)
-			{
-				newPerson.Addresses.Add(Address.ToAddress(address));
-			}
-		}
-
-		return newPerson;
-	}
-
-	/// <summary>
-	/// Returns a string representation of the <see cref="Person"/>.
-	/// </summary>
-	/// <returns>
-	/// A string containing the property values of the person.
-	/// </returns>
-	[DebuggerStepThrough]
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override string ToString()
-	{
-		return this.PropertiesToString();
-	}
-
-	/// <summary>
 	/// Gets or sets the collection of addresses.
 	/// Setter defensively copies the collection.
 	/// </summary>
@@ -606,5 +382,229 @@ public sealed class Person : IPerson<Person, Address>
 
 			this._phone = safeValue;
 		}
+	}
+
+	/// <summary>
+	/// Greater-than-or-equal operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is greater than or equal to right.</returns>
+	public static bool operator >=(in Person? left, in Person? right)
+	{
+		return right is null ? true : left is null ? false : left.CompareTo(right) >= 0;
+	}
+
+	/// <summary>
+	/// Greater-than operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is greater than right.</returns>
+	public static bool operator >(in Person? left, in Person? right)
+	{
+		return left is null ? false : right is null ? true : left.CompareTo(right) > 0;
+	}
+
+	/// <summary>
+	/// Equality operator (identity).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if equal, otherwise false.</returns>
+	public static bool operator ==(in Person? left, in Person? right)
+	{
+		return EqualityComparer<Person>.Default.Equals(left, right);
+	}
+
+	/// <summary>
+	/// Less-than-or-equal operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is less than or equal to right.</returns>
+	public static bool operator <=(in Person? left, in Person? right)
+	{
+		return left is null ? true : right is null ? false : left.CompareTo(right) <= 0;
+	}
+
+	/// <summary>
+	/// Less-than operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is less than right.</returns>
+	public static bool operator <(in Person? left, in Person? right)
+	{
+		return left is null ? right is not null : right is null ? false : left.CompareTo(right) < 0;
+	}
+
+	/// <summary>
+	/// Inequality operator (identity).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if not equal, otherwise false.</returns>
+	public static bool operator !=(in Person? left, in Person? right)
+	{
+		return !(left == right);
+	}
+
+	/// <summary>
+	/// Creates a new <see cref="Person"/> with the specified values.
+	/// </summary>
+	/// <param name="id">The unique identifier for the person.</param>
+	/// <param name="email">The email address of the person.</param>
+	/// <param name="firstName">The first name of the person.</param>
+	/// <param name="lastName">The last name of the person.</param>
+	/// <param name="bornOn">The birth date of the person.</param>
+	/// <param name="addresses">The collection of addresses.</param>
+	/// <param name="cellPhone">The cell phone number.</param>
+	/// <param name="phone">The home phone number.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	public static Person Create(string id, string email, string firstName, string lastName, DateTimeOffset? bornOn, Collection<Address>? addresses = null, string? cellPhone = null, string? phone = null)
+	{
+		return new Person(id, email)
+		{
+			FirstName = firstName ?? string.Empty,
+			LastName = lastName ?? string.Empty,
+			BornOn = bornOn,
+			Addresses = addresses ?? [],
+			CellPhone = cellPhone ?? string.Empty,
+			Phone = phone ?? string.Empty
+		};
+	}
+
+
+	/// <summary>
+	/// Converts to <see cref="ValueTypes.Person"/> to <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The person.</param>
+	/// <returns>DotNetTips.Spargine.Tester.Models.RefTypes.Person.</returns>
+	[return: NotNull]
+	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static Person ToPerson(in ValueTypes.Person person)
+	{
+		_ = person.ArgumentNotNull();
+
+		Person newPerson = new()
+		{
+			Id = person.Id,
+			Email = person.Email,
+			FirstName = person.FirstName,
+			LastName = person.LastName,
+			BornOn = person.BornOn,
+			CellPhone = person.CellPhone,
+			Phone = person.Phone,
+		};
+
+		if (person.Addresses.IsNotEmpty())
+		{
+			foreach (var address in person.Addresses)
+			{
+				newPerson.Addresses.Add(Address.ToAddress(address));
+			}
+		}
+
+		return newPerson;
+	}
+
+	/// <summary>
+	/// Converts a <see cref="PersonRecord"/> to a <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The <see cref="PersonRecord"/> to convert.</param>
+	/// <returns>A new instance of <see cref="Person"/> based on the provided <see cref="PersonRecord"/>.</returns>
+	[return: NotNull]
+	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static Person ToPerson([NotNull] in PersonRecord person)
+	{
+		_ = person.ArgumentNotNull();
+
+		Person newPerson = new(person.Email, person.Id)
+		{
+			FirstName = person.FirstName,
+			LastName = person.LastName,
+			BornOn = person.BornOn,
+			CellPhone = person.CellPhone,
+			Phone = person.Phone,
+		};
+
+		if (person.Addresses.IsNotEmpty())
+		{
+			foreach (var address in person.Addresses)
+			{
+				newPerson.Addresses.Add(Address.ToAddress(address));
+			}
+		}
+
+		return newPerson;
+	}
+
+	/// <summary>
+	/// Non-generic comparison required by <see cref="IComparable"/>.
+	/// </summary>
+	/// <param name="obj">Object to compare.</param>
+	/// <returns>
+	/// Value indicating the relative order of the objects.
+	/// </returns>
+	/// <exception cref="ArgumentException">
+	/// Thrown when <paramref name="obj"/> is not a <see cref="Person"/>.
+	/// </exception>
+	int IComparable.CompareTo(object? obj)
+	{
+		return obj is null
+			? 1
+			: obj is Person other
+			? this.CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
+	}
+
+	/// <summary>
+	/// Compares this instance with another <see cref="Person"/>
+	/// using ordinal <see cref="Id"/>.
+	/// </summary>
+	/// <param name="other">Other <see cref="Person"/>.</param>
+	/// <returns>
+	/// Value indicating the relative order of the objects.
+	/// </returns>
+	public int CompareTo(in Person? other)
+	{
+		return other is null ? 1 : string.Compare(this.Id, other.Id, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Determines equality with another <see cref="Person"/>
+	/// using ordinal <see cref="Id"/>.
+	/// </summary>
+	/// <param name="other">Other <see cref="Person"/>.</param>
+	/// <returns>True if equal, otherwise false.</returns>
+	public bool Equals(in Person? other)
+	{
+		return ReferenceEquals(this, other) ? true : other is not null && string.Equals(this.Id, other.Id, StringComparison.Ordinal);
+	}
+
+	/// <inheritdoc />
+	public override bool Equals(object? obj)
+	{
+		return ReferenceEquals(this, obj) ? true : obj is Person other && this.Equals(other);
+	}
+
+	/// <inheritdoc />
+	public override int GetHashCode()
+	{
+		return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;
+	}
+
+	/// <summary>
+	/// Returns a string representation of the <see cref="Person"/>.
+	/// </summary>
+	/// <returns>
+	/// A string containing the property values of the person.
+	/// </returns>
+	[DebuggerStepThrough]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public override string ToString()
+	{
+		return this.PropertiesToString();
 	}
 }
