@@ -18,10 +18,8 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Engines;

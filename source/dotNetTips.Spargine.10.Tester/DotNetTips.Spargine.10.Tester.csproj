@@ -128,11 +128,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
-	<ProjectReference Include="..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
 	<Compile Update="Properties\Resources.Designer.cs">
 	  <DesignTime>true</DesignTime>
 	  <AutoGen>true</AutoGen>
