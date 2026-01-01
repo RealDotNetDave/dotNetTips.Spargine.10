@@ -58,21 +58,21 @@ internal sealed class Program
 
 			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			//_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<DictionaryExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkHelper.Run<ArrayExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkHelper.Run<DictionaryExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkHelper.Run<ListExtensionsCollectionBenchmark>(config);
 			_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
 			_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine(CompleteMessage);
-			Benchmark.PlaySuccessBeep();
+			BenchmarkHelper.PlaySuccessBeep();
 			_ = Console.ReadLine();
 		}
 		catch (Exception ex)
 		{
 			ConsoleLogger.Default.WriteLine(ErrorMessage);
 			ConsoleLogger.Default.WriteLine(ex.Message);
-			Benchmark.PlayErrorBeep();
+			BenchmarkHelper.PlayErrorBeep();
 			_ = Console.ReadLine();
 		}
 	}

@@ -46,18 +46,19 @@ internal sealed class Program
 
 			_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			//_ = BenchmarkRunner.Run<TypeHelperBenchmark>(config);
-			//_ = BenchmarkRunner.Run<EnumerationBenchmark>(config);
+			//_ = BenchmarkHelper.Run<TypeHelperBenchmark>(config);
+			//_ = BenchmarkHelper.Run<EnumerationBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine("COMPLETE!");
-			Benchmark.PlaySuccessBeep();
+			BenchmarkHelper.PlaySuccessBeep();
+
 			_ = Console.ReadLine();
 		}
 		catch (Exception ex)
 		{
 			ConsoleLogger.Default.WriteLine("ERROR!");
 			ConsoleLogger.Default.WriteLine(ex.Message);
-			Benchmark.PlayErrorBeep();
+			BenchmarkHelper.PlayErrorBeep();
 			_ = Console.ReadLine();
 		}
 	}
