@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-01-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Core;
 /// This class serves as a utility for accessing various application and system properties such as culture information, OS details, and processor information.
 /// It also provides methods for changing culture settings, retrieving environment variables, and managing application processes.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineApp", Status = Status.UpdateDocumentation)]
+[Information(Documentation = "https://bit.ly/SpargineApp", Status = Status.Available)]
 public static class App
 {
 
@@ -69,51 +69,232 @@ public static class App
 	private static ReadOnlyCollection<string>? _cultureNames;
 
 	/// <summary>
-	/// Initializes the application information.
+	/// Gets the application information.
 	/// </summary>
-	/// <returns>AppInfo.</returns>
-	private static AppInfo InitAppInfo()
+	/// <value>The application information, including company, configuration, copyright, description, file version, memory allocated, memory info, product, thread allocated bytes, _title, total allocated bytes, and version.</value>
+	/// <example>Example usage:
+	/// <code>
+	/// var appInfo = App.AppInfo;
+	/// Console.WriteLine($"Company: {appInfo.Company}");
+	/// </code>
+	/// This will output the company name from the application's assembly information.
+	/// </example>
+	[Pure]
+	[Information(nameof(AppInfo), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static AppInfo AppInfo
 	{
-		var assembly = Assembly.GetEntryAssembly() ?? throw new InvalidOperationException(Resources.EntryAssemblyIsNullUnableToInitializeAppli);
-
-		return new AppInfo
+		get
 		{
-			Company = assembly.GetCustomAttributes<AssemblyCompanyAttribute>().FirstOrDefault()?.Company ?? string.Empty,
-			Configuration = assembly.GetCustomAttributes<AssemblyConfigurationAttribute>().FirstOrDefault()?.Configuration ?? string.Empty,
-			Copyright = assembly.GetCustomAttributes<AssemblyCopyrightAttribute>().FirstOrDefault()?.Copyright ?? string.Empty,
-			Description = assembly.GetCustomAttributes<AssemblyDescriptionAttribute>().FirstOrDefault()?.Description ?? string.Empty,
-			FileVersion = assembly.GetCustomAttributes<AssemblyFileVersionAttribute>().FirstOrDefault()?.Version ?? string.Empty,
-			MemoryAllocated = GC.GetTotalMemory(forceFullCollection: false),
-			MemoryInfo = GC.GetGCMemoryInfo(),
-			Product = assembly.GetCustomAttributes<AssemblyProductAttribute>().FirstOrDefault()?.Product ?? string.Empty,
-			ThreadAllocatedBytes = GC.GetAllocatedBytesForCurrentThread(),
-			Title = assembly.GetCustomAttributes<AssemblyTitleAttribute>().FirstOrDefault()?.Title ?? string.Empty,
-			TotalAllocatedBytes = GC.GetTotalAllocatedBytes(precise: false),
-			Version = assembly.GetName().Version?.ToString() ?? string.Empty,
-		};
+			return _appInfo.Value;
+		}
 	}
 
 	/// <summary>
-	/// Kills the specified process by name.
+	/// Gets the current culture of the application.
 	/// </summary>
-	/// <param name="processName">The name of the process to kill.</param>
-	/// <example>
-	/// Here is how you can use the <see cref="KillProcess" /> method:
-	/// <code>
-	/// App.KillProcess("notepad");
-	/// </code></example>
-	[ExcludeFromCodeCoverage]
-	private static void KillProcess(string processName)
+	/// <value>The current culture.</value>
+	/// <remarks>This property provides access to the current culture used by the application. It is a wrapper around <see cref="CultureInfo.CurrentCulture" />.</remarks>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static CultureInfo CurrentCulture
 	{
-		processName = processName.ArgumentNotNullOrEmpty();
-
-		var app = Process.GetProcessesByName(processName).FirstOrDefault();
-
-		if (app is not null)
+		get
 		{
-			app.Kill();
+			return CultureInfo.CurrentCulture;
+		}
+	}
 
-			_ = app.WaitForExit(milliseconds: 6000);
+	/// <summary>
+	/// Gets a unique identifier for the current managed thread.
+	/// </summary>
+	/// <value>The current thread identifier.</value>
+	/// <remarks>This property provides the unique identifier of the currently executing thread. It is useful for logging, debugging, or tracking thread-specific operations.</remarks>
+	[Pure]
+	[Information(nameof(CurrentThreadId), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static int CurrentThreadId
+	{
+		get
+		{
+			return _computerInfo.Value.CurrentManagedThreadId;
+		}
+	}
+
+	/// <summary>
+	/// Retrieves the current UI culture used by the application for localization.
+	/// </summary>
+	/// <value>The current UI culture.</value>
+	/// <remarks>This property provides access to the current UI culture used by the application. It is a wrapper around <see cref="CultureInfo.CurrentUICulture" />.
+	/// The UI culture is used for string localization, date and number formatting, and other culture-specific operations in the UI.</remarks>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static CultureInfo CurrentUICulture
+	{
+		get
+		{
+			return CultureInfo.CurrentUICulture;
+		}
+	}
+
+	/// <summary>
+	/// Provides a string describing the .NET installation running the application, useful for ensuring compatibility.
+	/// </summary>
+	/// <value>The framework description.</value>
+	/// <example>Example output: ".NET 5.0.6"</example>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static string FrameworkDescription
+	{
+		get
+		{
+			return RuntimeInformation.FrameworkDescription;
+		}
+	}
+
+	/// <summary>
+	/// Returns the default UI culture installed on the system.
+	/// </summary>
+	/// <value>The installed UI culture.</value>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static CultureInfo InstalledUICulture
+	{
+		get
+		{
+			return CultureInfo.InstalledUICulture;
+		}
+	}
+
+	/// <summary>
+	/// Describes the architecture (e.g., x86, x64) of the operating system hosting the application.
+	/// </summary>
+	/// <value>The operating system platform.</value>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static Architecture OSArchitecture
+	{
+		get
+		{
+			return RuntimeInformation.OSArchitecture;
+		}
+	}
+
+	/// <summary>
+	/// Gets a string that describes the operating system on which the app is running.
+	/// </summary>
+	/// <value>The operating system description.</value>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static string OSDescription
+	{
+		get
+		{
+			return RuntimeInformation.OSDescription;
+		}
+	}
+
+	/// <summary>
+	/// Gets the process architecture of the currently running app.
+	/// </summary>
+	/// <value>The process architecture.</value>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static Architecture ProcessArchitecture
+	{
+		get
+		{
+			return RuntimeInformation.ProcessArchitecture;
+		}
+	}
+
+	/// <summary>
+	/// Provides the unique identifier for the current process, useful for diagnostics and logging.
+	/// </summary>
+	/// <value>The process identifier.</value>
+	/// <example>Example usage:
+	/// <code>
+	/// var processId = App.ProcessId;
+	/// Console.WriteLine(processId);
+	/// </code>
+	/// This will output the unique identifier of the current process.
+	/// </example>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static int ProcessId
+	{
+		get
+		{
+			return Environment.ProcessId;
+		}
+	}
+
+	/// <summary>
+	/// The name of the process currently running, aiding in identification and tracking.
+	/// </summary>
+	/// <value>The name of the process.</value>
+	/// <example>Example usage:
+	/// <code>
+	/// var processName = App.ProcessName;
+	/// Console.WriteLine(processName);
+	/// </code>
+	/// This will output the name of the current process.
+	/// </example>
+	[Pure]
+	[Information(nameof(ProcessName), "David McCarter", "7/26/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static string ProcessName
+	{
+		get
+		{
+			return Process.GetCurrentProcess().ProcessName;
+		}
+	}
+
+	/// <summary>
+	/// Returns the path of the executable that started the currently executing process. Returns null when the path is not available.
+	/// </summary>
+	/// <value>The process path.</value>
+	[Pure]
+	[Information(nameof(GetProcessorInformation), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static string ProcessPath
+	{
+		get
+		{
+			return _computerInfo.Value.CurrentWorkingDirectory;
+		}
+	}
+
+	/// <summary>
+	/// Gets the stack trace for the current thread.
+	/// </summary>
+	/// <value>A string that describes the stack trace for the current thread.</value>
+	/// <remarks>
+	/// This property provides a string representation of the stack trace, which can be useful for debugging purposes.
+	/// It includes the sequence of method calls that led to the current point of execution.
+	/// </remarks>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static string StackTrace
+	{
+		get
+		{
+			return Environment.StackTrace;
+		}
+	}
+
+	/// <summary>
+	/// Gets the working set of the current process.
+	/// </summary>
+	/// <value>The amount of physical memory mapped to the process context.</value>
+	/// <remarks>
+	/// This property provides the size of the working set, which is the set of memory pages currently visible to the process in physical RAM.
+	/// It includes both shared and private data, such as the pages containing all the instructions that the process executes, as well as the pages containing the process's data.
+	/// </remarks>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static long WorkingSet
+	{
+		get
+		{
+			return Environment.WorkingSet;
 		}
 	}
 
@@ -204,7 +385,7 @@ public static class App
 	/// It is useful for debugging, logging, or generating support information.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(GenerateDiagnosticReport), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GenerateDiagnosticReport), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateDiagnosticReport()
 	{
 		return $@"
@@ -274,7 +455,7 @@ public static class App
 	/// </exception>
 	/// <seealso cref="SetAppState(string, object)"/>
 	[Pure]
-	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static object? GetAppState(string key)
 	{
 		return _appState.TryGetValue(key, out var value) ? value : null;
@@ -365,7 +546,7 @@ public static class App
 	/// </exception>
 	/// <seealso cref="Environment.GetCommandLineArgs"/>
 	[Pure]
-	[Information(nameof(GetCommandLineArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GetCommandLineArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static IReadOnlyDictionary<string, string> GetCommandLineArguments()
 	{
 		return Environment.GetCommandLineArgs()
@@ -450,7 +631,7 @@ public static class App
 	/// This will retrieve the localized string for the key "WelcomeMessage" in French from the specified resource manager.
 	/// </example>
 	[Pure]
-	[Information(nameof(GetLocalizedString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetLocalizedString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetLocalizedString(ResourceManager resourceManager, [DisallowNull] string key, string cultureName)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -698,7 +879,7 @@ public static class App
 	/// Thrown when <paramref name="key"/> is <c>null</c> or empty, or when <paramref name="value"/> is <c>null</c>.
 	/// </exception>
 	/// <seealso cref="GetAppState(string)"/>
-	[Information(nameof(SetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(SetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static void SetAppState([DisallowNull] string key, [DisallowNull] object value)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -708,232 +889,51 @@ public static class App
 	}
 
 	/// <summary>
-	/// Gets the application information.
+	/// Initializes the application information.
 	/// </summary>
-	/// <value>The application information, including company, configuration, copyright, description, file version, memory allocated, memory info, product, thread allocated bytes, _title, total allocated bytes, and version.</value>
-	/// <example>Example usage:
+	/// <returns>AppInfo.</returns>
+	private static AppInfo InitAppInfo()
+	{
+		var assembly = Assembly.GetEntryAssembly() ?? throw new InvalidOperationException(Resources.EntryAssemblyIsNullUnableToInitializeAppli);
+
+		return new AppInfo
+		{
+			Company = assembly.GetCustomAttributes<AssemblyCompanyAttribute>().FirstOrDefault()?.Company ?? string.Empty,
+			Configuration = assembly.GetCustomAttributes<AssemblyConfigurationAttribute>().FirstOrDefault()?.Configuration ?? string.Empty,
+			Copyright = assembly.GetCustomAttributes<AssemblyCopyrightAttribute>().FirstOrDefault()?.Copyright ?? string.Empty,
+			Description = assembly.GetCustomAttributes<AssemblyDescriptionAttribute>().FirstOrDefault()?.Description ?? string.Empty,
+			FileVersion = assembly.GetCustomAttributes<AssemblyFileVersionAttribute>().FirstOrDefault()?.Version ?? string.Empty,
+			MemoryAllocated = GC.GetTotalMemory(forceFullCollection: false),
+			MemoryInfo = GC.GetGCMemoryInfo(),
+			Product = assembly.GetCustomAttributes<AssemblyProductAttribute>().FirstOrDefault()?.Product ?? string.Empty,
+			ThreadAllocatedBytes = GC.GetAllocatedBytesForCurrentThread(),
+			Title = assembly.GetCustomAttributes<AssemblyTitleAttribute>().FirstOrDefault()?.Title ?? string.Empty,
+			TotalAllocatedBytes = GC.GetTotalAllocatedBytes(precise: false),
+			Version = assembly.GetName().Version?.ToString() ?? string.Empty,
+		};
+	}
+
+	/// <summary>
+	/// Kills the specified process by name.
+	/// </summary>
+	/// <param name="processName">The name of the process to kill.</param>
+	/// <example>
+	/// Here is how you can use the <see cref="KillProcess" /> method:
 	/// <code>
-	/// var appInfo = App.AppInfo;
-	/// Console.WriteLine($"Company: {appInfo.Company}");
-	/// </code>
-	/// This will output the company name from the application's assembly information.
-	/// </example>
-	[Pure]
-	[Information(nameof(AppInfo), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static AppInfo AppInfo
+	/// App.KillProcess("notepad");
+	/// </code></example>
+	[ExcludeFromCodeCoverage]
+	private static void KillProcess(string processName)
 	{
-		get
-		{
-			return _appInfo.Value;
-		}
-	}
+		processName = processName.ArgumentNotNullOrEmpty();
 
-	/// <summary>
-	/// Gets the current culture of the application.
-	/// </summary>
-	/// <value>The current culture.</value>
-	/// <remarks>This property provides access to the current culture used by the application. It is a wrapper around <see cref="CultureInfo.CurrentCulture" />.</remarks>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static CultureInfo CurrentCulture
-	{
-		get
-		{
-			return CultureInfo.CurrentCulture;
-		}
-	}
+		var app = Process.GetProcessesByName(processName).FirstOrDefault();
 
-	/// <summary>
-	/// Gets a unique identifier for the current managed thread.
-	/// </summary>
-	/// <value>The current thread identifier.</value>
-	/// <remarks>This property provides the unique identifier of the currently executing thread. It is useful for logging, debugging, or tracking thread-specific operations.</remarks>
-	[Pure]
-	[Information(nameof(CurrentThreadId), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static int CurrentThreadId
-	{
-		get
+		if (app is not null)
 		{
-			return _computerInfo.Value.CurrentManagedThreadId;
-		}
-	}
+			app.Kill();
 
-	/// <summary>
-	/// Retrieves the current UI culture used by the application for localization.
-	/// </summary>
-	/// <value>The current UI culture.</value>
-	/// <remarks>This property provides access to the current UI culture used by the application. It is a wrapper around <see cref="CultureInfo.CurrentUICulture" />.
-	/// The UI culture is used for string localization, date and number formatting, and other culture-specific operations in the UI.</remarks>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static CultureInfo CurrentUICulture
-	{
-		get
-		{
-			return CultureInfo.CurrentUICulture;
-		}
-	}
-
-	/// <summary>
-	/// Provides a string describing the .NET installation running the application, useful for ensuring compatibility.
-	/// </summary>
-	/// <value>The framework description.</value>
-	/// <example>Example output: ".NET 5.0.6"</example>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string FrameworkDescription
-	{
-		get
-		{
-			return RuntimeInformation.FrameworkDescription;
-		}
-	}
-
-	/// <summary>
-	/// Returns the default UI culture installed on the system.
-	/// </summary>
-	/// <value>The installed UI culture.</value>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static CultureInfo InstalledUICulture
-	{
-		get
-		{
-			return CultureInfo.InstalledUICulture;
-		}
-	}
-
-	/// <summary>
-	/// Describes the architecture (e.g., x86, x64) of the operating system hosting the application.
-	/// </summary>
-	/// <value>The operating system platform.</value>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static Architecture OSArchitecture
-	{
-		get
-		{
-			return RuntimeInformation.OSArchitecture;
-		}
-	}
-
-	/// <summary>
-	/// Gets a string that describes the operating system on which the app is running.
-	/// </summary>
-	/// <value>The operating system description.</value>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string OSDescription
-	{
-		get
-		{
-			return RuntimeInformation.OSDescription;
-		}
-	}
-
-	/// <summary>
-	/// Gets the process architecture of the currently running app.
-	/// </summary>
-	/// <value>The process architecture.</value>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static Architecture ProcessArchitecture
-	{
-		get
-		{
-			return RuntimeInformation.ProcessArchitecture;
-		}
-	}
-
-	/// <summary>
-	/// Provides the unique identifier for the current process, useful for diagnostics and logging.
-	/// </summary>
-	/// <value>The process identifier.</value>
-	/// <example>Example usage:
-	/// <code>
-	/// var processId = App.ProcessId;
-	/// Console.WriteLine(processId);
-	/// </code>
-	/// This will output the unique identifier of the current process.
-	/// </example>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static int ProcessId
-	{
-		get
-		{
-			return Environment.ProcessId;
-		}
-	}
-
-	/// <summary>
-	/// The name of the process currently running, aiding in identification and tracking.
-	/// </summary>
-	/// <value>The name of the process.</value>
-	/// <example>Example usage:
-	/// <code>
-	/// var processName = App.ProcessName;
-	/// Console.WriteLine(processName);
-	/// </code>
-	/// This will output the name of the current process.
-	/// </example>
-	[Pure]
-	[Information(nameof(ProcessName), "David McCarter", "7/26/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string ProcessName
-	{
-		get
-		{
-			return Process.GetCurrentProcess().ProcessName;
-		}
-	}
-
-	/// <summary>
-	/// Returns the path of the executable that started the currently executing process. Returns null when the path is not available.
-	/// </summary>
-	/// <value>The process path.</value>
-	[Pure]
-	[Information(nameof(GetProcessorInformation), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string ProcessPath
-	{
-		get
-		{
-			return _computerInfo.Value.CurrentWorkingDirectory;
-		}
-	}
-
-	/// <summary>
-	/// Gets the stack trace for the current thread.
-	/// </summary>
-	/// <value>A string that describes the stack trace for the current thread.</value>
-	/// <remarks>
-	/// This property provides a string representation of the stack trace, which can be useful for debugging purposes.
-	/// It includes the sequence of method calls that led to the current point of execution.
-	/// </remarks>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string StackTrace
-	{
-		get
-		{
-			return Environment.StackTrace;
-		}
-	}
-
-	/// <summary>
-	/// Gets the working set of the current process.
-	/// </summary>
-	/// <value>The amount of physical memory mapped to the process context.</value>
-	/// <remarks>
-	/// This property provides the size of the working set, which is the set of memory pages currently visible to the process in physical RAM.
-	/// It includes both shared and private data, such as the pages containing all the instructions that the process executes, as well as the pages containing the process's data.
-	/// </remarks>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static long WorkingSet
-	{
-		get
-		{
-			return Environment.WorkingSet;
+			_ = app.WaitForExit(milliseconds: 6000);
 		}
 	}
 }

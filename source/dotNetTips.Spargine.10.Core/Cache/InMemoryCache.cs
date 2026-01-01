@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-01-2026
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -94,7 +94,7 @@ namespace DotNetTips.Spargine.Core.Cache;
 /// <seealso cref="GetOrCreateAsync{T}(string, Func{CancellationToken, Task{T}}, TimeSpan?, CancellationToken)"/>
 /// <seealso cref="GetCacheStatistics"/>
 /// <seealso cref="CacheStatistics"/>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineInMemoryCache")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineInMemoryCache")]
 public sealed class InMemoryCache
 {
 
@@ -178,7 +178,7 @@ public sealed class InMemoryCache
 	/// When a size limit is set, you must specify the size of each cache entry using AddCacheItemWithSize.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateCacheWithLimit), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(CreateCacheWithLimit), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static MemoryCache CreateCacheWithLimit(long? sizeLimit = null)
 	{
 		var options = new MemoryCacheOptions
@@ -305,7 +305,7 @@ public sealed class InMemoryCache
 	/// <param name="items">Dictionary of key-value pairs to add to the cache.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemBatch<T>([DisallowNull] IDictionary<string, T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -327,7 +327,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithCallback), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithCallback), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithCallback<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, [DisallowNull] PostEvictionDelegate postEvictionCallback)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -356,7 +356,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithChangeToken), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithChangeToken), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithChangeToken<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, [DisallowNull] IChangeToken changeToken)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -381,7 +381,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithCombinedExpiration), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithCombinedExpiration), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithCombinedExpiration<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan slidingExpiration, TimeSpan absoluteExpiration)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -409,7 +409,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithDependency), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithDependency), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithDependency<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, [DisallowNull] CancellationTokenSource dependencyTokenSource)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -434,7 +434,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithPriority), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithPriority), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithPriority<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, CacheItemPriority priority)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -458,7 +458,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if required parameters are null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithSize), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithSize), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithSize<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, long size)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -481,7 +481,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(AddCacheItemWithSlidingExpiration), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(AddCacheItemWithSlidingExpiration), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void AddCacheItemWithSlidingExpiration<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan slidingExpiration)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -509,7 +509,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="percentage"/> is not between 0.0 and 1.0.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Compact), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(Compact), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void Compact(double percentage)
 	{
 		if (percentage is < 0.0 or > 1.0)
@@ -546,7 +546,7 @@ public sealed class InMemoryCache
 	/// Store the dependency key and later call InvalidateDependentCacheItems to remove all linked entries.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateCacheDependency), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(CreateCacheDependency), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public CancellationTokenSource CreateCacheDependency([DisallowNull] string dependencyKey)
 	{
 		dependencyKey = dependencyKey.ArgumentNotNullOrEmpty();
@@ -626,7 +626,7 @@ public sealed class InMemoryCache
 	/// Only items that exist in the cache are included in the returned dictionary.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(GetCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public IDictionary<string, T> GetCacheItemBatch<T>([DisallowNull] IEnumerable<string> keys)
 	{
 		keys = keys.ArgumentNotNull();
@@ -653,7 +653,7 @@ public sealed class InMemoryCache
 	/// useful for monitoring and optimization. Use this for diagnostics and performance tuning.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(GetCacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public CacheStatistics GetCacheStatistics()
 	{
 		return new CacheStatistics
@@ -681,7 +681,7 @@ public sealed class InMemoryCache
 	/// <remarks>
 	/// If multiple callers attempt to create the same cache entry concurrently, only one factory delegate will execute and the result will be shared.
 	/// </remarks>
-	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public async Task<T> GetOrCreateAsync<T>([DisallowNull] string key, [DisallowNull] Func<CancellationToken, Task<T>> factory, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -741,7 +741,7 @@ public sealed class InMemoryCache
 	/// <remarks>
 	/// If multiple callers attempt to create the same cache entry concurrently, only one factory delegate will execute and the result will be shared.
 	/// </remarks>
-	[Information(nameof(GetOrCreateAsync), "David McCarter", "8/10/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(GetOrCreateAsync), "David McCarter", "8/10/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public Task<T> GetOrCreateAsync<T>([DisallowNull] string key, [DisallowNull] Func<CancellationToken, Task<T>> factory, DateTimeOffset absoluteExpiration, CancellationToken cancellationToken = default)
 	{
 		// Convert to relative window and delegate to the main overload
@@ -761,7 +761,7 @@ public sealed class InMemoryCache
 	/// causing all cache entries linked to that dependency to be automatically removed.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(InvalidateDependentCacheItems), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(InvalidateDependentCacheItems), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public bool InvalidateDependentCacheItems([DisallowNull] string dependencyKey)
 	{
 		dependencyKey = dependencyKey.ArgumentNotNullOrEmpty();
@@ -791,7 +791,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public bool PeekCacheItem<T>([DisallowNull] string key, out T? value)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -814,7 +814,7 @@ public sealed class InMemoryCache
 	/// <returns><c>true</c> if the item was found and refreshed; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(RefreshCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(RefreshCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public bool RefreshCacheItem([DisallowNull] string key, TimeSpan newTimeout)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -856,7 +856,7 @@ public sealed class InMemoryCache
 	/// <returns>The number of items successfully removed.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keys"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(RemoveCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(RemoveCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public int RemoveCacheItemBatch([DisallowNull] IEnumerable<string> keys)
 	{
 		keys = keys.ArgumentNotNull();
@@ -881,7 +881,7 @@ public sealed class InMemoryCache
 	/// This method resets the hit and miss counters, useful for monitoring cache performance over specific time periods.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ResetStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(ResetStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public void ResetStatistics()
 	{
 		_ = Interlocked.Exchange(ref this._cacheHits, 0);
@@ -903,7 +903,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryGetValue<T>([DisallowNull] string key, out T? value)
 	{
 		key = key.ArgumentNotNullOrEmpty();

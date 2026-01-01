@@ -29,15 +29,33 @@ using DotNetTips.Spargine.Core.Properties;
 namespace DotNetTips.Spargine.Core.Collections;
 
 /// <summary>
-/// Initializes a new instance of the <see cref="CollectionRandomizer{T}"/> class.
+/// Provides functionality to shuffle and iterate through a collection with optional repeating.
 /// </summary>
-/// <param name="collection">The collection to randomize. This collection must not be null.</param>
-/// <param name="repeat">if set to <c>true</c>, the collection will repeat over and over, each time reshuffled. Be cautious of endless loops, which could crash your application.</param>
+/// <typeparam name="T">The type of elements in the collection.</typeparam>
+/// <param name="collection">The collection to randomize. This collection must not be null or empty.</param>
+/// <param name="repeat">If set to <c>true</c>, the collection will repeat over and over, each time reshuffled. Be cautious of endless loops, which could crash your application.</param>
 /// <remarks>
 /// The <see cref="CollectionRandomizer{T}"/> is designed to shuffle a collection and allow retrieving items sequentially with the option to repeat and reshuffle.
+/// Items are retrieved using the <see cref="GetNext"/> method. The collection is lazily initialized on the first call to <see cref="GetNext"/> or when using enumeration.
+/// Thread-safety is ensured through internal locking mechanisms.
 /// </remarks>
+/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
+/// <exception cref="InvalidValueException{ImmutableArray}">Thrown during initialization if the collection is empty.</exception>
+/// <example>
+/// <code>
+/// var numbers = Enumerable.Range(1, 10);
+/// var randomizer = new CollectionRandomizer&lt;int&gt;(numbers);
+/// 
+/// // Get items in random order
+/// while (randomizer.HasRemainingItems)
+/// {
+///     var item = randomizer.GetNext();
+///     Console.WriteLine(item);
+/// }
+/// </code>
+/// </example>
 [DebuggerDisplay("Count = {Count}, CurrentIndex = {CurrentIndex}, HasRemainingItems = {HasRemainingItems}")]
-[Information(nameof(CollectionRandomizer<>), author: "David McCarter and Kristine Tran", createdOn: "8/26/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineCollectionRandomizer")]
+[Information(nameof(CollectionRandomizer<>), author: "David McCarter and Kristine Tran", createdOn: "8/26/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineCollectionRandomizer")]
 public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> collection, bool repeat = false) : IEnumerable<T>
 {
 
@@ -74,7 +92,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// <summary>
 	/// Gets the total count of items in the collection.
 	/// </summary>
-	[Information(nameof(Count), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Count), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public int Count
 	{
 		[Pure]
@@ -95,7 +113,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// The index is zero-based and indicates the position of the current item in the randomized collection.
 	/// Returns -1 if no items have been retrieved yet.
 	/// </remarks>
-	[Information(nameof(CurrentIndex), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(CurrentIndex), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public int CurrentIndex
 	{
 		[Pure]
@@ -140,7 +158,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// Returns 0.0 if the collection has not been initialized or is empty.
 	/// Returns 100.0 when all items have been retrieved (and repeat is false).
 	/// </remarks>
-	[Information(nameof(PercentageComplete), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(PercentageComplete), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public double PercentageComplete
 	{
 		[Pure]
@@ -168,7 +186,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// When used with repeat mode enabled, this creates an infinite sequence. 
 	/// Exercise caution with operations that materialize the entire sequence (like ToList() or ToArray()).
 	/// </remarks>
-	[Information(nameof(GetEnumerator), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetEnumerator), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public IEnumerator<T> GetEnumerator()
 	{
 		while (true)
@@ -226,7 +244,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	[return: NotNull]
 	[DebuggerStepThrough]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(PeekNext), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(PeekNext), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public T PeekNext()
 	{
 		lock (this._threadLock)
@@ -250,7 +268,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// </summary>
 	[DebuggerStepThrough]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Reset), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Reset), "David McCarter", "6/25/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void Reset()
 	{
 		lock (this._threadLock)
@@ -267,7 +285,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// <remarks>
 	/// If the collection is set to repeat and is exhausted, it will be reshuffled before skipping.
 	/// </remarks>
-	[Information(nameof(SkipNext), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(SkipNext), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public bool SkipNext()
 	{
 		lock (this._threadLock)
@@ -297,7 +315,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// not just the remaining items.
 	/// </remarks>
 	[return: NotNull]
-	[Information(nameof(ToArray), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ToArray), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public T[] ToArray()
 	{
 		lock (this._threadLock)

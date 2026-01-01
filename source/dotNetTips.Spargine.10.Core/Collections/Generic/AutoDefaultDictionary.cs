@@ -4,7 +4,7 @@
 // Created          : 01-03-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-01-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionary.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 [Serializable]
-[Information("Original Code by: Simon Painter. Improvement suggested by: James Curran.", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineAutoDefaultDictionary")]
+[Information("Original Code by: Simon Painter. Improvement suggested by: James Curran.", Status = Status.Available, Documentation = "https://bit.ly/SpargineAutoDefaultDictionary")]
 public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializable, IReadOnlyDictionary<TKey, TValue>
 	where TKey : notnull
 	where TValue : notnull
@@ -173,7 +173,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="capacity">The initial number of elements that the dictionary can contain.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="defaultValue"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than 0.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public AutoDefaultDictionary(TValue defaultValue, int capacity) : base(capacity)
 	{
 		this._defaultValue = defaultValue ?? throw new ArgumentNullException(nameof(defaultValue));
@@ -187,11 +187,34 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="capacity">The initial number of elements that the dictionary can contain.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="onMissingKey"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than 0.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public AutoDefaultDictionary(in Func<TKey, TValue> onMissingKey, int capacity) : base(capacity)
 	{
 		this._onMissingKey = onMissingKey ?? throw new ArgumentNullException(nameof(onMissingKey));
 		this._defaultValue = default!;
+	}
+
+	/// <summary>
+	/// Gets the default value returned when a key is not found in the dictionary.
+	/// Returns <c>default(TValue)</c> if a factory function is configured instead of a static default value.
+	/// </summary>
+	/// <value>The default value for missing keys.</value>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public TValue DefaultValue
+	{
+		get => this._defaultValue;
+	}
+
+	/// <summary>
+	/// Gets the factory function used to generate values for missing keys, or <c>null</c> if a static default value is used.
+	/// </summary>
+	/// <value>The factory function, or <c>null</c> if using a static default value.</value>
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public Func<TKey, TValue>? OnMissingKeyFactory
+	{
+		get => this._onMissingKey;
 	}
 
 	/// <summary>
@@ -230,7 +253,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="updateValueFactory">The function to generate a new value for an existing key.</param>
 	/// <returns>The new value for the key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public TValue AddOrUpdate([DisallowNull] TKey key, [DisallowNull] TValue addValue, [DisallowNull] Func<TKey, TValue, TValue> updateValueFactory)
 	{
 		key = key.ArgumentNotNull();
@@ -252,7 +275,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <summary>
 	/// Removes all keys and values from the dictionary while retaining the default value behavior.
 	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public new void Clear()
 	{
 		base.Clear();
@@ -265,7 +288,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="comparer">The comparer to use when comparing values.</param>
 	/// <returns><c>true</c> if the dictionary contains an element with the specified value; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool ContainsValue([DisallowNull] TValue value, [AllowNull] IEqualityComparer<TValue>? comparer = null)
 	{
 		value = value.ArgumentNotNull();
@@ -289,7 +312,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <returns>The value associated with the specified key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> or <paramref name="value"/> is null.</exception>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public TValue GetOrAdd([DisallowNull] TKey key, [DisallowNull] TValue value)
 	{
 		key = key.ArgumentNotNull();
@@ -313,7 +336,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <returns>The value associated with the specified key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> or <paramref name="valueFactory"/> is null.</exception>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public TValue GetOrAdd([DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFactory)
 	{
 		key = key.ArgumentNotNull();
@@ -337,7 +360,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public TValue GetValueOrDefault([DisallowNull] TKey key)
 	{
 		key = key.ArgumentNotNull();
@@ -356,7 +379,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <returns>An <see cref="ImmutableDictionary{TKey, TValue}"/> containing all current key-value pairs.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public ImmutableDictionary<TKey, TValue> ToImmutableDictionary()
 	{
 		return ImmutableDictionary.CreateRange(this);
@@ -367,7 +390,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// </summary>
 	/// <returns>A <see cref="ReadOnlyDictionary{TKey, TValue}"/> that wraps this dictionary.</returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary()
 	{
 		return new ReadOnlyDictionary<TKey, TValue>(this);
@@ -380,7 +403,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="value">The value of the element to add.</param>
 	/// <returns><c>true</c> if the key/value pair was added; <c>false</c> if the key already exists.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> or <paramref name="value"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public new bool TryAdd([DisallowNull] TKey key, [DisallowNull] TValue value)
 	{
 		key = key.ArgumentNotNull();
@@ -403,7 +426,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="comparisonValue">The value to compare with the existing value.</param>
 	/// <returns><c>true</c> if the value was updated; <c>false</c> if the key doesn't exist or the comparison failed.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/>, <paramref name="newValue"/>, or <paramref name="comparisonValue"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool TryUpdate([DisallowNull] TKey key, [DisallowNull] TValue newValue, [DisallowNull] TValue comparisonValue)
 	{
 		key = key.ArgumentNotNull();
@@ -417,28 +440,5 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 		}
 
 		return false;
-	}
-
-	/// <summary>
-	/// Gets the default value returned when a key is not found in the dictionary.
-	/// Returns <c>default(TValue)</c> if a factory function is configured instead of a static default value.
-	/// </summary>
-	/// <value>The default value for missing keys.</value>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public TValue DefaultValue
-	{
-		get => this._defaultValue;
-	}
-
-	/// <summary>
-	/// Gets the factory function used to generate values for missing keys, or <c>null</c> if a static default value is used.
-	/// </summary>
-	/// <value>The factory function, or <c>null</c> if using a static default value.</value>
-	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public Func<TKey, TValue>? OnMissingKeyFactory
-	{
-		get => this._onMissingKey;
 	}
 }
