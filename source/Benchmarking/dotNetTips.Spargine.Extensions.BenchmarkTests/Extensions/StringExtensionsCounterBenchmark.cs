@@ -31,7 +31,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 {
 	private static readonly char[] _charList = ['a', 'z'];
-	private string _base64String;
 	private string _brotilString;
 	private string _crlfCompareString;
 	private string _crlfString;
@@ -42,7 +41,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void CalculateByteArraySize()
 	{
-		var result = this._base64String.CalculateByteArraySize();
+		var result = this.Base64String.CalculateByteArraySize();
 
 		this.Consume(result);
 	}
@@ -109,7 +108,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void FromBase64()
 	{
-		var result = this._base64String.FromBase64();
+		var result = this.Base64String.FromBase64();
 
 		this.Consume(result);
 	}
@@ -184,7 +183,6 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this._crlfCompareString = this._crlfString;
 		this._brotilString = this._crlfString.ToBrotliStringAsync().Result;
 		this._gzipString = this._crlfString.ToGZipStringAsync().GetAwaiter().GetResult();
-		this._base64String = this._crlfString.ToBase64();
 		this._wordCollection = [.. RandomData.GenerateWords(this.Count)];
 	}
 
@@ -290,7 +288,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void ToBase64ByteSpan()
 	{
-		var result = this._crlfString.ToBase64Bytes();
+		var result = this.Base64String.ToBase64Bytes();
 		this.Consume(result.Length);
 	}
 

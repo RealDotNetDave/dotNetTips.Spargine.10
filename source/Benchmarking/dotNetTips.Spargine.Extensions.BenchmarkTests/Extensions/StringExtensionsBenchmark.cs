@@ -33,11 +33,9 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Strings)]
 public class StringExtensionsBenchmark : Benchmark
 {
-	private const string COMMA = ",";
 
 	public const string MacAddress = "00:1A:C2:7B:00:47";
-
-	private string _compressedString;
+	private const string COMMA = ",";
 	private readonly string _creditCardNumber = RandomData.GenerateNumber(12);
 	private readonly string _currencyCode = "USD";
 	private readonly string _delimitedString = RandomData.GenerateWords(100).ToDelimitedString();
@@ -52,8 +50,9 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly char _testCharacter = RandomData.GenerateCharacter();
 
 	private readonly string _url = "https://api.example.com:8443/v1/users/123?include=profile,settings&format=json#section1";
-	private string _zlibString;
 
+	private string _compressedString;
+	private string _zlibString;
 
 	[Benchmark(Description = nameof(StringExtensions.CombineToString))]
 	[BenchmarkCategory(Categories.Strings)]
@@ -569,7 +568,7 @@ public class StringExtensionsBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void ToBase64ToBase64ByteSpan()
 	{
-		var result = this.LongTestString.ToBase64Bytes();
+		var result = this.Base64String.ToBase64Bytes();
 
 		this.Consume(result);
 	}
