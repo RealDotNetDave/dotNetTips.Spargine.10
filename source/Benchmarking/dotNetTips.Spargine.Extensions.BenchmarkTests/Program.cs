@@ -56,13 +56,13 @@ internal sealed class Program
 			//	typeof(ArrayExtensionsCollectionBenchmark)
 			//	);
 
-			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+			var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
 			//_ = BenchmarkHelper.Run<ArrayExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkHelper.Run<DictionaryExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkHelper.Run<ListExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
-			_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
+			//_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
+			//_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
 
 			ConsoleLogger.Default.WriteLine(CompleteMessage);
 			BenchmarkHelper.PlaySuccessBeep();
