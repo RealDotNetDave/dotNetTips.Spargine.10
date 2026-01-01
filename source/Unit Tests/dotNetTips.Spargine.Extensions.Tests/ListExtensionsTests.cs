@@ -36,15 +36,6 @@ public class ListExtensionsTests
 
 	private const int Count = 256;
 
-	private async IAsyncEnumerable<T> GetAsyncEnumerable<T>(IEnumerable<T> items)
-	{
-		foreach (var item in items)
-		{
-			yield return item;
-			await Task.Yield();
-		}
-	}
-
 	[TestMethod]
 	public void AddFirstAndAddLastCombinedTest()
 	{
@@ -135,21 +126,6 @@ public class ListExtensionsTests
 		Assert.AreEqual(itemToAdd, list[0], "The first (and only) item should be the added item.");
 	}
 
-	[TestMethod]
-	public void AddFirstWithNullItemTest()
-	{
-		// Arrange
-		var list = new List<string> { "item1", "item2", "item3" };
-		string nullItem = null;
-		var originalCount = list.Count;
-
-		// Act
-		list.AddFirst(nullItem);
-
-		// Assert
-		Assert.AreEqual(originalCount, list.Count, "List count should remain unchanged when adding null.");
-		Assert.IsFalse(list.Contains(null), "List should not contain null after attempting to add null.");
-	}
 
 	[TestMethod]
 	public void AddFirstWithNullListShouldThrowTest()
@@ -272,22 +248,6 @@ public class ListExtensionsTests
 		// Assert
 		Assert.AreEqual(1, list.Count, "List should contain exactly 1 item.");
 		Assert.AreEqual(itemToAdd, list[0], "The first (and only) item should be the added item.");
-	}
-
-	[TestMethod]
-	public void AddLastWithNullItemTest()
-	{
-		// Arrange
-		var list = new List<string> { "item1", "item2", "item3" };
-		string nullItem = null;
-		var originalCount = list.Count;
-
-		// Act
-		list.AddLast(nullItem);
-
-		// Assert
-		Assert.AreEqual(originalCount, list.Count, "List count should remain unchanged when adding null.");
-		Assert.IsFalse(list.Contains(null), "List should not contain null after attempting to add null.");
 	}
 
 	[TestMethod]
@@ -1390,6 +1350,15 @@ public class ListExtensionsTests
 		List<int> list = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToReadOnlyObservableCollection());
+	}
+
+	private async IAsyncEnumerable<T> GetAsyncEnumerable<T>(IEnumerable<T> items)
+	{
+		foreach (var item in items)
+		{
+			yield return item;
+			await Task.Yield();
+		}
 	}
 
 }

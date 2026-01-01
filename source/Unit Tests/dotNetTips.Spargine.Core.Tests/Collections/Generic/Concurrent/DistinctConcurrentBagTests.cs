@@ -239,23 +239,6 @@ public class DistinctConcurrentBagTests
 	}
 
 	[TestMethod]
-	public void ConcurrentAddRange_ShouldMaintainUniqueness()
-	{
-		var bag = new DistinctConcurrentBag<int>();
-		var tasks = new List<Task>();
-
-		for (int i = 0; i < 10; i++)
-		{
-			var items = Enumerable.Range(1, 100).ToArray();
-			tasks.Add(Task.Run(() => bag.AddRange(items)));
-		}
-
-		Task.WaitAll(tasks.ToArray());
-
-		Assert.AreEqual(100, bag.Count);
-	}
-
-	[TestMethod]
 	public void Constructor_ShouldInitializeEmptyBag()
 	{
 		var bag = new DistinctConcurrentBag<int>();

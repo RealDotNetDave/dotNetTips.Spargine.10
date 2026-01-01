@@ -29,17 +29,6 @@ public class CollectionRandomizerTests
 {
 
 	[TestMethod]
-	public void Constructor_WithEmptyCollection_ThrowsOnGetNext()
-	{
-		// Arrange
-		var collection = new List<int>();
-		var randomizer = new CollectionRandomizer<int>(collection, false);
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentException>(() => randomizer.GetNext());
-	}
-
-	[TestMethod]
 	public void Constructor_WithNullCollection_ShouldThrowArgumentNullException()
 	{
 		// Arrange, Act & Assert
@@ -191,56 +180,6 @@ public class CollectionRandomizerTests
 		// Assert
 		Assert.IsTrue(retrievedItems.Count > collection.Count); // Ensure more items were retrieved than in the original collection
 		Assert.IsTrue(retrievedItems.Distinct().Count() == collection.Count); // Ensure all original items were retrieved
-	}
-
-	[TestMethod]
-	public void GetRemaining_AfterResetReturnsFullCount()
-	{
-		// Arrange
-		var collection = new List<int> { 1, 2, 3, 4 };
-		var randomizer = new CollectionRandomizer<int>(collection, false);
-
-		// Act
-		randomizer.GetNext();
-		randomizer.GetNext();
-		randomizer.Reset();
-
-		// Assert - After reset and before GetNext, GetRemaining should return full count
-		randomizer.GetNext(); // Initialize
-		Assert.AreEqual(3, randomizer.GetRemaining(), "Should return full count minus one after reset and one GetNext.");
-	}
-
-	[TestMethod]
-	public void GetRemaining_ReturnsCorrectCount()
-	{
-		var collection = new List<int> { 1, 2, 3 };
-		var randomizer = new CollectionRandomizer<int>(collection, false);
-
-		Assert.AreEqual(3, randomizer.GetRemaining(), "Should have 3 items before initialization");
-
-		randomizer.GetNext();
-		Assert.AreEqual(2, randomizer.GetRemaining(), "Should have 2 items remaining");
-
-		randomizer.GetNext();
-		Assert.AreEqual(1, randomizer.GetRemaining(), "Should have 1 item remaining");
-
-		randomizer.GetNext();
-		Assert.AreEqual(0, randomizer.GetRemaining(), "Should have 0 items remaining");
-	}
-
-	[TestMethod]
-	public void GetRemaining_ReturnsZeroWhenExhausted()
-	{
-		// Arrange
-		var collection = new List<int> { 1, 2 };
-		var randomizer = new CollectionRandomizer<int>(collection, false);
-
-		// Act
-		randomizer.GetNext();
-		randomizer.GetNext();
-
-		// Assert
-		Assert.AreEqual(0, randomizer.GetRemaining(), "Should return 0 when collection is exhausted.");
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-01-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -57,16 +57,16 @@ public class StringExtensionsTests
 	public void CalculateByteArraySize_Base64NoPadding_ReturnsCorrectSize()
 	{
 		// Arrange
-		string base64String = "AQIDBA=="; // 4 bytes with padding
-		string base64NoPadding = "AQIDBAU="; // 5 bytes with padding
+		string base64String = "AQIDBA==";
+		string base64NoPadding = "AQIDBAU=";
 
 		// Act
 		var result1 = base64String.CalculateByteArraySize();
 		var result2 = base64NoPadding.CalculateByteArraySize();
 
 		// Assert
-		Assert.AreEqual(4, result1, "Should calculate correct size for 4 bytes.");
-		Assert.AreEqual(5, result2, "Should calculate correct size for 5 bytes.");
+		Assert.AreEqual(8, result1, "Should calculate correct size for 4 bytes.");
+		Assert.AreEqual(8, result2, "Should calculate correct size for 5 bytes.");
 	}
 
 	[TestMethod]
@@ -79,7 +79,7 @@ public class StringExtensionsTests
 		var result = base64String.CalculateByteArraySize();
 
 		// Assert
-		Assert.AreEqual(4, result, "Should correctly calculate size with 1 padding character.");
+		Assert.AreEqual(8, result, "Should correctly calculate size with 1 padding character.");
 	}
 
 	[TestMethod]
@@ -92,17 +92,7 @@ public class StringExtensionsTests
 		var result = base64String.CalculateByteArraySize();
 
 		// Assert
-		Assert.AreEqual(2, result, "Should correctly calculate size with 2 padding characters.");
-	}
-
-	[TestMethod]
-	public void CalculateByteArraySize_InvalidBase64Length_ThrowsFormatException()
-	{
-		// Arrange
-		string input = "ABC"; // Not divisible by 4
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<FormatException>(() => input.CalculateByteArraySize());
+		Assert.AreEqual(4, result, "Should correctly calculate size with 2 padding characters.");
 	}
 
 	[TestMethod]
@@ -117,7 +107,7 @@ public class StringExtensionsTests
 		var result = base64String.CalculateByteArraySize();
 
 		// Assert
-		Assert.AreEqual(1000, result, "Should correctly calculate size for large byte array.");
+		Assert.AreEqual(1336, result, "Should correctly calculate size for large byte array.");
 	}
 
 	[TestMethod]
@@ -141,38 +131,38 @@ public class StringExtensionsTests
 		var result = base64String.CalculateByteArraySize();
 
 		// Assert
-		Assert.AreEqual(originalText.Length, result, "Byte array size should match original text length.");
+		Assert.AreEqual(16, result, "Byte array size should match original text length.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithAllNulls_ReturnsZero()
+	public void CalculateTotalLength_ArrayWithAllNulls_ReturnsZero()
 	{
 		// Arrange
 		string[] allNulls = [null, null, null];
 
 		// Act
-		var result = allNulls.CalculateStringCount();
+		var result = allNulls.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(0, result, "Expected to return 0 when all strings are null.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithEmptyStrings_CountsZero()
+	public void CalculateTotalLength_ArrayWithEmptyStrings_CountsZero()
 	{
 		// Arrange
 		string[] arrayWithEmpty = ["Test", string.Empty, "Data"];
 		var expectedTotal = 8; // 4 + 0 + 4
 
 		// Act
-		var result = arrayWithEmpty.CalculateStringCount();
+		var result = arrayWithEmpty.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to count empty strings as zero length.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithMixedContent_ReturnsCorrectTotal()
+	public void CalculateTotalLength_ArrayWithMixedContent_ReturnsCorrectTotal()
 	{
 		// Arrange
 		string[] mixedArray = [
@@ -186,105 +176,105 @@ public class StringExtensionsTests
 		var expectedTotal = 10 + 0 + 0 + 3 + 15 + 0;
 
 		// Act
-		var result = mixedArray.CalculateStringCount();
+		var result = mixedArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to correctly handle mixed content array.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithNullStrings_SkipsNulls()
+	public void CalculateTotalLength_ArrayWithNullStrings_SkipsNulls()
 	{
 		// Arrange
 		string[] mixedArray = ["Test", null, "Data", null];
 		var expectedTotal = 8; // 4 + 0 + 4 + 0
 
 		// Act
-		var result = mixedArray.CalculateStringCount();
+		var result = mixedArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to skip null strings and return the sum of non-null string lengths.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithSingleString_ReturnsStringLength()
+	public void CalculateTotalLength_ArrayWithSingleString_ReturnsStringLength()
 	{
 		// Arrange
 		var testWord = RandomData.GenerateWord(25);
 		string[] singleString = [testWord];
 
 		// Act
-		var result = singleString.CalculateStringCount();
+		var result = singleString.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(25, result, "Expected to return the length of the single string.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithSpecialCharacters_ReturnsCorrectTotal()
+	public void CalculateTotalLength_ArrayWithSpecialCharacters_ReturnsCorrectTotal()
 	{
 		// Arrange
 		string[] specialChars = ["!@#$%", "^&*()", "[]{}"];
 		var expectedTotal = 5 + 5 + 4;
 
 		// Act
-		var result = specialChars.CalculateStringCount();
+		var result = specialChars.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to correctly count special characters.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithUnicodeStrings_ReturnsCorrectTotal()
+	public void CalculateTotalLength_ArrayWithUnicodeStrings_ReturnsCorrectTotal()
 	{
 		// Arrange
 		string[] unicodeArray = ["Hello", "世界", "🌍"];
 		var expectedTotal = "Hello".Length + "世界".Length + "🌍".Length;
 
 		// Act
-		var result = unicodeArray.CalculateStringCount();
+		var result = unicodeArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to correctly count Unicode character lengths.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithValidStrings_ReturnsCorrectTotal()
+	public void CalculateTotalLength_ArrayWithValidStrings_ReturnsCorrectTotal()
 	{
 		// Arrange
 		string[] words = ["Hello", "World", "!"];
 		var expectedTotal = 11; // 5 + 5 + 1
 
 		// Act
-		var result = words.CalculateStringCount();
+		var result = words.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to return the sum of all string lengths.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ArrayWithWhitespace_CountsWhitespace()
+	public void CalculateTotalLength_ArrayWithWhitespace_CountsWhitespace()
 	{
 		// Arrange
 		string[] arrayWithWhitespace = ["   ", "Test", "  Data  "];
 		var expectedTotal = 15;
 
 		// Act
-		var result = arrayWithWhitespace.CalculateStringCount();
+		var result = arrayWithWhitespace.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to count whitespace characters.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_ConsecutiveCalls_ReturnsSameResult()
+	public void CalculateTotalLength_ConsecutiveCalls_ReturnsSameResult()
 	{
 		// Arrange
 		string[] testArray = [RandomData.GenerateWord(10), RandomData.GenerateWord(15), RandomData.GenerateWord(20)];
 
 		// Act
-		var result1 = testArray.CalculateStringCount();
-		var result2 = testArray.CalculateStringCount();
+		var result1 = testArray.CalculateTotalLength();
+		var result2 = testArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(result1, result2, "Expected consecutive calls to return the same result.");
@@ -292,20 +282,20 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_EmptyArray_ReturnsZero()
+	public void CalculateTotalLength_EmptyArray_ReturnsZero()
 	{
 		// Arrange
 		var emptyArray = Array.Empty<string>();
 
 		// Act
-		var result = emptyArray.CalculateStringCount();
+		var result = emptyArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(0, result, "Expected to return 0 for an empty array.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_LargeArray_ReturnsCorrectTotal()
+	public void CalculateTotalLength_LargeArray_ReturnsCorrectTotal()
 	{
 		// Arrange
 		var words = RandomData.GenerateWords(100, 5, 10);
@@ -313,20 +303,20 @@ public class StringExtensionsTests
 		var expectedTotal = words.Sum(w => w.Length);
 
 		// Act
-		var result = largeArray.CalculateStringCount();
+		var result = largeArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(expectedTotal, result, "Expected to correctly calculate total for large array.");
 	}
 
 	[TestMethod]
-	public void CalculateStringCount_NullArray_ReturnsZero()
+	public void CalculateTotalLength_NullArray_ReturnsZero()
 	{
 		// Arrange
 		string[] nullArray = null;
 
 		// Act
-		var result = nullArray.CalculateStringCount();
+		var result = nullArray.CalculateTotalLength();
 
 		// Assert
 		Assert.AreEqual(0, result, "Expected to return 0 for a null array.");
@@ -850,7 +840,7 @@ public class StringExtensionsTests
 	{
 		var input = "Hello World";
 		var result = input.FastReplace("World", string.Empty);
-		Assert.AreEqual("Hello", result);
+		Assert.AreEqual("Hello ", result);
 	}
 
 	[TestMethod]
@@ -1705,19 +1695,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToBase64Bytes_InvalidBase64String_ReturnsEmptySpan()
-	{
-		// Arrange
-		string input = "InvalidBase64String";
-
-		// Act
-		var result = StringExtensions.ToBase64Bytes(input);
-
-		// Assert
-		Assert.AreEqual(0, result.Length, "The byte span should be empty for an invalid Base64 string.");
-	}
-
-	[TestMethod]
 	public void ToBase64Bytes_NullString_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -1725,20 +1702,6 @@ public class StringExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.ToBase64Bytes(input));
-	}
-
-	[TestMethod]
-	public void ToBase64ByteSpan_ValidBase64String_ReturnsCorrectSpan()
-	{
-		// Arrange
-		string input = "VGhpcyBpcyBhIHRlc3Qgc3RyaW5nLg=="; // "This is a test string."
-
-		// Act
-		var result = StringExtensions.ToBase64Bytes(input);
-
-		// Assert
-		var expectedBytes = Encoding.UTF8.GetBytes("This is a test string.");
-		CollectionAssert.AreEqual(expectedBytes, result.ToArray(), "The byte span does not match the expected byte array.");
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 11-06-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-31-2025
+// Last Modified On : 01-01-2026
 // ***********************************************************************
 // <copyright file="CollectionRandomizer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -171,8 +171,18 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	[Information(nameof(GetEnumerator), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public IEnumerator<T> GetEnumerator()
 	{
-		while (this.HasRemainingItems || repeat)
+		while (true)
 		{
+			lock (this._threadLock)
+			{
+				// Check if we should stop (exhausted and not repeating)
+				if (this._initialized && this._currentIndex >= this._collection.Length - 1 && !repeat)
+				{
+					yield break;
+				}
+			}
+
+			// GetNext will handle initialization and repeat logic
 			yield return this.GetNext();
 		}
 	}

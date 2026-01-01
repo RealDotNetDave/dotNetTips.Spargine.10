@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2025.10.12.29
+# DotNetTips.Spargine.10.Extensions - 2026.10.1.1
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -1673,7 +1673,7 @@
 ### T TryGetValue(T collection, T key, T valueFunction)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1955,7 +1955,7 @@
 ### System.Int32 IndexOf(T collection, T item)
 
 * **Status:** Updated
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2086,7 +2086,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/2/2023
@@ -2275,7 +2275,7 @@
 ### T Upsert(T collection, T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2533,7 +2533,7 @@
 ### System.Int32 IndexOf(T item)
 
 * **Status:** Updated
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2652,7 +2652,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/2/2023
@@ -2841,7 +2841,7 @@
 ### T Upsert(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3301,7 +3301,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2024
@@ -3312,8 +3312,8 @@
 ### System.Void AddRangeIfNotExists(T list, T items, T comparer)
 
 * **Status:** New
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/22/2026
@@ -3361,7 +3361,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/12/2022
@@ -3397,7 +3397,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/17/2022
@@ -3480,7 +3480,7 @@
 ### System.Boolean RemoveFirst(T list, T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3492,7 +3492,7 @@
 ### System.Boolean RemoveLast(T list, T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3686,7 +3686,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2024
@@ -3697,8 +3697,8 @@
 ### System.Void AddRangeIfNotExists(T items, T comparer)
 
 * **Status:** New
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/22/2026
@@ -3746,7 +3746,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/12/2022
@@ -3782,7 +3782,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/17/2022
@@ -3865,7 +3865,7 @@
 ### System.Boolean RemoveFirst(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3877,7 +3877,7 @@
 ### System.Boolean RemoveLast(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -5593,9 +5593,6 @@
 * **Modified On:** 
 
 *****
-## DotNetTips.Spargine.Extensions.OrdinalStringKeyComparer<T>
-
-*****
 ## DotNetTips.Spargine.Extensions.ProcessExtensions
 
 ### System.Void EnsureHighPriority(System.Diagnostics.Process process, Microsoft.Extensions.Logging.ILogger logger)
@@ -5892,47 +5889,44 @@
 ### System.Boolean IsEmpty(T collection)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/17/2022
 * **Description:** IsEmpty
-* **Documentation:** https://bit.ly/SpargineAug2022
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** IsNotEmpty
-* **Documentation:** https://bit.ly/SpargineAug2022
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/15/2022
 * **Description:** IsNotEmpty
-* **Documentation:** https://bit.ly/SpargineAug2022
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### T ToImmutableSortedSet(T collection)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -5946,47 +5940,44 @@
 ### System.Boolean IsEmpty()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/17/2022
 * **Description:** IsEmpty
-* **Documentation:** https://bit.ly/SpargineAug2022
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### System.Boolean IsNotEmpty()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** IsNotEmpty
-* **Documentation:** https://bit.ly/SpargineAug2022
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/15/2022
 * **Description:** IsNotEmpty
-* **Documentation:** https://bit.ly/SpargineAug2022
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### T ToImmutableSortedSet()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -6234,10 +6225,10 @@
 *****
 ## DotNetTips.Spargine.Extensions.StringExtensions
 
-### System.Int32 CalculateByteArraySize(System.String base64Input)
+### System.Int32 CalculateByteArraySize(System.String input, System.Text.Encoding encoding)
 
-* **Status:** Available
-* **Optimization Status:** Optimize
+* **Status:** Updated
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6246,15 +6237,15 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Int32 CalculateStringCount(System.String[] args)
+### System.Int32 CalculateTotalLength(System.String[] args)
 
 * **Status:** New
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/29/2025
-* **Description:** CalculateStringCount
+* **Description:** CalculateTotalLength
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -6297,8 +6288,8 @@
 ### System.Boolean ContainsAny(System.String input, System.StringComparison stringComparison, System.String[] characters)
 
 * **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -6321,8 +6312,8 @@
 ### System.String DefaultIfNull(System.String value, System.String defaultValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -6357,7 +6348,7 @@
 ### System.Boolean EqualsIgnoreCase(System.String input, System.String inputToCompare)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6415,7 +6406,7 @@
 ### System.ValueTuple<System.String, System.String, System.String, System.String> FastParseUrl(System.String url)
 
 * **Status:** New
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6427,14 +6418,14 @@
 ### System.String FastReplace(System.String input, System.String oldValue, System.String newValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** FastReplace
 * **Modified On:** 
 
-### System.String FromBase64(System.String input)
+### System.String FromBase64(System.String base64Input)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6509,8 +6500,8 @@
 ### System.Boolean HasValue(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** HasValue
@@ -6539,8 +6530,8 @@
 ### System.Boolean HasValue(System.String input, System.String expression, System.Text.RegularExpressions.RegexOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** HasValue
@@ -6621,7 +6612,7 @@
 ### System.Boolean IsEmpty(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6633,8 +6624,8 @@
 ### System.Boolean IsFirstLastName(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** IsFirstLastName
@@ -6677,8 +6668,8 @@
 ### System.Boolean IsNotEmpty(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/18/2020
@@ -6788,7 +6779,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6799,7 +6790,7 @@
 ### DotNetTips.Spargine.Core.LineSplitEnumerator SplitLines(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6822,7 +6813,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6834,7 +6825,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6857,7 +6848,7 @@
 ### System.String ToBase64(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6870,7 +6861,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
@@ -6894,7 +6885,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/21/2022
@@ -7628,4 +7619,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 12/30/2025 9:53:04 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/1/2026 3:12:27 PM UTC**
