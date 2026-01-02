@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -35,7 +35,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
-	private List<PersonRecord> _personRecordList;
 	private IEnumerable<Person> _personRefEnumerable;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
 	private string _personRefId;
@@ -413,7 +412,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
 		this._personRefList = [.. this.GetPersonRefArray()];
-		this._personRecordList = [.. this.GetPersonRecordArray()];
 		this._coordinateValEnumerable = this.GetCoordinateValArray().AsEnumerable();
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 

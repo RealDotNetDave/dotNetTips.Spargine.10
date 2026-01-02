@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -19,7 +19,6 @@ using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
-using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -33,41 +32,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private List<Person> _peopleRefList;
 	private List<Person> _peopleRefSubSet;
 	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList;
-	private readonly Person _person = RandomData.GeneratePerson<Person>();
 
-	[Benchmark(Description = nameof(ListExtensions.AddFirst))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void AddFirst()
-	{
-		var people = this._peopleRefList;
-
-		people.AddFirst(this._person);
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(ListExtensions.AddLast))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void AddLast()
-	{
-		var people = this._peopleRefList;
-
-		people.AddLast(this._person);
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(ListExtensions.AddRangeIfNotExists))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void AddRangeIfNotExists()
-	{
-		var people = this._peopleRefList;
-		var peopleToAdd = this._peopleRefSubSet;
-
-		people.AddRangeIfNotExists(peopleToAdd);
-
-		this.Consume(people);
-	}
 
 	[Benchmark(Description = nameof(ListExtensions.AsReadOnlySpan))]
 	public void AsReadOnlySpan()
@@ -206,14 +171,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.IsEqualTo(this._peopleRefList));
 	}
 
-	[IterationSetup]
-	public void IterationSetup()
-	{
-		this._peopleRecordList = [.. this.GetPersonRecordArray()];
-		this._peopleRefList = [.. this.GetPersonRefArray()];
-		this._peopleValList = [.. this.GetPersonValArray()];
-	}
-
 	[Benchmark(Description = nameof(ListExtensions.PerformAction) + " :Ref")]
 	[BenchmarkCategory(Categories.ReferenceType)]
 	public void PerformAction_Ref()
@@ -226,24 +183,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(sb.ToString());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.RemoveFirst))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void RemoveFirst()
-	{
-		var result = this._peopleRefList.RemoveFirst(this._peopleRefList.First());
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ListExtensions.RemoveLast))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
-	public void RemoveLast()
-	{
-		var result = this._peopleRefList.RemoveLast(this._peopleRefList.Last());
-
-		this.Consume(result);
-	}
-
 	public override void Setup()
 	{
 		base.Setup();
@@ -252,7 +191,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._peopleRefList = [.. this.GetPersonRefArray()];
 		this._peopleRefSubSet = [.. this.GetPersonRefArray().TakeLast(10)];
 		this._peopleValList = [.. this.GetPersonValArray()];
-
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
