@@ -4,7 +4,7 @@
 // Created          : 09-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="ExceptionThrower.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Core;
 /// across a project.
 /// </summary>
 [StackTraceHidden]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineExThrow")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineExThrow")]
 public static partial class ExceptionThrower
 {
 	/// <summary>

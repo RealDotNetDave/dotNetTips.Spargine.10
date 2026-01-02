@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core;
 /// <summary>
 /// Provides detailed information about the computer system.
 /// </summary>
-[Information(nameof(ComputerInfo), author: "David McCarter", createdOn: "10/15/2018", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineComputerInfo")]
+[Information(nameof(ComputerInfo), author: "David McCarter", createdOn: "10/15/2018", Status = Status.Available, Documentation = "https://bit.ly/SpargineComputerInfo")]
 [DataContract(Namespace = "dotNetTips.com/Info")]
 [Serializable]
 public sealed class ComputerInfo
@@ -49,7 +49,7 @@ public sealed class ComputerInfo
 	/// </summary>
 	/// <returns>The total CPU usage time as a <see cref="TimeSpan"/>.</returns>
 	[DataMember]
-	[Information(nameof(GetCpuUsageTotalTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCpuUsageTotalTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TimeSpan GetCpuUsageTotalTime { get; private set; } = CpuUsage.TotalTime;
 
 	/// <summary>
@@ -57,7 +57,7 @@ public sealed class ComputerInfo
 	/// </summary>
 	/// <returns>The user CPU usage time as a <see cref="TimeSpan"/>.</returns>
 	[DataMember]
-	[Information(nameof(GetCpuUsageUserTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCpuUsageUserTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TimeSpan GetCpuUsageUserTime { get; private set; } = CpuUsage.UserTime;
 
 	/// <summary>
@@ -112,7 +112,7 @@ public sealed class ComputerInfo
 	/// A string representing the total free space and total size of all ready drives.
 	/// </value>
 	[DataMember]
-	[Information(nameof(DiskUsage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(DiskUsage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string DiskUsage => $"{DriveInfo.GetDrives().Where(d => d.IsReady).Sum(d => d.TotalFreeSpace)} bytes free of {DriveInfo.GetDrives().Where(d => d.IsReady).Sum(d => d.TotalSize)} bytes";
 
 	/// <summary>
@@ -140,7 +140,7 @@ public sealed class ComputerInfo
 	/// </remarks>
 	/// <returns>The privileged CPU usage time as a <see cref="TimeSpan"/>.</returns>
 	[DataMember]
-	[Information(nameof(GetCpuUsagePrivilegedTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCpuUsagePrivilegedTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public TimeSpan GetCpuUsagePrivilegedTime { get; private set; } = CpuUsage.PrivilegedTime;
 
 	/// <summary>

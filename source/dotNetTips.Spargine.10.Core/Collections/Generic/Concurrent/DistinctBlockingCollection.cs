@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollection.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -36,7 +36,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 /// This type implements IDisposable. Make sure to call .Dispose() or use the 'using' statement
 /// to remove from memory.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDistinctBlockingCollection")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDistinctBlockingCollection")]
 public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, ICloneable<DistinctBlockingCollection<T>>, ICollection<T>
 {
 
@@ -75,17 +75,12 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	}
 
 	/// <summary>
-	/// Determines whether the specified item is not already in the <see cref="DistinctBlockingCollection{T}"/>.
+	/// Gets a value indicating whether the collection is read-only.
 	/// </summary>
-	/// <param name="item">The item to check.</param>
-	/// <returns><c>true</c> if the item is null or not contained in the <see cref="DistinctBlockingCollection{T}"/>; otherwise, <c>false</c>.</returns>
+	/// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>. This property returns <c>true</c> if <see cref="BlockingCollection{T}.IsAddingCompleted"/> is <c>true</c>, indicating that no more items can be added to the collection.</value>
 	[Pure]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsNotInCollection), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
-	private bool IsNotInCollection([NotNullWhen(false)] T item)
-	{
-		return this.Contains(item) is false;
-	}
+	[Information(nameof(IsReadOnly), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool IsReadOnly => this.IsAddingCompleted;
 
 	/// <summary>
 	/// Adds the specified item to the <see cref="DistinctBlockingCollection{T}"/>.
@@ -113,7 +108,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns>The number of unique items successfully added.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public int AddRange(IEnumerable<T> items, CancellationToken cancellationToken = default)
 	{
 		items = items.ArgumentNotNull();
@@ -191,7 +186,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool ContainsAny(IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -281,7 +276,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns>The number of unique items successfully added within the timeout period.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(TryAddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public int TryAddRange(IEnumerable<T> items, [ConstantExpected(Min = 1, Max = int.MaxValue)] int millisecondsTimeout = 0, CancellationToken cancellationToken = default)
 	{
 		items = items.ArgumentNotNull();
@@ -300,10 +295,15 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	}
 
 	/// <summary>
-	/// Gets a value indicating whether the collection is read-only.
+	/// Determines whether the specified item is not already in the <see cref="DistinctBlockingCollection{T}"/>.
 	/// </summary>
-	/// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>. This property returns <c>true</c> if <see cref="BlockingCollection{T}.IsAddingCompleted"/> is <c>true</c>, indicating that no more items can be added to the collection.</value>
+	/// <param name="item">The item to check.</param>
+	/// <returns><c>true</c> if the item is null or not contained in the <see cref="DistinctBlockingCollection{T}"/>; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(IsReadOnly), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public bool IsReadOnly => this.IsAddingCompleted;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsNotInCollection), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	private bool IsNotInCollection([NotNullWhen(false)] T item)
+	{
+		return this.Contains(item) is false;
+	}
 }

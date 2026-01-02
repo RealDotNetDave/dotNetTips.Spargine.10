@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 /// This implementation provides atomic operations for adding, removing, and checking for elements, making it suitable for concurrent scenarios.
 /// </remarks>
 [DebuggerDisplay("Count = {Count}")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineConcurrentHashSet")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineConcurrentHashSet")]
 public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T>
 {
 	/// <summary>
@@ -44,11 +44,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// The maximum number of locks that can be used for concurrency management in <see cref="ConcurrentHashSet{T}"/>.
 	/// </summary>
 	private const int MaxLockNumber = 1024;
-
-	/// <summary>
-	/// The budget for resizing. Controls when to resize the <see cref="Tables"/> based on the number of elements and the current capacity.
-	/// </summary>
-	private int _budget;
 
 	/// <summary>
 	/// The <see cref="IEqualityComparer{T}"/> instance that is used to determine equality of keys for the hash set.
@@ -65,6 +60,11 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	private readonly bool _growLockArray;
 
 	/// <summary>
+	/// The budget for resizing. Controls when to resize the <see cref="Tables"/> based on the number of elements and the current capacity.
+	/// </summary>
+	private int _budget;
+
+	/// <summary>
 	/// Represents the internal data structure of the <see cref="ConcurrentHashSet{T}"/>.
 	/// </summary>
 	/// <remarks>
@@ -73,51 +73,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// providing a mechanism for safe publication.
 	/// </remarks>
 	private volatile Tables _tables;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ConcurrentHashSet{T}"/> class with the specified concurrency level, initial capacity, option to allow lock array growth, and comparer.
-	/// </summary>
-	/// <param name="concurrencyLevel">The estimated number of threads that will update the <see cref="ConcurrentHashSet{T}"/> concurrently.</param>
-	/// <param name="capacity">The initial number of elements that the <see cref="ConcurrentHashSet{T}"/> can contain.</param>
-	/// <param name="growLockArray">Whether the lock array can grow with the collection, improving concurrency at the cost of increased memory usage.</param>
-	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items for equality.</param>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="concurrencyLevel"/> or <paramref name="capacity"/> is less than 1.</exception>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="comparer"/> is null.</exception>
-	private ConcurrentHashSet(int concurrencyLevel, int capacity, bool growLockArray, IEqualityComparer<T> comparer)
-	{
-		comparer = comparer.ArgumentNotNull();
-
-		if (concurrencyLevel < 1)
-		{
-			concurrencyLevel = 1;
-		}
-
-		concurrencyLevel = concurrencyLevel.EnsureMinimum(1);
-		capacity = capacity.EnsureMinimum(0);
-
-		// The capacity should be at least as large as the concurrency level. Otherwise, we would have locks that don't guard
-		// any buckets.
-		if (capacity < concurrencyLevel)
-		{
-			capacity = concurrencyLevel;
-		}
-
-		var locks = new object[concurrencyLevel];
-		var locksLength = locks.LongLength;
-
-		for (var lockCount = 0; lockCount < locksLength; lockCount++)
-		{
-			locks[lockCount] = new object();
-		}
-
-		var countPerLock = new int[locks.LongLength];
-		var buckets = new Node[capacity];
-
-		this._tables = new Tables(buckets, locks, countPerLock);
-		this._growLockArray = growLockArray;
-		this._budget = buckets.Length / locks.Length;
-		this._comparer = comparer;
-	}
 
 
 	/// <summary>
@@ -195,6 +150,153 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
+	/// Initializes a new instance of the <see cref="ConcurrentHashSet{T}"/> class with the specified concurrency level, initial capacity, option to allow lock array growth, and comparer.
+	/// </summary>
+	/// <param name="concurrencyLevel">The estimated number of threads that will update the <see cref="ConcurrentHashSet{T}"/> concurrently.</param>
+	/// <param name="capacity">The initial number of elements that the <see cref="ConcurrentHashSet{T}"/> can contain.</param>
+	/// <param name="growLockArray">Whether the lock array can grow with the collection, improving concurrency at the cost of increased memory usage.</param>
+	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items for equality.</param>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="concurrencyLevel"/> or <paramref name="capacity"/> is less than 1.</exception>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="comparer"/> is null.</exception>
+	private ConcurrentHashSet(int concurrencyLevel, int capacity, bool growLockArray, IEqualityComparer<T> comparer)
+	{
+		comparer = comparer.ArgumentNotNull();
+
+		if (concurrencyLevel < 1)
+		{
+			concurrencyLevel = 1;
+		}
+
+		concurrencyLevel = concurrencyLevel.EnsureMinimum(1);
+		capacity = capacity.EnsureMinimum(0);
+
+		// The capacity should be at least as large as the concurrency level. Otherwise, we would have locks that don't guard
+		// any buckets.
+		if (capacity < concurrencyLevel)
+		{
+			capacity = concurrencyLevel;
+		}
+
+		var locks = new object[concurrencyLevel];
+		var locksLength = locks.LongLength;
+
+		for (var lockCount = 0; lockCount < locksLength; lockCount++)
+		{
+			locks[lockCount] = new object();
+		}
+
+		var countPerLock = new int[locks.LongLength];
+		var buckets = new Node[capacity];
+
+		this._tables = new Tables(buckets, locks, countPerLock);
+		this._growLockArray = growLockArray;
+		this._budget = buckets.Length / locks.Length;
+		this._comparer = comparer;
+	}
+
+	/// <summary>
+	/// Gets the default concurrency level, which is the number of processors on the current machine.
+	/// </summary>
+	/// <value>The default concurrency level, based on the number of processors.</value>
+	[Pure]
+	public static int DefaultConcurrencyLevel
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			return Environment.ProcessorCount;
+		}
+	}
+
+
+	/// <summary>
+	/// Gets the number of elements contained in the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <value>The number of elements contained in the <see cref="ConcurrentHashSet{T}"/>.</value>
+	[Pure]
+	[Information(nameof(Count), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public int Count
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			var count = 0;
+			var acquiredLocks = 0;
+
+			try
+			{
+				this.AcquireAllLocks(ref acquiredLocks);
+
+				// Use direct loop instead of LINQ Aggregate for better performance
+				var countPerLock = this._tables._countPerLock;
+				var length = countPerLock.Length;
+
+				for (var i = 0; i < length; i++)
+				{
+					count += countPerLock[i];
+				}
+			}
+			finally
+			{
+				this.ReleaseLocks(0, acquiredLocks);
+			}
+
+			return count;
+		}
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether the <see cref="ConcurrentHashSet{T}"/> is empty.
+	/// </summary>
+	/// <value><c>true</c> if the <see cref="ConcurrentHashSet{T}"/> is empty; otherwise, <c>false</c>.</value>
+	[Pure]
+	[DefaultValue(true)]
+	[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public bool IsEmpty
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			var acquiredLocks = 0;
+
+			try
+			{
+				this.AcquireAllLocks(ref acquiredLocks);
+
+				for (var counter = 0; counter < this._tables._countPerLock.LongLength; counter++)
+				{
+					if (this._tables._countPerLock[counter] != 0)
+					{
+						return false;
+					}
+				}
+			}
+			finally
+			{
+				this.ReleaseLocks(0, acquiredLocks);
+			}
+
+			return true;
+		}
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether the <see cref="ConcurrentHashSet{T}"/> is read-only.
+	/// </summary>
+	/// <value>
+	/// Always returns <c>false</c>, as <see cref="ConcurrentHashSet{T}"/> is not a read-only collection.
+	/// </value>
+	[Pure]
+	public bool IsReadOnly
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			return false;
+		}
+	}
+
+	/// <summary>
 	/// Returns an enumerator that iterates through the <see cref="ConcurrentHashSet{T}"/>.
 	/// </summary>
 	/// <returns>An <see cref="IEnumerator"/> that can be used to iterate through the collection.</returns>
@@ -210,6 +312,381 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Add), author: "David McCarter", createdOn: "7/28/2021", BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	IEnumerator<T> IEnumerable<T>.GetEnumerator() => this.GetEnumerator();
+
+	/// <summary>
+	/// Adds an item to the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="item">The item to add to the set. The value cannot be null.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Add), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public void Add(T item)
+	{
+		item = item.ArgumentNotNull();
+
+		_ = this.AddInternal(item, this._comparer.GetHashCode(item!), false);
+	}
+
+	/// <summary>
+	/// Adds multiple items to the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="items">The collection of items to add. Cannot be null.</param>
+	/// <returns>The number of items successfully added (excluding duplicates).</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddRange), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	public int AddRange(IEnumerable<T> items)
+	{
+		items = items.ArgumentNotNull();
+
+		var addedCount = 0;
+
+		foreach (var item in items)
+		{
+			if (item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true))
+			{
+				addedCount++;
+			}
+		}
+
+		return addedCount;
+	}
+
+	/// <summary>
+	/// Removes all items from the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <remarks>
+	/// This method acquires all locks to ensure thread safety during the clear operation.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Clear), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public void Clear()
+	{
+		var locksAcquired = 0;
+
+		try
+		{
+			this.AcquireAllLocks(ref locksAcquired);
+
+			// Cache current tables reference for better performance
+			var tables = this._tables;
+			var locks = tables._locks;
+			var lockCount = locks.Length;
+
+			// Clear counts efficiently using Array.Clear
+			Array.Clear(tables._countPerLock, 0, tables._countPerLock.Length);
+
+			// Clear all bucket references to null for GC
+			var buckets = tables._buckets;
+			Array.Clear(buckets, 0, buckets.Length);
+
+			// Reset budget
+			this._budget = Math.Max(1, buckets.Length / lockCount);
+		}
+		finally
+		{
+			this.ReleaseLocks(0, locksAcquired);
+		}
+	}
+
+	/// <summary>
+	/// Determines whether the <see cref="ConcurrentHashSet{T}"/> contains a specific value.
+	/// </summary>
+	/// <param name="item">The object to locate in the <see cref="ConcurrentHashSet{T}"/>. Cannot be null.</param>
+	/// <returns><c>true</c> if <paramref name="item"/> is found in the <see cref="ConcurrentHashSet{T}"/>; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
+	[DefaultValue(false)]
+	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public bool Contains(T item)
+	{
+		if (item is null)
+		{
+			return false;
+		}
+
+		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+
+		// We must capture the _buckets field in a local variable. It is set to a new table on each table resize.
+		var tables = this._tables;
+
+		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
+
+		// We can get away w/out a lock here.
+		// The Volatile.Read ensures that the load of the fields of 'n' doesn't move before the load from buckets[i].
+		var current = Volatile.Read(ref tables._buckets[bucketNo]);
+
+		while (current is not null)
+		{
+			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+			{
+				return true;
+			}
+
+			current = current._next;
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Copies the elements of the <see cref="ConcurrentHashSet{T}"/> to an array, starting at a particular array index.
+	/// </summary>
+	/// <param name="array">The one-dimensional array that is the destination of the elements copied from <see cref="ConcurrentHashSet{T}"/>. The array must have zero-based indexing.</param>
+	/// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="array"/> is null.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="arrayIndex"/> is less than 0.</exception>
+	/// <exception cref="ArgumentException">Thrown if the number of elements in the source <see cref="ConcurrentHashSet{T}"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public void CopyTo([DisallowNull] T[] array, int arrayIndex)
+	{
+		array = array.ArgumentItemsExists(nameof(array));
+
+		var locksAcquired = 0;
+
+		try
+		{
+			this.AcquireAllLocks(ref locksAcquired);
+
+			var count = 0;
+
+			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
+			{
+				count += this._tables._countPerLock[lockCount];
+			}
+
+			// "count" itself or "count + arrayIndex" can overflow
+			if (array.Length - count < arrayIndex || count < 0)
+			{
+				ExceptionThrower.ThrowArgumentInvalidException(Resources.TheIndexIsEqualToOrGreaterThanTheLengthOfInput, nameof(array));
+			}
+
+			this.CopyToItems(array, arrayIndex);
+		}
+		finally
+		{
+			this.ReleaseLocks(0, locksAcquired);
+		}
+	}
+
+	/// <summary>
+	/// Returns an enumerator that iterates through the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <returns>An <see cref="IEnumerator{T}"/> for the <see cref="ConcurrentHashSet{T}"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetEnumerator), author: "David McCarter", createdOn: "7/28/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public IEnumerator<T> GetEnumerator()
+	{
+		var buckets = this._tables._buckets;
+
+		foreach (var bucket in buckets)
+		{
+			var current = Volatile.Read(in bucket);
+
+			while (current is not null)
+			{
+				yield return current._item;
+				current = current._next;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Removes the specified item from the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="item">The item to remove.</param>
+	/// <returns><c>true</c> if the item was successfully removed; otherwise, <c>false</c>. This method also returns <c>false</c> if the item was not found in the original <see cref="ConcurrentHashSet{T}"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Remove), author: "David McCarter", createdOn: "7/28/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public bool Remove(T item)
+	{
+		return item is null ? false : this.TryRemove(item);
+	}
+
+	/// <summary>
+	/// Copies the elements of the <see cref="ConcurrentHashSet{T}"/> to a new array.
+	/// </summary>
+	/// <returns>An array containing a snapshot of elements copied from the <see cref="ConcurrentHashSet{T}"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	public T[] ToArray()
+	{
+		var locksAcquired = 0;
+
+		try
+		{
+			this.AcquireAllLocks(ref locksAcquired);
+
+			var count = 0;
+
+			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
+			{
+				count += this._tables._countPerLock[lockCount];
+			}
+
+			if (count == 0)
+			{
+				return Array.Empty<T>();
+			}
+
+			var array = new T[count];
+			this.CopyToItems(array, 0);
+
+			return array;
+		}
+		finally
+		{
+			this.ReleaseLocks(0, locksAcquired);
+		}
+	}
+
+	/// <summary>
+	/// Attempts to add the specified item to the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="item">The item to add to the set. The value cannot be null.</param>
+	/// <returns><c>true</c> if the item was added successfully; <c>false</c> if the item already exists in the set.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
+	[DefaultValue(false)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryAdd), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	public bool TryAdd(T item)
+	{
+		item = item.ArgumentNotNull();
+
+		return this.AddInternal(item, this._comparer.GetHashCode(item!), acquireLock: true);
+	}
+
+	/// <summary>
+	/// Attempts to retrieve an item from the <see cref="ConcurrentHashSet{T}"/> that equals the specified value.
+	/// </summary>
+	/// <param name="equalValue">The value to search for.</param>
+	/// <param name="actualValue">When this method returns, contains the actual value from the set, if found; otherwise, the default value for the type.</param>
+	/// <returns><c>true</c> if an equal value was found in the set; otherwise, <c>false</c>.</returns>
+	[DefaultValue(false)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	public bool TryPeek(T equalValue, [MaybeNullWhen(false)] out T actualValue)
+	{
+		if (equalValue is null)
+		{
+			actualValue = default;
+			return false;
+		}
+
+		var hashCode = this._comparer?.GetHashCode(equalValue) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+		var tables = this._tables;
+		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
+		var current = Volatile.Read(ref tables._buckets[bucketNo]);
+
+		while (current is not null)
+		{
+			if (hashCode == current._hashCode && this._comparer.Equals(current._item, equalValue))
+			{
+				actualValue = current._item;
+				return true;
+			}
+
+			current = current._next;
+		}
+
+		actualValue = default;
+		return false;
+	}
+
+	/// <summary>
+	/// Attempts to remove the specified item from the <see cref="ConcurrentHashSet{T}"/>.
+	/// </summary>
+	/// <param name="item">The item to remove.</param>
+	/// <returns><c>true</c> if the item was successfully removed; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
+	/// <remarks>
+	/// This method is thread-safe and may be used concurrently with other operations on the <see cref="ConcurrentHashSet{T}"/>.
+	/// </remarks>
+	[DefaultValue(false)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public bool TryRemove(T item)
+	{
+		if (item is null)
+		{
+			return false;
+		}
+
+		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+
+		while (true)
+		{
+			var tables = this._tables;
+
+			GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
+
+			lock (tables._locks[lockNo])
+			{
+				// If the table just got resized, we may not be holding the right lock, and must retry.
+				// This should be a rare occurrence.
+				if (tables != this._tables)
+				{
+					continue;
+				}
+
+				Node? previous = null;
+
+				for (var current = tables._buckets[bucketNo]; current is not null; current = current._next)
+				{
+					Debug.Assert((previous is null && current == tables._buckets[bucketNo]) || previous?._next == current);
+
+					if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+					{
+						if (previous is null)
+						{
+							Volatile.Write(ref tables._buckets[bucketNo], current._next);
+						}
+						else
+						{
+							previous._next = current._next;
+						}
+
+						tables._countPerLock[lockNo]--;
+						return true;
+					}
+
+					previous = current;
+				}
+			}
+
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Calculates the bucket index for the specified hash code.
+	/// </summary>
+	/// <param name="hashCode">The hash code of the item.</param>
+	/// <param name="bucketCount">The total number of buckets in the <see cref="ConcurrentHashSet{T}"/>.</param>
+	/// <returns>The index of the bucket.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static int GetBucket(in int hashCode, in int bucketCount)
+	{
+		//SUGGESTION FROM COPILOT BROKE THE CODE
+		var bucketNo = (hashCode & 0x7fffffff) % bucketCount;
+		Debug.Assert(bucketNo >= 0 && bucketNo < bucketCount);
+		return bucketNo;
+	}
+
+	/// <summary>
+	/// Calculates the bucket and lock numbers for a given hash code.
+	/// </summary>
+	/// <param name="hashCode">The hash code of the item.</param>
+	/// <param name="bucketNo">The calculated bucket number.</param>
+	/// <param name="lockNo">The calculated lock number.</param>
+	/// <param name="bucketCount">The total number of buckets in the <see cref="ConcurrentHashSet{T}"/>.</param>
+	/// <param name="lockCount">The total number of locks in the <see cref="ConcurrentHashSet{T}"/>.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static void GetBucketAndLockNo(in int hashCode, out int bucketNo, out int lockNo, in int bucketCount, in int lockCount)
+	{
+		bucketNo = (hashCode & 0x7fffffff) % bucketCount;
+		lockNo = bucketNo % lockCount;
+	}
 
 	/// <summary>
 	/// Acquires all locks for the <see cref="ConcurrentHashSet{T}"/>, used to ensure thread safety during operations that need to access all elements.
@@ -370,36 +847,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 				index++; // this should never flow, CopyToItems is only called when there's no overflow risk
 			}
 		}
-	}
-
-	/// <summary>
-	/// Calculates the bucket index for the specified hash code.
-	/// </summary>
-	/// <param name="hashCode">The hash code of the item.</param>
-	/// <param name="bucketCount">The total number of buckets in the <see cref="ConcurrentHashSet{T}"/>.</param>
-	/// <returns>The index of the bucket.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static int GetBucket(in int hashCode, in int bucketCount)
-	{
-		//SUGGESTION FROM COPILOT BROKE THE CODE
-		var bucketNo = (hashCode & 0x7fffffff) % bucketCount;
-		Debug.Assert(bucketNo >= 0 && bucketNo < bucketCount);
-		return bucketNo;
-	}
-
-	/// <summary>
-	/// Calculates the bucket and lock numbers for a given hash code.
-	/// </summary>
-	/// <param name="hashCode">The hash code of the item.</param>
-	/// <param name="bucketNo">The calculated bucket number.</param>
-	/// <param name="lockNo">The calculated lock number.</param>
-	/// <param name="bucketCount">The total number of buckets in the <see cref="ConcurrentHashSet{T}"/>.</param>
-	/// <param name="lockCount">The total number of locks in the <see cref="ConcurrentHashSet{T}"/>.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void GetBucketAndLockNo(in int hashCode, out int bucketNo, out int lockNo, in int bucketCount, in int lockCount)
-	{
-		bucketNo = (hashCode & 0x7fffffff) % bucketCount;
-		lockNo = bucketNo % lockCount;
 	}
 
 	/// <summary>
@@ -576,453 +1023,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
-	/// Adds an item to the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <param name="item">The item to add to the set. The value cannot be null.</param>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Add), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public void Add(T item)
-	{
-		item = item.ArgumentNotNull();
-
-		_ = this.AddInternal(item, this._comparer.GetHashCode(item!), false);
-	}
-
-	/// <summary>
-	/// Adds multiple items to the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <param name="items">The collection of items to add. Cannot be null.</param>
-	/// <returns>The number of items successfully added (excluding duplicates).</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddRange), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
-	public int AddRange(IEnumerable<T> items)
-	{
-		items = items.ArgumentNotNull();
-
-		var addedCount = 0;
-
-		foreach (var item in items)
-		{
-			if (item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true))
-			{
-				addedCount++;
-			}
-		}
-
-		return addedCount;
-	}
-
-	/// <summary>
-	/// Removes all items from the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <remarks>
-	/// This method acquires all locks to ensure thread safety during the clear operation.
-	/// </remarks>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clear), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public void Clear()
-	{
-		var locksAcquired = 0;
-
-		try
-		{
-			this.AcquireAllLocks(ref locksAcquired);
-
-			// Cache current tables reference for better performance
-			var tables = this._tables;
-			var locks = tables._locks;
-			var lockCount = locks.Length;
-
-			// Clear counts efficiently using Array.Clear
-			Array.Clear(tables._countPerLock, 0, tables._countPerLock.Length);
-
-			// Clear all bucket references to null for GC
-			var buckets = tables._buckets;
-			Array.Clear(buckets, 0, buckets.Length);
-
-			// Reset budget
-			this._budget = Math.Max(1, buckets.Length / lockCount);
-		}
-		finally
-		{
-			this.ReleaseLocks(0, locksAcquired);
-		}
-	}
-
-	/// <summary>
-	/// Determines whether the <see cref="ConcurrentHashSet{T}"/> contains a specific value.
-	/// </summary>
-	/// <param name="item">The object to locate in the <see cref="ConcurrentHashSet{T}"/>. Cannot be null.</param>
-	/// <returns><c>true</c> if <paramref name="item"/> is found in the <see cref="ConcurrentHashSet{T}"/>; otherwise, <c>false</c>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
-	[DefaultValue(false)]
-	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public bool Contains(T item)
-	{
-		if (item is null)
-		{
-			return false;
-		}
-
-		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
-
-		// We must capture the _buckets field in a local variable. It is set to a new table on each table resize.
-		var tables = this._tables;
-
-		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
-
-		// We can get away w/out a lock here.
-		// The Volatile.Read ensures that the load of the fields of 'n' doesn't move before the load from buckets[i].
-		var current = Volatile.Read(ref tables._buckets[bucketNo]);
-
-		while (current is not null)
-		{
-			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
-			{
-				return true;
-			}
-
-			current = current._next;
-		}
-
-		return false;
-	}
-
-	/// <summary>
-	/// Copies the elements of the <see cref="ConcurrentHashSet{T}"/> to an array, starting at a particular array index.
-	/// </summary>
-	/// <param name="array">The one-dimensional array that is the destination of the elements copied from <see cref="ConcurrentHashSet{T}"/>. The array must have zero-based indexing.</param>
-	/// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="array"/> is null.</exception>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="arrayIndex"/> is less than 0.</exception>
-	/// <exception cref="ArgumentException">Thrown if the number of elements in the source <see cref="ConcurrentHashSet{T}"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public void CopyTo([DisallowNull] T[] array, int arrayIndex)
-	{
-		array = array.ArgumentItemsExists(nameof(array));
-
-		var locksAcquired = 0;
-
-		try
-		{
-			this.AcquireAllLocks(ref locksAcquired);
-
-			var count = 0;
-
-			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
-			{
-				count += this._tables._countPerLock[lockCount];
-			}
-
-			// "count" itself or "count + arrayIndex" can overflow
-			if (array.Length - count < arrayIndex || count < 0)
-			{
-				ExceptionThrower.ThrowArgumentInvalidException(Resources.TheIndexIsEqualToOrGreaterThanTheLengthOfInput, nameof(array));
-			}
-
-			this.CopyToItems(array, arrayIndex);
-		}
-		finally
-		{
-			this.ReleaseLocks(0, locksAcquired);
-		}
-	}
-
-	/// <summary>
-	/// Returns an enumerator that iterates through the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <returns>An <see cref="IEnumerator{T}"/> for the <see cref="ConcurrentHashSet{T}"/>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetEnumerator), author: "David McCarter", createdOn: "7/28/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public IEnumerator<T> GetEnumerator()
-	{
-		var buckets = this._tables._buckets;
-
-		foreach (var bucket in buckets)
-		{
-			var current = Volatile.Read(in bucket);
-
-			while (current is not null)
-			{
-				yield return current._item;
-				current = current._next;
-			}
-		}
-	}
-
-	/// <summary>
-	/// Removes the specified item from the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <param name="item">The item to remove.</param>
-	/// <returns><c>true</c> if the item was successfully removed; otherwise, <c>false</c>. This method also returns <c>false</c> if the item was not found in the original <see cref="ConcurrentHashSet{T}"/>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Remove), author: "David McCarter", createdOn: "7/28/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public bool Remove(T item)
-	{
-		return item is null ? false : this.TryRemove(item);
-	}
-
-	/// <summary>
-	/// Copies the elements of the <see cref="ConcurrentHashSet{T}"/> to a new array.
-	/// </summary>
-	/// <returns>An array containing a snapshot of elements copied from the <see cref="ConcurrentHashSet{T}"/>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
-	public T[] ToArray()
-	{
-		var locksAcquired = 0;
-
-		try
-		{
-			this.AcquireAllLocks(ref locksAcquired);
-
-			var count = 0;
-
-			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
-			{
-				count += this._tables._countPerLock[lockCount];
-			}
-
-			if (count == 0)
-			{
-				return Array.Empty<T>();
-			}
-
-			var array = new T[count];
-			this.CopyToItems(array, 0);
-
-			return array;
-		}
-		finally
-		{
-			this.ReleaseLocks(0, locksAcquired);
-		}
-	}
-
-	/// <summary>
-	/// Attempts to add the specified item to the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <param name="item">The item to add to the set. The value cannot be null.</param>
-	/// <returns><c>true</c> if the item was added successfully; <c>false</c> if the item already exists in the set.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
-	[DefaultValue(false)]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAdd), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
-	public bool TryAdd(T item)
-	{
-		item = item.ArgumentNotNull();
-
-		return this.AddInternal(item, this._comparer.GetHashCode(item!), acquireLock: true);
-	}
-
-	/// <summary>
-	/// Attempts to retrieve an item from the <see cref="ConcurrentHashSet{T}"/> that equals the specified value.
-	/// </summary>
-	/// <param name="equalValue">The value to search for.</param>
-	/// <param name="actualValue">When this method returns, contains the actual value from the set, if found; otherwise, the default value for the type.</param>
-	/// <returns><c>true</c> if an equal value was found in the set; otherwise, <c>false</c>.</returns>
-	[DefaultValue(false)]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
-	public bool TryPeek(T equalValue, [MaybeNullWhen(false)] out T actualValue)
-	{
-		if (equalValue is null)
-		{
-			actualValue = default;
-			return false;
-		}
-
-		var hashCode = this._comparer?.GetHashCode(equalValue) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
-		var tables = this._tables;
-		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
-		var current = Volatile.Read(ref tables._buckets[bucketNo]);
-
-		while (current is not null)
-		{
-			if (hashCode == current._hashCode && this._comparer.Equals(current._item, equalValue))
-			{
-				actualValue = current._item;
-				return true;
-			}
-
-			current = current._next;
-		}
-
-		actualValue = default;
-		return false;
-	}
-
-	/// <summary>
-	/// Attempts to remove the specified item from the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <param name="item">The item to remove.</param>
-	/// <returns><c>true</c> if the item was successfully removed; otherwise, <c>false</c>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
-	/// <remarks>
-	/// This method is thread-safe and may be used concurrently with other operations on the <see cref="ConcurrentHashSet{T}"/>.
-	/// </remarks>
-	[DefaultValue(false)]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public bool TryRemove(T item)
-	{
-		if (item is null)
-		{
-			return false;
-		}
-
-		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
-
-		while (true)
-		{
-			var tables = this._tables;
-
-			GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
-
-			lock (tables._locks[lockNo])
-			{
-				// If the table just got resized, we may not be holding the right lock, and must retry.
-				// This should be a rare occurrence.
-				if (tables != this._tables)
-				{
-					continue;
-				}
-
-				Node? previous = null;
-
-				for (var current = tables._buckets[bucketNo]; current is not null; current = current._next)
-				{
-					Debug.Assert((previous is null && current == tables._buckets[bucketNo]) || previous?._next == current);
-
-					if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
-					{
-						if (previous is null)
-						{
-							Volatile.Write(ref tables._buckets[bucketNo], current._next);
-						}
-						else
-						{
-							previous._next = current._next;
-						}
-
-						tables._countPerLock[lockNo]--;
-						return true;
-					}
-
-					previous = current;
-				}
-			}
-
-			return false;
-		}
-	}
-
-
-	/// <summary>
-	/// Gets the number of elements contained in the <see cref="ConcurrentHashSet{T}"/>.
-	/// </summary>
-	/// <value>The number of elements contained in the <see cref="ConcurrentHashSet{T}"/>.</value>
-	[Pure]
-	[Information(nameof(Count), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public int Count
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			var count = 0;
-			var acquiredLocks = 0;
-
-			try
-			{
-				this.AcquireAllLocks(ref acquiredLocks);
-
-				// Use direct loop instead of LINQ Aggregate for better performance
-				var countPerLock = this._tables._countPerLock;
-				var length = countPerLock.Length;
-
-				for (var i = 0; i < length; i++)
-				{
-					count += countPerLock[i];
-				}
-			}
-			finally
-			{
-				this.ReleaseLocks(0, acquiredLocks);
-			}
-
-			return count;
-		}
-	}
-
-	/// <summary>
-	/// Gets the default concurrency level, which is the number of processors on the current machine.
-	/// </summary>
-	/// <value>The default concurrency level, based on the number of processors.</value>
-	[Pure]
-	public static int DefaultConcurrencyLevel
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return Environment.ProcessorCount;
-		}
-	}
-
-	/// <summary>
-	/// Gets a value indicating whether the <see cref="ConcurrentHashSet{T}"/> is empty.
-	/// </summary>
-	/// <value><c>true</c> if the <see cref="ConcurrentHashSet{T}"/> is empty; otherwise, <c>false</c>.</value>
-	[Pure]
-	[DefaultValue(true)]
-	[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public bool IsEmpty
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			var acquiredLocks = 0;
-
-			try
-			{
-				this.AcquireAllLocks(ref acquiredLocks);
-
-				for (var counter = 0; counter < this._tables._countPerLock.LongLength; counter++)
-				{
-					if (this._tables._countPerLock[counter] != 0)
-					{
-						return false;
-					}
-				}
-			}
-			finally
-			{
-				this.ReleaseLocks(0, acquiredLocks);
-			}
-
-			return true;
-		}
-	}
-
-	/// <summary>
-	/// Gets a value indicating whether the <see cref="ConcurrentHashSet{T}"/> is read-only.
-	/// </summary>
-	/// <value>
-	/// Always returns <c>false</c>, as <see cref="ConcurrentHashSet{T}"/> is not a read-only collection.
-	/// </value>
-	[Pure]
-	public bool IsReadOnly
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return false;
-		}
-	}
-
-	/// <summary>
 	/// Represents a node in the concurrent hash set.
 	/// </summary>
 	private sealed class Node
@@ -1075,14 +1075,14 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		internal readonly Node[] _buckets;
 
 		/// <summary>
-		/// An array that keeps track of the count of elements in each corresponding bucket in <see cref="_buckets"/>.
-		/// </summary>
-		internal volatile int[] _countPerLock;
-
-		/// <summary>
 		/// An array of objects used as locks for synchronizing access to buckets.
 		/// </summary>
 		internal readonly object[] _locks;
+
+		/// <summary>
+		/// An array that keeps track of the count of elements in each corresponding bucket in <see cref="_buckets"/>.
+		/// </summary>
+		internal volatile int[] _countPerLock;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Tables"/> class.

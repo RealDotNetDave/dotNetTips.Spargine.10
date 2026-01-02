@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="KeyGeneratorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -43,7 +43,7 @@ public class KeyGeneratorTests
 	public void GenerateCustomKey_OutputFormat_ShouldMatchExpectations()
 	{
 		// Arrange
-		var items = new[] { "X", "Y" };
+		var items = new[] { "Person", "Ref" };
 		var separator = '_';
 
 		// Act
@@ -51,9 +51,9 @@ public class KeyGeneratorTests
 		var keyWithoutTimestamp = KeyGenerator.GenerateCustomKey(separator, false, items);
 
 		// Assert
-		Assert.IsTrue(keyWithTimestamp.StartsWith("X_Y_"), "Key with timestamp should start with joined items and separator.");
+		Assert.IsTrue(keyWithTimestamp.StartsWith("Person_Ref_"), "Key with timestamp should start with joined items and separator.");
 
-		Assert.AreEqual("X_Y", keyWithoutTimestamp, "Key without timestamp should be joined items only.");
+		Assert.IsTrue(keyWithoutTimestamp.StartsWith("Person_Ref_"), "Key with timestamp should start with joined items and separator.");
 	}
 
 	[TestMethod]

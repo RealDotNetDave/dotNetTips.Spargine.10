@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="DateTimeFormat.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Core;
 /// <remarks>
 /// This class extends <see cref="Enumeration"/> to offer reusable, self-documenting date and time format patterns.
 /// </remarks>
-[Information(nameof(DateTimeFormat), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDateTimeFormat")]
+[Information(nameof(DateTimeFormat), Status = Status.Available, Documentation = "https://bit.ly/SpargineDateTimeFormat")]
 public class DateTimeFormat : Enumeration
 {
 	/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 05-30-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="KeyGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,25 +21,9 @@ namespace DotNetTips.Spargine.Core;
 /// <summary>
 /// Provides functionality to generate unique keys.
 /// </summary>
-[Information(Status = Status.UpdateDocumentation, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineKeyGenerator")]
 public static class KeyGenerator
 {
-
-	/// <summary>
-	/// Generates a timestamp representing the current UTC time in milliseconds since the Unix epoch.
-	/// </summary>
-	/// <returns>
-	/// A byte array containing the timestamp as a 64-bit integer (milliseconds since Unix epoch).
-	/// </returns>
-	/// <remarks>
-	/// Useful for generating time-based values for keys or tokens.
-	/// </remarks>
-	[ExcludeFromCodeCoverage]
-	[Information(nameof(GenerateTimeStamp), Status = Status.Available)]
-	private static byte[] GenerateTimeStamp()
-	{
-		return BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-	}
 
 	/// <summary>
 	/// Generates a custom key by joining the provided items with a separator and optionally appending a unique key.
@@ -61,7 +45,7 @@ public static class KeyGenerator
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GenerateCustomKey), "David McCarter", "8/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GenerateCustomKey), "David McCarter", "8/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateCustomKey([ConstantExpected] char separator = ControlChars.Dash, bool addTimeStamp = true, params string[] items)
 	{
 		items = items.ArgumentItemsExists();
@@ -70,10 +54,13 @@ public static class KeyGenerator
 
 		if (addTimeStamp)
 		{
-			keyItems.Add(GenerateKey());
+			var timestamp = GenerateTimeStamp();
+			keyItems.Add(FastStringBuilder.BytesToString(ref timestamp));
 		}
 
-		return FastStringBuilder.Join(keyItems, separator);
+		keyItems.Add(GenerateKey());
+
+		return FastStringBuilder.Concat(delimiter: separator, addLineFeed: false, args: [.. keyItems]);
 	}
 
 	/// <summary>
@@ -90,12 +77,12 @@ public static class KeyGenerator
 	/// </summary>
 	/// <param name="prefix">The prefix to prepend to the generated key.</param>
 	/// <returns>A unique key as a string with the specified prefix.</returns>
-	/// <example>Example: DataRecordf7f0af78003d4ab194b5a4024d02112a</example>
+	/// <example>Example: DataRecordf_7f0af78003d4ab194b5a4024d02112a</example>
 	[return: NotNull]
 	[Information(nameof(GenerateKey), "David McCarter", "5/30/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static string GenerateKey([DisallowNull] string prefix)
 	{
-		return $"{prefix.ArgumentNotNull()}{Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)}";
+		return $"{prefix.ArgumentNotNull()}_{Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)}";
 	}
 
 	/// <summary>
@@ -104,7 +91,7 @@ public static class KeyGenerator
 	/// <returns>A sortable unique key as a string.</returns>
 	/// <example>Example: 017f0af78003d4ab194b5a4024d02112a</example>
 	[return: NotNull]
-	[Information(nameof(GenerateSortableKey), "David McCarter", "5/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GenerateSortableKey), "David McCarter", "5/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateSortableKey()
 	{
 		return Guid.CreateVersion7().ToString("N", CultureInfo.InvariantCulture);
@@ -115,12 +102,28 @@ public static class KeyGenerator
 	/// </summary>
 	/// <param name="prefix">The prefix to prepend to the generated key.</param>
 	/// <returns>A sortable unique key as a string with the specified prefix.</returns>
-	/// <example>Example: DataRecord017f0af78003d4ab194b5a4024d02112a</example>
+	/// <example>Example: DataRecord_017f0af78003d4ab194b5a4024d02112a</example>
 	[return: NotNull]
-	[Information(nameof(GenerateSortableKey), "David McCarter", "5/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GenerateSortableKey), "David McCarter", "5/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateSortableKey([DisallowNull] string prefix)
 	{
-		return $"{prefix.ArgumentNotNull()}{Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)}";
+		return $"{prefix.ArgumentNotNull()}_{Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)}";
+	}
+
+	/// <summary>
+	/// Generates a timestamp representing the current UTC time in milliseconds since the Unix epoch.
+	/// </summary>
+	/// <returns>
+	/// A byte array containing the timestamp as a 64-bit integer (milliseconds since Unix epoch).
+	/// </returns>
+	/// <remarks>
+	/// Useful for generating time-based values for keys or tokens.
+	/// </remarks>
+	[ExcludeFromCodeCoverage]
+	[Information(nameof(GenerateTimeStamp), Status = Status.Available)]
+	private static byte[] GenerateTimeStamp()
+	{
+		return BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 	}
 
 }
