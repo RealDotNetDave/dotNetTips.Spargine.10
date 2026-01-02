@@ -107,7 +107,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 		this.Consume(result.Count);
 	}
 
-	[Benchmark(Description = "Person" + ":OrderBy()")]
+	[Benchmark(Description = "OrderBy(): Ref")]
 	[BenchmarkCategory(Categories.New)]
 	public void PersonOrderByBenchmark()
 	{
@@ -116,7 +116,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 		this.Consume(result.Last());
 	}
 
-	[Benchmark(Description = nameof(Coordinate) + ":OrderBy()")]
+	[Benchmark(Description = "OrderBy(): Record")]
 	[BenchmarkCategory(Categories.New, Categories.RecordType)]
 	public void PersonRecordOrderBy()
 	{
@@ -125,7 +125,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 		this.Consume(result.Last());
 	}
 
-	[Benchmark(Description = nameof(PersonRecord) + ":OrderBy()")]
+	[Benchmark(Description = "OrderBy(): Val")]
 	[BenchmarkCategory(Categories.New)]
 	public void PersonValOrderBy()
 	{
