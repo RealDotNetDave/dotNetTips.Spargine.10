@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Core.Queues;
 /// Thread-Safe queue using <see cref="Channel{T}"/>.
 /// </summary>
 /// <typeparam name="T">The type of items stored in the queue.</typeparam>
-[Information("Queue using Channel<T>.", "David McCarter", "7/26/2021", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineChannelQueue")]
+[Information("Queue using Channel<T>.", "David McCarter", "7/26/2021", Status = Status.Available, Documentation = "https://bit.ly/SpargineChannelQueue")]
 public sealed class ChannelQueue<T>
 {
 
@@ -113,12 +113,35 @@ public sealed class ChannelQueue<T>
 		this._cancellationTimeout = cancellationTimeout ?? TimeSpan.FromMinutes(5);
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static long ToExpiryMs(TimeSpan? window)
-		=> window is null ? long.MaxValue : DateTimeOffset.UtcNow.Add(window.Value).ToUnixTimeMilliseconds();
+	/// <summary>
+	/// Gets a task that completes when the channel is done.
+	/// </summary>
+	[Information(nameof(Completion), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public Task Completion => this._channel.Reader.Completion;
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static long UtcNowMs() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+	/// <summary>
+	/// Gets the count of items currently in the channel.
+	/// </summary>
+	/// <value>The count of items. Returns -1 if the channel does not support counting.</value>
+	/// <remarks>
+	/// Use this property to get the number of items that are currently queued in the <see cref="Channel{T}"/>.
+	/// This property acquires a lock to ensure thread safety when accessing the count.
+	/// </remarks>
+	[Information(nameof(Count), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public int Count
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			return this._channel.Reader.CanCount ? this._channel.Reader.Count : -1;
+		}
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether the channel is completed.
+	/// </summary>
+	[Information(nameof(IsCompleted), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public bool IsCompleted => this._channel.Reader.Completion.IsCompleted;
 
 	/// <summary>
 	/// Acknowledges that the item associated with the specified <paramref name="idempotencyKey"/> has been processed,
@@ -136,7 +159,7 @@ public sealed class ChannelQueue<T>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Acknowledge), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool Acknowledge([DisallowNull] string idempotencyKey)
 	{
 		return this._idempotencyKeys.TryRemove(idempotencyKey, out _);
@@ -162,7 +185,7 @@ public sealed class ChannelQueue<T>
 	/// Removes all items from the channel.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clear), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(Clear), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void Clear()
 	{
 		while (this._channel.Reader.TryRead(out _))
@@ -279,7 +302,7 @@ public sealed class ChannelQueue<T>
 	/// This enables future enqueues with the same key.
 	/// </remarks>
 	[Information(nameof(ReadAsync), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async ValueTask<T> ReadAsync([DisallowNull] Func<T, string> keyResolver, CancellationToken cancellationToken = default)
 	{
 		keyResolver = keyResolver.ArgumentNotNull();
@@ -326,7 +349,7 @@ public sealed class ChannelQueue<T>
 	/// This method does not block. If the channel is empty, it returns immediately with <c>false</c>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRead), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(TryRead), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool TryRead(out T item)
 	{
 		return this._channel.Reader.TryRead(out item!);
@@ -336,7 +359,7 @@ public sealed class ChannelQueue<T>
 	/// Attempts to write an item to the channel without waiting.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryWrite), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(TryWrite), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool TryWrite([DisallowNull] T item)
 	{
 		item = item.ArgumentNotNull();
@@ -365,7 +388,7 @@ public sealed class ChannelQueue<T>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryWriteOnce([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null)
 	{
 		item = item.ArgumentNotNull();
@@ -482,7 +505,7 @@ public sealed class ChannelQueue<T>
 	/// If the write fails due to a closed channel, the key is removed to allow future attempts.
 	/// </remarks>
 	[Information(nameof(WriteOnceAsync), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task<bool> WriteOnceAsync([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null, CancellationToken cancellationToken = default)
 	{
 		item = item.ArgumentNotNull();
@@ -519,35 +542,12 @@ public sealed class ChannelQueue<T>
 		}
 	}
 
-	/// <summary>
-	/// Gets a task that completes when the channel is done.
-	/// </summary>
-	[Information(nameof(Completion), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
-	public Task Completion => this._channel.Reader.Completion;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static long ToExpiryMs(TimeSpan? window)
+		=> window is null ? long.MaxValue : DateTimeOffset.UtcNow.Add(window.Value).ToUnixTimeMilliseconds();
 
-	/// <summary>
-	/// Gets the count of items currently in the channel.
-	/// </summary>
-	/// <value>The count of items. Returns -1 if the channel does not support counting.</value>
-	/// <remarks>
-	/// Use this property to get the number of items that are currently queued in the <see cref="Channel{T}"/>.
-	/// This property acquires a lock to ensure thread safety when accessing the count.
-	/// </remarks>
-	[Information(nameof(Count), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int Count
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return this._channel.Reader.CanCount ? this._channel.Reader.Count : -1;
-		}
-	}
-
-	/// <summary>
-	/// Gets a value indicating whether the channel is completed.
-	/// </summary>
-	[Information(nameof(IsCompleted), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
-	public bool IsCompleted => this._channel.Reader.Completion.IsCompleted;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static long UtcNowMs() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
 
 }

@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-26-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// and verifying hashed passwords. It leverages AES (Advanced Encryption Standard) for encryption tasks and SHA256 for hashing,
 /// ensuring a high level of security for sensitive data handling.
 /// </summary>
-[Information(Version = "1", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
+[Information(Version = "1", Status = Status.Available, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
 public static class EncryptionHelper
 {
 	private const byte FormatVersion = 1;
@@ -181,7 +181,7 @@ public static class EncryptionHelper
 	/// Thrown if the payload is invalid, the version is unsupported, or decryption fails.
 	/// </exception>
 	[Pure]
-	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AesGcmDecrypt([DisallowNull] string base64Payload, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		base64Payload = base64Payload.ArgumentNotNullOrEmpty();
@@ -326,7 +326,7 @@ public static class EncryptionHelper
 	/// A randomly generated 32-byte key suitable for AES-GCM.
 	/// </returns>
 	[Pure]
-	[Information(nameof(GenerateAesGcmKey), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GenerateAesGcmKey), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public static byte[] GenerateAesGcmKey()
 	{
 		var key = new byte[32]; // 256-bit

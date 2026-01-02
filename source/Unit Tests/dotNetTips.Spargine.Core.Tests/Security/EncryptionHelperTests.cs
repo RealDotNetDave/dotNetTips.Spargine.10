@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-02-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -31,6 +31,7 @@ public class EncryptionHelperTests
 	private string _cipherText;
 	private byte[] _iv;
 	private byte[] _key;
+	private string _plainText;
 
 	[TestMethod]
 	public void AesDecrypt_NullCipherText_ThrowsArgumentNullException()
@@ -67,7 +68,7 @@ public class EncryptionHelperTests
 	public void AesGcmDecrypt_InvalidKeyLength_Throws()
 	{
 		var key = new byte[16]; // Invalid length
-		var payload = EncryptionHelper.AesGcmEncrypt("test", EncryptionHelper.GenerateAesGcmKey());
+		var payload = EncryptionHelper.AesGcmEncrypt(this._plainText, EncryptionHelper.GenerateAesGcmKey());
 		_ = Assert.ThrowsExactly<ArgumentException>(() =>
 			EncryptionHelper.AesGcmDecrypt(payload, key));
 	}
@@ -77,15 +78,13 @@ public class EncryptionHelperTests
 	{
 		var key = EncryptionHelper.GenerateAesGcmKey();
 
-		var testString = RandomData.GenerateWord(15);
-
-		var encrypted = EncryptionHelper.AesGcmEncrypt(testString, key, this._iv);
+		var encrypted = EncryptionHelper.AesGcmEncrypt(this._plainText, key, this._iv);
 
 		Assert.IsFalse(string.IsNullOrWhiteSpace(encrypted));
 
 		var decrypted = EncryptionHelper.AesGcmDecrypt(encrypted, key, this._iv);
 
-		Assert.AreEqual(testString, decrypted);
+		Assert.AreEqual(this._plainText, decrypted);
 	}
 
 	[TestMethod]
@@ -99,9 +98,7 @@ public class EncryptionHelperTests
 	[TestMethod]
 	public void ComputeSha256HashTest()
 	{
-		var testString = RandomData.GenerateWord(15);
-
-		var result = testString.ComputeHash();
+		var result = this._plainText.ComputeHash();
 
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}
@@ -109,9 +106,7 @@ public class EncryptionHelperTests
 	[TestMethod]
 	public void ComputeSHA384HashTest()
 	{
-		var testString = RandomData.GenerateWord(15);
-
-		var result = testString.ComputeHash(HashType.SHA384);
+		var result = this._plainText.ComputeHash(HashType.SHA384);
 
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}
@@ -119,9 +114,7 @@ public class EncryptionHelperTests
 	[TestMethod]
 	public void ComputeSHA512HashTest()
 	{
-		var testString = RandomData.GenerateWord(15);
-
-		var result = testString.ComputeHash(HashType.SHA512);
+		var result = this._plainText.ComputeHash(HashType.SHA512);
 
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}
@@ -153,11 +146,9 @@ public class EncryptionHelperTests
 	[TestMethod]
 	public void SimpleSHA256EncryptDecryptStringTest()
 	{
-		var testString = RandomData.GenerateWord(15);
-
 		var key = EncryptionHelper.GenerateRandomKey();
 
-		var cipherText = EncryptionHelper.SimpleSHA256Encrypt(testString, key);
+		var cipherText = EncryptionHelper.SimpleSHA256Encrypt(this._plainText, key);
 
 		Assert.IsTrue(string.IsNullOrEmpty(cipherText) is false);
 
@@ -165,7 +156,7 @@ public class EncryptionHelperTests
 
 		Assert.IsTrue(string.IsNullOrEmpty(plainText) is false);
 
-		Assert.IsTrue(plainText.Equals(testString));
+		Assert.IsTrue(plainText.Equals(this._plainText));
 	}
 
 	[TestInitialize]
@@ -177,7 +168,8 @@ public class EncryptionHelperTests
 		this._iv = aes.IV;
 
 
-		this._cipherText = EncryptionHelper.AesEncrypt("Test", this._key, this._iv);
+		this._cipherText = EncryptionHelper.AesEncrypt(this._plainText, this._key, this._iv);
+		this._plainText = RandomData.GenerateWord(15);
 	}
 
 	[TestMethod]
