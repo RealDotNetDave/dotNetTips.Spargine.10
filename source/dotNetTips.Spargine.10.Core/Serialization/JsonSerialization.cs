@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Serialization;
 /// Utilizes the System.Text.Json namespace for efficient processing. This class supports custom serialization
 /// options and aims to simplify the use of JSON serialization in .NET applications.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.UpdateDocumentation)]
+[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.Available)]
 public static class JsonSerialization
 {
 	/// <summary>
@@ -41,93 +41,6 @@ public static class JsonSerialization
 	{
 		NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
 	};
-
-	/// <summary>
-	/// Compares two <see cref="JsonElement"/> instances for equality, considering their structure and data.
-	/// </summary>
-	/// <param name="expected">The expected <see cref="JsonElement"/> structure.</param>
-	/// <param name="actual">The actual <see cref="JsonElement"/> structure to compare against the expected.</param>
-	/// <returns><c>true</c> if both <see cref="JsonElement"/> instances are equal; otherwise, <c>false</c>.</returns>
-	/// <exception cref="NotSupportedException">Thrown when encountering an undefined or unexpected JsonValueKind.</exception>
-	/// <remarks>
-	/// This method performs a deep comparison of the contents of two <see cref="JsonElement"/> instances,
-	/// including objects, arrays, and primitive values. It is designed to handle complex JSON structures
-	/// and can be used for testing and validation purposes.
-	/// </remarks>
-	private static bool JsonEqual(in JsonElement expected, in JsonElement actual)
-	{
-		var valueKind = expected.ValueKind;
-
-		if (valueKind != actual.ValueKind)
-		{
-			return false;
-		}
-
-		switch (valueKind)
-		{
-			case JsonValueKind.Object:
-				var propertyNames = new HashSet<string>();
-
-				using (var expectedEnumerator = expected.EnumerateObject())
-				{
-					foreach (var property in expectedEnumerator)
-					{
-						_ = propertyNames.Add(property.Name);
-					}
-				}
-
-				using (var actualEnumerator = actual.EnumerateObject())
-				{
-					foreach (var property in actualEnumerator)
-					{
-						_ = propertyNames.Add(property.Name);
-					}
-				}
-
-				foreach (var name in propertyNames)
-				{
-					if (!JsonEqual(expected.GetProperty(name), actual.GetProperty(name)))
-					{
-						return false;
-					}
-				}
-
-				return true;
-			case JsonValueKind.Array:
-				using (var expectedEnumerator = actual.EnumerateArray())
-				{
-					using (var actualEnumerator = expected.EnumerateArray())
-					{
-						while (expectedEnumerator.MoveNext())
-						{
-							if (!actualEnumerator.MoveNext())
-							{
-								return false;
-							}
-
-							if (!JsonEqual(expectedEnumerator.Current, actualEnumerator.Current))
-							{
-								return false;
-							}
-						}
-
-						return !actualEnumerator.MoveNext();
-					}
-				}
-
-			case JsonValueKind.String:
-				return string.Equals(expected.GetString(), actual.GetString(), StringComparison.Ordinal);
-			case JsonValueKind.Number:
-			case JsonValueKind.True:
-			case JsonValueKind.False:
-			case JsonValueKind.Null:
-				return string.Equals(expected.GetRawText(), actual.GetRawText(), StringComparison.Ordinal);
-			case JsonValueKind.Undefined:
-				throw new NotSupportedException($"Undefined JsonValueKind: {valueKind}.");
-			default:
-				throw new NotSupportedException($"Unexpected JsonValueKind: {valueKind}.");
-		}
-	}
 
 	/// <summary>
 	/// Converts a specified JSON string into its corresponding object representation.
@@ -158,7 +71,7 @@ public static class JsonSerialization
 	/// <returns>An instance of <typeparamref name="TResult"/> deserialized from the JSON string.</returns>
 	/// <exception cref="InvalidOperationException">Failed to deserialize the JSON string to {typeof(TResult)}.</exception>
 	[Pure]
-	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, JsonSerializerOptions? options = null)
 	{
 		json = json.ArgumentNotNullOrEmpty();
@@ -178,7 +91,7 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="typeInfo"/> is null.</exception>
 	/// <exception cref="InvalidOperationException">Failed to deserialize the JSON string to {typeof(TResult)}.</exception>
 	[Pure]
-	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, [DisallowNull] JsonTypeInfo<TResult> typeInfo)
 	{
 		json = json.ArgumentNotNullOrEmpty();
@@ -278,7 +191,7 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the items in the json collection is less than count.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
 	[Pure]
-	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count)
 	{
 		file = file.ArgumentExists();
@@ -353,7 +266,7 @@ public static class JsonSerialization
 	/// <returns>A JSON string representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the input object is null.</exception>
 	[Pure]
-	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj, JsonSerializerOptions? options = null)
 	{
 		obj = obj.ArgumentNotNull();
@@ -370,7 +283,7 @@ public static class JsonSerialization
 	/// <returns>A JSON string representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the input object or <paramref name="typeInfo"/> is null.</exception>
 	[Pure]
-	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string Serialize<T>([DisallowNull] T obj, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		obj = obj.ArgumentNotNull();
@@ -399,5 +312,92 @@ public static class JsonSerialization
 		file.Directory?.Create();
 
 		File.WriteAllText(file.FullName, Serialize(obj, options));
+	}
+
+	/// <summary>
+	/// Compares two <see cref="JsonElement"/> instances for equality, considering their structure and data.
+	/// </summary>
+	/// <param name="expected">The expected <see cref="JsonElement"/> structure.</param>
+	/// <param name="actual">The actual <see cref="JsonElement"/> structure to compare against the expected.</param>
+	/// <returns><c>true</c> if both <see cref="JsonElement"/> instances are equal; otherwise, <c>false</c>.</returns>
+	/// <exception cref="NotSupportedException">Thrown when encountering an undefined or unexpected JsonValueKind.</exception>
+	/// <remarks>
+	/// This method performs a deep comparison of the contents of two <see cref="JsonElement"/> instances,
+	/// including objects, arrays, and primitive values. It is designed to handle complex JSON structures
+	/// and can be used for testing and validation purposes.
+	/// </remarks>
+	private static bool JsonEqual(in JsonElement expected, in JsonElement actual)
+	{
+		var valueKind = expected.ValueKind;
+
+		if (valueKind != actual.ValueKind)
+		{
+			return false;
+		}
+
+		switch (valueKind)
+		{
+			case JsonValueKind.Object:
+				var propertyNames = new HashSet<string>();
+
+				using (var expectedEnumerator = expected.EnumerateObject())
+				{
+					foreach (var property in expectedEnumerator)
+					{
+						_ = propertyNames.Add(property.Name);
+					}
+				}
+
+				using (var actualEnumerator = actual.EnumerateObject())
+				{
+					foreach (var property in actualEnumerator)
+					{
+						_ = propertyNames.Add(property.Name);
+					}
+				}
+
+				foreach (var name in propertyNames)
+				{
+					if (!JsonEqual(expected.GetProperty(name), actual.GetProperty(name)))
+					{
+						return false;
+					}
+				}
+
+				return true;
+			case JsonValueKind.Array:
+				using (var expectedEnumerator = actual.EnumerateArray())
+				{
+					using (var actualEnumerator = expected.EnumerateArray())
+					{
+						while (expectedEnumerator.MoveNext())
+						{
+							if (!actualEnumerator.MoveNext())
+							{
+								return false;
+							}
+
+							if (!JsonEqual(expectedEnumerator.Current, actualEnumerator.Current))
+							{
+								return false;
+							}
+						}
+
+						return !actualEnumerator.MoveNext();
+					}
+				}
+
+			case JsonValueKind.String:
+				return string.Equals(expected.GetString(), actual.GetString(), StringComparison.Ordinal);
+			case JsonValueKind.Number:
+			case JsonValueKind.True:
+			case JsonValueKind.False:
+			case JsonValueKind.Null:
+				return string.Equals(expected.GetRawText(), actual.GetRawText(), StringComparison.Ordinal);
+			case JsonValueKind.Undefined:
+				throw new NotSupportedException($"Undefined JsonValueKind: {valueKind}.");
+			default:
+				throw new NotSupportedException($"Unexpected JsonValueKind: {valueKind}.");
+		}
 	}
 }
