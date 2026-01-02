@@ -34,8 +34,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	//TODO: BREAK UP AFTER JAN RELEASE. TAKES OVER 4 HOURS TO RUN ALL TESTS!	
-
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
 	private List<PersonRecord> _personRecordList;
 	private IEnumerable<Person> _personRefEnumerable;
