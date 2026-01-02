@@ -871,7 +871,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.a)]
+	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
