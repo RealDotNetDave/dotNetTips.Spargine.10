@@ -97,6 +97,7 @@ namespace DotNetTips.Spargine.Core.Cache;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineInMemoryCache")]
 public sealed class InMemoryCache
 {
+	//TODO: UPDATE ARTICLE ON DOTNETTIPS.COM
 
 	/// <summary>
 	/// Provides single-flight protection for concurrent cache population.
@@ -114,7 +115,6 @@ public sealed class InMemoryCache
 	/// See <see cref="AddCacheItem{T}(string, T)"/> and <see cref="CreateCache"/> for how this value is applied.  
 	/// </remarks>  
 	private readonly TimeSpan _timeoutInMinutes = TimeSpan.FromMinutes(20);
-	//TODO: UPDATE ARTICLE ON DOTNETTIPS.COM
 
 	/// <summary>
 	/// Tracks cache hit statistics for performance monitoring.

@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -40,10 +41,13 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private Collection<Person> _personRefCollectionToAdd;
 	private IEnumerable<Person> _personRefEnumerable;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
+	private FrozenSet<Person> _personRefFrozenSet;
+	private HashSet<Person> _personRefHashSet;
 	private string _personRefId;
 	private Person _personRefLast;
 	private List<Person> _personRefList;
 	private List<Person> _personRefListDups;
+	private SortedSet<Person> _personRefSortedSet;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -171,10 +175,76 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique))]
-	public void EnsureUnique()
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": Collection")]
+	public void EnsureUniqueCollection()
+	{
+		var people = this._personRefCollection.AddLast(this.PersonRef01).ToCollection();
+
+		var result = people.EnsureUnique();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": Enumerable")]
+	public void EnsureUniqueEnumerable()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
+
+		var result = people.EnsureUnique();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": FrozenSet")]
+	public void EnsureUniqueFrozenSet()
+	{
+		var people = this._personRefFrozenSet.AddLast(this.PersonRef01).ToFrozenSet();
+
+		var result = people.EnsureUnique();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": HashSet")]
+	public void EnsureUniqueHashSet()
+	{
+		var people = this._personRefHashSet.AddLast(this.PersonRef01).ToHashSet();
+
+		var result = people.EnsureUnique();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": List")]
+	public void EnsureUniqueList()
+	{
+		var people = this._personRefList;
+		people.AddLast(this.PersonRef01);
+
+		var result = people.EnsureUnique();
+
+		foreach (var person in result)
+		{
+			this.Consume(person);
+		}
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": SortedSet")]
+	public void EnsureUniqueSortedSet()
+	{
+		var people = new SortedSet<Person>(this._personRefSortedSet.AddLast(this.PersonRef01));
 
 		var result = people.EnsureUnique();
 
@@ -415,11 +485,14 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		base.Setup();
 
-		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
-		this._personRefList = [.. this.GetPersonRefArray()];
 		this._coordinateValEnumerable = this.GetCoordinateValArray().AsEnumerable();
-		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 		this._personRefCollection = this.GetPersonRefArray().ToCollection();
+		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
+		this._personRefFrozenSet = this.GetPersonRefArray().ToFrozenSet();
+		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
+		this._personRefList = [.. this.GetPersonRefArray()];
+		this._personRefSortedSet = new SortedSet<Person>(this.GetPersonRefArray());
+		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 
 		this._personRefLast = this._personRefList.Last();
 		this._personRefId = this._personRefList[this.Count / 2].Id;

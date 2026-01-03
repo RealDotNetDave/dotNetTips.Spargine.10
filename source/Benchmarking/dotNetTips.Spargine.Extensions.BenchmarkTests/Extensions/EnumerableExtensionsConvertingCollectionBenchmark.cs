@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-14-2025
+// Last Modified On : 01-03-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsConvertingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -26,13 +28,21 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollectionBenchmark
 {
+	private Person[] _personRefArray;
+	private Collection<Person> _personRefCollection;
 	private IEnumerable<Person> _personRefEnumerable;
+	private ImmutableArray<Person> _personRefImmutableArray;
+	private List<Person> _personRefList;
 
 	public override void Setup()
 	{
 		base.Setup();
 
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
+		this._personRefList = this.GetPersonRefArray().ToList();
+		this._personRefArray = this.GetPersonRefArray().ToArray();
+		this._personRefCollection = this.GetPersonRefArray().ToCollection();
+		this._personRefImmutableArray = this.GetPersonRefArray().ToImmutableArray();
 	}
 
 
@@ -44,10 +54,34 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection))]
-	public void ToCollection()
+	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection) + ": Array")]
+	public void ToCollectionArray()
+	{
+		var result = this._personRefArray.ToCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection) + ": Enumerable")]
+	public void ToCollectionEnumerable()
 	{
 		var result = this._personRefEnumerable.ToCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection) + ": ImmutableArray")]
+	public void ToCollectionImmutableArray()
+	{
+		var result = this._personRefImmutableArray.ToCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection) + ": List")]
+	public void ToCollectionList()
+	{
+		var result = this._personRefList.ToCollection();
 
 		this.Consume(result);
 	}
@@ -94,13 +128,36 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		await this.ConsumeAsync(result).ConfigureAwait(false);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
-	public void ToReadOnlyCollection()
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection) + ": Array")]
+	public void ToReadOnlyCollectionArray()
+	{
+		var result = this._personRefArray.ToReadOnlyCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection) + ": Collection")]
+	public void ToReadOnlyCollectionCollection()
+	{
+		var result = this._personRefCollection.ToReadOnlyCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection) + ": Enumerable")]
+	public void ToReadOnlyCollectionEnumerable()
 	{
 		var result = this._personRefEnumerable.ToReadOnlyCollection();
 
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection) + ": List")]
+	public void ToReadOnlyCollectionList()
+	{
+		var result = this._personRefList.ToReadOnlyCollection();
+
+		this.Consume(result);
+	}
 
 }
