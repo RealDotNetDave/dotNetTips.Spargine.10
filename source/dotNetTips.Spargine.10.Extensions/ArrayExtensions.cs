@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 01-03-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -129,13 +129,50 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 		public int IndexOf([DisallowNull] T[] item)
 		{
 			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
 			return Array.IndexOf(array, item);
+		}
+
+		/// <summary>
+		/// Searches for the specified item and returns the zero-based index of its last occurrence in the array.
+		/// </summary>
+		/// <param name="item">The item to locate in the array.</param>
+		/// <returns>
+		/// The zero-based index of the last occurrence of <paramref name="item"/> within the entire array, if found; otherwise, -1.
+		/// </returns>
+		/// <remarks>
+		/// This method wraps the <see cref="Array.LastIndexOf{T}(T[], T)"/> method to provide a convenient extension method syntax.
+		/// The array is searched backward starting at the last element and ending at the first element.
+		/// The method performs an equality comparison by calling the <c>T.Equals</c> method on every element. 
+		/// If type <typeparamref name="T"/> overrides the <see cref="object.Equals(object)"/> method, that override is used for the comparison.
+		/// This is an O(n) operation, where n is the length of the array.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <c>array</c> or <paramref name="item"/> is null.</exception>
+		/// <example>
+		/// This example shows how to find the last index of an item in an array.
+		/// <code>
+		/// int[] numbers = { 10, 20, 30, 20, 50 };
+		/// int index = numbers.LastIndexOf(20);
+		/// Console.WriteLine(index); // Output: 3
+		/// 
+		/// int notFound = numbers.LastIndexOf(99);
+		/// Console.WriteLine(notFound); // Output: -1
+		/// </code>
+		/// </example>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public int LastIndexOf([DisallowNull] T[] item)
+		{
+			array = array.ArgumentNotNull();
+			item = item.ArgumentNotNull();
+
+			return Array.LastIndexOf(array, item);
 		}
 
 		/// <summary>

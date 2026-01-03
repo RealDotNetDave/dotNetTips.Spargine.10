@@ -286,7 +286,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void ModifyCollectionLoop()
 	{
 		var people = this._personRefEnumerable;
-		var result = new List<Person>(people.Count());
+		var result = new List<Person>();
 
 		foreach (var person in people)
 		{
