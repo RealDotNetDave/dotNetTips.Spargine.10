@@ -37,8 +37,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
 	private IEnumerable<Person> _personRefEnumerable;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
-	private string _personRefId;
-	private Person _personRefLast;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -207,7 +205,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void IndexOf()
 	{
 		var people = this._personRefEnumerable;
-		var result = people.IndexOf(this._personRefLast);
+
+		var result = people.IndexOf(this.PersonRef01);
 
 		this.Consume(result);
 	}
@@ -217,7 +216,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefEnumerable;
 		var comparer = new PersonComparer();
-		var result = people.IndexOf(this._personRefLast, comparer);
+
+		var result = people.IndexOf(this.PersonRef01, comparer);
 
 		this.Consume(result);
 	}
@@ -228,7 +228,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void IndexOfPredicate()
 	{
 		var people = this._personRefEnumerable;
-		var result = people.IndexOf(p => p.Equals(this._personRefLast));
+
+		var result = people.IndexOf(p => p.Equals(this.PersonRef01));
 
 		this.Consume(result);
 	}
@@ -376,7 +377,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void ReplaceIf()
 	{
 		var people = this._personRefEnumerable;
-		var result = people.ReplaceIf((p, index) => string.Equals(p.Id, this._personRefId, StringComparison.Ordinal), this._personRefLast);
+		var result = people.ReplaceIf((p, index) => string.Equals(p.Id, this.PersonRef01.Id, StringComparison.Ordinal), this.PersonRef01);
 
 		foreach (var person in result)
 		{
