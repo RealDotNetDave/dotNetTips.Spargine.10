@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 01-03-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// converting lists to various collection types, performing actions on list elements, and more. These methods
 /// are designed to extend the capabilities of <see cref="List{T}"/> and simplify common operations.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineListExtentions")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineListExtentions")]
 public static class ListExtensions
 {
 	/// <summary>
@@ -143,7 +143,7 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [DisallowNull] IEqualityComparer<T> comparer)
 		{
 			if (items is null)
