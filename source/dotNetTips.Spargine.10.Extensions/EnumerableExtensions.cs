@@ -192,15 +192,6 @@ public static class EnumerableExtensions
 		/// <item><description><b>Reference equality:</b> Use <see cref="ReferenceEqualityComparer"/> to compare object references instead of values.</description></item>
 		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
 		/// </list>
-		/// <para>
-		/// <b>Related Methods:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><see cref="IndexOf(T)"/> - Uses <see cref="EqualityComparer{T}.Default"/> for comparison.</description></item>
-		/// <item><description><see cref="IndexOf(Func{T, bool})"/> - Uses a predicate function for matching.</description></item>
-		/// <item><description><see cref="Array.IndexOf{T}(T[], T)"/> - Optimized array-specific implementation.</description></item>
-		/// <item><description><see cref="List{T}.IndexOf(T)"/> - Optimized list-specific implementation.</description></item>
-		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
