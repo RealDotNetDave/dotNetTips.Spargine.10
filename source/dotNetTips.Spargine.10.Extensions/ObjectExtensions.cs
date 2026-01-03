@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 01-03-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// These methods are designed to extend the capabilities of all objects and simplify common operations related to serialization,
 /// reflection, and memory management.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineObjectExtensions", Status = Status.UpdateDocumentation)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineObjectExtensions")]
 public static class ObjectExtensions
 {
 	/// <summary>
@@ -66,10 +66,6 @@ public static class ObjectExtensions
 	{
 		ProcessCollectionToDispose(items);
 	}
-
-	// Fix for CS0246: The type or namespace name 'T' could not be found
-	// The issue is that 'T' is not defined in the context of the `DisposeFields` method.
-	// To fix this, we need to remove the generic type 'T' and use a non-generic approach.
 
 	/// <summary>
 	/// Automatically disposes of all IDisposable fields within an object using reflection, simplifying memory management in classes that deal with unmanaged resources.
@@ -128,7 +124,7 @@ public static class ObjectExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json" /> is null or empty.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult FromJson<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] this string json, JsonSerializerOptions? options = null)
 	{
 		json = json.ArgumentNotNullOrEmpty();
@@ -146,7 +142,7 @@ public static class ObjectExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json" /> is null or empty, or if <paramref name="typeInfo"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult FromJson<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] this string json, JsonTypeInfo<TResult> typeInfo)
 	{
 		json = json.ArgumentNotNullOrEmpty();
@@ -188,7 +184,7 @@ public static class ObjectExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Lazy<T> ToLazy<T>([DisallowNull] this T value)
 	{
 		value = value.ArgumentNotNull();
@@ -277,6 +273,7 @@ public static class ObjectExtensions
 		[Information(nameof(Max), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T? Max<T>([DisallowNull] T obj2) where T : IComparable
 		{
+			//TODO: ADD MIN?
 			return obj is T comparableObj
 				? TypeHelper.Max(comparableObj, obj2)
 				: throw new InvalidOperationException($"The object is not of type {typeof(T).Name} which implements IComparable.");
@@ -402,7 +399,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
 		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -723,7 +720,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
 		public string FieldsToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 		{
 			obj = obj.ArgumentNotNull();
@@ -774,7 +771,7 @@ public static class ObjectExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 		public bool IsString() => obj is string;
 
 		/// <summary>
@@ -843,7 +840,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string ToJson<T>([DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			obj = obj.ArgumentNotNull();
@@ -903,7 +900,7 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastClone<T>([DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			obj = obj.ArgumentNotNull();
@@ -921,7 +918,7 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastClone<T>(JsonSerializerOptions? options = null)
 		{
 			obj = obj.ArgumentNotNull();
@@ -955,7 +952,7 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastBinaryClone<T>()
 		{
 			obj = obj.ArgumentNotNull();
@@ -1018,7 +1015,7 @@ public static class ObjectExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 		public T FastBinaryClone<T>([AllowNull] MessagePack.MessagePackSerializerOptions options = null)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1075,7 +1072,7 @@ public static class ObjectExtensions
 		/// </summary>
 		/// <returns>A read-only collection of interface names.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public ReadOnlyCollection<string> GetImplementedInterfaces()
 		{
 			return TypeHelper.GetImplementedInterfaces(obj);
@@ -1086,7 +1083,7 @@ public static class ObjectExtensions
 		/// </summary>
 		/// <returns>A read-only collection of interface types.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetImplementedInterfaceTypes()
 		{
 			return TypeHelper.GetImplementedInterfaceTypes(obj);
