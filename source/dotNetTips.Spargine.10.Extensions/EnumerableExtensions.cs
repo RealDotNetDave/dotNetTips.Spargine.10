@@ -608,9 +608,9 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(2);
 
-			foreach (var people in collection.Chunk(pageCount))
+			foreach (var chunk in collection.Chunk(pageCount))
 			{
-				yield return people;
+				yield return chunk;
 			}
 		}
 

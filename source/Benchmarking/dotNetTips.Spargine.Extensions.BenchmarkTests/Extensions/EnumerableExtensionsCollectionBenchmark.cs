@@ -36,6 +36,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
 	private IEnumerable<Person> _personRefEnumerable;
+	private List<Person> _personRefEnumerableStart;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
@@ -396,6 +397,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var peopleToAdd = this._personRefEnumerable.ToList();
 		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.Count / 10));
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
+
+		this._personRefEnumerableStart = this._personRefEnumerable.Take(this.HalfCount).ToList();
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle))]
@@ -435,7 +438,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void StartsWith()
 	{
 		var people = this._personRefEnumerable;
-		var result = people.StartsWith(people.Take(10));
+		var result = people.StartsWith(this._personRefEnumerableStart);
 
 		this.Consume(result);
 	}
