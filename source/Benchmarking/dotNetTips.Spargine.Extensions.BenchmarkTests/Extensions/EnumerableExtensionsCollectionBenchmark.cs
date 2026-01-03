@@ -13,9 +13,7 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -37,17 +35,10 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
-	private Collection<Person> _personRefCollection;
-	private Collection<Person> _personRefCollectionToAdd;
 	private IEnumerable<Person> _personRefEnumerable;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
-	private FrozenSet<Person> _personRefFrozenSet;
-	private HashSet<Person> _personRefHashSet;
 	private string _personRefId;
 	private Person _personRefLast;
-	private List<Person> _personRefList;
-	private List<Person> _personRefListDups;
-	private SortedSet<Person> _personRefSortedSet;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -175,76 +166,10 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": Collection")]
-	public void EnsureUniqueCollection()
-	{
-		var people = this._personRefCollection.AddLast(this.PersonRef01).ToCollection();
-
-		var result = people.EnsureUnique();
-
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": Enumerable")]
-	public void EnsureUniqueEnumerable()
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique))]
+	public void EnsureUnique()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
-
-		var result = people.EnsureUnique();
-
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": FrozenSet")]
-	public void EnsureUniqueFrozenSet()
-	{
-		var people = this._personRefFrozenSet.AddLast(this.PersonRef01).ToFrozenSet();
-
-		var result = people.EnsureUnique();
-
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": HashSet")]
-	public void EnsureUniqueHashSet()
-	{
-		var people = this._personRefHashSet.AddLast(this.PersonRef01).ToHashSet();
-
-		var result = people.EnsureUnique();
-
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": List")]
-	public void EnsureUniqueList()
-	{
-		var people = this._personRefList;
-		people.AddLast(this.PersonRef01);
-
-		var result = people.EnsureUnique();
-
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": SortedSet")]
-	public void EnsureUniqueSortedSet()
-	{
-		var people = new SortedSet<Person>(this._personRefSortedSet.AddLast(this.PersonRef01));
 
 		var result = people.EnsureUnique();
 
@@ -274,16 +199,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void FirstOrNull()
 	{
 		var result = this._coordinateValEnumerable.FirstOrNull(p => p.X == this.CoordinateVal01.X);
-
-		this.Consume(result);
-	}
-
-
-	[Benchmark(Description = nameof(EnumerableExtensions.HasDuplicates))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void HasDuplicates()
-	{
-		var result = this._personRefListDups.HasDuplicates();
 
 		this.Consume(result);
 	}
@@ -435,18 +350,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.RemoveDuplicates))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void RemoveDuplicates()
-	{
-		var result = this._personRefListDups.RemoveDuplicates().Value;
-
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.RemoveNulls))]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
 	public void RemoveNulls()
@@ -486,29 +389,12 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this._coordinateValEnumerable = this.GetCoordinateValArray().AsEnumerable();
-		this._personRefCollection = this.GetPersonRefArray().ToCollection();
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
-		this._personRefFrozenSet = this.GetPersonRefArray().ToFrozenSet();
-		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
-		this._personRefList = [.. this.GetPersonRefArray()];
-		this._personRefSortedSet = new SortedSet<Person>(this.GetPersonRefArray());
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
-
-		this._personRefLast = this._personRefList.Last();
-		this._personRefId = this._personRefList[this.Count / 2].Id;
 
 		var peopleToAdd = this._personRefEnumerable.ToList();
 		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.Count / 10));
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
-		this._personRefCollectionToAdd = peopleToAdd.ToCollection();
-
-		// Create collection with duplicates
-		var dups = this._personRefEnumerable.Shuffle().Take(this.Count / 10);
-		this._personRefListDups = [.. this._personRefEnumerable];
-		foreach (var person in dups)
-		{
-			_ = this._personRefListDups.Append(person);
-		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle))]
@@ -553,20 +439,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.StructuralSequenceEqual) + ": Collection")]
-	public void StructuralSequenceEqualCollection()
-	{
-		var people = this._personRefCollection;
-		var people2 = this._personRefCollectionToAdd;
-
-		var result = people.StructuralSequenceEqual(people2);
-
-		this.Consume(result);
-	}
-
-
-	[Benchmark(Description = nameof(EnumerableExtensions.StructuralSequenceEqual) + ": Enumerable")]
-	public void StructuralSequenceEqualEnumerable()
+	[Benchmark(Description = nameof(EnumerableExtensions.StructuralSequenceEqual))]
+	public void StructuralSequenceEqual()
 	{
 		var people1 = this._personRefEnumerable;
 		var people2 = this._personRefEnumerableToAdd;

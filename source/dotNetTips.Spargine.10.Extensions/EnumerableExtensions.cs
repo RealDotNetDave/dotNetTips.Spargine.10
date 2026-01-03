@@ -148,38 +148,6 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
-			//TODO: ADD UNIT TESTS FOR ALL COLLECTION TYPES.
-
-			if (collection is List<T> list)
-			{
-				// Use List<T>.IndexOf which is highly optimized in the framework
-				return list.IndexOf(item);
-			}
-
-			if (collection is T[] array)
-			{
-				// Use Array.IndexOf which is highly optimized
-				return Array.IndexOf(array, item);
-			}
-
-			if (collection is IList<T> ilist)
-			{
-				// Use indexed access to avoid enumerator allocation
-				var count = ilist.Count;
-				var comparer = EqualityComparer<T>.Default;
-
-				for (var itemIndex = 0; itemIndex < count; itemIndex++)
-				{
-					if (comparer.Equals(ilist[itemIndex], item))
-					{
-						return itemIndex;
-					}
-				}
-
-				return -1;
-			}
-
-			// Fallback: Generic enumeration path
 			var index = 0;
 			var defaultComparer = EqualityComparer<T>.Default;
 
@@ -263,6 +231,7 @@ public static class EnumerableExtensions
 			comparer = comparer.ArgumentNotNull();
 
 			var index = 0;
+
 			foreach (var element in collection)
 			{
 				if (comparer.Equals(element, item))
@@ -674,7 +643,7 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Determines whether two sequences are structurally equal by comparing their elements by using a default <see cref="IEqualityComparer{T}"/>.
+		/// Determines whether two sequences are structurally equal by comparing their elements by using a default <see cref="IEqualityComparer{T}" />.
 		/// </summary>
 		/// <param name="second">The second sequence to compare.</param>
 		/// <returns>true if the two collection sequences are of equal length and their corresponding elements are equal according to the default equality comparer for their type; otherwise, false.</returns>
@@ -691,14 +660,6 @@ public static class EnumerableExtensions
 			if (ReferenceEquals(collection, second))
 			{
 				return true;
-			}
-
-			if (collection is ICollection<T> col1 && second is ICollection<T> col2)
-			{
-				if (col1.Count != col2.Count)
-				{
-					return false;
-				}
 			}
 
 			var comparer = StructuralComparisons.StructuralEqualityComparer;
@@ -779,30 +740,6 @@ public static class EnumerableExtensions
 		{
 			collection = collection.ArgumentItemsExists();
 
-			// Optimize for common collection types to avoid double enumeration
-			if (collection is IList<T> list)
-			{
-				return new Collection<T>(list);
-			}
-
-			// Optimize for arrays with direct creation
-			if (collection is T[] array)
-			{
-				return new Collection<T>(array);
-			}
-
-			// For other types, materialize to list first for better performance
-			if (collection is ICollection<T> collectionT)
-			{
-				var tempList = new List<T>(collectionT.Count);
-				foreach (var item in collection)
-				{
-					tempList.Add(item);
-				}
-				return new Collection<T>(tempList);
-			}
-
-			// Fall back to collection expression for unknown types
 			return new Collection<T>([.. collection]);
 		}
 
@@ -1180,26 +1117,16 @@ public static class EnumerableExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			if (collection is ICollection<T> col)
+			long count = 0;
+
+			using (var enumerator = collection.GetEnumerator())
 			{
-				return col.Count;
-			}
-			else if (collection is ICollection colNonGeneric)
-			{
-				return colNonGeneric.Count;
-			}
-			else
-			{
-				var count = 0;
-				using (var enumerator = collection.GetEnumerator())
+				while (enumerator.MoveNext())
 				{
-					while (enumerator.MoveNext())
-					{
-						count++;
-					}
+					count++;
 				}
-				return count;
 			}
+			return count;
 		}
 
 		/// <summary>
@@ -1353,51 +1280,9 @@ public static class EnumerableExtensions
 		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> EnsureUnique()
 		{
+			//TODO: OVERLOAD TO USE EQUALITYCOMPARER
 			collection = collection.ArgumentNotNull();
 
-			// Return early if collection is already a unique set
-			if (collection is HashSet<T> hashSet)
-			{
-				return hashSet;
-			}
-
-			if (collection is SortedSet<T> sortedSet)
-			{
-				return sortedSet;
-			}
-
-			if (collection is FrozenSet<T> frozenSet)
-			{
-				return frozenSet;
-			}
-
-			// For small collections, using a direct HashSet approach is faster than LINQ
-			if (collection is ICollection<T> collectionT)
-			{
-				return collectionT.Count <= 1
-					? collection // Single element or empty is already unique
-					: new HashSet<T>(collection, EqualityComparer<T>.Default);
-			}
-
-			// Use specialized implementation for lists to avoid multiple enumerations
-			if (collection is List<T> list)
-			{
-				if (list.Count <= 1)
-				{
-					return list;
-				}
-
-				var hashSetWithCapacity = new HashSet<T>(list.Count, EqualityComparer<T>.Default);
-
-				foreach (var item in list)
-				{
-					_ = hashSetWithCapacity.Add(item);
-				}
-
-				return hashSetWithCapacity;
-			}
-
-			// Default implementation using HashSet for other collection types
 			return new HashSet<T>(collection, EqualityComparer<T>.Default);
 		}
 
@@ -1652,39 +1537,12 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<T> ToReadOnlyCollection()
 		{
 			collection = collection.ArgumentNotNull();
 
-			// Fast path: Already an IList<T>, wrap directly
-			if (collection is IList<T> list)
-			{
-				return new ReadOnlyCollection<T>(list);
-			}
-
-			// Fast path: Array (implements IList<T>)
-			if (collection is T[] array)
-			{
-				return new ReadOnlyCollection<T>(array);
-			}
-
-			// Medium path: ICollection<T> with known count - pre-size list
-			if (collection is ICollection<T> collectionT)
-			{
-				var tempList = new List<T>(collectionT.Count);
-
-				foreach (var item in collection)
-				{
-					tempList.Add(item);
-				}
-
-				return new ReadOnlyCollection<T>(tempList);
-			}
-
-			// Slow path: Generic IEnumerable<T> - materialize to list
-			// Note: ToList() is optimized internally for common collection types
-			return new ReadOnlyCollection<T>(collection.ToList());
+			return new ReadOnlyCollection<T>([.. collection]);
 		}
 
 		/// <summary>

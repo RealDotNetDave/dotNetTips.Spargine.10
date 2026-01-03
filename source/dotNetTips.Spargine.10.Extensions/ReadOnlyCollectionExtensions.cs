@@ -68,6 +68,7 @@ public static class ReadOnlyCollectionExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
+			//TODO: OVERLOAD TO USE EQUALITYCOMPARER
 			var comparer = EqualityComparer<T>.Default;
 			var hash = 6551;
 
