@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-03-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -35,6 +36,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
+	private Collection<Person> _personRefCollection;
+	private Collection<Person> _personRefCollectionToAdd;
 	private IEnumerable<Person> _personRefEnumerable;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
 	private string _personRefId;
@@ -42,7 +45,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private List<Person> _personRefList;
 	private List<Person> _personRefListDups;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
-
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
 	public void AddDistinct()
@@ -382,8 +384,11 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var collection = this._personRefEnumerable;
 
 		// Add a null to the collection
-		collection = collection.AddFirst(null);
-		collection = collection.AddLast(null);
+		var people = collection.ToList();
+		people.Add(null);
+		people.Add(null);
+
+		collection = people.AsEnumerable();
 
 		var result = collection.RemoveNulls();
 
@@ -414,6 +419,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personRefList = [.. this.GetPersonRefArray()];
 		this._coordinateValEnumerable = this.GetCoordinateValArray().AsEnumerable();
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
+		this._personRefCollection = this.GetPersonRefArray().ToCollection();
 
 		this._personRefLast = this._personRefList.Last();
 		this._personRefId = this._personRefList[this.Count / 2].Id;
@@ -421,6 +427,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var peopleToAdd = this._personRefEnumerable.ToList();
 		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.Count / 10));
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
+		this._personRefCollectionToAdd = peopleToAdd.ToCollection();
 
 		// Create collection with duplicates
 		var dups = this._personRefEnumerable.Shuffle().Take(this.Count / 10);
@@ -473,11 +480,25 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.StructuralSequenceEqual))]
-	public void StructuralSequenceEqual()
+	[Benchmark(Description = nameof(EnumerableExtensions.StructuralSequenceEqual) + ": Collection")]
+	public void StructuralSequenceEqualCollection()
 	{
-		var people = this._personRefEnumerable;
-		var result = people.StructuralSequenceEqual(this._personRefEnumerableToAdd);
+		var people = this._personRefCollection;
+		var people2 = this._personRefCollectionToAdd;
+
+		var result = people.StructuralSequenceEqual(people2);
+
+		this.Consume(result);
+	}
+
+
+	[Benchmark(Description = nameof(EnumerableExtensions.StructuralSequenceEqual) + ": Enumerable")]
+	public void StructuralSequenceEqualEnumerable()
+	{
+		var people1 = this._personRefEnumerable;
+		var people2 = this._personRefEnumerableToAdd;
+
+		var result = people1.StructuralSequenceEqual(people2);
 
 		this.Consume(result);
 	}

@@ -683,8 +683,6 @@ public static class EnumerableExtensions
 		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool StructuralSequenceEqual([AllowNull] IEnumerable<T> second)
 		{
-			//TODO: ADD UNIT TESTS AND BENCHMARKS FOR ALL COLLECTION TYPES
-
 			if (collection is null || second is null)
 			{
 				return false;
