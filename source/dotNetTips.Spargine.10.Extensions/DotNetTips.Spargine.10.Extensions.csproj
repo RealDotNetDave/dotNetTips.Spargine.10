@@ -128,7 +128,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+	<ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
   </ItemGroup>
 
 </Project>

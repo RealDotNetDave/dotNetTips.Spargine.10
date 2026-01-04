@@ -1300,7 +1300,7 @@ public class StringExtensionsTests
 	[TestMethod]
 	public void IsStringTest()
 	{
-		Assert.IsTrue("979-8589711707".IsString());
+		Assert.IsTrue("979-8589711707".IsValidString());
 	}
 
 	[TestMethod]

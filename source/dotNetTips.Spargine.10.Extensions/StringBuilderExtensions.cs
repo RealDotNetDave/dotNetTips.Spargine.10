@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-04-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <remarks>
 /// This class includes methods for appending key-value pairs, bytes, and collections with various formatting options.
 /// </remarks>
-[Information(nameof(StringBuilderExtensions), "David McCarter", "5/26/2020", "7/29/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineStringBuilderExtensions")]
+[Information(nameof(StringBuilderExtensions), "David McCarter", "5/26/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineStringBuilderExtensions")]
 public static class StringBuilderExtensions
 {
 
@@ -95,19 +95,41 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Appends the key-value pair to the <see cref="StringBuilder"/>.
+		/// Appends a key-value pair to the <see cref="StringBuilder"/> in a formatted string representation.
 		/// </summary>
-		/// <param name="key">The key to append.</param>
-		/// <param name="value">The value to append.</param>
-		/// <param name="includeQuotes">If set to <c>true</c>, includes quotes around the value.</param>
-		/// <param name="includeComma">If set to <c>true</c>, includes a comma after the key-value pair.</param>
-		/// <exception cref="ArgumentNullException">Thrown if StringBuilder or <paramref name="key"/> is null.</exception>
+		/// <param name="key">The key name to append. Must not be <c>null</c> or empty.</param>
+		/// <param name="value">The value to append. If <c>null</c>, the method returns without modifying the <see cref="StringBuilder"/>.</param>
+		/// <param name="includeQuotes">
+		/// If set to <c>true</c>, wraps the value in double quotation marks and escapes any special characters (double quotes and backslashes) within the value.
+		/// Default is <c>true</c>.
+		/// </param>
+		/// <param name="includeComma">
+		/// If set to <c>true</c>, appends a comma separator after the key-value pair for chaining multiple pairs.
+		/// Default is <c>true</c>.
+		/// </param>
+		/// <exception cref="ArgumentNullException">Thrown if the <see cref="StringBuilder"/> instance or <paramref name="key"/> is <c>null</c>.</exception>
 		/// <exception cref="ArgumentException">Thrown if <paramref name="key"/> is empty.</exception>
+		/// <remarks>
+		/// This method formats the output as <c>key=value</c> or <c>key="value"</c> depending on the <paramref name="includeQuotes"/> parameter.
+		/// When <paramref name="includeQuotes"/> is <c>true</c>, special characters within the value (specifically double quotes and backslashes) are automatically
+		/// escaped with a backslash prefix to ensure proper string formatting. The method efficiently handles special character escaping using
+		/// <see cref="SearchValues{T}"/> for optimal performance.
+		/// If <paramref name="includeComma"/> is <c>true</c>, a comma is appended after the key-value pair, making it suitable for constructing
+		/// comma-separated lists of key-value pairs.
+		/// </remarks>
 		/// <example>
 		/// <code>
 		/// var sb = new StringBuilder();
 		/// sb.AppendKeyValue("Name", "John", true, true);
 		/// Console.WriteLine(sb.ToString()); // Output: Name="John",
+		/// 
+		/// var sb2 = new StringBuilder();
+		/// sb2.AppendKeyValue("Path", @"C:\Files\Data", true, false);
+		/// Console.WriteLine(sb2.ToString()); // Output: Path="C:\\Files\\Data"
+		/// 
+		/// var sb3 = new StringBuilder();
+		/// sb3.AppendKeyValue("Count", "42", false, false);
+		/// Console.WriteLine(sb3.ToString()); // Output: Count=42
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

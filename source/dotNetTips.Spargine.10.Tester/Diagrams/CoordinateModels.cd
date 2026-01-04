@@ -6,16 +6,13 @@
       <HashCode>AAAAAAAAAAAAAAQEgACAAgAAAAAAAIAAAAAAAAAAZyE=</HashCode>
       <FileName>Models\ValueTypes\Coordinate.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="ICoordinate" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Struct>
-  <Interface Name="DotNetTips.Spargine.Tester.Models.ValueTypes.ICoordinate">
-    <Position X="4.25" Y="1.5" Width="1.5" />
+  <Interface Name="DotNetTips.Spargine.Tester.Models.Common.ICoordinate">
+    <Position X="3.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAYAE=</HashCode>
-      <FileName>Models\ValueTypes\ICoordinate.cs</FileName>
+      <FileName>Models\Common\ICoordinate.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
