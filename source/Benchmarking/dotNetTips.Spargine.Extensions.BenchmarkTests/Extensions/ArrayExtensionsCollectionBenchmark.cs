@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 01-03-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -37,7 +37,9 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	private PersonRecord[] _personRecordArray;
 	private Person[] _personRefArray;
+	private Person[] _personRefArrayHalf;
 	private Spargine.Tester.Models.ValueTypes.Person[] _personValArray;
+	private Spargine.Tester.Models.ValueTypes.Person[] _personValArrayHalf;
 
 	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
@@ -66,7 +68,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void AreEqual_Ref()
 	{
 		var people1 = this._personRefArray;
-		var people2 = people1.Take(this.Count / 2).ToArray();
+		var people2 = this._personRefArrayHalf;
 
 		var result = people1.AreEqual(people2);
 
@@ -78,7 +80,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void AreEqual_Val()
 	{
 		var people1 = this._personValArray;
-		var people2 = people1.Take(this.Count / 2).ToArray();
+		var people2 = this._personValArrayHalf;
 
 		var result = people1.AreEqual(people2);
 
@@ -461,7 +463,9 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._personRecordArray = this.GetPersonRecordArray();
 		this._personRefArray = this.GetPersonRefArray();
+		this._personRefArrayHalf = this.GetPersonRefArray().Take(this.HalfCount).ToArray();
 		this._personValArray = this.GetPersonValArray();
+		this._personValArrayHalf = this.GetPersonValArray().Take(this.HalfCount).ToArray();
 		this._byteArray = this.GetByteArray(this.Count);
 
 		this._halfCount = this._personRefArray.Length / 2;

@@ -122,7 +122,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		people = people.AddLast(people.FirstOrDefault());
 
-		var result = people.ContainsAny(people.Take(10).ToArray().AsReadOnly());
+		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
 
 		this.Consume(result);
 	}
@@ -152,7 +152,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		people = people.Create(true);
 
-		var result = people.ContainsAny(people.Take(10).ToArray().AsReadOnly());
+		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
 
 		this.Consume(result);
 	}
@@ -395,7 +395,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 
 		var peopleToAdd = this._personRefEnumerable.ToList();
-		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.Count / 10));
+		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.HalfCount));
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
 
 		this._personRefEnumerableStart = this._personRefEnumerable.Take(this.HalfCount).ToList();
