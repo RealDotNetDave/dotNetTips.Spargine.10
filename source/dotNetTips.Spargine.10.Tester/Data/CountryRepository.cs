@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-23-2025
+// Last Modified On : 01-04-2026
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Tester.Data;
 /// Provides static methods for retrieving comprehensive data about countries, including their regions, states, and cities.
 /// Utilizes resources and serialization to efficiently manage and access country data.
 /// </summary>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineCountryRepository")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineCountryRepository")]
 public static class CountryRepository
 {
 	/// <summary>
@@ -44,58 +44,6 @@ public static class CountryRepository
 	/// The serializer options configured for JSON operations within the CountryRepository class.
 	/// </summary>
 	private static readonly JsonSerializerOptions? _options = ConfigureSerializerOptions();
-
-	/// <summary>
-	/// Configures and returns the serializer options for JSON serialization.
-	/// </summary>
-	/// <returns>
-	/// A <see cref="JsonSerializerOptions"/> object configured with custom settings for serialization.
-	/// </returns>
-	/// <remarks>
-	/// This method sets up JSON serializer options to handle numbers as strings and adds custom converters.
-	/// </remarks>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static JsonSerializerOptions ConfigureSerializerOptions()
-	{
-		var options = new JsonSerializerOptions()
-		{
-			NumberHandling = JsonNumberHandling.AllowReadingFromString,
-		};
-
-		foreach (var converter in CountryConverter.Settings.Converters)
-		{
-			options.Converters.Add(converter);
-		}
-
-		return options;
-	}
-
-	/// <summary>
-	/// Deserializes the JSON string from resources into a collection of <see cref="Country"/>.
-	/// This method is marked with <see cref="MethodImplOptions.NoInlining"/> to suggest that
-	/// the JIT compiler should not inline this method, potentially to improve debugging or
-	/// to work around JIT compilation behaviors.
-	/// </summary>
-	/// <returns>
-	/// A read-only collection of <see cref="Country"/> objects.
-	/// </returns>
-	/// <exception cref="InvalidOperationException">
-	/// Thrown when deserialization fails due to invalid JSON format.
-	/// </exception>
-	[MethodImpl(MethodImplOptions.NoInlining)]
-	private static ReadOnlyCollection<Country> DeserializeCountries()
-	{
-		try
-		{
-			var countries = JsonSerializer.Deserialize<Country[]>(Resources.CountryData, _options);
-			return countries?.AsReadOnly() ?? new ReadOnlyCollection<Country>([]);
-		}
-		catch (JsonException ex)
-		{
-			// Log the exception or handle it as needed.
-			throw new InvalidOperationException(Resources.FailedToDeserializeCountriesData, ex);
-		}
-	}
 
 	/// <summary>
 	/// Retrieves a read-only collection of all countries.
@@ -150,7 +98,7 @@ public static class CountryRepository
 	/// </exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Country? GetCountry(string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNullOrEmpty();
@@ -176,5 +124,57 @@ public static class CountryRepository
 		}
 
 		return info;
+	}
+
+	/// <summary>
+	/// Configures and returns the serializer options for JSON serialization.
+	/// </summary>
+	/// <returns>
+	/// A <see cref="JsonSerializerOptions"/> object configured with custom settings for serialization.
+	/// </returns>
+	/// <remarks>
+	/// This method sets up JSON serializer options to handle numbers as strings and adds custom converters.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static JsonSerializerOptions ConfigureSerializerOptions()
+	{
+		var options = new JsonSerializerOptions()
+		{
+			NumberHandling = JsonNumberHandling.AllowReadingFromString,
+		};
+
+		foreach (var converter in CountryConverter.Settings.Converters)
+		{
+			options.Converters.Add(converter);
+		}
+
+		return options;
+	}
+
+	/// <summary>
+	/// Deserializes the JSON string from resources into a collection of <see cref="Country"/>.
+	/// This method is marked with <see cref="MethodImplOptions.NoInlining"/> to suggest that
+	/// the JIT compiler should not inline this method, potentially to improve debugging or
+	/// to work around JIT compilation behaviors.
+	/// </summary>
+	/// <returns>
+	/// A read-only collection of <see cref="Country"/> objects.
+	/// </returns>
+	/// <exception cref="InvalidOperationException">
+	/// Thrown when deserialization fails due to invalid JSON format.
+	/// </exception>
+	[MethodImpl(MethodImplOptions.NoInlining)]
+	private static ReadOnlyCollection<Country> DeserializeCountries()
+	{
+		try
+		{
+			var countries = JsonSerializer.Deserialize<Country[]>(Resources.CountryData, _options);
+			return countries?.AsReadOnly() ?? new ReadOnlyCollection<Country>([]);
+		}
+		catch (JsonException ex)
+		{
+			// Log the exception or handle it as needed.
+			throw new InvalidOperationException(Resources.FailedToDeserializeCountriesData, ex);
+		}
 	}
 }
