@@ -33,13 +33,13 @@
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<Nullable>enable</Nullable>
 	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
-	<PackageProjectUrl>https://github.com/RealDotNetDave/DotNetTips.Spargine.8</PackageProjectUrl>
+	<PackageProjectUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</PackageProjectUrl>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
 	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/RealDotNetDave/DotNetTips.Spargine.8</RepositoryUrl>
+	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
 	<RootNamespace>DotNetTips.Spargine.Extensions</RootNamespace>
 	<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>

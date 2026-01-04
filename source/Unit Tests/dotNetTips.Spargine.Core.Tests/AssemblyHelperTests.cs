@@ -161,8 +161,6 @@ public class AssemblyHelperTests : UnitTester
 		var dir = new DirectoryInfo("C:\\Windows\\assembly\\NativeImages_v4.0.30319_64");
 
 		var files = Directory.GetFiles(dir.FullName, "*.dll", SearchOption.AllDirectories).Where(p => AssemblyHelper.IsDotNetAssembly(new FileInfo(p))).ToArray();
-
-		//		var assembly = Assembly.LoadFile(Path.Combine(App.ProcessPath, "DotNetTips.Spargine.8.Benchmarking.dll"));
 	}
 
 	[TestMethod]

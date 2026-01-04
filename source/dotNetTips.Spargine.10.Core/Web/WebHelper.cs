@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Web;
 /// <remarks>
 /// The WebHelper class simplifies common web operations such as downloading content asynchronously,
 /// identifying local URIs, and managing HTTP headers. It leverages <see cref="HttpClient"/> for network communications,
-/// ensuring best practices like connection reuse are followed. This class is part of the DotNetTips.Spargine.8.Core library,
+/// ensuring best practices like connection reuse are followed. This class is part of the DotNetTips.Spargine.Core library,
 /// aimed at enhancing .NET development productivity.
 /// </remarks>
 [Information("From dotNetTips.Utility", Status = Status.NeedsDocumentation)]

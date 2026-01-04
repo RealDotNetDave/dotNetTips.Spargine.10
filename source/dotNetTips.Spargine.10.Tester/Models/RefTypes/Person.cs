@@ -1,22 +1,17 @@
 // ***********************************************************************
-// Assembly         : dotNetTips.Spargine8.Tester
+// Assembly         : DotNetTips.Spargine.10.Tester
 // Author           : David McCarter
-// Created          : 07-17-2019
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-17-2025
+// Last Modified On : 01-04-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// A real-world type for testing and benchmarking named "Person" with
-// the following properties: Addresses, Age, BornOn, CellPhone,
-// Email, FirstName, FullName, LastName, and Phone. This type also
-// includes methods to convert from PersonRecord and Person value
-// types to Person.
-// </summary>
+// <summary></summary>
 // ***********************************************************************
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Provides extension methods for the <see cref="Color"/> type, enhancing functionality with additional utility methods.
 /// </summary>
 /// <remarks>
-/// This class includes methods for operations such as averaging the RGB values of a collection of colors. It is part of the DotNetTips.Spargine.8.Extensions
+/// This class includes methods for operations such as averaging the RGB values of a collection of colors. It is part of the DotNetTips.Spargine.Extensions
 /// library, which provides a wide range of extension methods for .NET types, aiming to improve code readability and efficiency.
 /// </remarks>
 [Information(Status = Status.Available)]

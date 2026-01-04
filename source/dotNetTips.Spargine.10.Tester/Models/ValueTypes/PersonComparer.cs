@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.10.Tester
+// Author           : David McCarter
+// Created          : 06-13-2025
+//
+// Last Modified By : David McCarter
+// Last Modified On : 12-23-2025
+// ***********************************************************************
+// <copyright file="PersonComparer.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
