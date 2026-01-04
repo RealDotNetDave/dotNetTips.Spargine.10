@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-21-2025
+// Last Modified On : 01-04-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -56,11 +56,11 @@ internal sealed class Program
 			//	typeof(ArrayExtensionsCollectionBenchmark)
 			//	);
 
-			//var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+			var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
 
-			_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
-			_ = BenchmarkRunner.Run<ListExtensionsAddRemoveCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
+			//_ = BenchmarkRunner.Run<ListExtensionsAddRemoveCollectionBenchmark>(config);
 			//_ = BenchmarkHelper.Run<DictionaryExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkHelper.Run<ListExtensionsCollectionBenchmark>(config);
 			//_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);

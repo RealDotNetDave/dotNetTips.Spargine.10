@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
@@ -261,15 +260,6 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.HasValue) + ": RegEx + IgnoreCase")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void HasValueWithRegEx()
-	{
-		var result = TestEmailMixedCase.HasValue(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.IgnoreCase);
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(StringExtensions.HasValue) + ": String")]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void HasValueWithString()
@@ -442,15 +432,6 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.IsString))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void IsString()
-	{
-		var result = this.LongTestString.IsString();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(StringExtensions.IsStringSHA1Hash))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void IsStringSHA1Hash()
@@ -465,6 +446,15 @@ public class StringExtensionsBenchmark : Benchmark
 	public void IsUrl()
 	{
 		var result = this._domainAddress.IsUrl();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.IsValidString))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void IsValidString()
+	{
+		var result = this.LongTestString.IsValidString();
 
 		this.Consume(result);
 	}
