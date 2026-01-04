@@ -124,7 +124,7 @@
 
 ### T FastSelectItems(T array, System.Int32 startIndex, System.Int32 count)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -143,6 +143,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** GenerateHashCode
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 IndexOf(T array, T item)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/3/2026
+* **Description:** IndexOf
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -191,6 +203,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 6/15/2022
 * **Description:** IsNotEmpty
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 LastIndexOf(T array, T item)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/3/2026
+* **Description:** IndexOf
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -367,7 +391,7 @@
 
 ### T FastSelectItems(System.Int32 startIndex, System.Int32 count)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -386,6 +410,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** GenerateHashCode
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 IndexOf(T item)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/3/2026
+* **Description:** IndexOf
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -434,6 +470,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 6/15/2022
 * **Description:** IsNotEmpty
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 LastIndexOf(T item)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/3/2026
+* **Description:** IndexOf
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -1837,7 +1885,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 5/21/2022
 * **Description:** FastLongCount
@@ -1849,7 +1897,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FastLongCount
@@ -1894,7 +1942,7 @@
 
 ### T FastShuffle(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1954,7 +2002,7 @@
 
 ### System.Int32 IndexOf(T collection, T item)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2072,7 +2120,7 @@
 
 ### T PageAsync(T collection, System.Int32 pageSize)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** None
@@ -2181,7 +2229,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 4/13/2021
 * **Description:** ToCollection
@@ -2263,7 +2311,7 @@
 ### T ToReadOnlyCollection(T collection)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2289,7 +2337,7 @@
 
 ### T PageAsync(System.Int32 pageSize)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** None
@@ -2415,7 +2463,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 5/21/2022
 * **Description:** FastLongCount
@@ -2427,7 +2475,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FastLongCount
@@ -2472,7 +2520,7 @@
 
 ### T FastShuffle()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2532,7 +2580,7 @@
 
 ### System.Int32 IndexOf(T item)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2747,7 +2795,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 4/13/2021
 * **Description:** ToCollection
@@ -2829,7 +2877,7 @@
 ### T ToReadOnlyCollection()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3311,7 +3359,7 @@
 
 ### System.Void AddRangeIfNotExists(T list, T items, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3696,7 +3744,7 @@
 
 ### System.Void AddRangeIfNotExists(T items, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4867,7 +4915,7 @@
 
 ### T FastBinaryClone(System.Object obj)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4877,7 +4925,7 @@
 
 ### T FastBinaryClone(System.Object obj, MessagePack.MessagePackSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -4887,7 +4935,7 @@
 
 ### T FastClone(System.Object obj, T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4897,7 +4945,7 @@
 
 ### T FastClone(System.Object obj, System.Text.Json.JsonSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4939,7 +4987,7 @@
 
 ### System.String FieldsToString(System.Object obj, System.String header, System.Char keyValueSeparator, System.String sequenceSeparator, System.Boolean ignoreNulls, System.Boolean includeMemberName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4963,7 +5011,7 @@
 
 ### T FromJson(System.String json, System.Text.Json.JsonSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4973,7 +5021,7 @@
 
 ### T FromJson(System.String json, T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4983,7 +5031,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetImplementedInterfaces(System.Object obj)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -5003,7 +5051,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetImplementedInterfaceTypes(System.Object obj)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -5053,7 +5101,7 @@
 
 ### System.Boolean IsString(System.Object obj)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5107,7 +5155,7 @@
 
 ### System.String PropertiesToString(System.Object obj, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String header, System.Char keyValueSeparator, System.String sequenceSeparator, System.Boolean ignoreNulls, System.Boolean includeMemberName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -5129,7 +5177,7 @@
 
 ### System.String ToJson(System.Object obj, T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5169,7 +5217,7 @@
 
 ### T ToLazy(T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -5224,7 +5272,7 @@
 
 ### T FastBinaryClone()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5234,7 +5282,7 @@
 
 ### T FastBinaryClone(MessagePack.MessagePackSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -5244,7 +5292,7 @@
 
 ### T FastClone(T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5254,7 +5302,7 @@
 
 ### T FastClone(System.Text.Json.JsonSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5296,7 +5344,7 @@
 
 ### System.String FieldsToString(System.String header, System.Char keyValueSeparator, System.String sequenceSeparator, System.Boolean ignoreNulls, System.Boolean includeMemberName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -5308,7 +5356,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetImplementedInterfaces()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -5328,7 +5376,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetImplementedInterfaceTypes()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -5378,7 +5426,7 @@
 
 ### System.Boolean IsString()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5422,7 +5470,7 @@
 
 ### System.String PropertiesToString(System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String header, System.Char keyValueSeparator, System.String sequenceSeparator, System.Boolean ignoreNulls, System.Boolean includeMemberName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -5444,7 +5492,7 @@
 
 ### System.String ToJson(T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6239,7 +6287,7 @@
 
 ### System.Int32 CalculateTotalLength(System.String[] args)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6297,7 +6345,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.String DefaultIfNull(System.String value)
+### System.String DefaultIfNull(System.String input)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6321,7 +6369,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.String DefaultIfNullOrEmpty(System.String value, System.String defaultValue)
+### System.String DefaultIfNullOrEmpty(System.String input, System.String defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6395,7 +6443,7 @@
 
 ### System.Boolean FastIsNullOrEmpty(System.String input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6405,7 +6453,7 @@
 
 ### System.ValueTuple<System.String, System.String, System.String, System.String> FastParseUrl(System.String url)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6487,7 +6535,7 @@
 
 ### System.String HashPassword(System.String input, DotNetTips.Spargine.Core.Security.HashAlgorithmType algorithmType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -6522,16 +6570,6 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
-* **CreatedOn:** 
-* **Description:** HasValue
-* **Modified On:** 
-
-### System.Boolean HasValue(System.String input, System.String expression, System.Text.RegularExpressions.RegexOptions options)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** HasValue
@@ -6697,16 +6735,6 @@
 * **Description:** IsScientific
 * **Modified On:** 
 
-### System.Boolean IsString(System.String input)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
-* **CreatedOn:** 
-* **Description:** IsString
-* **Modified On:** 
-
 ### System.Boolean IsStringSHA1Hash(System.String input)
 
 * **Status:** Available
@@ -6727,6 +6755,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** IsUrl
+* **Modified On:** 
+
+### System.Boolean IsValidString(System.String input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** IsValidString
 * **Modified On:** 
 
 ### System.String RemoveCRLF(System.String input, System.String replacement)
@@ -6944,7 +6982,7 @@
 ### System.String ToTrimmed(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -6965,7 +7003,7 @@
 
 ### DotNetTips.Spargine.Core.Security.PasswordVerificationResult VerifyHashedPassword(System.String hashedPassword, System.String input, DotNetTips.Spargine.Core.Security.HashAlgorithmType algorithmType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7054,7 +7092,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo> GetAllConstructors(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7206,7 +7244,7 @@
 
 ### System.Type[] GetGenericArguments(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7252,7 +7290,7 @@
 
 ### System.Boolean HasMethod(System.Type type, System.String methodName, System.Reflection.BindingFlags bindingFlags)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7272,7 +7310,7 @@
 
 ### System.Boolean HasProperty(System.Type type, System.String propertyName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7282,7 +7320,7 @@
 
 ### System.Boolean ImplementsInterface(System.Type type, System.Type interfaceType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7292,7 +7330,7 @@
 
 ### System.Boolean IsAssignableTo(System.Type type, System.Type targetType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7302,7 +7340,7 @@
 
 ### System.Boolean IsClosedGeneric(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7367,7 +7405,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo> GetAllConstructors()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7483,7 +7521,7 @@
 
 ### System.Type[] GetGenericArguments()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7517,7 +7555,7 @@
 
 ### System.Boolean HasMethod(System.String methodName, System.Reflection.BindingFlags bindingFlags)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7537,7 +7575,7 @@
 
 ### System.Boolean HasProperty(System.String propertyName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7547,7 +7585,7 @@
 
 ### System.Boolean ImplementsInterface(System.Type interfaceType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7557,7 +7595,7 @@
 
 ### System.Boolean IsAssignableTo(System.Type targetType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7567,7 +7605,7 @@
 
 ### System.Boolean IsClosedGeneric()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7619,4 +7657,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/1/2026 3:12:27 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/4/2026 5:46:58 PM UTC**

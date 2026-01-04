@@ -1167,7 +1167,7 @@ public static class StringExtensions
 	/// bool isFirstNameValid = firstName.HasValue(1, 50);
 	/// bool isLastNameValid = lastName.HasValue(1, 50);
 	/// 
-	/// if (isFirstNameValid && isLastNameValid)
+	/// if (isFirstNameValid &amp;&amp; isLastNameValid)
 	/// {
 	///     SaveUserData(firstName, lastName);
 	/// }
@@ -1187,7 +1187,7 @@ public static class StringExtensions
 	/// <code>
 	/// string text = "test";
 	/// 
-	/// // Throws ArgumentOutOfRangeException: minLength < 0
+	/// // Throws ArgumentOutOfRangeException: minLength &lt; 0
 	/// bool result1 = text.HasValue(-1, 10);
 	/// 
 	/// // Throws ArgumentOutOfRangeException: minLength > maxLength
@@ -1196,7 +1196,6 @@ public static class StringExtensions
 	/// </example>
 	/// <seealso cref="HasValue(string)"/>
 	/// <seealso cref="HasValue(string, int)"/>
-	/// <seealso cref="int.IsInRange"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool HasValue(this string input, int minLength, int maxLength)

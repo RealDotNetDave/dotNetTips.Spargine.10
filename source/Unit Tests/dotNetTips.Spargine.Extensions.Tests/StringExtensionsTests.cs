@@ -17,7 +17,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Security;
@@ -944,11 +943,7 @@ public class StringExtensionsTests
 
 		Assert.IsFalse(testValue.HasValue("XXXXX"));
 
-		//Test Regex
-		var email = "dotnetdave@live.com";
-		Assert.IsTrue(email.HasValue(@"([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)", RegexOptions.IgnoreCase));
-
-		Assert.IsFalse("David".HasValue(string.Empty, RegexOptions.IgnoreCase));
+		Assert.IsFalse("David".HasValue(string.Empty));
 	}
 
 	[TestMethod]

@@ -37,6 +37,8 @@ namespace DotNetTips.Spargine.Core.Security;
 [Information(Version = "1", Status = Status.Available, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
 public static class EncryptionHelper
 {
+	//TODO: UPDATE UNIT TESTS
+
 	private const byte FormatVersion = 1;
 	private const int NonceSize = 12; // 96-bit nonce per NIST recommendation
 	private const int TagSize = 16;   // 128-bit auth tag (recommended)

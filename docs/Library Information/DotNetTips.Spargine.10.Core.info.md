@@ -101,7 +101,7 @@
 
 ### System.String GenerateDiagnosticReport()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -111,7 +111,7 @@
 
 ### System.Object GetAppState(System.String key)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -121,7 +121,7 @@
 
 ### System.Collections.Generic.IReadOnlyDictionary<System.String, System.String> GetCommandLineArguments()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -151,7 +151,7 @@
 
 ### System.String GetLocalizedString(System.Resources.ResourceManager resourceManager, System.String key, System.String cultureName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -327,7 +327,7 @@
 
 ### System.Void SetAppState(System.String key, System.Object value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -609,7 +609,7 @@
 
 ### System.Void AddCacheItemBatch(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -621,7 +621,7 @@
 
 ### System.Void AddCacheItemWithCallback(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Caching.Memory.PostEvictionDelegate postEvictionCallback)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -633,7 +633,7 @@
 
 ### System.Void AddCacheItemWithChangeToken(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Primitives.IChangeToken changeToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -645,7 +645,7 @@
 
 ### System.Void AddCacheItemWithCombinedExpiration(System.String key, T item, System.TimeSpan slidingExpiration, System.TimeSpan absoluteExpiration)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -657,7 +657,7 @@
 
 ### System.Void AddCacheItemWithDependency(System.String key, T item, System.TimeSpan timeout, System.Threading.CancellationTokenSource dependencyTokenSource)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -669,7 +669,7 @@
 
 ### System.Void AddCacheItemWithPriority(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Caching.Memory.CacheItemPriority priority)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -681,7 +681,7 @@
 
 ### System.Void AddCacheItemWithSize(System.String key, T item, System.TimeSpan timeout, System.Int64 size)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -693,7 +693,7 @@
 
 ### System.Void AddCacheItemWithSlidingExpiration(System.String key, T item, System.TimeSpan slidingExpiration)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -729,7 +729,7 @@
 
 ### System.Void Compact(System.Double percentage)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -765,7 +765,7 @@
 
 ### System.Threading.CancellationTokenSource CreateCacheDependency(System.String dependencyKey)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -777,7 +777,7 @@
 
 ### Microsoft.Extensions.Caching.Memory.MemoryCache CreateCacheWithLimit(System.Nullable<System.Int64> sizeLimit)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -825,7 +825,7 @@
 
 ### T GetCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -837,7 +837,7 @@
 
 ### DotNetTips.Spargine.Core.Cache.CacheStatistics GetCacheStatistics()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -849,7 +849,7 @@
 
 ### T GetOrCreateAsync(System.String key, T factory, System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -859,7 +859,7 @@
 
 ### T GetOrCreateAsync(System.String key, T factory, System.DateTimeOffset absoluteExpiration, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -883,7 +883,7 @@
 
 ### System.Boolean InvalidateDependentCacheItems(System.String dependencyKey)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -895,7 +895,7 @@
 
 ### System.Boolean PeekCacheItem(System.String key, T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -907,7 +907,7 @@
 
 ### System.Boolean RefreshCacheItem(System.String key, System.TimeSpan newTimeout)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -931,7 +931,7 @@
 
 ### System.Int32 RemoveCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -943,7 +943,7 @@
 
 ### System.Void ResetStatistics()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -955,7 +955,7 @@
 
 ### System.Boolean TryGetValue(System.String key, T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -968,7 +968,7 @@
 
 ### System.Int32 Count { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -980,7 +980,7 @@
 
 ### System.Int32 CurrentIndex { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -992,7 +992,7 @@
 
 ### T GetEnumerator()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1028,7 +1028,7 @@
 
 ### T PeekNext()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1040,7 +1040,7 @@
 
 ### System.Double PercentageComplete { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1052,7 +1052,7 @@
 
 ### System.Void Reset()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1064,7 +1064,7 @@
 
 ### System.Boolean SkipNext()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -1076,7 +1076,7 @@
 
 ### T ToArray()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1191,7 +1191,7 @@
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue, System.Int32 capacity)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1201,7 +1201,7 @@
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey, System.Int32 capacity)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1211,7 +1211,7 @@
 
 ### T AddOrUpdate(T key, T addValue, T updateValueFactory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1221,7 +1221,7 @@
 
 ### System.Void Clear()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1231,7 +1231,7 @@
 
 ### System.Boolean ContainsValue(T value, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1241,7 +1241,7 @@
 
 ### T DefaultValue { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1251,7 +1251,7 @@
 
 ### T GetOrAdd(T key, T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1261,7 +1261,7 @@
 
 ### T GetOrAdd(T key, T valueFactory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1271,7 +1271,7 @@
 
 ### T GetValueOrDefault(T key)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1291,7 +1291,7 @@
 
 ### T OnMissingKeyFactory { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1301,7 +1301,7 @@
 
 ### T ToImmutableDictionary()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1311,7 +1311,7 @@
 
 ### T ToReadOnlyDictionary()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1321,7 +1321,7 @@
 
 ### System.Boolean TryAdd(T key, T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1331,7 +1331,7 @@
 
 ### System.Boolean TryUpdate(T key, T newValue, T comparisonValue)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1440,7 +1440,7 @@
 
 ### System.Int32 AddRange(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1548,7 +1548,7 @@
 
 ### T ToArray()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1560,7 +1560,7 @@
 
 ### System.Boolean TryAdd(T item)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1572,7 +1572,7 @@
 
 ### System.Boolean TryPeek(T equalValue, T actualValue)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1639,7 +1639,7 @@
 
 ### System.Int32 AddRange(T items, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1679,7 +1679,7 @@
 
 ### System.Boolean ContainsAny(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1759,7 +1759,7 @@
 
 ### System.Int32 TryAddRange(T items, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -2584,7 +2584,7 @@
 
 ### System.String DiskUsage { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -2614,7 +2614,7 @@
 
 ### System.TimeSpan GetCpuUsagePrivilegedTime { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -2624,7 +2624,7 @@
 
 ### System.TimeSpan GetCpuUsageTotalTime { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -2634,7 +2634,7 @@
 
 ### System.TimeSpan GetCpuUsageUserTime { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4736,10 +4736,10 @@
 
 ### System.String GenerateCustomKey(System.Char separator, System.Boolean addTimeStamp, System.String[] items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 8/18/2025
 * **Description:** GenerateCustomKey
@@ -4774,7 +4774,7 @@
 
 ### System.String GenerateSortableKey()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -4786,7 +4786,7 @@
 
 ### System.String GenerateSortableKey(System.String prefix)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5339,7 +5339,7 @@
 
 ### System.Boolean Acknowledge(System.String idempotencyKey)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5351,7 +5351,7 @@
 
 ### System.Void Clear()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5361,7 +5361,7 @@
 
 ### System.Threading.Tasks.Task Completion { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5383,7 +5383,7 @@
 
 ### System.Boolean IsCompleted { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5429,7 +5429,7 @@
 
 ### T ReadAsync(T keyResolver, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5441,7 +5441,7 @@
 
 ### System.Boolean TryRead(T item)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5451,7 +5451,7 @@
 
 ### System.Boolean TryWrite(T item)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5461,7 +5461,7 @@
 
 ### System.Boolean TryWriteOnce(T item, System.String idempotencyKey, System.Nullable<System.TimeSpan> dedupeWindow)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5497,7 +5497,7 @@
 
 ### System.Threading.Tasks.Task<System.Boolean> WriteOnceAsync(T item, System.String idempotencyKey, System.Nullable<System.TimeSpan> dedupeWindow, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5797,7 +5797,7 @@
 
 ### System.String AesGcmDecrypt(System.String base64Payload, System.Byte[] key, System.ReadOnlySpan<System.Byte> aad)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5821,7 +5821,7 @@
 
 ### System.Byte[] GenerateAesGcmKey()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
@@ -5963,7 +5963,7 @@
 
 ### T Deserialize(System.String json, System.Text.Json.JsonSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5973,7 +5973,7 @@
 
 ### T Deserialize(System.String json, T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6015,7 +6015,7 @@
 
 ### T LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Not Required
@@ -6047,7 +6047,7 @@
 
 ### System.String Serialize(System.Object obj, System.Text.Json.JsonSerializerOptions options)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6057,7 +6057,7 @@
 
 ### System.String Serialize(T obj, T typeInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6516,7 +6516,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllAbstractMethods(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Update
@@ -6526,7 +6526,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo> GetAllConstructors(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6536,7 +6536,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo> GetAllDeclaredFields(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6548,7 +6548,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo> GetAllDeclaredMethods(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6560,7 +6560,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo> GetAllFields(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6570,7 +6570,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllGenericMethods(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6582,7 +6582,7 @@
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo> GetAllMethods(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6604,7 +6604,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllPublicMethods(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6614,7 +6614,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllStaticMethods(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6624,7 +6624,7 @@
 
 ### T GetAttribute(System.Reflection.FieldInfo fieldInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6634,7 +6634,7 @@
 
 ### T GetAttribute(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6644,7 +6644,7 @@
 
 ### T GetAttribute(System.Reflection.MethodInfo methodInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6654,7 +6654,7 @@
 
 ### T GetAttribute(System.Reflection.PropertyInfo propertyInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6674,7 +6674,7 @@
 
 ### System.Type[] GetGenericArguments(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6684,7 +6684,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetImplementedInterfaces(System.Object input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6704,7 +6704,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetImplementedInterfaceTypes(System.Object input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6786,7 +6786,7 @@
 
 ### System.Boolean HasAttribute(System.Reflection.MethodInfo methodInfo)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -6796,7 +6796,7 @@
 
 ### System.Boolean HasBaseClass(System.Type type, System.Type baseClass)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Update
@@ -6806,7 +6806,7 @@
 
 ### System.Boolean HasMethod(System.Type type, System.String methodName, System.Reflection.BindingFlags bindingFlags)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6816,7 +6816,7 @@
 
 ### System.Boolean HasParameterlessConstructor(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6826,7 +6826,7 @@
 
 ### System.Boolean HasProperty(System.Type type, System.String propertyName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6836,7 +6836,7 @@
 
 ### System.Boolean ImplementsInterface(System.Type type, System.Type interfaceType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Update
@@ -6846,7 +6846,7 @@
 
 ### System.Boolean IsAssignableTo(System.Type type, System.Type targetType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6868,7 +6868,7 @@
 
 ### System.Boolean IsClosedGeneric(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Update
@@ -6878,7 +6878,7 @@
 
 ### System.Boolean IsEnumerable(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6888,7 +6888,7 @@
 
 ### System.Boolean IsNullable(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -6898,7 +6898,7 @@
 
 ### System.Boolean IsOpenGeneric(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -6908,7 +6908,7 @@
 
 ### System.Boolean IsStatic(System.Reflection.PropertyInfo property)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Update
@@ -7820,4 +7820,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/1/2026 3:12:27 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/4/2026 5:46:58 PM UTC**

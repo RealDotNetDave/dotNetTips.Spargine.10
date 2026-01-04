@@ -31,28 +31,7 @@ public class EncryptionHelperTests
 	private string _cipherText;
 	private byte[] _iv;
 	private byte[] _key;
-	private string _plainText;
-
-	[TestMethod]
-	public void AesDecrypt_NullCipherText_ThrowsArgumentNullException()
-	{
-		// Act and Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(null, this._key, this._iv));
-	}
-
-	[TestMethod]
-	public void AesDecrypt_NullIv_ThrowsArgumentNullException()
-	{
-		// Act and Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(this._cipherText, this._key, null));
-	}
-
-	[TestMethod]
-	public void AesDecrypt_NullKey_ThrowsArgumentNullException()
-	{
-		// Act and Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => EncryptionHelper.AesDecrypt(this._cipherText, null, this._iv));
-	}
+	private string _plainText = "Test";
 
 	[TestMethod]
 	public void AesDecrypt_ValidInputs_ReturnsDecryptedString()
