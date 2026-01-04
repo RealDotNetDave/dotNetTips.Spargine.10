@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core;
 /// This class contains utility methods and properties to enhance exception handling.
 /// </remarks>
 [Information(nameof(ExceptionExtensions), Status = Status.New)]
-public static class ExceptionExtensions
+public static partial class ExceptionExtensions
 {
 	/// <summary>
 	/// Provides a thread-safe storage for metadata associated with exceptions.
@@ -91,32 +91,6 @@ public static class ExceptionExtensions
 			var metadata = _exceptionMetadata.GetOrCreateValue(ex);
 			metadata.IsLogged = true;
 		}
-	}
-
-	/// <summary>
-	/// Represents metadata associated with an exception.
-	/// </summary>
-	/// <param name="IsLogged"> Gets or sets a value indicating whether the exception has been logged. </param>
-	/// <remarks>
-	/// This class is used internally to store additional information about exceptions, such as their logged state.
-	/// </remarks>
-	[Preserve("Used in ExceptionExtensions")]
-	internal sealed record ExceptionMetadata(bool IsLogged)
-	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExceptionMetadata"/> class.
-		/// </summary>
-		public ExceptionMetadata() : this(false)
-		{
-		}
-
-		/// <summary>
-		/// Gets or sets a value indicating whether the exception has been logged.
-		/// </summary>
-		/// <value><c>true</c> if the exception has been logged; otherwise, <c>false</c>.</value>
-		public bool IsLogged { get; internal set; } = IsLogged;
-
-		private string GetDebuggerDisplay() => this.ToString();
 	}
 
 	///<summary></summary>

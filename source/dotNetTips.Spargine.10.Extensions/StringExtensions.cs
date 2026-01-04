@@ -423,12 +423,9 @@ public static class StringExtensions
 		input = input.ArgumentNotNull();
 		inputToCompare = inputToCompare.ArgumentNotNull();
 
-		if (ReferenceEquals(input, inputToCompare))
-		{
-			return true;
-		}
-
-		return input.AsSpan().Equals(inputToCompare.AsSpan(), StringComparison.OrdinalIgnoreCase);
+		return ReferenceEquals(input, inputToCompare)
+			? true
+			: input.AsSpan().Equals(inputToCompare.AsSpan(), StringComparison.OrdinalIgnoreCase);
 	}
 
 	/// <summary>
