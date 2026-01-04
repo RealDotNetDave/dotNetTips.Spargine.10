@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-04-2026
 // ***********************************************************************
 // <copyright file="TypeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for <see cref="Type"/> to enhance and simplify its usage.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineTypeExtension", Status = Status.UpdateDocumentation)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTypeExtension")]
 public static class TypeExtensions
 {
 
@@ -129,7 +129,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of constructors.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public IEnumerable<ConstructorInfo> GetAllConstructors()
 		{
 			return TypeHelper.GetAllConstructors(type);
@@ -250,7 +250,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns>An array of <see cref="Type"/> objects representing the generic type arguments.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public Type[] GetGenericArguments()
 		{
 			return TypeHelper.GetGenericArguments(type);
@@ -289,7 +289,7 @@ public static class TypeExtensions
 		/// <param name="bindingFlags">The binding flags to use when searching for the method. Defaults to public instance methods.</param>
 		/// <returns><c>true</c> if the method exists; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public bool HasMethod([DisallowNull] string methodName, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
 		{
 			return TypeHelper.HasMethod(type, methodName, bindingFlags);
@@ -313,7 +313,7 @@ public static class TypeExtensions
 		/// <param name="propertyName">The name of the property to check for.</param>
 		/// <returns><c>true</c> if the property exists; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public bool HasProperty([DisallowNull] string propertyName)
 		{
 			return TypeHelper.HasProperty(type, propertyName);
@@ -325,7 +325,7 @@ public static class TypeExtensions
 		/// <param name="interfaceType">The interface type to check for.</param>
 		/// <returns><c>true</c> if the type implements the interface; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public bool ImplementsInterface([DisallowNull] Type interfaceType)
 		{
 			return TypeHelper.ImplementsInterface(type, interfaceType);
@@ -337,7 +337,7 @@ public static class TypeExtensions
 		/// <param name="targetType">The target type to check assignment compatibility with.</param>
 		/// <returns><c>true</c> if the current type can be assigned to the target type; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsAssignableTo), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(IsAssignableTo), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public bool IsAssignableTo([DisallowNull] Type targetType)
 		{
 			return TypeHelper.IsAssignableTo(type, targetType);
@@ -348,7 +348,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns><c>true</c> if the type is a closed generic; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public bool IsClosedGeneric()
 		{
 			return TypeHelper.IsClosedGeneric(type);
