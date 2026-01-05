@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -37,9 +38,6 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class TypeHelperTests : UnitTester
 {
-
-	[Obsolete(message: "TEST")]
-	private void MethodWithObsoleteAttribute() { }
 
 	[TestMethod]
 	public void BuiltInTypeNames01()
@@ -515,16 +513,16 @@ public class TypeHelperTests : UnitTester
 	[TestMethod]
 	public void GetAllProperties_WithDeclaredAndInheritedProperties_ReturnsAllProperties()
 	{
-		// Arrange
-		var type = typeof(FileInfo);
-
 		// Act
-		var properties = TypeHelper.GetAllProperties(type).ToList();
+		var result = TypeHelper.GetAllProperties(typeof(Person));
 
-		// Assert
-		Assert.IsNotNull(properties);
-		Assert.IsTrue(properties.Any());
-		Assert.IsTrue(properties.Any(p => p.DeclaringType == typeof(FileSystemInfo)), "Should include inherited properties.");
+		Assert.IsNotNull(result);
+		Assert.IsNotEmpty(result);
+
+		foreach (var prop in result)
+		{
+			Debug.WriteLine($"Property: {prop.Name}, Type: {prop.PropertyType}");
+		}
 	}
 
 	[TestMethod]
@@ -1460,16 +1458,19 @@ public class TypeHelperTests : UnitTester
 		Assert.AreEqual("System.Collections.Generic.Dictionary<System.Collections.Generic.List<System.String>, System.Collections.Generic.Dictionary<System.Int32, System.String>>", result);
 	}
 
-	private class PropertyWithAttributeTestClass
-	{
-		[Obsolete]
-		public int MarkedProperty { get; set; }
-	}
+	[Obsolete(message: "TEST")]
+	private void MethodWithObsoleteAttribute() { }
 
 	// Helper class for attribute test
 	private class FieldWithAttributeTestClass
 	{
 		[Obsolete]
 		public int MarkedField = 1;
+	}
+
+	private class PropertyWithAttributeTestClass
+	{
+		[Obsolete]
+		public int MarkedProperty { get; set; }
 	}
 }

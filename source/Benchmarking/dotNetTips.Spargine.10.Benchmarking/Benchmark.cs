@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-31-2025
+// Last Modified On : 01-05-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -61,7 +61,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [IterationsColumn]
 [JsonExporter(indentJson: true)]
 [MemoryDiagnoser(displayGenColumns: true)]
-[Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
+[Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Declared)]
 [RankColumn]
 [StatisticalTestColumn]
 [StopOnFirstError(true)]

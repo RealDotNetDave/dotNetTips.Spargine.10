@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text.Json.Serialization;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -76,11 +77,20 @@ public class TypeExtensionsBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void GetAllProperties()
 	{
-		var result = typeof(Person).GetAllProperties();
-
-		foreach (var item in result)
+		try
 		{
-			this.Consume(item);
+			var result = typeof(Person).GetAllProperties();
+
+			foreach (var item in result)
+			{
+				this.Consume(item);
+			}
+		}
+		catch (Exception ex)
+		{
+			LogInfo($"Exception: {ex.GetType().Name} - {ex.Message}");
+			LogInfo($"StackTrace: {ex.StackTrace}");
+			throw;
 		}
 	}
 

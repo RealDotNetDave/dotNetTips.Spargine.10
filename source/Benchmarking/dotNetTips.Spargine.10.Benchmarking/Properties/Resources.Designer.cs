@@ -70,6 +70,24 @@ namespace DotNetTips.Spargine.Benchmarking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Benchmark tests are complete! Rock on!.
+        /// </summary>
+        internal static string BenchmarkTestsAreCompleteRockOn {
+            get {
+                return ResourceManager.GetString("BenchmarkTestsAreCompleteRockOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danger! There has been an error running benchmark tests!.
+        /// </summary>
+        internal static string DangerThereHasBeenAnErrorRunningBenchmarkT {
+            get {
+                return ResourceManager.GetString("DangerThereHasBeenAnErrorRunningBenchmarkT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;addresses&quot;:[{&quot;address1&quot;:&quot;14877 vnoypbpodowuuuyrcga&quot;,&quot;address2&quot;:&quot;bjptvcimuppedxiabhm 60867&quot;,&quot;city&quot;:&quot;Faxe Kommune&quot;,&quot;country&quot;:&quot;Denmark&quot;,&quot;countryProvince&quot;:&quot;jaqvhfmvpemhounfiqlu&quot;,&quot;id&quot;:&quot;310bea7792614ef6883a5996bc9de6da&quot;,&quot;phone&quot;:&quot;23312373&quot;,&quot;postalCode&quot;:&quot;1661&quot;,&quot;state&quot;:&quot;Region Zealand&quot;},{&quot;address1&quot;:&quot;82317 yydivkcukmnbngmurss&quot;,&quot;address2&quot;:&quot;ftjrdpjgyemtifidtvh 38756&quot;,&quot;city&quot;:&quot;\u00C5rhus Kommune&quot;,&quot;country&quot;:&quot;Denmark&quot;,&quot;countryProvince&quot;:&quot;eaqxgystikvpcqlgpnwt&quot;,&quot;id&quot;:&quot;75baa5a646f84ea49fba877c0d6f1b4f&quot;,&quot;phone&quot;:&quot;51402120&quot;,&quot;pos [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string JsonTestDataPerson {

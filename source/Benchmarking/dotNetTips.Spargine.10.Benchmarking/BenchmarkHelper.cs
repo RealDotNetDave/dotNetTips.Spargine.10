@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 01-05-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -17,6 +17,7 @@ using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Loggers;
+using BenchmarkDotNet.Running;
 using DotNetTips.Spargine.Benchmarking.Properties;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
@@ -153,14 +154,19 @@ public static class BenchmarkHelper
 	/// multiple benchmark assemblies.
 	/// </para>
 	/// <para>
-	/// The method leverages <see cref="BenchmarkDotNet.Running.BenchmarkSwitcher"/> to discover
+	/// The method leverages <see cref="BenchmarkSwitcher"/> to discover
 	/// all types in the calling assembly that contain benchmark methods (marked with [Benchmark] attribute).
 	/// It then executes all discovered benchmarks using the provided configuration.
 	/// </para>
 	/// <para>
-	/// After all benchmarks complete, the method logs the title of each benchmark summary to the console
-	/// using <see cref="ConsoleLogger"/>. This provides a quick overview of which benchmarks were executed
-	/// and their summary information.
+	/// <strong>Assembly Context:</strong> This method runs benchmarks in the calling assembly's context,
+	/// which ensures proper operation with diagnosers like <see cref="MemoryDiagnoserAttribute"/>. 
+	/// The use of <see cref="Assembly.GetCallingAssembly"/> guarantees that BenchmarkDotNet spawns 
+	/// the benchmark process from the correct assembly context.
+	/// </para>
+	/// <para>
+	/// After all benchmarks complete, the method logs completion status to the console
+	/// using <see cref="ConsoleLogger"/>. This provides immediate feedback about the execution status and results.
 	/// </para>
 	/// <para>
 	/// <strong>Typical Usage Pattern:</strong>
@@ -176,7 +182,7 @@ public static class BenchmarkHelper
 	/// var config = DefaultConfig.Instance
 	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
 	/// 
-	/// Benchmark.RunBenchmarks(config);
+	/// BenchmarkHelper.RunAllBenchmarks(config);
 	/// </code>
 	/// <code>
 	/// // In dotNetTips.Spargine.Extensions.BenchmarkTests/Program.cs
@@ -188,12 +194,12 @@ public static class BenchmarkHelper
 	///     .AddJob(Job.Default.WithWarmupCount(2))
 	///     .AddJob(Job.Default.WithIterationCount(5));
 	/// 
-	/// Benchmark.RunBenchmarks(config);
+	/// BenchmarkHelper.RunAllBenchmarks(config);
 	/// </code>
 	/// </example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="config"/> is null.</exception>
-	/// <seealso cref="BenchmarkDotNet.Running.BenchmarkSwitcher"/>
-	/// <seealso cref="BenchmarkDotNet.Running.BenchmarkSwitcher.FromAssembly(Assembly)"/>
+	/// <seealso cref="BenchmarkSwitcher"/>
+	/// <seealso cref="BenchmarkSwitcher.FromAssembly(Assembly)"/>
 	/// <seealso cref="Assembly.GetCallingAssembly"/>
 	/// <seealso cref="IConfig"/>
 	[Information(description: nameof(RunAllBenchmarks), Status = Status.New)]
@@ -201,12 +207,25 @@ public static class BenchmarkHelper
 	{
 		config = config.ArgumentNotNull();
 
-		var callingAssembly = Assembly.GetCallingAssembly();
-		var result = BenchmarkDotNet.Running.BenchmarkSwitcher.FromAssembly(callingAssembly).RunAll(config);
-
-		foreach (var summary in result)
+		try
 		{
-			ConsoleLogger.Default.WriteLine(LogKind.Info, summary.Title);
+			var callingAssembly = Assembly.GetCallingAssembly();
+
+			ConsoleLogger.Default.WriteLine(LogKind.Info, $"Running all benchmarks from assembly: {callingAssembly.GetName().Name}");
+
+			var summaries = BenchmarkSwitcher.FromAssembly(callingAssembly).RunAll(config);
+
+			ConsoleLogger.Default.WriteLine(Resources.BenchmarkTestsAreCompleteRockOn);
+
+			PlaySuccessBeep();
+			_ = Console.ReadLine();
+		}
+		catch (Exception ex)
+		{
+			ConsoleLogger.Default.WriteLine(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
+			ConsoleLogger.Default.WriteLine(ex.Message);
+			PlayErrorBeep();
+			_ = Console.ReadLine();
 		}
 	}
 
@@ -233,12 +252,18 @@ public static class BenchmarkHelper
 	/// </list>
 	/// </para>
 	/// <para>
-	/// This method uses <see cref="BenchmarkDotNet.Running.BenchmarkSwitcher.FromTypes"/> to create a benchmark switcher
-	/// for the specified types, then runs all of them with the provided configuration. This approach is more efficient than
-	/// running each benchmark individually and provides consistent behavior with <see cref="RunAllBenchmarks(IConfig)"/>.
+	/// <strong>Important Implementation Note:</strong> To ensure proper operation with diagnosers (especially <see cref="MemoryDiagnoserAttribute"/>),
+	/// this method uses <see cref="BenchmarkSwitcher.FromAssembly"/> with the calling assembly and runs each benchmark
+	/// type individually using <see cref="BenchmarkRunner.Run(Type, IConfig)"/>. This ensures BenchmarkDotNet spawns 
+	/// the benchmark process from the calling assembly's context, which is required for diagnosers to function correctly.
 	/// </para>
 	/// <para>
-	/// After all benchmarks complete, the method logs the title of each benchmark summary to the console
+	/// <strong>Why This Approach:</strong> Each benchmark type is run individually using <c>BenchmarkRunner.Run()</c> 
+	/// within the calling assembly's context. This avoids cross-assembly execution issues with diagnosers while still
+	/// allowing selective execution of specific benchmark types.
+	/// </para>
+	/// <para>
+	/// After all benchmarks complete, the method logs completion status to the console
 	/// using <see cref="ConsoleLogger"/>, providing immediate feedback about the execution status and results.
 	/// </para>
 	/// </remarks>
@@ -252,46 +277,22 @@ public static class BenchmarkHelper
 	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
 	/// 
 	/// // Run any classes with [Benchmark] methods
-	/// Benchmark.RunBenchmarks(
+	/// BenchmarkHelper.RunBenchmarks(
 	///     config,
 	///     typeof(StringExtensionsBenchmark),
 	///     typeof(CollectionBenchmark),
-	///     typeof(MyCustomBenchmark) // Doesn't need to inherit from Benchmark
+	///     typeof(MyCustomBenchmark)
 	/// );
-	/// </code>
-	/// <code>
-	/// // Conditional benchmark execution based on command-line arguments
-	/// var config = DefaultConfig.Instance;
-	/// var benchmarksToRun = new List&lt;Type&gt;();
-	/// 
-	/// if (args.Contains("--string-tests"))
-	/// {
-	///     benchmarksToRun.Add(typeof(StringExtensionsBenchmark));
-	/// }
-	/// 
-	/// if (args.Contains("--collection-tests"))
-	/// {
-	///     benchmarksToRun.Add(typeof(CollectionBenchmark));
-	/// }
-	/// 
-	/// if (benchmarksToRun.Count > 0)
-	/// {
-	///     Benchmark.RunBenchmarks(config, [.. benchmarksToRun]);
-	/// }
-	/// else
-	/// {
-	///     // Run all benchmarks if no specific ones are requested
-	///     Benchmark.RunBenchmarks(config);
-	/// }
 	/// </code>
 	/// </example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="config"/> or <paramref name="benchmarks"/> is null.</exception>
-	/// <exception cref="ArgumentException">Thrown when <paramref name="benchmarks"/> is empty.</exception>
-	/// <seealso cref="BenchmarkDotNet.Running.BenchmarkSwitcher"/>
-	/// <seealso cref="BenchmarkDotNet.Running.BenchmarkSwitcher.FromTypes"/>
+	/// <exception cref="ArgumentException">Thrown when <paramref name="benchmarks"/> is empty or when benchmark types are not from the calling assembly.</exception>
+	/// <seealso cref="BenchmarkRunner"/>
+	/// <seealso cref="BenchmarkRunner.Run(Type, IConfig)"/>
 	/// <seealso cref="BenchmarkAttribute"/>
 	/// <seealso cref="IConfig"/>
-	[Information(description: nameof(RunAllBenchmarks), Status = Status.New)]
+	/// <seealso cref="Assembly.GetCallingAssembly"/>
+	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
 	public static void RunBenchmarks([DisallowNull] IConfig config, [DisallowNull] params Type[] benchmarks)
 	{
 		config = config.ArgumentNotNull();
@@ -302,13 +303,43 @@ public static class BenchmarkHelper
 			ExceptionThrower.ThrowArgumentException(Resources.AtLeastOneBenchmarkTypeMustBeProvided, nameof(benchmarks));
 		}
 
-		// Use BenchmarkSwitcher.FromTypes for efficient multi-benchmark execution
-		var result = BenchmarkDotNet.Running.BenchmarkSwitcher.FromTypes(benchmarks).RunAll(config);
-
-		// Log results
-		foreach (var summary in result)
+		try
 		{
-			ConsoleLogger.Default.WriteLine(LogKind.Info, summary.Title);
+			// Get the calling assembly to ensure benchmarks run in the correct assembly context
+			// This is critical for diagnosers like MemoryDiagnoser to work properly
+			var callingAssembly = Assembly.GetCallingAssembly();
+
+			// Verify all benchmark types are from the calling assembly
+			var invalidTypes = benchmarks.Where(t => t.Assembly != callingAssembly).ToArray();
+
+			if (invalidTypes.Length > 0)
+			{
+				var typeNamesCheck = string.Join(", ", invalidTypes.Select(t => t.FullName));
+				ExceptionThrower.ThrowArgumentException(
+					$"All benchmark types must be from the calling assembly. Invalid types: {typeNamesCheck}",
+					nameof(benchmarks));
+			}
+
+			// Run each benchmark type individually using BenchmarkRunner.Run()
+			// This ensures each benchmark runs in the calling assembly's context
+			// which is required for diagnosers like MemoryDiagnoser to work properly
+			foreach (var benchmarkType in benchmarks)
+			{
+				ConsoleLogger.Default.WriteLine(LogKind.Info, $"Running benchmark: {benchmarkType.Name}");
+				_ = BenchmarkRunner.Run(benchmarkType, config);
+			}
+
+			ConsoleLogger.Default.WriteLine(Resources.BenchmarkTestsAreCompleteRockOn);
+
+			PlaySuccessBeep();
+			_ = Console.ReadLine();
+		}
+		catch (Exception ex)
+		{
+			ConsoleLogger.Default.WriteLine(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
+			ConsoleLogger.Default.WriteLine(ex.Message);
+			PlayErrorBeep();
+			_ = Console.ReadLine();
 		}
 	}
 }

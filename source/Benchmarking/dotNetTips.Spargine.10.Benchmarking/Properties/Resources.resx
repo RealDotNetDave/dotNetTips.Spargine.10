@@ -135,4 +135,10 @@
   <data name="AtLeastOneBenchmarkTypeMustBeProvided" xml:space="preserve">
     <value>At least one benchmark type must be provided.</value>
   </data>
+  <data name="BenchmarkTestsAreCompleteRockOn" xml:space="preserve">
+    <value>Benchmark tests are complete! Rock on!</value>
+  </data>
+  <data name="DangerThereHasBeenAnErrorRunningBenchmarkT" xml:space="preserve">
+    <value>Danger! There has been an error running benchmark tests!</value>
+  </data>
 </root>

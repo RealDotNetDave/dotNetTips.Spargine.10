@@ -9,7 +9,10 @@
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary></summary>
+// <summary>
+// Benchmark Runtime: 
+// Benchmark count: 
+// </summary>
 // ***********************************************************************
 
 using System;

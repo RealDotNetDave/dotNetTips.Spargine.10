@@ -688,7 +688,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllProperties";
+		var cacheKey = $"{type.FullName}-{nameof(GetAllProperties)}";
 
 		if (_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var cachedProperties))
 		{

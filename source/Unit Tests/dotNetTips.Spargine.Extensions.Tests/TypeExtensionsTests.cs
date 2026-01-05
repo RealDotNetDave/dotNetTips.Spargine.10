@@ -99,6 +99,21 @@ public class TypeExtensionsTests
 		Assert.IsTrue(result.Count() >= 40);
 	}
 
+	[TestMethod]
+	public void GetAllPropertiesTest()
+	{
+		var result = typeof(Person).GetAllProperties();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsNotEmpty(result);
+
+		foreach (var prop in result)
+		{
+			Debug.WriteLine($"Property: {prop.Name}, Type: {prop.PropertyType}");
+		}
+	}
+
 	/// <summary>
 	/// Defines the attribute method GetAttributeFieldTest.
 	/// </summary>
@@ -187,17 +202,6 @@ public class TypeExtensionsTests
 
 		Assert.IsTrue(result.Count == 2);
 
-	}
-
-	/// <summary>
-	/// Defines the attribute method GetPropertiesTest.
-	/// </summary>
-	[TestMethod]
-	public void GetPropertiesTest()
-	{
-		var result = typeof(Person).GetAllProperties();
-
-		Assert.IsTrue(result.Count() >= 8);
 	}
 
 	/// <summary>

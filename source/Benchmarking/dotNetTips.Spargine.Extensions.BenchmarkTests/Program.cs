@@ -4,23 +4,21 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2026
+// Last Modified On : 01-05-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary>
 // Benchmark Runtime: 16 hours
-// Benchmark count: 1,703
+// Benchmark count: 1,708
 // </summary>
 // ***********************************************************************
 using System;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
-using BenchmarkDotNet.Running;
 using DotNetTips.Spargine.Benchmarking;
 using Perfolizer.Horology;
 
@@ -33,49 +31,24 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 internal sealed class Program
 {
-	private const string CompleteMessage = "COMPLETE!";
-	private const string ErrorMessage = "ERROR!";
-
 	/// <summary>
 	/// Defines the entry point of the application.
 	/// </summary>
 	/// <param name="args">The arguments.</param>
 	public static void Main()
 	{
-		try
-		{
-			var config = DefaultConfig.Instance
-				.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
-				.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
 
-			//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
+		var config = DefaultConfig.Instance
+			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
+			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
 
-			//Benchmark.RunAllBenchmarks(config);
+		//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-			//Benchmark.RunBenchmarks(config,
-			//	typeof(ArrayExtensionsCollectionBenchmark)
-			//	);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
-			var temp = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+		BenchmarkHelper.RunBenchmarks(config,
+			typeof(TypeExtensionsBenchmark)
+			);
 
-			//_ = BenchmarkRunner.Run<ArrayExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<ListExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<ListExtensionsAddRemoveCollectionBenchmark>(config);
-			//_ = BenchmarkHelper.Run<DictionaryExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkHelper.Run<ListExtensionsCollectionBenchmark>(config);
-			//_ = BenchmarkRunner.Run<StringExtensionsBenchmark>(config);
-			//_ = BenchmarkRunner.Run<StringExtensionsCounterBenchmark>(config);
-
-			ConsoleLogger.Default.WriteLine(CompleteMessage);
-			BenchmarkHelper.PlaySuccessBeep();
-			_ = Console.ReadLine();
-		}
-		catch (Exception ex)
-		{
-			ConsoleLogger.Default.WriteLine(ErrorMessage);
-			ConsoleLogger.Default.WriteLine(ex.Message);
-			BenchmarkHelper.PlayErrorBeep();
-			_ = Console.ReadLine();
-		}
 	}
 }
