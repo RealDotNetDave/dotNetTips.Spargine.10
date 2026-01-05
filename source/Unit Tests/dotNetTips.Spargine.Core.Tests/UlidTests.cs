@@ -71,7 +71,7 @@ public class UlidTests
 	public void Ulid_Constructor_ValidUlid_CreatesInstance()
 	{
 		// Arrange
-		var validUlid = Ulid.NewUlid().ToString();
+		var validUlid = "GDJYD3WV04FJ4SN35XMEC2G3S5";
 
 		// Act
 		var ulid = new Ulid(validUlid);

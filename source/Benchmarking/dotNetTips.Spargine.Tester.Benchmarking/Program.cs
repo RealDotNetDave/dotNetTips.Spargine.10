@@ -19,9 +19,7 @@ using System;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
-using BenchmarkDotNet.Running;
 using DotNetTips.Spargine.Benchmarking;
 using Perfolizer.Horology;
 
@@ -39,28 +37,19 @@ internal sealed class Program
 	/// </summary>
 	public static void Main()
 	{
-		try
-		{
-			var config = DefaultConfig.Instance
-				.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
-				.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
+		var config = DefaultConfig.Instance
+			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
+			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
 
-			config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
+		//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-			_ = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).RunAll(config);
+		// Run All Tests
+		BenchmarkHelper.RunAllBenchmarks(config);
 
-			//_ = BenchmarkHelper.Run<RandomDataCollectionsBenchmark>(config);
+		// Run Selected Tests
+		//BenchmarkHelper.RunBenchmarks(config,
+		//	typeof(RandomDataBenchmark)
+		//	);
 
-			ConsoleLogger.Default.WriteLine("COMPLETE!");
-			BenchmarkHelper.PlaySuccessBeep();
-			_ = Console.ReadLine();
-		}
-		catch (Exception ex)
-		{
-			ConsoleLogger.Default.WriteLine("ERROR!");
-			ConsoleLogger.Default.WriteLine(ex.Message);
-			BenchmarkHelper.PlayErrorBeep();
-			_ = Console.ReadLine();
-		}
 	}
 }

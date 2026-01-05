@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-05-2026
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,7 +28,7 @@ namespace DotNetTips.Spargine.Core;
 /// <summary>
 /// Represents a Universally Unique Lexicographically Sortable Identifier (ULID).
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 {
 	/// <summary>
@@ -246,7 +246,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	public override int GetHashCode() => this._ulid.GetHashCode(StringComparison.Ordinal);
 
 	/// <summary>
-	/// Extracts the timestamp from the ULID.
+	/// Extracts the timestamp from the Ulid.
 	/// </summary>
 	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
 	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]

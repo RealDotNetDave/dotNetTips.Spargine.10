@@ -44,8 +44,10 @@ internal sealed class Program
 
 		//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
+		// Run All Tests
 		//BenchmarkHelper.RunAllBenchmarks(config);
 
+		// Run Selected Tests
 		BenchmarkHelper.RunBenchmarks(config,
 			typeof(TypeExtensionsBenchmark)
 			);
