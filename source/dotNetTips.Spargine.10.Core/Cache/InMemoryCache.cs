@@ -97,7 +97,6 @@ namespace DotNetTips.Spargine.Core.Cache;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineInMemoryCache")]
 public sealed class InMemoryCache
 {
-	//TODO: UPDATE ARTICLE ON DOTNETTIPS.COM
 
 	/// <summary>
 	/// Provides single-flight protection for concurrent cache population.
