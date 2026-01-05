@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-05-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 /// This collection wraps a <see cref="ConcurrentBag{T}"/>, ensuring that all elements are unique.
 /// </remarks>
 /// <seealso cref="ICollection{T}" />
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDistinctConcurrentBag")]
 public sealed class DistinctConcurrentBag<T> : ICollection<T>
 {
 
@@ -75,6 +75,32 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	{
 		this._uniqueItems = new ConcurrentHashSet<T>(comparer.ArgumentNotNull());
 	}
+
+	/// <summary>
+	/// Gets the number of elements contained in the <see cref="DistinctConcurrentBag{T}"/>.
+	/// </summary>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int Count
+	{
+		get
+		{
+			return this._uniqueItems.Count;
+		}
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether the <see cref="DistinctConcurrentBag{T}"/> is empty.
+	/// </summary>
+	/// <value><c>true</c> if the bag is empty; otherwise, <c>false</c>.</value>
+	[Information(nameof(IsEmpty), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public bool IsEmpty => this._uniqueItems.IsEmpty;
+
+	/// <summary>
+	/// Gets a value indicating whether the <see cref="DistinctConcurrentBag{T}"/> is read-only.
+	/// </summary>
+	/// <value>Always <c>false</c> because the <see cref="DistinctConcurrentBag{T}"/> allows adding and removing items.</value>
+	[Information(Status = Status.Available)]
+	public bool IsReadOnly => false;
 
 	/// <summary>
 	/// Returns an enumerator that iterates through the <see cref="DistinctConcurrentBag{T}"/>.
@@ -367,31 +393,5 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 
 		return false;
 	}
-
-	/// <summary>
-	/// Gets the number of elements contained in the <see cref="DistinctConcurrentBag{T}"/>.
-	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int Count
-	{
-		get
-		{
-			return this._uniqueItems.Count;
-		}
-	}
-
-	/// <summary>
-	/// Gets a value indicating whether the <see cref="DistinctConcurrentBag{T}"/> is empty.
-	/// </summary>
-	/// <value><c>true</c> if the bag is empty; otherwise, <c>false</c>.</value>
-	[Information(nameof(IsEmpty), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
-	public bool IsEmpty => this._uniqueItems.IsEmpty;
-
-	/// <summary>
-	/// Gets a value indicating whether the <see cref="DistinctConcurrentBag{T}"/> is read-only.
-	/// </summary>
-	/// <value>Always <c>false</c> because the <see cref="DistinctConcurrentBag{T}"/> allows adding and removing items.</value>
-	[Information(Status = Status.Available)]
-	public bool IsReadOnly => false;
 
 }

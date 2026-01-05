@@ -37,7 +37,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 /// <para>If you need ordered elements with notifications, consider using <see cref="ObservableCollection{T}"/> instead.</para>
 /// <para>This implementation is based on EF Core's ObservableHashSet with enhanced functionality including batch operations.</para>
 /// </remarks>
-[Information(nameof(ObservableList<>), author: "David McCarter", createdOn: "7/31/2020", Status = Status.NeedsDocumentation)]
+[Information(nameof(ObservableList<>), author: "David McCarter", createdOn: "7/31/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineObservableList")]
 public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged, INotifyPropertyChanging
 {
 	/// <summary>
