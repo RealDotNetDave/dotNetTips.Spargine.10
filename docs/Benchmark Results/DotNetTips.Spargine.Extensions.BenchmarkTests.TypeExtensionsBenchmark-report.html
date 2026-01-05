@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TypeExtensionsBenchmark-20251226-065456</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TypeExtensionsBenchmark-20260105-061015</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,7 +13,7 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.6, Windows 10 (10.0.19045.6691/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6691/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.101
   [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
@@ -24,14 +24,14 @@ Categories=Strings
 </code></pre>
 
 <table>
-<thead><tr><th>Method               </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min</th><th>Q1 </th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method               </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>GetAllDeclaredFields</td><td>11.81 ns</td><td>0.183 ns</td><td>0.171 ns</td><td>0.044 ns</td><td>11.75 ns</td><td>11.52 ns</td><td>11.71 ns</td><td>11.91 ns</td><td>12.14 ns</td><td>84,640,316.9</td><td>7.478 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0015</td><td>99 B</td><td>-</td><td>0.0000</td><td>0.0000</td><td>64 B</td>
-</tr><tr><td>GetAllDeclaredMethods</td><td>11.54 ns</td><td>0.140 ns</td><td>0.131 ns</td><td>0.034 ns</td><td>11.50 ns</td><td>11.40 ns</td><td>11.44 ns</td><td>11.67 ns</td><td>11.78 ns</td><td>86,623,976.6</td><td>7.483 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0015</td><td>99 B</td><td>-</td><td>0.0000</td><td>0.0000</td><td>64 B</td>
-</tr><tr><td>GetAllFields</td><td>12.70 ns</td><td>0.364 ns</td><td>1.033 ns</td><td>0.107 ns</td><td>12.45 ns</td><td>11.65 ns</td><td>11.84 ns</td><td>13.05 ns</td><td>15.10 ns</td><td>78,730,383.2</td><td>46.446 ns</td><td>93.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0048</td><td>99 B</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
-</tr><tr><td>GetAllMethods</td><td>12.42 ns</td><td>0.319 ns</td><td>0.899 ns</td><td>0.094 ns</td><td>11.91 ns</td><td>11.62 ns</td><td>11.77 ns</td><td>12.86 ns</td><td>14.81 ns</td><td>80,524,649.6</td><td>45.953 ns</td><td>92.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0048</td><td>99 B</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
-</tr><tr><td>GetAllProperties</td><td>12.77 ns</td><td>0.318 ns</td><td>0.864 ns</td><td>0.093 ns</td><td>12.57 ns</td><td>11.74 ns</td><td>12.17 ns</td><td>13.11 ns</td><td>15.18 ns</td><td>78,306,620.8</td><td>42.953 ns</td><td>86.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0048</td><td>99 B</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
-</tr><tr><td>GetTypeMembersWithAttribute</td><td>220.65 ns</td><td>0.855 ns</td><td>0.667 ns</td><td>0.193 ns</td><td>220.71 ns</td><td>219.35 ns</td><td>220.29 ns</td><td>220.99 ns</td><td>221.64 ns</td><td>4,532,007.3</td><td>5.904 ns</td><td>12.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>0.0126</td><td>1,582 B</td><td>-</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
+</thead><tbody><tr><td>GetAllDeclaredFields</td><td>150.0 ns</td><td>0.99 ns</td><td>0.92 ns</td><td>0.24 ns</td><td>148.8 ns</td><td>149.4 ns</td><td>150.0 ns</td><td>150.4 ns</td><td>152.1 ns</td><td>6,666,438.8</td><td>7.381 ns</td><td>15.00</td><td>1</td><td>No</td><td>0.0081</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>232 B</td>
+</tr><tr><td>GetAllDeclaredMethods</td><td>292.3 ns</td><td>2.81 ns</td><td>2.63 ns</td><td>0.68 ns</td><td>288.2 ns</td><td>290.4 ns</td><td>291.5 ns</td><td>294.3 ns</td><td>296.5 ns</td><td>3,420,768.0</td><td>7.161 ns</td><td>15.00</td><td>5</td><td>No</td><td>0.0076</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>232 B</td>
+</tr><tr><td>GetAllFields</td><td>166.8 ns</td><td>2.01 ns</td><td>1.78 ns</td><td>0.48 ns</td><td>163.7 ns</td><td>166.1 ns</td><td>167.0 ns</td><td>167.8 ns</td><td>170.5 ns</td><td>5,993,431.5</td><td>6.762 ns</td><td>14.00</td><td>3</td><td>No</td><td>0.0093</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>207 B</td>
+</tr><tr><td>GetAllMethods</td><td>363.2 ns</td><td>2.95 ns</td><td>2.76 ns</td><td>0.71 ns</td><td>359.0 ns</td><td>361.4 ns</td><td>363.1 ns</td><td>364.4 ns</td><td>367.8 ns</td><td>2,753,664.9</td><td>7.144 ns</td><td>15.00</td><td>6</td><td>No</td><td>0.0076</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>240 B</td>
+</tr><tr><td>GetAllProperties</td><td>159.8 ns</td><td>0.68 ns</td><td>0.63 ns</td><td>0.16 ns</td><td>158.7 ns</td><td>159.4 ns</td><td>159.8 ns</td><td>160.2 ns</td><td>161.3 ns</td><td>6,256,977.1</td><td>7.418 ns</td><td>15.00</td><td>2</td><td>No</td><td>0.0086</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>248 B</td>
+</tr><tr><td>GetTypeMembersWithAttribute</td><td>223.4 ns</td><td>1.93 ns</td><td>1.81 ns</td><td>0.47 ns</td><td>220.4 ns</td><td>221.8 ns</td><td>224.2 ns</td><td>224.7 ns</td><td>225.7 ns</td><td>4,476,579.7</td><td>7.266 ns</td><td>15.00</td><td>4</td><td>No</td><td>0.0126</td><td>-</td><td>-</td><td>-</td><td>1,582 B</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
 </tr></tbody></table>
 </body>
 </html>
