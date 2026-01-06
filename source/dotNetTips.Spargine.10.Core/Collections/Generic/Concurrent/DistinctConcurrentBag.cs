@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-05-2026
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 /// This collection wraps a <see cref="ConcurrentBag{T}"/>, ensuring that all elements are unique.
 /// </remarks>
 /// <seealso cref="ICollection{T}" />
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDistinctConcurrentBag")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDistinctConcurrentBag")]
 public sealed class DistinctConcurrentBag<T> : ICollection<T>
 {
 
@@ -70,7 +70,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Initializes a new instance of the <see cref="DistinctConcurrentBag{T}"/> class with a custom comparer.
 	/// </summary>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> to use for comparing items.</param>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public DistinctConcurrentBag([NotNull] IEqualityComparer<T> comparer)
 	{
 		this._uniqueItems = new ConcurrentHashSet<T>(comparer.ArgumentNotNull());
@@ -92,7 +92,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Gets a value indicating whether the <see cref="DistinctConcurrentBag{T}"/> is empty.
 	/// </summary>
 	/// <value><c>true</c> if the bag is empty; otherwise, <c>false</c>.</value>
-	[Information(nameof(IsEmpty), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(IsEmpty), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public bool IsEmpty => this._uniqueItems.IsEmpty;
 
 	/// <summary>
@@ -135,7 +135,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="items">The collection of items to add. Cannot be null.</param>
 	/// <returns>The number of items successfully added (excluding duplicates).</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public int AddRange([NotNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -183,7 +183,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="items">The collection of items to check. Cannot be null.</param>
 	/// <returns><c>true</c> if any item is found in the bag; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool ContainsAny([NotNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -267,7 +267,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="items">The collection of items to remove. Cannot be null.</param>
 	/// <returns>The number of items successfully removed.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[Information(nameof(RemoveRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RemoveRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public int RemoveRange([NotNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -289,7 +289,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Copies the elements of the <see cref="DistinctConcurrentBag{T}"/> to a new array.
 	/// </summary>
 	/// <returns>An array containing a snapshot of elements in the bag.</returns>
-	[Information(nameof(ToArray), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ToArray), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public T[] ToArray()
 	{
 		return [.. this._uniqueItems];
@@ -299,7 +299,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Converts the <see cref="DistinctConcurrentBag{T}"/> to a <see cref="FrozenSet{T}"/> for optimal read performance.
 	/// </summary>
 	/// <returns>A <see cref="FrozenSet{T}"/> containing a snapshot of elements in the bag.</returns>
-	[Information(nameof(ToFrozenSet), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ToFrozenSet), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public FrozenSet<T> ToFrozenSet()
 	{
 		return this._uniqueItems.ToArray().ToFrozenSet();
@@ -309,7 +309,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Converts the <see cref="DistinctConcurrentBag{T}"/> to a <see cref="List{T}"/>.
 	/// </summary>
 	/// <returns>A <see cref="List{T}"/> containing a snapshot of elements in the bag.</returns>
-	[Information(nameof(ToList), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ToList), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public List<T> ToList()
 	{
 		return [.. this._uniqueItems];
@@ -345,7 +345,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="equalValue">The value to search for.</param>
 	/// <param name="actualValue">When this method returns, contains the actual value from the bag if found; otherwise, the default value.</param>
 	/// <returns><c>true</c> if an equal value was found; otherwise, <c>false</c>.</returns>
-	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool TryGetValue(T equalValue, [NotNullWhen(true)] out T actualValue)
 	{
 		if (equalValue is null)
@@ -363,7 +363,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="equalValue">The value to search for.</param>
 	/// <param name="actualValue">When this method returns, contains the actual value from the bag if found; otherwise, the default value.</param>
 	/// <returns><c>true</c> if an equal value was found; otherwise, <c>false</c>.</returns>
-	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool TryPeek(T equalValue, [NotNullWhen(true)] out T actualValue)
 	{
 		if (equalValue is null)
