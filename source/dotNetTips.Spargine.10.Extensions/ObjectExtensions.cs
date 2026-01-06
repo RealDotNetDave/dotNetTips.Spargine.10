@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-03-2026
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// These methods are designed to extend the capabilities of all objects and simplify common operations related to serialization,
 /// reflection, and memory management.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineObjectExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineObjectExtensions")]
 public static class ObjectExtensions
 {
 	/// <summary>
@@ -273,9 +273,22 @@ public static class ObjectExtensions
 		[Information(nameof(Max), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T? Max<T>([DisallowNull] T obj2) where T : IComparable
 		{
-			//TODO: ADD MIN?
 			return obj is T comparableObj
 				? TypeHelper.Max(comparableObj, obj2)
+				: throw new InvalidOperationException($"The object is not of type {typeof(T).Name} which implements IComparable.");
+		}
+
+		/// <summary>
+		/// Returns the minimum of two comparable objects.
+		/// </summary>
+		/// <typeparam name="T">The type of the objects to compare. Must implement <see cref="IComparable"/>.</typeparam>
+		/// <param name="obj2">The second object to compare. This parameter can be null.</param>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(Min), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public T? Min<T>([DisallowNull] T obj2) where T : IComparable
+		{
+			return obj is T comparableObj
+				? TypeHelper.Min(comparableObj, obj2)
 				: throw new InvalidOperationException($"The object is not of type {typeof(T).Name} which implements IComparable.");
 		}
 

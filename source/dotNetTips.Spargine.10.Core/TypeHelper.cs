@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Core;
 /// converting objects to and from JSON. It also provides methods to get default values, hash codes, property values,
 /// and display names for types, as well as determining if a type is a built-in .NET type or if an assembly is a .NET assembly.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTypeHelper")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTypeHelper")]
 public static class TypeHelper
 {
 	/// <summary>
@@ -1485,6 +1485,126 @@ public static class TypeHelper
 	public static T? Max<T>([AllowNull] T? obj1, [AllowNull] T? obj2) where T : IComparable
 	{
 		return obj1?.CompareTo(obj2) >= 0 ? obj1 : obj2;
+	}
+
+	/// <summary>
+	/// Returns the minimum of two comparable objects.
+	/// </summary>
+	/// <typeparam name="T">The type of the objects to compare. Must implement <see cref="IComparable"/>.</typeparam>
+	/// <param name="obj1">The first object to compare. Can be <c>null</c>.</param>
+	/// <param name="obj2">The second object to compare. Can be <c>null</c>.</param>
+	/// <returns>
+	/// <paramref name="obj1"/> if it is less than <paramref name="obj2"/>; otherwise, <paramref name="obj2"/>.
+	/// If both are <c>null</c>, returns <c>null</c>.
+	/// </returns>
+	/// <remarks>
+	/// This method compares two objects that implement <see cref="IComparable"/> and returns the smaller value.
+	/// The comparison is performed using the <see cref="IComparable.CompareTo"/> method.
+	/// <para>
+	/// <strong>Null Handling:</strong>
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description>If <paramref name="obj1"/> is <c>null</c>, returns <paramref name="obj2"/></description></item>
+	/// <item><description>If <paramref name="obj2"/> is <c>null</c>, <see cref="IComparable.CompareTo"/> treats it as less than non-null, so <paramref name="obj2"/> is returned</description></item>
+	/// <item><description>If both are <c>null</c>, returns <c>null</c></description></item>
+	/// </list>
+	/// <para>
+	/// <strong>Performance Characteristics (.NET 10):</strong>
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description>Time Complexity: O(1) - single comparison operation</description></item>
+	/// <item><description>Space Complexity: O(1) - no allocations</description></item>
+	/// <item><description>Uses null-conditional operator for efficient null checking</description></item>
+	/// </list>
+	/// </remarks>
+	/// <example>
+	/// Comparing integers:
+	/// <code>
+	/// int a = 5;
+	/// int b = 10;
+	/// int min = TypeHelper.Min(a, b);
+	/// // Returns: 5
+	/// </code>
+	/// 
+	/// Comparing strings:
+	/// <code>
+	/// string str1 = "apple";
+	/// string str2 = "banana";
+	/// string min = TypeHelper.Min(str1, str2);
+	/// // Returns: "apple" (lexicographic comparison)
+	/// </code>
+	/// 
+	/// Comparing DateTime values:
+	/// <code>
+	/// DateTime date1 = new DateTime(2024, 1, 1);
+	/// DateTime date2 = new DateTime(2024, 12, 31);
+	/// DateTime min = TypeHelper.Min(date1, date2);
+	/// // Returns: 2024-01-01
+	/// </code>
+	/// 
+	/// Comparing decimal values:
+	/// <code>
+	/// decimal price1 = 19.99m;
+	/// decimal price2 = 24.99m;
+	/// decimal min = TypeHelper.Min(price1, price2);
+	/// // Returns: 19.99
+	/// </code>
+	/// 
+	/// Handling null values:
+	/// <code>
+	/// int? nullValue = null;
+	/// int? value = 42;
+	/// int? min1 = TypeHelper.Min(nullValue, value);
+	/// // Returns: 42
+	/// 
+	/// int? min2 = TypeHelper.Min(nullValue, nullValue);
+	/// // Returns: null
+	/// 
+	/// int? min3 = TypeHelper.Min(100, 50);
+	/// // Returns: 50
+	/// </code>
+	/// 
+	/// Comparing custom types implementing IComparable:
+	/// <code>
+	/// public class Priority : IComparable
+	/// {
+	///     public int Level { get; set; }
+	///     
+	///     public int CompareTo(object obj)
+	///     {
+	///         if (obj is Priority other)
+	///             return Level.CompareTo(other.Level);
+	///         return 0;
+	///     }
+	/// }
+	/// 
+	/// var p1 = new Priority { Level = 1 };
+	/// var p2 = new Priority { Level = 5 };
+	/// var minPriority = TypeHelper.Min(p1, p2);
+	/// // Returns: p1 (Level = 1)
+	/// </code>
+	/// 
+	/// Using with TimeSpan:
+	/// <code>
+	/// TimeSpan duration1 = TimeSpan.FromMinutes(30);
+	/// TimeSpan duration2 = TimeSpan.FromHours(2);
+	/// TimeSpan min = TypeHelper.Min(duration1, duration2);
+	/// // Returns: 00:30:00 (30 minutes)
+	/// </code>
+	/// 
+	/// Comparing Version objects:
+	/// <code>
+	/// Version v1 = new Version(1, 0, 0);
+	/// Version v2 = new Version(2, 0, 0);
+	/// Version min = TypeHelper.Min(v1, v2);
+	/// // Returns: 1.0.0
+	/// </code>
+	/// </example>
+	/// <seealso cref="IComparable"/>
+	[Information(nameof(Min), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static T? Min<T>([AllowNull] T? obj1, [AllowNull] T? obj2) where T : IComparable
+	{
+		return obj1?.CompareTo(obj2) < 0 ? obj1 : obj2;
 	}
 
 	/// <summary>
