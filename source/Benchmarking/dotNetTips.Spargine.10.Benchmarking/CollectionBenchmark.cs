@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -67,47 +67,113 @@ public partial class CollectionBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Loads collections of people objects for insertion into benchmarks.
-	/// This method generates collections of reference type, value type, and record type people objects
-	/// using the specified count and assigns them to the corresponding fields.
+	/// Gets the half count.
 	/// </summary>
-	private void LoadInsertCollections()
-	{
-		LogInfo($"Loading Insert Collections. Count={this.HalfCount}: {nameof(CollectionBenchmark)}.");
-
-		// Load people objects
-		this._peopleRefToInsert = [.. RandomData.GeneratePersonRefCollection(this.HalfCount)];
-
-		this._peopleValToInsert = [.. RandomData.GeneratePersonValCollection(this.HalfCount)];
-
-		this._peopleRecordToInsert = [.. RandomData.GeneratePersonRecordCollection(this.HalfCount)];
-	}
+	/// <value>The half count.</value>
+	public int HalfCount { get => this._halfCount; internal set => this._halfCount = value; }
 
 	/// <summary>
-	/// Gets a collection of <see cref="PersonRecord"/> objects for insertion into collections.
+	/// Gets the maximum count for the collections used in the benchmark.
 	/// </summary>
-	/// <returns>An array of <see cref="PersonRecord"/>.</returns>
-	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert()
-	{
-		return this._peopleRecordToInsert;
-	}
+	/// <value>The maximum count.</value>
+	public int MaxCount { get; internal set; }
 
 	/// <summary>
-	/// Gets a collection of <see cref="Person"/> reference objects for insertion into collections.
+	/// Gets the email address of a person in the middle of the collection.
 	/// </summary>
-	/// <returns>An array of <see cref="Person"/>.</returns>
-	protected virtual Person[] GetPersonRefCollectionToInsert()
-	{
-		return this._peopleRefToInsert;
-	}
+	public string PersonEmailHalf { get; private set; }
 
 	/// <summary>
-	/// Gets a collection of <see cref="Tester.Models.ValueTypes.Person"/> value objects for insertion into collections.
+	/// Gets the email address of the last person in the collection.
 	/// </summary>
-	/// <returns>An array of <see cref="Tester.Models.ValueTypes.Person"/>.</returns>
-	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert()
+	public string PersonEmailLast { get; private set; }
+
+	/// <summary>
+	/// Gets the first name of a person in the middle of the collection.
+	/// </summary>
+	public string PersonFirstNameHalf { get; private set; }
+
+	/// <summary>
+	/// Gets the first name of the last person in the collection.
+	/// </summary>
+	public string PersonFirstNameLast { get; private set; }
+
+	/// <summary>
+	/// Gets the last name of a person in the middle of the collection.
+	/// </summary>
+	public string PersonLastNameHalf { get; private set; }
+
+	/// <summary>
+	/// Gets the last name of the last person in the collection.
+	/// </summary>
+	public string PersonLastNameLast { get; private set; }
+
+	/// <summary>
+	/// Gets the person record for lookup from the middle of the collection.
+	/// </summary>
+	public PersonRecord PersonRecordLookupHalf { get; private set; }
+
+	/// <summary>
+	/// Gets the person record for lookup of the last item in the collection.
+	/// </summary>
+	public PersonRecord PersonRecordLookupLast { get; private set; }
+
+	/// <summary>
+	/// Gets the reference type person for lookup from the middle of the collection.
+	/// </summary>
+	public Person PersonRefLookupHalf { get; private set; }
+
+	/// <summary>
+	/// Gets the reference type person for lookup of the last item in the collection.
+	/// </summary>
+	public Person PersonRefLookupLast { get; private set; }
+
+	/// <summary>
+	/// Gets the value type person for lookup from the middle of the collection.
+	/// </summary>
+	public Tester.Models.ValueTypes.Person PersonValLookupHalf { get; private set; }
+
+	/// <summary>
+	/// Gets the value type person for lookup of the last item in the collection.
+	/// </summary>
+	public Tester.Models.ValueTypes.Person PersonValLookupLast { get; private set; }
+
+	/// <summary>
+	/// Setups the benchmark instance. This method is called before the benchmark runs and is responsible for initializing the collections and loading the data.
+	/// </summary>
+	public override void Setup()
 	{
-		return this._peopleValToInsert;
+		base.Setup();
+
+		this.HalfCount = this.MaxCount / 2;
+
+		// Load collections.
+		// DO NOT ADD ANY COLLECTION GENERATION ABOVE THIS LINE
+		this.LoadCoordinateCollections();
+		this.LoadPersonCollections();
+
+		// Cache arrays to avoid multiple enumerations and improve performance
+		var personRefArray = this.GetPersonRefArray();
+		var personRecordArray = this.GetPersonRecordArray();
+		var personValArray = this.GetPersonValArray();
+
+		// Load lookup values
+		this.PersonEmailHalf = personRefArray[this.HalfCount].Email;
+		this.PersonEmailLast = personRefArray.Last().Email;
+		this.PersonFirstNameHalf = personRefArray[this.HalfCount].FirstName;
+		this.PersonFirstNameLast = personRefArray.Last().FirstName;
+		this.PersonLastNameHalf = personRefArray[this.HalfCount].LastName;
+		this.PersonLastNameLast = personRefArray.Last().LastName;
+		this.PersonRecordLookupHalf = personRecordArray[this.HalfCount];
+		this.PersonRecordLookupLast = personRecordArray.Last();
+		this.PersonRefLookupHalf = personRefArray[this.HalfCount];
+		this.PersonRefLookupLast = personRefArray.Last();
+		this.PersonValLookupHalf = personValArray[this.HalfCount];
+		this.PersonValLookupLast = personValArray.Last();
+
+		// Load insert collections
+		this.LoadInsertCollections();
+
 	}
 
 	/// <summary>
@@ -177,112 +243,46 @@ public partial class CollectionBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Setups the benchmark instance. This method is called before the benchmark runs and is responsible for initializing the collections and loading the data.
+	/// Gets a collection of <see cref="PersonRecord"/> objects for insertion into collections.
 	/// </summary>
-	public override void Setup()
+	/// <returns>An array of <see cref="PersonRecord"/>.</returns>
+	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert()
 	{
-		base.Setup();
-
-		this.HalfCount = this.MaxCount / 2;
-
-		// Load collections.
-		// DO NOT ADD ANY COLLECTION GENERATION ABOVE THIS LINE
-		this.LoadCoordinateCollections();
-		this.LoadPersonCollections();
-
-		// Cache arrays to avoid multiple enumerations and improve performance
-		var personRefArray = this.GetPersonRefArray();
-		var personRecordArray = this.GetPersonRecordArray();
-		var personValArray = this.GetPersonValArray();
-
-		// Load lookup values
-		this.PersonEmailHalf = personRefArray[this.HalfCount].Email;
-		this.PersonEmailLast = personRefArray.Last().Email;
-		this.PersonFirstNameHalf = personRefArray[this.HalfCount].FirstName;
-		this.PersonFirstNameLast = personRefArray.Last().FirstName;
-		this.PersonLastNameHalf = personRefArray[this.HalfCount].LastName;
-		this.PersonLastNameLast = personRefArray.Last().LastName;
-		this.PersonRecordLookupHalf = personRecordArray[this.HalfCount];
-		this.PersonRecordLookupLast = personRecordArray.Last();
-		this.PersonRefLookupHalf = personRefArray[this.HalfCount];
-		this.PersonRefLookupLast = personRefArray.Last();
-		this.PersonValLookupHalf = personValArray[this.HalfCount];
-		this.PersonValLookupLast = personValArray.Last();
-
-		// Load insert collections
-		this.LoadInsertCollections();
-
+		return this._peopleRecordToInsert;
 	}
 
 	/// <summary>
-	/// Gets or sets the half count.
+	/// Gets a collection of <see cref="Person"/> reference objects for insertion into collections.
 	/// </summary>
-	/// <value>The half count.</value>
-	public int HalfCount { get => this._halfCount; set => this._halfCount = value; }
+	/// <returns>An array of <see cref="Person"/>.</returns>
+	protected virtual Person[] GetPersonRefCollectionToInsert()
+	{
+		return this._peopleRefToInsert;
+	}
 
 	/// <summary>
-	/// Gets or sets the maximum count for the collections used in the benchmark.
+	/// Gets a collection of <see cref="Tester.Models.ValueTypes.Person"/> value objects for insertion into collections.
 	/// </summary>
-	/// <value>The maximum count.</value>
-	public int MaxCount { get; internal set; }
+	/// <returns>An array of <see cref="Tester.Models.ValueTypes.Person"/>.</returns>
+	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert()
+	{
+		return this._peopleValToInsert;
+	}
 
 	/// <summary>
-	/// Gets the email address of a person in the middle of the collection.
+	/// Loads collections of people objects for insertion into benchmarks.
+	/// This method generates collections of reference type, value type, and record type people objects
+	/// using the specified count and assigns them to the corresponding fields.
 	/// </summary>
-	public string PersonEmailHalf { get; private set; }
+	private void LoadInsertCollections()
+	{
+		LogInfo($"Loading Insert Collections. Count={this.HalfCount}: {nameof(CollectionBenchmark)}.");
 
-	/// <summary>
-	/// Gets the email address of the last person in the collection.
-	/// </summary>
-	public string PersonEmailLast { get; private set; }
+		// Load people objects
+		this._peopleRefToInsert = [.. RandomData.GeneratePersonRefCollection(this.HalfCount)];
 
-	/// <summary>
-	/// Gets the first name of a person in the middle of the collection.
-	/// </summary>
-	public string PersonFirstNameHalf { get; private set; }
+		this._peopleValToInsert = [.. RandomData.GeneratePersonValCollection(this.HalfCount)];
 
-	/// <summary>
-	/// Gets the first name of the last person in the collection.
-	/// </summary>
-	public string PersonFirstNameLast { get; private set; }
-
-	/// <summary>
-	/// Gets the last name of a person in the middle of the collection.
-	/// </summary>
-	public string PersonLastNameHalf { get; private set; }
-
-	/// <summary>
-	/// Gets the last name of the last person in the collection.
-	/// </summary>
-	public string PersonLastNameLast { get; private set; }
-
-	/// <summary>
-	/// Gets the person record for lookup from the middle of the collection.
-	/// </summary>
-	public PersonRecord PersonRecordLookupHalf { get; private set; }
-
-	/// <summary>
-	/// Gets the person record for lookup of the last item in the collection.
-	/// </summary>
-	public PersonRecord PersonRecordLookupLast { get; private set; }
-
-	/// <summary>
-	/// Gets the reference type person for lookup from the middle of the collection.
-	/// </summary>
-	public Person PersonRefLookupHalf { get; private set; }
-
-	/// <summary>
-	/// Gets the reference type person for lookup of the last item in the collection.
-	/// </summary>
-	public Person PersonRefLookupLast { get; private set; }
-
-	/// <summary>
-	/// Gets the value type person for lookup from the middle of the collection.
-	/// </summary>
-	public Tester.Models.ValueTypes.Person PersonValLookupHalf { get; private set; }
-
-	/// <summary>
-	/// Gets the value type person for lookup of the last item in the collection.
-	/// </summary>
-	public Tester.Models.ValueTypes.Person PersonValLookupLast { get; private set; }
+		this._peopleRecordToInsert = [.. RandomData.GeneratePersonRecordCollection(this.HalfCount)];
+	}
 }
