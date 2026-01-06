@@ -41,16 +41,15 @@ internal sealed class Program
 		var config = DefaultConfig.Instance
 			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
 			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
-
-		//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
+		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		//BenchmarkHelper.RunAllBenchmarks(config);
+		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config,
-			typeof(TypeExtensionsBenchmark)
-			);
+		//BenchmarkHelper.RunBenchmarks(config,
+		//	typeof(TypeExtensionsBenchmark)
+		//	);
 
 	}
 }

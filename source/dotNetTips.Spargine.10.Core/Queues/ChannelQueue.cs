@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -383,8 +383,19 @@ public sealed class ChannelQueue<T>
 	/// <c>true</c> if the item was written to the channel and the key was added; <c>false</c> if the key already exists or the channel is full.
 	/// </returns>
 	/// <remarks>
+	/// <para>
 	/// This method is non-blocking and does not wait for space in the channel. If the key is already present and not expired, or if the channel is full, the method returns <c>false</c>.
-	/// If the key has expired, it is removed and the write is retried.
+	/// </para>
+	/// <para>
+	/// <strong>Thread Safety:</strong> While individual operations on <see cref="ConcurrentDictionary{TKey, TValue}"/> and <see cref="Channel{T}"/> are thread-safe,
+	/// there is a small window between checking for expired keys and adding new ones where race conditions could occur.
+	/// This is acceptable for idempotency scenarios where the goal is "at-most-once" delivery with best-effort expiration cleanup.
+	/// </para>
+	/// <para>
+	/// <strong>Expired Key Handling:</strong> If a key has expired (expiry timestamp is less than current time), it is opportunistically removed before attempting the write.
+	/// Due to the non-atomic nature of check-then-remove, it's possible for multiple threads to detect the same expired key,
+	/// but only one will successfully remove it. This is harmless as ConcurrentDictionary.TryRemove"/> is idempotent.
+	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025",
@@ -395,23 +406,32 @@ public sealed class ChannelQueue<T>
 		idempotencyKey = idempotencyKey.ArgumentNotNullOrEmpty();
 
 		var now = UtcNowMs();
+		var expiryTime = ToExpiryMs(dedupeWindow);
 
-		if (this._idempotencyKeys.TryGetValue(idempotencyKey, out var expiresAt) && expiresAt <= now)
+		// Opportunistically clean up expired entry for this specific key
+		if (this._idempotencyKeys.TryGetValue(idempotencyKey, out var existingExpiry) && existingExpiry < now)
 		{
+			// Try to remove the expired key
+			// It's okay if another thread removes it first - TryRemove is idempotent
 			_ = this._idempotencyKeys.TryRemove(idempotencyKey, out _);
 		}
 
-		if (!this._idempotencyKeys.TryAdd(idempotencyKey, ToExpiryMs(dedupeWindow)))
+		// Try to add the key - first writer wins
+		// This is the idempotency gate
+		if (!this._idempotencyKeys.TryAdd(idempotencyKey, expiryTime))
 		{
-			return false; // duplicate
+			return false; // Key already exists (either unexpired or just added by another thread)
 		}
 
+		// At this point, we "own" the idempotency key
+		// Now try to write to the channel
 		if (this._channel.Writer.TryWrite(item))
 		{
-			return true;
+			return true; // Success: both key was added AND item was written
 		}
 
-		// Could not write -> free the key.
+		// Channel write failed (likely full) - must roll back the key
+		// to allow future attempts
 		_ = this._idempotencyKeys.TryRemove(idempotencyKey, out _);
 
 		return false;

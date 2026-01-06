@@ -11,11 +11,10 @@
 // </copyright>
 // <summary>
 // Benchmark Runtime: 
-// Benchmark count: 
+// Benchmark count: 754 benchmarks.
 // </summary>
 // ***********************************************************************
 
-using System;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
@@ -41,17 +40,14 @@ internal sealed class Program
 		var config = DefaultConfig.Instance
 			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
 			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
-
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
-
-		//config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
 		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
 		//BenchmarkHelper.RunBenchmarks(config,
-		//	typeof(AppBenchmark)
+		//	typeof(ChannelQueueCollectionBenchmark)
 		//	);
 
 	}

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -36,37 +36,6 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 	/// The person reference array
 	/// </summary>
 	private Person[] _personRefArray;
-
-	/// <summary>
-	/// Add to queue as an asynchronous operation.
-	/// </summary>
-	/// <param name="channel">The channel.</param>
-	/// <param name="people">The people.</param>
-	/// <param name="token">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-	/// <returns>A Task representing the asynchronous operation.</returns>
-	private static async Task AddToQueueAsync(ChannelQueue<Person> channel, IList<Person> people, CancellationToken token)
-	{
-		foreach (var person in people)
-		{
-			await channel.WriteAsync(person, cancellationToken: token).ConfigureAwait(false);
-		}
-
-		_ = channel.Lock();
-	}
-
-	/// <summary>
-	/// Listen to queue as an asynchronous operation.
-	/// </summary>
-	/// <param name="channel">The channel.</param>
-	/// <param name="token">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-	/// <returns>A Task representing the asynchronous operation.</returns>
-	private static async Task ListenToQueueAsync(ChannelQueue<Person> channel, CancellationToken token)
-	{
-		await foreach (var item in channel.ListenAsync(token).ConfigureAwait(false))
-		{
-			Trace.WriteLine(item.Email);
-		}
-	}
 
 	/// <summary>
 	/// Setups this instance.
@@ -180,6 +149,76 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 		while (channel.Count > 0)
 		{
 			await this.ConsumeAsync(await channel.ReadAsync().ConfigureAwait(false)).ConfigureAwait(false);
+		}
+	}
+
+	/// <summary>
+	/// Add to queue as an asynchronous operation.
+	/// </summary>
+	/// <param name="channel">The channel.</param>
+	/// <param name="people">The people.</param>
+	/// <param name="token">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+	/// <returns>A Task representing the asynchronous operation.</returns>
+	/// <remarks>
+	/// <para>
+	/// This method writes all items to the channel and then locks it to signal completion.
+	/// If cancellation is requested during the write operations, the channel is NOT locked,
+	/// allowing cleanup or retry logic to function correctly.
+	/// </para>
+	/// <para>
+	/// <strong>Exception Handling:</strong> If an <see cref="OperationCanceledException"/> is thrown
+	/// during the write loop, it will propagate to the caller without locking the channel.
+	/// This ensures the channel remains in a consistent state that can be cleaned up or reused.
+	/// </para>
+	/// </remarks>
+	private static async Task AddToQueueAsync(ChannelQueue<Person> channel, IList<Person> people, CancellationToken token)
+	{
+		// Write all items to the channel
+		// If cancellation is requested, WriteAsync will throw OperationCanceledException
+		foreach (var person in people)
+		{
+			await channel.WriteAsync(person, cancellationToken: token).ConfigureAwait(false);
+		}
+
+		// Check for cancellation one final time before locking
+		// This prevents locking the channel if cancellation was requested
+		// between the last WriteAsync and the Lock call
+		token.ThrowIfCancellationRequested();
+
+		// Lock the channel to signal that no more items will be written
+		// This allows listeners (via ListenAsync) to complete their enumeration
+		_ = channel.Lock();
+	}
+
+	/// <summary>
+	/// Listen to queue as an asynchronous operation.
+	/// </summary>
+	/// <param name="channel">The channel.</param>
+	/// <param name="token">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+	/// <returns>A Task representing the asynchronous operation.</returns>
+	/// <remarks>
+	/// <para>
+	/// This method asynchronously enumerates items from the channel using <see cref="ChannelQueue{T}.ListenAsync"/>.
+	/// The enumeration continues until the channel is locked (completed) or cancellation is requested via the <paramref name="token"/>.
+	/// </para>
+	/// <para>
+	/// <strong>Cancellation Handling:</strong> The cancellation token is passed to the async stream via <see cref="TaskAsyncEnumerableExtensions.WithCancellation{T}"/>.
+	/// When cancellation is requested, the enumeration stops at the next cancellation check point (typically at the next await operation).
+	/// </para>
+	/// <para>
+	/// <strong>ConfigureAwait:</strong> Using <c>.ConfigureAwait(false)</c> prevents capturing the synchronization context,
+	/// which improves performance in non-UI scenarios by avoiding unnecessary context switches.
+	/// </para>
+	/// </remarks>
+	private static async Task ListenToQueueAsync(ChannelQueue<Person> channel, CancellationToken token)
+	{
+		// Use WithCancellation to pass the cancellation token to the async stream
+		// ConfigureAwait(false) controls how awaits are performed (without capturing context)
+		await foreach (var item in channel.ListenAsync(token)
+			.WithCancellation(token)
+			.ConfigureAwait(false))
+		{
+			Trace.WriteLine(item.Email);
 		}
 	}
 

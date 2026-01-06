@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-03-2026
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -59,18 +59,75 @@ public static class EnumerableExtensions
 		/// <summary>
 		/// Asynchronously pages the specified <see cref="IAsyncEnumerable{T}"/> into a sequence of pages, each containing up to <paramref name="pageSize"/> elements.
 		/// </summary>
-		/// <param name="pageSize">The maximum number of elements per page. Must be greater than zero.</param>
+		/// <param name="pageSize">The maximum number of elements per page. Must be at least 2.</param>
+		/// <param name="cancellationToken">
+		/// A <see cref="CancellationToken"/> that can be used to cancel the paging operation.
+		/// </param>
 		/// <returns>
 		/// An <see cref="IAsyncEnumerable{T}"/> where each item is a page of the original collection containing up to <paramref name="pageSize"/> elements.
+		/// The last page may contain fewer elements if the total count is not evenly divisible by <paramref name="pageSize"/>.
 		/// </returns>
 		/// <remarks>
-		/// This method uses deferred execution to generate pages only when they are enumerated asynchronously.
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method provides several performance enhancements:
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Deferred Execution:</b> Pages are generated on-demand only when enumerated, minimizing memory usage.</description></item>
+		/// <item><description><b>Pre-sized Lists:</b> Each page list is pre-allocated with <paramref name="pageSize"/> capacity to avoid resizing.</description></item>
+		/// <item><description><b>ConfigureAwait(false):</b> Prevents synchronization context capture for better performance in non-UI scenarios.</description></item>
+		/// <item><description><b>Cancellation Support:</b> Supports cooperative cancellation via <see cref="CancellationToken"/> using <see cref="EnumeratorCancellationAttribute"/>.</description></item>
+		/// <item><description><b>Memory Efficiency:</b> Only one page is held in memory at a time, unlike buffering the entire collection.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Time Complexity:</b> O(n) - Single pass through the source collection.</description></item>
+		/// <item><description><b>Space Complexity:</b> O(pageSize) - Only one page allocated at a time.</description></item>
+		/// <item><description><b>Streaming:</b> Elements are yielded as soon as a page is full, enabling true streaming scenarios.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Best Practices:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Large datasets:</b> Ideal for processing large collections without loading everything into memory.</description></item>
+		/// <item><description><b>API responses:</b> Perfect for paginated API responses to avoid memory exhaustion.</description></item>
+		/// <item><description><b>Database queries:</b> Combine with Entity Framework's async LINQ for efficient database paging.</description></item>
+		/// <item><description><b>Cancellation:</b> Always pass a cancellation token when possible to enable graceful cancellation.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>When to use:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description>Processing large collections in batches</description></item>
+		/// <item><description>Implementing pagination in ASP.NET Core APIs</description></item>
+		/// <item><description>Streaming data processing where memory is constrained</description></item>
+		/// <item><description>Parallel processing of pages (each page can be processed independently)</description></item>
+		/// </list>
 		/// </remarks>
+		/// <example>
+		/// <code>
+		/// // Basic usage with database query
+		/// await foreach (var page in dbContext.Users.AsAsyncEnumerable().PageAsync(100))
+		/// {
+		///     // Process each page of 100 users
+		///     await ProcessBatchAsync(page);
+		/// }
+		/// 
+		/// // With cancellation token
+		/// await using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+		/// await foreach (var page in largeCollection.PageAsync(50, cts.Token))
+		/// {
+		///     // Process each page with cancellation support
+		///     Console.WriteLine($"Processing page with {page.Count} items");
+		/// }
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
-		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize)
+		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
 			pageSize = pageSize.EnsureMinimum(2);
@@ -79,16 +136,21 @@ public static class EnumerableExtensions
 
 			await foreach (var item in collection.ConfigureAwait(false))
 			{
+				// Check cancellation before processing item
+				cancellationToken.ThrowIfCancellationRequested();
+
 				currentPage.Add(item);
 
 				if (currentPage.Count == pageSize)
 				{
 					yield return currentPage;
 
+					// Pre-allocate next page with same capacity
 					currentPage = new List<T>(pageSize);
 				}
 			}
 
+			// Yield the last partial page if it contains any items
 			if (currentPage.Count > 0)
 			{
 				yield return currentPage;
@@ -589,11 +651,9 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastShuffle()
 		{
-			collection = collection.ArgumentNotNull();
-
 			return collection.Shuffle();
 		}
 
@@ -1527,11 +1587,9 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<T> ToReadOnlyCollection()
 		{
-			collection = collection.ArgumentNotNull();
-
 			return new ReadOnlyCollection<T>([.. collection]);
 		}
 
