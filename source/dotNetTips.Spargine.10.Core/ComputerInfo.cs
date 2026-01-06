@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-06-2026
 // ***********************************************************************
 // <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -113,7 +113,21 @@ public sealed class ComputerInfo
 	/// </value>
 	[DataMember]
 	[Information(nameof(DiskUsage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public string DiskUsage => $"{DriveInfo.GetDrives().Where(d => d.IsReady).Sum(d => d.TotalFreeSpace)} bytes free of {DriveInfo.GetDrives().Where(d => d.IsReady).Sum(d => d.TotalSize)} bytes";
+	public string DiskUsage
+	{
+		get
+		{
+			var drives = DriveInfo.GetDrives().Where(d => d.IsReady).ToArray();
+			var totalFreeSpace = drives.Sum(d => d.TotalFreeSpace);
+			var totalSize = drives.Sum(d => d.TotalSize);
+
+			return string.Format(
+				CultureInfo.CurrentCulture,
+				"{0:N0} bytes free of {1:N0} bytes",
+				totalFreeSpace,
+				totalSize);
+		}
+	}
 
 	/// <summary>
 	/// Displays a description of the .NET framework in use.
@@ -314,9 +328,15 @@ public sealed class ComputerInfo
 	}
 
 	/// <summary>
-	/// Returns a string that represents the current object.
+	/// Returns a string representation of the current <see cref="ComputerInfo"/> instance.
 	/// </summary>
-	/// <returns>A string that represents the current object.</returns>
+	/// <returns>
+	/// A formatted string containing the names and values of all public instance properties.
+	/// </returns>
+	/// <remarks>
+	/// Uses an extension method to format properties into delimited name/value pairs suitable for diagnostics and logging.
+	/// For structured output, prefer calling <see cref="ToJson"/>.
+	/// </remarks>
 	[Pure]
 	[return: NotNull]
 	public override string ToString() => this.PropertiesToString();
