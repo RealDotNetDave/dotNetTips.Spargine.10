@@ -6,13 +6,13 @@
        push      rbx
        sub       rsp,28
        mov       rbx,rcx
-       mov       rcx,23FF7C000F0
+       mov       rcx,1FF2A4020C0
        mov       rcx,[rcx]
        test      rcx,rcx
        je        short M00_L01
 M00_L00:
        cmp       [rcx],ecx
-       call      qword ptr [7FFE114A8E90]; System.MulticastDelegate.GetHashCode()
+       call      qword ptr [7FF9F7B48E90]; System.MulticastDelegate.GetHashCode()
        mov       rcx,[rbx+60]
        mov       [rcx+38],eax
        add       rsp,28
@@ -25,10 +25,10 @@ M00_L01:
        mov       rsi,rax
        mov       rcx,rsi
        xor       edx,edx
-       mov       r8,7FFE11B5B090
-       mov       r9,7FFE1138D0B0
-       call      qword ptr [7FFE11446EB0]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
-       mov       rcx,23FF7C000F0
+       mov       r8,7FF9F81CA700
+       mov       r9,7FF9F7A2D0B0
+       call      qword ptr [7FF9F7AE6EB0]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
+       mov       rcx,1FF2A4020C0
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
        mov       rcx,rsi
@@ -58,10 +58,10 @@ M01_L00:
        cmp       qword ptr [rbx+20],0
        je        short M01_L05
        mov       rcx,rbx
-       call      qword ptr [7FFE1144C9C0]; System.Object.GetType()
+       call      qword ptr [7FF9F7AEC9C0]; System.Object.GetType()
        mov       rbx,rax
        mov       rcx,rbx
-       call      00007FFE71026270
+       call      00007FFA576E6270
        test      eax,eax
        je        short M01_L02
 M01_L01:
@@ -78,7 +78,7 @@ M01_L02:
        pop       rbp
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FFE1144E940]; System.Runtime.CompilerServices.RuntimeHelpers.<GetHashCode>g__GetHashCodeWorker|15_0(System.Object)
+       jmp       qword ptr [7FF9F7AEE940]; System.Runtime.CompilerServices.RuntimeHelpers.<GetHashCode>g__GetHashCodeWorker|15_0(System.Object)
 M01_L03:
        mov       rcx,[rbx+18]
        mov       rdx,[rbx+20]
@@ -87,11 +87,11 @@ M01_L03:
        pop       rbp
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FFE11C06B80]
+       jmp       qword ptr [7FF9F82962F8]
 M01_L04:
        mov       rdx,[rbx+28]
        mov       rcx,offset MT_System.Delegate
-       call      qword ptr [7FFE11446850]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+       call      qword ptr [7FF9F7AE6850]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
        test      rax,rax
        je        near ptr M01_L00
        mov       rcx,rax
@@ -110,15 +110,15 @@ M01_L05:
        jmp       short M01_L07
 M01_L06:
        mov       rcx,[rbx+8]
-       call      qword ptr [7FFE1193C978]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FF9F7FDC978]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       esi,eax
        shl       esi,5
        add       esi,eax
 M01_L07:
        mov       rcx,rbx
-       call      qword ptr [7FFE1144C9C0]; System.Object.GetType()
+       call      qword ptr [7FF9F7AEC9C0]; System.Object.GetType()
        mov       rcx,rax
-       call      qword ptr [7FFE1193C978]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FF9F7FDC978]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        add       eax,esi
        jmp       near ptr M01_L01
 M01_L08:
@@ -162,7 +162,7 @@ M01_L11:
        mov       rdi,r9
        lea       rcx,[rbx+8]
        mov       rdx,rbx
-       call      qword ptr [7FFE70E87FD0]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFA57547FD0]; CORINFO_HELP_ASSIGN_REF
        mov       [rbx+18],rdi
        mov       [rbx+20],rsi
        pop       rbx
@@ -182,7 +182,7 @@ M01_L11:
        xor       eax,eax
        mov       [rsp+20],rax
        mov       rbx,rcx
-       mov       rcx,249634000F0
+       mov       rcx,29D7A4000C8
        mov       rax,[rcx]
        test      rax,rax
        je        short M00_L01
@@ -204,10 +204,10 @@ M00_L01:
        mov       rsi,rax
        mov       rcx,rsi
        xor       edx,edx
-       mov       r8,7FFE11B6B018
-       mov       r9,7FFE1139D0B0
-       call      qword ptr [7FFE11456EB0]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
-       mov       rcx,249634000F0
+       mov       r8,7FF9F81C32B8
+       mov       r9,7FF9F7A2D0B0
+       call      qword ptr [7FF9F7AE6EB0]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
+       mov       rcx,29D7A4000C8
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
        mov       rax,rsi
@@ -224,7 +224,7 @@ M00_L01:
        mov       rdi,r9
        lea       rcx,[rbx+8]
        mov       rdx,rbx
-       call      qword ptr [7FFE70E87FD0]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFA57547FD0]; CORINFO_HELP_ASSIGN_REF
        mov       [rbx+18],rdi
        mov       [rbx+20],rsi
        pop       rbx
