@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2026.10.1.1
+# DotNetTips.Spargine.10.Core - 2026.10.1.5
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -1792,7 +1792,7 @@
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1812,7 +1812,7 @@
 
 ### System.Int32 AddRange(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1842,7 +1842,7 @@
 
 ### System.Boolean ContainsAny(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1882,7 +1882,7 @@
 
 ### System.Boolean IsEmpty { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -1912,7 +1912,7 @@
 
 ### System.Int32 RemoveRange(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1922,7 +1922,7 @@
 
 ### T ToArray()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1932,7 +1932,7 @@
 
 ### T ToFrozenSet()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1942,7 +1942,7 @@
 
 ### T ToList()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1962,7 +1962,7 @@
 
 ### System.Boolean TryGetValue(T equalValue, T actualValue)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1972,7 +1972,7 @@
 
 ### System.Boolean TryPeek(T equalValue, T actualValue)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -2896,8 +2896,8 @@
 ### DotNetTips.Spargine.Core.Data.Models.CountryPhonePostalInfo GetCountryPhonePostalInfo(System.String countryNameOrIso)
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/1/2025
@@ -3615,7 +3615,7 @@
 ### System.Boolean TryFromDisplayName(System.String displayName, T result)
 
 * **Status:** New
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -3625,8 +3625,8 @@
 ### System.Boolean TryFromValue(System.Int32 value, T result)
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryFromValue
@@ -5025,8 +5025,8 @@
 ### System.Void LogApplicationInformation(Microsoft.Extensions.Logging.ILogger logger)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/3/2020
@@ -5798,8 +5798,8 @@
 ### System.String AesGcmDecrypt(System.String base64Payload, System.Byte[] key, System.ReadOnlySpan<System.Byte> aad)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/14/2025
@@ -5810,8 +5810,8 @@
 ### System.String AesGcmEncrypt(System.String plainText, System.Byte[] key, System.ReadOnlySpan<System.Byte> aad)
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/14/2025
@@ -6016,8 +6016,8 @@
 ### T LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Not Required
 * **CreatedOn:** 
 * **Description:** LoadCollectionFromJson
@@ -6776,7 +6776,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MemberInfo> GetTypeMembersWithAttribute(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6936,6 +6936,16 @@
 * **Description:** Max
 * **Modified On:** 
 
+### T Min(T obj1, T obj2)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Min
+* **Modified On:** 
+
 ### System.Void ProcessGenericType(System.Text.StringBuilder builder, System.Type type, System.Type[] genericArguments, System.Int32 length, DotNetTips.Spargine.Core.DisplayNameOptions options)
 
 * **Status:** Available
@@ -7042,8 +7052,8 @@
 ### System.DateTimeOffset GetTimeStamp()
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetTimeStamp
@@ -7053,7 +7063,7 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** NewUlid
@@ -7820,4 +7830,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/5/2026 12:19:28 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/7/2026 11:39:13 AM UTC**

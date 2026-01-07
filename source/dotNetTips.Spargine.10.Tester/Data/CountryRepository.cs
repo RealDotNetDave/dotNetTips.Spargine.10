@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2026
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -98,32 +98,37 @@ public static class CountryRepository
 	/// </exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetCountry), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static Country? GetCountry(string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNullOrEmpty();
 
 		var countryData = GetCountries();
+		var length = countryNameOrIso.Length;
 
-		Country? info = null;
+		// Single pass through collection checking all conditions
+		foreach (var country in countryData)
+		{
+			// Fast path: Check ISO2 (2 chars) - most common case
+			if (length == 2 && string.Equals(country.Iso2, countryNameOrIso, StringComparison.OrdinalIgnoreCase))
+			{
+				return country;
+			}
 
-		if (countryNameOrIso.Length == 2)
-		{
-			// Get by iso 2
-			info = countryData.FirstOrDefault(p => string.Equals(p.Iso2, countryNameOrIso, StringComparison.OrdinalIgnoreCase));
-		}
-		else if (countryNameOrIso.Length == 3)
-		{
-			// Get by iso 3
-			info = countryData.FirstOrDefault(p => string.Equals(p.Iso3, countryNameOrIso, StringComparison.OrdinalIgnoreCase));
-		}
-		else
-		{
-			// Get by country name
-			info = countryData.FirstOrDefault(p => string.Equals(p.Name, countryNameOrIso, StringComparison.OrdinalIgnoreCase));
+			// Check ISO3 (3 chars)
+			if (length == 3 && string.Equals(country.Iso3, countryNameOrIso, StringComparison.OrdinalIgnoreCase))
+			{
+				return country;
+			}
+
+			// Check country name (any other length)
+			if (length != 2 && length != 3 && string.Equals(country.Name, countryNameOrIso, StringComparison.OrdinalIgnoreCase))
+			{
+				return country;
+			}
 		}
 
-		return info;
+		return null;
 	}
 
 	/// <summary>

@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.1.1
+# DotNetTips.Spargine.10.Extensions - 2026.10.1.5
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -1943,8 +1943,8 @@
 ### T FastShuffle(T collection)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/26/2020
@@ -2118,12 +2118,12 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T PageAsync(T collection, System.Int32 pageSize)
+### T PageAsync(T collection, System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
 * **Description:** PageAsync
@@ -2311,8 +2311,8 @@
 ### T ToReadOnlyCollection(T collection)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/5/2024
@@ -2335,12 +2335,12 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumerableExtensions.<G>$80073E1EF8BFBE3894A8F13DEEA08DF4<$T0>
 
-### T PageAsync(System.Int32 pageSize)
+### T PageAsync(System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
 * **Description:** PageAsync
@@ -2521,8 +2521,8 @@
 ### T FastShuffle()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/26/2020
@@ -2877,8 +2877,8 @@
 ### T ToReadOnlyCollection()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/5/2024
@@ -3324,8 +3324,8 @@
 ### System.Void AddFirst(T list, T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -3336,8 +3336,8 @@
 ### System.Void AddLast(T list, T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -3348,8 +3348,8 @@
 ### System.Void AddRangeIfNotExists(T list, T items)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2024
@@ -3709,8 +3709,8 @@
 ### System.Void AddFirst(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -3721,8 +3721,8 @@
 ### System.Void AddLast(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -3733,8 +3733,8 @@
 ### System.Void AddRangeIfNotExists(T items)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2024
@@ -5119,6 +5119,16 @@
 * **Description:** Max
 * **Modified On:** 
 
+### T Min(System.Object obj, T obj2)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Min
+* **Modified On:** 
+
 ### System.Void ProcessCollectionToDispose(T items)
 
 * **Status:** Available
@@ -5442,6 +5452,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Max
+* **Modified On:** 
+
+### T Min(T obj2)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Min
 * **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyDictionary<System.String, System.String> PropertiesToDictionary(System.String memberName, System.Boolean ignoreNulls)
@@ -6336,8 +6356,8 @@
 ### System.Boolean ContainsAny(System.String input, System.StringComparison stringComparison, System.String[] characters)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -6396,8 +6416,8 @@
 ### System.Boolean EqualsIgnoreCase(System.String input, System.String inputToCompare)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6706,8 +6726,8 @@
 ### System.Boolean IsNotEmpty(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/18/2020
@@ -6828,7 +6848,7 @@
 ### DotNetTips.Spargine.Core.LineSplitEnumerator SplitLines(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6886,8 +6906,8 @@
 ### System.String ToBase64(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/8/2020
@@ -6982,8 +7002,8 @@
 ### System.String ToTrimmed(System.String input)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToTrimmed
@@ -7657,4 +7677,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/5/2026 12:19:28 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/7/2026 11:39:13 AM UTC**
