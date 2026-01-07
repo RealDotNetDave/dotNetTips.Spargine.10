@@ -1,18 +1,15 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.10.Core
 // Author           : David McCarter
-// Created          : 10-22-2023
+// Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-02-2025
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="JsonSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// Provides methods for serializing objects to JSON strings and
-// deserializing JSON strings to objects.
-// </summary>
+// <summary></summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -191,14 +188,33 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the items in the json collection is less than count.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
 	[Pure]
-	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count)
 	{
 		file = file.ArgumentExists();
+		count = count.ArgumentInRange(min: 1);
 
-		var json = File.ReadAllText(file.FullName);
+		// Stream the file directly to avoid loading entire JSON string into memory
+		using var stream = file.OpenRead();
+		using var doc = JsonDocument.Parse(stream);
 
-		return LoadCollectionFromJson<T>(json, count);
+		var root = doc.RootElement;
+
+		if (root.GetArrayLength() < count)
+		{
+			throw new ArgumentOutOfRangeException(nameof(count), $"The JSON array contains fewer than {count} elements.");
+		}
+
+		var items = new T[count];
+
+		for (var itemCount = 0; itemCount < count; itemCount++)
+		{
+			var deserializedItem = root[itemCount].Deserialize<T>(_options) ?? throw new JsonException($"Failed to deserialize item at index {itemCount}.");
+
+			items[itemCount] = deserializedItem;
+		}
+
+		return items;
 	}
 
 	/// <summary>

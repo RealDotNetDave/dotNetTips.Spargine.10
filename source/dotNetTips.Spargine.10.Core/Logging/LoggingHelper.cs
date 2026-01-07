@@ -4,7 +4,7 @@
 // Created          : 09-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-21-2025
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="LoggingHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -38,6 +38,11 @@ public static class LoggingHelper
 {
 
 	/// <summary>
+	/// The lock object used to ensure thread-safe initialization of the application domain event loggers.
+	/// </summary>
+	private static readonly Lock _lock = new();
+
+	/// <summary>
 	/// The logger used for capturing and logging application domain events.
 	/// </summary>
 	/// <remarks>
@@ -65,9 +70,258 @@ public static class LoggingHelper
 	private static ILogger? _appDomainUnhandledExceptionLogger;
 
 	/// <summary>
-	/// The lock object used to ensure thread-safe initialization of the application domain event loggers.
+	/// Initializes logging for various application domain events such as assembly load, assembly resolve, domain unload, process exit, and type resolve.
 	/// </summary>
-	private static readonly Lock _lock = new();
+	/// <param name="logger">The logger to use for logging application domain events. This cannot be null.</param>
+	/// <remarks>
+	/// This method sets up a logger to capture and log significant application domain events, aiding in diagnostics and monitoring of the application's behavior.
+	/// It is crucial to call this method early in the application startup process to ensure all relevant domain events are logged.
+	/// The logger can only be set once. Subsequent calls to this method will be ignored.
+	/// </remarks>
+	[Information(nameof(LogAppDomainEvents), author: "David McCarter", createdOn: "7/13/2024", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static void LogAppDomainEvents([DisallowNull] ILogger logger)
+	{
+		logger = logger.ArgumentNotNull();
+
+		lock (_lock)
+		{
+			if (_appDomainEventsLogger is null)
+			{
+				_appDomainEventsLogger = logger;
+				AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+				AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+				AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
+				AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+				AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += CurrentDomain_ReflectionOnlyAssemblyResolve;
+				AppDomain.CurrentDomain.ResourceResolve += CurrentDomain_ResourceResolve;
+				AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
+
+				if (logger.IsEnabled(LogLevel.Information))
+				{
+					logger.LogInformationMessage($"Starting to capture all domain events on {Clock.UtcTime} UTC");
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Initializes logging for first chance exceptions within the application domain.
+	/// </summary>
+	/// <param name="logger">The logger to use for logging first chance exceptions. This cannot be null.</param>
+	/// <remarks>
+	/// This method sets up a logger to capture first chance exceptions that occur within the application domain.
+	/// First chance exceptions are exceptions that are thrown but may be handled by the application.
+	/// It is important to call this method early in the application startup process to ensure all first chance exceptions are logged.
+	/// The logger can only be set once. Subsequent calls to this method will be ignored.
+	/// </remarks>
+	[Information(nameof(LogAppDomainFirstChanceException), author: "David McCarter", createdOn: "10/19/2021", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static void LogAppDomainFirstChanceException([DisallowNull] ILogger logger)
+	{
+		logger = logger.ArgumentNotNull();
+
+		lock (_lock)
+		{
+			if (_appDomainExceptionLogger is null)
+			{
+				_appDomainExceptionLogger = logger;
+				AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+
+				if (logger.IsEnabled(LogLevel.Information))
+				{
+					logger.LogInformationMessage($"Starting to capture all exceptions on {Clock.UtcTime} UTC");
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Initializes logging for unhandled exceptions as critical within the application domain.
+	/// </summary>
+	/// <param name="logger">The logger to use for logging unhandled domain exceptions. This cannot be null.</param>
+	/// <remarks>
+	/// This method sets up a logger to capture unhandled exceptions that occur within the application domain.
+	/// It is important to call this method early in the application startup process to ensure all unhandled exceptions are logged.
+	/// Logger can only be set once. Subsequent calls to this method will be ignored.
+	/// </remarks>
+	[Information(nameof(LogAppDomainUnhandledException), author: "David McCarter", createdOn: "7/13/2024", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static void LogAppDomainUnhandledException([DisallowNull] ILogger logger)
+	{
+		logger = logger.ArgumentNotNull();
+
+		lock (_lock)
+		{
+			if (_appDomainUnhandledExceptionLogger is null)
+			{
+				_appDomainUnhandledExceptionLogger = logger;
+				AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+				if (logger.IsEnabled(LogLevel.Information))
+				{
+					logger.LogInformationMessage($"Starting to capture unhandled exceptions on {Clock.UtcTime} UTC");
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Logs default application information as key/value pairs to the specified <see cref="ILogger"/>.
+	/// </summary>
+	/// <param name="logger">The logger to use for logging application information. Must not be null.</param>
+	/// <loggableException cref="ArgumentNullException">Thrown if <paramref name="logger"/> is null.</loggableException>
+	/// <example>
+	///   <b>Output:</b>
+	/// AppInfo:Company - Microsoft Corporation
+	/// AppInfo:Version - 16.8.0
+	/// AppInfo:Copyright - © Microsoft Corporation.All rights reserved.
+	/// AppInfo:Product - dotNetTips.Spargine
+	/// AppInfo:FileVersion - 15.0.0
+	/// AppInfo:Title - dotNetTips.Spargine
+	/// </example>
+	[Information(nameof(LogApplicationInformation), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static void LogApplicationInformation([DisallowNull] ILogger logger)
+	{
+		logger = logger.ArgumentNotNull();
+
+		if (!logger.IsEnabled(LogLevel.Information))
+		{
+			return;
+		}
+
+		var values = TypeHelper.GetPropertyValues(input: App.AppInfo);
+
+		if (values?.Count > 0)
+		{
+			foreach (var item in values.OrderBy(static p => p.Key))
+			{
+				logger.LogInformationMessage($"{nameof(AppInfo)}:{item.Key} - {item.Value}");
+			}
+		}
+	}
+
+	/// <summary>
+	/// Logs detailed computer information, such as OS, architecture, and memory usage, and more, to the specified logger.
+	/// </summary>
+	/// <param name="logger">The logger to use for logging computer information. Must not be null.</param>
+	/// <loggableException cref="ArgumentNullException">Thrown if <paramref name="logger"/> is null.</loggableException>
+	/// <example>OUTPUT:
+	/// AppInfo:Is64BitProcess - True
+	/// AppInfo:ProcessArchitecture - X64
+	/// AppInfo:CurrentStackTrace - at System.Environment.get_StackTrace()\r\n at
+	/// .Standard.ComputerInfo..ctor() in...
+	/// AppInfo:ComputerCulture - eng
+	/// AppInfo:UserName - david
+	/// AppInfo:IsUserInteractive - True
+	/// AppInfo:OsMemoryPageSize - 4096
+	/// AppInfo:FrameworkVersion - 3.1.10
+	/// AppInfo:IPAddress - 192.168.0.7
+	/// AppInfo:Is64BitOperatingSystem - True
+	/// AppInfo:CurrentSystemTickCount - 185990421
+	/// AppInfo:ComputerUICulture - eng
+	/// AppInfo:ProcessorCount - 4
+	/// AppInfo:FrameworkDescription - .NET Core 3.1.10
+	/// AppInfo:PhysicalMemoryInUse - 49123328
+	/// AppInfo:OSArchitecture - X64
+	/// AppInfo:CurrentManagedTreadId - 6
+	/// AppInfo:CurrentWorkingDirectory - C:\\src\\GitHub\\dotNetTips.Utility.Core\\src\\Unit Tests\\dotNetTips.Utility.Standard.Tests\\bin\\Debug\\netcoreapp3.1
+	/// AppInfo:MachineName - DOTNETTIPS
+	/// AppInfo:OSDescription - Microsoft Windows 10.0.19042
+	/// AppInfo:UserDomainName - DOTNETTIPS
+	/// AppInfo:SystemDirectory - C:\\WINDOWS\\system32
+	/// AppInfo:HasShutdownStarted - False
+	/// </example>
+	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static void LogComputerInformation([DisallowNull] ILogger logger)
+	{
+		logger = logger.ArgumentNotNull();
+
+		var values = TypeHelper.GetPropertyValues(new ComputerInfo());
+
+		if (values is null || values.Count == 0)
+		{
+			return;
+		}
+
+		var sortedItems = values.OrderBy(static p => p.Key);
+
+		foreach (var item in sortedItems)
+		{
+			logger.LogComputerInfoItem(item.Key, item.Value);
+		}
+	}
+
+	/// <summary>
+	/// Retrieves all Exception messages from the provided Exception, including messages from any inner exceptions.
+	/// </summary>
+	/// <param name="exception">The exception to retrieve messages from. Must not be null.</param>
+	/// <returns>A read-only collection of exception messages.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="exception"/> is null.</exception>
+	/// <example>
+	/// <code>
+	/// try
+	/// {
+	///     // Some code that throws an exception
+	/// }
+	/// catch (Exception ex)
+	/// {
+	///     var messages = LoggingHelper.RetrieveAllExceptionMessages(ex);
+	///     foreach (var message in messages)
+	///     {
+	///         Console.WriteLine(message);
+	///     }
+	/// }
+	/// </code>
+	/// </example>
+	[Pure]
+	[Information(nameof(RetrieveAllExceptionMessages), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<string> RetrieveAllExceptionMessages([DisallowNull] Exception exception)
+	{
+		exception = exception.ArgumentNotNull();
+
+		var exceptions = RetrieveAllExceptions(exception);
+
+		var messages = exceptions.Select(ex => ex.Message).ToList();
+
+		return messages.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Retrieves all exceptions, including inner exceptions, from the provided Exception.
+	/// </summary>
+	/// <param name="exception">The exception from which to retrieve all exceptions, including inner exceptions. Must not be null.</param>
+	/// <returns>A read-only collection of all exceptions, including inner exceptions.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="exception"/> is null.</exception>
+	/// <example>
+	/// <code>
+	/// try
+	/// {
+	///     // Some code that throws an exception
+	/// }
+	/// catch (Exception ex)
+	/// {
+	///     var exceptions = LoggingHelper.RetrieveAllExceptions(ex);
+	///     foreach (var ex in exceptions)
+	///     {
+	///         Console.WriteLine(ex.Message);
+	///     }
+	/// }
+	/// </code>
+	/// </example>
+	[Pure]
+	[Information(nameof(RetrieveAllExceptions), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<Exception> RetrieveAllExceptions([DisallowNull] Exception exception)
+	{
+		// SUGGESION FROM COPILOT SLIGHT SLOWER.
+		exception = exception.ArgumentNotNull();
+
+		var collection = new List<Exception>();
+
+		for (var currentException = exception; currentException is not null; currentException = currentException.InnerException)
+		{
+			collection.Add(currentException);
+		}
+
+		return collection.AsReadOnly();
+	}
 
 	/// <summary>
 	/// Handles the <see cref="AppDomain.AssemblyLoad"/> event. Logs the loaded assembly information using the application domain events logger.
@@ -248,261 +502,6 @@ public static class LoggingHelper
 				}
 			}
 		}
-	}
-
-	/// <summary>
-	/// Initializes logging for various application domain events such as assembly load, assembly resolve, domain unload, process exit, and type resolve.
-	/// </summary>
-	/// <param name="logger">The logger to use for logging application domain events. This cannot be null.</param>
-	/// <remarks>
-	/// This method sets up a logger to capture and log significant application domain events, aiding in diagnostics and monitoring of the application's behavior.
-	/// It is crucial to call this method early in the application startup process to ensure all relevant domain events are logged.
-	/// The logger can only be set once. Subsequent calls to this method will be ignored.
-	/// </remarks>
-	[Information(nameof(LogAppDomainEvents), author: "David McCarter", createdOn: "7/13/2024", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static void LogAppDomainEvents([DisallowNull] ILogger logger)
-	{
-		logger = logger.ArgumentNotNull();
-
-		lock (_lock)
-		{
-			if (_appDomainEventsLogger is null)
-			{
-				_appDomainEventsLogger = logger;
-				AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
-				AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-				AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
-				AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-				AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += CurrentDomain_ReflectionOnlyAssemblyResolve;
-				AppDomain.CurrentDomain.ResourceResolve += CurrentDomain_ResourceResolve;
-				AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
-
-				if (logger.IsEnabled(LogLevel.Information))
-				{
-					logger.LogInformationMessage($"Starting to capture all domain events on {Clock.UtcTime} UTC");
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Initializes logging for first chance exceptions within the application domain.
-	/// </summary>
-	/// <param name="logger">The logger to use for logging first chance exceptions. This cannot be null.</param>
-	/// <remarks>
-	/// This method sets up a logger to capture first chance exceptions that occur within the application domain.
-	/// First chance exceptions are exceptions that are thrown but may be handled by the application.
-	/// It is important to call this method early in the application startup process to ensure all first chance exceptions are logged.
-	/// The logger can only be set once. Subsequent calls to this method will be ignored.
-	/// </remarks>
-	[Information(nameof(LogAppDomainFirstChanceException), author: "David McCarter", createdOn: "10/19/2021", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static void LogAppDomainFirstChanceException([DisallowNull] ILogger logger)
-	{
-		logger = logger.ArgumentNotNull();
-
-		lock (_lock)
-		{
-			if (_appDomainExceptionLogger is null)
-			{
-				_appDomainExceptionLogger = logger;
-				AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-
-				if (logger.IsEnabled(LogLevel.Information))
-				{
-					logger.LogInformationMessage($"Starting to capture all exceptions on {Clock.UtcTime} UTC");
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Initializes logging for unhandled exceptions as critical within the application domain.
-	/// </summary>
-	/// <param name="logger">The logger to use for logging unhandled domain exceptions. This cannot be null.</param>
-	/// <remarks>
-	/// This method sets up a logger to capture unhandled exceptions that occur within the application domain.
-	/// It is important to call this method early in the application startup process to ensure all unhandled exceptions are logged.
-	/// Logger can only be set once. Subsequent calls to this method will be ignored.
-	/// </remarks>
-	[Information(nameof(LogAppDomainUnhandledException), author: "David McCarter", createdOn: "7/13/2024", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static void LogAppDomainUnhandledException([DisallowNull] ILogger logger)
-	{
-		logger = logger.ArgumentNotNull();
-
-		lock (_lock)
-		{
-			if (_appDomainUnhandledExceptionLogger is null)
-			{
-				_appDomainUnhandledExceptionLogger = logger;
-				AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
-				if (logger.IsEnabled(LogLevel.Information))
-				{
-					logger.LogInformationMessage($"Starting to capture unhandled exceptions on {Clock.UtcTime} UTC");
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Logs default application information as key/value pairs to the specified <see cref="ILogger"/>.
-	/// </summary>
-	/// <param name="logger">The logger to use for logging application information. Must not be null.</param>
-	/// <loggableException cref="ArgumentNullException">Thrown if <paramref name="logger"/> is null.</loggableException>
-	/// <example>
-	///   <b>Output:</b>
-	/// AppInfo:Company - Microsoft Corporation
-	/// AppInfo:Version - 16.8.0
-	/// AppInfo:Copyright - © Microsoft Corporation.All rights reserved.
-	/// AppInfo:Product - dotNetTips.Spargine
-	/// AppInfo:FileVersion - 15.0.0
-	/// AppInfo:Title - dotNetTips.Spargine
-	/// </example>
-	[Information(nameof(LogApplicationInformation), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static void LogApplicationInformation([DisallowNull] ILogger logger)
-	{
-		logger = logger.ArgumentNotNull();
-
-		var values = TypeHelper.GetPropertyValues(input: App.AppInfo);
-
-		if (values?.Count > 0)
-		{
-			//FrozenSet is slower.
-			var items = values.OrderBy(p => p.Key).ToArray();
-
-			if (logger.IsEnabled(LogLevel.Information))
-			{
-				foreach (var item in items)
-				{
-					logger.LogInformationMessage($"{nameof(AppInfo)}:{item.Key} - {item.Value}");
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Logs detailed computer information, such as OS, architecture, and memory usage, and more, to the specified logger.
-	/// </summary>
-	/// <param name="logger">The logger to use for logging computer information. Must not be null.</param>
-	/// <loggableException cref="ArgumentNullException">Thrown if <paramref name="logger"/> is null.</loggableException>
-	/// <example>OUTPUT:
-	/// AppInfo:Is64BitProcess - True
-	/// AppInfo:ProcessArchitecture - X64
-	/// AppInfo:CurrentStackTrace - at System.Environment.get_StackTrace()\r\n at
-	/// .Standard.ComputerInfo..ctor() in...
-	/// AppInfo:ComputerCulture - eng
-	/// AppInfo:UserName - david
-	/// AppInfo:IsUserInteractive - True
-	/// AppInfo:OsMemoryPageSize - 4096
-	/// AppInfo:FrameworkVersion - 3.1.10
-	/// AppInfo:IPAddress - 192.168.0.7
-	/// AppInfo:Is64BitOperatingSystem - True
-	/// AppInfo:CurrentSystemTickCount - 185990421
-	/// AppInfo:ComputerUICulture - eng
-	/// AppInfo:ProcessorCount - 4
-	/// AppInfo:FrameworkDescription - .NET Core 3.1.10
-	/// AppInfo:PhysicalMemoryInUse - 49123328
-	/// AppInfo:OSArchitecture - X64
-	/// AppInfo:CurrentManagedTreadId - 6
-	/// AppInfo:CurrentWorkingDirectory - C:\\src\\GitHub\\dotNetTips.Utility.Core\\src\\Unit Tests\\dotNetTips.Utility.Standard.Tests\\bin\\Debug\\netcoreapp3.1
-	/// AppInfo:MachineName - DOTNETTIPS
-	/// AppInfo:OSDescription - Microsoft Windows 10.0.19042
-	/// AppInfo:UserDomainName - DOTNETTIPS
-	/// AppInfo:SystemDirectory - C:\\WINDOWS\\system32
-	/// AppInfo:HasShutdownStarted - False
-	/// </example>
-	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static void LogComputerInformation([DisallowNull] ILogger logger)
-	{
-		logger = logger.ArgumentNotNull();
-
-		var values = TypeHelper.GetPropertyValues(new ComputerInfo());
-
-		if (values is null || values.Count == 0)
-		{
-			return;
-		}
-
-		var sortedItems = values.OrderBy(static p => p.Key);
-
-		foreach (var item in sortedItems)
-		{
-			logger.LogComputerInfoItem(item.Key, item.Value);
-		}
-	}
-
-	/// <summary>
-	/// Retrieves all Exception messages from the provided Exception, including messages from any inner exceptions.
-	/// </summary>
-	/// <param name="exception">The exception to retrieve messages from. Must not be null.</param>
-	/// <returns>A read-only collection of exception messages.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="exception"/> is null.</exception>
-	/// <example>
-	/// <code>
-	/// try
-	/// {
-	///     // Some code that throws an exception
-	/// }
-	/// catch (Exception ex)
-	/// {
-	///     var messages = LoggingHelper.RetrieveAllExceptionMessages(ex);
-	///     foreach (var message in messages)
-	///     {
-	///         Console.WriteLine(message);
-	///     }
-	/// }
-	/// </code>
-	/// </example>
-	[Pure]
-	[Information(nameof(RetrieveAllExceptionMessages), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<string> RetrieveAllExceptionMessages([DisallowNull] Exception exception)
-	{
-		exception = exception.ArgumentNotNull();
-
-		var exceptions = RetrieveAllExceptions(exception);
-
-		var messages = exceptions.Select(ex => ex.Message).ToList();
-
-		return messages.AsReadOnly();
-	}
-
-	/// <summary>
-	/// Retrieves all exceptions, including inner exceptions, from the provided Exception.
-	/// </summary>
-	/// <param name="exception">The exception from which to retrieve all exceptions, including inner exceptions. Must not be null.</param>
-	/// <returns>A read-only collection of all exceptions, including inner exceptions.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="exception"/> is null.</exception>
-	/// <example>
-	/// <code>
-	/// try
-	/// {
-	///     // Some code that throws an exception
-	/// }
-	/// catch (Exception ex)
-	/// {
-	///     var exceptions = LoggingHelper.RetrieveAllExceptions(ex);
-	///     foreach (var ex in exceptions)
-	///     {
-	///         Console.WriteLine(ex.Message);
-	///     }
-	/// }
-	/// </code>
-	/// </example>
-	[Pure]
-	[Information(nameof(RetrieveAllExceptions), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<Exception> RetrieveAllExceptions([DisallowNull] Exception exception)
-	{
-		// SUGGESION FROM COPILOT SLIGHT SLOWER.
-		exception = exception.ArgumentNotNull();
-
-		var collection = new List<Exception>();
-
-		for (var currentException = exception; currentException is not null; currentException = currentException.InnerException)
-		{
-			collection.Add(currentException);
-		}
-
-		return collection.AsReadOnly();
 	}
 
 }
