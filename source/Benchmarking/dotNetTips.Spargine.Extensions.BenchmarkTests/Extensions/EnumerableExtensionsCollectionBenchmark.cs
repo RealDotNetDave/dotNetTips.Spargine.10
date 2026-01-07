@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-03-2026
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -100,19 +100,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = AnyWithPredicate(this._personRefEnumerable, p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = "Chunk (compare to Partition)")]
-	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
-	public void Chunk()
-	{
-		foreach (var people in this._personRefEnumerable.Chunk(25))
-		{
-			foreach (var person in people)
-			{
-				this.Consume(person);
-			}
-		}
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ContainsAny))]
@@ -344,6 +331,19 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		}
 	}
 
+	[Benchmark(Description = "Chunk (compare to Partition)")]
+	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
+	public void PartitionChunk()
+	{
+		foreach (var people in this._personRefEnumerable.Chunk(this.HalfCount))
+		{
+			foreach (var person in people)
+			{
+				this.Consume(person);
+			}
+		}
+	}
+
 	[Benchmark(Description = nameof(EnumerableExtensions.PickRandom))]
 	public void PickRandom()
 	{
@@ -415,7 +415,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
 	public void ShuffleFastShuffleWithCount()
 	{
-		var result = this._personRefEnumerable.FastShuffle(this.Count / 2);
+		var result = this._personRefEnumerable.FastShuffle(this.HalfCount);
 
 		foreach (var person in result)
 		{
