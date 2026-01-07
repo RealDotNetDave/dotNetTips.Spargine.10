@@ -443,9 +443,9 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void SelectItemsArraySegment()
 	{
-		var result = new ArraySegment<Person>(this._personRefArray, 0, this._halfCount);
+		var result = new ArraySegment<Person>(this._personRefArray, 0, this._halfCount).ToArray();
 
-		this.Consume(result.Count);
+		this.Consume(result.Length);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
