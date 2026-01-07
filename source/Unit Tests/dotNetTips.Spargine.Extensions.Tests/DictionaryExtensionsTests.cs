@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -362,19 +362,6 @@ public class DictionaryExtensionsTests
 		Assert.IsTrue(result.IsNotEmpty());
 	}
 
-	/// <summary>
-	/// Defines the test method ToImmutableTest.
-	/// </summary>
-	[TestMethod]
-	public void ToImmutableListTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
-
-		var result = people.ToImmutableList();
-
-		Assert.IsTrue(result.IsNotEmpty());
-	}
-
 	[TestMethod]
 	public void ToImmutableSortedDictionaryTest()
 	{
@@ -673,10 +660,10 @@ public class DictionaryExtensionsTests
 public class MockDisposable : IDisposable
 {
 
+	public bool IsDisposed { get; private set; }
+
 	public void Dispose()
 	{
 		this.IsDisposed = true;
 	}
-
-	public bool IsDisposed { get; private set; }
 }

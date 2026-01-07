@@ -4,7 +4,7 @@
 // Created          : 01-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="HashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -102,14 +102,6 @@ public class HashSetTests
 		// Assert
 		Assert.AreEqual(hashSet.Count, result.Count);
 		CollectionAssert.AreEquivalent(hashSet.ToList(), result.ToList());
-	}
-
-	[TestMethod]
-	public void ToImmutableTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToImmutableList();
-
-		Assert.IsTrue(people.Count == 10);
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 01-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -889,14 +889,6 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		Assert.IsTrue(people.ToImmutableArray().IsNotEmpty());
-	}
-
-	[TestMethod]
-	public void ToImmutableTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count);
-
-		Assert.IsTrue(people.ToImmutableList().IsNotEmpty());
 	}
 
 	[TestMethod]
