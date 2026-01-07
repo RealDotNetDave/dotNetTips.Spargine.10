@@ -887,20 +887,6 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Converts the specified enumerable collection to an <see cref="ImmutableList{T}"/>.
-		/// </summary>
-		[Pure]
-		[return: NotNull]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToImmutableList), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public ImmutableList<T> ToImmutableList()
-		{
-			collection = collection.ArgumentNotNull();
-
-			return [.. collection];
-		}
-
-		/// <summary>
 		/// Converts a <see cref="IEnumerable{T}" /> to <see cref="ImmutableArray{T}" />.
 		/// Validates that collection is not null.
 		/// </summary>
