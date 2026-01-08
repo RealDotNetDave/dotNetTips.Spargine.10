@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-06-2026
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -259,7 +259,7 @@ public static class TypeHelper
 		currentDomain = currentDomain.ArgumentNotNull();
 		baseType = baseType.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[128], $"FindDerivedTypes.{currentDomain.FriendlyName}.{baseType.MetadataToken}.{(classOnly ? '1' : '0')}");
+		var cacheKey = string.Create(null, stackalloc char[128], $"{nameof(FindDerivedTypes)}.{currentDomain.FriendlyName}.{baseType.MetadataToken}.{(classOnly ? '1' : '0')}");
 
 
 		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedTypes))
@@ -413,7 +413,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllAbstractMethods";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllAbstractMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -444,7 +444,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllConstructors";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllConstructors)}";
 
 		if (_commonCache.TryGetValue<ConstructorInfo[]>(cacheKey, out var cachedConstructors))
 		{
@@ -489,7 +489,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllDeclaredFields";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllDeclaredFields)}";
 
 		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
 		{
@@ -532,7 +532,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllDeclaredMethods";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllDeclaredMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -576,7 +576,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllFields";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllFields)}";
 
 		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
 		{
@@ -617,14 +617,23 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static ReadOnlyCollection<MethodInfo> GetAllGenericMethods([DisallowNull] Type type)
 	{
-		//TODO: ADD CACHING
-
 		type = type.ArgumentNotNull();
 
-		return Array.AsReadOnly(type.GetTypeInfo().DeclaredMethods.Where(m => m.IsGenericMethod).ToArray());
+		var cacheKey = $"{type.FullName}.{nameof(GetAllGenericMethods)}";
+
+		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
+		{
+			return Array.AsReadOnly(cachedMethods!);
+		}
+
+		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsGenericMethod).ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(methods);
 	}
 
 	/// <summary>
@@ -644,7 +653,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.GetAllMethods";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -690,7 +699,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}-{nameof(GetAllProperties)}";
+		var cacheKey = $"{type.FullName}.{nameof(GetAllProperties)}";
 
 		if (_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var cachedProperties))
 		{
@@ -731,14 +740,23 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static ReadOnlyCollection<MethodInfo> GetAllPublicMethods([DisallowNull] Type type)
 	{
-		//TODO: ADD CACHING
-
 		type = type.ArgumentNotNull();
 
-		return Array.AsReadOnly(type.GetTypeInfo().DeclaredMethods.Where(m => m.IsPublic).ToArray());
+		var cacheKey = $"{type.FullName}.{nameof(GetAllPublicMethods)}";
+
+		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
+		{
+			return Array.AsReadOnly(cachedMethods!);
+		}
+
+		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsPublic).ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(methods);
 	}
 
 	/// <summary>
@@ -753,14 +771,23 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static ReadOnlyCollection<MethodInfo> GetAllStaticMethods([DisallowNull] Type type)
 	{
-		//TODO: ADD CACHING
-
 		type = type.ArgumentNotNull();
 
-		return Array.AsReadOnly(type.GetTypeInfo().DeclaredMethods.Where(m => m.IsStatic).ToArray());
+		var cacheKey = $"{type.FullName}.{nameof(GetAllStaticMethods)}";
+
+		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
+		{
+			return Array.AsReadOnly(cachedMethods!);
+		}
+
+		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsStatic).ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(methods);
 	}
 
 	/// <summary>
@@ -776,12 +803,23 @@ public static class TypeHelper
 	/// or <c>null</c> if no such attribute is found.
 	/// </remarks>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] FieldInfo fieldInfo) where TAttribute : Attribute
 	{
 		fieldInfo = fieldInfo.ArgumentNotNull();
 
-		return fieldInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+		var cacheKey = $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+
+		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
+		{
+			return cachedAttribute;
+		}
+
+		var attribute = fieldInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+
+		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return attribute;
 	}
 
 	/// <summary>
@@ -798,14 +836,23 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
 	{
-		//TODO: ADD CACHING. INCLUDE ALL OVERLOADS
-
 		type = type.ArgumentNotNull();
 
-		return type.GetTypeInfo().GetCustomAttributes(typeof(TAttribute), false).OfType<TAttribute>().FirstOrDefault();
+		var cacheKey = $"{type.FullName}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+
+		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
+		{
+			return cachedAttribute;
+		}
+
+		var attribute = type.GetTypeInfo().GetCustomAttributes(typeof(TAttribute), false).OfType<TAttribute>().FirstOrDefault();
+
+		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return attribute;
 	}
 
 	/// <summary>
@@ -822,24 +869,46 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="methodInfo"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] MethodInfo methodInfo) where TAttribute : Attribute
 	{
 		methodInfo = methodInfo.ArgumentNotNull();
 
-		return methodInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+		var cacheKey = $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+
+		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
+		{
+			return cachedAttribute;
+		}
+
+		var attribute = methodInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+
+		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return attribute;
 	}
 
 	/// <summary>
 	/// Gets a custom attribute of the specified type from the given property.
 	/// </summary>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] PropertyInfo propertyInfo) where TAttribute : Attribute
 	{
 		propertyInfo = propertyInfo.ArgumentNotNull();
 
-		return propertyInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+		var cacheKey = $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+
+		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
+		{
+			return cachedAttribute;
+		}
+
+		var attribute = propertyInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+
+		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return attribute;
 	}
 
 	/// <summary>
@@ -861,14 +930,23 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static Type[] GetGenericArguments([DisallowNull] Type type)
 	{
-		//TODO: ADD CACHING
-
 		type = type.ArgumentNotNull();
 
-		return type.GetGenericArguments();
+		var cacheKey = $"{type.FullName}.{nameof(GetGenericArguments)}";
+
+		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedArguments))
+		{
+			return cachedArguments!;
+		}
+
+		var arguments = type.GetGenericArguments();
+
+		_commonCache.AddCacheItem(cacheKey, arguments, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return arguments;
 	}
 
 	/// <summary>
@@ -881,14 +959,24 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input)
 	{
-		//TODO: ADD CACHING
-
 		input = input.ArgumentNotNull();
 
-		return Array.AsReadOnly(input.GetType().GetInterfaces().Select(p => p.Name).ToArray());
+		var type = input.GetType();
+		var cacheKey = $"{type.FullName}.{nameof(GetImplementedInterfaces)}";
+
+		if (_commonCache.TryGetValue<string[]>(cacheKey, out var cachedInterfaces))
+		{
+			return Array.AsReadOnly(cachedInterfaces!);
+		}
+
+		var interfaces = type.GetInterfaces().Select(p => p.Name).ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, interfaces, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(interfaces);
 	}
 
 	/// <summary>
@@ -926,14 +1014,24 @@ public static class TypeHelper
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 	public static ReadOnlyCollection<Type> GetImplementedInterfaceTypes([DisallowNull] object input)
 	{
-		//TODO: ADD CACHING
-
 		input = input.ArgumentNotNull();
 
-		return Array.AsReadOnly(input.GetType().GetInterfaces());
+		var type = input.GetType();
+		var cacheKey = $"{type.FullName}.{nameof(GetImplementedInterfaceTypes)}";
+
+		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedInterfaces))
+		{
+			return Array.AsReadOnly(cachedInterfaces!);
+		}
+
+		var interfaces = type.GetInterfaces();
+
+		_commonCache.AddCacheItem(cacheKey, interfaces, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(interfaces);
 	}
 
 	/// <summary>
@@ -948,7 +1046,7 @@ public static class TypeHelper
 		instance = instance.ArgumentNotNull();
 
 		var type = instance.GetType();
-		var cacheKey = $"{type.FullName}.GetInstanceHashCode";
+		var cacheKey = $"{type.FullName}.{nameof(GetInstanceHashCode)}";
 
 		// Cache the PropertyInfo array to avoid repeated reflection
 		if (!_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var properties))
@@ -986,7 +1084,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"GetMembersWithAttribute.{type.FullName}";
+		var cacheKey = $"{nameof(GetMembersWithAttribute)}.{type.FullName}";
 
 		if (_commonCache.TryGetValue<MemberInfo[]>(cacheKey, out var cachedMembers))
 		{
@@ -1154,7 +1252,7 @@ public static class TypeHelper
 		type = type.ArgumentNotNull();
 
 		// Create a cache key that uniquely identifies the combination of type and display options
-		var cacheKey = $"{type.AssemblyQualifiedName}.GetTypeDisplayName.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}";
+		var cacheKey = $"{type.AssemblyQualifiedName}.{nameof(GetTypeDisplayName)}.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}";
 
 		if (_commonCache.TryGetValue<string>(cacheKey, out var cachedDisplayName))
 		{
@@ -1381,7 +1479,7 @@ public static class TypeHelper
 		}
 
 		// Create a cache key based on the type and baseClass
-		var cacheKey = $"{type.FullName}.HasBaseClass.{baseClass.FullName}";
+		var cacheKey = $"{type.FullName}.{nameof(HasBaseClass)}.{baseClass.FullName}";
 
 		// Check if the result is already in the cache
 		if (_commonCache.TryGetValue<bool>(cacheKey, out var cachedResult))
@@ -1489,7 +1587,7 @@ public static class TypeHelper
 		}
 
 		// Create a cache key based on the type and interfaceType
-		var cacheKey = $"{type.FullName}.ImplementsInterface.{interfaceType.FullName}";
+		var cacheKey = $"{type.FullName}.{nameof(ImplementsInterface)}.{interfaceType.FullName}";
 
 		// Check if the result is already in the cache
 		if (_commonCache.TryGetValue<bool>(cacheKey, out var cachedResult))
