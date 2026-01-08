@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-03-2026
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsConvertingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -69,10 +69,10 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.ToImmutableList))]
-	public void ToImmutable()
+	[Benchmark(Description = nameof(EnumerableExtensions.ToImmutableArray))]
+	public void ToImmutableArray()
 	{
-		var result = this._personRefEnumerable.AsEnumerable().ToImmutableList();
+		var result = this._personRefEnumerable.AsEnumerable().ToImmutableArray();
 
 		this.Consume(result);
 	}

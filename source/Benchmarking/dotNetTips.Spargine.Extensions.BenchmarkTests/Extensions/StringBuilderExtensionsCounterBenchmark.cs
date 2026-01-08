@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -35,6 +35,7 @@ public class StringBuilderExtensionsCounterBenchmark : TinyCollectionBenchmark
 	private IEnumerable<string> _stringEnumerable;
 
 	[Benchmark(Description = nameof(StringBuilderExtensions.AppendBytes) + ": 01*")]
+	[BenchmarkCategory(Categories.Strings)]
 	public void AppendBytes01()
 	{
 		var sb = new StringBuilder();

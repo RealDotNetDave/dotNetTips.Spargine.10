@@ -4,12 +4,12 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-05-2026
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>BenchmarkHelper provides utility methods to run BenchmarkDotNet benchmarks with minimal boilerplate.</summary>
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;

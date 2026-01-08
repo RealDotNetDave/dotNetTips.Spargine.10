@@ -15,7 +15,6 @@
 // </summary>
 // ***********************************************************************
 
-using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -188,13 +187,13 @@ public class Benchmark
 	/// Gets the first coordinate object generated during startup for use in testing.
 	/// </summary>
 	/// <value>The first coordinate object.</value>
-	public Coordinate CoordinateRef01 { get; private set; }
+	public Tester.Models.RefTypes.Coordinate CoordinateRef01 { get; private set; }
 
 	/// <summary>
 	/// Gets the second coordinate object generated during startup for use in testing.
 	/// </summary>
 	/// <value>The second coordinate object.</value>
-	public Coordinate CoordinateRef02 { get; private set; }
+	public Tester.Models.RefTypes.Coordinate CoordinateRef02 { get; private set; }
 
 	/// <summary>
 	/// Retrieves a random coordinate generated during startup for use in testing.
@@ -243,14 +242,14 @@ public class Benchmark
 	/// This property provides access to a Person object instance that can be used in benchmark tests to measure performance of operations involving item objects.
 	/// </summary>
 	/// <value>The first Person{Address} object.</value>
-	public Person PersonRef01 { get; private set; }
+	public Tester.Models.RefTypes.Person PersonRef01 { get; private set; }
 
 	/// <summary>
 	/// Retrieves a Person{Address} reference type object for testing generated during startup.
 	/// This property provides access to a Person object instance that can be used in benchmark tests to measure performance of operations involving item objects.
 	/// </summary>
 	/// <value>The second Person{Address} object.</value>
-	public Person PersonRef02 { get; private set; }
+	public Tester.Models.RefTypes.Person PersonRef02 { get; private set; }
 
 	/// <summary>
 	/// Retrieves a Person{Address} value type object for testing generated during startup.
@@ -366,7 +365,7 @@ public class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeDictionary), "David McCarter", "1/7/2026", Status = Status.New)]
+	[Information(nameof(ConsumeDictionary), "David McCarter", "1/7/2026", Status = Status.Available)]
 	public void ConsumeDictionary<TKey, TValue>([DisallowNull] IDictionary<TKey, TValue> collection)
 	{
 		foreach (var kvp in collection)
@@ -389,7 +388,7 @@ public class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeEnumerable), author: "David McCarter", createdOn: "1/8/2026", Status = Status.New)]
+	[Information(nameof(ConsumeEnumerable), author: "David McCarter", createdOn: "1/8/2026", Status = Status.Available)]
 	public void ConsumeEnumerable<T>(IEnumerable<T> collection)
 	{
 		foreach (var person in collection)
@@ -411,7 +410,7 @@ public class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeSpan), author: "David McCarter", createdOn: "1/8/2026", Status = Status.New)]
+	[Information(nameof(ConsumeSpan), author: "David McCarter", createdOn: "1/8/2026", Status = Status.Available)]
 	public void ConsumeSpan<T>(Span<T> span)
 	{
 		foreach (var person in span)
@@ -514,12 +513,12 @@ public class Benchmark
 		this.Base64String = this.LongTestString.Substring(1, 50).ToBase64();
 		this.CoordinateVal01 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
 		this.CoordinateVal02 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
-		this.CoordinateRef01 = RandomData.GenerateCoordinate<Coordinate>();
-		this.CoordinateRef02 = RandomData.GenerateCoordinate<Coordinate>();
+		this.CoordinateRef01 = RandomData.GenerateCoordinate<Tester.Models.RefTypes.Coordinate>();
+		this.CoordinateRef02 = RandomData.GenerateCoordinate<Tester.Models.RefTypes.Coordinate>();
 		this.PersonRecord01 = RandomData.GeneratePerson<PersonRecord>();
 		this.PersonRecord02 = RandomData.GeneratePerson<PersonRecord>();
-		this.PersonRef01 = RandomData.GeneratePerson<Person>();
-		this.PersonRef02 = RandomData.GeneratePerson<Person>();
+		this.PersonRef01 = RandomData.GeneratePerson<Tester.Models.RefTypes.Person>();
+		this.PersonRef02 = RandomData.GeneratePerson<Tester.Models.RefTypes.Person>();
 		this.PersonVal01 = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 		this.PersonVal02 = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 		this.StringToTrim = $"          {this.LongTestString}          ";
@@ -582,7 +581,7 @@ public class Benchmark
 	/// This helper is intended for benchmarking scenarios to apply a deterministic mutation to a <see cref="Person"/> instance.
 	/// <see cref="Person.CellPhone"/> to the constant test value stored in <see cref="PhoneNumberUpdate"/>.
 	/// </remarks>
-	public virtual Person Update([DisallowNull] Person person)
+	public virtual Tester.Models.RefTypes.Person Update([DisallowNull] Tester.Models.RefTypes.Person person)
 	{
 		person = person.ArgumentNotNull();
 
