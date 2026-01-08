@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2026
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,6 +31,7 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.Common;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.ValueTypes;
 using static BenchmarkDotNet.Attributes.JsonExporterAttribute;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -349,6 +350,40 @@ public class Benchmark
 	public Task ConsumeAsync<T>(T obj, CancellationToken cancellationToken = default)
 	{
 		return Task.Run(() => this.Consumer.Consume(obj), cancellationToken);
+	}
+
+	/// <summary>
+	/// Consumes each item in the specified <see cref="IEnumerable{T}"/> sequence using the <see cref="Consume{T}(T)"/> method using foreach().
+	/// </summary>
+	/// <typeparam name="T">The type of the elements contained in the <paramref name="collection"/>.</typeparam>
+	/// <param name="collection">
+	/// The sequence of items to consume. Each element is passed to <see cref="Consume{T}(T)"/> to prevent
+	/// the JIT compiler from optimizing away the code being benchmarked.
+	/// </param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public void ConsumeEnumerable<T>(IEnumerable<T> collection)
+	{
+		foreach (var person in collection)
+		{
+			this.Consume(person);
+		}
+	}
+
+	/// <summary>
+	/// Consumes each item in the specified <see cref="Span{T}"/> using the <see cref="Consume{T}(T)"/> method uising foreach().
+	/// </summary>
+	/// <typeparam name="T">The type of the elements contained in the <paramref name="span"/>.</typeparam>
+	/// <param name="span">
+	/// The span of items to consume. Each element is passed to <see cref="Consume{T}(T)"/> to prevent
+	/// the JIT compiler from optimizing away the code being benchmarked while avoiding additional allocations.
+	/// </param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public void ConsumeSpan<T>(Span<T> span)
+	{
+		foreach (var person in span)
+		{
+			this.Consume(person);
+		}
 	}
 
 	/// <summary>
