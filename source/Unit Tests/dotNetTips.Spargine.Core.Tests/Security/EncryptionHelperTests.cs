@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -14,6 +14,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
+using System.Text;
 using DotNetTips.Spargine.Core.Security;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
@@ -50,6 +51,65 @@ public class EncryptionHelperTests
 		var payload = EncryptionHelper.AesGcmEncrypt(this._plainText, EncryptionHelper.GenerateAesGcmKey());
 		_ = Assert.ThrowsExactly<ArgumentException>(() =>
 			EncryptionHelper.AesGcmDecrypt(payload, key));
+	}
+
+	[TestMethod]
+	public void AesGcmDecrypt_InvalidPayloadLength_ThrowsCryptographicException()
+	{
+		// Arrange
+		var key = EncryptionHelper.GenerateAesGcmKey();
+		var shortPayload = Convert.ToBase64String(new byte[10]); // Too short
+
+		// Act and Assert
+		_ = Assert.ThrowsExactly<CryptographicException>(() =>
+			EncryptionHelper.AesGcmDecrypt(shortPayload, key));
+	}
+
+	[TestMethod]
+	public void AesGcmDecrypt_TamperedCiphertext_ThrowsCryptographicException()
+	{
+		// Arrange
+		var key = EncryptionHelper.GenerateAesGcmKey();
+		var encrypted = EncryptionHelper.AesGcmEncrypt(this._plainText, key);
+
+		// Tamper with the encrypted payload
+		var bytes = Convert.FromBase64String(encrypted);
+		bytes[bytes.Length / 2] ^= 0xFF; // Flip bits in the middle
+		var tamperedPayload = Convert.ToBase64String(bytes);
+
+		// Act and Assert
+		_ = Assert.ThrowsExactly<CryptographicException>(() =>
+			EncryptionHelper.AesGcmDecrypt(tamperedPayload, key));
+	}
+
+	[TestMethod]
+	public void AesGcmDecrypt_UnsupportedVersion_ThrowsCryptographicException()
+	{
+		// Arrange
+		var key = EncryptionHelper.GenerateAesGcmKey();
+		var invalidVersionPayload = new byte[50];
+		invalidVersionPayload[0] = 99; // Invalid version
+		RandomNumberGenerator.Fill(invalidVersionPayload.AsSpan(1));
+		var base64Payload = Convert.ToBase64String(invalidVersionPayload);
+
+		// Act and Assert
+		var ex = Assert.ThrowsExactly<CryptographicException>(() =>
+			EncryptionHelper.AesGcmDecrypt(base64Payload, key));
+		Assert.IsTrue(ex.Message.Contains("Unsupported payload version"));
+	}
+
+	[TestMethod]
+	public void AesGcmDecrypt_WithMismatchedAAD_ThrowsCryptographicException()
+	{
+		// Arrange
+		var key = EncryptionHelper.GenerateAesGcmKey();
+		var aad1 = Encoding.UTF8.GetBytes("AAD1");
+		var aad2 = Encoding.UTF8.GetBytes("AAD2");
+		var encrypted = EncryptionHelper.AesGcmEncrypt(this._plainText, key, aad1);
+
+		// Act and Assert
+		_ = Assert.ThrowsExactly<CryptographicException>(() =>
+			EncryptionHelper.AesGcmDecrypt(encrypted, key, aad2));
 	}
 
 	[TestMethod]
