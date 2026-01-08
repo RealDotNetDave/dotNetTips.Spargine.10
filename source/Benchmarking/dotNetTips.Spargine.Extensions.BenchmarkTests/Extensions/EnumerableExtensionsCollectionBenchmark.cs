@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2026
+// Last Modified On : 01-08-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -45,10 +45,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.AddDistinct(this._personRefEnumerableToAdd);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddFirst))]
@@ -56,10 +53,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.AddFirst(this.PersonRef01);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddIf))]
@@ -68,10 +62,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		var result = this._personRefEnumerable.AddIf(this.PersonRef01, true);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddLast))]
@@ -79,10 +70,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.AddLast(this.PersonRef01);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastAny) + ": With Predicate")]
@@ -159,10 +147,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		var result = people.EnsureUnique();
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrDefault) + ": With Alternate")]
@@ -291,10 +276,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.OrderBy(p => p.Email);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.OrderByOrdinal))]
@@ -302,10 +284,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.OrderByOrdinal(p => p.Email);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.OrderBy) + ": With Sort Expression")]
@@ -313,10 +292,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.OrderBy("Email desc");
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.Partition))]
@@ -324,10 +300,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		foreach (var partition in this._personRefEnumerable.Partition(this.HalfCount))
 		{
-			foreach (var person in partition)
-			{
-				this.Consume(person);
-			}
+			this.ConsumeEnumerable(partition);
 		}
 	}
 
@@ -337,10 +310,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		foreach (var people in this._personRefEnumerable.Chunk(this.HalfCount))
 		{
-			foreach (var person in people)
-			{
-				this.Consume(person);
-			}
+			this.ConsumeEnumerable(people);
 		}
 	}
 
@@ -367,10 +337,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		var result = collection.RemoveNulls();
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ReplaceIf))]
@@ -380,10 +347,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefEnumerable;
 		var result = people.ReplaceIf((p, index) => string.Equals(p.Id, this.PersonRef01.Id, StringComparison.Ordinal), this.PersonRef01);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	public override void Setup()
@@ -406,10 +370,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.FastShuffle();
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
@@ -417,10 +378,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.FastShuffle(this.HalfCount);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = "Shuffle")]
@@ -428,10 +386,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefEnumerable.Shuffle();
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.StartsWith))]
@@ -461,10 +416,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		var result = people.Upsert(this.PersonRef01);
 
-		foreach (var person in result)
-		{
-			this.Consume(person);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	private static bool AnyWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Any(predicate);

@@ -14,7 +14,6 @@
 // Benchmark count: 1,708
 // </summary>
 // ***********************************************************************
-using System;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;

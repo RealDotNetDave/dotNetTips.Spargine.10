@@ -15,6 +15,7 @@
 // </summary>
 // ***********************************************************************
 
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -352,15 +353,43 @@ public class Benchmark
 		return Task.Run(() => this.Consumer.Consume(obj), cancellationToken);
 	}
 
+
 	/// <summary>
-	/// Consumes each item in the specified <see cref="IEnumerable{T}"/> sequence using the <see cref="Consume{T}(T)"/> method using foreach().
+	/// Iterates over the specified <see cref="IDictionary{TKey, TValue}"/> and consumes each value using <see cref="Consume{T}(T)"/>.
+	/// This helper prevents the JIT compiler from optimizing away dictionary iteration in benchmark scenarios.
+	/// </summary>
+	/// <typeparam name="TKey">The type of keys in the dictionary. Keys must be non-null.</typeparam>
+	/// <typeparam name="TValue">The type of values stored in the dictionary.</typeparam>
+	/// <param name="collection">The dictionary whose values will be consumed. Must not be <c>null</c>.</param>
+	/// <remarks>
+	/// This method uses a <c>foreach</c> loop to traverse the dictionary and calls <see cref="Consume{T}(T)"/> for each value.
+	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ConsumeDictionary), "David McCarter", "1/7/2026", Status = Status.New)]
+	public void ConsumeDictionary<TKey, TValue>([DisallowNull] IDictionary<TKey, TValue> collection)
+	{
+		foreach (var kvp in collection)
+		{
+
+			this.Consume(kvp.Value);
+		}
+	}
+
+	/// <summary>
+	/// Consumes each item in the specified <see cref="IEnumerable{T}"/> sequence using the <see cref="Consume{T}(T)"/> method.
 	/// </summary>
 	/// <typeparam name="T">The type of the elements contained in the <paramref name="collection"/>.</typeparam>
 	/// <param name="collection">
 	/// The sequence of items to consume. Each element is passed to <see cref="Consume{T}(T)"/> to prevent
 	/// the JIT compiler from optimizing away the code being benchmarked.
 	/// </param>
+	/// <remarks>
+	/// This method uses a <c>foreach</c> loop to traverse the dictionary and calls <see cref="Consume{T}(T)"/> for each value.
+	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
+	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ConsumeEnumerable), author: "David McCarter", createdOn: "1/8/2026", Status = Status.New)]
 	public void ConsumeEnumerable<T>(IEnumerable<T> collection)
 	{
 		foreach (var person in collection)
@@ -370,14 +399,19 @@ public class Benchmark
 	}
 
 	/// <summary>
-	/// Consumes each item in the specified <see cref="Span{T}"/> using the <see cref="Consume{T}(T)"/> method uising foreach().
+	/// Consumes each item in the specified <see cref="Span{T}"/> using the <see cref="Consume{T}(T)"/> method.
 	/// </summary>
 	/// <typeparam name="T">The type of the elements contained in the <paramref name="span"/>.</typeparam>
 	/// <param name="span">
 	/// The span of items to consume. Each element is passed to <see cref="Consume{T}(T)"/> to prevent
 	/// the JIT compiler from optimizing away the code being benchmarked while avoiding additional allocations.
 	/// </param>
+	/// <remarks>
+	/// This method uses a <c>foreach</c> loop to traverse the dictionary and calls <see cref="Consume{T}(T)"/> for each value.
+	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
+	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ConsumeSpan), author: "David McCarter", createdOn: "1/8/2026", Status = Status.New)]
 	public void ConsumeSpan<T>(Span<T> span)
 	{
 		foreach (var person in span)
