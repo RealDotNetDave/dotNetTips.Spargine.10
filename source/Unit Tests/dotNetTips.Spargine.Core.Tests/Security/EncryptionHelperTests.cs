@@ -78,7 +78,7 @@ public class EncryptionHelperTests
 		var tamperedPayload = Convert.ToBase64String(bytes);
 
 		// Act and Assert
-		_ = Assert.ThrowsExactly<CryptographicException>(() =>
+		_ = Assert.ThrowsExactly<AuthenticationTagMismatchException>(() =>
 			EncryptionHelper.AesGcmDecrypt(tamperedPayload, key));
 	}
 
@@ -108,7 +108,7 @@ public class EncryptionHelperTests
 		var encrypted = EncryptionHelper.AesGcmEncrypt(this._plainText, key, aad1);
 
 		// Act and Assert
-		_ = Assert.ThrowsExactly<CryptographicException>(() =>
+		_ = Assert.ThrowsExactly<AuthenticationTagMismatchException>(() =>
 			EncryptionHelper.AesGcmDecrypt(encrypted, key, aad2));
 	}
 

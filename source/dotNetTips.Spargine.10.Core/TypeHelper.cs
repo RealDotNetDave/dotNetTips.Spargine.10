@@ -817,9 +817,17 @@ public static class TypeHelper
 
 		var attribute = fieldInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
 
-		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+		if (attribute is not null)
+		{
 
-		return attribute;
+			_commonCache.AddCacheItem(cacheKey, attribute, TimeSpan.FromMinutes(TimeOutMinutes));
+
+			return attribute;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/// <summary>
@@ -850,9 +858,17 @@ public static class TypeHelper
 
 		var attribute = type.GetTypeInfo().GetCustomAttributes(typeof(TAttribute), false).OfType<TAttribute>().FirstOrDefault();
 
-		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+		if (attribute is not null)
+		{
 
-		return attribute;
+			_commonCache.AddCacheItem(cacheKey, attribute, TimeSpan.FromMinutes(TimeOutMinutes));
+
+			return attribute;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/// <summary>
@@ -883,9 +899,18 @@ public static class TypeHelper
 
 		var attribute = methodInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
 
-		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
 
-		return attribute;
+		if (attribute is not null)
+		{
+
+			_commonCache.AddCacheItem(cacheKey, attribute, TimeSpan.FromMinutes(TimeOutMinutes));
+
+			return attribute;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/// <summary>
@@ -906,9 +931,17 @@ public static class TypeHelper
 
 		var attribute = propertyInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
 
-		_commonCache.AddCacheItem(cacheKey, attribute!, TimeSpan.FromMinutes(TimeOutMinutes));
+		if (attribute is not null)
+		{
 
-		return attribute;
+			_commonCache.AddCacheItem(cacheKey, attribute, TimeSpan.FromMinutes(TimeOutMinutes));
+
+			return attribute;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/// <summary>
