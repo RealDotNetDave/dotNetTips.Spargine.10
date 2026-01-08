@@ -1316,10 +1316,68 @@ public static class EnumerableExtensions
 		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> EnsureUnique()
 		{
-			//TODO: OVERLOAD TO USE EQUALITYCOMPARER
 			collection = collection.ArgumentNotNull();
 
 			return new HashSet<T>(collection, EqualityComparer<T>.Default);
+		}
+		/// <summary>
+		/// Ensures that all elements in the collection are unique based on the specified equality comparer.
+		/// </summary>
+		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements, or null to use the default equality comparer <see cref="EqualityComparer{T}.Default"/>.</param>
+		/// <returns>An IEnumerable containing only unique elements from the original collection based on the specified comparer.</returns>
+		/// <remarks>
+		/// <para>
+		/// This method uses the specified <see cref="IEqualityComparer{T}"/> to determine uniqueness.
+		/// If the collection contains duplicate items according to the comparer, only the first occurrence is included in the returned collection.
+		/// </para>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements in the collection.</description></item>
+		/// <item><description><b>Space complexity:</b> O(n) for the HashSet that stores unique elements.</description></item>
+		/// <item><description><b>Enumeration:</b> Single-pass enumeration of the source collection.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>When to Use Custom Comparers:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
+		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
+		/// <item><description><b>Property-based uniqueness:</b> Create a custom comparer that compares specific properties of objects.</description></item>
+		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
+		/// </list>
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var names = new List&lt;string&gt; { "Alice", "BOB", "alice", "Charlie", "bob" };
+		/// 
+		/// // Case-insensitive uniqueness
+		/// var uniqueNames = names.EnsureUnique(StringComparer.OrdinalIgnoreCase);
+		/// // Result: { "Alice", "BOB", "Charlie" }
+		/// 
+		/// // Custom comparer for Person objects based on Id
+		/// var people = new List&lt;Person&gt; 
+		/// { 
+		///     new Person { Id = 1, Name = "John" },
+		///     new Person { Id = 2, Name = "Jane" },
+		///     new Person { Id = 1, Name = "John Doe" } // Duplicate Id
+		/// };
+		/// var personComparer = new PersonIdComparer();
+		/// var uniquePeople = people.EnsureUnique(personComparer);
+		/// // Result: Only the first two Person objects (unique by Id)
+		/// </code>
+		/// </example>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(EnsureUnique), "David McCarter", "1/8/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public IEnumerable<T> EnsureUnique([DisallowNull] IEqualityComparer<T> comparer)
+		{
+			collection = collection.ArgumentNotNull();
+			comparer = comparer.ArgumentNotNull();
+
+			return new HashSet<T>(collection, comparer);
 		}
 
 		/// <summary>
