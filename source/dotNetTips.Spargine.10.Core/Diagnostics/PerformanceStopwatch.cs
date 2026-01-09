@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-17-2025
+// Last Modified On : 01-09-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -168,7 +168,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="StopIfThresholdExceeded"/>
 	/// <seealso cref="ElapsedEventArgs"/>
 	/// <seealso cref="EventHandler{TEventArgs}"/>
-	[Information(nameof(Reset), "David McCarter", "11/11/2025", Status = Status.New)]
+	[Information(nameof(Reset), "David McCarter", "11/11/2025", Status = Status.Available)]
 	public event EventHandler<ElapsedEventArgs>? ResetCompleted;
 
 	/// <summary>
@@ -207,7 +207,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// var stopwatch = PerformanceStopwatch.StartNew("APICall");
 	/// 
 	/// // Subscribe to stopped event
-	/// stopwatch.StoppedCompleted += (sender, e) =>
+	/// stopwatch.StopCompleted += (sender, e) =>
 	/// {
 	///     Console.WriteLine($"Operation completed in {e.Elapsed.TotalMilliseconds:F2}ms");
 	///     
@@ -221,10 +221,10 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// // Make API call
 	/// await CallExternalApiAsync();
 	/// 
-	/// // Stop and reset - fires StoppedCompleted event
+	/// // Stop and reset - fires StopCompleted event
 	/// var elapsed = stopwatch.StopReset();
 	/// 
-	/// // Or stop and restart - also fires StoppedCompleted
+	/// // Or stop and restart - also fires StopCompleted
 	/// var elapsed2 = stopwatch.StopRestart();
 	/// </code>
 	/// </example>
@@ -233,8 +233,8 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="ResetCompleted"/>
 	/// <seealso cref="ElapsedEventArgs"/>
 	/// <seealso cref="EventHandler{TEventArgs}"/>
-	[Information(nameof(StoppedCompleted), "David McCarter", "11/11/2025", Status = Status.New)]
-	public event EventHandler<ElapsedEventArgs>? StoppedCompleted;
+	[Information(nameof(StopCompleted), "David McCarter", "11/11/2025", Status = Status.Available)]
+	public event EventHandler<ElapsedEventArgs>? StopCompleted;
 
 	/// <summary>
 	/// Occurs when the elapsed time exceeds the configured <see cref="AlertThreshold"/>.
@@ -305,22 +305,746 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="StopIfThresholdExceeded"/>
 	/// <seealso cref="ElapsedEventArgs"/>
 	/// <seealso cref="EventHandler{TEventArgs}"/>
-	[Information(nameof(ThresholdExceeded), "David McCarter", "11/11/2025", Status = Status.New)]
+	[Information(nameof(ThresholdExceeded), "David McCarter", "11/11/2025", Status = Status.Available)]
 	public event EventHandler<ElapsedEventArgs>? ThresholdExceeded;
 
 	/// <summary>
-	/// Creates a structured diagnostic entry.
+	/// Gets the threshold for performance alerts.
 	/// </summary>
-	/// <param name="message">The message to record.</param>
-	/// <param name="result">The elapsed time.</param>
-	/// <returns>A new <see cref="DiagnosticEntry"/>.</returns>
-	private DiagnosticEntry CreateEntry(string message, TimeSpan result)
+	[Information("AlertThreshold", "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public TimeSpan? AlertThreshold { get; private set; }
+
+	/// <summary>
+	/// The logged messages as a <see cref="ReadOnlyCollection{String}"/>.
+	/// </summary>
+	/// <example>
+	/// Output:
+	/// GetUsers():Load users from database. Time: 1013.02 ms
+	/// GetUsers():Save users to database.Time: 1013.7925 ms
+	/// </example>
+	[Pure]
+	[Information(nameof(Diagnostics), "David McCarter", "1/18/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public ReadOnlyCollection<DiagnosticEntry> Diagnostics
 	{
-		var entry = new DiagnosticEntry(DateTimeOffset.UtcNow, $"{this.Title} {message}", result);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			return this._diagnostics.OrderBy(p => p.Timestamp).ToArray().AsReadOnly();
+		}
+	}
 
-		this._diagnostics.Add(entry);
+	/// <summary>
+	/// Gets a value indicating whether the current elapsed time has exceeded the configured alert threshold.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if <see cref="AlertThreshold"/> is configured (not null) and the current Elapsed
+	/// time is greater than the threshold value; otherwise, <c>false</c>.
+	/// </value>
+	/// <remarks>
+	/// This property provides a real-time check of whether the stopwatch's elapsed time has surpassed 
+	/// the configured performance threshold without triggering any events or stopping the stopwatch.
+	/// <para>
+	/// <strong>Evaluation Logic:</strong>
+	/// <list type="bullet">
+	/// <item><description>Returns <c>false</c> if <see cref="AlertThreshold"/> is <c>null</c> (no threshold configured)</description></item>
+	/// <item><description>Returns <c>true</c> if <see cref="AlertThreshold"/> has a value AND Elapsed is greater than that value</description></item>
+	/// <item><description>The comparison uses <see cref="TimeSpan"/> greater-than operator for precise threshold checking</description></item>
+	/// <item><description>Can be checked at any time - the stopwatch does NOT need to be stopped</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Relationship with Events:</strong>
+	/// This property only evaluates the condition; it does NOT raise the <see cref="ThresholdExceeded"/> event.
+	/// The event is raised by methods like <see cref="StopReset()"/>, <see cref="StopRestart()"/>, and 
+	/// <see cref="StopIfThresholdExceeded"/> when they detect this property is <c>true</c>.
+	/// </para>
+	/// <para>
+	/// <strong>Performance Considerations:</strong>
+	/// <list type="bullet">
+	/// <item><description>Very lightweight property - performs a simple null check and time comparison</description></item>
+	/// <item><description>Marked with <see cref="MethodImplOptions.AggressiveInlining"/> for optimal performance</description></item>
+	/// <item><description>Safe to call frequently in loops or monitoring scenarios</description></item>
+	/// <item><description>Does not allocate memory or trigger any side effects</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Thread Safety:</strong>
+	/// This property is thread-safe for reading. Multiple threads can check this property concurrently.
+	/// However, the elapsed time may change between checks in multi-threaded scenarios.
+	/// </para>
+	/// <para>
+	/// <strong>Use Cases:</strong>
+	/// <list type="bullet">
+	/// <item><description>Monitoring elapsed time in loops to implement timeout logic</description></item>
+	/// <item><description>Conditional logic based on whether an operation is taking too long</description></item>
+	/// <item><description>Warning users or logging when operations approach or exceed acceptable durations</description></item>
+	/// <item><description>Building custom threshold handling logic without relying on events</description></item>
+	/// <item><description>Displaying visual indicators (e.g., progress bars with warning states)</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Comparison with Related Members:</strong>
+	/// <list type="bullet">
+	/// <item><description><see cref="IsThresholdExceeded"/> - Checks if threshold exceeded (this property)</description></item>
+	/// <item><description><see cref="AlertThreshold"/> - The configured threshold value</description></item>
+	/// <item><description><see cref="ThresholdExceeded"/> - Event fired when threshold is exceeded during stop operations</description></item>
+	/// <item><description><see cref="StopIfThresholdExceeded"/> - Conditionally stops if this property is <c>true</c></description></item>
+	/// </list>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Basic threshold checking in a loop:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromSeconds(30),
+	///     "BatchProcessing"
+	/// );
+	/// 
+	/// foreach (var item in items)
+	/// {
+	///     await ProcessItem(item);
+	///     
+	///     // Check if we've exceeded the threshold
+	///     if (stopwatch.IsThresholdExceeded)
+	///     {
+	///         logger.LogWarning("Processing time exceeded threshold");
+	///         break; // Exit loop early
+	///     }
+	/// }
+	/// 
+	/// stopwatch.Stop();
+	/// </code>
+	/// 
+	/// Implementing warning logic:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromSeconds(10),
+	///     "DataProcessing"
+	/// );
+	/// 
+	/// while (HasMoreWork())
+	/// {
+	///     await ProcessNextItem();
+	///     
+	///     // Warn when approaching threshold
+	///     if (stopwatch.IsThresholdExceeded)
+	///     {
+	///         logger.LogWarning("Operation is taking longer than expected");
+	///         // Could continue processing or take corrective action
+	///     }
+	/// }
+	/// 
+	/// stopwatch.Stop();
+	/// </code>
+	/// 
+	/// Conditional logic based on threshold:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromMilliseconds(5000),
+	///     "APICall"
+	/// );
+	/// 
+	/// var response = await CallExternalApi();
+	/// 
+	/// // Different handling based on whether threshold was exceeded
+	/// if (stopwatch.IsThresholdExceeded)
+	/// {
+	///     // Slow response - log and potentially cache result
+	///     logger.LogWarning("API call was slow: {Elapsed}ms", stopwatch.Elapsed.TotalMilliseconds);
+	///     await CacheResult(response);
+	/// }
+	/// else
+	/// {
+	///     // Fast response - normal processing
+	///     logger.LogDebug("API call completed within threshold");
+	/// }
+	/// 
+	/// stopwatch.Stop();
+	/// </code>
+	/// 
+	/// Checking without a threshold configured:
+	/// <code>
+	/// // No threshold configured
+	/// var stopwatch = PerformanceStopwatch.StartNew("Operation");
+	/// 
+	/// await PerformWork();
+	/// 
+	/// // Always returns false when AlertThreshold is null
+	/// if (stopwatch.IsThresholdExceeded)
+	/// {
+	///     // This block never executes
+	///     Console.WriteLine("Threshold exceeded");
+	/// }
+	/// else
+	/// {
+	///     // Always executes when no threshold is configured
+	///     Console.WriteLine("No threshold configured");
+	/// }
+	/// 
+	/// stopwatch.Stop();
+	/// </code>
+	/// 
+	/// UI progress indicator with threshold warning:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromMinutes(5),
+	///     "FileProcessing"
+	/// );
+	/// 
+	/// // Update UI periodically
+	/// var timer = new Timer(_ =>
+	/// {
+	///     var elapsed = stopwatch.Elapsed.TotalSeconds;
+	///     progressBar.Value = (int)elapsed;
+	///     
+	///     // Change color if threshold exceeded
+	///     if (stopwatch.IsThresholdExceeded)
+	///     {
+	///         progressBar.ForeColor = Color.Red;
+	///         statusLabel.Text = "Processing taking longer than expected...";
+	///     }
+	///     else
+	///     {
+	///         progressBar.ForeColor = Color.Green;
+	///         statusLabel.Text = $"Processing... {elapsed:F0}s";
+	///     }
+	/// }, null, 0, 1000);
+	/// 
+	/// await ProcessFiles();
+	/// 
+	/// timer.Dispose();
+	/// stopwatch.Stop();
+	/// </code>
+	/// 
+	/// Combining threshold check with conditional stopping:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromSeconds(60),
+	///     "DataMigration"
+	/// );
+	/// 
+	/// int recordsProcessed = 0;
+	/// 
+	/// foreach (var record in records)
+	/// {
+	///     await MigrateRecord(record);
+	///     recordsProcessed++;
+	///     
+	///     // Check threshold but continue processing
+	///     if (stopwatch.IsThresholdExceeded &amp;&amp; recordsProcessed % 100 == 0)
+	///     {
+	///         logger.LogWarning(
+	///             "Migration exceeding time budget. Processed: {Count}, Elapsed: {Elapsed}s",
+	///             recordsProcessed,
+	///             stopwatch.Elapsed.TotalSeconds
+	///         );
+	///     }
+	///     
+	///     // Only stop if threshold significantly exceeded
+	///     if (stopwatch.Elapsed > TimeSpan.FromSeconds(120))
+	///     {
+	///         logger.LogError("Migration timeout - stopping");
+	///         break;
+	///     }
+	/// }
+	/// 
+	/// stopwatch.Stop();
+	/// </code>
+	/// </example>
+	/// <seealso cref="AlertThreshold"/>
+	/// <seealso cref="ThresholdExceeded"/>
+	/// <seealso cref="StopIfThresholdExceeded"/>
+	/// <seealso cref="TimeSpan"/>
+	[Pure]
+	[Information(nameof(IsThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool IsThresholdExceeded
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			return this.AlertThreshold.HasValue && this.Elapsed > this.AlertThreshold.Value;
+		}
+	}
 
-		return entry;
+	/// <summary>
+	/// Gets the _title for the stopwatch instance.
+	/// </summary>
+	[Pure]
+	[Information(nameof(Title), "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string Title
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get;
+	}
+
+	/// <summary>
+	/// Starts a new stopwatch instance with optional _title.
+	/// </summary>
+	/// <param name="title">Optional _title for diagnostics.</param>
+	[Information(nameof(StartNew), "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static PerformanceStopwatch StartNew(string title = ControlChars.EmptyString)
+	{
+		if (!string.IsNullOrEmpty(title))
+		{
+			title += ControlChars.Colon;
+		}
+
+		var sw = new PerformanceStopwatch(title);
+		sw.Start();
+
+		return sw;
+	}
+
+	/// <summary>
+	/// Creates and starts a new <see cref="PerformanceStopwatch"/> instance with performance alert threshold monitoring.
+	/// </summary>
+	/// <param name="alertThreshold">
+	/// The threshold <see cref="TimeSpan"/> for performance alerts. When the elapsed time exceeds this value,
+	/// the <see cref="ThresholdExceeded"/> event is triggered. Pass <c>null</c> to disable threshold monitoring.
+	/// </param>
+	/// <param name="title">
+	/// An optional descriptive title for the stopwatch operation. This title is used in diagnostic messages,
+	/// log entries, and reports. Defaults to an empty string if not specified.
+	/// </param>
+	/// <returns>
+	/// A new, running instance of <see cref="PerformanceStopwatch"/> configured with the specified alert threshold and title.
+	/// </returns>
+	/// <remarks>
+	/// This factory method provides a convenient way to create and start a stopwatch with built-in performance
+	/// threshold monitoring. The stopwatch is automatically started upon creation.
+	/// <para>
+	/// <strong>Alert Threshold Behavior:</strong>
+	/// <list type="bullet">
+	/// <item><description>If <paramref name="alertThreshold"/> is not null, the <see cref="AlertThreshold"/> property is set</description></item>
+	/// <item><description>The <see cref="ThresholdExceeded"/> event fires when elapsed time exceeds the threshold during stop operations</description></item>
+	/// <item><description>Use <see cref="IsThresholdExceeded"/> to check if the threshold has been exceeded at any time</description></item>
+	/// <item><description>The stopwatch continues running even if the threshold is exceeded</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Title Formatting:</strong>
+	/// If a non-empty title is provided, a colon (":") is automatically appended to it for consistent formatting
+	/// in diagnostic outputs. This matches the behavior of <see cref="StartNew"/>.
+	/// </para>
+	/// <para>
+	/// <strong>When Threshold Events Fire:</strong>
+	/// The <see cref="ThresholdExceeded"/> event is raised in the following scenarios:
+	/// <list type="bullet">
+	/// <item><description>When <see cref="StopReset()"/> is called and the elapsed time exceeds the threshold</description></item>
+	/// <item><description>When <see cref="StopRestart()"/> is called and the elapsed time exceeds the threshold</description></item>
+	/// <item><description>When <see cref="StopIfThresholdExceeded"/> is called and the threshold is exceeded</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Use Cases:</strong>
+	/// <list type="bullet">
+	/// <item><description>Monitoring operations with SLA requirements or time constraints</description></item>
+	/// <item><description>Detecting slow database queries or API calls</description></item>
+	/// <item><description>Triggering alerts when operations exceed acceptable durations</description></item>
+	/// <item><description>Performance regression testing with automated threshold validation</description></item>
+	/// <item><description>Collecting metrics for operations that violate performance budgets</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Performance Considerations:</strong>
+	/// <list type="bullet">
+	/// <item><description>Setting a threshold does not impact performance during timing - checks only occur during stop operations</description></item>
+	/// <item><description>The threshold comparison uses <see cref="TimeSpan"/> comparison which is very efficient</description></item>
+	/// <item><description>Event handlers for <see cref="ThresholdExceeded"/> are invoked synchronously</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Comparison with Related Methods:</strong>
+	/// <list type="bullet">
+	/// <item><description><see cref="StartNew"/> - Creates stopwatch without threshold monitoring</description></item>
+	/// <item><description><see cref="StartNewWithAlertThreshold"/> - Creates stopwatch with threshold monitoring (this method)</description></item>
+	/// <item><description><see cref="StartNewWithTelemetry"/> - Creates stopwatch with both threshold and telemetry</description></item>
+	/// </list>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Basic usage with threshold monitoring:
+	/// <code>
+	/// // Create stopwatch with 2-second threshold
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromSeconds(2),
+	///     "DatabaseQuery"
+	/// );
+	/// 
+	/// // Subscribe to threshold exceeded event
+	/// stopwatch.ThresholdExceeded += (sender, e) =>
+	/// {
+	///     logger.LogWarning("Query exceeded threshold: {Elapsed}ms", e.Elapsed.TotalMilliseconds);
+	/// };
+	/// 
+	/// await ExecuteDatabaseQuery();
+	/// 
+	/// stopwatch.Stop();
+	/// // If query took > 2 seconds, ThresholdExceeded event was raised
+	/// </code>
+	/// 
+	/// Monitoring API response times:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromMilliseconds(500),
+	///     "ExternalAPICall"
+	/// );
+	/// 
+	/// stopwatch.ThresholdExceeded += (sender, e) =>
+	/// {
+	///     // Log slow API calls
+	///     logger.LogWarning(
+	///         "Slow API call detected. Elapsed: {Elapsed}ms, Threshold: {Threshold}ms",
+	///         e.Elapsed.TotalMilliseconds,
+	///         stopwatch.AlertThreshold?.TotalMilliseconds
+	///     );
+	///     
+	///     // Optionally trigger alerts or increment metrics
+	///     metrics.IncrementCounter("slow_api_calls");
+	/// };
+	/// 
+	/// try
+	/// {
+	///     var response = await CallExternalApi();
+	///     return response;
+	/// }
+	/// finally
+	/// {
+	///     stopwatch.Stop();
+	/// }
+	/// </code>
+	/// 
+	/// Conditional stopping based on threshold:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromSeconds(5),
+	///     "BatchProcessing"
+	/// );
+	/// 
+	/// foreach (var item in items)
+	/// {
+	///     await ProcessItem(item);
+	///     
+	///     // Stop early if threshold exceeded
+	///     if (stopwatch.StopIfThresholdExceeded())
+	///     {
+	///         logger.LogWarning("Processing stopped due to timeout after {Count} items", processedCount);
+	///         break;
+	///     }
+	/// }
+	/// </code>
+	/// 
+	/// Using without threshold (null value):
+	/// <code>
+	/// // No threshold monitoring - behaves like StartNew()
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     null,
+	///     "FlexibleOperation"
+	/// );
+	/// 
+	/// await PerformOperation();
+	/// stopwatch.Stop();
+	/// 
+	/// // No threshold events will fire
+	/// Console.WriteLine($"Completed in {stopwatch.Elapsed.TotalMilliseconds}ms");
+	/// </code>
+	/// 
+	/// Performance testing with threshold validation:
+	/// <code>
+	/// var threshold = TimeSpan.FromMilliseconds(100);
+	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     threshold,
+	///     "PerformanceTest"
+	/// );
+	/// 
+	/// bool thresholdExceeded = false;
+	/// stopwatch.ThresholdExceeded += (sender, e) =>
+	/// {
+	///     thresholdExceeded = true;
+	/// };
+	/// 
+	/// RunAlgorithm();
+	/// stopwatch.Stop();
+	/// 
+	/// Assert.IsFalse(thresholdExceeded, 
+	///     $"Algorithm exceeded {threshold.TotalMilliseconds}ms threshold");
+	/// </code>
+	/// 
+	/// Multiple operations with different thresholds:
+	/// <code>
+	/// // Fast operation - tight threshold
+	/// var fastOp = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromMilliseconds(50),
+	///     "FastOperation"
+	/// );
+	/// await PerformFastOperation();
+	/// fastOp.Stop();
+	/// 
+	/// // Slow operation - relaxed threshold
+	/// var slowOp = PerformanceStopwatch.StartNewWithAlertThreshold(
+	///     TimeSpan.FromSeconds(5),
+	///     "SlowOperation"
+	/// );
+	/// await PerformSlowOperation();
+	/// slowOp.Stop();
+	/// </code>
+	/// </example>
+	/// <seealso cref="StartNew"/>
+	/// <seealso cref="StartNewWithTelemetry"/>
+	/// <seealso cref="AlertThreshold"/>
+	/// <seealso cref="ThresholdExceeded"/>
+	/// <seealso cref="IsThresholdExceeded"/>
+	/// <seealso cref="StopIfThresholdExceeded"/>
+	[Information(nameof(StartNewWithAlertThreshold), "David McCarter", "5/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static PerformanceStopwatch StartNewWithAlertThreshold(TimeSpan? alertThreshold, string title = ControlChars.EmptyString)
+	{
+		var sw = new PerformanceStopwatch(title) { AlertThreshold = alertThreshold };
+
+		sw.Start();
+
+		return sw;
+	}
+
+	/// <summary>
+	/// Creates and starts a new <see cref="PerformanceStopwatch"/> instance with Application Insights telemetry tracking and optional performance alert threshold monitoring.
+	/// </summary>
+	/// <param name="telemetry">
+	/// The <see cref="TelemetryClient"/> instance used to record events and metrics to Application Insights. Cannot be null.
+	/// </param>
+	/// <param name="operationName">
+	/// The name of the operation being tracked. This name is used as the event name in Application Insights and as a prefix for metrics.
+	/// </param>
+	/// <param name="alertThreshold">
+	/// An optional threshold <see cref="TimeSpan"/> for performance alerts. When the elapsed time exceeds this value,
+	/// the <see cref="ThresholdExceeded"/> event is triggered. Pass <c>null</c> to disable threshold monitoring.
+	/// </param>
+	/// <param name="message">
+	/// An optional custom message to include with telemetry events and as the stopwatch title. Defaults to an empty string if not specified.
+	/// </param>
+	/// <param name="properties">
+	/// Optional key/value properties to attach to telemetry events. These properties are included with both the event and metric data sent to Application Insights.
+	/// </param>
+	/// <returns>
+	/// A new, running instance of <see cref="PerformanceStopwatch"/> configured with telemetry tracking, optional alert threshold monitoring, and the specified title/message.
+	/// </returns>
+	/// <remarks>
+	/// This factory method provides the most comprehensive way to create a stopwatch with both telemetry tracking and 
+	/// performance threshold monitoring. The stopwatch is automatically started upon creation.
+	/// <para>
+	/// <strong>Telemetry Integration:</strong>
+	/// <list type="bullet">
+	/// <item><description>Automatically tracks events and metrics to Application Insights when the stopwatch stops</description></item>
+	/// <item><description>Uses <see cref="WithTelemetry"/> internally to configure telemetry settings</description></item>
+	/// <item><description>Telemetry is sent when <see cref="StopReset()"/> or <see cref="StopRestart()"/> is called</description></item>
+	/// <item><description>Both an event (named <paramref name="operationName"/>) and a metric (named <paramref name="operationName"/>.Duration) are tracked</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Title and Message Handling:</strong>
+	/// The <paramref name="message"/> parameter serves dual purposes:
+	/// <list type="bullet">
+	/// <item><description>Used as the stopwatch's <see cref="Title"/> for diagnostic messages and reports</description></item>
+	/// <item><description>Included in telemetry properties under the "Message" key (if not empty)</description></item>
+	/// <item><description>If non-empty, a colon (":") is automatically appended for consistent formatting</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Alert Threshold Behavior:</strong>
+	/// <list type="bullet">
+	/// <item><description>If <paramref name="alertThreshold"/> is not null, the <see cref="AlertThreshold"/> property is set</description></item>
+	/// <item><description>The <see cref="ThresholdExceeded"/> event fires when elapsed time exceeds the threshold during stop operations</description></item>
+	/// <item><description>Threshold monitoring is independent of telemetry tracking</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Telemetry Data Structure:</strong>
+	/// When the stopwatch stops, the following data is sent to Application Insights:
+	/// <list type="bullet">
+	/// <item><description><strong>Event Properties:</strong> Title (stopwatch title), ElapsedMs (elapsed time in milliseconds), Message (if provided), plus any custom properties</description></item>
+	/// <item><description><strong>Metric:</strong> A metric named "{operationName}.Duration" with the elapsed time in milliseconds</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Use Cases:</strong>
+	/// <list type="bullet">
+	/// <item><description>Monitoring critical operations with automatic telemetry reporting to Application Insights</description></item>
+	/// <item><description>Tracking performance of API calls, database queries, or external service interactions</description></item>
+	/// <item><description>Combining SLA monitoring (threshold) with centralized logging (telemetry)</description></item>
+	/// <item><description>Building performance dashboards in Application Insights based on operation metrics</description></item>
+	/// <item><description>Correlating performance data with custom properties (user ID, request ID, etc.)</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Performance Considerations:</strong>
+	/// <list type="bullet">
+	/// <item><description>Telemetry data is sent asynchronously to Application Insights - does not block stop operations</description></item>
+	/// <item><description>The <see cref="TelemetryClient"/> should be reused across operations for optimal performance</description></item>
+	/// <item><description>Custom properties are shallow-copied to avoid reference issues</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Comparison with Related Methods:</strong>
+	/// <list type="bullet">
+	/// <item><description><see cref="StartNew"/> - Creates basic stopwatch without telemetry or threshold</description></item>
+	/// <item><description><see cref="StartNewWithAlertThreshold"/> - Creates stopwatch with threshold but no telemetry</description></item>
+	/// <item><description><see cref="StartNewWithTelemetry"/> - Creates stopwatch with both threshold and telemetry (this method)</description></item>
+	/// </list>
+	/// </para>
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="telemetry"/> is null.
+	/// </exception>
+	/// <example>
+	/// Basic usage with telemetry tracking:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///     telemetryClient,
+	///     "DatabaseQuery",
+	///     alertThreshold: TimeSpan.FromSeconds(2),
+	///     message: "GetUsers"
+	/// );
+	/// 
+	/// await ExecuteDatabaseQuery();
+	/// 
+	/// stopwatch.Stop();
+	/// // Telemetry event and metric automatically sent to Application Insights
+	/// </code>
+	/// 
+	/// Including custom properties with telemetry:
+	/// <code>
+	/// var properties = new Dictionary&lt;string, string&gt;
+	/// {
+	///     ["UserId"] = currentUserId,
+	///     ["QueryType"] = "SELECT",
+	///     ["TableName"] = "Users"
+	/// };
+	/// 
+	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///     telemetryClient,
+	///     "DatabaseQuery",
+	///     message: "GetUsersByRegion",
+	///     properties: properties
+	/// );
+	/// 
+	/// var users = await GetUsersByRegion(regionId);
+	/// 
+	/// stopwatch.Stop();
+	/// // Application Insights receives event with all custom properties plus performance data
+	/// </code>
+	/// 
+	/// Combining telemetry with threshold monitoring:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///     telemetryClient,
+	///     "ExternalAPICall",
+	///     alertThreshold: TimeSpan.FromMilliseconds(500),
+	///     message: "PaymentGateway"
+	/// );
+	/// 
+	/// // Subscribe to threshold exceeded event for immediate alerting
+	/// stopwatch.ThresholdExceeded += (sender, e) =>
+	/// {
+	///     logger.LogWarning("API call exceeded SLA: {Elapsed}ms", e.Elapsed.TotalMilliseconds);
+	///     alertingService.SendAlert("Slow API call detected");
+	/// };
+	/// 
+	/// try
+	/// {
+	///     var response = await CallPaymentGatewayAsync();
+	///     return response;
+	/// }
+	/// finally
+	/// {
+	///     stopwatch.Stop();
+	///     // Both threshold event (if exceeded) and telemetry data are processed
+	/// }
+	/// </code>
+	/// 
+	/// Tracking operation with no threshold:
+	/// <code>
+	/// // Track telemetry without threshold monitoring
+	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///     telemetryClient,
+	///     "BackgroundJob",
+	///     alertThreshold: null,  // No threshold
+	///     message: "EmailProcessor"
+	/// );
+	/// 
+	/// await ProcessEmailQueue();
+	/// 
+	/// stopwatch.Stop();
+	/// // Only telemetry is sent, no threshold checking occurs
+	/// </code>
+	/// 
+	/// Building performance dashboards in Application Insights:
+	/// <code>
+	/// // Track different operations with consistent naming for dashboard queries
+	/// var dbStopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///     telemetryClient,
+	///     "Database.Query",
+	///     message: "GetOrders"
+	/// );
+	/// await GetOrders();
+	/// dbStopwatch.Stop();
+	/// 
+	/// var cacheStopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///     telemetryClient,
+	///     "Cache.Read",
+	///     message: "GetUserProfile"
+	/// );
+	/// await GetFromCache();
+	/// cacheStopwatch.Stop();
+	/// 
+	/// // In Application Insights, query:
+	/// // customEvents | where name startswith "Database."
+	/// // customMetrics | where name endswith ".Duration"
+	/// </code>
+	/// 
+	/// Reusing telemetry client across operations:
+	/// <code>
+	/// public class PerformanceMonitor
+	/// {
+	///     private readonly TelemetryClient _telemetryClient;
+	///     
+	///     public PerformanceMonitor(TelemetryClient telemetryClient)
+	///     {
+	///         _telemetryClient = telemetryClient;
+	///     }
+	///     
+	///     public async Task&lt;T&gt; TrackOperationAsync&lt;T&gt;(
+	///         string operationName, 
+	///         Func&lt;Task&lt;T&gt;&gt; operation,
+	///         TimeSpan? threshold = null)
+	///     {
+	///         var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
+	///             _telemetryClient,
+	///             operationName,
+	///             alertThreshold: threshold
+	///         );
+	///         
+	///         try
+	///         {
+	///             return await operation();
+	///         }
+	///         finally
+	///         {
+	///             stopwatch.Stop();
+	///         }
+	///     }
+	/// }
+	/// </code>
+	/// </example>
+	/// <seealso cref="StartNew"/>
+	/// <seealso cref="StartNewWithAlertThreshold"/>
+	/// <seealso cref="WithTelemetry"/>
+	/// <seealso cref="TrackTelemetry"/>
+	/// <seealso cref="TelemetryClient"/>
+	/// <seealso cref="AlertThreshold"/>
+	/// <seealso cref="ThresholdExceeded"/>
+	[Information(nameof(StartNewWithTelemetry), "David McCarter", "5/8/2025", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	public static PerformanceStopwatch StartNewWithTelemetry(TelemetryClient telemetry, string operationName, TimeSpan? alertThreshold = null, string message = ControlChars.EmptyString, IDictionary<string, string>? properties = null)
+	{
+		return StartNewWithAlertThreshold(alertThreshold, message).WithTelemetry(telemetry, operationName, message, properties);
 	}
 
 	/// <summary>
@@ -410,7 +1134,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="RecordLap"/>
 	/// <seealso cref="GetLaps"/>
 	/// <seealso cref="ClearDiagnostics"/>
-	[Information(nameof(ClearLaps), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ClearLaps), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void ClearLaps() => this._laps.Clear();
 
 	/// <summary>
@@ -567,7 +1291,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="JsonSerializer"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ExportToJson), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ExportToJson), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string ExportToJson()
 	{
 		return JsonSerializer.Serialize(
@@ -779,7 +1503,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="ExportToJson"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetDiagnosticMessages), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetDiagnosticMessages), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlyCollection<string> GetDiagnosticMessages()
 	{
 		return this.Diagnostics.Select(d => d.ToString()).ToList().AsReadOnly();
@@ -948,7 +1672,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="TimeSpan.TotalMilliseconds"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetElapsedTimeString), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetElapsedTimeString), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string GetElapsedTimeString()
 	{
 		return $"Elapsed Time: {this.Elapsed.TotalMilliseconds.FormatTime()}";
@@ -1184,7 +1908,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="GetSummaryReport"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetLaps), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetLaps), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlyCollection<TimeSpan> GetLaps()
 	{
 		return this._laps.OrderBy(p => p.TotalNanoseconds).ToArray().AsReadOnly();
@@ -1463,7 +2187,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="ILogger"/>
 	/// <seealso cref="ILogger.BeginScope"/>
 	/// <seealso cref="LogLevel"/>
-	[Information(nameof(LogMessage), "David McCarter", "05/08/2025", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(LogMessage), "David McCarter", "05/08/2025", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void LogMessage([DisallowNull] ILogger logger, [DisallowNull] string message)
 	{
 		logger = logger.ArgumentNotNull();
@@ -1665,480 +2389,10 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="ClearLaps"/>
 	/// <seealso cref="TimeSpan"/>
 	/// <seealso cref="ConcurrentBag{T}"/>
-	[Information(nameof(RecordLap), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(RecordLap), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void RecordLap()
 	{
 		this._laps.Add(this.Elapsed);
-	}
-
-	/// <summary>
-	/// Starts a new stopwatch instance with optional _title.
-	/// </summary>
-	/// <param name="title">Optional _title for diagnostics.</param>
-	[Information(nameof(StartNew), "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static PerformanceStopwatch StartNew(string title = ControlChars.EmptyString)
-	{
-		if (!string.IsNullOrEmpty(title))
-		{
-			title += ControlChars.Colon;
-		}
-
-		var sw = new PerformanceStopwatch(title);
-		sw.Start();
-
-		return sw;
-	}
-
-	/// <summary>
-	/// Creates and starts a new <see cref="PerformanceStopwatch"/> instance with performance alert threshold monitoring.
-	/// </summary>
-	/// <param name="alertThreshold">
-	/// The threshold <see cref="TimeSpan"/> for performance alerts. When the elapsed time exceeds this value,
-	/// the <see cref="ThresholdExceeded"/> event is triggered. Pass <c>null</c> to disable threshold monitoring.
-	/// </param>
-	/// <param name="title">
-	/// An optional descriptive title for the stopwatch operation. This title is used in diagnostic messages,
-	/// log entries, and reports. Defaults to an empty string if not specified.
-	/// </param>
-	/// <returns>
-	/// A new, running instance of <see cref="PerformanceStopwatch"/> configured with the specified alert threshold and title.
-	/// </returns>
-	/// <remarks>
-	/// This factory method provides a convenient way to create and start a stopwatch with built-in performance
-	/// threshold monitoring. The stopwatch is automatically started upon creation.
-	/// <para>
-	/// <strong>Alert Threshold Behavior:</strong>
-	/// <list type="bullet">
-	/// <item><description>If <paramref name="alertThreshold"/> is not null, the <see cref="AlertThreshold"/> property is set</description></item>
-	/// <item><description>The <see cref="ThresholdExceeded"/> event fires when elapsed time exceeds the threshold during stop operations</description></item>
-	/// <item><description>Use <see cref="IsThresholdExceeded"/> to check if the threshold has been exceeded at any time</description></item>
-	/// <item><description>The stopwatch continues running even if the threshold is exceeded</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Title Formatting:</strong>
-	/// If a non-empty title is provided, a colon (":") is automatically appended to it for consistent formatting
-	/// in diagnostic outputs. This matches the behavior of <see cref="StartNew"/>.
-	/// </para>
-	/// <para>
-	/// <strong>When Threshold Events Fire:</strong>
-	/// The <see cref="ThresholdExceeded"/> event is raised in the following scenarios:
-	/// <list type="bullet">
-	/// <item><description>When <see cref="StopReset()"/> is called and the elapsed time exceeds the threshold</description></item>
-	/// <item><description>When <see cref="StopRestart()"/> is called and the elapsed time exceeds the threshold</description></item>
-	/// <item><description>When <see cref="StopIfThresholdExceeded"/> is called and the threshold is exceeded</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Use Cases:</strong>
-	/// <list type="bullet">
-	/// <item><description>Monitoring operations with SLA requirements or time constraints</description></item>
-	/// <item><description>Detecting slow database queries or API calls</description></item>
-	/// <item><description>Triggering alerts when operations exceed acceptable durations</description></item>
-	/// <item><description>Performance regression testing with automated threshold validation</description></item>
-	/// <item><description>Collecting metrics for operations that violate performance budgets</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Performance Considerations:</strong>
-	/// <list type="bullet">
-	/// <item><description>Setting a threshold does not impact performance during timing - checks only occur during stop operations</description></item>
-	/// <item><description>The threshold comparison uses <see cref="TimeSpan"/> comparison which is very efficient</description></item>
-	/// <item><description>Event handlers for <see cref="ThresholdExceeded"/> are invoked synchronously</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Comparison with Related Methods:</strong>
-	/// <list type="bullet">
-	/// <item><description><see cref="StartNew"/> - Creates stopwatch without threshold monitoring</description></item>
-	/// <item><description><see cref="StartNewWithAlertThreshold"/> - Creates stopwatch with threshold monitoring (this method)</description></item>
-	/// <item><description><see cref="StartNewWithTelemetry"/> - Creates stopwatch with both threshold and telemetry</description></item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-	/// <example>
-	/// Basic usage with threshold monitoring:
-	/// <code>
-	/// // Create stopwatch with 2-second threshold
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromSeconds(2),
-	///     "DatabaseQuery"
-	/// );
-	/// 
-	/// // Subscribe to threshold exceeded event
-	/// stopwatch.ThresholdExceeded += (sender, e) =>
-	/// {
-	///     logger.LogWarning("Query exceeded threshold: {Elapsed}ms", e.Elapsed.TotalMilliseconds);
-	/// };
-	/// 
-	/// await ExecuteDatabaseQuery();
-	/// 
-	/// stopwatch.Stop();
-	/// // If query took > 2 seconds, ThresholdExceeded event was raised
-	/// </code>
-	/// 
-	/// Monitoring API response times:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromMilliseconds(500),
-	///     "ExternalAPICall"
-	/// );
-	/// 
-	/// stopwatch.ThresholdExceeded += (sender, e) =>
-	/// {
-	///     // Log slow API calls
-	///     logger.LogWarning(
-	///         "Slow API call detected. Elapsed: {Elapsed}ms, Threshold: {Threshold}ms",
-	///         e.Elapsed.TotalMilliseconds,
-	///         stopwatch.AlertThreshold?.TotalMilliseconds
-	///     );
-	///     
-	///     // Optionally trigger alerts or increment metrics
-	///     metrics.IncrementCounter("slow_api_calls");
-	/// };
-	/// 
-	/// try
-	/// {
-	///     var response = await CallExternalApi();
-	///     return response;
-	/// }
-	/// finally
-	/// {
-	///     stopwatch.Stop();
-	/// }
-	/// </code>
-	/// 
-	/// Conditional stopping based on threshold:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromSeconds(5),
-	///     "BatchProcessing"
-	/// );
-	/// 
-	/// foreach (var item in items)
-	/// {
-	///     await ProcessItem(item);
-	///     
-	///     // Stop early if threshold exceeded
-	///     if (stopwatch.StopIfThresholdExceeded())
-	///     {
-	///         logger.LogWarning("Processing stopped due to timeout after {Count} items", processedCount);
-	///         break;
-	///     }
-	/// }
-	/// </code>
-	/// 
-	/// Using without threshold (null value):
-	/// <code>
-	/// // No threshold monitoring - behaves like StartNew()
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     null,
-	///     "FlexibleOperation"
-	/// );
-	/// 
-	/// await PerformOperation();
-	/// stopwatch.Stop();
-	/// 
-	/// // No threshold events will fire
-	/// Console.WriteLine($"Completed in {stopwatch.Elapsed.TotalMilliseconds}ms");
-	/// </code>
-	/// 
-	/// Performance testing with threshold validation:
-	/// <code>
-	/// var threshold = TimeSpan.FromMilliseconds(100);
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     threshold,
-	///     "PerformanceTest"
-	/// );
-	/// 
-	/// bool thresholdExceeded = false;
-	/// stopwatch.ThresholdExceeded += (sender, e) =>
-	/// {
-	///     thresholdExceeded = true;
-	/// };
-	/// 
-	/// RunAlgorithm();
-	/// stopwatch.Stop();
-	/// 
-	/// Assert.IsFalse(thresholdExceeded, 
-	///     $"Algorithm exceeded {threshold.TotalMilliseconds}ms threshold");
-	/// </code>
-	/// 
-	/// Multiple operations with different thresholds:
-	/// <code>
-	/// // Fast operation - tight threshold
-	/// var fastOp = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromMilliseconds(50),
-	///     "FastOperation"
-	/// );
-	/// await PerformFastOperation();
-	/// fastOp.Stop();
-	/// 
-	/// // Slow operation - relaxed threshold
-	/// var slowOp = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromSeconds(5),
-	///     "SlowOperation"
-	/// );
-	/// await PerformSlowOperation();
-	/// slowOp.Stop();
-	/// </code>
-	/// </example>
-	/// <seealso cref="StartNew"/>
-	/// <seealso cref="StartNewWithTelemetry"/>
-	/// <seealso cref="AlertThreshold"/>
-	/// <seealso cref="ThresholdExceeded"/>
-	/// <seealso cref="IsThresholdExceeded"/>
-	/// <seealso cref="StopIfThresholdExceeded"/>
-	[Information(nameof(StartNewWithAlertThreshold), "David McCarter", "5/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static PerformanceStopwatch StartNewWithAlertThreshold(TimeSpan? alertThreshold, string title = ControlChars.EmptyString)
-	{
-		var sw = new PerformanceStopwatch(title) { AlertThreshold = alertThreshold };
-
-		sw.Start();
-
-		return sw;
-	}
-
-	/// <summary>
-	/// Creates and starts a new <see cref="PerformanceStopwatch"/> instance with Application Insights telemetry tracking and optional performance alert threshold monitoring.
-	/// </summary>
-	/// <param name="telemetry">
-	/// The <see cref="TelemetryClient"/> instance used to record events and metrics to Application Insights. Cannot be null.
-	/// </param>
-	/// <param name="operationName">
-	/// The name of the operation being tracked. This name is used as the event name in Application Insights and as a prefix for metrics.
-	/// </param>
-	/// <param name="alertThreshold">
-	/// An optional threshold <see cref="TimeSpan"/> for performance alerts. When the elapsed time exceeds this value,
-	/// the <see cref="ThresholdExceeded"/> event is triggered. Pass <c>null</c> to disable threshold monitoring.
-	/// </param>
-	/// <param name="message">
-	/// An optional custom message to include with telemetry events and as the stopwatch title. Defaults to an empty string if not specified.
-	/// </param>
-	/// <param name="properties">
-	/// Optional key/value properties to attach to telemetry events. These properties are included with both the event and metric data sent to Application Insights.
-	/// </param>
-	/// <returns>
-	/// A new, running instance of <see cref="PerformanceStopwatch"/> configured with telemetry tracking, optional alert threshold monitoring, and the specified title/message.
-	/// </returns>
-	/// <remarks>
-	/// This factory method provides the most comprehensive way to create a stopwatch with both telemetry tracking and 
-	/// performance threshold monitoring. The stopwatch is automatically started upon creation.
-	/// <para>
-	/// <strong>Telemetry Integration:</strong>
-	/// <list type="bullet">
-	/// <item><description>Automatically tracks events and metrics to Application Insights when the stopwatch stops</description></item>
-	/// <item><description>Uses <see cref="WithTelemetry"/> internally to configure telemetry settings</description></item>
-	/// <item><description>Telemetry is sent when <see cref="StopReset()"/> or <see cref="StopRestart()"/> is called</description></item>
-	/// <item><description>Both an event (named <paramref name="operationName"/>) and a metric (named <paramref name="operationName"/>.Duration) are tracked</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Title and Message Handling:</strong>
-	/// The <paramref name="message"/> parameter serves dual purposes:
-	/// <list type="bullet">
-	/// <item><description>Used as the stopwatch's <see cref="Title"/> for diagnostic messages and reports</description></item>
-	/// <item><description>Included in telemetry properties under the "Message" key (if not empty)</description></item>
-	/// <item><description>If non-empty, a colon (":") is automatically appended for consistent formatting</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Alert Threshold Behavior:</strong>
-	/// <list type="bullet">
-	/// <item><description>If <paramref name="alertThreshold"/> is not null, the <see cref="AlertThreshold"/> property is set</description></item>
-	/// <item><description>The <see cref="ThresholdExceeded"/> event fires when elapsed time exceeds the threshold during stop operations</description></item>
-	/// <item><description>Threshold monitoring is independent of telemetry tracking</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Telemetry Data Structure:</strong>
-	/// When the stopwatch stops, the following data is sent to Application Insights:
-	/// <list type="bullet">
-	/// <item><description><strong>Event Properties:</strong> Title (stopwatch title), ElapsedMs (elapsed time in milliseconds), Message (if provided), plus any custom properties</description></item>
-	/// <item><description><strong>Metric:</strong> A metric named "{operationName}.Duration" with the elapsed time in milliseconds</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Use Cases:</strong>
-	/// <list type="bullet">
-	/// <item><description>Monitoring critical operations with automatic telemetry reporting to Application Insights</description></item>
-	/// <item><description>Tracking performance of API calls, database queries, or external service interactions</description></item>
-	/// <item><description>Combining SLA monitoring (threshold) with centralized logging (telemetry)</description></item>
-	/// <item><description>Building performance dashboards in Application Insights based on operation metrics</description></item>
-	/// <item><description>Correlating performance data with custom properties (user ID, request ID, etc.)</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Performance Considerations:</strong>
-	/// <list type="bullet">
-	/// <item><description>Telemetry data is sent asynchronously to Application Insights - does not block stop operations</description></item>
-	/// <item><description>The <see cref="TelemetryClient"/> should be reused across operations for optimal performance</description></item>
-	/// <item><description>Custom properties are shallow-copied to avoid reference issues</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Comparison with Related Methods:</strong>
-	/// <list type="bullet">
-	/// <item><description><see cref="StartNew"/> - Creates basic stopwatch without telemetry or threshold</description></item>
-	/// <item><description><see cref="StartNewWithAlertThreshold"/> - Creates stopwatch with threshold but no telemetry</description></item>
-	/// <item><description><see cref="StartNewWithTelemetry"/> - Creates stopwatch with both threshold and telemetry (this method)</description></item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown when <paramref name="telemetry"/> is null.
-	/// </exception>
-	/// <example>
-	/// Basic usage with telemetry tracking:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///     telemetryClient,
-	///     "DatabaseQuery",
-	///     alertThreshold: TimeSpan.FromSeconds(2),
-	///     message: "GetUsers"
-	/// );
-	/// 
-	/// await ExecuteDatabaseQuery();
-	/// 
-	/// stopwatch.Stop();
-	/// // Telemetry event and metric automatically sent to Application Insights
-	/// </code>
-	/// 
-	/// Including custom properties with telemetry:
-	/// <code>
-	/// var properties = new Dictionary&lt;string, string&gt;
-	/// {
-	///     ["UserId"] = currentUserId,
-	///     ["QueryType"] = "SELECT",
-	///     ["TableName"] = "Users"
-	/// };
-	/// 
-	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///     telemetryClient,
-	///     "DatabaseQuery",
-	///     message: "GetUsersByRegion",
-	///     properties: properties
-	/// );
-	/// 
-	/// var users = await GetUsersByRegion(regionId);
-	/// 
-	/// stopwatch.Stop();
-	/// // Application Insights receives event with all custom properties plus performance data
-	/// </code>
-	/// 
-	/// Combining telemetry with threshold monitoring:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///     telemetryClient,
-	///     "ExternalAPICall",
-	///     alertThreshold: TimeSpan.FromMilliseconds(500),
-	///     message: "PaymentGateway"
-	/// );
-	/// 
-	/// // Subscribe to threshold exceeded event for immediate alerting
-	/// stopwatch.ThresholdExceeded += (sender, e) =>
-	/// {
-	///     logger.LogWarning("API call exceeded SLA: {Elapsed}ms", e.Elapsed.TotalMilliseconds);
-	///     alertingService.SendAlert("Slow API call detected");
-	/// };
-	/// 
-	/// try
-	/// {
-	///     var response = await CallPaymentGatewayAsync();
-	///     return response;
-	/// }
-	/// finally
-	/// {
-	///     stopwatch.Stop();
-	///     // Both threshold event (if exceeded) and telemetry data are processed
-	/// }
-	/// </code>
-	/// 
-	/// Tracking operation with no threshold:
-	/// <code>
-	/// // Track telemetry without threshold monitoring
-	/// var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///     telemetryClient,
-	///     "BackgroundJob",
-	///     alertThreshold: null,  // No threshold
-	///     message: "EmailProcessor"
-	/// );
-	/// 
-	/// await ProcessEmailQueue();
-	/// 
-	/// stopwatch.Stop();
-	/// // Only telemetry is sent, no threshold checking occurs
-	/// </code>
-	/// 
-	/// Building performance dashboards in Application Insights:
-	/// <code>
-	/// // Track different operations with consistent naming for dashboard queries
-	/// var dbStopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///     telemetryClient,
-	///     "Database.Query",
-	///     message: "GetOrders"
-	/// );
-	/// await GetOrders();
-	/// dbStopwatch.Stop();
-	/// 
-	/// var cacheStopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///     telemetryClient,
-	///     "Cache.Read",
-	///     message: "GetUserProfile"
-	/// );
-	/// await GetFromCache();
-	/// cacheStopwatch.Stop();
-	/// 
-	/// // In Application Insights, query:
-	/// // customEvents | where name startswith "Database."
-	/// // customMetrics | where name endswith ".Duration"
-	/// </code>
-	/// 
-	/// Reusing telemetry client across operations:
-	/// <code>
-	/// public class PerformanceMonitor
-	/// {
-	///     private readonly TelemetryClient _telemetryClient;
-	///     
-	///     public PerformanceMonitor(TelemetryClient telemetryClient)
-	///     {
-	///         _telemetryClient = telemetryClient;
-	///     }
-	///     
-	///     public async Task&lt;T&gt; TrackOperationAsync&lt;T&gt;(
-	///         string operationName, 
-	///         Func&lt;Task&lt;T&gt;&gt; operation,
-	///         TimeSpan? threshold = null)
-	///     {
-	///         var stopwatch = PerformanceStopwatch.StartNewWithTelemetry(
-	///             _telemetryClient,
-	///             operationName,
-	///             alertThreshold: threshold
-	///         );
-	///         
-	///         try
-	///         {
-	///             return await operation();
-	///         }
-	///         finally
-	///         {
-	///             stopwatch.Stop();
-	///         }
-	///     }
-	/// }
-	/// </code>
-	/// </example>
-	/// <seealso cref="StartNew"/>
-	/// <seealso cref="StartNewWithAlertThreshold"/>
-	/// <seealso cref="WithTelemetry"/>
-	/// <seealso cref="TrackTelemetry"/>
-	/// <seealso cref="TelemetryClient"/>
-	/// <seealso cref="AlertThreshold"/>
-	/// <seealso cref="ThresholdExceeded"/>
-	[Information(nameof(StartNewWithTelemetry), "David McCarter", "5/8/2025", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
-	public static PerformanceStopwatch StartNewWithTelemetry(TelemetryClient telemetry, string operationName, TimeSpan? alertThreshold = null, string message = ControlChars.EmptyString, IDictionary<string, string>? properties = null)
-	{
-		return StartNewWithAlertThreshold(alertThreshold, message).WithTelemetry(telemetry, operationName, message, properties);
 	}
 
 	/// <summary>
@@ -2377,7 +2631,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="ThresholdExceeded"/>
 	/// <seealso cref="StopReset()"/>
 	/// <seealso cref="StopRestart()"/>
-	[Information(nameof(StopIfThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(StopIfThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool StopIfThresholdExceeded()
 	{
 		if (this.IsThresholdExceeded)
@@ -2399,7 +2653,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	{
 		this.Stop();
 		var result = this.Elapsed;
-		this.StoppedCompleted?.Invoke(this, new ElapsedEventArgs(result));
+		this.StopCompleted?.Invoke(this, new ElapsedEventArgs(result));
 		this.ResetCompleted?.Invoke(this, new ElapsedEventArgs(result));
 		this.Reset();
 
@@ -2464,7 +2718,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	public TimeSpan StopRestart()
 	{
 		var result = this.Elapsed;
-		this.StoppedCompleted?.Invoke(this, new ElapsedEventArgs(result));
+		this.StopCompleted?.Invoke(this, new ElapsedEventArgs(result));
 		this.Restart();
 
 		if (this.IsThresholdExceeded)
@@ -2768,7 +3022,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="WithTelemetry"/>
 	/// <seealso cref="StartNewWithTelemetry"/>
 	/// <seealso cref="TelemetryClient"/>
-	[Information(nameof(TrackTelemetry), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(TrackTelemetry), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void TrackTelemetry([DisallowNull] TelemetryClient telemetry, string operationName, string message = ControlChars.EmptyString, IDictionary<string, string>? properties = null)
 	{
 		telemetry = telemetry.ArgumentNotNull();
@@ -2806,271 +3060,17 @@ public sealed class PerformanceStopwatch : Stopwatch
 	}
 
 	/// <summary>
-	/// Gets the threshold for performance alerts.
+	/// Creates a structured diagnostic entry.
 	/// </summary>
-	[Information("AlertThreshold", "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public TimeSpan? AlertThreshold { get; private set; }
-
-	/// <summary>
-	/// The logged messages as a <see cref="ReadOnlyCollection{String}"/>.
-	/// </summary>
-	/// <example>
-	/// Output:
-	/// GetUsers():Load users from database. Time: 1013.02 ms
-	/// GetUsers():Save users to database.Time: 1013.7925 ms
-	/// </example>
-	[Pure]
-	[Information(nameof(StopRestart), "David McCarter", "1/18/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public ReadOnlyCollection<DiagnosticEntry> Diagnostics
+	/// <param name="message">The message to record.</param>
+	/// <param name="result">The elapsed time.</param>
+	/// <returns>A new <see cref="DiagnosticEntry"/>.</returns>
+	private DiagnosticEntry CreateEntry(string message, TimeSpan result)
 	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return this._diagnostics.OrderBy(p => p.Timestamp).ToArray().AsReadOnly();
-		}
-	}
+		var entry = new DiagnosticEntry(DateTimeOffset.UtcNow, $"{this.Title} {message}", result);
 
-	/// <summary>
-	/// Gets a value indicating whether the current elapsed time has exceeded the configured alert threshold.
-	/// </summary>
-	/// <value>
-	/// <c>true</c> if <see cref="AlertThreshold"/> is configured (not null) and the current Elapsed
-	/// time is greater than the threshold value; otherwise, <c>false</c>.
-	/// </value>
-	/// <remarks>
-	/// This property provides a real-time check of whether the stopwatch's elapsed time has surpassed 
-	/// the configured performance threshold without triggering any events or stopping the stopwatch.
-	/// <para>
-	/// <strong>Evaluation Logic:</strong>
-	/// <list type="bullet">
-	/// <item><description>Returns <c>false</c> if <see cref="AlertThreshold"/> is <c>null</c> (no threshold configured)</description></item>
-	/// <item><description>Returns <c>true</c> if <see cref="AlertThreshold"/> has a value AND Elapsed is greater than that value</description></item>
-	/// <item><description>The comparison uses <see cref="TimeSpan"/> greater-than operator for precise threshold checking</description></item>
-	/// <item><description>Can be checked at any time - the stopwatch does NOT need to be stopped</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Relationship with Events:</strong>
-	/// This property only evaluates the condition; it does NOT raise the <see cref="ThresholdExceeded"/> event.
-	/// The event is raised by methods like <see cref="StopReset()"/>, <see cref="StopRestart()"/>, and 
-	/// <see cref="StopIfThresholdExceeded"/> when they detect this property is <c>true</c>.
-	/// </para>
-	/// <para>
-	/// <strong>Performance Considerations:</strong>
-	/// <list type="bullet">
-	/// <item><description>Very lightweight property - performs a simple null check and time comparison</description></item>
-	/// <item><description>Marked with <see cref="MethodImplOptions.AggressiveInlining"/> for optimal performance</description></item>
-	/// <item><description>Safe to call frequently in loops or monitoring scenarios</description></item>
-	/// <item><description>Does not allocate memory or trigger any side effects</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Thread Safety:</strong>
-	/// This property is thread-safe for reading. Multiple threads can check this property concurrently.
-	/// However, the elapsed time may change between checks in multi-threaded scenarios.
-	/// </para>
-	/// <para>
-	/// <strong>Use Cases:</strong>
-	/// <list type="bullet">
-	/// <item><description>Monitoring elapsed time in loops to implement timeout logic</description></item>
-	/// <item><description>Conditional logic based on whether an operation is taking too long</description></item>
-	/// <item><description>Warning users or logging when operations approach or exceed acceptable durations</description></item>
-	/// <item><description>Building custom threshold handling logic without relying on events</description></item>
-	/// <item><description>Displaying visual indicators (e.g., progress bars with warning states)</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Comparison with Related Members:</strong>
-	/// <list type="bullet">
-	/// <item><description><see cref="IsThresholdExceeded"/> - Checks if threshold exceeded (this property)</description></item>
-	/// <item><description><see cref="AlertThreshold"/> - The configured threshold value</description></item>
-	/// <item><description><see cref="ThresholdExceeded"/> - Event fired when threshold is exceeded during stop operations</description></item>
-	/// <item><description><see cref="StopIfThresholdExceeded"/> - Conditionally stops if this property is <c>true</c></description></item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-	/// <example>
-	/// Basic threshold checking in a loop:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromSeconds(30),
-	///     "BatchProcessing"
-	/// );
-	/// 
-	/// foreach (var item in items)
-	/// {
-	///     await ProcessItem(item);
-	///     
-	///     // Check if we've exceeded the threshold
-	///     if (stopwatch.IsThresholdExceeded)
-	///     {
-	///         logger.LogWarning("Processing time exceeded threshold");
-	///         break; // Exit loop early
-	///     }
-	/// }
-	/// 
-	/// stopwatch.Stop();
-	/// </code>
-	/// 
-	/// Implementing warning logic:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromSeconds(10),
-	///     "DataProcessing"
-	/// );
-	/// 
-	/// while (HasMoreWork())
-	/// {
-	///     await ProcessNextItem();
-	///     
-	///     // Warn when approaching threshold
-	///     if (stopwatch.IsThresholdExceeded)
-	///     {
-	///         logger.LogWarning("Operation is taking longer than expected");
-	///         // Could continue processing or take corrective action
-	///     }
-	/// }
-	/// 
-	/// stopwatch.Stop();
-	/// </code>
-	/// 
-	/// Conditional logic based on threshold:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromMilliseconds(5000),
-	///     "APICall"
-	/// );
-	/// 
-	/// var response = await CallExternalApi();
-	/// 
-	/// // Different handling based on whether threshold was exceeded
-	/// if (stopwatch.IsThresholdExceeded)
-	/// {
-	///     // Slow response - log and potentially cache result
-	///     logger.LogWarning("API call was slow: {Elapsed}ms", stopwatch.Elapsed.TotalMilliseconds);
-	///     await CacheResult(response);
-	/// }
-	/// else
-	/// {
-	///     // Fast response - normal processing
-	///     logger.LogDebug("API call completed within threshold");
-	/// }
-	/// 
-	/// stopwatch.Stop();
-	/// </code>
-	/// 
-	/// Checking without a threshold configured:
-	/// <code>
-	/// // No threshold configured
-	/// var stopwatch = PerformanceStopwatch.StartNew("Operation");
-	/// 
-	/// await PerformWork();
-	/// 
-	/// // Always returns false when AlertThreshold is null
-	/// if (stopwatch.IsThresholdExceeded)
-	/// {
-	///     // This block never executes
-	///     Console.WriteLine("Threshold exceeded");
-	/// }
-	/// else
-	/// {
-	///     // Always executes when no threshold is configured
-	///     Console.WriteLine("No threshold configured");
-	/// }
-	/// 
-	/// stopwatch.Stop();
-	/// </code>
-	/// 
-	/// UI progress indicator with threshold warning:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromMinutes(5),
-	///     "FileProcessing"
-	/// );
-	/// 
-	/// // Update UI periodically
-	/// var timer = new Timer(_ =>
-	/// {
-	///     var elapsed = stopwatch.Elapsed.TotalSeconds;
-	///     progressBar.Value = (int)elapsed;
-	///     
-	///     // Change color if threshold exceeded
-	///     if (stopwatch.IsThresholdExceeded)
-	///     {
-	///         progressBar.ForeColor = Color.Red;
-	///         statusLabel.Text = "Processing taking longer than expected...";
-	///     }
-	///     else
-	///     {
-	///         progressBar.ForeColor = Color.Green;
-	///         statusLabel.Text = $"Processing... {elapsed:F0}s";
-	///     }
-	/// }, null, 0, 1000);
-	/// 
-	/// await ProcessFiles();
-	/// 
-	/// timer.Dispose();
-	/// stopwatch.Stop();
-	/// </code>
-	/// 
-	/// Combining threshold check with conditional stopping:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNewWithAlertThreshold(
-	///     TimeSpan.FromSeconds(60),
-	///     "DataMigration"
-	/// );
-	/// 
-	/// int recordsProcessed = 0;
-	/// 
-	/// foreach (var record in records)
-	/// {
-	///     await MigrateRecord(record);
-	///     recordsProcessed++;
-	///     
-	///     // Check threshold but continue processing
-	///     if (stopwatch.IsThresholdExceeded &amp;&amp; recordsProcessed % 100 == 0)
-	///     {
-	///         logger.LogWarning(
-	///             "Migration exceeding time budget. Processed: {Count}, Elapsed: {Elapsed}s",
-	///             recordsProcessed,
-	///             stopwatch.Elapsed.TotalSeconds
-	///         );
-	///     }
-	///     
-	///     // Only stop if threshold significantly exceeded
-	///     if (stopwatch.Elapsed > TimeSpan.FromSeconds(120))
-	///     {
-	///         logger.LogError("Migration timeout - stopping");
-	///         break;
-	///     }
-	/// }
-	/// 
-	/// stopwatch.Stop();
-	/// </code>
-	/// </example>
-	/// <seealso cref="AlertThreshold"/>
-	/// <seealso cref="ThresholdExceeded"/>
-	/// <seealso cref="StopIfThresholdExceeded"/>
-	/// <seealso cref="TimeSpan"/>
-	[Pure]
-	[Information(nameof(IsThresholdExceeded), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public bool IsThresholdExceeded
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return this.AlertThreshold.HasValue && this.Elapsed > this.AlertThreshold.Value;
-		}
-	}
+		this._diagnostics.Add(entry);
 
-	/// <summary>
-	/// Gets the _title for the stopwatch instance.
-	/// </summary>
-	[Pure]
-	[Information(nameof(Title), "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public string Title
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get;
+		return entry;
 	}
 }

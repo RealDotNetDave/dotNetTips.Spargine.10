@@ -729,7 +729,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns>A List containing all elements from the collection.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual List<T> ToList()
 	{
 		return [.. this._set];

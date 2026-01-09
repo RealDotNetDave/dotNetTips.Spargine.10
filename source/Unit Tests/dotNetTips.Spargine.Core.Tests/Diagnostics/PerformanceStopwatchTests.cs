@@ -4,7 +4,7 @@
 // Created          : 01-18-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-17-2025
+// Last Modified On : 01-09-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatchTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -486,7 +486,7 @@ public class PerformanceStopwatchTests
 		var eventTriggered = false;
 		TimeSpan? eventElapsed = null;
 
-		psw.StoppedCompleted += (sender, args) =>
+		psw.StopCompleted += (sender, args) =>
 		{
 			eventTriggered = true;
 			eventElapsed = args.Elapsed;
@@ -546,7 +546,7 @@ public class PerformanceStopwatchTests
 		var psw = PerformanceStopwatch.StartNew(nameof(this.StopRestart_TriggersStoppedCompletedEvent));
 		var eventTriggered = false;
 
-		psw.StoppedCompleted += (sender, args) => eventTriggered = true;
+		psw.StopCompleted += (sender, args) => eventTriggered = true;
 
 		Thread.Sleep(100);
 

@@ -35,7 +35,7 @@ namespace DotNetTips.Spargine.Core.Data;
 /// <summary>
 /// Provides methods for accessing and validating country phone and postal information.
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class CountryPhonePostalInfoRepository
 {
 	private static ReadOnlyCollection<CountryPhonePostalInfo>? _countries;

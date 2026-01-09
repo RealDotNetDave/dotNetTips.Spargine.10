@@ -4,7 +4,7 @@
 // Created          : 05-09-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-17-2025
+// Last Modified On : 01-09-2026
 // ***********************************************************************
 // <copyright file="DiagnosticEntry.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -80,73 +80,15 @@ namespace DotNetTips.Spargine.Core.Diagnostics;
 /// Thrown when <paramref name="message"/> is <c>null</c>.
 /// </exception>
 /// <seealso cref="IEquatable{T}"/>
-[Information("DiagnosticEntry", "David McCarter", "05/08/2025", Status = Status.New)]
+[Information("DiagnosticEntry", "David McCarter", "05/08/2025", Status = Status.Available)]
 [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
 public readonly struct DiagnosticEntry([NotNull] DateTimeOffset timestamp, [NotNull] string message, [NotNull] TimeSpan elapsed) : IEquatable<DiagnosticEntry>
 {
 
 	/// <summary>
-	/// Determines whether two <see cref="DiagnosticEntry"/> instances are not equal.
-	/// </summary>
-	/// <param name="left">The first <see cref="DiagnosticEntry"/> to compare.</param>
-	/// <param name="right">The second <see cref="DiagnosticEntry"/> to compare.</param>
-	/// <returns>
-	/// <c>true</c> if the two <see cref="DiagnosticEntry"/> instances are not equal; otherwise, <c>false</c>.
-	/// </returns>
-	public static bool operator !=(DiagnosticEntry left, DiagnosticEntry right) => !(left == right);
-
-	/// <summary>
-	/// Determines whether two <see cref="DiagnosticEntry"/> instances are equal.
-	/// </summary>
-	/// <param name="left">The first <see cref="DiagnosticEntry"/> to compare.</param>
-	/// <param name="right">The second <see cref="DiagnosticEntry"/> to compare.</param>
-	/// <returns>
-	/// <c>true</c> if the two <see cref="DiagnosticEntry"/> instances are equal; otherwise, <c>false</c>.
-	/// </returns>
-	public static bool operator ==(DiagnosticEntry left, DiagnosticEntry right) => left.Equals(right);
-
-	private string GetDebuggerDisplay() => this.ToString();
-
-	/// <summary>
-	/// Determines whether the specified object is equal to the current <see cref="DiagnosticEntry"/>.
-	/// </summary>
-	/// <param name="obj">The object to compare with the current <see cref="DiagnosticEntry"/>.</param>
-	/// <returns>
-	/// <c>true</c> if the specified object is equal to the current <see cref="DiagnosticEntry"/>; otherwise, <c>false</c>.
-	/// </returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public override bool Equals(object? obj) => obj is DiagnosticEntry other && this.Equals(other);
-
-	/// <summary>
-	/// Determines whether the specified <see cref="DiagnosticEntry"/> is equal to the current <see cref="DiagnosticEntry"/>.
-	/// </summary>
-	/// <param name="other">The <see cref="DiagnosticEntry"/> to compare with the current instance.</param>
-	/// <returns>
-	/// <c>true</c> if the specified <see cref="DiagnosticEntry"/> is equal to the current instance; otherwise, <c>false</c>.
-	/// </returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public bool Equals(DiagnosticEntry other) => this.Timestamp == other.Timestamp && string.Equals(this.Message, other.Message, StringComparison.Ordinal) && this.Elapsed == other.Elapsed;
-
-	/// <summary>
-	/// Returns a hash code for the current <see cref="DiagnosticEntry"/>.
-	/// </summary>
-	/// <returns>
-	/// A hash code for the current <see cref="DiagnosticEntry"/>.
-	/// </returns>
-	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public override int GetHashCode() => HashCode.Combine(this.Timestamp, this.Message, this.Elapsed);
-
-	/// <summary>
-	/// Returns a string representation of the diagnostic entry.
-	/// </summary>
-	/// <returns>A string representation of the diagnostic entry.</returns>
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public override string ToString() => $"{this.Timestamp:u} - {this.Message} ({this.Elapsed.TotalMilliseconds} ms)";
-
-	/// <summary>
 	/// Gets the elapsed time when the diagnostic entry was recorded.
 	/// </summary>
-	[Information(nameof(Elapsed), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Elapsed), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public TimeSpan Elapsed { get; } = elapsed;
 
 	/// <summary>
@@ -213,7 +155,7 @@ public readonly struct DiagnosticEntry([NotNull] DateTimeOffset timestamp, [NotN
 	/// Thrown during construction when the <c>message</c> parameter is <c>null</c>.
 	/// </exception>
 	/// <seealso cref="string.Trim()"/>
-	[Information(nameof(Message), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Message), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Message { get; } = message?.Trim() ?? throw new ArgumentNullException(nameof(message), "Message cannot be null.");
 
 	/// <summary>
@@ -268,6 +210,64 @@ public readonly struct DiagnosticEntry([NotNull] DateTimeOffset timestamp, [NotN
 	/// </example>
 	/// <seealso cref="DateTimeOffset"/>
 	/// <seealso cref="DateTimeOffset.UtcNow"/>
-	[Information(nameof(Timestamp), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Timestamp), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public DateTimeOffset Timestamp { get; } = timestamp;
+
+	/// <summary>
+	/// Determines whether two <see cref="DiagnosticEntry"/> instances are equal.
+	/// </summary>
+	/// <param name="left">The first <see cref="DiagnosticEntry"/> to compare.</param>
+	/// <param name="right">The second <see cref="DiagnosticEntry"/> to compare.</param>
+	/// <returns>
+	/// <c>true</c> if the two <see cref="DiagnosticEntry"/> instances are equal; otherwise, <c>false</c>.
+	/// </returns>
+	public static bool operator ==(DiagnosticEntry left, DiagnosticEntry right) => left.Equals(right);
+
+	/// <summary>
+	/// Determines whether two <see cref="DiagnosticEntry"/> instances are not equal.
+	/// </summary>
+	/// <param name="left">The first <see cref="DiagnosticEntry"/> to compare.</param>
+	/// <param name="right">The second <see cref="DiagnosticEntry"/> to compare.</param>
+	/// <returns>
+	/// <c>true</c> if the two <see cref="DiagnosticEntry"/> instances are not equal; otherwise, <c>false</c>.
+	/// </returns>
+	public static bool operator !=(DiagnosticEntry left, DiagnosticEntry right) => !(left == right);
+
+	/// <summary>
+	/// Determines whether the specified object is equal to the current <see cref="DiagnosticEntry"/>.
+	/// </summary>
+	/// <param name="obj">The object to compare with the current <see cref="DiagnosticEntry"/>.</param>
+	/// <returns>
+	/// <c>true</c> if the specified object is equal to the current <see cref="DiagnosticEntry"/>; otherwise, <c>false</c>.
+	/// </returns>
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public override bool Equals(object? obj) => obj is DiagnosticEntry other && this.Equals(other);
+
+	/// <summary>
+	/// Determines whether the specified <see cref="DiagnosticEntry"/> is equal to the current <see cref="DiagnosticEntry"/>.
+	/// </summary>
+	/// <param name="other">The <see cref="DiagnosticEntry"/> to compare with the current instance.</param>
+	/// <returns>
+	/// <c>true</c> if the specified <see cref="DiagnosticEntry"/> is equal to the current instance; otherwise, <c>false</c>.
+	/// </returns>
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public bool Equals(DiagnosticEntry other) => this.Timestamp == other.Timestamp && string.Equals(this.Message, other.Message, StringComparison.Ordinal) && this.Elapsed == other.Elapsed;
+
+	/// <summary>
+	/// Returns a hash code for the current <see cref="DiagnosticEntry"/>.
+	/// </summary>
+	/// <returns>
+	/// A hash code for the current <see cref="DiagnosticEntry"/>.
+	/// </returns>
+	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public override int GetHashCode() => HashCode.Combine(this.Timestamp, this.Message, this.Elapsed);
+
+	/// <summary>
+	/// Returns a string representation of the diagnostic entry.
+	/// </summary>
+	/// <returns>A string representation of the diagnostic entry.</returns>
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public override string ToString() => $"{this.Timestamp:u} - {this.Message} ({this.Elapsed.TotalMilliseconds} ms)";
+
+	private string GetDebuggerDisplay() => this.ToString();
 }
