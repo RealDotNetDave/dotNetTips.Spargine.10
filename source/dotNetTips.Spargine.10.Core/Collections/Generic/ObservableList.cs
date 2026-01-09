@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-09-2026
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -37,7 +37,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 /// <para>If you need ordered elements with notifications, consider using <see cref="ObservableCollection{T}"/> instead.</para>
 /// <para>This implementation is based on EF Core's ObservableHashSet with enhanced functionality including batch operations.</para>
 /// </remarks>
-[Information(nameof(ObservableList<>), author: "David McCarter", createdOn: "7/31/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineObservableList")]
+[Information(nameof(ObservableList<>), author: "David McCarter", createdOn: "7/31/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineObservableList")]
 public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged, INotifyPropertyChanging
 {
 	/// <summary>
@@ -227,7 +227,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// list.AddRange(new[] { 1, 2, 3, 4, 5 });
 	/// </code>
 	/// </example>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual void AddRange([DisallowNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -340,7 +340,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// This method can improve performance when adding many items by reducing the number of
 	/// internal resize operations. Available in .NET 5.0 and later.
 	/// </remarks>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual int EnsureCapacity(int capacity)
 	{
 		capacity = capacity.ArgumentInRange(min: 0);
@@ -391,7 +391,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="match"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual IEnumerable<T> FindAll([DisallowNull] Predicate<T> match)
 	{
 		match = match.ArgumentNotNull();
@@ -404,7 +404,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <returns>The first element, or default(T).</returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual T? FirstOrDefault()
 	{
 		return this._set.Count > 0 ? this._set.First() : default;
@@ -422,9 +422,34 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	}
 
 	/// <summary>
-	/// Returns an enumerator that iterates through the <see cref="ObservableList{T}"/>.
+	/// Modifies the current <see cref="ObservableList{T}"/> to contain only elements that are also present in the specified collection.
 	/// </summary>
-	/// <returns>An enumerator that can be used to iterate through the collection.</returns>
+	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>. This collection must not be <see langword="null"/>.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="other"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// This operation performs an in-place intersection: after completion, the set contains only elements common to both
+	/// the current set and <paramref name="other"/>. Internally, this method:
+	/// <list type="number">
+	/// <item><description>Copies the current set to a temporary <see cref="HashSet{T}"/> using the existing comparer.</description></item>
+	/// <item><description>Calls <see cref="HashSet{T}.IntersectWith(IEnumerable{T})"/> on the copy.</description></item>
+	/// <item><description>If the resulting set differs in count, replaces the backing set and raises notifications:</description>
+	/// <list type="bullet">
+	/// <item><description><see cref="INotifyPropertyChanging.PropertyChanging"/> for the <c>Count</c> property before mutation.</description></item>
+	/// <item><description><see cref="INotifyCollectionChanged.CollectionChanged"/> with <see cref="NotifyCollectionChangedAction.Replace"/> to report removed items.</description></item>
+	/// <item><description><see cref="INotifyPropertyChanged.PropertyChanged"/> for the <c>Count</c> property after mutation.</description></item>
+	/// </list>
+	/// </item>
+	/// </list>
+	/// Elements not present in <paramref name="other"/> are removed from the set. If the intersection does not change the
+	/// size of the set (i.e., no items would be removed), no notifications are raised to avoid unnecessary churn.
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var set = new ObservableList&lt;int&gt; { 1, 2, 3, 4 };
+	/// set.IntersectWith(new[] { 3, 4, 5 });
+	/// // Resulting set: { 3, 4 }
+	/// </code>
+	/// </example>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual void IntersectWith([DisallowNull] IEnumerable<T> other)
 	{
@@ -499,7 +524,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <returns>The last element, or default(T).</returns>
 	[Pure]
-	[Information(Status = Status.New, UnitTestStatus = UnitTestStatus.None)]
+	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.None)]
 	public virtual T? LastOrDefault()
 	{
 		return this._set.Count > 0 ? this._set.Last() : default;
@@ -555,7 +580,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// a single <see cref="CollectionChanged"/> event after all items are removed. Items not found 
 	/// in the collection are silently ignored.
 	/// </remarks>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual int RemoveRange([DisallowNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -621,7 +646,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="items">The items to replace the collection with.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual void Reset([DisallowNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -692,7 +717,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns>An array containing all elements from the collection.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual T[] ToArray()
 	{
 		return [.. this._set];
@@ -725,7 +750,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="equalValue">The value to search for.</param>
 	/// <param name="actualValue">The value from the set that equals the search value, if found; otherwise the default value for T.</param>
 	/// <returns>true if a value was found; otherwise false.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual bool TryGetValue(T equalValue, [MaybeNullWhen(false)] out T actualValue)
 	{
 		return this._set.TryGetValue(equalValue, out actualValue);

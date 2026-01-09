@@ -20,7 +20,7 @@ namespace DotNetTips.Spargine.Core.Cache;
 /// <summary>
 /// Represents cache statistics and metrics.
 /// </summary>
-[Information(nameof(CacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+[Information(nameof(CacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 public sealed class CacheStatistics
 {
 
