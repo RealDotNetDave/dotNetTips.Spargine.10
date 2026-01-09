@@ -617,7 +617,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllGenericMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -740,7 +740,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllPublicMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -771,7 +771,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllStaticMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -803,7 +803,7 @@ public static class TypeHelper
 	/// or <c>null</c> if no such attribute is found.
 	/// </remarks>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] FieldInfo fieldInfo) where TAttribute : Attribute
 	{
 		fieldInfo = fieldInfo.ArgumentNotNull();
@@ -963,23 +963,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Type[] GetGenericArguments([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetGenericArguments)}";
-
-		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedArguments))
-		{
-			return cachedArguments!;
-		}
-
-		var arguments = type.GetGenericArguments();
-
-		_commonCache.AddCacheItem(cacheKey, arguments, TimeSpan.FromMinutes(TimeOutMinutes));
-
-		return arguments;
+		return type.GetGenericArguments();
 	}
 
 	/// <summary>
@@ -992,24 +981,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
 
-		var type = input.GetType();
-		var cacheKey = $"{type.FullName}.{nameof(GetImplementedInterfaces)}";
-
-		if (_commonCache.TryGetValue<string[]>(cacheKey, out var cachedInterfaces))
-		{
-			return Array.AsReadOnly(cachedInterfaces!);
-		}
-
-		var interfaces = type.GetInterfaces().Select(p => p.Name).ToArray();
-
-		_commonCache.AddCacheItem(cacheKey, interfaces, TimeSpan.FromMinutes(TimeOutMinutes));
-
-		return Array.AsReadOnly(interfaces);
+		return Array.AsReadOnly(input.GetType().GetInterfaces().Select(p => p.Name).ToArray());
 	}
 
 	/// <summary>
@@ -1047,24 +1024,12 @@ public static class TypeHelper
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> GetImplementedInterfaceTypes([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
 
-		var type = input.GetType();
-		var cacheKey = $"{type.FullName}.{nameof(GetImplementedInterfaceTypes)}";
-
-		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedInterfaces))
-		{
-			return Array.AsReadOnly(cachedInterfaces!);
-		}
-
-		var interfaces = type.GetInterfaces();
-
-		_commonCache.AddCacheItem(cacheKey, interfaces, TimeSpan.FromMinutes(TimeOutMinutes));
-
-		return Array.AsReadOnly(interfaces);
+		return Array.AsReadOnly(input.GetType().GetInterfaces());
 	}
 
 	/// <summary>
