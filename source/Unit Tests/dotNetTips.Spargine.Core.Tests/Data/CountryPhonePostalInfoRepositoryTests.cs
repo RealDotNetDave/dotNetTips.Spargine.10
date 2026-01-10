@@ -91,7 +91,7 @@ public class CountryPhonePostalInfoRepositoryTests
 	public void ValidatePhoneNumberDOValidCountryCodeTest()
 	{
 
-		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("Dominican Republic", "1-809-555-666-7777", true);
+		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber(countryNameOrIso: "Dominican Republic", phoneNumber: "1-809-555-666-7777", validateCountryCode: true);
 
 		Assert.IsTrue(result);
 	}
@@ -160,7 +160,7 @@ public class CountryPhonePostalInfoRepositoryTests
 	public void ValidatePostalCodeUSValidFullTest()
 	{
 
-		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", "92130-1234");
+		var result = CountryPhonePostalInfoRepository.ValidatePostalCode(countryNameOrIso: "United States", postalCode: "92130-1234");
 
 		Assert.IsTrue(result == PostalCodeState.Valid);
 	}

@@ -228,7 +228,7 @@ public class EnumerableExtensionsTests
 	{
 		var emptyList = new List<Person>().AsEnumerable();
 
-		emptyList.FastShuffle();
+		emptyList = emptyList.FastShuffle();
 
 		Assert.AreEqual(0, emptyList.Count());
 	}
@@ -270,12 +270,13 @@ public class EnumerableExtensionsTests
 		var numbers = Enumerable.Range(1, 100).AsEnumerable();
 		var originalNumbers = numbers.ToHashSet();
 
-		numbers.FastShuffle();
+		var shuffledNumbers = numbers.FastShuffle();
 
-		Assert.AreEqual(100, numbers.Count());
+		Assert.AreEqual(100, shuffledNumbers.Count());
+
 		foreach (var num in originalNumbers)
 		{
-			Assert.IsTrue(numbers.Contains(num));
+			Assert.IsTrue(shuffledNumbers.Contains(num));
 		}
 	}
 
@@ -326,9 +327,10 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 		var originalPeople = people.ToHashSet();
 
-		people.FastShuffle();
+		people = people.FastShuffle();
 
 		Assert.AreEqual(Count, people.Count());
+
 		foreach (var person in originalPeople)
 		{
 			Assert.IsTrue(people.Contains(person));
@@ -341,7 +343,7 @@ public class EnumerableExtensionsTests
 		var words = RandomData.GenerateWords(Count, 5, 10).AsEnumerable();
 		var originalWords = words.ToHashSet();
 
-		words.FastShuffle();
+		words = words.FastShuffle();
 
 		Assert.AreEqual(Count, words.Count());
 		foreach (var word in originalWords)
@@ -355,7 +357,7 @@ public class EnumerableExtensionsTests
 	{
 		var numbers = Enumerable.Range(1, Count).AsEnumerable();
 
-		numbers.FastShuffle();
+		numbers = numbers.FastShuffle();
 
 		Assert.AreEqual(Count, numbers.Count());
 		for (int i = 1; i <= Count; i++)
@@ -392,7 +394,7 @@ public class EnumerableExtensionsTests
 
 		Assert.IsFalse(people.HasDuplicates());
 
-		people.FastShuffle();
+		people = people.FastShuffle();
 
 		var dups = people.Take(Count / 10).ToList();
 

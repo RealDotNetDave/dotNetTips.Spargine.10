@@ -4,7 +4,7 @@
 // Created          : 09-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2026
+// Last Modified On : 01-10-2026
 // ***********************************************************************
 // <copyright file="CountryPhonePostalInfoRepository.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -35,7 +36,7 @@ namespace DotNetTips.Spargine.Core.Data;
 /// <summary>
 /// Provides methods for accessing and validating country phone and postal information.
 /// </summary>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class CountryPhonePostalInfoRepository
 {
 	private static ReadOnlyCollection<CountryPhonePostalInfo>? _countries;
@@ -175,7 +176,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[Pure]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
-	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo(string countryNameOrIso)
+	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo([NotNull] string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNull();
 
@@ -262,14 +263,16 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
-	public static bool ValidatePhoneNumber(string countryNameOrIso, string phoneNumber, bool validateCountryCode = false)
+	public static bool ValidatePhoneNumber([NotNull] string countryNameOrIso, [NotNull] string phoneNumber, bool validateCountryCode = false)
 	{
-		var country = GetCountryPhonePostalInfo(countryNameOrIso.ArgumentNotNull());
+		var country = GetCountryPhonePostalInfo(countryNameOrIso);
 
 		if (country is null || string.IsNullOrEmpty(country.PhoneCode))
 		{
 			return false;
 		}
+
+		phoneNumber = phoneNumber.ArgumentNotNull();
 
 		var number = RegexProcessor.GetNumbers(phoneNumber);
 
@@ -376,9 +379,9 @@ public static class CountryPhonePostalInfoRepository
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
-	public static PostalCodeState ValidatePostalCode(string countryNameOrIso, string postalCode)
+	public static PostalCodeState ValidatePostalCode([NotNull] string countryNameOrIso, [NotNull] string postalCode)
 	{
-		var country = GetCountryPhonePostalInfo(countryNameOrIso.ArgumentNotNull());
+		var country = GetCountryPhonePostalInfo(countryNameOrIso);
 
 		// Fast null/empty check and avoid unnecessary Regex call
 		var regex = country?.PostalRegex;

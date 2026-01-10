@@ -20,10 +20,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
+using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Extensions.Properties;
 using Microsoft.VisualBasic;
 
@@ -836,33 +836,44 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Shuffles the elements of the list into a random order using a cryptographically secure random number generator.
+		/// Randomizes the order of elements in the current <see cref="List{T}"/> and returns a new shuffled list.
 		/// </summary>
-		/// <returns>A new <see cref="List{T}"/> containing all elements from the original list in a randomly shuffled order.</returns>
+		/// <returns>
+		/// A new <see cref="List{T}"/> containing the elements of the source list in randomized order.
+		/// </returns>
 		/// <remarks>
-		/// This method implements the Fisher-Yates shuffle algorithm (also known as the Knuth shuffle).
-		/// It creates a copy of the original list and performs an in-place shuffle on the copy using
-		/// <see cref="RandomNumberGenerator"/> to ensure cryptographically secure randomization.
+		/// <para>
+		/// This method performs an in-place Fisher–Yates shuffle on a copy of the source list using
+		/// <see cref="Random.Shared.Shuffle(Span{T})"/> over a span for optimal performance.
+		/// The original list instance is not modified.
+		/// </para>
 		/// <para>
 		/// Performance characteristics:
-		/// - Time complexity: O(n) where n is the number of elements
-		/// - Space complexity: O(n) - creates a copy of the list
-		/// - Significantly faster than LINQ-based approaches due to direct array access
+		/// <list type="bullet">
+		/// <item><description>Time complexity: O(n) where n is the number of elements.</description></item>
+		/// <item><description>Space complexity: O(n) to create the shuffled copy.</description></item>
+		/// </list>
 		/// </para>
 		/// </remarks>
 		/// <example>
-		/// This example shows how to use <see cref="FastShuffle"/> to randomly shuffle a list of integers.
 		/// <code>
 		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
 		/// var shuffled = numbers.FastShuffle();
-		/// // Result: A new list with elements in random order, e.g., { 3, 1, 5, 2, 4 }
+		/// // Example result: { 3, 1, 5, 2, 4 }
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public List<T> FastShuffle()
 		{
-			return [.. list.Shuffle()];
+			list = list.ArgumentNotNull();
+
+			var span = list.AsSpan();
+
+			// Shuffle in-place on the copy using span for optimal performance
+			Random.Shared.Shuffle(span);
+
+			return [.. span.ToArray()];
 		}
 
 		/// <summary>

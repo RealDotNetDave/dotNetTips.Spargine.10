@@ -23,9 +23,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 using DotNetTips.Spargine.Core;
+using DotNetTips.Spargine.Extensions;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.VisualBasic;
 using ControlChars = DotNetTips.Spargine.Core.ControlChars;
@@ -166,7 +166,7 @@ public static class EnumerableExtensions
 		/// <param name="accumulatorPredicate">The accumulatorFunction to accumulatorPredicate against the elements of the collection.</param>
 		/// <returns>The first element that matches the condition defined by <paramref name="accumulatorPredicate"/>, or null if no such element is found.</returns>
 		/// <example>
-		/// This example shows how to use <see cref="FirstOrNull{T}"/> to find the first element in an array of integers that is greater than 10, or null if no such element exists.
+		/// This example shows how to use <see cref="FirstOrNull{T}"/> to find the first element in an span of integers that is greater than 10, or null if no such element exists.
 		/// <code>
 		/// int[] numbers = { 1, 4, 7, 10, 12, 15 };
 		/// int? firstGreaterThanTen = numbers.FirstOrNull(n => n > 10);
@@ -496,9 +496,9 @@ public static class EnumerableExtensions
 		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized replacement paths for different collection types:
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><see cref="List{T}"/> - Uses indexed access with pre-sized result array (avoids span ref struct limitations).</description></item>
-		/// <item><description>Arrays - Uses direct indexed access with pre-sized result array.</description></item>
-		/// <item><description><see cref="IList{T}"/> - Uses indexed access with pre-sized result array.</description></item>
+		/// <item><description><see cref="List{T}"/> - Uses indexed access with pre-sized result span (avoids span ref struct limitations).</description></item>
+		/// <item><description>Arrays - Uses direct indexed access with pre-sized result span.</description></item>
+		/// <item><description><see cref="IList{T}"/> - Uses indexed access with pre-sized result span.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Falls back to LINQ <see cref="Enumerable.Select{TSource, TResult}(IEnumerable{TSource}, Func{TSource, int, TResult})"/>.</description></item>
 		/// </list>
 		/// <para>
@@ -510,7 +510,7 @@ public static class EnumerableExtensions
 		/// </list>
 		/// <para>
 		/// <b>Important:</b> While <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> could provide performance benefits,
-		/// it cannot be used here because <see cref="Span{T}"/> is a ref struct that cannot be part of the returned array.
+		/// it cannot be used here because <see cref="Span{T}"/> is a ref struct that cannot be part of the returned span.
 		/// Instead, we use direct indexed access which still provides excellent performance.
 		/// </para>
 		/// </remarks>
@@ -614,47 +614,50 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> FastShuffle(int count)
 		{
 			count = count.ArgumentInRange(min: 1, max: int.MaxValue);
 			collection = collection.ArgumentNotNull();
 
-			return collection.Shuffle().Take(count);
+			return collection.FastShuffle().Take(count);
 		}
 
 		/// <summary>
-		/// Shuffles the elements of the collection into a random order using a cryptographically secure random number generator.
+		/// Randomizes the order of elements in the collection and returns a new sequence containing the shuffled items.
 		/// </summary>
-		/// <returns>An <see cref="IEnumerable{T}"/> containing all elements from the original collection in a randomized order.</returns>
+		/// <returns>
+		/// An <see cref="IEnumerable{T}"/> with the elements of the original collection in randomized order.
+		/// </returns>
 		/// <remarks>
-		/// This method provides optimized shuffling paths for different collection types using <see cref="RandomNumberGenerator.Shuffle{T}(Span{T})"/>:
-		/// <list type="bullet">
-		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Clones the array and shuffles in-place for optimal performance.</description></item>
-		/// <item><description><see cref="List{T}"/> - Creates a copy and uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> to shuffle via span for improved performance.</description></item>
-		/// <item><description><see cref="ICollection{T}"/> - Materializes to an array, then shuffles using the cryptographically secure random number generator.</description></item>
-		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Converts to array first, then shuffles.</description></item>
-		/// </list>
-		/// This method uses <see cref="RandomNumberGenerator"/> to ensure cryptographically strong randomization, which is more secure
-		/// than pseudo-random shuffling but may have slightly higher overhead for very large collections (100,000+ elements).
-		/// The original collection is never modified; a new shuffled collection is always returned.
+		/// <para>
+		/// The original input enumeration is not modified. If the input is already an span, it is used directly;
+		/// otherwise, a new span is created from the input items before shuffling.
+		/// </para>
+		/// <para>
+		/// <b>Performance:</b> Uses span-based shuffling for optimal performance and minimal allocations.
+		/// </para>
 		/// </remarks>
-		/// <exception cref="ArgumentNullException">Thrown when the collection is null.</exception>
 		/// <example>
-		/// This example shows how to use FastShuffle to randomize a collection of integers.
 		/// <code>
-		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var numbers = Enumerable.Range(1, 5);
 		/// var shuffled = numbers.FastShuffle();
-		/// // Result: A randomized sequence like { 3, 1, 5, 2, 4 }
+		/// // Example result: { 3, 1, 5, 2, 4 }
 		/// </code>
 		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> FastShuffle()
 		{
-			return collection.Shuffle();
+			collection = collection.ArgumentNotNull();
+
+			var span = collection.ToArray().AsSpan();
+
+			Random.Shared.Shuffle(span);
+
+			return span.ToArray();
 		}
 
 		/// <summary>
@@ -752,7 +755,7 @@ public static class EnumerableExtensions
 		/// This method provides optimized conversion paths for different collection types to minimize allocations and enumerations:
 		/// <list type="bullet">
 		/// <item><description><see cref="IList{T}"/> - Directly wraps the list without copying (fastest path, zero allocation).</description></item>
-		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Directly wraps the array without copying.</description></item>
+		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Directly wraps the span without copying.</description></item>
 		/// <item><description><see cref="ICollection{T}"/> - Creates a pre-sized <see cref="List{T}"/> and copies elements once, then wraps it.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Uses collection expression to materialize and wrap the collection.</description></item>
 		/// </list>
@@ -762,7 +765,7 @@ public static class EnumerableExtensions
 		/// <item><description><b>IList&lt;T&gt; input:</b> O(1) operation, no allocations beyond the Collection wrapper.</description></item>
 		/// <item><description><b>Array input:</b> O(1) operation, no allocations beyond the Collection wrapper.</description></item>
 		/// <item><description><b>ICollection&lt;T&gt; input:</b> O(n) operation, single enumeration with pre-sized list allocation.</description></item>
-		/// <item><description><b>Other IEnumerable&lt;T&gt; input:</b> O(n) operation, potential array allocation.</description></item>
+		/// <item><description><b>Other IEnumerable&lt;T&gt; input:</b> O(n) operation, potential span allocation.</description></item>
 		/// </list>
 		/// </remarks>
 		/// <example>
@@ -772,9 +775,9 @@ public static class EnumerableExtensions
 		/// var list = new List&lt;int&gt; { 1, 2, 3 };
 		/// Collection&lt;int&gt; collection1 = list.ToCollection();
 		///
-		/// // From array - direct wrap, no copy
-		/// int[] array = { 1, 2, 3 };
-		/// Collection&lt;int&gt; collection2 = array.ToCollection();
+		/// // From span - direct wrap, no copy
+		/// int[] span = { 1, 2, 3 };
+		/// Collection&lt;int&gt; collection2 = span.ToCollection();
 		///
 		/// // From IEnumerable&lt;T&gt; - materialized then wrapped
 		/// IEnumerable&lt;int&gt; enumerable = Enumerable.Range(1, 3);
@@ -1095,7 +1098,7 @@ public static class EnumerableExtensions
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Converts to <see cref="List{T}"/> and then processes via <see cref="ReadOnlySpan{T}"/> for consistent performance.</description></item>
 		/// </list>
 		/// Performance benefits are most significant with large collections (1000+ elements) where the transformation function is lightweight.
-		/// The method creates a new array for the results, ensuring the returned collection is independent of the source.
+		/// The method creates a new span for the results, ensuring the returned collection is independent of the source.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when collection or <paramref name="action"/> is null.</exception>
 		/// <example>
@@ -1188,7 +1191,7 @@ public static class EnumerableExtensions
 		/// <param name="accumulatorPredicate">A accumulatorFunction to test each element for a condition.</param>
 		/// <returns>true if any elements in the collection sequence pass the test in the specified accumulatorFunction; otherwise, false.</returns>
 		/// <example>
-		/// This example shows how to use <see cref="FastAny{T}"/> to quickly check if any elements in an array satisfy a condition.
+		/// This example shows how to use <see cref="FastAny{T}"/> to quickly check if any elements in an span satisfy a condition.
 		/// <code>
 		/// int[] numbers = { 1, 2, 3 };
 		/// bool hasEvenNumber = numbers.FastAny(n => n % 2 == 0);
@@ -1427,7 +1430,7 @@ public static class EnumerableExtensions
 		/// </para>
 		/// <list type="bullet">
 		/// <item><description><see cref="List{T}"/> - Uses <see cref="List{T}.Add(T)"/> for direct addition.</description></item>
-		/// <item><description>Arrays - Creates pre-sized array and copies elements directly.</description></item>
+		/// <item><description>Arrays - Creates pre-sized span and copies elements directly.</description></item>
 		/// <item><description><see cref="IList{T}"/> - Creates new list with capacity and adds elements efficiently.</description></item>
 		/// <item><description><see cref="ICollection{T}"/> - Pre-sizes list to avoid resizing overhead.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Falls back to built-in <see cref="Enumerable.Append{TSource}(IEnumerable{TSource}, TSource)"/>.</description></item>
@@ -1505,7 +1508,7 @@ public static class EnumerableExtensions
 		/// </para>
 		/// <list type="bullet">
 		/// <item><description><see cref="List{T}"/> - Uses <see cref="List{T}.Insert(int, T)"/> for direct insertion.</description></item>
-		/// <item><description>Arrays - Creates pre-sized array and copies elements directly.</description></item>
+		/// <item><description>Arrays - Creates pre-sized span and copies elements directly.</description></item>
 		/// <item><description><see cref="IList{T}"/> - Creates new list with capacity and adds elements efficiently.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Falls back to built-in <see cref="Enumerable.Prepend{TSource}(IEnumerable{TSource}, TSource)"/>.</description></item>
 		/// </list>
@@ -1595,7 +1598,7 @@ public static class EnumerableExtensions
 		/// </para>
 		/// <list type="bullet">
 		/// <item><description><see cref="IList{T}"/> - Directly wraps the list without copying (fastest path, zero allocation for wrapper).</description></item>
-		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Directly wraps the array without copying.</description></item>
+		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Directly wraps the span without copying.</description></item>
 		/// <item><description><see cref="List{T}"/> - Directly wraps the list without copying.</description></item>
 		/// <item><description><see cref="ICollection{T}"/> - Creates pre-sized list, copies once, then wraps.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Materializes to list, then wraps.</description></item>
@@ -1619,9 +1622,9 @@ public static class EnumerableExtensions
 		/// var list = new List&lt;int&gt; { 1, 2, 3 };
 		/// ReadOnlyCollection&lt;int&gt; roc1 = list.ToReadOnlyCollection();
 		///
-		/// // From array - wraps directly, no copy
-		/// int[] array = { 1, 2, 3 };
-		/// ReadOnlyCollection&lt;int&gt; roc2 = array.ToReadOnlyCollection();
+		/// // From span - wraps directly, no copy
+		/// int[] span = { 1, 2, 3 };
+		/// ReadOnlyCollection&lt;int&gt; roc2 = span.ToReadOnlyCollection();
 		///
 		/// // From IEnumerable - materializes then wraps
 		/// IEnumerable&lt;int&gt; enumerable = Enumerable.Range(1, 3);

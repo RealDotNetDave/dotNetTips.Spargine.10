@@ -2208,7 +2208,7 @@
 
 ### System.Void AddRange(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -2288,7 +2288,7 @@
 
 ### System.Int32 EnsureCapacity(System.Int32 capacity)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -2308,7 +2308,7 @@
 
 ### T FindAll(T match)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -2318,7 +2318,7 @@
 
 ### T FirstOrDefault()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -2388,7 +2388,7 @@
 
 ### T LastOrDefault()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -2418,7 +2418,7 @@
 
 ### System.Int32 RemoveRange(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -2438,7 +2438,7 @@
 
 ### System.Void Reset(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -2468,7 +2468,7 @@
 
 ### T ToArray()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -2478,7 +2478,7 @@
 
 ### T ToList()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -2498,7 +2498,7 @@
 
 ### System.Boolean TryGetValue(T equalValue, T actualValue)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3050,7 +3050,7 @@
 
 ### System.TimeSpan Elapsed { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3070,7 +3070,7 @@
 
 ### System.Boolean Equals(DotNetTips.Spargine.Core.Diagnostics.DiagnosticEntry other)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3090,7 +3090,7 @@
 
 ### System.String Message { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3100,7 +3100,7 @@
 
 ### System.DateTimeOffset Timestamp { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3110,7 +3110,7 @@
 
 ### System.String ToString()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3198,7 +3198,7 @@
 
 ### System.Void ClearLaps()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3216,13 +3216,13 @@
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/18/2023
-* **Description:** StopRestart
+* **Description:** Diagnostics
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### System.String ExportToJson()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3234,7 +3234,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetDiagnosticMessages()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3246,7 +3246,7 @@
 
 ### System.String GetElapsedTimeString()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3258,7 +3258,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.TimeSpan> GetLaps()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3282,7 +3282,7 @@
 
 ### System.Boolean IsThresholdExceeded { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3294,7 +3294,7 @@
 
 ### System.Void LogMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -3306,7 +3306,7 @@
 
 ### System.Void RecordLap()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3318,7 +3318,7 @@
 
 ### event EventHandler`1 ResetCompleted
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3342,7 +3342,7 @@
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch StartNewWithAlertThreshold(System.Nullable<System.TimeSpan> alertThreshold, System.String title)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3354,7 +3354,7 @@
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch StartNewWithTelemetry(Microsoft.ApplicationInsights.TelemetryClient telemetry, System.String operationName, System.Nullable<System.TimeSpan> alertThreshold, System.String message, System.Collections.Generic.IDictionary<System.String, System.String> properties)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -3364,27 +3364,27 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### event EventHandler`1 StopCompleted
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 11/11/2025
+* **Description:** StopCompleted
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean StopIfThresholdExceeded()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/8/2025
 * **Description:** StopIfThresholdExceeded
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### event EventHandler`1 StoppedCompleted
-
-* **Status:** New
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
-* **Unit Test Status:** None
-* **Author:** David McCarter
-* **CreatedOn:** 11/11/2025
-* **Description:** StoppedCompleted
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -3438,7 +3438,7 @@
 
 ### event EventHandler`1 ThresholdExceeded
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3474,7 +3474,7 @@
 
 ### System.Void TrackTelemetry(Microsoft.ApplicationInsights.TelemetryClient telemetry, System.String operationName, System.String message, System.Collections.Generic.IDictionary<System.String, System.String> properties)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -6570,9 +6570,9 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllGenericMethods(System.Type type)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6604,9 +6604,9 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllPublicMethods(System.Type type)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAllPublicMethods
@@ -6614,9 +6614,9 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllStaticMethods(System.Type type)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAllStaticMethods
@@ -6624,9 +6624,9 @@
 
 ### T GetAttribute(System.Reflection.FieldInfo fieldInfo)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAttribute
@@ -6674,9 +6674,9 @@
 
 ### System.Type[] GetGenericArguments(System.Type type)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetGenericArguments
@@ -6684,9 +6684,9 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetImplementedInterfaces(System.Object input)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetImplementedInterfaces
@@ -6704,9 +6704,9 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetImplementedInterfaceTypes(System.Object input)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetImplementedInterfaceTypes
@@ -7830,4 +7830,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/8/2026 9:55:24 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/9/2026 4:32:39 PM UTC**

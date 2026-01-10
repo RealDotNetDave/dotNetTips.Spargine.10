@@ -170,7 +170,7 @@ public class CollectionExtensionsTests
 	public void UpsertNullTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		people.FastShuffle();
+		people = people.FastShuffle();
 		var personFromCollection = people.First();
 		Person nullPerson = null;
 
@@ -185,7 +185,7 @@ public class CollectionExtensionsTests
 	public void UpsertTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		people.FastShuffle();
+		people = people.FastShuffle();
 		var personFromCollection = people.First();
 		var person = RandomData.GeneratePerson<Person>();
 		var personRecords = RandomData.GeneratePersonRecordCollection(Count).ToList();

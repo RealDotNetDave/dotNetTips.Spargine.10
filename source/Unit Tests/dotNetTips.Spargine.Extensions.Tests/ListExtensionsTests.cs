@@ -457,6 +457,23 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastShuffleTest()
+	{
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var originalList = new List<int>(list);
+
+		list = list.FastShuffle();
+
+		Assert.AreEqual(5, list.Count);
+		Assert.IsTrue(list.Contains(1));
+		Assert.IsTrue(list.Contains(2));
+		Assert.IsTrue(list.Contains(3));
+		Assert.IsTrue(list.Contains(4));
+		Assert.IsTrue(list.Contains(5));
+		CollectionAssert.AreNotEqual(originalList, list);
+	}
+
+	[TestMethod]
 	public void GenerateHashCodeForRecord()
 	{
 		var people = RandomData.GeneratePersonRecordCollection(Count).ToList();
@@ -787,23 +804,6 @@ public class ListExtensionsTests
 		var shuffledPeople = people.Shuffle();
 
 		Assert.IsTrue(people.Count == shuffledPeople.Count());
-	}
-
-	[TestMethod]
-	public void ShuffleTest()
-	{
-		var list = new List<int> { 1, 2, 3, 4, 5 };
-		var originalList = new List<int>(list);
-
-		list = list.FastShuffle();
-
-		Assert.AreEqual(5, list.Count);
-		Assert.IsTrue(list.Contains(1));
-		Assert.IsTrue(list.Contains(2));
-		Assert.IsTrue(list.Contains(3));
-		Assert.IsTrue(list.Contains(4));
-		Assert.IsTrue(list.Contains(5));
-		CollectionAssert.AreNotEqual(originalList, list);
 	}
 
 	[TestMethod]
