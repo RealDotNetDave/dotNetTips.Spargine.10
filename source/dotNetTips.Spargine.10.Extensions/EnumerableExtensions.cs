@@ -651,8 +651,6 @@ public static class EnumerableExtensions
 		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastShuffle()
 		{
-			// CREATE METHOD TO RETURN SPAN INSTEAD TO INCREASE SPEEND AND LOWER ALLOCATIONS.
-
 			collection = collection.ArgumentNotNull();
 
 			var array = collection.ToArray();
@@ -660,6 +658,45 @@ public static class EnumerableExtensions
 			Random.Shared.Shuffle(array);
 
 			return array;
+		}
+
+		/// <summary>
+		/// Randomizes the order of elements in the collection and returns a <see cref="Span{T}"/> view over the shuffled buffer.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// <b>Important:</b> The returned <see cref="Span{T}"/> is a view over a newly allocated array created inside this method.
+		/// As <see cref="Span{T}"/> is a ref struct, it cannot be stored on the heap, captured by lambdas, used across
+		/// asynchronous boundaries, or escape the current stack frame. Consumers must process the span immediately.
+		/// </para>
+		/// <para>
+		/// <b>Allocations:</b> Exactly one array allocation is performed to materialize the source sequence. No additional allocations
+		/// occur during shuffling or when creating the span view.
+		/// </para>
+		/// <para>
+		/// <b>Performance:</b> Shuffling is O(n) and performed in-place on the array via the span.
+		/// </para>
+		/// </remarks>
+		/// <returns>
+		/// A <see cref="Span{T}"/> representing the shuffled elements of the source collection.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when the source collection is null.
+		/// </exception>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastShuffleAsSpan), "David McCarter", "1/11/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+
+		public Span<T> FastShuffleAsSpan()
+		{
+			collection = collection.ArgumentNotNull();
+
+			var span = collection.ToArray().AsSpan();
+
+			Random.Shared.Shuffle(span);
+
+			return span;
 		}
 
 		/// <summary>

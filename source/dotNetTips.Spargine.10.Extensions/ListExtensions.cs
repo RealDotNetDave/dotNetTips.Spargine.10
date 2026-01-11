@@ -50,92 +50,20 @@ public static class ListExtensions
 	extension<T>([DisallowNull] List<T> list)
 	{
 		/// <summary>
-		/// Adds an item to the beginning of the list.
+		/// Inserts the specified <paramref name="item"/> at the beginning of the <see cref="List{T}"/>.
 		/// </summary>
-		/// <param name="item">The item to add to the beginning of the list.</param>
+		/// <param name="item">The item to insert at index zero.</param>
 		/// <remarks>
 		/// <para>
-		/// <b>⚠️ Performance Warning (.NET 10):</b> This operation has <b>O(n) time complexity</b> because it uses 
-		/// <see cref="List{T}.Insert(int, T)"/> at index 0, which shifts all existing elements one position to the right.
+		/// This operation has O(n) time complexity because all existing elements are shifted one position to the right.
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// If the list needs to grow its internal capacity, an additional allocation and copy will occur.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) - All n elements must be shifted right</description></item>
-		/// <item><description><b>Space complexity:</b> O(1) - No additional allocations unless capacity is exceeded</description></item>
-		/// <item><description><b>Capacity:</b> May trigger array reallocation if <see cref="List{T}.Count"/> equals <see cref="List{T}.Capacity"/></description></item>
-		/// </list>
-		/// <para>
-		/// <b>Why Is This Slow?</b>
-		/// </para>
-		/// <para>
-		/// <see cref="List{T}"/> uses an internal array for storage. When inserting at index 0:
-		/// </para>
-		/// <list type="number">
-		/// <item><description>All existing elements (n items) must be shifted one position to the right</description></item>
-		/// <item><description>This requires copying n elements, resulting in O(n) complexity</description></item>
-		/// <item><description>There is <b>NO way to make this faster</b> with <see cref="List{T}"/></description></item>
-		/// </list>
-		/// <para>
-		/// <b>Performance Alternatives:</b>
-		/// </para>
-		/// <para>
-		/// If you frequently need to add items to the beginning of a collection, consider these alternatives:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><see cref="LinkedList{T}"/>: O(1) prepend via <see cref="LinkedList{T}.AddFirst(T)"/> (but O(n) indexing)</description></item>
-		/// <item><description><see cref="Deque{T}"/> (if available): O(1) prepend and O(1) indexing</description></item>
-		/// <item><description><see cref="Enumerable.Prepend{TSource}(IEnumerable{TSource}, TSource)"/>: Deferred execution, no immediate shift</description></item>
-		/// <item><description>Reverse insertion pattern: Add to end, then reverse the list once</description></item>
-		/// </list>
-		/// <para>
-		/// <b>When to use this method:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description>Infrequent prepend operations (occasional use is fine)</description></item>
-		/// <item><description>Small lists (under 100 elements)</description></item>
-		/// <item><description>When you must use <see cref="List{T}"/> and need this specific operation</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Benchmark Data (.NET 10):</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description>10 items: ~30 ns</description></item>
-		/// <item><description>100 items: ~250 ns</description></item>
-		/// <item><description>1,000 items: ~2,500 ns</description></item>
-		/// <item><description>10,000 items: ~25,000 ns (0.025 ms)</description></item>
-		/// </list>
 		/// </remarks>
-		/// <example>
-		/// <code>
-		/// // Basic usage
-		/// var numbers = new List&lt;int&gt; { 2, 3, 4 };
-		/// numbers.AddFirst(1);  // List becomes { 1, 2, 3, 4 }
-		/// 
-		/// // ⚠️ Anti-pattern: Multiple prepends in a loop (very slow!)
-		/// var list = new List&lt;string&gt;();
-		/// for (int i = 0; i &lt; 1000; i++)
-		/// {
-		///     list.AddFirst($"Item {i}");  // O(n) each time = O(n²) total!
-		/// }
-		/// 
-		/// // ✅ Better: Use LinkedList for frequent prepends
-		/// var linkedList = new LinkedList&lt;string&gt;();
-		/// for (int i = 0; i &lt; 1000; i++)
-		/// {
-		///     linkedList.AddFirst($"Item {i}");  // O(1) each time = O(n) total
-		/// }
-		/// 
-		/// // ✅ Alternative: Build in reverse, then reverse once
-		/// var reverseList = new List&lt;string&gt;();
-		/// for (int i = 0; i &lt; 1000; i++)
-		/// {
-		///     reverseList.Add($"Item {i}");  // O(1) amortized
-		/// }
-		/// reverseList.Reverse();  // O(n) once
-		/// </code>
-		/// </example>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when <paramref name="item"/> is <c>null</c>.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AddFirst([DisallowNull] T item)
@@ -269,124 +197,36 @@ public static class ListExtensions
 		/// <summary>
 		/// Adds a range of items to the list if they do not already exist in the list.
 		/// </summary>
-		/// <param name="items">The items to add if not already present.</param>
+		/// <param name="items">The items to add if not already present. Must not be null.</param>
 		/// <remarks>
 		/// <para>
-		/// <b>✅ Performance Optimized (.NET 10):</b> This method uses a <see cref="HashSet{T}"/> for O(1) lookups
-		/// to efficiently determine which items are new, avoiding O(n²) complexity from repeated <see cref="List{T}.Contains(T)"/> calls.
-		/// Additionally, it pre-allocates list capacity for bulk additions to minimize array resizing.
+		/// ✅ Performance Optimized (.NET 10): Uses a <see cref="HashSet{T}"/> built from the existing list for O(1) lookups,
+		/// avoiding O(n²) behavior from repeated <see cref="List{T}.Contains(T)"/> calls. Pre-allocates list capacity
+		/// when the count of <paramref name="items"/> is known to reduce resize operations.
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// <b>Complexity:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n + m) where n is the list size and m is the number of items to add</description></item>
-		/// <item><description><b>Space complexity:</b> O(n) for the temporary HashSet</description></item>
-		/// <item><description><b>HashSet construction:</b> O(n) - Creates HashSet from existing list items</description></item>
-		/// <item><description><b>Uniqueness check:</b> O(1) per item - HashSet.Add is constant time</description></item>
-		/// <item><description><b>List insertion:</b> O(1) amortized with pre-allocation</description></item>
+		/// <item><description>Time: O(n + m) where n is list size and m is the number of items to add.</description></item>
+		/// <item><description>Space: O(n) for the temporary <see cref="HashSet{T}"/>.</description></item>
 		/// </list>
 		/// <para>
-		/// <b>Why This Is Fast:</b>
+		/// Items determined to already exist (by <see cref="EqualityComparer{T}.Default"/>) are not added. The relative order
+		/// of newly added items follows their enumeration order from <paramref name="items"/>.
 		/// </para>
-		/// <para>
-		/// The naive approach of using <see cref="List{T}.Contains(T)"/> for each item is O(n*m) because:
-		/// </para>
-		/// <list type="number">
-		/// <item><description><see cref="List{T}.Contains(T)"/> is O(n) - linear search through the list</description></item>
-		/// <item><description>Checking m items requires m * O(n) = O(n*m) operations</description></item>
-		/// <item><description>For 1,000 existing items + 1,000 new items = 1,000,000 operations! ❌</description></item>
-		/// </list>
-		/// <para>
-		/// This optimized approach using <see cref="HashSet{T}"/> is O(n + m) because:
-		/// </para>
-		/// <list type="number">
-		/// <item><description><see cref="HashSet{T}"/> construction from list is O(n)</description></item>
-		/// <item><description><see cref="HashSet{T}.Add(T)"/> is O(1) - hash-based lookup</description></item>
-		/// <item><description>Checking m items requires O(n) + m * O(1) = O(n + m) operations</description></item>
-		/// <item><description>For 1,000 existing + 1,000 new = only 2,000 operations! ✅</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Capacity Pre-allocation:</b>
-		/// </para>
-		/// <para>
-		/// This method uses <see cref="CollectionExtensions.EnsureCapacity{T}(List{T}, int)"/> to pre-allocate space for new items,
-		/// preventing multiple array reallocations during bulk additions:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Without pre-allocation:</b> Adding 1,000 items may trigger ~10 resize operations (O(n) each)</description></item>
-		/// <item><description><b>With pre-allocation:</b> Single resize operation upfront, then O(1) additions</description></item>
-		/// <item><description><b>Result:</b> Significantly faster for large bulk additions</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Performance Comparison:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Naive approach (Contains):</b> O(n*m) = ~1,000,000 operations for 1K items</description></item>
-		/// <item><description><b>Optimized approach (HashSet):</b> O(n + m) = ~2,000 operations for 1K items</description></item>
-		/// <item><description><b>Performance gain:</b> ~500x faster! ✅</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Benchmark Data (.NET 10):</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>10 existing + 10 new items:</b> ~500 ns (HashSet overhead minimal)</description></item>
-		/// <item><description><b>100 existing + 100 new items:</b> ~15 μs (starting to see benefits)</description></item>
-		/// <item><description><b>1,000 existing + 1,000 new items:</b> ~200 μs (500x faster than naive)</description></item>
-		/// <item><description><b>10,000 existing + 10,000 new items:</b> ~2 ms (excellent scalability)</description></item>
-		/// </list>
-		/// <para>
-		/// <b>When to use this method:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description>Adding multiple items while maintaining uniqueness</description></item>
-		/// <item><description>Building collections from multiple sources without duplicates</description></item>
-		/// <item><description>Merging datasets where overlap is possible</description></item>
-		/// <item><description>Any scenario where you need "add if not exists" for multiple items</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Alternatives:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>If order doesn't matter:</b> Use <see cref="HashSet{T}"/> directly instead of <see cref="List{T}"/></description></item>
-		/// <item><description><b>If you need both order and uniqueness:</b> This method is ideal</description></item>
-		/// <item><description><b>For very small collections (&lt; 10 items):</b> Simple Contains() may be simpler</description></item>
-		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// // Basic usage
-		/// var numbers = new List&lt;int&gt; { 1, 2, 3 };
-		/// var newNumbers = new[] { 3, 4, 5 };
-		/// numbers.AddRangeIfNotExists(newNumbers);
-		/// // Result: { 1, 2, 3, 4, 5 } - duplicate 3 not added
-		/// 
-		/// // ⚠️ Anti-pattern: Naive approach (very slow for large lists!)
-		/// var list = new List&lt;string&gt;();
-		/// foreach (var item in manyItems)
-		/// {
-		///     if (!list.Contains(item))  // O(n) each time = O(n²) total!
-		///     {
-		///         list.Add(item);
-		///     }
-		/// }
-		/// 
-		/// // ✅ Better: Use this method
-		/// var list2 = new List&lt;string&gt;();
-		/// list2.AddRangeIfNotExists(manyItems);  // O(n + m) - 500x faster!
-		/// 
-		/// // ✅ Alternative: If order doesn't matter, use HashSet
-		/// var set = new HashSet&lt;string&gt;(existingItems);
-		/// set.UnionWith(newItems);  // Fastest for pure set operations
-		/// 
-		/// // Real-world example: Merging user lists without duplicates
-		/// var allUsers = new List&lt;User&gt;();
-		/// allUsers.AddRangeIfNotExists(admins);
-		/// allUsers.AddRangeIfNotExists(moderators);
-		/// allUsers.AddRangeIfNotExists(regularUsers);
-		/// // Result: All unique users, maintaining insertion order
+		/// var list = new List&lt;int&gt; { 1, 2, 3 };
+		/// var incoming = new[] { 3, 4, 5 };
+		/// list.AddRangeIfNotExists(incoming);
+		/// // Result: { 1, 2, 3, 4, 5 }
 		/// </code>
 		/// </example>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when <paramref name="items"/> or the target <c>list</c> is null.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
@@ -843,16 +683,16 @@ public static class ListExtensions
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// This method performs an in-place Fisher–Yates shuffle on a copy of the source list using
-		/// <see cref="Random.Shared.Shuffle(Span{T})"/> over a span for optimal performance.
-		/// The original list instance is not modified.
+		/// <b>Performance Characteristics (.NET 10):</b>
 		/// </para>
-		/// <para>
-		/// Performance characteristics:
 		/// <list type="bullet">
-		/// <item><description>Time complexity: O(n) where n is the number of elements.</description></item>
-		/// <item><description>Space complexity: O(n) to create the shuffled copy.</description></item>
+		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements.</description></item>
+		/// <item><description><b>Space complexity:</b> O(n) for the copied and shuffled list.</description></item>
+		/// <item><description><b>Allocations:</b> One new list allocation for the result; avoids mutating the source.</description></item>
 		/// </list>
+		/// <para>
+		/// If you need to avoid allocations and can consume a ref struct immediately, consider using <see cref="FastShuffleAsSpan"/> which shuffles in-place
+		/// over the list's internal buffer and returns a <see cref="Span{T}"/> view.
 		/// </para>
 		/// </remarks>
 		/// <example>
@@ -866,9 +706,57 @@ public static class ListExtensions
 		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public List<T> FastShuffle()
 		{
-			// CREATE METHOD TO RETURN SPAN INSTEAD TO INCREASE SPEEND AND LOWER ALLOCATIONS.
-
 			return [.. list.Shuffle()];
+		}
+
+		/// <summary>
+		/// Randomizes the order of elements in the current <see cref="List{T}"/> and returns a <see cref="Span{T}"/> view over the shuffled buffer.
+		/// </summary>
+		/// <remarks>
+		/// <list type="bullet">
+		/// <item><description><b>Ref struct constraints:</b> <see cref="Span{T}"/> cannot be stored on the heap, captured by lambdas, used across asynchronous boundaries, or escape the current stack frame.</description></item>
+		/// <item><description><b>List mutations:</b> Adding or removing items to/from the source <see cref="List{T}"/> after obtaining the span can invalidate the span.</description></item>
+		/// <item><description><b>Thread safety:</b> Do not mutate the list while consuming the returned span from another thread.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Performance Characteristics (.NET 10):</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Time complexity:</b> O(n) — Fisher–Yates shuffle over the span.</description></item>
+		/// <item><description><b>Allocations:</b> None — operates directly on the list's internal buffer via <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/>.</description></item>
+		/// </list>
+		/// </remarks>
+		/// <returns>
+		/// A <see cref="Span{T}"/> representing the shuffled elements of the source list.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when the source list is <c>null</c>.
+		/// </exception>
+		/// <example>
+		/// <code>
+		/// var list = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var span = list.FastShuffleAsSpan();
+		/// // Consume span immediately
+		/// for (int i = 0; i &lt; span.Length; i++)
+		/// {
+		///     Console.WriteLine(span[i]);
+		/// }
+		/// </code>
+		/// </example>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastShuffleAsSpan), "David McCarter", "1/11/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+
+		public Span<T> FastShuffleAsSpan()
+		{
+			list = list.ArgumentNotNull();
+
+			var span = list.AsSpan();
+
+			Random.Shared.Shuffle(span);
+
+			return span;
 		}
 
 		/// <summary>
