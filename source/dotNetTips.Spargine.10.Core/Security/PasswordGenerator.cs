@@ -47,19 +47,6 @@ public static class PasswordGenerator
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
 	/// <summary>
-	/// Shuffles an array in place using Fisher-Yates algorithm.
-	/// </summary>
-	/// <param name="array">The array to shuffle.</param>
-	private static void ShuffleArray(char[] array)
-	{
-		for (var index = array.Length - 1; index > 0; index--)
-		{
-			var j = RandomNumberGenerator.GetInt32(index + 1); // Use the class name to call the static method
-			(array[index], array[j]) = (array[j], array[index]); // Swap elements
-		}
-	}
-
-	/// <summary>
 	/// Generates a random password with the specified length.
 	/// The password will contain a mix of uppercase letters, lowercase letters, digits, and special characters.
 	/// </summary>
@@ -112,6 +99,21 @@ public static class PasswordGenerator
 		finally
 		{
 			_stringBuilderPool.Value.Return(sb.Clear());
+		}
+	}
+
+	/// <summary>
+	/// Shuffles an array in place using Fisher-Yates algorithm.
+	/// </summary>
+	/// <param name="array">The array to shuffle.</param>
+	private static void ShuffleArray(char[] array)
+	{
+		//TODO: OPTIMIZE
+
+		for (var index = array.Length - 1; index > 0; index--)
+		{
+			var j = RandomNumberGenerator.GetInt32(index + 1); // Use the class name to call the static method
+			(array[index], array[j]) = (array[j], array[index]); // Swap elements
 		}
 	}
 }

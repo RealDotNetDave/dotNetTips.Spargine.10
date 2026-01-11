@@ -746,7 +746,7 @@ public static class ListExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffleAsSpan), "David McCarter", "1/11/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+		[Information(nameof(FastShuffleAsSpan), "David McCarter", "1/11/2026", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
 
 		public Span<T> FastShuffleAsSpan()
 		{

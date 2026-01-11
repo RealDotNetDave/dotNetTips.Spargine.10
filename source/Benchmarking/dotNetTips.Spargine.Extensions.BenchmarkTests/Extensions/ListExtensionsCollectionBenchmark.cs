@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-11-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -194,10 +194,17 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void ShuffleFastShuffle()
 	{
-		this.Consume(this._peopleRefList.FastShuffle());
+		this.ConsumeEnumerable(this._peopleRefList.FastShuffle());
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.FastShuffleAsSpan))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void ShuffleFastShuffleAsSpan()
+	{
+		this.ConsumeSpan(this._peopleRefList.FastShuffleAsSpan());
 	}
 
 	[Benchmark(Description = "Shuffle")]
@@ -206,7 +213,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._peopleRefList.Shuffle().ToList();
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.Split))]

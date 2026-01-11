@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-08-2026
+// Last Modified On : 01-11-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -371,6 +371,14 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._personRefEnumerable.FastShuffle();
 
 		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffleAsSpan))]
+	public void ShuffleFastShuffleAsSpan()
+	{
+		var result = this._personRefEnumerable.FastShuffleAsSpan();
+
+		this.ConsumeSpan(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
