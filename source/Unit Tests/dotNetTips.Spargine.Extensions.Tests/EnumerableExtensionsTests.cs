@@ -274,6 +274,8 @@ public class EnumerableExtensionsTests
 
 		Assert.AreEqual(100, shuffledNumbers.Count());
 
+		Assert.IsFalse(originalNumbers.SequenceEqual(shuffledNumbers));
+
 		foreach (var num in originalNumbers)
 		{
 			Assert.IsTrue(shuffledNumbers.Contains(num));
