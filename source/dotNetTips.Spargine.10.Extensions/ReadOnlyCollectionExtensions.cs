@@ -4,7 +4,7 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-08-2026
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -90,7 +90,7 @@ public static class ReadOnlyCollectionExtensions
 		/// A hash code for the collection, considering the hash codes of individual elements computed using the specified comparer.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is <c>null</c>.
+		/// Thrown if collection or <paramref name="comparer"/> is <c>null</c>.
 		/// </exception>
 		/// <remarks>
 		/// <para>

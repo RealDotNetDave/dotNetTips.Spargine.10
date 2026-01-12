@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-08-2026
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,6 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.Common;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.ValueTypes;
 using static BenchmarkDotNet.Attributes.JsonExporterAttribute;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -187,13 +186,13 @@ public class Benchmark
 	/// Gets the first coordinate object generated during startup for use in testing.
 	/// </summary>
 	/// <value>The first coordinate object.</value>
-	public Tester.Models.RefTypes.Coordinate CoordinateRef01 { get; private set; }
+	public Coordinate CoordinateRef01 { get; private set; }
 
 	/// <summary>
 	/// Gets the second coordinate object generated during startup for use in testing.
 	/// </summary>
 	/// <value>The second coordinate object.</value>
-	public Tester.Models.RefTypes.Coordinate CoordinateRef02 { get; private set; }
+	public Coordinate CoordinateRef02 { get; private set; }
 
 	/// <summary>
 	/// Retrieves a random coordinate generated during startup for use in testing.
@@ -242,14 +241,14 @@ public class Benchmark
 	/// This property provides access to a Person object instance that can be used in benchmark tests to measure performance of operations involving item objects.
 	/// </summary>
 	/// <value>The first Person{Address} object.</value>
-	public Tester.Models.RefTypes.Person PersonRef01 { get; private set; }
+	public Person PersonRef01 { get; private set; }
 
 	/// <summary>
 	/// Retrieves a Person{Address} reference type object for testing generated during startup.
 	/// This property provides access to a Person object instance that can be used in benchmark tests to measure performance of operations involving item objects.
 	/// </summary>
 	/// <value>The second Person{Address} object.</value>
-	public Tester.Models.RefTypes.Person PersonRef02 { get; private set; }
+	public Person PersonRef02 { get; private set; }
 
 	/// <summary>
 	/// Retrieves a Person{Address} value type object for testing generated during startup.
@@ -513,12 +512,12 @@ public class Benchmark
 		this.Base64String = this.LongTestString.Substring(1, 50).ToBase64();
 		this.CoordinateVal01 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
 		this.CoordinateVal02 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
-		this.CoordinateRef01 = RandomData.GenerateCoordinate<Tester.Models.RefTypes.Coordinate>();
-		this.CoordinateRef02 = RandomData.GenerateCoordinate<Tester.Models.RefTypes.Coordinate>();
+		this.CoordinateRef01 = RandomData.GenerateCoordinate<Coordinate>();
+		this.CoordinateRef02 = RandomData.GenerateCoordinate<Coordinate>();
 		this.PersonRecord01 = RandomData.GeneratePerson<PersonRecord>();
 		this.PersonRecord02 = RandomData.GeneratePerson<PersonRecord>();
-		this.PersonRef01 = RandomData.GeneratePerson<Tester.Models.RefTypes.Person>();
-		this.PersonRef02 = RandomData.GeneratePerson<Tester.Models.RefTypes.Person>();
+		this.PersonRef01 = RandomData.GeneratePerson<Person>();
+		this.PersonRef02 = RandomData.GeneratePerson<Person>();
 		this.PersonVal01 = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 		this.PersonVal02 = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 		this.StringToTrim = $"          {this.LongTestString}          ";
@@ -534,7 +533,7 @@ public class Benchmark
 	/// <returns>A <see cref="Task"/> representing the asynchronous setup operation.</returns>
 	public virtual Task SetupAsync()
 	{
-		//TODO: FIX?
+		this.Setup();
 		return Task.CompletedTask;
 	}
 
@@ -581,7 +580,7 @@ public class Benchmark
 	/// This helper is intended for benchmarking scenarios to apply a deterministic mutation to a <see cref="Person"/> instance.
 	/// <see cref="Person.CellPhone"/> to the constant test value stored in <see cref="PhoneNumberUpdate"/>.
 	/// </remarks>
-	public virtual Tester.Models.RefTypes.Person Update([DisallowNull] Tester.Models.RefTypes.Person person)
+	public virtual Person Update([DisallowNull] Person person)
 	{
 		person = person.ArgumentNotNull();
 

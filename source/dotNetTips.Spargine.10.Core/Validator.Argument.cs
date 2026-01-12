@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,8 +33,6 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineValidatorArguments, https://bit.ly/SpargineValidatorData")]
 public static partial class Validator
 {
-	//TODO: FIX : Review all Argument methods to ensure they follow the same pattern for default values.
-
 	/// <summary>
 	/// The invalid string length format
 	/// </summary>

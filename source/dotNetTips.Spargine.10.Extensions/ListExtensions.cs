@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-11-2026
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -690,10 +690,6 @@ public static class ListExtensions
 		/// <item><description><b>Space complexity:</b> O(n) for the copied and shuffled list.</description></item>
 		/// <item><description><b>Allocations:</b> One new list allocation for the result; avoids mutating the source.</description></item>
 		/// </list>
-		/// <para>
-		/// If you need to avoid allocations and can consume a ref struct immediately, consider using <see cref="FastShuffleAsSpan"/> which shuffles in-place
-		/// over the list's internal buffer and returns a <see cref="Span{T}"/> view.
-		/// </para>
 		/// </remarks>
 		/// <example>
 		/// <code>

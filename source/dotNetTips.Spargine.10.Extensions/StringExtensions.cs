@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-06-2026
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -1327,15 +1327,6 @@ public static class StringExtensions
 	/// <remarks>
 	/// This method validates that a string's length falls within an inclusive range. Both the minimum and maximum 
 	/// length values are included in the valid range.
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Short-circuits for null input (returns false immediately)</description></item>
-	/// <item><description>Uses <see cref="int.IsInRange"/> for efficient bounds checking</description></item>
-	/// <item><description>Time Complexity: O(1) - constant time check</description></item>
-	/// <item><description>Space Complexity: O(1) - no allocations</description></item>
-	/// </list>
-	/// </para>
 	/// <para>
 	/// <strong>Validation Behavior:</strong>
 	/// </para>

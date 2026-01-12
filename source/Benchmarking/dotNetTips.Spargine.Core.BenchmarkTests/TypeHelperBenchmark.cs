@@ -49,7 +49,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
 	public void BuiltInTypeNames_NoCache()
 	{
-		var result = this.BuiltInTypeNamesNoCache();
+		var result = BuiltInTypeNamesNoCache();
 
 		this.Consume(result);
 	}
@@ -117,7 +117,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void FindDerivedTypes()
 	{
-		var result = this.FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
+		var result = FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
 		this.Consume(result);
 	}
 
@@ -133,7 +133,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllAbstractMethods()
 	{
-		var result = this.GetAllAbstractMethodsNoCache(typeof(Benchmark));
+		var result = GetAllAbstractMethodsNoCache(typeof(Benchmark));
 
 		this.Consume(result);
 	}
@@ -151,7 +151,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllConstructors()
 	{
-		var result = this.GetAllConstructorsNoCache(typeof(Benchmark));
+		var result = GetAllConstructorsNoCache(typeof(Benchmark));
 
 		foreach (var item in result)
 		{
@@ -175,7 +175,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllDeclaredFields()
 	{
-		var result = this.GetAllDeclaredFieldsNoCache(typeof(Benchmark));
+		var result = GetAllDeclaredFieldsNoCache(typeof(Benchmark));
 
 		foreach (var item in result)
 		{
@@ -196,7 +196,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllDeclaredMethods()
 	{
-		var result = this.GetAllDeclaredMethodsNoCache(typeof(Benchmark));
+		var result = GetAllDeclaredMethodsNoCache(typeof(Benchmark));
 
 		foreach (var item in result)
 		{
@@ -221,7 +221,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllFields()
 	{
-		var result = this.GetAllFieldsNoCache(typeof(Benchmark));
+		var result = GetAllFieldsNoCache(typeof(Benchmark));
 
 		foreach (var item in result)
 		{
@@ -255,7 +255,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllMethods()
 	{
-		var result = this.GetAllMethodsNoCache(typeof(StringBuilder));
+		var result = GetAllMethodsNoCache(typeof(StringBuilder));
 
 		foreach (var item in result)
 		{
@@ -279,7 +279,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void GetAllProperties()
 	{
-		var result = this.GetAllPropertiesNoCache(typeof(Person));
+		var result = GetAllPropertiesNoCache(typeof(Person));
 
 		foreach (var item in result)
 		{
@@ -416,7 +416,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var type = typeof(Person);
 
-		var result = this.GetMembersWithAttributeNoCache<InformationAttribute>(type);
+		var result = GetMembersWithAttributeNoCache<InformationAttribute>(type);
 
 		foreach (var item in result)
 		{
@@ -475,7 +475,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void HasBaseClass()
 	{
-		var result = this.HasBaseClassNoCache(typeof(Exception), typeof(object));
+		var result = HasBaseClassNoCache(typeof(Exception), typeof(object));
 
 		this.Consume(result);
 	}
@@ -520,7 +520,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void ImplementsInterface()
 	{
-		var result = this.ImplementsInterfaceNoCache(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
+		var result = ImplementsInterfaceNoCache(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
 
 		this.Consume(result);
 	}
@@ -588,7 +588,7 @@ public class TypeHelperBenchmark : Benchmark
 		this._people = [.. RandomData.GeneratePersonRefCollection(this._collectionCount)];
 	}
 
-	private Dictionary<Type, string> BuiltInTypeNamesNoCache()
+	private static Dictionary<Type, string> BuiltInTypeNamesNoCache()
 	{
 
 		var builtInTypes = new Dictionary<Type, string>();
@@ -644,7 +644,7 @@ public class TypeHelperBenchmark : Benchmark
 		return builtInTypes;
 	}
 
-	private ReadOnlyCollection<Type> FindDerivedTypesNoCache([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
+	private static ReadOnlyCollection<Type> FindDerivedTypesNoCache([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
 	{
 		currentDomain = currentDomain.ArgumentNotNull();
 		baseType = baseType.ArgumentNotNull();
@@ -657,7 +657,7 @@ public class TypeHelperBenchmark : Benchmark
 		{
 			try
 			{
-				types.AddRange(this.LoadDerivedTypesNoCache(assembly.DefinedTypes, baseType, classOnly));
+				types.AddRange(LoadDerivedTypesNoCache(assembly.DefinedTypes, baseType, classOnly));
 			}
 			catch (ReflectionTypeLoadException reflectionEx)
 			{
@@ -670,7 +670,7 @@ public class TypeHelperBenchmark : Benchmark
 		return Array.AsReadOnly(result);
 	}
 
-	private ReadOnlyCollection<MethodInfo> GetAllAbstractMethodsNoCache([DisallowNull] Type type)
+	private static ReadOnlyCollection<MethodInfo> GetAllAbstractMethodsNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -680,7 +680,7 @@ public class TypeHelperBenchmark : Benchmark
 		return Array.AsReadOnly(methods);
 	}
 
-	private IEnumerable<ConstructorInfo> GetAllConstructorsNoCache([DisallowNull] Type type)
+	private static IEnumerable<ConstructorInfo> GetAllConstructorsNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -702,7 +702,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 
-	private IEnumerable<FieldInfo> GetAllDeclaredFieldsNoCache([DisallowNull] Type type)
+	private static IEnumerable<FieldInfo> GetAllDeclaredFieldsNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -721,7 +721,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	private IEnumerable<MethodInfo> GetAllDeclaredMethodsNoCache([DisallowNull] Type type)
+	private static IEnumerable<MethodInfo> GetAllDeclaredMethodsNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -739,7 +739,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	private IEnumerable<FieldInfo> GetAllFieldsNoCache([DisallowNull] Type type)
+	private static IEnumerable<FieldInfo> GetAllFieldsNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -758,7 +758,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	private IEnumerable<MethodInfo> GetAllMethodsNoCache([DisallowNull] Type type)
+	private static IEnumerable<MethodInfo> GetAllMethodsNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -778,7 +778,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	private IEnumerable<PropertyInfo> GetAllPropertiesNoCache([DisallowNull] Type type)
+	private static IEnumerable<PropertyInfo> GetAllPropertiesNoCache([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
@@ -798,7 +798,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	private IEnumerable<MemberInfo> GetMembersWithAttributeNoCache<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
+	private static IEnumerable<MemberInfo> GetMembersWithAttributeNoCache<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
 	{
 		type = type.ArgumentNotNull();
 
@@ -828,7 +828,7 @@ public class TypeHelperBenchmark : Benchmark
 		}
 	}
 
-	private bool HasBaseClassNoCache(Type type, Type baseClass)
+	private static bool HasBaseClassNoCache(Type type, Type baseClass)
 	{
 		type = type.ArgumentNotNull();
 
@@ -855,7 +855,7 @@ public class TypeHelperBenchmark : Benchmark
 		return result;
 	}
 
-	private bool ImplementsInterfaceNoCache([DisallowNull] Type type, [DisallowNull] Type interfaceType)
+	private static bool ImplementsInterfaceNoCache([DisallowNull] Type type, [DisallowNull] Type interfaceType)
 	{
 		type = type.ArgumentNotNull();
 
@@ -870,7 +870,7 @@ public class TypeHelperBenchmark : Benchmark
 		return result;
 	}
 
-	private IEnumerable<Type> LoadDerivedTypesNoCache(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
+	private static IEnumerable<Type> LoadDerivedTypesNoCache(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
 	{
 		foreach (var type in types)
 		{

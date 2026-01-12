@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-08-2026
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -230,68 +230,45 @@ public static class BenchmarkHelper
 	}
 
 	/// <summary>
-	/// Runs specific benchmark tests using the specified configuration.
-	/// This method executes only the benchmark types provided in the <paramref name="benchmarks"/> parameter,
-	/// allowing for selective benchmark execution of any types containing methods marked with [Benchmark] attribute.
+	/// Runs the specified benchmark types using the provided BenchmarkDotNet configuration.
+	/// Ensures all benchmark types originate from the calling assembly.
 	/// </summary>
-	/// <param name="config">The BenchmarkDotNet configuration to use for running the benchmarks.
-	/// This controls aspects such as exporters, diagnosers, job configurations, and other benchmark execution settings.
-	/// Must not be null.</param>
-	/// <param name="benchmarks">A variable-length parameter array of <see cref="Type"/> objects representing
-	/// the benchmark classes to execute. Each type must contain at least one method marked with the [Benchmark] attribute.
-	/// Types do not need to inherit from <see cref="Benchmark"/>. Must not be null or empty.</param>
+	/// <param name="config">
+	/// The BenchmarkDotNet configuration used to run the benchmarks. Controls exporters, diagnosers,
+	/// jobs, and other execution settings. Must not be <c>null</c>.
+	/// </param>
+	/// <param name="benchmarks">
+	/// One or more benchmark types to execute. Each type must be defined in the calling assembly and
+	/// contain methods marked with <see cref="BenchmarkAttribute"/>. Must not be <c>null</c>.
+	/// </param>
 	/// <remarks>
 	/// <para>
-	/// This overload provides fine-grained control over which benchmarks are executed, making it ideal for:
-	/// <list type="bullet">
-	/// <item><description>Running a specific subset of benchmarks during development or debugging</description></item>
-	/// <item><description>Executing only performance-critical benchmarks in CI/CD pipelines</description></item>
-	/// <item><description>Selectively running benchmarks that have been modified or require validation</description></item>
-	/// <item><description>Creating custom benchmark execution workflows based on command-line arguments or configuration</description></item>
-	/// <item><description>Running benchmarks from any class that contains [Benchmark] methods, not just those inheriting from <see cref="Benchmark"/></description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Important Implementation Note:</strong> To ensure proper operation with diagnosers (especially <see cref="MemoryDiagnoserAttribute"/>),
-	/// this method uses <see cref="BenchmarkSwitcher.FromAssembly"/> with the calling assembly and runs each benchmark
-	/// type individually using <see cref="BenchmarkRunner.Run(Type, IConfig)"/>. This ensures BenchmarkDotNet spawns 
-	/// the benchmark process from the calling assembly's context, which is required for diagnosers to function correctly.
-	/// </para>
-	/// <para>
-	/// <strong>Why This Approach:</strong> Each benchmark type is run individually using <c>BenchmarkRunner.Run()</c> 
-	/// within the calling assembly's context. This avoids cross-assembly execution issues with diagnosers while still
-	/// allowing selective execution of specific benchmark types.
-	/// </para>
-	/// <para>
-	/// After all benchmarks complete, the method logs completion status to the console
-	/// using <see cref="ConsoleLogger"/>, providing immediate feedback about the execution status and results.
+	/// This method validates that all provided benchmark types are defined in the assembly returned by
+	/// <see cref="Assembly.GetCallingAssembly()"/>. This guarantees the benchmarks execute in the
+	/// correct context and that diagnosers run as expected.
 	/// </para>
 	/// </remarks>
 	/// <example>
 	/// <code>
-	/// // Run specific benchmarks in Program.cs
 	/// using BenchmarkDotNet.Configs;
 	/// using DotNetTips.Spargine.Benchmarking;
 	/// 
-	/// var config = DefaultConfig.Instance
-	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
-	/// 
-	/// // Run any classes with [Benchmark] methods
+	/// var config = ManualConfig.Create(DefaultConfig.Instance);
 	/// BenchmarkHelper.RunBenchmarks(
 	///     config,
 	///     typeof(StringExtensionsBenchmark),
-	///     typeof(CollectionBenchmark),
-	///     typeof(MyCustomBenchmark)
-	/// );
+	///     typeof(CollectionBenchmark));
 	/// </code>
 	/// </example>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="config"/> or <paramref name="benchmarks"/> is null.</exception>
-	/// <exception cref="ArgumentException">Thrown when <paramref name="benchmarks"/> is empty or when benchmark types are not from the calling assembly.</exception>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="config"/> or <paramref name="benchmarks"/> is <c>null</c>.
+	/// </exception>
+	/// <exception cref="ArgumentException">
+	/// Thrown when no benchmark types are provided, or when any provided type is not from the calling assembly.
+	/// </exception>
 	/// <seealso cref="BenchmarkRunner"/>
-	/// <seealso cref="BenchmarkRunner.Run(Type, IConfig)"/>
-	/// <seealso cref="BenchmarkAttribute"/>
 	/// <seealso cref="IConfig"/>
-	/// <seealso cref="Assembly.GetCallingAssembly"/>
+	/// <seealso cref="Assembly.GetCallingAssembly()"/>
 	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
 	public static void RunBenchmarks([DisallowNull] IConfig config, [DisallowNull] params Type[] benchmarks)
 	{
