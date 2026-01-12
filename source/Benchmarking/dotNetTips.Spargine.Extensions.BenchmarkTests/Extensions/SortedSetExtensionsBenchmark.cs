@@ -4,9 +4,9 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
-// <copyright file="SortedSetCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="SortedSetExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary></summary>
@@ -22,13 +22,12 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 /// <summary>
-/// Class SortedSetCollectionBenchmark. Implements the <see cref="LargeCollectionBenchmark"/>
+/// Class SortedSetExtensionsBenchmark. Implements the <see cref="LargeCollectionBenchmark"/>
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark"/>
 [BenchmarkCategory(Categories.Collections)]
-public class SortedSetCollectionBenchmark : LargeCollectionBenchmark
+public class SortedSetExtensionsBenchmark : LargeCollectionBenchmark
 {
-	//TODO: FIX FILE NAME AFTER RELEASE
 	private SortedSet<Person> _personRefSortedSet;
 
 	[Benchmark(Description = nameof(SortedSetExtensions.IsEmpty))]

@@ -30,15 +30,6 @@ namespace DotNetTips.Spargine.Core;
 /// </summary>
 public static partial class Validator
 {
-	/// <summary>
-	/// Creates the exception message.
-	/// </summary>
-	/// <param name="message">The message.</param>
-	/// <param name="messageFromResource">The message from resource.</param>
-	/// <returns>System.String.</returns>
-	[ExcludeFromCodeCoverage]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static string CreateExceptionMessage(string message, string messageFromResource) => string.IsNullOrEmpty(message) ? messageFromResource : message;
 
 	/// <summary>
 	/// Checks if the specified <see cref="FileInfo" /> exists on the file system.
@@ -506,5 +497,15 @@ public static partial class Validator
 
 		return isValid;
 	}
+
+	/// <summary>
+	/// Creates the exception message.
+	/// </summary>
+	/// <param name="message">The message.</param>
+	/// <param name="messageFromResource">The message from resource.</param>
+	/// <returns>System.String.</returns>
+	[ExcludeFromCodeCoverage]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static string CreateExceptionMessage(string message, string messageFromResource) => string.IsNullOrEmpty(message) ? messageFromResource : message;
 
 }

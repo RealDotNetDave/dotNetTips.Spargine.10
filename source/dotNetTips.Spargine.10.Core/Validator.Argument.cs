@@ -33,7 +33,6 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineValidatorArguments, https://bit.ly/SpargineValidatorData")]
 public static partial class Validator
 {
-
 	//TODO: FIX : Review all Argument methods to ensure they follow the same pattern for default values.
 
 	/// <summary>
@@ -280,7 +279,7 @@ public static partial class Validator
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ArgumentInRange), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static int ArgumentInRange(this int input, int min = 0, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString, int max = int.MaxValue, in int? defaultValue = null, string errorMessage = ControlChars.EmptyString)
+	public static int ArgumentInRange(this int input, int min = 0, int max = int.MaxValue, in int? defaultValue = null, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
 		var isValid = input.CheckIsInRange(min, max);
 

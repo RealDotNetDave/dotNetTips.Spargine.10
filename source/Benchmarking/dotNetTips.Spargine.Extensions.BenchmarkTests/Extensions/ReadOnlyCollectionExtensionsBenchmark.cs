@@ -4,9 +4,9 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
-// <copyright file="ReadOnlyCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="ReadOnlyCollectionExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary></summary>
@@ -22,9 +22,8 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
-public class ReadOnlyCollectionBenchmark : LargeCollectionBenchmark
+public class ReadOnlyCollectionExtensionsBenchmark : LargeCollectionBenchmark
 {
-	//TODO: FIX FILE NAME AFTER RELEASE
 	private ReadOnlyCollection<Person> _personRefReadOnlyCollection;
 
 	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.IsEmpty))]
