@@ -808,7 +808,7 @@ public static class TypeHelper
 	{
 		fieldInfo = fieldInfo.ArgumentNotNull();
 
-		var cacheKey = $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+		var cacheKey = $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.FieldInfo.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -849,7 +849,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+		var cacheKey = $"{type.FullName}.{nameof(GetAttribute)}.Type.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -890,7 +890,7 @@ public static class TypeHelper
 	{
 		methodInfo = methodInfo.ArgumentNotNull();
 
-		var cacheKey = $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+		var cacheKey = $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.MethodInfo.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -922,7 +922,7 @@ public static class TypeHelper
 	{
 		propertyInfo = propertyInfo.ArgumentNotNull();
 
-		var cacheKey = $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.{typeof(TAttribute).FullName}";
+		var cacheKey = $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.PropertyInfo.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{

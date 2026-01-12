@@ -334,7 +334,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Reflection, Categories.New)]
 	public void GetAttributeMethodInfo()
 	{
-		var method = typeof(TypeHelper).GetMethod(nameof(TypeHelper.GetAttribute));
+		var method = typeof(TypeHelper).GetMethod(nameof(TypeHelper.GetPropertyValues));
 
 		var result = TypeHelper.GetAttribute<InformationAttribute>(method);
 
