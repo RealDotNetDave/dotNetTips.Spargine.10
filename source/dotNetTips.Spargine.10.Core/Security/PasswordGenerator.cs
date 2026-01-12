@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-22-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="PasswordGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -55,7 +55,7 @@ public static class PasswordGenerator
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the length is less than 8.</exception>
 	/// <example>Password example: ik)-qm%OomiO</example>
 	[Pure]
-	[Information(nameof(GeneratePassword), "David McCarter", "11/12/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePassword), "David McCarter", "11/12/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GeneratePassword(int length = 8)
 	{
 		length = length.ArgumentInRange(8, errorMessage: "Password length must be at least 8 characters.");
@@ -92,6 +92,7 @@ public static class PasswordGenerator
 
 			// Shuffle the characters to randomize their positions
 			var passwordArray = sb.ToString().ToCharArray();
+
 			ShuffleArray(passwordArray);
 
 			return new string(passwordArray);
@@ -108,13 +109,7 @@ public static class PasswordGenerator
 	/// <param name="array">The array to shuffle.</param>
 	private static void ShuffleArray(char[] array)
 	{
-		//TODO: OPTIMIZE
-
-		for (var index = array.Length - 1; index > 0; index--)
-		{
-			var j = RandomNumberGenerator.GetInt32(index + 1); // Use the class name to call the static method
-			(array[index], array[j]) = (array[j], array[index]); // Swap elements
-		}
+		Random.Shared.Shuffle(array);
 	}
 }
 
