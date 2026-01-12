@@ -1,13 +1,14 @@
 # DotNetTips.Spargine for Microsoft .NET 10: v2026.10.1.5 
 ![](docs/Graphics/SPARGINE-10-BANNER-BACKGROUND-100.png)
 
-Open-source .NET assemblies from dotNetTips.com and **<a href="https://dotnettips.wordpress.com/about/" target="_blank">David (dotNetDave) McCarter</a>**. 
+Open-source .NET assemblies from dotNetTips.com and [**David (dotNetDave) McCarter**](https://dotnettips.wordpress.com/about/). 
 This repository hosts the **dotNetTips.Spargine** codebase for .NET 10. Spargine encompasses foundational code that I’ve been building and perfecting since the early days of .NET 2. In addition to the core library, it includes a dedicated library to support efficient testing and another designed specifically for benchmarking your code, helping you achieve optimal performance with ease.
 
-Please support this project by <a href="https://github.com/sponsors/RealDotNetDave" target="_blank">**clicking here**</a>. 
-<a href="https://dotnettips.wordpress.com/spargine/" target="_blank">Click here</a> to visit the Spargine page on **dotNetTips.com**. Much of this code is also documented on <a href="https://dotnettips.wordpress.com/category/open-source/spargine/" target="_blank">**dotNetTips.com**</a>.
+Please support this project by [**clicking here**](https://github.com/sponsors/RealDotNetDave).  
+
+[Click here](https://dotnettips.wordpress.com/spargine/) to visit the Spargine page on **dotNetTips.com**. Much of this code is also documented on  [**dotNetTips.com**](https://dotnettips.wordpress.com/category/open-source/spargine/).
 # NuGet
-All of the assemblies listed below can be found on NuGet by <a href="https://www.nuget.org/profiles/davidmccarter" target="_blank">clicking here</a>.
+All of the assemblies listed below can be found on NuGet by [clicking here](https://www.nuget.org/profiles/davidmccarter).
 # Projects
 Below is the list of current projects in this repository
 *  	**DotNetTips.Spargine:** Windows and File I/O Targeting Library.
@@ -126,8 +127,8 @@ Below is the list of current projects in this repository
     * **RandomCreditCardNumberGenerator**: Create random credit card numbers. It includes support for major credit card types such as Visa, MasterCard, American Express, and others.
     * **RandomData**: Create random data for unit and benchmark testing.
     * **UnitTester**: Provides utility methods for debugging and saving object properties. This class is intended to be used as a base class for unit testing scenarios.
-*   **DotNetTips.Spargine.Benchmarking:** Library for benchmarking code using <a href="https://benchmarkdotnet.org/index.html" target="_blank">BenchmarkDotNet</a>. To read more about this project, <a href="source/Benchmarking/README.md" target="_blank">**click here**</a>.
+*   **DotNetTips.Spargine.Benchmarking:** Library for benchmarking code using BenchmarkDotNet. To read more about this project, [**click here**](source/Benchmarking/README.md).
 # Benchmark Tests
-Spargine undergoes performance testing through benchmark tests using **BenchmarkDotNet**. **<a href="https://github.com/RealDotNetDave/dotNetTips.Spargine.10/tree/master/docs/Benchmark%20Results" target="_blank">Click here</a>** to access the latest benchmark results for these projects.
+Spargine undergoes performance testing through benchmark tests using **BenchmarkDotNet**.
 # Your Support Is Appreciated!
-Do you have code you would like to submit to these repositories? Submit a pull request or submit an issue. I promise to take a look and include it if I like it! **I might just send you some cool geeky swag that includes one of my books (as supplies last).** **You can also support these projects via GitHub Sponsors:** <a href="https://github.com/sponsors/RealDotNetDave" target="_blank">https://github.com/sponsors/RealDotNetDave</a>
+Do you have code you would like to submit to these repositories? Submit a pull request or submit an issue. I promise to take a look and include it if I like it! **I might just send you some cool geeky swag that includes one of my books (as supplies last).** **You can also support these projects via GitHub Sponsors:** [https://github.com/sponsors/RealDotNetDave](https://github.com/sponsors/RealDotNetDave)
