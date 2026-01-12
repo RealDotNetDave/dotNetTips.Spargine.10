@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="Clock.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,21 +31,9 @@ namespace DotNetTips.Spargine.Core.Devices;
 /// Some of this code is from the Microsoft.VisualBasic.dll.
 /// </remarks>
 [ExcludeFromCodeCoverage(Justification = "Not needed due to just using the <see cref=\"DateTime\"/> type.")]
-[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.NeedsDocumentation)]
+[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "ADD URL")]
 public static class Clock
 {
-	/// <summary>
-	/// Determines whether the specified year is a leap year.
-	/// </summary>
-	/// <param name="year">The year to check.</param>
-	/// <returns><c>true</c> if the specified year is a leap year; otherwise, <c>false</c>.</returns>
-	[Pure]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsLeapYear), "David McCarter", "11/14/2024", Status = Status.Available)]
-	public static bool IsLeapYear(in int year)
-	{
-		return DateTime.IsLeapYear(year);
-	}
 
 	/// <summary>
 	/// Gets the days in the current month (local time) by utilizing <see cref="DateTime.DaysInMonth(int, int)"/>.
@@ -135,5 +123,18 @@ public static class Clock
 		{
 			return DateTime.UtcNow;
 		}
+	}
+
+	/// <summary>
+	/// Determines whether the specified year is a leap year.
+	/// </summary>
+	/// <param name="year">The year to check.</param>
+	/// <returns><c>true</c> if the specified year is a leap year; otherwise, <c>false</c>.</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsLeapYear), "David McCarter", "11/14/2024", Status = Status.Available)]
+	public static bool IsLeapYear(in int year)
+	{
+		return DateTime.IsLeapYear(year);
 	}
 }
