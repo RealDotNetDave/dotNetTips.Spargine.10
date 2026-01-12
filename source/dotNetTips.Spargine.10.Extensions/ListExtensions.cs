@@ -65,7 +65,7 @@ public static class ListExtensions
 		/// Thrown when <paramref name="item"/> is <c>null</c>.
 		/// </exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddFirst([DisallowNull] T item)
 		{
 			item = item.ArgumentNotNull();
@@ -183,7 +183,7 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddLast([DisallowNull] T item)
 		{
 			item = item.ArgumentNotNull();
@@ -228,7 +228,7 @@ public static class ListExtensions
 		/// Thrown when <paramref name="items"/> or the target <c>list</c> is null.
 		/// </exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
 		{
 			list = list.ArgumentNotNull();
@@ -706,57 +706,14 @@ public static class ListExtensions
 		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public List<T> FastShuffle()
 		{
-			return [.. list.Shuffle()];
-		}
-
-		/// <summary>
-		/// Randomizes the order of elements in the current <see cref="List{T}"/> and returns a <see cref="Span{T}"/> view over the shuffled buffer.
-		/// </summary>
-		/// <remarks>
-		/// <list type="bullet">
-		/// <item><description><b>Ref struct constraints:</b> <see cref="Span{T}"/> cannot be stored on the heap, captured by lambdas, used across asynchronous boundaries, or escape the current stack frame.</description></item>
-		/// <item><description><b>List mutations:</b> Adding or removing items to/from the source <see cref="List{T}"/> after obtaining the span can invalidate the span.</description></item>
-		/// <item><description><b>Thread safety:</b> Do not mutate the list while consuming the returned span from another thread.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Performance Characteristics (.NET 10):</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) — Fisher–Yates shuffle over the span.</description></item>
-		/// <item><description><b>Allocations:</b> None — operates directly on the list's internal buffer via <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/>.</description></item>
-		/// </list>
-		/// </remarks>
-		/// <returns>
-		/// A <see cref="Span{T}"/> representing the shuffled elements of the source list.
-		/// </returns>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown when the source list is <c>null</c>.
-		/// </exception>
-		/// <example>
-		/// <code>
-		/// var list = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
-		/// var span = list.FastShuffleAsSpan();
-		/// // Consume span immediately
-		/// for (int i = 0; i &lt; span.Length; i++)
-		/// {
-		///     Console.WriteLine(span[i]);
-		/// }
-		/// </code>
-		/// </example>
-		[Pure]
-		[return: NotNull]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffleAsSpan), "David McCarter", "1/11/2026", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
-
-		public Span<T> FastShuffleAsSpan()
-		{
 			list = list.ArgumentNotNull();
 
 			var span = list.AsSpan();
 
+			// Shuffle in-place on the copy using span for optimal performance
 			Random.Shared.Shuffle(span);
 
-			return span;
+			return [.. span.ToArray()];
 		}
 
 		/// <summary>

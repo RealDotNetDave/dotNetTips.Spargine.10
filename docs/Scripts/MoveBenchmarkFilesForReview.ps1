@@ -9,12 +9,16 @@ Step 1:
 - After a successful copy, clear the Archive bit on the source file.
 
 Step 2:
-- Copy *-report-full.json files from Archive\2026JAN to D:\temp\sparginereview as *-report-full-old.json
-- Copy *-report-full.json files from current Benchmark Results to D:\temp\sparginereview as *-report-full-new.json
+- OLD (Archive\2026JAN):
+  - Copy *-report-full.json to D:\temp\sparginereview as *-report-full-old.json
+  - Copy *-report.csv       to D:\temp\sparginereview as *-report-old.csv
+- NEW (Current Benchmark Results):
+  - Copy *-report-full.json to D:\temp\sparginereview as *-report-full-new.json
+  - Copy *-report.csv       to D:\temp\sparginereview as *-report-new.csv
 - Copy ONLY if destination is missing OR destination LastWriteTime is older than source.
 
 Summary:
-- Counts and lists of Copied / Skipped / Failed for each step.
+- Counts and lists of Copied / Skipped / Failed for each sub-step.
 #>
 
 $ErrorActionPreference = 'Stop'
@@ -25,8 +29,8 @@ $ErrorActionPreference = 'Stop'
 $sourceRoot          = 'D:\src\GitHub\dotNetTips.Spargine.10\docs\Benchmark Results'
 $destCsv             = 'D:\src\GitHub\dotNetTips.Spargine.10\docs\Charts\Data'
 
-$archiveJsonSource   = Join-Path $sourceRoot 'Archive\2026JAN'
-$currentJsonSource   = $sourceRoot
+$archiveSource       = Join-Path $sourceRoot 'Archive\2026JAN'
+$currentSource       = $sourceRoot
 $reviewDest          = 'D:\temp\sparginebenchmarkreview'
 
 # ----------------------------
@@ -65,7 +69,6 @@ function Should-CopyFile {
 	}
 
 	$destItem = Get-Item -LiteralPath $DestinationPath
-	# Copy if destination is older than source (strictly)
 	return ($destItem.LastWriteTime -lt $SourceFile.LastWriteTime)
 }
 
@@ -85,9 +88,9 @@ function Copy-IfMissingOrOlder {
 
 function New-StepSummary {
 	return [ordered]@{
-		Copied = New-Object System.Collections.Generic.List[string]
+		Copied  = New-Object System.Collections.Generic.List[string]
 		Skipped = New-Object System.Collections.Generic.List[string]
-		Failed = New-Object System.Collections.Generic.List[string]
+		Failed  = New-Object System.Collections.Generic.List[string]
 	}
 }
 
@@ -161,96 +164,142 @@ else {
 }
 
 # ----------------------------
-# Step 2 - OLD
+# Step 2a: OLD (Archive\2026JAN) JSON + CSV (renamed)
 # ----------------------------
-$step2Old = New-StepSummary
+$step2OldJson = New-StepSummary
+$step2OldCsv  = New-StepSummary
 
 Write-Host ""
-Write-Host "=== Step 2a: Copy OLD full JSON reports (Archive\\2026JAN) - only if missing/older ==="
+Write-Host "=== Step 2a: Copy OLD reports from Archive\\2026JAN (JSON + CSV) - only if missing/older ==="
 
-if (Test-Path -LiteralPath $archiveJsonSource) {
-	$oldJsonFiles = Get-ChildItem -LiteralPath $archiveJsonSource -File -Filter '*-report-full.json'
+if (Test-Path -LiteralPath $archiveSource) {
 
-	if (-not $oldJsonFiles -or $oldJsonFiles.Count -eq 0) {
-		Write-Host "No '*-report-full.json' found in archive folder: $archiveJsonSource"
+	# OLD JSON
+	$oldJsonFiles = Get-ChildItem -LiteralPath $archiveSource -File -Filter '*-report-full.json'
+	foreach ($file in ($oldJsonFiles | Where-Object { $_ -ne $null })) {
+		$newName  = Rename-Suffix -FileName $file.Name -OldSuffix '-report-full.json' -NewSuffix '-report-full-old.json'
+		$destPath = Join-Path $reviewDest $newName
+
+		try {
+			$copied = Copy-IfMissingOrOlder -SourceFile $file -DestinationPath $destPath
+			if ($copied) {
+				$step2OldJson.Copied.Add("$($file.Name)  ->  $newName")
+				Write-Host "Copied OLD JSON: $($file.Name) -> $newName"
+			}
+			else {
+				$step2OldJson.Skipped.Add("$($file.Name)  ->  $newName  (destination up-to-date)")
+				Write-Host "Skipped OLD JSON (up-to-date): $($file.Name)"
+			}
+		}
+		catch {
+			$step2OldJson.Failed.Add("$($file.FullName)  Error: $($_.Exception.Message)")
+			Write-Warning "FAILED (OLD JSON): $($file.FullName). Error: $($_.Exception.Message)"
+		}
 	}
-	else {
-		foreach ($file in $oldJsonFiles) {
-			$newName  = Rename-Suffix -FileName $file.Name -OldSuffix '-report-full.json' -NewSuffix '-report-full-old.json'
-			$destPath = Join-Path $reviewDest $newName
 
-			try {
-				$copied = Copy-IfMissingOrOlder -SourceFile $file -DestinationPath $destPath
+	# OLD CSV (rename to *-report-old.csv)
+	$oldCsvFiles = Get-ChildItem -LiteralPath $archiveSource -File -Filter '*-report.csv'
+	foreach ($file in ($oldCsvFiles | Where-Object { $_ -ne $null })) {
+		$newName  = Rename-Suffix -FileName $file.Name -OldSuffix '-report.csv' -NewSuffix '-report-old.csv'
+		$destPath = Join-Path $reviewDest $newName
 
-				if ($copied) {
-					$step2Old.Copied.Add("$($file.Name)  ->  $newName")
-					Write-Host "Copied OLD: $($file.Name) -> $newName"
-				}
-				else {
-					$step2Old.Skipped.Add("$($file.Name)  ->  $newName  (destination up-to-date)")
-					Write-Host "Skipped OLD (up-to-date): $($file.Name)"
-				}
+		try {
+			$copied = Copy-IfMissingOrOlder -SourceFile $file -DestinationPath $destPath
+			if ($copied) {
+				$step2OldCsv.Copied.Add("$($file.Name)  ->  $newName")
+				Write-Host "Copied OLD CSV: $($file.Name) -> $newName"
 			}
-			catch {
-				$step2Old.Failed.Add("$($file.FullName)  Error: $($_.Exception.Message)")
-				Write-Warning "FAILED (OLD): $($file.FullName). Error: $($_.Exception.Message)"
+			else {
+				$step2OldCsv.Skipped.Add("$($file.Name)  ->  $newName  (destination up-to-date)")
+				Write-Host "Skipped OLD CSV (up-to-date): $($file.Name)"
 			}
+		}
+		catch {
+			$step2OldCsv.Failed.Add("$($file.FullName)  Error: $($_.Exception.Message)")
+			Write-Warning "FAILED (OLD CSV): $($file.FullName). Error: $($_.Exception.Message)"
 		}
 	}
 }
 else {
-	$step2Old.Failed.Add("Archive folder not found: $archiveJsonSource")
-	Write-Warning "Archive folder not found: $archiveJsonSource"
+	$msg = "Archive folder not found: $archiveSource"
+	$step2OldJson.Failed.Add($msg)
+	$step2OldCsv.Failed.Add($msg)
+	Write-Warning $msg
 }
 
 # ----------------------------
-# Step 2 - NEW
+# Step 2b: NEW (Current) JSON + CSV (renamed)
 # ----------------------------
-$step2New = New-StepSummary
+$step2NewJson = New-StepSummary
+$step2NewCsv  = New-StepSummary
 
 Write-Host ""
-Write-Host "=== Step 2b: Copy NEW full JSON reports (current) - only if missing/older ==="
+Write-Host "=== Step 2b: Copy NEW reports from current folder (JSON + CSV) - only if missing/older ==="
 
-if (Test-Path -LiteralPath $currentJsonSource) {
-	$newJsonFiles = Get-ChildItem -LiteralPath $currentJsonSource -File -Filter '*-report-full.json'
+if (Test-Path -LiteralPath $currentSource) {
 
-	if (-not $newJsonFiles -or $newJsonFiles.Count -eq 0) {
-		Write-Host "No '*-report-full.json' found in current folder: $currentJsonSource"
+	# NEW JSON
+	$newJsonFiles = Get-ChildItem -LiteralPath $currentSource -File -Filter '*-report-full.json'
+	foreach ($file in ($newJsonFiles | Where-Object { $_ -ne $null })) {
+		$newName  = Rename-Suffix -FileName $file.Name -OldSuffix '-report-full.json' -NewSuffix '-report-full-new.json'
+		$destPath = Join-Path $reviewDest $newName
+
+		try {
+			$copied = Copy-IfMissingOrOlder -SourceFile $file -DestinationPath $destPath
+			if ($copied) {
+				$step2NewJson.Copied.Add("$($file.Name)  ->  $newName")
+				Write-Host "Copied NEW JSON: $($file.Name) -> $newName"
+			}
+			else {
+				$step2NewJson.Skipped.Add("$($file.Name)  ->  $newName  (destination up-to-date)")
+				Write-Host "Skipped NEW JSON (up-to-date): $($file.Name)"
+			}
+		}
+		catch {
+			$step2NewJson.Failed.Add("$($file.FullName)  Error: $($_.Exception.Message)")
+			Write-Warning "FAILED (NEW JSON): $($file.FullName). Error: $($_.Exception.Message)"
+		}
 	}
-	else {
-		foreach ($file in $newJsonFiles) {
-			$newName  = Rename-Suffix -FileName $file.Name -OldSuffix '-report-full.json' -NewSuffix '-report-full-new.json'
-			$destPath = Join-Path $reviewDest $newName
 
-			try {
-				$copied = Copy-IfMissingOrOlder -SourceFile $file -DestinationPath $destPath
+	# NEW CSV (rename to *-report-new.csv)
+	$newCsvFiles = Get-ChildItem -LiteralPath $currentSource -File -Filter '*-report.csv'
+	foreach ($file in ($newCsvFiles | Where-Object { $_ -ne $null })) {
+		$newName  = Rename-Suffix -FileName $file.Name -OldSuffix '-report.csv' -NewSuffix '-report-new.csv'
+		$destPath = Join-Path $reviewDest $newName
 
-				if ($copied) {
-					$step2New.Copied.Add("$($file.Name)  ->  $newName")
-					Write-Host "Copied NEW: $($file.Name) -> $newName"
-				}
-				else {
-					$step2New.Skipped.Add("$($file.Name)  ->  $newName  (destination up-to-date)")
-					Write-Host "Skipped NEW (up-to-date): $($file.Name)"
-				}
+		try {
+			$copied = Copy-IfMissingOrOlder -SourceFile $file -DestinationPath $destPath
+			if ($copied) {
+				$step2NewCsv.Copied.Add("$($file.Name)  ->  $newName")
+				Write-Host "Copied NEW CSV: $($file.Name) -> $newName"
 			}
-			catch {
-				$step2New.Failed.Add("$($file.FullName)  Error: $($_.Exception.Message)")
-				Write-Warning "FAILED (NEW): $($file.FullName). Error: $($_.Exception.Message)"
+			else {
+				$step2NewCsv.Skipped.Add("$($file.Name)  ->  $newName  (destination up-to-date)")
+				Write-Host "Skipped NEW CSV (up-to-date): $($file.Name)"
 			}
+		}
+		catch {
+			$step2NewCsv.Failed.Add("$($file.FullName)  Error: $($_.Exception.Message)")
+			Write-Warning "FAILED (NEW CSV): $($file.FullName). Error: $($_.Exception.Message)"
 		}
 	}
 }
 else {
-	$step2New.Failed.Add("Current folder not found: $currentJsonSource")
-	Write-Warning "Current folder not found: $currentJsonSource"
+	$msg = "Current folder not found: $currentSource"
+	$step2NewJson.Failed.Add($msg)
+	$step2NewCsv.Failed.Add($msg)
+	Write-Warning $msg
 }
 
 # ----------------------------
 # Print summaries
 # ----------------------------
-Print-StepSummary -Title "Step 1 (CSV -report.csv with Archive bit)" -Summary $step1
-Print-StepSummary -Title "Step 2a (OLD JSON -report-full-old.json)" -Summary $step2Old
-Print-StepSummary -Title "Step 2b (NEW JSON -report-full-new.json)" -Summary $step2New
+Print-StepSummary -Title "Step 1 (CSV -report.csv with Archive bit -> Charts\\Data)" -Summary $step1
+
+Print-StepSummary -Title "Step 2a OLD JSON (*-report-full-old.json)" -Summary $step2OldJson
+Print-StepSummary -Title "Step 2a OLD CSV  (*-report-old.csv)"      -Summary $step2OldCsv
+
+Print-StepSummary -Title "Step 2b NEW JSON (*-report-full-new.json)" -Summary $step2NewJson
+Print-StepSummary -Title "Step 2b NEW CSV  (*-report-new.csv)"       -Summary $step2NewCsv
 
 Write-Host "`nDone."

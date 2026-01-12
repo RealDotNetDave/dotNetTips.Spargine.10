@@ -373,14 +373,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.ConsumeEnumerable(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffleAsSpan))]
-	public void ShuffleFastShuffleAsSpan()
-	{
-		var result = this._personRefEnumerable.FastShuffleAsSpan();
-
-		this.ConsumeSpan(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
 	public void ShuffleFastShuffleWithCount()
 	{

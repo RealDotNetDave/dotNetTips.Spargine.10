@@ -469,7 +469,7 @@ public static class StringExtensions
 		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
 		params string[] characters)
 	{
-		// Early exit: null or empty search array
+		// Suggestion from Copilot turned out to be slower
 		if (characters is null || characters.Length == 0)
 		{
 			return false;
@@ -478,21 +478,8 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		stringComparison = stringComparison.ArgumentDefined();
 
-		// Use ReadOnlySpan to avoid array allocations during iteration
-		var searchTerms = characters.AsSpan();
-
-		// Iterate using span for zero-allocation enumeration
-		for (var searchIndex = 0; searchIndex < searchTerms.Length; searchIndex++)
+		foreach (var character in characters.AsSpan())
 		{
-			var character = searchTerms[searchIndex];
-
-			// Skip null entries in the search array
-			if (character is null)
-			{
-				continue;
-			}
-
-			// Early termination on first match
 			if (input.Contains(character, stringComparison))
 			{
 				return true;
@@ -682,7 +669,7 @@ public static class StringExtensions
 	/// <seealso cref="StringComparison.OrdinalIgnoreCase"/>
 	/// <seealso cref="FastEquals(string, string, in StringComparison)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(EqualsIgnoreCase), "David McCarter", "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool EqualsIgnoreCase([DisallowNull] this string input, [DisallowNull] string inputToCompare)
 	{
 		input = input.ArgumentNotNull();
@@ -1914,7 +1901,7 @@ public static class StringExtensions
 	/// <seealso cref="string.IsNullOrEmpty(string)"/>
 	/// <seealso cref="string.IsNullOrWhiteSpace(string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsNotEmpty), "David McCarter", "8/18/20", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsNotEmpty), "David McCarter", "8/18/20", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsNotEmpty(this string? input) => input is { Length: > 0 };
 
 	/// <summary>
@@ -2778,7 +2765,7 @@ public static class StringExtensions
 	/// <seealso cref="Convert.ToBase64String(byte[])"/>
 	/// <seealso cref="ASCIIEncoding"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToBase64), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ToBase64), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ToBase64([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty(true);
@@ -3106,7 +3093,7 @@ public static class StringExtensions
 	/// <seealso cref="string.TrimEnd()"/>
 	/// <seealso cref="char.IsWhiteSpace(char)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToTrimmed), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ToTrimmed), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string? ToTrimmed([AllowNull] this string input)
 	{
 		// Early exit for null - preserves null input

@@ -181,7 +181,7 @@ public static class EncryptionHelper
 	/// Thrown if the payload is invalid, the version is unsupported, or decryption fails.
 	/// </exception>
 	[Pure]
-	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AesGcmDecrypt([DisallowNull] string base64Payload, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		base64Payload = base64Payload.ArgumentNotNullOrEmpty();

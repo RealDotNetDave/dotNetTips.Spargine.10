@@ -200,13 +200,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.ConsumeEnumerable(this._peopleRefList.FastShuffle());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.FastShuffleAsSpan))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void ShuffleFastShuffleAsSpan()
-	{
-		this.ConsumeSpan(this._peopleRefList.FastShuffleAsSpan());
-	}
-
 	[Benchmark(Description = "Shuffle")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void ShuffleShuffle()

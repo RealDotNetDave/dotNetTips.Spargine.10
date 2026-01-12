@@ -104,7 +104,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="CountryPhonePostalInfo"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.Synchronized)]
-	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<CountryPhonePostalInfo> GetCountryPhonePostalInfo()
 	{
 		_countries ??= DeserializeCountryPhonePostalInfo();
@@ -175,7 +175,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="ValidatePhoneNumber(string, string, bool)"/>
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[Pure]
-	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo([NotNull] string countryNameOrIso)
 	{
 		countryNameOrIso = countryNameOrIso.ArgumentNotNull();
@@ -262,7 +262,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="GetCountryPhonePostalInfo(string)"/>
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ValidatePhoneNumber([NotNull] string countryNameOrIso, [NotNull] string phoneNumber, bool validateCountryCode = false)
 	{
 		var country = GetCountryPhonePostalInfo(countryNameOrIso);
@@ -378,7 +378,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="PostalCodeState"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static PostalCodeState ValidatePostalCode([NotNull] string countryNameOrIso, [NotNull] string postalCode)
 	{
 		var country = GetCountryPhonePostalInfo(countryNameOrIso);

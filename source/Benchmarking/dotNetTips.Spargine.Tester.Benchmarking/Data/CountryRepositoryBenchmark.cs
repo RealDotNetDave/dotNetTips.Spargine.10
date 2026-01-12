@@ -30,7 +30,7 @@ public class CountryRepositoryBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(CountryRepository.GetCountry))]
+	[Benchmark(Description = nameof(CountryRepository.GetCountry) + ": By CountryCode")]
 	[BenchmarkCategory(Categories.New)]
 	public void GetCountry()
 	{
