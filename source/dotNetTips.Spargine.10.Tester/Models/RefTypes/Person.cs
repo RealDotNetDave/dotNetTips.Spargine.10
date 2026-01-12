@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2026
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -377,6 +377,30 @@ public sealed class Person : IPerson<Person, Address>
 
 			this._phone = safeValue;
 		}
+	}
+
+	/// <summary>
+	/// Implicitly converts a <see cref="ValueTypes.Person"/> to a <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The value type person to convert.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	[return: NotNull]
+	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static implicit operator Person(in ValueTypes.Person person)
+	{
+		return ToPerson(person);
+	}
+
+	/// <summary>
+	/// Implicitly converts a <see cref="PersonRecord"/> to a <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The person record to convert.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	[return: NotNull]
+	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static implicit operator Person(in PersonRecord person)
+	{
+		return ToPerson(person);
 	}
 
 	/// <summary>

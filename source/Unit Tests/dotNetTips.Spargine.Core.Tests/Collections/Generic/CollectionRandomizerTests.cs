@@ -248,8 +248,11 @@ public class CollectionRandomizerTests
 
 		// Exhaust the collection
 		var items = new HashSet<int>();
+
 		for (int i = 0; i < collection.Count; i++)
+		{
 			items.Add(randomizer.GetNext());
+		}
 
 		// At this point, collection is exhausted, next PeekNext should reshuffle and return a valid item
 		var peeked = randomizer.PeekNext();

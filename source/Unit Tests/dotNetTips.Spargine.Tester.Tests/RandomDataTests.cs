@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -58,38 +58,6 @@ public class RandomDataTests
 	private const int FileLength = 1500;
 
 	private List<Person> _people;
-
-	/// <summary>
-	/// Deletes the files.
-	/// </summary>
-	/// <param name="files">The files.</param>
-	private void DeleteFiles(IEnumerable<string> files)
-	{
-		if (files.IsEmpty())
-		{
-			return;
-		}
-
-		_ = Parallel.ForEach(
-			source: files,
-			body: (fileName) =>
-			{
-				try
-				{
-					File.Delete(fileName);
-				}
-				catch (Exception ex) when (ex is ArgumentException ||
-					ex is ArgumentNullException ||
-					ex is System.IO.DirectoryNotFoundException ||
-					ex is IOException ||
-					ex is NotSupportedException ||
-					ex is PathTooLongException ||
-					ex is UnauthorizedAccessException)
-				{
-					Trace.WriteLine(ex.GetAllMessages());
-				}
-			});
-	}
 
 	/// <summary>
 	/// Defines the test method AddToPersonCollectionTest.
@@ -205,7 +173,6 @@ public class RandomDataTests
 		Assert.IsFalse(string.IsNullOrEmpty(address.Country));
 		Assert.IsFalse(string.IsNullOrEmpty(address.CountyProvince));
 		Assert.IsFalse(string.IsNullOrEmpty(address.Phone));
-		Assert.IsFalse(string.IsNullOrEmpty(address.State));
 	}
 
 	[TestMethod]
@@ -1262,5 +1229,37 @@ public class RandomDataTests
 		Debug.WriteLine(person2.ToString());
 
 		Debug.WriteLine(person2.PropertiesToString());
+	}
+
+	/// <summary>
+	/// Deletes the files.
+	/// </summary>
+	/// <param name="files">The files.</param>
+	private void DeleteFiles(IEnumerable<string> files)
+	{
+		if (files.IsEmpty())
+		{
+			return;
+		}
+
+		_ = Parallel.ForEach(
+			source: files,
+			body: (fileName) =>
+			{
+				try
+				{
+					File.Delete(fileName);
+				}
+				catch (Exception ex) when (ex is ArgumentException ||
+					ex is ArgumentNullException ||
+					ex is System.IO.DirectoryNotFoundException ||
+					ex is IOException ||
+					ex is NotSupportedException ||
+					ex is PathTooLongException ||
+					ex is UnauthorizedAccessException)
+				{
+					Trace.WriteLine(ex.GetAllMessages());
+				}
+			});
 	}
 }

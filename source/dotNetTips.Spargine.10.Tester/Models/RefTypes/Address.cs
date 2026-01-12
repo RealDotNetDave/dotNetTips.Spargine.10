@@ -446,6 +446,36 @@ public sealed class Address : IAddress<Address>
 	}
 
 	/// <summary>
+	/// Implicitly converts a <see cref="ValueTypes.Address"/> to a <see cref="Address"/>.
+	/// </summary>
+	/// <param name="address">The value type address to convert.</param>
+	/// <returns>A new <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="address"/> is null.
+	/// </exception>
+	[return: NotNull]
+	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static implicit operator Address(in ValueTypes.Address address)
+	{
+		return ToAddress(address);
+	}
+
+	/// <summary>
+	/// Implicitly converts an <see cref="AddressRecord"/> to a <see cref="Address"/>.
+	/// </summary>
+	/// <param name="address">The address record to convert.</param>
+	/// <returns>A new <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="address"/> is null.
+	/// </exception>
+	[return: NotNull]
+	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static implicit operator Address(in AddressRecord address)
+	{
+		return ToAddress(address);
+	}
+
+	/// <summary>
 	/// Determines whether the left <see cref="Address"/> is greater
 	/// than or equal to the right <see cref="Address"/> based on
 	/// identity comparison.
