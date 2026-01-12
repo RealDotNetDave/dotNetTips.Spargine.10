@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-12-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -334,7 +334,8 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Reflection, Categories.New)]
 	public void GetAttributeMethodInfo()
 	{
-		var method = typeof(TypeHelper).GetMethod(nameof(TypeHelper.GetAttribute), BindingFlags.Static | BindingFlags.Public);
+		var method = typeof(TypeHelper).GetMethod(nameof(TypeHelper.GetAttribute));
+
 		var result = TypeHelper.GetAttribute<InformationAttribute>(method);
 
 		this.Consume(result);

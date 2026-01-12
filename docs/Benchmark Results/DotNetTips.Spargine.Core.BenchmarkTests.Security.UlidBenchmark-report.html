@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark-20260111-122441</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6691/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.101
+  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=**NEW**  
+</code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s   </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>GetHashCode</td><td>5.044 ns</td><td>0.0278 ns</td><td>0.0260 ns</td><td>0.0067 ns</td><td>4.999 ns</td><td>5.024 ns</td><td>5.040 ns</td><td>5.061 ns</td><td>5.090 ns</td><td>198,252,487.0</td><td>7.497 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>458 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>GetTimeStamp</td><td>252.172 ns</td><td>2.3749 ns</td><td>2.2214 ns</td><td>0.5736 ns</td><td>248.838 ns</td><td>250.671 ns</td><td>252.030 ns</td><td>253.446 ns</td><td>256.821 ns</td><td>3,965,553.3</td><td>7.213 ns</td><td>15.00</td><td>3</td><td>No</td><td>0.0024</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>80 B</td>
+</tr><tr><td>NewUlid</td><td>2.080 ns</td><td>0.0190 ns</td><td>0.0168 ns</td><td>0.0045 ns</td><td>2.051 ns</td><td>2.069 ns</td><td>2.082 ns</td><td>2.091 ns</td><td>2.111 ns</td><td>480,698,596.0</td><td>6.998 ns</td><td>14.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>179 B</td><td>-</td><td>-</td><td>-</td>
+</tr></tbody></table>
+</body>
+</html>

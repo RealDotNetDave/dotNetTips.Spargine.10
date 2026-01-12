@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20260111-232757</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6691/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.101
+  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=**NEW**  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Code Size</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>617.15 ns</td><td>3.760 ns</td><td>3.517 ns</td><td>0.908 ns</td><td>609.70 ns</td><td>614.55 ns</td><td>617.85 ns</td><td>619.14 ns</td><td>624.09 ns</td><td>1,620,353.4</td><td>7.046 ns</td><td>15.00</td><td>2</td><td>No</td><td>6,313 B</td><td>0.0029</td><td>-</td><td>-</td><td>-</td><td>104 B</td>
+</tr><tr><td>GetCountries</td><td>19.06 ns</td><td>0.180 ns</td><td>0.168 ns</td><td>0.043 ns</td><td>18.86 ns</td><td>18.91 ns</td><td>19.08 ns</td><td>19.14 ns</td><td>19.42 ns</td><td>52,457,380.5</td><td>7.478 ns</td><td>15.00</td><td>1</td><td>No</td><td>192 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>GetCountry</td><td>826.94 ns</td><td>4.454 ns</td><td>4.167 ns</td><td>1.076 ns</td><td>821.64 ns</td><td>824.02 ns</td><td>826.83 ns</td><td>829.10 ns</td><td>836.24 ns</td><td>1,209,282.9</td><td>6.962 ns</td><td>15.00</td><td>3</td><td>No</td><td>1,755 B</td><td>0.0010</td><td>-</td><td>-</td><td>-</td><td>32 B</td>
+</tr></tbody></table>
+</body>
+</html>
