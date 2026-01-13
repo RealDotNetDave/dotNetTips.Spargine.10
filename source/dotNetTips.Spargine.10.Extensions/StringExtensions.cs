@@ -478,7 +478,7 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		stringComparison = stringComparison.ArgumentDefined();
 
-		foreach (var character in characters.AsSpan())
+		foreach (var character in characters)
 		{
 			if (input.Contains(character, stringComparison))
 			{

@@ -200,7 +200,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.ConsumeEnumerable(this._peopleRefList.FastShuffle());
 	}
 
-	[Benchmark(Description = "Shuffle")]
+	[Benchmark(Description = "LINQ.Shuffle")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void ShuffleShuffle()
 	{

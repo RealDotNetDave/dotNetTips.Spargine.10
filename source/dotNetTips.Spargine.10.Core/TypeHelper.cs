@@ -844,7 +844,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
 	{
 		type = type.ArgumentNotNull();
@@ -885,7 +885,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="methodInfo"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] MethodInfo methodInfo) where TAttribute : Attribute
 	{
 		methodInfo = methodInfo.ArgumentNotNull();
@@ -917,7 +917,7 @@ public static class TypeHelper
 	/// Gets a custom attribute of the specified type from the given property.
 	/// </summary>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] PropertyInfo propertyInfo) where TAttribute : Attribute
 	{
 		propertyInfo = propertyInfo.ArgumentNotNull();

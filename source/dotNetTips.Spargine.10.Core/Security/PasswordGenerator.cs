@@ -55,7 +55,7 @@ public static class PasswordGenerator
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the length is less than 8.</exception>
 	/// <example>Password example: ik)-qm%OomiO</example>
 	[Pure]
-	[Information(nameof(GeneratePassword), "David McCarter", "11/12/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GeneratePassword), "David McCarter", "11/12/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GeneratePassword(int length = 8)
 	{
 		length = length.ArgumentInRange(8, errorMessage: "Password length must be at least 8 characters.");

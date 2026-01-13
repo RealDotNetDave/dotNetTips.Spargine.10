@@ -268,7 +268,7 @@ public static class EncryptionHelper
 	/// <returns>Base64 payload string.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string AesGcmEncrypt([DisallowNull] string plainText, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		plainText = plainText.ArgumentNotNullOrEmpty();

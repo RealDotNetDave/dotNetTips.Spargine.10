@@ -704,12 +704,12 @@ public static class ListExtensions
 		{
 			list = list.ArgumentNotNull();
 
-			var span = list.AsSpan();
+			var span = list.ToArray();
 
 			// Shuffle in-place on the copy using span for optimal performance
 			Random.Shared.Shuffle(span);
 
-			return [.. span.ToArray()];
+			return [.. span];
 		}
 
 		/// <summary>
