@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-11-2026
+// Last Modified On : 01-13-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -125,6 +125,18 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefEnumerable;
 
+		people = people.Create();
+
+		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.Create) + ": With Unique")]
+	public void CreateUnique()
+	{
+		var people = this._personRefEnumerable.AddFirst(this.PersonRef01);
+
 		people = people.Create(true);
 
 		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
@@ -146,6 +158,38 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
 		var result = people.EnsureUnique();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.EnsureUnique) + ": Comparer")]
+	public void EnsureUniqueComparer()
+	{
+		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
+
+		var result = people.EnsureUnique(new PersonComparer());
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = "EnsureUnique: LINQ.Distinct")]
+	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
+	public void EnsureUniqueLINQDistinct()
+	{
+		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
+
+		var result = people.Distinct();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = "EnsureUnique: LINQ.Distinct with Comparer")]
+	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
+	public void EnsureUniqueLINQDistinctComparer()
+	{
+		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
+
+		var result = people.Distinct(new PersonComparer());
 
 		this.ConsumeEnumerable(result);
 	}
@@ -203,6 +247,22 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefEnumerable;
 
 		var result = people.IndexOf(p => p.Equals(this.PersonRef01));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsNotEmpty))]
+	public void IsNotEmpty()
+	{
+		var result = this._personRefEnumerable.IsNotEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsNotEmpty) + ": with Count")]
+	public void IsNotEmptyWithCount()
+	{
+		var result = this._personRefEnumerable.IsNotEmpty(this.Count);
 
 		this.Consume(result);
 	}
@@ -408,6 +468,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this.Consume(result);
 	}
+
 
 	[Benchmark(Description = nameof(EnumerableExtensions.Upsert))]
 	public void Upsert()

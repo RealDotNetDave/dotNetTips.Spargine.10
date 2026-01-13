@@ -50,7 +50,8 @@ internal sealed class Program
 			typeof(ListExtensionsCollectionBenchmark),
 			typeof(ListExtensionsAddRemoveCollectionBenchmark),
 			typeof(StringExtensionsBenchmark),
-			typeof(StringExtensionsCounterBenchmark)
+			typeof(StringExtensionsCounterBenchmark),
+			typeof(EnumerableExtensionsCollectionBenchmark)
 			);
 
 	}

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-11-2026
+// Last Modified On : 01-13-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Provides a collection of static methods for querying objects that implement <see cref="IEnumerable{T}"/>.
 /// These extensions add functionality for adding, checking, and manipulating elements within enumerable collections.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
 {
 	/// <summary>
@@ -275,7 +275,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item, [DisallowNull] IEqualityComparer<T> comparer)
 		{
 			collection = collection.ArgumentItemsExists();
@@ -290,6 +290,7 @@ public static class EnumerableExtensions
 				{
 					return index;
 				}
+
 				index++;
 			}
 
@@ -430,7 +431,7 @@ public static class EnumerableExtensions
 		/// Orders the elements of a collection by a key selected from each element using ordinal string comparison.
 		/// </summary>
 		/// <param name="accumulatorFunction">A function to extract a string key from an element.</param>
-		/// <returns>An <see cref="IOrderedEnumerable{T}"/> whose elements are sorted according to a key using ordinal comparison.</returns>
+		/// <returns>An <see cref="IEnumerable{T}"/> whose elements are sorted according to a key using ordinal comparison.</returns>
 		/// <remarks>
 		/// <para>
 		/// <b>Performance (.NET 10):</b> This method uses <see cref="StringComparer.Ordinal"/> which performs
@@ -463,7 +464,7 @@ public static class EnumerableExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(OrderByOrdinal), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public IOrderedEnumerable<T> OrderByOrdinal([DisallowNull] Func<T, string> accumulatorFunction)
+		public IEnumerable<T> OrderByOrdinal([DisallowNull] Func<T, string> accumulatorFunction)
 		{
 			collection = collection.ArgumentNotNull();
 			accumulatorFunction = accumulatorFunction.ArgumentNotNull();
@@ -477,12 +478,13 @@ public static class EnumerableExtensions
 		/// <returns>A <see cref="SimpleResult{TResult}"/> containing the collection without duplicates.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public SimpleResult<IEnumerable<T>> RemoveDuplicates()
+		[Obsolete("Use EnsureUnique. Will be removed at the end of 2026", false)]
+		[Information(nameof(RemoveDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		public IEnumerable<T> RemoveDuplicates()
 		{
 			collection = collection.ArgumentNotNull();
 
-			return new SimpleResult<IEnumerable<T>>(new HashSet<T>(collection).AsEnumerable());
+			return new HashSet<T>(collection);
 		}
 
 		/// <summary>
@@ -493,47 +495,71 @@ public static class EnumerableExtensions
 		/// <returns>A new collection with elements replaced based on the specified condition.</returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized replacement paths for different collection types:
+		/// <b>Performance Optimization (.NET 10):</b> This method uses deferred execution with yield return for optimal performance:
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><see cref="List{T}"/> - Uses indexed access with pre-sized result span (avoids span ref struct limitations).</description></item>
-		/// <item><description>Arrays - Uses direct indexed access with pre-sized result span.</description></item>
-		/// <item><description><see cref="IList{T}"/> - Uses indexed access with pre-sized result span.</description></item>
-		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Falls back to LINQ <see cref="Enumerable.Select{TSource, TResult}(IEnumerable{TSource}, Func{TSource, int, TResult})"/>.</description></item>
+		/// <item><description><b>Deferred Execution:</b> Elements are processed on-demand only when enumerated.</description></item>
+		/// <item><description><b>Streaming Operation:</b> Single-pass enumeration with true lazy evaluation.</description></item>
+		/// <item><description><b>Memory Efficient:</b> No intermediate collection allocation - processes elements one at a time.</description></item>
+		/// <item><description><b>Zero Overhead:</b> Direct yield-based implementation without LINQ Select delegation.</description></item>
 		/// </list>
 		/// <para>
 		/// <b>Performance Characteristics:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>List/Array:</b> O(n) single pass with direct memory access, no iterator overhead.</description></item>
-		/// <item><description><b>Other types:</b> O(n) with deferred execution via Select.</description></item>
+		/// <item><description><b>Time Complexity:</b> O(n) - Single pass through the source collection.</description></item>
+		/// <item><description><b>Space Complexity:</b> O(1) - No intermediate collection allocation.</description></item>
+		/// <item><description><b>Streaming:</b> True streaming operation - each element is transformed as it's enumerated.</description></item>
 		/// </list>
 		/// <para>
-		/// <b>Important:</b> While <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> could provide performance benefits,
-		/// it cannot be used here because <see cref="Span{T}"/> is a ref struct that cannot be part of the returned span.
-		/// Instead, we use direct indexed access which still provides excellent performance.
+		/// <b>When to Use:</b>
 		/// </para>
+		/// <list type="bullet">
+		/// <item><description>Transforming elements based on conditions</description></item>
+		/// <item><description>Replacing elements at specific indices</description></item>
+		/// <item><description>Chaining with other LINQ operations for complex transformations</description></item>
+		/// <item><description>Processing large collections where deferred execution provides memory benefits</description></item>
+		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
 		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// 
+		/// // Replace values greater than 3
 		/// var result = numbers.ReplaceIf((n, itemIndex) => n > 3, 0);
 		/// // Result: { 1, 2, 3, 0, 0 }
 		/// 
+		/// // Replace at even indices
 		/// var evens = numbers.ReplaceIf((n, itemIndex) => itemIndex % 2 == 0, -1);
-		/// // Result: { -1, 2, -1, 4, -1 } (replace at even indices)
+		/// // Result: { -1, 2, -1, 4, -1 }
+		/// 
+		/// // Deferred execution - no processing until enumeration
+		/// var query = numbers.ReplaceIf((n, i) => n > 2, 999);
+		/// // Nothing happens yet...
+		/// 
+		/// foreach (var item in query) // Now processing occurs
+		/// {
+		///     Console.WriteLine(item);
+		/// }
 		/// </code>
 		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("Original code by Simon Painter.", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information("Original code by Simon Painter.", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> ReplaceIf([DisallowNull] Func<T, int, bool> accumulatorPredicate, T replacement)
 		{
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			return collection.Select((obj, pos) => accumulatorPredicate.Invoke(obj, pos) ? replacement : obj);
+			var index = 0;
+
+			foreach (var element in collection)
+			{
+				yield return accumulatorPredicate.Invoke(element, index) ? replacement : element;
+
+				index++;
+			}
 		}
 
 		/// <summary>
@@ -1032,7 +1058,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "12/9/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "12/9/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public void FastProcessor([DisallowNull] Action<T> action)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1112,7 +1138,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
 		public ReadOnlyCollection<T> FastProcessor([DisallowNull] Func<T, T> action)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1260,7 +1286,7 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the collection contains duplicates; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public bool HasDuplicates()
 		{
 			if (collection.IsEmpty())
@@ -1272,13 +1298,13 @@ public static class EnumerableExtensions
 
 			foreach (var item in collection)
 			{
-				if (!seenItems.Add(item)) // Add returns false if the item was already in the set.
+				if (!seenItems.Add(item))
 				{
-					return true; // Duplicate found.
+					return true;
 				}
 			}
 
-			return false; // No duplicates found.
+			return false;
 		}
 
 		/// <summary>
@@ -1316,13 +1342,14 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> EnsureUnique()
 		{
 			collection = collection.ArgumentNotNull();
 
-			return new HashSet<T>(collection, EqualityComparer<T>.Default);
+			return new HashSet<T>(collection);
 		}
+
 		/// <summary>
 		/// Ensures that all elements in the collection are unique based on the specified equality comparer.
 		/// </summary>
@@ -1374,8 +1401,8 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "1/8/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
-		public IEnumerable<T> EnsureUnique([DisallowNull] IEqualityComparer<T> comparer)
+		[Information(nameof(EnsureUnique), "David McCarter", "1/8/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		public IEnumerable<T> EnsureUnique([DisallowNull] IEqualityComparer<T>? comparer)
 		{
 			collection = collection.ArgumentNotNull();
 			comparer = comparer.ArgumentNotNull();
@@ -1408,15 +1435,12 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Create), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public Collection<T> Create(in bool ensureUnique)
+		[Information(nameof(Create), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		public Collection<T> Create(in bool ensureUnique = false)
 		{
 			collection = collection.ArgumentNotNull();
 
-			//RECOMENDATION FROM COPILOT SLOWER.
-			IList<T> list = ensureUnique ? new HashSet<T>(collection).ToList() : [.. collection];
-
-			return [.. list];
+			return ensureUnique ? new Collection<T>(new HashSet<T>(collection).ToList()) : new Collection<T>([.. collection]);
 		}
 
 		/// <summary>
@@ -1472,29 +1496,99 @@ public static class EnumerableExtensions
 		/// Inserts or updates an item in the collection. If the item already exists, it is updated; otherwise, it is added.
 		/// Note: This method returns a new <see cref="IEnumerable{T}"/> with the item upserted and does not modify the original collection.
 		/// </summary>
+		/// <param name="item">The item to upsert into the collection.</param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements.
+		/// If <c>null</c>, uses <see cref="EqualityComparer{T}.Default"/>.
+		/// </param>
+		/// <returns>An <see cref="IEnumerable{T}"/> with the item upserted (updated if exists, added if not).</returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method uses deferred execution with yield return for memory efficiency:
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Deferred Execution:</b> Elements are yielded on-demand during enumeration.</description></item>
+		/// <item><description><b>Single Pass:</b> Enumerates the collection once to find and update the matching item.</description></item>
+		/// <item><description><b>Memory Efficient:</b> No intermediate List allocation when item exists in collection.</description></item>
+		/// <item><description><b>Custom Comparison:</b> Supports custom equality comparers for flexible item matching.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Item exists:</b> O(n) with deferred execution - yields original items until match found, then yields updated item.</description></item>
+		/// <item><description><b>Item doesn't exist:</b> O(n) with deferred execution - yields all original items, then yields new item at end.</description></item>
+		/// <item><description><b>Space complexity:</b> O(1) - no intermediate collection allocation.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>When to Use Custom Comparers:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
+		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
+		/// <item><description><b>Property-based matching:</b> Create a custom comparer that matches based on specific properties (e.g., Id-based matching).</description></item>
+		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
+		/// </list>
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var people = new List&lt;Person&gt; 
+		/// { 
+		///     new Person { Id = 1, Name = "John" },
+		///     new Person { Id = 2, Name = "Jane" }
+		/// };
+		/// 
+		/// // Update existing person using default comparer
+		/// var updatedPerson = new Person { Id = 1, Name = "John Doe" };
+		/// var result = people.Upsert(updatedPerson);
+		/// 
+		/// // Add new person
+		/// var newPerson = new Person { Id = 3, Name = "Bob" };
+		/// var result2 = people.Upsert(newPerson);
+		/// 
+		/// // Upsert with custom comparer (match by Id only)
+		/// var personIdComparer = new PersonIdComparer();
+		/// var updated = people.Upsert(updatedPerson, personIdComparer);
+		/// // This will update the person with Id=1, even if other properties differ
+		/// 
+		/// // Case-insensitive string upsert
+		/// var names = new List&lt;string&gt; { "Alice", "Bob" };
+		/// var upserted = names.Upsert("alice", StringComparer.OrdinalIgnoreCase);
+		/// // Result: { "alice", "Bob" } - "Alice" updated to "alice"
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public IEnumerable<T> Upsert([DisallowNull] T item)
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
+		public IEnumerable<T> Upsert([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
-			var list = collection as List<T> ?? [.. collection];
+			comparer ??= EqualityComparer<T>.Default;
+			var itemFound = false;
 
-			var index = list.IndexOf(item);
-
-			if (index >= 0)
+			foreach (var element in collection)
 			{
-				list[index] = item; // Update the existing item.
-			}
-			else
-			{
-				list.Add(item); // Add the new item.
+				if (!itemFound && comparer.Equals(element, item))
+				{
+					// Found the item - yield the updated version
+					yield return item;
+					itemFound = true;
+				}
+				else
+				{
+					// Yield the original element
+					yield return element;
+				}
 			}
 
-			return list;
+			// If item wasn't found, add it at the end
+			if (!itemFound)
+			{
+				yield return item;
+			}
 		}
 
 		/// <summary>
@@ -1530,7 +1624,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddFirst), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddFirst), "David McCarter", "10/24/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public IEnumerable<T> AddFirst([DisallowNull] T item)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1555,7 +1649,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> AddDistinct([AllowNull] params IEnumerable<T> items)
 		{
 			if (collection == null || items == null || items.Count() == 0)
@@ -1577,16 +1671,22 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public bool IsNotEmpty(in int count) => collection is null ? false : collection.Count() == count;
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		public bool IsNotEmpty(in int count)
+		{
+			return collection is null ? false : collection.Count() == count;
+		}
 
 		/// <summary>
 		/// Determines whether the specified collection has any items.
 		/// </summary>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-		public bool IsNotEmpty() => collection is null ? false : collection.Count() > 0;
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		public bool IsNotEmpty()
+		{
+			return collection is null ? false : collection.Count() > 0;
+		}
 
 		/// <summary>
 		/// Converts the specified collection to a <see cref="ReadOnlyCollection{T}"/> with optimized performance for common collection types.
@@ -1680,22 +1780,29 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> AddIf([DisallowNull] T item, bool condition)
 		{
-			if (item is null)
-			{
-				return collection;
-			}
-
 			collection = collection.ArgumentNotNull();
 
-			if (condition)
+			if (item is null || !condition)
 			{
-				collection = collection.AddLast(item);
+				// Fast path: just yield the original collection
+				foreach (var element in collection)
+				{
+					yield return element;
+				}
+
+				yield break;
 			}
 
-			return collection;
+			// Condition is true: yield collection + item
+			foreach (var element in collection)
+			{
+				yield return element;
+			}
+
+			yield return item;
 		}
 	}
 }

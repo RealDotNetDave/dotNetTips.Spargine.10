@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-13-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -101,7 +101,7 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void AdIfTest()
+	public void AddIfTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
@@ -113,7 +113,7 @@ public class EnumerableExtensionsTests
 
 		result = people.AddIf(person, false);
 
-		Assert.IsTrue(result.Count() == Count);
+		Assert.IsTrue(result.Count() == people.Count());
 	}
 
 	[TestMethod]
@@ -163,15 +163,27 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void EnsureUniqueComparerTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		people.Add(people.First());
+
+		var result = people.EnsureUnique(new PersonComparer());
+
+		Assert.IsTrue(result.Count() == Count);
+	}
+
+	[TestMethod]
 	public void EnsureUniqueTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 
-		people.Add(people.FirstOrDefault());
+		people.Add(people.First());
 
-		var result = people.EnsureUnique().ToList();
+		var result = people.EnsureUnique();
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.IsTrue(result.Count() == Count);
 	}
 
 	[TestMethod]
@@ -315,12 +327,13 @@ public class EnumerableExtensionsTests
 	public void FastShuffle_WithoutCount_SingleElement_DoesNotThrow()
 	{
 		var singlePerson = new List<Person> { RandomData.GeneratePerson<Person>() }.AsEnumerable();
+
 		var originalPerson = singlePerson.First();
 
-		singlePerson.FastShuffle();
+		var shuffled = singlePerson.FastShuffle(); // Capture the result
 
-		Assert.AreEqual(1, singlePerson.Count());
-		Assert.AreEqual(originalPerson, singlePerson.First());
+		Assert.AreEqual(1, shuffled.Count());
+		Assert.AreEqual(originalPerson, shuffled.First());
 	}
 
 	[TestMethod]
@@ -400,12 +413,12 @@ public class EnumerableExtensionsTests
 
 		foreach (var person in dups)
 		{
-			people.AddLast(person);
+			people = people.AddLast(person);
 		}
 
 		var result = people.HasDuplicates();
 
-		Assert.IsFalse(result);
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -564,7 +577,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		var dups = people.Shuffle().Take(Count / 10).ToList();
+		var dups = people.Shuffle().Take(Count / 2).ToList();
 
 		foreach (var person in dups)
 		{
@@ -572,8 +585,7 @@ public class EnumerableExtensionsTests
 		}
 
 		var result = people.RemoveDuplicates();
-		Assert.IsTrue(result.Status == ResultStatus.Succeeded);
-		Assert.IsTrue(result.Value.Count() == Count);
+		Assert.IsTrue(result.Count() == Count);
 	}
 
 	[TestMethod]
@@ -619,7 +631,11 @@ public class EnumerableExtensionsTests
 		var result = collection.RemoveNulls().ToList();
 
 		Assert.AreEqual(3, result.Count);
-		CollectionAssert.AreEqual(new List<string> { "apple", "banana", "cherry" }, result);
+
+		// Verify order preservation explicitly
+		Assert.AreEqual("apple", result[0]);
+		Assert.AreEqual("banana", result[1]);
+		Assert.AreEqual("cherry", result[2]);
 	}
 
 	[TestMethod]
@@ -949,8 +965,8 @@ public class EnumerableExtensionsTests
 
 		Assert.IsTrue(result.Count() == people.Count() + 1);
 
-		result = people.Upsert(personFromCollection);
+		result = result.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.Count() == Count);
+		Assert.IsTrue(result.Count() == Count + 1);
 	}
 }
