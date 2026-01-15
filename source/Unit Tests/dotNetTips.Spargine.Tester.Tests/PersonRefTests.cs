@@ -55,7 +55,7 @@ public class PersonRefTests
 		person.Addresses = addresses;
 
 		// Assert
-		Assert.AreEqual(1, person.Addresses.Count);
+		Assert.HasCount(1, person.Addresses);
 	}
 
 	[TestMethod]
@@ -152,7 +152,7 @@ public class PersonRefTests
 		var person = new Person(email: "test@example.com", id: "1234567890");
 		var other = new Person(email: "other@example.com", id: "1234567891");
 		var result = person.CompareTo(other);
-		Assert.IsTrue(result < 0);
+		Assert.IsLessThan(0, result);
 	}
 
 	[TestMethod]
@@ -161,7 +161,7 @@ public class PersonRefTests
 		var person = new Person(email: "test@example.com", id: "1234567891");
 		var other = new Person(email: "other@example.com", id: "1234567890");
 		var result = person.CompareTo(other);
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -374,8 +374,8 @@ public class PersonRefTests
 
 		// Act & Assert
 		Assert.AreEqual(0, person1.CompareTo(person2));
-		Assert.IsTrue(person1.CompareTo(person3) < 0);
-		Assert.IsTrue(person3.CompareTo(person1) > 0);
+		Assert.IsLessThan(0, person1.CompareTo(person3));
+		Assert.IsGreaterThan(0, person3.CompareTo(person1));
 	}
 
 	[TestMethod]
@@ -541,7 +541,7 @@ public class PersonRefTests
 		Assert.AreEqual(personRecord.BornOn, person.BornOn);
 		Assert.AreEqual(personRecord.CellPhone, person.CellPhone);
 		Assert.AreEqual(personRecord.Phone, person.Phone);
-		Assert.AreEqual(personRecord.Addresses.Count, person.Addresses.Count);
+		Assert.HasCount(personRecord.Addresses.Count, person.Addresses);
 	}
 
 	[TestMethod]
@@ -569,7 +569,7 @@ public class PersonRefTests
 		Assert.AreEqual(valueTypesPerson.BornOn, person.BornOn);
 		Assert.AreEqual(valueTypesPerson.CellPhone, person.CellPhone);
 		Assert.AreEqual(valueTypesPerson.Phone, person.Phone);
-		Assert.AreEqual(valueTypesPerson.Addresses.Count, person.Addresses.Count);
+		Assert.HasCount(valueTypesPerson.Addresses.Count, person.Addresses);
 	}
 
 
@@ -658,6 +658,6 @@ public class PersonRefTests
 		var address = Address.Create("1234567890", "A1", "City", "Country", "12345");
 		var str = address.ToString();
 		Assert.IsFalse(string.IsNullOrWhiteSpace(str));
-		Assert.IsTrue(str.Contains("Address1"));
+		Assert.Contains("Address1", str);
 	}
 }

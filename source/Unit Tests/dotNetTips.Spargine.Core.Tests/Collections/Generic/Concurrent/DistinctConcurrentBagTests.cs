@@ -155,7 +155,7 @@ public class DistinctConcurrentBagTests
 		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
 		bag.Clear();
 		var items = bag.ToList();
-		Assert.AreEqual(0, items.Count);
+		Assert.IsEmpty(items);
 	}
 
 	[TestMethod]
@@ -517,7 +517,7 @@ public class DistinctConcurrentBagTests
 		var array = bag.ToArray();
 
 		Assert.IsNotNull(array);
-		Assert.AreEqual(0, array.Length);
+		Assert.IsEmpty(array);
 	}
 
 	[TestMethod]
@@ -540,7 +540,7 @@ public class DistinctConcurrentBagTests
 
 		var array = bag.ToArray();
 
-		Assert.AreEqual(3, array.Length);
+		Assert.HasCount(3, array);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, array);
 	}
 
@@ -552,7 +552,7 @@ public class DistinctConcurrentBagTests
 		var list = bag.ToList();
 
 		Assert.IsNotNull(list);
-		Assert.AreEqual(0, list.Count);
+		Assert.IsEmpty(list);
 	}
 
 	[TestMethod]
@@ -574,7 +574,7 @@ public class DistinctConcurrentBagTests
 
 		var list = bag.ToList();
 
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, list);
 	}
 
@@ -625,10 +625,10 @@ public class DistinctConcurrentBagTests
 
 		var frozenSet = bag.ToFrozenSet();
 
-		Assert.AreEqual(3, frozenSet.Count);
-		Assert.IsTrue(frozenSet.Contains(1));
-		Assert.IsTrue(frozenSet.Contains(2));
-		Assert.IsTrue(frozenSet.Contains(3));
+		Assert.HasCount(3, frozenSet);
+		Assert.Contains(1, frozenSet);
+		Assert.Contains(2, frozenSet);
+		Assert.Contains(3, frozenSet);
 	}
 
 	[TestMethod]
@@ -639,7 +639,7 @@ public class DistinctConcurrentBagTests
 		var frozenSet = bag.ToFrozenSet();
 
 		Assert.IsNotNull(frozenSet);
-		Assert.AreEqual(0, frozenSet.Count);
+		Assert.IsEmpty(frozenSet);
 	}
 
 	[TestMethod]
@@ -650,8 +650,8 @@ public class DistinctConcurrentBagTests
 		var frozenSet = bag.ToFrozenSet();
 		bag.Add(4);
 
-		Assert.AreEqual(3, frozenSet.Count);
-		Assert.IsFalse(frozenSet.Contains(4));
+		Assert.HasCount(3, frozenSet);
+		Assert.DoesNotContain(4, frozenSet);
 	}
 
 	[TestMethod]

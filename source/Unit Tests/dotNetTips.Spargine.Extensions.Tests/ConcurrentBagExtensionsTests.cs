@@ -36,7 +36,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(4, bag.Count);
+		Assert.HasCount(4, bag);
 		CollectionAssert.Contains(bag.ToList(), 2);
 		CollectionAssert.Contains(bag.ToList(), 3);
 		CollectionAssert.Contains(bag.ToList(), 4);
@@ -53,10 +53,10 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(5, bag.Count);
+		Assert.HasCount(5, bag);
 		var bagList = bag.ToList();
-		Assert.AreEqual(2, bagList.FindAll(x => x == 1).Count);
-		Assert.AreEqual(2, bagList.FindAll(x => x == 2).Count);
+		Assert.HasCount(2, bagList.FindAll(x => x == 1));
+		Assert.HasCount(2, bagList.FindAll(x => x == 2));
 	}
 
 	[TestMethod]
@@ -70,7 +70,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(5, bag.Count);
+		Assert.HasCount(5, bag);
 		CollectionAssert.AreEquivalent(items, bag.ToList());
 	}
 
@@ -85,7 +85,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(3, bag.Count);
+		Assert.HasCount(3, bag);
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, bag.ToList());
 	}
 
@@ -100,7 +100,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(4, bag.Count);
+		Assert.HasCount(4, bag);
 		CollectionAssert.Contains(bag.ToList(), null);
 		CollectionAssert.Contains(bag.ToList(), "b");
 		CollectionAssert.Contains(bag.ToList(), "c");
@@ -121,7 +121,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(1000, bag.Count);
+		Assert.HasCount(1000, bag);
 		CollectionAssert.AreEquivalent(items, bag.ToList());
 	}
 
@@ -147,7 +147,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(3, bag.Count);
+		Assert.HasCount(3, bag);
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, bag.ToList());
 	}
 
@@ -162,7 +162,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(3, bag.Count);
+		Assert.HasCount(3, bag);
 		foreach (var item in items)
 		{
 			CollectionAssert.Contains(bag.ToList(), item);
@@ -180,7 +180,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(3, bag.Count);
+		Assert.HasCount(3, bag);
 		CollectionAssert.Contains(bag.ToList(), 3);
 	}
 
@@ -195,7 +195,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(5, bag.Count);
+		Assert.HasCount(5, bag);
 		CollectionAssert.Contains(bag.ToList(), "c");
 		CollectionAssert.Contains(bag.ToList(), "d");
 		CollectionAssert.Contains(bag.ToList(), "e");
@@ -211,7 +211,7 @@ public class ConcurrentBagExtensionsTests
 		bag.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(6, bag.Count);
+		Assert.HasCount(6, bag);
 		CollectionAssert.Contains(bag.ToList(), 4);
 		CollectionAssert.Contains(bag.ToList(), 5);
 		CollectionAssert.Contains(bag.ToList(), 6);
@@ -228,7 +228,7 @@ public class ConcurrentBagExtensionsTests
 		var result = bag.RemoveRange(items);
 
 		// Assert
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -242,7 +242,7 @@ public class ConcurrentBagExtensionsTests
 		var result = bag.RemoveRange(items);
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result.ToList());
 	}
 
@@ -257,7 +257,7 @@ public class ConcurrentBagExtensionsTests
 		var result = bag.RemoveRange(items);
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result.ToList());
 	}
 
@@ -283,7 +283,7 @@ public class ConcurrentBagExtensionsTests
 		var result = bag.RemoveRange(items);
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.DoesNotContain(result, 2);
 		CollectionAssert.DoesNotContain(result, 4);
 	}
@@ -298,7 +298,7 @@ public class ConcurrentBagExtensionsTests
 		var result = bag.ToList();
 
 		// Assert
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -321,7 +321,7 @@ public class ConcurrentBagExtensionsTests
 		var result = bag.ToList();
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.Contains(result, 1);
 		CollectionAssert.Contains(result, 2);
 		CollectionAssert.Contains(result, 3);

@@ -28,14 +28,13 @@ namespace DotNetTips.Spargine.Core.Tests.Network;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class HttpEventListenersTests
+public class HttpEventListenersTests : IDisposable
 {
 
 	private readonly HttpClient _httpClient = new();
 	private readonly ILogger _logger = new NullLogger<HttpEventListenersTests>();
 
-	[TestCleanup]
-	public void Cleanup()
+	public void Dispose()
 	{
 		this._httpClient.TryDispose();
 	}

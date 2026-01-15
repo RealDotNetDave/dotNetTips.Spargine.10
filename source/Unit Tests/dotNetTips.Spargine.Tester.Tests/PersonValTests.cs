@@ -73,7 +73,7 @@ public class PersonValTests
 		var person = new Person(email: "test@example.com", id: "1234567890");
 		var other = new Person(email: "other@example.com", id: "1234567891");
 		var result = person.CompareTo(other);
-		Assert.IsTrue(result < 0);
+		Assert.IsLessThan(0, result);
 	}
 
 	[TestMethod]
@@ -82,7 +82,7 @@ public class PersonValTests
 		var person = new Person(email: "test@example.com", id: "1234567891");
 		var other = new Person(email: "other@example.com", id: "1234567890");
 		var result = person.CompareTo(other);
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -143,8 +143,8 @@ public class PersonValTests
 
 		// Act & Assert
 		Assert.AreEqual(0, person1.CompareTo(person2));
-		Assert.IsTrue(person1.CompareTo(person3) < 0);
-		Assert.IsTrue(person3.CompareTo(person1) > 0);
+		Assert.IsLessThan(0, person1.CompareTo(person3));
+		Assert.IsGreaterThan(0, person3.CompareTo(person1));
 	}
 
 	[TestMethod]
@@ -317,7 +317,7 @@ public class PersonValTests
 		var person = Person.Create("1234567890", "email@email.com", "First", "Last", DateTimeOffset.UtcNow);
 		var str = person.ToString();
 		Assert.IsFalse(string.IsNullOrWhiteSpace(str));
-		Assert.IsTrue(str.Contains("Email"));
+		Assert.Contains("Email", str);
 	}
 
 }

@@ -75,7 +75,7 @@ public class CollectionExtensionsTests
 		// TEST
 		people.AddIf(nullPerson, people.Count == Count);
 
-		Assert.IsTrue(people.Count == 10);
+		Assert.AreEqual(10, people.Count);
 	}
 
 	[TestMethod]
@@ -87,7 +87,7 @@ public class CollectionExtensionsTests
 		// TEST
 		people.AddIf(person, people.Count == Count);
 
-		Assert.IsTrue(people.Count == 11);
+		Assert.AreEqual(11, people.Count);
 	}
 
 	[TestMethod]
@@ -98,7 +98,7 @@ public class CollectionExtensionsTests
 
 		// Add with ensureUnique = false (should add all, even duplicates)
 		Assert.IsTrue(people.AddRange(peopleToAdd, ensureUnique: false));
-		Assert.AreEqual(Count * 2, people.Count);
+		Assert.HasCount(Count * 2, people);
 	}
 
 	[TestMethod]
@@ -111,7 +111,7 @@ public class CollectionExtensionsTests
 
 		Assert.IsNotNull(people);
 
-		Assert.IsTrue(people.Count == 5500);
+		Assert.AreEqual(5500, people.Count);
 	}
 
 	[TestMethod]
@@ -159,10 +159,10 @@ public class CollectionExtensionsTests
 		var collection = new Collection<Person>(people);
 
 		var frozenSet = collection.ToFrozenSet();
-		Assert.AreEqual(collection.Count, frozenSet.Count);
+		Assert.HasCount(collection.Count, frozenSet);
 		foreach (var person in collection)
 		{
-			Assert.IsTrue(frozenSet.Contains(person));
+			Assert.Contains(person, frozenSet);
 		}
 	}
 
@@ -177,7 +177,7 @@ public class CollectionExtensionsTests
 		// TEST
 		people.Upsert(nullPerson);
 
-		Assert.IsTrue(people.Count == 10);
+		Assert.AreEqual(10, people.Count);
 	}
 
 
@@ -194,11 +194,11 @@ public class CollectionExtensionsTests
 		// TEST
 		people.Upsert(person);
 
-		Assert.IsTrue(people.Count == 11);
+		Assert.AreEqual(11, people.Count);
 
 		personRecords.Upsert(personRecord);
 
-		Assert.IsTrue(personRecords.Count == 11);
+		Assert.AreEqual(11, personRecords.Count);
 	}
 
 	[TestMethod]
@@ -224,7 +224,7 @@ public class CollectionExtensionsTests
 		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(Count + 1, models.Count);
+		Assert.HasCount(Count + 1, models);
 		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(originalPerson.Id));
 		Assert.IsNotNull(foundPerson);
 	}
@@ -240,7 +240,7 @@ public class CollectionExtensionsTests
 		models.Upsert(newPerson);
 
 		// Assert
-		Assert.AreEqual(1, models.Count);
+		Assert.HasCount(1, models);
 		Assert.AreEqual(newPerson.Id, models.First().Id);
 	}
 
@@ -266,7 +266,7 @@ public class CollectionExtensionsTests
 		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(Count + 1, models.Count);
+		Assert.HasCount(Count + 1, models);
 
 		var foundPerson = models.FirstOrDefault(p => p.Id.Equals(updatedPerson.Id));
 
@@ -293,7 +293,7 @@ public class CollectionExtensionsTests
 		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(largeCount + 1, models.Count);
+		Assert.HasCount(largeCount + 1, models);
 		var found = models.FirstOrDefault(p => p.Id.Equals(personToUpdate.Id));
 		Assert.IsNotNull(found);
 		Assert.AreNotEqual(updatedPerson.Phone, found.Phone);
@@ -309,11 +309,11 @@ public class CollectionExtensionsTests
 
 		// Act - Add first item
 		models.Upsert(testPerson1);
-		Assert.AreEqual(1, models.Count);
+		Assert.HasCount(1, models);
 
 		// Act - Add second item
 		models.Upsert(testPerson2);
-		Assert.AreEqual(2, models.Count);
+		Assert.HasCount(2, models);
 
 		// Act - Update first item
 		var updatedPerson1 = RandomData.GeneratePerson<Person>();
@@ -321,7 +321,7 @@ public class CollectionExtensionsTests
 		models.Upsert(updatedPerson1);
 
 		// Assert
-		Assert.AreEqual(3, models.Count);
+		Assert.HasCount(3, models);
 		Assert.IsTrue(models.Any(p => p.Id.Equals(testPerson1.Id)));
 		Assert.IsTrue(models.Any(p => p.Id.Equals(testPerson2.Id)));
 	}
@@ -341,7 +341,7 @@ public class CollectionExtensionsTests
 		models.Upsert(newPerson);
 
 		// Assert
-		Assert.AreEqual(Count + 1, models.Count);
+		Assert.HasCount(Count + 1, models);
 		Assert.IsTrue(models.Any(p => p.Id.Equals(newPerson.Id)));
 	}
 
@@ -361,7 +361,7 @@ public class CollectionExtensionsTests
 		models.Upsert(nullPerson);
 
 		// Assert
-		Assert.AreEqual(Count, models.Count);
+		Assert.HasCount(Count, models);
 	}
 
 	[TestMethod]
@@ -393,12 +393,12 @@ public class CollectionExtensionsTests
 
 
 		// Should have same count, but updated value for Id=5
-		Assert.AreEqual(Count, models.Count);
+		Assert.HasCount(Count, models);
 
 		// Add new item
 		var person = RandomData.GeneratePerson<Person>();
 		models.Upsert(person);
-		Assert.AreEqual(Count + 1, models.Count);
+		Assert.HasCount(Count + 1, models);
 	}
 
 

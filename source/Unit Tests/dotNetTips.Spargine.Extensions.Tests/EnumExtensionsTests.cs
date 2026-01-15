@@ -58,7 +58,7 @@ public class EnumExtensionsTests
 	public void GetItems_ReturnsAllEnumValues()
 	{
 		var items = TestEnum.WithDescription.GetItems();
-		Assert.AreEqual(2, items.Count);
+		Assert.HasCount(2, items);
 		Assert.IsTrue(items.Any(i => i.Description == "WithDescription" && i.Value == 0));
 		Assert.IsTrue(items.Any(i => i.Description == "WithoutDescription" && i.Value == 1));
 	}
@@ -68,7 +68,7 @@ public class EnumExtensionsTests
 	{
 		var result = TaskStatus.Canceled.GetItems();
 
-		Assert.IsTrue(result.Count > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
@@ -91,7 +91,7 @@ public class EnumExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(string.Compare(result.ToString(), "Canceled", StringComparison.Ordinal) == 0);
+		Assert.AreEqual(0, string.Compare(result.ToString(), "Canceled", StringComparison.Ordinal));
 	}
 
 	private enum TestEnum

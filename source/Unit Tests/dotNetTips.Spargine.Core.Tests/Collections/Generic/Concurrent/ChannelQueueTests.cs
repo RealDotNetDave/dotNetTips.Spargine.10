@@ -72,7 +72,7 @@ public class ChannelQueueTests
 		{
 			channel.WriteAsync(i).Wait();
 		}
-		Assert.IsTrue(channel.Count > 0, "Channel should allow adding many items, indicating it's unbounded.");
+		Assert.IsGreaterThan(0, channel.Count, "Channel should allow adding many items, indicating it's unbounded.");
 	}
 
 	[TestMethod]
@@ -167,7 +167,7 @@ public class ChannelQueueTests
 	public void Count_BoundedChannel_SupportsCount()
 	{
 		var channel = new ChannelQueue<int>(10);
-		Assert.IsTrue(channel.Count >= 0, "Count should be supported and non-negative for a bounded channel.");
+		Assert.IsGreaterThanOrEqualTo(0, channel.Count, "Count should be supported and non-negative for a bounded channel.");
 	}
 
 	[TestMethod]
@@ -181,7 +181,7 @@ public class ChannelQueueTests
 	public void Count_UnboundedChannel_SupportsCount()
 	{
 		var channel = new ChannelQueue<int>();
-		Assert.IsTrue(channel.Count >= 0, "Count should be supported and non-negative for an unbounded channel.");
+		Assert.IsGreaterThanOrEqualTo(0, channel.Count, "Count should be supported and non-negative for an unbounded channel.");
 	}
 
 	[TestMethod]
@@ -212,7 +212,7 @@ public class ChannelQueueTests
 			readItems.Add(item);
 		}
 
-		Assert.AreEqual(items.Count, readItems.Count, "ListenAsync should complete reading all items once the channel is locked.");
+		Assert.HasCount(items.Count, readItems, "ListenAsync should complete reading all items once the channel is locked.");
 	}
 
 	[TestMethod]

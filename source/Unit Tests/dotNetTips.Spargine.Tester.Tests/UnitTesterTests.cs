@@ -39,8 +39,8 @@ public class UnitTesterTests
 		var result = tester.PropertiesToString(sample, p => true);
 
 		// Assert
-		Assert.IsTrue(result.Contains("Id:1"));
-		Assert.IsTrue(result.Contains("Name:Test"));
+		Assert.Contains("Id:1", result);
+		Assert.Contains("Name:Test", result);
 	}
 
 	[TestMethod]
@@ -124,7 +124,7 @@ public class UnitTesterTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(savedFilePath), "File should be created in specified directory");
-			Assert.IsTrue(savedFilePath.StartsWith(tempDir.FullName), "File should be in the specified directory");
+			Assert.StartsWith(tempDir.FullName, savedFilePath, "File should be in the specified directory");
 			var fileContent = File.ReadAllText(savedFilePath);
 			Assert.AreEqual(content, fileContent);
 		}

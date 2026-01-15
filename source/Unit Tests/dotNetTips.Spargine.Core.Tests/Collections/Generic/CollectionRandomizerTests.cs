@@ -122,7 +122,7 @@ public class CollectionRandomizerTests
 		}
 
 		// Assert
-		Assert.AreEqual(5, retrieved.Count, "Should iterate through all items.");
+		Assert.HasCount(5, retrieved, "Should iterate through all items.");
 		CollectionAssert.AreEquivalent(collection, retrieved, "Should retrieve all original items.");
 	}
 
@@ -143,7 +143,7 @@ public class CollectionRandomizerTests
 		}
 
 		// Assert
-		Assert.IsTrue(retrieved.Count == collection.Count * 2, "Should iterate through items multiple times with repeat.");
+		Assert.AreEqual(collection.Count * 2, retrieved.Count, "Should iterate through items multiple times with repeat.");
 	}
 
 	[TestMethod]
@@ -178,8 +178,8 @@ public class CollectionRandomizerTests
 		}
 
 		// Assert
-		Assert.IsTrue(retrievedItems.Count > collection.Count); // Ensure more items were retrieved than in the original collection
-		Assert.IsTrue(retrievedItems.Distinct().Count() == collection.Count); // Ensure all original items were retrieved
+		Assert.IsGreaterThan(collection.Count, retrievedItems.Count); // Ensure more items were retrieved than in the original collection
+		Assert.AreEqual(collection.Count, retrievedItems.Distinct().Count()); // Ensure all original items were retrieved
 	}
 
 	[TestMethod]
@@ -258,7 +258,7 @@ public class CollectionRandomizerTests
 		var peeked = randomizer.PeekNext();
 
 		// Assert
-		Assert.IsTrue(collection.Contains(peeked), "PeekNext should return a valid item after reshuffle when repeating.");
+		Assert.Contains(peeked, collection, "PeekNext should return a valid item after reshuffle when repeating.");
 	}
 
 	[TestMethod]
@@ -357,7 +357,7 @@ public class CollectionRandomizerTests
 		// Act & Assert
 		randomizer.Reset();
 		var next = randomizer.GetNext();
-		Assert.IsTrue(collection.Contains(next), "After reset, GetNext should return a valid item from the collection.");
+		Assert.Contains(next, collection, "After reset, GetNext should return a valid item from the collection.");
 	}
 
 	[TestMethod]
@@ -528,8 +528,8 @@ public class CollectionRandomizerTests
 		System.Threading.Tasks.Task.WaitAll(tasks.ToArray());
 
 		// Assert
-		Assert.IsTrue(retrieved.Count <= collection.Count, "Should not retrieve more items than available.");
-		Assert.IsTrue(retrieved.Count > 0, "Should retrieve at least some items.");
+		Assert.IsLessThanOrEqualTo(collection.Count, retrieved.Count, "Should not retrieve more items than available.");
+		Assert.IsNotEmpty(retrieved, "Should retrieve at least some items.");
 	}
 
 	[TestMethod]
@@ -543,7 +543,7 @@ public class CollectionRandomizerTests
 		var snapshot = randomizer.ToArray();
 
 		// Assert
-		Assert.AreEqual(5, snapshot.Length, "ToArray should return all items even before initialization.");
+		Assert.HasCount(5, snapshot, "ToArray should return all items even before initialization.");
 		CollectionAssert.AreEquivalent(collection, snapshot, "ToArray should contain all original items.");
 	}
 
@@ -575,7 +575,7 @@ public class CollectionRandomizerTests
 
 		var snapshot = randomizer.ToArray();
 
-		Assert.AreEqual(5, snapshot.Length);
+		Assert.HasCount(5, snapshot);
 		CollectionAssert.AreEquivalent(collection, snapshot);
 	}
 

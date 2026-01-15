@@ -53,7 +53,7 @@ public class TaskHelperTests
 	{
 		TaskHelper.RunSync(() => this.Fire(nameof(this.RunSync10)));
 
-		Assert.AreEqual(this._fireResult, nameof(this.RunSync10));
+		Assert.AreEqual(nameof(this.RunSync10), this._fireResult);
 	}
 
 	[TestMethod]
@@ -63,7 +63,7 @@ public class TaskHelperTests
 
 		TaskHelper.RunSync(() => this.Fire(nameof(this.RunSync11)), cancellationToken: cancelToken);
 
-		Assert.AreEqual(this._fireResult, nameof(this.RunSync11));
+		Assert.AreEqual(nameof(this.RunSync11), this._fireResult);
 	}
 
 	[TestMethod]
@@ -71,7 +71,7 @@ public class TaskHelperTests
 	{
 		_ = TaskHelper.RunSync(() => this.FireWithReturn(nameof(this.RunSync20)));
 
-		Assert.AreEqual(this._fireResult, nameof(this.RunSync20));
+		Assert.AreEqual(nameof(this.RunSync20), this._fireResult);
 	}
 
 	[TestMethod]
@@ -81,7 +81,7 @@ public class TaskHelperTests
 
 		_ = TaskHelper.RunSync(() => this.FireWithReturn(nameof(this.RunSync21)), cancellationToken: cancelToken);
 
-		Assert.AreEqual(this._fireResult, nameof(this.RunSync21));
+		Assert.AreEqual(nameof(this.RunSync21), this._fireResult);
 	}
 
 }

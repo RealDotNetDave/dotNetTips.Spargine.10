@@ -48,7 +48,7 @@ public class DirectoryHelperTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.EndsWith(companyName), $"The path should end with the company name: {companyName}");
+		Assert.EndsWith(companyName, result, $"The path should end with the company name: {companyName}");
 	}
 
 
@@ -139,7 +139,7 @@ public class DirectoryHelperTests
 		var result = DirectoryHelper.LoadOneDriveFolders();
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
@@ -161,7 +161,7 @@ public class DirectoryHelperTests
 			}
 
 			// Assert
-			Assert.AreEqual(0, files.Count);
+			Assert.IsEmpty(files);
 		}
 		finally
 		{
@@ -200,10 +200,10 @@ public class DirectoryHelperTests
 			}
 
 			// Assert
-			Assert.AreEqual(expectedFiles.Count, files.Count);
+			Assert.HasCount(expectedFiles.Count, files);
 			foreach (var file in files)
 			{
-				Assert.IsTrue(expectedFiles.Contains(file.FullName));
+				Assert.Contains(file.FullName, expectedFiles);
 			}
 		}
 		finally

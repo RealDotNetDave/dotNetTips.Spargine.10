@@ -338,6 +338,6 @@ public class AddressValTests
 		var address = Address.Create("1234567890", "A1", "City", "Country", "12345");
 		var str = address.ToString();
 		Assert.IsFalse(string.IsNullOrWhiteSpace(str));
-		Assert.IsTrue(str.Contains("Address1"));
+		Assert.Contains("Address1", str);
 	}
 }

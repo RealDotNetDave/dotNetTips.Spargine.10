@@ -26,13 +26,12 @@ namespace DotNetTips.Spargine.Tests.IO;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class PathHelperTests
+public class PathHelperTests : IDisposable
 {
 
 	private readonly string _testDirectory = Path.Combine(Path.GetTempPath(), "PathHelperTests");
 
-	[TestCleanup]
-	public void Cleanup()
+	public void Dispose()
 	{
 		if (Directory.Exists(this._testDirectory))
 		{
@@ -112,7 +111,7 @@ public class PathHelperTests
 		var result = PathHelper.EnsureTrailingSlash(pathWithForwardSlash);
 
 		// This assertion now respects the system's directory separator character
-		Assert.IsTrue(result == expected);
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod]
@@ -169,8 +168,7 @@ public class PathHelperTests
 		Assert.IsFalse(result, "Wildcards should not be considered as invalid characters.");
 	}
 
-	[TestInitialize]
-	public void Initialize()
+	public PathHelperTests()
 	{
 		if (Directory.Exists(this._testDirectory))
 		{
@@ -182,16 +180,16 @@ public class PathHelperTests
 	public void InvalidFilterChars_ExcludesWildcards()
 	{
 		var invalidChars = PathHelper.InvalidFilterChars();
-		Assert.IsFalse(invalidChars.Contains('*'), "The InvalidFilterChars method should not include the '*' wildcard character.");
-		Assert.IsFalse(invalidChars.Contains('?'), "The InvalidFilterChars method should not include the '?' wildcard character.");
+		Assert.DoesNotContain('*', invalidChars, "The InvalidFilterChars method should not include the '*' wildcard character.");
+		Assert.DoesNotContain('?', invalidChars, "The InvalidFilterChars method should not include the '?' wildcard character.");
 	}
 
 	[TestMethod]
 	public void InvalidPathNameChars_ExcludesDirectorySeparators()
 	{
 		var invalidChars = PathHelper.InvalidPathNameChars();
-		Assert.IsFalse(invalidChars.Contains(Path.DirectorySeparatorChar), "The InvalidPathNameChars method should not include the directory separator character.");
-		Assert.IsFalse(invalidChars.Contains(Path.AltDirectorySeparatorChar), "The InvalidPathNameChars method should not include the alternate directory separator character.");
+		Assert.DoesNotContain(Path.DirectorySeparatorChar, invalidChars, "The InvalidPathNameChars method should not include the directory separator character.");
+		Assert.DoesNotContain(Path.AltDirectorySeparatorChar, invalidChars, "The InvalidPathNameChars method should not include the alternate directory separator character.");
 	}
 
 	[TestMethod]
@@ -284,11 +282,11 @@ public class PathHelperTests
 		var expectedSeparators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
 		var separators = PathHelper.PathSeparators;
 
-		Assert.AreEqual(expectedSeparators.Length, separators.Count, "The count of path separators does not match the expected count.");
+		Assert.HasCount(expectedSeparators.Length, separators, "The count of path separators does not match the expected count.");
 
 		foreach (var separator in expectedSeparators)
 		{
-			Assert.IsTrue(separators.Contains(separator), $"The expected separator '{separator}' was not found in the PathSeparators collection.");
+			Assert.Contains(separator, separators, $"The expected separator '{separator}' was not found in the PathSeparators collection.");
 		}
 	}
 }

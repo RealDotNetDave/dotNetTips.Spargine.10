@@ -139,7 +139,7 @@ public class ExceptionExtensionsTests
 		var data = exception.ExtractData();
 
 		Assert.IsNotNull(data);
-		Assert.AreEqual(2, data.Count);
+		Assert.HasCount(2, data);
 		Assert.AreEqual("Value1", data["Key1"]);
 		Assert.AreEqual(42, data["Key2"]);
 	}
@@ -151,7 +151,7 @@ public class ExceptionExtensionsTests
 		var data = exception.ExtractData();
 
 		Assert.IsNotNull(data);
-		Assert.AreEqual(0, data.Count);
+		Assert.IsEmpty(data);
 	}
 
 	[TestMethod]
@@ -162,8 +162,8 @@ public class ExceptionExtensionsTests
 
 		var result = exception.FormatForDisplay();
 
-		Assert.IsTrue(result.Contains("Test exception"));
-		Assert.IsTrue(result.Contains("Exception"));
+		Assert.Contains("Test exception", result);
+		Assert.Contains("Exception", result);
 	}
 
 	[TestMethod]
@@ -199,7 +199,7 @@ public class ExceptionExtensionsTests
 
 		var hierarchy = ex.FromHierarchy(e => e.InnerException, e => e != null).ToList();
 
-		Assert.AreEqual(2, hierarchy.Count);
+		Assert.HasCount(2, hierarchy);
 		Assert.AreEqual("Outer exception", hierarchy[0].Message);
 		Assert.AreEqual("Inner exception", hierarchy[1].Message);
 	}
@@ -214,7 +214,7 @@ public class ExceptionExtensionsTests
 		var result = exception.GetAllInnerExceptions();
 
 		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Count);
+		Assert.HasCount(2, result);
 		Assert.AreEqual("Inner exception", result[0].Message);
 		Assert.AreEqual("Innermost exception", result[1].Message);
 	}
@@ -227,7 +227,7 @@ public class ExceptionExtensionsTests
 		var result = exception.GetAllInnerExceptions();
 
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -239,7 +239,7 @@ public class ExceptionExtensionsTests
 		var result = exception.GetAllInnerExceptions();
 
 		Assert.IsNotNull(result);
-		Assert.AreEqual(1, result.Count);
+		Assert.HasCount(1, result);
 		Assert.AreEqual("Inner exception", result[0].Message);
 	}
 
@@ -264,7 +264,7 @@ public class ExceptionExtensionsTests
 		var result = ex.GetAllMessagesWithStackTrace();
 
 		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Count);
+		Assert.HasCount(2, result);
 		Assert.AreEqual("Outer message", result[0].message);
 		Assert.AreEqual("Inner message", result[1].message);
 		Assert.IsTrue(result[0].StackTrace == "NONE" || !string.IsNullOrWhiteSpace(result[0].StackTrace));
@@ -278,7 +278,7 @@ public class ExceptionExtensionsTests
 		// Not thrown, so StackTrace is likely null
 		var result = ex.GetAllMessagesWithStackTrace();
 
-		Assert.AreEqual(1, result.Count);
+		Assert.HasCount(1, result);
 		Assert.AreEqual("Test message", result[0].message);
 		Assert.IsTrue(result[0].StackTrace == "NONE" || !string.IsNullOrWhiteSpace(result[0].StackTrace));
 	}
@@ -307,7 +307,7 @@ public class ExceptionExtensionsTests
 
 		// Assert
 		Assert.IsTrue(metadata.ContainsKey("IsLogged"));
-		Assert.AreEqual(true, metadata["IsLogged"]);
+		Assert.IsTrue((bool?)metadata["IsLogged"]);
 	}
 
 
@@ -540,8 +540,7 @@ public class ExceptionExtensionsTests
 		Assert.IsTrue(exception.IsLogged());
 	}
 
-	[TestInitialize]
-	public void Setup()
+	public ExceptionExtensionsTests()
 	{
 		this._logger = new NullLogger<FastLoggerExtensionsTests>();
 	}
@@ -556,8 +555,8 @@ public class ExceptionExtensionsTests
 		var json = exception.ToJson();
 
 		// Assert
-		Assert.IsTrue(json.Contains("Test exception"));
-		Assert.IsTrue(json.Contains("Inner exception"));
+		Assert.Contains("Test exception", json);
+		Assert.Contains("Inner exception", json);
 	}
 
 	[TestMethod]

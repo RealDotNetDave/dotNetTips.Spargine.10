@@ -51,7 +51,7 @@ public class EnumerationTests
 	[TestMethod]
 	public void AbsoluteDifferenceTest()
 	{
-		Assert.IsTrue(DateTimeFormat.AbsoluteDifference(DateTimeFormat.MonthDay, DateTimeFormat.MonthYear) > 0);
+		Assert.IsGreaterThan(0, DateTimeFormat.AbsoluteDifference(DateTimeFormat.MonthDay, DateTimeFormat.MonthYear));
 	}
 
 	[TestMethod]
@@ -69,9 +69,9 @@ public class EnumerationTests
 		var numericFormat2 = NumericFormat.Decimal;
 		var numericFormat3 = NumericFormat.Currency;
 
-		Assert.IsTrue(numericFormat1.CompareTo(numericFormat2) < 0);
-		Assert.IsTrue(numericFormat2.CompareTo(numericFormat1) > 0);
-		Assert.IsTrue(numericFormat1.CompareTo(numericFormat3) == 0);
+		Assert.IsLessThan(0, numericFormat1.CompareTo(numericFormat2));
+		Assert.IsGreaterThan(0, numericFormat2.CompareTo(numericFormat1));
+		Assert.AreEqual(0, numericFormat1.CompareTo(numericFormat3));
 	}
 
 	[TestMethod]
@@ -155,10 +155,10 @@ public class EnumerationTests
 	public void GetAll_ReturnsAllEnumerationInstances()
 	{
 		var allNumericFormats = Enumeration.GetAll<NumericFormat>().ToList();
-		Assert.AreEqual(9, allNumericFormats.Count);
-		Assert.IsTrue(allNumericFormats.Contains(NumericFormat.Currency));
-		Assert.IsTrue(allNumericFormats.Contains(NumericFormat.Decimal));
-		Assert.IsTrue(allNumericFormats.Contains(NumericFormat.Percent));
+		Assert.HasCount(9, allNumericFormats);
+		Assert.Contains(NumericFormat.Currency, allNumericFormats);
+		Assert.Contains(NumericFormat.Decimal, allNumericFormats);
+		Assert.Contains(NumericFormat.Percent, allNumericFormats);
 	}
 
 

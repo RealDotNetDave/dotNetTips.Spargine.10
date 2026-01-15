@@ -135,7 +135,7 @@ public class DictionaryExtensionsTests
 		var result = dict.AddRange(items, keyFunc, valueFunc);
 
 		Assert.IsTrue(result);
-		Assert.AreEqual(2, dict.Count);
+		Assert.HasCount(2, dict);
 		Assert.AreEqual(1, dict["a"]);
 		Assert.AreEqual(1, dict["b"]);
 	}
@@ -176,10 +176,10 @@ public class DictionaryExtensionsTests
 		var newPeople = RandomData.GeneratePersonRefCollection(2).ToDictionary(p => p.Id);
 
 		var result = people.AddRange(newPeople, true);
-		Assert.IsTrue(people.Count == CollectionCount + 2);
+		Assert.AreEqual(CollectionCount + 2, people.Count);
 
 		result = people.AddRange(newPeople, true);
-		Assert.IsTrue(people.Count == CollectionCount + 2);
+		Assert.AreEqual(CollectionCount + 2, people.Count);
 	}
 
 	[TestMethod]
@@ -219,7 +219,7 @@ public class DictionaryExtensionsTests
 	{
 		var people1 = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
 
-		Assert.IsTrue(people1.Count == CollectionCount);
+		Assert.AreEqual(CollectionCount, people1.Count);
 
 	}
 
@@ -237,10 +237,10 @@ public class DictionaryExtensionsTests
 
 		// TEST
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
-		Assert.IsTrue(people.Count == CollectionCount + 1);
+		Assert.AreEqual(CollectionCount + 1, people.Count);
 
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
-		Assert.IsTrue(people.Count == CollectionCount + 1);
+		Assert.AreEqual(CollectionCount + 1, people.Count);
 	}
 
 	/// <summary>
@@ -324,7 +324,7 @@ public class DictionaryExtensionsTests
 		var result = people.ToFrozenDictionary();
 
 		Assert.IsTrue(result.IsNotEmpty());
-		Assert.AreEqual(people.Count, result.Count);
+		Assert.HasCount(people.Count, result);
 		foreach (var kvp in people)
 		{
 			Assert.IsTrue(result.ContainsKey(kvp.Key));
@@ -341,7 +341,7 @@ public class DictionaryExtensionsTests
 		var result = emptyDictionary.ToFrozenDictionary();
 
 		Assert.IsFalse(result.IsNotEmpty());
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -370,7 +370,7 @@ public class DictionaryExtensionsTests
 		var result = people.ToImmutableSortedDictionary();
 
 		Assert.IsTrue(result.IsNotEmpty());
-		Assert.AreEqual(people.Count, result.Count);
+		Assert.HasCount(people.Count, result);
 		foreach (var kvp in people)
 		{
 			Assert.IsTrue(result.ContainsKey(kvp.Key));
@@ -386,7 +386,7 @@ public class DictionaryExtensionsTests
 		var result = emptyDictionary.ToImmutableSortedDictionary();
 
 		Assert.IsFalse(result.IsNotEmpty());
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -454,7 +454,7 @@ public class DictionaryExtensionsTests
 
 		// Test
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == CollectionCount);
+		Assert.AreEqual(CollectionCount, result.Count);
 	}
 
 	[TestMethod]
@@ -466,7 +466,7 @@ public class DictionaryExtensionsTests
 
 		// Test
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == CollectionCount);
+		Assert.AreEqual(CollectionCount, result.Count);
 	}
 
 	[TestMethod]
@@ -486,7 +486,7 @@ public class DictionaryExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.AreEqual(new[] { "c", "b", "a" }, result.Keys.ToArray());
 	}
 
@@ -507,7 +507,7 @@ public class DictionaryExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.AreEqual(new[] { "a", "b", "c" }, result.Keys.ToArray());
 	}
 
@@ -523,7 +523,7 @@ public class DictionaryExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -646,13 +646,13 @@ public class DictionaryExtensionsTests
 
 		// Test
 		people.Upsert(newPerson.Id, newPerson);
-		Assert.IsTrue(people.Count == CollectionCount + 1);
+		Assert.AreEqual(CollectionCount + 1, people.Count);
 
 		people.Upsert(personFromCollection.Value.Id, personFromCollection.Value);
-		Assert.IsTrue(people.Count == CollectionCount + 1);
+		Assert.AreEqual(CollectionCount + 1, people.Count);
 
 		people.Upsert(personFromCollection.Value.Id, null);
-		Assert.IsTrue(people.Count == CollectionCount + 1);
+		Assert.AreEqual(CollectionCount + 1, people.Count);
 	}
 }
 

@@ -39,7 +39,7 @@ public class PersonRecordRefTests
 		var addresses = new Collection<AddressRecord> { new AddressRecord("1234567890") };
 		var record = new PersonRecord("email@email.com", "1234567890") { Addresses = addresses };
 		Assert.AreNotSame(addresses, record.Addresses);
-		Assert.AreEqual(addresses.Count, record.Addresses.Count);
+		Assert.HasCount(addresses.Count, record.Addresses);
 	}
 
 	[TestMethod]
@@ -95,7 +95,7 @@ public class PersonRecordRefTests
 		var person = new PersonRecord(email: "test@example.com", id: "1234567890");
 		var other = new PersonRecord(email: "other@example.com", id: "1234567891");
 		var result = person.CompareTo(other);
-		Assert.IsTrue(result < 0);
+		Assert.IsLessThan(0, result);
 	}
 
 	[TestMethod]
@@ -104,7 +104,7 @@ public class PersonRecordRefTests
 		var person = new PersonRecord(email: "test@example.com", id: "1234567891");
 		var other = new PersonRecord(email: "other@example.com", id: "1234567890");
 		var result = person.CompareTo(other);
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -193,8 +193,8 @@ public class PersonRecordRefTests
 
 		// Act & Assert
 		Assert.AreEqual(0, person1.CompareTo(person2));
-		Assert.IsTrue(person1.CompareTo(person3) < 0);
-		Assert.IsTrue(person3.CompareTo(person1) > 0);
+		Assert.IsLessThan(0, person1.CompareTo(person3));
+		Assert.IsGreaterThan(0, person3.CompareTo(person1));
 	}
 
 	[TestMethod]
@@ -350,7 +350,7 @@ public class PersonRecordRefTests
 		Assert.AreEqual(person.BornOn, personRecord.BornOn);
 		Assert.AreEqual(person.CellPhone, personRecord.CellPhone);
 		Assert.AreEqual(person.Phone, personRecord.Phone);
-		Assert.AreEqual(person.Addresses.Count, personRecord.Addresses.Count);
+		Assert.HasCount(person.Addresses.Count, personRecord.Addresses);
 	}
 
 	[TestMethod]
@@ -412,7 +412,7 @@ public class PersonRecordRefTests
 		var record = new PersonRecord("email@email.com", "1234567890");
 		var str = record.ToString();
 		Assert.IsFalse(string.IsNullOrWhiteSpace(str));
-		Assert.IsTrue(str.Contains("Email"));
+		Assert.Contains("Email", str);
 	}
 
 	[TestMethod]

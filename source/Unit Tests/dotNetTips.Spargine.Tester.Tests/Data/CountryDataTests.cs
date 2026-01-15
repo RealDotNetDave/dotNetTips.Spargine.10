@@ -36,7 +36,7 @@ public class CountryDataTests
 	{
 		var countries = CountryRepository.GetCountries();
 		Assert.IsNotNull(countries);
-		Assert.IsTrue(countries.Count > 0);
+		Assert.IsNotEmpty(countries);
 	}
 
 	[TestMethod]
@@ -52,7 +52,7 @@ public class CountryDataTests
 
 		JsonSerialization.SerializeToFile(data, file, options);
 
-		Assert.IsTrue(countries.Count == 250);
+		Assert.AreEqual(250, countries.Count);
 	}
 
 	[TestMethod]
@@ -62,7 +62,7 @@ public class CountryDataTests
 
 		Assert.IsNotNull(countries);
 
-		Assert.IsTrue(countries.Count == 250);
+		Assert.AreEqual(250, countries.Count);
 	}
 
 	[TestMethod]

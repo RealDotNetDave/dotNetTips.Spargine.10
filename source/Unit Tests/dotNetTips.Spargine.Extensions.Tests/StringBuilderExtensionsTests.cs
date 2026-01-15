@@ -39,7 +39,7 @@ public class StringBuilderExtensionsTests
 
 		sb.AppendBytes(null);
 
-		Assert.IsTrue(sb.Length == 0);
+		Assert.AreEqual(0, sb.Length);
 	}
 
 	[TestMethod]
@@ -49,7 +49,7 @@ public class StringBuilderExtensionsTests
 		var byteArray = RandomData.GenerateByteArray(256);
 		sb.AppendBytes(byteArray);
 
-		Assert.IsTrue(sb.Length > 50);
+		Assert.IsGreaterThan(50, sb.Length);
 	}
 
 	[TestMethod]
@@ -67,7 +67,7 @@ public class StringBuilderExtensionsTests
 			sb.AppendKeyValue(person.Key, person.Value.Email, includeQuotes: true, includeComma: true);
 		}
 
-		Assert.IsTrue(sb.ToString().Length > 50 * 4);
+		Assert.IsGreaterThan(50 * 4, sb.ToString().Length);
 
 		var pool = new StringBuilder();
 
@@ -79,7 +79,7 @@ public class StringBuilderExtensionsTests
 			pool.AppendKeyValue(person.Key, person.Value.Email, includeQuotes: true, includeComma: true);
 		}
 
-		Assert.IsTrue(pool.ToString().Length > 50 * 4);
+		Assert.IsGreaterThan(50 * 4, pool.ToString().Length);
 	}
 
 	[TestMethod]
@@ -90,13 +90,13 @@ public class StringBuilderExtensionsTests
 
 		sb.AppendValues(ControlChars.CommaSpace, values);
 
-		Assert.IsTrue(sb.Length > 10);
+		Assert.IsGreaterThan(10, sb.Length);
 
 		var pool = new StringBuilder();
 
 		pool.AppendValues(", ", values);
 
-		Assert.IsTrue(pool.Length > 10);
+		Assert.IsGreaterThan(10, pool.Length);
 	}
 
 	[TestMethod]
@@ -106,13 +106,13 @@ public class StringBuilderExtensionsTests
 
 		sb.AppendValues(", ", RandomData.GenerateWord(100), RandomData.GenerateWord(100));
 
-		Assert.IsTrue(sb.Length > 10);
+		Assert.IsGreaterThan(10, sb.Length);
 
 		var pool = new StringBuilder();
 
 		pool.AppendValues(", ", RandomData.GenerateWord(100), RandomData.GenerateWord(100));
 
-		Assert.IsTrue(pool.Length > 10);
+		Assert.IsGreaterThan(10, pool.Length);
 	}
 
 
@@ -129,7 +129,7 @@ public class StringBuilderExtensionsTests
 			_ = sb.AppendFormat(fmt, person.FirstName, person.LastName);
 		});
 
-		Assert.IsTrue(sb.Length > 0, "StringBuilder should contain formatted values.");
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain formatted values.");
 
 		var pool = new StringBuilder();
 
@@ -138,7 +138,7 @@ public class StringBuilderExtensionsTests
 			_ = pool.AppendFormat(fmt, person.FirstName, person.LastName);
 		});
 
-		Assert.IsTrue(pool.Length > 0, "StringBuilder should contain formatted values in the pool instance.");
+		Assert.IsGreaterThan(0, pool.Length, "StringBuilder should contain formatted values in the pool instance.");
 	}
 
 	[TestMethod]
@@ -179,7 +179,7 @@ public class StringBuilderExtensionsTests
 			_ = builder.AppendFormat(format, person.FirstName, person.LastName, person.Addresses, param1, param2);
 		});
 
-		Assert.IsTrue(sb.Length > 0, "StringBuilder should contain formatted values.");
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain formatted values.");
 		var pool = new StringBuilder();
 
 		pool.AppendValues(separator, values, "ExtraParam1", "ExtraParam2", (StringBuilder builder, Person person, string param1, string param2) =>
@@ -187,7 +187,7 @@ public class StringBuilderExtensionsTests
 			_ = builder.AppendFormat(format, person.FirstName, person.LastName, person.Addresses, param1, param2);
 		});
 
-		Assert.IsTrue(pool.Length > 0, "StringBuilder should contain formatted values in the pool instance.");
+		Assert.IsGreaterThan(0, pool.Length, "StringBuilder should contain formatted values in the pool instance.");
 	}
 
 	[TestMethod]
@@ -197,7 +197,7 @@ public class StringBuilderExtensionsTests
 		int newCapacity = -1;
 
 		// Ensure the StringBuilder has initial content
-		Assert.IsTrue(sb.Length > 0, "StringBuilder should have initial content.");
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should have initial content.");
 
 		// Call ClearSetCapacity
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => sb.ClearSetCapacity(newCapacity));
@@ -206,7 +206,7 @@ public class StringBuilderExtensionsTests
 		Assert.AreEqual(0, sb.Length, "StringBuilder should be cleared.");
 
 		// Verify the capacity is set correctly
-		Assert.IsTrue(sb.Capacity >= 0, "StringBuilder capacity should be non-negative.");
+		Assert.IsGreaterThanOrEqualTo(0, sb.Capacity, "StringBuilder capacity should be non-negative.");
 	}
 	[TestMethod]
 	public void ClearSetCapacityTest()
@@ -215,7 +215,7 @@ public class StringBuilderExtensionsTests
 		int newCapacity = 100;
 
 		// Ensure the StringBuilder has initial content
-		Assert.IsTrue(sb.Length > 0, "StringBuilder should have initial content.");
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should have initial content.");
 
 		// Call ClearSetCapacity
 		sb.ClearSetCapacity(newCapacity);
@@ -233,7 +233,7 @@ public class StringBuilderExtensionsTests
 		var sb = new StringBuilder("Initial content");
 
 		// Ensure the StringBuilder has initial content
-		Assert.IsTrue(sb.Length > 0, "StringBuilder should have initial content.");
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should have initial content.");
 
 		// Call ClearSetCapacity
 		_ = sb.ClearSetCapacity(0);
@@ -265,7 +265,7 @@ public class StringBuilderExtensionsTests
 		// Verify content and length are preserved
 		Assert.AreEqual(contentBeforeCapacity, sb.ToString(), "Content should be preserved after SetCapacity.");
 		Assert.AreEqual(lengthBeforeCapacity, sb.Length, "Length should be preserved after SetCapacity.");
-		Assert.IsTrue(sb.Capacity >= 500, "Capacity should be at least 500.");
+		Assert.IsGreaterThanOrEqualTo(500, sb.Capacity, "Capacity should be at least 500.");
 	}
 
 	[TestMethod]
@@ -277,7 +277,7 @@ public class StringBuilderExtensionsTests
 		// Use SetCapacity (preserves content)
 		sb1.SetCapacity(100);
 		Assert.AreEqual("Test Content", sb1.ToString(), "SetCapacity should preserve content.");
-		Assert.IsTrue(sb1.Capacity >= 100, "Capacity should be set correctly.");
+		Assert.IsGreaterThanOrEqualTo(100, sb1.Capacity, "Capacity should be set correctly.");
 
 		// Use ClearSetCapacity (clears content)
 		sb2.ClearSetCapacity(100);
@@ -298,7 +298,7 @@ public class StringBuilderExtensionsTests
 
 		Assert.AreSame(sb, result, "Method chaining should return the same StringBuilder instance.");
 		Assert.AreEqual(testString, sb.ToString(), "Content should match after chained operations.");
-		Assert.IsTrue(sb.Capacity >= 200, "Final capacity should be at least 200.");
+		Assert.IsGreaterThanOrEqualTo(200, sb.Capacity, "Final capacity should be at least 200.");
 	}
 
 	[TestMethod]
@@ -308,13 +308,13 @@ public class StringBuilderExtensionsTests
 
 		// Call SetCapacity multiple times with increasing capacities
 		sb.SetCapacity(50);
-		Assert.IsTrue(sb.Capacity >= 50, "First capacity should be at least 50.");
+		Assert.IsGreaterThanOrEqualTo(50, sb.Capacity, "First capacity should be at least 50.");
 
 		sb.SetCapacity(100);
-		Assert.IsTrue(sb.Capacity >= 100, "Second capacity should be at least 100.");
+		Assert.IsGreaterThanOrEqualTo(100, sb.Capacity, "Second capacity should be at least 100.");
 
 		sb.SetCapacity(200);
-		Assert.IsTrue(sb.Capacity >= 200, "Third capacity should be at least 200.");
+		Assert.IsGreaterThanOrEqualTo(200, sb.Capacity, "Third capacity should be at least 200.");
 
 		// Content should be preserved through all calls
 		Assert.AreEqual("Initial", sb.ToString(), "Content should be preserved after multiple SetCapacity calls.");
@@ -371,7 +371,7 @@ public class StringBuilderExtensionsTests
 		Assert.AreEqual("Hello World", sb.ToString(), "StringBuilder content should be preserved.");
 
 		// Verify the capacity is set correctly
-		Assert.IsTrue(sb.Capacity >= newCapacity, "StringBuilder capacity should be at least the requested capacity.");
+		Assert.IsGreaterThanOrEqualTo(newCapacity, sb.Capacity, "StringBuilder capacity should be at least the requested capacity.");
 
 		// Verify method chaining works
 		Assert.AreSame(sb, result, "SetCapacity should return the same StringBuilder instance for chaining.");
@@ -387,7 +387,7 @@ public class StringBuilderExtensionsTests
 		sb.SetCapacity(newCapacity);
 
 		// Verify the capacity is set correctly
-		Assert.IsTrue(sb.Capacity >= newCapacity, "StringBuilder capacity should be at least the requested capacity.");
+		Assert.IsGreaterThanOrEqualTo(newCapacity, sb.Capacity, "StringBuilder capacity should be at least the requested capacity.");
 		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty.");
 	}
 
@@ -415,7 +415,7 @@ public class StringBuilderExtensionsTests
 
 		// Verify the StringBuilder remains valid
 		Assert.AreEqual(0, sb.Length, "StringBuilder length should be zero.");
-		Assert.IsTrue(sb.Capacity >= 0, "StringBuilder capacity should be non-negative.");
+		Assert.IsGreaterThanOrEqualTo(0, sb.Capacity, "StringBuilder capacity should be non-negative.");
 	}
 
 }

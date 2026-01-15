@@ -38,7 +38,7 @@ public class TempFileManagerTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(filePath));
-			Assert.IsTrue(manager.GetManagedFiles().Contains(filePath));
+			Assert.Contains(filePath, manager.GetManagedFiles());
 		}
 	}
 
@@ -54,11 +54,11 @@ public class TempFileManagerTests
 			var files = manager.CreateFiles(fileCount);
 
 			// Assert
-			Assert.AreEqual(fileCount, files.Count);
+			Assert.HasCount(fileCount, files);
 			foreach (var file in files)
 			{
 				Assert.IsTrue(File.Exists(file));
-				Assert.IsTrue(manager.GetManagedFiles().Contains(file));
+				Assert.Contains(file, manager.GetManagedFiles());
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class TempFileManagerTests
 			manager.DeleteAllFiles();
 
 			// Assert
-			Assert.AreEqual(0, manager.GetManagedFiles().Count);
+			Assert.IsEmpty(manager.GetManagedFiles());
 		}
 	}
 
@@ -93,7 +93,7 @@ public class TempFileManagerTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(filePath));
-			Assert.IsTrue(manager.GetManagedFiles().Contains(filePath));
+			Assert.Contains(filePath, manager.GetManagedFiles());
 		}
 	}
 
@@ -122,7 +122,7 @@ public class TempFileManagerTests
 
 			// Assert
 			Assert.IsFalse(File.Exists(filePath));
-			Assert.IsFalse(manager.GetManagedFiles().Contains(filePath));
+			Assert.DoesNotContain(filePath, manager.GetManagedFiles());
 		}
 	}
 
@@ -138,7 +138,7 @@ public class TempFileManagerTests
 			manager.Dispose();
 
 			// Assert
-			Assert.AreEqual(0, manager.GetManagedFiles().Count);
+			Assert.IsEmpty(manager.GetManagedFiles());
 		}
 	}
 
@@ -169,7 +169,7 @@ public class TempFileManagerTests
 		await (manager as IAsyncDisposable).DisposeAsync();
 
 		// Assert
-		Assert.AreEqual(0, manager.GetManagedFiles().Count);
+		Assert.IsEmpty(manager.GetManagedFiles());
 	}
 
 	[TestMethod]
@@ -195,7 +195,7 @@ public class TempFileManagerTests
 		await (manager as IAsyncDisposable).DisposeAsync();
 
 		// Assert
-		Assert.AreEqual(0, manager.GetManagedFiles().Count);
+		Assert.IsEmpty(manager.GetManagedFiles());
 	}
 
 	[TestMethod]

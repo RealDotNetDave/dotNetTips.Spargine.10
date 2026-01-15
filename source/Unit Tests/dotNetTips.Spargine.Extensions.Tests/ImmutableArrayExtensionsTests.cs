@@ -141,7 +141,7 @@ public class ImmutableArrayExtensionsTests
 	{
 		var array = ImmutableArray.Create(1, 2, 3, 4, 5);
 		var shuffled = array.FastShuffle();
-		Assert.AreEqual(array.Length, shuffled.Length);
+		Assert.HasCount(array.Length, shuffled);
 		CollectionAssert.AreEquivalent(array.ToArray(), shuffled.ToArray());
 	}
 
@@ -150,7 +150,7 @@ public class ImmutableArrayExtensionsTests
 	{
 		var array = ImmutableArray.Create(42);
 		var shuffled = array.FastShuffle();
-		Assert.AreEqual(1, shuffled.Length);
+		Assert.HasCount(1, shuffled);
 		Assert.AreEqual(42, shuffled[0]);
 	}
 }

@@ -32,7 +32,7 @@ public class PersonComparerByLastNameTests
 
 		int result = comparer.Compare(person1, person2);
 
-		Assert.IsTrue(result < 0);
+		Assert.IsLessThan(0, result);
 	}
 
 	[TestMethod]
@@ -41,7 +41,7 @@ public class PersonComparerByLastNameTests
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Adams" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
-		Assert.IsTrue(comparer.Compare(p1, p2) < 0);
+		Assert.IsLessThan(0, comparer.Compare(p1, p2));
 	}
 
 	[TestMethod]
@@ -50,7 +50,7 @@ public class PersonComparerByLastNameTests
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890");
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
-		Assert.IsTrue(comparer.Compare(p1, p2) < 0);
+		Assert.IsLessThan(0, comparer.Compare(p1, p2));
 	}
 
 	[TestMethod]
@@ -62,7 +62,7 @@ public class PersonComparerByLastNameTests
 
 		int result = comparer.Compare(person1, person2);
 
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -71,7 +71,7 @@ public class PersonComparerByLastNameTests
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Adams" };
-		Assert.IsTrue(comparer.Compare(p1, p2) > 0);
+		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
 	}
 
 	[TestMethod]
@@ -80,7 +80,7 @@ public class PersonComparerByLastNameTests
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ");
-		Assert.IsTrue(comparer.Compare(p1, p2) > 0);
+		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
 	}
 
 	[TestMethod]
@@ -116,7 +116,7 @@ public class PersonComparerByLastNameTests
 		var comparer = new PersonComparerByLastName();
 		Person p1 = null;
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
-		Assert.IsTrue(comparer.Compare(p1, p2) < 0);
+		Assert.IsLessThan(0, comparer.Compare(p1, p2));
 	}
 
 	[TestMethod]
@@ -125,6 +125,6 @@ public class PersonComparerByLastNameTests
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		Person p2 = null;
-		Assert.IsTrue(comparer.Compare(p1, p2) > 0);
+		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
 	}
 }

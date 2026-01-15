@@ -135,9 +135,9 @@ public class FastStringBuilderTests
 
 		var result = FastStringBuilder.Concat(delimiter: ControlChars.Plus, addLineFeed: false, args: strings);
 
-		Assert.IsTrue(string.IsNullOrEmpty(result) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
-		Assert.IsTrue(FastStringBuilder.Concat(null) == ControlChars.EmptyString);
+		Assert.AreEqual(ControlChars.EmptyString, FastStringBuilder.Concat(null));
 	}
 
 	[TestMethod]
@@ -147,13 +147,13 @@ public class FastStringBuilderTests
 
 		var result = FastStringBuilder.Concat(ControlChars.CommaSpace.ToString(), false, strings);
 
-		Assert.IsTrue(string.IsNullOrEmpty(result) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
 		result = FastStringBuilder.Concat(ControlChars.CommaSpace.ToString(), true, strings);
 
-		Assert.IsTrue(string.IsNullOrEmpty(result) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
-		Assert.IsTrue(FastStringBuilder.Concat(null) == ControlChars.EmptyString);
+		Assert.AreEqual(ControlChars.EmptyString, FastStringBuilder.Concat(null));
 	}
 
 	[TestMethod]
@@ -233,8 +233,8 @@ public class FastStringBuilderTests
 		var result = FastStringBuilder.PerformAction(capacity, action);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Contains("Item0:"));
-		Assert.IsTrue(result.Contains($"Item{itemCount - 1}:"));
+		Assert.Contains("Item0:", result);
+		Assert.Contains($"Item{itemCount - 1}:", result);
 	}
 
 	[TestMethod]
@@ -267,8 +267,8 @@ public class FastStringBuilderTests
 		var result = FastStringBuilder.PerformAction(capacity, action);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.StartsWith("WORD:"));
-		Assert.IsTrue(result.Contains("|"));
+		Assert.StartsWith("WORD:", result);
+		Assert.Contains("|", result);
 		Assert.AreEqual(strings.Length, result.Count(c => c == '|'));
 	}
 
@@ -327,8 +327,8 @@ public class FastStringBuilderTests
 		var result = FastStringBuilder.PerformAction(capacity, action);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Length > 0);
-		Assert.IsTrue(result.Contains("|"));
+		Assert.IsGreaterThan(0, result.Length);
+		Assert.Contains("|", result);
 	}
 
 	[TestMethod]

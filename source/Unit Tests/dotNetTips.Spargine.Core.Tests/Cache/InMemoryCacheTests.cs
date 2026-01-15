@@ -911,7 +911,7 @@ public class InMemoryCacheTests
 		var cache = InMemoryCache.Instance;
 		cache.Clear();
 		var keys = cache.GetAllKeys().ToList();
-		Assert.AreEqual(0, keys.Count);
+		Assert.IsEmpty(keys);
 	}
 
 	[TestMethod]
@@ -924,8 +924,8 @@ public class InMemoryCacheTests
 		cache.AddCacheItem(key1, "v1");
 		cache.AddCacheItem(key2, "v2");
 		var keys = cache.GetAllKeys().ToList();
-		Assert.IsTrue(keys.Contains(key1));
-		Assert.IsTrue(keys.Contains(key2));
+		Assert.Contains(key1, keys);
+		Assert.Contains(key2, keys);
 		cache.Clear();
 	}
 
@@ -936,7 +936,7 @@ public class InMemoryCacheTests
 		var cache = InMemoryCache.Instance;
 		cache.Clear();
 		var keys = cache.GetAllKeys().ToList();
-		Assert.AreEqual(0, keys.Count);
+		Assert.IsEmpty(keys);
 	}
 
 	[TestMethod]
@@ -1014,7 +1014,7 @@ public class InMemoryCacheTests
 		var result = cache.GetCacheItemBatch<Person>(Enumerable.Empty<string>());
 
 		// Assert
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 		cache.Clear();
 	}
 
@@ -1046,7 +1046,7 @@ public class InMemoryCacheTests
 		var result = cache.GetCacheItemBatch<Person>(keys);
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		foreach (var person in people)
 		{
 			Assert.IsTrue(result.ContainsKey(person.Id));

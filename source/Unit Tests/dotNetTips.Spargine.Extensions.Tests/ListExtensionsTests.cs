@@ -50,7 +50,7 @@ public class ListExtensionsTests
 		list.AddLast(6);
 
 		// Assert
-		Assert.AreEqual(6, list.Count, "List should contain 6 items.");
+		Assert.HasCount(6, list, "List should contain 6 items.");
 		Assert.AreEqual(1, list[0], "First item should be 1.");
 		Assert.AreEqual(2, list[1], "Second item should be 2.");
 		Assert.AreEqual(3, list[2], "Third item should be 3.");
@@ -71,7 +71,7 @@ public class ListExtensionsTests
 		list.AddFirst(1);
 
 		// Assert
-		Assert.AreEqual(6, list.Count, "List should contain 6 items.");
+		Assert.HasCount(6, list, "List should contain 6 items.");
 		Assert.AreEqual(1, list[0], "First item should be 1.");
 		Assert.AreEqual(2, list[1], "Second item should be 2.");
 		Assert.AreEqual(3, list[2], "Third item should be 3.");
@@ -89,7 +89,7 @@ public class ListExtensionsTests
 		list.AddFirst(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(10001, list.Count, "List should contain 10001 items.");
+		Assert.HasCount(10001, list, "List should contain 10001 items.");
 		Assert.AreEqual(itemToAdd, list[0], "First item should be the added item.");
 		Assert.AreEqual(2, list[1], "Second item should be 2.");
 	}
@@ -105,7 +105,7 @@ public class ListExtensionsTests
 		list.AddFirst(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(4, list.Count, "List should have 4 items.");
+		Assert.HasCount(4, list, "List should have 4 items.");
 		Assert.AreEqual(itemToAdd, list[0], "First item should be the newly added item.");
 		Assert.AreEqual("second", list[1], "Second item should remain in second position.");
 		Assert.AreEqual("third", list[2], "Third item should remain in third position.");
@@ -123,7 +123,7 @@ public class ListExtensionsTests
 		list.AddFirst(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(1, list.Count, "List should contain exactly 1 item.");
+		Assert.HasCount(1, list, "List should contain exactly 1 item.");
 		Assert.AreEqual(itemToAdd, list[0], "The first (and only) item should be the added item.");
 	}
 
@@ -150,7 +150,7 @@ public class ListExtensionsTests
 		list.AddFirst(personToAdd);
 
 		// Assert
-		Assert.AreEqual(1, list.Count, "List should contain exactly 1 person.");
+		Assert.HasCount(1, list, "List should contain exactly 1 person.");
 		Assert.AreSame(personToAdd, list[0], "The added person should be the same reference.");
 	}
 
@@ -165,7 +165,7 @@ public class ListExtensionsTests
 		list.AddFirst(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(5, list.Count, "List should contain 5 items after adding one.");
+		Assert.HasCount(5, list, "List should contain 5 items after adding one.");
 		Assert.AreEqual(itemToAdd, list[0], "The first item should be the added item.");
 		Assert.AreEqual(2, list[1], "The second item should be 2.");
 	}
@@ -181,7 +181,7 @@ public class ListExtensionsTests
 		list.AddFirst(valueToAdd);
 
 		// Assert
-		Assert.AreEqual(4, list.Count, "List should contain 4 decimal values.");
+		Assert.HasCount(4, list, "List should contain 4 decimal values.");
 		Assert.AreEqual(valueToAdd, list[0], "First value should be the added decimal.");
 	}
 
@@ -197,7 +197,7 @@ public class ListExtensionsTests
 		list.AddLast(6);
 
 		// Assert
-		Assert.AreEqual(6, list.Count, "List should contain 6 items.");
+		Assert.HasCount(6, list, "List should contain 6 items.");
 		Assert.AreEqual(4, list[3], "Fourth item should be 4.");
 		Assert.AreEqual(5, list[4], "Fifth item should be 5.");
 		Assert.AreEqual(6, list[5], "Sixth item should be 6.");
@@ -214,7 +214,7 @@ public class ListExtensionsTests
 		list.AddLast(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(10001, list.Count, "List should contain 10001 items.");
+		Assert.HasCount(10001, list, "List should contain 10001 items.");
 		Assert.AreEqual(itemToAdd, list[10000], "Last item should be the added item.");
 	}
 
@@ -229,7 +229,7 @@ public class ListExtensionsTests
 		list.AddLast(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(4, list.Count, "List should have 4 items.");
+		Assert.HasCount(4, list, "List should have 4 items.");
 		Assert.AreEqual("first", list[0], "First item should remain unchanged.");
 		Assert.AreEqual("second", list[1], "Second item should remain unchanged.");
 		Assert.AreEqual("third", list[2], "Third item should remain unchanged.");
@@ -247,7 +247,7 @@ public class ListExtensionsTests
 		list.AddLast(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(1, list.Count, "List should contain exactly 1 item.");
+		Assert.HasCount(1, list, "List should contain exactly 1 item.");
 		Assert.AreEqual(itemToAdd, list[0], "The first (and only) item should be the added item.");
 	}
 
@@ -273,7 +273,7 @@ public class ListExtensionsTests
 		list.AddLast(personToAdd);
 
 		// Assert
-		Assert.AreEqual(1, list.Count, "List should contain exactly 1 person.");
+		Assert.HasCount(1, list, "List should contain exactly 1 person.");
 		Assert.AreSame(personToAdd, list[0], "The added person should be the same reference.");
 	}
 
@@ -288,7 +288,7 @@ public class ListExtensionsTests
 		list.AddLast(itemToAdd);
 
 		// Assert
-		Assert.AreEqual(6, list.Count, "List should contain 6 items after adding one.");
+		Assert.HasCount(6, list, "List should contain 6 items after adding one.");
 		Assert.AreEqual(itemToAdd, list[5], "The last item should be the added item.");
 	}
 
@@ -303,7 +303,7 @@ public class ListExtensionsTests
 		list.AddLast(valueToAdd);
 
 		// Assert
-		Assert.AreEqual(4, list.Count, "List should contain 4 decimal values.");
+		Assert.HasCount(4, list, "List should contain 4 decimal values.");
 		Assert.AreEqual(valueToAdd, list[3], "Last value should be the added decimal.");
 	}
 
@@ -315,7 +315,7 @@ public class ListExtensionsTests
 
 		list.AddRangeIfNotExists(itemsToAdd, new PersonEmailEqualityComparer());
 
-		Assert.AreEqual(1010, list.Count);
+		Assert.HasCount(1010, list);
 	}
 
 	[TestMethod]
@@ -326,7 +326,7 @@ public class ListExtensionsTests
 
 		list.AddRangeIfNotExists(itemsToAdd);
 
-		Assert.AreEqual(1010, list.Count);
+		Assert.HasCount(1010, list);
 	}
 
 	[TestMethod]
@@ -337,12 +337,12 @@ public class ListExtensionsTests
 
 		list.AddRangeIfNotExists(itemsToAdd);
 
-		Assert.AreEqual(5, list.Count);
-		Assert.IsTrue(list.Contains(1));
-		Assert.IsTrue(list.Contains(2));
-		Assert.IsTrue(list.Contains(3));
-		Assert.IsTrue(list.Contains(4));
-		Assert.IsTrue(list.Contains(5));
+		Assert.HasCount(5, list);
+		Assert.Contains(1, list);
+		Assert.Contains(2, list);
+		Assert.Contains(3, list);
+		Assert.Contains(4, list);
+		Assert.Contains(5, list);
 	}
 
 	[TestMethod]
@@ -397,7 +397,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result, "Expected true when clearing nulls from a collection with all nulls.");
-		Assert.AreEqual(0, collection.Count, "Expected the collection count to be zero after clearing all nulls.");
+		Assert.IsEmpty(collection, "Expected the collection count to be zero after clearing all nulls.");
 	}
 
 	[TestMethod]
@@ -411,7 +411,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result, "Expected false when clearing nulls from an empty collection.");
-		Assert.AreEqual(0, collection.Count, "Expected the collection count to remain zero.");
+		Assert.IsEmpty(collection, "Expected the collection count to remain zero.");
 	}
 
 	[TestMethod]
@@ -425,7 +425,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result, "Expected false when clearing nulls from a collection with no nulls.");
-		Assert.AreEqual(3, collection.Count, "Expected the collection count to remain unchanged.");
+		Assert.HasCount(3, collection, "Expected the collection count to remain unchanged.");
 	}
 
 	[TestMethod]
@@ -452,8 +452,8 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result, "Expected true when clearing nulls from a collection with nulls.");
-		Assert.AreEqual(3, collection.Count, "Expected the collection count to be reduced by the number of nulls.");
-		Assert.IsFalse(collection.Contains(null), "Expected the collection to no longer contain nulls.");
+		Assert.HasCount(3, collection, "Expected the collection count to be reduced by the number of nulls.");
+		Assert.DoesNotContain(null, collection, "Expected the collection to no longer contain nulls.");
 	}
 
 	[TestMethod]
@@ -464,12 +464,12 @@ public class ListExtensionsTests
 
 		list = list.FastShuffle();
 
-		Assert.AreEqual(5, list.Count);
-		Assert.IsTrue(list.Contains(1));
-		Assert.IsTrue(list.Contains(2));
-		Assert.IsTrue(list.Contains(3));
-		Assert.IsTrue(list.Contains(4));
-		Assert.IsTrue(list.Contains(5));
+		Assert.HasCount(5, list);
+		Assert.Contains(1, list);
+		Assert.Contains(2, list);
+		Assert.Contains(3, list);
+		Assert.Contains(4, list);
+		Assert.Contains(5, list);
 		CollectionAssert.AreNotEqual(originalList, list);
 	}
 
@@ -480,7 +480,7 @@ public class ListExtensionsTests
 
 		var result = people.GenerateHashCode();
 
-		Assert.IsFalse(result == 0, "Hash code should be greater than zero for a non-empty list of records.");
+		Assert.AreNotEqual(0, result, "Hash code should be greater than zero for a non-empty list of records.");
 	}
 
 	[TestMethod]
@@ -740,7 +740,7 @@ public class ListExtensionsTests
 
 		words.PerformAction((word) => _ = sb.Append($"WORD:{word}|"));
 
-		Assert.IsTrue(sb.Length > Count);
+		Assert.IsGreaterThan(Count, sb.Length);
 	}
 
 	[TestMethod]
@@ -771,7 +771,7 @@ public class ListExtensionsTests
 		var result = list.RemoveFirst(2);
 
 		Assert.IsTrue(result);
-		Assert.AreEqual(4, list.Count);
+		Assert.HasCount(4, list);
 		Assert.AreEqual(1, list[0]);
 		Assert.AreEqual(3, list[1]);
 		Assert.AreEqual(2, list[2]);
@@ -786,7 +786,7 @@ public class ListExtensionsTests
 		var result = list.RemoveLast(2);
 
 		Assert.IsTrue(result);
-		Assert.AreEqual(4, list.Count);
+		Assert.HasCount(4, list);
 		Assert.AreEqual(1, list[0]);
 		Assert.AreEqual(2, list[1]);
 		Assert.AreEqual(3, list[2]);
@@ -803,7 +803,7 @@ public class ListExtensionsTests
 
 		var shuffledPeople = people.Shuffle();
 
-		Assert.IsTrue(people.Count == shuffledPeople.Count());
+		Assert.AreEqual(shuffledPeople.Count(), people.Count);
 	}
 
 	[TestMethod]
@@ -812,7 +812,7 @@ public class ListExtensionsTests
 		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 		var result = list.Split(3);
 
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, result[0]);
 		CollectionAssert.AreEqual(new List<int> { 4, 5, 6 }, result[1]);
 		CollectionAssert.AreEqual(new List<int> { 7, 8, 9 }, result[2]);
@@ -827,7 +827,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 
@@ -843,7 +843,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.IsInstanceOfType(result, typeof(Collection<int>), "Result should be of type Collection<int>.");
-		Assert.AreEqual(0, result.Count, "Resulting collection should be empty.");
+		Assert.IsEmpty(result, "Resulting collection should be empty.");
 	}
 
 	[TestMethod]
@@ -858,7 +858,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.IsInstanceOfType(result, typeof(Collection<int>), "Result should be of type Collection<int>.");
-		Assert.AreEqual(list.Count, result.Count, "Resulting collection should have the same count as the source list.");
+		Assert.HasCount(list.Count, result, "Resulting collection should have the same count as the source list.");
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], result[i], $"Item at index {i} should be equal in both list and resulting collection.");
@@ -899,7 +899,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 
 		Assert.IsTrue(result.IsAddingCompleted);
 	}
@@ -921,7 +921,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
@@ -936,7 +936,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(list.Count, result.Count, "Resulting list should have the same count as the source list.");
+		Assert.HasCount(list.Count, result, "Resulting list should have the same count as the source list.");
 	}
 
 	[TestMethod]
@@ -950,7 +950,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(0, result.Count, "Resulting list should be empty.");
+		Assert.IsEmpty(result, "Resulting list should be empty.");
 	}
 
 	[TestMethod]
@@ -981,7 +981,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(list.Count, result.Count, "Resulting list should have the same count as the source list.");
+		Assert.HasCount(list.Count, result, "Resulting list should have the same count as the source list.");
 	}
 
 	[TestMethod]
@@ -993,7 +993,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 
@@ -1008,10 +1008,10 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(list.Distinct().Count(), result.Count, "Resulting FrozenSet should contain distinct elements only.");
+		Assert.HasCount(list.Distinct().Count(), result, "Resulting FrozenSet should contain distinct elements only.");
 		foreach (var item in list.Distinct())
 		{
-			Assert.IsTrue(result.Contains(item), $"Item {item} should be present in the resulting FrozenSet.");
+			Assert.Contains(item, result, $"Item {item} should be present in the resulting FrozenSet.");
 		}
 	}
 
@@ -1026,7 +1026,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(0, result.Count, "Resulting FrozenSet should be empty.");
+		Assert.IsEmpty(result, "Resulting FrozenSet should be empty.");
 	}
 
 	[TestMethod]
@@ -1040,10 +1040,10 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(list.Count, result.Count, "Resulting FrozenSet should have the same count as the source list.");
+		Assert.HasCount(list.Count, result, "Resulting FrozenSet should have the same count as the source list.");
 		foreach (var item in list)
 		{
-			Assert.IsTrue(result.Contains(item), $"Item {item} should be present in the resulting FrozenSet.");
+			Assert.Contains(item, result, $"Item {item} should be present in the resulting FrozenSet.");
 		}
 	}
 
@@ -1068,7 +1068,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Length == Count);
+		Assert.AreEqual(Count, result.Length);
 	}
 
 	[TestMethod]
@@ -1115,7 +1115,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(list.Count, result.Count, "Result should have the same count.");
+		Assert.HasCount(list.Count, result, "Result should have the same count.");
 
 		for (int i = 0; i < list.Count; i++)
 		{
@@ -1136,7 +1136,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(expectedCount, result.Count, "Result should have the same count as the original list.");
+		Assert.HasCount(expectedCount, result, "Result should have the same count as the original list.");
 		Assert.AreNotSame(list, result, "Result should be a new list instance, not the same reference.");
 
 		for (int i = 0; i < list.Count; i++)
@@ -1156,7 +1156,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(0, result.Count, "Result should be empty.");
+		Assert.IsEmpty(result, "Result should be empty.");
 	}
 
 	[TestMethod]
@@ -1171,7 +1171,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(expectedCount, result.Count, "Result should contain all elements from the original list.");
+		Assert.HasCount(expectedCount, result, "Result should contain all elements from the original list.");
 	}
 
 	[TestMethod]
@@ -1213,7 +1213,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(1, result.Count, "Result should contain exactly one element.");
+		Assert.HasCount(1, result, "Result should contain exactly one element.");
 		Assert.AreSame(person, result[0], "The element should be the same reference as the original.");
 	}
 
@@ -1228,7 +1228,7 @@ public class ListExtensionsTests
 		var result = await data.ToListAsync(cancellationToken);
 
 		// Assert
-		Assert.AreEqual(5, result.Count);
+		Assert.HasCount(5, result);
 		Assert.AreEqual(1, result[0]);
 		Assert.AreEqual(2, result[1]);
 		Assert.AreEqual(3, result[2]);
@@ -1247,7 +1247,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.AreEqual(list.Count, result.Count, "Result should have the same count as the original list.");
+		Assert.HasCount(list.Count, result, "Result should have the same count as the original list.");
 		CollectionAssert.AreEqual(list, result, "Result should contain the same values as the original list.");
 		Assert.AreNotSame(list, result, "Result should be a different list instance.");
 	}
@@ -1261,7 +1261,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
@@ -1269,7 +1269,7 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToReadOnlyCollection();
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -1283,7 +1283,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(readOnlyList, "Result should not be null.");
-		Assert.AreEqual(0, readOnlyList.Count, "Resulting IReadOnlyList should be empty.");
+		Assert.IsEmpty(readOnlyList, "Resulting IReadOnlyList should be empty.");
 	}
 
 	[TestMethod]
@@ -1297,7 +1297,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(readOnlyList, "Result should not be null.");
-		Assert.AreEqual(list.Count, readOnlyList.Count, "Resulting IReadOnlyList should have the same count as the source list.");
+		Assert.HasCount(list.Count, readOnlyList, "Resulting IReadOnlyList should have the same count as the source list.");
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], readOnlyList[i], $"Item at index {i} should be equal in both list and resulting IReadOnlyList.");
@@ -1324,7 +1324,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(readOnlyObservableCollection, "Result should not be null.");
-		Assert.AreEqual(0, readOnlyObservableCollection.Count, "Resulting ReadOnlyObservableCollection should be empty.");
+		Assert.IsEmpty(readOnlyObservableCollection, "Resulting ReadOnlyObservableCollection should be empty.");
 	}
 
 	[TestMethod]
@@ -1338,7 +1338,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(readOnlyObservableCollection, "Result should not be null.");
-		Assert.AreEqual(list.Count, readOnlyObservableCollection.Count, "Resulting ReadOnlyObservableCollection should have the same count as the source list.");
+		Assert.HasCount(list.Count, readOnlyObservableCollection, "Resulting ReadOnlyObservableCollection should have the same count as the source list.");
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], readOnlyObservableCollection[i], $"Item at index {i} should be equal in both list and resulting ReadOnlyObservableCollection.");

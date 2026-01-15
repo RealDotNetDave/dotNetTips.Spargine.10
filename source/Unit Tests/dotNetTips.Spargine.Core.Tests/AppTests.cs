@@ -37,7 +37,7 @@ public class AppTests
 	{
 		var config = new AppConfig();
 
-		Assert.IsTrue(string.IsNullOrEmpty(config.ConfigFileName) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(config.ConfigFileName));
 
 		_ = config.TestValues.Count1 = 100;
 
@@ -45,7 +45,7 @@ public class AppTests
 
 		_ = config.Load();
 
-		Assert.IsTrue(config.TestValues.Count1 == 100);
+		Assert.AreEqual(100, config.TestValues.Count1);
 
 	}
 
@@ -54,7 +54,7 @@ public class AppTests
 	{
 		var info = App.AppInfo;
 
-		Assert.IsTrue(info is not null);
+		Assert.IsNotNull(info);
 	}
 
 	[TestMethod]
@@ -106,7 +106,7 @@ public class AppTests
 	{
 		var result = App.CurrentThreadId;
 
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -211,7 +211,7 @@ public class AppTests
 
 			// Assert
 			Assert.IsNotNull(result);
-			Assert.AreEqual(0, result.Count);
+			Assert.IsEmpty(result);
 		}
 		finally
 		{
@@ -261,7 +261,7 @@ public class AppTests
 
 		// Assert
 		Assert.IsNotNull(cultureNames);
-		Assert.IsTrue(cultureNames.Count > 0);
+		Assert.IsNotEmpty(cultureNames);
 	}
 
 	[TestMethod]
@@ -272,8 +272,8 @@ public class AppTests
 
 		// Assert
 		Assert.IsNotNull(cultureNames);
-		Assert.IsTrue(cultureNames.Count > 0);
-		Assert.IsTrue(cultureNames.Contains("en-US"));
+		Assert.IsNotEmpty(cultureNames);
+		Assert.Contains("en-US", cultureNames);
 	}
 
 	[TestMethod]
@@ -284,8 +284,8 @@ public class AppTests
 
 		// Assert
 		Assert.IsNotNull(cultureNames);
-		Assert.IsTrue(cultureNames.Count > 0);
-		Assert.IsTrue(cultureNames.Contains("en"));
+		Assert.IsNotEmpty(cultureNames);
+		Assert.Contains("en", cultureNames);
 	}
 
 	[TestMethod]
@@ -296,8 +296,8 @@ public class AppTests
 
 		// Assert
 		Assert.IsNotNull(cultureNames);
-		Assert.IsTrue(cultureNames.Count > 0);
-		Assert.IsTrue(cultureNames.Contains("en-US"));
+		Assert.IsNotEmpty(cultureNames);
+		Assert.Contains("en-US", cultureNames);
 	}
 
 	[TestMethod]
@@ -308,7 +308,7 @@ public class AppTests
 
 		// Assert
 		Assert.IsNotNull(cultureNames);
-		Assert.IsTrue(cultureNames.Count >= 0); // User custom cultures might be empty
+		Assert.IsGreaterThanOrEqualTo(0, cultureNames.Count); // User custom cultures might be empty
 	}
 
 	[TestMethod]
@@ -332,7 +332,7 @@ public class AppTests
 	{
 		var result = App.GetEnvironmentVariables();
 
-		Assert.IsTrue(result.FastLongCount() > 0);
+		Assert.IsGreaterThan(0, result.FastLongCount());
 
 		foreach (var info in result)
 		{
@@ -413,7 +413,7 @@ public class AppTests
 
 		var result3 = App.OSArchitecture;
 
-		Assert.IsTrue(result3 == Architecture.X64);
+		Assert.AreEqual(Architecture.X64, result3);
 
 		var result4 = App.OSDescription;
 
@@ -421,11 +421,11 @@ public class AppTests
 
 		var result5 = App.ProcessArchitecture;
 
-		Assert.IsTrue(result5 == Architecture.X64);
+		Assert.AreEqual(Architecture.X64, result5);
 
 		var result2 = App.WorkingSet;
 
-		Assert.IsTrue(result2 > 0);
+		Assert.IsGreaterThan(0, result2);
 	}
 
 	[TestMethod]
@@ -471,7 +471,7 @@ public class AppTests
 	{
 		var result = App.ProcessId;
 
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -488,7 +488,7 @@ public class AppTests
 	{
 		var result = App.ProcessPath;
 
-		Assert.IsTrue(result.Length > 0);
+		Assert.IsGreaterThan(0, result.Length);
 	}
 
 	[TestMethod]
@@ -496,7 +496,7 @@ public class AppTests
 	{
 		var result = App.ReferencedAssemblies();
 
-		Assert.IsTrue(result.FastLongCount() > 0);
+		Assert.IsGreaterThan(0, result.FastLongCount());
 	}
 
 	[TestMethod]

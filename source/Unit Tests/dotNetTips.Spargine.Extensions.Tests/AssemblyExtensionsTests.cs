@@ -38,7 +38,7 @@ public class AssemblyExtensionsTests
 	{
 		var assembly = Assembly.GetExecutingAssembly();
 		var interfaces = assembly.GetAllInterfaces();
-		Assert.AreEqual(interfaces.Distinct().Count(), interfaces.Count);
+		Assert.HasCount(interfaces.Distinct().Count(), interfaces);
 	}
 
 	[TestMethod]
@@ -52,7 +52,7 @@ public class AssemblyExtensionsTests
 	{
 		var result = Assembly.GetExecutingAssembly().GetAllTypes();
 
-		Assert.IsTrue(result.Count >= 1);
+		Assert.IsGreaterThanOrEqualTo(1, result.Count);
 	}
 
 	[TestMethod]
@@ -73,7 +73,7 @@ public class AssemblyExtensionsTests
 	{
 		var result = Assembly.GetExecutingAssembly().GetInstances<AssemblyExtensionsTests>();
 
-		Assert.IsTrue(result.Count() == 1);
+		Assert.AreEqual(1, result.Count());
 	}
 
 	[TestMethod]
@@ -83,7 +83,7 @@ public class AssemblyExtensionsTests
 
 		var result = assembly.GetAllInterfaces().ToList();
 
-		Assert.IsTrue(result.Count > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
@@ -117,8 +117,8 @@ public class AssemblyExtensionsTests
 		var result = assembly.GetTypes(type);
 
 		// Assert
-		Assert.IsTrue(result.Count > 0);
-		Assert.IsTrue(result.Contains(type));
+		Assert.IsNotEmpty(result);
+		Assert.Contains(type, result);
 	}
 
 	[TestMethod]
@@ -126,7 +126,7 @@ public class AssemblyExtensionsTests
 	{
 		var result = Assembly.GetExecutingAssembly().GetTypes();
 
-		Assert.IsTrue(result.FastLongCount() > 0);
+		Assert.IsGreaterThan(0, result.FastLongCount());
 	}
 
 }

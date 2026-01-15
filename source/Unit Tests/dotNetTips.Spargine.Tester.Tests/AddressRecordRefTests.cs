@@ -340,7 +340,7 @@ public class AddressRecordRefTests
 		var record = AddressRecord.Create("1234567890", "A1", "City", "Country", "12345");
 		var str = record.ToString();
 		Assert.IsFalse(string.IsNullOrWhiteSpace(str));
-		Assert.IsTrue(str.Contains("Address1"));
+		Assert.Contains("Address1", str);
 	}
 	[TestMethod]
 	public void ToString_Test()

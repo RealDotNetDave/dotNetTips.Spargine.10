@@ -67,7 +67,7 @@ public class RandomCreditCardNumberGeneratorTests
 
 		// Assert
 		Assert.IsNotNull(creditCardNumbers);
-		Assert.AreEqual(count, creditCardNumbers.Count);
+		Assert.HasCount(count, creditCardNumbers);
 		foreach (var number in creditCardNumbers)
 		{
 			Assert.IsTrue(this.LuhnCheck(number));

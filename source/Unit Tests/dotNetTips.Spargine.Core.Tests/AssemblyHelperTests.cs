@@ -29,7 +29,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DotNetTips.Spargine.Core.Tests;
 
 [TestClass]
-public class AssemblyHelperTests : UnitTester
+public class AssemblyHelperTests : UnitTester, IDisposable
 {
 
 	private const string SDKVersion = "10.0.1";
@@ -37,8 +37,7 @@ public class AssemblyHelperTests : UnitTester
 	private string _testOutputDirectory;
 	private TestUnitTester _unitTester;
 
-	[TestCleanup]
-	public void Cleanup()
+	public void Dispose()
 	{
 		if (Directory.Exists(this._testOutputDirectory))
 		{
@@ -144,7 +143,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 500);
+		Assert.IsGreaterThan(500, result.Count);
 
 		//Export to file
 		var query = result.Where(p => p.FullName.StartsWith("DotNetTips") == false && p.DeclaringType == null).OrderBy(p => p.Assembly.FullName).ThenBy(p => p.Name).ToArray();
@@ -171,7 +170,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files, but none were found.");
+		Assert.IsNotEmpty(result, "Expected to find .NET SDK files, but none were found.");
 	}
 
 	[TestMethod]
@@ -182,7 +181,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count, "Expected no .NET SDK files for version 99.99.99, but some were found.");
+		Assert.IsEmpty(result, "Expected no .NET SDK files for version 99.99.99, but some were found.");
 	}
 
 	[TestMethod]
@@ -197,7 +196,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files for version 10, but none were found.");
+		Assert.IsNotEmpty(result, "Expected to find .NET SDK files for version 10, but none were found.");
 	}
 
 	[TestMethod]
@@ -221,7 +220,7 @@ public class AssemblyHelperTests : UnitTester
 		SaveToFile<Type>(foundTypes, prop => prop.Name == "FullName", $"IDisposable-{SDKVersion}");
 
 		// Assert
-		Assert.IsTrue(foundTypes.Count > 100, "Expected to find types implementing IDisposable, but none were found.");
+		Assert.IsGreaterThan(100, foundTypes.Count, "Expected to find types implementing IDisposable, but none were found.");
 	}
 
 	[TestMethod]
@@ -235,7 +234,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count, "Expected no types implementing ICloneable, but some were found.");
+		Assert.IsEmpty(result, "Expected no types implementing ICloneable, but some were found.");
 	}
 
 	[TestMethod]
@@ -268,7 +267,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find types implementing Attribute, but none were found.");
+		Assert.IsNotEmpty(result, "Expected to find types implementing Attribute, but none were found.");
 	}
 
 	[TestMethod]
@@ -291,7 +290,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result, "Expected a non-null result, but got null.");
-		Assert.IsTrue(result.Count > 0, "Expected to find custom attributes, but none were found.");
+		Assert.IsNotEmpty(result, "Expected to find custom attributes, but none were found.");
 	}
 
 	[TestMethod]
@@ -344,7 +343,7 @@ public class AssemblyHelperTests : UnitTester
 
 			// Assert
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.Count);
+			Assert.HasCount(1, result);
 			Assert.AreEqual("Error", result.First().Key);
 		}
 		finally
@@ -368,7 +367,7 @@ public class AssemblyHelperTests : UnitTester
 
 			// Assert
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.Count);
+			Assert.HasCount(1, result);
 			var error = result.First();
 			Assert.AreEqual("Error", error.Key);
 			Assert.AreEqual("Invalid .NET assembly", error.Value);
@@ -431,7 +430,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(4, result.Count);
+		Assert.HasCount(4, result);
 		Assert.IsTrue(result.Any(kv => kv.Key == "Name"));
 		Assert.IsTrue(result.Any(kv => kv.Key == "Version"));
 		Assert.IsTrue(result.Any(kv => kv.Key == "Culture"));
@@ -484,7 +483,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(dependentAssemblies, "Expected a non-null collection of dependent assemblies.");
-		Assert.AreEqual(0, dependentAssemblies.Count, "Expected an empty collection for an assembly with no dependencies.");
+		Assert.IsEmpty(dependentAssemblies, "Expected an empty collection for an assembly with no dependencies.");
 	}
 
 	[TestMethod]
@@ -507,7 +506,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(dependentAssemblies, "Expected a non-null collection of dependent assemblies.");
-		Assert.IsTrue(dependentAssemblies.Count > 0, "Expected at least one dependent assembly.");
+		Assert.IsNotEmpty(dependentAssemblies, "Expected at least one dependent assembly.");
 		Assert.IsTrue(dependentAssemblies.Any(dep => dep.Name == "System.Runtime"), "Expected 'System.Runtime' to be a dependent assembly.");
 	}
 
@@ -524,7 +523,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(methods, "Expected a non-null collection of methods.");
-		Assert.AreEqual(0, methods.Count, "Expected an empty collection for a non-existent type.");
+		Assert.IsEmpty(methods, "Expected an empty collection for a non-existent type.");
 	}
 
 	[TestMethod]
@@ -558,7 +557,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(methods, "Expected a non-null collection of methods.");
-		Assert.IsTrue(methods.Count > 0, "Expected at least one method in the type.");
+		Assert.IsNotEmpty(methods, "Expected at least one method in the type.");
 	}
 
 	[TestMethod]
@@ -573,7 +572,7 @@ public class AssemblyHelperTests : UnitTester
 		foreach (var file in result.Take(10)) // Test a sample to avoid long test times
 		{
 			Assert.IsTrue(file.Exists, $"File {file.FullName} should exist.");
-			Assert.IsTrue(file.Length > 0, $"File {file.FullName} should not be empty.");
+			Assert.IsGreaterThan(0, file.Length, $"File {file.FullName} should not be empty.");
 		}
 	}
 
@@ -604,7 +603,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find SDK files.");
+		Assert.IsNotEmpty(result, "Expected to find SDK files.");
 
 		// Check for common expected assemblies
 		var fileNames = result.Select(f => f.Name).ToList();
@@ -620,7 +619,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files when using empty string (should default to highest version).");
+		Assert.IsNotEmpty(result, "Expected to find .NET SDK files when using empty string (should default to highest version).");
 	}
 
 	[TestMethod]
@@ -679,7 +678,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count, "Expected empty collection for non-existent version.");
+		Assert.IsEmpty(result, "Expected empty collection for non-existent version.");
 	}
 
 	[TestMethod]
@@ -692,7 +691,7 @@ public class AssemblyHelperTests : UnitTester
 		// Assert
 		Assert.IsNotNull(result1);
 		Assert.IsNotNull(result2);
-		Assert.AreEqual(result1.Count, result2.Count,
+		Assert.HasCount(result1.Count, result2,
 			"Expected consistent results across multiple calls.");
 	}
 
@@ -711,8 +710,8 @@ public class AssemblyHelperTests : UnitTester
 		this.PrintToDebug($"GetNetSdkDllFiles execution time: {stopwatch.ElapsedMilliseconds}ms for {result.Count} files");
 
 		// Should complete in reasonable time (adjust threshold as needed)
-		Assert.IsTrue(stopwatch.ElapsedMilliseconds < 30000,
-			$"Method took too long to complete: {stopwatch.ElapsedMilliseconds}ms");
+		Assert.IsLessThan(30000,
+stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.ElapsedMilliseconds}ms");
 	}
 
 	[TestMethod]
@@ -779,7 +778,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files when using whitespace (should default to highest version).");
+		Assert.IsNotEmpty(result, "Expected to find .NET SDK files when using whitespace (should default to highest version).");
 	}
 
 	[TestMethod]
@@ -790,7 +789,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result, "Expected a non-null collection of SDK files.");
-		Assert.IsTrue(result.Count > 0, "Expected to find .NET SDK files when using the highest available version.");
+		Assert.IsNotEmpty(result, "Expected to find .NET SDK files when using the highest available version.");
 
 		// Verify all returned files are valid .NET assemblies
 		foreach (var file in result)
@@ -811,7 +810,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(publicTypes, "Expected a non-null collection of public types.");
-		Assert.AreEqual(0, publicTypes.Count, "Expected an empty collection for an assembly with no public types.");
+		Assert.IsEmpty(publicTypes, "Expected an empty collection for an assembly with no public types.");
 	}
 
 	[TestMethod]
@@ -859,7 +858,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(publicTypes, "Expected a non-null collection of public types.");
-		Assert.IsTrue(publicTypes.Count > 0, "Expected at least one public type in the assembly.");
+		Assert.IsNotEmpty(publicTypes, "Expected at least one public type in the assembly.");
 	}
 
 	[TestMethod]
@@ -946,7 +945,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(assemblies, "Expected a non-null collection of assemblies.");
-		Assert.AreEqual(0, assemblies.Count, "Expected an empty collection for a directory with no assemblies.");
+		Assert.IsEmpty(assemblies, "Expected an empty collection for a directory with no assemblies.");
 
 		// Cleanup
 		testFile.Delete();
@@ -968,7 +967,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(assemblies, "Expected a non-null collection of assemblies.");
-		Assert.AreEqual(0, assemblies.Count, "Expected an empty collection for an empty directory.");
+		Assert.IsEmpty(assemblies, "Expected an empty collection for an empty directory.");
 
 		// Cleanup
 		emptyDirectory.Delete();
@@ -985,7 +984,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(assemblies, "Expected a non-null collection of assemblies.");
-		Assert.AreEqual(0, assemblies.Count, "Expected an empty collection for a non-existent directory.");
+		Assert.IsEmpty(assemblies, "Expected an empty collection for a non-existent directory.");
 	}
 
 	[TestMethod]
@@ -1008,7 +1007,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(assemblies, "Expected a non-null collection of assemblies.");
-		Assert.IsTrue(assemblies.Count > 0, "Expected at least one assembly in the directory.");
+		Assert.IsNotEmpty(assemblies, "Expected at least one assembly in the directory.");
 		Assert.IsTrue(assemblies.Any(assembly => assembly.FullName!.Contains("DotNetTips.Spargine.Core")), "Expected the current assembly to be loaded.");
 	}
 
@@ -1033,7 +1032,7 @@ public class AssemblyHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0, "Expected to find types in the assembly, but none were found.");
+		Assert.IsNotEmpty(result, "Expected to find types in the assembly, but none were found.");
 	}
 
 	[TestMethod]
@@ -1056,8 +1055,7 @@ public class AssemblyHelperTests : UnitTester
 		Assert.ThrowsExactly<ArgumentNullException>(() => this._unitTester.SaveToFile(collection, null));
 	}
 
-	[TestInitialize]
-	public void Setup()
+	public AssemblyHelperTests()
 	{
 		this._testOutputDirectory = Path.Combine(Path.GetTempPath(), "UnitTesterTests");
 		Directory.CreateDirectory(this._testOutputDirectory);

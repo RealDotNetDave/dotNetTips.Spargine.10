@@ -36,7 +36,7 @@ public class KeyGeneratorTests
 		var key = KeyGenerator.GenerateCustomKey(separator, false, items);
 
 		// Assert
-		Assert.IsTrue(key.StartsWith("A$+B#+C%+"), "Key should start with joined items and separator.");
+		Assert.StartsWith("A$+B#+C%+", key, "Key should start with joined items and separator.");
 	}
 
 	[TestMethod]
@@ -51,9 +51,9 @@ public class KeyGeneratorTests
 		var keyWithoutTimestamp = KeyGenerator.GenerateCustomKey(separator, false, items);
 
 		// Assert
-		Assert.IsTrue(keyWithTimestamp.StartsWith("Person_Ref_"), "Key with timestamp should start with joined items and separator.");
+		Assert.StartsWith("Person_Ref_", keyWithTimestamp, "Key with timestamp should start with joined items and separator.");
 
-		Assert.IsTrue(keyWithoutTimestamp.StartsWith("Person_Ref_"), "Key with timestamp should start with joined items and separator.");
+		Assert.StartsWith("Person_Ref_", keyWithoutTimestamp, "Key with timestamp should start with joined items and separator.");
 	}
 
 	[TestMethod]
@@ -67,7 +67,7 @@ public class KeyGeneratorTests
 		var key = KeyGenerator.GenerateCustomKey(separator, false, items);
 
 		// Assert
-		Assert.IsTrue(key.StartsWith("A|B|C|"), "Key should use the provided separator.");
+		Assert.StartsWith("A|B|C|", key, "Key should use the provided separator.");
 	}
 
 	[TestMethod]

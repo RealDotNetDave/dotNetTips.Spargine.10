@@ -33,7 +33,7 @@ public class DirectoryInfoExtensionsTests
 
 		var result = directory.GetSize();
 
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryInfoExtensions.GetSize(null));
 	}
@@ -45,7 +45,7 @@ public class DirectoryInfoExtensionsTests
 
 		var result = directory.GetSize(ControlChars.WildcardAllFiles);
 
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => directory.GetSize(null) == 0);
 	}
@@ -57,7 +57,7 @@ public class DirectoryInfoExtensionsTests
 
 		var result = directory.GetSize(searchPattern: ControlChars.WildcardAllFiles, searchOption: SearchOption.AllDirectories);
 
-		Assert.IsTrue(result > 0);
+		Assert.IsGreaterThan(0, result);
 
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => directory.GetSize("*.txt", (SearchOption)100) ==
 			0);

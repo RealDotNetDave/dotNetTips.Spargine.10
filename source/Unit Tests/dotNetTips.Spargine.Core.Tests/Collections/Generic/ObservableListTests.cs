@@ -39,7 +39,7 @@ public class ObservableListTests
 	{
 		this._observableList.Add(1);
 
-		Assert.AreEqual(1, this._collectionChangedEvents.Count, "Adding an item should trigger a CollectionChanged event.");
+		Assert.HasCount(1, this._collectionChangedEvents, "Adding an item should trigger a CollectionChanged event.");
 		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "Adding an item should trigger a PropertyChanged event for 'Count'.");
 	}
 
@@ -122,7 +122,7 @@ public class ObservableListTests
 		this._observableList.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(1, this._collectionChangedEvents.Count, "AddRange should trigger a single CollectionChanged event.");
+		Assert.HasCount(1, this._collectionChangedEvents, "AddRange should trigger a single CollectionChanged event.");
 		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
 	}
 
@@ -138,8 +138,8 @@ public class ObservableListTests
 		this._observableList.AddRange(items);
 
 		// Assert
-		Assert.AreEqual(0, this._collectionChangedEvents.Count, "No events should be triggered for empty collection.");
-		Assert.AreEqual(0, this._propertyChangedEvents.Count, "No property events should be triggered.");
+		Assert.IsEmpty(this._collectionChangedEvents, "No events should be triggered for empty collection.");
+		Assert.IsEmpty(this._propertyChangedEvents, "No property events should be triggered.");
 	}
 
 	[TestMethod]
@@ -312,7 +312,7 @@ public class ObservableListTests
 		list.CopyTo(array);
 
 		// Assert
-		Assert.AreEqual(list.Count, array.Length, "The length of the array should match the count of the list.");
+		Assert.HasCount(list.Count, array, "The length of the array should match the count of the list.");
 
 		for (int i = 0; i < list.Count; i++)
 		{
@@ -433,7 +433,7 @@ public class ObservableListTests
 		int actualCapacity = this._observableList.EnsureCapacity(requestedCapacity);
 
 		// Assert
-		Assert.IsTrue(actualCapacity >= requestedCapacity, "Actual capacity should be greater than or equal to requested capacity.");
+		Assert.IsGreaterThanOrEqualTo(requestedCapacity, actualCapacity, "Actual capacity should be greater than or equal to requested capacity.");
 	}
 
 	[TestMethod]
@@ -516,10 +516,10 @@ public class ObservableListTests
 		var result = this._observableList.FindAll(x => x > 2).ToList();
 
 		// Assert
-		Assert.AreEqual(3, result.Count, "Should return 3 items greater than 2.");
-		Assert.IsTrue(result.Contains(3), "Result should contain 3.");
-		Assert.IsTrue(result.Contains(4), "Result should contain 4.");
-		Assert.IsTrue(result.Contains(5), "Result should contain 5.");
+		Assert.HasCount(3, result, "Should return 3 items greater than 2.");
+		Assert.Contains(3, result, "Result should contain 3.");
+		Assert.Contains(4, result, "Result should contain 4.");
+		Assert.Contains(5, result, "Result should contain 5.");
 	}
 
 	[TestMethod]
@@ -533,7 +533,7 @@ public class ObservableListTests
 		var result = this._observableList.FindAll(x => x > 10).ToList();
 
 		// Assert
-		Assert.AreEqual(0, result.Count, "Should return empty collection when no items match.");
+		Assert.IsEmpty(result, "Should return empty collection when no items match.");
 	}
 
 	[TestMethod]
@@ -559,8 +559,7 @@ public class ObservableListTests
 		Assert.IsTrue(this._observableList.Contains(result), "Returned item should be in the list.");
 	}
 
-	[TestInitialize]
-	public void Initialize()
+	public ObservableListTests()
 	{
 		this._observableList = new ObservableList<int>();
 		this._collectionChangedEvents = new List<NotifyCollectionChangedEventArgs>();
@@ -1013,9 +1012,9 @@ public class ObservableListTests
 		this._observableList.Add(1);
 
 		// Assert
-		Assert.IsTrue(propertyChangingEvents.Count > 0, "PropertyChanging event should be raised.");
-		Assert.IsTrue(propertyChangingEvents[0].PropertyName == "Count", "PropertyChanging should be for Count property.");
-		Assert.IsTrue(this._propertyChangedEvents.Count > 0, "PropertyChanged event should be raised.");
+		Assert.IsNotEmpty(propertyChangingEvents, "PropertyChanging event should be raised.");
+		Assert.AreEqual("Count", propertyChangingEvents[0].PropertyName, "PropertyChanging should be for Count property.");
+		Assert.IsNotEmpty(this._propertyChangedEvents, "PropertyChanged event should be raised.");
 		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "PropertyChanged should be for Count property.");
 	}
 
@@ -1077,7 +1076,7 @@ public class ObservableListTests
 		this._observableList.RemoveRange(itemsToRemove);
 
 		// Assert
-		Assert.AreEqual(1, this._collectionChangedEvents.Count, "RemoveRange should trigger a single CollectionChanged event.");
+		Assert.HasCount(1, this._collectionChangedEvents, "RemoveRange should trigger a single CollectionChanged event.");
 		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
 	}
 
@@ -1183,7 +1182,7 @@ public class ObservableListTests
 		this._observableList.Reset(newItems);
 
 		// Assert
-		Assert.AreEqual(1, this._collectionChangedEvents.Count, "Reset should trigger a single CollectionChanged event.");
+		Assert.HasCount(1, this._collectionChangedEvents, "Reset should trigger a single CollectionChanged event.");
 		Assert.AreEqual(NotifyCollectionChangedAction.Reset, this._collectionChangedEvents[0].Action, "Event action should be Reset.");
 	}
 
@@ -1208,8 +1207,8 @@ public class ObservableListTests
 		this._observableList.Reset(sameItems);
 
 		// Assert
-		Assert.AreEqual(0, this._collectionChangedEvents.Count, "No events should be triggered when items are the same.");
-		Assert.AreEqual(0, this._propertyChangedEvents.Count, "No property events should be triggered.");
+		Assert.IsEmpty(this._collectionChangedEvents, "No events should be triggered when items are the same.");
+		Assert.IsEmpty(this._propertyChangedEvents, "No property events should be triggered.");
 	}
 
 	[TestMethod]
@@ -1357,7 +1356,7 @@ public class ObservableListTests
 		var array = this._observableList.ToArray();
 
 		// Assert
-		Assert.AreEqual(3, array.Length, "Array should contain all items from the list.");
+		Assert.HasCount(3, array, "Array should contain all items from the list.");
 		Assert.IsTrue(array.Contains(1), "Array should contain 1.");
 		Assert.IsTrue(array.Contains(2), "Array should contain 2.");
 		Assert.IsTrue(array.Contains(3), "Array should contain 3.");
@@ -1370,7 +1369,7 @@ public class ObservableListTests
 		var array = this._observableList.ToArray();
 
 		// Assert
-		Assert.AreEqual(0, array.Length, "Array should be empty for empty list.");
+		Assert.IsEmpty(array, "Array should be empty for empty list.");
 	}
 
 	[TestMethod]
@@ -1385,10 +1384,10 @@ public class ObservableListTests
 		var list = this._observableList.ToList();
 
 		// Assert
-		Assert.AreEqual(3, list.Count, "List should contain all items from the observable list.");
-		Assert.IsTrue(list.Contains(1), "List should contain 1.");
-		Assert.IsTrue(list.Contains(2), "List should contain 2.");
-		Assert.IsTrue(list.Contains(3), "List should contain 3.");
+		Assert.HasCount(3, list, "List should contain all items from the observable list.");
+		Assert.Contains(1, list, "List should contain 1.");
+		Assert.Contains(2, list, "List should contain 2.");
+		Assert.Contains(3, list, "List should contain 3.");
 	}
 
 	[TestMethod]
@@ -1398,7 +1397,7 @@ public class ObservableListTests
 		var list = this._observableList.ToList();
 
 		// Assert
-		Assert.AreEqual(0, list.Count, "List should be empty for empty observable list.");
+		Assert.IsEmpty(list, "List should be empty for empty observable list.");
 	}
 
 
@@ -1430,7 +1429,7 @@ public class ObservableListTests
 		}
 		// If TrimExcess worked, adding this number of items should not trigger a resize operation,
 		// which would be indicated by no exceptions or significant delays.
-		Assert.IsTrue(this._observableList.Count > 10, "List should contain more items after adding additional elements post-TrimExcess.");
+		Assert.IsGreaterThan(10, this._observableList.Count, "List should contain more items after adding additional elements post-TrimExcess.");
 	}
 
 	[TestMethod]

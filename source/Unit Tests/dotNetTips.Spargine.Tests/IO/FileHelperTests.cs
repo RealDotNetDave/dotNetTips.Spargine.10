@@ -283,9 +283,9 @@ public class FileHelperTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Status == ResultStatus.Succeeded);
-		Assert.IsTrue(result.Value.Count == FileCount);
-		Assert.IsTrue(result.Errors().Count == 0);
+		Assert.AreEqual(ResultStatus.Succeeded, result.Status);
+		Assert.AreEqual(FileCount, result.Value.Count);
+		Assert.IsEmpty(result.Errors());
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -306,9 +306,9 @@ public class FileHelperTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Status == ResultStatus.PartialSuccess);
-		Assert.IsTrue(result.Value.Count == FileCount - 2);
-		Assert.IsTrue(result.Errors().Count == 2);
+		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
+		Assert.AreEqual(FileCount - 2, result.Value.Count);
+		Assert.AreEqual(2, result.Errors().Count);
 
 		foreach (var file in files.Files)
 		{
@@ -339,8 +339,8 @@ public class FileHelperTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Status == ResultStatus.PartialSuccess);
-		Assert.IsTrue(result.Errors().Count == 1);
+		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
+		Assert.AreEqual(1, result.Errors().Count);
 
 		foreach (var file in files.Files)
 		{
@@ -401,7 +401,7 @@ public class FileHelperTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(invalidChars.Length, result.Count);
+		Assert.HasCount(invalidChars.Length, result);
 		CollectionAssert.AreEquivalent(invalidChars, result.ToArray());
 	}
 

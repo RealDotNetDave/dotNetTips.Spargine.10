@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Core.Tests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class ValidatorTests
+public partial class ValidatorTests
 {
 	private const string BadEmail = "BAD@EMAIL";
 	private const string GoodEmail = "fakeemail@google.com";
@@ -130,7 +130,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -367,7 +367,7 @@ public class ValidatorTests
 		catch (ArgumentInvalidException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -423,7 +423,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -467,7 +467,7 @@ public class ValidatorTests
 		catch (DirectoryNotFoundException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -513,7 +513,7 @@ public class ValidatorTests
 		catch (FileNotFoundException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -661,7 +661,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -683,7 +683,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -705,7 +705,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -727,7 +727,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -747,7 +747,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -767,7 +767,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -787,7 +787,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -807,7 +807,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1156,7 +1156,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1255,7 +1255,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1402,7 +1402,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentItemsExists(input, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -1414,7 +1414,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentItemsExists(input, paramName: paramName));
-		Assert.IsTrue(ex.Message.Contains(paramName));
+		Assert.Contains(paramName, ex.Message);
 	}
 
 	[TestMethod]
@@ -1456,7 +1456,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1489,7 +1489,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1610,7 +1610,7 @@ public class ValidatorTests
 	{
 		// Arrange
 		var input = string.Empty;
-		var pattern = new Regex(@"^\w+$");
+		var pattern = MyRegex();
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentMatched(pattern));
@@ -1647,7 +1647,7 @@ public class ValidatorTests
 		catch (ArgumentInvalidException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1733,7 +1733,7 @@ public class ValidatorTests
 		catch (ArgumentInvalidException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1767,7 +1767,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1801,7 +1801,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1915,7 +1915,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1952,7 +1952,7 @@ public class ValidatorTests
 		catch (ArgumentInvalidException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -1985,7 +1985,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2183,7 +2183,7 @@ public class ValidatorTests
 		catch (ArgumentReadOnlyException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2196,7 +2196,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -2208,7 +2208,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, paramName: paramName));
-		Assert.IsTrue(ex.Message.Contains(paramName));
+		Assert.Contains(paramName, ex.Message);
 	}
 
 	[TestMethod]
@@ -2261,7 +2261,7 @@ public class ValidatorTests
 		catch (ArgumentReadOnlyException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2274,7 +2274,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -2286,7 +2286,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input, paramName: paramName));
-		Assert.IsTrue(ex.Message.Contains(paramName));
+		Assert.Contains(paramName, ex.Message);
 	}
 
 	[TestMethod]
@@ -2357,7 +2357,7 @@ public class ValidatorTests
 		catch (ArgumentInvalidException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2407,7 +2407,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -2446,7 +2446,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidValueException<Type>>(() => Validator.CheckTypeEquals(input, expectedType, true));
-		Assert.IsTrue(ex.Message.Contains("Invalid type"));
+		Assert.Contains("Invalid type", ex.Message);
 	}
 
 	[TestMethod]
@@ -2536,7 +2536,7 @@ public class ValidatorTests
 		catch (DirectoryNotFoundException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2614,7 +2614,7 @@ public class ValidatorTests
 		catch (FileNotFoundException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2642,7 +2642,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidValueException<object>>(() => Validator.CheckIsCondition(input, condition, true, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -2692,7 +2692,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidValueException<object>>(() => Validator.CheckIsCondition(input, condition, true));
-		Assert.IsTrue(ex.Message.Contains("Invalid value"));
+		Assert.Contains("Invalid value", ex.Message);
 	}
 
 	[TestMethod]
@@ -2742,7 +2742,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -2820,7 +2820,7 @@ public class ValidatorTests
 		catch (InvalidValueException<Enum> ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -2832,7 +2832,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidValueException<Enum>>(() => Validator.CheckIsDefined(input, true));
-		Assert.IsTrue(ex.Message.Contains("The value is not defined in the Enum."));
+		Assert.Contains("The value is not defined in the Enum.", ex.Message);
 	}
 
 	[TestMethod]
@@ -3090,7 +3090,7 @@ public class ValidatorTests
 		catch (ArgumentOutOfRangeException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -3215,7 +3215,7 @@ public class ValidatorTests
 
 		// Act & Assert
 		var ex = Assert.ThrowsExactly<InvalidOperationException>(() => Validator.CheckIsNotEmpty(input, true, errorMessage));
-		Assert.IsTrue(ex.Message.Contains(errorMessage));
+		Assert.Contains(errorMessage, ex.Message);
 	}
 
 	[TestMethod]
@@ -3298,7 +3298,7 @@ public class ValidatorTests
 		catch (InvalidOperationException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -3368,7 +3368,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -3618,7 +3618,7 @@ public class ValidatorTests
 		catch (ArgumentNullException ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -3736,7 +3736,7 @@ public class ValidatorTests
 		catch (InvalidValueException<IEnumerable<int>> ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -3796,7 +3796,7 @@ public class ValidatorTests
 		catch (InvalidValueException<Type> ex)
 		{
 			// Assert
-			Assert.IsTrue(ex.Message.Contains(customMessage));
+			Assert.Contains(customMessage, ex.Message);
 		}
 	}
 
@@ -3827,4 +3827,7 @@ public class ValidatorTests
 		Value1,
 		Value2
 	}
+
+	[GeneratedRegex(@"^\w+$")]
+	private static partial Regex MyRegex();
 }

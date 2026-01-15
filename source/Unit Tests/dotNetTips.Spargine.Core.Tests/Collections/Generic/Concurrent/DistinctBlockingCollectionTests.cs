@@ -54,7 +54,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(0, result, "AddRange should return 0 for empty collection.");
-		Assert.AreEqual(0, collection.Count, "Collection should remain empty.");
+		Assert.IsEmpty(collection, "Collection should remain empty.");
 	}
 
 	[TestMethod]
@@ -79,7 +79,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(3, result);
-		Assert.AreEqual(3, collection.Count);
+		Assert.HasCount(3, collection);
 	}
 
 	[TestMethod]
@@ -95,7 +95,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result);
-		Assert.AreEqual(2, collection.Count);
+		Assert.HasCount(2, collection);
 	}
 
 	[TestMethod]
@@ -126,7 +126,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result, "AddRange should only add unique items.");
-		Assert.AreEqual(4, collection.Count, "Collection should contain 4 unique items total.");
+		Assert.HasCount(4, collection, "Collection should contain 4 unique items total.");
 	}
 
 	[TestMethod]
@@ -141,7 +141,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(3, result, "AddRange should skip null items.");
-		Assert.AreEqual(3, collection.Count, "Collection should contain only non-null items.");
+		Assert.HasCount(3, collection, "Collection should contain only non-null items.");
 	}
 	[TestMethod]
 	public void AddRange_WithUniqueItems_AddsAllItems()
@@ -155,7 +155,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(3, result, "AddRange should return the count of items added.");
-		Assert.AreEqual(3, collection.Count, "Collection should contain all unique items.");
+		Assert.HasCount(3, collection, "Collection should contain all unique items.");
 		Assert.IsTrue(collection.Contains("item1"));
 		Assert.IsTrue(collection.Contains("item2"));
 		Assert.IsTrue(collection.Contains("item3"));
@@ -171,7 +171,7 @@ public class DistinctBlockingCollectionTests
 
 		_ = collection.AddRange(new List<string>() { "test1", "test2" }, true);
 
-		Assert.IsTrue(collection.Count == 2);
+		Assert.AreEqual(2, collection.Count);
 	}
 
 	/// <summary>
@@ -183,7 +183,7 @@ public class DistinctBlockingCollectionTests
 		var collection = new DistinctBlockingCollection<string>();
 		collection.Add("test1");
 
-		Assert.AreEqual(1, collection.Count);
+		Assert.HasCount(1, collection);
 		Assert.IsTrue(collection.Contains("test1"));
 	}
 
@@ -197,7 +197,7 @@ public class DistinctBlockingCollectionTests
 		var cancellationToken = new CancellationToken();
 		collection.Add("test1", cancellationToken);
 
-		Assert.AreEqual(1, collection.Count);
+		Assert.HasCount(1, collection);
 		Assert.IsTrue(collection.Contains("test1"));
 	}
 
@@ -224,7 +224,7 @@ public class DistinctBlockingCollectionTests
 	{
 		var collection = new DistinctBlockingCollection<string>(5);
 
-		Assert.IsTrue(collection.BoundedCapacity == 5);
+		Assert.AreEqual(5, collection.BoundedCapacity);
 	}
 
 	/// <summary>
@@ -237,7 +237,7 @@ public class DistinctBlockingCollectionTests
 
 		collection.Clear();
 
-		Assert.AreEqual(0, collection.Count);
+		Assert.IsEmpty(collection);
 	}
 
 	/// <summary>
@@ -252,7 +252,7 @@ public class DistinctBlockingCollectionTests
 
 		collection.Clear();
 
-		Assert.AreEqual(0, collection.Count);
+		Assert.IsEmpty(collection);
 	}
 
 	/// <summary>
@@ -267,7 +267,7 @@ public class DistinctBlockingCollectionTests
 
 		collection.Clear();
 
-		Assert.IsTrue(collection.Count == 0);
+		Assert.IsEmpty(collection);
 	}
 
 	/// <summary>
@@ -282,7 +282,7 @@ public class DistinctBlockingCollectionTests
 
 		collection.Clear();
 
-		Assert.AreEqual(0, collection.Count);
+		Assert.IsEmpty(collection);
 		Assert.AreEqual(5, collection.BoundedCapacity);
 	}
 
@@ -299,7 +299,7 @@ public class DistinctBlockingCollectionTests
 		// Specify the type argument explicitly to resolve CS0411  
 		var result = collection.FastClone<DistinctBlockingCollection<string>>();
 
-		Assert.IsTrue(result.Count == 2);
+		Assert.AreEqual(2, result.Count);
 	}
 
 	[TestMethod]
@@ -350,7 +350,7 @@ public class DistinctBlockingCollectionTests
 		var collection = new DistinctBlockingCollection<string>(initialCollection);
 
 		Assert.IsNotNull(collection);
-		Assert.AreEqual(2, collection.Count);
+		Assert.HasCount(2, collection);
 		Assert.IsTrue(collection.Contains("test1"));
 		Assert.IsTrue(collection.Contains("test2"));
 	}
@@ -471,7 +471,7 @@ public class DistinctBlockingCollectionTests
 
 		collection.CopyTo(array, 0);
 
-		Assert.IsTrue(array.Length == 2);
+		Assert.AreEqual(2, array.Length);
 	}
 
 	/// <summary>
@@ -534,7 +534,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result, "Should only add 2 new unique items.");
-		Assert.AreEqual(3, collection.Count);
+		Assert.HasCount(3, collection);
 		Assert.IsTrue(collection.ContainsAny(new List<string> { "item1", "item2", "item3" }));
 	}
 
@@ -615,7 +615,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(0, result);
-		Assert.AreEqual(0, collection.Count);
+		Assert.IsEmpty(collection);
 	}
 
 	[TestMethod]
@@ -642,7 +642,7 @@ public class DistinctBlockingCollectionTests
 		var result = collection.TryAddRange(items, 10); // Short timeout
 
 		// Assert - May add 0 items if collection is full and timeout is short
-		Assert.IsTrue(result >= 0, "TryAddRange should return non-negative count.");
+		Assert.IsGreaterThanOrEqualTo(0, result, "TryAddRange should return non-negative count.");
 	}
 
 	[TestMethod]
@@ -658,7 +658,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result);
-		Assert.AreEqual(2, collection.Count);
+		Assert.HasCount(2, collection);
 	}
 
 	[TestMethod]
@@ -688,7 +688,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result, "TryAddRange should only add unique items.");
-		Assert.AreEqual(3, collection.Count);
+		Assert.HasCount(3, collection);
 	}
 
 	[TestMethod]
@@ -703,7 +703,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result, "TryAddRange should skip null items.");
-		Assert.AreEqual(2, collection.Count);
+		Assert.HasCount(2, collection);
 	}
 
 	[TestMethod]
@@ -718,7 +718,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(2, result);
-		Assert.AreEqual(2, collection.Count);
+		Assert.HasCount(2, collection);
 	}
 
 	[TestMethod]
@@ -733,7 +733,7 @@ public class DistinctBlockingCollectionTests
 
 		// Assert
 		Assert.AreEqual(3, result, "TryAddRange should add all unique items.");
-		Assert.AreEqual(3, collection.Count);
+		Assert.HasCount(3, collection);
 	}
 
 	[TestMethod]

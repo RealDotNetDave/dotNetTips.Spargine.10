@@ -37,11 +37,11 @@ public class HashSetTests
 
 		people.AddIf(person, true);
 
-		Assert.IsTrue(people.Count == 11);
+		Assert.AreEqual(11, people.Count);
 
 		people.AddIf(person, false);
 
-		Assert.IsTrue(people.Count == 11);
+		Assert.AreEqual(11, people.Count);
 
 	}
 
@@ -50,7 +50,7 @@ public class HashSetTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToConcurrentHashSet();
 
-		Assert.IsTrue(people.Count == 10);
+		Assert.AreEqual(10, people.Count);
 	}
 
 	[TestMethod]
@@ -63,7 +63,7 @@ public class HashSetTests
 		var result = hashSet.ToImmutableHashSet();
 
 		// Assert
-		Assert.AreEqual(5, result.Count);
+		Assert.HasCount(5, result);
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3, 4, 5 }, result.ToList());
 	}
 
@@ -77,7 +77,7 @@ public class HashSetTests
 		var result = hashSet.ToImmutableHashSet();
 
 		// Assert
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -100,7 +100,7 @@ public class HashSetTests
 		var result = hashSet.ToImmutableHashSet();
 
 		// Assert
-		Assert.AreEqual(hashSet.Count, result.Count);
+		Assert.HasCount(hashSet.Count, result);
 		CollectionAssert.AreEquivalent(hashSet.ToList(), result.ToList());
 	}
 
@@ -113,10 +113,10 @@ public class HashSetTests
 
 		people.Upsert(person);
 
-		Assert.IsTrue(people.Count == 11);
+		Assert.AreEqual(11, people.Count);
 
 		people.Upsert(personFromCollection);
 
-		Assert.IsTrue(people.Count == 11);
+		Assert.AreEqual(11, people.Count);
 	}
 }

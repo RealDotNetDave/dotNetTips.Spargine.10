@@ -67,7 +67,7 @@ public class FileProcessorTests
 
 		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "Copy"));
 
-		Assert.IsTrue(processor.CopyFilesWithOriginalPath(files, destination) == FileCount);
+		Assert.AreEqual(FileCount, processor.CopyFilesWithOriginalPath(files, destination));
 
 		destination.Delete(true);
 
@@ -98,7 +98,7 @@ public class FileProcessorTests
 			File.SetAttributes(file.FullName, FileAttributes.ReadOnly);
 		}
 
-		Assert.IsTrue(processor.DeleteFiles(files) == FileCount);
+		Assert.AreEqual(FileCount, processor.DeleteFiles(files));
 
 	}
 
@@ -157,7 +157,7 @@ public class FileProcessorTests
 		processor.Processed += this.Processor_Processed;
 
 		// Act & Assert
-		Assert.IsTrue(processor.DeleteFolders(null, true) == 0);
+		Assert.AreEqual(0, processor.DeleteFolders(null, true));
 	}
 
 	/// <summary>
@@ -222,7 +222,7 @@ public class FileProcessorTests
 			}
 		}
 
-		Assert.IsTrue(processor.DeleteFolders(folders, true) == DirectoryCount);
+		Assert.AreEqual(DirectoryCount, processor.DeleteFolders(folders, true));
 
 	}
 

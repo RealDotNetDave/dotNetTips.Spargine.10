@@ -48,7 +48,7 @@ public class LoggingHelperTests
 
 		var result = LoggingHelper.RetrieveAllExceptionMessages(testException);
 
-		Assert.IsTrue(result.Count == 2);
+		Assert.AreEqual(2, result.Count);
 	}
 	[TestMethod]
 	public void RetrieveAllExceptionsTest()
@@ -57,7 +57,7 @@ public class LoggingHelperTests
 
 		var result = LoggingHelper.RetrieveAllExceptions(testException);
 
-		Assert.IsTrue(result.Count == 2);
+		Assert.AreEqual(2, result.Count);
 	}
 
 }

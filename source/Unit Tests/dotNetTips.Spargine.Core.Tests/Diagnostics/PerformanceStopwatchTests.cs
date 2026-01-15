@@ -55,8 +55,8 @@ public class PerformanceStopwatchTests
 
 		psw.AddDiagnosticEntry("Test diagnostic entry");
 
-		Assert.AreEqual(1, psw.Diagnostics.Count);
-		Assert.IsTrue(psw.Diagnostics[0].Message.Contains("Test diagnostic entry"));
+		Assert.HasCount(1, psw.Diagnostics);
+		Assert.Contains("Test diagnostic entry", psw.Diagnostics[0].Message);
 	}
 
 	[TestMethod]
@@ -79,11 +79,11 @@ public class PerformanceStopwatchTests
 		psw.StopReset(this._logger, "Test message 1");
 		psw.StopReset(this._logger, "Test message 2");
 
-		Assert.IsTrue(psw.Diagnostics.Count > 0);
+		Assert.IsNotEmpty(psw.Diagnostics);
 
 		psw.ClearDiagnostics();
 
-		Assert.AreEqual(0, psw.Diagnostics.Count);
+		Assert.IsEmpty(psw.Diagnostics);
 	}
 
 	[TestMethod]
@@ -94,11 +94,11 @@ public class PerformanceStopwatchTests
 		psw.RecordLap();
 		psw.RecordLap();
 
-		Assert.AreEqual(2, psw.GetLaps().Count);
+		Assert.HasCount(2, psw.GetLaps());
 
 		psw.ClearLaps();
 
-		Assert.AreEqual(0, psw.GetLaps().Count);
+		Assert.IsEmpty(psw.GetLaps());
 	}
 
 	[TestMethod]
@@ -131,7 +131,7 @@ public class PerformanceStopwatchTests
 
 		var diagnostics = psw.Diagnostics;
 
-		Assert.AreEqual(3, diagnostics.Count);
+		Assert.HasCount(3, diagnostics);
 		Assert.IsTrue(diagnostics[0].Timestamp <= diagnostics[1].Timestamp);
 		Assert.IsTrue(diagnostics[1].Timestamp <= diagnostics[2].Timestamp);
 	}
@@ -171,8 +171,8 @@ public class PerformanceStopwatchTests
 
 		var diagnostics = psw.Diagnostics;
 
-		Assert.IsTrue(diagnostics.Count > 0);
-		Assert.IsTrue(diagnostics[0].Message.Contains("Test message"));
+		Assert.IsNotEmpty(diagnostics);
+		Assert.Contains("Test message", diagnostics[0].Message);
 	}
 
 	[TestMethod]
@@ -183,7 +183,7 @@ public class PerformanceStopwatchTests
 
 		var json = psw.ExportToJson();
 
-		Assert.IsTrue(json.Contains(title));
+		Assert.Contains(title, json);
 	}
 
 	[TestMethod]
@@ -193,9 +193,9 @@ public class PerformanceStopwatchTests
 
 		var json = psw.ExportToJson();
 
-		Assert.IsTrue(json.Contains(Environment.NewLine));
-		Assert.IsTrue(json.Contains("{"));
-		Assert.IsTrue(json.Contains("}"));
+		Assert.Contains(Environment.NewLine, json);
+		Assert.Contains("{", json);
+		Assert.Contains("}", json);
 	}
 
 	[TestMethod]
@@ -210,9 +210,9 @@ public class PerformanceStopwatchTests
 
 		var json = psw.ExportToJson();
 
-		Assert.IsTrue(json.Contains("ElapsedTimeMs"));
-		Assert.IsTrue(json.Contains("Laps"));
-		Assert.IsTrue(json.Contains("Diagnostics"));
+		Assert.Contains("ElapsedTimeMs", json);
+		Assert.Contains("Laps", json);
+		Assert.Contains("Diagnostics", json);
 	}
 
 	[TestMethod]
@@ -224,8 +224,8 @@ public class PerformanceStopwatchTests
 
 		var messages = psw.GetDiagnosticMessages();
 
-		Assert.AreEqual(1, messages.Count);
-		Assert.IsTrue(messages[0].Contains("Test diagnostic message"));
+		Assert.HasCount(1, messages);
+		Assert.Contains("Test diagnostic message", messages[0]);
 	}
 
 	[TestMethod]
@@ -237,7 +237,7 @@ public class PerformanceStopwatchTests
 
 		var elapsedTimeString = psw.GetElapsedTimeString();
 
-		Assert.IsTrue(elapsedTimeString.StartsWith("Elapsed Time:"));
+		Assert.StartsWith("Elapsed Time:", elapsedTimeString);
 	}
 
 	[TestMethod]
@@ -250,7 +250,7 @@ public class PerformanceStopwatchTests
 
 		var laps = psw.GetLaps();
 
-		Assert.AreEqual(2, laps.Count);
+		Assert.HasCount(2, laps);
 	}
 
 	[TestMethod]
@@ -262,7 +262,7 @@ public class PerformanceStopwatchTests
 
 		var report = psw.GetSummaryReport();
 
-		Assert.IsTrue(report.Contains("Lap 0"));
+		Assert.Contains("Lap 0", report);
 	}
 
 	[TestMethod]
@@ -277,8 +277,8 @@ public class PerformanceStopwatchTests
 
 		var report = psw.GetSummaryReport();
 
-		Assert.IsTrue(report.Contains("Performance Report"));
-		Assert.IsTrue(report.Contains("Test diagnostic entry"));
+		Assert.Contains("Performance Report", report);
+		Assert.Contains("Test diagnostic entry", report);
 	}
 
 	[TestMethod]
@@ -338,8 +338,8 @@ public class PerformanceStopwatchTests
 
 		psw.LogMessage(this._logger, "Intermediate log message");
 
-		Assert.IsTrue(psw.Diagnostics.Count > 0);
-		Assert.IsTrue(psw.Diagnostics[0].Message.Contains("Intermediate log message"));
+		Assert.IsNotEmpty(psw.Diagnostics);
+		Assert.Contains("Intermediate log message", psw.Diagnostics[0].Message);
 	}
 
 	[TestMethod]
@@ -358,7 +358,7 @@ public class PerformanceStopwatchTests
 
 		var laps = psw.GetLaps();
 
-		Assert.AreEqual(3, laps.Count);
+		Assert.HasCount(3, laps);
 		Assert.IsTrue(laps[0] < laps[1]);
 		Assert.IsTrue(laps[1] < laps[2]);
 	}
@@ -370,7 +370,7 @@ public class PerformanceStopwatchTests
 
 		psw.RecordLap();
 
-		Assert.AreEqual(1, psw.GetLaps().Count);
+		Assert.HasCount(1, psw.GetLaps());
 	}
 
 	[TestMethod]
@@ -498,7 +498,7 @@ public class PerformanceStopwatchTests
 
 		Assert.IsTrue(eventTriggered);
 		Assert.IsNotNull(eventElapsed);
-		Assert.IsTrue(eventElapsed.Value.TotalMilliseconds >= 100);
+		Assert.IsGreaterThanOrEqualTo(100, eventElapsed.Value.TotalMilliseconds);
 	}
 
 	[TestMethod]
@@ -536,7 +536,7 @@ public class PerformanceStopwatchTests
 
 		var elapsed = psw.StopReset();
 
-		Assert.IsTrue(elapsed.TotalMilliseconds >= 500);
+		Assert.IsGreaterThanOrEqualTo(500, elapsed.TotalMilliseconds);
 		Assert.AreEqual(0, psw.ElapsedMilliseconds);
 	}
 
@@ -591,8 +591,8 @@ public class PerformanceStopwatchTests
 
 		var elapsed = psw.StopRestart();
 
-		Assert.IsTrue(elapsed.TotalMilliseconds >= 500);
-		Assert.IsTrue(psw.ElapsedMilliseconds >= 0);
+		Assert.IsGreaterThanOrEqualTo(500, elapsed.TotalMilliseconds);
+		Assert.IsGreaterThanOrEqualTo(0, psw.ElapsedMilliseconds);
 	}
 
 	[TestMethod]
@@ -606,6 +606,6 @@ public class PerformanceStopwatchTests
 
 		var result = psw.ToString();
 
-		Assert.IsTrue(result.Contains("Test message"));
+		Assert.Contains("Test message", result);
 	}
 }

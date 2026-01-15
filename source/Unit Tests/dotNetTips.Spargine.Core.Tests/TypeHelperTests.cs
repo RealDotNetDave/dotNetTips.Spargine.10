@@ -54,7 +54,7 @@ public class TypeHelperTests : UnitTester
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count >= 16);
+		Assert.IsGreaterThanOrEqualTo(16, result.Count);
 	}
 
 	[TestMethod]
@@ -113,7 +113,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
@@ -131,7 +131,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
@@ -361,7 +361,7 @@ public class TypeHelperTests : UnitTester
 		var methods2 = TypeHelper.GetAllDeclaredMethods(type).ToList();
 
 		// Assert
-		Assert.AreEqual(methods1.Count, methods2.Count);
+		Assert.HasCount(methods1.Count, methods2);
 		for (int i = 0; i < methods1.Count; i++)
 		{
 			Assert.AreEqual(methods1[i].Name, methods2[i].Name);
@@ -715,7 +715,7 @@ public class TypeHelperTests : UnitTester
 	{
 		var result = TypeHelper.GetGenericArguments(typeof(Dictionary<string, int>));
 		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Length);
+		Assert.HasCount(2, result);
 		Assert.AreEqual(typeof(string), result[0]);
 		Assert.AreEqual(typeof(int), result[1]);
 	}
@@ -725,7 +725,7 @@ public class TypeHelperTests : UnitTester
 	{
 		var result = TypeHelper.GetGenericArguments(typeof(Dictionary<,>));
 		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Length);
+		Assert.HasCount(2, result);
 		Assert.IsTrue(result[0].IsGenericParameter);
 		Assert.IsTrue(result[1].IsGenericParameter);
 	}
@@ -735,7 +735,7 @@ public class TypeHelperTests : UnitTester
 	{
 		var result = TypeHelper.GetGenericArguments(typeof(int));
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Length);
+		Assert.IsEmpty(result);
 	}
 	[TestMethod]
 	public void GetGenericArguments_NullType_ThrowsArgumentNullException()
@@ -749,8 +749,8 @@ public class TypeHelperTests : UnitTester
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list, new List<string> { nameof(IEnumerable), nameof(IDisposable) });
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Contains(nameof(IEnumerable)));
-		Assert.IsFalse(result.Contains(nameof(IDisposable)));
+		Assert.Contains(nameof(IEnumerable), result);
+		Assert.DoesNotContain(nameof(IDisposable), result);
 	}
 
 	[TestMethod]
@@ -759,7 +759,7 @@ public class TypeHelperTests : UnitTester
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list, new List<string> { "NonExistentInterface" });
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -781,7 +781,7 @@ public class TypeHelperTests : UnitTester
 		var obj = new object();
 		var result = TypeHelper.GetImplementedInterfaces(obj);
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 	[TestMethod]
 	public void GetImplementedInterfaces_NullInput_ThrowsArgumentNullException()
@@ -795,9 +795,9 @@ public class TypeHelperTests : UnitTester
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list);
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Contains(nameof(IEnumerable)));
-		Assert.IsTrue(result.Contains(nameof(ICollection)));
-		Assert.IsTrue(result.Contains(nameof(IList)));
+		Assert.Contains(nameof(IEnumerable), result);
+		Assert.Contains(nameof(ICollection), result);
+		Assert.Contains(nameof(IList), result);
 	}
 
 	[TestMethod]
@@ -806,7 +806,7 @@ public class TypeHelperTests : UnitTester
 		var obj = new object();
 		var result = TypeHelper.GetImplementedInterfaceTypes(obj);
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -893,13 +893,13 @@ public class TypeHelperTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 
 		var result = TypeHelper.GetPropertyValues(person);
-		Assert.IsTrue(result.Count > 5);
+		Assert.IsGreaterThan(5, result.Count);
 
 		var exTest = new ArgumentOutOfRangeException("TESTPARAM", "TESTMESSAGE");
 
 		result = TypeHelper.GetPropertyValues(exTest);
 
-		Assert.IsTrue(result.Count > 1);
+		Assert.IsGreaterThan(1, result.Count);
 	}
 
 	[TestMethod]
@@ -913,7 +913,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -934,7 +934,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(1, result.Count);
+		Assert.HasCount(1, result);
 		Assert.IsTrue(result.Any(kv => kv.Key == "Address" && kv.Value.Contains("Street") && kv.Value.Contains("City")));
 	}
 
@@ -949,7 +949,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(1, result.Count);
+		Assert.HasCount(1, result);
 		Assert.IsTrue(result.Any(kv => kv.Key == "Data" && kv.Value == "Key1: 1,Key2: 2"));
 	}
 
@@ -964,7 +964,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -978,7 +978,7 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Count);
+		Assert.HasCount(2, result);
 		Assert.IsTrue(result.Any(kv => kv.Key == "Name" && kv.Value == "Test"));
 		Assert.IsTrue(result.Any(kv => kv.Key == "Age" && kv.Value == "30"));
 	}
@@ -1102,26 +1102,26 @@ public class TypeHelperTests : UnitTester
 
 		var result = TypeHelper.GetTypeDisplayName(person);
 
-		Assert.IsTrue(string.Compare(result, "DotNetTips.Spargine.Tester.Models.RefTypes.Person",
-					StringComparison.Ordinal) == 0);
+		Assert.AreEqual(0, string.Compare(result, "DotNetTips.Spargine.Tester.Models.RefTypes.Person",
+					StringComparison.Ordinal));
 
 		result = TypeHelper.GetTypeDisplayName(person, true);
 
-		Assert.IsTrue(string.Compare(result, "DotNetTips.Spargine.Tester.Models.RefTypes.Person", StringComparison.Ordinal) == 0);
+		Assert.AreEqual(0, string.Compare(result, "DotNetTips.Spargine.Tester.Models.RefTypes.Person", StringComparison.Ordinal));
 
 		result = TypeHelper.GetTypeDisplayName(typeof(int), true, true, true, '-');
 
-		Assert.IsTrue(string.Compare(result, "System.Int32", StringComparison.Ordinal) == 0);
+		Assert.AreEqual(0, string.Compare(result, "System.Int32", StringComparison.Ordinal));
 
 		var people = RandomData.GeneratePersonRefCollection(5);
 
 		result = TypeHelper.GetTypeDisplayName(people);
 
-		Assert.IsTrue(result.Length > 0);
+		Assert.IsGreaterThan(0, result.Length);
 
 		result = TypeHelper.GetTypeDisplayName(RandomData.GeneratePerson<Person>());
 
-		Assert.IsTrue(result.Length > 0);
+		Assert.IsGreaterThan(0, result.Length);
 	}
 
 	[TestMethod]

@@ -363,7 +363,7 @@ public class StringExtensionsTests
 
 		Assert.IsTrue(string.IsNullOrEmpty(testValue1.Concat("-", true, testValue2)) is false);
 
-		Assert.IsTrue(testValue1.Concat("-", false, testValue2).Length == 26);
+		Assert.AreEqual(26, testValue1.Concat("-", false, testValue2).Length);
 	}
 
 	[TestMethod]
@@ -381,7 +381,7 @@ public class StringExtensionsTests
 	{
 		string testValue = null;
 
-		Assert.IsTrue(testValue.DefaultIfNullOrEmpty(RandomData.GenerateWord(5)).Length == 5);
+		Assert.AreEqual(5, testValue.DefaultIfNullOrEmpty(RandomData.GenerateWord(5)).Length);
 	}
 
 	[TestMethod]
@@ -389,9 +389,9 @@ public class StringExtensionsTests
 	{
 		string testValue = null;
 
-		Assert.IsTrue(testValue.DefaultIfNull().Length == 0);
+		Assert.AreEqual(0, testValue.DefaultIfNull().Length);
 
-		Assert.IsTrue(testValue.DefaultIfNull(RandomData.GenerateWord(5)).Length == 5);
+		Assert.AreEqual(5, testValue.DefaultIfNull(RandomData.GenerateWord(5)).Length);
 	}
 
 	[TestMethod]
@@ -424,7 +424,7 @@ public class StringExtensionsTests
 
 		var result = inputString.DelimitedStringToArray();
 
-		Assert.IsTrue(result.Count() == 0);
+		Assert.AreEqual(0, result.Count());
 	}
 
 	[TestMethod]
@@ -434,9 +434,9 @@ public class StringExtensionsTests
 
 		var result = inputString.DelimitedStringToArray();
 
-		Assert.IsTrue(result.Count() == 3);
+		Assert.AreEqual(3, result.Count());
 
-		Assert.IsTrue(result.Count() == 3);
+		Assert.AreEqual(3, result.Count());
 	}
 
 	[TestMethod]
@@ -965,11 +965,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Indent(2, '>');
 
-		Assert.IsTrue(result.Length > 100);
+		Assert.IsGreaterThan(100, result.Length);
 
 		result = testValue.Indent(0, '>');
 
-		Assert.IsTrue(result.Length == 0);
+		Assert.AreEqual(0, result.Length);
 	}
 
 	[TestMethod]
@@ -1565,7 +1565,7 @@ public class StringExtensionsTests
 	{
 		var testValue = $"{RandomData.GenerateWord(25)},{RandomData.GenerateWord(25)}";
 
-		Assert.IsTrue(testValue.SplitRemoveEmpty().Count > 1);
+		Assert.IsGreaterThan(1, testValue.SplitRemoveEmpty().Count);
 	}
 
 	[TestMethod]
@@ -1573,9 +1573,9 @@ public class StringExtensionsTests
 	{
 		var testValue = $"{RandomData.GenerateWord(25)},{RandomData.GenerateWord(25)}";
 
-		Assert.IsTrue(testValue.Split(',', options: StringSplitOptions.RemoveEmptyEntries).FastLongCount() == 2);
+		Assert.AreEqual(2, testValue.Split(',', options: StringSplitOptions.RemoveEmptyEntries).FastLongCount());
 
-		Assert.IsTrue(testValue.Split(',', count: 2, options: StringSplitOptions.RemoveEmptyEntries).FastLongCount() == 2);
+		Assert.AreEqual(2, testValue.Split(',', count: 2, options: StringSplitOptions.RemoveEmptyEntries).FastLongCount());
 	}
 
 	[TestMethod]
@@ -1585,11 +1585,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(',', 2, StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastLongCount() == 2);
+		Assert.AreEqual(2, result.FastLongCount());
 
 		result = testValue.Split(',', 1, StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastLongCount() == 1);
+		Assert.AreEqual(1, result.FastLongCount());
 	}
 
 	[TestMethod]
@@ -1599,11 +1599,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastLongCount() == 3);
+		Assert.AreEqual(3, result.FastLongCount());
 
 		result = testValue.Split(',', StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastLongCount() == 3);
+		Assert.AreEqual(3, result.FastLongCount());
 	}
 
 	[TestMethod]
@@ -1613,11 +1613,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(",", 2, StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastLongCount() == 2);
+		Assert.AreEqual(2, result.FastLongCount());
 
 		result = testValue.Split(",", 1, StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastLongCount() == 1);
+		Assert.AreEqual(1, result.FastLongCount());
 	}
 
 	[TestMethod]
@@ -1627,11 +1627,11 @@ public class StringExtensionsTests
 
 		var result = testValue.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.IsTrue(result.FastLongCount() == 3);
+		Assert.AreEqual(3, result.FastLongCount());
 
 		result = testValue.Split(",", StringSplitOptions.None);
 
-		Assert.IsTrue(result.FastLongCount() == 3);
+		Assert.AreEqual(3, result.FastLongCount());
 	}
 
 	[TestMethod]
@@ -1736,19 +1736,19 @@ public class StringExtensionsTests
 	{
 		var testValue = RandomData.GenerateWord(25);
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.ASCII).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.ASCII));
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.BigEndianUnicode).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.BigEndianUnicode));
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.Default).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.Default));
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.Latin1).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.Latin1));
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.Unicode).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.Unicode));
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.UTF32).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.UTF32));
 
-		Assert.IsTrue(testValue.ToByteArray(encoding: Encoding.UTF8).Length > 0);
+		Assert.IsNotEmpty(testValue.ToByteArray(encoding: Encoding.UTF8));
 	}
 
 	[TestMethod]
@@ -1766,7 +1766,7 @@ public class StringExtensionsTests
 	{
 		var testValue = $"{RandomData.GenerateWord(25)}   ";
 
-		Assert.IsTrue(testValue.ToTrimmed().Length == 25);
+		Assert.AreEqual(25, testValue.ToTrimmed().Length);
 	}
 
 	[TestMethod]

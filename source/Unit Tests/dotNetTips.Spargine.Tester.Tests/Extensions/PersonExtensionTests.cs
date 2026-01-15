@@ -34,7 +34,7 @@ public class PersonExtensionTests : UnitTester
 
 		var age = person.Age;
 
-		Assert.IsTrue(age.TotalDays > 0, "Age should be a non-negative value.");
+		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
 	}
 
 	[TestMethod]
@@ -56,7 +56,7 @@ public class PersonExtensionTests : UnitTester
 
 		var age = person.Age;
 
-		Assert.IsTrue(age.TotalDays > 0, "Age should be a non-negative value.");
+		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
 	}
 
 	[TestMethod]
@@ -78,7 +78,7 @@ public class PersonExtensionTests : UnitTester
 
 		var age = person.Age;
 
-		Assert.IsTrue(age.TotalDays > 0, "Age should be a non-negative value.");
+		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
 	}
 
 	[TestMethod]

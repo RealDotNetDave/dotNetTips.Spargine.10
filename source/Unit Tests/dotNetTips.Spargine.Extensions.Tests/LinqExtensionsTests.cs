@@ -43,7 +43,7 @@ public class LinqExtensionsTests
 		var result = data.If(condition, transforms).ToList();
 
 		// Assert
-		Assert.AreEqual(5, result.Count);
+		Assert.HasCount(5, result);
 		Assert.AreEqual(1, result[0]);
 		Assert.AreEqual(2, result[1]);
 		Assert.AreEqual(3, result[2]);
@@ -66,7 +66,7 @@ public class LinqExtensionsTests
 		var result = data.If(condition, transforms).ToList();
 
 		// Assert
-		Assert.AreEqual(5, result.Count);
+		Assert.HasCount(5, result);
 		Assert.AreEqual(1, result[0]);
 		Assert.AreEqual(2, result[1]);
 		Assert.AreEqual(3, result[2]);
@@ -88,7 +88,7 @@ public class LinqExtensionsTests
 		var result = data.If(condition, transforms).ToList();
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		Assert.AreEqual(5, result[0]);
 		Assert.AreEqual(4, result[1]);
 		Assert.AreEqual(3, result[2]);
@@ -109,7 +109,7 @@ public class LinqExtensionsTests
 		var result = data.If(condition, transforms).ToList();
 
 		// Assert
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		Assert.AreEqual(5, result[0]);
 		Assert.AreEqual(4, result[1]);
 		Assert.AreEqual(3, result[2]);

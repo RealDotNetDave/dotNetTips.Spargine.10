@@ -1235,11 +1235,11 @@ public class RegexProcessorTests
 	{
 		var result = RegexProcessor.ReplaceCrLf("dotnettips");
 
-		Assert.IsTrue(result.Length == 10);
+		Assert.AreEqual(10, result.Length);
 
 		result = RegexProcessor.ReplaceCrLf("dotnettips" + ControlChars.CRLF);
 
-		Assert.IsTrue(result.Length == 10);
+		Assert.AreEqual(10, result.Length);
 	}
 
 	[TestMethod]
@@ -1260,10 +1260,10 @@ public class RegexProcessorTests
 	{
 		var result = RegexProcessor.ReplaceSpaces("dotnettips");
 
-		Assert.IsTrue(result.Length == 10);
+		Assert.AreEqual(10, result.Length);
 
 		result = RegexProcessor.ReplaceSpaces("dot nett ip s");
 
-		Assert.IsTrue(result.Length == 13);
+		Assert.AreEqual(13, result.Length);
 	}
 }

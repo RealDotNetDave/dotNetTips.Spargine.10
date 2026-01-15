@@ -147,8 +147,7 @@ public class FastLoggerExtensionsTests
 		// No exception means the test passes
 	}
 
-	[TestInitialize]
-	public void Setup()
+	public FastLoggerExtensionsTests()
 	{
 		this._logger = new NullLogger<FastLoggerExtensionsTests>();
 	}

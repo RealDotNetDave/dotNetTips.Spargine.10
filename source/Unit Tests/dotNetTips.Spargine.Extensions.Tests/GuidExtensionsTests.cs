@@ -83,6 +83,6 @@ public class GuidExtensionsTests
 
 		// Assert
 		Assert.AreEqual(32, result.Length);
-		Assert.IsFalse(result.Contains('-'));
+		Assert.DoesNotContain('-', result);
 	}
 }

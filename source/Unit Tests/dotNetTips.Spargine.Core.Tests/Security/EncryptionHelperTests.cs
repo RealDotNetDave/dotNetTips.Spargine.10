@@ -95,7 +95,7 @@ public class EncryptionHelperTests
 		// Act and Assert
 		var ex = Assert.ThrowsExactly<CryptographicException>(() =>
 			EncryptionHelper.AesGcmDecrypt(base64Payload, key));
-		Assert.IsTrue(ex.Message.Contains("Unsupported payload version"));
+		Assert.Contains("Unsupported payload version", ex.Message);
 	}
 
 	[TestMethod]
@@ -163,7 +163,7 @@ public class EncryptionHelperTests
 	{
 		var key = EncryptionHelper.GenerateAesGcmKey();
 		Assert.IsNotNull(key);
-		Assert.AreEqual(32, key.Length);
+		Assert.HasCount(32, key);
 	}
 
 	[TestMethod]
@@ -198,8 +198,7 @@ public class EncryptionHelperTests
 		Assert.IsTrue(plainText.Equals(this._plainText));
 	}
 
-	[TestInitialize]
-	public void TestInitialize()
+	public EncryptionHelperTests()
 	{
 		var aes = Aes.Create();
 

@@ -76,7 +76,7 @@ public class RandomDataTests
 				_ = newPeople.AddIfNotExists(people[personCount]);
 			}
 
-			Assert.IsTrue(newPeople.FastCount() == Count);
+			Assert.AreEqual(Count, newPeople.FastCount());
 		}
 		catch (Exception ex)
 		{
@@ -135,7 +135,7 @@ public class RandomDataTests
 		var result = JsonSerializer.Deserialize(json, PersonRefJsonSerializerContext.Default.PersonList);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
@@ -146,7 +146,7 @@ public class RandomDataTests
 		var result = JsonSerializer.Deserialize(json, PersonRecordJsonSerializerContext.Default.PersonList);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
@@ -157,7 +157,7 @@ public class RandomDataTests
 		var result = JsonSerializer.Deserialize(json, PersonRefJsonSerializerContext.Default.PersonList);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	// Tests for RandomData.GenerateAddress<TAddress>
@@ -216,9 +216,9 @@ public class RandomDataTests
 
 		var address = RandomData.GenerateAddress<Address>(country, addressLength, countyProvinceLength);
 		Assert.IsNotNull(address);
-		Assert.IsTrue(address.Address1.Length <= addressLength);
-		Assert.IsTrue(address.Address2.Length <= addressLength);
-		Assert.IsTrue(address.CountyProvince.Length <= countyProvinceLength);
+		Assert.IsLessThanOrEqualTo(addressLength, address.Address1.Length);
+		Assert.IsLessThanOrEqualTo(addressLength, address.Address2.Length);
+		Assert.IsLessThanOrEqualTo(countyProvinceLength, address.CountyProvince.Length);
 	}
 
 	[TestMethod]
@@ -232,7 +232,7 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == 2);
+		Assert.AreEqual(2, result.Count);
 	}
 
 	[TestMethod]
@@ -241,7 +241,7 @@ public class RandomDataTests
 		var addresses = RandomData.GenerateAddressCollection<AddressRecord>(Count);
 
 		Assert.IsNotNull(addresses);
-		Assert.IsTrue(addresses.Count == Count);
+		Assert.AreEqual(Count, addresses.Count);
 	}
 
 	[TestMethod]
@@ -249,7 +249,7 @@ public class RandomDataTests
 	{
 		var addresses = RandomData.GenerateAddressCollection<Address>(Count);
 		Assert.IsNotNull(addresses);
-		Assert.IsTrue(addresses.Count == Count);
+		Assert.AreEqual(Count, addresses.Count);
 	}
 
 	[TestMethod]
@@ -258,7 +258,7 @@ public class RandomDataTests
 		var addresses = RandomData.GenerateAddressCollection<DotNetTips.Spargine.Tester.Models.ValueTypes.Address>(Count);
 
 		Assert.IsNotNull(addresses);
-		Assert.IsTrue(addresses.Count == Count);
+		Assert.AreEqual(Count, addresses.Count);
 	}
 
 	[TestMethod]
@@ -284,7 +284,7 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == count);
+		Assert.AreEqual(count, result.Count);
 	}
 
 	[TestMethod]
@@ -298,7 +298,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(addresses);
 
-		Assert.IsTrue(addresses.Count == AddressCount);
+		Assert.AreEqual(AddressCount, addresses.Count);
 	}
 
 	[TestMethod]
@@ -306,9 +306,9 @@ public class RandomDataTests
 	{
 		var byteArray = RandomData.GenerateByteArray(1);
 
-		Assert.IsTrue(byteArray.Length > 0);
+		Assert.IsNotEmpty(byteArray);
 
-		Assert.IsTrue(byteArray.First() > 0);
+		Assert.IsGreaterThan(0, byteArray.First());
 	}
 
 	[TestMethod]
@@ -343,7 +343,7 @@ public class RandomDataTests
 		var result = RandomData.GenerateCreditCards(100);
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == 100);
+		Assert.AreEqual(100, result.Count);
 	}
 
 	[TestMethod]
@@ -359,8 +359,8 @@ public class RandomDataTests
 	{
 		var decimalValue = RandomData.GenerateDecimal(0, 100, 2);
 
-		Assert.IsTrue(decimalValue >= 0);
-		Assert.IsTrue(decimalValue <= 100);
+		Assert.IsGreaterThanOrEqualTo(0, decimalValue);
+		Assert.IsLessThanOrEqualTo(100, decimalValue);
 	}
 
 	[TestMethod]
@@ -388,7 +388,7 @@ public class RandomDataTests
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsNotNull(result.Path);
-		Assert.IsTrue(result.Files.Count == 2);
+		Assert.AreEqual(2, result.Files.Count);
 
 		// Clean up
 		this.DeleteFiles(result.Files);
@@ -408,7 +408,7 @@ public class RandomDataTests
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsNotNull(result.Path);
-		Assert.IsTrue(result.Files.Count == count);
+		Assert.AreEqual(count, result.Files.Count);
 
 		// Clean up
 		this.DeleteFiles(result.Files);
@@ -427,7 +427,7 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == count);
+		Assert.AreEqual(count, result.Count);
 
 		// Clean up
 		this.DeleteFiles(result);
@@ -442,7 +442,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(files.Path);
 
-		Assert.IsTrue(files.Files.Count == Count);
+		Assert.AreEqual(Count, files.Files.Count);
 
 		this.DeleteFiles(files.Files);
 	}
@@ -456,7 +456,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(files.Path);
 
-		Assert.IsTrue(files.Files.Count == Count);
+		Assert.AreEqual(Count, files.Files.Count);
 
 		this.DeleteFiles(files.Files);
 	}
@@ -474,7 +474,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(files);
 
-		Assert.IsTrue(files.Count == Count);
+		Assert.AreEqual(Count, files.Count);
 
 		this.DeleteFiles(files);
 	}
@@ -490,7 +490,7 @@ public class RandomDataTests
 
 		Assert.IsTrue(testFile.Exists);
 
-		Assert.IsTrue(FileLength == testFile.Length);
+		Assert.AreEqual(testFile.Length, FileLength);
 
 		testFile.Delete();
 	}
@@ -508,8 +508,8 @@ public class RandomDataTests
 	{
 		var intValue = RandomData.GenerateInteger(0, 1000);
 
-		Assert.IsTrue(intValue >= 0);
-		Assert.IsTrue(intValue <= 1000);
+		Assert.IsGreaterThanOrEqualTo(0, intValue);
+		Assert.IsLessThanOrEqualTo(1000, intValue);
 	}
 
 	[TestMethod]
@@ -543,7 +543,7 @@ public class RandomDataTests
 		var normalArray = RandomData.GenerateByteArray(count);
 
 		// Assert
-		Assert.IsTrue(nonZeroArray.Length == normalArray.Length);
+		Assert.AreEqual(normalArray.Length, nonZeroArray.Length);
 		Assert.IsTrue(nonZeroArray.All(b => b != 0), "Non-zero array should contain no zero bytes");
 	}
 
@@ -566,10 +566,10 @@ public class RandomDataTests
 			distribution[byteValue]++;
 		}
 
-		Assert.IsTrue(distribution[0] == 0, "Zero byte should never be generated");
+		Assert.AreEqual(0, distribution[0], "Zero byte should never be generated");
 
 		var uniqueValues = distribution.Count(d => d > 0);
-		Assert.IsTrue(uniqueValues >= 127, $"Expected at least 127 unique non-zero values, got {uniqueValues}");
+		Assert.IsGreaterThanOrEqualTo(127, uniqueValues, $"Expected at least 127 unique non-zero values, got {uniqueValues}");
 	}
 
 	/// <summary>
@@ -583,8 +583,8 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Length == 1);
-		Assert.IsTrue(result[0] != 0);
+		Assert.AreEqual(1, result.Length);
+		Assert.AreNotEqual(0, result[0]);
 	}
 
 	/// <summary>
@@ -601,10 +601,10 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Length == count);
+		Assert.AreEqual(count, result.Length);
 
 		var zeroCount = result.Count(b => b == 0);
-		Assert.IsTrue(zeroCount == 0, $"Found {zeroCount} zero bytes, expected 0");
+		Assert.AreEqual(0, zeroCount, $"Found {zeroCount} zero bytes, expected 0");
 	}
 
 	/// <summary>
@@ -618,8 +618,8 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Length == 1);
-		Assert.IsTrue(result[0] != 0, "Generated byte should not be zero");
+		Assert.AreEqual(1, result.Length);
+		Assert.AreNotEqual(0, result[0], "Generated byte should not be zero");
 	}
 
 	/// <summary>
@@ -660,11 +660,11 @@ public class RandomDataTests
 		});
 
 		// Assert
-		Assert.IsTrue(results.Count == iterations);
+		Assert.AreEqual(iterations, results.Count);
 
 		foreach (var result in results)
 		{
-			Assert.IsTrue(result.Length == count);
+			Assert.AreEqual(count, result.Length);
 			Assert.IsTrue(result.All(b => b != 0), "All bytes should be non-zero");
 		}
 	}
@@ -683,11 +683,11 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Length == count);
+		Assert.AreEqual(count, result.Length);
 
 		foreach (var byteValue in result)
 		{
-			Assert.IsTrue(byteValue != 0, $"Byte value {byteValue} should not be zero");
+			Assert.AreNotEqual(0, byteValue, $"Byte value {byteValue} should not be zero");
 		}
 	}
 
@@ -706,7 +706,7 @@ public class RandomDataTests
 			var result = RandomData.GenerateNonZeroByteArray(size);
 
 			Assert.IsNotNull(result, $"Result should not be null for size {size}");
-			Assert.IsTrue(result.Length == size, $"Array length should be {size}");
+			Assert.AreEqual(size, result.Length, $"Array length should be {size}");
 			Assert.IsTrue(result.All(b => b != 0), $"All bytes should be non-zero for size {size}");
 		}
 	}
@@ -718,7 +718,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(stringValue.Length == 15);
+		Assert.AreEqual(15, stringValue.Length);
 	}
 
 	[TestMethod]
@@ -729,7 +729,7 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == 2);
+		Assert.AreEqual(2, result.Count);
 	}
 
 	[TestMethod]
@@ -743,7 +743,7 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == count);
+		Assert.AreEqual(count, result.Count);
 	}
 
 	[TestMethod]
@@ -753,7 +753,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(personNames);
 
-		Assert.IsTrue(personNames.Count == Count);
+		Assert.AreEqual(Count, personNames.Count);
 	}
 
 	[TestMethod]
@@ -763,7 +763,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(people);
 
-		Assert.IsTrue(people.Count == AddressCount);
+		Assert.AreEqual(AddressCount, people.Count);
 
 		JsonSerialization.SerializeToFile(
 			people,
@@ -786,7 +786,7 @@ public class RandomDataTests
 		Assert.IsNotNull(person.LastName);
 		Assert.IsNotNull(person.Phone);
 
-		Assert.IsTrue(person.Addresses.Count == AddressCount);
+		Assert.AreEqual(AddressCount, person.Addresses.Count);
 
 		JsonSerialization.SerializeToFile(
 			person,
@@ -800,7 +800,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(people);
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 
 		JsonSerialization.SerializeToFile(people, new FileInfo(Path.Combine(App.ExecutingFolder(), "PeopleRef.json")));
 	}
@@ -820,7 +820,7 @@ public class RandomDataTests
 		Assert.IsNotNull(person.Id);
 		Assert.IsNotNull(person.LastName);
 		Assert.IsNotNull(person.Phone);
-		Assert.IsTrue(person.Addresses.Count == AddressCount);
+		Assert.AreEqual(AddressCount, person.Addresses.Count);
 
 		JsonSerialization.SerializeToFile(person, new FileInfo(Path.Combine(App.ExecutingFolder(), "PersonRef.json")));
 	}
@@ -830,9 +830,9 @@ public class RandomDataTests
 	{
 		var people = RandomData.GeneratePersonValCollection(Count);
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 
-		Assert.IsTrue(people.ToDictionary(item => item.Id).Count == Count);
+		Assert.AreEqual(Count, people.ToDictionary(item => item.Id).Count);
 
 		JsonSerialization.SerializeToFile(people, new FileInfo(Path.Combine(App.ExecutingFolder(), "PeopleVal.json")));
 	}
@@ -852,9 +852,9 @@ public class RandomDataTests
 		Assert.IsNotNull(person.Id);
 		Assert.IsNotNull(person.LastName);
 		Assert.IsNotNull(person.Phone);
-		Assert.IsTrue(person.Addresses.Count == 5);
+		Assert.AreEqual(5, person.Addresses.Count);
 
-		Assert.IsTrue(person.Addresses.Count == AddressCount);
+		Assert.AreEqual(AddressCount, person.Addresses.Count);
 
 		JsonSerialization.SerializeToFile(person, new FileInfo(Path.Combine(App.ExecutingFolder(), "PersonVal.json")));
 	}
@@ -898,9 +898,9 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(new FileInfo(stringValue).Name.Length == 10 + FileExtension.Length + 1);
+		Assert.AreEqual(10 + FileExtension.Length + 1, new FileInfo(stringValue).Name.Length);
 
-		Assert.IsTrue(stringValue.EndsWith(FileExtension));
+		Assert.EndsWith(FileExtension, stringValue);
 	}
 
 	[TestMethod]
@@ -918,9 +918,9 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(new FileInfo(stringValue).Name.Length == 10 + FileExtension.Length + 1);
+		Assert.AreEqual(10 + FileExtension.Length + 1, new FileInfo(stringValue).Name.Length);
 
-		Assert.IsTrue(stringValue.EndsWith(FileExtension));
+		Assert.EndsWith(FileExtension, stringValue);
 	}
 
 	[TestMethod]
@@ -983,7 +983,7 @@ public class RandomDataTests
 
 		Assert.IsTrue(tempFile.Exists);
 
-		Assert.IsTrue(tempFile.Length == FileLength);
+		Assert.AreEqual(FileLength, tempFile.Length);
 
 		tempFile.Delete();
 	}
@@ -1053,7 +1053,7 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(stringValue.Length == 10);
+		Assert.AreEqual(10, stringValue.Length);
 	}
 
 	[TestMethod]
@@ -1063,9 +1063,9 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(stringValue.Length >= 10);
+		Assert.IsGreaterThanOrEqualTo(10, stringValue.Length);
 
-		Assert.IsTrue(stringValue.Length <= 25);
+		Assert.IsLessThanOrEqualTo(25, stringValue.Length);
 	}
 
 	[TestMethod]
@@ -1075,9 +1075,9 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(stringValue.Length >= 5);
+		Assert.IsGreaterThanOrEqualTo(5, stringValue.Length);
 
-		Assert.IsTrue(stringValue.Length <= 25);
+		Assert.IsLessThanOrEqualTo(25, stringValue.Length);
 	}
 
 	[TestMethod]
@@ -1087,7 +1087,7 @@ public class RandomDataTests
 
 		var words = RandomData.GenerateWords(WordCount, 10, 25);
 
-		Assert.IsTrue(words.Count == WordCount);
+		Assert.AreEqual(WordCount, words.Count);
 	}
 
 	/// <summary>
@@ -1100,11 +1100,10 @@ public class RandomDataTests
 
 		Assert.IsNotNull(stringValue);
 
-		Assert.IsTrue(stringValue.Length == 25);
+		Assert.AreEqual(25, stringValue.Length);
 	}
 
-	[TestInitialize]
-	public void Initialize()
+	public RandomDataTests()
 	{
 		this._people = RandomData.GeneratePersonRefCollection(Count).Shuffle().ToList();
 	}
@@ -1116,7 +1115,7 @@ public class RandomDataTests
 
 		var result = JsonSerializer.Serialize(person);
 
-		Assert.IsTrue(string.IsNullOrEmpty(result) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
 		person = JsonSerializer.Deserialize<PersonRecord>(result);
 
@@ -1130,7 +1129,7 @@ public class RandomDataTests
 
 		var result = JsonSerializer.Serialize(person);
 
-		Assert.IsTrue(string.IsNullOrEmpty(result) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
 		person = JsonSerializer.Deserialize<Person>(result);
 
@@ -1144,7 +1143,7 @@ public class RandomDataTests
 
 		var result = JsonSerializer.Serialize(person);
 
-		Assert.IsTrue(string.IsNullOrEmpty(result) == false);
+		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
 		person = JsonSerializer.Deserialize<Models.ValueTypes.Person>(result);
 
@@ -1180,7 +1179,7 @@ public class RandomDataTests
 				}
 			}
 
-			Assert.IsTrue(newPeople.FastCount() == Count);
+			Assert.AreEqual(Count, newPeople.FastCount());
 		}
 		catch (Exception ex)
 		{
@@ -1208,7 +1207,7 @@ public class RandomDataTests
 
 		collection.Sort();
 
-		Assert.IsTrue(this._people.First().Email == collection.First().Email);
+		Assert.AreEqual(collection.First().Email, this._people.First().Email);
 	}
 
 	/// <summary>

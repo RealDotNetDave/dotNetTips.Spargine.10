@@ -179,7 +179,7 @@ public class ObjectExtensionsTests : UnitTester
 		var clone = numbers.FastBinaryClone<int[]>();
 
 		Assert.IsNotNull(clone);
-		Assert.AreEqual(numbers.Length, clone.Length);
+		Assert.HasCount(numbers.Length, clone);
 		Assert.AreNotSame(numbers, clone);
 
 		for (int i = 0; i < numbers.Length; i++)
@@ -196,7 +196,7 @@ public class ObjectExtensionsTests : UnitTester
 		var clone = people.FastBinaryClone<List<Person>>();
 
 		Assert.IsNotNull(clone);
-		Assert.AreEqual(people.Count, clone.Count);
+		Assert.HasCount(people.Count, clone);
 		Assert.AreNotSame(people, clone);
 
 		for (int i = 0; i < people.Count; i++)
@@ -226,7 +226,7 @@ public class ObjectExtensionsTests : UnitTester
 		var clone = emptyList.FastBinaryClone<List<Person>>();
 
 		Assert.IsNotNull(clone);
-		Assert.AreEqual(0, clone.Count);
+		Assert.IsEmpty(clone);
 		Assert.AreNotSame(emptyList, clone);
 	}
 
@@ -409,7 +409,7 @@ public class ObjectExtensionsTests : UnitTester
 		int value = 42;
 		var dict = value.FieldsToDictionary("TestInt");
 
-		Assert.AreEqual(1, dict.Count);
+		Assert.HasCount(1, dict);
 		Assert.IsTrue(dict.ContainsKey("TestInt"));
 		Assert.AreEqual("42", dict["TestInt"]);
 	}
@@ -430,7 +430,7 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 		var dict = person.FieldsToDictionary("Person");
 
-		Assert.IsTrue(dict.Count > 0);
+		Assert.IsNotEmpty(dict);
 		// Verify hierarchical naming with dot notation
 		Assert.IsTrue(dict.Keys.Any(k => k.Contains("Person.")));
 	}
@@ -441,7 +441,7 @@ public class ObjectExtensionsTests : UnitTester
 		var dateTime = new DateTime(2025, 11, 17, 14, 30, 0);
 		var dict = dateTime.FieldsToDictionary("DateTime");
 
-		Assert.AreEqual(1, dict.Count);
+		Assert.HasCount(1, dict);
 		Assert.IsTrue(dict.ContainsKey("DateTime"));
 		Assert.IsFalse(string.IsNullOrEmpty(dict["DateTime"]));
 	}
@@ -452,7 +452,7 @@ public class ObjectExtensionsTests : UnitTester
 		var emptyList = new List<int>();
 		var dict = emptyList.FieldsToDictionary("Empty");
 
-		Assert.AreEqual(0, dict.Count);
+		Assert.IsEmpty(dict);
 	}
 
 	[TestMethod]
@@ -461,7 +461,7 @@ public class ObjectExtensionsTests : UnitTester
 		int value = 42;
 		var dict = value.FieldsToDictionary(string.Empty);
 
-		Assert.AreEqual(1, dict.Count);
+		Assert.HasCount(1, dict);
 		Assert.IsTrue(dict.ContainsKey(string.Empty));
 	}
 
@@ -471,7 +471,7 @@ public class ObjectExtensionsTests : UnitTester
 		var list = new List<int> { 1, 2, 3 };
 		var dict = list.FieldsToDictionary("Numbers");
 
-		Assert.IsTrue(dict.Count > 0);
+		Assert.IsNotEmpty(dict);
 		Assert.IsTrue(dict.Keys.Any(k => k.StartsWith("Numbers[0]")));
 		Assert.IsTrue(dict.Keys.Any(k => k.StartsWith("Numbers[1]")));
 		Assert.IsTrue(dict.Keys.Any(k => k.StartsWith("Numbers[2]")));
@@ -490,7 +490,7 @@ public class ObjectExtensionsTests : UnitTester
 
 		var dict = propertiesTest.FieldsToDictionary();
 
-		Assert.IsTrue(dict.Count == 0);
+		Assert.IsEmpty(dict);
 	}
 	[TestMethod]
 	public void FieldsToDictionary_Null_ThrowsArgumentNullException()
@@ -522,7 +522,7 @@ public class ObjectExtensionsTests : UnitTester
 		string value = "Hello World";
 		var dict = value.FieldsToDictionary("TestString");
 
-		Assert.AreEqual(1, dict.Count);
+		Assert.HasCount(1, dict);
 		Assert.IsTrue(dict.ContainsKey("TestString"));
 		Assert.AreEqual("Hello World", dict["TestString"]);
 	}
@@ -538,7 +538,7 @@ public class ObjectExtensionsTests : UnitTester
 
 		var dict = people.FieldsToDictionary("People");
 
-		Assert.IsTrue(dict.Count > 0);
+		Assert.IsNotEmpty(dict);
 		// Verify indexed naming for collection items
 		Assert.IsTrue(dict.Keys.Any(k => k.Contains("People[0].")));
 		Assert.IsTrue(dict.Keys.Any(k => k.Contains("People[1].")));
@@ -551,7 +551,7 @@ public class ObjectExtensionsTests : UnitTester
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: false);
 
 		Assert.IsNotNull(dict);
-		Assert.IsTrue(dict.Count > 0);
+		Assert.IsNotEmpty(dict);
 	}
 
 	[TestMethod]
@@ -572,7 +572,7 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 		var dict = person.FieldsToDictionary("CustomPrefix");
 
-		Assert.IsTrue(dict.Count > 0);
+		Assert.IsNotEmpty(dict);
 		Assert.IsTrue(dict.Keys.Any(k => k.StartsWith("CustomPrefix.")));
 	}
 
@@ -582,7 +582,7 @@ public class ObjectExtensionsTests : UnitTester
 		int value = 42;
 		var result = value.FieldsToString();
 
-		Assert.IsTrue(result.Contains("42"));
+		Assert.Contains("42", result);
 	}
 
 	[TestMethod]
@@ -601,7 +601,7 @@ public class ObjectExtensionsTests : UnitTester
 		var result = person.FieldsToString();
 
 		// Should not contain backing field syntax
-		Assert.IsFalse(result.Contains("k__BackingField"));
+		Assert.DoesNotContain("k__BackingField", result);
 	}
 
 	[TestMethod]
@@ -612,7 +612,7 @@ public class ObjectExtensionsTests : UnitTester
 		var result = propertiesTest.FieldsToString();
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.Contains(":"));
+		Assert.Contains(":", result);
 	}
 
 	[TestMethod]
@@ -638,7 +638,7 @@ public class ObjectExtensionsTests : UnitTester
 
 		Assert.IsNotNull(result);
 		// List<> should be replaced with "Item"
-		Assert.IsFalse(result.Contains("List`1"));
+		Assert.DoesNotContain("List`1", result);
 	}
 
 	[TestMethod]
@@ -650,7 +650,7 @@ public class ObjectExtensionsTests : UnitTester
 		// Check that fields are separated correctly
 		if (result.Contains(","))
 		{
-			Assert.IsTrue(result.Contains(", "));
+			Assert.Contains(", ", result);
 		}
 	}
 
@@ -686,7 +686,7 @@ public class ObjectExtensionsTests : UnitTester
 		var result = person.FieldsToString();
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.Contains(":"));
+		Assert.Contains(":", result);
 	}
 
 	[TestMethod]
@@ -695,7 +695,7 @@ public class ObjectExtensionsTests : UnitTester
 		string value = "Test String";
 		var result = value.FieldsToString();
 
-		Assert.IsTrue(result.Contains("Test String"));
+		Assert.Contains("Test String", result);
 	}
 
 	[TestMethod]
@@ -706,7 +706,7 @@ public class ObjectExtensionsTests : UnitTester
 
 
 		Assert.IsTrue(result.IsNotEmpty());
-		Assert.IsTrue(result.Contains("="));
+		Assert.Contains("=", result);
 	}
 
 	[TestMethod]
@@ -715,7 +715,7 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 		var result = person.FieldsToString(sequenceSeparator: " | ");
 
-		Assert.IsTrue(result.Contains(" | "));
+		Assert.Contains(" | ", result);
 	}
 
 	[TestMethod]
@@ -725,7 +725,7 @@ public class ObjectExtensionsTests : UnitTester
 		var header = "PERSON FIELDS:";
 		var result = person.FieldsToString(header: header);
 
-		Assert.IsTrue(result.StartsWith(header));
+		Assert.StartsWith(header, result);
 	}
 
 	[TestMethod]
@@ -752,7 +752,7 @@ public class ObjectExtensionsTests : UnitTester
 		int value = 42;
 		var result = value.FieldsToString(includeMemberName: false);
 
-		Assert.IsFalse(result.Contains("Int32."));
+		Assert.DoesNotContain("Int32.", result);
 	}
 
 	[TestMethod]
@@ -761,7 +761,7 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 		var result = person.FieldsToString(includeMemberName: true);
 
-		Assert.IsTrue(result.Contains("Person."));
+		Assert.Contains("Person.", result);
 	}
 
 	[TestMethod]
@@ -828,7 +828,7 @@ public class ObjectExtensionsTests : UnitTester
 		var interfaces = ObjectExtensions.GetImplementedInterfaces(list);
 
 		Assert.IsNotNull(interfaces);
-		Assert.IsTrue(interfaces.Count > 0);
+		Assert.IsNotEmpty(interfaces);
 	}
 
 	[TestMethod]
@@ -850,7 +850,7 @@ public class ObjectExtensionsTests : UnitTester
 		var interfaceTypes = list.GetImplementedInterfaceTypes();
 
 		Assert.IsNotNull(interfaceTypes);
-		Assert.IsTrue(interfaceTypes.Count > 0);
+		Assert.IsNotEmpty(interfaceTypes);
 	}
 
 	[TestMethod]
@@ -1056,7 +1056,7 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		int value = 42;
 		var dict = value.PropertiesToDictionary("TestInt");
-		Assert.AreEqual(1, dict.Count);
+		Assert.HasCount(1, dict);
 		Assert.IsTrue(dict.ContainsKey("TestInt"));
 	}
 
@@ -1065,7 +1065,7 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		var list = new List<int> { 1, 2, 3 };
 		var dict = list.PropertiesToDictionary("Numbers");
-		Assert.AreEqual(3, dict.Count);
+		Assert.HasCount(3, dict);
 		Assert.IsTrue(dict.Keys.Any(k => k.StartsWith("Numbers[0]")));
 	}
 
@@ -1091,11 +1091,11 @@ public class ObjectExtensionsTests : UnitTester
 
 		var result = personProper.PropertiesToDictionary(memberName: $"Person-{personProper.Id}", ignoreNulls: true);
 
-		Assert.IsTrue(result.Count > 1);
+		Assert.IsGreaterThan(1, result.Count);
 
 		result = propertiesTest.PropertiesToDictionary(memberName: $"TestPerson-{personProper.Id}", ignoreNulls: true);
 
-		Assert.IsTrue(result.Count > 1);
+		Assert.IsGreaterThan(1, result.Count);
 	}
 
 	[TestMethod]
@@ -1137,9 +1137,9 @@ public class ObjectExtensionsTests : UnitTester
 			includeMemberName: true);
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.StartsWith("PERSON:"));
-		Assert.IsTrue(result.Contains("="));
-		Assert.IsTrue(result.Contains(" | "));
+		Assert.StartsWith("PERSON:", result);
+		Assert.Contains("=", result);
+		Assert.Contains(" | ", result);
 	}
 
 	[TestMethod]
@@ -1222,8 +1222,8 @@ public class ObjectExtensionsTests : UnitTester
 		var result = person.PropertiesToString(idPropertyOnly);
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.Contains("Id"));
-		Assert.IsFalse(result.Contains("FirstName"));
+		Assert.Contains("Id", result);
+		Assert.DoesNotContain("FirstName", result);
 	}
 
 	[TestMethod]
@@ -1306,7 +1306,7 @@ public class ObjectExtensionsTests : UnitTester
 		var result = person.PropertiesToString(selectAll);
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.Contains(":"));
+		Assert.Contains(":", result);
 	}
 
 	[TestMethod]
@@ -1346,9 +1346,9 @@ public class ObjectExtensionsTests : UnitTester
 			sequenceSeparator: " | ");
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.StartsWith("PROPERTIES:"));
-		Assert.IsTrue(result.Contains("="));
-		Assert.IsTrue(result.Contains(" | "));
+		Assert.StartsWith("PROPERTIES:", result);
+		Assert.Contains("=", result);
+		Assert.Contains(" | ", result);
 	}
 
 	[TestMethod]
@@ -1360,7 +1360,7 @@ public class ObjectExtensionsTests : UnitTester
 
 		var result = person.PropertiesToString(selector, header: header);
 
-		Assert.IsTrue(result.StartsWith(header));
+		Assert.StartsWith(header, result);
 	}
 
 	[TestMethod]
@@ -1405,7 +1405,7 @@ public class ObjectExtensionsTests : UnitTester
 
 		var result = person.PropertiesToString(selector, includeMemberName: false);
 
-		Assert.IsFalse(result.Contains("Person."));
+		Assert.DoesNotContain("Person.", result);
 	}
 
 	[TestMethod]
@@ -1416,7 +1416,7 @@ public class ObjectExtensionsTests : UnitTester
 
 		var result = person.PropertiesToString(selector, includeMemberName: true);
 
-		Assert.IsTrue(result.Contains("Person."));
+		Assert.Contains("Person.", result);
 	}
 
 	[TestMethod]

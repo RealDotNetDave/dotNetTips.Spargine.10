@@ -63,7 +63,7 @@ public class NetworkHelperTests
 		var activeInterfaces = allInterfaces.Where(ni => ni.OperationalStatus == OperationalStatus.Up);
 		var expectedDnsCount = activeInterfaces.SelectMany(ni => ni.GetIPProperties().DnsAddresses).Distinct().Count();
 
-		Assert.AreEqual(expectedDnsCount, result.Count, "Should only include DNS servers from active interfaces.");
+		Assert.HasCount(expectedDnsCount, result, "Should only include DNS servers from active interfaces.");
 	}
 
 	[TestMethod]
@@ -138,7 +138,7 @@ public class NetworkHelperTests
 		var result = NetworkHelper.GetLocalIPAddresses();
 
 		Assert.IsNotNull(result, "Local IP addresses should not be null.");
-		Assert.IsTrue(result.Count >= 0, "Should return zero or more addresses.");
+		Assert.IsGreaterThanOrEqualTo(0, result.Count, "Should return zero or more addresses.");
 	}
 
 	[TestMethod]
@@ -185,7 +185,7 @@ public class NetworkHelperTests
 			ni.OperationalStatus == OperationalStatus.Up &&
 			ni.GetPhysicalAddress() != PhysicalAddress.None);
 
-		Assert.IsTrue(result.Count <= activeInterfaceCount, "Should only include MAC addresses from active interfaces.");
+		Assert.IsLessThanOrEqualTo(activeInterfaceCount, result.Count, "Should only include MAC addresses from active interfaces.");
 	}
 
 	[TestMethod]
@@ -206,7 +206,7 @@ public class NetworkHelperTests
 
 		foreach (var downInterface in downInterfaces)
 		{
-			Assert.IsFalse(result.Contains(downInterface), $"Down interface {downInterface.Name} should not be in the result.");
+			Assert.DoesNotContain(downInterface, result, $"Down interface {downInterface.Name} should not be in the result.");
 		}
 	}
 
@@ -225,7 +225,7 @@ public class NetworkHelperTests
 		var result1 = NetworkHelper.GetNetworkConnections();
 		var result2 = NetworkHelper.GetNetworkConnections();
 
-		Assert.AreEqual(result1.Count, result2.Count, "Multiple calls should return consistent results.");
+		Assert.HasCount(result1.Count, result2, "Multiple calls should return consistent results.");
 	}
 
 	[TestMethod]
@@ -236,7 +236,7 @@ public class NetworkHelperTests
 		foreach (var (interfaceName, speedBps) in result)
 		{
 			Assert.IsFalse(string.IsNullOrWhiteSpace(interfaceName), "Interface name should not be null or empty.");
-			Assert.IsTrue(speedBps >= 0, "Speed should be a non-negative value.");
+			Assert.IsGreaterThanOrEqualTo(0, speedBps, "Speed should be a non-negative value.");
 		}
 	}
 
@@ -247,7 +247,7 @@ public class NetworkHelperTests
 		var allInterfaces = NetworkInterface.GetAllNetworkInterfaces();
 		var activeInterfaceCount = allInterfaces.Count(ni => ni.OperationalStatus == OperationalStatus.Up && ni.Speed > 0);
 
-		Assert.AreEqual(activeInterfaceCount, result.Count, "Should only include speeds from active interfaces.");
+		Assert.HasCount(activeInterfaceCount, result, "Should only include speeds from active interfaces.");
 	}
 
 	[TestMethod]
@@ -267,8 +267,8 @@ public class NetworkHelperTests
 		foreach (var (interfaceName, statistics) in result)
 		{
 			Assert.IsNotNull(statistics, "Statistics should not be null.");
-			Assert.IsTrue(statistics.BytesReceived >= 0, "Bytes received should be non-negative.");
-			Assert.IsTrue(statistics.BytesSent >= 0, "Bytes sent should be non-negative.");
+			Assert.IsGreaterThanOrEqualTo(0, statistics.BytesReceived, "Bytes received should be non-negative.");
+			Assert.IsGreaterThanOrEqualTo(0, statistics.BytesSent, "Bytes sent should be non-negative.");
 		}
 	}
 

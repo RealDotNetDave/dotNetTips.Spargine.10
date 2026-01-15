@@ -40,7 +40,7 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.AreEqual("newValue", result);
 		Assert.AreEqual("newValue", dictionary[1]);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -57,7 +57,7 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.AreEqual("originalValue_updated", result);
 		Assert.AreEqual("originalValue_updated", dictionary[1]);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -105,10 +105,10 @@ public class AutoDefaultDictionaryTests
 		dictionary.Clear();
 
 		// Assert
-		Assert.AreEqual(0, dictionary.Count);
+		Assert.IsEmpty(dictionary);
 		var value = dictionary[4];
 		Assert.AreEqual("default", value);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -138,7 +138,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual(defaultValue, value);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -196,9 +196,9 @@ public class AutoDefaultDictionaryTests
 		var value = dictionary[1];
 
 		// Assert
-		Assert.AreEqual(0, initialDictionary.Count);
+		Assert.IsEmpty(initialDictionary);
 		Assert.AreEqual(defaultValue, value);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -241,7 +241,7 @@ public class AutoDefaultDictionaryTests
 		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, defaultValue);
 
 		// Assert
-		Assert.AreEqual(2, dictionary.Count);
+		Assert.HasCount(2, dictionary);
 		Assert.AreEqual("one", dictionary[1]);
 		Assert.AreEqual("two", dictionary[2]);
 	}
@@ -258,7 +258,7 @@ public class AutoDefaultDictionaryTests
 		Assert.AreEqual("one", dictionary[1]);
 		Assert.AreEqual("two", dictionary[2]);
 		Assert.AreEqual("three", dictionary[3]);
-		Assert.AreEqual(3, dictionary.Count);
+		Assert.HasCount(3, dictionary);
 	}
 
 	[TestMethod]
@@ -274,7 +274,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual(defaultValue, value);
-		Assert.AreEqual(2, dictionary.Count);
+		Assert.HasCount(2, dictionary);
 		Assert.IsTrue(dictionary.ContainsKey(99));
 	}
 
@@ -308,7 +308,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("Generated_1", value);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -524,7 +524,7 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.AreEqual("Generated_1", result);
 		Assert.AreEqual("Generated_1", dictionary[1]);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -540,7 +540,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("existingValue", result);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -555,7 +555,7 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.AreEqual("newValue", result);
 		Assert.AreEqual("newValue", dictionary[1]);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -570,7 +570,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("existingValue", result);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -584,7 +584,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("default", result);
-		Assert.AreEqual(0, dictionary.Count); // Verify key was NOT added
+		Assert.IsEmpty(dictionary); // Verify key was NOT added
 	}
 
 	[TestMethod]
@@ -599,7 +599,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("existingValue", result);
-		Assert.AreEqual(1, dictionary.Count); // Verify no new key was added
+		Assert.HasCount(1, dictionary); // Verify no new key was added
 	}
 
 	[TestMethod]
@@ -624,7 +624,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("Missing_1", result);
-		Assert.AreEqual(0, dictionary.Count); // Verify key was NOT added
+		Assert.IsEmpty(dictionary); // Verify key was NOT added
 	}
 
 	[TestMethod]
@@ -709,13 +709,13 @@ public class AutoDefaultDictionaryTests
 		var immutable = dictionary.ToImmutableDictionary();
 
 		// Assert
-		Assert.AreEqual(2, immutable.Count);
+		Assert.HasCount(2, immutable);
 		Assert.AreEqual("one", immutable[1]);
 		Assert.AreEqual("two", immutable[2]);
 
 		// Verify it's truly immutable by modifying the original
 		dictionary[3] = "three";
-		Assert.AreEqual(2, immutable.Count); // Immutable should not reflect changes
+		Assert.HasCount(2, immutable); // Immutable should not reflect changes
 	}
 
 	[TestMethod]
@@ -730,13 +730,13 @@ public class AutoDefaultDictionaryTests
 		var readOnly = dictionary.ToReadOnlyDictionary();
 
 		// Assert
-		Assert.AreEqual(2, readOnly.Count);
+		Assert.HasCount(2, readOnly);
 		Assert.AreEqual("one", readOnly[1]);
 		Assert.AreEqual("two", readOnly[2]);
 
 		// Verify modifications to original are reflected
 		dictionary[3] = "three";
-		Assert.AreEqual(3, readOnly.Count);
+		Assert.HasCount(3, readOnly);
 	}
 
 	[TestMethod]
@@ -751,7 +751,7 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.IsTrue(result);
 		Assert.AreEqual("value", dictionary[1]);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -767,7 +767,7 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.IsFalse(result);
 		Assert.AreEqual("existingValue", dictionary[1]);
-		Assert.AreEqual(1, dictionary.Count);
+		Assert.HasCount(1, dictionary);
 	}
 
 	[TestMethod]
@@ -801,7 +801,7 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.IsFalse(result);
-		Assert.AreEqual(0, dictionary.Count);
+		Assert.IsEmpty(dictionary);
 	}
 
 	[TestMethod]

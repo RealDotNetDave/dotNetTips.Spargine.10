@@ -59,6 +59,6 @@ public class AddressRefTests
 		var result = address.CompareTo(null);
 
 		// Assert
-		Assert.IsTrue(result > 0, "Expected CompareTo to return a positive value when comparing with null.");
+		Assert.IsGreaterThan(0, result, "Expected CompareTo to return a positive value when comparing with null.");
 	}
 }

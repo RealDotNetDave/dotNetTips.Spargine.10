@@ -33,7 +33,7 @@ public class ReadOnlySpanExtensionsTests
 		var readOnlySpan = new ReadOnlySpan<byte>(bytes);
 		var result = readOnlySpan.BytesToString();
 
-		Assert.IsTrue(result.Length > 100);
+		Assert.IsGreaterThan(100, result.Length);
 	}
 
 	public int[] CreateArray()

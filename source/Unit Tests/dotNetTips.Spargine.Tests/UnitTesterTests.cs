@@ -206,7 +206,7 @@ public class UnitTesterTests
 			// Assert
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
-			Assert.AreEqual(0, lines.Length);
+			Assert.IsEmpty(lines);
 		}
 		finally
 		{
@@ -260,7 +260,7 @@ public class UnitTesterTests
 			// Assert
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
-			Assert.AreEqual(2, lines.Length);
+			Assert.HasCount(2, lines);
 		}
 		finally
 		{
@@ -328,7 +328,7 @@ public class UnitTesterTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(savedFilePath), "File should be created with random name");
-			Assert.IsTrue(savedFilePath.EndsWith(".txt"), "File should have .txt extension");
+			Assert.EndsWith(".txt", savedFilePath, "File should have .txt extension");
 			var fileContent = File.ReadAllText(savedFilePath);
 			Assert.AreEqual(content, fileContent);
 		}
@@ -393,7 +393,7 @@ public class UnitTesterTests
 			Assert.AreEqual("Content 1", File.ReadAllText(file1));
 			Assert.AreEqual("Content 2", File.ReadAllText(file2));
 			Assert.AreEqual("Content 3", File.ReadAllText(file3));
-			Assert.AreEqual(3, tempDir.GetFiles("*.txt").Length);
+			Assert.HasCount(3, tempDir.GetFiles("*.txt"));
 		}
 		finally
 		{
@@ -422,8 +422,8 @@ public class UnitTesterTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(savedFilePath));
-			Assert.IsTrue(savedFilePath.Contains("Level1"));
-			Assert.IsTrue(savedFilePath.Contains("Level2"));
+			Assert.Contains("Level1", savedFilePath);
+			Assert.Contains("Level2", savedFilePath);
 			var fileContent = File.ReadAllText(savedFilePath);
 			Assert.AreEqual(content, fileContent);
 		}
@@ -626,8 +626,8 @@ public class UnitTesterTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(savedFilePath), "File should be created in specified directory");
-			Assert.IsTrue(savedFilePath.Contains(tempDir.FullName), "File path should contain directory path");
-			Assert.IsTrue(savedFilePath.EndsWith($"{methodName}.txt"), "File should have method name");
+			Assert.Contains(tempDir.FullName, savedFilePath, "File path should contain directory path");
+			Assert.EndsWith($"{methodName}.txt", savedFilePath, "File should have method name");
 			var fileContent = File.ReadAllText(savedFilePath);
 			Assert.AreEqual(content, fileContent);
 		}

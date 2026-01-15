@@ -48,7 +48,7 @@ public class EnumHelperTests
 	public void GetValues_ReturnsAllEnumValues_WithDefaultNames()
 	{
 		var values = EnumHelper.GetItems<Status>();
-		Assert.AreEqual(8, values.Count);
+		Assert.HasCount(8, values);
 		Assert.IsTrue(values.Any(v => v.Name == "Not Set" && v.Value == 0));
 		Assert.IsTrue(values.Any(v => v.Name == "New" && v.Value == 1));
 		Assert.IsTrue(values.Any(v => v.Name == "Available" && v.Value == 2));
@@ -63,7 +63,7 @@ public class EnumHelperTests
 	public void GetValues_ReturnsAllEnumValues_WithoutFixNames()
 	{
 		var values = EnumHelper.GetItems<Status>(fixNames: false);
-		Assert.AreEqual(8, values.Count);
+		Assert.HasCount(8, values);
 		Assert.IsTrue(values.Any(v => v.Name == "NotSet" && v.Value == 0));
 		Assert.IsTrue(values.Any(v => v.Name == "New" && v.Value == 1));
 		Assert.IsTrue(values.Any(v => v.Name == "Available" && v.Value == 2));

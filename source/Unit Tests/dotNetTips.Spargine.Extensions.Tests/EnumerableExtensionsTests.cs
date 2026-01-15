@@ -70,15 +70,15 @@ public class EnumerableExtensionsTests
 
 		people = people.AddDistinct(person1);
 
-		Assert.IsTrue(people.Count() == Count + 1);
+		Assert.AreEqual(Count + 1, people.Count());
 
 		people = people.AddDistinct(person1);
 
-		Assert.IsTrue(people.Count() == Count + 1);
+		Assert.AreEqual(Count + 1, people.Count());
 
 		people = people.AddDistinct(null);
 
-		Assert.IsTrue(people.Count() == Count + 1);
+		Assert.AreEqual(Count + 1, people.Count());
 	}
 
 
@@ -87,7 +87,7 @@ public class EnumerableExtensionsTests
 	{
 		var list = new List<int> { 1, 2 }.AsEnumerable();
 		list.AddIf(3, false);
-		Assert.IsTrue(list.Count() == 2);
+		Assert.AreEqual(2, list.Count());
 	}
 
 	[TestMethod]
@@ -109,11 +109,11 @@ public class EnumerableExtensionsTests
 
 		var result = people.AddIf(person, true);
 
-		Assert.IsTrue(result.Count() == people.Count() + 1);
+		Assert.AreEqual(people.Count() + 1, result.Count());
 
 		result = people.AddIf(person, false);
 
-		Assert.IsTrue(result.Count() == people.Count());
+		Assert.AreEqual(people.Count(), result.Count());
 	}
 
 	[TestMethod]
@@ -133,7 +133,7 @@ public class EnumerableExtensionsTests
 
 		var peopleCount = await people.CountAsync(CancellationToken.None);
 
-		Assert.IsTrue(peopleCount == Count);
+		Assert.AreEqual(Count, peopleCount);
 	}
 
 	[TestMethod]
@@ -141,7 +141,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
-		Assert.IsTrue(people.Count() == Count);
+		Assert.AreEqual(Count, people.Count());
 	}
 
 	[TestMethod]
@@ -151,7 +151,7 @@ public class EnumerableExtensionsTests
 
 		var peopleCreated = people.Create(true);
 
-		Assert.IsTrue(people.Count() == peopleCreated.Count);
+		Assert.AreEqual(peopleCreated.Count, people.Count());
 	}
 
 	[TestMethod]
@@ -171,7 +171,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.EnsureUnique(new PersonComparer());
 
-		Assert.IsTrue(result.Count() == Count);
+		Assert.AreEqual(Count, result.Count());
 	}
 
 	[TestMethod]
@@ -183,7 +183,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.EnsureUnique();
 
-		Assert.IsTrue(result.Count() == Count);
+		Assert.AreEqual(Count, result.Count());
 	}
 
 	[TestMethod]
@@ -203,7 +203,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -212,7 +212,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRecordCollection(Count);
 		people.FastProcessor(person => person.GetHashCode());
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -222,7 +222,7 @@ public class EnumerableExtensionsTests
 
 		people.FastProcessor(person => person.GetHashCode());
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -232,7 +232,7 @@ public class EnumerableExtensionsTests
 
 		people.FastProcessor(person => person.GetHashCode());
 
-		Assert.IsTrue(people.Count == Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -487,7 +487,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 		var person1 = people.FastShuffle(1).First();
 
-		Assert.IsTrue(people.IndexOf(person1).IsNegative() == false);
+		Assert.AreEqual(false, people.IndexOf(person1).IsNegative());
 	}
 
 	[TestMethod]
@@ -552,7 +552,7 @@ public class EnumerableExtensionsTests
 		var splitPeople = people.Partition(people.Count() / 10);
 
 		Assert.IsNotNull(splitPeople);
-		Assert.IsTrue(splitPeople.Count() == 11);
+		Assert.AreEqual(11, splitPeople.Count());
 
 		var emptyPeople = new List<Person>();
 
@@ -573,6 +573,7 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	[Obsolete]
 	public void RemoveDuplicatesTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
@@ -585,7 +586,7 @@ public class EnumerableExtensionsTests
 		}
 
 		var result = people.RemoveDuplicates();
-		Assert.IsTrue(result.Count() == Count);
+		Assert.AreEqual(Count, result.Count());
 	}
 
 	[TestMethod]
@@ -594,7 +595,7 @@ public class EnumerableExtensionsTests
 		var collection = new List<string> { null, null, null };
 		var result = collection.RemoveNulls().ToList();
 
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -603,7 +604,7 @@ public class EnumerableExtensionsTests
 		var collection = new List<string>();
 		var result = collection.RemoveNulls().ToList();
 
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -612,7 +613,7 @@ public class EnumerableExtensionsTests
 		var collection = new List<string> { "apple", "banana", "cherry" };
 		var result = collection.RemoveNulls().ToList();
 
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		CollectionAssert.AreEqual(new List<string> { "apple", "banana", "cherry" }, result);
 	}
 
@@ -630,7 +631,7 @@ public class EnumerableExtensionsTests
 		var collection = new List<string> { "apple", null, "banana", null, "cherry" };
 		var result = collection.RemoveNulls().ToList();
 
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 
 		// Verify order preservation explicitly
 		Assert.AreEqual("apple", result[0]);
@@ -665,7 +666,7 @@ public class EnumerableExtensionsTests
 
 		var result = emptyList.ReplaceIf((item, index) => true, 99).ToList();
 
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -675,7 +676,7 @@ public class EnumerableExtensionsTests
 
 		var result = numbers.ReplaceIf((n, i) => n % 100 == 0, 0).ToList();
 
-		Assert.AreEqual(Count, result.Count);
+		Assert.HasCount(Count, result);
 		Assert.AreEqual(0, result[99]); // 100th element (index 99) should be replaced
 	}
 
@@ -796,7 +797,7 @@ public class EnumerableExtensionsTests
 
 		var result = words.ReplaceIf((s, i) => s == "banana", null).ToList();
 
-		Assert.AreEqual(3, result.Count);
+		Assert.HasCount(3, result);
 		Assert.IsNull(result[1]);
 	}
 
@@ -808,7 +809,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.ReplaceIf((p, i) => i == 2, replacementPerson).ToList();
 
-		Assert.AreEqual(5, result.Count);
+		Assert.HasCount(5, result);
 		Assert.AreEqual(replacementPerson, result[2]);
 	}
 
@@ -831,7 +832,7 @@ public class EnumerableExtensionsTests
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);
 
-		Assert.IsTrue(people.Shuffle().Count() == Count);
+		Assert.AreEqual(Count, people.Shuffle().Count());
 	}
 
 	[TestMethod]
@@ -842,7 +843,7 @@ public class EnumerableExtensionsTests
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(nullList.Shuffle);
 
-		Assert.IsTrue(people.FastShuffle(5).Count() == 5);
+		Assert.AreEqual(5, people.FastShuffle(5).Count());
 	}
 
 	[TestMethod]
@@ -874,7 +875,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.ToBlockingCollection();
 
-		Assert.IsTrue(result.Count == Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
@@ -963,10 +964,10 @@ public class EnumerableExtensionsTests
 
 		var result = people.Upsert(person);
 
-		Assert.IsTrue(result.Count() == people.Count() + 1);
+		Assert.AreEqual(people.Count() + 1, result.Count());
 
 		result = result.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.Count() == Count + 1);
+		Assert.AreEqual(Count + 1, result.Count());
 	}
 }

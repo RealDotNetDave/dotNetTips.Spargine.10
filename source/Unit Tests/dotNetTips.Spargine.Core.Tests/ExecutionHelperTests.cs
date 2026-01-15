@@ -41,7 +41,7 @@ public class ExecutionHelperTests
 
 			}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
 
-			Assert.IsTrue(result.Value > 0);
+			Assert.IsGreaterThan(0, result.Value);
 		}
 		catch (Exception ex)
 		{
@@ -59,7 +59,7 @@ public class ExecutionHelperTests
 				  var types = TypeHelper.BuiltInTypeNames();
 			  }, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
 
-			Assert.IsTrue(result.Value > 0);
+			Assert.IsGreaterThan(0, result.Value);
 		}
 		catch (Exception ex)
 		{

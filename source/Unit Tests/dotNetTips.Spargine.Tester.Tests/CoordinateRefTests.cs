@@ -50,12 +50,12 @@ public class CoordinateRefTests
 		var coord4 = new Coordinate(1, 2, 4);
 
 		// Act & Assert
-		Assert.IsTrue(coord1.CompareTo(coord2) < 0);
-		Assert.IsTrue(coord1.CompareTo(coord3) < 0);
-		Assert.IsTrue(coord1.CompareTo(coord4) < 0);
-		Assert.IsTrue(coord2.CompareTo(coord1) > 0);
-		Assert.IsTrue(coord3.CompareTo(coord1) > 0);
-		Assert.IsTrue(coord4.CompareTo(coord1) > 0);
+		Assert.IsLessThan(0, coord1.CompareTo(coord2));
+		Assert.IsLessThan(0, coord1.CompareTo(coord3));
+		Assert.IsLessThan(0, coord1.CompareTo(coord4));
+		Assert.IsGreaterThan(0, coord2.CompareTo(coord1));
+		Assert.IsGreaterThan(0, coord3.CompareTo(coord1));
+		Assert.IsGreaterThan(0, coord4.CompareTo(coord1));
 	}
 
 	[TestMethod]
@@ -103,8 +103,8 @@ public class CoordinateRefTests
 
 		// Act & Assert
 		Assert.AreEqual(0, coord1.CompareTo(coord2));
-		Assert.IsTrue(coord1.CompareTo(coord3) < 0);
-		Assert.IsTrue(coord3.CompareTo(coord1) > 0);
+		Assert.IsLessThan(0, coord1.CompareTo(coord3));
+		Assert.IsGreaterThan(0, coord3.CompareTo(coord1));
 	}
 
 	[TestMethod]
@@ -117,8 +117,8 @@ public class CoordinateRefTests
 
 		// Act & Assert
 		Assert.AreEqual(0, coord1.CompareTo(coord2));
-		Assert.IsTrue(coord1.CompareTo(coord3) < 0);
-		Assert.IsTrue(coord3.CompareTo(coord1) > 0);
+		Assert.IsLessThan(0, coord1.CompareTo(coord3));
+		Assert.IsGreaterThan(0, coord3.CompareTo(coord1));
 	}
 
 	[TestMethod]

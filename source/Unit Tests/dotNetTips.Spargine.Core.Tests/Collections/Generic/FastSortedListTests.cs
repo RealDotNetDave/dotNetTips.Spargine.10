@@ -70,7 +70,7 @@ public class FastSortedListTests
 		list.Add(3);
 
 		// Verify the list capacity has increased
-		Assert.IsTrue(list.Capacity > capacity, "List capacity should increase when adding more items than its initial capacity.");
+		Assert.IsGreaterThan(capacity, list.Capacity, "List capacity should increase when adding more items than its initial capacity.");
 	}
 
 	[TestMethod]
@@ -135,7 +135,7 @@ public class FastSortedListTests
 		var list = new FastSortedList<int>(10);
 
 		// Verify the list is initially empty
-		Assert.AreEqual(0, list.Count, "Newly created list should be empty.");
+		Assert.IsEmpty(list, "Newly created list should be empty.");
 	}
 
 	[TestMethod]
@@ -164,7 +164,7 @@ public class FastSortedListTests
 		var collection = new List<int> { 5, 2, 4, 3, 1 };
 		var list = new FastSortedList<int>(collection);
 
-		Assert.AreEqual(collection.Count, list.Count, "List should contain all elements from the collection.");
+		Assert.HasCount(collection.Count, list, "List should contain all elements from the collection.");
 		for (int i = 0; i < collection.Count; i++)
 		{
 			Assert.AreEqual(collection[i], list[i], $"Element at index {i} should match the collection's element.");

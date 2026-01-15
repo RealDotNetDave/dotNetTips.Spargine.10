@@ -52,7 +52,7 @@ public class TaskExtensionsTests
 	{
 		this.FireAsync(nameof(this.FireAndForgetTest01)).FireAndForget();
 
-		Assert.AreEqual(this._fireResult, nameof(this.FireAndForgetTest01));
+		Assert.AreEqual(nameof(this.FireAndForgetTest01), this._fireResult);
 	}
 
 	/// <summary>
@@ -67,7 +67,7 @@ public class TaskExtensionsTests
 
 		this.FireAsync(nameof(this.FireAndForgetTest01)).FireAndForget(p);
 
-		Assert.AreEqual(this._fireResult, nameof(this.FireAndForgetTest01));
+		Assert.AreEqual(nameof(this.FireAndForgetTest01), this._fireResult);
 	}
 
 }

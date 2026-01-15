@@ -33,7 +33,7 @@ public class CountryPhonePostalInfoRepositoryTests
 
 		Assert.IsNotNull(result);
 
-		Assert.IsTrue(result.Count == 250);
+		Assert.AreEqual(250, result.Count);
 	}
 
 	[TestMethod]
@@ -153,7 +153,7 @@ public class CountryPhonePostalInfoRepositoryTests
 
 		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", "1234");
 
-		Assert.IsTrue(result == PostalCodeState.Invalid);
+		Assert.AreEqual(PostalCodeState.Invalid, result);
 	}
 
 	[TestMethod]
@@ -162,7 +162,7 @@ public class CountryPhonePostalInfoRepositoryTests
 
 		var result = CountryPhonePostalInfoRepository.ValidatePostalCode(countryNameOrIso: "United States", postalCode: "92130-1234");
 
-		Assert.IsTrue(result == PostalCodeState.Valid);
+		Assert.AreEqual(PostalCodeState.Valid, result);
 	}
 
 	[TestMethod]
@@ -170,6 +170,6 @@ public class CountryPhonePostalInfoRepositoryTests
 	{
 		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", "92130");
 
-		Assert.IsTrue(result == PostalCodeState.Valid);
+		Assert.AreEqual(PostalCodeState.Valid, result);
 	}
 }

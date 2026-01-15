@@ -321,7 +321,7 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.Decrement(lowerBound: 1, step: 5);
 
-		Assert.IsTrue(testValue - result == 5);
+		Assert.AreEqual(5, testValue - result);
 	}
 
 	[TestMethod]
@@ -330,25 +330,25 @@ public class NumericExtensionsTests : UnitTester
 		var testValue = double.MaxValue / 2;
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.RoundTrip);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Decimal));
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Hexadecimal));
@@ -362,7 +362,7 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.EnsureMinimum(100);
 
-		Assert.IsTrue(result == 100);
+		Assert.AreEqual(100, result);
 	}
 
 
@@ -483,7 +483,7 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.Increment(upperBound: 300000, step: 5);
 
-		Assert.IsTrue(result == 256239);
+		Assert.AreEqual(256239, result);
 	}
 
 	[TestMethod]
@@ -492,29 +492,29 @@ public class NumericExtensionsTests : UnitTester
 		var testValue = int.MaxValue;
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Decimal);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
 		//PrintResult(result, nameof(NumericFormat.Exponential));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Hexadecimal);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 	}
@@ -752,35 +752,35 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
 		//PrintResult(result, nameof(NumericFormat.Currency));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Decimal);
 		//PrintResult(result, nameof(NumericFormat.Decimal));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
 		//PrintResult(result, nameof(NumericFormat.Exponential));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
 		//PrintResult(result, nameof(NumericFormat.FixedPoint));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
 		//PrintResult(result, nameof(NumericFormat.General));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Hexadecimal);
 		//PrintResult(result, nameof(NumericFormat.Hexadecimal));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
 		//PrintResult(result, nameof(NumericFormat.Number));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		//PrintResult(result, nameof(NumericFormat.Percent));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
@@ -792,7 +792,7 @@ public class NumericExtensionsTests : UnitTester
 		int time = 99999999;
 		var result = time.MillisecondsToString();
 
-		Assert.IsTrue(result == "27:46:39");
+		Assert.AreEqual("27:46:39", result);
 	}
 
 	[TestMethod]
@@ -801,7 +801,7 @@ public class NumericExtensionsTests : UnitTester
 		long time = 99999999;
 		var result = time.MillisecondsToString();
 
-		Assert.IsTrue(result == "27:46:39");
+		Assert.AreEqual("27:46:39", result);
 	}
 
 	[TestMethod]
@@ -810,7 +810,7 @@ public class NumericExtensionsTests : UnitTester
 		var time = new TimeSpan(1, 12, 55, 33, 2200);
 		var result = time.MillisecondsToString();
 
-		Assert.IsTrue(result == "36:55:35");
+		Assert.AreEqual("36:55:35", result);
 	}
 
 	[TestMethod]
@@ -820,7 +820,7 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.RoundToPowerOf2();
 
-		Assert.IsTrue(result == 262144);
+		Assert.AreEqual(262144, result);
 
 		//PrintResult(result, nameof(this.RoundToPowerOf2Test));
 	}
@@ -832,35 +832,35 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
 		//PrintResult(result, nameof(NumericFormat.Currency));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Decimal);
 		//PrintResult(result, nameof(NumericFormat.Decimal));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
 		//PrintResult(result, nameof(NumericFormat.Exponential));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
 		//PrintResult(result, nameof(NumericFormat.FixedPoint));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
 		//PrintResult(result, nameof(NumericFormat.General));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Hexadecimal);
 		//PrintResult(result, nameof(NumericFormat.Hexadecimal));
-		Assert.IsTrue(result.Length > 3);
+		Assert.IsGreaterThan(3, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
 		//PrintResult(result, nameof(NumericFormat.Number));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		//PrintResult(result, nameof(NumericFormat.Percent));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 	}
@@ -870,7 +870,7 @@ public class NumericExtensionsTests : UnitTester
 	{
 		decimal testValue = -100;
 
-		Assert.IsTrue(testValue.ToPositiveValue() > -1);
+		Assert.IsGreaterThan(-1, testValue.ToPositiveValue());
 	}
 
 	[TestMethod]
@@ -878,7 +878,7 @@ public class NumericExtensionsTests : UnitTester
 	{
 		int testValue = -100;
 
-		Assert.IsTrue(testValue.ToPositiveValue() > -1);
+		Assert.IsGreaterThan(-1, testValue.ToPositiveValue());
 	}
 
 	[TestMethod]
@@ -886,7 +886,7 @@ public class NumericExtensionsTests : UnitTester
 	{
 		long testValue = -100;
 
-		Assert.IsTrue(testValue.ToPositiveValue() > -1);
+		Assert.IsGreaterThan(-1, testValue.ToPositiveValue());
 	}
 
 	[TestMethod]
@@ -904,7 +904,7 @@ public class NumericExtensionsTests : UnitTester
 
 		Assert.IsTrue(testValue.ToStringOrEmpty(lowerLimit: 0, upperLimit: 2000, defaultText: OutOfRange).HasValue());
 
-		Assert.IsTrue(testValue.ToStringOrEmpty(lowerLimit: 0, upperLimit: 200, defaultText: OutOfRange) == OutOfRange);
+		Assert.AreEqual(OutOfRange, testValue.ToStringOrEmpty(lowerLimit: 0, upperLimit: 200, defaultText: OutOfRange));
 	}
 
 	[TestMethod]
@@ -914,7 +914,7 @@ public class NumericExtensionsTests : UnitTester
 
 		Assert.IsTrue(testValue.ToWords().HasValue());
 
-		Assert.IsTrue(testValue.ToWords().Length == 49);
+		Assert.AreEqual(49, testValue.ToWords().Length);
 	}
 
 	[TestMethod]
@@ -924,35 +924,35 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
 		//PrintResult(result, nameof(NumericFormat.Currency));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Decimal);
 		//PrintResult(result, nameof(NumericFormat.Decimal));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
 		//PrintResult(result, nameof(NumericFormat.Exponential));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
 		//PrintResult(result, nameof(NumericFormat.FixedPoint));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
 		//PrintResult(result, nameof(NumericFormat.General));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Hexadecimal);
 		//PrintResult(result, nameof(NumericFormat.Hexadecimal));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
 		//PrintResult(result, nameof(NumericFormat.Number));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		//PrintResult(result, nameof(NumericFormat.Percent));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
@@ -965,35 +965,35 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
 		//PrintResult(result, nameof(NumericFormat.Currency));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Decimal);
 		//PrintResult(result, nameof(NumericFormat.Decimal));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
 		//PrintResult(result, nameof(NumericFormat.Exponential));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
 		//PrintResult(result, nameof(NumericFormat.FixedPoint));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
 		//PrintResult(result, nameof(NumericFormat.General));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Hexadecimal);
 		//PrintResult(result, nameof(NumericFormat.Hexadecimal));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
 		//PrintResult(result, nameof(NumericFormat.Number));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		//PrintResult(result, nameof(NumericFormat.Percent));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
@@ -1006,35 +1006,35 @@ public class NumericExtensionsTests : UnitTester
 
 		var result = testValue.ToFormattedString(NumericFormat.Currency);
 		//PrintResult(result, nameof(NumericFormat.Currency));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Decimal);
 		//PrintResult(result, nameof(NumericFormat.Decimal));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Exponential);
 		//PrintResult(result, nameof(NumericFormat.Exponential));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.FixedPoint);
 		//PrintResult(result, nameof(NumericFormat.FixedPoint));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.General);
 		//PrintResult(result, nameof(NumericFormat.General));
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Hexadecimal);
 		//PrintResult(result, nameof(NumericFormat.Hexadecimal));
-		Assert.IsTrue(result.Length > 3);
+		Assert.IsGreaterThan(3, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Number);
 		//PrintResult(result, nameof(NumericFormat.Number));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = testValue.ToFormattedString(NumericFormat.Percent);
 		//PrintResult(result, nameof(NumericFormat.Percent));
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 

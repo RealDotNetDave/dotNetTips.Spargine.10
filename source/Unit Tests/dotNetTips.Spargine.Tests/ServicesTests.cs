@@ -34,8 +34,8 @@ public class ServicesTests
 		var services = ServiceHelper.AllServices();
 
 		Assert.IsNotNull(services);
-		Assert.IsTrue(services.Count > 0);
-		Assert.IsTrue(services.Contains(ExistingServiceName));
+		Assert.IsNotEmpty(services);
+		Assert.Contains(ExistingServiceName, services);
 	}
 
 	[TestMethod]

@@ -99,13 +99,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="..\..\README.md">
-	  <Pack>true</Pack>
-	  <PackagePath>\</PackagePath>
-	</None>
-  </ItemGroup>
-
-  <ItemGroup>
 	<PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

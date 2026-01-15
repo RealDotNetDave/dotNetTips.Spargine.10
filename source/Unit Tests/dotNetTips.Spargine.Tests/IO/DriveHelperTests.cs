@@ -67,7 +67,7 @@ public class DriveHelperTests
 		var result = DriveHelper.GetDriveFreeSpace(drive);
 
 		// Assert
-		Assert.IsTrue(result > 0); // Assuming the drive C:\ has free space
+		Assert.IsGreaterThan(0, result); // Assuming the drive C:\ has free space
 	}
 
 	[TestMethod]
@@ -133,7 +133,7 @@ public class DriveHelperTests
 		var result = DriveHelper.GetDriveTotalSize(drive);
 
 		// Assert
-		Assert.IsTrue(result > 0); // Assuming the drive C:\ has a total size
+		Assert.IsGreaterThan(0, result); // Assuming the drive C:\ has a total size
 	}
 
 	[TestMethod]
@@ -142,7 +142,7 @@ public class DriveHelperTests
 	{
 		var result = DriveHelper.GetFixedDrives();
 
-		Assert.IsTrue(result.Count > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]

@@ -117,7 +117,7 @@ public class ThreadExtensionsTests
 		var endTime = Clock.LocalTime;
 
 		// Assert
-		Assert.IsTrue(endTime.Ticks - startTime.Ticks >= interval.Ticks, "The method should wait for at least the specified interval.");
+		Assert.IsGreaterThanOrEqualTo(interval.Ticks, endTime.Ticks - startTime.Ticks, "The method should wait for at least the specified interval.");
 	}
 }
 

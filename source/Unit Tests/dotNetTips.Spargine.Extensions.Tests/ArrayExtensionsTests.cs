@@ -38,7 +38,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddFirst(null);
 
-		Assert.IsTrue(result.FastLongCount() == 10);
+		Assert.AreEqual(10, result.FastLongCount());
 	}
 
 	/// <summary>
@@ -52,7 +52,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddFirst(person);
 
-		Assert.IsTrue(result.FastLongCount() == 11);
+		Assert.AreEqual(11, result.FastLongCount());
 	}
 
 	[TestMethod]
@@ -62,7 +62,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(null, people.Length == 10);
 
-		Assert.IsTrue(result.FastLongCount() == 10);
+		Assert.AreEqual(10, result.FastLongCount());
 	}
 
 	/// <summary>
@@ -76,7 +76,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(person, people.Length == 10);
 
-		Assert.IsTrue(result.FastLongCount() == 11);
+		Assert.AreEqual(11, result.FastLongCount());
 	}
 
 	/// <summary>
@@ -90,10 +90,10 @@ public class ArrayExtensionsTests
 
 		var result = people.AddLast(person);
 
-		Assert.IsTrue(result.Length == 11);
+		Assert.AreEqual(11, result.Length);
 		Assert.IsTrue(result.Last() == person);
 
-		Assert.IsTrue(result.AddLast(null).Length == 11);
+		Assert.AreEqual(11, result.AddLast(null).Length);
 	}
 
 	[TestMethod]
@@ -191,7 +191,7 @@ public class ArrayExtensionsTests
 
 		var result = words.AsReadOnlySpan();
 
-		Assert.IsTrue(result.Length == 10);
+		Assert.AreEqual(10, result.Length);
 	}
 
 	[TestMethod]
@@ -202,7 +202,7 @@ public class ArrayExtensionsTests
 		var result = words.AsReadOnly();
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == 10);
+		Assert.AreEqual(10, result.Count);
 	}
 
 	[TestMethod]
@@ -241,7 +241,7 @@ public class ArrayExtensionsTests
 
 		var result = bytes.BytesToString();
 
-		Assert.IsTrue(result.Length > 100);
+		Assert.IsGreaterThan(100, result.Length);
 	}
 
 	/// <summary>
@@ -296,7 +296,7 @@ public class ArrayExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Length > 0);
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
@@ -324,7 +324,7 @@ public class ArrayExtensionsTests
 
 		var result = people.FastSelectItems(0, 2);
 
-		Assert.IsTrue(result.Length == 2);
+		Assert.AreEqual(2, result.Length);
 	}
 
 	[TestMethod]
@@ -496,7 +496,7 @@ public class ArrayExtensionsTests
 
 		people.PerformAction((person) => _ = sb.Append($"{person.ToString()}|"));
 
-		Assert.IsTrue(sb.Length > 1000);
+		Assert.IsGreaterThan(1000, sb.Length);
 	}
 
 	/// <summary>
@@ -510,7 +510,7 @@ public class ArrayExtensionsTests
 
 		people.PerformAction((person) => _ = sb.Append($"{person.ToString()}|"));
 
-		Assert.IsTrue(sb.Length > 100);
+		Assert.IsGreaterThan(100, sb.Length);
 	}
 
 	[TestMethod]
@@ -533,7 +533,7 @@ public class ArrayExtensionsTests
 		var result = array.RemoveFirst();
 
 		// Assert
-		Assert.AreEqual(0, result.Length);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -546,7 +546,7 @@ public class ArrayExtensionsTests
 		var result = array.RemoveFirst();
 
 		// Assert
-		Assert.AreEqual(4, result.Length);
+		Assert.HasCount(4, result);
 		CollectionAssert.AreEqual(new[] { 2, 3, 4, 5 }, result);
 	}
 
@@ -581,7 +581,7 @@ public class ArrayExtensionsTests
 		var result = array.RemoveLast();
 
 		// Assert
-		Assert.AreEqual(0, result.Length);
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
@@ -594,7 +594,7 @@ public class ArrayExtensionsTests
 		var result = array.RemoveLast();
 
 		// Assert
-		Assert.AreEqual(4, result.Length);
+		Assert.HasCount(4, result);
 		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4 }, result);
 	}
 
@@ -608,7 +608,7 @@ public class ArrayExtensionsTests
 
 		var result = people.RemoveLast();
 
-		Assert.IsTrue(result.FastLongCount() == 99);
+		Assert.AreEqual(99, result.FastLongCount());
 	}
 
 	[TestMethod]
@@ -629,7 +629,7 @@ public class ArrayExtensionsTests
 
 		words = words.AddLast(words.First());
 
-		Assert.IsTrue(words.ToDistinct().Length == 10);
+		Assert.AreEqual(10, words.ToDistinct().Length);
 	}
 
 	[TestMethod]
@@ -637,8 +637,8 @@ public class ArrayExtensionsTests
 	{
 		var arr = new[] { 1, 2, 3 };
 		var frozen = arr.ToFrozenSet();
-		Assert.IsTrue(frozen.Contains(2));
-		Assert.AreEqual(3, frozen.Count);
+		Assert.Contains(2, frozen);
+		Assert.HasCount(3, frozen);
 	}
 
 	[TestMethod]
@@ -649,7 +649,7 @@ public class ArrayExtensionsTests
 		var result = words.ToFrozenSet();
 
 		Assert.IsNotNull(result);
-		Assert.IsTrue(result.Count == 10);
+		Assert.AreEqual(10, result.Count);
 	}
 
 	[TestMethod]
@@ -658,7 +658,7 @@ public class ArrayExtensionsTests
 		var arr2 = new int[0];
 		var result = arr2.Upsert(0);
 
-		Assert.AreEqual(1, result.Length);
+		Assert.HasCount(1, result);
 	}
 
 	[TestMethod]
@@ -673,7 +673,7 @@ public class ArrayExtensionsTests
 		var result = people.Upsert(existingPerson);
 
 		// Assert
-		Assert.AreEqual(people.Length, result.Length, "The length of the array should remain unchanged when upserting an existing item.");
+		Assert.HasCount(people.Length, result, "The length of the array should remain unchanged when upserting an existing item.");
 
 		Assert.AreEqual("1234567890", result.First().Phone, "The existing item should be updated in the array.");
 	}
@@ -690,7 +690,7 @@ public class ArrayExtensionsTests
 		var result = people.Upsert(existingPerson);
 
 		// Assert
-		Assert.AreEqual(people.Length, result.Length, "The length of the array should remain unchanged when upserting an existing item.");
+		Assert.HasCount(people.Length, result, "The length of the array should remain unchanged when upserting an existing item.");
 		Assert.AreEqual("1234567890", result.First(p => p.Id == existingPerson.Id).Phone, "The existing item should be updated in the array.");
 	}
 
@@ -705,7 +705,7 @@ public class ArrayExtensionsTests
 		var result = people.Upsert(newPerson);
 
 		// Assert
-		Assert.AreEqual(people.Length + 1, result.Length, "The length of the array should increase by one when upserting a new item.");
+		Assert.HasCount(people.Length + 1, result, "The length of the array should increase by one when upserting a new item.");
 		Assert.IsTrue(result.Contains(newPerson), "The new item should be present in the array after upserting.");
 	}
 
@@ -722,18 +722,18 @@ public class ArrayExtensionsTests
 
 		var result = people.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.FastLongCount() == 10);
+		Assert.AreEqual(10, result.FastLongCount());
 
 		result = people.Upsert(person);
 
-		Assert.IsTrue(result.FastLongCount() == 11);
+		Assert.AreEqual(11, result.FastLongCount());
 
 		result = people.Upsert(personFromCollection);
 
-		Assert.IsTrue(result.FastLongCount() == 10);
+		Assert.AreEqual(10, result.FastLongCount());
 
 		result = people.Upsert(null);
 
-		Assert.IsTrue(result.FastLongCount() == 10);
+		Assert.AreEqual(10, result.FastLongCount());
 	}
 }

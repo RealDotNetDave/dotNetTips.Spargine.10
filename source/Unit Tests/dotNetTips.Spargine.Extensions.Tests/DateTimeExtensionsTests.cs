@@ -182,7 +182,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var result = now.TimeUntilNextHour();
 
-		Assert.IsTrue(result.TotalMinutes <= 60);
+		Assert.IsLessThanOrEqualTo(60, result.TotalMinutes);
 	}
 
 	/// <summary>
@@ -195,7 +195,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var result = now.TimeUntilNextMinute();
 
-		Assert.IsTrue(result.TotalSeconds <= 60);
+		Assert.IsLessThanOrEqualTo(60, result.TotalSeconds);
 	}
 
 	/// <summary>
@@ -235,7 +235,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var result = now.TimeUntilNextHour();
 
-		Assert.IsTrue(result.TotalMinutes <= 60);
+		Assert.IsLessThanOrEqualTo(60, result.TotalMinutes);
 	}
 
 	/// <summary>
@@ -248,7 +248,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var result = now.TimeUntilNextMinute();
 
-		Assert.IsTrue(result.TotalSeconds <= 60);
+		Assert.IsLessThanOrEqualTo(60, result.TotalSeconds);
 	}
 
 	/// <summary>
@@ -263,96 +263,96 @@ public class DateTimeExtensionsTests : UnitTester
 
 		//PrintResult(result, nameof(DateTimeFormat.FullDateLongTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.FullDateShortTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.FullDateShortTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.FullDateTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.FullDateTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.GeneralDateLongTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.GeneralDateLongTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.GeneralDateShortTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.GeneralDateShortTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.LongDate);
 
 		//PrintResult(result, nameof(DateTimeFormat.LongDate));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.LongTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.LongTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.MonthDay);
 
 		//PrintResult(result, nameof(DateTimeFormat.MonthDay));
 
-		Assert.IsTrue(result.Length > 4);
+		Assert.IsGreaterThan(4, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.RFC1123);
 
 		//PrintResult(result, nameof(DateTimeFormat.RFC1123));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.RoundTripDateTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.RoundTripDateTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.ShortDate);
 
 		//PrintResult(result, nameof(DateTimeFormat.ShortDate));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.ShortTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.ShortTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.SortableDateTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.SortableDateTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.UniversalFullDateTime);
 
 		//PrintResult(result, nameof(DateTimeFormat.UniversalFullDateTime));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 
 		result = now.ToFormattedString(DateTimeFormat.MonthYear);
 
 		//PrintResult(result, nameof(DateTimeFormat.MonthYear));
 
-		Assert.IsTrue(result.Length > 5);
+		Assert.IsGreaterThan(5, result.Length);
 	}
 
 	/// <summary>
@@ -378,7 +378,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var result = dateTime.GetLastDayOfWeek(DayOfWeek.Sunday);
 
-		Assert.IsTrue(result.DayOfWeek == DayOfWeek.Sunday);
+		Assert.AreEqual(DayOfWeek.Sunday, result.DayOfWeek);
 	}
 
 	/// <summary>
@@ -391,7 +391,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var result = dateTime.GetNextDayOfWeek(DayOfWeek.Tuesday);
 
-		Assert.IsTrue(result.DayOfWeek == DayOfWeek.Tuesday);
+		Assert.AreEqual(DayOfWeek.Tuesday, result.DayOfWeek);
 	}
 	[TestMethod]
 	public void GetWeekOfTheYear_DateOnly_CoversAllWeeks()
@@ -402,7 +402,7 @@ public class DateTimeExtensionsTests : UnitTester
 			{
 				var date = new DateOnly(2024, month, day);
 				var week = DateTimeExtensions.GetWeekOfTheYear(date);
-				Assert.IsTrue(week > 0);
+				Assert.IsGreaterThan(0, week);
 			}
 		}
 	}
@@ -412,7 +412,7 @@ public class DateTimeExtensionsTests : UnitTester
 	{
 		var date = new DateOnly(2024, 1, 1);
 		var week = DateTimeExtensions.GetWeekOfTheYear(date);
-		Assert.IsTrue(week > 0);
+		Assert.IsGreaterThan(0, week);
 	}
 
 	[TestMethod]
@@ -424,7 +424,7 @@ public class DateTimeExtensionsTests : UnitTester
 			{
 				var date = new DateTime(2024, month, day);
 				var week = DateTimeExtensions.GetWeekOfTheYear(date);
-				Assert.IsTrue(week > 0);
+				Assert.IsGreaterThan(0, week);
 			}
 		}
 	}
@@ -434,7 +434,7 @@ public class DateTimeExtensionsTests : UnitTester
 	{
 		var date = new DateTime(2024, 1, 1);
 		var week = DateTimeExtensions.GetWeekOfTheYear(date);
-		Assert.IsTrue(week > 0);
+		Assert.IsGreaterThan(0, week);
 	}
 
 	[TestMethod]
@@ -629,10 +629,10 @@ public class DateTimeExtensionsTests : UnitTester
 		var other = DateTime.Today.AddDays(-3).AddHours(10);
 
 		var strToday = today.ToFriendlyDateString();
-		Assert.IsTrue(strToday.Contains("Today"));
+		Assert.Contains("Today", strToday);
 
 		var strYesterday = yesterday.ToFriendlyDateString();
-		Assert.IsTrue(strYesterday.Contains("Yesterday"));
+		Assert.Contains("Yesterday", strYesterday);
 
 		var strOther = other.ToFriendlyDateString();
 		Assert.IsFalse(string.IsNullOrEmpty(strOther));
@@ -646,10 +646,10 @@ public class DateTimeExtensionsTests : UnitTester
 		var other = DateTimeOffset.Now.Date.AddDays(-3).AddHours(10);
 
 		var strToday = today.ToFriendlyDateString();
-		Assert.IsTrue(strToday.Contains("Today"));
+		Assert.Contains("Today", strToday);
 
 		var strYesterday = yesterday.ToFriendlyDateString();
-		Assert.IsTrue(strYesterday.Contains("Yesterday"));
+		Assert.Contains("Yesterday", strYesterday);
 
 		var strOther = other.ToFriendlyDateString();
 		Assert.IsFalse(string.IsNullOrEmpty(strOther));
@@ -666,7 +666,7 @@ public class DateTimeExtensionsTests : UnitTester
 
 		//PrintResult(epochTime, nameof(this.ToFromMilliEpochTimeTest));
 
-		Assert.IsTrue(epochTime > 0);
+		Assert.IsGreaterThan(0, epochTime);
 
 		// Test reverse
 		var convertedTime = epochTime.FromMilliEpochTime();

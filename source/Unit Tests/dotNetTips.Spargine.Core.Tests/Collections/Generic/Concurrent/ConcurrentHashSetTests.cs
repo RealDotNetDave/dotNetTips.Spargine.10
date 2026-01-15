@@ -467,7 +467,7 @@ public class ConcurrentHashSetTests
 			items.Add(item);
 		}
 
-		Assert.AreEqual(3, items.Count, "The enumerator should iterate over all items.");
+		Assert.HasCount(3, items, "The enumerator should iterate over all items.");
 		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, items, "The enumerated items should match the items in the set.");
 	}
 
@@ -485,7 +485,7 @@ public class ConcurrentHashSetTests
 
 		// Assert
 		Assert.AreEqual(100, addedCount, "AddRange should add all items.");
-		Assert.AreEqual(100, arraySnapshot.Length, "ToArray should return all items.");
+		Assert.HasCount(100, arraySnapshot, "ToArray should return all items.");
 		Assert.IsTrue(peekResult, "TryPeek should find the item.");
 		Assert.AreEqual(50, actualValue, "Peeked value should match.");
 	}
@@ -508,7 +508,7 @@ public class ConcurrentHashSetTests
 		Assert.IsFalse(result2, "Second TryAdd should fail (duplicate).");
 		Assert.IsFalse(result3, "Third TryAdd should fail (duplicate).");
 		Assert.IsTrue(result4, "Fourth TryAdd should succeed (unique).");
-		Assert.AreEqual(2, array.Length, "Array should contain only 2 unique items.");
+		Assert.HasCount(2, array, "Array should contain only 2 unique items.");
 	}
 
 	[TestMethod]
@@ -519,7 +519,7 @@ public class ConcurrentHashSetTests
 
 		Assert.IsNotNull(hashSet, "HashSet should be initialized with the provided collection.");
 
-		Assert.IsTrue(hashSet.Count == 10, "HashSet count should match the number of unique items in the initial collection.");
+		Assert.AreEqual(10, hashSet.Count, "HashSet count should match the number of unique items in the initial collection.");
 	}
 
 	[TestMethod]
@@ -642,8 +642,8 @@ public class ConcurrentHashSetTests
 		var array2 = set.ToArray();
 
 		// Assert
-		Assert.AreEqual(3, array1.Length, "First array should have original count.");
-		Assert.AreEqual(5, array2.Length, "Second array should reflect changes.");
+		Assert.HasCount(3, array1, "First array should have original count.");
+		Assert.HasCount(5, array2, "Second array should reflect changes.");
 	}
 
 
@@ -658,7 +658,7 @@ public class ConcurrentHashSetTests
 
 		// Assert
 		Assert.IsNotNull(result, "ToArray should not return null.");
-		Assert.AreEqual(0, result.Length, "Array should be empty for empty set.");
+		Assert.IsEmpty(result, "Array should be empty for empty set.");
 	}
 
 	[TestMethod]
@@ -672,7 +672,7 @@ public class ConcurrentHashSetTests
 		var result = set.ToArray();
 
 		// Assert
-		Assert.AreEqual(3, result.Length, "Array should contain all unique items based on comparer.");
+		Assert.HasCount(3, result, "Array should contain all unique items based on comparer.");
 	}
 
 	[TestMethod]
@@ -685,7 +685,7 @@ public class ConcurrentHashSetTests
 		var result = set.ToArray();
 
 		// Assert
-		Assert.AreEqual(5, result.Length, "Array should contain all items from set.");
+		Assert.HasCount(5, result, "Array should contain all items from set.");
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, result, "Array should contain the same items as the set.");
 	}
 

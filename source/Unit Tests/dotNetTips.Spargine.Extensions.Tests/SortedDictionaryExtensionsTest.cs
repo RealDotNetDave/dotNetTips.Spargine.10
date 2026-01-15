@@ -95,11 +95,11 @@ public class SortedDictionaryExtensionsTest
 
 		_ = peopleSortedSet.Upsert(person.Id, person);
 
-		Assert.IsTrue(peopleSortedSet.Count == 11);
+		Assert.AreEqual(11, peopleSortedSet.Count);
 
 		_ = peopleSortedSet.Upsert(personFromCollection.Key, personFromCollection.Value);
 
-		Assert.IsTrue(peopleSortedSet.Count == 11);
+		Assert.AreEqual(11, peopleSortedSet.Count);
 
 	}
 
