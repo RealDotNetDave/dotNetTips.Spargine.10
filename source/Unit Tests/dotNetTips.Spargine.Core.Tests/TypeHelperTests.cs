@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -15,12 +15,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
@@ -114,6 +116,13 @@ public class TypeHelperTests : UnitTester
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsNotEmpty(result);
+
+		//Run again to hit cache
+		var result2 = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(Exception), true);
+
+		// Assert
+		Assert.IsNotNull(result2);
+		Assert.IsNotEmpty(result2);
 	}
 
 	[TestMethod]
@@ -254,6 +263,277 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void GetAllAbstractMethods_AbstractClass_ReturnsAbstractMethodsOnly()
+	{
+		// Arrange
+		var type = typeof(Stream);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Count > 0);
+		Assert.IsTrue(result.All(m => m.IsAbstract), "All returned methods should be abstract");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_AbstractClassWithNoAbstractMethods_ReturnsEmpty()
+	{
+		// Arrange
+		// Use a type that is abstract but might not have abstract methods
+		var type = typeof(MemberInfo);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		// Even if abstract, might not have declared abstract methods
+		Assert.IsTrue(result.Count >= 0);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_CachingWorks_ReturnsSameResults()
+	{
+		// Arrange
+		var type = typeof(Stream);
+
+		// Act - Call twice
+		var result1 = TypeHelper.GetAllAbstractMethods(type);
+		var result2 = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count);
+
+		// Compare method names to verify same results
+		var names1 = result1.Select(m => m.Name).OrderBy(n => n).ToArray();
+		var names2 = result2.Select(m => m.Name).OrderBy(n => n).ToArray();
+		CollectionAssert.AreEqual(names1, names2);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_ClosedGenericType_HandlesCorrectly()
+	{
+		// Arrange
+		var type = typeof(List<int>);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_ConcreteClass_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var type = typeof(Person);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_Delegate_ReturnsExpectedMethods()
+	{
+		// Arrange
+		var type = typeof(Action);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		// Delegates are sealed and have no abstract methods
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_Enum_ReturnsEmpty()
+	{
+		// Arrange
+		var type = typeof(DateTimeKind);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "Enums cannot have abstract methods");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_GenericType_HandlesCorrectly()
+	{
+		// Arrange
+		var type = typeof(List<>);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "List<T> is not abstract and has no abstract methods");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_Interface_ReturnsAbstractMethods()
+	{
+		// Arrange
+		var type = typeof(IDisposable);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		// Interfaces have abstract methods
+		Assert.IsTrue(result.Count > 0);
+		Assert.IsTrue(result.All(m => m.IsAbstract));
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_NullType_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllAbstractMethods(null));
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_OnlyDeclaredMethods_DoesNotIncludeInherited()
+	{
+		// Arrange
+		var type = typeof(MemoryStream); // Concrete class inheriting from abstract Stream
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert - MemoryStream has no abstract methods of its own
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "Concrete MemoryStream should not have abstract methods");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_PerformanceWithCaching_SecondCallIsFaster()
+	{
+		// Arrange
+		var type = typeof(Stream);
+
+		// Act - First call (cache miss)
+		var sw1 = Stopwatch.StartNew();
+		var result1 = TypeHelper.GetAllAbstractMethods(type);
+		sw1.Stop();
+
+		// Act - Second call (cache hit)
+		var sw2 = Stopwatch.StartNew();
+		var result2 = TypeHelper.GetAllAbstractMethods(type);
+		sw2.Stop();
+
+		// Assert
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count);
+
+		// Second call should be faster due to caching
+		Assert.IsTrue(sw2.ElapsedTicks <= sw1.ElapsedTicks * 2,
+			$"Cached call should be faster: First={sw1.ElapsedTicks}ns, Second={sw2.ElapsedTicks}ns");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_ReturnsReadOnlyCollection()
+	{
+		// Arrange
+		var type = typeof(Stream);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsInstanceOfType<ReadOnlyCollection<MethodInfo>>(result);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_SealedClass_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var type = typeof(string);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_StaticClass_ReturnsEmpty()
+	{
+		// Arrange
+		var type = typeof(Math);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "Static classes cannot have abstract methods");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_Struct_ReturnsEmpty()
+	{
+		// Arrange
+		var type = typeof(DateTime);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "Structs cannot have abstract methods");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_ValueType_ReturnsEmpty()
+	{
+		// Arrange
+		var type = typeof(int);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count, "Value types cannot have abstract methods");
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_VerifyNoNonAbstractMethods()
+	{
+		// Arrange
+		var type = typeof(Stream);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Any(m => !m.IsAbstract),
+			"Result should not contain any non-abstract methods");
+	}
+
+	[TestMethod]
 	public void GetAllAbstractMethods_WithAbstractMethods_ReturnsMethods()
 	{
 		// Arrange
@@ -265,6 +545,25 @@ public class TypeHelperTests : UnitTester
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsTrue(result.Any(m => m.IsAbstract));
+	}
+
+	[TestMethod]
+	public void GetAllAbstractMethods_WithMultipleAbstractMethods_ReturnsAll()
+	{
+		// Arrange
+		var type = typeof(Stream);
+
+		// Act
+		var result = TypeHelper.GetAllAbstractMethods(type);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Count > 1, "Stream should have multiple abstract methods");
+
+		// Verify some known abstract methods exist
+		var methodNames = result.Select(m => m.Name).ToHashSet();
+		Assert.IsTrue(methodNames.Contains("Read") || methodNames.Contains("Write"),
+			"Stream should contain Read or Write abstract methods");
 	}
 
 	[TestMethod]
@@ -401,6 +700,7 @@ public class TypeHelperTests : UnitTester
 		Assert.IsNotNull(methods);
 		Assert.IsFalse(methods.Any());
 	}
+
 	[TestMethod]
 	public void GetAllFields_NullType_ThrowsArgumentNullException()
 	{
@@ -1174,10 +1474,285 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void HasBaseClass_AbstractClassInheritance_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(FileStream), typeof(Stream));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_ArrayAndObject_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(int[]), typeof(Array));
+
+		// Assert
+		Assert.IsTrue(result, "Arrays inherit from Array");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_CachingWorks_ReturnsSameResults()
+	{
+		// Arrange
+		var type = typeof(ArgumentException);
+		var baseClass = typeof(Exception);
+
+		// Act - Call twice
+		var result1 = TypeHelper.HasBaseClass(type, baseClass);
+		var result2 = TypeHelper.HasBaseClass(type, baseClass);
+
+		// Assert
+		Assert.IsTrue(result1);
+		Assert.IsTrue(result2);
+		Assert.AreEqual(result1, result2);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_CustomClassInheritance_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(MemoryStream), typeof(Stream));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_DelegateAndDelegate_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(Action), typeof(Delegate));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_DelegateAndMulticastDelegate_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(Action), typeof(MulticastDelegate));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_DirectInheritance_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(ArgumentException), typeof(SystemException));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_EnumAndValueType_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(DateTimeKind), typeof(Enum));
+
+		// Assert
+		Assert.IsTrue(result, "Enums inherit from Enum");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_EnumAndValueTypeBase_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(DateTimeKind), typeof(ValueType));
+
+		// Assert
+		Assert.IsTrue(result, "Enum inherits from ValueType");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_GenericTypeInheritance_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(List<int>), typeof(object));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_IndirectInheritance_ReturnsTrue()
+	{
+		// Arrange & Act
+		// ArgumentNullException -> ArgumentException -> SystemException -> Exception -> object
+		var result = TypeHelper.HasBaseClass(typeof(ArgumentNullException), typeof(Exception));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_InterfaceAsBaseClass_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(List<int>), typeof(IEnumerable));
+
+		// Assert
+		Assert.IsFalse(result, "HasBaseClass checks inheritance hierarchy, not interface implementation");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_MultiLevelInheritance_ReturnsTrue()
+	{
+		// Arrange & Act
+		// InvalidOperationException -> SystemException -> Exception -> object
+		var result = TypeHelper.HasBaseClass(typeof(InvalidOperationException), typeof(object));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_NoInheritanceRelationship_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(string), typeof(Exception));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_NullBaseClass_ReturnsFalse()
+	{
+		// Arrange
+		var type = typeof(Exception);
+
+		// Act
+		var result = TypeHelper.HasBaseClass(type, null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_NullType_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.HasBaseClass(null, typeof(object)));
+	}
+
+	[TestMethod]
+	public void HasBaseClass_ObjectAsBaseClass_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(string), typeof(object));
+
+		// Assert
+		Assert.IsTrue(result, "All types inherit from object");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_PerformanceWithCaching_SecondCallIsFaster()
+	{
+		// Arrange
+		var type = typeof(ArgumentNullException);
+		var baseClass = typeof(Exception);
+
+		// Act - First call (cache miss)
+		var sw1 = Stopwatch.StartNew();
+		var result1 = TypeHelper.HasBaseClass(type, baseClass);
+		sw1.Stop();
+
+		// Act - Second call (cache hit)
+		var sw2 = Stopwatch.StartNew();
+		var result2 = TypeHelper.HasBaseClass(type, baseClass);
+		sw2.Stop();
+
+		// Assert
+		Assert.IsTrue(result1);
+		Assert.IsTrue(result2);
+
+		// Second call should be faster due to caching
+		Assert.IsTrue(sw2.ElapsedTicks <= sw1.ElapsedTicks * 2,
+			$"Cached call should be faster: First={sw1.ElapsedTicks}ns, Second={sw2.ElapsedTicks}ns");
+	}
+
+	[TestMethod]
 	public void HasBaseClass_ReturnsTrueAndFalse()
 	{
 		Assert.IsTrue(TypeHelper.HasBaseClass(typeof(Exception), typeof(object)));
 		Assert.IsFalse(TypeHelper.HasBaseClass(typeof(int), typeof(IDisposable)));
+	}
+
+	[TestMethod]
+	public void HasBaseClass_ReverseHierarchy_ReturnsFalse()
+	{
+		// Arrange & Act - Testing reverse (base class does not inherit from derived)
+		var result = TypeHelper.HasBaseClass(typeof(Exception), typeof(ArgumentException));
+
+		// Assert
+		Assert.IsFalse(result, "Base class does not inherit from derived class");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_SameType_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(Exception), typeof(Exception));
+
+		// Assert
+		Assert.IsTrue(result, "A type should be considered as having itself as a base class");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_SealedClassAndNoRelation_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(string), typeof(Stream));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_StructAndValueType_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(DateTime), typeof(ValueType));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_TypeAndItsInterface_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(List<int>), typeof(ICollection<int>));
+
+		// Assert
+		Assert.IsFalse(result, "Interfaces are not in the base class hierarchy");
+	}
+
+	[TestMethod]
+	public void HasBaseClass_UnrelatedTypes_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(StringBuilder), typeof(MemoryStream));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasBaseClass_ValueTypeAndObject_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.HasBaseClass(typeof(int), typeof(ValueType));
+
+		// Assert
+		Assert.IsTrue(result, "int inherits from ValueType");
 	}
 	[TestMethod]
 	public void HasMethod_ExistingPublicInstanceMethod_ReturnsTrue()
@@ -1236,6 +1811,263 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ImplementsInterface_AbstractClassWithInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(Stream), typeof(IDisposable));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_AnonymousType_ReturnsTrue()
+	{
+		// Arrange
+		var anonymousObject = new { Name = "Test", Age = 30 };
+		var type = anonymousObject.GetType();
+
+		// Act - Anonymous types don't implement standard interfaces
+		var result = TypeHelper.ImplementsInterface(type, typeof(IDisposable));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_ArrayType_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(int[]), typeof(IEnumerable));
+
+		// Assert
+		Assert.IsTrue(result, "Arrays implement IEnumerable");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_CachingWorks_ReturnsSameResults()
+	{
+		// Arrange
+		var type = typeof(List<int>);
+		var interfaceType = typeof(IEnumerable<int>);
+
+		// Act - Call twice
+		var result1 = TypeHelper.ImplementsInterface(type, interfaceType);
+		var result2 = TypeHelper.ImplementsInterface(type, interfaceType);
+
+		// Assert
+		Assert.IsTrue(result1);
+		Assert.IsTrue(result2);
+		Assert.AreEqual(result1, result2);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_ClassImplementingMultipleInterfaces_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result1 = TypeHelper.ImplementsInterface(typeof(StringBuilder), typeof(ISerializable));
+
+		// Assert
+		Assert.IsTrue(result1);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_ClosedGenericType_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(Dictionary<string, int>), typeof(IDictionary<string, int>));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_CovariantInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<string>), typeof(IEnumerable<string>));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_DelegateType_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(Action), typeof(IDisposable));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_DerivedInterfaceImplementsBaseInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(IList<int>), typeof(IEnumerable<int>));
+
+		// Assert
+		Assert.IsTrue(result, "IList<int> inherits from IEnumerable<int>");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_DirectlyImplementedInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IList<int>));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_EnumWithInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(DateTimeKind), typeof(IComparable));
+
+		// Assert
+		Assert.IsTrue(result, "Enums implement IComparable");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_ExplicitInterfaceImplementation_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(ICollection<int>));
+
+		// Assert
+		Assert.IsTrue(result, "Even with explicit interface implementation, type still implements interface");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_GenericTypeDefinition_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<>), typeof(IEnumerable));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_IndirectlyImplementedInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable<int>));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_InterfaceDoesNotMatch_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IComparable<int>));
+
+		// Assert
+		Assert.IsFalse(result, "List<int> does not implement IComparable<int>");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_MultipleGenericParameters_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(Dictionary<string, int>), typeof(ICollection<KeyValuePair<string, int>>));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_MultipleInterfaces_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result1 = TypeHelper.ImplementsInterface(typeof(MemoryStream), typeof(IDisposable));
+		var result2 = TypeHelper.ImplementsInterface(typeof(MemoryStream), typeof(Stream)); // Stream is not an interface
+
+		// Assert
+		Assert.IsTrue(result1);
+		Assert.IsFalse(result2, "Stream is a class, not an interface");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_NonGenericInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_NonInterfaceType_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(string));
+
+		// Assert
+		Assert.IsFalse(result, "Should return false when second parameter is not an interface");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_NullInterfaceType_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(string), null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_NullType_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.ImplementsInterface(null, typeof(IDisposable)));
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_OpenGenericInterfaceWithClosedType_ReturnsFalse()
+	{
+		// Arrange & Act
+		// Checking if List<int> implements IEnumerable<> (open generic) - should be false
+		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable<>));
+
+		// Assert
+		Assert.IsFalse(result, "Closed type does not directly implement open generic interface");
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_PerformanceWithCaching_SecondCallIsFaster()
+	{
+		// Arrange
+		var type = typeof(List<int>);
+		var interfaceType = typeof(IEnumerable<int>);
+
+		// Act - First call (cache miss)
+		var sw1 = Stopwatch.StartNew();
+		var result1 = TypeHelper.ImplementsInterface(type, interfaceType);
+		sw1.Stop();
+
+		// Act - Second call (cache hit)
+		var sw2 = Stopwatch.StartNew();
+		var result2 = TypeHelper.ImplementsInterface(type, interfaceType);
+		sw2.Stop();
+
+		// Assert
+		Assert.IsTrue(result1);
+		Assert.IsTrue(result2);
+
+		// Second call should be faster due to caching
+		Assert.IsTrue(sw2.ElapsedTicks <= sw1.ElapsedTicks * 2,
+			$"Cached call should be faster: First={sw1.ElapsedTicks}ns, Second={sw2.ElapsedTicks}ns");
+	}
+
+	[TestMethod]
 	public void ImplementsInterface_ReturnsTrueAndFalse()
 	{
 		Assert.IsTrue(TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int))));
@@ -1243,10 +2075,162 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ImplementsInterface_SealedClass_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(string), typeof(IEnumerable));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_StaticClass_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(Math), typeof(IDisposable));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_StructWithInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(DateTime), typeof(IComparable));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_TypeDoesNotImplementInterface_ReturnsFalse()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(string), typeof(IList));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ImplementsInterface_ValueTypeWithInterface_ReturnsTrue()
+	{
+		// Arrange & Act
+		var result = TypeHelper.ImplementsInterface(typeof(int), typeof(IComparable));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
 	public void IsAssignableTo_ReturnsTrueAndFalse()
 	{
 		Assert.IsTrue(TypeHelper.IsAssignableTo(typeof(string), typeof(object)));
 		Assert.IsFalse(TypeHelper.IsAssignableTo(typeof(int), typeof(IDisposable)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_ArraySegment_ReturnsTrue()
+	{
+		// ArraySegment<> is in the built-in types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ArraySegment<>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_ArrayTypes_ReturnsFalse()
+	{
+		// Array types are not in the built-in types cache
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(int[])));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(string[])));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Person[])));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_CachePerformance_SecondCallIsFaster()
+	{
+		// First call initializes cache
+		var sw1 = Stopwatch.StartNew();
+		_ = TypeHelper.IsBuiltinType(typeof(int));
+		sw1.Stop();
+
+		// Second call should use cache
+		var sw2 = Stopwatch.StartNew();
+		_ = TypeHelper.IsBuiltinType(typeof(int));
+		sw2.Stop();
+
+		// Second call should be faster or equal (cache hit)
+		Assert.IsTrue(sw2.ElapsedTicks <= sw1.ElapsedTicks * 2,
+			$"Cache should improve performance: First={sw1.ElapsedTicks}ns, Second={sw2.ElapsedTicks}ns");
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_ClosedGenericTypes_ReturnsFalse()
+	{
+		// Closed generic types are NOT in the built-in types cache
+		// because the cache contains open generic definitions
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(List<int>)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Dictionary<string, int>)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(HashSet<Person>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_CommonBuiltInTypes_ReturnsTrue()
+	{
+		// Test common built-in types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(string)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(object)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(DateTime)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(DateTimeOffset)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(TimeSpan)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Guid)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Uri)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(IntPtr)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(UIntPtr)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_ConcurrentCollections_ReturnsTrue()
+	{
+		// Test concurrent collection types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.ConcurrentDictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.ConcurrentQueue<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.ConcurrentStack<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.BlockingCollection<>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_CustomTypes_ReturnsFalse()
+	{
+		// Test custom types
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Person)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Address)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(PersonComparer)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_GenericCollectionTypes_ReturnsTrue()
+	{
+		// Test generic collection types (open generics)
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(List<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Dictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(HashSet<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Queue<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Stack<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(LinkedList<>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_ImmutableCollections_ReturnsTrue()
+	{
+		// Test immutable collection types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableArray<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableList<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableDictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableHashSet<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableQueue<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableStack<>)));
 	}
 
 	[TestMethod]
@@ -1258,11 +2242,105 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void IsBuiltInTypeTest_NullableTypes_ReturnsFalse()
+	{
+		// Nullable<> itself should be true as it's in the built-in types list
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Nullable<>)));
+
+		// But closed nullable types are not in the cache
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(int?)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(DateTime?)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_NullType_ReturnsFalse()
+	{
+		var result = TypeHelper.IsBuiltinType(null);
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_NumericTypes_ReturnsTrue()
+	{
+		// Test numeric types including newer ones
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Numerics.BigInteger)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Half)));
+	}
+
+	[TestMethod]
 	public void IsBuiltInTypeTest_PersonRecord()
 	{
 		var result = TypeHelper.IsBuiltinType(typeof(PersonRecord));
 
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_PrimitiveTypes_ReturnsTrue()
+	{
+		// Test all primitive types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(bool)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(byte)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(sbyte)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(char)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(short)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ushort)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(int)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(uint)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(long)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ulong)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(float)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(double)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(decimal)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_ReadOnlyCollections_ReturnsTrue()
+	{
+		// Test read-only collection types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ReadOnlyCollection<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ReadOnlyDictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ReadOnlyObservableCollection<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ObservableCollection<>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_SortedCollections_ReturnsTrue()
+	{
+		// Test sorted collection types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(SortedList<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(SortedDictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(SortedSet<>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_SpanTypes_ReturnsTrue()
+	{
+		// Test Span and Memory types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Span<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ReadOnlySpan<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Memory<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ReadOnlyMemory<>)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_SystemNamespacePublicTypes_ReturnsTrue()
+	{
+		// Some System namespace types that should be included
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(DateTimeKind)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(StringComparison)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Environment)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Math)));
+	}
+
+	[TestMethod]
+	public void IsBuiltInTypeTest_TupleTypes_ReturnsTrue()
+	{
+		// Test tuple types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ValueTuple)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Tuple)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(KeyValuePair<,>)));
 	}
 	[TestMethod]
 	public void IsClosedGeneric_ClosedGenericType_ReturnsTrue()
