@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-09-2026
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -524,7 +524,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <returns>The last element, or default(T).</returns>
 	[Pure]
-	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.None)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual T? LastOrDefault()
 	{
 		return this._set.Count > 0 ? this._set.Last() : default;
@@ -717,7 +717,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns>An array containing all elements from the collection.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual T[] ToArray()
 	{
 		return [.. this._set];
@@ -729,7 +729,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns>A List containing all elements from the collection.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual List<T> ToList()
 	{
 		return [.. this._set];

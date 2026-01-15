@@ -189,9 +189,9 @@ public static partial class ExceptionExtensions
 				if (_exceptionMetadata.TryGetValue(exception, out var metadata))
 				{
 					return new Dictionary<string, object>
-		{
-			{ "IsLogged", metadata.IsLogged }
-		};
+					{
+						{ "IsLogged", metadata.IsLogged }
+					};
 				}
 
 				return new Dictionary<string, object>();
@@ -349,7 +349,7 @@ public static partial class ExceptionExtensions
 		/// </list>
 		/// </remarks>
 		[return: NotNull]
-		[Information(nameof(FormatForDisplay), UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
+		[Information(nameof(FormatForDisplay), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 		public string FormatForDisplay()
 		{
 			if (exception is null)

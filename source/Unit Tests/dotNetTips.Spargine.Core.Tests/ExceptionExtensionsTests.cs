@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,6 +33,11 @@ namespace DotNetTips.Spargine.Core.Tests;
 public class ExceptionExtensionsTests
 {
 	private NullLogger<FastLoggerExtensionsTests> _logger;
+
+	public ExceptionExtensionsTests()
+	{
+		this._logger = new NullLogger<FastLoggerExtensionsTests>();
+	}
 
 	[TestMethod]
 	public void ClearIsLogged_ShouldResetIsLoggedState()
@@ -164,6 +169,137 @@ public class ExceptionExtensionsTests
 
 		Assert.Contains("Test exception", result);
 		Assert.Contains("Exception", result);
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_IncludesExceptionMessage()
+	{
+		// Arrange
+		var exception = new Exception("This is a test exception message");
+
+		// Act
+		var result = exception.FormatForDisplay();
+
+		// Assert
+		Assert.Contains("Message: This is a test exception message", result);
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_IncludesExceptionTypeName()
+	{
+		// Arrange
+		var exception = new ArgumentNullException("paramName", "Parameter cannot be null");
+
+		// Act
+		var result = exception.FormatForDisplay();
+
+		// Assert
+		Assert.Contains("Exception: ArgumentNullException", result);
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_WithDifferentExceptionTypes_FormatsCorrectly()
+	{
+		// Arrange
+		var exceptions = new Exception[]
+		{
+		new NullReferenceException("Null reference"),
+		new IndexOutOfRangeException("Index out of range"),
+		new OutOfMemoryException("Out of memory")
+		};
+
+		// Act & Assert
+		foreach (var exception in exceptions)
+		{
+			var result = exception.FormatForDisplay();
+
+			Assert.Contains($"Exception: {exception.GetType().Name}", result);
+			Assert.Contains($"Message: {exception.Message}", result);
+			Assert.Contains("StackTrace:", result);
+		}
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_WithEmptyMessage_HandlesCorrectly()
+	{
+		// Arrange
+		var exception = new Exception(string.Empty);
+
+		// Act
+		var result = exception.FormatForDisplay();
+
+		// Assert
+		Assert.Contains("Exception: Exception", result);
+		Assert.Contains("Message:", result);
+		Assert.Contains("StackTrace: NONE", result);
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_WithExceptionWithoutStackTrace_ShowsNone()
+	{
+		// Arrange
+		var exception = new InvalidOperationException("Test operation failed");
+
+		// Act
+		var result = exception.FormatForDisplay();
+
+		// Assert
+		Assert.Contains("StackTrace: NONE", result);
+		Assert.Contains("Message: Test operation failed", result);
+		Assert.Contains("Exception: InvalidOperationException", result);
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_WithExceptionWithStackTrace_IncludesStackTrace()
+	{
+		// Arrange
+		Exception exception = null;
+		try
+		{
+			throw new ArgumentException("Invalid argument");
+		}
+		catch (Exception ex)
+		{
+			exception = ex;
+		}
+
+		// Act
+		var result = exception.FormatForDisplay();
+
+		// Assert
+		Assert.Contains("Exception: ArgumentException", result);
+		Assert.Contains("Message: Invalid argument", result);
+		Assert.IsFalse(result.Contains("StackTrace: NONE"));
+		Assert.Contains("StackTrace:", result);
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_WithInnerException_FormatsOnlyOuterException()
+	{
+		// Arrange
+		var innerException = new InvalidOperationException("Inner exception message");
+		var outerException = new Exception("Outer exception message", innerException);
+
+		// Act
+		var result = outerException.FormatForDisplay();
+
+		// Assert
+		Assert.Contains("Exception: Exception", result);
+		Assert.Contains("Message: Outer exception message", result);
+		Assert.IsFalse(result.Contains("Inner exception message"), "Should not include inner exception details");
+	}
+
+	[TestMethod]
+	public void FormatForDisplay_WithNullException_ReturnsEmptyString()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act
+		var result = exception.FormatForDisplay();
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
@@ -540,9 +676,21 @@ public class ExceptionExtensionsTests
 		Assert.IsTrue(exception.IsLogged());
 	}
 
-	public ExceptionExtensionsTests()
+	[TestMethod]
+	public void ToJson_ReturnsValidJson()
 	{
-		this._logger = new NullLogger<FastLoggerExtensionsTests>();
+		// Arrange
+		var innerException = new ArgumentNullException("param", "Parameter cannot be null");
+		var exception = new Exception("Outer exception", innerException);
+
+		// Act
+		var json = exception.ToJson();
+
+		// Assert
+		Assert.IsNotEmpty(json);
+		Assert.IsTrue(json.StartsWith("{"), "JSON should start with opening brace");
+		Assert.IsTrue(json.EndsWith("}"), "JSON should end with closing brace");
+		Assert.Contains("\"Message\"", json);
 	}
 
 	[TestMethod]
@@ -557,6 +705,130 @@ public class ExceptionExtensionsTests
 		// Assert
 		Assert.Contains("Test exception", json);
 		Assert.Contains("Inner exception", json);
+	}
+
+	[TestMethod]
+	public void ToJson_WithDifferentExceptionTypes_SerializesCorrectly()
+	{
+		// Arrange
+		var exceptions = new Exception[]
+		{
+		new NullReferenceException("Null reference error"),
+		new InvalidOperationException("Invalid operation")
+		};
+
+		// Act & Assert
+		foreach (var exception in exceptions)
+		{
+			var json = exception.ToJson();
+
+			Assert.IsNotEmpty(json);
+			Assert.Contains(exception.Message, json);
+			Assert.Contains("Message", json);
+			Assert.Contains("StackTrace", json);
+		}
+	}
+
+	[TestMethod]
+	public void ToJson_WithEmptyMessage_HandlesCorrectly()
+	{
+		// Arrange
+		var exception = new Exception(string.Empty);
+
+		// Act
+		var json = exception.ToJson();
+
+		// Assert
+		Assert.IsNotEmpty(json);
+		Assert.Contains("Message", json);
+		Assert.Contains("StackTrace", json);
+	}
+
+	[TestMethod]
+	public void ToJson_WithExceptionWithoutInnerExceptions_ContainsMessageOnly()
+	{
+		// Arrange
+		var exception = new Exception("Single exception message");
+
+		// Act
+		var json = exception.ToJson();
+
+		// Assert
+		Assert.Contains("Single exception message", json);
+		Assert.Contains("Message", json);
+		Assert.Contains("StackTrace", json);
+		Assert.Contains("InnerExceptions", json);
+	}
+
+	[TestMethod]
+	public void ToJson_WithExceptionWithStackTrace_IncludesStackTrace()
+	{
+		// Arrange
+		Exception exception = null;
+		try
+		{
+			throw new InvalidOperationException("Exception with stack trace");
+		}
+		catch (Exception ex)
+		{
+			exception = ex;
+		}
+
+		// Act
+		var json = exception.ToJson();
+
+		// Assert
+		Assert.Contains("Exception with stack trace", json);
+		Assert.Contains("StackTrace", json);
+		Assert.IsTrue(json.Length > 50, "JSON should include substantial stack trace information");
+	}
+
+	[TestMethod]
+	public void ToJson_WithInnerExceptionChain_SerializesAllMessages()
+	{
+		// Arrange
+		var level3 = new Exception("Level 3 exception");
+		var level2 = new Exception("Level 2 exception", level3);
+		var level1 = new Exception("Level 1 exception", level2);
+
+		// Act
+		var json = level1.ToJson();
+
+		// Assert
+		Assert.Contains("Level 1 exception", json);
+		Assert.Contains("Level 2 exception", json);
+		Assert.Contains("Level 3 exception", json);
+	}
+
+	[TestMethod]
+	public void ToJson_WithMultipleNestedInnerExceptions_IncludesAll()
+	{
+		// Arrange
+		var innermost = new InvalidOperationException("Innermost exception");
+		var middle = new ArgumentException("Middle exception", innermost);
+		var outer = new Exception("Outer exception", middle);
+
+		// Act
+		var json = outer.ToJson();
+
+		// Assert
+		Assert.Contains("Outer exception", json);
+		Assert.Contains("Middle exception", json);
+		Assert.Contains("Innermost exception", json);
+		Assert.Contains("InnerExceptions", json);
+	}
+
+	[TestMethod]
+	public void ToJson_WithNullException_ReturnsEmptyString()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act
+		var result = exception.ToJson();
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]

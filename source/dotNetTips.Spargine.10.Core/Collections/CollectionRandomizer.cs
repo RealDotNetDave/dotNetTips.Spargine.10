@@ -4,7 +4,7 @@
 // Created          : 11-06-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="CollectionRandomizer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -285,7 +285,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	/// <remarks>
 	/// If the collection is set to repeat and is exhausted, it will be reshuffled before skipping.
 	/// </remarks>
-	[Information(nameof(SkipNext), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(SkipNext), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool SkipNext()
 	{
 		lock (this._threadLock)

@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-06-2026
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -92,7 +92,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Gets a value indicating whether the <see cref="DistinctConcurrentBag{T}"/> is empty.
 	/// </summary>
 	/// <value><c>true</c> if the bag is empty; otherwise, <c>false</c>.</value>
-	[Information(nameof(IsEmpty), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(IsEmpty), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool IsEmpty => this._uniqueItems.IsEmpty;
 
 	/// <summary>

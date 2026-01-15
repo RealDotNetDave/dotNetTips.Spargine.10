@@ -4,7 +4,7 @@
 // Created          : 05-30-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2026
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="KeyGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -355,7 +355,7 @@ public static class KeyGenerator
 	/// <seealso cref="GenerateKey(string)"/>
 	/// <seealso cref="DateTimeOffset.UtcNow"/>
 	[return: NotNull]
-	[Information(nameof(GenerateCustomKey), "David McCarter", "8/18/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GenerateCustomKey), "David McCarter", "8/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateCustomKey([ConstantExpected] char separator = ControlChars.Dash, bool addTimeStamp = true, params string[] items)
 	{
 		items = items.ArgumentItemsExists();

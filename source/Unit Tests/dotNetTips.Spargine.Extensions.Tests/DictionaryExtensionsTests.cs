@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2026
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -221,6 +221,122 @@ public class DictionaryExtensionsTests
 
 		Assert.AreEqual(CollectionCount, people1.Count);
 
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_AllNullItems_ReturnsInitialHashValue()
+	{
+		// Arrange
+		var items = new string[] { null, null, null };
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var comparer = EqualityComparer<string>.Default;
+
+		// Act
+		var hashCode = collection.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.AreEqual(6551, hashCode, "Collection with all null items should return initial hash value");
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_CollectionWithNullItems_SkipsNullItems()
+	{
+		// Arrange
+		var items = new[] { "Apple", null, "Banana", null, "Cherry" };
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var comparer = EqualityComparer<string>.Default;
+
+		// Act
+		var hashCode = collection.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.IsTrue(hashCode != 0);
+		Assert.IsTrue(hashCode != 6551, "Should compute hash from non-null items");
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_CustomComparer_ReturnsConsistentHashCode()
+	{
+		// Arrange
+		var items = new[] { "apple", "BANANA", "Cherry" };
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var comparer = StringComparer.OrdinalIgnoreCase;
+
+		// Act
+		var hashCode1 = collection.GenerateHashCode(comparer);
+		var hashCode2 = collection.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.AreEqual(hashCode1, hashCode2, "Hash codes should be consistent for same collection and comparer");
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_DifferentComparers_ProducesDifferentHashCodes()
+	{
+		// Arrange
+		var items = new[] { "Apple", "apple" };
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var caseSensitiveComparer = StringComparer.Ordinal;
+		var caseInsensitiveComparer = StringComparer.OrdinalIgnoreCase;
+
+		// Act
+		var hashCode1 = collection.GenerateHashCode(caseSensitiveComparer);
+		var hashCode2 = collection.GenerateHashCode(caseInsensitiveComparer);
+
+		// Assert
+		Assert.AreNotEqual(hashCode1, hashCode2, "Different comparers should produce different hash codes");
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_EmptyCollection_ReturnsInitialHashValue()
+	{
+		// Arrange
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(Array.Empty<string>());
+		var comparer = EqualityComparer<string>.Default;
+
+		// Act
+		var hashCode = collection.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.AreEqual(6551, hashCode, "Empty collection should return initial hash value");
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_IntegerCollection_ReturnsHashCode()
+	{
+		// Arrange
+		var items = new[] { 1, 2, 3, 4, 5 };
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<int>(items);
+		var comparer = EqualityComparer<int>.Default;
+
+		// Act
+		var hashCode = collection.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.IsTrue(hashCode != 0);
+		Assert.IsTrue(hashCode != 6551);
+	}
+
+	[TestMethod]
+	[TestCategory("Extensions")]
+	public void GenerateHashCodeWithComparer_ValidCollection_ReturnsHashCode()
+	{
+		// Arrange
+		var items = new[] { "Apple", "Banana", "Cherry" };
+		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var comparer = EqualityComparer<string>.Default;
+
+		// Act
+		var hashCode = collection.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.IsTrue(hashCode != 0);
 	}
 
 	/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 04-09-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="AssemblyHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,101 +37,13 @@ public static class AssemblyHelper
 	private static readonly MemoryCache _assemblyTypeCache = new(new MemoryCacheOptions());
 
 	/// <summary>
-	/// Finds the root folder of the .NET installation.
-	/// </summary>
-	/// <remarks>
-	/// This method first checks the <c>DOTNET_ROOT</c> environment variable. If it is not set or is empty,
-	/// it falls back to the default installation path for the current operating system:
-	/// <list type="bullet">
-	/// <item><description>Windows: <c>C:\Program Files\dotnet</c></description></item>
-	/// <item><description>macOS/Linux: <c>/usr/local/share/dotnet</c></description></item>
-	/// </list>
-	/// </remarks>
-	/// <returns>
-	/// The path to the .NET root folder as a <see cref="string"/>.
-	/// </returns>
-	[ExcludeFromCodeCoverage]
-	private static string FindDotNetRootFolder()
-	{
-		var root = Environment.GetEnvironmentVariable("DOTNET_ROOT");
-
-		if (string.IsNullOrEmpty(root))
-		{
-			root = Environment.OSVersion.Platform == PlatformID.Win32NT
-				? @"C:\Program Files\dotnet"
-				: "/usr/local/share/dotnet";
-		}
-
-		return root;
-	}
-
-	/// <summary>
-	/// Determines whether the provided stream represents a .NET assembly.
-	/// </summary>
-	/// <param name="stream">The stream to analyze.</param>
-	/// <returns><c>true</c> if the stream represents a .NET assembly; otherwise, <c>false</c>.</returns>
-	[Information(nameof(IsDotNetAssembly), author: "David McCarter", createdOn: "5/20/2024", OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	private static bool IsDotNetAssembly(in Stream stream)
-	{
-		try
-		{
-			using var peReader = new PEReader(stream);
-
-			if (!peReader.HasMetadata)
-			{
-				return false;
-			}
-
-			// If peReader.PEHeaders doesn't throw, it is a valid PEImage
-			return peReader.PEHeaders.CorHeader != null && peReader.GetMetadataReader().IsAssembly;
-		}
-		catch (BadImageFormatException)
-		{
-			return false;
-		}
-		catch (IOException ex)
-		{
-			Trace.WriteLine(ex);
-			return false;
-		}
-		catch (UnauthorizedAccessException ex)
-		{
-			Trace.WriteLine(ex);
-			return false;
-		}
-	}
-
-	/// <summary>
-	/// Safely parses a version string, falling back to <c>Version(0,0)</c> if parsing fails.
-	/// </summary>
-	/// <param name="input">The version string to parse.</param>
-	/// <returns>A <see cref="Version"/> object representing the parsed version, or <c>Version(0,0)</c> if parsing fails.</returns>
-	/// <remarks>
-	/// This method attempts to parse the input string as a version. If the parsing fails, it tries to extract a version-like pattern
-	/// using a regular expression and parses that. If all attempts fail, it returns <c>Version(0,0)</c>.
-	/// </remarks>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
-	private static Version VersionParseSafe(string input)
-	{
-		if (Version.TryParse(input, out var version))
-		{
-			return version;
-		}
-
-		// Try to extract version from things like "1.2.3-preview" or similar
-		var extractedVersion = RegexProcessor.ExtractVersion(input);
-
-		return string.IsNullOrEmpty(extractedVersion) is false ? Version.Parse(extractedVersion) : new Version(0, 0);
-	}
-
-	/// <summary>
 	/// Checks if the specified assembly references another assembly by name.
 	/// </summary>
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <param name="referencedAssemblyName">The name of the referenced assembly.</param>
 	/// <returns><c>true</c> if the assembly references the specified assembly; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(DoesAssemblyReference), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(DoesAssemblyReference), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool DoesAssemblyReference([DisallowNull] FileInfo assemblyFile, [DisallowNull] string referencedAssemblyName)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -164,7 +76,7 @@ public static class AssemblyHelper
 	/// <param name="typeName">The fully qualified name of the type to check.</param>
 	/// <returns><c>true</c> if the type exists; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(DoesTypeExistInAssembly), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(DoesTypeExistInAssembly), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool DoesTypeExistInAssembly([DisallowNull] FileInfo assemblyFile, [DisallowNull] string typeName)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -260,7 +172,7 @@ public static class AssemblyHelper
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	/// <exception cref="FileLoadException">Thrown if an assembly cannot be loaded.</exception>
 	[Pure]
-	[Information(nameof(GetAssemblyCustomAttributes), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetAssemblyCustomAttributes), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<Attribute> GetAssemblyCustomAttributes([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -292,7 +204,7 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>The entry point <see cref="MethodInfo"/>, or <c>null</c> if none exists.</returns>
 	[Pure]
-	[Information(nameof(GetAssemblyEntryPoint), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetAssemblyEntryPoint), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static MethodInfo? GetAssemblyEntryPoint([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -324,7 +236,7 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>A read-only collection containing metadata key-value pairs.</returns>
 	[Pure]
-	[Information(nameof(GetAssemblyMetadata), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetAssemblyMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetAssemblyMetadata([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -363,7 +275,7 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>A read-only collection of public <see cref="Type"/> objects.</returns>
 	[Pure]
-	[Information(nameof(GetAssemblyPublicTypes), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetAssemblyPublicTypes), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> GetAssemblyPublicTypes([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -446,7 +358,7 @@ public static class AssemblyHelper
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	/// <exception cref="FileLoadException">Thrown if an assembly cannot be loaded.</exception>
 	[Pure]
-	[Information(nameof(GetDependentAssemblies), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetDependentAssemblies), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<AssemblyName> GetDependentAssemblies([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -484,7 +396,7 @@ public static class AssemblyHelper
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	/// <exception cref="TypeLoadException">Thrown if the specified type cannot be loaded from the assembly.</exception>
 	[Pure]
-	[Information(nameof(GetMethodsInType), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetMethodsInType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetMethodsInType([DisallowNull] FileInfo assemblyFile, [DisallowNull] string typeName)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
@@ -530,7 +442,7 @@ public static class AssemblyHelper
 	/// </remarks>
 	/// <exception cref="DirectoryNotFoundException">Thrown if the .NET packs directory does not exist.</exception>
 	[Pure]
-	[Information(nameof(GetNetSdkDllFiles), "David McCarter", "4/9/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetNetSdkDllFiles), "David McCarter", "4/9/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<FileInfo> GetNetSdkDllFiles(string? version = null)
 	{
 		var root = FindDotNetRootFolder();
@@ -622,5 +534,93 @@ public static class AssemblyHelper
 		_ = context.LoadFromAssemblyPath(assemblyFile.FullName);
 
 		context.Unload();
+	}
+
+	/// <summary>
+	/// Finds the root folder of the .NET installation.
+	/// </summary>
+	/// <remarks>
+	/// This method first checks the <c>DOTNET_ROOT</c> environment variable. If it is not set or is empty,
+	/// it falls back to the default installation path for the current operating system:
+	/// <list type="bullet">
+	/// <item><description>Windows: <c>C:\Program Files\dotnet</c></description></item>
+	/// <item><description>macOS/Linux: <c>/usr/local/share/dotnet</c></description></item>
+	/// </list>
+	/// </remarks>
+	/// <returns>
+	/// The path to the .NET root folder as a <see cref="string"/>.
+	/// </returns>
+	[ExcludeFromCodeCoverage]
+	private static string FindDotNetRootFolder()
+	{
+		var root = Environment.GetEnvironmentVariable("DOTNET_ROOT");
+
+		if (string.IsNullOrEmpty(root))
+		{
+			root = Environment.OSVersion.Platform == PlatformID.Win32NT
+				? @"C:\Program Files\dotnet"
+				: "/usr/local/share/dotnet";
+		}
+
+		return root;
+	}
+
+	/// <summary>
+	/// Determines whether the provided stream represents a .NET assembly.
+	/// </summary>
+	/// <param name="stream">The stream to analyze.</param>
+	/// <returns><c>true</c> if the stream represents a .NET assembly; otherwise, <c>false</c>.</returns>
+	[Information(nameof(IsDotNetAssembly), author: "David McCarter", createdOn: "5/20/2024", OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	private static bool IsDotNetAssembly(in Stream stream)
+	{
+		try
+		{
+			using var peReader = new PEReader(stream);
+
+			if (!peReader.HasMetadata)
+			{
+				return false;
+			}
+
+			// If peReader.PEHeaders doesn't throw, it is a valid PEImage
+			return peReader.PEHeaders.CorHeader != null && peReader.GetMetadataReader().IsAssembly;
+		}
+		catch (BadImageFormatException)
+		{
+			return false;
+		}
+		catch (IOException ex)
+		{
+			Trace.WriteLine(ex);
+			return false;
+		}
+		catch (UnauthorizedAccessException ex)
+		{
+			Trace.WriteLine(ex);
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Safely parses a version string, falling back to <c>Version(0,0)</c> if parsing fails.
+	/// </summary>
+	/// <param name="input">The version string to parse.</param>
+	/// <returns>A <see cref="Version"/> object representing the parsed version, or <c>Version(0,0)</c> if parsing fails.</returns>
+	/// <remarks>
+	/// This method attempts to parse the input string as a version. If the parsing fails, it tries to extract a version-like pattern
+	/// using a regular expression and parses that. If all attempts fail, it returns <c>Version(0,0)</c>.
+	/// </remarks>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+	private static Version VersionParseSafe(string input)
+	{
+		if (Version.TryParse(input, out var version))
+		{
+			return version;
+		}
+
+		// Try to extract version from things like "1.2.3-preview" or similar
+		var extractedVersion = RegexProcessor.ExtractVersion(input);
+
+		return string.IsNullOrEmpty(extractedVersion) is false ? Version.Parse(extractedVersion) : new Version(0, 0);
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 01-03-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -54,6 +54,111 @@ public class FastStringBuilderTests
 	}
 
 	[TestMethod]
+	public void BytesToString_ByteArray_AllBytesTest()
+	{
+		// Test complete range 0x00 to 0xFF
+		var bytes = new byte[] {
+		0x00, 0x01, 0x10, 0x11, 0x20, 0x2F,
+		0x30, 0x3F, 0x40, 0x4F, 0x50, 0x5F,
+		0x60, 0x6F, 0x70, 0x7F, 0x80, 0x8F,
+		0x90, 0x9F, 0xA0, 0xAF, 0xB0, 0xBF,
+		0xC0, 0xCF, 0xD0, 0xDF, 0xE0, 0xEF,
+		0xF0, 0xFF
+	};
+
+		var result = FastStringBuilder.BytesToString(ref bytes);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(bytes.Length * 2, result.Length);
+		Assert.Contains("00", result);
+		Assert.Contains("FF", result);
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_LargeArrayTest()
+	{
+		var bytes = new byte[256];
+		for (var i = 0; i < 256; i++)
+		{
+			bytes[i] = (byte)i;
+		}
+
+		var result = FastStringBuilder.BytesToString(ref bytes);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(512, result.Length); // 256 bytes * 2 chars each
+		Assert.StartsWith("00", result);
+		Assert.EndsWith("FF", result);
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_MaximumValuesTest()
+	{
+		var bytes = new byte[] { 0xFF, 0xFF, 0xFF };
+		var result = FastStringBuilder.BytesToString(ref bytes);
+		Assert.AreEqual("FFFFFF", result);
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_MixedValuesTest()
+	{
+		var bytes = new byte[] { 0x00, 0x0F, 0xF0, 0xFF, 0x12, 0x34, 0x56, 0x78 };
+		var result = FastStringBuilder.BytesToString(ref bytes);
+
+		Assert.AreEqual("000FF0FF12345678", result);
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_NullArrayTest()
+	{
+		byte[] bytes = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+		{
+			_ = FastStringBuilder.BytesToString(ref bytes);
+		});
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_PaddingTest()
+	{
+		// Verify single-digit hex values are padded with leading zero
+		var bytes = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x09 };
+		var result = FastStringBuilder.BytesToString(ref bytes);
+
+		Assert.AreEqual("010203040509", result);
+		Assert.AreEqual(12, result.Length); // 6 bytes * 2 chars each
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_SingleByteTest()
+	{
+		var bytes = new byte[] { 0xA5 };
+		var result = FastStringBuilder.BytesToString(ref bytes);
+		Assert.AreEqual("A5", result);
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_UppercaseHexTest()
+	{
+		var bytes = new byte[] { 0xAB, 0xCD, 0xEF };
+		var result = FastStringBuilder.BytesToString(ref bytes);
+
+		Assert.AreEqual("ABCDEF", result);
+		Assert.IsFalse(result.Contains("ab"));
+		Assert.IsFalse(result.Contains("cd"));
+		Assert.IsFalse(result.Contains("ef"));
+	}
+
+	[TestMethod]
+	public void BytesToString_ByteArray_ZeroValuesTest()
+	{
+		var bytes = new byte[] { 0x00, 0x00, 0x00 };
+		var result = FastStringBuilder.BytesToString(ref bytes);
+		Assert.AreEqual("000000", result);
+	}
+
+	[TestMethod]
 	public void BytesToString_ByteArrayTest()
 	{
 		var bytes = new byte[] { 0xA, 0xB, 0xC, 0xD };
@@ -77,6 +182,143 @@ public class FastStringBuilderTests
 	}
 
 	[TestMethod]
+	public void Combine_AllNullStringsTest()
+	{
+		var words = new string[] { null, null, null };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void Combine_EmptyArrayTest()
+	{
+		var result = FastStringBuilder.Combine(false, ReadOnlySpan<string>.Empty);
+		Assert.AreEqual(ControlChars.EmptyString, result);
+
+		result = FastStringBuilder.Combine(true, ReadOnlySpan<string>.Empty);
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void Combine_LargeArrayTest()
+	{
+		var words = RandomData.GenerateWords(1000, 5, 15).ToArray();
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.IsNotNull(result);
+		Assert.Contains(words[0], result);
+		Assert.Contains(words[999], result);
+	}
+
+	[TestMethod]
+	public void Combine_LineFeedBehaviorTest()
+	{
+		var words = new[] { "Line1", "Line2", "Line3" };
+		var result = FastStringBuilder.Combine(true, words.AsReadOnlySpan());
+
+		var lines = result.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+		Assert.AreEqual(3, lines.Length);
+		Assert.AreEqual("Line1", lines[0]);
+		Assert.AreEqual("Line2", lines[1]);
+		Assert.AreEqual("Line3", lines[2]);
+	}
+
+	[TestMethod]
+	public void Combine_ParamsArraySyntaxTest()
+	{
+		var result = FastStringBuilder.Combine(false, "One", "Two", "Three");
+		Assert.AreEqual("OneTwoThree", result);
+
+		result = FastStringBuilder.Combine(true, "One", "Two", "Three");
+		var expected = "One" + Environment.NewLine + "Two" + Environment.NewLine + "Three" + Environment.NewLine;
+		Assert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	public void Combine_SingleStringTest()
+	{
+		var words = new[] { "Hello" };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+		Assert.AreEqual("Hello", result);
+
+		result = FastStringBuilder.Combine(true, words.AsReadOnlySpan());
+		Assert.AreEqual("Hello" + Environment.NewLine, result);
+	}
+
+	[TestMethod]
+	public void Combine_UnicodeStringsTest()
+	{
+		var words = new[] { "Hello", "世界", "🌍", "Привет" };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.Contains("Hello", result);
+		Assert.Contains("世界", result);
+		Assert.Contains("🌍", result);
+		Assert.Contains("Привет", result);
+	}
+
+	[TestMethod]
+	public void Combine_VeryLongStringsTest()
+	{
+		var longString = new string('A', 10000);
+		var words = new[] { longString, longString, longString };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.AreEqual(30000, result.Length);
+	}
+
+	[TestMethod]
+	public void Combine_WithEmptyStringsTest()
+	{
+		var words = new[] { "Hello", string.Empty, "World", string.Empty, "!" };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.AreEqual("HelloWorld!", result);
+
+		result = FastStringBuilder.Combine(true, words.AsReadOnlySpan());
+		Assert.Contains("Hello", result);
+		Assert.Contains("World", result);
+		Assert.Contains(Environment.NewLine, result);
+	}
+
+	[TestMethod]
+	public void Combine_WithNullStringsTest()
+	{
+		var words = new[] { "Hello", null, "World", null, "!" };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.IsNotNull(result);
+		Assert.Contains("Hello", result);
+		Assert.Contains("World", result);
+		Assert.Contains("!", result);
+	}
+
+	[TestMethod]
+	public void Combine_WithSpecialCharactersTest()
+	{
+		var words = new[] { "Hello\t", "World\r\n", "Test\n", "Special!" };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.Contains("Hello\t", result);
+		Assert.Contains("World\r\n", result);
+		Assert.Contains("Test\n", result);
+		Assert.Contains("Special!", result);
+	}
+
+	[TestMethod]
+	public void Combine_WithWhitespaceStringsTest()
+	{
+		var words = new[] { "  ", "\t", "\n", "Text", "   " };
+		var result = FastStringBuilder.Combine(false, words.AsReadOnlySpan());
+
+		Assert.Contains("Text", result);
+		Assert.Contains("  ", result);
+		Assert.Contains("\t", result);
+	}
+
+	[TestMethod]
 	public void CombineTest()
 	{
 		var words = RandomData.GenerateWords(5, 3, 8).ToReadOnlyCollection();
@@ -87,6 +329,187 @@ public class FastStringBuilderTests
 		var expected = string.Join(Environment.NewLine, words) + Environment.NewLine;
 
 		Assert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_AllNullStringsTest()
+	{
+		var words = new string[] { null, null, null, null };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		// Should have 3 spaces between 4 null strings
+		Assert.AreEqual("   ", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_EmptyArrayTest()
+	{
+		var result = FastStringBuilder.CombineWithSpace(ReadOnlySpan<string>.Empty);
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_FirstStringNullTest()
+	{
+		var words = new string[] { null, "World", "!" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.Contains("World", result);
+		Assert.Contains("!", result);
+		Assert.StartsWith(" ", result); // First character should be space
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_LargeArrayTest()
+	{
+		var words = RandomData.GenerateWords(500, 5, 10).ToArray();
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.IsNotNull(result);
+		Assert.Contains(words[0], result);
+		Assert.Contains(words[499], result);
+		Assert.Contains(" ", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_LastStringNullTest()
+	{
+		var words = new[] { "Hello", "World", null };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.Contains("Hello", result);
+		Assert.Contains("World", result);
+		Assert.EndsWith(" ", result); // Last character should be space
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_MixedNullAndEmptyTest()
+	{
+		var words = new[] { "Start", null, string.Empty, "Middle", null, string.Empty, "End" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.Contains("Start", result);
+		Assert.Contains("Middle", result);
+		Assert.Contains("End", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_MultipleStringsTest()
+	{
+		var words = new[] { "Hello", "World", "Test" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+		Assert.AreEqual("Hello World Test", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_NumberStringsTest()
+	{
+		var words = new[] { "1", "2", "3", "4", "5" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.AreEqual("1 2 3 4 5", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_ParamsArraySyntaxTest()
+	{
+		var result = FastStringBuilder.CombineWithSpace("One", "Two", "Three", "Four");
+		Assert.AreEqual("One Two Three Four", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_SingleNonNullStringTest()
+	{
+		var words = new[] { "Hello" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+		Assert.AreEqual("Hello", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_SingleNullStringTest()
+	{
+		var words = new string[] { null };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_SpecialCharactersTest()
+	{
+		var words = new[] { "Hello!", "@#$%", "Test&Value", "(parentheses)" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.AreEqual("Hello! @#$% Test&Value (parentheses)", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_TwoStringsTest()
+	{
+		var words = new[] { "Hello", "World" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+		Assert.AreEqual("Hello World", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_UnicodeStringsTest()
+	{
+		var words = new[] { "Hello", "世界", "🌍", "Привет", "مرحبا" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.Contains("Hello", result);
+		Assert.Contains("世界", result);
+		Assert.Contains("🌍", result);
+		Assert.Contains("Привет", result);
+		Assert.Contains("مرحبا", result);
+		Assert.AreEqual("Hello 世界 🌍 Привет مرحبا", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_VeryLongStringsTest()
+	{
+		var longString1 = new string('A', 5000);
+		var longString2 = new string('B', 5000);
+		var longString3 = new string('C', 5000);
+		var words = new[] { longString1, longString2, longString3 };
+
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.AreEqual(15002, result.Length); // 15000 chars + 2 spaces
+		Assert.StartsWith(longString1, result);
+		Assert.EndsWith(longString3, result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_WithEmptyStringsTest()
+	{
+		var words = new[] { "Hello", string.Empty, "World", string.Empty, "!" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.AreEqual("Hello  World  !", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_WithNullStringsTest()
+	{
+		var words = new[] { "Hello", null, "World", null, "!" };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		// Based on the code logic, nulls are skipped but spaces are still added
+		Assert.Contains("Hello", result);
+		Assert.Contains("World", result);
+		Assert.Contains("!", result);
+		Assert.Contains(" ", result);
+	}
+
+	[TestMethod]
+	public void CombineWithSpace_WithWhitespaceStringsTest()
+	{
+		var words = new[] { "  ", "\t", "Text", "\n", "   " };
+		var result = FastStringBuilder.CombineWithSpace(words.AsReadOnlySpan());
+
+		Assert.Contains("Text", result);
+		Assert.Contains("  ", result);
+		Assert.Contains("\t", result);
 	}
 
 	[TestMethod]

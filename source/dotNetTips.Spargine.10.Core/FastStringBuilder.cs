@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -43,58 +43,6 @@ public static class FastStringBuilder
 	private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
-	/// Estimates the total string length needed for combining multiple strings with single-character separators.
-	/// </summary>
-	/// <param name="args">A read-only span of strings to measure.</param>
-	/// <returns>
-	/// The estimated capacity in characters, calculated as the sum of all string lengths plus (n-1) separator characters.
-	/// </returns>
-	/// <remarks>
-	/// This method efficiently calculates the required StringBuilder capacity to avoid internal buffer reallocations.
-	/// The calculation includes:
-	/// <list type="bullet">
-	/// <item><description>Sum of all individual string lengths (handling null strings as zero length)</description></item>
-	/// <item><description>Space for (n-1) separator characters between strings</description></item>
-	/// </list>
-	/// The method uses a simple loop for optimal performance on small to medium-sized collections.
-	/// For very large collections (10,000+ strings), the JIT compiler can optimize this pattern efficiently.
-	/// </remarks>
-	/// <example>
-	/// This example shows how the estimation works:
-	/// <code>
-	/// ReadOnlySpan&lt;string&gt; words = ["Hello", "World", "!"];
-	/// // "Hello" (5) + "World" (5) + "!" (1) = 11 chars
-	/// // Plus 2 spaces between 3 words = 13 total
-	/// int capacity = EstimateParamsStringLength(words); // Returns 13
-	/// </code>
-	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static int EstimateParamsStringLength(ReadOnlySpan<string> args)
-	{
-		var length = args.Length;
-
-		// Early exit for empty span
-		if (length == 0)
-		{
-			return 0;
-		}
-
-		var estimatedCapacity = 0;
-
-		// Use foreach for ReadOnlySpan - JIT optimizes with bounds check elimination
-		foreach (var arg in args)
-		{
-			// Handle null strings as zero length to avoid NullReferenceException
-			estimatedCapacity += arg?.Length ?? 0;
-		}
-
-		// Add separator characters: (n-1) separators for n strings
-		estimatedCapacity += length - 1;
-
-		return estimatedCapacity;
-	}
-
-	/// <summary>
 	/// Converts an array of bytes into a hexadecimal string representation, making it easy to inspect raw byte data in string form.
 	/// This method uses an object pool for <see cref="StringBuilder"/> to improve performance and reduce memory allocations.
 	/// </summary>
@@ -102,7 +50,7 @@ public static class FastStringBuilder
 	/// <returns>A hexadecimal string representation of the byte array, prefixed with '0x'.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "3/7/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "3/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string BytesToString([DisallowNull] ref readonly byte[] bytes)
 	{
 		if (bytes is null)
@@ -233,7 +181,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">This exception is not thrown by this overload since ReadOnlySpan cannot be null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Combine), "David McCarter", "12/23/2022", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(Combine), "David McCarter", "12/23/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 	public static string Combine(in bool addLineFeed = false, [DisallowNull] params ReadOnlySpan<string> args)
 	{
 		// Early exit for empty collection - avoids StringBuilder acquisition
@@ -285,7 +233,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="args"/> is null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 	public static string CombineWithSpace([DisallowNull] params ReadOnlySpan<string> args)
 	{
 		if (args.Length == 0)
@@ -902,5 +850,57 @@ public static class FastStringBuilder
 		{
 			_stringBuilderPool.Return(sb.Clear());
 		}
+	}
+
+	/// <summary>
+	/// Estimates the total string length needed for combining multiple strings with single-character separators.
+	/// </summary>
+	/// <param name="args">A read-only span of strings to measure.</param>
+	/// <returns>
+	/// The estimated capacity in characters, calculated as the sum of all string lengths plus (n-1) separator characters.
+	/// </returns>
+	/// <remarks>
+	/// This method efficiently calculates the required StringBuilder capacity to avoid internal buffer reallocations.
+	/// The calculation includes:
+	/// <list type="bullet">
+	/// <item><description>Sum of all individual string lengths (handling null strings as zero length)</description></item>
+	/// <item><description>Space for (n-1) separator characters between strings</description></item>
+	/// </list>
+	/// The method uses a simple loop for optimal performance on small to medium-sized collections.
+	/// For very large collections (10,000+ strings), the JIT compiler can optimize this pattern efficiently.
+	/// </remarks>
+	/// <example>
+	/// This example shows how the estimation works:
+	/// <code>
+	/// ReadOnlySpan&lt;string&gt; words = ["Hello", "World", "!"];
+	/// // "Hello" (5) + "World" (5) + "!" (1) = 11 chars
+	/// // Plus 2 spaces between 3 words = 13 total
+	/// int capacity = EstimateParamsStringLength(words); // Returns 13
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static int EstimateParamsStringLength(ReadOnlySpan<string> args)
+	{
+		var length = args.Length;
+
+		// Early exit for empty span
+		if (length == 0)
+		{
+			return 0;
+		}
+
+		var estimatedCapacity = 0;
+
+		// Use foreach for ReadOnlySpan - JIT optimizes with bounds check elimination
+		foreach (var arg in args)
+		{
+			// Handle null strings as zero length to avoid NullReferenceException
+			estimatedCapacity += arg?.Length ?? 0;
+		}
+
+		// Add separator characters: (n-1) separators for n strings
+		estimatedCapacity += length - 1;
+
+		return estimatedCapacity;
 	}
 }

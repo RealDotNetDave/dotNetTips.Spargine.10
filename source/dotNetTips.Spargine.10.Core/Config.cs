@@ -50,6 +50,34 @@ public class Config<T> where T : class, new()
 	}
 
 	/// <summary>
+	/// Gets the full path of the configuration file.
+	/// </summary>
+	/// <value>The full path of the configuration file.</value>
+	[XmlIgnore]
+	public string ConfigFileName { [return: NotNull] get; }
+
+	/// <summary>
+	/// Gets the full path of the configuration folder.
+	/// </summary>
+	/// <value>The full path of the configuration folder.</value>
+	[XmlIgnore]
+	public string ConfigFolderName { [return: NotNull] get; }
+
+	/// <summary>
+	/// Gets the singleton instance of the configuration object.
+	/// </summary>
+	/// <value>The instance of the configuration object.</value>
+	[XmlIgnore]
+	public T Instance
+	{
+		[return: NotNull]
+		get
+		{
+			return _instance;
+		}
+	}
+
+	/// <summary>
 	/// Loads the configuration from the disk if it exists.
 	/// </summary>
 	/// <returns><c>true</c> if the configuration was successfully loaded; otherwise, <c>false</c>.</returns>
@@ -57,7 +85,7 @@ public class Config<T> where T : class, new()
 	/// This method attempts to deserialize the configuration object from a file specified by <see cref="ConfigFileName"/>.
 	/// If the file does not exist, the method returns <c>false</c>.
 	/// </remarks>
-	[Information(nameof(Load), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(Load), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual bool Load()
 	{
 		if (File.Exists(this.ConfigFileName))
@@ -84,33 +112,5 @@ public class Config<T> where T : class, new()
 		XmlSerialization.SerializeToFile(this.Instance, new FileInfo(this.ConfigFileName));
 
 		return true;
-	}
-
-	/// <summary>
-	/// Gets the full path of the configuration file.
-	/// </summary>
-	/// <value>The full path of the configuration file.</value>
-	[XmlIgnore]
-	public string ConfigFileName { [return: NotNull] get; }
-
-	/// <summary>
-	/// Gets the full path of the configuration folder.
-	/// </summary>
-	/// <value>The full path of the configuration folder.</value>
-	[XmlIgnore]
-	public string ConfigFolderName { [return: NotNull] get; }
-
-	/// <summary>
-	/// Gets the singleton instance of the configuration object.
-	/// </summary>
-	/// <value>The instance of the configuration object.</value>
-	[XmlIgnore]
-	public T Instance
-	{
-		[return: NotNull]
-		get
-		{
-			return _instance;
-		}
 	}
 }

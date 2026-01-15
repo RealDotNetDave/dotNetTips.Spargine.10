@@ -30,12 +30,24 @@ public readonly struct DisplayNameOptions(bool fullName, bool includeGenericPara
 {
 
 	/// <summary>
-	/// Determines whether two <see cref="DisplayNameOptions"/> instances are not equal.
+	/// Gets a value indicating whether the full name of the type is used.
 	/// </summary>
-	/// <param name="left">The first <see cref="DisplayNameOptions"/> instance to compare.</param>
-	/// <param name="right">The second <see cref="DisplayNameOptions"/> instance to compare.</param>
-	/// <returns><c>true</c> if the specified <see cref="DisplayNameOptions"/> instances are not equal; otherwise, <c>false</c>.</returns>
-	public static bool operator !=(DisplayNameOptions left, DisplayNameOptions right) => !(left == right);
+	public bool FullName { get; } = fullName;
+
+	/// <summary>
+	/// Gets a value indicating whether the names of generic parameters are included in the type's display name.
+	/// </summary>
+	public bool IncludeGenericParameterNames { get; } = includeGenericParameterNames;
+
+	/// <summary>
+	/// Gets a value indicating whether generic parameters are included in the type's display name.
+	/// </summary>
+	public bool IncludeGenericParameters { get; } = includeGenericParameters;
+
+	/// <summary>
+	/// Gets the delimiter used for nested types in the type's display name.
+	/// </summary>
+	public char NestedTypeDelimiter { get; } = nestedTypeDelimiter;
 
 	/// <summary>
 	/// Determines whether two <see cref="DisplayNameOptions"/> instances are equal.
@@ -44,6 +56,14 @@ public readonly struct DisplayNameOptions(bool fullName, bool includeGenericPara
 	/// <param name="right">The second <see cref="DisplayNameOptions"/> instance to compare.</param>
 	/// <returns><c>true</c> if the specified <see cref="DisplayNameOptions"/> instances are equal; otherwise, <c>false</c>.</returns>
 	public static bool operator ==(DisplayNameOptions left, DisplayNameOptions right) => left.Equals(right);
+
+	/// <summary>
+	/// Determines whether two <see cref="DisplayNameOptions"/> instances are not equal.
+	/// </summary>
+	/// <param name="left">The first <see cref="DisplayNameOptions"/> instance to compare.</param>
+	/// <param name="right">The second <see cref="DisplayNameOptions"/> instance to compare.</param>
+	/// <returns><c>true</c> if the specified <see cref="DisplayNameOptions"/> instances are not equal; otherwise, <c>false</c>.</returns>
+	public static bool operator !=(DisplayNameOptions left, DisplayNameOptions right) => !(left == right);
 
 	/// <summary>
 	/// Determines whether the specified object is equal to the current object.
@@ -81,25 +101,5 @@ public readonly struct DisplayNameOptions(bool fullName, bool includeGenericPara
 	{
 		return $"{nameof(this.FullName)}: {this.FullName}, {nameof(this.IncludeGenericParameterNames)}: {this.IncludeGenericParameterNames}, {nameof(this.IncludeGenericParameters)}: {this.IncludeGenericParameters}, {nameof(this.NestedTypeDelimiter)}: {this.NestedTypeDelimiter}";
 	}
-
-	/// <summary>
-	/// Gets a value indicating whether the full name of the type is used.
-	/// </summary>
-	public bool FullName { get; } = fullName;
-
-	/// <summary>
-	/// Gets a value indicating whether the names of generic parameters are included in the type's display name.
-	/// </summary>
-	public bool IncludeGenericParameterNames { get; } = includeGenericParameterNames;
-
-	/// <summary>
-	/// Gets a value indicating whether generic parameters are included in the type's display name.
-	/// </summary>
-	public bool IncludeGenericParameters { get; } = includeGenericParameters;
-
-	/// <summary>
-	/// Gets the delimiter used for nested types in the type's display name.
-	/// </summary>
-	public char NestedTypeDelimiter { get; } = nestedTypeDelimiter;
 }
 

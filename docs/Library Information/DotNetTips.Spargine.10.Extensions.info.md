@@ -1776,7 +1776,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/22/2023
@@ -1789,7 +1789,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 10/24/2023
 * **Description:** AddFirst
@@ -1798,9 +1798,9 @@
 
 ### T AddIf(T collection, T item, System.Boolean condition)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -1848,7 +1848,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/12/2020
@@ -1860,7 +1860,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/8/2022
@@ -1872,8 +1872,8 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/8/2026
 * **Description:** EnsureUnique
@@ -1920,7 +1920,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/9/2022
@@ -1932,7 +1932,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/7/2024
@@ -2004,7 +2004,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
@@ -2028,7 +2028,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2062,7 +2062,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2074,7 +2074,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2170,7 +2170,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
@@ -2192,9 +2192,9 @@
 
 ### T ReplaceIf(T collection, T accumulatorPredicate, T replacement)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Original code by Simon Painter.
@@ -2320,12 +2320,12 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T Upsert(T collection, T item)
+### T Upsert(T collection, T item, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** Upsert
@@ -2354,7 +2354,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/22/2023
@@ -2367,7 +2367,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 10/24/2023
 * **Description:** AddFirst
@@ -2376,9 +2376,9 @@
 
 ### T AddIf(T item, System.Boolean condition)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2426,7 +2426,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/12/2020
@@ -2438,7 +2438,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/8/2022
@@ -2450,8 +2450,8 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/8/2026
 * **Description:** EnsureUnique
@@ -2498,7 +2498,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/9/2022
@@ -2510,7 +2510,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/7/2024
@@ -2582,7 +2582,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
@@ -2606,7 +2606,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2640,7 +2640,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2652,7 +2652,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2736,7 +2736,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
@@ -2758,9 +2758,9 @@
 
 ### T ReplaceIf(T accumulatorPredicate, T replacement)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Original code by Simon Painter.
@@ -2886,12 +2886,12 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T Upsert(T item)
+### T Upsert(T item, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** Upsert
@@ -4845,7 +4845,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -5743,7 +5743,7 @@
 * **Status:** New
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/8/2026
 * **Description:** GenerateHashCode
@@ -5796,7 +5796,7 @@
 * **Status:** New
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/8/2026
 * **Description:** GenerateHashCode
@@ -7701,4 +7701,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/12/2026 8:21:45 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/15/2026 3:40:34 PM UTC**

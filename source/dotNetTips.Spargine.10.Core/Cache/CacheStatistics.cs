@@ -5,7 +5,7 @@
 // Created          : 12-30-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="CacheStatistics.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,7 +20,7 @@ namespace DotNetTips.Spargine.Core.Cache;
 /// <summary>
 /// Represents cache statistics and metrics.
 /// </summary>
-[Information(nameof(CacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+[Information(nameof(CacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 public sealed class CacheStatistics
 {
 

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -361,7 +361,7 @@ public static class App
 	/// Console.WriteLine(folderPath);
 	/// </code></example>
 	[Pure]
-	[Information(nameof(ExecutingFolder), author: "David McCarter", createdOn: "6/26/2017", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ExecutingFolder), author: "David McCarter", createdOn: "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ExecutingFolder()
 	{
 		var currentWorkingDirectory = _computerInfo.Value.CurrentWorkingDirectory;
@@ -698,7 +698,7 @@ public static class App
 	/// <returns><c>true</c> if the application is running from an ASP.NET context; otherwise, <c>false</c>.</returns>
 	/// <remarks>This method determines if the application is running within an ASP.NET context by checking the presence of ASP.NET temporary files in the application's dynamic directory.</remarks>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsRunningFromAspNet()
 	{
 		return (!string.IsNullOrEmpty(AppDomain.CurrentDomain.DynamicDirectory)) && AppDomain.CurrentDomain.DynamicDirectory.Contains(TempAspFiles, StringComparison.OrdinalIgnoreCase);
@@ -710,7 +710,7 @@ public static class App
 	/// <returns><c>true</c> if the current user is an administrator; otherwise, <c>false</c>.</returns>
 	/// <exception cref="PlatformNotSupportedException">Thrown when the operating system is not Windows, as administrator status can only be checked on Windows.</exception>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsUserAdministrator()
 	{
 		return !RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -779,7 +779,7 @@ public static class App
 	/// }
 	/// </code></example>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ReferencedAssemblies()
 	{
 		var entryAssembly = Assembly.GetEntryAssembly();
@@ -797,7 +797,7 @@ public static class App
 	/// <remarks>If the current user is not an administrator, this method will attempt to restart the application with administrator privileges.
 	/// It prompts the user for permission to run as an administrator. If granted, the application restarts; otherwise, it exits.
 	/// This method should be used cautiously, as it terminates the current process and starts a new one.</remarks>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public static void RunAsAdministrator()
 	{
 		if (IsUserAdministrator())

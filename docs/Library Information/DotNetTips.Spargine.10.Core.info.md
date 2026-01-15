@@ -82,7 +82,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/26/2017
 * **Description:** ExecutingFolder
@@ -196,7 +196,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -206,7 +206,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -310,7 +310,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -320,7 +320,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Not Required
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -372,7 +372,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** DoesAssemblyReference
 * **Modified On:** 
@@ -382,7 +382,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** DoesTypeExistInAssembly
 * **Modified On:** 
@@ -412,7 +412,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAssemblyCustomAttributes
 * **Modified On:** 
@@ -422,7 +422,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAssemblyEntryPoint
 * **Modified On:** 
@@ -432,7 +432,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAssemblyMetadata
 * **Modified On:** 
@@ -442,7 +442,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAssemblyPublicTypes
 * **Modified On:** 
@@ -464,7 +464,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetDependentAssemblies
 * **Modified On:** 
@@ -474,7 +474,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetMethodsInType
 * **Modified On:** 
@@ -484,22 +484,10 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/9/2025
 * **Description:** GetNetSdkDllFiles
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### System.Boolean IsDotNetAssembly(System.IO.Stream& stream)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** None
-* **Unit Test Status:** None
-* **Author:** David McCarter
-* **CreatedOn:** 5/20/2024
-* **Description:** IsDotNetAssembly
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -513,6 +501,18 @@
 * **CreatedOn:** 5/20/2024
 * **Description:** Original code by GÉRALD BARRÉ
 * **Documentation:** https://bit.ly/SpargineAug2024
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsDotNetAssembly(System.IO.Stream& stream)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 5/20/2024
+* **Description:** IsDotNetAssembly
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -1067,7 +1067,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** SkipNext
@@ -1885,7 +1885,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** IsEmpty
 * **Modified On:** 
@@ -2391,7 +2391,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2471,7 +2471,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2481,7 +2481,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2870,7 +2870,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Load
 * **Modified On:** 
@@ -2933,7 +2933,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -3567,7 +3567,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -3751,7 +3751,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** FormatForDisplay
 * **Modified On:** 
@@ -3954,7 +3954,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** FormatForDisplay
 * **Modified On:** 
@@ -4516,7 +4516,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/7/2025
 * **Description:** BytesToString
@@ -4540,7 +4540,7 @@
 * **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/23/2022
 * **Description:** Combine
@@ -4552,7 +4552,7 @@
 * **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/6/2025
 * **Description:** CombineWithSpace
@@ -4739,7 +4739,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Update
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/18/2025
 * **Description:** GenerateCustomKey
@@ -4867,7 +4867,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -5811,7 +5811,7 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/14/2025
@@ -5910,7 +5910,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/12/2024
@@ -6636,7 +6636,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAttribute
@@ -6646,7 +6646,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAttribute
@@ -6656,7 +6656,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetAttribute
@@ -6941,7 +6941,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Min
 * **Modified On:** 
@@ -7830,4 +7830,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/12/2026 8:21:45 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/15/2026 3:40:34 PM UTC**

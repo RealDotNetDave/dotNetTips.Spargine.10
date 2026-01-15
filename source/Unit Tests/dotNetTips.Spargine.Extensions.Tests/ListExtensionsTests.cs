@@ -453,7 +453,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsTrue(result, "Expected true when clearing nulls from a collection with nulls.");
 		Assert.HasCount(3, collection, "Expected the collection count to be reduced by the number of nulls.");
-		Assert.DoesNotContain(null, collection, "Expected the collection to no longer contain nulls.");
+		Assert.DoesNotContain((string s) => s is null, collection, "Expected the collection to no longer contain nulls.");
 	}
 
 	[TestMethod]

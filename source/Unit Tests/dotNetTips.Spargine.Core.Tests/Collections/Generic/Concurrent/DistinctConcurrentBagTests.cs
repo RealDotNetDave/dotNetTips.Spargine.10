@@ -210,10 +210,10 @@ public class DistinctConcurrentBagTests
 		// Add items concurrently
 		for (int i = 0; i < 5; i++)
 		{
-			var start = i * 20;
+			var localStart = i * 20; // Create local copy to avoid closure problem
 			tasks.Add(Task.Run(() =>
 			{
-				for (int j = start; j < start + 20; j++)
+				for (int j = localStart; j < localStart + 20; j++)
 				{
 					bag.Add(j);
 				}
@@ -223,18 +223,21 @@ public class DistinctConcurrentBagTests
 		// Remove items concurrently
 		for (int i = 0; i < 5; i++)
 		{
-			var start = i * 20;
+			var localStart = i * 20; // Create local copy to avoid closure problem
 			tasks.Add(Task.Run(() =>
 			{
-				for (int j = start; j < start + 10; j++)
+				for (int j = localStart; j < localStart + 10; j++)
 				{
 					bag.Remove(j);
 				}
 			}));
 		}
 
-		Task.WaitAll(tasks.ToArray());
+		Task.WaitAll([.. tasks]);
 
+		// 5 ranges × 20 items = 100 items added
+		// 5 ranges × 10 items = 50 items removed
+		// Expected: 50 items remaining
 		Assert.AreEqual(50, bag.Count);
 	}
 

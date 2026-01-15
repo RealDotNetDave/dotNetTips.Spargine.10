@@ -146,7 +146,7 @@ public static class ReadOnlyCollectionExtensions
 		/// </code>
 		/// </example>
 		[Pure]
-		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "1/8/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "1/8/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 		public int GenerateHashCode([DisallowNull] IEqualityComparer<T> comparer)
 		{
 			collection = collection.ArgumentNotNull();

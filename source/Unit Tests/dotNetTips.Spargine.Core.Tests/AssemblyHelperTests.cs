@@ -32,10 +32,16 @@ namespace DotNetTips.Spargine.Core.Tests;
 public class AssemblyHelperTests : UnitTester, IDisposable
 {
 
-	private const string SDKVersion = "10.0.1";
-
+	private const string SDKVersion = "10.0.2";
 	private string _testOutputDirectory;
 	private TestUnitTester _unitTester;
+
+	public AssemblyHelperTests()
+	{
+		this._testOutputDirectory = Path.Combine(Path.GetTempPath(), "UnitTesterTests");
+		Directory.CreateDirectory(this._testOutputDirectory);
+		this._unitTester = new TestUnitTester(this._testOutputDirectory);
+	}
 
 	public void Dispose()
 	{
@@ -1053,13 +1059,6 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => this._unitTester.SaveToFile(collection, null));
-	}
-
-	public AssemblyHelperTests()
-	{
-		this._testOutputDirectory = Path.Combine(Path.GetTempPath(), "UnitTesterTests");
-		Directory.CreateDirectory(this._testOutputDirectory);
-		this._unitTester = new TestUnitTester(this._testOutputDirectory);
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 07-05-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-20-2024
+// Last Modified On : 01-15-2026
 // ***********************************************************************
 // <copyright file="LineSplitEnumerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,6 +31,12 @@ public ref struct LineSplitEnumerator(ReadOnlySpan<char> input)
 	private ReadOnlySpan<char> _string = input;
 
 	/// <summary>
+	/// Gets the current line in the input string being enumerated.
+	/// </summary>
+	/// <value>The current line as a <see cref="LineSplitEntry"/>.</value>
+	public LineSplitEntry Current { get; private set; } = default;
+
+	/// <summary>
 	/// Gets the enumerator itself, required to support the foreach loop semantics.
 	/// </summary>
 	/// <returns>The <see cref="LineSplitEnumerator"/> instance.</returns>
@@ -40,7 +46,7 @@ public ref struct LineSplitEnumerator(ReadOnlySpan<char> input)
 	/// Advances the enumerator to the next line in the input string.
 	/// </summary>
 	/// <returns><c>true</c> if the enumerator was successfully advanced to the next line; <c>false</c> if the enumerator has passed the end of the collection.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool MoveNext()
 	{
 		var span = this._string;
@@ -78,11 +84,5 @@ public ref struct LineSplitEnumerator(ReadOnlySpan<char> input)
 
 		return true;
 	}
-
-	/// <summary>
-	/// Gets the current line in the input string being enumerated.
-	/// </summary>
-	/// <value>The current line as a <see cref="LineSplitEntry"/>.</value>
-	public LineSplitEntry Current { get; private set; } = default;
 
 }
