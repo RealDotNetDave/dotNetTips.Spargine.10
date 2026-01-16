@@ -4,7 +4,7 @@
 // Created          : 11-28-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="ValidatorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -34,6 +34,12 @@ public partial class ValidatorTests
 {
 	private const string BadEmail = "BAD@EMAIL";
 	private const string GoodEmail = "fakeemail@google.com";
+
+	public enum TestEnum
+	{
+		Value1,
+		Value2
+	}
 
 	[TestMethod]
 	public void ArgumentCountInRange_CountAboveMax_ThrowsArgumentOutOfRangeException()
@@ -1735,6 +1741,232 @@ public partial class ValidatorTests
 			// Assert
 			Assert.Contains(customMessage, ex.Message);
 		}
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_Array_ConditionFalse_ReturnsDefaultArray()
+	{
+		// Arrange
+		var input = new[] { 1, 2, 3 };
+		var defaultValue = new[] { 4, 5, 6 };
+
+		// Act
+		var result = input.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreSame(defaultValue, result);
+		Assert.AreEqual(3, result.Length);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_DateTime_ConditionFalse_ReturnsDefaultValue()
+	{
+		// Arrange
+		var input = DateTime.Now;
+		var defaultValue = DateTime.MinValue;
+
+		// Act
+		var result = input.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_EmptyString_ConditionFalse_ReturnsDefaultValue()
+	{
+		// Arrange
+		var input = string.Empty;
+		var defaultValue = "DefaultValue";
+
+		// Act
+		var result = input.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_EmptyString_ConditionTrue_ReturnsInput()
+	{
+		// Arrange
+		var input = string.Empty;
+		var defaultValue = "DefaultValue";
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_Guid_ConditionTrue_ReturnsInput()
+	{
+		// Arrange
+		var input = Guid.NewGuid();
+		var defaultValue = Guid.NewGuid();
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_List_ConditionTrue_ReturnsSameList()
+	{
+		// Arrange
+		var input = new List<int> { 1, 2, 3 };
+		var defaultValue = new List<int> { 4, 5, 6 };
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreSame(input, result);
+		Assert.AreEqual(3, result.Count);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_NullableInt_Null_ConditionTrue_ReturnsDefaultValue()
+	{
+		// Arrange
+		int? input = null;
+		int? defaultValue = 100;
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_NullableInt_WithValue_ConditionTrue_ReturnsInput()
+	{
+		// Arrange
+		int? input = 42;
+		int? defaultValue = 100;
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_NullInput_ConditionFalse_ReturnsDefaultValue()
+	{
+		// Arrange
+		string nullInput = null;
+		var defaultValue = "DefaultValue";
+
+		// Act
+		var result = nullInput.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_NullInput_ConditionTrue_ReturnsDefaultValue()
+	{
+		// Arrange
+		string nullInput = null;
+		var defaultValue = "DefaultValue";
+
+		// Act
+		var result = nullInput.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_ReferenceType_ConditionFalse_ReturnsDefaultValue()
+	{
+		// Arrange
+		var input = new Person { FirstName = "John", LastName = "Doe" };
+		var defaultValue = new Person { FirstName = "Jane", LastName = "Smith" };
+
+		// Act
+		var result = input.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreSame(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_ReferenceType_ConditionTrue_ReturnsSameInstance()
+	{
+		// Arrange
+		var input = new Person { FirstName = "John", LastName = "Doe" };
+		var defaultValue = new Person { FirstName = "Jane", LastName = "Smith" };
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreSame(input, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_ValidInput_ConditionFalse_ReturnsDefaultValue()
+	{
+		// Arrange
+		var input = "TestValue";
+		var defaultValue = "DefaultValue";
+
+		// Act
+		var result = input.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_ValidInput_ConditionTrue_ReturnsInput()
+	{
+		// Arrange
+		var input = "TestValue";
+		var defaultValue = "DefaultValue";
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_ValueType_ConditionFalse_ReturnsDefaultValue()
+	{
+		// Arrange
+		var input = 42;
+		var defaultValue = 100;
+
+		// Act
+		var result = input.ArgumentMeetsCondition(false, defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void ArgumentMeetsCondition_WithDefaultValue_ValueType_ConditionTrue_ReturnsInput()
+	{
+		// Arrange
+		var input = 42;
+		var defaultValue = 100;
+
+		// Act
+		var result = input.ArgumentMeetsCondition(true, defaultValue);
+
+		// Assert
+		Assert.AreEqual(input, result);
 	}
 
 	[TestMethod]
@@ -3820,12 +4052,6 @@ public partial class ValidatorTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentNotNull(collection, errorMessage, paramName: nameof(collection)));
-	}
-
-	public enum TestEnum
-	{
-		Value1,
-		Value2
 	}
 
 	[GeneratedRegex(@"^\w+$")]

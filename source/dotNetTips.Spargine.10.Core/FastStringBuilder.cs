@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -813,7 +813,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Updated, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
 	public static string ToDelimitedString<TKey, TValue>([DisallowNull] Dictionary<TKey, TValue> collection, [ConstantExpected] char delimiter = ControlChars.Comma) where TKey : notnull
 	{
 		if ((collection is null) || (collection.Count == 0))

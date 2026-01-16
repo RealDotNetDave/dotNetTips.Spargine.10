@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-13-2026
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
+using DotNetTips.Spargine.Tester.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -79,6 +80,226 @@ public class EnumerableExtensionsTests
 		people = people.AddDistinct(null);
 
 		Assert.AreEqual(Count + 1, people.Count());
+	}
+
+	[TestMethod]
+	public void AddFirst_DeferredExecution_DoesNotEnumerateImmediately()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+		var enumeratedCount = 0;
+		var trackingNumbers = numbers.Select(n =>
+		{
+			enumeratedCount++;
+			return n;
+		});
+
+		// Act - just create the query, don't enumerate
+		var query = trackingNumbers.AddFirst(0);
+
+		// Assert - should not have enumerated yet
+		Assert.AreEqual(0, enumeratedCount);
+
+		// Now enumerate
+		var result = query.ToList();
+		Assert.AreEqual(3, enumeratedCount); // Original 3 items enumerated
+	}
+
+	[TestMethod]
+	public void AddFirst_DoesNotModifyOriginalCollection()
+	{
+		// Arrange
+		var originalNumbers = new List<int> { 1, 2, 3 };
+		var numbers = originalNumbers.AsEnumerable();
+
+		// Act
+		var result = numbers.AddFirst(0).ToList();
+
+		// Assert
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, originalNumbers);
+		CollectionAssert.AreEqual(new List<int> { 0, 1, 2, 3 }, result);
+	}
+
+	[TestMethod]
+	public void AddFirst_EmptyCollection_AddsItemAsFirst()
+	{
+		// Arrange
+		var emptyList = new List<int>().AsEnumerable();
+
+		// Act
+		var result = emptyList.AddFirst(42).ToList();
+
+		// Assert
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual(42, result.First());
+	}
+
+	[TestMethod]
+	public void AddFirst_LargeCollection_PerformanceTest()
+	{
+		// Arrange
+		var largeCollection = Enumerable.Range(1, Count).AsEnumerable();
+
+		// Act
+		var result = largeCollection.AddFirst(0).ToList();
+
+		// Assert
+		Assert.AreEqual(Count + 1, result.Count);
+		Assert.AreEqual(0, result.First());
+		Assert.AreEqual(Count, result.Last());
+	}
+
+	[TestMethod]
+	public void AddFirst_MultipleInvocations_AddsMultipleItems()
+	{
+		// Arrange
+		var numbers = new List<int> { 4, 5 }.AsEnumerable();
+
+		// Act
+		var result = numbers.AddFirst(3).AddFirst(2).AddFirst(1).ToList();
+
+		// Assert
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 4, 5 }, result);
+	}
+
+	[TestMethod]
+	public void AddFirst_NonEmptyCollection_InsertsItemAtBeginning()
+	{
+		// Arrange
+		var numbers = new List<int> { 2, 3, 4 }.AsEnumerable();
+
+		// Act
+		var result = numbers.AddFirst(1).ToList();
+
+		// Assert
+		Assert.AreEqual(4, result.Count);
+		Assert.AreEqual(1, result.First());
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 4 }, result);
+	}
+
+	[TestMethod]
+	public void AddFirst_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> nullCollection = null;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.AddFirst(person).ToList());
+	}
+
+	[TestMethod]
+	public void AddFirst_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.AddFirst(null).ToList());
+	}
+
+	[TestMethod]
+	public void AddFirst_PreservesOriginalOrder()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable().ToList();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		people.AddFirst(newPerson);
+
+		// Assert
+		Assert.AreEqual(Count + 1, people.Count);
+		Assert.AreEqual(newPerson, people.First());
+	}
+
+	[TestMethod]
+	public void AddFirst_SingleItemCollection_AddsToBeginning()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.AddFirst(1).ToList();
+
+		// Assert
+		Assert.AreEqual(2, result.Count);
+		Assert.AreEqual(1, result.First());
+		Assert.AreEqual(42, result.Last());
+	}
+
+	[TestMethod]
+	public void AddFirst_WithArray_AddsCorrectly()
+	{
+		// Arrange
+		var array = new int[] { 2, 3, 4 };
+
+		// Act
+		var result = array.AddFirst(1).ToList();
+
+		// Assert
+		Assert.AreEqual(4, result.Count);
+		Assert.AreEqual(1, result.First());
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3, 4 }, result);
+	}
+
+	[TestMethod]
+	public void AddFirst_WithIList_AddsCorrectly()
+	{
+		// Arrange
+		IList<int> list = new List<int> { 2, 3, 4 };
+
+		// Act
+		var result = list.AddFirst(1).ToList();
+
+		// Assert
+		Assert.AreEqual(4, result.Count);
+		Assert.AreEqual(1, result.First());
+	}
+
+	[TestMethod]
+	public void AddFirst_WithReferenceTypes_AddsCorrectly()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(5).AsEnumerable();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		var result = people.AddFirst(newPerson).ToList();
+
+		// Assert
+		Assert.AreEqual(6, result.Count);
+		Assert.AreSame(newPerson, result.First());
+	}
+
+	[TestMethod]
+	public void AddFirst_WithStrings_AddsCorrectly()
+	{
+		// Arrange
+		var words = new List<string> { "banana", "cherry" }.AsEnumerable();
+
+		// Act
+		var result = words.AddFirst("apple").ToList();
+
+		// Assert
+		Assert.AreEqual(3, result.Count);
+		Assert.AreEqual("apple", result.First());
+		CollectionAssert.AreEqual(new List<string> { "apple", "banana", "cherry" }, result);
+	}
+
+	[TestMethod]
+	public void AddFirst_WithValueTypes_AddsCorrectly()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, Count).AsEnumerable();
+
+		// Act
+		var result = numbers.AddFirst(0).ToList();
+
+		// Assert
+		Assert.AreEqual(Count + 1, result.Count);
+		Assert.AreEqual(0, result.First());
+		Assert.AreEqual(1, result[1]);
 	}
 
 
@@ -204,6 +425,145 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.AreEqual(Count, people.Count);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_AllMatch_ReturnsFullCount()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.FastLongCount(p => p != null);
+
+		Assert.AreEqual((long)Count, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_ComparedToStandardCount_ReturnsSameValue()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var standardCount = people.LongCount(p => p.Email.Contains("@", StringComparison.Ordinal));
+		var fastCount = people.FastLongCount(p => p.Email.Contains("@", StringComparison.Ordinal));
+
+		Assert.AreEqual(standardCount, fastCount);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_ComplexPredicate_ReturnsCorrectCount()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.FastLongCount(p =>
+			p.Age.TotalDays > 25 &&
+			p.Email.Contains("@", StringComparison.Ordinal) &&
+			!string.IsNullOrEmpty(p.LastName));
+
+		Assert.IsTrue(result >= 0);
+		Assert.IsTrue(result <= Count);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_EmptyCollection_ReturnsZero()
+	{
+		var emptyList = new List<Person>().AsEnumerable();
+
+		var result = emptyList.FastLongCount(p => p.Age.TotalDays > 30);
+
+		Assert.AreEqual(0L, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_LargeCollection_ReturnsLongValue()
+	{
+		var largeCount = 100000;
+		var numbers = Enumerable.Range(1, largeCount).AsEnumerable();
+
+		var result = numbers.FastLongCount(n => n > 0);
+
+		Assert.AreEqual((long)largeCount, result);
+		Assert.IsInstanceOfType<long>(result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_MultiplePredicateCalls_ReturnsConsistentResults()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result1 = people.FastLongCount(p => p.Age.TotalDays > 30);
+		var result2 = people.FastLongCount(p => p.Age.TotalDays > 30);
+
+		Assert.AreEqual(result1, result2);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_NoMatches_ReturnsZero()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.FastLongCount(p => p.FirstName == "NonExistentName12345");
+
+		Assert.AreEqual(0L, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_NullCollection_ThrowsArgumentNullException()
+	{
+		IEnumerable<Person> nullCollection = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FastLongCount(p => p.Age.TotalDays > 30));
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_NullPredicate_ThrowsArgumentNullException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.FastLongCount(null));
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_SingleMatch_ReturnsOne()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable().ToList();
+		var uniquePerson = RandomData.GeneratePerson<Person>();
+		uniquePerson.FirstName = "UniqueTestName_XYZ123";
+		people.Add(uniquePerson);
+
+		var result = people.FastLongCount(p => p.FirstName == "UniqueTestName_XYZ123");
+
+		Assert.AreEqual(1L, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_SomeMatch_ReturnsCorrectCount()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var expectedCount = people.Count(p => p.FirstName.Contains('a', StringComparison.OrdinalIgnoreCase));
+		var result = people.FastLongCount(p => p.FirstName.Contains('a', StringComparison.OrdinalIgnoreCase));
+
+		Assert.AreEqual((long)expectedCount, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_Strings_ReturnsCorrectCount()
+	{
+		var words = RandomData.GenerateWords(Count, 5, 10).AsEnumerable();
+
+		var result = words.FastLongCount(w => w.Length > 7);
+
+		Assert.IsTrue(result >= 0);
+		Assert.IsTrue(result <= Count);
+	}
+
+	[TestMethod]
+	public void FastLongCount_WithPredicate_ValueTypes_ReturnsCorrectCount()
+	{
+		var numbers = Enumerable.Range(1, Count).AsEnumerable();
+
+		var result = numbers.FastLongCount(n => n % 2 == 0);
+
+		Assert.AreEqual((long)(Count / 2), result);
 	}
 
 	[TestMethod]

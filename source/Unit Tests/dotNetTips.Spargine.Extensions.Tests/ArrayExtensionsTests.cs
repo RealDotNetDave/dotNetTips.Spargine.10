@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-08-2025
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -412,6 +412,370 @@ public class ArrayExtensionsTests
 		Assert.IsFalse(nullCollection.IsNotEmpty(selector));
 
 		Assert.IsFalse(nullCollection.IsNotEmpty(null));
+	}
+
+	[TestMethod]
+	public void IndexOf_DuplicateItems_ReturnsFirstOccurrence()
+	{
+		// Arrange
+		var numbers = new[] { 10, 20, 30, 20, 50 };
+
+		// Act
+		var result = numbers.IndexOf(20);
+
+		// Assert
+		Assert.AreEqual(1, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_EmptyArray_ReturnsMinusOne()
+	{
+		// Arrange
+		var array = new int[0];
+
+		// Act
+		var result = array.IndexOf(5);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_FirstItem_ReturnsZero()
+	{
+		// Arrange
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = numbers.IndexOf(10);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_ItemExists_ReturnsCorrectIndex()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+		var targetPerson = people[5];
+
+		// Act
+		var result = people.IndexOf(targetPerson);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_ItemNotFound_ReturnsMinusOne()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		var result = people.IndexOf(newPerson);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_LargeArray_FindsItem()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(1000).ToArray();
+		var targetPerson = people[750];
+
+		// Act
+		var result = people.IndexOf(targetPerson);
+
+		// Assert
+		Assert.AreEqual(750, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_LastItem_ReturnsLastIndex()
+	{
+		// Arrange
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = numbers.IndexOf(50);
+
+		// Assert
+		Assert.AreEqual(4, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_MiddleItem_ReturnsCorrectIndex()
+	{
+		// Arrange
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = numbers.IndexOf(30);
+
+		// Assert
+		Assert.AreEqual(2, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_NullArray_ThrowsArgumentNullException()
+	{
+		// Arrange
+		int[] array = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.IndexOf(5));
+	}
+
+	[TestMethod]
+	public void IndexOf_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var array = new Person[] { RandomData.GeneratePerson<Person>() };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.IndexOf(null));
+	}
+
+	[TestMethod]
+	public void IndexOf_SingleElementArray_Found()
+	{
+		// Arrange
+		var array = new[] { 42 };
+
+		// Act
+		var result = array.IndexOf(42);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_SingleElementArray_NotFound()
+	{
+		// Arrange
+		var array = new[] { 42 };
+
+		// Act
+		var result = array.IndexOf(99);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_StringArray_FindsItem()
+	{
+		// Arrange
+		var words = new[] { "apple", "banana", "cherry", "date" };
+
+		// Act
+		var result = words.IndexOf("cherry");
+
+		// Assert
+		Assert.AreEqual(2, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_StringArray_ItemNotFound()
+	{
+		// Arrange
+		var words = new[] { "apple", "banana", "cherry" };
+
+		// Act
+		var result = words.IndexOf("grape");
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void IndexOf_ValueTypeArray_FindsItem()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, 100).ToArray();
+
+		// Act
+		var result = numbers.IndexOf(50);
+
+		// Assert
+		Assert.AreEqual(49, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_EmptyJaggedArray_ReturnsMinusOne()
+	{
+		// Arrange
+		var array = new int[0][];
+		var target = new[] { 1, 2 };
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_JaggedArray_FirstElement_ReturnsZero()
+	{
+		// Arrange
+		var target = new[] { 10, 20 };
+		var array = new int[][]
+		{
+		target,
+		new[] { 1, 2 },
+		new[] { 3, 4 }
+		};
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_JaggedArray_ItemExists_ReturnsLastIndex()
+	{
+		// Arrange
+		var target = new[] { 10, 20 };
+		var array = new int[][]
+		{
+		new[] { 1, 2 },
+		target,
+		new[] { 3, 4 },
+		target,
+		new[] { 5, 6 }
+		};
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(3, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_JaggedArray_ItemNotFound_ReturnsMinusOne()
+	{
+		// Arrange
+		var array = new int[][]
+		{
+		new[] { 1, 2 },
+		new[] { 3, 4 },
+		new[] { 5, 6 }
+		};
+		var notInArray = new[] { 7, 8 };
+
+		// Act
+		var result = array.LastIndexOf(notInArray);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_JaggedArray_LastElement_ReturnsLastIndex()
+	{
+		// Arrange
+		var target = new[] { 10, 20 };
+		var array = new int[][]
+		{
+		new[] { 1, 2 },
+		new[] { 3, 4 },
+		new[] { 5, 6 },
+		target
+		};
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(3, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_JaggedArray_SingleOccurrence_ReturnsIndex()
+	{
+		// Arrange
+		var target = new[] { 10, 20 };
+		var array = new int[][]
+		{
+		new[] { 1, 2 },
+		new[] { 3, 4 },
+		target,
+		new[] { 5, 6 }
+		};
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(2, result);
+	}
+
+
+	[TestMethod]
+	public void LastIndexOf_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var array = new int[][] { new[] { 1, 2 }, new[] { 3, 4 } };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.LastIndexOf(null));
+	}
+
+	[TestMethod]
+	public void LastIndexOf_SingleElementJaggedArray_Found()
+	{
+		// Arrange
+		var target = new[] { 42 };
+		var array = new int[][] { target };
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_SingleElementJaggedArray_NotFound()
+	{
+		// Arrange
+		var array = new int[][] { new[] { 42 } };
+		var target = new[] { 99 };
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void LastIndexOf_StringJaggedArray_ReturnsLastIndex()
+	{
+		// Arrange
+		var target = new[] { "apple", "banana" };
+		var array = new string[][]
+		{
+		new[] { "cat", "dog" },
+		target,
+		new[] { "fish", "bird" },
+		target
+		};
+
+		// Act
+		var result = array.LastIndexOf(target);
+
+		// Assert
+		Assert.AreEqual(3, result);
 	}
 
 	[TestMethod]

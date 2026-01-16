@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -298,6 +298,274 @@ public class DirectoryHelperTests
 		var result = DirectoryHelper.SafeFileSearch(folder, "*.tmp", SearchOption.AllDirectories);
 
 		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_AllDirectories_FindsSubdirectoryFiles()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create subdirectory with matching file
+			var subDir = Directory.CreateDirectory(Path.Combine(tempDirectory.FullName, "SubFolder"));
+			File.WriteAllText(Path.Combine(subDir.FullName, "test.txt"), "content");
+
+			var searchPatterns = new List<string> { "*.txt" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.AllDirectories, searchPatterns);
+
+			// Assert
+			Assert.IsTrue(result, "AllDirectories should find files in subdirectories.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_EmptyDirectory_ReturnsFalse()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			var searchPatterns = new List<string> { "*.txt", "*.docx" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsFalse(result, "Empty directory should return false.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_EmptySearchPatterns_ReturnsFalse()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test.txt"), "content");
+
+			var searchPatterns = new List<string>().AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsFalse(result, "Empty search patterns should return false.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_MultiplePatterns_NoMatches_ReturnsFalse()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create file not matching any pattern
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test.jpg"), "content");
+
+			var searchPatterns = new List<string> { "*.txt", "*.docx", "*.pdf" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsFalse(result, "Directory with no matching patterns should return false.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_MultiplePatterns_OneMatch_ReturnsTrue()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create file matching only one pattern
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test.txt"), "content");
+
+			var searchPatterns = new List<string> { "*.txt", "*.docx", "*.pdf" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsTrue(result, "Directory with at least one matching pattern should return true.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_NullPath_ThrowsArgumentNullException()
+	{
+		// Arrange
+		DirectoryInfo nullPath = null;
+		var searchPatterns = new List<string> { "*.txt" }.AsReadOnly();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			DirectoryHelper.SafeHasFoldersOrFiles(nullPath, SearchOption.TopDirectoryOnly, searchPatterns));
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_NullSearchPatterns_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Act & Assert
+			Assert.ThrowsExactly<ArgumentNullException>(() =>
+				DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, null));
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_TopDirectoryOnly_IgnoresSubdirectoryFiles()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create subdirectory with matching file
+			var subDir = Directory.CreateDirectory(Path.Combine(tempDirectory.FullName, "SubFolder"));
+			File.WriteAllText(Path.Combine(subDir.FullName, "test.txt"), "content");
+
+			var searchPatterns = new List<string> { "*.txt" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsFalse(result, "TopDirectoryOnly should not find files in subdirectories.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_WildcardPattern_MatchesAllFiles()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create various files
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test.txt"), "content");
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test.jpg"), "content");
+			Directory.CreateDirectory(Path.Combine(tempDirectory.FullName, "folder"));
+
+			var searchPatterns = new List<string> { "*.*" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsTrue(result, "Wildcard pattern should match files and folders.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_WithMatchingFiles_ReturnsTrue()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create test files
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test1.txt"), "content");
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test2.docx"), "content");
+
+			var searchPatterns = new List<string> { "*.txt" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsTrue(result, "Directory with matching files should return true.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_WithNoMatchingFiles_ReturnsFalse()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create test files that don't match pattern
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test1.jpg"), "content");
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "test2.png"), "content");
+
+			var searchPatterns = new List<string> { "*.txt", "*.docx" }.AsReadOnly();
+
+			// Act
+			var result = DirectoryHelper.SafeHasFoldersOrFiles(tempDirectory, SearchOption.TopDirectoryOnly, searchPatterns);
+
+			// Assert
+			Assert.IsFalse(result, "Directory with no matching files should return false.");
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
 	}
 
 	[SupportedOSPlatform("windows")]

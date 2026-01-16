@@ -814,6 +814,37 @@ public class FastStringBuilderTests
 	}
 
 	[TestMethod]
+	public void ToDelimitedString_BooleanValuesTest()
+	{
+		var dict = new Dictionary<string, bool>
+	{
+		{ "IsActive", true },
+		{ "IsDeleted", false },
+		{ "IsVerified", true }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, '|');
+		Assert.Contains("IsActive:True", result);
+		Assert.Contains("IsDeleted:False", result);
+		Assert.Contains("IsVerified:True", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_DefaultDelimiterTest()
+	{
+		var dict = new Dictionary<string, int>
+	{
+		{ "A", 1 },
+		{ "B", 2 },
+		{ "C", 3 }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict);
+		Assert.Contains("A:1", result);
+		Assert.Contains("B:2", result);
+		Assert.Contains("C:3", result);
+		Assert.Contains(",", result);
+	}
+
+	[TestMethod]
 	public void ToDelimitedString_DictionaryTest()
 	{
 		var dict = new Dictionary<string, string>
@@ -825,6 +856,157 @@ public class FastStringBuilderTests
 		var result = FastStringBuilder.ToDelimitedString(dict, ';');
 		var expected = "A:1;B:2;C:3";
 		Assert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_DoubleValuesTest()
+	{
+		var dict = new Dictionary<string, double>
+	{
+		{ "Pi", 3.14159 },
+		{ "E", 2.71828 },
+		{ "Golden", 1.61803 }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, ';');
+		Assert.Contains("Pi:", result);
+		Assert.Contains("E:", result);
+		Assert.Contains("Golden:", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_EmptyDictionaryTest()
+	{
+		var dict = new Dictionary<string, int>();
+		var result = FastStringBuilder.ToDelimitedString(dict);
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_EmptyStringValuesTest()
+	{
+		var dict = new Dictionary<string, string>
+	{
+		{ "Key1", string.Empty },
+		{ "Key2", "Value2" },
+		{ "Key3", string.Empty }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, '|');
+		Assert.Contains("Key1:", result);
+		Assert.Contains("Key2:Value2", result);
+		Assert.Contains("Key3:", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_IntegerKeysTest()
+	{
+		var dict = new Dictionary<int, string>
+	{
+		{ 1, "One" },
+		{ 2, "Two" },
+		{ 3, "Three" }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, '|');
+		Assert.Contains("1:One", result);
+		Assert.Contains("2:Two", result);
+		Assert.Contains("3:Three", result);
+		Assert.Contains("|", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_LargeDictionaryTest()
+	{
+		var dict = new Dictionary<int, string>();
+		for (var i = 0; i < 1000; i++)
+		{
+			dict.Add(i, $"Value{i}");
+		}
+
+		var result = FastStringBuilder.ToDelimitedString(dict);
+		Assert.IsNotNull(result);
+		Assert.Contains("0:Value0", result);
+		Assert.Contains("999:Value999", result);
+		Assert.IsGreaterThan(0, result.Length);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_MixedValueTypesTest()
+	{
+		var dict = new Dictionary<string, object>
+	{
+		{ "String", "Value" },
+		{ "Integer", 42 },
+		{ "Double", 3.14 },
+		{ "Boolean", true }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, ';');
+		Assert.Contains("String:Value", result);
+		Assert.Contains("Integer:42", result);
+		Assert.Contains("Double:3.14", result);
+		Assert.Contains("Boolean:True", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_NullableValuesTest()
+	{
+		var dict = new Dictionary<string, int?>
+	{
+		{ "A", 1 },
+		{ "B", null },
+		{ "C", 3 }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, ',');
+		Assert.Contains("A:1", result);
+		Assert.Contains("B:", result);
+		Assert.Contains("C:3", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_NullDictionaryTest()
+	{
+		Dictionary<string, string> dict = null;
+		var result = FastStringBuilder.ToDelimitedString(dict);
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_SingleEntryTest()
+	{
+		var dict = new Dictionary<string, int>
+	{
+		{ "Key1", 100 }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict);
+		Assert.AreEqual("Key1:100", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_SpecialCharactersTest()
+	{
+		var dict = new Dictionary<string, string>
+	{
+		{ "Key@1", "Value#1" },
+		{ "Key$2", "Value%2" },
+		{ "Key&3", "Value*3" }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, '|');
+		Assert.Contains("Key@1:Value#1", result);
+		Assert.Contains("Key$2:Value%2", result);
+		Assert.Contains("Key&3:Value*3", result);
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_WhitespaceValuesTest()
+	{
+		var dict = new Dictionary<string, string>
+	{
+		{ "Key1", "  " },
+		{ "Key2", "\t" },
+		{ "Key3", "\n" }
+	};
+		var result = FastStringBuilder.ToDelimitedString(dict, ',');
+		Assert.Contains("Key1:  ", result);
+		Assert.Contains("Key2:\t", result);
+		Assert.Contains("Key3:\n", result);
 	}
 
 }

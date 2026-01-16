@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -393,8 +393,6 @@ public static class DirectoryHelper
 		//OPTIMIZATION FROM COPILOT BREAKS CODE
 		path = path.ArgumentExists();
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
-
-
 		searchOption = searchOption.ArgumentDefined();
 
 		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = false, AttributesToSkip = FileAttributes.Hidden };
@@ -404,12 +402,15 @@ public static class DirectoryHelper
 			options.RecurseSubdirectories = true;
 		}
 
-		var directories = path.GetDirectories(searchPattern, searchOption);
+		var files = path.GetFiles(searchPattern, searchOption);
+
+		var directories = files.Select(file => file.Directory).Distinct().ToArray();
+
 		var itemCount = directories.LongLength;
 
 		for (var index = 0; index < itemCount; index++)
 		{
-			yield return directories[index];
+			yield return directories[index]!;
 		}
 	}
 
@@ -520,7 +521,7 @@ public static class DirectoryHelper
 	/// Thrown when <paramref name="path"/> or <paramref name="searchPatterns"/> is null.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeDirectorySearch), "David McCarter", "6/14/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Updated)]
+	[Information(nameof(SafeDirectorySearch), "David McCarter", "6/14/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 	public static bool SafeHasFoldersOrFiles([DisallowNull] DirectoryInfo path, SearchOption searchOption = SearchOption.TopDirectoryOnly, [DisallowNull] params ReadOnlyCollection<string> searchPatterns)
 	{
 		path = path.ArgumentExists();
@@ -528,7 +529,18 @@ public static class DirectoryHelper
 		searchOption = searchOption.ArgumentDefined();
 		searchPatterns = searchPatterns.ArgumentNotNull();
 
-		return searchPatterns.Any(pattern => SafeDirectorySearch(path, pattern, searchOption).IsNotEmpty());
+		//Search for directories
+		var directoryFound = searchPatterns.Any(pattern => SafeDirectorySearch(path, pattern, searchOption).IsNotEmpty());
+
+		if (directoryFound)
+		{
+			return true;
+		}
+		else
+		{
+			//Search for files
+			return searchPatterns.Any(pattern => SafeFileSearch(path, pattern, searchOption).IsNotEmpty());
+		}
 	}
 
 	/// <summary>

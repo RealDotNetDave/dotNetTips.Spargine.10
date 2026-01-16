@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -675,7 +675,7 @@ public static partial class Validator
 	/// <exception cref="ArgumentInvalidException">Condition failed.</exception>
 	/// <remarks>This also checks the input for null.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentMeetsCondition), "David McCarter", "4/4/2022", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ArgumentMeetsCondition), "David McCarter", "4/4/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T ArgumentMeetsCondition<T>(this T input, in bool condition, [DisallowNull] T defaultValue)
 	{
 		var isValid = input is not null && condition;

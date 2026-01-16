@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 01-16-2026
 // ***********************************************************************
 // <copyright file="ExecutionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -37,15 +37,6 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineExecutionHelper")]
 public static class ExecutionHelper
 {
-	/// <summary>
-	/// Calculates the delay time before the next retry attempt.
-	/// </summary>
-	/// <param name="retryWaitMilliseconds">The initial wait time in milliseconds before the first retry.</param>
-	/// <param name="attempts">The current number of attempts made.</param>
-	/// <returns>The calculated delay time in milliseconds.</returns>
-	[ExcludeFromCodeCoverage]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static int CalculateDelay(in int retryWaitMilliseconds, in int attempts) => retryWaitMilliseconds * attempts;
 
 	/// <summary>
 	/// Provides utility methods for executing operations with retry logic, allowing for progressive delays between retries.
@@ -67,7 +58,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static SimpleResult<int> ProgressiveRetry([DisallowNull] Action operation, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, int retryWaitMilliseconds = 100, ILogger? logger = null)
 	{
 		operation = operation.ArgumentNotNull();
@@ -170,4 +161,14 @@ public static class ExecutionHelper
 			}
 		}
 	}
+
+	/// <summary>
+	/// Calculates the delay time before the next retry attempt.
+	/// </summary>
+	/// <param name="retryWaitMilliseconds">The initial wait time in milliseconds before the first retry.</param>
+	/// <param name="attempts">The current number of attempts made.</param>
+	/// <returns>The calculated delay time in milliseconds.</returns>
+	[ExcludeFromCodeCoverage]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static int CalculateDelay(in int retryWaitMilliseconds, in int attempts) => retryWaitMilliseconds * attempts;
 }
