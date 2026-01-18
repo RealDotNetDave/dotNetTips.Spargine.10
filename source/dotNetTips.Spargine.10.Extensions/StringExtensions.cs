@@ -464,7 +464,7 @@ public static class StringExtensions
 	/// <seealso cref="StringComparison"/>
 	/// <seealso cref="System.Buffers.SearchValues{T}"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input,
 		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
 		params string[] characters)

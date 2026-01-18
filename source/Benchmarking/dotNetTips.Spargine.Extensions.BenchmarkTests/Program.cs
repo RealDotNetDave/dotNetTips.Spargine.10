@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-05-2026
+// Last Modified On : 01-18-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -47,8 +47,7 @@ internal sealed class Program
 
 		// Run Selected Tests
 		BenchmarkHelper.RunBenchmarks(config,
-			//typeof(ListExtensionsCollectionBenchmark),
-			//typeof(StringExtensionsBenchmark),
+			typeof(ListExtensionsCollectionBenchmark),
 			typeof(EnumerableExtensionsCollectionBenchmark)
 			);
 
