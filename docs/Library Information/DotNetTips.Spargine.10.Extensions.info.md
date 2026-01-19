@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.1.5
+# DotNetTips.Spargine.10.Extensions - 2026.10.1.17
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -819,23 +819,11 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean AddIfNotExists(T collection, T item)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 11/21/2020
-* **Description:** AddIfNotExists
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Boolean AddIfNotExists(T collection, T item, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -930,23 +918,11 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean AddIfNotExists(T item)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 11/21/2020
-* **Description:** AddIfNotExists
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Boolean AddIfNotExists(T item, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -1800,7 +1776,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -1825,7 +1801,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** ContainsAny
@@ -1856,9 +1832,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T EnsureUnique(T collection)
+### T EnsureUnique(T collection, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
@@ -1868,24 +1844,12 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T EnsureUnique(T collection, T comparer)
-
-* **Status:** New
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 1/8/2026
-* **Description:** EnsureUnique
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Boolean FastAny(T collection, T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FastAny
@@ -1921,7 +1885,7 @@
 * **Status:** Updated
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 12/9/2022
 * **Description:** FastProcessor
@@ -1969,7 +1933,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FirstOrDefault
@@ -1981,7 +1945,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FirstOrDefault
@@ -1993,7 +1957,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FirstOrNull
@@ -2005,22 +1969,10 @@
 * **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Check Performance
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
 * **Description:** HasDuplicates
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### System.Int32 IndexOf(T collection, T item)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 11/21/2020
-* **Description:** IndexOf
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -2111,7 +2063,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** OrderBy
@@ -2135,7 +2087,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
 * **Description:** PageAsync
@@ -2194,7 +2146,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Original code by Simon Painter.
@@ -2205,7 +2157,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** StartsWith
@@ -2217,7 +2169,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** StructuralSequenceEqual
@@ -2265,7 +2217,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
 * **Description:** ToFrozenSet
@@ -2324,8 +2276,8 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
-* **Unit Test Status:** Update
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** Upsert
@@ -2340,7 +2292,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
 * **Description:** PageAsync
@@ -2378,7 +2330,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2403,7 +2355,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** ContainsAny
@@ -2434,9 +2386,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T EnsureUnique()
+### T EnsureUnique(T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
@@ -2446,24 +2398,12 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T EnsureUnique(T comparer)
-
-* **Status:** New
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 1/8/2026
-* **Description:** EnsureUnique
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Boolean FastAny(T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FastAny
@@ -2499,7 +2439,7 @@
 * **Status:** Updated
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 12/9/2022
 * **Description:** FastProcessor
@@ -2547,7 +2487,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FirstOrDefault
@@ -2559,7 +2499,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FirstOrDefault
@@ -2571,7 +2511,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** FirstOrNull
@@ -2583,22 +2523,10 @@
 * **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Check Performance
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
 * **Description:** HasDuplicates
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### System.Int32 IndexOf(T item)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 11/21/2020
-* **Description:** IndexOf
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -2689,7 +2617,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** OrderBy
@@ -2760,7 +2688,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Original code by Simon Painter.
@@ -2771,7 +2699,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** StartsWith
@@ -2783,7 +2711,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** StructuralSequenceEqual
@@ -2831,7 +2759,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
 * **Description:** ToFrozenSet
@@ -2890,8 +2818,8 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
-* **Unit Test Status:** Update
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** Upsert
@@ -3345,21 +3273,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Void AddRangeIfNotExists(T list, T items)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 12/30/2024
-* **Description:** AddRangeIfNotExists
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Void AddRangeIfNotExists(T list, T items, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3421,7 +3337,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2024
@@ -3730,21 +3646,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Void AddRangeIfNotExists(T items)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 12/30/2024
-* **Description:** AddRangeIfNotExists
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Void AddRangeIfNotExists(T items, T comparer)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3806,7 +3710,7 @@
 
 * **Status:** Updated
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2024
@@ -5726,21 +5630,9 @@
 *****
 ## DotNetTips.Spargine.Extensions.ReadOnlyCollectionExtensions
 
-### System.Int32 GenerateHashCode(T collection)
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
-* **Description:** From .NET Core source.
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Int32 GenerateHashCode(T collection, T comparer)
 
-* **Status:** New
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -5779,21 +5671,9 @@
 *****
 ## DotNetTips.Spargine.Extensions.ReadOnlyCollectionExtensions.<G>$DC550F3D42D3085FE7D720396E05FB19<$T0>
 
-### System.Int32 GenerateHashCode()
-
-* **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
-* **Description:** From .NET Core source.
-* **Modified By:** David McCarter
-* **Modified On:** 
-
 ### System.Int32 GenerateHashCode(T comparer)
 
-* **Status:** New
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -7701,4 +7581,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/18/2026 6:35:25 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/19/2026 8:29:17 PM UTC**

@@ -12,11 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
@@ -546,6 +548,237 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastAny_AllElementsMatch_ReturnsTrue()
+	{
+		// Arrange
+		var numbers = new List<int> { 10, 20, 30 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FastAny(n => n > 5);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_Array_MatchingElementExists_ReturnsTrue()
+	{
+		// Arrange
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = numbers.FastAny(n => n % 2 == 0);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_ComplexPredicate_ReturnsCorrectResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FastAny(p =>
+			p.Email.Contains("@", StringComparison.Ordinal) &&
+			!string.IsNullOrEmpty(p.FirstName) &&
+			!string.IsNullOrEmpty(p.LastName));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_DeferredEnumerable_MatchingElementExists_ReturnsTrue()
+	{
+		// Arrange
+		var deferred = Enumerable.Range(1, 10).Where(x => x % 2 == 0);
+
+		// Act
+		var result = deferred.FastAny(n => n == 6);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_EmptyCollection_ReturnsFalse()
+	{
+		// Arrange
+		var emptyCollection = new List<int>().AsEnumerable();
+
+		// Act
+		var result = emptyCollection.FastAny(n => n > 0);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastAny_FirstElementMatches_ReturnsTrue()
+	{
+		// Arrange
+		var numbers = new List<int> { 10, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FastAny(n => n > 5);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_LargeCollection_MatchingElementExists_ReturnsTrue()
+	{
+		// Arrange
+		var largeCollection = Enumerable.Range(1, Count).AsEnumerable();
+
+		// Act
+		var result = largeCollection.FastAny(n => n == Count);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_LastElementMatches_ReturnsTrue()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 10 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FastAny(n => n > 5);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_MatchingElementExists_ReturnsTrue()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FastAny(n => n > 3);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_NoMatchingElement_ReturnsFalse()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FastAny(n => n > 10);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastAny_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FastAny(n => n > 0));
+	}
+
+	[TestMethod]
+	public void FastAny_NullPredicate_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => numbers.FastAny(null));
+	}
+
+	[TestMethod]
+	public void FastAny_ReferenceType_MatchingElementExists_ReturnsTrue()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FastAny(p => p.Email.Contains("@", StringComparison.Ordinal));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_ReferenceType_NoMatchingElement_ReturnsFalse()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FastAny(p => p.Id == "non-existent-id-12345");
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastAny_SingleElementMatches_ReturnsTrue()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FastAny(n => n == 42);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_SingleElementNoMatch_ReturnsFalse()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FastAny(n => n == 100);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastAny_StringCollection_MatchingElement_ReturnsTrue()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
+
+		// Act
+		var result = strings.FastAny(s => s.StartsWith("b", StringComparison.Ordinal));
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastAny_StringCollection_NoMatchingElement_ReturnsFalse()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
+
+		// Act
+		var result = strings.FastAny(s => s.StartsWith("z", StringComparison.Ordinal));
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void FastCountPredicateTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
@@ -880,6 +1113,645 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FirstOrDefault_WithAlternate_Array_ReturnsFirstElement()
+	{
+		// Arrange
+		var numbers = new int[] { 5, 10, 15 };
+
+		// Act
+		var result = numbers.FirstOrDefault(-1);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_CollectionWithNullFirst_ReturnsNull()
+	{
+		// Arrange
+		var strings = new List<string> { null, "second", "third" }.AsEnumerable();
+
+		// Act
+		var result = strings.FirstOrDefault("alternate");
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_DeferredEnumerable_ReturnsFirstElement()
+	{
+		// Arrange
+		var deferred = Enumerable.Range(100, 10);
+
+		// Act
+		var result = deferred.FirstOrDefault(-1);
+
+		// Assert
+		Assert.AreEqual(100, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_EmptyCollection_ReturnsAlternate()
+	{
+		// Arrange
+		var numbers = new List<int>().AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(42);
+
+		// Assert
+		Assert.AreEqual(42, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_EmptyStringCollection_ReturnsAlternate()
+	{
+		// Arrange
+		var emptyStrings = new List<string>().AsEnumerable();
+
+		// Act
+		var result = emptyStrings.FirstOrDefault("alternate");
+
+		// Assert
+		Assert.AreEqual("alternate", result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_LargeCollection_ReturnsFirstElement()
+	{
+		// Arrange
+		var largeCollection = Enumerable.Range(1, Count).AsEnumerable();
+
+		// Act
+		var result = largeCollection.FirstOrDefault(-1);
+
+		// Assert
+		Assert.AreEqual(1, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_NonEmptyCollection_ReturnsFirstElement()
+	{
+		// Arrange
+		var numbers = new List<int> { 10, 20, 30 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(-1);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FirstOrDefault(-1));
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_ReferenceType_EmptyCollection_ReturnsAlternate()
+	{
+		// Arrange
+		var emptyCollection = new List<Person>().AsEnumerable();
+		var alternatePerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		var result = emptyCollection.FirstOrDefault(alternatePerson);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(alternatePerson.Id, result.Id);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_ReferenceType_EmptyCollection_ReturnsNullAlternate()
+	{
+		// Arrange
+		var emptyCollection = new List<Person>().AsEnumerable();
+
+		// Act
+		var result = emptyCollection.FirstOrDefault(null);
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_ReferenceType_NonEmptyCollection_ReturnsFirstElement()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		var alternatePerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		var result = people.FirstOrDefault(alternatePerson);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(people.First().Id, result.Id);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_SingleItemCollection_ReturnsItem()
+	{
+		// Arrange
+		var singleItem = new List<int> { 99 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FirstOrDefault(-1);
+
+		// Assert
+		Assert.AreEqual(99, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithAlternate_StringCollection_ReturnsFirstString()
+	{
+		// Arrange
+		var strings = new List<string> { "first", "second", "third" }.AsEnumerable();
+
+		// Act
+		var result = strings.FirstOrDefault("alternate");
+
+		// Assert
+		Assert.AreEqual("first", result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_Array_ReturnsCorrectResult()
+	{
+		// Arrange
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n % 2 == 0, -1);
+
+		// Assert
+		Assert.AreEqual(2, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_ComplexPredicate_ReturnsCorrectMatch()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FirstOrDefault(
+			p => p.Email.Contains("@", StringComparison.Ordinal) && !string.IsNullOrEmpty(p.FirstName),
+			null);
+
+		// Assert - all generated people should have valid email and first name
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Email.Contains("@", StringComparison.Ordinal));
+		Assert.IsFalse(string.IsNullOrEmpty(result.FirstName));
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_EmptyCollection_ReturnsAlternate()
+	{
+		// Arrange
+		var numbers = new List<int>().AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n > 0, 42);
+
+		// Assert
+		Assert.AreEqual(42, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_FirstElementMatches_ReturnsFirstElement()
+	{
+		// Arrange
+		var numbers = new List<int> { 10, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n > 5, -1);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_LastElementMatches_ReturnsLastElement()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 10 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n > 5, -1);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_MatchFound_ReturnsMatchingItem()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n > 3, -1);
+
+		// Assert
+		Assert.AreEqual(4, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_MultipleMatches_ReturnsFirstMatch()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 10, 20, 30 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n > 5, -1);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_NoMatch_ReturnsAlternate()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrDefault(n => n > 10, -1);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FirstOrDefault(n => n > 0, -1));
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_NullPredicate_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => numbers.FirstOrDefault(null, -1));
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_ReferenceType_MatchFound_ReturnsMatchingItem()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		var targetPerson = people.First();
+
+		// Act
+		var result = people.FirstOrDefault(p => p.Id == targetPerson.Id, null);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(targetPerson.Id, result.Id);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_ReferenceType_NoMatch_ReturnsAlternate()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		var alternatePerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		var result = people.FirstOrDefault(p => p.Id == "non-existent-id-12345", alternatePerson);
+
+		// Assert
+		Assert.AreEqual(alternatePerson, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_ReferenceType_NoMatch_ReturnsNullAlternate()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FirstOrDefault(p => p.Id == "non-existent-id-12345", null);
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_SingleItemCollection_MatchFound_ReturnsItem()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FirstOrDefault(n => n == 42, -1);
+
+		// Assert
+		Assert.AreEqual(42, result);
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithPredicate_SingleItemCollection_NoMatch_ReturnsAlternate()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FirstOrDefault(n => n == 100, -1);
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_Array_MatchingElementExists_ReturnsElement()
+	{
+		// Arrange
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = numbers.FirstOrNull(n => n % 2 == 0);
+
+		// Assert
+		Assert.AreEqual(2, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_ComplexPredicate_ReturnsCorrectMatch()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FirstOrNull(p =>
+			p.Email.Contains("@", StringComparison.Ordinal) &&
+			!string.IsNullOrEmpty(p.FirstName));
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Email.Contains("@", StringComparison.Ordinal));
+		Assert.IsFalse(string.IsNullOrEmpty(result.FirstName));
+	}
+
+	[TestMethod]
+	public void FirstOrNull_DeferredEnumerable_MatchingElementExists_ReturnsElement()
+	{
+		// Arrange
+		var deferred = Enumerable.Range(1, 10).Where(x => x % 2 == 0);
+
+		// Act
+		var result = deferred.FirstOrNull(n => n > 4);
+
+		// Assert
+		Assert.AreEqual(6, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_EmptyCollection_ReturnsDefault()
+	{
+		// Arrange
+		var emptyCollection = new List<int>().AsEnumerable();
+
+		// Act
+		var result = emptyCollection.FirstOrNull(n => n > 0);
+
+		// Assert
+		Assert.AreEqual(default(int), result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_FirstElementMatches_ReturnsFirstElement()
+	{
+		// Arrange
+		var numbers = new List<int> { 10, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrNull(n => n > 5);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_LargeCollection_MatchingElementExists_ReturnsElement()
+	{
+		// Arrange
+		var largeCollection = Enumerable.Range(1, Count).AsEnumerable();
+
+		// Act
+		var result = largeCollection.FirstOrNull(n => n == Count);
+
+		// Assert
+		Assert.AreEqual(Count, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_LastElementMatches_ReturnsLastElement()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 10 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrNull(n => n > 5);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_MatchingElementExists_ReturnsFirstMatch()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrNull(n => n > 3);
+
+		// Assert
+		Assert.AreEqual(4, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_MultipleMatches_ReturnsFirstMatch()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 10, 20, 30 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrNull(n => n > 5);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_NoMatchingElement_ReturnsDefault()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = numbers.FirstOrNull(n => n > 10);
+
+		// Assert
+		Assert.AreEqual(default(int), result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_NullableValueType_MatchExists_ReturnsValue()
+	{
+		// Arrange
+		var nullableNumbers = new List<int?> { 1, null, 3, 4, 5 }.AsEnumerable();
+
+		// Act
+		var result = nullableNumbers.FirstOrNull(n => n > 3);
+
+		// Assert
+		Assert.AreEqual(4, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_NullableValueType_NoMatch_ReturnsDefault()
+	{
+		// Arrange
+		var nullableNumbers = new List<int?> { 1, 2, 3 }.AsEnumerable();
+
+		// Act
+		var result = nullableNumbers.FirstOrNull(n => n > 10);
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FirstOrNull(n => n > 0));
+	}
+
+	[TestMethod]
+	public void FirstOrNull_NullPredicate_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => numbers.FirstOrNull(null));
+	}
+
+	[TestMethod]
+	public void FirstOrNull_ReferenceType_EmptyCollection_ReturnsNull()
+	{
+		// Arrange
+		var emptyCollection = new List<Person>().AsEnumerable();
+
+		// Act
+		var result = emptyCollection.FirstOrNull(p => p != null);
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_ReferenceType_MatchingElementExists_ReturnsElement()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		var targetPerson = people.First();
+
+		// Act
+		var result = people.FirstOrNull(p => p.Id == targetPerson.Id);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(targetPerson.Id, result.Id);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_ReferenceType_NoMatchingElement_ReturnsNull()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.FirstOrNull(p => p.Id == "non-existent-id-12345");
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_SingleElementMatches_ReturnsElement()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FirstOrNull(n => n == 42);
+
+		// Assert
+		Assert.AreEqual(42, result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_SingleElementNoMatch_ReturnsDefault()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.FirstOrNull(n => n == 100);
+
+		// Assert
+		Assert.AreEqual(default(int), result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_StringCollection_MatchingElement_ReturnsElement()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
+
+		// Act
+		var result = strings.FirstOrNull(s => s.StartsWith("b", StringComparison.Ordinal));
+
+		// Assert
+		Assert.AreEqual("banana", result);
+	}
+
+	[TestMethod]
+	public void FirstOrNull_StringCollection_NoMatchingElement_ReturnsNull()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
+
+		// Act
+		var result = strings.FirstOrNull(s => s.StartsWith("z", StringComparison.Ordinal));
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
 	public void FromDelimitedStringTest()
 	{
 		var testValue = ".net, c#, vb, f#";
@@ -1127,7 +1999,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(accumulatorPredicate: null));
+		_ = Assert.ThrowsExactly<NullReferenceException>(() => people.IndexOf(accumulatorPredicate: null));
 	}
 
 	[TestMethod]
@@ -1191,6 +2063,310 @@ public class EnumerableExtensionsTests
 		var result = people.OrderBy("Email desc");
 
 		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	[TestMethod]
+	public async Task PageAsync_CancellationRequested_ThrowsOperationCanceledException()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 100));
+		using var cts = new CancellationTokenSource();
+		var pageSize = 5;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<OperationCanceledException>(async () =>
+		{
+			var pageCount = 0;
+			await foreach (var page in numbers.PageAsync(pageSize, cts.Token))
+			{
+				pageCount++;
+				if (pageCount == 2)
+				{
+					cts.Cancel();
+				}
+			}
+		});
+	}
+
+	[TestMethod]
+	public async Task PageAsync_ComplexType_PagesCorrectly()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(10);
+		var asyncPeople = ToAsyncEnumerable(people);
+		var pageSize = 3;
+
+		// Act
+		var pages = new List<List<Person>>();
+		await foreach (var page in asyncPeople.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(4, pages.Count);
+		Assert.AreEqual(3, pages[0].Count);
+		Assert.AreEqual(3, pages[1].Count);
+		Assert.AreEqual(3, pages[2].Count);
+		Assert.AreEqual(1, pages[3].Count);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_EmptyCollection_ReturnsNoPages()
+	{
+		// Arrange
+		var emptyCollection = ToAsyncEnumerable(Array.Empty<int>());
+		var pageSize = 5;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in emptyCollection.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(0, pages.Count);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_ExactlyPageSizeItems_ReturnsSingleFullPage()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 5));
+		var pageSize = 5;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(1, pages.Count);
+		Assert.AreEqual(5, pages[0].Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, pages[0]);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_ExactMultipleOfPageSize_ReturnsFullPages()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 10));
+		var pageSize = 5;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(2, pages.Count);
+		Assert.AreEqual(5, pages[0].Count);
+		Assert.AreEqual(5, pages[1].Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, pages[0]);
+		CollectionAssert.AreEqual(new[] { 6, 7, 8, 9, 10 }, pages[1]);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_ItemsLessThanPageSize_ReturnsSinglePartialPage()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(new[] { 1, 2, 3 });
+		var pageSize = 10;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(1, pages.Count);
+		Assert.AreEqual(3, pages[0].Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3 }, pages[0]);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_LargeCollection_PagesCorrectly()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 1000));
+		var pageSize = 100;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(10, pages.Count);
+		Assert.IsTrue(pages.All(p => p.Count == 100));
+	}
+
+	[TestMethod]
+	public async Task PageAsync_NotExactMultiple_ReturnsPartialLastPage()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 7));
+		var pageSize = 3;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(3, pages.Count);
+		Assert.AreEqual(3, pages[0].Count);
+		Assert.AreEqual(3, pages[1].Count);
+		Assert.AreEqual(1, pages[2].Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3 }, pages[0]);
+		CollectionAssert.AreEqual(new[] { 4, 5, 6 }, pages[1]);
+		CollectionAssert.AreEqual(new[] { 7 }, pages[2]);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IAsyncEnumerable<int> nullCollection = null;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await foreach (var page in nullCollection.PageAsync(5))
+			{
+				// Should not reach here
+			}
+		});
+	}
+
+	[TestMethod]
+	public async Task PageAsync_PageSizeLessThanTwo_EnforcesMinimumTwo()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 5));
+		var pageSize = 1; // Should be enforced to 2
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(3, pages.Count);
+		Assert.AreEqual(2, pages[0].Count);
+		Assert.AreEqual(2, pages[1].Count);
+		Assert.AreEqual(1, pages[2].Count);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_PreAllocatesPageCapacity()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 10));
+		var pageSize = 5;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+			// Verify that each page has correct count
+			Assert.IsTrue(page.Count <= pageSize);
+		}
+
+		// Assert
+		Assert.AreEqual(2, pages.Count);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_PreserversElementOrder()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(new[] { 5, 3, 8, 1, 9, 2, 7, 4, 6 });
+		var pageSize = 3;
+
+		// Act
+		var allItems = new List<int>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			allItems.AddRange(page);
+		}
+
+		// Assert
+		CollectionAssert.AreEqual(new[] { 5, 3, 8, 1, 9, 2, 7, 4, 6 }, allItems);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_ReferenceType_PagesCorrectly()
+	{
+		// Arrange
+		var strings = ToAsyncEnumerable(new[] { "a", "b", "c", "d", "e" });
+		var pageSize = 2;
+
+		// Act
+		var pages = new List<List<string>>();
+		await foreach (var page in strings.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(3, pages.Count);
+		CollectionAssert.AreEqual(new[] { "a", "b" }, pages[0]);
+		CollectionAssert.AreEqual(new[] { "c", "d" }, pages[1]);
+		CollectionAssert.AreEqual(new[] { "e" }, pages[2]);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_SingleItem_ReturnsSinglePageWithOneItem()
+	{
+		// Arrange
+		var singleItem = ToAsyncEnumerable(new[] { 42 });
+		var pageSize = 5;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in singleItem.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(1, pages.Count);
+		Assert.AreEqual(1, pages[0].Count);
+		Assert.AreEqual(42, pages[0][0]);
+	}
+
+	[TestMethod]
+	public async Task PageAsync_WithDefaultCancellationToken_CompletesSuccessfully()
+	{
+		// Arrange
+		var numbers = ToAsyncEnumerable(Enumerable.Range(1, 6));
+		var pageSize = 3;
+
+		// Act
+		var pages = new List<List<int>>();
+		await foreach (var page in numbers.PageAsync(pageSize))
+		{
+			pages.Add(page);
+		}
+
+		// Assert
+		Assert.AreEqual(2, pages.Count);
+		Assert.AreEqual(6, pages.Sum(p => p.Count));
 	}
 
 	[TestMethod]
@@ -1544,6 +2720,198 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFrozenSet_Array_ReturnsFrozenSet()
+	{
+		// Arrange
+		var numbers = new int[] { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = numbers.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(5, result.Count);
+		Assert.IsTrue(result.Contains(30));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_CollectionWithDuplicates_ReturnsUniqueElements()
+	{
+		// Arrange
+		var numbersWithDuplicates = new List<int> { 1, 2, 2, 3, 3, 3, 4, 5, 5 }.AsEnumerable();
+
+		// Act
+		var result = numbersWithDuplicates.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(5, result.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, result.ToList());
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_ContainsLookup_PerformsCorrectly()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, 100).AsEnumerable();
+		var frozenSet = numbers.ToFrozenSet();
+
+		// Act & Assert - verify Contains works correctly
+		Assert.IsTrue(frozenSet.Contains(1));
+		Assert.IsTrue(frozenSet.Contains(50));
+		Assert.IsTrue(frozenSet.Contains(100));
+		Assert.IsFalse(frozenSet.Contains(0));
+		Assert.IsFalse(frozenSet.Contains(101));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_DeferredEnumerable_ReturnsFrozenSet()
+	{
+		// Arrange
+		var deferred = Enumerable.Range(1, 10).Where(x => x % 2 == 0);
+
+		// Act
+		var result = deferred.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(5, result.Count);
+		Assert.IsTrue(result.Contains(2));
+		Assert.IsTrue(result.Contains(10));
+		Assert.IsFalse(result.Contains(1));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_EmptyCollection_ReturnsEmptyFrozenSet()
+	{
+		// Arrange
+		var emptyCollection = new List<int>().AsEnumerable();
+
+		// Act
+		var result = emptyCollection.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_IsImmutable_CannotBeModified()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		// Act
+		var frozenSet = numbers.ToFrozenSet();
+
+		// Assert - FrozenSet is immutable, verify it's read-only
+		Assert.IsInstanceOfType<FrozenSet<int>>(frozenSet);
+		Assert.AreEqual(3, frozenSet.Count);
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_LargeCollection_ReturnsFrozenSet()
+	{
+		// Arrange
+		var largeCollection = Enumerable.Range(1, Count).AsEnumerable();
+
+		// Act
+		var result = largeCollection.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(Count, result.Count);
+		Assert.IsTrue(result.Contains(1));
+		Assert.IsTrue(result.Contains(Count));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_NonEmptyCollection_ReturnsFrozenSetWithAllElements()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		// Act
+		var result = numbers.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(5, result.Count);
+		Assert.IsTrue(result.Contains(1));
+		Assert.IsTrue(result.Contains(5));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.ToFrozenSet());
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_ReferenceType_ReturnsFrozenSetWithAllElements()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		// Act
+		var result = people.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(Count, result.Count);
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_SingleItemCollection_ReturnsFrozenSetWithOneElement()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		// Act
+		var result = singleItem.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(1, result.Count);
+		Assert.IsTrue(result.Contains(42));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_StringCollection_ReturnsFrozenSet()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
+
+		// Act
+		var result = strings.ToFrozenSet();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(3, result.Count);
+		Assert.IsTrue(result.Contains("apple"));
+		Assert.IsTrue(result.Contains("banana"));
+		Assert.IsTrue(result.Contains("cherry"));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_StringCollectionWithDuplicates_ReturnsUniqueStrings()
+	{
+		// Arrange
+		var stringsWithDuplicates = new List<string> { "apple", "Apple", "APPLE", "banana" }.AsEnumerable();
+
+		// Act
+		var result = stringsWithDuplicates.ToFrozenSet();
+
+		// Assert - default string comparison is case-sensitive
+		Assert.IsNotNull(result);
+		Assert.AreEqual(4, result.Count);
+	}
+
+	[TestMethod]
 	public void ToFrozenTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
@@ -1618,6 +2986,17 @@ public class EnumerableExtensionsTests
 		result = result.Upsert(personFromCollection);
 
 		Assert.AreEqual(Count + 1, result.Count());
+	}
+
+	// Helper method to create IAsyncEnumerable for testing
+	private static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(IEnumerable<T> source, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+	{
+		foreach (var item in source)
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+			await Task.Yield();
+			yield return item;
+		}
 	}
 
 	/// <summary>
