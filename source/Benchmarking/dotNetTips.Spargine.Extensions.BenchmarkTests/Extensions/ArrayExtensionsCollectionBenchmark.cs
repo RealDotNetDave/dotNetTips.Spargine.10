@@ -32,6 +32,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
+
+	private const int OperationsCount = 1024;
 	private byte[] _byteArray;
 	private int _halfCount;
 
@@ -182,6 +184,13 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._personValArray.IsEmpty();
 
 		this.Consume(result);
+	}
+
+	[Benchmark(OperationsPerInvoke = OperationsCount, Description = "Spargine FastLongCount(): Ref")]
+	[BenchmarkCategory(Categories.Array)]
+	public long FastLongCountArrayRef()
+	{
+		return this._personRefArray.FastLongCount();
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Reference")]
