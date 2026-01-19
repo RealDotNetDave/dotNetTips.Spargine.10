@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-19-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -381,6 +382,143 @@ public class EnumerableExtensionsTests
 		var people = new List<Person>().AsEnumerable();
 
 		Assert.IsTrue(people.IsEmpty());
+	}
+
+	[TestMethod]
+	public void EnsureUnique_AllDuplicates_WithComparer_ReturnsSingleElement()
+	{
+		var allSame = new List<int> { 5, 5, 5, 5, 5 }.AsEnumerable();
+
+		var result = allSame.EnsureUnique(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual(5, result[0]);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_EmptyCollection_WithComparer_ReturnsEmpty()
+	{
+		var emptyList = new List<int>().AsEnumerable();
+
+		var result = emptyList.EnsureUnique(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_NoDuplicates_WithComparer_ReturnsAll()
+	{
+		var uniqueNumbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		var result = uniqueNumbers.EnsureUnique(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(5, result.Count);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_ReferenceTypes_LargeCollection_WithComparer_RemovesDuplicates()
+	{
+		// Large collection (> 4096) uses Distinct path
+		var largeCount = 5000;
+		var people = RandomData.GeneratePersonRefCollection(largeCount).ToList();
+		var duplicate = people[0];
+
+		for (int i = 0; i < 10; i++)
+		{
+			people.Add(duplicate);
+		}
+
+		var result = people.EnsureUnique(new PersonComparer()).ToList();
+
+		var expectedCount = people.Select(p => p.Id).Distinct().Count();
+		Assert.AreEqual(expectedCount, result.Count);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_ReferenceTypes_SmallCollection_WithComparer_RemovesDuplicates()
+	{
+		// Small collection (<= 4096) uses HashSet path
+		var people = RandomData.GeneratePersonRefCollection(20).ToList();
+		var duplicate = people[0];
+		people.Add(duplicate);
+		people.Add(duplicate);
+
+		var result = people.EnsureUnique(new PersonComparer()).ToList();
+
+		var expectedCount = people.Select(p => p.Id).Distinct().Count();
+		Assert.AreEqual(expectedCount, result.Count);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_SingleElement_WithComparer_ReturnsSingleElement()
+	{
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		var result = singleItem.EnsureUnique(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual(42, result[0]);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_Strings_CaseInsensitiveComparer_RemovesDuplicates()
+	{
+		var words = new List<string> { "Apple", "apple", "APPLE", "Banana", "BANANA", "Cherry" }.AsEnumerable();
+
+		var result = words.EnsureUnique(StringComparer.OrdinalIgnoreCase).ToList();
+
+		Assert.AreEqual(3, result.Count);
+		Assert.IsTrue(result.Any(w => w.Equals("Apple", StringComparison.OrdinalIgnoreCase)));
+		Assert.IsTrue(result.Any(w => w.Equals("Banana", StringComparison.OrdinalIgnoreCase)));
+		Assert.IsTrue(result.Any(w => w.Equals("Cherry", StringComparison.OrdinalIgnoreCase)));
+	}
+
+	[TestMethod]
+	public void EnsureUnique_Strings_OrdinalComparer_PreservesCaseSensitiveDuplicates()
+	{
+		var words = new List<string> { "Apple", "apple", "APPLE", "Banana" }.AsEnumerable();
+
+		var result = words.EnsureUnique(StringComparer.Ordinal).ToList();
+
+		// Ordinal comparison is case-sensitive, so all variations are unique
+		Assert.AreEqual(4, result.Count);
+	}
+
+	[TestMethod]
+	public void EnsureUnique_ValueTypes_WithCustomComparer_FiltersCorrectly()
+	{
+		// Custom comparer that considers numbers equal if they have the same remainder when divided by 3
+		var numbers = Enumerable.Range(1, 10).AsEnumerable();
+
+		var modComparer = new ModuloEqualityComparer(3);
+		var result = numbers.EnsureUnique(modComparer).ToList();
+
+		// Should have 3 unique "mod 3" classes: 0, 1, 2
+		Assert.AreEqual(3, result.Count);
+		Assert.IsTrue(result.Any(n => n % 3 == 0));
+		Assert.IsTrue(result.Any(n => n % 3 == 1));
+		Assert.IsTrue(result.Any(n => n % 3 == 2));
+	}
+
+	[TestMethod]
+	public void EnsureUnique_WithComparer_PreservesFirstOccurrence()
+	{
+		var words = new List<string> { "FIRST", "first", "First" }.AsEnumerable();
+
+		var result = words.EnsureUnique(StringComparer.OrdinalIgnoreCase).ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual("FIRST", result[0]); // First occurrence should be preserved
+	}
+
+	[TestMethod]
+	public void EnsureUnique_WithNullComparer_UsesDefaultEquality()
+	{
+		var numbers = new List<int> { 1, 2, 2, 3, 3, 3 }.AsEnumerable();
+
+		var result = numbers.EnsureUnique(null).ToList();
+
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result);
 	}
 
 	[TestMethod]
@@ -795,13 +933,164 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void IndexOf_WithComparer_ThrowsArgumentNullException_WhenComparerIsNull()
+	public void IndexOf_WithComparer_CaseInsensitiveStringSearch()
+	{
+		var names = new List<string> { "Alice", "Bob", "Charlie" }.AsEnumerable();
+
+		var index = names.IndexOf("alice", StringComparer.OrdinalIgnoreCase);
+
+		Assert.AreEqual(0, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_CaseSensitiveStringSearch_NotFound()
+	{
+		var names = new List<string> { "Alice", "Bob", "Charlie" }.AsEnumerable();
+
+		var index = names.IndexOf("alice", StringComparer.Ordinal);
+
+		Assert.AreEqual(-1, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_DefaultComparerBehavior_MatchesNullComparer()
+	{
+		var numbers = new List<int> { 10, 20, 30, 40, 50 }.AsEnumerable();
+
+		var indexWithNull = numbers.IndexOf(30, null);
+		var indexWithDefault = numbers.IndexOf(30, EqualityComparer<int>.Default);
+
+		Assert.AreEqual(indexWithNull, indexWithDefault);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_FindsFirstOccurrence()
+	{
+		var names = new List<string> { "Apple", "Banana", "apple", "Cherry" }.AsEnumerable();
+
+		var index = names.IndexOf("apple", StringComparer.OrdinalIgnoreCase);
+
+		Assert.AreEqual(0, index); // Should find "Apple" at index 0, not "apple" at index 2
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_FindsItemWithCustomComparer()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var targetPerson = people[Count / 2];
+
+		var index = people.IndexOf(targetPerson, new PersonComparer());
+
+		Assert.AreEqual(Count / 2, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_FindsItemWithDefaultComparer()
+	{
+		var numbers = new List<int> { 10, 20, 30, 40, 50 }.AsEnumerable();
+
+		var index = numbers.IndexOf(30, null);
+
+		Assert.AreEqual(2, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_FirstElement_ReturnsZero()
+	{
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		var index = numbers.IndexOf(1, EqualityComparer<int>.Default);
+
+		Assert.AreEqual(0, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_ItemNotFound_ReturnsNegativeOne()
+	{
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		var index = numbers.IndexOf(99, EqualityComparer<int>.Default);
+
+		Assert.AreEqual(-1, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_LargeCollection_FindsItem()
+	{
+		var largeCount = 10000;
+		var numbers = Enumerable.Range(1, largeCount).AsEnumerable();
+
+		var index = numbers.IndexOf(5000, EqualityComparer<int>.Default);
+
+		Assert.AreEqual(4999, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_LastElement_ReturnsCorrectIndex()
+	{
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		var index = numbers.IndexOf(5, EqualityComparer<int>.Default);
+
+		Assert.AreEqual(4, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_ModuloComparer_FindsEquivalentItem()
+	{
+		var numbers = new List<int> { 3, 6, 9, 12, 15 }.AsEnumerable();
+
+		// Using modulo 3 comparer, searching for 18 should find 3 (both % 3 == 0)
+		var index = numbers.IndexOf(18, new ModuloEqualityComparer(3));
+
+		Assert.AreEqual(0, index); // 3 % 3 == 0, 18 % 3 == 0
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_NullCollection_ThrowsArgumentNullException()
+	{
+		IEnumerable<int> nullCollection = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.IndexOf(1, null));
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_NullItem_ThrowsArgumentNullException()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-		var person = RandomData.GeneratePerson<Person>();
-		IEqualityComparer<Person> nullComparer = null;
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(person, nullComparer));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(null, new PersonComparer()));
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_ReferenceTypeWithPersonComparer()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var searchPerson = new Person { Id = people[10].Id };
+
+		var index = people.IndexOf(searchPerson, new PersonComparer());
+
+		Assert.AreEqual(10, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_SingleElementCollection_FindsItem()
+	{
+		var singleItem = new List<string> { "Test" }.AsEnumerable();
+
+		var index = singleItem.IndexOf("test", StringComparer.OrdinalIgnoreCase);
+
+		Assert.AreEqual(0, index);
+	}
+
+	[TestMethod]
+	public void IndexOf_WithComparer_SingleElementCollection_NotFound()
+	{
+		var singleItem = new List<string> { "Test" }.AsEnumerable();
+
+		var index = singleItem.IndexOf("Other", StringComparer.OrdinalIgnoreCase);
+
+		Assert.AreEqual(-1, index);
 	}
 
 	[TestMethod]
@@ -1329,5 +1618,19 @@ public class EnumerableExtensionsTests
 		result = result.Upsert(personFromCollection);
 
 		Assert.AreEqual(Count + 1, result.Count());
+	}
+
+	/// <summary>
+	/// Helper comparer for testing modulo-based equality.
+	/// </summary>
+	private sealed class ModuloEqualityComparer : IEqualityComparer<int>
+	{
+		private readonly int _modulo;
+
+		public ModuloEqualityComparer(int modulo) => this._modulo = modulo;
+
+		public bool Equals(int x, int y) => x % this._modulo == y % this._modulo;
+
+		public int GetHashCode(int obj) => obj % this._modulo;
 	}
 }

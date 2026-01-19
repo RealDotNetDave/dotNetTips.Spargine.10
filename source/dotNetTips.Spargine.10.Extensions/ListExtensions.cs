@@ -461,13 +461,9 @@ public static class ListExtensions
 
 			if (isPowerOfTwo)
 			{
-				// Fast path: Bitwise AND for power-of-2 counts
-				// Example: index=7, count=8 (mask=7) => 7 & 7 = 7
-				// Example: index=-1, count=8 (mask=7) => -1 & 7 = 7 (last element!)
 				var mask = count - 1;
 				indexWrap = index & mask;
 
-				// Handle negative indices for power-of-2
 				if (index < 0)
 				{
 					indexWrap = (count + (index % count)) & mask;

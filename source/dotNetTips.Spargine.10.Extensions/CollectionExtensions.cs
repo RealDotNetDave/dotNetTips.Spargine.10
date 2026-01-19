@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// They include features such as adding items conditionally, ensuring items are unique before adding them, and converting collections to different types.
 /// These utilities can significantly reduce boilerplate code and improve performance in scenarios involving collection manipulation.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineCollectionExtensions", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineCollectionExtensions", Status = Status.UpdateDocumentation)]
 public static class CollectionExtensions
 {
 
@@ -111,47 +111,30 @@ public static class CollectionExtensions
 		}
 
 		/// <summary>
-		/// Adds the specified item to the collection if it does not already exist.
-		/// </summary>
-		/// <param name="item">The item to add to the collection.</param>
-		/// <returns><c>true</c> if the item was added to the collection; otherwise, <c>false</c>.</returns>
-		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
-		/// <exception cref="ArgumentReadOnlyException">Thrown if collection is read-only.</exception>
-		[Information(nameof(AddIfNotExists), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public bool AddIfNotExists([AllowNull] in T item)
-		{
-			if (item is null)
-			{
-				return false;
-			}
-
-			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
-
-			if (collection.Contains<T>(item))
-			{
-				return false;
-			}
-
-			collection.Add(item);
-
-			return true;
-		}
-
-		/// <summary>
 		/// Adds the item to the <see cref="ICollection{T}" /> if it does not exist.
 		/// </summary>
-		/// <param name="item">The item.</param>
-		/// <param name="comparer">The comparer.</param>
-		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-		/// <exception cref="ArgumentReadOnlyException">List cannot be read-only.</exception>
-		/// <exception cref="ArgumentNullException">Collection cannot be <see langword="null" />.</exception>
+		/// <param name="item">The item to add. If <c>null</c>, the method returns <c>false</c>.</param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
+		/// <returns><c>true</c> if the item was added to the collection; <c>false</c> if the item already exists or is <c>null</c>.</returns>
+		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <example>
-		///   <code>
-		/// people.AddIfNotExists(person, comparer)
+		/// <code>
+		/// // With custom comparer
+		/// people.AddIfNotExists(person, new PersonComparer());
+		/// 
+		/// // With default comparer (null)
+		/// numbers.AddIfNotExists(42, null);
+		/// 
+		/// // Case-insensitive string addition
+		/// names.AddIfNotExists("Alice", StringComparer.OrdinalIgnoreCase);
 		/// </code>
 		/// </example>
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-		public bool AddIfNotExists([AllowNull] in T item, [DisallowNull] in IEqualityComparer<T> comparer)
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Updated)]
+		public bool AddIfNotExists([AllowNull] in T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (item is null)
 			{
@@ -160,7 +143,9 @@ public static class CollectionExtensions
 
 			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
-			if (collection.Contains(item, comparer))
+			var eq = comparer ?? EqualityComparer<T>.Default;
+
+			if (collection.Contains(item, eq))
 			{
 				return false;
 			}

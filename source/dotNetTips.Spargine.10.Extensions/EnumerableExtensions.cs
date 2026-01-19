@@ -194,99 +194,70 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Finds the otherIndex of the first occurrence of an item in the collection.
+		/// Finds the index of the first occurrence of an item in the collection using the specified equality comparer.
 		/// </summary>
-		/// <param name="item">The item to find in the collection.</param>
-		/// <returns>The zero-based otherIndex of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
-		/// <remarks>
-		/// This method uses <see cref="EqualityComparer{T}.Default"/> to compare elements.
-		/// </remarks>
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public int IndexOf([DisallowNull] T item)
-		{
-			collection = collection.ArgumentItemsExists();
-			item = item.ArgumentNotNull();
-
-			var index = 0;
-			var defaultComparer = EqualityComparer<T>.Default;
-
-			foreach (var element in collection)
-			{
-				if (defaultComparer.Equals(element, item))
-				{
-					return index;
-				}
-
-				index++;
-			}
-
-			return -1;
-		}
-
-		/// <summary>
-		/// Finds the index of the first occurrence of an item in the collection using a custom equality comparer.
-		/// </summary>
-		/// <param name="item">The item to find in the collection.</param>
-		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements, or null to use the default equality comparer <see cref="EqualityComparer{T}.Default"/>.</param>
-		/// <returns>The zero-based index of the first occurrence of <paramref name="item"/> within the entire collection if found; otherwise, -1.</returns>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> or <paramref name="comparer"/> is null.</exception>
+		/// <param name="item">The item to locate in the collection. Must not be null.</param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements; if <c>null</c>, the default equality comparer
+		/// <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
+		/// <returns>
+		/// The zero-based index of the first occurrence of <paramref name="item"/> within the collection if found; otherwise, <c>-1</c>.
+		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// This method performs a linear search using the specified <see cref="IEqualityComparer{T}"/> to determine equality between elements.
+		/// Performs a single forward enumeration over the source collection and compares each element using the provided <paramref name="comparer"/>.
+		/// If <paramref name="comparer"/> is <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// Performance characteristics:
 		/// </para>
 		/// <list type="bullet">
 		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements in the collection.</description></item>
-		/// <item><description><b>Space complexity:</b> O(1) - no additional memory allocation beyond the enumerator.</description></item>
-		/// <item><description><b>Enumeration:</b> Single-pass forward enumeration from the beginning of the collection.</description></item>
+		/// <item><description><b>Space complexity:</b> O(1) - no additional allocations beyond the enumerator.</description></item>
+		/// <item><description><b>Enumeration:</b> Single-pass forward iteration.</description></item>
 		/// </list>
 		/// <para>
-		/// <b>When to Use Custom Comparers:</b>
+		/// Recommended comparers:
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
-		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
-		/// <item><description><b>Reference equality:</b> Use <see cref="ReferenceEqualityComparer"/> to compare object references instead of values.</description></item>
-		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
+		/// <item><description><b>Strings:</b> <see cref="StringComparer.OrdinalIgnoreCase"/> for case-insensitive, <see cref="StringComparer.Ordinal"/> for case-sensitive.</description></item>
+		/// <item><description><b>Reference equality:</b> use a reference comparer to match object instances.</description></item>
+		/// <item><description><b>Custom objects:</b> provide an <see cref="IEqualityComparer{T}"/> implementation that compares required properties.</description></item>
 		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
 		/// var names = new List&lt;string&gt; { "Alice", "Bob", "Charlie" };
-		/// 
 		/// // Case-insensitive search
-		/// var index = names.IndexOf("alice", StringComparer.OrdinalIgnoreCase);
-		/// // Result: 0 (found "Alice")
-		/// 
-		/// // Custom comparer for Person objects
-		/// var people = new List&lt;Person&gt; 
-		/// { 
+		/// var index1 = names.IndexOf("alice", StringComparer.OrdinalIgnoreCase); // returns 0
+		///
+		/// // Default comparer (null) - case-sensitive for strings
+		/// var index2 = names.IndexOf("Bob", null); // returns 1
+		///
+		/// // Custom comparer for a Person type by Id
+		/// var people = new List&lt;Person&gt;
+		/// {
 		///     new Person { Id = 1, Name = "John" },
 		///     new Person { Id = 2, Name = "Jane" }
 		/// };
-		/// var personComparer = new PersonIdComparer();
-		/// var foundIndex = people.IndexOf(new Person { Id = 2 }, personComparer);
-		/// // Result: 1 (found person with Id = 2)
+		/// var index3 = people.IndexOf(new Person { Id = 2 }, new PersonComparer()); // returns 1
 		/// </code>
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
-		public int IndexOf([DisallowNull] T item, [DisallowNull] IEqualityComparer<T> comparer)
+		public int IndexOf([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
-			comparer = comparer.ArgumentNotNull();
 
+			var eq = comparer ?? EqualityComparer<T>.Default;
 			var index = 0;
 
 			foreach (var element in collection)
 			{
-				if (comparer.Equals(element, item))
+				if (eq.Equals(element, item))
 				{
 					return index;
 				}
@@ -1401,93 +1372,25 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public IEnumerable<T> EnsureUnique()
+		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		public IEnumerable<T> EnsureUnique([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			collection = collection.ArgumentNotNull();
-
-			// Value types: always use Distinct() for optimal performance
+			// Value types: use Distinct() which is optimized; pass comparer when provided
 			if (typeof(T).IsValueType)
 			{
-				return collection.Distinct();
+				return collection.Distinct(comparer);
 			}
 
-			// Reference types: use size-based optimization
+			// Reference types: use size-based optimization; honor comparer
 			if (collection is ICollection<T> collectionT)
 			{
 				return collectionT.Count > 4096
-					? collection.Distinct()
-					: new HashSet<T>(collection);
-			}
-			else if (collection is IReadOnlyCollection<T> readOnlyCollection)
-			{
-				return readOnlyCollection.Count > 4096
-					? collection.Distinct()
-					: new HashSet<T>(collection);
+					? collection.Distinct(comparer)
+					: new HashSet<T>(collection, comparer ?? EqualityComparer<T>.Default);
 			}
 
-			// Can't determine count efficiently, use HashSet as default for reference types
-			return new HashSet<T>(collection);
-		}
-
-		/// <summary>
-		/// Ensures that all elements in the collection are unique based on the specified equality comparer.
-		/// </summary>
-		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements, or null to use the default equality comparer <see cref="EqualityComparer{T}.Default"/>.</param>
-		/// <returns>An IEnumerable containing only unique elements from the original collection based on the specified comparer.</returns>
-		/// <remarks>
-		/// <para>
-		/// This method uses the specified <see cref="IEqualityComparer{T}"/> to determine uniqueness.
-		/// If the collection contains duplicate items according to the comparer, only the first occurrence is included in the returned collection.
-		/// </para>
-		/// <para>
-		/// <b>Performance Characteristics:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements in the collection.</description></item>
-		/// <item><description><b>Space complexity:</b> O(n) for the HashSet that stores unique elements.</description></item>
-		/// <item><description><b>Enumeration:</b> Single-pass enumeration of the source collection.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>When to Use Custom Comparers:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
-		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
-		/// <item><description><b>Property-based uniqueness:</b> Create a custom comparer that compares specific properties of objects.</description></item>
-		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
-		/// </list>
-		/// </remarks>
-		/// <example>
-		/// <code>
-		/// var names = new List&lt;string&gt; { "Alice", "BOB", "alice", "Charlie", "bob" };
-		/// 
-		/// // Case-insensitive uniqueness
-		/// var uniqueNames = names.EnsureUnique(StringComparer.OrdinalIgnoreCase);
-		/// // Result: { "Alice", "BOB", "Charlie" }
-		/// 
-		/// // Custom comparer for Person objects based on Id
-		/// var people = new List&lt;Person&gt; 
-		/// { 
-		///     new Person { Id = 1, Name = "John" },
-		///     new Person { Id = 2, Name = "Jane" },
-		///     new Person { Id = 1, Name = "John Doe" } // Duplicate Id
-		/// };
-		/// var personComparer = new PersonIdComparer();
-		/// var uniquePeople = people.EnsureUnique(personComparer);
-		/// // Result: Only the first two Person objects (unique by Id)
-		/// </code>
-		/// </example>
-		[Pure]
-		[return: NotNull]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "1/8/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-		public IEnumerable<T> EnsureUnique([DisallowNull] IEqualityComparer<T>? comparer)
-		{
-			collection = collection.ArgumentNotNull();
-			comparer = comparer.ArgumentNotNull();
-
-			return new HashSet<T>(collection, comparer);
+			// Unknown count: default to HashSet; honor comparer
+			return new HashSet<T>(collection, comparer ?? EqualityComparer<T>.Default);
 		}
 
 		/// <summary>
@@ -1640,7 +1543,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> Upsert([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
