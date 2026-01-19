@@ -195,82 +195,17 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Adds a range of items to the list if they do not already exist in the list.
-		/// </summary>
-		/// <param name="items">The items to add if not already present. Must not be null.</param>
-		/// <remarks>
-		/// <para>
-		/// ✅ Performance Optimized (.NET 10): Uses a <see cref="HashSet{T}"/> built from the existing list for O(1) lookups,
-		/// avoiding O(n²) behavior from repeated <see cref="List{T}.Contains(T)"/> calls. Pre-allocates list capacity
-		/// when the count of <paramref name="items"/> is known to reduce resize operations.
-		/// </para>
-		/// <para>
-		/// <b>Complexity:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description>Time: O(n + m) where n is list size and m is the number of items to add.</description></item>
-		/// <item><description>Space: O(n) for the temporary <see cref="HashSet{T}"/>.</description></item>
-		/// </list>
-		/// <para>
-		/// Items determined to already exist (by <see cref="EqualityComparer{T}.Default"/>) are not added. The relative order
-		/// of newly added items follows their enumeration order from <paramref name="items"/>.
-		/// </para>
-		/// </remarks>
-		/// <example>
-		/// <code>
-		/// var list = new List&lt;int&gt; { 1, 2, 3 };
-		/// var incoming = new[] { 3, 4, 5 };
-		/// list.AddRangeIfNotExists(incoming);
-		/// // Result: { 1, 2, 3, 4, 5 }
-		/// </code>
-		/// </example>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="items"/> or the target <c>list</c> is null.
-		/// </exception>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
-		{
-			list = list.ArgumentNotNull();
-			items = items.ArgumentNotNull();
-
-			// Create HashSet from existing list for O(1) lookups
-			var existingItems = new HashSet<T>(list);
-
-			// Pre-allocate capacity if items is a collection with known count
-			// This prevents multiple resize operations during bulk additions
-			if (items is ICollection<T> itemsCollection)
-			{
-				var potentialNewItems = itemsCollection.Count;
-
-				if (potentialNewItems > 0)
-				{
-					// EnsureCapacity to accommodate all potential new items
-					_ = list.EnsureCapacity(list.Count + potentialNewItems);
-				}
-			}
-
-			// Add only unique items
-			foreach (var item in items)
-			{
-				// HashSet.Add returns false if item already exists
-				// This is O(1) operation vs O(n) for List.Contains
-				if (existingItems.Add(item))
-				{
-					list.Add(item);
-				}
-			}
-		}
-
-		/// <summary>
 		/// Adds a range of items to the list if they do not already exist in the list, using a custom equality comparer.
 		/// </summary>
 		/// <param name="items">The items to add if not already present.</param>
-		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> to use for comparing elements for equality.</param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> to use for comparing elements for equality.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <remarks>
 		/// <para>
 		/// This method uses a <see cref="HashSet{T}"/> for O(1) lookups to efficiently determine which items are new.
-		/// The custom comparer is used both for the HashSet and for equality comparisons.
+		/// The comparer (or the default comparer if null) is used both for the HashSet and for equality comparisons.
 		/// </para>
 		/// <para>
 		/// <b>Performance characteristics:</b>
@@ -286,14 +221,21 @@ public static class ListExtensions
 		/// <code>
 		/// var names = new List&lt;string&gt; { "Alice", "Bob" };
 		/// var newNames = new[] { "alice", "Charlie", "ALICE" };
+		/// 
+		/// // With custom comparer
 		/// names.AddRangeIfNotExists(newNames, StringComparer.OrdinalIgnoreCase);
 		/// // Result: names contains { "Alice", "Bob", "Charlie" }
 		/// // "alice" and "ALICE" are not added because they match "Alice" using the comparer
+		/// 
+		/// // With default comparer (null)
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3 };
+		/// numbers.AddRangeIfNotExists(new[] { 2, 4, 5 }, null);
+		/// // Result: numbers contains { 1, 2, 3, 4, 5 }
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [DisallowNull] IEqualityComparer<T> comparer)
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
 			{
@@ -301,9 +243,9 @@ public static class ListExtensions
 			}
 
 			list = list.ArgumentNotNull();
-			comparer = comparer.ArgumentNotNull();
 
-			var existingItems = new HashSet<T>(list, comparer);
+			var eq = comparer ?? EqualityComparer<T>.Default;
+			var existingItems = new HashSet<T>(list, eq);
 
 			foreach (var item in items)
 			{

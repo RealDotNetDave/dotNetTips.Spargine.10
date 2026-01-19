@@ -4,7 +4,7 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-19-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -50,52 +50,22 @@ public static class ReadOnlyCollectionExtensions
 		}
 
 		/// <summary>
-		/// Generates a hash code for the <see cref="ReadOnlyCollection{T}"/>.
+		/// Generates a hash code for the <see cref="ReadOnlyCollection{T}"/> using the specified equality comparer.
 		/// </summary>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when computing hash codes for elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>
-		/// A hash code for the collection, considering the hash codes of individual elements.
+		/// A hash code for the collection, considering the hash codes of individual elements computed using the specified comparer.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		/// Thrown if collection is <c>null</c>.
 		/// </exception>
 		/// <remarks>
-		/// This method computes the hash code by aggregating the hash codes of the elements in the collection.
-		/// It ensures that the collection is not null before proceeding with the computation.
-		/// </remarks>
-		[Pure]
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public int GenerateHashCode()
-		{
-			collection = collection.ArgumentNotNull();
-
-			var comparer = EqualityComparer<T>.Default;
-			var hash = 6551;
-
-			foreach (var item in collection)
-			{
-				if (item is not null)
-				{
-					hash ^= (hash << 5) ^ comparer.GetHashCode(item);
-				}
-			}
-
-			return hash;
-		}
-
-		/// <summary>
-		/// Generates a hash code for the <see cref="ReadOnlyCollection{T}"/> using the specified equality comparer.
-		/// </summary>
-		/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when computing hash codes for elements, or null to use the default equality comparer <see cref="EqualityComparer{T}.Default"/>.</param>
-		/// <returns>
-		/// A hash code for the collection, considering the hash codes of individual elements computed using the specified comparer.
-		/// </returns>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown if collection or <paramref name="comparer"/> is <c>null</c>.
-		/// </exception>
-		/// <remarks>
 		/// <para>
 		/// This method computes the hash code by aggregating the hash codes of the elements in the collection using the specified comparer.
-		/// It ensures that both the collection and comparer are not null before proceeding with the computation.
+		/// If no comparer is provided, <see cref="EqualityComparer{T}.Default"/> is used.
 		/// </para>
 		/// <para>
 		/// <b>Hash Code Algorithm:</b>
@@ -128,11 +98,14 @@ public static class ReadOnlyCollectionExtensions
 		/// <code>
 		/// var names = new ReadOnlyCollection&lt;string&gt;(new[] { "Alice", "BOB", "Charlie" });
 		/// 
-		/// // Default hash code (case-sensitive)
+		/// // Default hash code (using default comparer)
 		/// int hash1 = names.GenerateHashCode();
 		/// 
+		/// // Explicit default comparer (null)
+		/// int hash2 = names.GenerateHashCode(null);
+		/// 
 		/// // Case-insensitive hash code
-		/// int hash2 = names.GenerateHashCode(StringComparer.OrdinalIgnoreCase);
+		/// int hash3 = names.GenerateHashCode(StringComparer.OrdinalIgnoreCase);
 		/// 
 		/// // Custom comparer for Person objects based on Id
 		/// var people = new ReadOnlyCollection&lt;Person&gt;(new[] 
@@ -140,25 +113,25 @@ public static class ReadOnlyCollectionExtensions
 		///     new Person { Id = 1, Name = "John" },
 		///     new Person { Id = 2, Name = "Jane" }
 		/// });
-		/// var personComparer = new PersonIdComparer();
-		/// int hash3 = people.GenerateHashCode(personComparer);
+		/// var personComparer = new PersonComparer();
+		/// int hash4 = people.GenerateHashCode(personComparer);
 		/// // Hash code computed based on Person.Id property only
 		/// </code>
 		/// </example>
 		[Pure]
-		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "1/8/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
-		public int GenerateHashCode([DisallowNull] IEqualityComparer<T> comparer)
+		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "1/8/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Updated)]
+		public int GenerateHashCode([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
-			comparer = comparer.ArgumentNotNull();
 
+			var eq = comparer ?? EqualityComparer<T>.Default;
 			var hash = 6551;
 
 			foreach (var item in collection)
 			{
 				if (item is not null)
 				{
-					hash ^= (hash << 5) ^ comparer.GetHashCode(item);
+					hash ^= (hash << 5) ^ eq.GetHashCode(item);
 				}
 			}
 
