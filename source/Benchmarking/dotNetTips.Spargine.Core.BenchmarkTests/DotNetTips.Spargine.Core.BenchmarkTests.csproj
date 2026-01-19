@@ -36,7 +36,7 @@
 	<ItemGroup>
 		<PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
 		<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>

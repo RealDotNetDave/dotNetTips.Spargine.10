@@ -537,7 +537,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("Original code by Simon Painter.", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+		[Information("Original code by Simon Painter.", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> ReplaceIf([DisallowNull] Func<T, int, bool> accumulatorPredicate, T replacement)
 		{
 			collection = collection.ArgumentNotNull();
@@ -547,7 +547,6 @@ public static class EnumerableExtensions
 
 			foreach (var element in collection)
 			{
-				// Avoid delegate.Invoke() virtual dispatch; call directly for lower overhead.
 				yield return accumulatorPredicate(element, index) ? replacement : element;
 				index++;
 			}
