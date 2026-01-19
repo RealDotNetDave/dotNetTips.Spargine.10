@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-19-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -53,6 +53,7 @@ public class TypeHelperTests : UnitTester
 	public void BuiltinTypesTest()
 	{
 		var result = TypeHelper.BuiltInTypes;
+		result = TypeHelper.BuiltInTypes;
 
 		Assert.IsNotNull(result);
 
