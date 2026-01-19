@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-18-2026
+// Last Modified On : 01-19-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1279,16 +1279,65 @@ public static class EnumerableExtensions
 		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
 		public bool HasDuplicates()
 		{
-			if (collection.IsEmpty())
+			// Fast-path: null or already-known empty
+			if (collection is null)
 			{
 				return false;
 			}
 
-			var seenItems = new HashSet<T>();
+			// Fast-path: if the source is a HashSet<T>, it's already unique
+			if (collection is HashSet<T>)
+			{
+				return false;
+			}
+
+			// Fast-path: if we can get the count without enumerating, bail out for 0 or 1
+			if (collection is ICollection<T> c)
+			{
+				if (c.Count <= 1)
+				{
+					return false;
+				}
+
+				// Pre-size the HashSet to minimize rehashing/resizing
+				var seenItems = new HashSet<T>(c.Count);
+				foreach (var item in c)
+				{
+					if (!seenItems.Add(item))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			if (collection is IReadOnlyCollection<T> rc)
+			{
+				if (rc.Count <= 1)
+				{
+					return false;
+				}
+
+				var seenItems = new HashSet<T>(rc.Count);
+
+				foreach (var item in rc)
+				{
+					if (!seenItems.Add(item))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			// Fallback: unknown count, enumerate once
+			var fallbackSeen = new HashSet<T>();
 
 			foreach (var item in collection)
 			{
-				if (!seenItems.Add(item))
+				if (!fallbackSeen.Add(item))
 				{
 					return true;
 				}
@@ -1352,7 +1401,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> EnsureUnique()
 		{
 			collection = collection.ArgumentNotNull();
@@ -1591,7 +1640,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
 		public IEnumerable<T> Upsert([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1810,7 +1859,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> AddIf([DisallowNull] T item, bool condition)
 		{
 			collection = collection.ArgumentNotNull();
