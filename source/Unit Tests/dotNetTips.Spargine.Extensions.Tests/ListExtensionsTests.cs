@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-19-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -308,6 +308,280 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddRangeIfNotExists_AddsOnlyNewItems()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 2, 3, 4, 5 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(5, list.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, list);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_AllItemsExist_DoesNotModifyList()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 1, 2, 3 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(3, list.Count);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_DuplicatesInItemsToAdd_AddsOnlyOnce()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2 };
+		var itemsToAdd = new[] { 3, 3, 3, 4, 4 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(4, list.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, list);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_EmptyItemsCollection_DoesNotModifyList()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var emptyItems = Array.Empty<int>();
+
+		// Act
+		list.AddRangeIfNotExists(emptyItems);
+
+		// Assert
+		Assert.AreEqual(3, list.Count);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_EmptyList_AddsAllItems()
+	{
+		// Arrange
+		var list = new List<int>();
+		var itemsToAdd = new[] { 1, 2, 3 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(3, list.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, list);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_LargeCollection_PerformsEfficiently()
+	{
+		// Arrange
+		var list = Enumerable.Range(1, 1000).ToList();
+		var itemsToAdd = Enumerable.Range(500, 1000); // 500-1499, overlaps 500-1000
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(1499, list.Count);
+		Assert.IsTrue(list.Contains(1));
+		Assert.IsTrue(list.Contains(1499));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_NullItems_DoesNotModifyList()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		IEnumerable<int> nullItems = null;
+
+		// Act
+		list.AddRangeIfNotExists(nullItems);
+
+		// Assert
+		Assert.AreEqual(3, list.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, list);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> nullList = null;
+		var itemsToAdd = new[] { 1, 2, 3 };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullList.AddRangeIfNotExists(itemsToAdd));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_PreservesOriginalOrder()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 4, 5 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(1, list[0]);
+		Assert.AreEqual(2, list[1]);
+		Assert.AreEqual(3, list[2]);
+		Assert.AreEqual(4, list[3]);
+		Assert.AreEqual(5, list[4]);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_ReferenceType_AddsOnlyNewItems()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(5).ToList();
+		var existingPerson = people.First();
+		var newPerson = RandomData.GeneratePerson<Person>();
+		var itemsToAdd = new[] { existingPerson, newPerson };
+
+		// Act
+		people.AddRangeIfNotExists(itemsToAdd, new PersonComparer());
+
+		// Assert
+		Assert.AreEqual(6, people.Count);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_SingleItem_AddsIfNotExists()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 4 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(4, list.Count);
+		Assert.IsTrue(list.Contains(4));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_SingleItemExists_DoesNotAdd()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 2 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(3, list.Count);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_StringsWithOrdinalComparer_IsCaseSensitive()
+	{
+		// Arrange
+		var list = new List<string> { "Apple" };
+		var itemsToAdd = new[] { "apple", "APPLE", "Banana" };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd, StringComparer.Ordinal);
+
+		// Assert
+		Assert.AreEqual(4, list.Count);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_StringsWithOrdinalIgnoreCaseComparer_IgnoresCase()
+	{
+		// Arrange
+		var list = new List<string> { "Apple" };
+		var itemsToAdd = new[] { "apple", "APPLE", "Banana" };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd, StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.AreEqual(2, list.Count);
+		Assert.IsTrue(list.Contains("Apple"));
+		Assert.IsTrue(list.Contains("Banana"));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_WithCustomComparer_UsesComparer()
+	{
+		// Arrange
+		var list = new List<string> { "Alice", "Bob" };
+		var itemsToAdd = new[] { "alice", "CHARLIE", "bob" };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd, StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.AreEqual(3, list.Count);
+		Assert.IsTrue(list.Contains("Alice"));
+		Assert.IsTrue(list.Contains("Bob"));
+		Assert.IsTrue(list.Contains("CHARLIE"));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_WithDefaultComparer_IsCaseSensitive()
+	{
+		// Arrange
+		var list = new List<string> { "Alice", "Bob" };
+		var itemsToAdd = new[] { "alice", "ALICE", "bob" };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd, null);
+
+		// Assert
+		Assert.AreEqual(5, list.Count);
+		Assert.IsTrue(list.Contains("Alice"));
+		Assert.IsTrue(list.Contains("alice"));
+		Assert.IsTrue(list.Contains("ALICE"));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_WithNullComparer_UsesDefaultComparer()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 3, 4, 5 };
+
+		// Act
+		list.AddRangeIfNotExists(itemsToAdd, null);
+
+		// Assert
+		Assert.AreEqual(5, list.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, list);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_WithPersonComparer_AddsOnlyUniquePeople()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(3).ToList();
+		var originalCount = people.Count;
+		var duplicatePerson = people.First();
+		var newPerson = RandomData.GeneratePerson<Person>();
+		var itemsToAdd = new[] { duplicatePerson, newPerson };
+
+		// Act
+		people.AddRangeIfNotExists(itemsToAdd, new PersonComparer());
+
+		// Assert
+		Assert.AreEqual(originalCount + 1, people.Count);
+	}
+
+	[TestMethod]
 	public void AddRangeIfNotExistsLargeComparerTest()
 	{
 		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
@@ -538,6 +812,274 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void IndexAtLooped_EightElements_PowerOfTwo_WrapsCorrectly()
+	{
+		// Arrange - power of two (8 elements)
+		var list = Enumerable.Range(0, 8).ToList();
+
+		// Act & Assert
+		Assert.AreEqual(0, list.IndexAtLooped(0));
+		Assert.AreEqual(0, list.IndexAtLooped(8));
+		Assert.AreEqual(0, list.IndexAtLooped(16));
+		Assert.AreEqual(3, list.IndexAtLooped(11)); // 11 & 7 = 3
+		Assert.AreEqual(7, list.IndexAtLooped(-1));
+		Assert.AreEqual(0, list.IndexAtLooped(-8));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_EmptyList_ThrowsArgumentException()
+	{
+		// Arrange
+		var emptyList = new List<int>();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => emptyList.IndexAtLooped(0));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_IndexEqualsCount_WrapsToFirstElement()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(5);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_IndexGreaterThanCount_WrapsCorrectly()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30 };
+
+		// Act
+		var result = list.IndexAtLooped(7); // 7 % 3 = 1
+
+		// Assert
+		Assert.AreEqual(20, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_IndexZero_ReturnsFirstElement()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30 };
+
+		// Act
+		var result = list.IndexAtLooped(0);
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_LargePositiveIndex_WrapsCorrectly()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(1000); // 1000 % 5 = 0
+
+		// Assert
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_LargePositiveIndexPlusOffset_WrapsCorrectly()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(1003); // 1003 % 5 = 3
+
+		// Assert
+		Assert.AreEqual(40, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_LastValidIndex_ReturnsLastElement()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(4);
+
+		// Assert
+		Assert.AreEqual(50, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_NegativeIndex_WrapsFromEnd()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(-1);
+
+		// Assert
+		Assert.AreEqual(50, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_NegativeIndexTwo_WrapsFromEnd()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(-2);
+
+		// Assert
+		Assert.AreEqual(40, result);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_NonPowerOfTwoCount_WrapsCorrectly()
+	{
+		// Arrange - non-power of two (5 elements)
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act & Assert
+		Assert.AreEqual(10, list.IndexAtLooped(0));
+		Assert.AreEqual(10, list.IndexAtLooped(5));  // Wraps
+		Assert.AreEqual(20, list.IndexAtLooped(6));  // Wraps
+		Assert.AreEqual(10, list.IndexAtLooped(10)); // Wraps twice
+		Assert.AreEqual(50, list.IndexAtLooped(-1)); // Negative wrap
+		Assert.AreEqual(10, list.IndexAtLooped(-5)); // Negative wrap full cycle
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> nullList = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullList.IndexAtLooped(0));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_PowerOfTwoCount_WrapsCorrectly()
+	{
+		// Arrange - power of two (4 elements)
+		var list = new List<int> { 10, 20, 30, 40 };
+
+		// Act & Assert
+		Assert.AreEqual(10, list.IndexAtLooped(0));
+		Assert.AreEqual(20, list.IndexAtLooped(1));
+		Assert.AreEqual(30, list.IndexAtLooped(2));
+		Assert.AreEqual(40, list.IndexAtLooped(3));
+		Assert.AreEqual(10, list.IndexAtLooped(4));  // Wraps
+		Assert.AreEqual(30, list.IndexAtLooped(6));  // Wraps
+		Assert.AreEqual(40, list.IndexAtLooped(-1)); // Negative wrap
+		Assert.AreEqual(30, list.IndexAtLooped(-2)); // Negative wrap
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_ReferenceType_NegativeIndex_WrapsCorrectly()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(5).ToList();
+
+		// Act
+		var result = people.IndexAtLooped(-1);
+
+		// Assert
+		Assert.AreEqual(people[4].Id, result.Id);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_ReferenceType_ReturnsCorrectElement()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(5).ToList();
+
+		// Act
+		var result = people.IndexAtLooped(2);
+
+		// Assert
+		Assert.AreEqual(people[2].Id, result.Id);
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_SingleElement_AlwaysReturnsSameElement()
+	{
+		// Arrange
+		var list = new List<int> { 42 };
+
+		// Act & Assert
+		Assert.AreEqual(42, list.IndexAtLooped(0));
+		Assert.AreEqual(42, list.IndexAtLooped(1));
+		Assert.AreEqual(42, list.IndexAtLooped(100));
+		Assert.AreEqual(42, list.IndexAtLooped(-1));
+		Assert.AreEqual(42, list.IndexAtLooped(-100));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_StringList_WrapsCorrectly()
+	{
+		// Arrange
+		var strings = new List<string> { "a", "b", "c", "d" };
+
+		// Act & Assert
+		Assert.AreEqual("a", strings.IndexAtLooped(0));
+		Assert.AreEqual("a", strings.IndexAtLooped(4));
+		Assert.AreEqual("b", strings.IndexAtLooped(5));
+		Assert.AreEqual("d", strings.IndexAtLooped(-1));
+		Assert.AreEqual("c", strings.IndexAtLooped(-2));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_ThreeElements_NonPowerOfTwo_WrapsCorrectly()
+	{
+		// Arrange - non-power of two (3 elements)
+		var list = new List<int> { 10, 20, 30 };
+
+		// Act & Assert
+		Assert.AreEqual(10, list.IndexAtLooped(0));
+		Assert.AreEqual(10, list.IndexAtLooped(3));
+		Assert.AreEqual(20, list.IndexAtLooped(4));
+		Assert.AreEqual(30, list.IndexAtLooped(-1));
+		Assert.AreEqual(20, list.IndexAtLooped(-2));
+		Assert.AreEqual(10, list.IndexAtLooped(-3));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_TwoElements_WrapsCorrectly()
+	{
+		// Arrange - power of two (2 elements)
+		var list = new List<int> { 100, 200 };
+
+		// Act & Assert
+		Assert.AreEqual(100, list.IndexAtLooped(0));
+		Assert.AreEqual(200, list.IndexAtLooped(1));
+		Assert.AreEqual(100, list.IndexAtLooped(2));
+		Assert.AreEqual(200, list.IndexAtLooped(3));
+		Assert.AreEqual(200, list.IndexAtLooped(-1));
+		Assert.AreEqual(100, list.IndexAtLooped(-2));
+	}
+
+	[TestMethod]
+	public void IndexAtLooped_ValidIndex_ReturnsCorrectElement()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30, 40, 50 };
+
+		// Act
+		var result = list.IndexAtLooped(2);
+
+		// Assert
+		Assert.AreEqual(30, result);
+	}
+
+	[TestMethod]
 	public void IndexAtLoopedWithEmptyListTest()
 	{
 		// Arrange
@@ -596,6 +1138,361 @@ public class ListExtensionsTests
 		// Assert
 		Assert.AreEqual(expectedIndex0, resultIndex0, "The item at index 0 should be 1.");
 		Assert.AreEqual(expectedIndex4, resultIndex4, "The item at index 4 should be 5.");
+	}
+
+	[TestMethod]
+	public void IsEqualTo_BothListsNull_ReturnsFalse()
+	{
+		// Arrange
+		List<int> list1 = null;
+		List<int> list2 = null;
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_DecimalLists_Equal_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<decimal> { 1.1m, 2.2m, 3.3m };
+		var list2 = new List<decimal> { 1.1m, 2.2m, 3.3m };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_DifferentCounts_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3, 4, 5 };
+		var list2 = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_DifferentOrder_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3 };
+		var list2 = new List<int> { 3, 2, 1 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_DifferentValues_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3, 4, 5 };
+		var list2 = new List<int> { 1, 2, 3, 4, 6 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_DoubleLists_Equal_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<double> { 1.1, 2.2, 3.3 };
+		var list2 = new List<double> { 1.1, 2.2, 3.3 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_EmptyLists_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<int>();
+		var list2 = new List<int>();
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_EqualLists_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3, 4, 5 };
+		var list2 = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_LargeLists_DifferentFirstElement_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = Enumerable.Range(1, 10000).ToList();
+		var list2 = Enumerable.Range(1, 10000).ToList();
+		list2[0] = 99999; // Change first element
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_LargeLists_DifferentLastElement_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = Enumerable.Range(1, 10000).ToList();
+		var list2 = Enumerable.Range(1, 10000).ToList();
+		list2[9999] = 99999; // Change last element
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_LargeLists_Equal_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = Enumerable.Range(1, 10000).ToList();
+		var list2 = Enumerable.Range(1, 10000).ToList();
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_NullableValueType_DifferentNullPosition_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int?> { 1, null, 3, 4, 5 };
+		var list2 = new List<int?> { 1, 2, null, 4, 5 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_NullableValueType_Equal_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<int?> { 1, null, 3, null, 5 };
+		var list2 = new List<int?> { 1, null, 3, null, 5 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_NullComparisonList_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3 };
+		List<int> nullList = null;
+
+		// Act
+		var result = list1.IsEqualTo(nullList);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_NullSourceList_ReturnsFalse()
+	{
+		// Arrange
+		List<int> nullList = null;
+		var list2 = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = nullList.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_OneEmptyOneNot_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int>();
+		var list2 = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_ReferenceType_DifferentObjects_ReturnsFalse()
+	{
+		// Arrange
+		var person1 = new Person { Id = "1234567890", FirstName = "John", LastName = "Doe" };
+		var person2 = new Person { Id = "1234567891", FirstName = "John", LastName = "Doe" };
+		var list1 = new List<Person> { person1 };
+		var list2 = new List<Person> { person2 }; // Different reference
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert - Default equality comparer uses reference equality for Person
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_ReferenceType_EqualObjects_ReturnsTrue()
+	{
+		// Arrange
+		var person1 = new Person { Id = "1234567890", FirstName = "John", LastName = "Doe" };
+		var person2 = new Person { Id = "1234567890", FirstName = "John", LastName = "Doe" };
+		var list1 = new List<Person> { person1 };
+		var list2 = new List<Person> { person1 }; // Same reference
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_SameDuplicatesDifferentCount_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 2, 3, 3, 3 };
+		var list2 = new List<int> { 1, 2, 2, 3, 3 }; // One less 3
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_SameReference_ReturnsTrue()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = list.IsEqualTo(list);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_SingleElementDifferent_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 42 };
+		var list2 = new List<int> { 99 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_SingleElementEqual_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<int> { 42 };
+		var list2 = new List<int> { 42 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_StringLists_DifferentCase_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<string> { "Apple", "Banana", "Cherry" };
+		var list2 = new List<string> { "apple", "banana", "cherry" };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_StringLists_Equal_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<string> { "apple", "banana", "cherry" };
+		var list2 = new List<string> { "apple", "banana", "cherry" };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEqualTo_WithDuplicates_Equal_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 2, 3, 3, 3 };
+		var list2 = new List<int> { 1, 2, 2, 3, 3, 3 };
+
+		// Act
+		var result = list1.IsEqualTo(list2);
+
+		// Assert
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -730,6 +1627,278 @@ public class ListExtensionsTests
 		result = people.ToReadOnlyCollection().GenerateHashCode();
 
 		Assert.IsTrue(result.IsInRange(int.MinValue, int.MaxValue));
+	}
+
+	[TestMethod]
+	public void PerformAction_ComplexAction_ExecutesCorrectly()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		var results = new Dictionary<int, int>();
+
+		// Act
+		list.PerformAction(item => results[item] = item * item);
+
+		// Assert
+		Assert.AreEqual(3, results.Count);
+		Assert.AreEqual(1, results[1]);
+		Assert.AreEqual(4, results[2]);
+		Assert.AreEqual(9, results[3]);
+	}
+
+	[TestMethod]
+	public void PerformAction_DecimalList_CalculatesTotal()
+	{
+		// Arrange
+		var list = new List<decimal> { 1.5m, 2.5m, 3.5m };
+		var total = 0m;
+
+		// Act
+		list.PerformAction(item => total += item);
+
+		// Assert
+		Assert.AreEqual(7.5m, total);
+	}
+
+	[TestMethod]
+	public void PerformAction_DoesNotModifyOriginalList()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var originalCount = list.Count;
+
+		// Act
+		list.PerformAction(item => { /* no-op */ });
+
+		// Assert
+		Assert.AreEqual(originalCount, list.Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, list);
+	}
+
+	[TestMethod]
+	public void PerformAction_EmptyList_DoesNotExecuteAction()
+	{
+		// Arrange
+		var list = new List<int>();
+		var actionExecuted = false;
+
+		// Act
+		list.PerformAction(item => actionExecuted = true);
+
+		// Assert
+		Assert.IsFalse(actionExecuted);
+	}
+
+	[TestMethod]
+	public void PerformAction_ExecutesActionOnEachItem()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var processedItems = new List<int>();
+
+		// Act
+		list.PerformAction(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEqual(list, processedItems);
+	}
+
+	[TestMethod]
+	public void PerformAction_LargeList_ExecutesOnAllItems()
+	{
+		// Arrange
+		var list = Enumerable.Range(1, 10000).ToList();
+		var executionCount = 0;
+
+		// Act
+		list.PerformAction(item => executionCount++);
+
+		// Assert
+		Assert.AreEqual(10000, executionCount);
+	}
+
+	[TestMethod]
+	public void PerformAction_ModifiesExternalState()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var sum = 0;
+
+		// Act
+		list.PerformAction(item => sum += item);
+
+		// Assert
+		Assert.AreEqual(15, sum);
+	}
+
+	[TestMethod]
+	public void PerformAction_NullableType_HandlesNullItems()
+	{
+		// Arrange
+		var list = new List<string> { "a", null, "b", null, "c" };
+		var nonNullCount = 0;
+		var nullCount = 0;
+
+		// Act
+		list.PerformAction(item =>
+		{
+			if (item is null)
+			{
+				nullCount++;
+			}
+			else
+			{
+				nonNullCount++;
+			}
+		});
+
+		// Assert
+		Assert.AreEqual(3, nonNullCount);
+		Assert.AreEqual(2, nullCount);
+	}
+
+	[TestMethod]
+	public void PerformAction_NullAction_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		Action<int> nullAction = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.PerformAction(nullAction));
+	}
+
+	[TestMethod]
+	public void PerformAction_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> nullList = null;
+		Action<int> action = item => { };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullList.PerformAction(action));
+	}
+
+	[TestMethod]
+	public void PerformAction_PreservesOrder()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var processedOrder = new List<int>();
+
+		// Act
+		list.PerformAction(item => processedOrder.Add(item));
+
+		// Assert
+		CollectionAssert.AreEqual(list, processedOrder);
+	}
+
+	[TestMethod]
+	public void PerformAction_ReferenceType_CanModifyProperties()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(5).ToList();
+		var newLastName = "TestLastName";
+
+		// Act
+		people.PerformAction(person => person.LastName = newLastName);
+
+		// Assert
+		Assert.IsTrue(people.All(p => p.LastName == newLastName));
+	}
+
+	[TestMethod]
+	public void PerformAction_SingleItem_ExecutesOnce()
+	{
+		// Arrange
+		var list = new List<int> { 42 };
+		var executionCount = 0;
+
+		// Act
+		list.PerformAction(item => executionCount++);
+
+		// Assert
+		Assert.AreEqual(1, executionCount);
+	}
+
+	[TestMethod]
+	public void PerformAction_StringList_ExecutesActionOnEachString()
+	{
+		// Arrange
+		var list = new List<string> { "apple", "banana", "cherry" };
+		var concatenated = string.Empty;
+
+		// Act
+		list.PerformAction(item => concatenated += item);
+
+		// Assert
+		Assert.AreEqual("applebananacherry", concatenated);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithConditionalLogic_ExecutesCorrectly()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		var evenNumbers = new List<int>();
+
+		// Act
+		list.PerformAction(item =>
+		{
+			if (item % 2 == 0)
+			{
+				evenNumbers.Add(item);
+			}
+		});
+
+		// Assert
+		Assert.AreEqual(5, evenNumbers.Count);
+		CollectionAssert.AreEquivalent(new[] { 2, 4, 6, 8, 10 }, evenNumbers);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithExternalCounter_TracksExecutions()
+	{
+		// Arrange
+		var list = new List<int> { 10, 20, 30 };
+		var counter = 0;
+		var maxValue = 0;
+
+		// Act
+		list.PerformAction(item =>
+		{
+			counter++;
+			if (item > maxValue)
+			{
+				maxValue = item;
+			}
+		});
+
+		// Assert
+		Assert.AreEqual(3, counter);
+		Assert.AreEqual(30, maxValue);
+	}
+
+	[TestMethod]
+	public void PerformAction_WithIndex_CanTrackPosition()
+	{
+		// Arrange
+		var list = new List<string> { "a", "b", "c" };
+		var index = 0;
+		var indexedResults = new Dictionary<int, string>();
+
+		// Act
+		list.PerformAction(item =>
+		{
+			indexedResults[index] = item;
+			index++;
+		});
+
+		// Assert
+		Assert.AreEqual("a", indexedResults[0]);
+		Assert.AreEqual("b", indexedResults[1]);
+		Assert.AreEqual("c", indexedResults[2]);
 	}
 
 	[TestMethod]
