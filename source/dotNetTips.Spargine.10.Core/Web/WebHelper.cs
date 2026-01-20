@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="WebHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -85,7 +85,7 @@ public static class WebHelper
 	/// It can be useful for validation, logging, or setting headers in HTTP requests.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(HttpHeaderNames), "David McCarter", "9/2/2020", "9/2/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(HttpHeaderNames), "David McCarter", "9/2/2020", "9/2/2020", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> HttpHeaderNames()
 	{
 		return Enum.GetNames<HttpRequestHeader>().AsReadOnly();

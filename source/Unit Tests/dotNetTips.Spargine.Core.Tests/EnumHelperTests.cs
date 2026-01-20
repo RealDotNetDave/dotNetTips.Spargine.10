@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="EnumHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -48,6 +48,10 @@ public class EnumHelperTests
 	public void GetValues_ReturnsAllEnumValues_WithDefaultNames()
 	{
 		var values = EnumHelper.GetItems<Status>();
+
+		//Call again to hit cache
+		values = EnumHelper.GetItems<Status>();
+
 		Assert.HasCount(8, values);
 		Assert.IsTrue(values.Any(v => v.Name == "Not Set" && v.Value == 0));
 		Assert.IsTrue(values.Any(v => v.Name == "New" && v.Value == 1));

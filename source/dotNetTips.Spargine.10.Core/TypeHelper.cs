@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -439,7 +439,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<ConstructorInfo> GetAllConstructors([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -484,7 +484,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllDeclaredFields([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -571,7 +571,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllFields([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -617,7 +617,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllGenericMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -648,7 +648,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<MethodInfo> GetAllMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -740,7 +740,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllPublicMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -771,7 +771,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllStaticMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -803,7 +803,7 @@ public static class TypeHelper
 	/// or <c>null</c> if no such attribute is found.
 	/// </remarks>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] FieldInfo fieldInfo) where TAttribute : Attribute
 	{
 		fieldInfo = fieldInfo.ArgumentNotNull();
@@ -844,7 +844,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: MaybeNull]
-	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
 	{
 		type = type.ArgumentNotNull();
@@ -1244,7 +1244,7 @@ public static class TypeHelper
 	/// <param name="nestedTypeDelimiter">The delimiter to use for nested types.</param>
 	/// <returns>The display name of the type.</returns>
 	[return: NotNull]
-	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GetTypeDisplayName(Type type, bool fullName = true, bool includeGenericParameterNames = false, bool includeGenericParameters = true, char nestedTypeDelimiter = ControlChars.Dot)
 	{
 		type = type.ArgumentNotNull();
@@ -1632,7 +1632,7 @@ public static class TypeHelper
 	/// The cache is lazily initialized on first access and reused for all subsequent calls.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)] // Inline for maximum performance
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type == null)
@@ -1861,7 +1861,7 @@ public static class TypeHelper
 	/// </code>
 	/// </example>
 	/// <seealso cref="IComparable"/>
-	[Information(nameof(Min), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Min), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T? Min<T>([AllowNull] T? obj1, [AllowNull] T? obj2) where T : IComparable
 	{
 		return obj1?.CompareTo(obj2) < 0 ? obj1 : obj2;
@@ -1875,7 +1875,7 @@ public static class TypeHelper
 	/// <param name="genericArguments">The array of generic arguments for the type.</param>
 	/// <param name="length">The number of generic arguments to consider.</param>
 	/// <param name="options">Display name options to customize the output.</param>
-	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ProcessGenericType), UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void ProcessGenericType([DisallowNull] StringBuilder builder, [DisallowNull] Type type, [DisallowNull] Type[] genericArguments, int length, DisplayNameOptions options)
 	{
 		builder = builder.ArgumentNotNull();

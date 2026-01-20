@@ -320,7 +320,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Not Required
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -852,7 +852,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetOrCreateAsync
 * **Modified On:** 
@@ -898,7 +898,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** PeekCacheItem
@@ -1575,7 +1575,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
 * **Description:** TryPeek
@@ -1587,7 +1587,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/28/2021
 * **Description:** TryRemove
@@ -1805,7 +1805,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2201,7 +2201,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2221,7 +2221,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2411,7 +2411,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -2462,6 +2462,16 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Modified By:** UNKNOWN
+* **Modified On:** 
+
+### System.Void System.Collections.Generic.ICollection<T>.Add(T item)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
 * **Modified On:** 
@@ -4777,7 +4787,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 5/7/2025
 * **Description:** GenerateSortableKey
@@ -5027,7 +5037,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/3/2020
 * **Description:** LogApplicationInformation
@@ -5169,7 +5179,7 @@
 * **Status:** New
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetPrimaryNetworkInterface
 * **Modified On:** 
@@ -5179,7 +5189,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetNetworkConnections
 * **Modified On:** 
@@ -5337,6 +5347,18 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### DotNetTips.Spargine.Core.Queues.ChannelQueue<T> (System.Threading.Channels.BoundedChannelOptions options, System.Nullable<System.TimeSpan> cancellationTimeout)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 7/26/2021
+* **Description:** ChannelQueue
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean Acknowledge(System.String idempotencyKey)
 
 * **Status:** Available
@@ -5347,6 +5369,16 @@
 * **CreatedOn:** 8/10/2025
 * **Description:** Acknowledge
 * **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Void CleanupExpiredKeys()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** CleanupExpiredKeys
 * **Modified On:** 
 
 ### System.Void Clear()
@@ -5439,6 +5471,16 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Boolean TryPeek(T item)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** TryPeek
+* **Modified On:** 
+
 ### System.Boolean TryRead(T item)
 
 * **Status:** Available
@@ -5464,7 +5506,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 8/10/2025
 * **Description:** TryWriteOnce
@@ -6018,7 +6060,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Not Required
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** LoadCollectionFromJson
 * **Modified On:** 
@@ -6529,7 +6571,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetAllConstructors
 * **Modified On:** 
@@ -6539,7 +6581,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
 * **Description:** GetAllDeclaredFields
@@ -6563,7 +6605,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetAllFields
 * **Modified On:** 
@@ -6573,7 +6615,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** GetAllGenericMethods
@@ -6585,7 +6627,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** GetAllMethods
@@ -6607,7 +6649,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetAllPublicMethods
 * **Modified On:** 
@@ -6617,7 +6659,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetAllStaticMethods
 * **Modified On:** 
@@ -6627,7 +6669,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetAttribute
 * **Modified On:** 
@@ -6637,7 +6679,7 @@
 * **Status:** Updated
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetAttribute
 * **Modified On:** 
@@ -6769,7 +6811,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** GetTypeDisplayName
 * **Modified On:** 
@@ -6857,9 +6899,9 @@
 ### System.Boolean IsBuiltinType(System.Type& type)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 11/6/2023
 * **Description:** IsBuiltinType
@@ -6941,7 +6983,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** Min
 * **Modified On:** 
@@ -6951,7 +6993,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** ProcessGenericType
 * **Modified On:** 
@@ -7064,7 +7106,7 @@
 * **Status:** New
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** NewUlid
 * **Modified On:** 
@@ -7389,7 +7431,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 2/17/2022
 * **Description:** ArgumentItemsExists
@@ -7497,7 +7539,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 2/10/2021
 * **Description:** ArgumentNotNull
@@ -7533,7 +7575,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentNotNullOrEmpty
@@ -7725,7 +7767,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 6/26/2017
 * **Description:** CheckIsNotEmpty
@@ -7810,7 +7852,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 9/2/2020
 * **Description:** HttpHeaderNames
@@ -7830,4 +7872,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/20/2026 11:58:26 AM UTC**
+**Generated by Spargine - dotNetTips.com on 1/20/2026 2:29:06 PM UTC**

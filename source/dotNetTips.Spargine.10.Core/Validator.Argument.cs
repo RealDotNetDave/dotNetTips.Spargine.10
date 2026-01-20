@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -562,7 +562,7 @@ public static partial class Validator
 	/// <remarks>This also checks the input for null.</remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentItemsExists), "David McCarter", "2/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ArgumentItemsExists), "David McCarter", "2/17/2022", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static List<T> ArgumentItemsExists<T>([DisallowNull] this List<T> input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
 		var isValid = input.CheckItemsExists();
@@ -786,7 +786,7 @@ public static partial class Validator
 	/// <remarks>This also checks the input for null.</remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentNotNull), "David McCarter", "2/10/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ArgumentNotNull), "David McCarter", "2/10/2021", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T ArgumentNotNull<T>(this T input, T? defaultValue = default, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
 		var isValid = input is not null;
@@ -879,7 +879,7 @@ public static partial class Validator
 	/// </code></example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentNotNullOrEmpty), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ArgumentNotNullOrEmpty), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ArgumentNotNullOrEmpty([DisallowNull] this string input, bool trim = true, [AllowNull] string? defaultValue = null, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
 		var isValid = string.IsNullOrEmpty(input) is false;

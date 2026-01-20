@@ -4,7 +4,7 @@
 // Created          : 06-26-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="Validator.Check.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -343,7 +343,7 @@ public static partial class Validator
 	/// <returns><c>true</c> if [is not empty] [the specified span]; otherwise, <c>false</c>.</returns>
 	/// <exception cref="InvalidOperationException">Input cannot be empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckIsNotEmpty), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CheckIsNotEmpty), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckIsNotEmpty<T>([NotNull] this ReadOnlySpan<T> input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
 		var isValid = input.IsEmpty is false;

@@ -53,69 +53,6 @@ public static class EnumHelper
 	private static readonly Regex _titleCaseRegex = new(@"(\B[A-Z])", RegexOptions.Multiline | RegexOptions.Compiled);
 
 	/// <summary>
-	/// Adjusts camel case naming in the provided string by inserting a space before each capital letter that is not at the beginning.
-	/// </summary>
-	/// <param name="name">The string to adjust.</param>
-	/// <returns>A string with spaces inserted before capital letters that are not at the beginning.</returns>
-	private static string AdjustCamelCase(string name) => _titleCaseRegex.Replace(name, replacement: " $1");
-
-	/// <summary>
-	/// Adjusts the name of the enumeration value by replacing underscores with spaces and applying camel case adjustment.
-	/// </summary>
-	/// <param name="name">The original name of the enumeration value.</param>
-	/// <returns>The adjusted name with underscores replaced by spaces and camel case naming applied.</returns>
-	private static string AdjustName(string name)
-	{
-		return AdjustCamelCase(name.Replace(ControlChars.Underscore, ControlChars.Space))
-					.Replace(ControlChars.Space, ControlChars.Space);
-	}
-
-	/// <summary>
-	/// Retrieves a list of names for an enumeration type, with options to adjust for readability and to use XML attributes.
-	/// </summary>
-	/// <param name="type">The enumeration type.</param>
-	/// <param name="fixNames">If set to <c>true</c>, adjusts the names for readability by adding spaces in camel case names and replacing underscores with spaces.</param>
-	/// <returns>A list of enumeration names as strings.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
-	private static List<string> GetNames([DisallowNull] Type type, bool fixNames = true)
-	{
-		// Set up result
-		var result = new List<string>();
-
-		// Load fields
-		var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-		// Enum names (text) are defined as fields for the type
-		foreach (var enumValue in fields.AsSpan())
-		{
-			// If XML is specified and found, use this name
-			var attribute = Attribute.GetCustomAttribute(enumValue, typeof(XmlEnumAttribute)) as XmlEnumAttribute;
-
-			if (attribute?.Name is not null)
-			{
-				result.Add(attribute.Name);
-				continue;
-			}
-
-			// Attempt to use the Description attribute (if present)
-			var description = Attribute.GetCustomAttribute(enumValue, typeof(DescriptionAttribute)) as DescriptionAttribute;
-
-			if (description?.Description is not null)
-			{
-				// Use this value
-				result.Add(description.Description);
-			}
-			else
-			{
-				// If not found, use the Enum name, with adjustment if requested
-				result.Add(fixNames ? AdjustName(enumValue.Name) : enumValue.Name);
-			}
-		}
-
-		return result;
-	}
-
-	/// <summary>
 	/// Gets the description of the enum value by checking multiple attributes in this order:
 	/// 1. <see cref="DescriptionAttribute"/>
 	/// 2. <see cref="EnumMemberAttribute"/>
@@ -240,6 +177,69 @@ public static class EnumHelper
 		name = name.ArgumentNotNullOrEmpty();
 
 		return (T)Enum.Parse(typeof(T), name);
+	}
+
+	/// <summary>
+	/// Adjusts camel case naming in the provided string by inserting a space before each capital letter that is not at the beginning.
+	/// </summary>
+	/// <param name="name">The string to adjust.</param>
+	/// <returns>A string with spaces inserted before capital letters that are not at the beginning.</returns>
+	private static string AdjustCamelCase(string name) => _titleCaseRegex.Replace(name, replacement: " $1");
+
+	/// <summary>
+	/// Adjusts the name of the enumeration value by replacing underscores with spaces and applying camel case adjustment.
+	/// </summary>
+	/// <param name="name">The original name of the enumeration value.</param>
+	/// <returns>The adjusted name with underscores replaced by spaces and camel case naming applied.</returns>
+	private static string AdjustName(string name)
+	{
+		return AdjustCamelCase(name.Replace(ControlChars.Underscore, ControlChars.Space))
+					.Replace(ControlChars.Space, ControlChars.Space);
+	}
+
+	/// <summary>
+	/// Retrieves a list of names for an enumeration type, with options to adjust for readability and to use XML attributes.
+	/// </summary>
+	/// <param name="type">The enumeration type.</param>
+	/// <param name="fixNames">If set to <c>true</c>, adjusts the names for readability by adding spaces in camel case names and replacing underscores with spaces.</param>
+	/// <returns>A list of enumeration names as strings.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
+	private static List<string> GetNames([DisallowNull] Type type, bool fixNames = true)
+	{
+		// Set up result
+		var result = new List<string>();
+
+		// Load fields
+		var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+		// Enum names (text) are defined as fields for the type
+		foreach (var enumValue in fields.AsSpan())
+		{
+			// If XML is specified and found, use this name
+			var attribute = Attribute.GetCustomAttribute(enumValue, typeof(XmlEnumAttribute)) as XmlEnumAttribute;
+
+			if (attribute?.Name is not null)
+			{
+				result.Add(attribute.Name);
+				continue;
+			}
+
+			// Attempt to use the Description attribute (if present)
+			var description = Attribute.GetCustomAttribute(enumValue, typeof(DescriptionAttribute)) as DescriptionAttribute;
+
+			if (description?.Description is not null)
+			{
+				// Use this value
+				result.Add(description.Description);
+			}
+			else
+			{
+				// If not found, use the Enum name, with adjustment if requested
+				result.Add(fixNames ? AdjustName(enumValue.Name) : enumValue.Name);
+			}
+		}
+
+		return result;
 	}
 
 }

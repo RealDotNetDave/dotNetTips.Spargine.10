@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -797,7 +797,7 @@ public static class App
 	/// <remarks>If the current user is not an administrator, this method will attempt to restart the application with administrator privileges.
 	/// It prompts the user for permission to run as an administrator. If granted, the application restarts; otherwise, it exits.
 	/// This method should be used cautiously, as it terminates the current process and starts a new one.</remarks>
-	[Information(UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public static void RunAsAdministrator()
 	{
 		if (IsUserAdministrator())

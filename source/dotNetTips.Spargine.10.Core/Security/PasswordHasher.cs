@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-16-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="PasswordHasher.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,6 +36,77 @@ public static class PasswordHasher
 
 	private static readonly ArrayPool<byte> _byteArrayPool = ArrayPool<byte>.Shared;
 	private static readonly int _degreeOfParallelism = App.MaxDegreeOfParallelism();
+
+	/// <summary>
+	/// The number of iterations for PBKDF2.
+	/// </summary>
+	private static int Pbkdf2IterCount { get; } = 100000;
+
+	/// <summary>
+	/// The length of the PBKDF2 subkey in bytes.
+	/// </summary>
+	private static int Pbkdf2SubkeyLength { get; } = 256 / 8; // 256 bits
+
+	/// <summary>
+	/// The size of the salt in bytes.
+	/// </summary>
+	private static int SaltSize { get; } = 256;
+
+	/// <summary>
+	/// The version of the password hashing algorithm.
+	/// </summary>
+	private static byte Version => 1;
+
+	/// <summary>
+	/// Hashes a password using the specified algorithm.
+	/// </summary>
+	/// <param name="password">The password.</param>
+	/// <param name="algorithmType">The hashing algorithm to use.</param>
+	/// <returns>System.String.</returns>
+	[Pure]
+	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	public static string HashPassword([DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
+	{
+		password = password.ArgumentNotNull();
+
+		return algorithmType switch
+		{
+			HashAlgorithmType.PBKDF2 => HashPasswordPBKDF2(password),
+			HashAlgorithmType.SHA256 => HashPasswordSHA256(password),
+			HashAlgorithmType.SHA3256 => HashPasswordSHA3(password, 256),
+			HashAlgorithmType.SHA3384 => HashPasswordSHA3(password, 384),
+			HashAlgorithmType.SHA3512 => HashPasswordSHA3(password, 512),
+			HashAlgorithmType.Shake128 => HashPasswordShake(password, 128),
+			HashAlgorithmType.Shake256 => HashPasswordShake(password, 256),
+			HashAlgorithmType.Argon2 => HashPasswordArgon2(password),
+			_ => throw new NotSupportedException($"The algorithm {algorithmType} is not supported.")
+		};
+	}
+
+	/// <summary>
+	/// Verifies a hashed password using the specified algorithm.
+	/// </summary>
+	/// <param name="hashedPassword">The hashed password.</param>
+	/// <param name="password">The password.</param>
+	/// <param name="algorithmType">The hashing algorithm to use.</param>
+	/// <returns>PasswordVerificationResult.</returns>
+	[Pure]
+	[Information(nameof(VerifyHashedPassword), "David McCarter", "5/14/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static PasswordVerificationResult VerifyHashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
+	{
+		hashedPassword = hashedPassword.ArgumentNotNullOrEmpty();
+		password = password.ArgumentNotNullOrEmpty();
+		algorithmType = algorithmType.ArgumentDefined();
+
+		return algorithmType switch
+		{
+			HashAlgorithmType.PBKDF2 => VerifyHashedPasswordPBKDF2(hashedPassword, password),
+			HashAlgorithmType.SHA256 or HashAlgorithmType.SHA3256 or HashAlgorithmType.SHA3384 or HashAlgorithmType.SHA3512 or HashAlgorithmType.Shake128 or HashAlgorithmType.Shake256 =>
+				VerifyHashedPasswordSHA(hashedPassword, password, algorithmType),
+			HashAlgorithmType.Argon2 => VerifyHashedPasswordArgon2(hashedPassword, password),
+			_ => throw new NotSupportedException($"The algorithm {algorithmType} is not supported.")
+		};
+	}
 
 	/// <summary>
 	/// Hashes a password using Argon2.
@@ -293,76 +364,5 @@ public static class PasswordHasher
 		return CryptographicOperations.FixedTimeEquals(Convert.FromBase64String(hashedPassword), Convert.FromBase64String(hash))
 			? PasswordVerificationResult.Success
 			: PasswordVerificationResult.Failed;
-	}
-
-	/// <summary>
-	/// The number of iterations for PBKDF2.
-	/// </summary>
-	private static int Pbkdf2IterCount { get; } = 100000;
-
-	/// <summary>
-	/// The length of the PBKDF2 subkey in bytes.
-	/// </summary>
-	private static int Pbkdf2SubkeyLength { get; } = 256 / 8; // 256 bits
-
-	/// <summary>
-	/// The size of the salt in bytes.
-	/// </summary>
-	private static int SaltSize { get; } = 256;
-
-	/// <summary>
-	/// The version of the password hashing algorithm.
-	/// </summary>
-	private static byte Version => 1;
-
-	/// <summary>
-	/// Hashes a password using the specified algorithm.
-	/// </summary>
-	/// <param name="password">The password.</param>
-	/// <param name="algorithmType">The hashing algorithm to use.</param>
-	/// <returns>System.String.</returns>
-	[Pure]
-	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
-	public static string HashPassword([DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
-	{
-		password = password.ArgumentNotNull();
-
-		return algorithmType switch
-		{
-			HashAlgorithmType.PBKDF2 => HashPasswordPBKDF2(password),
-			HashAlgorithmType.SHA256 => HashPasswordSHA256(password),
-			HashAlgorithmType.SHA3256 => HashPasswordSHA3(password, 256),
-			HashAlgorithmType.SHA3384 => HashPasswordSHA3(password, 384),
-			HashAlgorithmType.SHA3512 => HashPasswordSHA3(password, 512),
-			HashAlgorithmType.Shake128 => HashPasswordShake(password, 128),
-			HashAlgorithmType.Shake256 => HashPasswordShake(password, 256),
-			HashAlgorithmType.Argon2 => HashPasswordArgon2(password),
-			_ => throw new NotSupportedException($"The algorithm {algorithmType} is not supported.")
-		};
-	}
-
-	/// <summary>
-	/// Verifies a hashed password using the specified algorithm.
-	/// </summary>
-	/// <param name="hashedPassword">The hashed password.</param>
-	/// <param name="password">The password.</param>
-	/// <param name="algorithmType">The hashing algorithm to use.</param>
-	/// <returns>PasswordVerificationResult.</returns>
-	[Pure]
-	[Information(nameof(VerifyHashedPassword), "David McCarter", "5/14/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static PasswordVerificationResult VerifyHashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
-	{
-		hashedPassword = hashedPassword.ArgumentNotNullOrEmpty();
-		password = password.ArgumentNotNullOrEmpty();
-		algorithmType = algorithmType.ArgumentDefined();
-
-		return algorithmType switch
-		{
-			HashAlgorithmType.PBKDF2 => VerifyHashedPasswordPBKDF2(hashedPassword, password),
-			HashAlgorithmType.SHA256 or HashAlgorithmType.SHA3256 or HashAlgorithmType.SHA3384 or HashAlgorithmType.SHA3512 or HashAlgorithmType.Shake128 or HashAlgorithmType.Shake256 =>
-				VerifyHashedPasswordSHA(hashedPassword, password, algorithmType),
-			HashAlgorithmType.Argon2 => VerifyHashedPasswordArgon2(hashedPassword, password),
-			_ => throw new NotSupportedException($"The algorithm {algorithmType} is not supported.")
-		};
 	}
 }
