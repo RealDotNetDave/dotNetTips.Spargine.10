@@ -400,7 +400,7 @@ public sealed class ChannelQueue<T>
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryWriteOnce([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null)
 	{
 		item = item.ArgumentNotNull();

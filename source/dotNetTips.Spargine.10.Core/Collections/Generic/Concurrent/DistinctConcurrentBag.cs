@@ -115,7 +115,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// </summary>
 	/// <param name="item">The object to be added to the bag. The value cannot be a null reference for reference types.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void Add([NotNull] T item)
 	{
 		if (item is null)

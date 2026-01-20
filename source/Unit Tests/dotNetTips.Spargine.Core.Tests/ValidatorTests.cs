@@ -1467,6 +1467,140 @@ public partial class ValidatorTests
 	}
 
 	[TestMethod]
+	public void ArgumentItemsExists_List_CanChainWithOtherValidators()
+	{
+		// Arrange
+		var input = new List<string> { "item1", "item2" };
+
+		// Act
+		var result = input.ArgumentItemsExists().ArgumentNotNull();
+
+		// Assert
+		Assert.AreSame(input, result);
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_EmptyList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var input = new List<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentItemsExists());
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_LargeList_ReturnsOriginalList()
+	{
+		// Arrange
+		var input = Enumerable.Range(0, 10000).ToList();
+
+		// Act
+		var result = input.ArgumentItemsExists();
+
+		// Assert
+		Assert.AreSame(input, result);
+		Assert.AreEqual(10000, result.Count);
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<string> input = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentItemsExists());
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_PreservesListContents()
+	{
+		// Arrange
+		var input = new List<string> { "alpha", "beta", "gamma" };
+
+		// Act
+		var result = input.ArgumentItemsExists();
+
+		// Assert
+		Assert.AreEqual("alpha", result[0]);
+		Assert.AreEqual("beta", result[1]);
+		Assert.AreEqual("gamma", result[2]);
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_SingleItem_ReturnsOriginalList()
+	{
+		// Arrange
+		var input = new List<int> { 42 };
+
+		// Act
+		var result = input.ArgumentItemsExists();
+
+		// Assert
+		Assert.AreSame(input, result);
+		Assert.AreEqual(1, result.Count);
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_WithComplexType_ReturnsOriginalList()
+	{
+		// Arrange
+		var input = new List<Person>
+	{
+		RandomData.GeneratePerson<Person>(),
+		RandomData.GeneratePerson<Person>()
+	};
+
+		// Act
+		var result = input.ArgumentItemsExists();
+
+		// Assert
+		Assert.AreSame(input, result);
+		Assert.AreEqual(2, result.Count);
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_WithCustomErrorMessage_ThrowsWithCustomMessage()
+	{
+		// Arrange
+		var input = new List<string>();
+		var customErrorMessage = "Custom error: List must have items.";
+
+		// Act & Assert
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentItemsExists(customErrorMessage));
+		Assert.IsTrue(exception.Message.Contains(customErrorMessage));
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_WithItems_ReturnsOriginalList()
+	{
+		// Arrange
+		var input = new List<string> { "item1", "item2", "item3" };
+
+		// Act
+		var result = input.ArgumentItemsExists();
+
+		// Assert
+		Assert.AreSame(input, result);
+		Assert.AreEqual(3, result.Count);
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_List_WithNullableItems_ReturnsOriginalList()
+	{
+		// Arrange
+		var input = new List<int?> { 1, null, 3 };
+
+		// Act
+		var result = input.ArgumentItemsExists();
+
+		// Assert
+		Assert.AreSame(input, result);
+		Assert.AreEqual(3, result.Count);
+	}
+
+	[TestMethod]
 	public void ArgumentItemsExists_WithCount_ExactCount_ReturnsCollection()
 	{
 		// Arrange

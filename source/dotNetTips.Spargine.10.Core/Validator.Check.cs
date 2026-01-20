@@ -343,7 +343,7 @@ public static partial class Validator
 	/// <returns><c>true</c> if [is not empty] [the specified span]; otherwise, <c>false</c>.</returns>
 	/// <exception cref="InvalidOperationException">Input cannot be empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckIsNotEmpty), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CheckIsNotEmpty), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckIsNotEmpty<T>([NotNull] this ReadOnlySpan<T> input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
 		var isValid = input.IsEmpty is false;

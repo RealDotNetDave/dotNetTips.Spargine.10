@@ -4,7 +4,7 @@
 // Created          : 12-06-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -892,6 +892,37 @@ public class ConcurrentHashSetTests
 	}
 
 	[TestMethod]
+	public void TryRemove_AfterClear_ReturnsFalse()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3 };
+		hashSet.Clear();
+
+		// Act
+		var result = hashSet.TryRemove(1);
+
+		// Assert
+		Assert.IsFalse(result, "TryRemove should return false after Clear.");
+	}
+
+	[TestMethod]
+	public void TryRemove_AllItems_SetBecomesEmpty()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3 };
+
+		// Act
+		var result1 = hashSet.TryRemove(1);
+		var result2 = hashSet.TryRemove(2);
+		var result3 = hashSet.TryRemove(3);
+
+		// Assert
+		Assert.IsTrue(result1 && result2 && result3, "All removals should return true.");
+		Assert.AreEqual(0, hashSet.Count, "Count should be 0.");
+		Assert.IsTrue(hashSet.IsEmpty, "Set should be empty.");
+	}
+
+	[TestMethod]
 	public void TryRemove_Concurrent_SameItem_MultipleThreads()
 	{
 		var set = new ConcurrentHashSet<int> { 1 };
@@ -919,22 +950,136 @@ public class ConcurrentHashSetTests
 	}
 
 	[TestMethod]
+	public void TryRemove_ConcurrentAccess_HandlesThreadSafely()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int>();
+		for (int i = 0; i < 1000; i++)
+		{
+			hashSet.Add(i);
+		}
+
+		var tasks = new List<Task<int>>();
+
+		// Act - Multiple threads try to remove different items
+		for (int taskId = 0; taskId < 10; taskId++)
+		{
+			var localTaskId = taskId;
+			tasks.Add(Task.Run(() =>
+			{
+				var removedCount = 0;
+				for (int i = localTaskId * 100; i < (localTaskId + 1) * 100; i++)
+				{
+					if (hashSet.TryRemove(i))
+					{
+						removedCount++;
+					}
+				}
+				return removedCount;
+			}));
+		}
+
+		Task.WaitAll(tasks.ToArray());
+		var totalRemoved = tasks.Sum(t => t.Result);
+
+		// Assert
+		Assert.AreEqual(1000, totalRemoved, "All items should be removed exactly once.");
+		Assert.AreEqual(0, hashSet.Count, "Set should be empty after removing all items.");
+	}
+
+	[TestMethod]
+	public void TryRemove_ConcurrentAddAndRemove_HandlesThreadSafely()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int>();
+		var addTask = Task.Run(() =>
+		{
+			for (int i = 0; i < 500; i++)
+			{
+				hashSet.Add(i);
+			}
+		});
+
+		var removeTask = Task.Run(() =>
+		{
+			var removed = 0;
+			for (int i = 0; i < 500; i++)
+			{
+				if (hashSet.TryRemove(i))
+				{
+					removed++;
+				}
+			}
+			return removed;
+		});
+
+		// Act
+		Task.WaitAll(addTask, removeTask);
+
+		// Assert - No exceptions should be thrown, demonstrating thread safety
+		Assert.IsTrue(hashSet.Count >= 0, "Count should be non-negative.");
+	}
+
+	[TestMethod]
+	public void TryRemove_EmptySet_ReturnsFalse()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int>();
+
+		// Act
+		var result = hashSet.TryRemove(1);
+
+		// Assert
+		Assert.IsFalse(result, "TryRemove should return false for empty set.");
+		Assert.AreEqual(0, hashSet.Count, "Count should remain 0.");
+	}
+
+	[TestMethod]
 	public void TryRemove_ExistingItem_ReturnsTrueAndRemovesItem()
 	{
-		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3 };
-		bool result = hashSet.TryRemove(2);
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3, 4, 5 };
 
-		Assert.IsTrue(result, "TryRemove should return true for an item that exists in the set.");
-		Assert.IsFalse(hashSet.Contains(2), "The item should no longer exist in the set after being removed.");
+		// Act
+		var result = hashSet.TryRemove(3);
+
+		// Assert
+		Assert.IsTrue(result, "TryRemove should return true for existing item.");
+		Assert.AreEqual(4, hashSet.Count, "Count should decrease by 1.");
+		Assert.IsFalse(hashSet.Contains(3), "Item should no longer be in the set.");
+	}
+
+	[TestMethod]
+	public void TryRemove_LargeSet_RemovesItemCorrectly()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int>();
+		for (int i = 0; i < 10000; i++)
+		{
+			hashSet.Add(i);
+		}
+
+		// Act
+		var result = hashSet.TryRemove(5000);
+
+		// Assert
+		Assert.IsTrue(result, "TryRemove should return true for existing item in large set.");
+		Assert.AreEqual(9999, hashSet.Count, "Count should decrease by 1.");
+		Assert.IsFalse(hashSet.Contains(5000), "Item should no longer be in the set.");
 	}
 
 	[TestMethod]
 	public void TryRemove_NonExistingItem_ReturnsFalse()
 	{
+		// Arrange
 		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3 };
-		bool result = hashSet.TryRemove(4);
 
-		Assert.IsFalse(result, "TryRemove should return false for an item that does not exist in the set.");
+		// Act
+		var result = hashSet.TryRemove(999);
+
+		// Assert
+		Assert.IsFalse(result, "TryRemove should return false for non-existing item.");
+		Assert.AreEqual(3, hashSet.Count, "Count should remain unchanged.");
 	}
 
 	[TestMethod]
@@ -945,6 +1090,51 @@ public class ConcurrentHashSetTests
 
 		// Act & Assert
 		Assert.IsFalse(set.TryRemove(null));
+	}
+
+	[TestMethod]
+	public void TryRemove_NullItem_ReturnsFalse()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<string> { "one", "two", "three" };
+
+		// Act
+		var result = hashSet.TryRemove(null);
+
+		// Assert
+		Assert.IsFalse(result, "TryRemove should return false for null item.");
+		Assert.AreEqual(3, hashSet.Count, "Count should remain unchanged.");
+	}
+
+	[TestMethod]
+	public void TryRemove_SameItemTwice_SecondRemovalReturnsFalse()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3 };
+
+		// Act
+		var firstResult = hashSet.TryRemove(2);
+		var secondResult = hashSet.TryRemove(2);
+
+		// Assert
+		Assert.IsTrue(firstResult, "First removal should return true.");
+		Assert.IsFalse(secondResult, "Second removal should return false.");
+		Assert.AreEqual(2, hashSet.Count, "Count should be 2 after removing one item.");
+	}
+
+	[TestMethod]
+	public void TryRemove_SingleItem_SetsBecomesEmpty()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int> { 42 };
+
+		// Act
+		var result = hashSet.TryRemove(42);
+
+		// Assert
+		Assert.IsTrue(result, "TryRemove should return true.");
+		Assert.IsTrue(hashSet.IsEmpty, "Set should be empty.");
+		Assert.AreEqual(0, hashSet.Count, "Count should be 0.");
 	}
 
 
@@ -959,6 +1149,40 @@ public class ConcurrentHashSetTests
 
 		Assert.IsTrue(removeResult, "Should be able to remove item with case-insensitive key.");
 		Assert.IsTrue(hashSet.IsEmpty, "Hash set should be empty after removal.");
+	}
+
+	[TestMethod]
+	public void TryRemove_WithCustomComparer_RemovesCorrectly()
+	{
+		// Arrange
+		var comparer = StringComparer.OrdinalIgnoreCase;
+		var hashSet = new ConcurrentHashSet<string>(comparer) { "Test", "HELLO", "World" };
+
+		// Act - Try to remove with different case
+		var result = hashSet.TryRemove("hello");
+
+		// Assert
+		Assert.IsTrue(result, "TryRemove should find and remove item with case-insensitive comparer.");
+		Assert.AreEqual(2, hashSet.Count, "Count should be 2.");
+		Assert.IsFalse(hashSet.Contains("HELLO"), "Original item should be removed.");
+	}
+
+	[TestMethod]
+	public void TryRemove_WithReferenceType_RemovesCorrectly()
+	{
+		// Arrange
+		var person1 = RandomData.GeneratePerson<Person>();
+		var person2 = RandomData.GeneratePerson<Person>();
+		var hashSet = new ConcurrentHashSet<Person> { person1, person2 };
+
+		// Act
+		var result = hashSet.TryRemove(person1);
+
+		// Assert
+		Assert.IsTrue(result, "TryRemove should return true for existing person.");
+		Assert.AreEqual(1, hashSet.Count, "Count should be 1.");
+		Assert.IsFalse(hashSet.Contains(person1), "Person1 should no longer be in the set.");
+		Assert.IsTrue(hashSet.Contains(person2), "Person2 should still be in the set.");
 	}
 
 }

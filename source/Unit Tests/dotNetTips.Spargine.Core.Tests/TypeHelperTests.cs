@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -611,6 +611,9 @@ public class TypeHelperTests : UnitTester
 		// Act
 		var ctors = TypeHelper.GetAllConstructors(type).ToList();
 
+		// Run again to hit cache
+		ctors = TypeHelper.GetAllConstructors(type).ToList();
+
 		// Assert
 		Assert.IsNotNull(ctors);
 		Assert.IsTrue(ctors.Any());
@@ -626,10 +629,13 @@ public class TypeHelperTests : UnitTester
 	public void GetAllDeclaredFields_WithDeclaredFields_ReturnsFields()
 	{
 		// Arrange
-		var type = typeof(FileInfo);
+		var type = typeof(Person);
 
 		// Act
 		var fields = TypeHelper.GetAllDeclaredFields(type).ToList();
+
+		//Call again, to test cache
+		fields = TypeHelper.GetAllDeclaredFields(type).ToList();
 
 		// Assert
 		Assert.IsNotNull(fields);
@@ -717,6 +723,9 @@ public class TypeHelperTests : UnitTester
 		// Act
 		var fields = TypeHelper.GetAllFields(type).ToList();
 
+		// Run again to hit cache
+		fields = TypeHelper.GetAllFields(type).ToList();
+
 		// Assert
 		Assert.IsNotNull(fields);
 		Assert.IsTrue(fields.Any());
@@ -751,6 +760,9 @@ public class TypeHelperTests : UnitTester
 		// Act
 		var methods = TypeHelper.GetAllGenericMethods(type);
 
+		// Call again to hit cache
+		methods = TypeHelper.GetAllGenericMethods(type);
+
 		// Assert
 		Assert.IsNotNull(methods);
 		Assert.IsTrue(methods.All(m => m.IsGenericMethod));
@@ -784,6 +796,9 @@ public class TypeHelperTests : UnitTester
 
 		// Act
 		var methods = TypeHelper.GetAllMethods(type).ToList();
+
+		// Call again to hit cache
+		methods = TypeHelper.GetAllMethods(type).ToList();
 
 		// Assert
 		Assert.IsNotNull(methods);
@@ -868,6 +883,9 @@ public class TypeHelperTests : UnitTester
 		// Act
 		var methods = TypeHelper.GetAllPublicMethods(type);
 
+		// Call again to hit cache
+		methods = TypeHelper.GetAllPublicMethods(type);
+
 		// Assert
 		Assert.IsNotNull(methods);
 		Assert.IsTrue(methods.All(m => m.IsPublic));
@@ -902,6 +920,9 @@ public class TypeHelperTests : UnitTester
 		// Act
 		var methods = TypeHelper.GetAllStaticMethods(type);
 
+		// Call again to hit cache
+		methods = TypeHelper.GetAllStaticMethods(type);
+
 		// Assert
 		Assert.IsNotNull(methods);
 		Assert.IsTrue(methods.Any());
@@ -914,6 +935,10 @@ public class TypeHelperTests : UnitTester
 		// Define a test class with a field and an attribute
 #pragma warning disable CS0612 // Type or member is obsolete
 		var field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
+
+		// Run again to hit cache
+		field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
+
 #pragma warning restore CS0612 // Type or member is obsolete
 		var attr = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
 		Assert.IsNotNull(attr);
@@ -973,6 +998,10 @@ public class TypeHelperTests : UnitTester
 	public void GetAttribute_Type_WithAttribute_ReturnsAttribute()
 	{
 		var attr = TypeHelper.GetAttribute<InformationAttribute>(typeof(TypeHelper));
+
+		// Run again to hit cache
+		attr = TypeHelper.GetAttribute<InformationAttribute>(typeof(TypeHelper));
+
 		Assert.IsNotNull(attr);
 	}
 
@@ -1282,6 +1311,208 @@ public class TypeHelperTests : UnitTester
 		Assert.HasCount(2, result);
 		Assert.IsTrue(result.Any(kv => kv.Key == "Name" && kv.Value == "Test"));
 		Assert.IsTrue(result.Any(kv => kv.Key == "Age" && kv.Value == "30"));
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_AllDefaultParameters_ReturnsFullNameWithGenericParameters()
+	{
+		// Arrange
+		var type = typeof(List<string>);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type);
+
+		// Run again to hit cache
+		result = TypeHelper.GetTypeDisplayName(type);
+
+		// Assert
+		Assert.Contains("System.Collections.Generic.List<", result);
+		Assert.Contains("System.String", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_ArrayType_IncludesBrackets()
+	{
+		// Arrange
+		var type = typeof(int[]);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false);
+
+		// Assert
+		Assert.AreEqual("Int32[]", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_CalledTwice_ReturnsCachedResult()
+	{
+		// Arrange
+		var type = typeof(StringBuilder);
+
+		// Act
+		var result1 = TypeHelper.GetTypeDisplayName(type, fullName: true);
+		var result2 = TypeHelper.GetTypeDisplayName(type, fullName: true);
+
+		// Assert
+		Assert.AreEqual(result1, result2);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_CustomNestedTypeDelimiter_UsesSpecifiedDelimiter()
+	{
+		// Arrange
+		var type = typeof(string);
+
+		// Act
+		var result1 = TypeHelper.GetTypeDisplayName(type, fullName: true, nestedTypeDelimiter: '.');
+		var result2 = TypeHelper.GetTypeDisplayName(type, fullName: true, nestedTypeDelimiter: '/');
+
+		// Assert
+		Assert.IsNotEmpty(result1);
+		Assert.IsNotEmpty(result2);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_GenericType_WithGenericParameters_IncludesGenericArguments()
+	{
+		// Arrange
+		var type = typeof(List<int>);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false, includeGenericParameters: true);
+
+		// Assert
+		Assert.Contains("List<", result);
+		Assert.Contains("Int32", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_GenericType_WithoutGenericParameters_ExcludesGenericArguments()
+	{
+		// Arrange
+		var type = typeof(List<int>);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false, includeGenericParameters: false);
+
+		// Assert
+		Assert.AreEqual("List", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_MultiDimensionalArray_ReturnsCorrectFormat()
+	{
+		// Arrange
+		var type = typeof(int[,]);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false);
+
+		// Assert
+		Assert.IsNotEmpty(result);
+		Assert.Contains("Int32", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_NestedGenericType_WithFullName_ReturnsCorrectFormat()
+	{
+		// Arrange
+		var type = typeof(Dictionary<string, List<int>>);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: true, includeGenericParameters: true);
+
+		// Assert
+		Assert.Contains("Dictionary<", result);
+		Assert.Contains("System.String", result);
+		Assert.Contains("List<", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_NullableType_ReturnsCorrectFormat()
+	{
+		// Arrange
+		var type = typeof(int?);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false, includeGenericParameters: true);
+
+		// Assert
+		Assert.Contains("Nullable<", result);
+		Assert.Contains("Int32", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_NullType_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Type type = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetTypeDisplayName(type));
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_OpenGenericType_WithGenericParameterNames_IncludesParameterNames()
+	{
+		// Arrange
+		var type = typeof(Dictionary<,>);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false, includeGenericParameterNames: true, includeGenericParameters: true);
+
+		// Assert
+		Assert.Contains("Dictionary<", result);
+		Assert.Contains("TKey", result);
+		Assert.Contains("TValue", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_OpenGenericType_WithoutGenericParameterNames_ExcludesParameterNames()
+	{
+		// Arrange
+		var type = typeof(List<>);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Assert
+		Assert.AreEqual("List<>", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_PrimitiveType_ReturnsCorrectName()
+	{
+		// Arrange & Act & Assert
+		Assert.AreEqual("Int32", TypeHelper.GetTypeDisplayName(typeof(int), fullName: false));
+		Assert.AreEqual("Boolean", TypeHelper.GetTypeDisplayName(typeof(bool), fullName: false));
+		Assert.AreEqual("Double", TypeHelper.GetTypeDisplayName(typeof(double), fullName: false));
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_SimpleType_WithFullName_ReturnsFullName()
+	{
+		// Arrange
+		var type = typeof(string);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: true);
+
+		// Assert
+		Assert.AreEqual("System.String", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_SimpleType_WithoutFullName_ReturnsShortName()
+	{
+		// Arrange
+		var type = typeof(string);
+
+		// Act
+		var result = TypeHelper.GetTypeDisplayName(type, fullName: false);
+
+		// Assert
+		Assert.AreEqual("String", result);
 	}
 
 	[TestMethod]
@@ -2136,6 +2367,9 @@ public class TypeHelperTests : UnitTester
 	public void IsBuiltInTypeTest_ArraySegment_ReturnsTrue()
 	{
 		// ArraySegment<> is in the built-in types
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ArraySegment<>)));
+
+		// Run again to hit cache
 		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ArraySegment<>)));
 	}
 

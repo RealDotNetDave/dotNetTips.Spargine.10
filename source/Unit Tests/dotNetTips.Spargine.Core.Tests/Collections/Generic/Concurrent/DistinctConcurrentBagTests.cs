@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -31,6 +31,187 @@ public class DistinctConcurrentBagTests
 {
 
 	[TestMethod]
+	public void Add_AfterClear_AddsSuccessfully()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
+		bag.Clear();
+
+		// Act
+		bag.Add(10);
+		bag.Add(20);
+
+		// Assert
+		Assert.AreEqual(2, bag.Count);
+		Assert.IsTrue(bag.Contains(10));
+		Assert.IsTrue(bag.Contains(20));
+	}
+
+	[TestMethod]
+	public void Add_ConcurrentAccess_HandlesThreadSafely()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int>();
+		var tasks = new List<Task>();
+
+		// Act - Multiple threads try to add unique items
+		for (int taskId = 0; taskId < 10; taskId++)
+		{
+			var localTaskId = taskId;
+			tasks.Add(Task.Run(() =>
+			{
+				for (int i = localTaskId * 100; i < (localTaskId + 1) * 100; i++)
+				{
+					bag.Add(i);
+				}
+			}));
+		}
+
+		Task.WaitAll(tasks.ToArray());
+
+		// Assert
+		Assert.AreEqual(1000, bag.Count, "All unique items should be added across concurrent tasks.");
+	}
+
+	[TestMethod]
+	public void Add_ConcurrentDuplicates_HandlesThreadSafely()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int>();
+		var tasks = new List<Task>();
+
+		// Act - Multiple threads try to add same items
+		for (int taskId = 0; taskId < 10; taskId++)
+		{
+			tasks.Add(Task.Run(() =>
+			{
+				for (int i = 0; i < 100; i++)
+				{
+					bag.Add(i);
+				}
+			}));
+		}
+
+		Task.WaitAll(tasks.ToArray());
+
+		// Assert - Only 100 unique items should exist
+		Assert.AreEqual(100, bag.Count, "Only unique items should be in the bag.");
+	}
+
+	[TestMethod]
+	public void Add_DuplicateItems_CountRemainsOne()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<string>();
+
+		// Act
+		bag.Add("test");
+		bag.Add("test");
+		bag.Add("test");
+
+		// Assert
+		Assert.AreEqual(1, bag.Count);
+		Assert.IsTrue(bag.Contains("test"));
+	}
+
+	[TestMethod]
+	public void Add_LargeNumberOfItems_HandlesCorrectly()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int>();
+
+		// Act
+		for (int i = 0; i < 10000; i++)
+		{
+			bag.Add(i);
+		}
+
+		// Assert
+		Assert.AreEqual(10000, bag.Count);
+	}
+
+	[TestMethod]
+	public void Add_MultipleUniqueItems_AddsAllItems()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int>();
+
+		// Act
+		bag.Add(1);
+		bag.Add(2);
+		bag.Add(3);
+		bag.Add(4);
+		bag.Add(5);
+
+		// Assert
+		Assert.AreEqual(5, bag.Count);
+		Assert.IsTrue(bag.Contains(1));
+		Assert.IsTrue(bag.Contains(2));
+		Assert.IsTrue(bag.Contains(3));
+		Assert.IsTrue(bag.Contains(4));
+		Assert.IsTrue(bag.Contains(5));
+	}
+	[TestMethod]
+	public void Add_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.Add(null));
+	}
+
+	[TestMethod]
+	public void Add_PreviouslyRemovedItem_AddsSuccessfully()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int>();
+		bag.Add(5);
+		bag.Remove(5);
+
+		// Act
+		bag.Add(5);
+
+		// Assert
+		Assert.AreEqual(1, bag.Count);
+		Assert.IsTrue(bag.Contains(5));
+	}
+
+	[TestMethod]
+	public void Add_ReferenceType_AddsCorrectly()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<List<int>>();
+		var list1 = new List<int> { 1, 2, 3 };
+		var list2 = new List<int> { 4, 5, 6 };
+
+		// Act
+		bag.Add(list1);
+		bag.Add(list2);
+
+		// Assert
+		Assert.AreEqual(2, bag.Count);
+		Assert.IsTrue(bag.Contains(list1));
+		Assert.IsTrue(bag.Contains(list2));
+	}
+
+	[TestMethod]
+	public void Add_SameReferenceMultipleTimes_OnlyAddsOnce()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<List<int>>();
+		var list = new List<int> { 1, 2, 3 };
+
+		// Act
+		bag.Add(list);
+		bag.Add(list);
+		bag.Add(list);
+
+		// Assert
+		Assert.AreEqual(1, bag.Count);
+	}
+
+	[TestMethod]
 	public void Add_ShouldAddUniqueItem()
 	{
 		var bag = new DistinctConcurrentBag<int>();
@@ -44,6 +225,73 @@ public class DistinctConcurrentBagTests
 		var bag = new DistinctConcurrentBag<int>();
 		bag.Add(1);
 		bag.Add(1);
+		Assert.AreEqual(1, bag.Count);
+	}
+
+	[TestMethod]
+	public void Add_StringItems_MaintainsDistinctness()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<string>();
+
+		// Act
+		bag.Add("apple");
+		bag.Add("banana");
+		bag.Add("apple");
+		bag.Add("cherry");
+		bag.Add("banana");
+
+		// Assert
+		Assert.AreEqual(3, bag.Count);
+		Assert.IsTrue(bag.Contains("apple"));
+		Assert.IsTrue(bag.Contains("banana"));
+		Assert.IsTrue(bag.Contains("cherry"));
+	}
+
+	[TestMethod]
+	public void Add_ToEmptyBag_IncreasesCount()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<int>();
+
+		// Act
+		bag.Add(42);
+
+		// Assert
+		Assert.AreEqual(1, bag.Count);
+		Assert.IsFalse(bag.IsEmpty);
+	}
+
+	[TestMethod]
+	public void Add_ValueType_AddsCorrectly()
+	{
+		// Arrange
+		var bag = new DistinctConcurrentBag<DateTime>();
+		var date1 = new DateTime(2025, 1, 1);
+		var date2 = new DateTime(2025, 6, 15);
+
+		// Act
+		bag.Add(date1);
+		bag.Add(date2);
+		bag.Add(date1); // Duplicate
+
+		// Assert
+		Assert.AreEqual(2, bag.Count);
+	}
+
+	[TestMethod]
+	public void Add_WithCustomComparer_UsesComparer()
+	{
+		// Arrange
+		var comparer = StringComparer.OrdinalIgnoreCase;
+		var bag = new DistinctConcurrentBag<string>(comparer);
+
+		// Act
+		bag.Add("Test");
+		bag.Add("TEST");
+		bag.Add("test");
+
+		// Assert - All should be treated as duplicates
 		Assert.AreEqual(1, bag.Count);
 	}
 

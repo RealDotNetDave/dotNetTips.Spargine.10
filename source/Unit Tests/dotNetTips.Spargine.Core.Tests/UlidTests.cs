@@ -4,7 +4,7 @@
 // Created          : 05-06-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="UlidTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,6 +13,10 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -22,6 +26,194 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class UlidTests
 {
+
+	[TestMethod]
+	public void NewUlid_ContainsOnlyValidBase32Characters()
+	{
+		// Arrange
+		var validChars = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+
+		// Act
+		var ulid = Ulid.NewUlid();
+		var ulidString = ulid.ToString();
+
+		// Assert
+		foreach (var c in ulidString)
+		{
+			Assert.IsTrue(validChars.Contains(c), $"Invalid character '{c}' found in ULID.");
+		}
+	}
+
+	[TestMethod]
+	public void NewUlid_GeneratedUlid_CanBeParsedBack()
+	{
+		// Arrange
+		var originalUlid = Ulid.NewUlid();
+		var ulidString = originalUlid.ToString();
+
+		// Act
+		var parsedUlid = Ulid.Parse(ulidString);
+
+		// Assert
+		Assert.AreEqual(originalUlid, parsedUlid);
+	}
+
+	[TestMethod]
+	public void NewUlid_GeneratedUlid_HasValidTimestamp()
+	{
+		// Arrange
+		var beforeGeneration = DateTimeOffset.UtcNow;
+
+		// Act
+		var ulid = Ulid.NewUlid();
+		var afterGeneration = DateTimeOffset.UtcNow;
+
+		var timestamp = ulid.GetTimeStamp();
+
+		// Assert
+		Assert.IsTrue(timestamp >= beforeGeneration.AddMilliseconds(-1), "Timestamp should be at or after generation start.");
+		Assert.IsTrue(timestamp <= afterGeneration.AddMilliseconds(1), "Timestamp should be at or before generation end.");
+	}
+
+	[TestMethod]
+	public void NewUlid_GeneratedUlid_TryParseSucceeds()
+	{
+		// Arrange
+		var originalUlid = Ulid.NewUlid();
+		var ulidString = originalUlid.ToString();
+
+		// Act
+		var result = Ulid.TryParse(ulidString, out var parsedUlid);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(originalUlid, parsedUlid);
+	}
+
+	[TestMethod]
+	public void NewUlid_IsLexicographicallySortable()
+	{
+		// Arrange
+		var ulids = new List<Ulid>();
+
+		for (var i = 0; i < 10; i++)
+		{
+			ulids.Add(Ulid.NewUlid());
+			Thread.Sleep(1);
+		}
+
+		// Act
+		var sortedByString = ulids.OrderBy(u => u.ToString()).ToList();
+
+		// Assert - Original order should match lexicographic sort order
+		for (var i = 0; i < ulids.Count; i++)
+		{
+			Assert.AreEqual(ulids[i], sortedByString[i], $"ULID at index {i} should be in lexicographic order.");
+		}
+	}
+
+	[TestMethod]
+	public void NewUlid_LaterUlid_IsGreaterOrEqual()
+	{
+		// Arrange
+		var ulid1 = Ulid.NewUlid();
+
+		// Small delay to ensure timestamp difference
+		Thread.Sleep(1);
+
+		var ulid2 = Ulid.NewUlid();
+
+		// Assert - ULIDs should be lexicographically sortable by time
+		Assert.IsTrue(ulid2 >= ulid1, "Later ULID should be greater than or equal to earlier ULID.");
+	}
+
+	[TestMethod]
+	public void NewUlid_MultipleRapidGenerations_AllUnique()
+	{
+		// Arrange
+		const int count = 1000;
+		var ulids = new HashSet<string>();
+
+		// Act
+		for (var i = 0; i < count; i++)
+		{
+			var ulid = Ulid.NewUlid();
+			ulids.Add(ulid.ToString());
+		}
+
+		// Assert
+		Assert.AreEqual(count, ulids.Count, "All generated ULIDs should be unique.");
+	}
+
+	[TestMethod]
+	public void NewUlid_ParallelGeneration_AllUnique()
+	{
+		// Arrange
+		const int count = 100;
+		var ulids = new System.Collections.Concurrent.ConcurrentBag<string>();
+
+		// Act
+		Parallel.For(0, count, _ =>
+		{
+			var ulid = Ulid.NewUlid();
+			ulids.Add(ulid.ToString());
+		});
+
+		// Assert
+		var distinctCount = ulids.Distinct().Count();
+		Assert.AreEqual(count, distinctCount, "All parallel-generated ULIDs should be unique.");
+	}
+
+	[TestMethod]
+	public void NewUlid_RandomComponent_IsDifferent()
+	{
+		// Arrange & Act
+		var ulid1 = Ulid.NewUlid();
+		var ulid2 = Ulid.NewUlid();
+
+		var random1 = ulid1.ToString()[10..];
+		var random2 = ulid2.ToString()[10..];
+
+		// Assert - Random portions should be different
+		Assert.AreNotEqual(random1, random2, "Random components should differ between ULIDs.");
+	}
+
+	[TestMethod]
+	public void NewUlid_ReturnsCorrectLength()
+	{
+		// Act
+		var ulid = Ulid.NewUlid();
+
+		// Assert
+		Assert.AreEqual(26, ulid.ToString().Length);
+	}
+	[TestMethod]
+	public void NewUlid_ReturnsNonNullUlid()
+	{
+		// Act
+		var ulid = Ulid.NewUlid();
+
+		// Assert
+		Assert.IsNotNull(ulid.ToString());
+	}
+
+	[TestMethod]
+	public void NewUlid_TimestampComponent_IsFirst10Characters()
+	{
+		// Arrange
+		var ulid1 = Ulid.NewUlid();
+
+		Thread.Sleep(10); // Wait to ensure different timestamp
+
+		var ulid2 = Ulid.NewUlid();
+
+		// Act
+		var timestamp1 = ulid1.ToString()[..10];
+		var timestamp2 = ulid2.ToString()[..10];
+
+		// Assert - Timestamp portions should be different after delay
+		Assert.AreNotEqual(timestamp1, timestamp2, "Timestamp components should differ after delay.");
+	}
 
 	[TestMethod]
 	public void Ulid_CompareTo_DifferentValues_ReturnsNonZero()

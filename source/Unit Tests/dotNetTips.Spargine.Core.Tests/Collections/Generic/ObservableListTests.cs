@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="ObservableListTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -33,6 +33,37 @@ public class ObservableListTests
 	private List<NotifyCollectionChangedEventArgs> _collectionChangedEvents;
 	private ObservableList<int> _observableList;
 	private List<PropertyChangedEventArgs> _propertyChangedEvents;
+
+	public ObservableListTests()
+	{
+		this._observableList = new ObservableList<int>();
+		this._collectionChangedEvents = new List<NotifyCollectionChangedEventArgs>();
+		this._propertyChangedEvents = new List<PropertyChangedEventArgs>();
+
+		this._observableList.CollectionChanged += (sender, e) => this._collectionChangedEvents.Add(e);
+		this._observableList.PropertyChanged += (sender, e) => this._propertyChangedEvents.Add(e);
+	}
+
+	[TestMethod]
+	public void Add_NullItem_ReturnsFalseAndDoesNotModifyCollection()
+	{
+		// Arrange
+		var list = new ObservableList<string>();
+		var collectionChangedRaised = false;
+		var propertyChangedRaised = false;
+
+		list.CollectionChanged += (sender, e) => collectionChangedRaised = true;
+		list.PropertyChanged += (sender, e) => propertyChangedRaised = true;
+
+		// Act
+		var result = list.Add(null);
+
+		// Assert
+		Assert.IsFalse(result, "Add should return false for null item.");
+		Assert.AreEqual(0, list.Count, "Count should remain 0.");
+		Assert.IsFalse(collectionChangedRaised, "CollectionChanged event should not be raised for null item.");
+		Assert.IsFalse(propertyChangedRaised, "PropertyChanged event should not be raised for null item.");
+	}
 
 	[TestMethod]
 	public void Add_ShouldTriggerCollectionAndPropertyChangedEvents()
@@ -559,16 +590,6 @@ public class ObservableListTests
 		Assert.IsTrue(this._observableList.Contains(result), "Returned item should be in the list.");
 	}
 
-	public ObservableListTests()
-	{
-		this._observableList = new ObservableList<int>();
-		this._collectionChangedEvents = new List<NotifyCollectionChangedEventArgs>();
-		this._propertyChangedEvents = new List<PropertyChangedEventArgs>();
-
-		this._observableList.CollectionChanged += (sender, e) => this._collectionChangedEvents.Add(e);
-		this._observableList.PropertyChanged += (sender, e) => this._propertyChangedEvents.Add(e);
-	}
-
 	[TestMethod]
 	public void IntersectWith_EmptyOtherCollection_ShouldClearList()
 	{
@@ -1016,6 +1037,29 @@ public class ObservableListTests
 		Assert.AreEqual("Count", propertyChangingEvents[0].PropertyName, "PropertyChanging should be for Count property.");
 		Assert.IsNotEmpty(this._propertyChangedEvents, "PropertyChanged event should be raised.");
 		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "PropertyChanged should be for Count property.");
+	}
+
+	[TestMethod]
+	public void Remove_ItemNotInList_ReturnsFalseAndDoesNotModifyCollection()
+	{
+		// Arrange
+		var list = new ObservableList<int> { 1, 2, 3, 4, 5 };
+		var originalCount = list.Count;
+		var collectionChangedRaised = false;
+		var propertyChangedRaised = false;
+
+		list.CollectionChanged += (sender, e) => collectionChangedRaised = true;
+		list.PropertyChanged += (sender, e) => propertyChangedRaised = true;
+
+		// Act
+		var result = list.Remove(999); // Item not in list
+
+		// Assert
+		Assert.IsFalse(result, "Remove should return false for item not in list.");
+		Assert.AreEqual(originalCount, list.Count, "Count should remain unchanged.");
+		Assert.IsFalse(collectionChangedRaised, "CollectionChanged event should not be raised.");
+		Assert.IsFalse(propertyChangedRaised, "PropertyChanged event should not be raised.");
+		Assert.IsTrue(list.Contains(1) && list.Contains(2) && list.Contains(3), "Original items should remain.");
 	}
 
 	[TestMethod]

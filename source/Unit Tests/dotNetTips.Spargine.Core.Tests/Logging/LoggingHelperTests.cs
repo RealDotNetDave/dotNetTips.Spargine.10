@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-06-2024
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="LoggingHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using DotNetTips.Spargine.Core.Logging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -28,6 +29,55 @@ public class LoggingHelperTests
 {
 
 	private readonly ILogger _logger = new NullLogger<LoggingHelperTests>();
+
+	[TestMethod]
+	public void LogApplicationInformation_NullLogger_ThrowsArgumentNullException()
+	{
+		// Arrange
+		ILogger logger = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.LogApplicationInformation(logger));
+	}
+
+	[TestMethod]
+	public void LogApplicationInformation_WhenLogLevelDisabled_DoesNotLog()
+	{
+		// Arrange - NullLogger returns false for IsEnabled
+		var logger = new NullLogger<LoggingHelperTests>();
+
+		// Act - Should return early without logging
+		LoggingHelper.LogApplicationInformation(logger);
+
+		// Assert - No exception thrown, method exits early
+	}
+
+	[TestMethod]
+	public void LogApplicationInformation_WithEnabledLogger_LogsAppInfo()
+	{
+		// Arrange
+		var logger = new MockLogger();
+
+		// Act
+		LoggingHelper.LogApplicationInformation(logger);
+
+		// Assert
+		Assert.IsTrue(logger.LoggedMessages.Count > 0, "Should log application information.");
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("AppInfo:")), "Messages should contain AppInfo prefix.");
+	}
+
+	[TestMethod]
+	public void LogApplicationInformation_WithEnabledLogger_LogsAtInformationLevel()
+	{
+		// Arrange
+		var logger = new MockLogger();
+
+		// Act
+		LoggingHelper.LogApplicationInformation(logger);
+
+		// Assert
+		Assert.IsTrue(logger.LoggedLevels.All(l => l == LogLevel.Information), "All messages should be logged at Information level.");
+	}
 
 	[TestMethod]
 	public void LogApplicationInformationTest()

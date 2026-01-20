@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
@@ -32,6 +33,7 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class ExceptionExtensionsTests
 {
+
 	private NullLogger<FastLoggerExtensionsTests> _logger;
 
 	public ExceptionExtensionsTests()
@@ -659,8 +661,209 @@ public class ExceptionExtensionsTests
 	[TestMethod]
 	public void LogException()
 	{
+
 		var exception = new Exception("Test exception");
 		exception.LogException(this._logger, LogLevel.Error);
+	}
+
+	[TestMethod]
+	public void LogException_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+		var logger = new MockLogger();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.LogException(logger));
+	}
+
+	[TestMethod]
+	public void LogException_NullLogger_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var exception = new Exception("Test exception");
+		ILogger logger = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.LogException(logger));
+	}
+
+	[TestMethod]
+	public void LogException_WhenLogLevelDisabled_DoesNotLogOrSetIsLogged()
+	{
+		// Arrange - Use NullLogger which has IsEnabled = false
+		var exception = new Exception("Test exception");
+		var logger = new NullLogger<ExceptionExtensionsTests>();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Error);
+
+		// Assert - Should NOT set IsLogged because logger.IsEnabled returns false
+		Assert.IsFalse(exception.IsLogged());
+	}
+
+	[TestMethod]
+	public void LogException_WithCriticalLogLevel_LogsAndSetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Critical exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Critical);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedLevels.Contains(LogLevel.Critical));
+	}
+
+	[TestMethod]
+	public void LogException_WithDebugLogLevel_LogsAndSetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Debug exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Debug);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("Debug")));
+	}
+
+	[TestMethod]
+	public void LogException_WithDefaultLogLevel_SetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Test exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count > 0);
+	}
+
+	[TestMethod]
+	public void LogException_WithErrorLogLevel_LogsAndSetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Error exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Error);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedLevels.Contains(LogLevel.Error));
+	}
+
+	[TestMethod]
+	public void LogException_WithInformationLogLevel_LogsAndSetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Information exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Information);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("Info")));
+	}
+
+	[TestMethod]
+	public void LogException_WithInnerException_LogsAllExceptions()
+	{
+		// Arrange
+		var innerException = new InvalidOperationException("Inner exception");
+		var outerException = new Exception("Outer exception", innerException);
+		var logger = new MockLogger();
+		outerException.ClearIsLogged();
+
+		// Act
+		outerException.LogException(logger, LogLevel.Error);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("Outer exception")));
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("Inner exception")));
+	}
+
+	[TestMethod]
+	public void LogException_WithMultipleNestedInnerExceptions_LogsAllExceptions()
+	{
+		// Arrange
+		var innermost = new ArgumentNullException("param", "Innermost exception");
+		var middle = new InvalidOperationException("Middle exception", innermost);
+		var outer = new Exception("Outer exception", middle);
+		var logger = new MockLogger();
+		outer.ClearIsLogged();
+
+		// Act
+		outer.LogException(logger, LogLevel.Error);
+
+		// Assert
+		Assert.IsTrue(outer.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count >= 3, "Should log outer, middle, and innermost exceptions");
+	}
+
+	[TestMethod]
+	public void LogException_WithNoneLogLevel_SetsIsLoggedButNoMessages()
+	{
+		// Arrange
+		var exception = new Exception("None log level exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.None);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+	}
+
+	[TestMethod]
+	public void LogException_WithTraceLogLevel_LogsAndSetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Trace exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Trace);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("Trace")));
+	}
+
+	[TestMethod]
+	public void LogException_WithWarningLogLevel_LogsAndSetsIsLogged()
+	{
+		// Arrange
+		var exception = new Exception("Warning exception");
+		var logger = new MockLogger();
+		exception.ClearIsLogged();
+
+		// Act
+		exception.LogException(logger, LogLevel.Warning);
+
+		// Assert
+		Assert.IsTrue(exception.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("Warning")));
 	}
 
 	[TestMethod]
@@ -861,5 +1064,23 @@ public class ExceptionExtensionsTests
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ex.TraverseFor<InvalidOperationException>());
 	}
+}
 
+/// <summary>
+/// A simple mock logger that enables all log levels for testing purposes.
+/// </summary>
+internal class MockLogger : ILogger
+{
+	public List<LogLevel> LoggedLevels { get; } = [];
+	public List<string> LoggedMessages { get; } = [];
+
+	public IDisposable BeginScope<TState>(TState state) where TState : notnull => null!;
+
+	public bool IsEnabled(LogLevel logLevel) => true; // Always enabled
+
+	public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+	{
+		this.LoggedLevels.Add(logLevel);
+		this.LoggedMessages.Add(formatter(state, exception));
+	}
 }
