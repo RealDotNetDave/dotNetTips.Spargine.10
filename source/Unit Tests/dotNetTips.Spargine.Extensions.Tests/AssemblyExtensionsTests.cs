@@ -62,13 +62,6 @@ public class AssemblyExtensionsTests
 	}
 
 	[TestMethod]
-	public void GetInstances_ReturnsEmptyForNoMatch()
-	{
-		var result = Assembly.GetExecutingAssembly().GetInstances<IDisposable>();
-		Assert.IsTrue(result.All(x => x is IDisposable));
-	}
-
-	[TestMethod]
 	public void GetInstancesTest()
 	{
 		var result = Assembly.GetExecutingAssembly().GetInstances<AssemblyExtensionsTests>();

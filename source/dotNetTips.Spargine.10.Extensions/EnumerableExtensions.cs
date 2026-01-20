@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1163,7 +1163,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool FastAny([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			return collection.Any(accumulatorPredicate);
@@ -1193,9 +1193,19 @@ public static class EnumerableExtensions
 		/// <c>true</c> if the collection contains any of the specified items; otherwise, <c>false</c>.
 		/// Returns <c>false</c> if the collection or items are null or empty.
 		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized lookup paths:
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><see cref="ISet{T}"/> (HashSet, etc.) - Uses O(1) Contains for each item.</description></item>
+		/// <item><description>Large item sets (>10 items) - Converts collection to HashSet for O(1) lookups.</description></item>
+		/// <item><description>Small item sets - Uses direct enumeration to avoid HashSet allocation overhead.</description></item>
+		/// </list>
+		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool ContainsAny([AllowNull] params ReadOnlyCollection<T> items)
 		{
 			if (collection is null || items is null || items.Count == 0)
@@ -1203,6 +1213,38 @@ public static class EnumerableExtensions
 				return false;
 			}
 
+			// Fast path: If collection is already a set, Contains is O(1)
+			if (collection is ISet<T> set)
+			{
+				foreach (var item in items)
+				{
+					if (set.Contains(item))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			// For larger item sets, convert collection to HashSet for O(1) lookups
+			// Threshold chosen based on typical break-even point for HashSet creation overhead
+			if (items.Count > 10)
+			{
+				var hashSet = collection as HashSet<T> ?? [.. collection];
+
+				foreach (var item in items)
+				{
+					if (hashSet.Contains(item))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			// Small item sets: direct enumeration avoids HashSet allocation overhead
 			foreach (var item in items)
 			{
 				if (collection.Contains(item))
@@ -1220,7 +1262,7 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the collection contains duplicates; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public bool HasDuplicates()
 		{
 			// Fast-path: null or already-known empty

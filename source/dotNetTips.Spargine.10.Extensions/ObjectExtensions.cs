@@ -284,7 +284,7 @@ public static class ObjectExtensions
 		/// <typeparam name="T">The type of the objects to compare. Must implement <see cref="IComparable"/>.</typeparam>
 		/// <param name="obj2">The second object to compare. This parameter can be null.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Min), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(Min), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T? Min<T>([DisallowNull] T obj2) where T : IComparable
 		{
 			return obj is T comparableObj

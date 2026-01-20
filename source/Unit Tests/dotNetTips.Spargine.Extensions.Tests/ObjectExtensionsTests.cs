@@ -1039,6 +1039,224 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void Min_BothAreEqual_ReturnsValue()
+	{
+		// Arrange
+		object obj1 = 5;
+		var obj2 = 5;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Min_FirstIsSmaller_ReturnsFirst()
+	{
+		// Arrange
+		object obj1 = 5;
+		var obj2 = 10;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Min_ObjectNotComparableType_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		object obj1 = new List<int> { 1, 2, 3 }; // List<T> doesn't implement IComparable
+		var obj2 = 10;
+
+		// Act & Assert
+		Assert.ThrowsExactly<InvalidOperationException>(() => obj1.Min(obj2));
+	}
+
+	[TestMethod]
+	public void Min_SecondIsSmaller_ReturnsSecond()
+	{
+		// Arrange
+		object obj1 = 10;
+		var obj2 = 5;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Min_WithChar_ReturnsSmallerValue()
+	{
+		// Arrange
+		object obj1 = 'Z';
+		var obj2 = 'A';
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual('A', result);
+	}
+
+	[TestMethod]
+	public void Min_WithDateTime_ReturnsEarlierDate()
+	{
+		// Arrange
+		object obj1 = new DateTime(2024, 12, 31);
+		var obj2 = new DateTime(2024, 1, 1);
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(new DateTime(2024, 1, 1), result);
+	}
+
+	[TestMethod]
+	public void Min_WithDateTimeOffset_ReturnsEarlierDate()
+	{
+		// Arrange
+		object obj1 = new DateTimeOffset(2024, 12, 31, 0, 0, 0, TimeSpan.Zero);
+		var obj2 = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero), result);
+	}
+
+	[TestMethod]
+	public void Min_WithDecimal_ReturnsSmallerValue()
+	{
+		// Arrange
+		object obj1 = 24.99m;
+		var obj2 = 19.99m;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(19.99m, result);
+	}
+
+	[TestMethod]
+	public void Min_WithDouble_ReturnsSmallerValue()
+	{
+		// Arrange
+		object obj1 = 3.14159;
+		var obj2 = 2.71828;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(2.71828, result);
+	}
+
+	[TestMethod]
+	public void Min_WithGuid_ReturnsSmallerGuid()
+	{
+		// Arrange
+		object obj1 = new Guid("ffffffff-ffff-ffff-ffff-ffffffffffff");
+		var obj2 = new Guid("00000000-0000-0000-0000-000000000001");
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000001"), result);
+	}
+
+	[TestMethod]
+	public void Min_WithLong_ReturnsSmallerValue()
+	{
+		// Arrange
+		object obj1 = 1000000000L;
+		var obj2 = 500000000L;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(500000000L, result);
+	}
+
+	[TestMethod]
+	public void Min_WithNegativeNumbers_ReturnsSmallerValue()
+	{
+		// Arrange
+		object obj1 = -5;
+		var obj2 = -10;
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(-10, result);
+	}
+
+	[TestMethod]
+	public void Min_WithStrings_ReturnsLexicographicallySmaller()
+	{
+		// Arrange
+		object obj1 = "banana";
+		var obj2 = "apple";
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual("apple", result);
+	}
+
+	[TestMethod]
+	public void Min_WithTimeSpan_ReturnsShorterDuration()
+	{
+		// Arrange
+		object obj1 = TimeSpan.FromHours(2);
+		var obj2 = TimeSpan.FromMinutes(30);
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(TimeSpan.FromMinutes(30), result);
+	}
+
+	[TestMethod]
+	public void Min_WithVersion_ReturnsLowerVersion()
+	{
+		// Arrange
+		object obj1 = new Version(2, 0, 0);
+		var obj2 = new Version(1, 0, 0);
+
+		// Act
+		var result = obj1.Min(obj2);
+
+		// Assert
+		Assert.AreEqual(new Version(1, 0, 0), result);
+	}
+
+	[TestMethod]
+	public void Min_WrongType_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		object obj1 = "not an integer";
+		var obj2 = 10;
+
+		// Act & Assert
+		Assert.ThrowsExactly<InvalidOperationException>(() => obj1.Min(obj2));
+	}
+
+	[TestMethod]
 	public void NullObjectTest()
 	{
 		var person = RandomData.GeneratePerson<Person>();

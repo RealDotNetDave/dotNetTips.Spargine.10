@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -338,6 +339,290 @@ public class EnumerableExtensionsTests
 		result = people.AddIf(person, false);
 
 		Assert.AreEqual(people.Count(), result.Count());
+	}
+
+	[TestMethod]
+	public void ContainsAny_AllItemsMatch_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var items = new ReadOnlyCollection<int>([1, 2, 3, 4, 5]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_ContainsFirstItem_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var items = new ReadOnlyCollection<int>([1, 10, 20]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_ContainsLastItem_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var items = new ReadOnlyCollection<int>([10, 20, 3]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_ContainsMultipleItems_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var items = new ReadOnlyCollection<int>([2, 3, 4]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_ContainsNoItems_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var items = new ReadOnlyCollection<int>([10, 20, 30]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_ContainsOneItem_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var items = new ReadOnlyCollection<int>([10, 20, 3, 30]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_EmptyCollection_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int>();
+		var items = new ReadOnlyCollection<int>([1, 2, 3]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_EmptyItems_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+		var items = new ReadOnlyCollection<int>([]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_LargeCollection_ContainsItem_ReturnsTrue()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 10000).ToList();
+		var items = new ReadOnlyCollection<int>([9999, 20000, 30000]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_LargeCollection_NoMatch_ReturnsFalse()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 10000).ToList();
+		var items = new ReadOnlyCollection<int>([20000, 30000, 40000]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_NullCollection_ReturnsFalse()
+	{
+		// Arrange
+		List<int> collection = null;
+		var items = new ReadOnlyCollection<int>([1, 2, 3]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_NullItems_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = collection.ContainsAny(null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_SingleItemMatch_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 42 };
+		var items = new ReadOnlyCollection<int>([42]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_SingleItemNoMatch_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 42 };
+		var items = new ReadOnlyCollection<int>([99]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithArray_ContainsItem_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new[] { 1, 2, 3, 4, 5 };
+		var items = new ReadOnlyCollection<int>([10, 3, 20]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithHashSet_ContainsItem_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> collection = new HashSet<int> { 1, 2, 3, 4, 5 };
+		var items = new ReadOnlyCollection<int>([10, 3, 20]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithReferenceType_DifferentInstance_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<Person>
+	{
+		RandomData.GeneratePerson<Person>(),
+		RandomData.GeneratePerson<Person>()
+	};
+		var items = new ReadOnlyCollection<Person>([RandomData.GeneratePerson<Person>()]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithReferenceType_SameInstance_ReturnsTrue()
+	{
+		// Arrange
+		var person = RandomData.GeneratePerson<Person>();
+		var collection = new List<Person> { person, RandomData.GeneratePerson<Person>() };
+		var items = new ReadOnlyCollection<Person>([person]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithStrings_ContainsItem_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "cherry" };
+		var items = new ReadOnlyCollection<string>(["grape", "banana", "orange"]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsAny_WithStrings_NoMatch_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "cherry" };
+		var items = new ReadOnlyCollection<string>(["grape", "orange", "mango"]);
+
+		// Act
+		var result = collection.ContainsAny(items);
+
+		// Assert
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -935,6 +1220,282 @@ public class EnumerableExtensionsTests
 		var result = numbers.FastLongCount(n => n % 2 == 0);
 
 		Assert.AreEqual((long)(Count / 2), result);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_CountsCorrectly_WithList()
+	{
+		// Arrange
+		var collection = new List<int> { 10, 20, 30, 40, 50 };
+		var itemIndex = 0;
+		var expectedOrder = new[] { 10, 20, 30, 40, 50 };
+		var orderCorrect = true;
+
+		// Act
+		collection.FastProcessor(item =>
+		{
+			if (item != expectedOrder[itemIndex])
+			{
+				orderCorrect = false;
+			}
+			itemIndex++;
+		});
+
+		// Assert
+		Assert.IsTrue(orderCorrect, "Items should be processed in order");
+		Assert.AreEqual(5, itemIndex);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_ModifiesExternalState_CorrectlyUpdatesState()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var results = new Dictionary<int, int>();
+
+		// Act
+		collection.FastProcessor(item => results[item] = item * item);
+
+		// Assert
+		Assert.AreEqual(5, results.Count);
+		Assert.AreEqual(1, results[1]);
+		Assert.AreEqual(4, results[2]);
+		Assert.AreEqual(9, results[3]);
+		Assert.AreEqual(16, results[4]);
+		Assert.AreEqual(25, results[5]);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_NullAction_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => collection.FastProcessor((Action<int>)null));
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithConcurrentBag_ProcessesAllItems()
+	{
+		// Arrange - ConcurrentBag uses the fallback foreach path
+		IEnumerable<int> collection = new ConcurrentBag<int>([1, 2, 3, 4, 5]);
+		var sum = 0;
+
+		// Act
+		collection.FastProcessor(item => Interlocked.Add(ref sum, item));
+
+		// Assert
+		Assert.AreEqual(15, sum);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithEmptyList_DoesNothing()
+	{
+		// Arrange
+		var collection = new List<int>();
+		var processedCount = 0;
+
+		// Act
+		collection.FastProcessor(_ => processedCount++);
+
+		// Assert
+		Assert.AreEqual(0, processedCount);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithEnumerableRange_ProcessesAllItems()
+	{
+		// Arrange - Enumerable.Range returns IEnumerable, not List or array
+		var collection = Enumerable.Range(1, 5);
+		var sum = 0;
+
+		// Act
+		collection.FastProcessor(item => sum += item);
+
+		// Assert
+		Assert.AreEqual(15, sum);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithHashSet_ProcessesAllItems()
+	{
+		// Arrange - HashSet is not List or array, uses fallback path
+		IEnumerable<int> collection = new HashSet<int> { 1, 2, 3, 4, 5 };
+		var sum = 0;
+
+		// Act
+		collection.FastProcessor(item => sum += item);
+
+		// Assert
+		Assert.AreEqual(15, sum);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithImmutableList_ProcessesAllItems()
+	{
+		// Arrange - ImmutableList uses the fallback foreach path
+		IEnumerable<int> collection = ImmutableList.Create(1, 2, 3, 4, 5);
+		var sum = 0;
+
+		// Act
+		collection.FastProcessor(item => sum += item);
+
+		// Assert
+		Assert.AreEqual(15, sum);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithLargeList_ProcessesAllItems()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 10000).ToList();
+		var sum = 0L;
+
+		// Act
+		collection.FastProcessor(item => sum += item);
+
+		// Assert
+		Assert.AreEqual(50005000L, sum); // Sum of 1 to 10000
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithLinkedList_ProcessesAllItems()
+	{
+		// Arrange - LinkedList uses the fallback foreach path
+		IEnumerable<int> collection = new LinkedList<int>([1, 2, 3, 4, 5]);
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithList_ProcessesAllItems()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item * 2));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEqual(new[] { 2, 4, 6, 8, 10 }, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithQueue_ProcessesAllItems()
+	{
+		// Arrange - Queue uses the fallback foreach path
+		IEnumerable<int> collection = new Queue<int>([1, 2, 3, 4, 5]);
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithReferenceTypes_ProcessesAllItems()
+	{
+		// Arrange
+		var collection = new List<Person>
+	{
+		RandomData.GeneratePerson<Person>(),
+		RandomData.GeneratePerson<Person>(),
+		RandomData.GeneratePerson<Person>()
+	};
+		var processedCount = 0;
+
+		// Act
+		collection.FastProcessor(_ => processedCount++);
+
+		// Assert
+		Assert.AreEqual(3, processedCount);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithSelectQuery_ProcessesAllItems()
+	{
+		// Arrange - LINQ Select returns IEnumerable, uses fallback path
+		var source = new List<int> { 1, 2, 3 };
+		var collection = source.Select(x => x * 10);
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(3, processedItems.Count);
+		CollectionAssert.AreEqual(new[] { 10, 20, 30 }, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithSingleItemList_ProcessesItem()
+	{
+		// Arrange
+		var collection = new List<int> { 42 };
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(1, processedItems.Count);
+		Assert.AreEqual(42, processedItems[0]);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithStack_ProcessesAllItems()
+	{
+		// Arrange - Stack uses the fallback foreach path
+		IEnumerable<int> collection = new Stack<int>([1, 2, 3, 4, 5]);
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithStrings_ProcessesAllItems()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "cherry" };
+		var concatenated = string.Empty;
+
+		// Act
+		collection.FastProcessor(item => concatenated += item);
+
+		// Assert
+		Assert.AreEqual("applebananacherry", concatenated);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithWhereQuery_ProcessesFilteredItems()
+	{
+		// Arrange - LINQ Where returns IEnumerable, uses fallback path
+		var source = new List<int> { 1, 2, 3, 4, 5 };
+		var collection = source.Where(x => x % 2 == 0);
+		var processedItems = new List<int>();
+
+		// Act
+		collection.FastProcessor(item => processedItems.Add(item));
+
+		// Assert
+		Assert.AreEqual(2, processedItems.Count);
+		CollectionAssert.AreEqual(new[] { 2, 4 }, processedItems);
 	}
 
 	[TestMethod]
@@ -2118,6 +2679,318 @@ public class EnumerableExtensionsTests
 		Assert.IsTrue(testValue.ToDelimitedString(',').IsNotEmpty());
 		Assert.IsTrue(testValue.ToDelimitedString().IsNotEmpty());
 		Assert.IsTrue(string.Empty.ToDelimitedString().IsEmpty());
+	}
+
+	[TestMethod]
+	public void HasDuplicates_AllSameValues_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 5, 5, 5, 5, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_ArrayWithDuplicates_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new[] { 1, 2, 3, 3, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_ArrayWithNoDuplicates_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_DuplicateAtBeginning_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_DuplicateAtEnd_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5, 1 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_EmptyArray_ReturnsFalse()
+	{
+		// Arrange
+		var collection = Array.Empty<int>();
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_EmptyCollection_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int>();
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_HashSet_ReturnsFalse()
+	{
+		// Arrange - HashSet is always unique by definition
+		var collection = new HashSet<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_IEnumerableNonCollection_NoDuplicates_ReturnsFalse()
+	{
+		// Arrange - Use Select to create an IEnumerable that is not ICollection
+		IEnumerable<int> collection = Enumerable.Range(1, 10).Select(x => x);
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_IEnumerableNonCollection_WithDuplicates_ReturnsTrue()
+	{
+		// Arrange - Use generator to create IEnumerable with duplicates
+		static IEnumerable<int> GenerateWithDuplicates()
+		{
+			yield return 1;
+			yield return 2;
+			yield return 3;
+			yield return 2; // duplicate
+			yield return 5;
+		}
+
+		// Act
+		var result = GenerateWithDuplicates().HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_LargeCollectionNoDuplicates_ReturnsFalse()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 10000).ToList();
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_LargeCollectionWithDuplicates_ReturnsTrue()
+	{
+		// Arrange
+		var collection = Enumerable.Range(1, 10000).ToList();
+		collection.Add(5000); // Add a duplicate
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_ListWithDuplicates_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 2, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_ListWithNoDuplicates_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_NullableValueType_WithDuplicateNulls_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int?> { 1, null, 2, null, 3 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_NullCollection_ReturnsFalse()
+	{
+		// Arrange
+		List<int> collection = null;
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_ReferenceTypeDifferentInstances_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<Person>
+	{
+		RandomData.GeneratePerson<Person>(),
+		RandomData.GeneratePerson<Person>()
+	};
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_ReferenceTypeSameInstance_ReturnsTrue()
+	{
+		// Arrange
+		var person = RandomData.GeneratePerson<Person>();
+		var collection = new List<Person> { person, person };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_SingleItemCollection_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 42 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_StringsNoDuplicates_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "cherry" };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_StringsWithDuplicates_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "apple" };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_TwoDifferentItems_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<int> { 42, 43 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_TwoIdenticalItems_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<int> { 42, 42 };
+
+		// Act
+		var result = collection.HasDuplicates();
+
+		// Assert
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
