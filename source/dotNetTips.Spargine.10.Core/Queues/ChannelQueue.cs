@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-06-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -107,6 +107,7 @@ public sealed class ChannelQueue<T>
 	/// </summary>
 	/// <param name="options">The options.</param>
 	/// <param name="cancellationTimeout">The cancellation timeout.</param>
+	[Information(nameof(ChannelQueue<>), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public ChannelQueue(BoundedChannelOptions options, TimeSpan? cancellationTimeout = null)
 	{
 		this._channel = Channel.CreateBounded<T>(options);
@@ -158,8 +159,7 @@ public sealed class ChannelQueue<T>
 	/// This enables future enqueues with the same key to succeed.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Acknowledge), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Acknowledge), "David McCarter", "8/10/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool Acknowledge([DisallowNull] string idempotencyKey)
 	{
 		return this._idempotencyKeys.TryRemove(idempotencyKey, out _);
@@ -168,6 +168,7 @@ public sealed class ChannelQueue<T>
 	/// <summary>
 	/// Cleanups the expired keys.
 	/// </summary>
+	[Information(nameof(CleanupExpiredKeys), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void CleanupExpiredKeys()
 	{
 		var now = UtcNowMs();
@@ -323,6 +324,7 @@ public sealed class ChannelQueue<T>
 	/// </summary>
 	/// <param name="item">The item.</param>
 	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool TryPeek(out T item)
 	{
 		if (this._channel.Reader.TryRead(out item!))
@@ -398,8 +400,7 @@ public sealed class ChannelQueue<T>
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025",
-		UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryWriteOnce), "David McCarter", "8/10/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryWriteOnce([DisallowNull] T item, [DisallowNull] string idempotencyKey, TimeSpan? dedupeWindow = null)
 	{
 		item = item.ArgumentNotNull();

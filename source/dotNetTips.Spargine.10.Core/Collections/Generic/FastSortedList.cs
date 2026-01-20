@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -119,30 +119,6 @@ public class FastSortedList<T> : List<T>
 	public FastSortedList(int capacity, in IComparer<T> comparer) : base(capacity) => this._comparer = comparer;
 
 	/// <summary>
-	/// Sorts the items in the collection if they have not been sorted yet.
-	/// This method checks the <see cref="_sorted"/> flag before performing the sort operation to ensure that sorting is only done when necessary.
-	/// </summary>
-	[Information(Status = Status.Available)]
-	private void SortCollection()
-	{
-		if (this._sorted)
-		{
-			return;
-		}
-
-		lock (this._lock)
-		{
-			if (this._sorted)
-			{
-				return;
-			}
-
-			this.Sort(this._comparer);
-			this._sorted = true;
-		}
-	}
-
-	/// <summary>
 	/// Adds an object to the end of the <see cref="FastSortedList{T}"/>.
 	/// </summary>
 	/// <param name="item">The object to be added to the end of the <see cref="FastSortedList{T}"/>. The value can be <see langword="null" /> for reference types.</param>
@@ -253,5 +229,29 @@ public class FastSortedList<T> : List<T>
 		this.SortCollection();
 
 		return [.. base.ToArray()];
+	}
+
+	/// <summary>
+	/// Sorts the items in the collection if they have not been sorted yet.
+	/// This method checks the <see cref="_sorted"/> flag before performing the sort operation to ensure that sorting is only done when necessary.
+	/// </summary>
+	[Information(Status = Status.Available)]
+	private void SortCollection()
+	{
+		if (this._sorted)
+		{
+			return;
+		}
+
+		lock (this._lock)
+		{
+			if (this._sorted)
+			{
+				return;
+			}
+
+			this.Sort(this._comparer);
+			this._sorted = true;
+		}
 	}
 }

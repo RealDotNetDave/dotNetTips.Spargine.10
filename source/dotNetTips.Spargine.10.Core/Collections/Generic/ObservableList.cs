@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -162,6 +162,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// Adds an item to the <see cref="ObservableList{T}"/>.
 	/// </summary>
 	/// <param name="item">The object to add to the collection.</param>
+	[Information(UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	void ICollection<T>.Add(T item) => this.Add(item);
 
 	/// <summary>
@@ -187,7 +188,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="item">The element to add to the set.</param>
 	/// <returns><see langword="true"/> if the element is added to the <see cref="ObservableList{T}"/>; <see langword="false"/> if the element is already present.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual bool Add(T item)
 	{
 		if (item is null)
@@ -260,7 +261,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// to indicate all items have been removed. It also raises the <see cref="PropertyChanging"/> and <see cref="PropertyChanged"/>
 	/// events for the "Count" property before and after the collection is cleared, respectively.
 	/// </remarks>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual void Clear()
 	{
 		if (this._set.FastLongCount() == 0)
@@ -548,7 +549,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="item">The item to remove.</param>
 	/// <returns><see langword="true"/> if item was successfully removed from the <see cref="ObservableList{T}"/>; otherwise, <see langword="false"/>. This method also returns <see langword="false"/> if item is not found in the original <see cref="ObservableList{T}"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public virtual bool Remove(T item)
 	{
 		item = item.ArgumentNotNull();

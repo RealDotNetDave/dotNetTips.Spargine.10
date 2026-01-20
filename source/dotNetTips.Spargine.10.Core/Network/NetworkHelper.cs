@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-18-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -282,7 +282,7 @@ public static class NetworkHelper
 	/// </summary>
 	/// <returns>Information about the primary active network interface, or null if none found.</returns>
 	[Pure]
-	[Information(nameof(GetPrimaryNetworkInterface), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetPrimaryNetworkInterface), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
 	public static NetworkInterface? GetPrimaryNetworkInterface()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -315,7 +315,7 @@ public static class NetworkHelper
 	/// </summary>
 	/// <returns><c>true</c> if the computer is connected to a Bluetooth network; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public static bool IsConnectedToBluetooth()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();

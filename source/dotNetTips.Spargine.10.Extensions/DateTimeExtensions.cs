@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -28,40 +28,9 @@ namespace DotNetTips.Spargine.Extensions;
 /// This class includes methods for converting between Unix epoch time and <see cref="DateTime"/>, finding the next or last day of the week from a given date, checking if a date range intersects with another, and more.
 /// These methods are designed to simplify common date and time operations, making code more readable and efficient.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineDateTimeExtensions", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineDateTimeExtensions", Status = Status.UpdateDocumentation)]
 public static class DateTimeExtensions
 {
-	/// <summary>
-	/// Formats the specified <see cref="DateTime"/> as a friendly date string, such as "Today @ 10:27:43 am" or "Yesterday @ 10:27:43 am".
-	/// </summary>
-	/// <param name="input">The <see cref="DateTime"/> to format.</param>
-	/// <returns>A friendly date string representation of the input date.</returns>
-	[Pure]
-	[return: NotNull]
-	private static string FormatFriendlyDateString(DateTime input)
-	{
-		string formattedDate;
-
-		if (input.Date == DateTime.Today)
-		{
-			formattedDate = nameof(DateTime.Today);
-		}
-		else
-		{
-			var condition = input.Date > DateTime.Today.AddDays(-6)
-				? input.ToString("dddd", CultureInfo.CurrentCulture)
-				: input.ToString(CultureInfo.CurrentCulture.DateTimeFormat.LongDatePattern,
-												  CultureInfo.CurrentCulture);
-
-			formattedDate = input.Date == DateTime.Today.AddDays(-1)
-				? Resources.Yesterday
-				: condition;
-		}
-
-		formattedDate += $" @ {input.ToString(CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern, CultureInfo.CurrentCulture).ToLower(CultureInfo.CurrentCulture)}";
-
-		return formattedDate;
-	}
 
 	/// <summary>
 	/// Converts a <see cref="long" /> value representing the time in milliseconds since
@@ -374,20 +343,6 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Subtracts the specified <see cref="TimeSpan" /> value from
-	/// a <see cref="DateTime" /> value.
-	/// </summary>
-	/// <param name="input">The input.</param>
-	/// <param name="time">The time.</param>
-	/// <returns>DateTime.</returns>
-	[Pure]
-	[Information(nameof(Subtract), author: "David McCarter", createdOn: "10/9/2023", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
-	public static DateTime Subtract(this in DateTime input, in TimeSpan time)
-	{
-		return input.ToUniversalTime().Add(time);
-	}
-
-	/// <summary>
 	/// Determines how long until the next hour starts.
 	/// </summary>
 	/// <param name="dateTime">The DateTime to check.</param>
@@ -577,6 +532,38 @@ public static class DateTimeExtensions
 		var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		return Convert.ToInt64((date - epoch).TotalMilliseconds);
+	}
+
+	/// <summary>
+	/// Formats the specified <see cref="DateTime"/> as a friendly date string, such as "Today @ 10:27:43 am" or "Yesterday @ 10:27:43 am".
+	/// </summary>
+	/// <param name="input">The <see cref="DateTime"/> to format.</param>
+	/// <returns>A friendly date string representation of the input date.</returns>
+	[Pure]
+	[return: NotNull]
+	private static string FormatFriendlyDateString(DateTime input)
+	{
+		string formattedDate;
+
+		if (input.Date == DateTime.Today)
+		{
+			formattedDate = nameof(DateTime.Today);
+		}
+		else
+		{
+			var condition = input.Date > DateTime.Today.AddDays(-6)
+				? input.ToString("dddd", CultureInfo.CurrentCulture)
+				: input.ToString(CultureInfo.CurrentCulture.DateTimeFormat.LongDatePattern,
+												  CultureInfo.CurrentCulture);
+
+			formattedDate = input.Date == DateTime.Today.AddDays(-1)
+				? Resources.Yesterday
+				: condition;
+		}
+
+		formattedDate += $" @ {input.ToString(CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern, CultureInfo.CurrentCulture).ToLower(CultureInfo.CurrentCulture)}";
+
+		return formattedDate;
 	}
 
 }

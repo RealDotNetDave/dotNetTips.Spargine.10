@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -769,6 +769,151 @@ public class DictionaryExtensionsTests
 
 		people.Upsert(personFromCollection.Value.Id, null);
 		Assert.AreEqual(CollectionCount + 1, people.Count);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_EmptyDictionary_AddsItem()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, Person>();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		dictionary.Upsert(newPerson);
+
+		// Assert
+		Assert.HasCount(1, dictionary);
+		Assert.IsTrue(dictionary.ContainsKey(newPerson.Id));
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_ExistingItem_UpdatesValue()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var existingPerson = people.Values.First();
+		var existingId = existingPerson.Id;
+
+		// Create updated person with same ID
+		var updatedPerson = new Person(email: "updated@test.com", id: existingId)
+		{
+			FirstName = "UpdatedFirstName",
+			LastName = "UpdatedLastName",
+			CellPhone = "9999999999"
+		};
+
+		// Act
+		people.Upsert(updatedPerson);
+
+		// Assert
+		Assert.AreEqual(CollectionCount, people.Count);
+		Assert.AreEqual("updated@test.com", people[existingId].Email);
+		Assert.AreEqual("UpdatedFirstName", people[existingId].FirstName);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_LargeCollection_PerformsCorrectly()
+	{
+		// Arrange
+		var largeCount = 1000;
+		var people = RandomData.GeneratePersonRefCollection(largeCount).ToDictionary(p => p.Id);
+		var existingPerson = people.Values.Skip(largeCount / 2).First();
+		var existingId = existingPerson.Id;
+
+		var updatedPerson = new Person(email: "large@test.com", id: existingId)
+		{
+			FirstName = "LargeTestUpdate"
+		};
+
+		// Act
+		people.Upsert(updatedPerson);
+
+		// Assert
+		Assert.AreEqual(largeCount, people.Count);
+		Assert.AreEqual("large@test.com", people[existingId].Email);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_MultipleUpserts_MaintainsCorrectCount()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, Person>();
+		var person1 = RandomData.GeneratePerson<Person>();
+		var person2 = RandomData.GeneratePerson<Person>();
+
+		// Act - Add first item
+		dictionary.Upsert(person1);
+		Assert.HasCount(1, dictionary);
+
+		// Act - Add second item
+		dictionary.Upsert(person2);
+		Assert.HasCount(2, dictionary);
+
+		// Act - Update first item (same ID)
+		var updatedPerson1 = new Person(email: "updated@test.com", id: person1.Id);
+		dictionary.Upsert(updatedPerson1);
+
+		// Assert - Count should still be 2
+		Assert.HasCount(2, dictionary);
+		Assert.AreEqual("updated@test.com", dictionary[person1.Id].Email);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_NewItem_AddsToCollection()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		people.Upsert(newPerson);
+
+		// Assert
+		Assert.AreEqual(CollectionCount + 1, people.Count);
+		Assert.IsTrue(people.ContainsKey(newPerson.Id));
+		Assert.AreEqual(newPerson, people[newPerson.Id]);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, Person> dictionary = null;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => DictionaryExtensions.Upsert<string, Person>(dictionary, person));
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_NullItem_DoesNotModifyCollection()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var originalCount = people.Count;
+		Person nullPerson = null;
+
+		// Act
+		people.Upsert(nullPerson);
+
+		// Assert
+		Assert.AreEqual(originalCount, people.Count);
+	}
+
+	[TestMethod]
+	public void UpsertWithIDataModel_UsesIdAsKey()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, Person>();
+		var person = RandomData.GeneratePerson<Person>();
+		var expectedKey = person.Id;
+
+		// Act
+		dictionary.Upsert(person);
+
+		// Assert - Verify the Id property is used as the dictionary key
+		Assert.IsTrue(dictionary.ContainsKey(expectedKey));
+		Assert.AreSame(person, dictionary[expectedKey]);
 	}
 }
 

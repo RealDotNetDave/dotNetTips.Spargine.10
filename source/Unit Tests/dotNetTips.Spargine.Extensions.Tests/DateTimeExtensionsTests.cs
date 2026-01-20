@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -26,6 +26,7 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class DateTimeExtensionsTests : UnitTester
 {
+
 	/// <summary>
 	/// Defines the test method DateTimeIntersectsTest.
 	/// </summary>
@@ -622,6 +623,150 @@ public class DateTimeExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_AllFormats_ReturnsNonEmptyStrings()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+		var formats = new[]
+		{
+		DateTimeFormat.FullDateLongTime,
+		DateTimeFormat.FullDateShortTime,
+		DateTimeFormat.FullDateTime,
+		DateTimeFormat.GeneralDateLongTime,
+		DateTimeFormat.GeneralDateShortTime,
+		DateTimeFormat.LongDate,
+		DateTimeFormat.LongTime,
+		DateTimeFormat.MonthDay,
+		DateTimeFormat.MonthYear,
+		DateTimeFormat.RFC1123,
+		DateTimeFormat.RoundTripDateTime,
+		DateTimeFormat.ShortDate,
+		DateTimeFormat.ShortTime,
+		DateTimeFormat.SortableDateTime,
+		DateTimeFormat.IsoDate,
+		DateTimeFormat.IsoDateTime
+	};
+
+		// Act & Assert
+		foreach (var format in formats)
+		{
+			var result = input.ToFormattedString(format);
+			Assert.IsNotNull(result, $"Format {format.DisplayName} returned null");
+			Assert.IsGreaterThan(0, result.Length, $"Format {format.DisplayName} returned empty string");
+		}
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_FullDateLongTime_ReturnsFormattedString()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+
+		// Act
+		var result = input.ToFormattedString(DateTimeFormat.FullDateLongTime);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsGreaterThan(10, result.Length);
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_IsoDate_ReturnsFormattedString()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+
+		// Act
+		var result = input.ToFormattedString(DateTimeFormat.IsoDate);
+
+		// Assert
+		Assert.AreEqual("2025-06-15", result);
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_IsoDateTime_ReturnsFormattedString()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+
+		// Act
+		var result = input.ToFormattedString(DateTimeFormat.IsoDateTime);
+
+		// Assert
+		Assert.AreEqual("2025-06-15T14:30:45", result);
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_LongTime_ReturnsFormattedString()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+
+		// Act
+		var result = input.ToFormattedString(DateTimeFormat.LongTime);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsGreaterThan(5, result.Length);
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_NullFormat_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+		DateTimeFormat nullFormat = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => input.ToFormattedString(nullFormat));
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_RoundTripDateTime_ReturnsFormattedString()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.FromHours(-5));
+
+		// Act
+		var result = input.ToFormattedString(DateTimeFormat.RoundTripDateTime);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains("2025"));
+		Assert.IsTrue(result.Contains("-05:00") || result.Contains("+"));
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_ShortDate_ReturnsFormattedString()
+	{
+		// Arrange
+		var input = new DateTimeOffset(2025, 6, 15, 14, 30, 45, TimeSpan.Zero);
+
+		// Act
+		var result = input.ToFormattedString(DateTimeFormat.ShortDate);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsGreaterThan(5, result.Length);
+	}
+
+	[TestMethod]
+	public void ToFormattedString_DateTimeOffset_WithDifferentTimeZones_ReturnsCorrectFormat()
+	{
+		// Arrange
+		var utcInput = new DateTimeOffset(2025, 6, 15, 12, 0, 0, TimeSpan.Zero);
+		var estInput = new DateTimeOffset(2025, 6, 15, 12, 0, 0, TimeSpan.FromHours(-5));
+
+		// Act
+		var utcResult = utcInput.ToFormattedString(DateTimeFormat.RoundTripDateTime);
+		var estResult = estInput.ToFormattedString(DateTimeFormat.RoundTripDateTime);
+
+		// Assert
+		Assert.IsTrue(utcResult.Contains("+00:00") || utcResult.EndsWith("Z"));
+		Assert.IsTrue(estResult.Contains("-05:00"));
+	}
+
+	[TestMethod]
 	public void ToFriendlyDateString_CoversTodayAndYesterday()
 	{
 		var today = DateTime.Today.AddHours(10);
@@ -639,6 +784,22 @@ public class DateTimeExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_ContainsTimeInLowerCase()
+	{
+		// Arrange
+		var input = new DateTimeOffset(DateTime.Today.AddHours(14).AddMinutes(30).AddSeconds(45));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		// Time portion should be in lowercase (e.g., "pm" not "PM")
+		var timePart = result[(result.IndexOf('@') + 1)..].Trim();
+		Assert.AreEqual(timePart, timePart.ToLowerInvariant());
+	}
+
+	[TestMethod]
 	public void ToFriendlyDateString_DateTimeOffset_CoversTodayAndYesterday()
 	{
 		var today = DateTimeOffset.Now.Date.AddHours(10);
@@ -653,6 +814,125 @@ public class DateTimeExtensionsTests : UnitTester
 
 		var strOther = other.ToFriendlyDateString();
 		Assert.IsFalse(string.IsNullOrEmpty(strOther));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_EndOfDayToday_ReturnsToday()
+	{
+		// Arrange - End of today (23:59:59)
+		var input = new DateTimeOffset(DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_ExactlySixDaysAgo_ReturnsDayName()
+	{
+		// Arrange - Exactly 6 days ago (boundary condition)
+		var input = new DateTimeOffset(DateTime.Today.AddDays(-5).AddHours(12));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains("@"));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_FutureDate_ReturnsFormattedString()
+	{
+		// Arrange - Future date
+		var input = new DateTimeOffset(DateTime.Today.AddDays(30).AddHours(9));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains("@"));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_MidnightToday_ReturnsToday()
+	{
+		// Arrange - Midnight today
+		var input = new DateTimeOffset(DateTime.Today);
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_OlderThanSixDays_ReturnsLongDate()
+	{
+		// Arrange - 10 days ago (outside the 6-day window)
+		var input = new DateTimeOffset(DateTime.Today.AddDays(-10).AddHours(15).AddMinutes(45));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains("@"));
+		// Should be a full long date format, not a day name
+		Assert.IsFalse(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+		Assert.IsFalse(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
+	}
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_Today_ReturnsToday()
+	{
+		// Arrange
+		var input = new DateTimeOffset(DateTime.Today.AddHours(10).AddMinutes(30).AddSeconds(45));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+		Assert.IsTrue(result.Contains("@"));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_WithinLastSixDays_ReturnsDayName()
+	{
+		// Arrange - 3 days ago (within the 6-day window)
+		var input = new DateTimeOffset(DateTime.Today.AddDays(-3).AddHours(10));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains("@"));
+		// Should contain a day name (Monday, Tuesday, etc.) not "Yesterday" or "Today"
+		Assert.IsFalse(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+		Assert.IsFalse(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTimeOffset_Yesterday_ReturnsYesterday()
+	{
+		// Arrange
+		var input = new DateTimeOffset(DateTime.Today.AddDays(-1).AddHours(14).AddMinutes(30));
+
+		// Act
+		var result = input.ToFriendlyDateString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
+		Assert.IsTrue(result.Contains("@"));
 	}
 
 	/// <summary>

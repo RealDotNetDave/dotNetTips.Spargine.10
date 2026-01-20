@@ -4,7 +4,7 @@
 // Created          : 10-08-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -55,6 +55,7 @@ public static class DirectoryInfoExtensions
 		searchOption = searchOption.ArgumentDefined();
 
 		long totalSize = 0;
+
 		foreach (var file in path.EnumerateFiles(searchPattern, searchOption))
 		{
 			totalSize += file.Length;

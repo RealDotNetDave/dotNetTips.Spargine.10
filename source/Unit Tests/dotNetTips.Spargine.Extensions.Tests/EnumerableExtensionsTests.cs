@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -935,6 +935,364 @@ public class EnumerableExtensionsTests
 		var result = numbers.FastLongCount(n => n % 2 == 0);
 
 		Assert.AreEqual((long)(Count / 2), result);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_ActionModifiesExternalState_StateIsUpdated()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+		var counter = new { Count = 0 };
+		var total = 0;
+
+		// Act
+		numbers.FastProcessor(n =>
+		{
+			total += n;
+		});
+
+		// Assert
+		Assert.AreEqual(15, total);
+	}
+
+
+	[TestMethod]
+	public void FastProcessorAction_EmptyList_DoesNotCallAction()
+	{
+		// Arrange
+		var emptyList = new List<int>();
+		var callCount = 0;
+
+		// Act
+		emptyList.FastProcessor(_ => callCount++);
+
+		// Assert
+		Assert.AreEqual(0, callCount);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_LargeList_ProcessesAllElements()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, Count).ToList();
+		var sum = 0;
+
+		// Act
+		numbers.FastProcessor(n => sum += n);
+
+		// Assert
+		var expectedSum = (Count * (Count + 1)) / 2;
+		Assert.AreEqual(expectedSum, sum);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_NullAction_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+		Action<int> nullAction = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => numbers.FastProcessor(nullAction));
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+		Action<int> action = _ => { };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FastProcessor(action));
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_PreservesOrder_Array()
+	{
+		// Arrange
+		var numbers = new int[] { 5, 4, 3, 2, 1 };
+		var processedItems = new List<int>();
+
+		// Act
+		numbers.FastProcessor(n => processedItems.Add(n));
+
+		// Assert
+		CollectionAssert.AreEqual(numbers, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_PreservesOrder_List()
+	{
+		// Arrange
+		var numbers = new List<int> { 5, 4, 3, 2, 1 };
+		var processedItems = new List<int>();
+
+		// Act
+		numbers.FastProcessor(n => processedItems.Add(n));
+
+		// Assert
+		CollectionAssert.AreEqual(numbers, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_SingleElement_ProcessesElement()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 };
+		var processedValue = 0;
+
+		// Act
+		singleItem.FastProcessor(n => processedValue = n);
+
+		// Assert
+		Assert.AreEqual(42, processedValue);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_WithArray_ProcessesAllElements()
+	{
+		// Arrange
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+		var processedItems = new List<int>();
+
+		// Act
+		numbers.FastProcessor(n => processedItems.Add(n));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEqual(numbers, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_WithEnumerable_ProcessesAllElements()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, 5);
+		var processedItems = new List<int>();
+
+		// Act
+		numbers.FastProcessor(n => processedItems.Add(n));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_WithList_ProcessesAllElements()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+		var processedItems = new List<int>();
+
+		// Act
+		numbers.FastProcessor(n => processedItems.Add(n));
+
+		// Assert
+		Assert.AreEqual(5, processedItems.Count);
+		CollectionAssert.AreEqual(numbers, processedItems);
+	}
+
+	[TestMethod]
+	public void FastProcessorAction_WithReferenceType_ProcessesAllElements()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var processedIds = new List<string>();
+
+		// Act
+		people.FastProcessor(p => processedIds.Add(p.Id));
+
+		// Assert
+		Assert.AreEqual(Count, processedIds.Count);
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_DoesNotModifyOriginalCollection()
+	{
+		// Arrange
+		var originalNumbers = new List<int> { 1, 2, 3 };
+		var originalCopy = originalNumbers.ToList();
+
+		// Act
+		var result = originalNumbers.FastProcessor(n => n * 100);
+
+		// Assert
+		CollectionAssert.AreEqual(originalCopy, originalNumbers);
+		CollectionAssert.AreEqual(new[] { 100, 200, 300 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_EmptyList_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var emptyList = new List<int>();
+
+		// Act
+		var result = emptyList.FastProcessor(n => n * 2);
+
+		// Assert
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_FromDeferredEnumerable_TransformsCorrectly()
+	{
+		// Arrange
+		var deferred = Enumerable.Range(1, 5).Where(x => x % 2 == 1);
+
+		// Act
+		var result = deferred.FastProcessor(n => n * 2);
+
+		// Assert
+		Assert.AreEqual(3, result.Count);
+		CollectionAssert.AreEqual(new[] { 2, 6, 10 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_IdentityFunction_ReturnsSameValues()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = numbers.FastProcessor(n => n);
+
+		// Assert
+		CollectionAssert.AreEqual(numbers, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_LargeList_TransformsAllElements()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, Count).ToList();
+
+		// Act
+		var result = numbers.FastProcessor(n => n * 2);
+
+		// Assert
+		Assert.AreEqual(Count, result.Count);
+		Assert.AreEqual(2, result[0]);
+		Assert.AreEqual(Count * 2, result[Count - 1]);
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+		Func<int, int> func = n => n * 2;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => nullCollection.FastProcessor(func));
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_NullFunc_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
+		Func<int, int> nullFunc = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => numbers.FastProcessor(nullFunc));
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_PreservesOrder()
+	{
+		// Arrange
+		var numbers = new List<int> { 5, 4, 3, 2, 1 };
+
+		// Act
+		var result = numbers.FastProcessor(n => n * 10);
+
+		// Assert
+		CollectionAssert.AreEqual(new[] { 50, 40, 30, 20, 10 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_ReturnsReadOnlyCollection()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = numbers.FastProcessor(n => n + 1);
+
+		// Assert
+		Assert.IsInstanceOfType<ReadOnlyCollection<int>>(result);
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_SingleElement_TransformsElement()
+	{
+		// Arrange
+		var singleItem = new List<int> { 5 };
+
+		// Act
+		var result = singleItem.FastProcessor(n => n * 10);
+
+		// Assert
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual(50, result[0]);
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_WithComplexTransformation_TransformsCorrectly()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = numbers.FastProcessor(n => n % 2 == 0 ? n * 2 : n * 3);
+
+		// Assert
+		CollectionAssert.AreEqual(new[] { 3, 4, 9, 8, 15 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_WithEnumerable_TransformsAllElements()
+	{
+		// Arrange
+		var numbers = Enumerable.Range(1, 5);
+
+		// Act
+		var result = numbers.FastProcessor(n => n * 2);
+
+		// Assert
+		Assert.AreEqual(5, result.Count);
+		CollectionAssert.AreEqual(new[] { 2, 4, 6, 8, 10 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_WithList_TransformsAllElements()
+	{
+		// Arrange
+		var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = numbers.FastProcessor(n => n * 2);
+
+		// Assert
+		Assert.AreEqual(5, result.Count);
+		CollectionAssert.AreEqual(new[] { 2, 4, 6, 8, 10 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastProcessorFunc_WithStringTransformation_TransformsCorrectly()
+	{
+		// Arrange
+		var strings = new List<string> { "hello", "world", "test" };
+
+		// Act
+		var result = strings.FastProcessor(s => s.ToUpperInvariant());
+
+		// Assert
+		Assert.AreEqual(3, result.Count);
+		CollectionAssert.AreEqual(new[] { "HELLO", "WORLD", "TEST" }, result.ToArray());
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 12-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -1148,6 +1148,11 @@ public class InMemoryCacheTests
 		}
 
 		var value = await cache.GetOrCreateAsync(key, Factory, timeout, cts.Token);
+
+		//Get item again to hit cache
+		value = await cache.GetOrCreateAsync(key, Factory, timeout, cts.Token);
+
+
 		Assert.AreEqual("created", value);
 		Assert.AreEqual("created", cache.GetCacheItem<string>(key));
 		Assert.AreEqual(1, callCount);

@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -115,7 +115,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// </summary>
 	/// <param name="item">The object to be added to the bag. The value cannot be a null reference for reference types.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
+	[Information(UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public void Add([NotNull] T item)
 	{
 		if (item is null)

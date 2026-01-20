@@ -4,7 +4,7 @@
 // Created          : 08-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-15-2024
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="ObservableHashSetSingletons.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)

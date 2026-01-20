@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -199,6 +199,143 @@ public class CollectionExtensionsTests
 		personRecords.Upsert(personRecord);
 
 		Assert.AreEqual(11, personRecords.Count);
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_EmptyCollection_ShouldAddItem()
+	{
+		// Arrange
+		var people = new List<Person>();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		CollectionExtensions.Upsert<Person, string>(people, newPerson);
+
+		// Assert
+		Assert.HasCount(1, people);
+		Assert.AreEqual(newPerson.Id, people.First().Id);
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_ExistingId_ShouldReplaceItem()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var existingPerson = people.First();
+		var existingId = existingPerson.Id;
+
+		// Create a new person with the same ID but different data
+		var updatedPerson = new Person(email: "updated@test.com", id: existingId)
+		{
+			FirstName = "UpdatedFirstName",
+			LastName = "UpdatedLastName",
+			CellPhone = "9999999999"
+		};
+
+		// Act
+		CollectionExtensions.Upsert<Person, string>(people, updatedPerson);
+
+		// Assert
+		Assert.HasCount(Count, people);
+		var foundPerson = people.FirstOrDefault(p => p.Id.Equals(existingId));
+		Assert.IsNotNull(foundPerson);
+		Assert.AreEqual("updated@test.com", foundPerson.Email);
+		Assert.AreEqual("UpdatedFirstName", foundPerson.FirstName);
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_LargeCollection_ShouldPerformCorrectly()
+	{
+		// Arrange
+		var largeCount = 1000;
+		var people = RandomData.GeneratePersonRefCollection(largeCount).ToList();
+		var existingPerson = people[largeCount / 2];
+		var existingId = existingPerson.Id;
+
+		var updatedPerson = new Person(email: "large@test.com", id: existingId)
+		{
+			FirstName = "LargeTestUpdate"
+		};
+
+		// Act
+		CollectionExtensions.Upsert<Person, string>(people, updatedPerson);
+
+		// Assert
+		Assert.HasCount(largeCount, people);
+		var foundPerson = people.FirstOrDefault(p => p.Id.Equals(existingId));
+		Assert.IsNotNull(foundPerson);
+		Assert.AreEqual("large@test.com", foundPerson.Email);
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_MultipleUpsertsSameId_ShouldMaintainSingleItem()
+	{
+		// Arrange
+		var people = new List<Person>();
+		var person = RandomData.GeneratePerson<Person>();
+		var personId = person.Id;
+
+		// Act - Upsert the same item multiple times
+		CollectionExtensions.Upsert<Person, string>(people, person);
+		CollectionExtensions.Upsert<Person, string>(people, person);
+		CollectionExtensions.Upsert<Person, string>(people, person);
+
+		// Assert - Should only have one item
+		Assert.HasCount(1, people);
+		Assert.IsTrue(people.All(p => p.Id.Equals(personId)));
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_NewItem_ShouldAddToCollection()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act
+		CollectionExtensions.Upsert<Person, string>(people, newPerson);
+
+		// Assert
+		Assert.HasCount(Count + 1, people);
+		Assert.IsTrue(people.Any(p => p.Id.Equals(newPerson.Id)));
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_NullCollection_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		ICollection<Person> nullCollection = null;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.Upsert<Person, string>(nullCollection, person));
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_NullItem_ShouldNotModifyCollection()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var originalCount = people.Count;
+		Person nullPerson = null;
+
+		// Act
+		CollectionExtensions.Upsert<Person, string>(people, nullPerson);
+
+		// Assert
+		Assert.AreEqual(originalCount, people.Count);
+	}
+
+	[TestMethod]
+	public void UpsertWithDataModelKey_ReadOnlyCollection_ShouldThrowArgumentReadOnlyException()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		ICollection<Person> readOnlyCollection = new ReadOnlyCollection<Person>(people);
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => CollectionExtensions.Upsert<Person, string>(readOnlyCollection, newPerson));
 	}
 
 	[TestMethod]

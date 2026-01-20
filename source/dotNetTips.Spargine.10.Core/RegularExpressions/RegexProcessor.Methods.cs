@@ -4,7 +4,7 @@
 // Created          : 03-16-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-15-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="RegexProcessor.Methods.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
