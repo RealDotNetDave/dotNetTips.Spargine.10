@@ -4,7 +4,7 @@
 // Created          : 01-23-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-21-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="PersonEmailEqualityComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,6 +30,7 @@ public sealed class PersonEmailEqualityComparer : IEqualityComparer<Person>
 	/// <param name="x">The first object of type to compare.</param>
 	/// <param name="y">The second object of type to compare.</param>
 	/// <returns><see langword="true" /> if the specified objects are equal; otherwise, <see langword="false" />.</returns>
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool Equals(Person x, Person y) =>
 		x.Equals(y);
 

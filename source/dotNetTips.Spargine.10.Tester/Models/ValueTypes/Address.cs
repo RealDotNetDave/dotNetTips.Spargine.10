@@ -4,7 +4,7 @@
 // Created          : 12-04-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="Address.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -55,29 +55,6 @@ public struct Address : IAddress<Address>
 	[JsonIgnore, NonSerialized] private string _state = string.Empty;
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Address"/> class
-	/// with the specified identifier, address line 1, city, country,
-	/// and postal code.
-	/// </summary>
-	/// <param name="id">The unique identifier for the address.</param>
-	/// <param name="address1">The first line of the address.</param>
-	/// <param name="city">The city of the address.</param>
-	/// <param name="country">The country of the address.</param>
-	/// <param name="postalCode">The postal code of the address.</param>
-	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown if any property value does not meet its length
-	/// requirements.
-	/// </exception>
-	private Address(string id, string address1, string city, string country, string postalCode)
-		: this(id)
-	{
-		this.Address1 = address1;
-		this.City = city;
-		this.Country = country;
-		this.PostalCode = postalCode;
-	}
-
-	/// <summary>
 	/// Prevent default construction except for serializers.
 	/// </summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
@@ -99,257 +76,26 @@ public struct Address : IAddress<Address>
 	}
 
 	/// <summary>
-	/// Inequality operator (identity).
-	/// </summary>
-	/// <param name="left">Left <see cref="Address"/>.</param>
-	/// <param name="right">Right <see cref="Address"/>.</param>
-	/// <returns>True if not equal, otherwise false.</returns>
-	[DebuggerStepThrough]
-	public static bool operator !=(Address left, Address right) => !(left == right);
-
-	/// <summary>
-	/// Less-than operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Address"/>.</param>
-	/// <param name="right">Right <see cref="Address"/>.</param>
-	/// <returns>True if left is less than right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator <(Address left, Address right) => left.CompareTo(right) < 0;
-
-	/// <summary>
-	/// Less-than-or-equal operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Address"/>.</param>
-	/// <param name="right">Right <see cref="Address"/>.</param>
-	/// <returns>True if left is less than or equal to right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator <=(Address left, Address right) => left.CompareTo(right) <= 0;
-
-	/// <summary>
-	/// Equality operator (identity).
-	/// </summary>
-	/// <param name="left">Left <see cref="Address"/>.</param>
-	/// <param name="right">Right <see cref="Address"/>.</param>
-	/// <returns>True if equal, otherwise false.</returns>
-	[DebuggerStepThrough]
-	public static bool operator ==(Address left, Address right) => left.Equals(right);
-
-	/// <summary>
-	/// Greater-than operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Address"/>.</param>
-	/// <param name="right">Right <see cref="Address"/>.</param>
-	/// <returns>True if left is greater than right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator >(Address left, Address right) => left.CompareTo(right) > 0;
-
-	/// <summary>
-	/// Greater-than-or-equal operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Address"/>.</param>
-	/// <param name="right">Right <see cref="Address"/>.</param>
-	/// <returns>True if left is greater than or equal to right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator >=(Address left, Address right) => left.CompareTo(right) >= 0;
-
-	/// <summary>
-	/// Converts an <see cref="AddressRecord"/> to <see cref="Address"/>.
-	/// </summary>
-	/// <param name="address">The <see cref="AddressRecord"/> to convert.</param>
-	/// <returns>An <see cref="Address"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="address"/> is null.
-	/// </exception>
-	[return: NotNull]
-	public static explicit operator Address(AddressRecord address) => ToAddress(address);
-
-	/// <summary>
-	/// Converts a <see cref="RefTypes.Address"/> to <see cref="Address"/>.
-	/// </summary>
-	/// <param name="address">The <see cref="RefTypes.Address"/> to convert.</param>
-	/// <returns>An <see cref="Address"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="address"/> is null.
-	/// </exception>
-	public static explicit operator Address(RefTypes.Address address) => ToAddress(address);
-
-	/// <summary>
-	/// Non-generic comparison required by <see cref="IComparable"/>.
-	/// </summary>
-	/// <param name="obj">Object to compare.</param>
-	/// <returns>
-	/// Value indicating the relative order of the objects.
-	/// </returns>
-	/// <exception cref="ArgumentException">
-	/// Thrown when <paramref name="obj"/> is not an
-	/// <see cref="Address"/>.
-	/// </exception>
-	readonly int IComparable.CompareTo(object? obj)
-	{
-		return obj is null
-			? 1
-			: obj is Address other
-			? this.CompareTo(other)
-			: throw new ArgumentException($"Object must be of type {nameof(Address)}", nameof(obj));
-	}
-
-	/// <summary>
-	/// Compares this instance with another <see cref="Address"/>
-	/// using ordinal <see cref="Id"/>.
-	/// </summary>
-	/// <param name="other">Other <see cref="Address"/>.</param>
-	/// <returns>
-	/// Value indicating the relative order of the objects.
-	/// </returns>
-	public readonly int CompareTo(Address other)
-	{
-		return string.Compare(this.Id, other.Id, StringComparison.Ordinal);
-	}
-
-	/// <summary>
-	/// Creates a new <see cref="Address"/> with only the identifier.
-	/// </summary>
-	/// <param name="id">Unique identifier (10–50 chars).</param>
-	/// <returns>A new <see cref="Address"/> instance.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown if <paramref name="id"/> does not meet length
-	/// requirements.
-	/// </exception>
-	public static Address Create(string id)
-	{
-		return new(id);
-	}
-
-	/// <summary>
-	/// Factory method to create a new <see cref="Address"/> instance with the specified values.
-	/// All fields are validated for length. Optional fields default to <c>string.Empty</c> if <c>null</c> is provided.
+	/// Initializes a new instance of the <see cref="Address"/> class
+	/// with the specified identifier, address line 1, city, country,
+	/// and postal code.
 	/// </summary>
 	/// <param name="id">The unique identifier for the address.</param>
 	/// <param name="address1">The first line of the address.</param>
 	/// <param name="city">The city of the address.</param>
 	/// <param name="country">The country of the address.</param>
 	/// <param name="postalCode">The postal code of the address.</param>
-	/// <param name="address2">The second line of the address
-	/// (optional).</param>
-	/// <param name="countyProvince">The county or province
-	/// (optional).</param>
-	/// <param name="state">The state or region (optional).</param>
-	/// <param name="phone">The phone number (optional).</param>
-	/// <returns>A new <see cref="Address"/> instance.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">
 	/// Thrown if any property value does not meet its length
 	/// requirements.
 	/// </exception>
-	public static Address Create(string id, string address1, string city, string country, string postalCode, string? address2 = null, string? countyProvince = null, string? state = null, string? phone = null)
+	private Address(string id, string address1, string city, string country, string postalCode)
+		: this(id)
 	{
-		return new Address(id, address1, city, country, postalCode)
-		{
-			Address2 = address2 ?? string.Empty,
-			CountyProvince = countyProvince ?? string.Empty,
-			State = state ?? string.Empty,
-			Phone = phone ?? string.Empty
-		};
-	}
-
-	/// <summary>
-	/// Determines equality with another <see cref="Address"/>
-	/// using ordinal <see cref="Id"/>.
-	/// </summary>
-	/// <param name="other">Other <see cref="Address"/>.</param>
-	/// <returns>True if equal, otherwise false.</returns>
-	public readonly bool Equals(Address other)
-	{
-		return string.Equals(this.Id, other.Id, StringComparison.Ordinal);
-	}
-
-	/// <summary>
-	/// Determines whether the specified object is equal to the
-	/// current object.
-	/// </summary>
-	/// <param name="obj">The object to compare with the current
-	/// object.</param>
-	/// <returns>
-	/// True if the specified object is equal to the current object;
-	/// otherwise, false.
-	/// </returns>
-	public override readonly bool Equals(object? obj)
-	{
-		return obj is Address other && this.Equals(other);
-	}
-
-	/// <summary>
-	/// Returns a hash code for this instance.
-	/// </summary>
-	/// <returns>
-	/// A hash code for the current object.
-	/// </returns>
-	public override readonly int GetHashCode()
-	{
-		return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;
-	}
-
-	/// <summary>
-	/// Converts an <see cref="AddressRecord"/> to <see cref="Address"/>.
-	/// </summary>
-	/// <param name="address">The <see cref="AddressRecord"/> to convert.</param>
-	/// <returns>An <see cref="Address"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="address"/> is null.
-	/// </exception>
-	[Information(nameof(ToAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Address ToAddress([NotNull] in AddressRecord address)
-	{
-		_ = address.ArgumentNotNull();
-
-		return new(address.Id)
-		{
-			Address1 = address.Address1,
-			Address2 = address.Address2,
-			City = address.City,
-			Country = address.Country,
-			CountyProvince = address.CountyProvince,
-			Phone = address.Phone,
-			PostalCode = address.PostalCode,
-			State = address.State,
-		};
-	}
-
-	/// <summary>
-	/// Converts a <see cref="RefTypes.Address"/> to <see cref="Address"/>.
-	/// </summary>
-	/// <param name="address">The <see cref="RefTypes.Address"/> to convert.</param>
-	/// <returns>An <see cref="Address"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="address"/> is null.
-	/// </exception>
-	public static Address ToAddress([NotNull] in RefTypes.Address address)
-	{
-		_ = address.ArgumentNotNull();
-
-		return new Address(address.Id)
-		{
-			Address1 = address.Address1,
-			Address2 = address.Address2,
-			City = address.City,
-			State = address.State,
-			CountyProvince = address.CountyProvince,
-			Country = address.Country,
-			PostalCode = address.PostalCode,
-			Phone = address.Phone
-		};
-	}
-
-	/// <summary>
-	/// Debug-friendly string.
-	/// </summary>
-	/// <returns>
-	/// A string representation of the address.
-	/// </returns>
-	[DebuggerStepThrough]
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override string ToString()
-	{
-		return this.PropertiesToString();
+		this.Address1 = address1;
+		this.City = city;
+		this.Country = country;
+		this.PostalCode = postalCode;
 	}
 
 	/// <summary>
@@ -682,6 +428,260 @@ public struct Address : IAddress<Address>
 				this._state = safeValue;
 			}
 		}
+	}
+
+	/// <summary>
+	/// Converts an <see cref="AddressRecord"/> to <see cref="Address"/>.
+	/// </summary>
+	/// <param name="address">The <see cref="AddressRecord"/> to convert.</param>
+	/// <returns>An <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="address"/> is null.
+	/// </exception>
+	[return: NotNull]
+	public static explicit operator Address(AddressRecord address) => ToAddress(address);
+
+	/// <summary>
+	/// Converts a <see cref="RefTypes.Address"/> to <see cref="Address"/>.
+	/// </summary>
+	/// <param name="address">The <see cref="RefTypes.Address"/> to convert.</param>
+	/// <returns>An <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="address"/> is null.
+	/// </exception>
+	public static explicit operator Address(RefTypes.Address address) => ToAddress(address);
+
+	/// <summary>
+	/// Greater-than-or-equal operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Address"/>.</param>
+	/// <param name="right">Right <see cref="Address"/>.</param>
+	/// <returns>True if left is greater than or equal to right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator >=(Address left, Address right) => left.CompareTo(right) >= 0;
+
+	/// <summary>
+	/// Greater-than operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Address"/>.</param>
+	/// <param name="right">Right <see cref="Address"/>.</param>
+	/// <returns>True if left is greater than right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator >(Address left, Address right) => left.CompareTo(right) > 0;
+
+	/// <summary>
+	/// Equality operator (identity).
+	/// </summary>
+	/// <param name="left">Left <see cref="Address"/>.</param>
+	/// <param name="right">Right <see cref="Address"/>.</param>
+	/// <returns>True if equal, otherwise false.</returns>
+	[DebuggerStepThrough]
+	public static bool operator ==(Address left, Address right) => left.Equals(right);
+
+	/// <summary>
+	/// Less-than-or-equal operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Address"/>.</param>
+	/// <param name="right">Right <see cref="Address"/>.</param>
+	/// <returns>True if left is less than or equal to right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator <=(Address left, Address right) => left.CompareTo(right) <= 0;
+
+	/// <summary>
+	/// Less-than operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Address"/>.</param>
+	/// <param name="right">Right <see cref="Address"/>.</param>
+	/// <returns>True if left is less than right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator <(Address left, Address right) => left.CompareTo(right) < 0;
+
+	/// <summary>
+	/// Inequality operator (identity).
+	/// </summary>
+	/// <param name="left">Left <see cref="Address"/>.</param>
+	/// <param name="right">Right <see cref="Address"/>.</param>
+	/// <returns>True if not equal, otherwise false.</returns>
+	[DebuggerStepThrough]
+	public static bool operator !=(Address left, Address right) => !(left == right);
+
+	/// <summary>
+	/// Creates a new <see cref="Address"/> with only the identifier.
+	/// </summary>
+	/// <param name="id">Unique identifier (10–50 chars).</param>
+	/// <returns>A new <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">
+	/// Thrown if <paramref name="id"/> does not meet length
+	/// requirements.
+	/// </exception>
+	public static Address Create(string id)
+	{
+		return new(id);
+	}
+
+	/// <summary>
+	/// Factory method to create a new <see cref="Address"/> instance with the specified values.
+	/// All fields are validated for length. Optional fields default to <c>string.Empty</c> if <c>null</c> is provided.
+	/// </summary>
+	/// <param name="id">The unique identifier for the address.</param>
+	/// <param name="address1">The first line of the address.</param>
+	/// <param name="city">The city of the address.</param>
+	/// <param name="country">The country of the address.</param>
+	/// <param name="postalCode">The postal code of the address.</param>
+	/// <param name="address2">The second line of the address
+	/// (optional).</param>
+	/// <param name="countyProvince">The county or province
+	/// (optional).</param>
+	/// <param name="state">The state or region (optional).</param>
+	/// <param name="phone">The phone number (optional).</param>
+	/// <returns>A new <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">
+	/// Thrown if any property value does not meet its length
+	/// requirements.
+	/// </exception>
+	public static Address Create(string id, string address1, string city, string country, string postalCode, string? address2 = null, string? countyProvince = null, string? state = null, string? phone = null)
+	{
+		return new Address(id, address1, city, country, postalCode)
+		{
+			Address2 = address2 ?? string.Empty,
+			CountyProvince = countyProvince ?? string.Empty,
+			State = state ?? string.Empty,
+			Phone = phone ?? string.Empty
+		};
+	}
+
+	/// <summary>
+	/// Converts an <see cref="AddressRecord"/> to <see cref="Address"/>.
+	/// </summary>
+	/// <param name="address">The <see cref="AddressRecord"/> to convert.</param>
+	/// <returns>An <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="address"/> is null.
+	/// </exception>
+	[Information(nameof(ToAddress), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static Address ToAddress([NotNull] in AddressRecord address)
+	{
+		_ = address.ArgumentNotNull();
+
+		return new(address.Id)
+		{
+			Address1 = address.Address1,
+			Address2 = address.Address2,
+			City = address.City,
+			Country = address.Country,
+			CountyProvince = address.CountyProvince,
+			Phone = address.Phone,
+			PostalCode = address.PostalCode,
+			State = address.State,
+		};
+	}
+
+	/// <summary>
+	/// Converts a <see cref="RefTypes.Address"/> to <see cref="Address"/>.
+	/// </summary>
+	/// <param name="address">The <see cref="RefTypes.Address"/> to convert.</param>
+	/// <returns>An <see cref="Address"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="address"/> is null.
+	/// </exception>
+	public static Address ToAddress([NotNull] in RefTypes.Address address)
+	{
+		_ = address.ArgumentNotNull();
+
+		return new Address(address.Id)
+		{
+			Address1 = address.Address1,
+			Address2 = address.Address2,
+			City = address.City,
+			State = address.State,
+			CountyProvince = address.CountyProvince,
+			Country = address.Country,
+			PostalCode = address.PostalCode,
+			Phone = address.Phone
+		};
+	}
+
+	/// <summary>
+	/// Non-generic comparison required by <see cref="IComparable"/>.
+	/// </summary>
+	/// <param name="obj">Object to compare.</param>
+	/// <returns>
+	/// Value indicating the relative order of the objects.
+	/// </returns>
+	/// <exception cref="ArgumentException">
+	/// Thrown when <paramref name="obj"/> is not an
+	/// <see cref="Address"/>.
+	/// </exception>
+	readonly int IComparable.CompareTo(object? obj)
+	{
+		return obj is null
+			? 1
+			: obj is Address other
+			? this.CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(Address)}", nameof(obj));
+	}
+
+	/// <summary>
+	/// Compares this instance with another <see cref="Address"/>
+	/// using ordinal <see cref="Id"/>.
+	/// </summary>
+	/// <param name="other">Other <see cref="Address"/>.</param>
+	/// <returns>
+	/// Value indicating the relative order of the objects.
+	/// </returns>
+	public readonly int CompareTo(Address other)
+	{
+		return string.Compare(this.Id, other.Id, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Determines equality with another <see cref="Address"/>
+	/// using ordinal <see cref="Id"/>.
+	/// </summary>
+	/// <param name="other">Other <see cref="Address"/>.</param>
+	/// <returns>True if equal, otherwise false.</returns>
+	public readonly bool Equals(Address other)
+	{
+		return string.Equals(this.Id, other.Id, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Determines whether the specified object is equal to the
+	/// current object.
+	/// </summary>
+	/// <param name="obj">The object to compare with the current
+	/// object.</param>
+	/// <returns>
+	/// True if the specified object is equal to the current object;
+	/// otherwise, false.
+	/// </returns>
+	public override readonly bool Equals(object? obj)
+	{
+		return obj is Address other && this.Equals(other);
+	}
+
+	/// <summary>
+	/// Returns a hash code for this instance.
+	/// </summary>
+	/// <returns>
+	/// A hash code for the current object.
+	/// </returns>
+	public override readonly int GetHashCode()
+	{
+		return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;
+	}
+
+	/// <summary>
+	/// Debug-friendly string.
+	/// </summary>
+	/// <returns>
+	/// A string representation of the address.
+	/// </returns>
+	[DebuggerStepThrough]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public override string ToString()
+	{
+		return this.PropertiesToString();
 	}
 }
 

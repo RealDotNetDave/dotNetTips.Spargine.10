@@ -4,7 +4,7 @@
 // Created          : 03-13-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="RandomCreditCardNumberGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -127,6 +127,47 @@ public static partial class RandomCreditCardNumberGenerator
 	private static readonly PrefixAndLength[] _prefixes = BuildPrefixAndLengths();
 
 	/// <summary>
+	/// Generate a single random credit card number. Supported credit cards include: American Express, Diners Club, Discover, EnRoute, JCB, MasterCard, Visa, and Voyager.
+	/// </summary>
+	/// <returns>A single random credit card number as a string.</returns>
+	/// <remarks>
+	/// This method is a convenience wrapper around <see cref="GetCreditCardNumbers(int)"/> with a count of 1.
+	/// It relies on <see cref="GetCreditCardNumbers(int)"/> to validate the input and ensure at least one credit card number is generated.
+	/// The generated credit card number is random and follows the credit card companies' numbering schemes, including passing the Luhn check.
+	/// However, these numbers are not valid for real transactions but can be used for testing validation and formatting routines.
+	/// </remarks>
+	[Information(nameof(GetCreditCardNumber), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static string? GetCreditCardNumber() => GetCreditCardNumbers(1).SingleOrDefault();
+
+	/// <summary>
+	/// Generates a collection of random credit card numbers. Supported credit cards include: American Express, Diners Club, Discover, EnRoute, JCB, MasterCard, Visa, and Voyager.
+	/// </summary>
+	/// <param name="count">The number of credit card numbers to generate. Must be at least 1.</param>
+	/// <returns>A read-only collection of generated credit card numbers.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than 1, ensuring that at least one credit card number is generated.</exception>
+	/// <remarks>
+	/// This method utilizes <see cref="CreateFakeCreditCardNumber(string, int)"/> to generate each credit card number based on predefined prefixes and lengths.
+	/// The generated numbers are random and follow the credit card companies' numbering schemes, including passing the Luhn check.
+	/// However, these numbers are not valid for real transactions but can be used for testing validation and formatting routines.
+	/// </remarks>
+	[Information(nameof(GetCreditCardNumbers), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static ReadOnlyCollection<string> GetCreditCardNumbers([Range(1, int.MaxValue, ErrorMessage = "Range must be between 1 and 2,147,483,647")] int count)
+	{
+		count = count.ArgumentInRange(min: 1);
+
+		var result = new List<string>(count);
+
+		for (var cardCount = 0; cardCount < count; cardCount++)
+		{
+			var prefixAndLength = _prefixes[RandomNumberGenerator.GetInt32(0, _prefixes.Length)];
+
+			result.Add(CreateFakeCreditCardNumber(prefixAndLength.Prefix, prefixAndLength.Length));
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>
 	/// Builds a collection of <see cref="PrefixAndLength"/> objects from a given list of prefixes and a specified length.
 	/// </summary>
 	/// <param name="prefixList">The list of prefix strings for the credit card numbers.</param>
@@ -222,47 +263,6 @@ public static partial class RandomCreditCardNumberGenerator
 		{
 			_stringBuilderPool.Return(sb.Clear());
 		}
-	}
-
-	/// <summary>
-	/// Generate a single random credit card number. Supported credit cards include: American Express, Diners Club, Discover, EnRoute, JCB, MasterCard, Visa, and Voyager.
-	/// </summary>
-	/// <returns>A single random credit card number as a string.</returns>
-	/// <remarks>
-	/// This method is a convenience wrapper around <see cref="GetCreditCardNumbers(int)"/> with a count of 1.
-	/// It relies on <see cref="GetCreditCardNumbers(int)"/> to validate the input and ensure at least one credit card number is generated.
-	/// The generated credit card number is random and follows the credit card companies' numbering schemes, including passing the Luhn check.
-	/// However, these numbers are not valid for real transactions but can be used for testing validation and formatting routines.
-	/// </remarks>
-	[Information(nameof(GetCreditCardNumber), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string? GetCreditCardNumber() => GetCreditCardNumbers(1).SingleOrDefault();
-
-	/// <summary>
-	/// Generates a collection of random credit card numbers. Supported credit cards include: American Express, Diners Club, Discover, EnRoute, JCB, MasterCard, Visa, and Voyager.
-	/// </summary>
-	/// <param name="count">The number of credit card numbers to generate. Must be at least 1.</param>
-	/// <returns>A read-only collection of generated credit card numbers.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than 1, ensuring that at least one credit card number is generated.</exception>
-	/// <remarks>
-	/// This method utilizes <see cref="CreateFakeCreditCardNumber(string, int)"/> to generate each credit card number based on predefined prefixes and lengths.
-	/// The generated numbers are random and follow the credit card companies' numbering schemes, including passing the Luhn check.
-	/// However, these numbers are not valid for real transactions but can be used for testing validation and formatting routines.
-	/// </remarks>
-	[Information(nameof(GetCreditCardNumbers), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static ReadOnlyCollection<string> GetCreditCardNumbers([Range(1, int.MaxValue, ErrorMessage = "Range must be between 1 and 2,147,483,647")] int count)
-	{
-		count = count.ArgumentInRange(min: 1);
-
-		var result = new List<string>(count);
-
-		for (var cardCount = 0; cardCount < count; cardCount++)
-		{
-			var prefixAndLength = _prefixes[RandomNumberGenerator.GetInt32(0, _prefixes.Length)];
-
-			result.Add(CreateFakeCreditCardNumber(prefixAndLength.Prefix, prefixAndLength.Length));
-		}
-
-		return result.AsReadOnly();
 	}
 
 }

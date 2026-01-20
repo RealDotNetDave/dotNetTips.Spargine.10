@@ -4,7 +4,7 @@
 // Created          : 06-04-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -62,36 +62,42 @@ public class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparable, ICom
 	}
 
 	/// <summary>
-	/// Determines whether two <see cref="Coordinate"/> instances are not equal.
+	/// Gets or sets the x coordinate.
 	/// </summary>
-	/// <param name="left">The left coordinate.</param>
-	/// <param name="right">The right coordinate.</param>
-	/// <returns><c>true</c> if the two coordinates are not equal; otherwise, <c>false</c>.</returns>
-	public static bool operator !=(Coordinate left, Coordinate right) => !left.ArgumentNotNull().Equals(right);
+	/// <value>The x.</value>
+	[DataMember(Name = "x", IsRequired = false)]
+	[JsonPropertyName("x")]
+	[XmlElement("X")]
+	[Information(nameof(X), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int X { get; set; }
 
 	/// <summary>
-	/// Determines whether one <see cref="Coordinate"/> is less than another.
+	/// Gets or sets the y coordinate.
 	/// </summary>
-	/// <param name="left">The left coordinate.</param>
-	/// <param name="right">The right coordinate.</param>
-	/// <returns><c>true</c> if the left coordinate is less than the right coordinate; otherwise, <c>false</c>.</returns>
-	public static bool operator <(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) < 0;
+	/// <value>The y.</value>
+	[DataMember(Name = "y", IsRequired = false)]
+	[JsonPropertyName("y")]
+	[XmlElement("Y")]
+	[Information(nameof(Y), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int Y { get; set; }
 
 	/// <summary>
-	/// Determines whether one <see cref="Coordinate"/> is less than or equal to another.
+	/// Gets or sets the z coordinate.
 	/// </summary>
-	/// <param name="left">The left coordinate.</param>
-	/// <param name="right">The right coordinate.</param>
-	/// <returns><c>true</c> if the left coordinate is less than or equal to the right coordinate; otherwise, <c>false</c>.</returns>
-	public static bool operator <=(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) <= 0;
+	/// <value>The z.</value>
+	[DataMember(Name = "z", IsRequired = false)]
+	[JsonPropertyName("z")]
+	[XmlElement("Z")]
+	[Information(nameof(Z), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int Z { get; set; }
 
 	/// <summary>
-	/// Determines whether two <see cref="Coordinate"/> instances are equal.
+	/// Determines whether one <see cref="Coordinate"/> is greater than or equal to another.
 	/// </summary>
 	/// <param name="left">The left coordinate.</param>
 	/// <param name="right">The right coordinate.</param>
-	/// <returns><c>true</c> if the two coordinates are equal; otherwise, <c>false</c>.</returns>
-	public static bool operator ==(Coordinate left, Coordinate right) => left.ArgumentNotNull().Equals(right);
+	/// <returns><c>true</c> if the left coordinate is greater than or equal to the right coordinate; otherwise, <c>false</c>.</returns>
+	public static bool operator >=(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) >= 0;
 
 	/// <summary>
 	/// Determines whether one <see cref="Coordinate"/> is greater than another.
@@ -102,12 +108,36 @@ public class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparable, ICom
 	public static bool operator >(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) > 0;
 
 	/// <summary>
-	/// Determines whether one <see cref="Coordinate"/> is greater than or equal to another.
+	/// Determines whether two <see cref="Coordinate"/> instances are equal.
 	/// </summary>
 	/// <param name="left">The left coordinate.</param>
 	/// <param name="right">The right coordinate.</param>
-	/// <returns><c>true</c> if the left coordinate is greater than or equal to the right coordinate; otherwise, <c>false</c>.</returns>
-	public static bool operator >=(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) >= 0;
+	/// <returns><c>true</c> if the two coordinates are equal; otherwise, <c>false</c>.</returns>
+	public static bool operator ==(Coordinate left, Coordinate right) => left.ArgumentNotNull().Equals(right);
+
+	/// <summary>
+	/// Determines whether one <see cref="Coordinate"/> is less than or equal to another.
+	/// </summary>
+	/// <param name="left">The left coordinate.</param>
+	/// <param name="right">The right coordinate.</param>
+	/// <returns><c>true</c> if the left coordinate is less than or equal to the right coordinate; otherwise, <c>false</c>.</returns>
+	public static bool operator <=(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) <= 0;
+
+	/// <summary>
+	/// Determines whether one <see cref="Coordinate"/> is less than another.
+	/// </summary>
+	/// <param name="left">The left coordinate.</param>
+	/// <param name="right">The right coordinate.</param>
+	/// <returns><c>true</c> if the left coordinate is less than the right coordinate; otherwise, <c>false</c>.</returns>
+	public static bool operator <(Coordinate left, Coordinate right) => left.ArgumentNotNull().CompareTo(right) < 0;
+
+	/// <summary>
+	/// Determines whether two <see cref="Coordinate"/> instances are not equal.
+	/// </summary>
+	/// <param name="left">The left coordinate.</param>
+	/// <param name="right">The right coordinate.</param>
+	/// <returns><c>true</c> if the two coordinates are not equal; otherwise, <c>false</c>.</returns>
+	public static bool operator !=(Coordinate left, Coordinate right) => !left.ArgumentNotNull().Equals(right);
 
 	/// <summary>
 	/// Compares this instance with a specified <see cref="object"/> and indicates whether this instance precedes, follows, or appears in the same position in the sort order as the specified <see cref="object"/>.
@@ -182,34 +212,4 @@ public class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparable, ICom
 	/// <returns>A string representation of the current <see cref="Coordinate"/>, including its X, Y, and Z values.</returns>
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString() => this.PropertiesToString(includeMemberName: false);
-
-	/// <summary>
-	/// Gets or sets the x coordinate.
-	/// </summary>
-	/// <value>The x.</value>
-	[DataMember(Name = "x", IsRequired = false)]
-	[JsonPropertyName("x")]
-	[XmlElement("X")]
-	[Information(nameof(X), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int X { get; set; }
-
-	/// <summary>
-	/// Gets or sets the y coordinate.
-	/// </summary>
-	/// <value>The y.</value>
-	[DataMember(Name = "y", IsRequired = false)]
-	[JsonPropertyName("y")]
-	[XmlElement("Y")]
-	[Information(nameof(Y), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int Y { get; set; }
-
-	/// <summary>
-	/// Gets or sets the z coordinate.
-	/// </summary>
-	/// <value>The z.</value>
-	[DataMember(Name = "z", IsRequired = false)]
-	[JsonPropertyName("z")]
-	[XmlElement("Z")]
-	[Information(nameof(Z), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int Z { get; set; }
 }

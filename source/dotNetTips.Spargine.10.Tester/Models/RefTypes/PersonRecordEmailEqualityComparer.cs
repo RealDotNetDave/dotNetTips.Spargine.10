@@ -30,6 +30,7 @@ public sealed class PersonRecordEmailEqualityComparer : IEqualityComparer<Person
 	/// <param name="x">The first <see cref="PersonRecord"/> to compare.</param>
 	/// <param name="y">The second <see cref="PersonRecord"/> to compare.</param>
 	/// <returns><c>true</c> if the specified <see cref="PersonRecord"/> objects are equal; otherwise, <c>false</c>.</returns>
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool Equals(PersonRecord? x, PersonRecord? y) => x == null && y == null
 			? true
 			: x == null || y == null ? false : string.Equals(x.Email, y.Email, StringComparison.OrdinalIgnoreCase);

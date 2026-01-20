@@ -4,7 +4,7 @@
 // Created          : 01-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-15-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -43,5 +43,6 @@ public sealed class PersonComparerByLastName : IComparer<Person>
 	/// </item>
 	/// </list>
 	/// </returns>
+	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int Compare(Person x, Person y) => string.Compare(x.LastName, y.LastName, StringComparison.Ordinal);
 }

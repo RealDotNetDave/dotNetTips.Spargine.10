@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-10-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="IsoDateTimeOffsetConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,20 +30,46 @@ internal sealed class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 {
 
 	/// <summary>
-	/// The default date time format
-	/// </summary>
-	private const string DefaultDateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
-
-	/// <summary>
 	/// Provides a singleton instance of the <see cref="IsoDateTimeOffsetConverter"/> for reuse across the application.
 	/// This ensures that only one instance of the converter is created and used, which can improve performance and memory usage.
 	/// </summary>
 	public static readonly IsoDateTimeOffsetConverter Singleton = new();
 
 	/// <summary>
+	/// The default date time format
+	/// </summary>
+	private const string DefaultDateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
+
+	/// <summary>
 	/// The date time format
 	/// </summary>
 	private string? _dateTimeFormat;
+
+	/// <summary>
+	/// Gets or sets the culture used for parsing and formatting <see cref="DateTimeOffset"/> values.
+	/// </summary>
+	/// <value>The culture information to use. If not set, the current culture is used.</value>
+	public CultureInfo Culture
+	{
+		get => field ?? CultureInfo.CurrentCulture;
+		set;
+	}
+
+	/// <summary>
+	/// Gets or sets the date and time format used for parsing and formatting <see cref="DateTimeOffset"/> values.
+	/// </summary>
+	/// <value>The date and time format string. If not set, an empty string is returned, indicating the default format should be used.</value>
+	public string? DateTimeFormat
+	{
+		get => this._dateTimeFormat ?? string.Empty;
+		set => this._dateTimeFormat = string.IsNullOrEmpty(value) ? null : value;
+	}
+
+	/// <summary>
+	/// Gets or sets the <see cref="DateTimeStyles"/> options used for parsing <see cref="DateTimeOffset"/> values.
+	/// </summary>
+	/// <value>The <see cref="DateTimeStyles"/> options that define the formatting options. The default is <see cref="DateTimeStyles.RoundtripKind"/>.</value>
+	public DateTimeStyles DateTimeStyles { get; set; } = DateTimeStyles.RoundtripKind;
 
 	/// <summary>
 	/// Determines whether this instance can convert the specified type.
@@ -60,6 +86,7 @@ internal sealed class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 	/// <param name="options">Serialization options to use.</param>
 	/// <returns>The converted <see cref="DateTimeOffset"/> value.</returns>
 	/// <exception cref="JsonException">Thrown when the JSON is invalid or cannot be converted to <see cref="DateTimeOffset"/>.</exception>
+	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var dateText = reader.GetString();
@@ -92,6 +119,7 @@ internal sealed class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 	/// <param name="value">The <see cref="DateTimeOffset"/> value to convert to JSON.</param>
 	/// <param name="options">An object that specifies serialization options to use.</param>
 	/// <exception cref="ArgumentNullException">Thrown if the writer is null.</exception>
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
 	{
 		writer = writer.ArgumentNotNull();
@@ -108,31 +136,5 @@ internal sealed class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 
 		writer.WriteStringValue(text);
 	}
-
-	/// <summary>
-	/// Gets or sets the culture used for parsing and formatting <see cref="DateTimeOffset"/> values.
-	/// </summary>
-	/// <value>The culture information to use. If not set, the current culture is used.</value>
-	public CultureInfo Culture
-	{
-		get => field ?? CultureInfo.CurrentCulture;
-		set;
-	}
-
-	/// <summary>
-	/// Gets or sets the date and time format used for parsing and formatting <see cref="DateTimeOffset"/> values.
-	/// </summary>
-	/// <value>The date and time format string. If not set, an empty string is returned, indicating the default format should be used.</value>
-	public string? DateTimeFormat
-	{
-		get => this._dateTimeFormat ?? string.Empty;
-		set => this._dateTimeFormat = string.IsNullOrEmpty(value) ? null : value;
-	}
-
-	/// <summary>
-	/// Gets or sets the <see cref="DateTimeStyles"/> options used for parsing <see cref="DateTimeOffset"/> values.
-	/// </summary>
-	/// <value>The <see cref="DateTimeStyles"/> options that define the formatting options. The default is <see cref="DateTimeStyles.RoundtripKind"/>.</value>
-	public DateTimeStyles DateTimeStyles { get; set; } = DateTimeStyles.RoundtripKind;
 
 }

@@ -4,7 +4,7 @@
 // Created          : 10-25-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-04-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -82,266 +82,13 @@ public struct Person() : IPerson<Person, Address>
 	}
 
 	/// <summary>
-	/// Inequality operator (identity).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if not equal, otherwise false.</returns>
-	[DebuggerStepThrough]
-	public static bool operator !=(Person left, Person right) => !(left == right);
-
-	/// <summary>
-	/// Less-than operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is less than right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator <(Person left, Person right) => left.CompareTo(right) < 0;
-
-	/// <summary>
-	/// Less-than-or-equal operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is less than or equal to right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator <=(Person left, Person right) => left.CompareTo(right) <= 0;
-
-	/// <summary>
-	/// Equality operator (identity).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if equal, otherwise false.</returns>
-	[DebuggerStepThrough]
-	public static bool operator ==(Person left, Person right) => left.Equals(right);
-
-	/// <summary>
-	/// Greater-than operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is greater than right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator >(Person left, Person right) => left.CompareTo(right) > 0;
-
-	/// <summary>
-	/// Greater-than-or-equal operator (identity compare).
-	/// </summary>
-	/// <param name="left">Left <see cref="Person"/>.</param>
-	/// <param name="right">Right <see cref="Person"/>.</param>
-	/// <returns>True if left is greater than or equal to right.</returns>
-	[DebuggerStepThrough]
-	public static bool operator >=(Person left, Person right) => left.CompareTo(right) >= 0;
-
-	/// <summary>
-	/// Explicitly converts a <see cref="PersonRecord"/> to a
-	/// <see cref="Person"/>.
-	/// </summary>
-	/// <param name="person">The <see cref="PersonRecord"/> to convert.</param>
-	/// <returns>A new <see cref="Person"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="person"/> is null.
-	/// </exception>
-	[return: NotNull]
-	public static explicit operator Person(in PersonRecord person) => ToPerson(person);
-
-	/// <summary>
-	/// Explicitly converts a <see cref="RefTypes.Person"/> to a
-	/// <see cref="Person"/>.
-	/// </summary>
-	/// <param name="refPerson">The <see cref="RefTypes.Person"/> to convert.</param>
-	/// <returns>A <see cref="Person"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="refPerson"/> is null.
-	/// </exception>
-	public static explicit operator Person(in RefTypes.Person refPerson) => ToPerson(refPerson);
-
-	/// <summary>
-	/// Non-generic comparison required by <see cref="IComparable"/>.
-	/// </summary>
-	/// <param name="obj">Object to compare.</param>
-	/// <returns>
-	/// Value indicating the relative order of the objects.
-	/// </returns>
-	/// <exception cref="ArgumentException">
-	/// Thrown when <paramref name="obj"/> is not a <see cref="Person"/>.
-	/// </exception>
-	readonly int IComparable.CompareTo(object? obj)
-	{
-		return obj is null
-			? 1
-			: obj is Person other
-			? this.CompareTo(other)
-			: throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
-	}
-
-	/// <summary>
-	/// Compares this instance with another <see cref="Person"/>
-	/// using ordinal <see cref="Id"/>.
-	/// </summary>
-	/// <param name="other">Other <see cref="Person"/>.</param>
-	/// <returns>
-	/// Value indicating the relative order of the objects.
-	/// </returns>
-	public readonly int CompareTo(Person other)
-	{
-		return string.Compare(this.Id, other.Id, StringComparison.Ordinal);
-	}
-
-	/// <summary>
-	/// Creates a new <see cref="Person"/> with the specified values.
-	/// </summary>
-	/// <param name="id">The unique identifier for the person.</param>
-	/// <param name="email">The email address of the person.</param>
-	/// <param name="firstName">The first name of the person.</param>
-	/// <param name="lastName">The last name of the person.</param>
-	/// <param name="bornOn">The birth date of the person.</param>
-	/// <param name="addresses">The collection of addresses.</param>
-	/// <param name="cellPhone">The cell phone number.</param>
-	/// <param name="phone">The home phone number.</param>
-	/// <returns>A new <see cref="Person"/> instance.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown if any property value does not meet its length
-	/// requirements.
-	/// </exception>
-	public static Person Create(string id, string email, string firstName, string lastName, DateTimeOffset? bornOn, Collection<Address>? addresses = null, string? cellPhone = null, string? phone = null)
-	{
-		return new Person(email, id)
-		{
-			FirstName = firstName,
-			LastName = lastName,
-			BornOn = bornOn,
-			Addresses = addresses ?? [],
-			CellPhone = cellPhone ?? string.Empty,
-			Phone = phone ?? string.Empty
-		};
-	}
-
-	/// <summary>
-	/// Determines equality with another <see cref="Person"/>
-	/// using ordinal <see cref="Id"/>.
-	/// </summary>
-	/// <param name="other">Other <see cref="Person"/>.</param>
-	/// <returns>True if equal, otherwise false.</returns>
-	public readonly bool Equals(Person other)
-	{
-		return string.Equals(this.Id, other.Id, StringComparison.Ordinal);
-	}
-
-	/// <summary>
-	/// Determines whether the specified object is equal to the
-	/// current object.
-	/// </summary>
-	/// <param name="obj">The object to compare with the current
-	/// object.</param>
-	/// <returns>
-	/// True if the specified object is equal to the current object;
-	/// otherwise, false.
-	/// </returns>
-	public override readonly bool Equals(object? obj)
-	{
-		return obj is Person other && this.Equals(other);
-	}
-
-	/// <summary>
-	/// Returns a hash code for this instance.
-	/// </summary>
-	/// <returns>
-	/// A hash code for the current object.
-	/// </returns>
-	public override readonly int GetHashCode()
-	{
-		return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;
-	}
-
-	/// <summary>
-	/// Converts a <see cref="PersonRecord"/> to a <see cref="Person"/>.
-	/// </summary>
-	/// <param name="person">The <see cref="PersonRecord"/> to convert.</param>
-	/// <returns>A new <see cref="Person"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="person"/> is null.
-	/// </exception>
-	[return: NotNull]
-	public static Person ToPerson([NotNull] in PersonRecord person)
-	{
-		_ = person.ArgumentNotNull();
-
-		Person newPerson = new(person.Email, person.Id)
-		{
-			FirstName = person.FirstName,
-			LastName = person.LastName,
-			BornOn = person.BornOn,
-			CellPhone = person.CellPhone,
-			Phone = person.Phone,
-		};
-
-		if (person.Addresses.IsNotEmpty())
-		{
-			foreach (var address in person.Addresses)
-			{
-				newPerson.Addresses.Add(Address.ToAddress(address));
-			}
-		}
-
-		return newPerson;
-	}
-
-	/// <summary>
-	/// Converts a <see cref="RefTypes.Person"/> to a <see cref="Person"/>.
-	/// </summary>
-	/// <param name="person">The <see cref="RefTypes.Person"/> to convert.</param>
-	/// <returns>A new <see cref="Person"/> instance.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown if <paramref name="person"/> is null.
-	/// </exception>
-	[return: NotNull]
-	public static Person ToPerson([NotNull] in RefTypes.Person person)
-	{
-		_ = person.ArgumentNotNull();
-
-		var newPerson = new Person(person.Email, person.Id)
-		{
-			FirstName = person.FirstName,
-			LastName = person.LastName,
-			BornOn = person.BornOn,
-			CellPhone = person.CellPhone,
-			Phone = person.Phone
-		};
-
-		if (person.Addresses.IsNotEmpty())
-		{
-			foreach (var address in person.Addresses)
-			{
-				newPerson.Addresses.Add(Address.ToAddress(address));
-			}
-		}
-
-		return newPerson;
-	}
-
-	/// <summary>
-	/// String representation via helper.
-	/// </summary>
-	/// <returns>
-	/// A string representation of the person.
-	/// </returns>
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override string ToString()
-	{
-		return this.PropertiesToString();
-	}
-
-	/// <summary>
 	/// Gets or sets the collection of addresses.
 	/// Setter defensively copies the collection.
 	/// </summary>
 	[DataMember(Name = "addresses", IsRequired = false)]
 	[JsonPropertyName("addresses")]
 	[XmlIgnore]
-	[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public Collection<Address> Addresses
 	{
 		readonly get
@@ -497,7 +244,7 @@ public struct Person() : IPerson<Person, Address>
 	[Required(ErrorMessageResourceName = "ErrorFirstNameIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(50, ErrorMessageResourceName = "ErrorFirstNameLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("FirstName")]
-	[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public string FirstName
 	{
 		readonly get { return this._firstName!; }
@@ -624,6 +371,261 @@ public struct Person() : IPerson<Person, Address>
 				this._phone = safeValue;
 			}
 		}
+	}
+
+	/// <summary>
+	/// Explicitly converts a <see cref="PersonRecord"/> to a
+	/// <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The <see cref="PersonRecord"/> to convert.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="person"/> is null.
+	/// </exception>
+	[return: NotNull]
+	public static explicit operator Person(in PersonRecord person) => ToPerson(person);
+
+	/// <summary>
+	/// Explicitly converts a <see cref="RefTypes.Person"/> to a
+	/// <see cref="Person"/>.
+	/// </summary>
+	/// <param name="refPerson">The <see cref="RefTypes.Person"/> to convert.</param>
+	/// <returns>A <see cref="Person"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="refPerson"/> is null.
+	/// </exception>
+	public static explicit operator Person(in RefTypes.Person refPerson) => ToPerson(refPerson);
+
+	/// <summary>
+	/// Greater-than-or-equal operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is greater than or equal to right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator >=(Person left, Person right) => left.CompareTo(right) >= 0;
+
+	/// <summary>
+	/// Greater-than operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is greater than right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator >(Person left, Person right) => left.CompareTo(right) > 0;
+
+	/// <summary>
+	/// Equality operator (identity).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if equal, otherwise false.</returns>
+	[DebuggerStepThrough]
+	public static bool operator ==(Person left, Person right) => left.Equals(right);
+
+	/// <summary>
+	/// Less-than-or-equal operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is less than or equal to right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator <=(Person left, Person right) => left.CompareTo(right) <= 0;
+
+	/// <summary>
+	/// Less-than operator (identity compare).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if left is less than right.</returns>
+	[DebuggerStepThrough]
+	public static bool operator <(Person left, Person right) => left.CompareTo(right) < 0;
+
+	/// <summary>
+	/// Inequality operator (identity).
+	/// </summary>
+	/// <param name="left">Left <see cref="Person"/>.</param>
+	/// <param name="right">Right <see cref="Person"/>.</param>
+	/// <returns>True if not equal, otherwise false.</returns>
+	[DebuggerStepThrough]
+	public static bool operator !=(Person left, Person right) => !(left == right);
+
+	/// <summary>
+	/// Creates a new <see cref="Person"/> with the specified values.
+	/// </summary>
+	/// <param name="id">The unique identifier for the person.</param>
+	/// <param name="email">The email address of the person.</param>
+	/// <param name="firstName">The first name of the person.</param>
+	/// <param name="lastName">The last name of the person.</param>
+	/// <param name="bornOn">The birth date of the person.</param>
+	/// <param name="addresses">The collection of addresses.</param>
+	/// <param name="cellPhone">The cell phone number.</param>
+	/// <param name="phone">The home phone number.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">
+	/// Thrown if any property value does not meet its length
+	/// requirements.
+	/// </exception>
+	public static Person Create(string id, string email, string firstName, string lastName, DateTimeOffset? bornOn, Collection<Address>? addresses = null, string? cellPhone = null, string? phone = null)
+	{
+		return new Person(email, id)
+		{
+			FirstName = firstName,
+			LastName = lastName,
+			BornOn = bornOn,
+			Addresses = addresses ?? [],
+			CellPhone = cellPhone ?? string.Empty,
+			Phone = phone ?? string.Empty
+		};
+	}
+
+	/// <summary>
+	/// Converts a <see cref="PersonRecord"/> to a <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The <see cref="PersonRecord"/> to convert.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="person"/> is null.
+	/// </exception>
+	[return: NotNull]
+	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static Person ToPerson([NotNull] in PersonRecord person)
+	{
+		_ = person.ArgumentNotNull();
+
+		Person newPerson = new(person.Email, person.Id)
+		{
+			FirstName = person.FirstName,
+			LastName = person.LastName,
+			BornOn = person.BornOn,
+			CellPhone = person.CellPhone,
+			Phone = person.Phone,
+		};
+
+		if (person.Addresses.IsNotEmpty())
+		{
+			foreach (var address in person.Addresses)
+			{
+				newPerson.Addresses.Add(Address.ToAddress(address));
+			}
+		}
+
+		return newPerson;
+	}
+
+	/// <summary>
+	/// Converts a <see cref="RefTypes.Person"/> to a <see cref="Person"/>.
+	/// </summary>
+	/// <param name="person">The <see cref="RefTypes.Person"/> to convert.</param>
+	/// <returns>A new <see cref="Person"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="person"/> is null.
+	/// </exception>
+	[return: NotNull]
+	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static Person ToPerson([NotNull] in RefTypes.Person person)
+	{
+		_ = person.ArgumentNotNull();
+
+		var newPerson = new Person(person.Email, person.Id)
+		{
+			FirstName = person.FirstName,
+			LastName = person.LastName,
+			BornOn = person.BornOn,
+			CellPhone = person.CellPhone,
+			Phone = person.Phone
+		};
+
+		if (person.Addresses.IsNotEmpty())
+		{
+			foreach (var address in person.Addresses)
+			{
+				newPerson.Addresses.Add(Address.ToAddress(address));
+			}
+		}
+
+		return newPerson;
+	}
+
+	/// <summary>
+	/// Non-generic comparison required by <see cref="IComparable"/>.
+	/// </summary>
+	/// <param name="obj">Object to compare.</param>
+	/// <returns>
+	/// Value indicating the relative order of the objects.
+	/// </returns>
+	/// <exception cref="ArgumentException">
+	/// Thrown when <paramref name="obj"/> is not a <see cref="Person"/>.
+	/// </exception>
+	readonly int IComparable.CompareTo(object? obj)
+	{
+		return obj is null
+			? 1
+			: obj is Person other
+			? this.CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(Person)}", nameof(obj));
+	}
+
+	/// <summary>
+	/// Compares this instance with another <see cref="Person"/>
+	/// using ordinal <see cref="Id"/>.
+	/// </summary>
+	/// <param name="other">Other <see cref="Person"/>.</param>
+	/// <returns>
+	/// Value indicating the relative order of the objects.
+	/// </returns>
+	public readonly int CompareTo(Person other)
+	{
+		return string.Compare(this.Id, other.Id, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Determines equality with another <see cref="Person"/>
+	/// using ordinal <see cref="Id"/>.
+	/// </summary>
+	/// <param name="other">Other <see cref="Person"/>.</param>
+	/// <returns>True if equal, otherwise false.</returns>
+	public readonly bool Equals(Person other)
+	{
+		return string.Equals(this.Id, other.Id, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Determines whether the specified object is equal to the
+	/// current object.
+	/// </summary>
+	/// <param name="obj">The object to compare with the current
+	/// object.</param>
+	/// <returns>
+	/// True if the specified object is equal to the current object;
+	/// otherwise, false.
+	/// </returns>
+	public override readonly bool Equals(object? obj)
+	{
+		return obj is Person other && this.Equals(other);
+	}
+
+	/// <summary>
+	/// Returns a hash code for this instance.
+	/// </summary>
+	/// <returns>
+	/// A hash code for the current object.
+	/// </returns>
+	public override readonly int GetHashCode()
+	{
+		return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;
+	}
+
+	/// <summary>
+	/// String representation via helper.
+	/// </summary>
+	/// <returns>
+	/// A string representation of the person.
+	/// </returns>
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public override string ToString()
+	{
+		return this.PropertiesToString();
 	}
 }
 

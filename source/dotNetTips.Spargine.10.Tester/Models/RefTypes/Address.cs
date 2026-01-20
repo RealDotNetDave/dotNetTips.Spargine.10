@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-23-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="Address.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -469,7 +469,7 @@ public sealed class Address : IAddress<Address>
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
 	[return: NotNull]
-	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public static implicit operator Address(in AddressRecord address)
 	{
 		return ToAddress(address);

@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-10-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="RegionConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,6 +14,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -71,6 +72,7 @@ internal sealed class RegionConverter : JsonConverter<Region>
 	/// <exception cref="Exception">Cannot marshal type Region</exception>
 	/// <remarks>A converter may throw any Exception, but should throw <see cref="JsonException"/> when the JSON
 	/// cannot be created.</remarks>
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, Region value, JsonSerializerOptions options)
 	{
 		switch (value)

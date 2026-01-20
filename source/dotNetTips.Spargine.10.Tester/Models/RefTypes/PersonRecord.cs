@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="PersonRecord.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -450,6 +450,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// Thrown if any property value does not meet its length
 	/// requirements.
 	/// </exception>
+	[Information(nameof(Create), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static PersonRecord Create(string id, string email, string firstName, string lastName, DateTimeOffset? bornOn, Collection<AddressRecord>? addresses = null, string? cellPhone = null, string? phone = null)
 	{
 		return new PersonRecord(email, id)
@@ -511,7 +512,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// Thrown if <paramref name="person"/> is null.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
 	public static PersonRecord ToPersonRecord([NotNull] in ValueTypes.Person person)
 	{
 		_ = person.ArgumentNotNull();

@@ -4,7 +4,7 @@
 // Created          : 06-04-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-04-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,50 +45,36 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes;
 [Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coordinate>, IComparable, IComparable<Coordinate>
 {
-	/// <summary>
-	/// Implements the inequality operator. Checks if two <see cref="Coordinate"/> instances are not equal.
-	/// </summary>
-	/// <param name="cord1">The first <see cref="Coordinate"/> instance.</param>
-	/// <param name="cord2">The second <see cref="Coordinate"/> instance.</param>
-	/// <returns><c>true</c> if the instances are not equal; otherwise, <c>false</c>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator !=(Coordinate cord1, Coordinate cord2) => !(cord1 == cord2);
 
 	/// <summary>
-	/// Implements the less than operator. Checks if the first <see cref="Coordinate"/> instance is less than the second.
+	/// Gets or sets the x coordinate.
 	/// </summary>
-	/// <param name="left">The first <see cref="Coordinate"/> instance.</param>
-	/// <param name="right">The second <see cref="Coordinate"/> instance.</param>
-	/// <returns><c>true</c> if the first instance is less than the second; otherwise, <c>false</c>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <(Coordinate left, Coordinate right) => left.CompareTo(right) < 0;
+	/// <value>The x.</value>
+	[DataMember(Name = "x", IsRequired = false)]
+	[JsonPropertyName("x")]
+	[XmlElement("X")]
+	[Information(nameof(X), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int X { get; set; } = x;
 
 	/// <summary>
-	/// Implements the less than or equal to operator. Checks if the first <see cref="Coordinate"/> instance is less than or equal to the second.
+	/// Gets or sets the y coordinate.
 	/// </summary>
-	/// <param name="left">The first <see cref="Coordinate"/> instance.</param>
-	/// <param name="right">The second <see cref="Coordinate"/> instance.</param>
-	/// <returns><c>true</c> if the first instance is less than or equal to the second; otherwise, <c>false</c>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <=(Coordinate left, Coordinate right) => left.CompareTo(right) <= 0;
+	/// <value>The y.</value>
+	[DataMember(Name = "y", IsRequired = false)]
+	[JsonPropertyName("y")]
+	[XmlElement("Y")]
+	[Information(nameof(Y), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int Y { get; set; } = y;
 
 	/// <summary>
-	/// Implements the equality operator. Checks if two <see cref="Coordinate"/> instances are equal.
+	/// Gets or sets the z coordinate.
 	/// </summary>
-	/// <param name="cord1">The first <see cref="Coordinate"/> instance.</param>
-	/// <param name="cord2">The second <see cref="Coordinate"/> instance.</param>
-	/// <returns><c>true</c> if the instances are equal; otherwise, <c>false</c>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator ==(Coordinate cord1, Coordinate cord2) => cord1.Equals(cord2);
-
-	/// <summary>
-	/// Implements the greater than operator. Checks if the first <see cref="Coordinate"/> instance is greater than the second.
-	/// </summary>
-	/// <param name="left">The first <see cref="Coordinate"/> instance.</param>
-	/// <param name="right">The second <see cref="Coordinate"/> instance.</param>
-	/// <returns><c>true</c> if the first instance is greater than the second; otherwise, <c>false</c>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >(Coordinate left, Coordinate right) => left.CompareTo(right) > 0;
+	/// <value>The z.</value>
+	[DataMember(Name = "z", IsRequired = false)]
+	[JsonPropertyName("z")]
+	[XmlElement("Z")]
+	[Information(nameof(Z), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public int Z { get; set; } = z;
 
 	/// <summary>
 	/// Implements the greater than or equal to operator. Checks if the first <see cref="Coordinate"/> instance is greater than or equal to the second.
@@ -100,6 +86,50 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	public static bool operator >=(Coordinate left, Coordinate right) => left.CompareTo(right) >= 0;
 
 	/// <summary>
+	/// Implements the greater than operator. Checks if the first <see cref="Coordinate"/> instance is greater than the second.
+	/// </summary>
+	/// <param name="left">The first <see cref="Coordinate"/> instance.</param>
+	/// <param name="right">The second <see cref="Coordinate"/> instance.</param>
+	/// <returns><c>true</c> if the first instance is greater than the second; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool operator >(Coordinate left, Coordinate right) => left.CompareTo(right) > 0;
+
+	/// <summary>
+	/// Implements the equality operator. Checks if two <see cref="Coordinate"/> instances are equal.
+	/// </summary>
+	/// <param name="cord1">The first <see cref="Coordinate"/> instance.</param>
+	/// <param name="cord2">The second <see cref="Coordinate"/> instance.</param>
+	/// <returns><c>true</c> if the instances are equal; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool operator ==(Coordinate cord1, Coordinate cord2) => cord1.Equals(cord2);
+
+	/// <summary>
+	/// Implements the less than or equal to operator. Checks if the first <see cref="Coordinate"/> instance is less than or equal to the second.
+	/// </summary>
+	/// <param name="left">The first <see cref="Coordinate"/> instance.</param>
+	/// <param name="right">The second <see cref="Coordinate"/> instance.</param>
+	/// <returns><c>true</c> if the first instance is less than or equal to the second; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool operator <=(Coordinate left, Coordinate right) => left.CompareTo(right) <= 0;
+
+	/// <summary>
+	/// Implements the less than operator. Checks if the first <see cref="Coordinate"/> instance is less than the second.
+	/// </summary>
+	/// <param name="left">The first <see cref="Coordinate"/> instance.</param>
+	/// <param name="right">The second <see cref="Coordinate"/> instance.</param>
+	/// <returns><c>true</c> if the first instance is less than the second; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool operator <(Coordinate left, Coordinate right) => left.CompareTo(right) < 0;
+	/// <summary>
+	/// Implements the inequality operator. Checks if two <see cref="Coordinate"/> instances are not equal.
+	/// </summary>
+	/// <param name="cord1">The first <see cref="Coordinate"/> instance.</param>
+	/// <param name="cord2">The second <see cref="Coordinate"/> instance.</param>
+	/// <returns><c>true</c> if the instances are not equal; otherwise, <c>false</c>.</returns>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static bool operator !=(Coordinate cord1, Coordinate cord2) => !(cord1 == cord2);
+
+	/// <summary>
 	/// Compares this instance with a specified <see cref="object"/> and indicates whether this instance precedes, follows, or appears in the same position in the sort order as the specified <see cref="object"/>.
 	/// </summary>
 	/// <param name="obj">The object to compare with this instance.</param>
@@ -108,7 +138,7 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// Zero: This instance occurs in the same position in the sort order as <paramref name="obj"/>.
 	/// Greater than zero: This instance follows <paramref name="obj"/> in the sort order.</returns>
 	/// <exception cref="ArgumentException">Thrown when <paramref name="obj"/> is not of type <see cref="Coordinate"/>.</exception>
-	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public readonly int CompareTo(object? obj)
 	{
 		if (obj is not Coordinate)
@@ -188,34 +218,4 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// <returns>A string representation of the current <see cref="Coordinate"/>, including its X, Y, and Z values.</returns>
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString() => this.PropertiesToString(includeMemberName: false);
-
-	/// <summary>
-	/// Gets or sets the x coordinate.
-	/// </summary>
-	/// <value>The x.</value>
-	[DataMember(Name = "x", IsRequired = false)]
-	[JsonPropertyName("x")]
-	[XmlElement("X")]
-	[Information(nameof(X), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int X { get; set; } = x;
-
-	/// <summary>
-	/// Gets or sets the y coordinate.
-	/// </summary>
-	/// <value>The y.</value>
-	[DataMember(Name = "y", IsRequired = false)]
-	[JsonPropertyName("y")]
-	[XmlElement("Y")]
-	[Information(nameof(Y), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int Y { get; set; } = y;
-
-	/// <summary>
-	/// Gets or sets the z coordinate.
-	/// </summary>
-	/// <value>The z.</value>
-	[DataMember(Name = "z", IsRequired = false)]
-	[JsonPropertyName("z")]
-	[XmlElement("Z")]
-	[Information(nameof(Z), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int Z { get; set; } = z;
 }
