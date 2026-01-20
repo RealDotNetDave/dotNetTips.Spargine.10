@@ -1,4 +1,4 @@
-# DotNetTips.Spargine for Microsoft .NET 10: v2026.10.1.17 
+# DotNetTips.Spargine for Microsoft .NET 10: v2026.10.1.20 
 ![](docs/Graphics/SPARGINE-10-BANNER-BACKGROUND-100.png)
 
 Open-source .NET assemblies from dotNetTips.com and [**David (dotNetDave) McCarter**](https://dotnettips.wordpress.com/about/). 

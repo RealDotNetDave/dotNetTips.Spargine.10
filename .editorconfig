@@ -947,7 +947,7 @@ dotnet_diagnostic.CA1727.severity = error
 [*.{cs,vb}]
 
 # Use Literals Where Appropriate
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1802.severity = suggestion
 
 # Do not initialize unnecessarily
@@ -960,7 +960,7 @@ dotnet_diagnostic.CA1805.severity = error
 dotnet_diagnostic.CA1806.severity = error
 
 # Initialize reference type static fields inline
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1810.severity = suggestion 
 
 # Avoid uninstantiated internal classes
@@ -968,18 +968,18 @@ dotnet_diagnostic.CA1810.severity = suggestion
 dotnet_diagnostic.CA1812.severity = suggestion
 
 # Avoid unsealed attributes
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1813.severity = suggestion
 
 # Prefer jagged arrays over multidimensional
 dotnet_diagnostic.CA1814.severity = warning
 
 # Override equals and operator equals on value types
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1815.severity = warning
 
 # Properties should not return arrays
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1819.severity = warning
 dotnet_code_quality.CA1819.api_surface = public, protected
 
@@ -1186,7 +1186,7 @@ dotnet_diagnostic.CA1872.severity = error
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1873.severity = error
 
-# CA1874: Prefer static HashData method over ComputeHash
+# CA1874: Prefer static HashData method over ComputeHash *
 dotnet_diagnostic.CA1874.severity = error
 
 # CA1875: Use 'Regex.Count'
