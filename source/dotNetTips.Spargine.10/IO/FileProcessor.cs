@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -65,12 +65,6 @@ public class FileProcessor
 	public event EventHandler<ProgressEventArgs>? Processed;
 
 	/// <summary>
-	/// Raises the <see cref="Processed"/> event.
-	/// </summary>
-	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
-	protected virtual void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
-
-	/// <summary>
 	/// Copies files to a new location using the path (excluding root) of the original file in the destination path.
 	/// </summary>
 	/// <param name="files">The files to copy.</param>
@@ -102,7 +96,13 @@ public class FileProcessor
 			return 0;
 		}
 
-		var list = files;
+		var list = files.RemoveNulls().EnsureUnique();
+
+		if (list.IsEmpty())
+		{
+			return 0;
+		}
+
 		destination = destination.ArgumentNotNull();
 
 		_ = destination.CheckExists(createDirectory: true);
@@ -113,7 +113,7 @@ public class FileProcessor
 
 		var psw = new PerformanceStopwatch(nameof(this.CopyFilesWithOriginalPath));
 
-		foreach (var tempFile in list.RemoveNulls())
+		foreach (var tempFile in list)
 		{
 			if (tempFile.Exists)
 			{
@@ -195,9 +195,16 @@ public class FileProcessor
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int DeleteFiles(in IEnumerable<FileInfo> files)
+	public int DeleteFiles(IEnumerable<FileInfo> files)
 	{
 		if (files is null)
+		{
+			return 0;
+		}
+
+		files = files.RemoveNulls().EnsureUnique();
+
+		if (files.IsEmpty())
 		{
 			return 0;
 		}
@@ -205,7 +212,7 @@ public class FileProcessor
 		var successCount = 0;
 		var psw = new PerformanceStopwatch(nameof(this.DeleteFiles));
 
-		foreach (var listItem in files.RemoveNulls())
+		foreach (var listItem in files)
 		{
 			if (listItem.Exists)
 			{
@@ -282,16 +289,24 @@ public class FileProcessor
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int DeleteFolders(in IEnumerable<DirectoryInfo> folders, in bool recursive = true)
+	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true)
 	{
-		if (folders is null || folders.IsNotEmpty() is false)
+		if (folders is null)
+		{
+			return 0;
+		}
+
+		folders = folders.RemoveNulls().EnsureUnique();
+
+		if (folders.IsEmpty())
 		{
 			return 0;
 		}
 
 		var successCount = 0;
+		SimpleResult<int>? result = null;
 
-		foreach (var folder in folders.RemoveNulls())
+		foreach (var folder in folders)
 		{
 			if (folder.CheckExists())
 			{
@@ -299,24 +314,27 @@ public class FileProcessor
 				{
 					var folderSize = folder.GetSize(searchOption: SearchOption.AllDirectories);
 
-					_ = DirectoryHelper.DeleteDirectory(folder, 5, recursive);
+					result = DirectoryHelper.DeleteDirectory(folder, 5, recursive);
 
-					successCount++;
-
-					this.OnProcessed(new ProgressEventArgs
+					if (result.IsFailure == false)
 					{
-						Name = folder.FullName,
-						ProgressState = FileProgressState.FileDeleted,
-						Size = folderSize,
-					});
+						successCount++;
+
+						this.OnProcessed(new ProgressEventArgs
+						{
+							Name = folder.FullName,
+							ProgressState = FileProgressState.FileDeleted,
+							Size = folderSize,
+						});
+					}
 				}
-				catch (Exception ex) // Report all errors
+				catch (Exception ex) // Report all errors including from the result.
 				{
 					this.OnProcessed(new ProgressEventArgs
 					{
 						Name = folder.FullName,
 						ProgressState = FileProgressState.Error,
-						Message = ex.GetAllMessages()
+						Message = $"{ex.GetAllMessages()}: {result?.GetErrorMessages()}"
 					});
 				}
 			}
@@ -333,5 +351,11 @@ public class FileProcessor
 
 		return successCount;
 	}
+
+	/// <summary>
+	/// Raises the <see cref="Processed"/> event.
+	/// </summary>
+	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
+	protected virtual void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
 
 }

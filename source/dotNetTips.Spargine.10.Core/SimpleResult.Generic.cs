@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,11 +29,8 @@ namespace DotNetTips.Spargine.Core;
 [Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineSimpleResult")]
 public class SimpleResult<T>
 {
-
-	/// <summary>
-	/// The collection of exceptions associated with this result.
-	/// </summary>
 	private readonly ConcurrentBag<Exception> _exceptions = [];
+	private readonly List<string> _messages = [];
 
 	/// <summary>
 	/// The value associated with this result.
@@ -74,25 +71,77 @@ public class SimpleResult<T>
 	}
 
 	/// <summary>
-	/// Generates the exception messages.
+	/// Gets exceptions associated with this result.
 	/// </summary>
-	/// <returns>A string containing all exception messages.</returns>
-	[return: NotNull]
-	private string GenerateExceptionMessages()
+	/// <returns>ReadOnlyCollection&lt;Exception&gt;.</returns>
+	[Information(nameof(Errors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
+	public ReadOnlyCollection<Exception> Errors => this._exceptions.ToList().AsReadOnly();
+
+	/// <summary>
+	/// Indicates if there are any errors.
+	/// </summary>
+	[Information(nameof(HasErrors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.New)]
+	public bool HasErrors => !this._exceptions.IsEmpty;
+
+	/// <summary>
+	/// Indicates if the result is a failure (no value or only errors).
+	/// </summary>
+	[Information(nameof(IsFailure), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.New)]
+	public bool IsFailure => this.Status == ResultStatus.Failed;
+
+	/// <summary>
+	/// Indicates if the result is successful (no errors and value set).
+	/// </summary>
+	[Information(nameof(IsSuccess), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.New)]
+	public bool IsSuccess => this.Status == ResultStatus.Succeeded;
+
+	/// <summary>
+	/// Gets the collection of messages associated with this result.
+	/// </summary>
+	/// <value>A read-only collection of informational or diagnostic messages.</value>
+	/// <remarks>
+	/// Messages can be added using the <see cref="AddMessage"/> method to provide
+	/// additional context about the operation's outcome.
+	/// </remarks>
+	[Information(nameof(Messages), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.New)]
+	public ReadOnlyCollection<string> Messages => this._messages.AsReadOnly();
+
+	/// <summary>
+	/// Indicates the status of the result.
+	/// </summary>
+	/// <value>
+	/// <see cref="ResultStatus.Succeeded"/> if the result is successful; 
+	/// <see cref="ResultStatus.PartialSuccess"/> if there are exceptions but a value is present;
+	/// otherwise, <see cref="ResultStatus.Failed"/>.
+	/// </value>>
+	[Information(nameof(Status), UnitTestStatus = UnitTestStatus.WIP, Status = Core.Status.Available)]
+	public ResultStatus Status
 	{
-		return FastStringBuilder.Join(this._exceptions.Select(e => e.GetAllMessages()), ControlChars.CR);
+		get
+		{
+			return this._valueSet && this._exceptions.IsEmpty
+				? ResultStatus.Succeeded
+				: this._valueSet ? ResultStatus.PartialSuccess : ResultStatus.Failed;
+		}
 	}
 
 	/// <summary>
-	/// Gets the reference to the value associated with the specified result.
+	/// Gets the value associated with this result.
+	/// </summary>
+	/// <value>The value of type <typeparamref name="T"/>.</value>
+	[Information(nameof(Value), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
+	public T Value => this._value;
+
+	/// <summary>
+	/// Extracts the actual result from the specified <see cref="SimpleResult{T}"/>.
 	/// </summary>
 	/// <param name="result">The result object containing the value.</param>
-	/// <returns>A reference to the value of type <typeparamref name="T"/>.</returns>
-	[ExcludeFromCodeCoverage]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static ref readonly T GetReference([DisallowNull] in SimpleResult<T> result)
+	/// <returns>The value of type <typeparamref name="T"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="result"/> is <see langword="null"/>.</exception>
+	[Information(nameof(FromResult), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
+	public static T FromResult([DisallowNull] in SimpleResult<T> result)
 	{
-		return ref result._value;
+		return result.ArgumentNotNull().Value;
 	}
 
 	/// <summary>
@@ -107,6 +156,26 @@ public class SimpleResult<T>
 		error = error.ArgumentNotNull();
 
 		this._exceptions.Add(ExceptionDispatchInfo.Capture(error).SourceException);
+	}
+
+	/// <summary>
+	/// Adds a message to the collection of messages associated with this result.
+	/// If the message is <see langword="null"/> or empty, the method returns without adding anything.
+	/// </summary>
+	/// <param name="message">The message to add. If <see langword="null"/> or empty, the message is ignored.</param>
+	/// <remarks>
+	/// This method allows associating informational or diagnostic messages with a result,
+	/// which can be useful for providing additional context about the operation's outcome.
+	/// </remarks>
+	[Information(nameof(AddMessage), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.New)]
+	public void AddMessage([DisallowNull] string message)
+	{
+		if (message.CheckIsNotNullOrEmpty() == false)
+		{
+			return;
+		}
+
+		this._messages.Add(message);
 	}
 
 	/// <summary>
@@ -138,29 +207,7 @@ public class SimpleResult<T>
 	public void Deconstruct(out T value, out ReadOnlyCollection<Exception> errors)
 	{
 		value = this._value;
-		errors = this.Errors();
-	}
-
-	/// <summary>
-	/// Gets exceptions associated with this result.
-	/// </summary>
-	/// <returns>ReadOnlyCollection&lt;Exception&gt;.</returns>
-	[Information(nameof(Errors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public ReadOnlyCollection<Exception> Errors()
-	{
-		return this._exceptions.ToList().AsReadOnly();
-	}
-
-	/// <summary>
-	/// Extracts the actual result from the specified <see cref="SimpleResult{T}"/>.
-	/// </summary>
-	/// <param name="result">The result object containing the value.</param>
-	/// <returns>The value of type <typeparamref name="T"/>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="result"/> is <see langword="null"/>.</exception>
-	[Information(nameof(FromResult), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public static T FromResult([DisallowNull] in SimpleResult<T> result)
-	{
-		return result.ArgumentNotNull().Value;
+		errors = this.Errors;
 	}
 
 	/// <summary>
@@ -247,47 +294,25 @@ public class SimpleResult<T>
 	}
 
 	/// <summary>
-	/// Indicates if there are any errors.
+	/// Gets the reference to the value associated with the specified result.
 	/// </summary>
-	[Information(nameof(HasErrors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.New)]
-	public bool HasErrors => !this._exceptions.IsEmpty;
-
-	/// <summary>
-	/// Indicates if the result is a failure (no value or only errors).
-	/// </summary>
-	[Information(nameof(IsFailure), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.New)]
-	public bool IsFailure => this.Status == ResultStatus.Failed;
-
-	/// <summary>
-	/// Indicates if the result is successful (no errors and value set).
-	/// </summary>
-	[Information(nameof(IsSuccess), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.New)]
-	public bool IsSuccess => this.Status == ResultStatus.Succeeded;
-
-	/// <summary>
-	/// Indicates the status of the result.
-	/// </summary>
-	/// <value>
-	/// <see cref="ResultStatus.Succeeded"/> if the result is successful; 
-	/// <see cref="ResultStatus.PartialSuccess"/> if there are exceptions but a value is present;
-	/// otherwise, <see cref="ResultStatus.Failed"/>.
-	/// </value>>
-	[Information(nameof(Status), UnitTestStatus = UnitTestStatus.WIP, Status = Core.Status.Available)]
-	public ResultStatus Status
+	/// <param name="result">The result object containing the value.</param>
+	/// <returns>A reference to the value of type <typeparamref name="T"/>.</returns>
+	[ExcludeFromCodeCoverage]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static ref readonly T GetReference([DisallowNull] in SimpleResult<T> result)
 	{
-		get
-		{
-			return this._valueSet && this._exceptions.IsEmpty
-				? ResultStatus.Succeeded
-				: this._valueSet ? ResultStatus.PartialSuccess : ResultStatus.Failed;
-		}
+		return ref result._value;
 	}
 
 	/// <summary>
-	/// Gets the value associated with this result.
+	/// Generates the exception messages.
 	/// </summary>
-	/// <value>The value of type <typeparamref name="T"/>.</value>
-	[Information(nameof(Value), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public T Value => this._value;
+	/// <returns>A string containing all exception messages.</returns>
+	[return: NotNull]
+	private string GenerateExceptionMessages()
+	{
+		return FastStringBuilder.Join(this._exceptions.Select(e => e.GetAllMessages()), ControlChars.CR);
+	}
 
 }

@@ -37,18 +37,6 @@ public class FileHelperTests
 	private const int FileCount = 100;
 	private const int FileLength = 2048;
 
-	private static CopyProgressResult CopyProgressCallback(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint dwStreamNumber, CopyProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData)
-	{
-		Trace.WriteLine($"TotalFileSize:{totalFileSize}");
-		Trace.WriteLine($"TotalBytesTransferred:{totalBytesTransferred}");
-		Trace.WriteLine($"StreamSize:{streamSize}");
-		Trace.WriteLine($"StreamBytesTransferred:{streamBytesTransferred}");
-		Trace.WriteLine($"dwStreamNumber:{dwStreamNumber}");
-		Trace.WriteLine($"CopyProgressCallbackReason:{dwCallbackReason}");
-
-		return CopyProgressResult.Continue;
-	}
-
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
 	public void AddAttributes_NullFile_Test()
@@ -285,7 +273,7 @@ public class FileHelperTests
 
 		Assert.AreEqual(ResultStatus.Succeeded, result.Status);
 		Assert.AreEqual(FileCount, result.Value.Count);
-		Assert.IsEmpty(result.Errors());
+		Assert.IsEmpty(result.Errors);
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -308,7 +296,7 @@ public class FileHelperTests
 
 		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
 		Assert.AreEqual(FileCount - 2, result.Value.Count);
-		Assert.AreEqual(2, result.Errors().Count);
+		Assert.AreEqual(2, result.Errors.Count);
 
 		foreach (var file in files.Files)
 		{
@@ -340,7 +328,7 @@ public class FileHelperTests
 		Assert.IsNotNull(result);
 
 		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
-		Assert.AreEqual(1, result.Errors().Count);
+		Assert.AreEqual(1, result.Errors.Count);
 
 		foreach (var file in files.Files)
 		{
@@ -553,6 +541,18 @@ public class FileHelperTests
 		Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.ReadOnly));
 
 		file.Delete();
+	}
+
+	private static CopyProgressResult CopyProgressCallback(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint dwStreamNumber, CopyProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData)
+	{
+		Trace.WriteLine($"TotalFileSize:{totalFileSize}");
+		Trace.WriteLine($"TotalBytesTransferred:{totalBytesTransferred}");
+		Trace.WriteLine($"StreamSize:{streamSize}");
+		Trace.WriteLine($"StreamBytesTransferred:{streamBytesTransferred}");
+		Trace.WriteLine($"dwStreamNumber:{dwStreamNumber}");
+		Trace.WriteLine($"CopyProgressCallbackReason:{dwCallbackReason}");
+
+		return CopyProgressResult.Continue;
 	}
 
 }

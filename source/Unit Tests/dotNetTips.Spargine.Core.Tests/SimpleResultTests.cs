@@ -42,7 +42,7 @@ public class SimpleResultTests
 		// Assert
 		Assert.IsTrue(result.HasErrors);
 		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
-		Assert.HasCount(1, result.Errors());
+		Assert.HasCount(1, result.Errors);
 	}
 
 	[TestMethod]
@@ -58,7 +58,7 @@ public class SimpleResultTests
 		// Assert
 		Assert.IsTrue(bound.HasErrors);
 		Assert.AreEqual(ResultStatus.Failed, bound.Status);
-		Assert.HasCount(1, bound.Errors());
+		Assert.HasCount(1, bound.Errors);
 	}
 
 	[TestMethod]
@@ -88,7 +88,7 @@ public class SimpleResultTests
 		Assert.IsTrue(result.HasErrors);
 		Assert.IsFalse(result.IsSuccess);
 		Assert.AreEqual(ResultStatus.Failed, result.Status);
-		Assert.HasCount(1, result.Errors());
+		Assert.HasCount(1, result.Errors);
 		Assert.Contains("fail", result.GetErrorMessages());
 	}
 
@@ -156,7 +156,7 @@ public class SimpleResultTests
 		var result = new SimpleResult<int>(ex);
 
 		// Act
-		var errors = result.Errors();
+		var errors = result.Errors;
 
 		// Assert
 		Assert.IsInstanceOfType(errors, typeof(ReadOnlyCollection<Exception>));
@@ -388,8 +388,8 @@ public class SimpleResultTests
 		result.AddException(exception);
 
 		// Assert
-		Assert.HasCount(1, result.Errors());
-		Assert.AreEqual(exception.Message, result.Errors()[0].Message);
+		Assert.HasCount(1, result.Errors);
+		Assert.AreEqual(exception.Message, result.Errors[0].Message);
 	}
 
 
@@ -404,8 +404,8 @@ public class SimpleResultTests
 
 		// Assert
 		Assert.AreEqual(ResultStatus.Failed, result.Status);
-		Assert.HasCount(1, result.Errors());
-		Assert.AreEqual(exception.Message, result.Errors()[0].Message);
+		Assert.HasCount(1, result.Errors);
+		Assert.AreEqual(exception.Message, result.Errors[0].Message);
 	}
 
 	[TestMethod]

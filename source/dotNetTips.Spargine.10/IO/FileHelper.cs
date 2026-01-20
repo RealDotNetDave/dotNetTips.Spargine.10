@@ -75,84 +75,18 @@ public static class FileHelper
 	public delegate CopyProgressResult CopyProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint dwStreamNumber, CopyProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
 
 	/// <summary>
-	/// Retrieves a singleton instance of <see cref="HttpClient"/> for use in file operations.
+	/// Gets a read-only collection of characters that are not allowed in file names, excluding directory separator characters.
 	/// </summary>
-	/// <returns>A singleton instance of <see cref="HttpClient"/>.</returns>
+	/// <value>A <see cref="ReadOnlyCollection{T}"/> of type <see cref="char"/> that contains the characters not allowed in file names.</value>
 	/// <remarks>
-	/// This method ensures that a single instance of <see cref="HttpClient"/> is reused across the application,
-	/// which is a recommended practice for efficient network resource utilization.
+	/// This property leverages the <see cref="Path.GetInvalidFileNameChars"/> method to retrieve the invalid characters and converts them to a read-only collection.
 	/// </remarks>
-	private static HttpClient GetHttpClient() => _httpClient ??= new HttpClient();
-
-	/// <summary>
-	/// Asynchronously extracts the contents of a Windows compressed (zipped) folder to the specified directory.
-	/// </summary>
-	/// <param name="zipPath">The path to the zip file. Must not be null or empty.</param>
-	/// <param name="expandedDirectoryPath">The path to the directory where the contents of the zip file will be extracted. Must not be null or empty.</param>
-	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
-	/// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="zipPath"/> or <paramref name="expandedDirectoryPath"/> is null or empty.</exception>
-	/// <exception cref="FileNotFoundException">Thrown if the zip file specified by <paramref name="zipPath"/> does not exist.</exception>
-	/// <remarks>
-	/// This method uses <see cref="ZipFile.ExtractToDirectory(string, string)"/> under the hood to perform the extraction.
-	/// Make sure to call .Dispose on Task
-	/// </remarks>
-	[Information(nameof(UnWinZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
-	private static async Task UnWinZipAsync([NotNull] string zipPath, [NotNull] string expandedDirectoryPath, CancellationToken cancellationToken = default)
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<char> InvalidFileNameChars
 	{
-		using var zipFileStream = File.OpenRead(zipPath);
-		using var zipArchiveStream = new ZipArchive(zipFileStream);
-
-		var itemCount = zipArchiveStream.Entries.Count;
-
-		for (var zipArchiveCount = 0; zipArchiveCount < itemCount; zipArchiveCount++)
-		{
-			var zipArchiveEntry = zipArchiveStream.Entries[zipArchiveCount];
-
-			if (zipArchiveEntry.CompressedLength == 0)
-			{
-				continue;
-			}
-
-			var extractedFilePath = Path.Combine(expandedDirectoryPath, zipArchiveEntry.FullName);
-
-			// Sanitize the extracted file path to prevent directory traversal attacks
-			if (!extractedFilePath.StartsWith(Path.GetFullPath(expandedDirectoryPath), StringComparison.OrdinalIgnoreCase))
-			{
-				ExceptionThrower.ThrowInvalidOperationException(Resources.ErrorInvalidFilePathZipArchive);
-			}
-
-			_ = Directory.CreateDirectory(Path.GetDirectoryName(extractedFilePath)!);
-
-			using (var zipStream = await zipArchiveEntry.OpenAsync(cancellationToken).ConfigureAwait(false))
-			{
-				using (var extractedFileStream = File.OpenWrite(extractedFilePath))
-				{
-					await zipStream.CopyToAsync(extractedFileStream, cancellationToken).ConfigureAwait(false);
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Validates the file file and destination directory, and creates the destination directory if it does not exist.
-	/// </summary>
-	/// <param name="file">The file file to be copied. Must not be null.</param>
-	/// <param name="destination">The destination directory where the file will be copied. Must not be null.</param>
-	/// <exception cref="ArgumentNullException">Thrown when the file or destination is null.</exception>
-	private static void ValidateFileCreateDestinationDirectory(FileInfo file, DirectoryInfo destination)
-	{
-		file = file.ArgumentExists();
-		destination = destination.ArgumentNotNull();
-
-		//Ensure the file directory and destination are not the same.
-		if (file.Directory!.FullName.Equals(destination.FullName, StringComparison.OrdinalIgnoreCase))
-		{
-			ExceptionThrower.ThrowInvalidOperationException(Resources.TheDirectoryForTheFileCannotBeTheSameAsThe);
-		}
-
-		_ = destination.CheckExists(createDirectory: true);
-	}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get;
+	} = Path.GetInvalidFileNameChars().AsReadOnly();
 
 	/// <summary>
 	/// Adds the specified <see cref="FileAttributes"/> to a file.
@@ -773,16 +707,82 @@ public static class FileHelper
 	}
 
 	/// <summary>
-	/// Gets a read-only collection of characters that are not allowed in file names, excluding directory separator characters.
+	/// Retrieves a singleton instance of <see cref="HttpClient"/> for use in file operations.
 	/// </summary>
-	/// <value>A <see cref="ReadOnlyCollection{T}"/> of type <see cref="char"/> that contains the characters not allowed in file names.</value>
+	/// <returns>A singleton instance of <see cref="HttpClient"/>.</returns>
 	/// <remarks>
-	/// This property leverages the <see cref="Path.GetInvalidFileNameChars"/> method to retrieve the invalid characters and converts them to a read-only collection.
+	/// This method ensures that a single instance of <see cref="HttpClient"/> is reused across the application,
+	/// which is a recommended practice for efficient network resource utilization.
 	/// </remarks>
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<char> InvalidFileNameChars
+	private static HttpClient GetHttpClient() => _httpClient ??= new HttpClient();
+
+	/// <summary>
+	/// Asynchronously extracts the contents of a Windows compressed (zipped) folder to the specified directory.
+	/// </summary>
+	/// <param name="zipPath">The path to the zip file. Must not be null or empty.</param>
+	/// <param name="expandedDirectoryPath">The path to the directory where the contents of the zip file will be extracted. Must not be null or empty.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="zipPath"/> or <paramref name="expandedDirectoryPath"/> is null or empty.</exception>
+	/// <exception cref="FileNotFoundException">Thrown if the zip file specified by <paramref name="zipPath"/> does not exist.</exception>
+	/// <remarks>
+	/// This method uses <see cref="ZipFile.ExtractToDirectory(string, string)"/> under the hood to perform the extraction.
+	/// Make sure to call .Dispose on Task
+	/// </remarks>
+	[Information(nameof(UnWinZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	private static async Task UnWinZipAsync([NotNull] string zipPath, [NotNull] string expandedDirectoryPath, CancellationToken cancellationToken = default)
 	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get;
-	} = Path.GetInvalidFileNameChars().AsReadOnly();
+		using var zipFileStream = File.OpenRead(zipPath);
+		using var zipArchiveStream = new ZipArchive(zipFileStream);
+
+		var itemCount = zipArchiveStream.Entries.Count;
+
+		for (var zipArchiveCount = 0; zipArchiveCount < itemCount; zipArchiveCount++)
+		{
+			var zipArchiveEntry = zipArchiveStream.Entries[zipArchiveCount];
+
+			if (zipArchiveEntry.CompressedLength == 0)
+			{
+				continue;
+			}
+
+			var extractedFilePath = Path.Combine(expandedDirectoryPath, zipArchiveEntry.FullName);
+
+			// Sanitize the extracted file path to prevent directory traversal attacks
+			if (!extractedFilePath.StartsWith(Path.GetFullPath(expandedDirectoryPath), StringComparison.OrdinalIgnoreCase))
+			{
+				ExceptionThrower.ThrowInvalidOperationException(Resources.ErrorInvalidFilePathZipArchive);
+			}
+
+			_ = Directory.CreateDirectory(Path.GetDirectoryName(extractedFilePath)!);
+
+			using (var zipStream = await zipArchiveEntry.OpenAsync(cancellationToken).ConfigureAwait(false))
+			{
+				using (var extractedFileStream = File.OpenWrite(extractedFilePath))
+				{
+					await zipStream.CopyToAsync(extractedFileStream, cancellationToken).ConfigureAwait(false);
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Validates the file file and destination directory, and creates the destination directory if it does not exist.
+	/// </summary>
+	/// <param name="file">The file file to be copied. Must not be null.</param>
+	/// <param name="destination">The destination directory where the file will be copied. Must not be null.</param>
+	/// <exception cref="ArgumentNullException">Thrown when the file or destination is null.</exception>
+	private static void ValidateFileCreateDestinationDirectory(FileInfo file, DirectoryInfo destination)
+	{
+		file = file.ArgumentExists();
+		destination = destination.ArgumentNotNull();
+
+		//Ensure the file directory and destination are not the same.
+		if (file.Directory!.FullName.Equals(destination.FullName, StringComparison.OrdinalIgnoreCase))
+		{
+			ExceptionThrower.ThrowInvalidOperationException(Resources.TheDirectoryForTheFileCannotBeTheSameAsThe);
+		}
+
+		_ = destination.CheckExists(createDirectory: true);
+	}
 }

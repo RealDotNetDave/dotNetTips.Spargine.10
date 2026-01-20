@@ -36,7 +36,7 @@ namespace DotNetTips.Spargine.IO;
 /// loading files asynchronously, managing OneDrive folders, and conducting safe directory and path searches. These methods
 /// are designed to extend the capabilities of the <see cref="DirectoryInfo"/> class and simplify common path system operations.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDirectoryHelper")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDirectoryHelper")]
 public static class DirectoryHelper
 {
 	private const string LocalAppData = "LOCALAPPDATA";
@@ -166,7 +166,7 @@ public static class DirectoryHelper
 	/// <exception cref="IOException">Thrown when the directory could not be deleted after the specified number of retries.</exception>
 	/// <exception cref="UnauthorizedAccessException">Thrown when the directory could not be deleted due to unauthorized access after the specified number of retries.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteDirectory), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(DeleteDirectory), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
 	public static SimpleResult<int> DeleteDirectory([DisallowNull] DirectoryInfo path, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5, bool recursive = true)
 	{
 		path = path.ArgumentExists();
@@ -185,7 +185,7 @@ public static class DirectoryHelper
 
 		if (result.Status != ResultStatus.Succeeded)
 		{
-			ExceptionThrower.ThrowIOException($"Directory could not be deleted after {retries} retries.");
+			result.AddException(new IOException($"Directory could not be deleted: {path.FullName}"));
 		}
 
 		return result;
@@ -310,29 +310,29 @@ public static class DirectoryHelper
 		return folders.AsReadOnly();
 	}
 
+
 	/// <summary>
-	/// Moves a directory from a source to a destination, optionally allowing retries in case of failure.
+	/// Moves a directory to a new location with retry support.
 	/// </summary>
-	/// <param name="source">The source directory to move. Must not be null.</param>
-	/// <param name="destination">The destination directory where the source directory should be moved to. Must not be null.</param>
-	/// <param name="retries">The number of retry attempts for the move operation. Must be greater than or equal to 0.</param>
+	/// <param name="source">The source directory to move. Must exist.</param>
+	/// <param name="destination">The destination directory path. Must not be null.</param>
+	/// <param name="retries">
+	/// The maximum number of retry attempts if the move operation fails.
+	/// Valid range is from 1 to 255. Default is 5.
+	/// </param>
+	/// <returns>
+	/// A <see cref="SimpleResult{T}"/> containing the number of attempts performed.
+	/// If the operation fails after all retries, the result will contain an exception.
+	/// </returns>
 	/// <remarks>
-	/// This method uses <see cref="DirectoryInfo.MoveTo"/> for moving the directory. If the operation fails, it will retry the specified number of times.
+	/// This method uses ExecutionHelper.ProgressiveRetry() to perform the move operation
+	/// with a progressive retry strategy, waiting 5 milliseconds between attempts.
 	/// </remarks>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="source"/> or <paramref name="destination"/> is null.</exception>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="retries"/> is less than 0.</exception>
-	/// <example>
-	/// This example shows how to call the <see cref="MoveDirectory" /> method.
-	/// <code>
-	/// var sourceDir = new DirectoryInfo(@"C:\SourceDirectory");
-	/// var destDir = new DirectoryInfo(@"C:\DestinationDirectory");
-	/// DirectoryHelper.MoveDirectory(sourceDir, destDir, 5);
-	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is null.</exception>
-	/// <exception cref="IOException">Thrown when the directory could not be moved after the specified number of retries.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="retries"/> is outside the valid range (1-255).</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(MoveDirectory), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
-	public static void MoveDirectory([DisallowNull] DirectoryInfo source, [DisallowNull] DirectoryInfo destination, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5)
+	[Information(nameof(MoveDirectory), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
+	public static SimpleResult<int> MoveDirectory([DisallowNull] DirectoryInfo source, [DisallowNull] DirectoryInfo destination, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5)
 	{
 		source = source.ArgumentExists();
 		destination = destination.ArgumentNotNull();
@@ -343,8 +343,10 @@ public static class DirectoryHelper
 
 		if (result.Status != ResultStatus.Succeeded)
 		{
-			ExceptionThrower.ThrowIOException($"Directory could not be moved after {retries} retries.");
+			result.AddException(new IOException($"Directory could not be moved after {result.Value} tries: {source.FullName} to {destination.FullName}"));
 		}
+
+		return result;
 	}
 
 	/// <summary>
