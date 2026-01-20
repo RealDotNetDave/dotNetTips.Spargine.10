@@ -52,7 +52,7 @@ namespace DotNetTips.Spargine.IO;
 /// </code>
 /// </remarks>
 [SupportedOSPlatform("windows")]
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFileProcessor")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineFileProcessor")]
 public class FileProcessor
 {
 	/// <summary>
@@ -65,14 +65,121 @@ public class FileProcessor
 	public event EventHandler<ProgressEventArgs>? Processed;
 
 	/// <summary>
-	/// Copies files to a new location using the path (excluding root) of the original file in the destination path.
+	/// Copies files to a new location.
 	/// </summary>
 	/// <param name="files">The files to copy.</param>
 	/// <param name="destination">The destination folder where files will be copied.</param>
+	/// <param name="overwrite">If <see langword="true"/>, overwrites existing files at the destination; otherwise, throws an exception if a file already exists.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of files successfully copied.</returns>
 	/// <remarks>
 	/// Use the <see cref="Processed"/> event to find out if file copy succeeded or failed.
 	/// </remarks>
+	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
+	/// <example>
+	/// Here is an example of using the <see cref="CopyFiles"/> method:
+	/// <code>
+	/// var fileProcessor = new FileProcessor();
+	/// fileProcessor.Processed += (sender, e) => 
+	/// {
+	///     Console.WriteLine($"{e.ProgressState}: {e.Name}");
+	/// };
+	/// 
+	/// var filesToCopy = new List&lt;FileInfo&gt; { new FileInfo("path/to/source/file.txt") };
+	/// var destinationDir = new DirectoryInfo("path/to/destination");
+	/// var cts = new CancellationTokenSource();
+	/// fileProcessor.CopyFiles(filesToCopy, destinationDir, cancellationToken: cts.Token);
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CopyFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public int CopyFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
+	{
+		if (files is null)
+		{
+			return 0;
+		}
+
+		files = files.RemoveNulls().EnsureUnique();
+
+		if (files.IsEmpty())
+		{
+			return 0;
+		}
+
+		destination = destination.ArgumentNotNull();
+
+		_ = destination.CheckExists(createDirectory: true);
+
+		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
+
+		var successCount = 0;
+		var psw = new PerformanceStopwatch(nameof(this.CopyFiles));
+
+		foreach (var tempFile in files)
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+
+			if (tempFile.Exists)
+			{
+				try
+				{
+					var newFileName = new FileInfo(Path.Combine(destinationPath, tempFile.Name));
+
+					psw.Start();
+
+					_ = tempFile.CopyTo(newFileName.FullName, overwrite);
+
+					var perf = psw.StopReset();
+
+					successCount++;
+
+					this.OnProcessed(new ProgressEventArgs
+					{
+						Name = tempFile.FullName,
+						Message = tempFile.Name,
+						ProgressState = FileProgressState.FileCopied,
+						Size = tempFile.Length,
+						SpeedInMilliseconds = perf.TotalMilliseconds,
+					});
+				}
+				catch (Exception ex) // Report all errors
+				{
+					this.OnProcessed(new ProgressEventArgs
+					{
+						Name = tempFile.FullName,
+						ProgressState = FileProgressState.Error,
+						Size = tempFile.Length,
+						Message = ex.GetAllMessages(),
+					});
+				}
+			}
+			else
+			{
+				this.OnProcessed(new ProgressEventArgs
+				{
+					Name = tempFile.FullName,
+					ProgressState = FileProgressState.Error,
+					Size = tempFile.Length,
+					Message = Resources.FileNotFound,
+				});
+			}
+		}
+
+		return successCount;
+	}
+
+	/// <summary>
+	/// Copies files to a new location using the path (excluding root) of the original file in the destination path.
+	/// </summary>
+	/// <param name="files">The files to copy.</param>
+	/// <param name="destination">The destination folder where files will be copied.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>The number of files successfully copied.</returns>
+	/// <remarks>
+	/// Use the <see cref="Processed"/> event to find out if file copy succeeded or failed.
+	/// </remarks>
+	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
 	/// <example>
 	/// Here is an example of using the <see cref="CopyFilesWithOriginalPath"/> method:
 	/// <code>
@@ -84,12 +191,13 @@ public class FileProcessor
 	/// 
 	/// var filesToCopy = new List&lt;FileInfo&gt; { new FileInfo("path/to/source/file.txt") };
 	/// var destinationDir = new DirectoryInfo("path/to/destination");
-	/// fileProcessor.CopyFilesWithOriginalPath(filesToCopy, destinationDir);
+	/// var cts = new CancellationTokenSource();
+	/// fileProcessor.CopyFilesWithOriginalPath(filesToCopy, destinationDir, cts.Token);
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CopyFilesWithOriginalPath), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int CopyFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination)
+	public int CopyFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		if (files is null)
 		{
@@ -115,6 +223,8 @@ public class FileProcessor
 
 		foreach (var tempFile in list)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
+
 			if (tempFile.Exists)
 			{
 				try
@@ -176,10 +286,12 @@ public class FileProcessor
 	/// Deletes the specified files.
 	/// </summary>
 	/// <param name="files">The files to delete.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of files successfully deleted.</returns>
 	/// <remarks>
 	/// Use the <see cref="Processed"/> event to find out if file deletion succeeded or failed.
 	/// </remarks>
+	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
 	/// <example>
 	/// Here is an example of using the <see cref="DeleteFiles"/> method:
 	/// <code>
@@ -190,12 +302,13 @@ public class FileProcessor
 	/// };
 	/// 
 	/// var filesToDelete = new List&lt;FileInfo&gt; { new FileInfo("path/to/file/to/delete.txt") };
-	/// fileProcessor.DeleteFiles(filesToDelete);
+	/// var cts = new CancellationTokenSource();
+	/// fileProcessor.DeleteFiles(filesToDelete, cts.Token);
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int DeleteFiles(IEnumerable<FileInfo> files)
+	public int DeleteFiles(IEnumerable<FileInfo> files, CancellationToken cancellationToken = default)
 	{
 		if (files is null)
 		{
@@ -214,6 +327,8 @@ public class FileProcessor
 
 		foreach (var listItem in files)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
+
 			if (listItem.Exists)
 			{
 				long fileLength = 0;
@@ -270,10 +385,12 @@ public class FileProcessor
 	/// </summary>
 	/// <param name="folders">The folders to delete.</param>
 	/// <param name="recursive">Specifies whether to delete directories, subdirectories, and files in <paramref name="folders"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of folders successfully deleted.</returns>
 	/// <remarks>
 	/// Use the <see cref="Processed"/> event to find out if folder deletion succeeded or failed.
 	/// </remarks>
+	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
 	/// <example>
 	/// Here is an example of using the <see cref="DeleteFolders"/> method:
 	/// <code>
@@ -284,12 +401,13 @@ public class FileProcessor
 	/// };
 	/// 
 	/// var foldersToDelete = new List&lt;DirectoryInfo&gt; { new DirectoryInfo("path/to/folder/to/delete") };
-	/// fileProcessor.DeleteFolders(foldersToDelete);
+	/// var cts = new CancellationTokenSource();
+	/// fileProcessor.DeleteFolders(foldersToDelete, recursive: true, cts.Token);
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true)
+	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
 		if (folders is null)
 		{
@@ -308,6 +426,8 @@ public class FileProcessor
 
 		foreach (var folder in folders)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
+
 			if (folder.CheckExists())
 			{
 				try
@@ -345,6 +465,234 @@ public class FileProcessor
 					Name = folder.FullName,
 					ProgressState = FileProgressState.Error,
 					Message = Resources.FolderNotFound,
+				});
+			}
+		}
+
+		return successCount;
+	}
+
+	/// <summary>
+	/// Moves files to a new location.
+	/// </summary>
+	/// <param name="files">The files to move.</param>
+	/// <param name="destination">The destination folder where files will be moved.</param>
+	/// <param name="overwrite">If <see langword="true"/>, overwrites existing files at the destination; otherwise, throws an exception if a file already exists.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>The number of files successfully moved.</returns>
+	/// <remarks>
+	/// Use the <see cref="Processed"/> event to find out if file move succeeded or failed.
+	/// </remarks>
+	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
+	/// <example>
+	/// Here is an example of using the <see cref="MoveFiles"/> method:
+	/// <code>
+	/// var fileProcessor = new FileProcessor();
+	/// fileProcessor.Processed += (sender, e) => 
+	/// {
+	///     Console.WriteLine($"{e.ProgressState}: {e.Name}");
+	/// };
+	/// 
+	/// var filesToMove = new List&lt;FileInfo&gt; { new FileInfo("path/to/source/file.txt") };
+	/// var destinationDir = new DirectoryInfo("path/to/destination");
+	/// var cts = new CancellationTokenSource();
+	/// fileProcessor.MoveFiles(filesToMove, destinationDir, cancellationToken: cts.Token);
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(MoveFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public int MoveFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
+	{
+		if (files is null)
+		{
+			return 0;
+		}
+
+		files = files.RemoveNulls().EnsureUnique();
+
+		if (files.IsEmpty())
+		{
+			return 0;
+		}
+
+		destination = destination.ArgumentNotNull();
+
+		_ = destination.CheckExists(createDirectory: true);
+
+		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
+
+		var successCount = 0;
+		var psw = new PerformanceStopwatch(nameof(this.MoveFiles));
+
+		foreach (var tempFile in files)
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+
+			if (tempFile.Exists)
+			{
+				long fileLength = 0;
+
+				try
+				{
+					fileLength = tempFile.Length;
+					var newFileName = new FileInfo(Path.Combine(destinationPath, tempFile.Name));
+
+					FileHelper.RemoveReadOnlyAttribute(tempFile);
+
+					psw.Start();
+
+					tempFile.MoveTo(newFileName.FullName, overwrite);
+
+					var perf = psw.StopReset();
+
+					successCount++;
+
+					this.OnProcessed(new ProgressEventArgs
+					{
+						Name = tempFile.FullName,
+						Message = tempFile.Name,
+						ProgressState = FileProgressState.FileMoved,
+						Size = fileLength,
+						SpeedInMilliseconds = perf.TotalMilliseconds,
+					});
+				}
+				catch (Exception ex) // Report all errors
+				{
+					this.OnProcessed(new ProgressEventArgs
+					{
+						Name = tempFile.FullName,
+						ProgressState = FileProgressState.Error,
+						Size = fileLength,
+						Message = ex.GetAllMessages(),
+					});
+				}
+			}
+			else
+			{
+				this.OnProcessed(new ProgressEventArgs
+				{
+					Name = tempFile.FullName,
+					ProgressState = FileProgressState.Error,
+					Message = Resources.FileNotFound,
+				});
+			}
+		}
+
+		return successCount;
+	}
+
+	/// <summary>
+	/// Moves files to a new location using the path (excluding root) of the original file in the destination path.
+	/// </summary>
+	/// <param name="files">The files to move.</param>
+	/// <param name="destination">The destination folder where files will be moved.</param>
+	/// <param name="overwrite">If <see langword="true"/>, overwrites existing files at the destination; otherwise, throws an exception if a file already exists.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>The number of files successfully moved.</returns>
+	/// <remarks>
+	/// Use the <see cref="Processed"/> event to find out if file move succeeded or failed.
+	/// </remarks>
+	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
+	/// <example>
+	/// Here is an example of using the <see cref="MoveFilesWithOriginalPath"/> method:
+	/// <code>
+	/// var fileProcessor = new FileProcessor();
+	/// fileProcessor.Processed += (sender, e) => 
+	/// {
+	///     Console.WriteLine($"{e.ProgressState}: {e.Name}");
+	/// };
+	/// 
+	/// var filesToMove = new List&lt;FileInfo&gt; { new FileInfo("path/to/source/file.txt") };
+	/// var destinationDir = new DirectoryInfo("path/to/destination");
+	/// var cts = new CancellationTokenSource();
+	/// fileProcessor.MoveFilesWithOriginalPath(filesToMove, destinationDir, cancellationToken: cts.Token);
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(MoveFilesWithOriginalPath), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public int MoveFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
+	{
+		if (files is null)
+		{
+			return 0;
+		}
+
+		var list = files.RemoveNulls().EnsureUnique();
+
+		if (list.IsEmpty())
+		{
+			return 0;
+		}
+
+		destination = destination.ArgumentNotNull();
+
+		_ = destination.CheckExists(createDirectory: true);
+
+		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
+
+		var successCount = 0;
+
+		var psw = new PerformanceStopwatch(nameof(this.MoveFilesWithOriginalPath));
+
+		foreach (var tempFile in list)
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+
+			if (tempFile.Exists)
+			{
+				long fileLength = 0;
+
+				try
+				{
+					fileLength = tempFile.Length;
+
+					var newFileName = tempFile.Directory?.Root is not null
+						? new FileInfo(fileName: tempFile.FullName.Replace(tempFile.Directory.Root.FullName, destinationPath, StringComparison.InvariantCulture))
+						: throw new InvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
+
+					if (newFileName.Directory?.CheckExists() is false)
+					{
+						newFileName.Directory.Create();
+					}
+
+					FileHelper.RemoveReadOnlyAttribute(tempFile);
+
+					psw.Start();
+
+					tempFile.MoveTo(newFileName.FullName, overwrite);
+
+					var perf = psw.StopReset();
+
+					successCount++;
+
+					this.OnProcessed(new ProgressEventArgs
+					{
+						Name = tempFile.FullName,
+						Message = tempFile.Name,
+						ProgressState = FileProgressState.FileMoved,
+						Size = fileLength,
+						SpeedInMilliseconds = perf.TotalMilliseconds,
+					});
+				}
+				catch (Exception ex) // Report all errors
+				{
+					// Send error.
+					this.OnProcessed(new ProgressEventArgs
+					{
+						Name = tempFile.FullName,
+						ProgressState = FileProgressState.Error,
+						Size = fileLength,
+						Message = ex.GetAllMessages(),
+					});
+				}
+			}
+			else
+			{
+				this.OnProcessed(new ProgressEventArgs
+				{
+					Name = tempFile.FullName,
+					ProgressState = FileProgressState.Error,
+					Message = Resources.FileNotFound,
 				});
 			}
 		}
