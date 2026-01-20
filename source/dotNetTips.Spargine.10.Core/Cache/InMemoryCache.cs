@@ -680,7 +680,7 @@ public sealed class InMemoryCache
 	/// <remarks>
 	/// If multiple callers attempt to create the same cache entry concurrently, only one factory delegate will execute and the result will be shared.
 	/// </remarks>
-	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public async Task<T> GetOrCreateAsync<T>([DisallowNull] string key, [DisallowNull] Func<CancellationToken, Task<T>> factory, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -790,7 +790,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Update, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public bool PeekCacheItem<T>([DisallowNull] string key, out T? value)
 	{
 		key = key.ArgumentNotNullOrEmpty();

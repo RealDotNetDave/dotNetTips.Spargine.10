@@ -1233,6 +1233,32 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public void PeekCacheItem_AfterItemRemoved_ReturnsFalse()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		cache.AddCacheItem(key, "test value");
+
+		// Verify item exists
+		var existsBefore = cache.PeekCacheItem<string>(key, out _);
+		Assert.IsTrue(existsBefore);
+
+		// Remove item
+		cache.RemoveCacheItem(key);
+
+		// Act
+		var result = cache.PeekCacheItem<string>(key, out var value);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(value);
+
+		cache.Clear();
+	}
+
+	[TestMethod]
 	public void PeekCacheItem_DoesNotAffectStatistics()
 	{
 		// Arrange
@@ -1254,14 +1280,98 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public void PeekCacheItem_DoesNotUpdateStatistics()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		cache.ResetStatistics();
+		var key = Guid.NewGuid().ToString();
+		cache.AddCacheItem(key, "test value");
+
+		var statsBefore = cache.GetCacheStatistics();
+		var hitsBefore = statsBefore.CacheHits;
+		var missesBefore = statsBefore.CacheMisses;
+
+		// Act
+		_ = cache.PeekCacheItem<string>(key, out _);
+		_ = cache.PeekCacheItem<string>("non-existent-key", out _);
+
+		// Assert - Statistics should remain unchanged
+		var statsAfter = cache.GetCacheStatistics();
+		Assert.AreEqual(hitsBefore, statsAfter.CacheHits);
+		Assert.AreEqual(missesBefore, statsAfter.CacheMisses);
+
+		cache.Clear();
+	}
+
+	[TestMethod]
 	public void PeekCacheItem_EmptyKey_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var cache = InMemoryCache.Instance;
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			cache.PeekCacheItem<Person>(string.Empty, out _));
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.PeekCacheItem<string>(string.Empty, out _));
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_ExistingItem_ReturnsTrueAndValue()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		var expectedValue = "test value";
+		cache.AddCacheItem(key, expectedValue);
+
+		// Act
+		var result = cache.PeekCacheItem<string>(key, out var value);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(expectedValue, value);
+
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_MultipleCalls_ReturnsConsistentResults()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		var expectedValue = "consistent value";
+		cache.AddCacheItem(key, expectedValue);
+
+		// Act & Assert - Multiple peeks should return same result
+		for (var i = 0; i < 5; i++)
+		{
+			var result = cache.PeekCacheItem<string>(key, out var value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(expectedValue, value);
+		}
+
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_NonExistingItem_ReturnsFalseAndDefault()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+
+		// Act
+		var result = cache.PeekCacheItem<string>(key, out var value);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(value);
+
+		cache.Clear();
 	}
 
 	[TestMethod]
@@ -1271,8 +1381,88 @@ public class InMemoryCacheTests
 		var cache = InMemoryCache.Instance;
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			cache.PeekCacheItem<Person>(null, out _));
+		Assert.ThrowsExactly<ArgumentNullException>(() => cache.PeekCacheItem<string>(null, out _));
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_TypeMismatch_ReturnsFalseAndDefault()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		cache.AddCacheItem(key, "string value");
+
+		// Act - Try to retrieve as int when it's a string
+		var result = cache.PeekCacheItem<int>(key, out var value);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.AreEqual(default(int), value);
+
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_WithNullableValueType_ReturnsTrueAndValue()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		int? expectedValue = 100;
+		cache.AddCacheItem(key, expectedValue);
+
+		// Act
+		var result = cache.PeekCacheItem<int?>(key, out var value);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(expectedValue, value);
+
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_WithReferenceType_ReturnsTrueAndValue()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		var expectedValue = RandomData.GeneratePerson<Person>();
+		cache.AddCacheItem(key, expectedValue);
+
+		// Act
+		var result = cache.PeekCacheItem<Person>(key, out var value);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.IsNotNull(value);
+		Assert.AreEqual(expectedValue.Id, value.Id);
+		Assert.AreEqual(expectedValue.Email, value.Email);
+
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public void PeekCacheItem_WithValueType_ReturnsTrueAndValue()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		var expectedValue = 42;
+		cache.AddCacheItem(key, expectedValue);
+
+		// Act
+		var result = cache.PeekCacheItem<int>(key, out var value);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(expectedValue, value);
+
+		cache.Clear();
 	}
 
 	[TestMethod]
