@@ -4,7 +4,7 @@
 // Created          : 07-26-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -23,6 +23,8 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Queues;
+using DotNetTips.Spargine.Tester;
+using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetTips.Spargine.Core.Tests.Collections.Generic.Concurrent;
@@ -42,6 +44,194 @@ public class ChannelQueueTests
 
 		Assert.IsTrue(queue.Acknowledge(key), "Acknowledge should remove the key and return true.");
 		Assert.IsFalse(queue.Acknowledge(key), "Acknowledge should return false for a non-existent key.");
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_AfterClear_DoesNotThrow()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
+
+		queue.Clear();
+
+		// Act & Assert - Should not throw after clear
+		queue.CleanupExpiredKeys();
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_CalledMultipleTimes_DoesNotThrow()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
+		Thread.Sleep(10);
+
+		// Act & Assert - Multiple calls should not throw
+		queue.CleanupExpiredKeys();
+		queue.CleanupExpiredKeys();
+		queue.CleanupExpiredKeys();
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_DoesNotRemoveNonExpiredKeys()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var idempotencyKey = "non-expired-key";
+
+		// Write with a long dedupe window
+		queue.TryWriteOnce("item1", idempotencyKey, TimeSpan.FromMinutes(10));
+
+		// Act
+		queue.CleanupExpiredKeys();
+
+		// Assert - Key should still exist, blocking new write with same key
+		var result = queue.TryWriteOnce("item2", idempotencyKey, TimeSpan.FromMinutes(5));
+		Assert.IsFalse(result, "Should not be able to write with the same key - it hasn't expired.");
+	}
+	[TestMethod]
+	public void CleanupExpiredKeys_RemovesExpiredKeys()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var idempotencyKey = "expired-key";
+
+		// Write with a very short dedupe window
+		queue.TryWriteOnce("item1", idempotencyKey, TimeSpan.FromMilliseconds(1));
+
+		// Wait for the key to expire
+		Thread.Sleep(50);
+
+		// Act
+		queue.CleanupExpiredKeys();
+
+		// Assert - Key should be removed, allowing new write with same key
+		var result = queue.TryWriteOnce("item2", idempotencyKey, TimeSpan.FromMinutes(5));
+		Assert.IsTrue(result, "Should be able to write with the same key after cleanup.");
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_RemovesMultipleExpiredKeys()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var keys = new[] { "key1", "key2", "key3" };
+
+		// Write with short dedupe window
+		foreach (var key in keys)
+		{
+			queue.TryWriteOnce($"item-{key}", key, TimeSpan.FromMilliseconds(1));
+		}
+
+		// Wait for all keys to expire
+		Thread.Sleep(50);
+
+		// Act
+		queue.CleanupExpiredKeys();
+
+		// Assert - All keys should be removed
+		foreach (var key in keys)
+		{
+			var result = queue.TryWriteOnce($"new-item-{key}", key, TimeSpan.FromMinutes(5));
+			Assert.IsTrue(result, $"Should be able to write with key '{key}' after cleanup.");
+		}
+	}
+
+	[TestMethod]
+	public async Task CleanupExpiredKeys_ThreadSafe_ConcurrentAccess()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Add many keys with short expiry
+		for (var i = 0; i < 100; i++)
+		{
+			queue.TryWriteOnce($"item{i}", $"key{i}", TimeSpan.FromMilliseconds(1));
+		}
+
+		Thread.Sleep(50);
+
+		// Act - Call cleanup concurrently with writes
+		var cleanupTask = Task.Run(() =>
+		{
+			for (var i = 0; i < 10; i++)
+			{
+				queue.CleanupExpiredKeys();
+				Thread.Sleep(5);
+			}
+		});
+
+		var writeTask = Task.Run(() =>
+		{
+			for (var i = 100; i < 200; i++)
+			{
+				queue.TryWriteOnce($"item{i}", $"key{i}", TimeSpan.FromMinutes(5));
+			}
+		});
+
+		// Assert - No exceptions should be thrown
+		await Task.WhenAll(cleanupTask, writeTask);
+		Assert.IsTrue(queue.Count > 0);
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_WithEmptyKeys_DoesNotThrow()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert - Should not throw
+		queue.CleanupExpiredKeys();
+
+		// Verify queue still works
+		Assert.IsTrue(queue.TryWrite("test"));
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_WithMixedKeys_OnlyRemovesExpired()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var expiredKey = "expired-key";
+		var validKey = "valid-key";
+
+		// Write with short dedupe window (will expire)
+		queue.TryWriteOnce("expired-item", expiredKey, TimeSpan.FromMilliseconds(1));
+
+		// Write with long dedupe window (won't expire)
+		queue.TryWriteOnce("valid-item", validKey, TimeSpan.FromMinutes(10));
+
+		// Wait for short key to expire
+		Thread.Sleep(50);
+
+		// Act
+		queue.CleanupExpiredKeys();
+
+		// Assert
+		var expiredResult = queue.TryWriteOnce("new-expired-item", expiredKey, TimeSpan.FromMinutes(5));
+		Assert.IsTrue(expiredResult, "Should be able to write with expired key after cleanup.");
+
+		var validResult = queue.TryWriteOnce("new-valid-item", validKey, TimeSpan.FromMinutes(5));
+		Assert.IsFalse(validResult, "Should not be able to write with non-expired key.");
+	}
+
+	[TestMethod]
+	public void CleanupExpiredKeys_WithNullDedupeWindow_KeysRemainUntilAcknowledged()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var idempotencyKey = "permanent-key";
+
+		// Write without dedupe window (uses long.MaxValue)
+		queue.TryWriteOnce("item1", idempotencyKey, dedupeWindow: null);
+
+		// Act
+		queue.CleanupExpiredKeys();
+
+		// Assert - Key should still exist (long.MaxValue expiry)
+		var result = queue.TryWriteOnce("item2", idempotencyKey);
+		Assert.IsFalse(result, "Key without dedupe window should not be cleaned up.");
 	}
 
 	[TestMethod]
@@ -95,6 +285,177 @@ public class ChannelQueueTests
 
 		// Assert
 		Assert.AreEqual(timeout, channelQueue.GetType().GetField("_cancellationTimeout", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(channelQueue), "The cancellation timeout should be set correctly.");
+	}
+
+	[TestMethod]
+	public async Task Constructor_WithBoundedChannelOptions_AllowsAsyncReadWrite()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10)
+		{
+			SingleReader = false,
+			SingleWriter = false
+		};
+		var queue = new ChannelQueue<string>(options);
+		var testItem = "test item";
+
+		// Act
+		await queue.WriteAsync(testItem);
+		var result = await queue.ReadAsync();
+
+		// Assert
+		Assert.AreEqual(testItem, result);
+		Assert.AreEqual(0, queue.Count);
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_AndCustomCancellationTimeout_SetsTimeout()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10);
+		var customTimeout = TimeSpan.FromSeconds(30);
+
+		// Act
+		var queue = new ChannelQueue<string>(options, customTimeout);
+
+		// Assert - Queue should work normally
+		Assert.IsNotNull(queue);
+		Assert.IsTrue(queue.TryWrite("test"));
+		Assert.AreEqual(1, queue.Count);
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_AndNullCancellationTimeout_UsesDefaultTimeout()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10);
+
+		// Act
+		var queue = new ChannelQueue<string>(options, cancellationTimeout: null);
+
+		// Assert - Queue should work normally with default 5 minute timeout
+		Assert.IsNotNull(queue);
+		Assert.IsTrue(queue.TryWrite("test"));
+		Assert.AreEqual(1, queue.Count);
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_CanLockAndComplete()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10);
+		var queue = new ChannelQueue<string>(options);
+
+		queue.TryWrite("item1");
+
+		// Act
+		var lockResult = queue.Lock();
+
+		// Assert
+		Assert.IsTrue(lockResult);
+		Assert.IsFalse(queue.TryWrite("item2")); // Cannot write after lock
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_ClearRemovesAllItems()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10);
+		var queue = new ChannelQueue<string>(options);
+
+		queue.TryWrite("item1");
+		queue.TryWrite("item2");
+		queue.TryWrite("item3");
+
+		// Act
+		queue.Clear();
+
+		// Assert
+		Assert.AreEqual(0, queue.Count);
+		Assert.IsFalse(queue.TryRead(out _));
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_CompletionTaskAvailable()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10);
+		var queue = new ChannelQueue<string>(options);
+
+		// Assert - Completion task should be available
+		Assert.IsNotNull(queue.Completion);
+		Assert.IsFalse(queue.Completion.IsCompleted);
+
+		// Act
+		queue.Lock();
+
+		// Assert - After lock, completion should be triggered
+		Assert.IsTrue(queue.IsCompleted);
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_CreatesWorkingQueue()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10)
+		{
+			FullMode = BoundedChannelFullMode.Wait
+		};
+
+		// Act
+		var queue = new ChannelQueue<string>(options);
+
+		// Assert
+		Assert.IsNotNull(queue);
+		Assert.AreEqual(0, queue.Count);
+		Assert.IsFalse(queue.IsCompleted);
+	}
+
+	[TestMethod]
+	public void Constructor_WithBoundedChannelOptions_DropOldestMode_DropsOldestWhenFull()
+	{
+		// Arrange
+		var capacity = 2;
+		var options = new BoundedChannelOptions(capacity)
+		{
+			FullMode = BoundedChannelFullMode.DropOldest
+		};
+		var queue = new ChannelQueue<int>(options);
+
+		// Act - Write more items than capacity
+		queue.TryWrite(1);
+		queue.TryWrite(2);
+		queue.TryWrite(3); // Should drop 1
+
+		// Assert
+		Assert.AreEqual(capacity, queue.Count);
+		Assert.IsTrue(queue.TryRead(out var first));
+		Assert.AreEqual(2, first); // First item (1) was dropped
+	}
+
+	[TestMethod]
+	public async Task Constructor_WithBoundedChannelOptions_ListenAsyncWorks()
+	{
+		// Arrange
+		var options = new BoundedChannelOptions(10);
+		var queue = new ChannelQueue<int>(options, TimeSpan.FromSeconds(5));
+		var items = new List<int> { 1, 2, 3 };
+
+		foreach (var item in items)
+		{
+			queue.TryWrite(item);
+		}
+		queue.Lock();
+
+		// Act
+		var receivedItems = new List<int>();
+		await foreach (var item in queue.ListenAsync())
+		{
+			receivedItems.Add(item);
+		}
+
+		// Assert
+		CollectionAssert.AreEqual(items, receivedItems);
 	}
 
 	[TestMethod]
@@ -356,6 +717,199 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void TryPeek_AfterClear_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWrite("item");
+		queue.Clear();
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(item);
+	}
+
+	[TestMethod]
+	public void TryPeek_AfterReadingAllItems_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWrite("item");
+		queue.TryRead(out _); // Remove the item
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(item);
+	}
+
+	[TestMethod]
+	public void TryPeek_DoesNotAffectCount()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWrite("item1");
+		queue.TryWrite("item2");
+		var initialCount = queue.Count;
+
+		// Act
+		queue.TryPeek(out _);
+
+		// Assert
+		Assert.AreEqual(initialCount, queue.Count);
+	}
+
+	[TestMethod]
+	public void TryPeek_EmptyQueue_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(item);
+	}
+
+	[TestMethod]
+	public void TryPeek_ItemRemainsInQueue()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWrite("item1");
+
+		// Act
+		var peekResult = queue.TryPeek(out var peekedItem);
+
+		// Assert - Item should still be readable
+		Assert.IsTrue(peekResult);
+		Assert.AreEqual(1, queue.Count);
+		Assert.IsTrue(queue.TryRead(out var readItem));
+		Assert.AreEqual(peekedItem, readItem);
+	}
+
+	[TestMethod]
+	public void TryPeek_MultiplePeeks_SameItemAvailable()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+		queue.TryWrite(42);
+
+		// Act - Peek multiple times
+		queue.TryPeek(out var item1);
+		queue.TryPeek(out var item2);
+		queue.TryPeek(out var item3);
+
+		// Assert - Same item should be available each time
+		Assert.AreEqual(42, item1);
+		Assert.AreEqual(42, item2);
+		Assert.AreEqual(42, item3);
+		Assert.AreEqual(1, queue.Count);
+	}
+
+	[TestMethod]
+	public void TryPeek_OnBoundedQueue_Works()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>(capacity: 5);
+		queue.TryWrite("bounded-item");
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual("bounded-item", item);
+		Assert.AreEqual(1, queue.Count);
+	}
+
+	[TestMethod]
+	public void TryPeek_OnLockedEmptyQueue_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.Lock();
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void TryPeek_WithComplexType_ReturnsCorrectItem()
+	{
+		// Arrange
+		var queue = new ChannelQueue<Person>();
+		var person = RandomData.GeneratePerson<Person>();
+		queue.TryWrite(person);
+
+		// Act
+		var result = queue.TryPeek(out var peekedPerson);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(person.Id, peekedPerson.Id);
+		Assert.AreEqual(person.Email, peekedPerson.Email);
+	}
+
+	[TestMethod]
+	public void TryPeek_WithItem_ReturnsTrueAndItem()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var expectedItem = "test-item";
+		queue.TryWrite(expectedItem);
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(expectedItem, item);
+	}
+
+	[TestMethod]
+	public void TryPeek_WithMultipleItems_ReturnsFirstItem()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWrite("first");
+		queue.TryWrite("second");
+		queue.TryWrite("third");
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual("first", item);
+		Assert.AreEqual(3, queue.Count);
+	}
+
+	[TestMethod]
+	public void TryPeek_WithValueType_ReturnsDefaultWhenEmpty()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+
+		// Act
+		var result = queue.TryPeek(out var item);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.AreEqual(default(int), item);
+	}
+
+	[TestMethod]
 	public void TryRead_ReturnsFalseWhenEmpty()
 	{
 		var queue = new ChannelQueue<int>();
@@ -369,6 +923,26 @@ public class ChannelQueueTests
 		queue.WriteAsync(42).Wait();
 		Assert.IsTrue(queue.TryRead(out var value), "TryRead should return true when an item is present.");
 		Assert.AreEqual(42, value, "TryRead should output the correct value.");
+	}
+
+	[TestMethod]
+	public void TryWrite_BoundedQueue_ReturnsFalseWhenAtCapacity()
+	{
+		// Arrange - Create bounded queue with capacity 3
+		var queue = new ChannelQueue<string>(capacity: 3);
+
+		// Act - Try to write more items than capacity
+		var result1 = queue.TryWrite("item1"); // true
+		var result2 = queue.TryWrite("item2"); // true
+		var result3 = queue.TryWrite("item3"); // true
+		var result4 = queue.TryWrite("item4"); // false - at capacity
+
+		// Assert
+		Assert.IsTrue(result1);
+		Assert.IsTrue(result2);
+		Assert.IsTrue(result3);
+		Assert.IsFalse(result4, "TryWrite should return false when bounded queue is at capacity");
+		Assert.AreEqual(3, queue.Count);
 	}
 
 	[TestMethod]

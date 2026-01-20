@@ -162,7 +162,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// Adds an item to the <see cref="ObservableList{T}"/>.
 	/// </summary>
 	/// <param name="item">The object to add to the collection.</param>
-	[Information(UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	void ICollection<T>.Add(T item) => this.Add(item);
 
 	/// <summary>

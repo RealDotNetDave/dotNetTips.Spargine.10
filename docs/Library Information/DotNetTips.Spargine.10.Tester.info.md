@@ -1,5 +1,87 @@
 # DotNetTips.Spargine.10.Tester - 2026.10.1.17
 
+## DotNetTips.Spargine.Tester.Data.Converters.DateOnlyConverter
+
+### System.DateOnly Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Read
+* **Modified On:** 
+
+### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateOnly value, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Write
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Data.Converters.IsoDateTimeOffsetConverter
+
+### System.DateTimeOffset Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Read
+* **Modified On:** 
+
+### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Write
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Data.Converters.RegionConverter
+
+### System.Void Write(System.Text.Json.Utf8JsonWriter writer, DotNetTips.Spargine.Tester.Data.Region value, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Write
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Data.Converters.TimeOnlyConverter
+
+### System.TimeOnly Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Read
+* **Modified On:** 
+
+### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.TimeOnly value, System.Text.Json.JsonSerializerOptions options)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Write
+* **Modified On:** 
+
+*****
 ## DotNetTips.Spargine.Tester.Data.CountryRepository
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.Data.Models.Country> GetCountries()
@@ -148,7 +230,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** op_Implicit
 * **Modified On:** 
@@ -517,7 +599,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** Addresses
 * **Modified On:** 
@@ -658,8 +740,28 @@
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.PersonComparerByLastNameThenFirstName
 
+### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.RefTypes.Person x, DotNetTips.Spargine.Tester.Models.RefTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Compare
+* **Modified On:** 
+
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.PersonEmailEqualityComparer
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.Person x, DotNetTips.Spargine.Tester.Models.RefTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord
@@ -712,6 +814,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** CellPhone
+* **Modified On:** 
+
+### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord Create(System.String id, System.String email, System.String firstName, System.String lastName, System.Nullable<System.DateTimeOffset> bornOn, System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord> addresses, System.String cellPhone, System.String phone)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Create
 * **Modified On:** 
 
 ### System.String Email { get; set; }
@@ -849,7 +961,7 @@
 * **Status:** Updated
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** ToPersonRecord
 * **Modified On:** 
@@ -866,6 +978,16 @@
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecordEmailEqualityComparer
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord x, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.Serializers.PersonRecordJsonSerializerContext
@@ -1007,7 +1129,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** CompareTo
 * **Modified On:** 
@@ -1170,7 +1292,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** Addresses
 * **Modified On:** 
@@ -1220,7 +1342,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **CreatedOn:** 
 * **Description:** FirstName
 * **Modified On:** 
@@ -1255,6 +1377,26 @@
 * **Description:** Phone
 * **Modified On:** 
 
+### DotNetTips.Spargine.Tester.Models.ValueTypes.Person ToPerson(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& person)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** ToPerson
+* **Modified On:** 
+
+### DotNetTips.Spargine.Tester.Models.ValueTypes.Person ToPerson(DotNetTips.Spargine.Tester.Models.RefTypes.Person& person)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** ToPerson
+* **Modified On:** 
+
 ### System.String ToString()
 
 * **Status:** Available
@@ -1266,13 +1408,56 @@
 * **Modified On:** 
 
 *****
+## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonComparer
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
+
+*****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonComparerByLastName
+
+### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Compare
+* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonComparerByLastNameThenFirstName
 
+### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Compare
+* **Modified On:** 
+
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonEmailEqualityComparer
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.PersonData
@@ -1445,7 +1630,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateCoordinateCollection
@@ -1637,7 +1822,7 @@
 * **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
+* **Unit Test Status:** Update
 * **Author:** David McCarter
 * **CreatedOn:** 12/15/2023
 * **Description:** GeneratePersonNames
@@ -1941,7 +2126,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Not Required
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateWords
@@ -2072,4 +2257,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/20/2026 2:29:06 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/20/2026 5:02:30 PM UTC**

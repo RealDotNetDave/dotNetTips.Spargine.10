@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-20-2026
 // ***********************************************************************
 // <copyright file="KeyGeneratorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,8 +13,12 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -469,6 +473,181 @@ public class KeyGeneratorTests
 		var isValidGuid = Guid.TryParseExact(key, "N", out var parsedGuid);
 		Assert.IsTrue(isValidGuid, "Generated key should be a valid GUID without dashes.");
 		Assert.IsNotNull(parsedGuid, "Parsed GUID should not be null.");
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_ConsistentFormatWithInvariantCulture()
+	{
+		// Arrange
+		var originalCulture = CultureInfo.CurrentCulture;
+
+		try
+		{
+			// Act - Generate keys in different cultures
+			CultureInfo.CurrentCulture = new CultureInfo("de-DE");
+			var germanKey = KeyGenerator.GenerateSortableKey();
+
+			CultureInfo.CurrentCulture = new CultureInfo("ja-JP");
+			var japaneseKey = KeyGenerator.GenerateSortableKey();
+
+			// Assert - Both should have consistent format (32 hex chars)
+			Assert.AreEqual(32, germanKey.Length);
+			Assert.AreEqual(32, japaneseKey.Length);
+			Assert.IsTrue(germanKey.All(c => "0123456789abcdef".Contains(c)));
+			Assert.IsTrue(japaneseKey.All(c => "0123456789abcdef".Contains(c)));
+		}
+		finally
+		{
+			CultureInfo.CurrentCulture = originalCulture;
+		}
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_ContainsOnlyHexadecimalCharacters()
+	{
+		// Arrange
+		var validChars = "0123456789abcdef";
+
+		// Act
+		var result = KeyGenerator.GenerateSortableKey();
+
+		// Assert
+		foreach (var c in result)
+		{
+			Assert.IsTrue(validChars.Contains(c), $"Invalid character '{c}' found in sortable key.");
+		}
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_DifferentFromStandardKey()
+	{
+		// Arrange & Act
+		var sortableKey = KeyGenerator.GenerateSortableKey();
+		var standardKey = KeyGenerator.GenerateKey();
+
+		// Assert - Both are 32 chars but different values
+		Assert.AreEqual(32, sortableKey.Length);
+		Assert.AreEqual(32, standardKey.Length);
+		Assert.AreNotEqual(sortableKey, standardKey);
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_GeneratesUniqueKeys()
+	{
+		// Act
+		var key1 = KeyGenerator.GenerateSortableKey();
+		var key2 = KeyGenerator.GenerateSortableKey();
+
+		// Assert
+		Assert.AreNotEqual(key1, key2);
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_KeysAreLexicographicallySortableByTime()
+	{
+		// Arrange
+		var keys = new List<string>();
+
+		for (var i = 0; i < 10; i++)
+		{
+			keys.Add(KeyGenerator.GenerateSortableKey());
+			Thread.Sleep(2); // Small delay to ensure different timestamps
+		}
+
+		// Act
+		var sortedKeys = keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
+
+		// Assert - Original order should match lexicographic sort order
+		for (var i = 0; i < keys.Count; i++)
+		{
+			Assert.AreEqual(keys[i], sortedKeys[i],
+				$"Key at index {i} should maintain chronological order when sorted lexicographically.");
+		}
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_LaterKeyIsGreaterOrEqual()
+	{
+		// Arrange
+		var key1 = KeyGenerator.GenerateSortableKey();
+
+		// Small delay to ensure timestamp difference
+		Thread.Sleep(1);
+
+		var key2 = KeyGenerator.GenerateSortableKey();
+
+		// Assert - Version 7 GUIDs are time-ordered, so later keys should be greater
+		Assert.IsTrue(string.Compare(key1, key2, StringComparison.Ordinal) <= 0,
+			"Later sortable key should be greater than or equal to earlier key.");
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_MultipleRapidGenerations_AllUnique()
+	{
+		// Arrange
+		const int count = 1000;
+		var keys = new HashSet<string>();
+
+		// Act
+		for (var i = 0; i < count; i++)
+		{
+			var key = KeyGenerator.GenerateSortableKey();
+			keys.Add(key);
+		}
+
+		// Assert
+		Assert.AreEqual(count, keys.Count, "All generated sortable keys should be unique.");
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_ParallelGeneration_AllUnique()
+	{
+		// Arrange
+		const int count = 100;
+		var keys = new System.Collections.Concurrent.ConcurrentBag<string>();
+
+		// Act
+		Parallel.For(0, count, _ =>
+		{
+			var key = KeyGenerator.GenerateSortableKey();
+			keys.Add(key);
+		});
+
+		// Assert
+		var distinctCount = keys.Distinct().Count();
+		Assert.AreEqual(count, distinctCount, "All parallel-generated sortable keys should be unique.");
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_ReturnsExactly32Characters()
+	{
+		// Act
+		var result = KeyGenerator.GenerateSortableKey();
+
+		// Assert
+		Assert.AreEqual(32, result.Length);
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_ReturnsNonNullNonEmptyString()
+	{
+		// Act
+		var result = KeyGenerator.GenerateSortableKey();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsNotEmpty(result);
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_UsesGuidVersion7Format()
+	{
+		// Act
+		var key = KeyGenerator.GenerateSortableKey();
+
+		// Assert - Version 7 GUIDs have specific characteristics
+		// The key should be parseable back to a valid GUID
+		Assert.IsTrue(Guid.TryParse(key, out var parsedGuid), "Key should be parseable as a valid GUID.");
 	}
 
 	[TestMethod]

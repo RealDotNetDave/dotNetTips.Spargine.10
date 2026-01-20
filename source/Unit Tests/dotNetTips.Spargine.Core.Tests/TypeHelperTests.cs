@@ -2670,6 +2670,249 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void Min_BothAreEqual_ReturnsSecond()
+	{
+		// Arrange
+		var obj1 = 5;
+		var obj2 = 5;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Min_BothAreNull_ReturnsNull()
+	{
+		// Arrange
+		string obj1 = null;
+		string obj2 = null;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void Min_FirstIsNull_ReturnsSecond()
+	{
+		// Arrange
+		string obj1 = null;
+		string obj2 = "test";
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual("test", result);
+	}
+
+	[TestMethod]
+	public void Min_FirstIsSmaller_ReturnsFirst()
+	{
+		// Arrange
+		var obj1 = 5;
+		var obj2 = 10;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Min_SecondIsSmaller_ReturnsSecond()
+	{
+		// Arrange
+		var obj1 = 10;
+		var obj2 = 5;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Min_WithChar_ReturnsLexicographicallySmallerChar()
+	{
+		// Arrange
+		var obj1 = 'Z';
+		var obj2 = 'A';
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual('A', result);
+	}
+
+	[TestMethod]
+	public void Min_WithDateTime_ReturnsEarlierDate()
+	{
+		// Arrange
+		var obj1 = new DateTime(2024, 12, 31);
+		var obj2 = new DateTime(2024, 1, 1);
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(new DateTime(2024, 1, 1), result);
+	}
+
+	[TestMethod]
+	public void Min_WithDateTimeOffset_ReturnsEarlierDate()
+	{
+		// Arrange
+		var obj1 = new DateTimeOffset(2024, 12, 31, 0, 0, 0, TimeSpan.Zero);
+		var obj2 = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero), result);
+	}
+
+	[TestMethod]
+	public void Min_WithDecimal_ReturnsSmallerValue()
+	{
+		// Arrange
+		var obj1 = 24.99m;
+		var obj2 = 19.99m;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(19.99m, result);
+	}
+
+	[TestMethod]
+	public void Min_WithDouble_ReturnsSmallerValue()
+	{
+		// Arrange
+		var obj1 = 3.14159;
+		var obj2 = 2.71828;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(2.71828, result);
+	}
+
+	[TestMethod]
+	public void Min_WithGuid_ReturnsLexicographicallySmallerGuid()
+	{
+		// Arrange
+		var obj1 = new Guid("ffffffff-ffff-ffff-ffff-ffffffffffff");
+		var obj2 = new Guid("00000000-0000-0000-0000-000000000001");
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000001"), result);
+	}
+
+	[TestMethod]
+	public void Min_WithLong_ReturnsSmallerValue()
+	{
+		// Arrange
+		var obj1 = 1000000000L;
+		var obj2 = 500000000L;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(500000000L, result);
+	}
+
+	[TestMethod]
+	public void Min_WithNegativeNumbers_ReturnsSmallerValue()
+	{
+		// Arrange
+		var obj1 = -5;
+		var obj2 = -10;
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(-10, result);
+	}
+
+	[TestMethod]
+	public void Min_WithStrings_ReturnsLexicographicallySmaller()
+	{
+		// Arrange
+		var obj1 = "banana";
+		var obj2 = "apple";
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual("apple", result);
+	}
+
+	[TestMethod]
+	public void Min_WithTimeSpan_ReturnsShorterDuration()
+	{
+		// Arrange
+		var obj1 = TimeSpan.FromHours(2);
+		var obj2 = TimeSpan.FromMinutes(30);
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(TimeSpan.FromMinutes(30), result);
+	}
+
+	[TestMethod]
+	public void Min_WithVersion_ReturnsLowerVersion()
+	{
+		// Arrange
+		var obj1 = new Version(2, 0, 0);
+		var obj2 = new Version(1, 0, 0);
+
+		// Act
+		var result = TypeHelper.Min(obj1, obj2);
+
+		// Assert
+		Assert.AreEqual(new Version(1, 0, 0), result);
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_DictionaryType_BuildsCorrectName()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(Dictionary<string, int>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("Dictionary<", result);
+		Assert.Contains("String", result);
+		Assert.Contains("Int32", result);
+	}
+
+	[TestMethod]
 	public void ProcessGenericType_EmptyGenericArguments()
 	{
 		// Arrange
@@ -2704,6 +2947,61 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ProcessGenericType_NestedClassType_BuildsCorrectName()
+	{
+		// Arrange - Create a test for actual nested class
+		var builder = new StringBuilder();
+		var type = typeof(OuterClass<int>.InnerClass<string>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("OuterClass<", result);
+		Assert.Contains("InnerClass<", result);
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_NestedClassType_WithCustomDelimiter()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(OuterClass<int>.InnerClass<string>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true, nestedTypeDelimiter: '/');
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("/", result);
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_NestedGenericType_BuildsCorrectName()
+	{
+		// Arrange - Use a nested generic type
+		var builder = new StringBuilder();
+		var type = typeof(Dictionary<string, List<int>>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("Dictionary<", result);
+		Assert.Contains("String", result);
+		Assert.Contains("List<", result);
+		Assert.Contains("Int32", result);
+	}
+
+	[TestMethod]
 	public void ProcessGenericType_NestedGenericTypes()
 	{
 		// Arrange
@@ -2718,6 +3016,101 @@ public class TypeHelperTests : UnitTester
 		// Assert
 		var result = builder.ToString();
 		Assert.AreEqual("System.Collections.Generic.Dictionary<System.Collections.Generic.List<System.String>, System.Collections.Generic.Dictionary<System.Int32, System.String>>", result);
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_NonGenericTypeName_AppendsTypeName()
+	{
+		// Arrange - Type without backtick (genericPartIndex <= 0)
+		var builder = new StringBuilder();
+		var type = typeof(string);
+		var genericArguments = Array.Empty<Type>();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, 0, options);
+
+		// Assert
+		Assert.AreEqual("String", builder.ToString());
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_NullBuilder_ThrowsArgumentNullException()
+	{
+		// Arrange
+		StringBuilder builder = null;
+		var type = typeof(List<int>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options));
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_NullGenericArguments_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(List<int>);
+		Type[] genericArguments = null;
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			TypeHelper.ProcessGenericType(builder, type, genericArguments, 0, options));
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_NullType_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		Type type = null;
+		var genericArguments = Array.Empty<Type>();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options));
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_OpenGenericWithParameterNames_IncludesParameterNames()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(Dictionary<,>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: true, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("Dictionary<", result);
+		Assert.Contains("TKey", result);
+		Assert.Contains("TValue", result);
+	}
+
+	[TestMethod]
+	public void ProcessGenericType_SimpleGenericType_BuildsCorrectName()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(List<int>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("List<", result);
+		Assert.Contains("Int32", result);
 	}
 
 	[TestMethod]
@@ -2755,6 +3148,23 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ProcessGenericType_WithFullName_IncludesNamespace()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(List<int>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.Contains("System.Collections.Generic.List<", result);
+	}
+
+	[TestMethod]
 	public void ProcessGenericType_WithNestedGenericTypeAndCustomDelimiter()
 	{
 		// Arrange
@@ -2771,8 +3181,37 @@ public class TypeHelperTests : UnitTester
 		Assert.AreEqual("System.Collections.Generic.Dictionary<System.Collections.Generic.List<System.String>, System.Collections.Generic.Dictionary<System.Int32, System.String>>", result);
 	}
 
+	[TestMethod]
+	public void ProcessGenericType_WithoutGenericParameters_ExcludesTypeArguments()
+	{
+		// Arrange
+		var builder = new StringBuilder();
+		var type = typeof(List<int>);
+		var genericArguments = type.GetGenericArguments();
+		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: false, includeGenericParameters: false);
+
+		// Act
+		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
+
+		// Assert
+		var result = builder.ToString();
+		Assert.AreEqual("List", result);
+	}
+
 	[Obsolete(message: "TEST")]
 	private void MethodWithObsoleteAttribute() { }
+
+	/// <summary>
+	/// Helper nested class for testing nested generic type processing.
+	/// </summary>
+	public class OuterClass<TOuter>
+	{
+		public class InnerClass<TInner>
+		{
+			public TInner InnerValue { get; set; }
+			public TOuter OuterValue { get; set; }
+		}
+	}
 
 	// Helper class for attribute test
 	private class FieldWithAttributeTestClass

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -46,31 +47,60 @@ public class DistinctConcurrentBagTests
 		Assert.IsTrue(bag.Contains(10));
 		Assert.IsTrue(bag.Contains(20));
 	}
-
 	[TestMethod]
-	public void Add_ConcurrentAccess_HandlesThreadSafely()
+	public async Task Add_ConcurrentAccess_HandlesThreadSafely()
 	{
 		// Arrange
 		var bag = new DistinctConcurrentBag<int>();
-		var tasks = new List<Task>();
+		const int taskCount = 10;
+		const int itemsPerTask = 100;
+		const int expectedTotal = taskCount * itemsPerTask;
+
+		// Use a barrier to ensure all tasks start simultaneously
+		using var startBarrier = new Barrier(taskCount);
+		var tasks = new Task[taskCount];
 
 		// Act - Multiple threads try to add unique items
-		for (int taskId = 0; taskId < 10; taskId++)
+		for (int taskId = 0; taskId < taskCount; taskId++)
 		{
 			var localTaskId = taskId;
-			tasks.Add(Task.Run(() =>
+			tasks[taskId] = Task.Run(() =>
 			{
-				for (int i = localTaskId * 100; i < (localTaskId + 1) * 100; i++)
+				startBarrier.SignalAndWait(); // Ensure all tasks start at the same time
+
+				var start = localTaskId * itemsPerTask;
+				var end = start + itemsPerTask;
+
+				for (int i = start; i < end; i++)
 				{
 					bag.Add(i);
 				}
-			}));
+			});
 		}
 
-		Task.WaitAll(tasks.ToArray());
+		await Task.WhenAll(tasks);
 
-		// Assert
-		Assert.AreEqual(1000, bag.Count, "All unique items should be added across concurrent tasks.");
+		// Give a small delay for any internal cleanup
+		await Task.Delay(50);
+
+		// Assert - Check for missing items to help diagnose the issue
+		var missingItems = new List<int>();
+		for (int i = 0; i < expectedTotal; i++)
+		{
+			if (!bag.Contains(i))
+			{
+				missingItems.Add(i);
+			}
+		}
+
+		if (missingItems.Count > 0)
+		{
+			Assert.Fail($"Expected {expectedTotal} items but got {bag.Count}. " +
+				$"Missing {missingItems.Count} items: [{string.Join(", ", missingItems.Take(20))}" +
+				$"{(missingItems.Count > 20 ? "..." : string.Empty)}]");
+		}
+
+		Assert.AreEqual(expectedTotal, bag.Count, "All unique items should be added across concurrent tasks.");
 	}
 
 	[TestMethod]
@@ -450,43 +480,66 @@ public class DistinctConcurrentBagTests
 	}
 
 	[TestMethod]
-	public void ConcurrentAddAndRemove_ShouldHandleCorrectly()
+	public async Task ConcurrentAddAndRemove_ShouldHandleCorrectly()
 	{
 		var bag = new DistinctConcurrentBag<int>();
-		var tasks = new List<Task>();
+		var addTasks = new Task[5];
+		var removeTasks = new Task[5];
 
-		// Add items concurrently
+		// Add items concurrently (first phase)
 		for (int i = 0; i < 5; i++)
 		{
 			var localStart = i * 20; // Create local copy to avoid closure problem
-			tasks.Add(Task.Run(() =>
+			addTasks[i] = Task.Run(() =>
 			{
 				for (int j = localStart; j < localStart + 20; j++)
 				{
 					bag.Add(j);
 				}
-			}));
+			});
 		}
 
-		// Remove items concurrently
+		// Wait for all adds to complete before starting removes
+		await Task.WhenAll(addTasks);
+
+		// Verify all 100 items were added
+		Assert.AreEqual(100, bag.Count, "All 100 items should be added before removals start.");
+
+		// Remove items concurrently (second phase)
 		for (int i = 0; i < 5; i++)
 		{
 			var localStart = i * 20; // Create local copy to avoid closure problem
-			tasks.Add(Task.Run(() =>
+			removeTasks[i] = Task.Run(() =>
 			{
 				for (int j = localStart; j < localStart + 10; j++)
 				{
 					bag.Remove(j);
 				}
-			}));
+			});
 		}
 
-		Task.WaitAll([.. tasks]);
+		await Task.WhenAll(removeTasks);
 
 		// 5 ranges × 20 items = 100 items added
-		// 5 ranges × 10 items = 50 items removed
-		// Expected: 50 items remaining
-		Assert.AreEqual(50, bag.Count);
+		// 5 ranges × 10 items = 50 items removed (items 0-9, 20-29, 40-49, 60-69, 80-89)
+		// Expected: 50 items remaining (items 10-19, 30-39, 50-59, 70-79, 90-99)
+		Assert.AreEqual(50, bag.Count, "50 items should remain after removals.");
+
+		// Verify the correct items remain
+		for (int i = 0; i < 5; i++)
+		{
+			var rangeStart = i * 20;
+			// Items 0-9 of each range should be removed
+			for (int j = rangeStart; j < rangeStart + 10; j++)
+			{
+				Assert.IsFalse(bag.Contains(j), $"Item {j} should have been removed.");
+			}
+			// Items 10-19 of each range should remain
+			for (int j = rangeStart + 10; j < rangeStart + 20; j++)
+			{
+				Assert.IsTrue(bag.Contains(j), $"Item {j} should still exist.");
+			}
+		}
 	}
 
 	[TestMethod]

@@ -748,7 +748,7 @@ public static class KeyGenerator
 	/// <returns>A sortable unique key as a string.</returns>
 	/// <example>Example: 017f0af78003d4ab194b5a4024d02112a</example>
 	[return: NotNull]
-	[Information(nameof(GenerateSortableKey), "David McCarter", "5/7/2025", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GenerateSortableKey), "David McCarter", "5/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateSortableKey()
 	{
 		return Guid.CreateVersion7().ToString("N", CultureInfo.InvariantCulture);

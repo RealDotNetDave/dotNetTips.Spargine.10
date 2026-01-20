@@ -107,7 +107,7 @@ public sealed class ChannelQueue<T>
 	/// </summary>
 	/// <param name="options">The options.</param>
 	/// <param name="cancellationTimeout">The cancellation timeout.</param>
-	[Information(nameof(ChannelQueue<>), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ChannelQueue<>), "David McCarter", "7/26/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public ChannelQueue(BoundedChannelOptions options, TimeSpan? cancellationTimeout = null)
 	{
 		this._channel = Channel.CreateBounded<T>(options);
@@ -168,7 +168,7 @@ public sealed class ChannelQueue<T>
 	/// <summary>
 	/// Cleanups the expired keys.
 	/// </summary>
-	[Information(nameof(CleanupExpiredKeys), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CleanupExpiredKeys), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void CleanupExpiredKeys()
 	{
 		var now = UtcNowMs();
@@ -324,7 +324,7 @@ public sealed class ChannelQueue<T>
 	/// </summary>
 	/// <param name="item">The item.</param>
 	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool TryPeek(out T item)
 	{
 		if (this._channel.Reader.TryRead(out item!))

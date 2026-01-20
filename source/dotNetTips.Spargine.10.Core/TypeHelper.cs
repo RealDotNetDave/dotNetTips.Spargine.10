@@ -1862,7 +1862,7 @@ public static class TypeHelper
 	/// </code>
 	/// </example>
 	/// <seealso cref="IComparable"/>
-	[Information(nameof(Min), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Min), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T? Min<T>([AllowNull] T? obj1, [AllowNull] T? obj2) where T : IComparable
 	{
 		return obj1?.CompareTo(obj2) < 0 ? obj1 : obj2;
