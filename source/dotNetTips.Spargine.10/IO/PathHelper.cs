@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -50,6 +50,23 @@ public static class PathHelper
 	/// It is used to validate paths by checking against characters that are not allowed in paths according to the file system.
 	/// </remarks>
 	private static readonly char[] InvalidPathChars = [.. Path.GetInvalidPathChars().Where(c => c != Path.DirectorySeparatorChar && c != Path.AltDirectorySeparatorChar)];
+
+	/// <summary>
+	/// Gets the path separators used in file paths.
+	/// </summary>
+	/// <value>
+	/// A read-only collection of characters used as path separators, specifically the
+	/// <see cref="Path.DirectorySeparatorChar"/> and <see cref="Path.AltDirectorySeparatorChar"/>.
+	/// </value>
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyCollection<char> PathSeparators
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get
+		{
+			return new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.AsReadOnly();
+		}
+	}
 
 	/// <summary>
 	/// Combines the paths into a single path. If <paramref name="createIfNotExists"/> is true, the combined path will be created if it does not exist.
@@ -188,7 +205,7 @@ public static class PathHelper
 	{
 		path = path.ArgumentNotNullOrEmpty();
 
-		if (!path.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+		if (!path.EndsWith(Path.DirectorySeparatorChar))
 		{
 			path += Path.DirectorySeparatorChar;
 		}
@@ -292,22 +309,5 @@ public static class PathHelper
 		path = path.ArgumentNotNullOrEmpty();
 
 		return path.IndexOfAny([.. InvalidPathNameChars()]) != -1;
-	}
-
-	/// <summary>
-	/// Gets the path separators used in file paths.
-	/// </summary>
-	/// <value>
-	/// A read-only collection of characters used as path separators, specifically the
-	/// <see cref="Path.DirectorySeparatorChar"/> and <see cref="Path.AltDirectorySeparatorChar"/>.
-	/// </value>
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<char> PathSeparators
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.AsReadOnly();
-		}
 	}
 }

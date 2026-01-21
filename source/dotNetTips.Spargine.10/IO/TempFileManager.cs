@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -65,66 +65,6 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	}
 
 	/// <summary>
-	/// Removes the specified files from the cache.
-	/// </summary>
-	/// <param name="files">A read-only collection of file paths to remove from the cache.</param>
-	private void DeleteFilesFromCache(ReadOnlyCollection<string> files)
-	{
-		var tempBag = new ConcurrentBag<string>();
-
-		_ = Parallel.ForEach(this._files, file =>
-		{
-			if (!files.Contains(file))
-			{
-				tempBag.Add(file);
-			}
-		});
-
-		this._files = tempBag;
-	}
-
-	/// <summary>
-	/// Releases unmanaged and - optionally - managed resources.
-	/// </summary>
-	/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-	private void Dispose(bool disposing)
-	{
-		if (!this._disposed)
-		{
-			// If disposing equals true, dispose all managed and unmanaged resources.
-			if (disposing)
-			{
-				// Dispose managed resources.
-				this.DeleteAllFiles();
-			}
-		}
-
-		this._disposed = true;
-	}
-
-	/// <summary>
-	/// Generates a random temporary file.
-	/// </summary>
-	/// <returns>The path of the created temporary file.</returns>
-	private static string GenerateRandomFile()
-	{
-		var tempFilePath = Path.Combine(Path.GetTempPath(), $"{Ulid.NewUlid()}.dntt");
-
-		try
-		{
-			// Create the file to ensure it exists
-			File.Create(tempFilePath).Dispose();
-		}
-		catch (Exception ex)
-		{
-			// Log or handle the exception as needed
-			ExceptionThrower.ThrowIOException(Resources.FailedToCreateTemporaryFile, ex);
-		}
-
-		return tempFilePath;
-	}
-
-	/// <summary>
 	/// Creates a new temporary file.
 	/// </summary>
 	/// <returns>The path of the created temporary file.</returns>
@@ -134,9 +74,6 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	{
 		var file = GenerateRandomFile();
 		this._files.Add(file);
-
-		// Set to temporary file
-		FileHelper.AddAttributes(new FileInfo(file), FileAttributes.Temporary);
 
 		return file;
 	}
@@ -151,16 +88,34 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	public ReadOnlyCollection<string> CreateFiles(in int count)
 	{
 		_ = count.ArgumentInRange(min: 1);
-		var files = new ConcurrentBag<string>();
 
-		_ = Parallel.For(0, count, _ =>
+		// Avoid parallel overhead for very small counts.
+		if (count <= 2)
+		{
+			var small = new string[count];
+
+			for (var index = 0; index < count; index++)
+			{
+				var file = GenerateRandomFile();
+				small[index] = file;
+				this._files.Add(file);
+			}
+
+			return new ReadOnlyCollection<string>(small);
+		}
+
+		// Preallocate result buffer and fill by index to avoid ConcurrentBag contention.
+		var result = new string[count];
+
+		_ = Parallel.For(0, count, index =>
 		{
 			var file = GenerateRandomFile();
-			files.Add(file);
+			result[index] = file;
 			this._files.Add(file);
 		});
 
-		return files.ToReadOnlyCollection();
+		// Wrap in ReadOnlyCollection directly to avoid extra allocations/extensions.
+		return result.AsReadOnly();
 	}
 
 	/// <summary>
@@ -226,4 +181,67 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetManagedFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public ReadOnlyCollection<string> GetManagedFiles() => this._files.ToReadOnlyCollection();
+
+	/// <summary>
+	/// Generates a random temporary file.
+	/// </summary>
+	/// <returns>The path of the created temporary file.</returns>
+	private static string GenerateRandomFile()
+	{
+		var tempFilePath = Path.Combine(Path.GetTempPath(), $"{Ulid.NewUlid()}.dntt");
+
+		try
+		{
+			// Create the file to ensure it exists
+			File.Create(tempFilePath).Dispose();
+
+			// Set to temporary file
+			FileHelper.AddAttributes(new FileInfo(tempFilePath), FileAttributes.Temporary);
+		}
+		catch (Exception ex)
+		{
+			// Log or handle the exception as needed
+			ExceptionThrower.ThrowIOException(Resources.FailedToCreateTemporaryFile, ex);
+		}
+
+		return tempFilePath;
+	}
+
+	/// <summary>
+	/// Removes the specified files from the cache.
+	/// </summary>
+	/// <param name="files">A read-only collection of file paths to remove from the cache.</param>
+	private void DeleteFilesFromCache(ReadOnlyCollection<string> files)
+	{
+		var tempBag = new ConcurrentBag<string>();
+
+		_ = Parallel.ForEach(this._files, file =>
+		{
+			if (!files.Contains(file))
+			{
+				tempBag.Add(file);
+			}
+		});
+
+		this._files = tempBag;
+	}
+
+	/// <summary>
+	/// Releases unmanaged and - optionally - managed resources.
+	/// </summary>
+	/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+	private void Dispose(bool disposing)
+	{
+		if (!this._disposed)
+		{
+			// If disposing equals true, dispose all managed and unmanaged resources.
+			if (disposing)
+			{
+				// Dispose managed resources.
+				this.DeleteAllFiles();
+			}
+		}
+
+		this._disposed = true;
+	}
 }
