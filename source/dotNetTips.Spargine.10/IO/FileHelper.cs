@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-18-2025
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.IO;
 /// intended for use on Windows platforms only.
 /// </remarks>
 [SupportedOSPlatform("windows")]
-[Information(nameof(FileHelper), Status = Status.Available, Documentation = "https://bit.ly/SpargineFileHelper")]
+[Information(nameof(FileHelper), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineFileHelper")]
 public static class FileHelper
 {
 
@@ -538,6 +538,37 @@ public static class FileHelper
 		}
 
 		return false;
+	}
+
+	/// <summary>
+	/// Removes the archive attribute from a file.
+	/// </summary>
+	/// <param name="file">
+	/// The <see cref="FileInfo"/> representing the file from which to remove the <see cref="FileAttributes.Archive"/> attribute. Must not be <c>null</c>.
+	/// </param>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="file"/> is <c>null</c>.
+	/// </exception>
+	/// <remarks>
+	/// If the file exists, this method clears the <see cref="FileAttributes.Archive"/> flag.
+	/// </remarks>
+	/// <example>
+	/// Here is how you can use the <see cref="RemoveArchiveAttribute"/> method:
+	/// <code>
+	/// var file = new FileInfo("path/to/file.txt");
+	/// FileHelper.RemoveArchiveAttribute(file);
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RemoveArchiveAttribute), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static void RemoveArchiveAttribute([DisallowNull] FileInfo file)
+	{
+		file = file.ArgumentNotNull();
+
+		if (file.Exists)
+		{
+			file.Attributes &= ~FileAttributes.Archive;
+		}
 	}
 
 	/// <summary>

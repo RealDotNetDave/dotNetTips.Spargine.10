@@ -435,15 +435,25 @@ public class FileProcessor
 
 					result = DirectoryHelper.DeleteDirectory(folder, 5, recursive);
 
-					if (result.IsFailure == false)
+					if (result.IsSuccess)
 					{
 						successCount++;
 
 						this.OnProcessed(new ProgressEventArgs
 						{
 							Name = folder.FullName,
-							ProgressState = FileProgressState.FileDeleted,
+							ProgressState = FileProgressState.DirectoryDeleted,
 							Size = folderSize,
+						});
+					}
+					else
+					{
+						this.OnProcessed(new ProgressEventArgs
+						{
+							Name = folder.FullName,
+							ProgressState = FileProgressState.Error,
+							Size = folderSize,
+							Message = $"{result?.GetErrorMessages()}"
 						});
 					}
 				}
