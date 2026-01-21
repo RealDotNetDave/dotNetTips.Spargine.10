@@ -49,7 +49,7 @@ public class ExceptionExtensionsTests
 		exception.SetIsLogged();
 
 		// Act
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Assert
 		Assert.IsFalse(exception.IsLogged());
@@ -694,7 +694,7 @@ public class ExceptionExtensionsTests
 		// Arrange - Use NullLogger which has IsEnabled = false
 		var exception = new Exception("Test exception");
 		var logger = new NullLogger<ExceptionExtensionsTests>();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Error);
@@ -709,7 +709,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Critical exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Critical);
@@ -725,7 +725,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Debug exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Debug);
@@ -741,7 +741,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Test exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger);
@@ -757,7 +757,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Error exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Error);
@@ -773,7 +773,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Information exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Information);
@@ -790,7 +790,7 @@ public class ExceptionExtensionsTests
 		var innerException = new InvalidOperationException("Inner exception");
 		var outerException = new Exception("Outer exception", innerException);
 		var logger = new MockLogger();
-		outerException.ClearIsLogged();
+		outerException.ClearLoggedState();
 
 		// Act
 		outerException.LogException(logger, LogLevel.Error);
@@ -809,7 +809,7 @@ public class ExceptionExtensionsTests
 		var middle = new InvalidOperationException("Middle exception", innermost);
 		var outer = new Exception("Outer exception", middle);
 		var logger = new MockLogger();
-		outer.ClearIsLogged();
+		outer.ClearLoggedState();
 
 		// Act
 		outer.LogException(logger, LogLevel.Error);
@@ -825,7 +825,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("None log level exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.None);
@@ -840,7 +840,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Trace exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Trace);
@@ -856,7 +856,7 @@ public class ExceptionExtensionsTests
 		// Arrange
 		var exception = new Exception("Warning exception");
 		var logger = new MockLogger();
-		exception.ClearIsLogged();
+		exception.ClearLoggedState();
 
 		// Act
 		exception.LogException(logger, LogLevel.Warning);

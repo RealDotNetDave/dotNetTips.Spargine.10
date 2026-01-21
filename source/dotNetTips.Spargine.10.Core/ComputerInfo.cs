@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-09-2026
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,6 +22,7 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Internal;
+using DotNetTips.Spargine.Core.Serialization;
 using static System.Environment;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -324,7 +325,7 @@ public sealed class ComputerInfo
 	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public string ToJson()
 	{
-		return JsonSerializer.Serialize(this);
+		return JsonSerialization.Serialize(this);
 	}
 
 	/// <summary>

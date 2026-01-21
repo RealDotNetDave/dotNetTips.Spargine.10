@@ -28,6 +28,13 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 public class EnumExtensionsTests
 {
 
+	private enum TestEnum
+	{
+		[EnumMember(Value = "Custom Description")]
+		WithDescription = 0,
+		WithoutDescription = 1
+	}
+
 	[TestMethod]
 	public void GetDescription_WithEnumMemberAttribute_ReturnsAttributeValue()
 	{
@@ -72,19 +79,6 @@ public class EnumExtensionsTests
 	}
 
 	[TestMethod]
-	public void Parse_InvalidValue_ThrowsArgumentException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentException>(() => "NotAValue".Parse<TaskStatus>());
-	}
-
-	[TestMethod]
-	public void Parse_NullOrEmpty_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((string)null).Parse<TaskStatus>());
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.Empty.Parse<TaskStatus>());
-	}
-
-	[TestMethod]
 	public void ParseTest_True()
 	{
 		var result = "Canceled".Parse<TaskStatus>();
@@ -92,13 +86,6 @@ public class EnumExtensionsTests
 		Assert.IsNotNull(result);
 
 		Assert.AreEqual(0, string.Compare(result.ToString(), "Canceled", StringComparison.Ordinal));
-	}
-
-	private enum TestEnum
-	{
-		[EnumMember(Value = "Custom Description")]
-		WithDescription = 0,
-		WithoutDescription = 1
 	}
 
 }

@@ -4,7 +4,7 @@
 // Created          : 05-04-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-31-2025
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -48,8 +48,8 @@ public static partial class ExceptionExtensions
 	/// </summary>
 	/// <param name="ex">The exception instance to clear.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="ex"/> is <c>null</c>.</exception>
-	[Information(nameof(ClearIsLogged), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static void ClearIsLogged([DisallowNull] this Exception ex)
+	[Information(nameof(ClearLoggedState), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static void ClearLoggedState([DisallowNull] this Exception ex)
 	{
 		ex = ex.ArgumentNotNull();
 

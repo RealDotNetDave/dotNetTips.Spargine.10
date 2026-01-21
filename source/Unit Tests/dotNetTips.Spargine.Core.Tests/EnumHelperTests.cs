@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="EnumHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -79,16 +79,28 @@ public class EnumHelperTests
 	}
 
 	[TestMethod]
-	public void Parse_ParsesEnumName()
+	public void TryParse_ParsesEnumName()
 	{
-		Assert.AreEqual(Status.Available, EnumHelper.Parse<Status>("Available"));
-		Assert.AreEqual(Status.NotSet, EnumHelper.Parse<Status>("NotSet"));
+		Assert.IsTrue(EnumHelper.TryParse<Status>("Available", out var result1));
+		Assert.AreEqual(Status.Available, result1);
+
+		Assert.IsTrue(EnumHelper.TryParse<Status>("NotSet", out var result2));
+		Assert.AreEqual(Status.NotSet, result2);
 	}
 
 	[TestMethod]
-	public void Parse_ThrowsOnNullOrEmpty()
+	public void TryParse_ReturnsFalse_OnNullOrEmpty()
 	{
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => EnumHelper.Parse<Status>(null!));
+		// Test null
+		Assert.IsFalse(EnumHelper.TryParse<Status>(null!, out var result1));
+		Assert.AreEqual(default(Status), result1);
+
+		// Test empty string
+		Assert.IsFalse(EnumHelper.TryParse<Status>(string.Empty, out var result2));
+		Assert.AreEqual(default(Status), result2);
+
+		// Test whitespace
+		Assert.IsFalse(EnumHelper.TryParse<Status>("   ", out var result3));
+		Assert.AreEqual(default(Status), result3);
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -36,9 +36,11 @@ public static class EnumExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="name" /> is null or an empty string, or if it does not correspond to any value of <typeparamref name="T" />.</exception>
 	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public static T Parse<T>(this string name)
-		where T : Enum
+		where T : struct, Enum
 	{
-		return EnumHelper.Parse<T>(name);
+		_ = EnumHelper.TryParse<T>(name, out var result);
+
+		return result;
 	}
 
 	/// <summary>

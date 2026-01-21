@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -164,19 +164,40 @@ public static class EnumHelper
 	}
 
 	/// <summary>
-	/// Parses the specified string to an enum of type <typeparamref name="T" />.
+	/// Attempts to parse the specified name into an enum value of type <typeparamref name="T"/>.
 	/// </summary>
-	/// <typeparam name="T">The enum type to which the string will be parsed.</typeparam>
+	/// <typeparam name="T">
+	/// The enum type to parse. Must be a non-nullable <see langword="struct"/> and <see cref="Enum"/>.
+	/// </typeparam>
 	/// <param name="name">The string representation of the enum value to parse.</param>
-	/// <returns>An enum of type <typeparamref name="T" /> corresponding to the parsed string.</returns>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="name" /> is null or an empty string, or if it does not correspond to any value of <typeparamref name="T" />.</exception>
-	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static T Parse<T>([DisallowNull] string name)
-		where T : Enum
+	/// <param name="result">
+	/// When this method returns, contains the parsed value if the operation succeeded; otherwise, the default value.
+	/// </param>
+	/// <returns>
+	/// <see langword="true"/> if <paramref name="name"/> was successfully parsed to <typeparamref name="T"/>; otherwise, <see langword="false"/>.
+	/// </returns>
+	/// <remarks>
+	/// This method follows the Try-pattern: it does not throw on failure, and uses an <c>out</c> parameter to return the parsed result.
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// if (EnumHelper.TryParse&lt;ConsoleColor&gt;("Red", out var color))
+	/// {
+	///     // use color
+	/// }
+	/// </code>
+	/// </example>
+	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool TryParse<T>(string name, [NotNullWhen(true)] out T result)
+	where T : struct, Enum
 	{
-		name = name.ArgumentNotNullOrEmpty();
+		if (string.IsNullOrEmpty(name))
+		{
+			result = default;
+			return false;
+		}
 
-		return (T)Enum.Parse(typeof(T), name);
+		return Enum.TryParse(name, out result);
 	}
 
 	/// <summary>
