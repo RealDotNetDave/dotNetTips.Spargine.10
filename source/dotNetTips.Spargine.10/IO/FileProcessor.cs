@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -95,6 +95,8 @@ public class FileProcessor
 	[Information(nameof(CopyFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public int CopyFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
+		destination = destination.ArgumentNotNull();
+
 		if (files is null)
 		{
 			return 0;
@@ -106,8 +108,6 @@ public class FileProcessor
 		{
 			return 0;
 		}
-
-		destination = destination.ArgumentNotNull();
 
 		_ = destination.CheckExists(createDirectory: true);
 
@@ -124,11 +124,11 @@ public class FileProcessor
 			{
 				try
 				{
-					var newFileName = new FileInfo(Path.Combine(destinationPath, tempFile.Name));
+					var newFileName = Path.Combine(destinationPath, tempFile.Name);
 
 					psw.Start();
 
-					_ = tempFile.CopyTo(newFileName.FullName, overwrite);
+					_ = tempFile.CopyTo(newFileName, overwrite);
 
 					var perf = psw.StopReset();
 
@@ -199,6 +199,8 @@ public class FileProcessor
 	[Information(nameof(CopyFilesWithOriginalPath), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int CopyFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
+		destination = destination.ArgumentNotNull();
+
 		if (files is null)
 		{
 			return 0;
@@ -210,8 +212,6 @@ public class FileProcessor
 		{
 			return 0;
 		}
-
-		destination = destination.ArgumentNotNull();
 
 		_ = destination.CheckExists(createDirectory: true);
 
@@ -257,7 +257,6 @@ public class FileProcessor
 				}
 				catch (Exception ex) // Report all errors
 				{
-					// Send error.
 					this.OnProcessed(new ProgressEventArgs
 					{
 						Name = tempFile.FullName,
@@ -503,6 +502,8 @@ public class FileProcessor
 	[Information(nameof(MoveFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public int MoveFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
+		destination = destination.ArgumentNotNull();
+
 		if (files is null)
 		{
 			return 0;
@@ -514,8 +515,6 @@ public class FileProcessor
 		{
 			return 0;
 		}
-
-		destination = destination.ArgumentNotNull();
 
 		_ = destination.CheckExists(createDirectory: true);
 
@@ -535,13 +534,13 @@ public class FileProcessor
 				try
 				{
 					fileLength = tempFile.Length;
-					var newFileName = new FileInfo(Path.Combine(destinationPath, tempFile.Name));
+					var newFileName = Path.Combine(destinationPath, tempFile.Name);
 
 					FileHelper.RemoveReadOnlyAttribute(tempFile);
 
 					psw.Start();
 
-					tempFile.MoveTo(newFileName.FullName, overwrite);
+					tempFile.MoveTo(newFileName, overwrite);
 
 					var perf = psw.StopReset();
 
@@ -612,6 +611,8 @@ public class FileProcessor
 	[Information(nameof(MoveFilesWithOriginalPath), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public int MoveFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
+		destination = destination.ArgumentNotNull();
+
 		if (files is null)
 		{
 			return 0;
@@ -623,8 +624,6 @@ public class FileProcessor
 		{
 			return 0;
 		}
-
-		destination = destination.ArgumentNotNull();
 
 		_ = destination.CheckExists(createDirectory: true);
 
