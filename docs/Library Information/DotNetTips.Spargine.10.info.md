@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10 - 2026.10.1.17
+# DotNetTips.Spargine.10 - 2026.10.1.20
 
 ## DotNetTips.Spargine.Extensions.RegistryExtensions
 
@@ -67,7 +67,7 @@
 
 ### DotNetTips.Spargine.Core.SimpleResult<System.Int32> DeleteDirectory(System.IO.DirectoryInfo path, System.Byte retries, System.Boolean recursive)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Update
@@ -101,9 +101,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Void MoveDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Byte retries)
+### DotNetTips.Spargine.Core.SimpleResult<System.Int32> MoveDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Byte retries)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Update
@@ -469,7 +469,19 @@
 *****
 ## DotNetTips.Spargine.IO.FileProcessor
 
-### System.Int32 CopyFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1[[System.IO.FileInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& files, System.IO.DirectoryInfo destination)
+### System.Int32 CopyFiles(System.Collections.Generic.IEnumerable<System.IO.FileInfo> files, System.IO.DirectoryInfo destination, System.Boolean& overwrite, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/20/2026
+* **Description:** CopyFiles
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 CopyFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1[[System.IO.FileInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& files, System.IO.DirectoryInfo destination, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -481,7 +493,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Int32 DeleteFiles(System.Collections.Generic.IEnumerable`1[[System.IO.FileInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& files)
+### System.Int32 DeleteFiles(System.Collections.Generic.IEnumerable<System.IO.FileInfo> files, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -493,7 +505,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Int32 DeleteFolders(System.Collections.Generic.IEnumerable`1[[System.IO.DirectoryInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& folders, System.Boolean& recursive)
+### System.Int32 DeleteFolders(System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> folders, System.Boolean& recursive, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -502,6 +514,30 @@
 * **Author:** David McCarter
 * **CreatedOn:** 8/6/2017
 * **Description:** DeleteFolders
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 MoveFiles(System.Collections.Generic.IEnumerable<System.IO.FileInfo> files, System.IO.DirectoryInfo destination, System.Boolean& overwrite, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/20/2026
+* **Description:** MoveFiles
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 MoveFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1[[System.IO.FileInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& files, System.IO.DirectoryInfo destination, System.Boolean& overwrite, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 1/20/2026
+* **Description:** MoveFilesWithOriginalPath
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -836,7 +872,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Void StartStopServices(System.Collections.Generic.IEnumerable`1[[DotNetTips.Spargine.ServiceAction, DotNetTips.Spargine.10, Version=2026.10.1.17, Culture=neutral, PublicKeyToken=null]]& requests, Microsoft.Extensions.Logging.ILogger logger)
+### System.Void StartStopServices(System.Collections.Generic.IEnumerable`1[[DotNetTips.Spargine.ServiceAction, DotNetTips.Spargine.10, Version=2026.10.1.20, Culture=neutral, PublicKeyToken=null]]& requests, Microsoft.Extensions.Logging.ILogger logger)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -891,4 +927,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/20/2026 5:12:46 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/21/2026 12:45:22 PM UTC**
