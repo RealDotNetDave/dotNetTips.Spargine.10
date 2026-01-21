@@ -1089,7 +1089,7 @@ dotnet_diagnostic.CA1845.severity = error
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1846.severity = error
 
-# Use string.Contains(char) instead of string.Contains(string) with single character
+# Use string.Contains(char) instead of string.Contains(string) with single character **
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1847.severity = error
 

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-21-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1379,13 +1379,13 @@ public static class EnumerableExtensions
 			// Reference types: use size-based optimization; honor comparer
 			if (collection is ICollection<T> collectionT)
 			{
-				return collectionT.Count > 4096
+				return collectionT.Count > 128
 					? collection.Distinct(comparer)
-					: new HashSet<T>(collection, comparer ?? EqualityComparer<T>.Default);
+					: new HashSet<T>(collection, comparer);
 			}
 
 			// Unknown count: default to HashSet; honor comparer
-			return new HashSet<T>(collection, comparer ?? EqualityComparer<T>.Default);
+			return new HashSet<T>(collection, comparer);
 		}
 
 		/// <summary>
