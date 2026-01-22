@@ -148,7 +148,7 @@ public static class DriveHelper
 	[Information(nameof(GetFixedDrives), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetFixedDrives()
 	{
-		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).EnsureUnique().ToReadOnlyCollection();
+		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).FastDistinct().ToReadOnlyCollection();
 	}
 
 	/// <summary>
@@ -163,7 +163,7 @@ public static class DriveHelper
 	[Information(nameof(GetRemovableDrives), author: "David McCarter", createdOn: "9/6/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetRemovableDrives()
 	{
-		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Removable && p.IsReady).EnsureUnique().ToReadOnlyCollection();
+		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Removable && p.IsReady).FastDistinct().ToReadOnlyCollection();
 	}
 
 }

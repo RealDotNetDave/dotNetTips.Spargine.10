@@ -102,7 +102,7 @@ public class FileProcessor
 			return 0;
 		}
 
-		files = files.RemoveNulls().EnsureUnique();
+		files = files.RemoveNulls().FastDistinct();
 
 		if (files.IsEmpty())
 		{
@@ -206,7 +206,7 @@ public class FileProcessor
 			return 0;
 		}
 
-		var list = files.RemoveNulls().EnsureUnique();
+		var list = files.RemoveNulls().FastDistinct();
 
 		if (list.IsEmpty())
 		{
@@ -314,7 +314,7 @@ public class FileProcessor
 			return 0;
 		}
 
-		files = files.RemoveNulls().EnsureUnique();
+		files = files.RemoveNulls().FastDistinct();
 
 		if (files.IsEmpty())
 		{
@@ -413,7 +413,7 @@ public class FileProcessor
 			return 0;
 		}
 
-		folders = folders.RemoveNulls().EnsureUnique();
+		folders = folders.RemoveNulls().FastDistinct();
 
 		if (folders.IsEmpty())
 		{
@@ -519,7 +519,7 @@ public class FileProcessor
 			return 0;
 		}
 
-		files = files.RemoveNulls().EnsureUnique();
+		files = files.RemoveNulls().FastDistinct();
 
 		if (files.IsEmpty())
 		{
@@ -628,7 +628,7 @@ public class FileProcessor
 			return 0;
 		}
 
-		var list = files.RemoveNulls().EnsureUnique();
+		var list = files.RemoveNulls().FastDistinct();
 
 		if (list.IsEmpty())
 		{

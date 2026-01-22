@@ -402,7 +402,7 @@ public static class DirectoryHelper
 			options.RecurseSubdirectories = true;
 		}
 
-		var directories = path.GetFiles(searchPattern, searchOption).Select(file => file.Directory).EnsureUnique().ToArray();
+		var directories = path.GetFiles(searchPattern, searchOption).Select(file => file.Directory).FastDistinct().ToArray();
 
 		var itemCount = directories.LongLength;
 

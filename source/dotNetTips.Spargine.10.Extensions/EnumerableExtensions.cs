@@ -1376,49 +1376,41 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Ensures that all elements in the collection are unique based on the default equality comparer.
+		/// Returns a sequence containing only the distinct elements from the source collection with size-based optimization.
 		/// </summary>
+		/// <param name="comparer">
+		/// An optional equality comparer to determine element equality. If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>
-		/// An <see cref="IEnumerable{T}"/> containing only unique elements from the original collection.
+		/// An <see cref="IEnumerable{T}"/> containing unique elements from the source collection.
 		/// </returns>
 		/// <remarks>
-		/// <para>
-		/// Adaptive strategy is used based on the element type and collection size:
-		/// </para>
+		/// Uses an adaptive strategy based on element type and collection size:
 		/// <list type="bullet">
-		/// <item><description><b>Value types:</b> Always uses <see cref="Enumerable.Distinct{TSource}(IEnumerable{TSource})"/> for optimal performance.</description></item>
-		/// <item><description><b>Reference types:</b> If count is ≤ 4096, uses <see cref="HashSet{T}"/>; otherwise, uses <see cref="Enumerable.Distinct{TSource}(IEnumerable{TSource})"/>.</description></item>
-		/// <item><description><b>Unknown count:</b> Falls back to <see cref="HashSet{T}"/>.</description></item>
+		/// <item><description><b>Value types:</b> For counts &gt; 256, uses <see cref="Enumerable.Distinct{TSource}(IEnumerable{TSource})"/>; otherwise, <see cref="HashSet{T}"/>.</description></item>
+		/// <item><description><b>Reference types:</b> If the source implements <see cref="ICollection{T}"/> and count &gt; 2048, uses <see cref="Enumerable.Distinct{TSource}(IEnumerable{TSource})"/>; otherwise, <see cref="HashSet{T}"/>.</description></item>
+		/// <item><description><b>Unknown count:</b> Defaults to <see cref="HashSet{T}"/> to ensure uniqueness.</description></item>
 		/// </list>
-		/// <para>
-		/// Uses the default equality comparer for type <typeparamref name="T"/> to determine uniqueness. If duplicates exist,
-		/// only the first occurrence is included in the returned sequence.
-		/// </para>
-		/// <para>
-		/// <b>Performance Characteristics:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements.</description></item>
-		/// <item><description><b>Space complexity:</b> O(u) where u is the number of unique elements (and potential auxiliary structures).</description></item>
-		/// <item><description><b>Count detection:</b> O(1) for <see cref="ICollection{T}"/> and <see cref="IReadOnlyCollection{T}"/>.</description></item>
-		/// </list>
+		/// This approach minimizes allocations and improves performance by selecting the most efficient distinct strategy for the given scenario.
 		/// </remarks>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(EnsureUnique), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
-		public IEnumerable<T> EnsureUnique([AllowNull] IEqualityComparer<T>? comparer = null)
+		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		public IEnumerable<T> FastDistinct([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			// Value types: use Distinct() which is optimized; pass comparer when provided
+			// Value types: use size-based optimization; honor comparer
 			if (typeof(T).IsValueType)
 			{
-				return collection.Distinct(comparer);
+				return collection.Count() > 256
+					? collection.Distinct(comparer)
+					: new HashSet<T>(collection, comparer);
 			}
 
 			// Reference types: use size-based optimization; honor comparer
-			if (collection is ICollection<T> collectionT)
+			if (collection is ICollection<T> refCollection)
 			{
-				return collectionT.Count > 128
+				return refCollection.Count > 2048
 					? collection.Distinct(comparer)
 					: new HashSet<T>(collection, comparer);
 			}
