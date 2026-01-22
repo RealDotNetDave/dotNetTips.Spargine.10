@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -43,6 +43,8 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineObjectExtensions")]
 public static class ObjectExtensions
 {
+	private const string Item = "Item";
+
 	/// <summary>
 	/// The built in type names
 	/// </summary>
@@ -73,7 +75,7 @@ public static class ObjectExtensions
 	/// </summary>
 	/// <param name="obj">The object containing IDisposable fields to be disposed.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void DisposeFields([AllowNull] this IDisposable obj)
 	{
 		if (obj is null)
@@ -81,7 +83,7 @@ public static class ObjectExtensions
 			return;
 		}
 
-		foreach (var field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+		foreach (var field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).AsSpan())
 		{
 			if (field.FieldType.IsAssignableTo(typeof(IDisposable)) && field.GetValue(obj) is IDisposable disposableField)
 			{
@@ -127,9 +129,7 @@ public static class ObjectExtensions
 	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult FromJson<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] this string json, JsonSerializerOptions? options = null)
 	{
-		json = json.ArgumentNotNullOrEmpty();
-
-		return JsonSerialization.Deserialize<TResult>(json, options);
+		return JsonSerialization.Deserialize<TResult>(json.ArgumentNotNullOrEmpty(), options);
 	}
 
 	/// <summary>
@@ -145,10 +145,7 @@ public static class ObjectExtensions
 	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult FromJson<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] this string json, JsonTypeInfo<TResult> typeInfo)
 	{
-		json = json.ArgumentNotNullOrEmpty();
-		typeInfo = typeInfo.ArgumentNotNull();
-
-		return JsonSerialization.Deserialize(json.ArgumentNotNullOrEmpty(), typeInfo);
+		return JsonSerialization.Deserialize(json.ArgumentNotNullOrEmpty(), typeInfo.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -199,7 +196,10 @@ public static class ObjectExtensions
 	/// <param name="obj">The <see cref="IDisposable" /> object to dispose.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(TryDispose), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
-	public static void TryDispose(this IDisposable obj) => TryDispose(obj.ArgumentNotNull(), false);
+	public static void TryDispose(this IDisposable obj)
+	{
+		TryDispose(obj.ArgumentNotNull(), false);
+	}
 
 	/// <summary>
 	/// Ensures a non-null string representation of an object. If the object is null, it returns an empty string.
@@ -264,6 +264,7 @@ public static class ObjectExtensions
 	/// <param name="obj">The object instance to extend.</param>
 	extension([DisallowNull] object obj)
 	{
+
 		/// <summary>
 		/// Returns the maximum of two comparable objects.
 		/// </summary>
@@ -299,7 +300,7 @@ public static class ObjectExtensions
 		/// <exception cref="JsonException">Thrown if an error occurs during serialization.</exception>
 		/// <exception cref="IOException">Thrown if an error occurs while writing the file.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void ToJsonFile([DisallowNull] FileInfo file)
 		{
 			file = file.ArgumentNotNull();
@@ -331,7 +332,7 @@ public static class ObjectExtensions
 
 			if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
 			{
-				typeName = "Item";
+				typeName = Item;
 			}
 			else if (includeMemberName is false)
 			{
@@ -423,7 +424,7 @@ public static class ObjectExtensions
 
 			if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
 			{
-				typeName = "Item";
+				typeName = Item;
 			}
 			else if (includeMemberName is false)
 			{
@@ -533,7 +534,7 @@ public static class ObjectExtensions
 
 			// Otherwise go deeper in the object tree.
 			// And foreach object public property collect each value
-			var propertyCollection = objectType.GetProperties().AsReadOnlySpan();
+			var propertyCollection = objectType.GetProperties().AsSpan();
 
 			var newMemberName = string.Empty;
 
@@ -645,7 +646,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
 		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -687,7 +688,7 @@ public static class ObjectExtensions
 			var fieldCollection = objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
 
-			foreach (var field in fieldCollection)
+			foreach (var field in fieldCollection.AsSpan())
 			{
 				// Skip compiler-generated fields (e.g., backing fields for auto-properties)
 				if (field.IsDefined(typeof(CompilerGeneratedAttribute), false))
@@ -743,7 +744,7 @@ public static class ObjectExtensions
 
 			if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
 			{
-				typeName = "Item";
+				typeName = Item;
 			}
 			else if (includeMemberName is false)
 			{
@@ -812,14 +813,14 @@ public static class ObjectExtensions
 		/// Automatically sets all null instance fields of an object to their default values.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public void InitializeFields()
 		{
 			obj = obj.ArgumentNotNull();
 
 			var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-			foreach (var field in fields)
+			foreach (var field in fields.AsSpan())
 			{
 				if (field.GetValue(obj) == null && !field.FieldType.IsValueType)
 				{

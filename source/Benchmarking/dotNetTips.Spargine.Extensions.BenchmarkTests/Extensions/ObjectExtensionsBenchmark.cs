@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -18,6 +18,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -29,25 +30,55 @@ using DotNetTips.Spargine.Tester.Models.Serializers;
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
+[ExcludeFromCodeCoverage]
+public class DisposableFields : IDisposable
+{
+
+	/// <summary>
+	/// The data set
+	/// </summary>
+	private readonly DataSet _dataSet = new("TEST");
+
+	/// <summary>
+	/// The disposed value
+	/// </summary>
+	private bool _disposedValue;
+
+	/// <summary>
+	/// Disposes this instance.
+	/// </summary>
+	[Preserve("Part of IDisposable", "4/16/2023", "David McCarter")]
+	public void Dispose()
+	{
+		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+		this.Dispose(disposing: true);
+		GC.SuppressFinalize(this);
+	}
+
+	/// <summary>
+	/// Disposes the specified disposing.
+	/// </summary>
+	/// <param name="disposing">The disposing.</param>
+	protected virtual void Dispose(bool disposing)
+	{
+		if (!this._disposedValue)
+		{
+			if (disposing)
+			{
+				this._dataSet.Dispose();
+			}
+
+			this._disposedValue = true;
+		}
+	}
+
+}
+
 public class ObjectExtensionsBenchmark : Benchmark
 {
 
 	private string _peopleJson;
 	private Collection<Person> _personCollection;
-
-	private void CheckForNullParamNormal(object input)
-	{
-		input ??= "TEST";
-
-		this.Consume(input);
-	}
-
-	private void CheckForNullParamSpargine(object input)
-	{
-		input ??= "SPARGINE";
-
-		this.Consume(input);
-	}
 
 	//[Benchmark(Description = nameof(ObjectExtensions.FastClone) + ": Person-ref")]
 	//public void ClonePerson()
@@ -422,6 +453,13 @@ public class ObjectExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ObjectExtensions.ToJsonFile))]
+	public void ToJsonFile()
+	{
+		this._personCollection.ToJsonFile(new FileInfo(RandomData.GenerateRandomFileName(nameof(this.ToJsonFile))));
+
+	}
+
 	[Benchmark(Description = nameof(ObjectExtensions.ToJson) + ": Person + JsonTypeInfo")]
 	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
 	public void ToJsonJsonTypeInfo()
@@ -440,48 +478,18 @@ public class ObjectExtensionsBenchmark : Benchmark
 		disposableType.TryDispose();
 	}
 
-}
-
-[ExcludeFromCodeCoverage]
-public class DisposableFields : IDisposable
-{
-
-	/// <summary>
-	/// The data set
-	/// </summary>
-	private readonly DataSet _dataSet = new("TEST");
-
-	/// <summary>
-	/// The disposed value
-	/// </summary>
-	private bool _disposedValue;
-
-	/// <summary>
-	/// Disposes the specified disposing.
-	/// </summary>
-	/// <param name="disposing">The disposing.</param>
-	protected virtual void Dispose(bool disposing)
+	private void CheckForNullParamNormal(object input)
 	{
-		if (!this._disposedValue)
-		{
-			if (disposing)
-			{
-				this._dataSet.Dispose();
-			}
+		input ??= "TEST";
 
-			this._disposedValue = true;
-		}
+		this.Consume(input);
 	}
 
-	/// <summary>
-	/// Disposes this instance.
-	/// </summary>
-	[Preserve("Part of IDisposable", "4/16/2023", "David McCarter")]
-	public void Dispose()
+	private void CheckForNullParamSpargine(object input)
 	{
-		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-		this.Dispose(disposing: true);
-		GC.SuppressFinalize(this);
+		input ??= "SPARGINE";
+
+		this.Consume(input);
 	}
 
 }
