@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-18-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -34,10 +34,11 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	private IEnumerable<Spargine.Tester.Models.ValueTypes.Coordinate> _coordinateValEnumerable;
+	private Person[] _personRefArray;
 	private IEnumerable<Person> _personRefEnumerable;
 	private List<Person> _personRefEnumerableStart;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
+	private HashSet<Person> _personRefHashSet;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -294,10 +295,34 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrNull))]
-	public void FirstOrNull()
+	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrNull) + ": Array<ref>")]
+	public void FirstOrNullArrayRef()
 	{
-		var result = this._coordinateValEnumerable.FirstOrNull(p => p.X == this.CoordinateVal01.X);
+		var result = this._personRefArray.FirstOrNull(p => p.Email == this.PersonRef01.Email);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrNull) + ": Enumerable<ref>")]
+	public void FirstOrNullEnumerableRef()
+	{
+		var result = this._personRefEnumerable.FirstOrNull(p => p.Email == this.PersonRef01.Email);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrNull) + ": Enumerable<val>")]
+	public void FirstOrNullEnumerableVal()
+	{
+		var result = this._personValEnumerable.FirstOrNull(p => p.Email == this.PersonVal01.Email);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrNull) + ": HashSet<ref>")]
+	public void FirstOrNullHashSetRef()
+	{
+		var result = this._personRefHashSet.FirstOrNull(p => p.Email == this.PersonRef01.Email);
 
 		this.Consume(result);
 	}
@@ -532,9 +557,11 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		base.Setup();
 
-		this._coordinateValEnumerable = this.GetCoordinateValArray().AsEnumerable();
+		this._personRefArray = this.GetPersonRefArray();
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
+		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
+
 
 		var peopleToAdd = this._personRefEnumerable.ToList();
 		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.HalfCount));

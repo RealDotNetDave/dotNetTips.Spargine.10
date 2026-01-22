@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -176,15 +176,51 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: MaybeNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public T FirstOrNull([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
+			// Fast path for List<T> using span
+			if (collection is List<T> list)
+			{
+				var span = CollectionsMarshal.AsSpan(list);
+				var length = span.Length;
+
+				for (var i = 0; i < length; i++)
+				{
+					if (accumulatorPredicate(span[i]))
+					{
+						return span[i];
+					}
+				}
+
+				return default;
+			}
+
+			// Fast path for arrays
+			if (collection is T[] array)
+			{
+				ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
+				var arrayLength = array.Length;
+
+				for (var i = 0; i < arrayLength; i++)
+				{
+					ref var item = ref Unsafe.Add(ref arrayStart, i);
+					if (accumulatorPredicate(item))
+					{
+						return item;
+					}
+				}
+
+				return default;
+			}
+
+			// Standard enumeration for other collection types
 			foreach (var item in collection)
 			{
-				if (accumulatorPredicate.Invoke(item))
+				if (accumulatorPredicate(item))
 				{
 					return item;
 				}
@@ -593,7 +629,6 @@ public static class EnumerableExtensions
 		public IEnumerable<T> FastShuffle(int count)
 		{
 			count = count.ArgumentInRange(min: 1, max: int.MaxValue);
-			collection = collection.ArgumentNotNull();
 
 			return collection.FastShuffle().Take(count);
 		}
@@ -626,6 +661,8 @@ public static class EnumerableExtensions
 		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastShuffle()
 		{
+			collection = collection.ArgumentNotNull();
+
 			var array = collection.ToArray();
 
 			Random.Shared.Shuffle(array);
@@ -714,8 +751,7 @@ public static class EnumerableExtensions
 		[Information(nameof(ToBlockingCollection), "David McCarter", "4/13/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public BlockingCollection<T> ToBlockingCollection()
 		{
-			//RECOMMENDATION FROM COPILOT IS SLOWER.
-			return [.. new ConcurrentQueue<T>(collection)];
+			return new BlockingCollection<T>(new ConcurrentQueue<T>(collection));
 		}
 
 		/// <summary>
@@ -962,7 +998,7 @@ public static class EnumerableExtensions
 
 			foreach (var item in collection)
 			{
-				if (accumulatorPredicate.Invoke(item))
+				if (accumulatorPredicate(item))
 				{
 					return item;
 				}
@@ -1114,7 +1150,7 @@ public static class EnumerableExtensions
 		/// </summary>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public long FastLongCount()
 		{
 			collection = collection.ArgumentNotNull();
@@ -1319,7 +1355,10 @@ public static class EnumerableExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public bool IsEmpty() => collection?.Count() <= 0;
+		public bool IsEmpty()
+		{
+			return collection?.Count() <= 0;
+		}
 
 		/// <summary>
 		/// Determines whether the specified collection is null or empty.

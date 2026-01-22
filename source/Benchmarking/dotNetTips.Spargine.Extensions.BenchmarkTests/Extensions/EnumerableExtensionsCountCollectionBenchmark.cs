@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-03-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCountCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -65,11 +65,19 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 		this.Consume(result);
 	}
 
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": With Predicate")]
 	public void CountFastLongCountWithPredicate()
 	{
 		var result = this._personRefEnumerable.FastLongCount(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "Enumerable.LongCount()")]
+	[BenchmarkCategory(Categories.ForComparison)]
+	public void CountLongCount()
+	{
+		var result = this._personRefEnumerable.LongCount();
 
 		this.Consume(result);
 	}
