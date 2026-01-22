@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -40,6 +40,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private PersonRecord[] _personRecordArray;
 	private Person[] _personRefArray;
 	private Person[] _personRefArrayHalf;
+	private Person[] _personRefArrayWithDups;
 	private Spargine.Tester.Models.ValueTypes.Person[] _personValArray;
 	private Spargine.Tester.Models.ValueTypes.Person[] _personValArrayHalf;
 
@@ -477,18 +478,15 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personValArrayHalf = this.GetPersonValArray().Take(this.HalfCount).ToArray();
 		this._byteArray = this.GetByteArray(this.Count);
 
-		this._halfCount = this._personRefArray.Length / 2;
-
-		LogInfo($"PersonRecordArray: {this._personRecordArray.Length}");
-		LogInfo($"PersonRefArray: {this._personRefArray.Length}");
-		LogInfo($"PersonValArray: {this._personValArray.Length}");
+		this._personRefArrayWithDups = this.GetPersonRefArray();
+		_ = this._personRefArrayWithDups.AddRange(this.GetPersonRefArray().Take(this.HalfCount));
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.ToDistinct) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ToDistinct_Ref()
 	{
-		var result = this._personRefArray.ToDistinct();
+		var result = this._personRefArrayWithDups.ToDistinct();
 
 		this.Consume(result);
 	}
