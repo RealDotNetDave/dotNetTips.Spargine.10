@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -251,7 +251,10 @@ public static class PathHelper
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<char> InvalidFilterChars() => InvalidFileNameChars.AsReadOnly();
+	public static ReadOnlyCollection<char> InvalidFilterChars()
+	{
+		return InvalidFileNameChars.AsReadOnly();
+	}
 
 	/// <summary>
 	/// Gets the invalid path name characters, excluding directory separators.

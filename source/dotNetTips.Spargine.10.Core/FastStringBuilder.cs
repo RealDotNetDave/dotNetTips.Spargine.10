@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -59,7 +59,6 @@ public static class FastStringBuilder
 		}
 
 		var sb = _stringBuilderPool.Get().ClearSetCapacity((bytes.Length * 2) + 3);
-
 
 		try
 		{
@@ -190,14 +189,10 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		var estimatedLength = EstimateParamsStringLength(args);
-
-		var sb = _stringBuilderPool.Get().SetCapacity(estimatedLength);
+		var sb = _stringBuilderPool.Get().SetCapacity(EstimateParamsStringLength(args));
 
 		try
 		{
-			// Use foreach for ReadOnlySpan - JIT optimizes this to bounds-check-eliminated loop
-			// Conditional per iteration is necessary due to different append methods
 			foreach (var arg in args)
 			{
 				_ = addLineFeed ? sb.AppendLine(arg) : sb.Append(arg);
@@ -247,8 +242,7 @@ public static class FastStringBuilder
 			return args[0] ?? ControlChars.EmptyString;
 		}
 
-		var estimatedCapacity = EstimateParamsStringLength(args);
-		var sb = _stringBuilderPool.Get().SetCapacity(estimatedCapacity);
+		var sb = _stringBuilderPool.Get().SetCapacity(EstimateParamsStringLength(args));
 
 		try
 		{
@@ -405,10 +399,7 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		// Pre-allocate capacity to minimize reallocations during formatting
-		// Estimate: format string length + (average 10 chars per argument)
-		var estimatedCapacity = args.CalculateStringCount();
-		var sb = _stringBuilderPool.Get().SetCapacity(estimatedCapacity);
+		var sb = _stringBuilderPool.Get().SetCapacity(args.CalculateStringCount());
 
 		try
 		{
@@ -821,15 +812,12 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		// Estimate: ~22 chars per entry (avg key + ':' + avg value + delimiter + ToString overhead)
 		var sb = _stringBuilderPool.Get().SetCapacity(collection.Count * 22);
 
 		try
 		{
 			var isFirst = true;
 
-			// Use foreach with KeyValuePair<TKey, TValue> - no LINQ, no explicit enumerator disposal needed
-			// Dictionary<TKey, TValue>.Enumerator is a value type, so foreach doesn't box
 			foreach (var item in collection)
 			{
 				if (isFirst)
@@ -891,7 +879,6 @@ public static class FastStringBuilder
 
 		var estimatedCapacity = 0;
 
-		// Use foreach for ReadOnlySpan - JIT optimizes with bounds check elimination
 		foreach (var arg in args)
 		{
 			// Handle null strings as zero length to avoid NullReferenceException

@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="DriveHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -50,9 +50,7 @@ public static class DriveHelper
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
 
-		var driveInfo = new DriveInfo(drive);
-
-		return driveInfo.DriveFormat;
+		return new DriveInfo(drive).DriveFormat;
 	}
 
 	/// <summary>
@@ -67,9 +65,7 @@ public static class DriveHelper
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
 
-		var driveInfo = new DriveInfo(drive);
-
-		return driveInfo.AvailableFreeSpace;
+		return new DriveInfo(drive).AvailableFreeSpace;
 	}
 
 	/// <summary>
@@ -84,9 +80,7 @@ public static class DriveHelper
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
 
-		var driveInfo = new DriveInfo(drive);
-
-		return driveInfo.VolumeLabel;
+		return new DriveInfo(drive).VolumeLabel;
 	}
 
 	/// <summary>
@@ -138,9 +132,7 @@ public static class DriveHelper
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
 
-		var driveInfo = new DriveInfo(drive);
-
-		return driveInfo.TotalSize;
+		return new DriveInfo(drive).TotalSize;
 	}
 
 	/// <summary>
@@ -156,7 +148,7 @@ public static class DriveHelper
 	[Information(nameof(GetFixedDrives), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetFixedDrives()
 	{
-		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).Distinct().ToReadOnlyCollection();
+		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).EnsureUnique().ToReadOnlyCollection();
 	}
 
 	/// <summary>
@@ -171,7 +163,7 @@ public static class DriveHelper
 	[Information(nameof(GetRemovableDrives), author: "David McCarter", createdOn: "9/6/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetRemovableDrives()
 	{
-		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Removable && p.IsReady).Distinct().ToReadOnlyCollection();
+		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Removable && p.IsReady).EnsureUnique().ToReadOnlyCollection();
 	}
 
 }

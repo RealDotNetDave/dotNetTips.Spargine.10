@@ -1058,7 +1058,7 @@ dotnet_diagnostic.CA1837.severity = suggestion
 # Avoid StringBuilder parameters for P/Invokes
 dotnet_diagnostic.CA1838.severity = warning
 
-# Use Environment.ProcessPath instead of Process.GetCurrentProcess().MainModule.FileName
+# Use Environment.ProcessPath instead of Process.GetCurrentProcess().MainModule.FileName **
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1839.severity = error
 
@@ -1071,18 +1071,18 @@ dotnet_diagnostic.CA1840.severity = silent
 dotnet_diagnostic.CA1841.severity = silent
 
 # Do not use 'WhenAll' with a single task
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET *
 dotnet_diagnostic.CA1842.severity = error
 
 # Do not use 'WaitAll' with a single task
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET *
 dotnet_diagnostic.CA1843.severity = error
 
-# Provide memory-based overrides of async methods when subclassing 'Stream'
+# Provide memory-based overrides of async methods when subclassing 'Stream' *
 dotnet_diagnostic.CA1844.severity = warning
 
 # Use span-based 'string.Concat'
-# Examples in Rock Your Code: Code Performance in Microsoft .NET **
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1845.severity = error
 
 # Prefer AsSpan over Substring

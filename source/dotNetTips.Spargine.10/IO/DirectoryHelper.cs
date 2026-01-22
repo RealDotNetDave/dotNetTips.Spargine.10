@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-22-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -52,8 +52,7 @@ public static class DirectoryHelper
 	{
 		var userPath = LocalAppData;
 
-		var entryAssembly = Assembly.GetEntryAssembly();
-		var companyName = entryAssembly?.GetCustomAttributes<AssemblyCompanyAttribute>().FirstOrDefault()?.Company?.Trim();
+		var companyName = Assembly.GetEntryAssembly()?.GetCustomAttributes<AssemblyCompanyAttribute>().FirstOrDefault()?.Company?.Trim();
 
 		if (string.IsNullOrEmpty(companyName))
 		{
@@ -249,7 +248,6 @@ public static class DirectoryHelper
 	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
 	{
-
 		const string DisplayNameKey = "DisplayName";
 		const string UserFolderKey = "UserFolder";
 		const string AccountsKey = "Accounts";
@@ -404,9 +402,7 @@ public static class DirectoryHelper
 			options.RecurseSubdirectories = true;
 		}
 
-		var files = path.GetFiles(searchPattern, searchOption);
-
-		var directories = files.Select(file => file.Directory).Distinct().ToArray();
+		var directories = path.GetFiles(searchPattern, searchOption).Select(file => file.Directory).EnsureUnique().ToArray();
 
 		var itemCount = directories.LongLength;
 
