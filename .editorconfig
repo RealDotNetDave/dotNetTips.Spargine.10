@@ -1082,14 +1082,14 @@ dotnet_diagnostic.CA1843.severity = error
 dotnet_diagnostic.CA1844.severity = warning
 
 # Use span-based 'string.Concat'
-# Examples in Rock Your Code: Code Performance in Microsoft .NET
+# Examples in Rock Your Code: Code Performance in Microsoft .NET **
 dotnet_diagnostic.CA1845.severity = error
 
 # Prefer AsSpan over Substring
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1846.severity = error
 
-# Use string.Contains(char) instead of string.Contains(string) with single character **
+# Use string.Contains(char) instead of string.Contains(string) with single character
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1847.severity = error
 
