@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -30,7 +30,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// Implements the <see cref="LargeCollectionBenchmark" />
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
-[MemoryDiagnoser]
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
@@ -121,162 +120,12 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.Create))]
-	public void Create()
-	{
-		var people = this._personRefEnumerable;
-
-		people = people.Create();
-
-		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.Create) + ": With Unique")]
-	public void CreateUnique()
-	{
-		var people = this._personRefEnumerable.AddFirst(this.PersonRef01);
-
-		people = people.Create(true);
-
-		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty))]
 	public void DoesNotHaveItemsIsEmpty()
 	{
 		var result = this._personRefEnumerable.IsEmpty();
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Comparer - Ref")]
-	public void EnsureUniqueComparerRef()
-	{
-		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
-
-		var result = people.FastDistinct(new PersonComparer());
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Comparer - Val")]
-	public void EnsureUniqueComparerVal()
-	{
-		var people = this._personValEnumerable.AddLast(this.PersonVal01);
-
-		var result = people.FastDistinct(new Spargine.Tester.Models.ValueTypes.PersonComparer());
-
-		this.ConsumeEnumerable(result);
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": IEnumerable<ref>")]
-	public void EnsureUniqueIEnumerableRef()
-	{
-		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
-
-		var result = people.FastDistinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": IEnumerable<val>")]
-	public void EnsureUniqueIEnumerableVal()
-	{
-		var people = this._personValEnumerable.AddLast(this.PersonVal01);
-
-		var result = people.FastDistinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = "EnsureUnique: LINQ.Distinct with Comparer - Ref")]
-	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void EnsureUniqueLINQDistinctComparerRef()
-	{
-		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
-
-		var result = people.Distinct(new PersonComparer());
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = "EnsureUnique: LINQ.Distinct with Comparer - Val")]
-	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void EnsureUniqueLINQDistinctComparerVal()
-	{
-		var people = this._personValEnumerable.AddLast(this.PersonVal01);
-
-		var result = people.Distinct(new Spargine.Tester.Models.ValueTypes.PersonComparer());
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = "EnsureUnique: LINQ.Distinct - IEnumerable<Ref>")]
-	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void EnsureUniqueLINQDistinctRef()
-	{
-		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
-
-		var result = people.Distinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = "EnsureUnique: LINQ.Distinct - IEnumerable<Val>")]
-	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void EnsureUniqueLINQDistinctVal()
-	{
-		var people = this._personValEnumerable.AddLast(this.PersonVal01);
-
-		var result = people.Distinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<ref>")]
-	public void EnsureUniqueListRef()
-	{
-		var people = this._personRefEnumerable.AddLast(this.PersonRef01).ToList();
-
-		var result = people.FastDistinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<val>")]
-	public void EnsureUniqueListVal()
-	{
-		var people = this._personValEnumerable.AddLast(this.PersonVal01).ToList();
-
-		var result = people.FastDistinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": ReadOnlyCollection<ref>")]
-	public void EnsureUniqueReadOnlyCollectionRef()
-	{
-		var people = this._personRefEnumerable.AddLast(this.PersonRef01).ToReadOnlyCollection();
-
-		var result = people.FastDistinct();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": ReadOnlyCollection<val>")]
-	public void EnsureUniqueReadOnlyCollectionVal()
-	{
-		var people = this._personValEnumerable.AddLast(this.PersonVal01).ToReadOnlyCollection();
-
-		var result = people.FastDistinct();
-
-		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrDefault) + ": With Alternate")]
@@ -414,16 +263,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "LINQ Sequence Equal")]
-	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void LINQSequenceEqual()
-	{
-		var people = this._personRefEnumerable;
-		var result = people.SequenceEqual(this._personRefEnumerableToAdd);
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor))]
 	[BenchmarkCategory(Categories.ReferenceType)]
 	public void ModifyCollectionFastProcessor()
@@ -530,14 +369,14 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.ConsumeEnumerable(result);
 	}
 
-	[Benchmark(Description = "LINQ: SequenceEqual")]
+	[Benchmark(Description = "LINQ: SequenceEqual()")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void SequenceEqualSequenceEqual()
+	public void SequenceEqualLINQ()
 	{
-		var people1 = this._personRefEnumerable;
+		var people = this._personRefEnumerable;
 		var people2 = this._personRefEnumerableToAdd;
 
-		var result = people1.SequenceEqual(people2);
+		var result = people.SequenceEqual(people2);
 
 		this.Consume(result);
 	}
@@ -599,6 +438,18 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefEnumerable;
 		var result = people.StartsWith(this._personRefEnumerableStart);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToUniqueCollection))]
+	public void ToUniqueCollection()
+	{
+		var people = this._personRefEnumerable;
+
+		people = people.ToUniqueCollection();
+
+		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
 
 		this.Consume(result);
 	}

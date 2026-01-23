@@ -1437,17 +1437,34 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Creates a new <see cref="Collection{T}"/> from the specified items. Optionally ensures uniqueness of items in the collection.
+		/// Creates a new <see cref="Collection{T}"/> that contains only the unique elements
+		/// from the source collection.
 		/// </summary>
-		/// <param name="ensureUnique">If set to <c>true</c>, the new collection will only include unique items.</param>
-		/// <returns>A new <see cref="Collection{T}"/> containing the specified items, with duplicates removed if <paramref name="ensureUnique"/> is <c>true</c>.</returns>
+		/// <returns>
+		/// A new <see cref="Collection{T}"/> containing the distinct elements from the source collection.
+		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// Uniqueness is determined by <see cref="EqualityComparer{T}.Default"/> via an intermediate
+		/// <see cref="HashSet{T}"/>. The resulting <see cref="Collection{T}"/> is a new, mutable collection
+		/// and is independent of the source.
+		/// </para>
+		/// <para>
+		/// The relative order of elements is not preserved because <see cref="HashSet{T}"/> does not guarantee ordering.
+		/// If you require stable ordering, consider applying <see cref="Enumerable.Distinct{TSource}(IEnumerable{TSource})"/>
+		/// prior to materialization.
+		/// </para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when the source collection is <c>null</c>.
+		/// </exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Create), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-		public Collection<T> Create(in bool ensureUnique = false)
+		[Information(nameof(ToUniqueCollection), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+		public Collection<T> ToUniqueCollection()
 		{
-			return ensureUnique ? new Collection<T>(new HashSet<T>(collection).ToList()) : new Collection<T>([.. collection]);
+			return new Collection<T>(new HashSet<T>(collection).ToList());
 		}
 
 		/// <summary>
@@ -1533,7 +1550,7 @@ public static class EnumerableExtensions
 		/// <list type="bullet">
 		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
 		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
-		/// <item><description><b>Property-based matching:</b> Create a custom comparer that matches based on specific properties (e.g., Id-based matching).</description></item>
+		/// <item><description><b>Property-based matching:</b> ToUniqueCollection a custom comparer that matches based on specific properties (e.g., Id-based matching).</description></item>
 		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
 		/// </list>
 		/// </remarks>

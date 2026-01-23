@@ -361,7 +361,7 @@ public static class StringExtensions
 	/// </para>
 	/// <code>
 	/// // One-time setup (cache this)
-	/// private static readonly SearchValues&lt;string&gt; SearchTerms = SearchValues.Create(
+	/// private static readonly SearchValues&lt;string&gt; SearchTerms = SearchValues.ToUniqueCollection(
 	///     new[] { "cat", "dog", "mouse" }, 
 	///     StringComparison.OrdinalIgnoreCase);
 	/// 

@@ -541,7 +541,7 @@ public static class DictionaryExtensions
 	///     ["two"] = 2
 	/// };
 	/// 
-	/// // Create read-only wrapper
+	/// // ToUniqueCollection read-only wrapper
 	/// var readOnlyDict = mutableDict.ToReadOnlyDictionary();
 	/// 
 	/// // Reads work fine

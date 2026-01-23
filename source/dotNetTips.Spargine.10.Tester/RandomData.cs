@@ -9,7 +9,7 @@
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
 // </copyright>
-// <summary>Create random data for unit and benchmark testing.</summary>
+// <summary>ToUniqueCollection random data for unit and benchmark testing.</summary>
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
@@ -269,7 +269,7 @@ public static class RandomData
 	/// byte[] randomData = RandomData.GenerateByteArray(1024);
 	/// 
 	/// // Use the random bytes for cryptographic operations
-	/// using (var aes = Aes.Create())
+	/// using (var aes = Aes.ToUniqueCollection())
 	/// {
 	///     // Use first 16 bytes for IV
 	///     byte[] iv = randomData[..16];

@@ -164,7 +164,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	{
 		base.Setup();
 
-		//Create lines of text.
+		//ToUniqueCollection lines of text.
 		var sb = new StringBuilder(this.Count * 70);
 
 		for (var lineCount = 0; lineCount < this.Count; lineCount++)

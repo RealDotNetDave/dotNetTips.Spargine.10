@@ -50,6 +50,7 @@ internal sealed class Program
 		BenchmarkHelper.RunBenchmarks(config,
 			typeof(EnumerableExtensionsCollectionBenchmark),
 			typeof(EnumerableExtensionsCountCollectionBenchmark),
+			typeof(EnumerableExtensionsDistinctCollectionBenchmark),
 			typeof(ObjectExtensionsBenchmark)
 			);
 

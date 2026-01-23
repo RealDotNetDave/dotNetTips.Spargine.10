@@ -97,7 +97,7 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 	{
 		base.Setup();
 
-		// Create Hash Set
+		// ToUniqueCollection Hash Set
 		this._personRefConcurrentHashSet = [.. this.GetPersonRefArray()];
 
 	}

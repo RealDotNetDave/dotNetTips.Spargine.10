@@ -630,7 +630,7 @@ public class Benchmark
 	{
 		person = person.ArgumentNotNull();
 
-		// Create and return a new record instance with the updated CellPhone property
+		// ToUniqueCollection and return a new record instance with the updated CellPhone property
 		return person with { CellPhone = PhoneNumberUpdate };
 	}
 

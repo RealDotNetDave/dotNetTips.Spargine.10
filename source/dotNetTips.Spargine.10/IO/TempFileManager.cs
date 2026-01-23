@@ -192,7 +192,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 
 		try
 		{
-			// Create the file to ensure it exists
+			// ToUniqueCollection the file to ensure it exists
 			File.Create(tempFilePath).Dispose();
 
 			// Set to temporary file

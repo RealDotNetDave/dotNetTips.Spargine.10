@@ -48,100 +48,6 @@ public static class ServiceHelper
 	private static readonly CompositeFormat _serviceHasBeenStarted = CompositeFormat.Parse(Resources.ServiceHasBeenStartedOn);
 	private static readonly CompositeFormat _serviceHasBeenStopped = CompositeFormat.Parse(Resources.ServiceHasBeenStoppedOn);
 
-
-	/// <summary>
-	/// Loads the service specified by the service name.
-	/// </summary>
-	/// <param name="serviceName">The name of the service to load.</param>
-	/// <returns>A ServiceController object for the specified service.</returns>
-	/// <example>
-	/// Here is how you can use the LoadService method:
-	/// <code>
-	/// var serviceName = "YourServiceName";
-	/// var serviceController = ServiceHelper.LoadService(serviceName);
-	/// if(serviceController != null)
-	/// {
-	///     Console.WriteLine($"Service {serviceName} is loaded.");
-	/// }
-	/// else
-	/// {
-	///     Console.WriteLine($"Service {serviceName} could not be found.");
-	/// }
-	/// </code>
-	/// </example>
-	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
-	private static ServiceController? LoadService([DisallowNull] string serviceName)
-	{
-		return Array.Find(ServiceController.GetServices(), p => string.Equals(p.ServiceName, serviceName, StringComparison.Ordinal));
-	}
-
-	/// <summary>
-	/// Starts all services that the specified service depends on, if they are not already running.
-	/// </summary>
-	/// <param name="services">
-	/// The array of <see cref="ServiceController"/> objects representing the services to start.
-	/// If <c>null</c>, no action is taken.
-	/// </param>
-	/// <param name="logger">
-	/// Optional logger for logging when services are successfully started.
-	/// If provided, logs a message for each started service.
-	/// </param>
-	/// <remarks>
-	/// This method iterates through the provided array of service controllers.
-	/// For each service that is not currently running, it attempts to start the service.
-	/// If a logger is provided, a log entry is created for each service that is started.
-	/// This method is used internally by <see cref="StartService"/> to handle dependent services.
-	/// </remarks>
-	/// <exception cref="InvalidOperationException">
-	/// May be thrown if there's an issue starting a service, such as insufficient permissions or if the service is disabled.
-	/// </exception>
-	private static void StartDependentServices(in ServiceController[] services, in ILogger? logger = null)
-	{
-		foreach (var serviceDependsOn in services!)
-		{
-			if (serviceDependsOn.Status != ServiceControllerStatus.Running)
-			{
-				serviceDependsOn.Start();
-
-				logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStarted, serviceDependsOn.ServiceName, Clock.UtcTime));
-			}
-		}
-	}
-
-	/// <summary>
-	/// Stops all services in the specified array if they are currently running.
-	/// </summary>
-	/// <param name="services">
-	/// An array of <see cref="ServiceController"/> objects representing the services to stop.
-	/// If <c>null</c> or empty, no action is taken.
-	/// </param>
-	/// <param name="logger">
-	/// Optional logger for logging when services are successfully stopped.
-	/// If provided, logs a message for each stopped service.
-	/// </param>
-	/// <remarks>
-	/// This method iterates through the provided array of service controllers.
-	/// For each service that is not currently stopped, it attempts to stop the service.
-	/// If a logger is provided, a log entry is created for each service that is stopped.
-	/// This method is used internally by <see cref="StopService"/> to handle dependent services.
-	/// </remarks>
-	/// <exception cref="InvalidOperationException">
-	/// May be thrown if there's an issue stopping a service, such as insufficient permissions or if the service cannot be stopped.
-	/// </exception>
-	private static void StopDependentServices(ServiceController[] services, ILogger? logger = null)
-	{
-		foreach (var serviceDependsOn in services!)
-		{
-			if (serviceDependsOn.Status != ServiceControllerStatus.Stopped)
-			{
-				serviceDependsOn.Stop();
-
-
-				logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStopped, serviceDependsOn.ServiceName, Clock.UtcTime));
-			}
-		}
-	}
-
 	/// <summary>
 	/// Retrieves the names of all requests installed on the system.
 	/// </summary>
@@ -358,7 +264,7 @@ public static class ServiceHelper
 	/// ServiceHelper.StartServices(serviceNames);
 	/// 
 	/// // Starting services with logging
-	/// var logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger("ServiceManager");
+	/// var logger = LoggerFactory.ToUniqueCollection(builder => builder.AddConsole()).CreateLogger("ServiceManager");
 	/// ServiceHelper.StartServices(serviceNames, logger);
 	/// </code>
 	/// </example>
@@ -540,6 +446,100 @@ public static class ServiceHelper
 	public static void StopServices([DisallowNull] IEnumerable<string> requests, ILogger? logger = null)
 	{
 		requests.ToList().ForEach(request => StopService(request, logger: logger));
+	}
+
+
+	/// <summary>
+	/// Loads the service specified by the service name.
+	/// </summary>
+	/// <param name="serviceName">The name of the service to load.</param>
+	/// <returns>A ServiceController object for the specified service.</returns>
+	/// <example>
+	/// Here is how you can use the LoadService method:
+	/// <code>
+	/// var serviceName = "YourServiceName";
+	/// var serviceController = ServiceHelper.LoadService(serviceName);
+	/// if(serviceController != null)
+	/// {
+	///     Console.WriteLine($"Service {serviceName} is loaded.");
+	/// }
+	/// else
+	/// {
+	///     Console.WriteLine($"Service {serviceName} could not be found.");
+	/// }
+	/// </code>
+	/// </example>
+	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	private static ServiceController? LoadService([DisallowNull] string serviceName)
+	{
+		return Array.Find(ServiceController.GetServices(), p => string.Equals(p.ServiceName, serviceName, StringComparison.Ordinal));
+	}
+
+	/// <summary>
+	/// Starts all services that the specified service depends on, if they are not already running.
+	/// </summary>
+	/// <param name="services">
+	/// The array of <see cref="ServiceController"/> objects representing the services to start.
+	/// If <c>null</c>, no action is taken.
+	/// </param>
+	/// <param name="logger">
+	/// Optional logger for logging when services are successfully started.
+	/// If provided, logs a message for each started service.
+	/// </param>
+	/// <remarks>
+	/// This method iterates through the provided array of service controllers.
+	/// For each service that is not currently running, it attempts to start the service.
+	/// If a logger is provided, a log entry is created for each service that is started.
+	/// This method is used internally by <see cref="StartService"/> to handle dependent services.
+	/// </remarks>
+	/// <exception cref="InvalidOperationException">
+	/// May be thrown if there's an issue starting a service, such as insufficient permissions or if the service is disabled.
+	/// </exception>
+	private static void StartDependentServices(in ServiceController[] services, in ILogger? logger = null)
+	{
+		foreach (var serviceDependsOn in services!)
+		{
+			if (serviceDependsOn.Status != ServiceControllerStatus.Running)
+			{
+				serviceDependsOn.Start();
+
+				logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStarted, serviceDependsOn.ServiceName, Clock.UtcTime));
+			}
+		}
+	}
+
+	/// <summary>
+	/// Stops all services in the specified array if they are currently running.
+	/// </summary>
+	/// <param name="services">
+	/// An array of <see cref="ServiceController"/> objects representing the services to stop.
+	/// If <c>null</c> or empty, no action is taken.
+	/// </param>
+	/// <param name="logger">
+	/// Optional logger for logging when services are successfully stopped.
+	/// If provided, logs a message for each stopped service.
+	/// </param>
+	/// <remarks>
+	/// This method iterates through the provided array of service controllers.
+	/// For each service that is not currently stopped, it attempts to stop the service.
+	/// If a logger is provided, a log entry is created for each service that is stopped.
+	/// This method is used internally by <see cref="StopService"/> to handle dependent services.
+	/// </remarks>
+	/// <exception cref="InvalidOperationException">
+	/// May be thrown if there's an issue stopping a service, such as insufficient permissions or if the service cannot be stopped.
+	/// </exception>
+	private static void StopDependentServices(ServiceController[] services, ILogger? logger = null)
+	{
+		foreach (var serviceDependsOn in services!)
+		{
+			if (serviceDependsOn.Status != ServiceControllerStatus.Stopped)
+			{
+				serviceDependsOn.Stop();
+
+
+				logger?.LogInformationMessage(string.Format(CultureInfo.CurrentCulture, _serviceHasBeenStopped, serviceDependsOn.ServiceName, Clock.UtcTime));
+			}
+		}
 	}
 
 }

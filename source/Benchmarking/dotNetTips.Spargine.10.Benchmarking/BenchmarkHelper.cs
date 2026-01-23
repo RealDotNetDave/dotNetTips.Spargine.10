@@ -190,7 +190,7 @@ public static class BenchmarkHelper
 	/// using BenchmarkDotNet.Jobs;
 	/// using DotNetTips.Spargine.Benchmarking;
 	/// 
-	/// var config = ManualConfig.Create(DefaultConfig.Instance)
+	/// var config = ManualConfig.ToUniqueCollection(DefaultConfig.Instance)
 	///     .AddJob(Job.Default.WithWarmupCount(2))
 	///     .AddJob(Job.Default.WithIterationCount(5));
 	/// 
@@ -253,7 +253,7 @@ public static class BenchmarkHelper
 	/// using BenchmarkDotNet.Configs;
 	/// using DotNetTips.Spargine.Benchmarking;
 	/// 
-	/// var config = ManualConfig.Create(DefaultConfig.Instance);
+	/// var config = ManualConfig.ToUniqueCollection(DefaultConfig.Instance);
 	/// BenchmarkHelper.RunBenchmarks(
 	///     config,
 	///     typeof(StringExtensionsBenchmark),
