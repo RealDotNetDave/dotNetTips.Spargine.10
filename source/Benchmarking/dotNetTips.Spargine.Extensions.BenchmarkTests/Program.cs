@@ -51,6 +51,7 @@ internal sealed class Program
 			typeof(EnumerableExtensionsCollectionBenchmark),
 			typeof(EnumerableExtensionsCountCollectionBenchmark),
 			typeof(EnumerableExtensionsDistinctCollectionBenchmark),
+			typeof(ListExtensionsCollectionBenchmark),
 			typeof(ObjectExtensionsBenchmark)
 			);
 

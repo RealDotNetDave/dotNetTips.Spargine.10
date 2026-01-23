@@ -984,7 +984,7 @@ dotnet_diagnostic.CA1819.severity = warning
 dotnet_code_quality.CA1819.api_surface = public, protected
 
 # Test for empty strings using string length
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1820.severity = error
 
 # Remove empty finalizers
@@ -992,7 +992,7 @@ dotnet_diagnostic.CA1820.severity = error
 dotnet_diagnostic.CA1821.severity = error
 
 # Mark members as static
-# Examples in Rock Your Code: Coding Standards for Microsoft .NET >
+# Examples in Rock Your Code: Coding Standards for Microsoft .NET
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1822.severity = suggestion
 
@@ -1004,15 +1004,15 @@ dotnet_diagnostic.CA1823.severity = error
 dotnet_diagnostic.CA1824.severity = suggestion
 
 # Avoid zero-length array allocations
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1825.severity = suggestion
 
 # Use property instead of Linq Enumerable method
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1826.severity = error
 
 # Do not use Count/LongCount when Any can be used
-# Examples in Rock Your Code: Code Performance in Microsoft .NET >
+# Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1827.severity = silent
 
 # Do not use CountAsync/LongCountAsync when AnyAsync can be used
@@ -1031,7 +1031,7 @@ dotnet_diagnostic.CA1830.severity = warning
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1831.severity = error
 
-# Use AsSpan or AsMemory instead of Range-based indexers for getting ReadOnlySpan or ReadOnlyMemory portion of an array
+# Use AsSpan or AsMemory instead of Range-based indexers for getting ReadOnlySpan or ReadOnlyMemory portion of an array *
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1832.severity = error
 
@@ -1058,7 +1058,7 @@ dotnet_diagnostic.CA1837.severity = suggestion
 # Avoid StringBuilder parameters for P/Invokes
 dotnet_diagnostic.CA1838.severity = warning
 
-# Use Environment.ProcessPath instead of Process.GetCurrentProcess().MainModule.FileName **
+# Use Environment.ProcessPath instead of Process.GetCurrentProcess().MainModule.FileName
 # Examples in Rock Your Code: Code Performance in Microsoft .NET
 dotnet_diagnostic.CA1839.severity = error
 

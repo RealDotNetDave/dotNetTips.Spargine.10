@@ -12,10 +12,12 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
@@ -33,6 +35,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private List<Person> _peopleRefSubSet;
 	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList;
 
+	private IComparer<Person> _personComparer;
 
 	[Benchmark(Description = nameof(ListExtensions.AsReadOnlySpan))]
 	public void AsReadOnlySpan()
@@ -191,6 +194,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._peopleRefList = [.. this.GetPersonRefArray()];
 		this._peopleRefSubSet = [.. this.GetPersonRefArray().TakeLast(10)];
 		this._peopleValList = [.. this.GetPersonValArray()];
+		this._personComparer = new PersonComparer();
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
@@ -218,6 +222,46 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ListExtensions.ToCollection))]
+	public void ToCollection()
+	{
+		var result = this._peopleRefList.ToCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.ToDistinctBlockingCollection))]
+	public void ToDistinctBlockingCollection()
+	{
+		var result = this._peopleRefList.ToDistinctBlockingCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.ToDistinctConcurrentBag))]
+	public void ToDistinctConcurrentBag()
+	{
+		var result = this._peopleRefList.ToDistinctConcurrentBag();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.ToFastSortedList))]
+	public void ToFastSortedList()
+	{
+		var result = this._peopleRefList.ToFastSortedList();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.ToFastSortedList) + ": Comparer")]
+	public void ToFastSortedListComparer()
+	{
+		var result = this._peopleRefList.ToFastSortedList(this._personComparer);
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ListExtensions.ToFrozenSet))]
 	public void ToFrozenSet()
 	{
@@ -234,10 +278,37 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ListExtensions.ToListAsync))]
+	[BenchmarkCategory(Categories.Threading)]
+	public void ToListAsync()
+	{
+		var result = this._peopleRefList.ToListAsync().GetAwaiter().GetResult();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.ToListAsync) + ": With CancellationToken")]
+	[BenchmarkCategory(Categories.Threading)]
+	public void ToListAsyncWithCancellationToken()
+	{
+		using var cts = new CancellationTokenSource();
+		var result = this._peopleRefList.ToListAsync(cts.Token).GetAwaiter().GetResult();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ListExtensions.ToObservableCollection))]
 	public void ToObservableCollection()
 	{
 		var result = this._peopleRefList.ToObservableCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.ToObservableList))]
+	public void ToObservableList()
+	{
+		var result = this._peopleRefList.ToObservableList();
 
 		this.Consume(result);
 	}
@@ -258,4 +329,37 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	private sealed class PersonComparer : IComparer<Person>
+	{
+		public int Compare(Person x, Person y)
+		{
+			if (x is null && y is null)
+			{
+				return 0;
+			}
+
+			if (x is null)
+			{
+				return -1;
+			}
+
+			if (y is null)
+			{
+				return 1;
+			}
+
+			// Primary sort by Id
+			var idComparison = string.Compare(x.Id, y.Id, StringComparison.Ordinal);
+
+			if (idComparison != 0)
+			{
+				return idComparison;
+			}
+
+			// Secondary sort by LastName
+			return string.Compare(x.LastName, y.LastName, StringComparison.Ordinal);
+		}
+	}
 }
+
+
