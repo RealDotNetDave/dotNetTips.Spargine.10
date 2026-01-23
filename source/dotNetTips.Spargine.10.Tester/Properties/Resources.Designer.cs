@@ -80,15 +80,6 @@ namespace DotNetTips.Spargine.Tester.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address cannot be null..
-        /// </summary>
-        internal static string ErrorAddressCannotBeNull {
-            get {
-                return ResourceManager.GetString("ErrorAddressCannotBeNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Address length is limited to 100 characters..
         /// </summary>
         internal static string ErrorAddressLengthIsLimitedToCharacters {
@@ -134,15 +125,6 @@ namespace DotNetTips.Spargine.Tester.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First name is required..
-        /// </summary>
-        internal static string ErrorFirstNameIsRequired {
-            get {
-                return ResourceManager.GetString("ErrorFirstNameIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to First name length is limited to 50 characters..
         /// </summary>
         internal static string ErrorFirstNameLengthIsLimitedToCharacters {
@@ -152,29 +134,11 @@ namespace DotNetTips.Spargine.Tester.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Id is required..
-        /// </summary>
-        internal static string ErrorIdIsRequired {
-            get {
-                return ResourceManager.GetString("ErrorIdIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Id length is limited to 50 characters..
         /// </summary>
         internal static string ErrorIdLengthIsLimitedToCharacters {
             get {
                 return ResourceManager.GetString("ErrorIdLengthIsLimitedToCharacters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id length must be at least 10 characters..
-        /// </summary>
-        internal static string ErrorIdLengthIsMinimumCharacters {
-            get {
-                return ResourceManager.GetString("ErrorIdLengthIsMinimumCharacters", resourceCulture);
             }
         }
         
@@ -197,15 +161,6 @@ namespace DotNetTips.Spargine.Tester.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last name is required..
-        /// </summary>
-        internal static string ErrorLastNameIsRequired {
-            get {
-                return ResourceManager.GetString("ErrorLastNameIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Last name length is limited to 50 characters..
         /// </summary>
         internal static string ErrorLastNameLengthIsLimitedToCharacters {
@@ -224,24 +179,6 @@ namespace DotNetTips.Spargine.Tester.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The BornOn property must be a date..
-        /// </summary>
-        internal static string ErrorMessageBornOnMustBeDate {
-            get {
-                return ResourceManager.GetString("ErrorMessageBornOnMustBeDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Email address is required..
-        /// </summary>
-        internal static string ErrorMessageEmailIsRequired {
-            get {
-                return ResourceManager.GetString("ErrorMessageEmailIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Email length is limited required to be 10 to 75 characters..
         /// </summary>
         internal static string ErrorMessageEmailLengthIsLimitedToCharacters {
@@ -256,15 +193,6 @@ namespace DotNetTips.Spargine.Tester.Properties {
         internal static string ErrorMessagePhoneNumberIsLimitedToCharacters {
             get {
                 return ResourceManager.GetString("ErrorMessagePhoneNumberIsLimitedToCharacters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The phone number is not in a valid format..
-        /// </summary>
-        internal static string ErrorPhoneNumberInvalid {
-            get {
-                return ResourceManager.GetString("ErrorPhoneNumberInvalid", resourceCulture);
             }
         }
         
@@ -337,15 +265,6 @@ namespace DotNetTips.Spargine.Tester.Properties {
         internal static string ObjectIsNotType {
             get {
                 return ResourceManager.GetString("ObjectIsNotType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Size must be &gt;= {0}..
-        /// </summary>
-        internal static string SizeMustBeEpsilon {
-            get {
-                return ResourceManager.GetString("SizeMustBeEpsilon", resourceCulture);
             }
         }
     }

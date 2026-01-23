@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -237,12 +237,6 @@
   <data name="RebootingIsOnlySupportedOnWindows" xml:space="preserve">
     <value>Rebooting is only supported on Windows.</value>
   </data>
-  <data name="RegexEmail" xml:space="preserve">
-    <value>\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*</value>
-  </data>
-  <data name="RegexUrl" xml:space="preserve">
-    <value>(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;amp;:/~\+#]*[\w\-\@?^=%&amp;amp;/~\+#])?</value>
-  </data>
   <data name="TheIndexIsEqualToOrGreaterThanTheLengthOfInput" xml:space="preserve">
     <value>The index is equal to or greater than the length of the array, or the number of elements in the set is greater than the available space from index to the end of the destination array.</value>
   </data>
@@ -267,16 +261,10 @@
   <data name="AnErrorOccurredWhileWritingToTheChannel" xml:space="preserve">
     <value>An error occurred while writing to the channel.</value>
   </data>
-  <data name="AnErrorOccurredWhileWritingToTheChannel1" xml:space="preserve">
-    <value>An error occurred while writing to the channel.</value>
-  </data>
   <data name="AnErrorOccurredWhileReadingFromTheChannel" xml:space="preserve">
     <value>An error occurred while reading from the channel.</value>
   </data>
   <data name="AnErrorOccurredWhileLoggingTheMessage" xml:space="preserve">
-    <value>An error occurred while logging the message.</value>
-  </data>
-  <data name="AnErrorOccurredWhileLoggingTheMessage1" xml:space="preserve">
     <value>An error occurred while logging the message.</value>
   </data>
   <data name="TheInputStringIsNotAValidBase64String" xml:space="preserve">
@@ -284,12 +272,6 @@
   </data>
   <data name="CustomValidationFailed" xml:space="preserve">
     <value>Custom validation failed.</value>
-  </data>
-  <data name="TheIdPropertyOfTheItemCannotBeNull" xml:space="preserve">
-    <value>The Id property of the item cannot be null.</value>
-  </data>
-  <data name="TheCollectionParameterMustNotBeNull" xml:space="preserve">
-    <value>The collection parameter must not be null.</value>
   </data>
   <data name="EntryAssemblyIsNullUnableToRetrieveReferen" xml:space="preserve">
     <value>Entry assembly is null. Unable to retrieve referenced assemblies.</value>
@@ -329,9 +311,6 @@
   </data>
   <data name="TheTaskFunctionReturnedNullWhichIsNotAllow" xml:space="preserve">
     <value>The taskFunction returned null, which is not allowed for a [NotNull] return type.</value>
-  </data>
-  <data name="ItemsCannotBeNullOrEmpty" xml:space="preserve">
-    <value>Items cannot be null or empty.</value>
   </data>
   <data name="StringIsNullOrEmpty" xml:space="preserve">
     <value>String is null or empty.</value>

@@ -133,51 +133,6 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Collection is null or has no items..
-        /// </summary>
-        internal static string ErrorCollectionIsNullOrHasNoItems {
-            get {
-                return ResourceManager.GetString("ErrorCollectionIsNullOrHasNoItems", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collection size is not valid..
-        /// </summary>
-        internal static string ErrorCollectionSizeIsNotValid {
-            get {
-                return ResourceManager.GetString("ErrorCollectionSizeIsNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File not found..
-        /// </summary>
-        internal static string ErrorFileNotFound {
-            get {
-                return ResourceManager.GetString("ErrorFileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid type..
-        /// </summary>
-        internal static string ErrorInvalidType {
-            get {
-                return ResourceManager.GetString("ErrorInvalidType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to String is not valid..
-        /// </summary>
-        internal static string ErrorStringIsNotValid {
-            get {
-                return ResourceManager.GetString("ErrorStringIsNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Failed to set up high priority. Make sure you have the right permissions..
         /// </summary>
         internal static string FailedToSetUpHighPriority {
@@ -282,15 +237,6 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         internal static string Hundred {
             get {
                 return ResourceManager.GetString("Hundred", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Input string is not a valid Base64 string. Length must be divisible by 4..
-        /// </summary>
-        internal static string InputStringIsNotAValidBase64StringLength {
-            get {
-                return ResourceManager.GetString("InputStringIsNotAValidBase64StringLength", resourceCulture);
             }
         }
         
@@ -457,29 +403,11 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The input is not a valid Base64 string..
-        /// </summary>
-        internal static string TheInputIsNotAValidBase64String {
-            get {
-                return ResourceManager.GetString("TheInputIsNotAValidBase64String", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The input string is not a valid Base64 string..
+        ///   Looks up a localized string similar to The input string is not a valid Base64 String..
         /// </summary>
         internal static string TheInputStringIsNotAValidBase64String {
             get {
                 return ResourceManager.GetString("TheInputStringIsNotAValidBase64String", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There is an issue disposing of the object using DisposeAsync()..
-        /// </summary>
-        internal static string ThereIsAnIssueDisposingOfTheObjectUsingAsyncDispose {
-            get {
-                return ResourceManager.GetString("ThereIsAnIssueDisposingOfTheObjectUsingAsyncDispose", resourceCulture);
             }
         }
         

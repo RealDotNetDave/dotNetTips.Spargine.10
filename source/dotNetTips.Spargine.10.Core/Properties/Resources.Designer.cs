@@ -88,15 +88,6 @@ namespace DotNetTips.Spargine.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred while logging the message..
-        /// </summary>
-        internal static string AnErrorOccurredWhileLoggingTheMessage1 {
-            get {
-                return ResourceManager.GetString("AnErrorOccurredWhileLoggingTheMessage1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to An error occurred while reading from the channel..
         /// </summary>
         internal static string AnErrorOccurredWhileReadingFromTheChannel {
@@ -111,15 +102,6 @@ namespace DotNetTips.Spargine.Core.Properties {
         internal static string AnErrorOccurredWhileWritingToTheChannel {
             get {
                 return ResourceManager.GetString("AnErrorOccurredWhileWritingToTheChannel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to An error occurred while writing to the channel..
-        /// </summary>
-        internal static string AnErrorOccurredWhileWritingToTheChannel1 {
-            get {
-                return ResourceManager.GetString("AnErrorOccurredWhileWritingToTheChannel1", resourceCulture);
             }
         }
         
@@ -539,15 +521,6 @@ namespace DotNetTips.Spargine.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Items cannot be null or empty..
-        /// </summary>
-        internal static string ItemsCannotBeNullOrEmpty {
-            get {
-                return ResourceManager.GetString("ItemsCannotBeNullOrEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Go to dotNetTips.com for help..
         /// </summary>
         internal static string MessageGoToDotNetTipsComForHelp {
@@ -593,24 +566,6 @@ namespace DotNetTips.Spargine.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*.
-        /// </summary>
-        internal static string RegexEmail {
-            get {
-                return ResourceManager.GetString("RegexEmail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;amp;:/~\+#]*[\w\-\@?^=%&amp;amp;/~\+#])?.
-        /// </summary>
-        internal static string RegexUrl {
-            get {
-                return ResourceManager.GetString("RegexUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to String is null or empty..
         /// </summary>
         internal static string StringIsNullOrEmpty {
@@ -620,29 +575,11 @@ namespace DotNetTips.Spargine.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The collection parameter must not be null..
-        /// </summary>
-        internal static string TheCollectionParameterMustNotBeNull {
-            get {
-                return ResourceManager.GetString("TheCollectionParameterMustNotBeNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The DOTNET_ROOT environment variable is not set or is empty..
         /// </summary>
         internal static string TheDOTNETROOTEnvironmentVariableIsNotSetOr {
             get {
                 return ResourceManager.GetString("TheDOTNETROOTEnvironmentVariableIsNotSetOr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The Id property of the item cannot be null..
-        /// </summary>
-        internal static string TheIdPropertyOfTheItemCannotBeNull {
-            get {
-                return ResourceManager.GetString("TheIdPropertyOfTheItemCannotBeNull", resourceCulture);
             }
         }
         

@@ -166,38 +166,11 @@
   <data name="ErrorPostalCodeLengthIsLimitedToCharacters" xml:space="preserve">
     <value>Postal code length is limited to 25 characters.</value>
   </data>
-  <data name="SizeMustBeEpsilon" xml:space="preserve">
-    <value>Size must be &gt;= {0}.</value>
-  </data>
   <data name="ErrorStateLengthIsLimitedToCharacters" xml:space="preserve">
     <value>State length is limited to 60 characters.</value>
   </data>
   <data name="ObjectIsNotACoordinate" xml:space="preserve">
     <value>Object is not a Coordinate.</value>
-  </data>
-  <data name="ErrorAddressCannotBeNull" xml:space="preserve">
-    <value>Address cannot be null.</value>
-  </data>
-  <data name="ErrorFirstNameIsRequired" xml:space="preserve">
-    <value>First name is required.</value>
-  </data>
-  <data name="ErrorIdIsRequired" xml:space="preserve">
-    <value>Id is required.</value>
-  </data>
-  <data name="ErrorIdLengthIsMinimumCharacters" xml:space="preserve">
-    <value>Id length must be at least 10 characters.</value>
-  </data>
-  <data name="ErrorLastNameIsRequired" xml:space="preserve">
-    <value>Last name is required.</value>
-  </data>
-  <data name="ErrorMessageBornOnMustBeDate" xml:space="preserve">
-    <value>The BornOn property must be a date.</value>
-  </data>
-  <data name="ErrorMessageEmailIsRequired" xml:space="preserve">
-    <value>Email address is required.</value>
-  </data>
-  <data name="ErrorPhoneNumberInvalid" xml:space="preserve">
-    <value>The phone number is not in a valid format.</value>
   </data>
   <data name="ErrorDateTextIsNullOrEmpty" xml:space="preserve">
     <value>Date text is null or empty.</value>

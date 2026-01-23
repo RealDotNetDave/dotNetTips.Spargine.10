@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -139,21 +139,6 @@
   <data name="Eleven" xml:space="preserve">
     <value>Eleven</value>
   </data>
-  <data name="ErrorCollectionIsNullOrHasNoItems" xml:space="preserve">
-    <value>Collection is null or has no items.</value>
-  </data>
-  <data name="ErrorCollectionSizeIsNotValid" xml:space="preserve">
-    <value>Collection size is not valid.</value>
-  </data>
-  <data name="ErrorFileNotFound" xml:space="preserve">
-    <value>File not found.</value>
-  </data>
-  <data name="ErrorInvalidType" xml:space="preserve">
-    <value>Invalid type.</value>
-  </data>
-  <data name="ErrorStringIsNotValid" xml:space="preserve">
-    <value>String is not valid.</value>
-  </data>
   <data name="FailedToSetUpHighPriority" xml:space="preserve">
     <value>Failed to set up high priority. Make sure you have the right permissions.</value>
   </data>
@@ -247,9 +232,6 @@
   <data name="Ten" xml:space="preserve">
     <value>Ten</value>
   </data>
-  <data name="ThereIsAnIssueDisposingOfTheObjectUsingAsyncDispose" xml:space="preserve">
-    <value>There is an issue disposing of the object using DisposeAsync().</value>
-  </data>
   <data name="Thirteen" xml:space="preserve">
     <value>Thirteen</value>
   </data>
@@ -283,16 +265,10 @@
   <data name="Zero" xml:space="preserve">
     <value>Zero</value>
   </data>
-  <data name="TheInputIsNotAValidBase64String" xml:space="preserve">
-    <value>The input is not a valid Base64 string.</value>
-  </data>
-  <data name="TheInputStringIsNotAValidBase64String" xml:space="preserve">
-    <value>The input string is not a valid Base64 string.</value>
-  </data>
   <data name="CollectionIsEmpty" xml:space="preserve">
     <value>Collection is empty.</value>
   </data>
-  <data name="InputStringIsNotAValidBase64StringLength" xml:space="preserve">
-    <value>Input string is not a valid Base64 string. Length must be divisible by 4.</value>
+  <data name="TheInputStringIsNotAValidBase64String" xml:space="preserve">
+    <value>The input string is not a valid Base64 String.</value>
   </data>
 </root>
