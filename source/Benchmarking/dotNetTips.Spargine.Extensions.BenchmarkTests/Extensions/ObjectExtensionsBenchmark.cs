@@ -25,7 +25,7 @@ using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.Serializers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;

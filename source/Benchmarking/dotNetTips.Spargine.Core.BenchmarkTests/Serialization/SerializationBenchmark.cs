@@ -20,7 +20,7 @@ using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.Serializers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 

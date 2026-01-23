@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 12-15-2025
 // ***********************************************************************
-// <copyright file="PersonJsonSerializerContext.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="PersonRecordJsonSerializerContext.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
@@ -18,24 +18,24 @@
 
 using System.Text.Json.Serialization;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Models.Serializers;
+namespace DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 
 /// <summary>  
 /// Provides a custom JSON serialization context for optimizing the serialization  
-/// and deserialization of <see cref="Person"/> types and their collections using source generation.
+/// and deserialization of <see cref="PersonRecord"/> types and their collections using source generation.
 /// </summary>
 /// <remarks>
 /// This class leverages the System.Text.Json source generation feature to provide compile-time
-/// generation of serialization code, offering several benefits:
+/// generation of serialization code for record types, offering several benefits:
 /// <list type="bullet">
 /// <item><description>Improved performance through pre-generated serialization code</description></item>
 /// <item><description>Reduced memory allocations during serialization/deserialization</description></item>
 /// <item><description>Native AOT (Ahead-of-Time) compilation support</description></item>
 /// <item><description>Trim-safe serialization without runtime reflection</description></item>
+/// <item><description>Optimized handling of record types with their immutable properties</description></item>
 /// </list>
 /// The context is configured with the following options:
 /// <list type="bullet">
@@ -44,30 +44,38 @@ namespace DotNetTips.Spargine.Tester.Models.Serializers;
 /// </list>
 /// This context supports serialization of:
 /// <list type="bullet">
-/// <item><description>Single <see cref="Person"/> instances via the <c>Person</c> property</description></item>
-/// <item><description>Collections of <see cref="Person"/> objects via the <c>PersonList</c> property</description></item>
+/// <item><description>Single <see cref="PersonRecord"/> instances via the <c>Person</c> property</description></item>
+/// <item><description>Collections of <see cref="PersonRecord"/> objects via the <c>PersonList</c> property</description></item>
 /// </list>
 /// </remarks>
 /// <example>
-/// This example shows how to use the PersonRefJsonSerializerContext for serialization and deserialization.
+/// This example shows how to use the PersonRecordJsonSerializerContext for serialization and deserialization of record types.
 /// <code>
 /// // Serialization
-/// var person = new Person { FirstName = "John", LastName = "Doe" };
-/// string json = JsonSerializer.Serialize(person, PersonRefJsonSerializerContext.Default.Person);
+/// var person = new PersonRecord { FirstName = "John", LastName = "Doe" };
+/// string json = JsonSerializer.Serialize(person, PersonRecordJsonSerializerContext.Default.Person);
+/// // Result: {"first-name":"John","last-name":"Doe"}
 /// 
 /// // Deserialization
-/// var deserializedPerson = JsonSerializer.Deserialize(json, PersonRefJsonSerializerContext.Default.Person);
+/// var deserializedPerson = JsonSerializer.Deserialize(json, PersonRecordJsonSerializerContext.Default.Person);
 /// 
 /// // Collection serialization
-/// var people = new List&lt;Person&gt; { person };
-/// string jsonList = JsonSerializer.Serialize(people, PersonRefJsonSerializerContext.Default.PersonList);
+/// var people = new List&lt;PersonRecord&gt; { person };
+/// string jsonList = JsonSerializer.Serialize(people, PersonRecordJsonSerializerContext.Default.PersonList);
+/// 
+/// // Using with JsonSerializerOptions
+/// var options = new JsonSerializerOptions
+/// {
+///     TypeInfoResolver = PersonRecordJsonSerializerContext.Default
+/// };
+/// string jsonWithOptions = JsonSerializer.Serialize(person, options);
 /// </code>
 /// </example>
 [JsonSourceGenerationOptions(IncludeFields = false, PropertyNamingPolicy = JsonKnownNamingPolicy.KebabCaseLower)]
-[JsonSerializable(typeof(Person), TypeInfoPropertyName = "Person")]
-[JsonSerializable(typeof(List<Person>), TypeInfoPropertyName = "PersonList")]
-[Information(nameof(PersonRefJsonSerializerContext), Status = Status.Updated)]
-public partial class PersonRefJsonSerializerContext : JsonSerializerContext
+[JsonSerializable(typeof(PersonRecord), TypeInfoPropertyName = "Person")]
+[JsonSerializable(typeof(List<PersonRecord>), TypeInfoPropertyName = "PersonList")]
+[Information(nameof(PersonRecordJsonSerializerContext), Status = Status.Updated)]
+public partial class PersonRecordJsonSerializerContext : JsonSerializerContext
 {
 
 }

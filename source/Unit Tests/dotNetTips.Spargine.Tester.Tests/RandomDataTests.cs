@@ -26,7 +26,7 @@ using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Data;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.Serializers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -58,6 +58,11 @@ public class RandomDataTests
 	private const int FileLength = 1500;
 
 	private List<Person> _people;
+
+	public RandomDataTests()
+	{
+		this._people = RandomData.GeneratePersonRefCollection(Count).Shuffle().ToList();
+	}
 
 	/// <summary>
 	/// Defines the test method AddToPersonCollectionTest.
@@ -1101,11 +1106,6 @@ public class RandomDataTests
 		Assert.IsNotNull(stringValue);
 
 		Assert.AreEqual(25, stringValue.Length);
-	}
-
-	public RandomDataTests()
-	{
-		this._people = RandomData.GeneratePersonRefCollection(Count).Shuffle().ToList();
 	}
 
 	[TestMethod]

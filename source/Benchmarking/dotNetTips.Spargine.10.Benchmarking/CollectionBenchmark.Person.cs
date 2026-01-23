@@ -18,7 +18,7 @@
 
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.Serializers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -49,16 +49,6 @@ public partial class CollectionBenchmark
 	/// The person value array.
 	/// </summary>
 	private List<Tester.Models.ValueTypes.Person> _personValList;
-
-	/// <summary>
-	/// Loads the person collections into memory, including arrays, lists, and dictionaries for PersonRecord, Person reference types, and Person value types.
-	/// </summary>
-	protected void LoadPersonCollections()
-	{
-		this._personRefList = LoadPeopleRefCollection(this.MaxCount);
-		this._personValList = LoadPeopleValCollection(this.MaxCount);
-		this._personRecordList = LoadPeopleRecordCollection(this.MaxCount);
-	}
 
 	/// <summary>
 	/// Gets a clone of the PersonRecord array. This method ensures that benchmarks operate on a fresh copy of the data,
@@ -105,7 +95,7 @@ public partial class CollectionBenchmark
 	/// <returns>An array of Person value types.</returns>
 	public Tester.Models.ValueTypes.Person[] GetPersonValArray()
 	{
-		return [.. this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList)];
+		return [.. this._personValList.FastClone(typeInfo: Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.PersonList)];
 	}
 
 	/// <summary>
@@ -114,8 +104,18 @@ public partial class CollectionBenchmark
 	public Dictionary<string, Tester.Models.ValueTypes.Person> GetPersonValDictionary()
 	{
 		return this._personValList
-			.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList)
+			.FastClone(typeInfo: Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.PersonList)
 			.ToDictionary(p => p.Id, StringComparer.OrdinalIgnoreCase);
+	}
+
+	/// <summary>
+	/// Loads the person collections into memory, including arrays, lists, and dictionaries for PersonRecord, Person reference types, and Person value types.
+	/// </summary>
+	protected void LoadPersonCollections()
+	{
+		this._personRefList = LoadPeopleRefCollection(this.MaxCount);
+		this._personValList = LoadPeopleValCollection(this.MaxCount);
+		this._personRecordList = LoadPeopleRecordCollection(this.MaxCount);
 	}
 
 }

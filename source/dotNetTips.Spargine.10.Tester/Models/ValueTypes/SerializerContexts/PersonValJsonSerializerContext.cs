@@ -18,11 +18,10 @@
 
 using System.Text.Json.Serialization;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Tester.Models.ValueTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Models.Serializers;
+namespace DotNetTips.Spargine.Tester.Models.ValueTypes.SerializerContexts;
 
 /// <summary>  
 /// Provides a custom JSON serialization context for optimizing the serialization  

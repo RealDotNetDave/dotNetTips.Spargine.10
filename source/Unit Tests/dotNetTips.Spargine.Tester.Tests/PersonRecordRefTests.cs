@@ -19,7 +19,7 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.Serializers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 using DotNetTips.Spargine.Tester.Tests.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

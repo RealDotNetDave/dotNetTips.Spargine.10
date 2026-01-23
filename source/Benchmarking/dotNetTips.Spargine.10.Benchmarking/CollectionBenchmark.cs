@@ -21,7 +21,7 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using DotNetTips.Spargine.Tester.Models.Serializers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -231,11 +231,11 @@ public partial class CollectionBenchmark : Benchmark
 	{
 		if (count <= MaxPeopleDataCount)
 		{
-			return [.. JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, count, PersonValJsonSerializerContext.Default.Person)];
+			return [.. JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, count, Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.Person)];
 		}
 		else
 		{
-			var people = JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, MaxPeopleDataCount, PersonValJsonSerializerContext.Default.Person);
+			var people = JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, MaxPeopleDataCount, Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonValCollection(count - MaxPeopleDataCount);
 
 			return [.. people, .. newPeople];
