@@ -74,6 +74,10 @@
   <ItemGroup>
 	<PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
 	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+	<PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
