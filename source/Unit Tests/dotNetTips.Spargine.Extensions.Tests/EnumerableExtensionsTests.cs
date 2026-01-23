@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -658,7 +658,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
-		var peopleCreated = people.Create(true);
+		var peopleCreated = people.ToUniqueCollection();
 
 		Assert.AreEqual(peopleCreated.Count, people.Count());
 	}
@@ -669,167 +669,6 @@ public class EnumerableExtensionsTests
 		var people = new List<Person>().AsEnumerable();
 
 		Assert.IsTrue(people.IsEmpty());
-	}
-
-	[TestMethod]
-	public void EnsureUnique_AllDuplicates_WithComparer_ReturnsSingleElement()
-	{
-		var allSame = new List<int> { 5, 5, 5, 5, 5 }.AsEnumerable();
-
-		var result = allSame.EnsureUnique(EqualityComparer<int>.Default).ToList();
-
-		Assert.AreEqual(1, result.Count);
-		Assert.AreEqual(5, result[0]);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_EmptyCollection_WithComparer_ReturnsEmpty()
-	{
-		var emptyList = new List<int>().AsEnumerable();
-
-		var result = emptyList.EnsureUnique(EqualityComparer<int>.Default).ToList();
-
-		Assert.AreEqual(0, result.Count);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_NoDuplicates_WithComparer_ReturnsAll()
-	{
-		var uniqueNumbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
-
-		var result = uniqueNumbers.EnsureUnique(EqualityComparer<int>.Default).ToList();
-
-		Assert.AreEqual(5, result.Count);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_ReferenceTypes_LargeCollection_WithComparer_RemovesDuplicates()
-	{
-		// Large collection (> 4096) uses Distinct path
-		var largeCount = 5000;
-		var people = RandomData.GeneratePersonRefCollection(largeCount).ToList();
-		var duplicate = people[0];
-
-		for (int i = 0; i < 10; i++)
-		{
-			people.Add(duplicate);
-		}
-
-		var result = people.EnsureUnique(new PersonComparer()).ToList();
-
-		var expectedCount = people.Select(p => p.Id).Distinct().Count();
-		Assert.AreEqual(expectedCount, result.Count);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_ReferenceTypes_SmallCollection_WithComparer_RemovesDuplicates()
-	{
-		// Small collection (<= 4096) uses HashSet path
-		var people = RandomData.GeneratePersonRefCollection(20).ToList();
-		var duplicate = people[0];
-		people.Add(duplicate);
-		people.Add(duplicate);
-
-		var result = people.EnsureUnique(new PersonComparer()).ToList();
-
-		var expectedCount = people.Select(p => p.Id).Distinct().Count();
-		Assert.AreEqual(expectedCount, result.Count);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_SingleElement_WithComparer_ReturnsSingleElement()
-	{
-		var singleItem = new List<int> { 42 }.AsEnumerable();
-
-		var result = singleItem.EnsureUnique(EqualityComparer<int>.Default).ToList();
-
-		Assert.AreEqual(1, result.Count);
-		Assert.AreEqual(42, result[0]);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_Strings_CaseInsensitiveComparer_RemovesDuplicates()
-	{
-		var words = new List<string> { "Apple", "apple", "APPLE", "Banana", "BANANA", "Cherry" }.AsEnumerable();
-
-		var result = words.EnsureUnique(StringComparer.OrdinalIgnoreCase).ToList();
-
-		Assert.AreEqual(3, result.Count);
-		Assert.IsTrue(result.Any(w => w.Equals("Apple", StringComparison.OrdinalIgnoreCase)));
-		Assert.IsTrue(result.Any(w => w.Equals("Banana", StringComparison.OrdinalIgnoreCase)));
-		Assert.IsTrue(result.Any(w => w.Equals("Cherry", StringComparison.OrdinalIgnoreCase)));
-	}
-
-	[TestMethod]
-	public void EnsureUnique_Strings_OrdinalComparer_PreservesCaseSensitiveDuplicates()
-	{
-		var words = new List<string> { "Apple", "apple", "APPLE", "Banana" }.AsEnumerable();
-
-		var result = words.EnsureUnique(StringComparer.Ordinal).ToList();
-
-		// Ordinal comparison is case-sensitive, so all variations are unique
-		Assert.AreEqual(4, result.Count);
-	}
-
-	[TestMethod]
-	public void EnsureUnique_ValueTypes_WithCustomComparer_FiltersCorrectly()
-	{
-		// Custom comparer that considers numbers equal if they have the same remainder when divided by 3
-		var numbers = Enumerable.Range(1, 10).AsEnumerable();
-
-		var modComparer = new ModuloEqualityComparer(3);
-		var result = numbers.EnsureUnique(modComparer).ToList();
-
-		// Should have 3 unique "mod 3" classes: 0, 1, 2
-		Assert.AreEqual(3, result.Count);
-		Assert.IsTrue(result.Any(n => n % 3 == 0));
-		Assert.IsTrue(result.Any(n => n % 3 == 1));
-		Assert.IsTrue(result.Any(n => n % 3 == 2));
-	}
-
-	[TestMethod]
-	public void EnsureUnique_WithComparer_PreservesFirstOccurrence()
-	{
-		var words = new List<string> { "FIRST", "first", "First" }.AsEnumerable();
-
-		var result = words.EnsureUnique(StringComparer.OrdinalIgnoreCase).ToList();
-
-		Assert.AreEqual(1, result.Count);
-		Assert.AreEqual("FIRST", result[0]); // First occurrence should be preserved
-	}
-
-	[TestMethod]
-	public void EnsureUnique_WithNullComparer_UsesDefaultEquality()
-	{
-		var numbers = new List<int> { 1, 2, 2, 3, 3, 3 }.AsEnumerable();
-
-		var result = numbers.EnsureUnique(null).ToList();
-
-		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result);
-	}
-
-	[TestMethod]
-	public void EnsureUniqueComparerTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		people.Add(people.First());
-
-		var result = people.EnsureUnique(new PersonComparer());
-
-		Assert.AreEqual(Count, result.Count());
-	}
-
-	[TestMethod]
-	public void EnsureUniqueTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		people.Add(people.First());
-
-		var result = people.EnsureUnique();
-
-		Assert.AreEqual(Count, result.Count());
 	}
 
 	[TestMethod]
@@ -1081,6 +920,167 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.AreEqual(Count, people.Count);
+	}
+
+	[TestMethod]
+	public void FastDistinct_AllDuplicates_WithComparer_ReturnsSingleElement()
+	{
+		var allSame = new List<int> { 5, 5, 5, 5, 5 }.AsEnumerable();
+
+		var result = allSame.FastDistinct(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual(5, result[0]);
+	}
+
+	[TestMethod]
+	public void FastDistinct_EmptyCollection_WithComparer_ReturnsEmpty()
+	{
+		var emptyList = new List<int>().AsEnumerable();
+
+		var result = emptyList.FastDistinct(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void FastDistinct_NoDuplicates_WithComparer_ReturnsAll()
+	{
+		var uniqueNumbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		var result = uniqueNumbers.FastDistinct(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(5, result.Count);
+	}
+
+	[TestMethod]
+	public void FastDistinct_ReferenceTypes_LargeCollection_WithComparer_RemovesDuplicates()
+	{
+		// Large collection (> 4096) uses Distinct path
+		var largeCount = 5000;
+		var people = RandomData.GeneratePersonRefCollection(largeCount).ToList();
+		var duplicate = people[0];
+
+		for (int i = 0; i < 10; i++)
+		{
+			people.Add(duplicate);
+		}
+
+		var result = people.FastDistinct(new PersonComparer()).ToList();
+
+		var expectedCount = people.Select(p => p.Id).Distinct().Count();
+		Assert.AreEqual(expectedCount, result.Count);
+	}
+
+	[TestMethod]
+	public void FastDistinct_ReferenceTypes_SmallCollection_WithComparer_RemovesDuplicates()
+	{
+		// Small collection (<= 4096) uses HashSet path
+		var people = RandomData.GeneratePersonRefCollection(20).ToList();
+		var duplicate = people[0];
+		people.Add(duplicate);
+		people.Add(duplicate);
+
+		var result = people.FastDistinct(new PersonComparer()).ToList();
+
+		var expectedCount = people.Select(p => p.Id).Distinct().Count();
+		Assert.AreEqual(expectedCount, result.Count);
+	}
+
+	[TestMethod]
+	public void FastDistinct_SingleElement_WithComparer_ReturnsSingleElement()
+	{
+		var singleItem = new List<int> { 42 }.AsEnumerable();
+
+		var result = singleItem.FastDistinct(EqualityComparer<int>.Default).ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual(42, result[0]);
+	}
+
+	[TestMethod]
+	public void FastDistinct_Strings_CaseInsensitiveComparer_RemovesDuplicates()
+	{
+		var words = new List<string> { "Apple", "apple", "APPLE", "Banana", "BANANA", "Cherry" }.AsEnumerable();
+
+		var result = words.FastDistinct(StringComparer.OrdinalIgnoreCase).ToList();
+
+		Assert.AreEqual(3, result.Count);
+		Assert.IsTrue(result.Any(w => w.Equals("Apple", StringComparison.OrdinalIgnoreCase)));
+		Assert.IsTrue(result.Any(w => w.Equals("Banana", StringComparison.OrdinalIgnoreCase)));
+		Assert.IsTrue(result.Any(w => w.Equals("Cherry", StringComparison.OrdinalIgnoreCase)));
+	}
+
+	[TestMethod]
+	public void FastDistinct_Strings_OrdinalComparer_PreservesCaseSensitiveDuplicates()
+	{
+		var words = new List<string> { "Apple", "apple", "APPLE", "Banana" }.AsEnumerable();
+
+		var result = words.FastDistinct(StringComparer.Ordinal).ToList();
+
+		// Ordinal comparison is case-sensitive, so all variations are unique
+		Assert.AreEqual(4, result.Count);
+	}
+
+	[TestMethod]
+	public void FastDistinct_ValueTypes_WithCustomComparer_FiltersCorrectly()
+	{
+		// Custom comparer that considers numbers equal if they have the same remainder when divided by 3
+		var numbers = Enumerable.Range(1, 10).AsEnumerable();
+
+		var modComparer = new ModuloEqualityComparer(3);
+		var result = numbers.FastDistinct(modComparer).ToList();
+
+		// Should have 3 unique "mod 3" classes: 0, 1, 2
+		Assert.AreEqual(3, result.Count);
+		Assert.IsTrue(result.Any(n => n % 3 == 0));
+		Assert.IsTrue(result.Any(n => n % 3 == 1));
+		Assert.IsTrue(result.Any(n => n % 3 == 2));
+	}
+
+	[TestMethod]
+	public void FastDistinct_WithComparer_PreservesFirstOccurrence()
+	{
+		var words = new List<string> { "FIRST", "first", "First" }.AsEnumerable();
+
+		var result = words.FastDistinct(StringComparer.OrdinalIgnoreCase).ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual("FIRST", result[0]); // First occurrence should be preserved
+	}
+
+	[TestMethod]
+	public void FastDistinct_WithNullComparer_UsesDefaultEquality()
+	{
+		var numbers = new List<int> { 1, 2, 2, 3, 3, 3 }.AsEnumerable();
+
+		var result = numbers.FastDistinct(null).ToList();
+
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result);
+	}
+
+	[TestMethod]
+	public void FastDistinctComparerTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		people.Add(people.First());
+
+		var result = people.FastDistinct(new PersonComparer());
+
+		Assert.AreEqual(Count, result.Count());
+	}
+
+	[TestMethod]
+	public void FastDistinctTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		people.Add(people.First());
+
+		var result = people.FastDistinct();
+
+		Assert.AreEqual(Count, result.Count());
 	}
 
 	[TestMethod]

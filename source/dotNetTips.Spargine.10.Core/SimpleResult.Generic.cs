@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -188,7 +188,7 @@ public class SimpleResult<T>
 
 		if (this.IsSuccess)
 		{
-			return binder.Invoke(this._value);
+			return binder(this._value);
 		}
 		var result = new SimpleResult<TResult>();
 
@@ -233,7 +233,7 @@ public class SimpleResult<T>
 
 		if (this.IsSuccess)
 		{
-			return new SimpleResult<TResult>(mapper.Invoke(this._value)!);
+			return new SimpleResult<TResult>(mapper(this._value)!);
 		}
 		var result = new SimpleResult<TResult>();
 

@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="Extensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,6 +38,49 @@ internal static partial class Extensions
 	/// The string builder pool
 	/// </summary>
 	private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
+
+	/// <summary>
+	/// Calculates the size of a byte array needed to store the Base64 encoded version of the input string.
+	/// </summary>
+	/// <param name="input">The input string to be encoded.</param>
+	/// <returns>The size of the byte array needed to store the Base64 encoded string, or 0 if the input is null or empty.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when the input string is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static int CalculateByteArraySize([NotNull] this string input) => string.IsNullOrEmpty(input) ? 0 : input.Length * 3 / 4;
+
+	/// <summary>
+	/// Formats the time as a human-readable string (e.g., "5 hours 10 minutes 20 seconds" or "20 milliseconds" for values less than 1000).
+	/// </summary>
+	/// <param name="milliseconds">The milliseconds.</param>
+	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
+	[Pure]
+	[return: NotNull]
+	public static string FormatTime(this double milliseconds)
+	{
+		if (milliseconds < 1000)
+		{
+			var ms = (int)Math.Round(milliseconds);
+			return $"{ms} millisecond{(ms == 1 ? string.Empty : "s")}";
+		}
+
+		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+
+		var parts = new List<string>(3);
+		if (timeSpan.Hours > 0)
+		{
+			parts.Add($"{timeSpan.Hours} hour{(timeSpan.Hours == 1 ? string.Empty : "s")}");
+		}
+		if (timeSpan.Minutes > 0)
+		{
+			parts.Add($"{timeSpan.Minutes} minute{(timeSpan.Minutes == 1 ? string.Empty : "s")}");
+		}
+		if (timeSpan.Seconds > 0 || parts.Count == 0)
+		{
+			parts.Add($"{timeSpan.Seconds} second{(timeSpan.Seconds == 1 ? string.Empty : "s")}");
+		}
+
+		return string.Join(" ", parts);
+	}
 
 	/// <summary>
 	/// Adds the specified item to the collection if it does not already exist.
@@ -219,7 +262,7 @@ internal static partial class Extensions
 		while (source != null && canContinue(source))
 		{
 			yield return source;
-			source = nextItemFunction.Invoke(source);
+			source = nextItemFunction(source);
 		}
 	}
 
@@ -434,48 +477,5 @@ internal static partial class Extensions
 		var readOnlyCollection = new ReadOnlyCollection<KeyValuePair<TKey, TValue>>(list);
 
 		return readOnlyCollection;
-	}
-
-	/// <summary>
-	/// Calculates the size of a byte array needed to store the Base64 encoded version of the input string.
-	/// </summary>
-	/// <param name="input">The input string to be encoded.</param>
-	/// <returns>The size of the byte array needed to store the Base64 encoded string, or 0 if the input is null or empty.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the input string is null.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static int CalculateByteArraySize([NotNull] this string input) => string.IsNullOrEmpty(input) ? 0 : input.Length * 3 / 4;
-
-	/// <summary>
-	/// Formats the time as a human-readable string (e.g., "5 hours 10 minutes 20 seconds" or "20 milliseconds" for values less than 1000).
-	/// </summary>
-	/// <param name="milliseconds">The milliseconds.</param>
-	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
-	[Pure]
-	[return: NotNull]
-	public static string FormatTime(this double milliseconds)
-	{
-		if (milliseconds < 1000)
-		{
-			var ms = (int)Math.Round(milliseconds);
-			return $"{ms} millisecond{(ms == 1 ? string.Empty : "s")}";
-		}
-
-		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-
-		var parts = new List<string>(3);
-		if (timeSpan.Hours > 0)
-		{
-			parts.Add($"{timeSpan.Hours} hour{(timeSpan.Hours == 1 ? string.Empty : "s")}");
-		}
-		if (timeSpan.Minutes > 0)
-		{
-			parts.Add($"{timeSpan.Minutes} minute{(timeSpan.Minutes == 1 ? string.Empty : "s")}");
-		}
-		if (timeSpan.Seconds > 0 || parts.Count == 0)
-		{
-			parts.Add($"{timeSpan.Seconds} second{(timeSpan.Seconds == 1 ? string.Empty : "s")}");
-		}
-
-		return string.Join(" ", parts);
 	}
 }

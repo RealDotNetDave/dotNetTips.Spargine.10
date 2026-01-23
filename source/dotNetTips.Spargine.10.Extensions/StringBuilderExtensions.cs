@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-04-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -275,7 +275,7 @@ public static class StringBuilderExtensions
 			//FrozenSet is slower.
 			foreach (var value in values)
 			{
-				joinAction.Invoke(value);
+				joinAction(value);
 				_ = sb.Append(separator);
 				appended = true;
 			}
@@ -317,7 +317,7 @@ public static class StringBuilderExtensions
 			//Frozenset is slower.
 			foreach (var value in values)
 			{
-				joinAction.Invoke(value, param);
+				joinAction(value, param);
 				_ = sb.Append(separator);
 				appended = true;
 			}

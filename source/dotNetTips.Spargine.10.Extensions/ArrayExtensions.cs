@@ -248,7 +248,6 @@ public static class ArrayExtensions
 
 			array = array.ArgumentNotNull();
 
-			// Let the compiler optimize this
 			return [.. array, item];
 		}
 
@@ -538,7 +537,7 @@ public static class ArrayExtensions
 
 			foreach (var value in array.AsSpan())
 			{
-				action.Invoke(value);
+				action(value);
 			}
 		}
 

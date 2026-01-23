@@ -457,7 +457,6 @@ public class ObjectExtensionsBenchmark : Benchmark
 	public void ToJsonFile()
 	{
 		this._personCollection.ToJsonFile(new FileInfo(RandomData.GenerateRandomFileName(nameof(this.ToJsonFile))));
-
 	}
 
 	[Benchmark(Description = nameof(ObjectExtensions.ToJson) + ": Person + JsonTypeInfo")]

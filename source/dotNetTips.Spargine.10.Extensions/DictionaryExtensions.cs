@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-08-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -97,8 +97,8 @@ public static class DictionaryExtensions
 
 		foreach (var item in items)
 		{
-			var itemKey = keyFunction.Invoke(item);
-			var itemValue = valueFunction.Invoke(item);
+			var itemKey = keyFunction(item);
+			var itemValue = valueFunction(item);
 
 			// TryAdd returns true if added, false if key exists
 			if (collection.TryAdd(itemKey, itemValue))
@@ -679,7 +679,7 @@ public static class DictionaryExtensions
 		}
 
 		// Key doesn't exist, compute and add new value
-		var newValue = valueFunction.Invoke(key);
+		var newValue = valueFunction(key);
 		collection[key] = newValue; // Use indexer which is faster than Add for this scenario
 
 		return newValue;

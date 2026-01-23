@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -84,7 +84,7 @@ public static partial class Validator
 		input = input.ArgumentNotNull();
 		predicate = predicate.ArgumentNotNull();
 
-		if (!predicate.Invoke(input))
+		if (!predicate(input))
 		{
 			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.CustomValidationFailed), paramName);
 		}

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -315,7 +315,7 @@ public static class EnumerableExtensions
 		public int IndexOf([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			//SUGGESTION BY COPILOT SLOWER.
-			var result = collection.Select((value, index) => (value, index)).FirstOrDefault(value => accumulatorPredicate.Invoke(value.value));
+			var result = collection.Select((value, index) => (value, index)).FirstOrDefault(value => accumulatorPredicate(value.value));
 
 			return result.Equals(default((T x, int i))) ? -1 : result.index;
 		}
@@ -1125,7 +1125,7 @@ public static class EnumerableExtensions
 
 				for (var index = 0; index < itemCount; index++)
 				{
-					resultArray[index] = action.Invoke(span[index]);
+					resultArray[index] = action(span[index]);
 				}
 
 				return Array.AsReadOnly(resultArray);

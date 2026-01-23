@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -650,7 +650,7 @@ public static class FastStringBuilder
 
 		try
 		{
-			action.Invoke(sb);
+			action(sb);
 
 			return sb.ToString();
 		}
@@ -700,7 +700,7 @@ public static class FastStringBuilder
 
 		try
 		{
-			action.Invoke(sb);
+			action(sb);
 			return sb.ToString();
 		}
 		finally
