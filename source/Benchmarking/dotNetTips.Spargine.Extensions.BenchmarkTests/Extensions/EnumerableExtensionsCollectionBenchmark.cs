@@ -20,6 +20,7 @@ using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -201,7 +202,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void IndexOfComparer()
 	{
 		var people = this._personRefEnumerable;
-		var comparer = new PersonComparer();
+		var comparer = new PersonEqualityComparer();
 
 		var result = people.IndexOf(this.PersonRef01, comparer);
 

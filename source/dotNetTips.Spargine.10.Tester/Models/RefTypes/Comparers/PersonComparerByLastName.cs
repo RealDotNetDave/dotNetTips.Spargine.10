@@ -4,19 +4,18 @@
 // Created          : 01-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="PersonComparerByLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Models.ValueTypes;
+namespace DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 /// <summary>
 /// Provides a comparison for <see cref="Person"/> objects based on their last names.
@@ -43,6 +42,5 @@ public sealed class PersonComparerByLastName : IComparer<Person>
 	/// </item>
 	/// </list>
 	/// </returns>
-	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int Compare(Person x, Person y) => string.Compare(x.LastName, y.LastName, StringComparison.Ordinal);
+	public int Compare(Person? x, Person? y) => string.Compare(x?.LastName, y?.LastName, StringComparison.Ordinal);
 }

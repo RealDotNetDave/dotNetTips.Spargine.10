@@ -18,6 +18,7 @@ using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -30,17 +31,6 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 	private KeyValuePair<string, Person> _lastPersonRefSortedList;
 	private FastSortedList<Person> _personRefFastSortedList;
 	private SortedList<string, Person> _personRefSortedList;
-
-	private void GenerateData()
-	{
-		// FastSortedList
-		this._personRefFastSortedList = [.. this.GetPersonRefArray()];
-		this._lastPersonRefFastSortedList = this._personRefFastSortedList[^1];
-
-		// SortedList
-		this._personRefSortedList = new SortedList<string, Person>(this.GetPersonRefDictionary());
-		this._lastPersonRefSortedList = this._personRefSortedList.Last();
-	}
 
 	[Benchmark(Description = "Remove: FastSortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
@@ -113,5 +103,16 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 		base.Setup();
 
 		this.GenerateData();
+	}
+
+	private void GenerateData()
+	{
+		// FastSortedList
+		this._personRefFastSortedList = [.. this.GetPersonRefArray()];
+		this._lastPersonRefFastSortedList = this._personRefFastSortedList[^1];
+
+		// SortedList
+		this._personRefSortedList = new SortedList<string, Person>(this.GetPersonRefDictionary());
+		this._lastPersonRefSortedList = this._personRefSortedList.Last();
 	}
 }

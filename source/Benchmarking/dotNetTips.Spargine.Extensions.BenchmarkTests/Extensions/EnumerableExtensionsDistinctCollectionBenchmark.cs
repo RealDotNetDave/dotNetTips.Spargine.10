@@ -18,6 +18,7 @@ using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -34,7 +35,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
-		var result = people.FastDistinct(new PersonComparer());
+		var result = people.FastDistinct(new PersonEqualityComparer());
 
 		this.ConsumeEnumerable(result);
 	}
@@ -44,7 +45,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 
-		var result = people.FastDistinct(new Spargine.Tester.Models.ValueTypes.PersonComparer());
+		var result = people.FastDistinct(new Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer());
 
 		this.ConsumeEnumerable(result);
 
@@ -117,7 +118,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
-		var result = people.Distinct(new PersonComparer());
+		var result = people.Distinct(new PersonEqualityComparer());
 
 		this.ConsumeEnumerable(result);
 	}
@@ -128,7 +129,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 
-		var result = people.Distinct(new Spargine.Tester.Models.ValueTypes.PersonComparer());
+		var result = people.Distinct(new Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer());
 
 		this.ConsumeEnumerable(result);
 	}

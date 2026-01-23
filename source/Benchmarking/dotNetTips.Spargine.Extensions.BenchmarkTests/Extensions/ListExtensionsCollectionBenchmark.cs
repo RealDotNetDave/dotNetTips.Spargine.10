@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -194,7 +193,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._peopleRefList = [.. this.GetPersonRefArray()];
 		this._peopleRefSubSet = [.. this.GetPersonRefArray().TakeLast(10)];
 		this._peopleValList = [.. this.GetPersonValArray()];
-		this._personComparer = new PersonComparer();
+		this._personComparer = new Spargine.Tester.Models.RefTypes.Comparers.PersonComparerByLastName();
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
@@ -327,38 +326,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._peopleRefList.ToReadOnlyObservableCollection();
 
 		this.Consume(result);
-	}
-
-	private sealed class PersonComparer : IComparer<Person>
-	{
-		public int Compare(Person x, Person y)
-		{
-			if (x is null && y is null)
-			{
-				return 0;
-			}
-
-			if (x is null)
-			{
-				return -1;
-			}
-
-			if (y is null)
-			{
-				return 1;
-			}
-
-			// Primary sort by Id
-			var idComparison = string.Compare(x.Id, y.Id, StringComparison.Ordinal);
-
-			if (idComparison != 0)
-			{
-				return idComparison;
-			}
-
-			// Secondary sort by LastName
-			return string.Compare(x.LastName, y.LastName, StringComparison.Ordinal);
-		}
 	}
 }
 

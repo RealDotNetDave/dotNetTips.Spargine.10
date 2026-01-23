@@ -28,7 +28,7 @@ public class PersonComparerByLastNameTests
 	{
 		var person1 = new Person("id1xxxxxxx", "test1@xxxxexample.com") { LastName = "Anderson" };
 		var person2 = new Person("id2xxxxxxx", "test2@xxxxexample.com") { LastName = "Smith" };
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 
 		int result = comparer.Compare(person1, person2);
 
@@ -38,7 +38,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsNegative_WhenXLastNameIsLessThanY()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Adams" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
 		Assert.IsLessThan(0, comparer.Compare(p1, p2));
@@ -47,7 +47,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsNegative_WhenXLastNameIsNull_AndYIsNot()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890");
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
 		Assert.IsLessThan(0, comparer.Compare(p1, p2));
@@ -58,7 +58,7 @@ public class PersonComparerByLastNameTests
 	{
 		var person1 = new Person("id112345678", "test1@example.com") { LastName = "Zimmerman" };
 		var person2 = new Person("id212345678", "test2@example.com") { LastName = "Smith" };
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 
 		int result = comparer.Compare(person1, person2);
 
@@ -68,7 +68,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsPositive_WhenXLastNameIsGreaterThanY()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Adams" };
 		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
@@ -77,7 +77,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsPositive_WhenYLastNameIsNull_AndXIsNot()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ");
 		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
@@ -86,7 +86,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsZero_WhenBothLastNamesAreNull()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890");
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ");
 		Assert.AreEqual(0, comparer.Compare(p1, p2));
@@ -95,7 +95,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_ReturnsZero_WhenLastNamesAreEqual()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
 		Assert.AreEqual(0, comparer.Compare(p1, p2));
@@ -104,7 +104,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_Works_WhenBothAreNull()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		Person p1 = null;
 		Person p2 = null;
 		Assert.AreEqual(0, comparer.Compare(p1, p2));
@@ -113,7 +113,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_Works_WhenXIsNull()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		Person p1 = null;
 		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
 		Assert.IsLessThan(0, comparer.Compare(p1, p2));
@@ -122,7 +122,7 @@ public class PersonComparerByLastNameTests
 	[TestMethod]
 	public void Compare_Works_WhenYIsNull()
 	{
-		var comparer = new PersonComparerByLastName();
+		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
 		Person p2 = null;
 		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));

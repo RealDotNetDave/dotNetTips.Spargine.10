@@ -17,6 +17,7 @@ using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -27,12 +28,6 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _peopleRefArrayToInsert;
 	private Dictionary<string, Person> _peopleRefDictionaryToInsert;
-
-	private void GenerateData()
-	{
-		this._peopleRefArrayToInsert = this.GetPersonRefArray();
-		this._peopleRefDictionaryToInsert = this.GetPersonRefDictionary();
-	}
 
 	[Benchmark(Description = "Add: FastSortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
@@ -189,5 +184,11 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this.GenerateData();
+	}
+
+	private void GenerateData()
+	{
+		this._peopleRefArrayToInsert = this.GetPersonRefArray();
+		this._peopleRefDictionaryToInsert = this.GetPersonRefDictionary();
 	}
 }

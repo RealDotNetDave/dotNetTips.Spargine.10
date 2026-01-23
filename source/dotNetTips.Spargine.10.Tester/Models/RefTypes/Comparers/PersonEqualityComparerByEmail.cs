@@ -6,7 +6,7 @@
 // Last Modified By : David McCarter
 // Last Modified On : 01-20-2026
 // ***********************************************************************
-// <copyright file="PersonEmailEqualityComparer.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="PersonEqualityComparerByEmail.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
@@ -16,13 +16,13 @@ using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Models.RefTypes;
+namespace DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 /// <summary>
 /// Provides equality comparison for <see cref="Person"/> objects based on their email addresses.
 /// </summary>
 [Information(Status = Status.Available)]
-public sealed class PersonEmailEqualityComparer : IEqualityComparer<Person>
+public sealed class PersonEqualityComparerByEmail : IEqualityComparer<Person>
 {
 	/// <summary>
 	/// Determines whether the specified <see cref="Person"/> objects are equal based on their email addresses.

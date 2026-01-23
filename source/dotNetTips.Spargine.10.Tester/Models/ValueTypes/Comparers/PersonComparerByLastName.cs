@@ -1,28 +1,29 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.10.Tester
 // Author           : David McCarter
-// Created          : 06-13-2025
+// Created          : 01-23-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
-// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="PersonComparerByLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
+
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Models.RefTypes;
+namespace DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
 
 /// <summary>
-/// Provides a comparison for <see cref="Person"/> objects based on their last names and then first names.
+/// Provides a comparison for <see cref="Person"/> objects based on their last names.
 /// </summary>
 [Information(Status = Status.Available)]
-public sealed class PersonComparerByLastNameThenFirstName : IComparer<Person>
+public sealed class PersonComparerByLastName : IComparer<Person>
 {
 	/// <summary>
 	/// Compares two <see cref="Person"/> objects and returns a value indicating whether one is less than, equal to, or greater than the other.
@@ -44,12 +45,5 @@ public sealed class PersonComparerByLastNameThenFirstName : IComparer<Person>
 	/// </list>
 	/// </returns>
 	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public int Compare(Person? x, Person? y)
-	{
-		var lastNameComparison = string.Compare(x?.LastName ?? string.Empty, y?.LastName ?? string.Empty, StringComparison.Ordinal);
-
-		return lastNameComparison != 0
-			? lastNameComparison
-			: string.Compare(x?.FirstName ?? string.Empty, y?.FirstName ?? string.Empty, StringComparison.Ordinal);
-	}
+	public int Compare(Person x, Person y) => string.Compare(x.LastName, y.LastName, StringComparison.Ordinal);
 }

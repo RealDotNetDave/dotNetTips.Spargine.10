@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetTips.Spargine.Extensions.Tests;
@@ -450,7 +451,7 @@ public class ListExtensionsTests
 		var itemsToAdd = new[] { existingPerson, newPerson };
 
 		// Act
-		people.AddRangeIfNotExists(itemsToAdd, new PersonComparer());
+		people.AddRangeIfNotExists(itemsToAdd, new PersonEqualityComparer());
 
 		// Assert
 		Assert.AreEqual(6, people.Count);
@@ -575,7 +576,7 @@ public class ListExtensionsTests
 		var itemsToAdd = new[] { duplicatePerson, newPerson };
 
 		// Act
-		people.AddRangeIfNotExists(itemsToAdd, new PersonComparer());
+		people.AddRangeIfNotExists(itemsToAdd, new PersonEqualityComparer());
 
 		// Assert
 		Assert.AreEqual(originalCount + 1, people.Count);
@@ -587,7 +588,7 @@ public class ListExtensionsTests
 		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
 		var itemsToAdd = RandomData.GeneratePersonRefCollection(10).ToList();
 
-		list.AddRangeIfNotExists(itemsToAdd, new PersonEmailEqualityComparer());
+		list.AddRangeIfNotExists(itemsToAdd, new PersonEqualityComparerByEmail());
 
 		Assert.HasCount(1010, list);
 	}

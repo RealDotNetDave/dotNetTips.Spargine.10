@@ -30,6 +30,7 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -2441,7 +2442,7 @@ public class TypeHelperTests : UnitTester
 		// Test custom types
 		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Person)));
 		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Address)));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(PersonComparer)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(PersonEqualityComparer)));
 	}
 
 	[TestMethod]

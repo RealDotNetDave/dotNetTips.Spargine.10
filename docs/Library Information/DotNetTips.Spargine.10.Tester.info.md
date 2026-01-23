@@ -489,6 +489,51 @@
 * **Modified On:** 
 
 *****
+## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonComparerByIdThenLastName
+
+*****
+## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonComparerByLastName
+
+*****
+## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonComparerByLastNameThenFirstName
+
+### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.RefTypes.Person x, DotNetTips.Spargine.Tester.Models.RefTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Compare
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonEqualityComparerByEmail
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.Person x, DotNetTips.Spargine.Tester.Models.RefTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonRecordEqualityComparerByEmail
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord x, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
+
+*****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.Coordinate
 
 ### System.Int32 CompareTo(System.Object obj)
@@ -735,35 +780,6 @@
 * **Modified On:** 
 
 *****
-## DotNetTips.Spargine.Tester.Models.RefTypes.PersonComparerByLastName
-
-*****
-## DotNetTips.Spargine.Tester.Models.RefTypes.PersonComparerByLastNameThenFirstName
-
-### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.RefTypes.Person x, DotNetTips.Spargine.Tester.Models.RefTypes.Person y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Compare
-* **Modified On:** 
-
-*****
-## DotNetTips.Spargine.Tester.Models.RefTypes.PersonEmailEqualityComparer
-
-### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.Person x, DotNetTips.Spargine.Tester.Models.RefTypes.Person y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Equals
-* **Modified On:** 
-
-*****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord (System.String email, System.String id)
@@ -977,19 +993,6 @@
 * **Modified On:** 
 
 *****
-## DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecordEmailEqualityComparer
-
-### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord x, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Equals
-* **Modified On:** 
-
-*****
 ## DotNetTips.Spargine.Tester.Models.Serializers.PersonRecordJsonSerializerContext
 
 *****
@@ -1119,6 +1122,61 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToString
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonComparerByIdThenLastName
+
+*****
+## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonComparerByLastName
+
+### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Compare
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonComparerByLastNameThenFirstName
+
+### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Compare
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparerByEmail
+
+### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Equals
 * **Modified On:** 
 
 *****
@@ -1405,58 +1463,6 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
-
-*****
-## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonComparer
-
-### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Equals
-* **Modified On:** 
-
-*****
-## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonComparerByLastName
-
-### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Compare
-* **Modified On:** 
-
-*****
-## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonComparerByLastNameThenFirstName
-
-### System.Int32 Compare(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Compare
-* **Modified On:** 
-
-*****
-## DotNetTips.Spargine.Tester.Models.ValueTypes.PersonEmailEqualityComparer
-
-### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Person x, DotNetTips.Spargine.Tester.Models.ValueTypes.Person y)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** Equals
 * **Modified On:** 
 
 *****
@@ -2257,4 +2263,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/23/2026 4:48:00 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/23/2026 8:55:45 PM UTC**

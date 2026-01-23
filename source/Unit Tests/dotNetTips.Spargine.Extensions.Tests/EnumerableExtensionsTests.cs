@@ -27,6 +27,7 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -966,7 +967,7 @@ public class EnumerableExtensionsTests
 			people.Add(duplicate);
 		}
 
-		var result = people.FastDistinct(new PersonComparer()).ToList();
+		var result = people.FastDistinct(new PersonEqualityComparer()).ToList();
 
 		var expectedCount = people.Select(p => p.Id).Distinct().Count();
 		Assert.AreEqual(expectedCount, result.Count);
@@ -981,7 +982,7 @@ public class EnumerableExtensionsTests
 		people.Add(duplicate);
 		people.Add(duplicate);
 
-		var result = people.FastDistinct(new PersonComparer()).ToList();
+		var result = people.FastDistinct(new PersonEqualityComparer()).ToList();
 
 		var expectedCount = people.Select(p => p.Id).Distinct().Count();
 		Assert.AreEqual(expectedCount, result.Count);
@@ -1066,7 +1067,7 @@ public class EnumerableExtensionsTests
 
 		people.Add(people.First());
 
-		var result = people.FastDistinct(new PersonComparer());
+		var result = people.FastDistinct(new PersonEqualityComparer());
 
 		Assert.AreEqual(Count, result.Count());
 	}
@@ -3082,7 +3083,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		var targetPerson = people[Count / 2];
 
-		var index = people.IndexOf(targetPerson, new PersonComparer());
+		var index = people.IndexOf(targetPerson, new PersonEqualityComparer());
 
 		Assert.AreEqual(Count / 2, index);
 	}
@@ -3162,7 +3163,7 @@ public class EnumerableExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(null, new PersonComparer()));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => people.IndexOf(null, new PersonEqualityComparer()));
 	}
 
 	[TestMethod]
@@ -3171,7 +3172,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		var searchPerson = new Person { Id = people[10].Id };
 
-		var index = people.IndexOf(searchPerson, new PersonComparer());
+		var index = people.IndexOf(searchPerson, new PersonEqualityComparer());
 
 		Assert.AreEqual(10, index);
 	}
