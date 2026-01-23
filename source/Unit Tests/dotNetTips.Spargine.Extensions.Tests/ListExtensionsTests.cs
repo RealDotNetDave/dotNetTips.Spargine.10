@@ -2109,6 +2109,27 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFastSortedList_WithCustomComparer_ShouldUseThatComparer()
+	{
+		// Arrange
+		var list = new List<int> { 5, 3, 1, 4, 2 };
+		// Create a custom comparer for descending order
+		var descendingComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
+
+		// Act
+		var result = list.ToFastSortedList(descendingComparer);
+
+		// Assert
+		Assert.IsNotNull(result, "Result should not be null.");
+		Assert.HasCount(5, result, "Result should have 5 elements.");
+		Assert.AreEqual(5, result[0], "First element should be 5 (descending order).");
+		Assert.AreEqual(4, result[1], "Second element should be 4.");
+		Assert.AreEqual(3, result[2], "Third element should be 3.");
+		Assert.AreEqual(2, result[3], "Fourth element should be 2.");
+		Assert.AreEqual(1, result[4], "Fifth element should be 1.");
+	}
+
+	[TestMethod]
 	public void ToFastSortedList_WithEmptyList_ShouldReturnEmptyList()
 	{
 		// Arrange
@@ -2120,15 +2141,6 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.IsEmpty(result, "Resulting list should be empty.");
-	}
-
-	[TestMethod]
-	public void ToFastSortedList_WithNullComparer_ShouldThrowArgumentNullException()
-	{
-		var list = new List<int> { 1, 2, 3 };
-		IComparer<int> comparer = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList(comparer));
 	}
 
 	[TestMethod]

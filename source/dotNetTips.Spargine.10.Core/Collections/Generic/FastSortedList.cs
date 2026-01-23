@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -105,7 +105,11 @@ public class FastSortedList<T> : List<T>
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public FastSortedList([DisallowNull] in IEnumerable<T> collection, in IComparer<T> comparer) : base(collection) => this._comparer = comparer;
+	public FastSortedList([DisallowNull] in IEnumerable<T> collection, in IComparer<T> comparer) : base(collection)
+	{
+		this._comparer = comparer;
+		this.SortCollection();
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FastSortedList{T}"/> class that is empty and has the specified initial capacity.

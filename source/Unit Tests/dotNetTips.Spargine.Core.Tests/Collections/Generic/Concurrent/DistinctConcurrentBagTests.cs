@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-23-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -47,6 +47,7 @@ public class DistinctConcurrentBagTests
 		Assert.IsTrue(bag.Contains(10));
 		Assert.IsTrue(bag.Contains(20));
 	}
+
 	[TestMethod]
 	public async Task Add_ConcurrentAccess_HandlesThreadSafely()
 	{
