@@ -300,7 +300,7 @@ public static class ObjectExtensions
 		/// <exception cref="JsonException">Thrown if an error occurs during serialization.</exception>
 		/// <exception cref="IOException">Thrown if an error occurs while writing the file.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 		public void ToJsonFile([DisallowNull] FileInfo file)
 		{
 			file = file.ArgumentNotNull();

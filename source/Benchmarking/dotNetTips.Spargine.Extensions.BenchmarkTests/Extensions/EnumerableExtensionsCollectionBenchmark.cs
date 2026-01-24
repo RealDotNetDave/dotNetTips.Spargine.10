@@ -13,7 +13,9 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -35,10 +37,12 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _personRefArray;
+	private ConcurrentStack<Person> _personRefConcurrentStack;
 	private IEnumerable<Person> _personRefEnumerable;
 	private List<Person> _personRefEnumerableStart;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
 	private HashSet<Person> _personRefHashSet;
+	private ImmutableQueue<Person> _personRefImmutableQueue;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -121,8 +125,32 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty))]
-	public void DoesNotHaveItemsIsEmpty()
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": Array<ref>")]
+	public void DoesNotHaveItemsIsEmptyArrayRef()
+	{
+		var result = this._personRefArray.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ConcurrentStack<ref>")]
+	public void DoesNotHaveItemsIsEmptyConcurrentStackRef()
+	{
+		var result = this._personRefConcurrentStack.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": EnumerableQueue<ref>")]
+	public void DoesNotHaveItemsIsEmptyEnumerableQueueRef()
+	{
+		var result = this._personRefImmutableQueue.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": Enumerable<ref>")]
+	public void DoesNotHaveItemsIsEmptyEnumerableRef()
 	{
 		var result = this._personRefEnumerable.IsEmpty();
 
@@ -401,6 +429,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
 		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
+		this._personRefImmutableQueue = ImmutableQueue.Create(this.GetPersonRefArray());
+		this._personRefConcurrentStack = new ConcurrentStack<Person>(this.GetPersonRefArray());
 
 
 		var peopleToAdd = this._personRefEnumerable.ToList();

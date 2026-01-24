@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-24-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -79,6 +79,18 @@ public class ObjectExtensionsBenchmark : Benchmark
 
 	private string _peopleJson;
 	private Collection<Person> _personCollection;
+	private FileInfo _tempJsonFile;
+
+	public override void Cleanup()
+	{
+		// Clean up temp file after benchmark
+		if (this._tempJsonFile?.Exists == true)
+		{
+			this._tempJsonFile.Delete();
+		}
+
+		base.Cleanup();
+	}
 
 	//[Benchmark(Description = nameof(ObjectExtensions.FastClone) + ": Person-ref")]
 	//public void ClonePerson()
@@ -398,6 +410,10 @@ public class ObjectExtensionsBenchmark : Benchmark
 
 		this._peopleJson = this.PersonRef01.ToJson();
 		this._personCollection = RandomData.GeneratePersonRefCollection(1000).ToCollection();
+
+		// Create temp file path for benchmark
+		this._tempJsonFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"benchmark_{Guid.NewGuid()}.json"));
+
 	}
 
 	[Benchmark(Description = nameof(ObjectExtensions.StripNull) + ": Person")]
@@ -454,9 +470,27 @@ public class ObjectExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(ObjectExtensions.ToJsonFile))]
+	[BenchmarkCategory(Categories.Serialization)]
 	public void ToJsonFile()
 	{
-		this._personCollection.ToJsonFile(new FileInfo(RandomData.GenerateRandomFileName(nameof(this.ToJsonFile))));
+		var person = this.PersonRef01;
+
+		person.ToJsonFile(this._tempJsonFile);
+
+		// Verify file was created
+		this.Consume(this._tempJsonFile.Exists);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.ToJsonFile) + ": Complex Object")]
+	[BenchmarkCategory(Categories.Serialization)]
+	public void ToJsonFileComplex()
+	{
+		var people = this._personCollection;
+
+		people.ToJsonFile(this._tempJsonFile);
+
+		// Verify file was created
+		this.Consume(this._tempJsonFile.Exists);
 	}
 
 	[Benchmark(Description = nameof(ObjectExtensions.ToJson) + ": Person + JsonTypeInfo")]
