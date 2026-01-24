@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-24-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1352,12 +1352,93 @@ public static class EnumerableExtensions
 		/// Determines whether the specified <see cref="IEnumerable"/> does not have items or is null.
 		/// </summary>
 		/// <returns><c>true</c> if the specified collection has items; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method uses optimized paths for different collection types:
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description>Arrays - Uses O(1) <see cref="Array.Length"/> property.</description></item>
+		/// <item><description><see cref="ICollection{T}"/> - Uses O(1) <see cref="ICollection{T}.Count"/> property.</description></item>
+		/// <item><description><see cref="IReadOnlyCollection{T}"/> - Uses O(1) <see cref="IReadOnlyCollection{T}.Count"/> property.</description></item>
+		/// <item><description>Concurrent collections - Uses O(1) thread-safe <see cref="IsEmpty"/> property.</description></item>
+		/// <item><description>Immutable collections - Uses O(1) <see cref="IsEmpty"/> property.</description></item>
+		/// <item><description>Other collections - Falls back to <see cref="Enumerable.Count{TSource}(IEnumerable{TSource})"/>.</description></item>
+		/// </list>
+		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Update, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public bool IsEmpty()
 		{
-			return collection?.Count() <= 0;
+			if (collection is null)
+			{
+				return true;
+			}
+
+			// Fast path: Arrays (most common case)
+			if (collection is T[] array)
+			{
+				return array.Length == 0;
+			}
+
+			// Fast path: Check concurrent collections BEFORE ICollection<T>
+			// These have optimized thread-safe IsEmpty properties
+			if (collection is ConcurrentBag<T> concurrentBag)
+			{
+				return concurrentBag.IsEmpty;
+			}
+
+			if (collection is ConcurrentQueue<T> concurrentQueue)
+			{
+				return concurrentQueue.IsEmpty;
+			}
+
+			if (collection is ConcurrentStack<T> concurrentStack)
+			{
+				return concurrentStack.IsEmpty;
+			}
+
+			// Fast path: Check immutable collections BEFORE ICollection
+			// These have optimized IsEmpty properties
+			if (collection is ImmutableList<T> immutableList)
+			{
+				return immutableList.IsEmpty;
+			}
+
+			if (collection is ImmutableHashSet<T> immutableHashSet)
+			{
+				return immutableHashSet.IsEmpty;
+			}
+
+			if (collection is ImmutableQueue<T> immutableQueue)
+			{
+				return immutableQueue.IsEmpty;
+			}
+
+			if (collection is ImmutableStack<T> immutableStack)
+			{
+				return immutableStack.IsEmpty;
+			}
+
+			if (collection is ImmutableSortedSet<T> immutableSortedSet)
+			{
+				return immutableSortedSet.IsEmpty;
+			}
+
+			// Fast path: ICollection<T> covers List<T>, HashSet<T>, Dictionary<K,V>.Values, etc.
+			if (collection is ICollection<T> collectionT)
+			{
+				return collectionT.Count == 0;
+			}
+
+			// Fast path: IReadOnlyCollection<T> for read-only wrappers
+			if (collection is IReadOnlyCollection<T> readOnlyCollection)
+			{
+				return readOnlyCollection.Count == 0;
+			}
+
+			// Fallback: Enumerate to count (least efficient)
+			return collection.Count() == 0;
 		}
 
 		/// <summary>
@@ -1708,7 +1789,7 @@ public static class EnumerableExtensions
 		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public bool IsNotEmpty()
 		{
-			return collection is null ? false : collection.Count() > 0;
+			return !collection.IsEmpty();
 		}
 
 		/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-24-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -3241,6 +3241,554 @@ public class EnumerableExtensionsTests
 		var person1 = people.FastShuffle(1).First();
 
 		Assert.AreEqual(false, people.IndexOf(person1).IsNegative());
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyArray_ReturnsTrue()
+	{
+		// Arrange
+		var emptyArray = Array.Empty<int>();
+
+		// Act
+		var result = emptyArray.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyConcurrentBag_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> concurrentBag = new ConcurrentBag<int>();
+
+		// Act
+		var result = concurrentBag.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyConcurrentQueue_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> concurrentQueue = new ConcurrentQueue<int>();
+
+		// Act
+		var result = concurrentQueue.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyConcurrentStack_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> concurrentStack = new ConcurrentStack<int>();
+
+		// Act
+		var result = concurrentStack.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyDeferredEnumerable_ReturnsTrue()
+	{
+		// Arrange - Use LINQ query that returns IEnumerable (fallback path)
+		var deferred = Enumerable.Range(1, 10).Where(x => x > 100);
+
+		// Act
+		var result = deferred.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyFrozenSet_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> frozenSet = FrozenSet<int>.Empty;
+
+		// Act
+		var result = frozenSet.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyHashSet_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> hashSet = new HashSet<int>();
+
+		// Act
+		var result = hashSet.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyImmutableHashSet_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> immutableHashSet = ImmutableHashSet<int>.Empty;
+
+		// Act
+		var result = immutableHashSet.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyImmutableList_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> immutableList = ImmutableList<int>.Empty;
+
+		// Act
+		var result = immutableList.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyImmutableQueue_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> immutableQueue = ImmutableQueue<int>.Empty;
+
+		// Act
+		var result = immutableQueue.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyImmutableSortedSet_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> immutableSortedSet = ImmutableSortedSet<int>.Empty;
+
+		// Act
+		var result = immutableSortedSet.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyImmutableStack_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> immutableStack = ImmutableStack<int>.Empty;
+
+		// Act
+		var result = immutableStack.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyLinkedList_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> linkedList = new LinkedList<int>();
+
+		// Act
+		var result = linkedList.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyList_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> list = new List<int>();
+
+		// Act
+		var result = list.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyObservableCollection_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> observableCollection = new ObservableCollection<int>();
+
+		// Act
+		var result = observableCollection.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyQueue_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> queue = new Queue<int>();
+
+		// Act
+		var result = queue.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyReadOnlyCollection_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> readOnlyCollection = new ReadOnlyCollection<int>(new List<int>());
+
+		// Act
+		var result = readOnlyCollection.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_EmptyStack_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> stack = new Stack<int>();
+
+		// Act
+		var result = stack.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_LargeCollection_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> collection = Enumerable.Range(1, Count);
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyArray_ReturnsFalse()
+	{
+		// Arrange
+		var array = new[] { 1, 2, 3 };
+
+		// Act
+		var result = array.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyConcurrentBag_ReturnsFalse()
+	{
+		// Arrange
+		var concurrentBag = new ConcurrentBag<int>();
+		concurrentBag.Add(1);
+		IEnumerable<int> collection = concurrentBag;
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyConcurrentQueue_ReturnsFalse()
+	{
+		// Arrange
+		var concurrentQueue = new ConcurrentQueue<int>();
+		concurrentQueue.Enqueue(1);
+		IEnumerable<int> collection = concurrentQueue;
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyConcurrentStack_ReturnsFalse()
+	{
+		// Arrange
+		var concurrentStack = new ConcurrentStack<int>();
+		concurrentStack.Push(1);
+		IEnumerable<int> collection = concurrentStack;
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyDeferredEnumerable_ReturnsFalse()
+	{
+		// Arrange - Use LINQ query that returns IEnumerable (fallback path)
+		var deferred = Enumerable.Range(1, 10).Where(x => x > 5);
+
+		// Act
+		var result = deferred.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyFrozenSet_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> frozenSet = new HashSet<int> { 1, 2, 3 }.ToFrozenSet();
+
+		// Act
+		var result = frozenSet.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyHashSet_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> hashSet = new HashSet<int> { 1, 2, 3 };
+
+		// Act
+		var result = hashSet.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyImmutableHashSet_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> immutableHashSet = ImmutableHashSet.Create(1, 2, 3);
+
+		// Act
+		var result = immutableHashSet.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyImmutableList_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> immutableList = ImmutableList.Create(1, 2, 3);
+
+		// Act
+		var result = immutableList.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyImmutableQueue_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> immutableQueue = ImmutableQueue.Create(1, 2, 3);
+
+		// Act
+		var result = immutableQueue.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyImmutableSortedSet_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> immutableSortedSet = ImmutableSortedSet.Create(1, 2, 3);
+
+		// Act
+		var result = immutableSortedSet.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyImmutableStack_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> immutableStack = ImmutableStack.Create(1, 2, 3);
+
+		// Act
+		var result = immutableStack.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyLinkedList_ReturnsFalse()
+	{
+		// Arrange
+		var linkedList = new LinkedList<int>();
+		linkedList.AddLast(1);
+		linkedList.AddLast(2);
+		IEnumerable<int> collection = linkedList;
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyList_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> list = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = list.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyObservableCollection_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> observableCollection = new ObservableCollection<int> { 1, 2, 3 };
+
+		// Act
+		var result = observableCollection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyQueue_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new Queue<int>();
+		queue.Enqueue(1);
+		IEnumerable<int> collection = queue;
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyReadOnlyCollection_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> readOnlyCollection = new ReadOnlyCollection<int>(new List<int> { 1, 2, 3 });
+
+		// Act
+		var result = readOnlyCollection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NonEmptyStack_ReturnsFalse()
+	{
+		// Arrange
+		var stack = new Stack<int>();
+		stack.Push(1);
+		IEnumerable<int> collection = stack;
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	// Tests for IsEmpty() method - covers all optimized paths
+
+	[TestMethod]
+	public void IsEmpty_NullCollection_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act
+		var result = nullCollection.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_ReferenceTypeCollection_EmptyList_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<Person> people = new List<Person>();
+
+		// Act
+		var result = people.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_ReferenceTypeCollection_NonEmptyList_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<Person> people = RandomData.GeneratePersonRefCollection(5);
+
+		// Act
+		var result = people.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_SingleElementCollection_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> collection = new List<int> { 42 };
+
+		// Act
+		var result = collection.IsEmpty();
+
+		// Assert
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
