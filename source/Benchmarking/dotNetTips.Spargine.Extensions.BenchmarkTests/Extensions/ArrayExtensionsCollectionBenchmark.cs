@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -35,7 +35,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	private const int OperationsCount = 1024;
 	private byte[] _byteArray;
-	private int _halfCount;
 
 	private PersonRecord[] _personRecordArray;
 	private Person[] _personRefArray;
@@ -165,24 +164,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void CloneFastClonePersonVal()
 	{
 		var result = this._personValArray.FastClone();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsEmpty) + ": as Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void DoesNotHaveItems_Ref()
-	{
-		var result = this._personRefArray.IsEmpty();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsEmpty) + ": as Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void DoesNotHaveItems_Val()
-	{
-		var result = this._personValArray.IsEmpty();
 
 		this.Consume(result);
 	}
@@ -453,7 +434,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void SelectItemsArraySegment()
 	{
-		var result = new ArraySegment<Person>(this._personRefArray, 0, this._halfCount).ToArray();
+		var result = new ArraySegment<Person>(this._personRefArray, 0, this.HalfCount).ToArray();
 
 		this.Consume(result.Length);
 	}
@@ -462,7 +443,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
 	public void SelectItemsFastSelectItems()
 	{
-		var result = this._personRefArray.FastSelectItems(0, this._halfCount);
+		var result = this._personRefArray.FastSelectItems(0, this.HalfCount);
 
 		this.Consume(result.Length);
 	}

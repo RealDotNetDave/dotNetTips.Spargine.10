@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-11-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -83,15 +83,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._peopleRefList.FastCount();
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ListExtensions.IsEmpty))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void DoesNotHaveItems()
-	{
-		var people = this._peopleRefList;
-
-		this.Consume(people.IsEmpty());
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": record")]

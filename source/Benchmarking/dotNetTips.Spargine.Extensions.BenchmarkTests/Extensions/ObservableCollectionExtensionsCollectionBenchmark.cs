@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -26,15 +26,6 @@ public class ObservableCollectionExtensionsCollectionBenchmark : LargeCollection
 {
 
 	private ObservableCollection<Person> _personRefObservableCollection;
-
-	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsEmpty))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void DoesNotHaveItems()
-	{
-		var result = this._personRefObservableCollection.IsEmpty();
-
-		this.Consume(result);
-	}
 
 	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
