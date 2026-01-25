@@ -29,17 +29,6 @@ public class SortedSetExtensionsTest
 {
 
 	[TestMethod]
-	public void DoesNotHaveItemsTest()
-	{
-		var collection = new SortedSet<Tester.Models.RefTypes.Person>(RandomData.GeneratePersonRefCollection(100));
-		SortedSet<Tester.Models.RefTypes.Person> nullCollection = null;
-
-		Assert.IsFalse(collection.IsEmpty());
-
-		Assert.IsTrue(nullCollection.IsEmpty());
-	}
-
-	[TestMethod]
 	public void HasItemsTest()
 	{
 		var collection = new SortedSet<Tester.Models.RefTypes.Person>(RandomData.GeneratePersonRefCollection(100));

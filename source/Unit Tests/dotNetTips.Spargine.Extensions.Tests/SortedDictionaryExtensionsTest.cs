@@ -29,28 +29,6 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 public class SortedDictionaryExtensionsTest
 {
 
-	[TestMethod]
-	public void DoesNotHaveItemsTest()
-	{
-		var peopleSortedSet = new SortedDictionary<string, Person>(RandomData.GeneratePersonRefCollection(10).ToDictionary(p => p.Id));
-		SortedDictionary<string, Person> nullPeople = null;
-
-		Assert.IsFalse(peopleSortedSet.IsEmpty());
-
-		Assert.IsTrue(nullPeople.IsEmpty());
-	}
-
-	[TestMethod]
-	public void HasItemsTest()
-	{
-		var peopleSortedSet = new SortedDictionary<string, Person>(RandomData.GeneratePersonRefCollection(10).ToDictionary(p => p.Id));
-		SortedDictionary<string, Person> nullPeople = null;
-
-		Assert.IsTrue(peopleSortedSet.IsNotEmpty());
-
-		Assert.IsFalse(nullPeople.IsNotEmpty());
-	}
-
 	/// <summary>
 	/// Defines the test method HasItemsTestWithFunction.
 	/// </summary>

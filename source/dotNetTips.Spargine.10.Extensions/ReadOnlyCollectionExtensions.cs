@@ -4,7 +4,7 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,19 +35,6 @@ public static class ReadOnlyCollectionExtensions
 	/// <param name="collection">The collection to extend.</param>
 	extension<T>([DisallowNull] IReadOnlyCollection<T> collection)
 	{
-
-		/// <summary>
-		/// Determines whether the collection is null or contains no items.
-		/// </summary>
-		/// <returns>
-		/// <c>true</c> if the collection is <c>null</c> or empty; otherwise, <c>false</c>.
-		/// </returns>
-		[Pure]
-		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool IsEmpty()
-		{
-			return collection is null ? true : collection.Count <= 0;
-		}
 
 		/// <summary>
 		/// Generates a hash code for the <see cref="ReadOnlyCollection{T}"/> using the specified equality comparer.

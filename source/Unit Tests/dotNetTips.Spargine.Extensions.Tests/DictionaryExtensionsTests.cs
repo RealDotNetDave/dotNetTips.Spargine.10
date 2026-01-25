@@ -199,18 +199,6 @@ public class DictionaryExtensionsTests
 		Assert.IsTrue(d2.IsDisposed);
 	}
 
-
-	/// <summary>
-	/// Defines the test method DoesNotHaveItemsTest.
-	/// </summary>
-	[TestMethod]
-	public void DoesNotHaveItemsTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
-
-		Assert.IsFalse(people.IsEmpty());
-	}
-
 	/// <summary>
 	/// Defines the test method AddRangeDictionaryTest02.
 	/// </summary>

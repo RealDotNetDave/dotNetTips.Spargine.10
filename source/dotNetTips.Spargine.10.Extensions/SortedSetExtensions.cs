@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-31-2025
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -39,26 +39,6 @@ public static class SortedSetExtensions
 	/// <param name="collection">The sorted set to extend.</param>
 	extension<T>([AllowNull] SortedSet<T> collection)
 	{
-
-		/// <summary>
-		/// Determines whether the specified <see cref="SortedSet{T}"/> is <c>null</c> or contains no elements.
-		/// </summary>
-		/// <returns>
-		/// <c>true</c> if the set is <c>null</c> or empty; otherwise, <c>false</c>.
-		/// </returns>
-		/// <remarks>
-		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method uses the <see cref="SortedSet{T}.Count"/> property
-		/// which is O(1) as SortedSet maintains its count internally.
-		/// </para>
-		/// </remarks>
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsEmpty()
-		{
-			return collection is null || collection.Count == 0;
-		}
 
 		/// <summary>
 		/// Determines whether the specified <see cref="SortedSet{T}"/> contains any elements.

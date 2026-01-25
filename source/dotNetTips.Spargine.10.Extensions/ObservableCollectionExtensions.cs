@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,20 +35,6 @@ public static class ObservableCollectionExtensions
 	/// <param name="collection">The observable collection instance.</param>
 	extension<T>([AllowNull] ObservableCollection<T> collection)
 	{
-
-		/// <summary>
-		/// Determines whether the specified collection is <c>null</c> or contains no items.
-		/// </summary>
-		/// <returns>
-		/// <c>true</c> if the collection is <c>null</c> or empty; otherwise, <c>false</c>.
-		/// </returns>
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool IsEmpty()
-		{
-			return collection == null || collection.Count == 0;
-		}
 
 		/// <summary>
 		/// Determines whether the specified collection contains any items.

@@ -1012,14 +1012,6 @@ public class StringExtensionsTests
 	public void IsEmailAddressTest() => Assert.IsTrue("dotnetdave@live.com".IsEmailAddress());
 
 	[TestMethod]
-	public void IsEmptyTest()
-	{
-		Assert.IsFalse(RandomData.GenerateWord(10).IsEmpty());
-
-		Assert.IsTrue(string.Empty.IsEmpty());
-	}
-
-	[TestMethod]
 	public void IsFirstLastNameTest()
 	{
 		Assert.IsTrue("David McCarter".IsFirstLastName());

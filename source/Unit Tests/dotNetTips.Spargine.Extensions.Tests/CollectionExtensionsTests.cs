@@ -140,18 +140,6 @@ public class CollectionExtensionsTests
 		Assert.IsTrue(span.SequenceEqual(collection.AsReadOnlySpan()));
 	}
 
-
-	[TestMethod]
-	public void DoesNotHaveItemsTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		var emptyPeople = new List<Person>();
-
-		Assert.IsFalse(people.IsEmpty());
-
-		Assert.IsTrue(emptyPeople.IsEmpty());
-	}
-
 	[TestMethod]
 	public void ToFrozenSetTest()
 	{

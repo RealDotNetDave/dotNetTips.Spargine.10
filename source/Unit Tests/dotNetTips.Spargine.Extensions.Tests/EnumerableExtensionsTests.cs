@@ -3509,10 +3509,9 @@ public class EnumerableExtensionsTests
 		// Arrange
 		var concurrentBag = new ConcurrentBag<int>();
 		concurrentBag.Add(1);
-		IEnumerable<int> collection = concurrentBag;
 
 		// Act
-		var result = collection.IsEmpty();
+		var result = concurrentBag.IsEmpty();
 
 		// Assert
 		Assert.IsFalse(result);
@@ -3524,10 +3523,9 @@ public class EnumerableExtensionsTests
 		// Arrange
 		var concurrentQueue = new ConcurrentQueue<int>();
 		concurrentQueue.Enqueue(1);
-		IEnumerable<int> collection = concurrentQueue;
 
 		// Act
-		var result = collection.IsEmpty();
+		var result = concurrentQueue.IsEmpty();
 
 		// Assert
 		Assert.IsFalse(result);
@@ -3539,10 +3537,9 @@ public class EnumerableExtensionsTests
 		// Arrange
 		var concurrentStack = new ConcurrentStack<int>();
 		concurrentStack.Push(1);
-		IEnumerable<int> collection = concurrentStack;
 
 		// Act
-		var result = collection.IsEmpty();
+		var result = concurrentStack.IsEmpty();
 
 		// Assert
 		Assert.IsFalse(result);

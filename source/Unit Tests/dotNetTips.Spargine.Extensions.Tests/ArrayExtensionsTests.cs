@@ -271,19 +271,6 @@ public class ArrayExtensionsTests
 		Assert.IsTrue(people.ContainsAny(new[] { people.Last() }));
 	}
 
-	/// <summary>
-	/// Defines the test method DoesNotHasItemsTest.
-	/// </summary>
-	[TestMethod]
-	public void DoesNotHasItemsTest()
-	{
-		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
-		Person[] nullPeople = null;
-
-		Assert.IsFalse(people1.IsEmpty());
-
-		Assert.IsTrue(nullPeople.IsEmpty());
-	}
 
 	[TestMethod]
 	public void FastHashData_ValidData_ReturnsHash()

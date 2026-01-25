@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -292,18 +292,6 @@ public static class ArrayExtensions
 			array = array.ArgumentNotNull();
 
 			return (T[])array.Clone();
-		}
-
-		/// <summary>
-		/// Determines whether the specified array does not contain any items.
-		/// </summary>
-		/// <returns><c>true</c> if the array is null or empty; otherwise, <c>false</c>.</returns>
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsEmpty()
-		{
-			return array == null || array.Length == 0;
 		}
 
 		/// <summary>

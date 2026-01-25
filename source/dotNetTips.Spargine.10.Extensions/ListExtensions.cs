@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -290,18 +290,6 @@ public static class ListExtensions
 		public bool ClearNulls()
 		{
 			return list is null ? false : list.RemoveAll(p => p is null) > 0;
-		}
-
-		/// <summary>
-		/// Determines whether the specified <see cref="List{T}"/> does not contain any items.
-		/// </summary>
-		/// <returns>True if the list is null or empty; otherwise, false.</returns>
-		[Pure]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsEmpty()
-		{
-			return list == null || list.Count == 0;
 		}
 
 		/// <summary>
