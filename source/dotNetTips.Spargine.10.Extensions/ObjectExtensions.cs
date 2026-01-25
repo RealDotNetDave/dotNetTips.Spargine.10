@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -83,7 +83,8 @@ public static class ObjectExtensions
 			return;
 		}
 
-		foreach (var field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).AsSpan())
+		// DON'T USE ASSPAN() HERE
+		foreach (var field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
 		{
 			if (field.FieldType.IsAssignableTo(typeof(IDisposable)) && field.GetValue(obj) is IDisposable disposableField)
 			{
@@ -688,7 +689,8 @@ public static class ObjectExtensions
 			var fieldCollection = objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
 
-			foreach (var field in fieldCollection.AsSpan())
+			// DON'T USE ASSPAN() HERE
+			foreach (var field in fieldCollection)
 			{
 				// Skip compiler-generated fields (e.g., backing fields for auto-properties)
 				if (field.IsDefined(typeof(CompilerGeneratedAttribute), false))
@@ -820,7 +822,8 @@ public static class ObjectExtensions
 
 			var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-			foreach (var field in fields.AsSpan())
+			// DON'T USE ASSPAN() HERE
+			foreach (var field in fields)
 			{
 				if (field.GetValue(obj) == null && !field.FieldType.IsValueType)
 				{

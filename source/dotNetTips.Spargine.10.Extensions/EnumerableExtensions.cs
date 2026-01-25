@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-24-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -182,42 +182,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			// Fast path for List<T> using span
-			if (collection is List<T> list)
-			{
-				var span = CollectionsMarshal.AsSpan(list);
-				var length = span.Length;
-
-				for (var i = 0; i < length; i++)
-				{
-					if (accumulatorPredicate(span[i]))
-					{
-						return span[i];
-					}
-				}
-
-				return default;
-			}
-
-			// Fast path for arrays
-			if (collection is T[] array)
-			{
-				ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
-				var arrayLength = array.Length;
-
-				for (var i = 0; i < arrayLength; i++)
-				{
-					ref var item = ref Unsafe.Add(ref arrayStart, i);
-					if (accumulatorPredicate(item))
-					{
-						return item;
-					}
-				}
-
-				return default;
-			}
-
-			// Standard enumeration for other collection types
+			// SUGGESTION BY COPILOT SLOWER.
 			foreach (var item in collection)
 			{
 				if (accumulatorPredicate(item))
@@ -282,22 +247,22 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
+			// SUGGESTION BY COPILOT SLOWER
 			var eq = comparer ?? EqualityComparer<T>.Default;
-			var index = 0;
 
+			var index = 0;
 			foreach (var element in collection)
 			{
 				if (eq.Equals(element, item))
 				{
 					return index;
 				}
-
 				index++;
 			}
 
@@ -314,10 +279,23 @@ public static class EnumerableExtensions
 		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
-			//SUGGESTION BY COPILOT SLOWER.
-			var result = collection.Select((value, index) => (value, index)).FirstOrDefault(value => accumulatorPredicate(value.value));
+			collection = collection.ArgumentNotNull();
+			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			return result.Equals(default((T x, int i))) ? -1 : result.index;
+			//SUGGESTION BY COPILOT SLOWER.
+			var index = 0;
+
+			foreach (var item in collection)
+			{
+				if (accumulatorPredicate(item))
+				{
+					return index;
+				}
+
+				index++;
+			}
+
+			return -1;
 		}
 
 
@@ -370,6 +348,8 @@ public static class EnumerableExtensions
 		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 		public IEnumerable<T> OrderBy([DisallowNull] string sortExpression)
 		{
+			collection = collection.ArgumentNotNull();
+
 			sortExpression = sortExpression?.Trim() ?? string.Empty;
 
 			if (string.IsNullOrEmpty(sortExpression))
@@ -457,7 +437,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(OrderByOrdinal), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(OrderByOrdinal), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> OrderByOrdinal([DisallowNull] Func<T, string> accumulatorFunction)
 		{
 			return collection.OrderBy(accumulatorFunction, StringComparer.Ordinal);
@@ -611,9 +591,12 @@ public static class EnumerableExtensions
 		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<IEnumerable<T>> Partition(int pageCount)
 		{
-			foreach (var chunk in collection.Chunk(pageCount))
+			collection = collection.ArgumentNotNull();
+			pageCount = pageCount.EnsureMinimum(2);
+
+			foreach (var people in collection.Chunk(pageCount))
 			{
-				yield return chunk;
+				yield return people;
 			}
 		}
 
@@ -1249,38 +1232,7 @@ public static class EnumerableExtensions
 				return false;
 			}
 
-			// Fast path: If collection is already a set, Contains is O(1)
-			if (collection is ISet<T> set)
-			{
-				foreach (var item in items)
-				{
-					if (set.Contains(item))
-					{
-						return true;
-					}
-				}
-
-				return false;
-			}
-
-			// For larger item sets, convert collection to HashSet for O(1) lookups
-			// Threshold chosen based on typical break-even point for HashSet creation overhead
-			if (items.Count > 10)
-			{
-				var hashSet = collection as HashSet<T> ?? [.. collection];
-
-				foreach (var item in items)
-				{
-					if (hashSet.Contains(item))
-					{
-						return true;
-					}
-				}
-
-				return false;
-			}
-
-			// Small item sets: direct enumeration avoids HashSet allocation overhead
+			// SUGGESTION FROM COPILOT SLOWER
 			foreach (var item in items)
 			{
 				if (collection.Contains(item))
@@ -1298,7 +1250,7 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the collection contains duplicates; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public bool HasDuplicates()
 		{
 			// Fast-path: null or already-known empty
@@ -1542,7 +1494,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToUniqueCollection), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Updated)]
+		[Information(nameof(ToUniqueCollection), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 		public Collection<T> ToUniqueCollection()
 		{
 			return new Collection<T>(new HashSet<T>(collection).ToList());

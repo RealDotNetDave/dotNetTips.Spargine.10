@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-25-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -39,6 +39,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private Person[] _personRefArray;
 	private ConcurrentStack<Person> _personRefConcurrentStack;
 	private IEnumerable<Person> _personRefEnumerable;
+	private List<Person> _personRefEnumerableEnd;
 	private List<Person> _personRefEnumerableStart;
 	private IEnumerable<Person> _personRefEnumerableToAdd;
 	private HashSet<Person> _personRefHashSet;
@@ -100,27 +101,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefEnumerable;
 
-		people = people.AddLast(people.FirstOrDefault());
-
-		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ContainsAny) + ": as Reference")]
-	[BenchmarkCategory(Categories.Collections, Categories.ReferenceType)]
-	public void ContainsAnyRef()
-	{
-		var result = this._personRefEnumerable.ContainsAny(this.GetPersonRefArray().AsReadOnly());
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ContainsAny) + ": as Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void ContainsAnyVal()
-	{
-		var result = this._personValEnumerable.ContainsAny(this.GetPersonValArray().AsReadOnly());
+		var result = people.ContainsAny(this._personRefEnumerableEnd.AsReadOnly());
 
 		this.Consume(result);
 	}
@@ -438,6 +419,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
 
 		this._personRefEnumerableStart = this._personRefEnumerable.Take(this.HalfCount).ToList();
+
+		this._personRefEnumerableEnd = this._personRefEnumerable.Skip(this.Count - this.HalfCount).Take(this.HalfCount).ToList();
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle))]
