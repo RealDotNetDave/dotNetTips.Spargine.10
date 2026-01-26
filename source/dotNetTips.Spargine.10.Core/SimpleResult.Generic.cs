@@ -167,7 +167,7 @@ public class SimpleResult<T>
 	/// This method allows associating informational or diagnostic messages with a result,
 	/// which can be useful for providing additional context about the operation's outcome.
 	/// </remarks>
-	[Information(nameof(AddMessage), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.New)]
+	[Information(nameof(AddMessage), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.Available)]
 	public void AddMessage([DisallowNull] string message)
 	{
 		if (message.CheckIsNotNullOrEmpty() == false)

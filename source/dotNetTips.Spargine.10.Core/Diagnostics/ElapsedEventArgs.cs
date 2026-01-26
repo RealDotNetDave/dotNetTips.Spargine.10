@@ -75,7 +75,7 @@ namespace DotNetTips.Spargine.Core.Diagnostics;
 /// <seealso cref="EventArgs"/>
 /// <seealso cref="TimeSpan"/>
 /// <seealso cref="EventHandler{TEventArgs}"/>
-[Information(nameof(ElapsedEventArgs), "David McCarter", "05/08/2025", Status = Status.New)]
+[Information(nameof(ElapsedEventArgs), "David McCarter", "05/08/2025", Status = Status.Available)]
 public class ElapsedEventArgs(TimeSpan elapsed) : EventArgs
 {
 	/// <summary>
@@ -118,6 +118,6 @@ public class ElapsedEventArgs(TimeSpan elapsed) : EventArgs
 	/// </example>
 	/// <seealso cref="TimeSpan"/>
 	/// <seealso cref="ElapsedEventArgs"/>
-	[Information(nameof(Elapsed), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(Elapsed), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public TimeSpan Elapsed { get; } = elapsed;
 }

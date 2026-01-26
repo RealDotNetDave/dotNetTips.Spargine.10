@@ -240,7 +240,7 @@ public readonly struct DiagnosticEntry([NotNull] DateTimeOffset timestamp, [NotN
 	/// <returns>
 	/// <c>true</c> if the specified object is equal to the current <see cref="DiagnosticEntry"/>; otherwise, <c>false</c>.
 	/// </returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override bool Equals(object? obj) => obj is DiagnosticEntry other && this.Equals(other);
 
 	/// <summary>
@@ -259,7 +259,7 @@ public readonly struct DiagnosticEntry([NotNull] DateTimeOffset timestamp, [NotN
 	/// <returns>
 	/// A hash code for the current <see cref="DiagnosticEntry"/>.
 	/// </returns>
-	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override int GetHashCode() => HashCode.Combine(this.Timestamp, this.Message, this.Elapsed);
 
 	/// <summary>

@@ -322,7 +322,7 @@ public sealed class ComputerInfo
 	/// </returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string ToJson()
 	{
 		return JsonSerialization.Serialize(this);

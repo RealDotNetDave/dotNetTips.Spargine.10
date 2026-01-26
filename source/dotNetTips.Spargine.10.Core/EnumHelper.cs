@@ -187,7 +187,7 @@ public static class EnumHelper
 	/// }
 	/// </code>
 	/// </example>
-	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryParse<T>(string name, [NotNullWhen(true)] out T result)
 	where T : struct, Enum
 	{

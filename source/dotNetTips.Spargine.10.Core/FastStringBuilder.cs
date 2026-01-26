@@ -684,7 +684,7 @@ public static class FastStringBuilder
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(PerformAction), "David McCarter", "11/26/2025", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.New)]
+	[Information(nameof(PerformAction), "David McCarter", "11/26/2025", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string PerformAction(in int capacity, [AllowNull] in Action<StringBuilder> action)
 	{
 		//TODO: WORK ON PERF. SLOWER WHEN APPENDING WITH STRING BUILDER USING OBJECTPOOL.

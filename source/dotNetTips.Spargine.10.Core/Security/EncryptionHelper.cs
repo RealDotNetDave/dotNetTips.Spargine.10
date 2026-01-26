@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// and verifying hashed passwords. It leverages AES (Advanced Encryption Standard) for encryption tasks and SHA256 for hashing,
 /// ensuring a high level of security for sensitive data handling.
 /// </summary>
-[Information(Version = "1", Status = Status.Available, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
+[Information(Version = "1", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
 public static class EncryptionHelper
 {
 	private const byte FormatVersion = 1;
@@ -268,7 +268,7 @@ public static class EncryptionHelper
 	/// <returns>Base64 payload string.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AesGcmEncrypt([DisallowNull] string plainText, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		plainText = plainText.ArgumentNotNullOrEmpty();

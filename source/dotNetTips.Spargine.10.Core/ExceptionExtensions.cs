@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Core;
 /// <remarks>
 /// This class contains utility methods and properties to enhance exception handling.
 /// </remarks>
-[Information(nameof(ExceptionExtensions), Status = Status.New)]
+[Information(nameof(ExceptionExtensions), Status = Status.NeedsDocumentation)]
 public static partial class ExceptionExtensions
 {
 	/// <summary>
@@ -48,7 +48,7 @@ public static partial class ExceptionExtensions
 	/// </summary>
 	/// <param name="ex">The exception instance to clear.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="ex"/> is <c>null</c>.</exception>
-	[Information(nameof(ClearLoggedState), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ClearLoggedState), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void ClearLoggedState([DisallowNull] this Exception ex)
 	{
 		ex = ex.ArgumentNotNull();
@@ -65,7 +65,7 @@ public static partial class ExceptionExtensions
 	/// <param name="ex">The exception instance to check or update.</param>
 	/// <returns><c>true</c> if the exception has been logged; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="ex"/> is <c>null</c>.</exception>
-	[Information(nameof(IsLogged), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsLogged), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsLogged([DisallowNull] this Exception ex)
 	{
 		ex = ex.ArgumentNotNull();
@@ -81,7 +81,7 @@ public static partial class ExceptionExtensions
 	/// </summary>
 	/// <param name="ex">The exception instance to update.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="ex"/> is <c>null</c>.</exception>
-	[Information(nameof(SetIsLogged), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(SetIsLogged), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void SetIsLogged([DisallowNull] this Exception ex)
 	{
 		ex = ex.ArgumentNotNull();
@@ -141,7 +141,7 @@ public static partial class ExceptionExtensions
 		/// Retrieves all inner exceptions from the specified exception as a flat list.
 		/// </summary>
 		/// <returns>A list of all inner exceptions.</returns>
-		[Information(nameof(GetAllInnerExceptions), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(GetAllInnerExceptions), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IReadOnlyList<Exception> GetAllInnerExceptions()
 		{
 			exception = exception.ArgumentNotNull();
@@ -167,7 +167,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <typeparam name="T">The type of exception to check for.</typeparam>
 		/// <returns><c>true</c> if the exception or any inner exception is of type <typeparamref name="T"/>; otherwise, <c>false</c>.</returns>
-		[Information(nameof(ContainsExceptionOfType), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ContainsExceptionOfType), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ContainsExceptionOfType<T>() where T : Exception
 		{
 			ArgumentNullException.ThrowIfNull(exception);
@@ -179,7 +179,7 @@ public static partial class ExceptionExtensions
 		/// Extracts metadata associated with the exception.
 		/// </summary>
 		/// <returns>A dictionary containing metadata key-value pairs.</returns>
-		[Information(nameof(GetMetadata), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(GetMetadata), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IReadOnlyDictionary<string, object> GetMetadata()
 		{
 			ArgumentNullException.ThrowIfNull(exception);
@@ -202,7 +202,7 @@ public static partial class ExceptionExtensions
 		/// Determines whether the exception or any of its inner exceptions is an <see cref="AggregateException"/>.
 		/// </summary>
 		/// <returns><c>true</c> if an <see cref="AggregateException"/> is found; otherwise, <c>false</c>.</returns>
-		[Information(nameof(ContainsAggregateException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ContainsAggregateException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ContainsAggregateException()
 		{
 			exception = exception.ArgumentNotNull();
@@ -215,7 +215,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <param name="message">The message to search for.</param>
 		/// <returns><c>true</c> if the message is found; otherwise, <c>false</c>.</returns>
-		[Information(nameof(ContainsMessage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ContainsMessage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ContainsMessage([DisallowNull] string message)
 		{
 			exception = exception.ArgumentNotNull();
@@ -229,7 +229,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <returns>A JSON string representing the exception.</returns>
 		[return: NotNull]
-		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string ToJson()
 		{
 			if (exception is null)
@@ -253,7 +253,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <param name="logger">The logger to use for logging.</param>
 		/// <param name="logLevel">The log level to use. Defaults to Error.</param>
-		[Information(nameof(LogException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(LogException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void LogException([DisallowNull] ILogger logger, LogLevel logLevel = LogLevel.Error)
 		{
 			logger = logger.ArgumentNotNull();
@@ -349,7 +349,7 @@ public static partial class ExceptionExtensions
 		/// </list>
 		/// </remarks>
 		[return: NotNull]
-		[Information(nameof(FormatForDisplay), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(FormatForDisplay), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string FormatForDisplay()
 		{
 			if (exception is null)

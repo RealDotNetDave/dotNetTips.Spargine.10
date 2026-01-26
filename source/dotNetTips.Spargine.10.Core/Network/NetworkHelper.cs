@@ -36,7 +36,7 @@ public static class NetworkHelper
 	/// <returns>A read-only collection of DNS server IP addresses.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetDnsServerAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetDnsServerAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<IPAddress> GetDnsServerAddresses()
 	{
 		var dnsServers = new List<IPAddress>();
@@ -103,7 +103,7 @@ public static class NetworkHelper
 	/// <exception cref="NetworkInformationException">A Windows system function call failed.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetLocalIPAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetLocalIPAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<IPAddress> GetLocalIPAddresses(AddressFamily? addressFamily = null)
 	{
 		var addresses = new List<IPAddress>();
@@ -227,7 +227,7 @@ public static class NetworkHelper
 	/// </example>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetNetworkSpeeds), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetNetworkSpeeds), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<(string InterfaceName, long SpeedBps)> GetNetworkSpeeds()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -253,7 +253,7 @@ public static class NetworkHelper
 	/// <returns>A read-only collection of tuples containing interface name and its statistics.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetNetworkStatistics), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetNetworkStatistics), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<(string InterfaceName, IPv4InterfaceStatistics Statistics)> GetNetworkStatistics(NetworkInterfaceType? interfaceType = null)
 	{
 		var statistics = new List<(string, IPv4InterfaceStatistics)>();
@@ -282,7 +282,7 @@ public static class NetworkHelper
 	/// </summary>
 	/// <returns>Information about the primary active network interface, or null if none found.</returns>
 	[Pure]
-	[Information(nameof(GetPrimaryNetworkInterface), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.New)]
+	[Information(nameof(GetPrimaryNetworkInterface), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public static NetworkInterface? GetPrimaryNetworkInterface()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -348,7 +348,7 @@ public static class NetworkHelper
 	/// </para>
 	/// </remarks>
 	[Pure]
-	[Information(nameof(IsConnectedToEthernet), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsConnectedToEthernet), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsConnectedToEthernet()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -374,7 +374,7 @@ public static class NetworkHelper
 	/// to determine if any network connection is available on the system.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsConnectedToNetwork()
 	{
 		return NetworkInterface.GetIsNetworkAvailable();
@@ -385,7 +385,7 @@ public static class NetworkHelper
 	/// </summary>
 	/// <returns><c>true</c> if the computer is connected to a Wi-Fi network; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(IsConnectedToWiFi), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsConnectedToWiFi), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsConnectedToWiFi()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -407,7 +407,7 @@ public static class NetworkHelper
 	/// </summary>
 	/// <returns><c>true</c> if any active network interface supports IPv6; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(IsIPv6Supported), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsIPv6Supported), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsIPv6Supported()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();

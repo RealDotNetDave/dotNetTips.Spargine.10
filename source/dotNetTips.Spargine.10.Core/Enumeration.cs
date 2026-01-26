@@ -197,7 +197,7 @@ public class Enumeration : IComparable
 	/// <returns>
 	/// <c>true</c> if a matching enumeration instance is found; otherwise, <c>false</c>.
 	/// </returns>
-	[Information(nameof(TryFromDisplayName), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryFromDisplayName), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryFromDisplayName<T>(string displayName, [NotNullWhen(true)] out T? result) where T : Enumeration
 	{
 		if (string.IsNullOrWhiteSpace(displayName))
@@ -222,7 +222,7 @@ public class Enumeration : IComparable
 	/// <returns>
 	/// <c>true</c> if a matching enumeration instance is found; otherwise, <c>false</c>.
 	/// </returns>
-	[Information(nameof(TryFromValue), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(TryFromValue), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static bool TryFromValue<T>(int value, [NotNullWhen(true)] out T? result) where T : Enumeration
 	{
 		result = GetAll<T>().FirstOrDefault(item => item.Value == value);
