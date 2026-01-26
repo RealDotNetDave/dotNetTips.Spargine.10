@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -75,7 +75,7 @@ public static class ObjectExtensions
 	/// </summary>
 	/// <param name="obj">The object containing IDisposable fields to be disposed.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void DisposeFields([AllowNull] this IDisposable obj)
 	{
 		if (obj is null)
@@ -647,7 +647,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
 		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -815,7 +815,7 @@ public static class ObjectExtensions
 		/// Automatically sets all null instance fields of an object to their default values.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public void InitializeFields()
 		{
 			obj = obj.ArgumentNotNull();

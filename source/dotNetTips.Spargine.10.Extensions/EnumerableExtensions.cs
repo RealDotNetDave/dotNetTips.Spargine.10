@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -176,7 +177,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: MaybeNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public T FirstOrNull([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -247,7 +248,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public int IndexOf([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentItemsExists();
@@ -276,7 +277,7 @@ public static class EnumerableExtensions
 		/// <returns>The zero-based otherIndex of the first occurrence of an item that matches the accumulatorFunction within the entire collection, if found; otherwise, -1.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -345,7 +346,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 		public IEnumerable<T> OrderBy([DisallowNull] string sortExpression)
 		{
 			collection = collection.ArgumentNotNull();
@@ -588,7 +589,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<IEnumerable<T>> Partition(int pageCount)
 		{
 			collection = collection.ArgumentNotNull();
@@ -731,7 +732,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToBlockingCollection), "David McCarter", "4/13/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(ToBlockingCollection), "David McCarter", "4/13/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public BlockingCollection<T> ToBlockingCollection()
 		{
 			return new BlockingCollection<T>(new ConcurrentQueue<T>(collection));
@@ -778,7 +779,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Collection<T> ToCollection()
 		{
 			return new Collection<T>([.. collection]);
@@ -869,7 +870,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet()
 		{
 			return FrozenSet.ToFrozenSet(collection);
@@ -896,7 +897,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToLinkedList), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToLinkedList), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public LinkedList<T> ToLinkedList()
 		{
 			return new LinkedList<T>(collection);
@@ -1133,7 +1134,7 @@ public static class EnumerableExtensions
 		/// </summary>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public long FastLongCount()
 		{
 			collection = collection.ArgumentNotNull();
@@ -1147,6 +1148,7 @@ public static class EnumerableExtensions
 					count++;
 				}
 			}
+
 			return count;
 		}
 
@@ -1182,7 +1184,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastAny), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool FastAny([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			return collection.Any(accumulatorPredicate);
@@ -1232,16 +1234,7 @@ public static class EnumerableExtensions
 				return false;
 			}
 
-			// SUGGESTION FROM COPILOT SLOWER
-			foreach (var item in items)
-			{
-				if (collection.Contains(item))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return items.Any(item => collection.Contains(item));
 		}
 
 		/// <summary>
@@ -1429,7 +1422,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 		public IEnumerable<T> FastDistinct([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			// Value types: use size-based optimization; honor comparer
