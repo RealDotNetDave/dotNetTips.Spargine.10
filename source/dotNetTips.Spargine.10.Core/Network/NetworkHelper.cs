@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,7 +26,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// <summary>
 /// Provides helper methods for network-related operations.
 /// </summary>
-[Information(Status = Status.NeedsDocumentation, Documentation = "")]
+[Information(Status = Status.Available, Documentation = "")]
 public static class NetworkHelper
 {
 
@@ -60,7 +60,7 @@ public static class NetworkHelper
 	/// <returns>A read-only collection of gateway IP addresses.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetGatewayAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetGatewayAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<IPAddress> GetGatewayAddresses()
 	{
 		var gateways = new List<IPAddress>();
@@ -89,7 +89,7 @@ public static class NetworkHelper
 	/// <returns>The hostname of the local computer.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetHostName), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetHostName), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetHostName()
 	{
 		return Dns.GetHostName();
@@ -139,12 +139,12 @@ public static class NetworkHelper
 	}
 
 	/// <summary>
-	/// Gets the MAC (physical) address of the active network interface.
+	/// Gets the MAC (physical) addresses of the active network interface.
 	/// </summary>
 	/// <returns>A read-only collection of physical addresses (MAC addresses) for active network interfaces.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetMacAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetMacAddresses), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<PhysicalAddress> GetMacAddresses()
 	{
 		var macAddresses = new List<PhysicalAddress>();
@@ -166,7 +166,7 @@ public static class NetworkHelper
 	}
 
 	/// <summary>
-	/// Checks the network connections and returns a read-only collection of active network interfaces.
+	/// Checks the network connections and returns a collection of active network interfaces.
 	/// </summary>
 	/// <returns>A read-only collection of <see cref="NetworkInterface"/> representing the active network connections.</returns>
 	[Pure]

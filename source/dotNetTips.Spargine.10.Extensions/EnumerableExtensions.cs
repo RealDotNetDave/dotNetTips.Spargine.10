@@ -42,6 +42,8 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
 {
+	//TODO: COMBINE WITH https://bit.ly/SpargineEnumHandling ARTICLE?
+
 	/// <summary>
 	/// Cache for compiled property accessor delegates to avoid repeated reflection and compilation overhead.
 	/// Key format: "TypeFullName.PropertyName" (e.g., "MyApp.Person.Age")
