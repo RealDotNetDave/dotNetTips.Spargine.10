@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="NetworkHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -17,6 +17,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.NetworkInformation;
 using DotNetTips.Spargine.Core.Network;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -24,7 +25,7 @@ namespace DotNetTips.Spargine.Core.Tests.Network;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class NetworkHelperTests
+public class NetworkHelperTests : UnitTester
 {
 
 
@@ -226,6 +227,30 @@ public class NetworkHelperTests
 		var result2 = NetworkHelper.GetNetworkConnections();
 
 		Assert.HasCount(result1.Count, result2, "Multiple calls should return consistent results.");
+	}
+
+	[TestMethod]
+	public void GetNetworkConnectionsReport()
+	{
+		var result = NetworkHelper.GetNetworkConnectionsReport();
+
+		this.PrintToDebug(result);
+
+		var file = this.SaveToFile(result, nameof(this.GetNetworkConnectionsReport));
+
+		Assert.IsFalse(string.IsNullOrWhiteSpace(result), "The network connections report should not be null or empty.");
+	}
+
+	[TestMethod]
+	public void GetNetworkConnectionsReportWithIPProperties()
+	{
+		var result = NetworkHelper.GetNetworkConnectionsReport(true);
+
+		this.PrintToDebug(result);
+
+		var file = this.SaveToFile(result, nameof(this.GetNetworkConnectionsReportWithIPProperties));
+
+		Assert.IsFalse(string.IsNullOrWhiteSpace(result), "The network connections report should not be null or empty.");
 	}
 
 	[TestMethod]

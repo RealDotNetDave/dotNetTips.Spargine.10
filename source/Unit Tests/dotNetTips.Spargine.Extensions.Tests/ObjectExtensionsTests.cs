@@ -1317,7 +1317,7 @@ public class ObjectExtensionsTests : UnitTester
 			Today = Clock.LocalTime
 		};
 
-		var result = personProper.PropertiesToDictionary(memberName: $"Person-{personProper.Id}", ignoreNulls: true);
+		var result = personProper.PropertiesToDictionary(ignoreNulls: true);
 
 		Assert.IsGreaterThan(1, result.Count);
 

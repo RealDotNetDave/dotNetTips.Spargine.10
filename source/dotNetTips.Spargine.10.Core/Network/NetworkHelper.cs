@@ -15,9 +15,13 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text;
+using DotNetTips.Spargine.Core.Internal;
+using Microsoft.Extensions.ObjectPool;
 
 namespace DotNetTips.Spargine.Core.Network;
 
@@ -29,6 +33,9 @@ namespace DotNetTips.Spargine.Core.Network;
 [Information(Status = Status.Available, Documentation = "")]
 public static class NetworkHelper
 {
+
+	private static readonly ObjectPool<StringBuilder> _stringBuilderPool =
+new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
 	/// Gets the DNS server addresses configured for the active network interfaces.
@@ -187,6 +194,108 @@ public static class NetworkHelper
 		connections.TrimExcess();
 
 		return connections.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Builds a detailed, human-readable report of active network connections.
+	/// </summary>
+	/// <param name="includeIPProperties">
+	/// If <c>true</c>, includes the IP properties section for each connection (such as DNS, gateways, and IP configurations).
+	/// If <c>false</c>, omits the IP properties section for a faster, lighter report.
+	/// </param>
+	/// <returns>
+	/// A formatted <see cref="string"/> containing one section per active network interface, including:
+	/// name, basic details (description, type, status, speed, receive-only flag, physical address),
+	/// IP statistics, IPv4 statistics, and optionally IP properties.
+	/// </returns>
+	/// <remarks>
+	/// - Interfaces are filtered to operational status <see cref="OperationalStatus.Up"/> and speed &gt; 0.
+	/// - Uses a pooled <see cref="StringBuilder"/> to minimize allocations.
+	/// - Relies on extension methods for formatting (e.g., <see cref="InternalMethods.PropertiesToDictionary(object, string, bool)"/>).
+	/// - Each interface section is separated by a header line of '=' characters for readability.
+	/// </remarks>
+	[Pure]
+	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static string GetNetworkConnectionsReport(bool includeIPProperties = false)
+	{
+		var connections = GetNetworkConnections();
+
+		var sb = _stringBuilderPool.Get().Clear();
+
+		foreach (var connection in connections.Where(p => p.Speed > 0))
+		{
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"Name: {connection.Name}");
+			sb.AppendRepeatedCharsLine(ControlChars.Equal, 40);
+
+			//Basic info
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Description: {connection.Description}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Type: {connection.NetworkInterfaceType.GetDescription()}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Status: {connection.OperationalStatus.GetDescription()}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Speed: {connection.Speed}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Receive only: {connection.IsReceiveOnly}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Physical Address: {connection.GetPhysicalAddress().ToString()}");
+			_ = sb.AppendLine();
+
+			//Add IP Statistics
+			var ipStats = connection.GetIPStatistics();
+
+			if (ipStats is not null)
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"IP Statistics:");
+
+				var ipStatsInfo = ipStats.PropertiesToDictionary();
+
+				foreach (var kvp in ipStatsInfo)
+				{
+					_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {kvp.Key}: {kvp.Value}");
+				}
+
+				_ = sb.AppendLine();
+			}
+
+			//Add IPv4 Statistics
+			var ipv4Stats = connection.GetIPv4Statistics();
+
+			if (ipv4Stats is not null)
+			{
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"IPv4 Statistics:");
+
+				var ipv4StatsInfo = ipv4Stats.PropertiesToDictionary();
+
+				foreach (var kvp in ipv4StatsInfo)
+				{
+					_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {kvp.Key}: {kvp.Value}");
+				}
+
+				_ = sb.AppendLine();
+			}
+
+			if (includeIPProperties)
+			{
+				//Add IP Properties
+				var ipProperties = connection.GetIPProperties();
+
+				if (ipProperties is not null)
+				{
+					_ = sb.AppendLine(CultureInfo.CurrentCulture, $"IP Properties:");
+
+					var ipPropertiesInfo = ipProperties.PropertiesToDictionary();
+
+					foreach (var kvp in ipPropertiesInfo)
+					{
+						_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {kvp.Key}: {kvp.Value}");
+					}
+
+					_ = sb.AppendLine();
+				}
+			}
+
+			// Add ending blank line
+			_ = sb.AppendLine();
+
+		}
+
+		return sb.ToString();
 	}
 
 	/// <summary>

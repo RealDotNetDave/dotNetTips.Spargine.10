@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Core;
 /// converting objects to and from JSON. It also provides methods to get default values, hash codes, property values,
 /// and display names for types, as well as determining if a type is a built-in .NET type or if an assembly is a .NET assembly.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTypeHelper")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTypeHelper")]
 public static class TypeHelper
 {
 	/// <summary>
@@ -1670,21 +1670,29 @@ public static class TypeHelper
 	}
 
 	/// <summary>
-	/// Determines whether the specified <see cref="Type"/> implements the <see cref="IEnumerable"/> interface.
+	/// Determines whether the specified <see cref="Type"/> implements the <see cref="IEnumerable"/> interface,
+	/// is an array, or implements the <see cref="ICollection"/> interface.
 	/// </summary>
 	/// <param name="type">The <see cref="Type"/> to inspect. Must not be <c>null</c>.</param>
 	/// <returns>
-	/// <c>true</c> if the type implements <see cref="IEnumerable"/>; otherwise, <c>false</c>.
+	/// <c>true</c> if the type is an array, implements <see cref="IEnumerable"/>, or implements <see cref="ICollection"/>; otherwise, <c>false</c>.
 	/// </returns>
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static bool IsEnumerable([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		return type.GetInterfaces().Any(t => t == typeof(IEnumerable));
+		// Check if type is an array
+		if (type.IsArray)
+		{
+			return true;
+		}
+
+		// Check if type implements IEnumerable or ICollection
+		return type.GetInterfaces().Any(t => t == typeof(IEnumerable) || t == typeof(ICollection));
 	}
 
 	/// <summary>

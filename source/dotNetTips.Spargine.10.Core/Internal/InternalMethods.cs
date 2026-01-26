@@ -4,7 +4,7 @@
 // Created          : 02-10-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-21-2025
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="InternalMethods.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,9 +12,15 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json.Serialization;
 using DotNetTips.Spargine.Core;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -26,12 +32,120 @@ namespace DotNetTips.Spargine.Core.Internal;
 internal static class InternalMethods
 {
 
-	/// <summary>
-	/// The null string
-	/// </summary>
-	private const string NullString = "[null]";
-
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
+
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static ReadOnlyDictionary<string, string> PropertiesToDictionary(this object obj, [DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
+	{
+		memberName = memberName.ArgumentNotNull();
+
+		// Return just member name if obj is null and ignoreNulls is false
+		if (memberName.HasValue() && obj is null && ignoreNulls is false)
+		{
+			return new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, string.Empty } });
+		}
+
+		var objectType = obj.ArgumentNotNull().GetType();
+
+		var result = new Dictionary<string, string>();
+
+		if (_builtInTypeNames.ContainsKey(objectType))
+		{
+			result.Add(memberName, obj!.ToString()!);
+			return result.AsReadOnly();
+		}
+
+		// If the type implements the IEnumerable interface.
+		if (TypeHelper.IsEnumerable(objectType))
+		{
+			// Cast obj to IEnumerable before iterating
+			if (obj is IEnumerable enumerable)
+			{
+				var itemCount = 0;
+
+				foreach (var item in enumerable)
+				{
+					var itemId = itemCount++;
+
+					var itemInnerMember = FastStringBuilder.Format($"{{0}}[{{1}}]", memberName, itemId.ToString(CultureInfo.CurrentCulture));
+
+					result = result.Concat(item.PropertiesToDictionary(itemInnerMember)).ToDictionary(e => e.Key, e => e.Value);
+				}
+
+				return result.AsReadOnly();
+			}
+		}
+
+		// Otherwise go deeper in the object tree.
+		// And foreach object public property collect each value
+		var propertyCollection = objectType.GetProperties();
+
+		var newMemberName = string.Empty;
+
+		if (memberName.Length > 0)
+		{
+			newMemberName = $"{memberName}{ControlChars.Dot}";
+		}
+
+		foreach (var property in propertyCollection)
+		{
+			var ignoreAttribute = property.GetCustomAttribute<JsonIgnoreAttribute>();
+
+			if (ignoreAttribute == null)
+			{
+				try
+				{
+					var innerObject = property.GetValue(obj, null);
+
+					if (ignoreNulls && innerObject is null)
+					{
+						continue;
+					}
+
+					var innerMember = FastStringBuilder.Format("{0}{1}", newMemberName, property.Name);
+
+					result = result.Concat(innerObject!.PropertiesToDictionary(innerMember, ignoreNulls)).ToDictionary(e => e.Key, e => e.Value);
+				}
+				catch (Exception ex)
+				{
+					Trace.WriteLine(ex.Message);
+				}
+			}
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Appends a character to the <see cref="StringBuilder"/> the specified number of times.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append to. Must not be <c>null</c>.</param>
+	/// <param name="character">The character to repeat.</param>
+	/// <param name="count">The number of times to append the character. Must be non-negative.</param>
+	/// <returns>The same <see cref="StringBuilder"/> instance for fluent chaining.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="sb"/> is <c>null</c>.
+	/// </exception>
+	/// <exception cref="ArgumentOutOfRangeException">
+	/// Thrown if <paramref name="count"/> is negative.
+	/// </exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AppendRepeatedCharsLine), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	internal static void AppendRepeatedCharsLine([DisallowNull] this StringBuilder sb, char character, int count)
+	{
+		sb = sb.ArgumentNotNull();
+		count = count.ArgumentInRange(min: 1);
+
+		for (var charCount = 0; charCount < count; charCount++)
+		{
+			_ = sb.Append(character);
+		}
+
+		_ = sb.AppendLine();
+	}
 
 	/// <summary>
 	/// Ensures the minimum.
@@ -61,70 +175,6 @@ internal static class InternalMethods
 		return type.GetInterfaces().Any(t => t == typeof(IEnumerable));
 	}
 
-	/// <summary>
-	/// Converts object properties to a <see cref="IDictionary" />.
-	/// </summary>
-	/// <param name="obj">The object.</param>
-	/// <param name="memberName">Name of the member.</param>
-	/// <param name="ignoreNulls">if set to <c>true</c> [ignore nulls].</param>
-	/// <returns>IDictionary&lt;System.String, System.String&gt;.</returns>
-	internal static IDictionary<string, string> PropertiesToDictionary(object obj, string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
-	{
-		var result = new Dictionary<string, string>();
-
-		if (obj is null)
-		{
-			result.Add(memberName, NullString);
-			return result;
-		}
-
-		var objectType = obj.GetType();
-
-		if (_builtInTypeNames.ContainsKey(objectType))
-		{
-			result.Add(memberName, obj.ToString()!);
-			return result;
-		}
-
-		if (IsEnumerable(objectType))
-		{
-			var itemCount = 0;
-
-			foreach (var item in (IEnumerable)obj)
-			{
-				var itemId = itemCount++;
-				var itemInnerMember = string.Format(CultureInfo.CurrentCulture, "{0}[{1}]", memberName, itemId);
-				result = result.Concat(PropertiesToDictionary(item, itemInnerMember)).ToDictionary(e => e.Key, e => e.Value);
-			}
-			return result;
-		}
-
-		var propertyCollection = objectType.GetProperties();
-		var newMemberName = string.Empty;
-
-		if (memberName.Length > 0)
-		{
-			newMemberName = $"{memberName}{ControlChars.Dot}";
-		}
-
-		var propertyCount = propertyCollection.LongLength;
-
-		for (var index = 0; index < propertyCount; index++)
-		{
-			var property = propertyCollection[index];
-			var innerObject = property.GetValue(obj, null);
-
-			if (ignoreNulls && innerObject is null)
-			{
-				continue;
-			}
-
-			var innerMember = string.Format(CultureInfo.CurrentCulture, "{0}{1}", newMemberName, property.Name);
-			result = result.Concat(PropertiesToDictionary(innerObject!, innerMember)).ToDictionary(e => e.Key, e => e.Value);
-		}
-
-		return result;
-	}
 
 	/// <summary>
 	/// Propertieses to string.
