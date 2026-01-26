@@ -68,9 +68,6 @@ public class InMemoryCacheTests
 		cache.Clear();
 	}
 
-
-
-
 	[TestMethod]
 	public void AddCacheItem_WithCustomExpirationDateTime_EmptyKey_ThrowsArgumentNullException()
 	{

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="EnumExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -40,6 +40,7 @@ public class EnumExtensionsTests
 	{
 		var value = TestEnum.WithDescription;
 		var desc = value.GetDescription();
+
 		Assert.AreEqual("Custom Description", desc);
 	}
 
@@ -48,6 +49,7 @@ public class EnumExtensionsTests
 	{
 		var value = TestEnum.WithoutDescription;
 		var desc = value.GetDescription();
+
 		Assert.AreEqual("WithoutDescription", desc);
 	}
 
@@ -65,6 +67,7 @@ public class EnumExtensionsTests
 	public void GetItems_ReturnsAllEnumValues()
 	{
 		var items = TestEnum.WithDescription.GetItems();
+
 		Assert.HasCount(2, items);
 		Assert.IsTrue(items.Any(i => i.Description == "WithDescription" && i.Value == 0));
 		Assert.IsTrue(items.Any(i => i.Description == "WithoutDescription" && i.Value == 1));

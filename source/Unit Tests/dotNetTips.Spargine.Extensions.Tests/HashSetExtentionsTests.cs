@@ -4,9 +4,9 @@
 // Created          : 01-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
-// <copyright file="HashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="HashSetExtentionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -26,7 +26,7 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class HashSetTests
+public class HashSetExtentionsTests
 {
 
 	[TestMethod]
@@ -37,12 +37,11 @@ public class HashSetTests
 
 		people.AddIf(person, true);
 
-		Assert.AreEqual(11, people.Count);
+		Assert.HasCount(11, people);
 
 		people.AddIf(person, false);
 
-		Assert.AreEqual(11, people.Count);
-
+		Assert.HasCount(11, people);
 	}
 
 	[TestMethod]
@@ -50,7 +49,7 @@ public class HashSetTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToConcurrentHashSet();
 
-		Assert.AreEqual(10, people.Count);
+		Assert.HasCount(10, people);
 	}
 
 	[TestMethod]
@@ -113,10 +112,10 @@ public class HashSetTests
 
 		people.Upsert(person);
 
-		Assert.AreEqual(11, people.Count);
+		Assert.HasCount(11, people);
 
 		people.Upsert(personFromCollection);
 
-		Assert.AreEqual(11, people.Count);
+		Assert.HasCount(11, people);
 	}
 }

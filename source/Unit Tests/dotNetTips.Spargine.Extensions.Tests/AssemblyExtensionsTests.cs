@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,6 +38,7 @@ public class AssemblyExtensionsTests
 	{
 		var assembly = Assembly.GetExecutingAssembly();
 		var interfaces = assembly.GetAllInterfaces();
+
 		Assert.HasCount(interfaces.Distinct().Count(), interfaces);
 	}
 

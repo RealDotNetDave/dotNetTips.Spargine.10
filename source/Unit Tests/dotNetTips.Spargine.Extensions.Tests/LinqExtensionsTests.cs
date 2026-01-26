@@ -73,6 +73,7 @@ public class LinqExtensionsTests
 		Assert.AreEqual(4, result[3]);
 		Assert.AreEqual(5, result[4]);
 	}
+
 	[TestMethod]
 	public void If_WithConditionTrue_ShouldApplyTransforms()
 	{

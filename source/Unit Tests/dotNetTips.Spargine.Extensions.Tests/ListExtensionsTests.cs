@@ -4,13 +4,14 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -319,7 +320,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(5, list.Count);
+		Assert.HasCount(5, list);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, list);
 	}
 
@@ -334,7 +335,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 	}
 
 	[TestMethod]
@@ -348,7 +349,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(4, list.Count);
+		Assert.HasCount(4, list);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, list);
 	}
 
@@ -363,7 +364,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(emptyItems);
 
 		// Assert
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 	}
 
 	[TestMethod]
@@ -377,7 +378,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, list);
 	}
 
@@ -392,7 +393,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(1499, list.Count);
+		Assert.HasCount(1499, list);
 		Assert.IsTrue(list.Contains(1));
 		Assert.IsTrue(list.Contains(1499));
 	}
@@ -408,7 +409,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(nullItems);
 
 		// Assert
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, list);
 	}
 
@@ -454,7 +455,7 @@ public class ListExtensionsTests
 		people.AddRangeIfNotExists(itemsToAdd, new PersonEqualityComparer());
 
 		// Assert
-		Assert.AreEqual(6, people.Count);
+		Assert.HasCount(6, people);
 	}
 
 	[TestMethod]
@@ -468,7 +469,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(4, list.Count);
+		Assert.HasCount(4, list);
 		Assert.IsTrue(list.Contains(4));
 	}
 
@@ -483,7 +484,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd);
 
 		// Assert
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 	}
 
 	[TestMethod]
@@ -497,7 +498,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd, StringComparer.Ordinal);
 
 		// Assert
-		Assert.AreEqual(4, list.Count);
+		Assert.HasCount(4, list);
 	}
 
 	[TestMethod]
@@ -511,7 +512,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd, StringComparer.OrdinalIgnoreCase);
 
 		// Assert
-		Assert.AreEqual(2, list.Count);
+		Assert.HasCount(2, list);
 		Assert.IsTrue(list.Contains("Apple"));
 		Assert.IsTrue(list.Contains("Banana"));
 	}
@@ -527,7 +528,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd, StringComparer.OrdinalIgnoreCase);
 
 		// Assert
-		Assert.AreEqual(3, list.Count);
+		Assert.HasCount(3, list);
 		Assert.IsTrue(list.Contains("Alice"));
 		Assert.IsTrue(list.Contains("Bob"));
 		Assert.IsTrue(list.Contains("CHARLIE"));
@@ -544,7 +545,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd, null);
 
 		// Assert
-		Assert.AreEqual(5, list.Count);
+		Assert.HasCount(5, list);
 		Assert.IsTrue(list.Contains("Alice"));
 		Assert.IsTrue(list.Contains("alice"));
 		Assert.IsTrue(list.Contains("ALICE"));
@@ -561,7 +562,7 @@ public class ListExtensionsTests
 		list.AddRangeIfNotExists(itemsToAdd, null);
 
 		// Assert
-		Assert.AreEqual(5, list.Count);
+		Assert.HasCount(5, list);
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, list);
 	}
 
@@ -579,7 +580,7 @@ public class ListExtensionsTests
 		people.AddRangeIfNotExists(itemsToAdd, new PersonEqualityComparer());
 
 		// Assert
-		Assert.AreEqual(originalCount + 1, people.Count);
+		Assert.HasCount(originalCount + 1, people);
 	}
 
 	[TestMethod]
@@ -631,6 +632,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.AreEqual(list.Count, span.Length, "The length of the span should match the count of the list.");
+
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], span[i], $"The element at index {i} should match between the list and the span.");
@@ -1148,11 +1150,8 @@ public class ListExtensionsTests
 		List<int> list1 = null;
 		List<int> list2 = null;
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1162,11 +1161,8 @@ public class ListExtensionsTests
 		var list1 = new List<decimal> { 1.1m, 2.2m, 3.3m };
 		var list2 = new List<decimal> { 1.1m, 2.2m, 3.3m };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1176,11 +1172,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3, 4, 5 };
 		var list2 = new List<int> { 1, 2, 3 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1190,11 +1183,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3 };
 		var list2 = new List<int> { 3, 2, 1 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1204,11 +1194,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3, 4, 5 };
 		var list2 = new List<int> { 1, 2, 3, 4, 6 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1218,11 +1205,8 @@ public class ListExtensionsTests
 		var list1 = new List<double> { 1.1, 2.2, 3.3 };
 		var list2 = new List<double> { 1.1, 2.2, 3.3 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1232,11 +1216,8 @@ public class ListExtensionsTests
 		var list1 = new List<int>();
 		var list2 = new List<int>();
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1246,11 +1227,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3, 4, 5 };
 		var list2 = new List<int> { 1, 2, 3, 4, 5 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1261,11 +1239,8 @@ public class ListExtensionsTests
 		var list2 = Enumerable.Range(1, 10000).ToList();
 		list2[0] = 99999; // Change first element
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1276,11 +1251,8 @@ public class ListExtensionsTests
 		var list2 = Enumerable.Range(1, 10000).ToList();
 		list2[9999] = 99999; // Change last element
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1290,11 +1262,8 @@ public class ListExtensionsTests
 		var list1 = Enumerable.Range(1, 10000).ToList();
 		var list2 = Enumerable.Range(1, 10000).ToList();
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1304,11 +1273,8 @@ public class ListExtensionsTests
 		var list1 = new List<int?> { 1, null, 3, 4, 5 };
 		var list2 = new List<int?> { 1, 2, null, 4, 5 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1318,11 +1284,8 @@ public class ListExtensionsTests
 		var list1 = new List<int?> { 1, null, 3, null, 5 };
 		var list2 = new List<int?> { 1, null, 3, null, 5 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1332,11 +1295,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3 };
 		List<int> nullList = null;
 
-		// Act
-		var result = list1.IsEqualTo(nullList);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(nullList));
 	}
 
 	[TestMethod]
@@ -1346,11 +1306,8 @@ public class ListExtensionsTests
 		List<int> nullList = null;
 		var list2 = new List<int> { 1, 2, 3 };
 
-		// Act
-		var result = nullList.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)nullList.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1360,11 +1317,8 @@ public class ListExtensionsTests
 		var list1 = new List<int>();
 		var list2 = new List<int> { 1, 2, 3 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1376,11 +1330,8 @@ public class ListExtensionsTests
 		var list1 = new List<Person> { person1 };
 		var list2 = new List<Person> { person2 }; // Different reference
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert - Default equality comparer uses reference equality for Person
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1392,11 +1343,8 @@ public class ListExtensionsTests
 		var list1 = new List<Person> { person1 };
 		var list2 = new List<Person> { person1 }; // Same reference
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1406,11 +1354,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 2, 3, 3, 3 };
 		var list2 = new List<int> { 1, 2, 2, 3, 3 }; // One less 3
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1419,11 +1364,8 @@ public class ListExtensionsTests
 		// Arrange
 		var list = new List<int> { 1, 2, 3, 4, 5 };
 
-		// Act
-		var result = list.IsEqualTo(list);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list.IsEqualTo(list));
 	}
 
 	[TestMethod]
@@ -1433,11 +1375,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 42 };
 		var list2 = new List<int> { 99 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1447,11 +1386,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 42 };
 		var list2 = new List<int> { 42 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1461,11 +1397,8 @@ public class ListExtensionsTests
 		var list1 = new List<string> { "Apple", "Banana", "Cherry" };
 		var list2 = new List<string> { "apple", "banana", "cherry" };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1475,11 +1408,8 @@ public class ListExtensionsTests
 		var list1 = new List<string> { "apple", "banana", "cherry" };
 		var list2 = new List<string> { "apple", "banana", "cherry" };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1489,11 +1419,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 2, 3, 3, 3 };
 		var list2 = new List<int> { 1, 2, 2, 3, 3, 3 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1503,11 +1430,8 @@ public class ListExtensionsTests
 		List<int> list1 = null;
 		var list2 = new List<int>();
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1517,11 +1441,8 @@ public class ListExtensionsTests
 		var list1 = new List<int>();
 		List<int> list2 = null;
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
@@ -1531,11 +1452,8 @@ public class ListExtensionsTests
 		var list1 = new List<int>();
 		var list2 = new List<int>();
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result, "Two empty lists should be considered equal.");
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2), "Two empty lists should be considered equal.");
 	}
 
 	[TestMethod]
@@ -1545,11 +1463,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3, 4, 5 };
 		var list2 = new List<int> { 5, 4, 3, 2, 1 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result, "Lists with different elements should not be considered equal.");
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2), "Lists with different elements should not be considered equal.");
 	}
 
 	[TestMethod]
@@ -1559,11 +1474,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3, 4, 5 };
 		var list2 = new List<int> { 1, 2, 3, 4, 5 };
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsTrue(result, "Lists with identical elements should be considered equal.");
+		Assert.IsTrue((bool?)list1.IsEqualTo(list2), "Lists with identical elements should be considered equal.");
 	}
 
 
@@ -1574,11 +1486,8 @@ public class ListExtensionsTests
 		var list1 = new List<int> { 1, 2, 3, 4, 5 };
 		var list2 = new List<int>();
 
-		// Act
-		var result = list1.IsEqualTo(list2);
-
 		// Assert
-		Assert.IsFalse(result, "A non-empty list and an empty list should not be considered equal.");
+		Assert.IsFalse((bool?)list1.IsEqualTo(list2), "A non-empty list and an empty list should not be considered equal.");
 	}
 
 	[TestMethod]
@@ -1586,9 +1495,7 @@ public class ListExtensionsTests
 	{
 		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
 
-		var result = list.IsNotEmpty(1000);
-
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list.IsNotEmpty(1000));
 	}
 
 	[TestMethod]
@@ -1596,9 +1503,7 @@ public class ListExtensionsTests
 	{
 		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
 
-		var result = list.IsNotEmpty(p => p.Addresses.Count > 1);
-
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list.IsNotEmpty(p => p.Addresses.Count > 1));
 	}
 
 	[TestMethod]
@@ -1606,9 +1511,7 @@ public class ListExtensionsTests
 	{
 		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
 
-		var result = list.IsNotEmpty();
-
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)list.IsNotEmpty());
 	}
 
 
@@ -1641,7 +1544,7 @@ public class ListExtensionsTests
 		list.PerformAction(item => results[item] = item * item);
 
 		// Assert
-		Assert.AreEqual(3, results.Count);
+		Assert.HasCount(3, results);
 		Assert.AreEqual(1, results[1]);
 		Assert.AreEqual(4, results[2]);
 		Assert.AreEqual(9, results[3]);
@@ -1701,7 +1604,7 @@ public class ListExtensionsTests
 		list.PerformAction(item => processedItems.Add(item));
 
 		// Assert
-		Assert.AreEqual(5, processedItems.Count);
+		Assert.HasCount(5, processedItems);
 		CollectionAssert.AreEqual(list, processedItems);
 	}
 
@@ -1854,7 +1757,7 @@ public class ListExtensionsTests
 		});
 
 		// Assert
-		Assert.AreEqual(5, evenNumbers.Count);
+		Assert.HasCount(5, evenNumbers);
 		CollectionAssert.AreEquivalent(new[] { 2, 4, 6, 8, 10 }, evenNumbers);
 	}
 
@@ -1918,9 +1821,7 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.PickRandom();
-
-		Assert.IsNotNull(result);
+		Assert.IsNotNull((object)people.PickRandom());
 	}
 
 	[TestMethod]
@@ -1928,9 +1829,7 @@ public class ListExtensionsTests
 	{
 		var list = RandomData.GeneratePersonRefCollection(10).ToList();
 
-		var result = list.RemoveFirst(null);
-
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)list.RemoveFirst(null));
 	}
 
 	[TestMethod]
@@ -1973,7 +1872,7 @@ public class ListExtensionsTests
 
 		var shuffledPeople = people.Shuffle();
 
-		Assert.AreEqual(shuffledPeople.Count(), people.Count);
+		Assert.HasCount(shuffledPeople.Count(), people);
 	}
 
 	[TestMethod]
@@ -1997,7 +1896,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.AreEqual(Count, result.Count);
+		Assert.HasCount(Count, result);
 	}
 
 
@@ -2029,6 +1928,7 @@ public class ListExtensionsTests
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.IsInstanceOfType(result, typeof(Collection<int>), "Result should be of type Collection<int>.");
 		Assert.HasCount(list.Count, result, "Resulting collection should have the same count as the source list.");
+
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], result[i], $"Item at index {i} should be equal in both list and resulting collection.");
@@ -2069,7 +1969,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.AreEqual(Count, result.Count);
+		Assert.HasCount(Count, result);
 
 		Assert.IsTrue(result.IsAddingCompleted);
 	}
@@ -2090,8 +1990,7 @@ public class ListExtensionsTests
 		var result = people.ToDistinctConcurrentBag();
 
 		Assert.IsNotNull(result);
-
-		Assert.AreEqual(Count, result.Count);
+		Assert.HasCount(Count, result);
 	}
 
 	[TestMethod]
@@ -2174,8 +2073,7 @@ public class ListExtensionsTests
 		var result = people.ToFastSortedList();
 
 		Assert.IsNotNull(result);
-
-		Assert.AreEqual(Count, result.Count);
+		Assert.HasCount(Count, result);
 	}
 
 
@@ -2191,6 +2089,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.HasCount(list.Distinct().Count(), result, "Resulting FrozenSet should contain distinct elements only.");
+
 		foreach (var item in list.Distinct())
 		{
 			Assert.Contains(item, result, $"Item {item} should be present in the resulting FrozenSet.");
@@ -2223,6 +2122,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.HasCount(list.Count, result, "Resulting FrozenSet should have the same count as the source list.");
+
 		foreach (var item in list)
 		{
 			Assert.Contains(item, result, $"Item {item} should be present in the resulting FrozenSet.");
@@ -2250,7 +2150,7 @@ public class ListExtensionsTests
 
 		Assert.IsNotNull(result);
 
-		Assert.AreEqual(Count, result.Length);
+		Assert.HasCount(Count, result);
 	}
 
 	[TestMethod]
@@ -2442,8 +2342,7 @@ public class ListExtensionsTests
 		var result = people.ToObservableList();
 
 		Assert.IsNotNull(result);
-
-		Assert.AreEqual(Count, result.Count);
+		Assert.HasCount(Count, result);
 	}
 
 	[TestMethod]
@@ -2451,7 +2350,7 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToReadOnlyCollection();
 
-		Assert.AreEqual(Count, people.Count);
+		Assert.HasCount(Count, people);
 	}
 
 	[TestMethod]
@@ -2480,6 +2379,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(readOnlyList, "Result should not be null.");
 		Assert.HasCount(list.Count, readOnlyList, "Resulting IReadOnlyList should have the same count as the source list.");
+
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], readOnlyList[i], $"Item at index {i} should be equal in both list and resulting IReadOnlyList.");
@@ -2521,6 +2421,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(readOnlyObservableCollection, "Result should not be null.");
 		Assert.HasCount(list.Count, readOnlyObservableCollection, "Resulting ReadOnlyObservableCollection should have the same count as the source list.");
+
 		for (int i = 0; i < list.Count; i++)
 		{
 			Assert.AreEqual(list[i], readOnlyObservableCollection[i], $"Item at index {i} should be equal in both list and resulting ReadOnlyObservableCollection.");

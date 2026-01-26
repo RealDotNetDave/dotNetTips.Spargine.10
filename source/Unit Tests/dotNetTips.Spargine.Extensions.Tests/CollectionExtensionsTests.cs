@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 public class CollectionExtensionsTests
 {
 
-	private const int Count = 10;
+	private const int Count = 100;
 
 	[TestMethod]
 	public void AddIfNotExistsSingleItemTest()
@@ -75,7 +75,7 @@ public class CollectionExtensionsTests
 		// TEST
 		people.AddIf(nullPerson, people.Count == Count);
 
-		Assert.AreEqual(10, people.Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -87,7 +87,7 @@ public class CollectionExtensionsTests
 		// TEST
 		people.AddIf(person, people.Count == Count);
 
-		Assert.AreEqual(11, people.Count);
+		Assert.AreEqual(Count + 1, people.Count);
 	}
 
 	[TestMethod]
@@ -165,7 +165,7 @@ public class CollectionExtensionsTests
 		// TEST
 		people.Upsert(nullPerson);
 
-		Assert.AreEqual(10, people.Count);
+		Assert.AreEqual(Count, people.Count);
 	}
 
 
@@ -182,11 +182,11 @@ public class CollectionExtensionsTests
 		// TEST
 		people.Upsert(person);
 
-		Assert.AreEqual(11, people.Count);
+		Assert.AreEqual(Count + 1, people.Count);
 
 		personRecords.Upsert(personRecord);
 
-		Assert.AreEqual(11, personRecords.Count);
+		Assert.AreEqual(Count + 1, personRecords.Count);
 	}
 
 	[TestMethod]
@@ -403,9 +403,8 @@ public class CollectionExtensionsTests
 	public void UpsertWithIDataModel_LargeCollection_ShouldPerformCorrectly()
 	{
 		// Arrange
-		var largeCount = 1000;
 		var models = new List<Person>();
-		for (int i = 0; i < largeCount; i++)
+		for (int i = 0; i < Count; i++)
 		{
 			models.Add(RandomData.GeneratePerson<Person>());
 		}
@@ -418,7 +417,7 @@ public class CollectionExtensionsTests
 		models.Upsert(updatedPerson);
 
 		// Assert
-		Assert.HasCount(largeCount + 1, models);
+		Assert.HasCount(Count + 1, models);
 		var found = models.FirstOrDefault(p => p.Id.Equals(personToUpdate.Id));
 		Assert.IsNotNull(found);
 		Assert.AreNotEqual(updatedPerson.Phone, found.Phone);

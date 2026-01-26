@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,7 +38,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddFirst(null);
 
-		Assert.AreEqual(10, result.FastLongCount());
+		Assert.AreEqual(10, result.Length);
 	}
 
 	/// <summary>
@@ -52,7 +52,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddFirst(person);
 
-		Assert.AreEqual(11, result.FastLongCount());
+		Assert.AreEqual(11, result.Length);
 	}
 
 	[TestMethod]
@@ -62,7 +62,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(null, people.Length == 10);
 
-		Assert.AreEqual(10, result.FastLongCount());
+		Assert.AreEqual(10, result.Length);
 	}
 
 	/// <summary>
@@ -76,7 +76,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(person, people.Length == 10);
 
-		Assert.AreEqual(11, result.FastLongCount());
+		Assert.AreEqual(11, result.Length);
 	}
 
 	/// <summary>
@@ -290,7 +290,8 @@ public class ArrayExtensionsTests
 	public void FastLongCount_ReturnsCorrectLength()
 	{
 		var arr = new[] { 1, 2, 3, 4, 5 };
-		Assert.AreEqual(5, arr.FastLongCount());
+
+		Assert.AreEqual(5, arr.Length);
 	}
 
 	/// <summary>
@@ -302,6 +303,8 @@ public class ArrayExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(10000).ToArray();
 
 		people.FastProcessor((Person person) => person.LastName = "TEST NAME");
+
+		Assert.IsTrue(people.All(p => p.LastName == "TEST NAME"));
 	}
 
 	[TestMethod]
@@ -327,78 +330,6 @@ public class ArrayExtensionsTests
 
 		Assert.AreEqual(hash1, hash2);
 		Assert.AreNotEqual(hash1, hash3);
-	}
-
-	[TestMethod]
-	public void HasItems_WithCount_ReturnsExpected()
-	{
-		var arr = new[] { 1, 2, 3 };
-		Assert.IsTrue(arr.IsNotEmpty(3));
-		Assert.IsFalse(arr.IsNotEmpty(2));
-	}
-
-	[TestMethod]
-	public void HasItems_WithFunc_ReturnsExpected()
-	{
-		var arr = new[] { 1, 2, 3, 4 };
-		Assert.IsTrue(arr.IsNotEmpty(x => x > 2));
-		Assert.IsFalse(arr.IsNotEmpty(x => x > 10));
-	}
-
-	[TestMethod]
-	public void HasItems_WithNullArray_ReturnsFalse()
-	{
-		int[] arr = null;
-		Assert.IsFalse(arr.IsNotEmpty());
-	}
-
-	/// <summary>
-	/// Defines the test method HasItemsTest.
-	/// </summary>
-	[TestMethod]
-	public void HasItemsTest()
-	{
-		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
-		Person[] nullPeople = null;
-
-		Assert.IsTrue(people1.IsNotEmpty());
-
-		Assert.IsFalse(nullPeople.IsNotEmpty());
-	}
-
-	/// <summary>
-	/// Defines the test method HasItemsTestWithCount.
-	/// </summary>
-	[TestMethod]
-	public void HasItemsTestWithCount()
-	{
-		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
-		Person[] nullPeople = null;
-
-		Assert.IsTrue(people1.IsNotEmpty(10));
-
-		Assert.IsFalse(people1.IsNotEmpty(100));
-
-		Assert.IsFalse(nullPeople.IsNotEmpty(10));
-
-	}
-
-	/// <summary>
-	/// Defines the test method HasItemsTestWithFunction.
-	/// </summary>
-	[TestMethod]
-	public void HasItemsTestWithFunction()
-	{
-		var collection = RandomData.GeneratePersonRefCollection(10).ToArray();
-		Person[] nullCollection = null;
-
-		Func<Person, bool> selector = (person) => person.Email.IsNotNull();
-
-		Assert.IsTrue(collection.IsNotEmpty(selector));
-
-		Assert.IsFalse(nullCollection.IsNotEmpty(selector));
-
-		Assert.IsFalse(nullCollection.IsNotEmpty(null));
 	}
 
 	[TestMethod]
@@ -591,6 +522,81 @@ public class ArrayExtensionsTests
 
 		// Assert
 		Assert.AreEqual(49, result);
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithCount_ReturnsExpected()
+	{
+		var arr = new[] { 1, 2, 3 };
+
+		Assert.IsTrue(arr.IsNotEmpty(3));
+		Assert.IsFalse(arr.IsNotEmpty(2));
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithFunc_ReturnsExpected()
+	{
+		var arr = new[] { 1, 2, 3, 4 };
+
+		Assert.IsTrue(arr.IsNotEmpty(x => x > 2));
+		Assert.IsFalse(arr.IsNotEmpty(x => x > 10));
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithNullArray_ReturnsFalse()
+	{
+		int[] arr = null;
+
+		Assert.IsFalse(arr.IsNotEmpty());
+	}
+
+	/// <summary>
+	/// Defines the test method HasItemsTest.
+	/// </summary>
+	[TestMethod]
+	public void IsNotEmptyTest()
+	{
+		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
+		Person[] nullPeople = null;
+
+		Assert.IsTrue(people1.IsNotEmpty());
+
+		Assert.IsFalse(nullPeople.IsNotEmpty());
+	}
+
+	/// <summary>
+	/// Defines the test method HasItemsTestWithCount.
+	/// </summary>
+	[TestMethod]
+	public void IsNotEmptyTestWithCount()
+	{
+		var people1 = RandomData.GeneratePersonRefCollection(10).ToArray();
+		Person[] nullPeople = null;
+
+		Assert.IsTrue(people1.IsNotEmpty(10));
+
+		Assert.IsFalse(people1.IsNotEmpty(100));
+
+		Assert.IsFalse(nullPeople.IsNotEmpty(10));
+
+	}
+
+	/// <summary>
+	/// Defines the test method HasItemsTestWithFunction.
+	/// </summary>
+	[TestMethod]
+	public void IsNotEmptyTestWithFunction()
+	{
+		var collection = RandomData.GeneratePersonRefCollection(10).ToArray();
+		Person[] nullCollection = null;
+
+		Func<Person, bool> selector = (person) => person.Email.IsNotNull();
+
+		Assert.IsTrue(collection.IsNotEmpty(selector));
+
+		Assert.IsFalse(nullCollection.IsNotEmpty(selector));
+
+		Assert.IsFalse(nullCollection.IsNotEmpty(null));
 	}
 
 	[TestMethod]
@@ -967,6 +973,7 @@ public class ArrayExtensionsTests
 	{
 		var arr = new[] { 1, 2, 2, 3, 3, 3 };
 		var result = arr.ToDistinct();
+
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, result);
 	}
 
@@ -988,6 +995,7 @@ public class ArrayExtensionsTests
 	{
 		var arr = new[] { 1, 2, 3 };
 		var frozen = arr.ToFrozenSet();
+
 		Assert.Contains(2, frozen);
 		Assert.HasCount(3, frozen);
 	}

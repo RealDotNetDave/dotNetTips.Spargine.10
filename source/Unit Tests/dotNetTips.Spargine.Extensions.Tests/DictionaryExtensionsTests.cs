@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -29,9 +29,7 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class DictionaryExtensionsTests
 {
-
-	private const int CollectionCount = 256;
-
+	private const int Count = 256;
 
 	/// <summary>
 	/// Defines the test method AddIfNotExistDictionaryTest.
@@ -39,7 +37,7 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void AddIfNotExistDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var newPerson = RandomData.GeneratePerson<Person>();
 
 		// Test parameters
@@ -172,14 +170,14 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void AddRangeDictionaryTest01()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var newPeople = RandomData.GeneratePersonRefCollection(2).ToDictionary(p => p.Id);
 
 		var result = people.AddRange(newPeople, true);
-		Assert.AreEqual(CollectionCount + 2, people.Count);
+		Assert.AreEqual(Count + 2, people.Count);
 
 		result = people.AddRange(newPeople, true);
-		Assert.AreEqual(CollectionCount + 2, people.Count);
+		Assert.AreEqual(Count + 2, people.Count);
 	}
 
 	[TestMethod]
@@ -205,9 +203,9 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void FastCountTest()
 	{
-		var people1 = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people1 = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		Assert.AreEqual(CollectionCount, people1.Count);
+		Assert.AreEqual(Count, people1.Count);
 
 	}
 
@@ -333,7 +331,7 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void GetOrAddTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var newPerson = RandomData.GeneratePerson<Person>();
 
 		// Test Parameters
@@ -341,53 +339,10 @@ public class DictionaryExtensionsTests
 
 		// TEST
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
-		Assert.AreEqual(CollectionCount + 1, people.Count);
+		Assert.AreEqual(Count + 1, people.Count);
 
 		_ = people.GetOrAdd(newPerson.Id, newPerson);
-		Assert.AreEqual(CollectionCount + 1, people.Count);
-	}
-
-	/// <summary>
-	/// Defines the test method HasItemsTest.
-	/// </summary>
-	[TestMethod]
-	public void HasItemsTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
-		Dictionary<string, Person> nullPeople = null;
-
-		Assert.IsTrue(people.IsNotEmpty());
-
-		Assert.IsFalse(nullPeople.IsNotEmpty());
-	}
-
-	/// <summary>
-	/// Defines the test method HasItemsTestWithFunction.
-	/// </summary>
-	[TestMethod]
-	public void HasItemsTestWithFunction()
-	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
-
-		// Explicitly specify the extension method to resolve ambiguity  
-		Func<KeyValuePair<string, Person>, bool> selector = p => p.Value.Email.IsNotNull();
-
-		Assert.IsTrue(DictionaryExtensions.IsNotEmpty(people, selector));
-	}
-
-	/// <summary>
-	/// Defines the test method HasItemsWithCountTest.
-	/// </summary>
-	[TestMethod]
-	public void HasItemsWithCountTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
-		Dictionary<string, Person> nullPeople = null;
-
-		Assert.IsTrue(people.IsNotEmpty(CollectionCount));
-		Assert.IsFalse(people.IsNotEmpty(100));
-
-		Assert.IsFalse(nullPeople.IsNotEmpty(CollectionCount));
+		Assert.AreEqual(Count + 1, people.Count);
 	}
 
 	/// <summary>
@@ -396,11 +351,11 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void ToConcurrentDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToConcurrentDictionary();
 
-		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsNotEmpty(result);
 	}
 	/// <summary>
 	/// Defines the test method ToDelimitedDictionaryTest.
@@ -408,9 +363,9 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void ToDelimitedDictionaryTest()
 	{
-		var words = RandomData.GenerateWords(CollectionCount, 25, 50);
+		var words = RandomData.GenerateWords(Count, 25, 50);
 
-		var dic = new Dictionary<string, string>(CollectionCount);
+		var dic = new Dictionary<string, string>(Count);
 
 		foreach (var item in words)
 		{
@@ -423,12 +378,13 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void ToFrozenDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToFrozenDictionary();
 
-		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsNotEmpty(result);
 		Assert.HasCount(people.Count, result);
+
 		foreach (var kvp in people)
 		{
 			Assert.IsTrue(result.ContainsKey(kvp.Key));
@@ -444,7 +400,6 @@ public class DictionaryExtensionsTests
 
 		var result = emptyDictionary.ToFrozenDictionary();
 
-		Assert.IsFalse(result.IsNotEmpty());
 		Assert.IsEmpty(result);
 	}
 
@@ -459,22 +414,23 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void ToImmutableDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToImmutableDictionary();
 
-		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsNotEmpty(result);
 	}
 
 	[TestMethod]
 	public void ToImmutableSortedDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToImmutableSortedDictionary();
 
-		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsNotEmpty(result);
 		Assert.HasCount(people.Count, result);
+
 		foreach (var kvp in people)
 		{
 			Assert.IsTrue(result.ContainsKey(kvp.Key));
@@ -489,7 +445,6 @@ public class DictionaryExtensionsTests
 
 		var result = emptyDictionary.ToImmutableSortedDictionary();
 
-		Assert.IsFalse(result.IsNotEmpty());
 		Assert.IsEmpty(result);
 	}
 
@@ -552,25 +507,25 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void ToReadOnlyCollectionTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToReadOnlyCollection();
 
 		// Test
 		Assert.IsNotNull(result);
-		Assert.AreEqual(CollectionCount, result.Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
 	public void ToReadOnlyDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToReadOnlyDictionary();
 
 		// Test
 		Assert.IsNotNull(result);
-		Assert.AreEqual(CollectionCount, result.Count);
+		Assert.AreEqual(Count, result.Count);
 	}
 
 	[TestMethod]
@@ -663,11 +618,11 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void ToSortedDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
 		var result = people.ToSortedDictionary();
 
-		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsNotEmpty(result);
 	}
 
 
@@ -741,7 +696,7 @@ public class DictionaryExtensionsTests
 	[TestMethod]
 	public void UpsertDictionaryTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var newPerson = RandomData.GeneratePerson<Person>();
 		var personFromCollection = people.Shuffle().First();
 
@@ -750,13 +705,13 @@ public class DictionaryExtensionsTests
 
 		// Test
 		people.Upsert(newPerson.Id, newPerson);
-		Assert.AreEqual(CollectionCount + 1, people.Count);
+		Assert.AreEqual(Count + 1, people.Count);
 
 		people.Upsert(personFromCollection.Value.Id, personFromCollection.Value);
-		Assert.AreEqual(CollectionCount + 1, people.Count);
+		Assert.AreEqual(Count + 1, people.Count);
 
 		people.Upsert(personFromCollection.Value.Id, null);
-		Assert.AreEqual(CollectionCount + 1, people.Count);
+		Assert.AreEqual(Count + 1, people.Count);
 	}
 
 	[TestMethod]
@@ -778,7 +733,7 @@ public class DictionaryExtensionsTests
 	public void UpsertWithIDataModel_ExistingItem_UpdatesValue()
 	{
 		// Arrange
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var existingPerson = people.Values.First();
 		var existingId = existingPerson.Id;
 
@@ -794,7 +749,7 @@ public class DictionaryExtensionsTests
 		people.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(CollectionCount, people.Count);
+		Assert.HasCount(Count, people);
 		Assert.AreEqual("updated@test.com", people[existingId].Email);
 		Assert.AreEqual("UpdatedFirstName", people[existingId].FirstName);
 	}
@@ -817,7 +772,7 @@ public class DictionaryExtensionsTests
 		people.Upsert(updatedPerson);
 
 		// Assert
-		Assert.AreEqual(largeCount, people.Count);
+		Assert.HasCount(largeCount, people);
 		Assert.AreEqual("large@test.com", people[existingId].Email);
 	}
 
@@ -850,14 +805,14 @@ public class DictionaryExtensionsTests
 	public void UpsertWithIDataModel_NewItem_AddsToCollection()
 	{
 		// Arrange
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var newPerson = RandomData.GeneratePerson<Person>();
 
 		// Act
 		people.Upsert(newPerson);
 
 		// Assert
-		Assert.AreEqual(CollectionCount + 1, people.Count);
+		Assert.HasCount(Count + 1, people);
 		Assert.IsTrue(people.ContainsKey(newPerson.Id));
 		Assert.AreEqual(newPerson, people[newPerson.Id]);
 	}
@@ -877,7 +832,7 @@ public class DictionaryExtensionsTests
 	public void UpsertWithIDataModel_NullItem_DoesNotModifyCollection()
 	{
 		// Arrange
-		var people = RandomData.GeneratePersonRefCollection(CollectionCount).ToDictionary(p => p.Id);
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 		var originalCount = people.Count;
 		Person nullPerson = null;
 

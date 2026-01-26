@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -181,7 +181,7 @@ public class ConcurrentBagExtensionsTests
 
 		// Assert
 		Assert.HasCount(3, bag);
-		CollectionAssert.Contains(bag.ToList(), 3);
+		CollectionAssert.Contains(bag, 3);
 	}
 
 	[TestMethod]
@@ -196,9 +196,9 @@ public class ConcurrentBagExtensionsTests
 
 		// Assert
 		Assert.HasCount(5, bag);
-		CollectionAssert.Contains(bag.ToList(), "c");
-		CollectionAssert.Contains(bag.ToList(), "d");
-		CollectionAssert.Contains(bag.ToList(), "e");
+		CollectionAssert.Contains(bag, "c");
+		CollectionAssert.Contains(bag, "d");
+		CollectionAssert.Contains(bag, "e");
 	}
 	[TestMethod]
 	public void AddRange_ValidItems_AddsAllItemsToBag()
@@ -212,9 +212,9 @@ public class ConcurrentBagExtensionsTests
 
 		// Assert
 		Assert.HasCount(6, bag);
-		CollectionAssert.Contains(bag.ToList(), 4);
-		CollectionAssert.Contains(bag.ToList(), 5);
-		CollectionAssert.Contains(bag.ToList(), 6);
+		CollectionAssert.Contains(bag, 4);
+		CollectionAssert.Contains(bag, 5);
+		CollectionAssert.Contains(bag, 6);
 	}
 
 	[TestMethod]
@@ -294,21 +294,8 @@ public class ConcurrentBagExtensionsTests
 		// Arrange
 		var bag = new ConcurrentBag<int>();
 
-		// Act
-		var result = bag.ToList();
-
 		// Assert
-		Assert.IsEmpty(result);
-	}
-
-	[TestMethod]
-	public void ToList_NullBag_ThrowsArgumentNullException()
-	{
-		// Arrange
-		ConcurrentBag<int> bag = null;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => bag.ToList());
+		Assert.IsEmpty(bag);
 	}
 
 	[TestMethod]
@@ -317,13 +304,11 @@ public class ConcurrentBagExtensionsTests
 		// Arrange
 		var bag = new ConcurrentBag<int> { 1, 2, 3 };
 
-		// Act
-		var result = bag.ToList();
 
 		// Assert
-		Assert.HasCount(3, result);
-		CollectionAssert.Contains(result, 1);
-		CollectionAssert.Contains(result, 2);
-		CollectionAssert.Contains(result, 3);
+		Assert.HasCount(3, bag);
+		CollectionAssert.Contains(bag, 1);
+		CollectionAssert.Contains(bag, 2);
+		CollectionAssert.Contains(bag, 3);
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-26-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,11 +33,8 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray<int>.Empty;
 
-		// Act
-		var result = array.IsNotEmpty();
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)array.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -46,11 +43,8 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray.Create(1, 2, 3);
 
-		// Act
-		var result = array.IsNotEmpty();
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)array.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -59,11 +53,8 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray<int>.Empty;
 
-		// Act
-		var result = array.IsNotEmpty(3);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)array.IsNotEmpty(3));
 	}
 
 	[TestMethod]
@@ -72,11 +63,8 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray.Create(1, 2, 3);
 
-		// Act
-		var result = array.IsNotEmpty(2);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)array.IsNotEmpty(2));
 	}
 
 	[TestMethod]
@@ -85,11 +73,8 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray.Create(1, 2, 3);
 
-		// Act
-		var result = array.IsNotEmpty(3);
-
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)array.IsNotEmpty(3));
 	}
 
 	[TestMethod]
@@ -98,21 +83,15 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray<int>.Empty;
 
-		// Act
-		var result = array.IsNotEmpty(x => x > 1);
-
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse((bool?)array.IsNotEmpty(x => x > 1));
 	}
 
 	[TestMethod]
 	public void HasItems_WithPredicate_NullPredicate_ThrowsArgumentNullException()
 	{
-		// Arrange
-		var array = ImmutableArray.Create(1, 2, 3);
-
 		// Act
-		Assert.IsFalse(array.IsNotEmpty(null));
+		Assert.IsFalse(ImmutableArray.Create(1, 2, 3).IsNotEmpty(null));
 	}
 
 	[TestMethod]
@@ -121,11 +100,9 @@ public class ImmutableArrayExtensionsTests
 		// Arrange
 		var array = ImmutableArray.Create(1, 2, 3);
 
-		// Act
-		var result = array.IsNotEmpty(x => x > 1);
 
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsTrue((bool?)array.IsNotEmpty(x => x > 1));
 	}
 
 	[TestMethod]
@@ -133,6 +110,7 @@ public class ImmutableArrayExtensionsTests
 	{
 		var array = ImmutableArray<int>.Empty;
 		var shuffled = array.FastShuffle();
+
 		Assert.IsTrue(shuffled.IsEmpty);
 	}
 
@@ -141,6 +119,7 @@ public class ImmutableArrayExtensionsTests
 	{
 		var array = ImmutableArray.Create(1, 2, 3, 4, 5);
 		var shuffled = array.FastShuffle();
+
 		Assert.HasCount(array.Length, shuffled);
 		CollectionAssert.AreEquivalent(array.ToArray(), shuffled.ToArray());
 	}
@@ -150,6 +129,7 @@ public class ImmutableArrayExtensionsTests
 	{
 		var array = ImmutableArray.Create(42);
 		var shuffled = array.FastShuffle();
+
 		Assert.HasCount(1, shuffled);
 		Assert.AreEqual(42, shuffled[0]);
 	}
