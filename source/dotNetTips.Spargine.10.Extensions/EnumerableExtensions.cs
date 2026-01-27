@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -42,8 +42,6 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
 {
-	//TODO: COMBINE WITH https://bit.ly/SpargineEnumHandling ARTICLE?
-
 	/// <summary>
 	/// Cache for compiled property accessor delegates to avoid repeated reflection and compilation overhead.
 	/// Key format: "TypeFullName.PropertyName" (e.g., "MyApp.Person.Age")
@@ -1236,7 +1234,15 @@ public static class EnumerableExtensions
 				return false;
 			}
 
-			return items.Any(item => collection.Contains(item));
+			foreach (var item in items)
+			{
+				if (collection.Contains(item))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		/// <summary>
