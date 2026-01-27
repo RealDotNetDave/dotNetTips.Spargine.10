@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -368,7 +368,7 @@ public static class ArrayExtensions
 		/// This method provides a safe way to check if an array has elements without throwing exceptions.
 		/// It returns <c>false</c> if the array reference is null, making it suitable for defensive programming patterns.
 		/// The method uses <see cref="Array.LongLength"/> to support arrays with more than <see cref="int.MaxValue"/> elements.
-		/// This is the inverse operation of <see cref="IsEmpty"/>.
+		/// This is the inverse operation of IsEmpty.
 		/// </remarks>
 		/// <example>
 		/// This example shows how to use IsNotEmpty() to check if an array has elements.

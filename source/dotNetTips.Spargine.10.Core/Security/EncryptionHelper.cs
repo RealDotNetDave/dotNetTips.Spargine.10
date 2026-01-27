@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -457,6 +457,7 @@ public static class EncryptionHelper
 	/// </code>
 	/// </example>
 	[Pure]
+	[SupportedOSPlatform("windows")]
 	[Information(nameof(SimpleSHA256Encrypt), "David McCarter", "7/19/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string SimpleSHA256Encrypt([DisallowNull] string plainText, [DisallowNull] string key)
 	{

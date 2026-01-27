@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -76,6 +76,7 @@ public static class DirectoryHelper
 	/// Console.WriteLine($"Has read permission: {hasReadPermission}");
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directory"/> is null.</exception>
+	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckPermission([DisallowNull] DirectoryInfo directory, FileSystemRights permission = FileSystemRights.Read)
@@ -244,6 +245,7 @@ public static class DirectoryHelper
 	/// }
 	/// </code>
 	/// </example>
+	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()

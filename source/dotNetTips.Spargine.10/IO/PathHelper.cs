@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,6 +14,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.Versioning;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 
@@ -39,6 +40,7 @@ public static class PathHelper
 	/// This array is derived from <see cref="FileHelper.InvalidFileNameChars"/> by filtering out specific characters.
 	/// It is used to validate file names by checking against characters that are not allowed in file names according to the file system.
 	/// </remarks>
+	[SupportedOSPlatform("windows")]
 	private static readonly char[] InvalidFileNameChars = [.. FileHelper.InvalidFileNameChars.Where(c => c is not '*' and not '|' and not '?')];
 
 	/// <summary>
@@ -226,6 +228,7 @@ public static class PathHelper
 	/// Console.WriteLine(result); // Output: True
 	/// </code>
 	/// </example>
+	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasInvalidFilterChars([DisallowNull] string filter)
@@ -249,6 +252,7 @@ public static class PathHelper
 	/// }
 	/// </code>
 	/// </example>
+	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<char> InvalidFilterChars()
