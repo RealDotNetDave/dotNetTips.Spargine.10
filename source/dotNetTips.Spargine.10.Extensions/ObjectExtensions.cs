@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
@@ -345,8 +346,10 @@ public static class ObjectExtensions
 			// Remove empty values
 			if (ignoreNulls)
 			{
-				properties = properties.Where(p => !string.IsNullOrEmpty(p.Value))
-					.ToDictionary(pair => pair.Key, pair => pair.Value);
+				properties = new ReadOnlyDictionary<string, string>(
+					properties.Where(p => !string.IsNullOrEmpty(p.Value))
+						.ToDictionary(pair => pair.Key, pair => pair.Value)
+				);
 			}
 
 			var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
@@ -474,8 +477,10 @@ public static class ObjectExtensions
 			// Remove empty values if ignoreNulls is true
 			if (ignoreNulls)
 			{
-				properties = properties.Where(p => !string.IsNullOrEmpty(p.Value))
-					.ToDictionary(pair => pair.Key, pair => pair.Value);
+				properties = new Dictionary<string, string>(
+					properties.Where(p => !string.IsNullOrEmpty(p.Value))
+						.ToDictionary(pair => pair.Key, pair => pair.Value)
+				);
 			}
 
 			var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
@@ -484,23 +489,73 @@ public static class ObjectExtensions
 		}
 
 		/// <summary>
-		/// Converts an object's properties into a dictionary, with property names as keys and their values as dictionary values.
+		/// Converts an object's properties into a dictionary where keys are hierarchical property names and values are their string representations.
 		/// </summary>
-		/// <param name="memberName">The name of a specific member to convert. If empty, all properties are converted.</param>
-		/// <param name="ignoreNulls">Specifies whether to ignore properties with null values.</param>
-		/// <returns>A dictionary containing the names and string representations of the properties of the object.</returns>
+		/// <param name="memberName">
+		/// The root member name to prefix property paths with. If empty, property names are not prefixed.
+		/// For nested objects and collections, hierarchical names use dot notation (e.g., "Order.Customer.Name") and array-style indexing (e.g., "Items[0].Name").
+		/// </param>
+		/// <param name="ignoreNulls">
+		/// When <c>true</c>, properties with <c>null</c> values are excluded from the resulting dictionary.
+		/// When <c>false</c>, <c>null</c> values are included as empty strings.
+		/// </param>
+		/// <returns>
+		/// An <see cref="ReadOnlyDictionary{TKey, TValue}"/> containing property names (possibly hierarchical) mapped to their string values.
+		/// Built-in types (e.g., <see cref="string"/>, <see cref="int"/>) are returned as a single entry with <paramref name="memberName"/> as the key.
+		/// Collections implementing <see cref="IEnumerable"/> are flattened with indexed keys (e.g., "Items[0]", "Items[1]").
+		/// </returns>
+		/// <remarks>
+		/// <para>
+		/// Behavior by type:
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>Built-in types:</b> Returns a single entry using <paramref name="memberName"/> with the object's <see cref="object.ToString"/> value.</description></item>
+		/// <item><description><b>Collections (<see cref="IEnumerable"/>):</b> Each item is processed recursively using indexed keys.</description></item>
+		/// <item><description><b>Complex types:</b> Public instance properties are enumerated and recursively flattened.</description></item>
+		/// </list>
+		/// <para>
+		/// Properties decorated with <see cref="JsonIgnoreAttribute"/> are skipped.
+		/// Exceptions thrown while reading property values are traced via <see cref="Trace.WriteLine(string)"/> and the property is skipped when <paramref name="ignoreNulls"/> is <c>true</c>.
+		/// </para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when the target object is <c>null</c> and <paramref name="memberName"/> is evaluated during recursion.
+		/// </exception>
+		/// <example>
+		/// <code>
+		/// var order = new Order
+		/// {
+		///     Id = 123,
+		///     Customer = new Customer { Name = "Alice" },
+		///     Items = new List&lt;Item&gt;
+		///     {
+		///         new Item { Name = "Widget", Quantity = 2 },
+		///         new Item { Name = "Gadget", Quantity = 1 }
+		///     }
+		/// };
+		///
+		/// var dict = order.PropertiesToDictionary("Order");
+		/// // Example keys:
+		/// // "Order.Id" -> "123"
+		/// // "Order.Customer.Name" -> "Alice"
+		/// // "Order.Items[0].Name" -> "Widget"
+		/// // "Order.Items[0].Quantity" -> "2"
+		/// // "Order.Items[1].Name" -> "Gadget"
+		/// // "Order.Items[1].Quantity" -> "1"
+		/// </code>
+		/// </example>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-		public IReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
+		public ReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
 			memberName = memberName.ArgumentNotNull();
 
 			// Return just member name if obj is null and ignoreNulls is false
 			if (memberName.HasValue() && obj is null && ignoreNulls is false)
 			{
-				return new Dictionary<string, string> { { memberName, string.Empty } };
+				return new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, string.Empty } });
 			}
 
 			var objectType = obj.ArgumentNotNull().GetType();
@@ -509,8 +564,8 @@ public static class ObjectExtensions
 
 			if (_builtInTypeNames.ContainsKey(objectType))
 			{
-				result.Add(memberName, obj!.ToString()!);
-				return result;
+				result = new Dictionary<string, string> { { memberName, obj!.ToString()! } };
+				return result.AsReadOnly();
 			}
 
 			// If the type implements the IEnumerable interface.
@@ -523,14 +578,21 @@ public static class ObjectExtensions
 				// because the method is supposed to catch value items not the list itself
 				foreach (var item in (IEnumerable)obj!)
 				{
-					var itemId = itemCount++;
+					try
+					{
+						var itemId = itemCount++;
 
-					var itemInnerMember = FastStringBuilder.Format($"{{0}}[{{1}}]", memberName, itemId.ToString(CultureInfo.CurrentCulture));
+						var itemInnerMember = FastStringBuilder.Format($"{{0}}[{{1}}]", memberName, itemId.ToString(CultureInfo.CurrentCulture));
 
-					result = result.Concat(item.PropertiesToDictionary(itemInnerMember)).ToDictionary(e => e.Key, e => e.Value);
+						result = result.Concat(item.PropertiesToDictionary(itemInnerMember)).ToDictionary(e => e.Key, e => e.Value);
+					}
+					catch (Exception ex)
+					{
+						Trace.WriteLine(ex.Message);
+					}
 				}
 
-				return result;
+				return result.AsReadOnly();
 			}
 
 			// Otherwise go deeper in the object tree.
@@ -553,20 +615,27 @@ public static class ObjectExtensions
 
 				if (ignoreAttribute == null)
 				{
-					var innerObject = property.GetValue(obj, null);
-
-					if (ignoreNulls && innerObject is null)
+					try
 					{
-						continue;
+						var innerObject = property.GetValue(obj, null);
+
+						if (ignoreNulls && innerObject is null)
+						{
+							continue;
+						}
+
+						var innerMember = FastStringBuilder.Format("{0}{1}", newMemberName, property.Name);
+
+						result = result.Concat(innerObject!.PropertiesToDictionary(innerMember, ignoreNulls)).ToDictionary(e => e.Key, e => e.Value);
 					}
-
-					var innerMember = FastStringBuilder.Format("{0}{1}", newMemberName, property.Name);
-
-					result = result.Concat(innerObject!.PropertiesToDictionary(innerMember, ignoreNulls)).ToDictionary(e => e.Key, e => e.Value);
+					catch (Exception ex)
+					{
+						Trace.WriteLine(ex.Message);
+					}
 				}
 			}
 
-			return result;
+			return result.AsReadOnly();
 		}
 
 		/// <summary>
@@ -648,7 +717,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.Completed)]
-		public IReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
+		public ReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
 			memberName = memberName.ArgumentNotNull();
 			var objectType = obj.ArgumentNotNull().GetType();
@@ -658,7 +727,7 @@ public static class ObjectExtensions
 			if (_builtInTypeNames.ContainsKey(objectType))
 			{
 				result.Add(memberName, obj.ToString()!);
-				return result;
+				return result.AsReadOnly();
 			}
 
 			// Handle IEnumerable types
@@ -682,7 +751,7 @@ public static class ObjectExtensions
 					}
 				}
 
-				return result;
+				return result.AsReadOnly();
 			}
 
 			// Otherwise, process fields
@@ -721,7 +790,7 @@ public static class ObjectExtensions
 				}
 			}
 
-			return result;
+			return result.AsReadOnly();
 		}
 
 		/// <summary>
@@ -758,8 +827,10 @@ public static class ObjectExtensions
 			// Remove empty values
 			if (ignoreNulls)
 			{
-				fields = fields.Where(f => !string.IsNullOrEmpty(f.Value))
-					.ToDictionary(static pair => pair.Key, static pair => pair.Value);
+				fields = new ReadOnlyDictionary<string, string>(
+					fields.Where(f => !string.IsNullOrEmpty(f.Value))
+						.ToDictionary(static pair => pair.Key, static pair => pair.Value)
+				);
 			}
 
 			var result = fields.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));

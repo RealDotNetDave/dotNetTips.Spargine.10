@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -419,7 +419,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
 
 		this._personRefEnumerableStart = this._personRefEnumerable.Take(this.HalfCount).ToList();
-
 		this._personRefEnumerableEnd = this._personRefEnumerable.Skip(this.Count - this.HalfCount).Take(this.HalfCount).ToList();
 	}
 

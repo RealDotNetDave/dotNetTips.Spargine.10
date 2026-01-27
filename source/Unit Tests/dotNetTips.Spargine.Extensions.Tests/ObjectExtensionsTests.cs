@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core.Devices;
+using DotNetTips.Spargine.Core.Network;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -1294,6 +1295,20 @@ public class ObjectExtensionsTests : UnitTester
 		var dict = list.PropertiesToDictionary("Numbers");
 		Assert.HasCount(3, dict);
 		Assert.IsTrue(dict.Keys.Any(k => k.StartsWith("Numbers[0]")));
+	}
+
+	[TestMethod]
+	public void PropertiesToDictionary_NetworkType_CausesExceptions()
+	{
+		// Using NetworkInterface that is known to cause exceptions with PropertiesToDictionary
+		var interfaces = NetworkHelper.GetNetworkConnections();
+
+		foreach (var netInterface in interfaces)
+		{
+			var dict = netInterface.PropertiesToDictionary("NetworkInterface");
+			Assert.IsNotNull(dict);
+			Assert.IsNotEmpty(dict);
+		}
 	}
 
 	[TestMethod]

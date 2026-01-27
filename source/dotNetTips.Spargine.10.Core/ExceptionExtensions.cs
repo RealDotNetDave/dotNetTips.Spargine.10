@@ -4,7 +4,7 @@
 // Created          : 05-04-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 01-27-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -154,12 +154,12 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <returns>A dictionary containing all key-value pairs from the exception's data.</returns>
 		[Information(nameof(ExtractData), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-		public IReadOnlyDictionary<object, object?> ExtractData()
+		public ReadOnlyDictionary<object, object?> ExtractData()
 		{
 			exception = exception.ArgumentNotNull();
 
 			return exception.Data.Cast<DictionaryEntry>()
-				.ToDictionary(entry => entry.Key, entry => entry.Value);
+				.ToDictionary(entry => entry.Key, entry => entry.Value).AsReadOnly();
 		}
 
 		/// <summary>
@@ -180,7 +180,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <returns>A dictionary containing metadata key-value pairs.</returns>
 		[Information(nameof(GetMetadata), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public IReadOnlyDictionary<string, object> GetMetadata()
+		public ReadOnlyDictionary<string, object> GetMetadata()
 		{
 			ArgumentNullException.ThrowIfNull(exception);
 
@@ -191,10 +191,10 @@ public static partial class ExceptionExtensions
 					return new Dictionary<string, object>
 					{
 						{ "IsLogged", metadata.IsLogged }
-					};
+					}.AsReadOnly();
 				}
 
-				return new Dictionary<string, object>();
+				return ReadOnlyDictionary<string, object>.Empty;
 			}
 		}
 
