@@ -363,6 +363,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToFrozenDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static FrozenDictionary<TKey, TValue> ToFrozenDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOFROZEN()
 		return FrozenDictionary.ToFrozenDictionary(list);
 	}
 
@@ -380,6 +381,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLE()
 		return ImmutableDictionary.CreateRange(collection.ArgumentNotNull());
 	}
 
@@ -397,6 +399,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToImmutableSortedDictionary), "David McCarter", "7/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLESORTED()
 		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
 	}
 
@@ -433,6 +436,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToReadOnlyCollection), "David McCarter", "11/6/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyCollection<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOREADONLY()
 		return dictionary.ArgumentNotNull().ToReadOnlyDictionary();
 	}
 
@@ -561,6 +565,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOREADONLY()
 		return new(collection.ArgumentNotNull());
 	}
 
@@ -578,6 +583,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToSortedDictionary), "David McCarter", "6/27/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOSORTED()
 		return new(collection.ArgumentNotNull());
 	}
 
@@ -595,6 +601,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToSortedDictionary), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IComparer<TKey> comparer) where TKey : notnull
 	{
+		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOSORTED()
 		return new(collection.ArgumentNotNull(), comparer.ArgumentNotNull());
 	}
 

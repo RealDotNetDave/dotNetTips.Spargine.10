@@ -68,6 +68,7 @@ public static class HashSetExtensions
 		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ConcurrentHashSet<T> ToConcurrentHashSet()
 		{
+			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOCONCURRENT()
 			return [.. collection.ArgumentNotNull()];
 		}
 
@@ -84,6 +85,7 @@ public static class HashSetExtensions
 		[Information(nameof(ToImmutableHashSet), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableHashSet<T> ToImmutableHashSet()
 		{
+			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLE()
 			return [.. collection.ArgumentNotNull()];
 		}
 

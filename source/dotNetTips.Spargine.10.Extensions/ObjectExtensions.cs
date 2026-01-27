@@ -332,6 +332,7 @@ public static class ObjectExtensions
 
 			var typeName = obj.GetType().Name;
 
+			// Adjust type name for lists and member name inclusion
 			if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
 			{
 				typeName = Item;
@@ -352,6 +353,7 @@ public static class ObjectExtensions
 				);
 			}
 
+			// Build the result string
 			var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
 
 			return result!.StartsWith(sequenceSeparator, StringComparison.CurrentCulture) ? result[sequenceSeparator.Length..] : result;
@@ -426,6 +428,7 @@ public static class ObjectExtensions
 
 			var typeName = obj.GetType().Name;
 
+			// Adjust type name for lists and member name inclusion
 			if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
 			{
 				typeName = Item;
@@ -562,6 +565,7 @@ public static class ObjectExtensions
 
 			var result = new Dictionary<string, string>();
 
+			// If the type is a built-in type.
 			if (_builtInTypeNames.ContainsKey(objectType))
 			{
 				result = new Dictionary<string, string> { { memberName, obj!.ToString()! } };
@@ -608,6 +612,7 @@ public static class ObjectExtensions
 
 			var propertyCount = propertyCollection.Length;
 
+			// Loop through all properties
 			for (var propertyIndex = 0; propertyIndex < propertyCount; propertyIndex++)
 			{
 				var property = propertyCollection[propertyIndex];
@@ -758,7 +763,7 @@ public static class ObjectExtensions
 			var fieldCollection = objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
 
-			// DON'T USE ASSPAN() HERE
+			// DON'T USE SPAN HERE
 			foreach (var field in fieldCollection)
 			{
 				// Skip compiler-generated fields (e.g., backing fields for auto-properties)
@@ -774,6 +779,7 @@ public static class ObjectExtensions
 					continue;
 				}
 
+				// Handle built-in types directly
 				if (innerObject is not null)
 				{
 					var innerMember = $"{newMemberName}{field.Name}";
@@ -845,7 +851,10 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNull), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsNull() => obj is null;
+		public bool IsNull()
+		{
+			return obj is null;
+		}
 
 		/// <summary>
 		/// Determines whether the specified object is a string.
@@ -859,7 +868,10 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsString), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-		public bool IsString() => obj is string;
+		public bool IsString()
+		{
+			return obj is string;
+		}
 
 		/// <summary>
 		/// Determines whether the specified object is not null.
@@ -868,7 +880,10 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotNull), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsNotNull() => obj is not null;
+		public bool IsNotNull()
+		{
+			return obj is not null;
+		}
 
 		/// <summary>
 		/// Ensures a non-null string representation of an object. If the object is null, it returns an empty string.
@@ -1153,7 +1168,10 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(As), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public T As<T>() => (T)obj.ArgumentNotNull();
+		public T As<T>()
+		{
+			return (T)obj.ArgumentNotNull();
+		}
 
 		/// <summary>
 		/// Gets the names of all interfaces implemented by the specified object's type.

@@ -122,6 +122,7 @@ public static class SortedSetExtensions
 		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
+			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLE()
 			collection = collection.ArgumentNotNull();
 
 			return ImmutableSortedSet.CreateRange(collection);

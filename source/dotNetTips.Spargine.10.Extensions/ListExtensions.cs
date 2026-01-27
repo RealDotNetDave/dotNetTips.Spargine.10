@@ -850,6 +850,7 @@ public static class ListExtensions
 		[Information(nameof(ToObservableList), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ObservableList<T> ToObservableList()
 		{
+			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOOBSERVABLE()
 			return [.. list];
 		}
 
@@ -863,6 +864,7 @@ public static class ListExtensions
 		[Information(nameof(ToReadOnlyList), "David McCarter", "4/10/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IReadOnlyList<T> ToReadOnlyList()
 		{
+			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOREADONLY()
 			return list.ArgumentNotNull();
 		}
 
