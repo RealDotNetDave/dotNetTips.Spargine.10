@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -119,13 +119,24 @@ public static class SortedSetExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Obsolete("Use ToImmutable() method instead. This method will be removed at the end of 2026.")]
 		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
-			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLE()
-			collection = collection.ArgumentNotNull();
+			return collection.ToImmutable();
+		}
 
-			return ImmutableSortedSet.CreateRange(collection);
+		/// <summary>
+		/// Converts a <see cref="SortedSet{T}"/> to an <see cref="ImmutableSortedSet{T}"/>.
+		/// </summary>
+		/// <returns>An <see cref="ImmutableSortedSet{T}"/> containing all elements from the source set.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public ImmutableSortedSet<T> ToImmutable()
+		{
+			return ImmutableSortedSet.CreateRange(collection.ArgumentNotNull());
 		}
 	}
 }

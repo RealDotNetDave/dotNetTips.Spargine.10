@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// This includes methods for adding or updating entries, converting dictionaries to various forms,
 /// disposing dictionary items, and more.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineDictionaryExtensions", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineDictionaryExtensions", Status = Status.UpdateDocumentation)]
 public static class DictionaryExtensions
 {
 	/// <summary>
@@ -351,6 +351,23 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to a <see cref="FrozenDictionary{TKey, TValue}"/>.
+	/// </summary>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="list">The source dictionary to convert.</param>
+	/// <returns>A frozen dictionary containing all key-value pairs from <paramref name="list"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="list"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToFrozen), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static FrozenDictionary<TKey, TValue> ToFrozen<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
+	{
+		return FrozenDictionary.ToFrozenDictionary(list);
+	}
+
+	/// <summary>
 	/// Converts a <see cref="IDictionary{TKey, TValue}" /> to <see cref="FrozenDictionary{TKey, TValue}" />.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the t keyFunction.</typeparam>
@@ -360,11 +377,28 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Obsolete("Use ToFrozen() instead. This method will be removed at the end of 2026.")]
 	[Information(nameof(ToFrozenDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static FrozenDictionary<TKey, TValue> ToFrozenDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOFROZEN()
-		return FrozenDictionary.ToFrozenDictionary(list);
+		return list.ToFrozen();
+	}
+
+	/// <summary>
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to an <see cref="ImmutableDictionary{TKey, TValue}"/>.
+	/// </summary>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="collection">The source dictionary to convert.</param>
+	/// <returns>An immutable dictionary containing all key-value pairs from <paramref name="collection"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static ImmutableDictionary<TKey, TValue> ToImmutable<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
+	{
+		return ImmutableDictionary.CreateRange(collection.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -378,11 +412,28 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Obsolete("Use ToImmutable() instead. This method will be removed at the end of 2026.")]
 	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLE()
-		return ImmutableDictionary.CreateRange(collection.ArgumentNotNull());
+		return collection.ToImmutable();
+	}
+
+	/// <summary>
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to an <see cref="ImmutableSortedDictionary{TKey, TValue}"/>.
+	/// </summary>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="collection">The source dictionary to convert.</param>
+	/// <returns>An immutable sorted dictionary containing all key-value pairs from <paramref name="collection"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToImmutableSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
+	{
+		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -396,11 +447,11 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Obsolete("Use ToImmutableSorted() instead. This method will be removed at the end of 2026.")]
 	[Information(nameof(ToImmutableSortedDictionary), "David McCarter", "7/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOIMMUTABLESORTED()
-		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
+		return collection.ToImmutableSorted();
 	}
 
 	/// <summary>
@@ -424,6 +475,23 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to a <see cref="ReadOnlyDictionary{TKey, TValue}"/>.
+	/// </summary>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="dictionary">The source dictionary to wrap.</param>
+	/// <returns>A read-only dictionary that wraps <paramref name="dictionary"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="dictionary"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToReadOnly), "David McCarter", "1/28/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static ReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
+	{
+		return dictionary.ArgumentNotNull().ToReadOnlyDictionary();
+	}
+
+	/// <summary>
 	/// Converts to a <see cref="IDictionary{TKey, TValue}" /> to a <see cref="ReadOnlyCollection{KeyValuePair}" />.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the keyFunction.</typeparam>
@@ -433,11 +501,11 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Obsolete("Use ToReadOnly() instead. Method will be removed at the end of 2026.")]
 	[Information(nameof(ToReadOnlyCollection), "David McCarter", "11/6/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyCollection<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
+	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyCollection<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOREADONLY()
-		return dictionary.ArgumentNotNull().ToReadOnlyDictionary();
+		return dictionary.ToReadOnly();
 	}
 
 	/// <summary>
@@ -562,13 +630,45 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Obsolete("Use ToReadOnly() instead. Method will be removed at the end of 2026.")]
 	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOREADONLY()
 		return new(collection.ArgumentNotNull());
 	}
 
+	/// <summary>
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to a <see cref="SortedDictionary{TKey, TValue}"/>.
+	/// </summary>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="collection">The source dictionary to convert.</param>
+	/// <returns>A sorted dictionary containing all key-value pairs from <paramref name="collection"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[Information(nameof(ToSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static SortedDictionary<TKey, TValue> ToSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
+	{
+		return new(collection.ArgumentNotNull());
+	}
+
+	/// <summary>
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to a <see cref="SortedDictionary{TKey, TValue}"/> using the specified comparer.
+	/// </summary>
+	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+	/// <param name="collection">The source dictionary to convert.</param>
+	/// <param name="comparer">The comparer to use for sorting the keys.</param>
+	/// <returns>A sorted dictionary containing all key-value pairs from <paramref name="collection"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[Information(nameof(ToSorted), BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.Updated)]
+	public static SortedDictionary<TKey, TValue> ToSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IComparer<TKey> comparer) where TKey : notnull
+	{
+		return new(collection.ArgumentNotNull(), comparer.ArgumentNotNull());
+	}
 
 	/// <summary>
 	/// Converts a <see cref="IDictionary{TKey, TValue}" /> to a <see cref="SortedDictionary{TKey, TValue}" />./&gt;
@@ -580,11 +680,11 @@ public static class DictionaryExtensions
 	/// <returns>SortedDictionary&lt;TKey, TValue&gt;.</returns>
 	[Pure]
 	[return: NotNull]
+	[Obsolete("Use ToSorted() instead. This method will be removed at the end of 2026.")]
 	[Information(nameof(ToSortedDictionary), "David McCarter", "6/27/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOSORTED()
-		return new(collection.ArgumentNotNull());
+		return collection.ToSorted();
 	}
 
 	/// <summary>
@@ -598,11 +698,11 @@ public static class DictionaryExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
+	[Obsolete("Use ToSorted() instead. This method will be removed at the end of 2026.")]
 	[Information(nameof(ToSortedDictionary), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IComparer<TKey> comparer) where TKey : notnull
 	{
-		//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOSORTED()
-		return new(collection.ArgumentNotNull(), comparer.ArgumentNotNull());
+		return collection.ToSorted(comparer);
 	}
 
 	/// <summary>

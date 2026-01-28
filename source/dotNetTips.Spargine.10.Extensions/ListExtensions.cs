@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -39,7 +39,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// converting lists to various collection types, performing actions on list elements, and more. These methods
 /// are designed to extend the capabilities of <see cref="List{T}"/> and simplify common operations.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineListExtentions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineListExtentions")]
 public static class ListExtensions
 {
 	/// <summary>
@@ -847,10 +847,24 @@ public static class ListExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Obsolete("Use ToObservable() extension method instead. Method will be removed at the end of 2026.")]
 		[Information(nameof(ToObservableList), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ObservableList<T> ToObservableList()
 		{
-			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOOBSERVABLE()
+			return list.ToObservable();
+		}
+
+		/// <summary>
+		/// Converts the list to an <see cref="ObservableList{T}"/>.
+		/// </summary>
+		/// <returns>An <see cref="ObservableList{T}"/> containing the elements of the list.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if list is null.</exception>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ToObservable), "David McCarter", "1/28/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public ObservableList<T> ToObservable()
+		{
 			return [.. list];
 		}
 
@@ -861,10 +875,24 @@ public static class ListExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Obsolete("Use ToReadOnly() extension method instead. Method will be removed at the end of 2026.")]
 		[Information(nameof(ToReadOnlyList), "David McCarter", "4/10/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IReadOnlyList<T> ToReadOnlyList()
 		{
-			//TODO: OVERLOAD AND OBSOLETE. CHANGE TO TOREADONLY()
+			return list.ToReadOnly();
+		}
+
+		/// <summary>
+		/// Converts the list to an <see cref="IReadOnlyList{T}"/>.
+		/// </summary>
+		/// <returns>An <see cref="IReadOnlyList{T}"/> containing the elements of the list.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if list is null.</exception>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ToReadOnly), "David McCarter", "1/28/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public IReadOnlyList<T> ToReadOnly()
+		{
 			return list.ArgumentNotNull();
 		}
 
