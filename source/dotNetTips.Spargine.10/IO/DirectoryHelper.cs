@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,7 @@ namespace DotNetTips.Spargine.IO;
 /// loading files asynchronously, managing OneDrive folders, and conducting safe directory and path searches. These methods
 /// are designed to extend the capabilities of the <see cref="DirectoryInfo"/> class and simplify common path system operations.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDirectoryHelper")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDirectoryHelper")]
 public static class DirectoryHelper
 {
 	private const string LocalAppData = "LOCALAPPDATA";
@@ -371,6 +371,7 @@ public static class DirectoryHelper
 
 	/// <summary>
 	/// Performs a safe directory search by matching a specified search pattern and search option.
+	/// Ignores errors accessing directories.
 	/// </summary>
 	/// <param name="path">The root directory to start the search from. Must not be null.</param>
 	/// <param name="searchPattern">The search pattern to match against the directory names. Default is "*.*" which matches all directories.</param>
@@ -521,7 +522,7 @@ public static class DirectoryHelper
 	/// Thrown when <paramref name="path"/> or <paramref name="searchPatterns"/> is null.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeDirectorySearch), "David McCarter", "6/14/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
+	[Information(nameof(SafeDirectorySearch), "David McCarter", "6/14/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool SafeHasFoldersOrFiles([DisallowNull] DirectoryInfo path, SearchOption searchOption = SearchOption.TopDirectoryOnly, [DisallowNull] params ReadOnlyCollection<string> searchPatterns)
 	{
 		path = path.ArgumentExists();

@@ -433,7 +433,7 @@ public class FileProcessor
 				{
 					var folderSize = folder.GetSize(searchOption: SearchOption.AllDirectories);
 
-					result = DirectoryHelper.DeleteDirectory(folder, 5, recursive);
+					result = DirectoryHelper.DeleteDirectory(folder, retries: 5, recursive);
 
 					if (result.IsSuccess)
 					{
