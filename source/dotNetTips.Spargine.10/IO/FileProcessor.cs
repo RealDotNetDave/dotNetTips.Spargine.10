@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -52,7 +52,7 @@ namespace DotNetTips.Spargine.IO;
 /// </code>
 /// </remarks>
 [SupportedOSPlatform("windows")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineFileProcessor")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFileProcessor")]
 public class FileProcessor
 {
 	/// <summary>
@@ -147,10 +147,10 @@ public class FileProcessor
 				{
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = ex.GetAllMessages(),
 						Name = tempFile.FullName,
 						ProgressState = FileProgressState.Error,
 						Size = tempFile.Length,
-						Message = ex.GetAllMessages(),
 					});
 				}
 			}
@@ -158,10 +158,10 @@ public class FileProcessor
 			{
 				this.OnProcessed(new ProgressEventArgs
 				{
+					Message = Resources.FileNotFound,
 					Name = tempFile.FullName,
 					ProgressState = FileProgressState.Error,
 					Size = tempFile.Length,
-					Message = Resources.FileNotFound,
 				});
 			}
 		}
@@ -248,8 +248,8 @@ public class FileProcessor
 
 					this.OnProcessed(new ProgressEventArgs
 					{
-						Name = tempFile.FullName,
 						Message = tempFile.Name,
+						Name = Resources.FileHasBeenCopied,
 						ProgressState = FileProgressState.FileCopied,
 						Size = tempFile.Length,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -259,10 +259,10 @@ public class FileProcessor
 				{
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = ex.GetAllMessages(),
 						Name = tempFile.FullName,
 						ProgressState = FileProgressState.Error,
 						Size = tempFile.Length,
-						Message = ex.GetAllMessages(),
 					});
 				}
 			}
@@ -270,10 +270,10 @@ public class FileProcessor
 			{
 				this.OnProcessed(new ProgressEventArgs
 				{
+					Message = Resources.FileNotFound,
 					Name = tempFile.FullName,
 					ProgressState = FileProgressState.Error,
 					Size = tempFile.Length,
-					Message = Resources.FileNotFound,
 				});
 			}
 		}
@@ -347,8 +347,8 @@ public class FileProcessor
 
 					this.OnProcessed(e: new ProgressEventArgs
 					{
+						Message = Resources.FileHasBeenDeleted,
 						Name = listItem.FullName,
-						Message = listItem.Name,
 						ProgressState = FileProgressState.FileDeleted,
 						Size = fileLength,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -358,10 +358,10 @@ public class FileProcessor
 				{
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = ex.GetAllMessages(),
 						Name = listItem.FullName,
 						ProgressState = FileProgressState.Error,
 						Size = fileLength,
-						Message = ex.GetAllMessages(),
 					});
 				}
 			}
@@ -369,9 +369,9 @@ public class FileProcessor
 			{
 				this.OnProcessed(new ProgressEventArgs
 				{
+					Message = Resources.FileNotFound,
 					Name = listItem.FullName,
 					ProgressState = FileProgressState.Error,
-					Message = Resources.FileNotFound,
 				});
 			}
 		}
@@ -442,6 +442,7 @@ public class FileProcessor
 						this.OnProcessed(new ProgressEventArgs
 						{
 							Name = folder.FullName,
+							Message = Resources.DeletedFolder,
 							ProgressState = FileProgressState.DirectoryDeleted,
 							Size = folderSize,
 						});
@@ -450,10 +451,10 @@ public class FileProcessor
 					{
 						this.OnProcessed(new ProgressEventArgs
 						{
+							Message = $"{result?.GetErrorMessages()}",
 							Name = folder.FullName,
 							ProgressState = FileProgressState.Error,
-							Size = folderSize,
-							Message = $"{result?.GetErrorMessages()}"
+							Size = folderSize
 						});
 					}
 				}
@@ -461,9 +462,9 @@ public class FileProcessor
 				{
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = $"{ex.GetAllMessages()}: {result?.GetErrorMessages()}",
 						Name = folder.FullName,
-						ProgressState = FileProgressState.Error,
-						Message = $"{ex.GetAllMessages()}: {result?.GetErrorMessages()}"
+						ProgressState = FileProgressState.Error
 					});
 				}
 			}
@@ -471,9 +472,9 @@ public class FileProcessor
 			{
 				this.OnProcessed(new ProgressEventArgs
 				{
+					Message = Resources.FolderNotFound,
 					Name = folder.FullName,
 					ProgressState = FileProgressState.Error,
-					Message = Resources.FolderNotFound,
 				});
 			}
 		}
@@ -559,7 +560,7 @@ public class FileProcessor
 					this.OnProcessed(new ProgressEventArgs
 					{
 						Name = tempFile.FullName,
-						Message = tempFile.Name,
+						Message = Resources.FileHasBeenMoved,
 						ProgressState = FileProgressState.FileMoved,
 						Size = fileLength,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -569,10 +570,10 @@ public class FileProcessor
 				{
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = ex.GetAllMessages(),
 						Name = tempFile.FullName,
 						ProgressState = FileProgressState.Error,
 						Size = fileLength,
-						Message = ex.GetAllMessages(),
 					});
 				}
 			}
@@ -580,9 +581,9 @@ public class FileProcessor
 			{
 				this.OnProcessed(new ProgressEventArgs
 				{
+					Message = Resources.FileNotFound,
 					Name = tempFile.FullName,
 					ProgressState = FileProgressState.Error,
-					Message = Resources.FileNotFound,
 				});
 			}
 		}
@@ -677,7 +678,7 @@ public class FileProcessor
 					this.OnProcessed(new ProgressEventArgs
 					{
 						Name = tempFile.FullName,
-						Message = tempFile.Name,
+						Message = Resources.FileHasBeenMoved,
 						ProgressState = FileProgressState.FileMoved,
 						Size = fileLength,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -688,10 +689,10 @@ public class FileProcessor
 					// Send error.
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = ex.GetAllMessages(),
 						Name = tempFile.FullName,
 						ProgressState = FileProgressState.Error,
 						Size = fileLength,
-						Message = ex.GetAllMessages(),
 					});
 				}
 			}
@@ -699,9 +700,9 @@ public class FileProcessor
 			{
 				this.OnProcessed(new ProgressEventArgs
 				{
+					Message = Resources.FileNotFound,
 					Name = tempFile.FullName,
 					ProgressState = FileProgressState.Error,
-					Message = Resources.FileNotFound,
 				});
 			}
 		}

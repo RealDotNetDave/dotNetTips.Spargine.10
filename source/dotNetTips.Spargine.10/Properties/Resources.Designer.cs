@@ -79,6 +79,15 @@ namespace DotNetTips.Spargine.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleted folder..
+        /// </summary>
+        internal static string DeletedFolder {
+            get {
+                return ResourceManager.GetString("DeletedFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid file path in zip archive..
         /// </summary>
         internal static string ErrorInvalidFilePathZipArchive {
@@ -93,6 +102,33 @@ namespace DotNetTips.Spargine.Properties {
         internal static string FailedToCreateTemporaryFile {
             get {
                 return ResourceManager.GetString("FailedToCreateTemporaryFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File has been copied..
+        /// </summary>
+        internal static string FileHasBeenCopied {
+            get {
+                return ResourceManager.GetString("FileHasBeenCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File has been deleted..
+        /// </summary>
+        internal static string FileHasBeenDeleted {
+            get {
+                return ResourceManager.GetString("FileHasBeenDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File has been moved..
+        /// </summary>
+        internal static string FileHasBeenMoved {
+            get {
+                return ResourceManager.GetString("FileHasBeenMoved", resourceCulture);
             }
         }
         

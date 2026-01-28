@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -164,5 +164,17 @@
   </data>
   <data name="ServiceHasBeenStoppedOn" xml:space="preserve">
     <value>Service {0} has been stopped on {1}.</value>
+  </data>
+  <data name="DeletedFolder" xml:space="preserve">
+    <value>Deleted folder.</value>
+  </data>
+  <data name="FileHasBeenDeleted" xml:space="preserve">
+    <value>File has been deleted.</value>
+  </data>
+  <data name="FileHasBeenCopied" xml:space="preserve">
+    <value>File has been copied.</value>
+  </data>
+  <data name="FileHasBeenMoved" xml:space="preserve">
+    <value>File has been moved.</value>
   </data>
 </root>
