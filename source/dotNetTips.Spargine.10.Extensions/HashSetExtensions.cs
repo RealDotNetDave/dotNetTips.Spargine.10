@@ -66,7 +66,7 @@ public static class HashSetExtensions
 		[Pure]
 		[return: NotNull]
 		[Obsolete("Use ToConcurrent() instead. This method will be removed at the end of 2026.", false)]
-		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", Status = Status.Available)]
 		public ConcurrentHashSet<T> ToConcurrentHashSet()
 		{
 			return collection.ToConcurrent();
@@ -75,14 +75,13 @@ public static class HashSetExtensions
 		/// <summary>
 		/// Converts a <see cref="HashSet{T}"/> to a <see cref="ConcurrentHashSet{T}"/> for thread-safe operations.
 		/// </summary>
-		/// <typeparam name="T">The type of elements in the <see cref="HashSet{T}"/>.</typeparam>
 		/// <returns>
 		/// A new <see cref="ConcurrentHashSet{T}"/> containing all elements from the source hash set.
 		/// </returns>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToConcurrent), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(ToConcurrent), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 		public ConcurrentHashSet<T> ToConcurrent()
 		{
 			return [.. collection.ArgumentNotNull()];
@@ -99,7 +98,7 @@ public static class HashSetExtensions
 		[Pure]
 		[return: NotNull]
 		[Obsolete("Use ToImmutable() instead. This method will be removed at the end of 2026.")]
-		[Information(nameof(ToImmutableHashSet), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToImmutableHashSet), "David McCarter", "11/21/2020", Status = Status.Available)]
 		public ImmutableHashSet<T> ToImmutableHashSet()
 		{
 			return [.. collection.ArgumentNotNull()];
@@ -108,14 +107,13 @@ public static class HashSetExtensions
 		/// <summary>
 		/// Converts a <see cref="HashSet{T}"/> to an <see cref="ImmutableHashSet{T}"/>.
 		/// </summary>
-		/// <typeparam name="T">The type of elements in the <see cref="HashSet{T}"/>.</typeparam>
 		/// <returns>
 		/// An <see cref="ImmutableHashSet{T}"/> containing all elements from the source hash set.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 		public ImmutableHashSet<T> ToImmutable()
 		{
 			return [.. collection.ArgumentNotNull()];

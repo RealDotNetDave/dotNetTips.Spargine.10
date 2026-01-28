@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-31-2025
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -94,18 +94,18 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.ToFrozenDictionary))]
+	[Benchmark(Description = nameof(DictionaryExtensions.ToFrozen))]
 	public void ToFrozenDictionary()
 	{
-		var people = this._personRefDictionary.ToFrozenDictionary();
+		var people = this._personRefDictionary.ToFrozen();
 
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.ToImmutableDictionary))]
+	[Benchmark(Description = nameof(DictionaryExtensions.ToImmutable))]
 	public void ToImmutableDictionary()
 	{
-		var people = this._personRefDictionary.ToImmutableDictionary();
+		var people = this._personRefDictionary.ToImmutable();
 
 		this.Consume(people);
 	}
@@ -121,34 +121,26 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.ToReadOnlyCollection))]
+	[Benchmark(Description = nameof(DictionaryExtensions.ToReadOnly))]
 	public void ToReadOnlyCollection()
 	{
-		var people = this._personRefDictionary.ToReadOnlyCollection();
+		var people = this._personRefDictionary.ToReadOnly();
 
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.ToReadOnlyDictionary))]
-	public void ToReadOnlyDictionary()
-	{
-		var people = this._personRefDictionary.ToReadOnlyDictionary();
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DictionaryExtensions.ToSortedDictionary) + ": Comparer")]
+	[Benchmark(Description = nameof(DictionaryExtensions.ToSorted) + ": Comparer")]
 	public void ToSortedDictionaryComparerTest()
 	{
-		var people = this._personRefDictionary.ToSortedDictionary(new OrdinalStringComparer());
+		var people = this._personRefDictionary.ToSorted(new OrdinalStringComparer());
 
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.ToSortedDictionary))]
+	[Benchmark(Description = nameof(DictionaryExtensions.ToSorted))]
 	public void ToSortedDictionaryTest()
 	{
-		var people = this._personRefDictionary.ToSortedDictionary();
+		var people = this._personRefDictionary.ToSorted();
 
 		this.Consume(people);
 	}

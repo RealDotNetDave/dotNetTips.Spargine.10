@@ -361,7 +361,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToFrozen), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(ToFrozen), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static FrozenDictionary<TKey, TValue> ToFrozen<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
 	{
 		return FrozenDictionary.ToFrozenDictionary(list);
@@ -378,7 +378,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToFrozen() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToFrozenDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToFrozenDictionary), "David McCarter", "6/3/2024", Status = Status.Available)]
 	public static FrozenDictionary<TKey, TValue> ToFrozenDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
 	{
 		return list.ToFrozen();
@@ -395,7 +395,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static ImmutableDictionary<TKey, TValue> ToImmutable<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return ImmutableDictionary.CreateRange(collection.ArgumentNotNull());
@@ -413,7 +413,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToImmutable() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", Status = Status.Available)]
 	public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return collection.ToImmutable();
@@ -430,7 +430,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToImmutableSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(ToImmutableSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
@@ -485,10 +485,10 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToReadOnly), "David McCarter", "1/28/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(ToReadOnly), "David McCarter", "1/28/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
 	{
-		return dictionary.ArgumentNotNull().ToReadOnlyDictionary();
+		return new(dictionary.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -502,7 +502,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToReadOnly() instead. Method will be removed at the end of 2026.")]
-	[Information(nameof(ToReadOnlyCollection), "David McCarter", "11/6/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToReadOnlyCollection), "David McCarter", "11/6/2023", Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyCollection<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
 	{
 		return dictionary.ToReadOnly();
@@ -631,7 +631,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToReadOnly() instead. Method will be removed at the end of 2026.")]
-	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return new(collection.ArgumentNotNull());
@@ -647,7 +647,7 @@ public static class DictionaryExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(ToSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static SortedDictionary<TKey, TValue> ToSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return new(collection.ArgumentNotNull());
@@ -664,7 +664,7 @@ public static class DictionaryExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToSorted), BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.Updated)]
+	[Information(nameof(ToSorted), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Updated)]
 	public static SortedDictionary<TKey, TValue> ToSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IComparer<TKey> comparer) where TKey : notnull
 	{
 		return new(collection.ArgumentNotNull(), comparer.ArgumentNotNull());
@@ -681,7 +681,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[Obsolete("Use ToSorted() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToSortedDictionary), "David McCarter", "6/27/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToSortedDictionary), "David McCarter", "6/27/2022", Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return collection.ToSorted();
@@ -699,7 +699,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[Obsolete("Use ToSorted() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToSortedDictionary), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToSortedDictionary), Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IComparer<TKey> comparer) where TKey : notnull
 	{
 		return collection.ToSorted(comparer);

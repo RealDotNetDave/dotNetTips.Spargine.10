@@ -2339,7 +2339,7 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 
-		var result = people.ToObservableList();
+		var result = people.ToObservable();
 
 		Assert.IsNotNull(result);
 		Assert.HasCount(Count, result);
@@ -2360,7 +2360,7 @@ public class ListExtensionsTests
 		var list = new List<int>();
 
 		// Act
-		var readOnlyList = list.ToReadOnlyList();
+		var readOnlyList = list.ToReadOnly();
 
 		// Assert
 		Assert.IsNotNull(readOnlyList, "Result should not be null.");
@@ -2374,7 +2374,7 @@ public class ListExtensionsTests
 		var list = new List<int> { 1, 2, 3, 4, 5 };
 
 		// Act
-		var readOnlyList = list.ToReadOnlyList();
+		var readOnlyList = list.ToReadOnly();
 
 		// Assert
 		Assert.IsNotNull(readOnlyList, "Result should not be null.");
@@ -2392,7 +2392,7 @@ public class ListExtensionsTests
 	{
 		List<int> list = null;
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToReadOnlyList());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToReadOnly());
 	}
 
 	[TestMethod]

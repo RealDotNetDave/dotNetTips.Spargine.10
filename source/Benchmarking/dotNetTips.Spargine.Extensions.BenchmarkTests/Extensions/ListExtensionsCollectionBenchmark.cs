@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -295,18 +295,18 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.ToObservableList))]
+	[Benchmark(Description = nameof(ListExtensions.ToObservable))]
 	public void ToObservableList()
 	{
-		var result = this._peopleRefList.ToObservableList();
+		var result = this._peopleRefList.ToObservable();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.ToReadOnlyList))]
+	[Benchmark(Description = nameof(ListExtensions.ToReadOnly))]
 	public void ToReadOnlyList()
 	{
-		var result = this._peopleRefList.ToReadOnlyList();
+		var result = this._peopleRefList.ToReadOnly();
 
 		this.Consume(result);
 	}

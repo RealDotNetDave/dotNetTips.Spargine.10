@@ -47,7 +47,7 @@ public class HashSetExtentionsTests
 	[TestMethod]
 	public void ToConcurrentHashSetTest()
 	{
-		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToConcurrentHashSet();
+		var people = RandomData.GeneratePersonRefCollection(10).ToHashSet().ToConcurrent();
 
 		Assert.HasCount(10, people);
 	}
@@ -59,7 +59,7 @@ public class HashSetExtentionsTests
 		var hashSet = new HashSet<int> { 1, 2, 2, 3, 4, 5 };
 
 		// Act
-		var result = hashSet.ToImmutableHashSet();
+		var result = hashSet.ToImmutable();
 
 		// Assert
 		Assert.HasCount(5, result);
@@ -73,7 +73,7 @@ public class HashSetExtentionsTests
 		var hashSet = new HashSet<int>();
 
 		// Act
-		var result = hashSet.ToImmutableHashSet();
+		var result = hashSet.ToImmutable();
 
 		// Assert
 		Assert.IsEmpty(result);
@@ -86,7 +86,7 @@ public class HashSetExtentionsTests
 		HashSet<int> hashSet = null;
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => hashSet.ToImmutableHashSet());
+		Assert.ThrowsExactly<ArgumentNullException>(() => hashSet.ToImmutable());
 	}
 
 	[TestMethod]
@@ -96,7 +96,7 @@ public class HashSetExtentionsTests
 		var hashSet = new HashSet<int> { 1, 2, 3, 4, 5 };
 
 		// Act
-		var result = hashSet.ToImmutableHashSet();
+		var result = hashSet.ToImmutable();
 
 		// Assert
 		Assert.HasCount(hashSet.Count, result);

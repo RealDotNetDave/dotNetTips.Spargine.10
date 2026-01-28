@@ -4,7 +4,7 @@
 // Created          : 06-10-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -48,18 +48,18 @@ public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	}
 
-	[Benchmark(Description = nameof(HashSetExtensions.ToConcurrentHashSet))]
+	[Benchmark(Description = nameof(HashSetExtensions.ToConcurrent))]
 	public void ToConcurrentHashSet()
 	{
-		var result = this._personRefHashSet.ToConcurrentHashSet();
+		var result = this._personRefHashSet.ToConcurrent();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(HashSetExtensions.ToImmutableHashSet))]
+	[Benchmark(Description = nameof(HashSetExtensions.ToImmutable))]
 	public void ToImmutableHashSet()
 	{
-		var result = this._personRefHashSet.ToImmutableHashSet();
+		var result = this._personRefHashSet.ToImmutable();
 
 		this.Consume(result);
 	}

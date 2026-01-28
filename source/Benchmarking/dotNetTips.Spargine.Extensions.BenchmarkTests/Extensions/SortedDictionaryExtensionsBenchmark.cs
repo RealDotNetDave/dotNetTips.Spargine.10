@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -68,7 +68,7 @@ public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 	{
 		base.Setup();
 
-		this._personRefSortedDictionary = this.GetPersonRefDictionary().ToSortedDictionary();
+		this._personRefSortedDictionary = this.GetPersonRefDictionary().ToSorted();
 	}
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.ToImmutable))]

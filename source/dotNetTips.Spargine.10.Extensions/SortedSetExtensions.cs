@@ -133,7 +133,7 @@ public static class SortedSetExtensions
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 		public ImmutableSortedSet<T> ToImmutable()
 		{
 			return ImmutableSortedSet.CreateRange(collection.ArgumentNotNull());

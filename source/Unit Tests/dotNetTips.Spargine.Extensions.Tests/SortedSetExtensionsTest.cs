@@ -69,7 +69,7 @@ public class SortedSetExtensionsTest
 	{
 		var peopleSortedSet = new SortedSet<Tester.Models.RefTypes.Person>(RandomData.GeneratePersonRefCollection(100));
 
-		var result = peopleSortedSet.ToImmutableSortedSet();
+		var result = peopleSortedSet.ToImmutable();
 
 		Assert.IsNotNull(result);
 	}

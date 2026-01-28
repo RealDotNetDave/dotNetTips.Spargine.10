@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-28-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -54,7 +54,7 @@ public class SortedSetExtensionsBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefSortedSet;
 
-		this.Consume(people.ToImmutableSortedSet());
+		this.Consume(people.ToImmutable());
 	}
 
 }

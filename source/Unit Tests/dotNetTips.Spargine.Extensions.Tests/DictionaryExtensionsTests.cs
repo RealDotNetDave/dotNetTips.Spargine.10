@@ -380,7 +380,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.ToFrozenDictionary();
+		var result = people.ToFrozen();
 
 		Assert.IsNotEmpty(result);
 		Assert.HasCount(people.Count, result);
@@ -398,7 +398,7 @@ public class DictionaryExtensionsTests
 	{
 		var emptyDictionary = new Dictionary<string, Person>();
 
-		var result = emptyDictionary.ToFrozenDictionary();
+		var result = emptyDictionary.ToFrozen();
 
 		Assert.IsEmpty(result);
 	}
@@ -408,7 +408,7 @@ public class DictionaryExtensionsTests
 	{
 		Dictionary<string, Person> nullDictionary = null;
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToFrozenDictionary());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToFrozen());
 	}
 
 	[TestMethod]
@@ -416,7 +416,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.ToImmutableDictionary();
+		var result = people.ToImmutable();
 
 		Assert.IsNotEmpty(result);
 	}
@@ -426,7 +426,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.ToImmutableSortedDictionary();
+		var result = people.ToImmutableSorted();
 
 		Assert.IsNotEmpty(result);
 		Assert.HasCount(people.Count, result);
@@ -443,7 +443,7 @@ public class DictionaryExtensionsTests
 	{
 		var emptyDictionary = new Dictionary<string, Person>();
 
-		var result = emptyDictionary.ToImmutableSortedDictionary();
+		var result = emptyDictionary.ToImmutableSorted();
 
 		Assert.IsEmpty(result);
 	}
@@ -453,7 +453,7 @@ public class DictionaryExtensionsTests
 	{
 		Dictionary<string, Person> nullDictionary = null;
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToImmutableSortedDictionary());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToImmutableSorted());
 	}
 
 	[TestMethod]
@@ -509,7 +509,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.ToReadOnlyCollection();
+		var result = people.ToReadOnly();
 
 		// Test
 		Assert.IsNotNull(result);
@@ -521,7 +521,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.ToReadOnlyDictionary();
+		var result = people.ToReadOnly();
 
 		// Test
 		Assert.IsNotNull(result);
@@ -541,7 +541,7 @@ public class DictionaryExtensionsTests
 		var comparer = Comparer<string>.Create((x, y) => string.Compare(y, x, StringComparison.Ordinal));
 
 		// Act
-		var result = dictionary.ToSortedDictionary(comparer);
+		var result = dictionary.ToSorted(comparer);
 
 		// Assert
 		Assert.IsNotNull(result);
@@ -562,7 +562,7 @@ public class DictionaryExtensionsTests
 		var comparer = Comparer<string>.Default;
 
 		// Act
-		var result = dictionary.ToSortedDictionary(comparer);
+		var result = dictionary.ToSorted(comparer);
 
 		// Assert
 		Assert.IsNotNull(result);
@@ -578,7 +578,7 @@ public class DictionaryExtensionsTests
 		var comparer = Comparer<string>.Default;
 
 		// Act
-		var result = dictionary.ToSortedDictionary(comparer);
+		var result = dictionary.ToSorted(comparer);
 
 		// Assert
 		Assert.IsNotNull(result);
@@ -598,7 +598,7 @@ public class DictionaryExtensionsTests
 		IComparer<string> comparer = null;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSortedDictionary(comparer));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSorted(comparer));
 	}
 
 	[TestMethod]
@@ -609,7 +609,7 @@ public class DictionaryExtensionsTests
 		var comparer = Comparer<string>.Default;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSortedDictionary(comparer));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSorted(comparer));
 	}
 
 	/// <summary>
@@ -620,7 +620,7 @@ public class DictionaryExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		var result = people.ToSortedDictionary();
+		var result = people.ToSorted();
 
 		Assert.IsNotEmpty(result);
 	}
