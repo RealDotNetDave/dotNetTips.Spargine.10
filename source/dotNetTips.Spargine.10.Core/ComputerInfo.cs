@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core;
 /// <summary>
 /// Provides detailed information about the computer system.
 /// </summary>
-[Information(nameof(ComputerInfo), author: "David McCarter", createdOn: "10/15/2018", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineComputerInfo")]
+[Information(nameof(ComputerInfo), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineComputerInfo")]
 [DataContract(Namespace = "dotNetTips.com/Info")]
 [Serializable]
 public sealed class ComputerInfo

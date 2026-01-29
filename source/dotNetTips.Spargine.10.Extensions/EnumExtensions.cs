@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for the <see cref="Enum" /> type, enhancing enum functionality with additional utilities such as getting descriptions, parsing, and retrieving items.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineEnumExtensions", Status = Status.Available)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static class EnumExtensions
 {
 	/// <summary>
@@ -55,6 +55,10 @@ public static class EnumExtensions
 		/// <returns>
 		/// The description of the enum value, or its name if no description is available.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+		/// <remarks>
+		/// This method delegates to <see cref="EnumHelper.GetDescription(Enum)"/> and preserves any custom enum member descriptions.
+		/// </remarks>
 		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
 		public string? GetDescription()
 		{
