@@ -136,8 +136,8 @@ public class FileProcessor
 
 					this.OnProcessed(new ProgressEventArgs
 					{
+						Message = Resources.FileHasBeenCopied,
 						Name = tempFile.FullName,
-						Message = tempFile.Name,
 						ProgressState = FileProgressState.FileCopied,
 						Size = tempFile.Length,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -248,8 +248,8 @@ public class FileProcessor
 
 					this.OnProcessed(new ProgressEventArgs
 					{
-						Message = tempFile.Name,
-						Name = Resources.FileHasBeenCopied,
+						Message = Resources.FileHasBeenCopied,
+						Name = tempFile.Name,
 						ProgressState = FileProgressState.FileCopied,
 						Size = tempFile.Length,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -441,8 +441,8 @@ public class FileProcessor
 
 						this.OnProcessed(new ProgressEventArgs
 						{
-							Name = folder.FullName,
 							Message = Resources.DeletedFolder,
+							Name = folder.FullName,
 							ProgressState = FileProgressState.DirectoryDeleted,
 							Size = folderSize,
 						});
@@ -451,7 +451,7 @@ public class FileProcessor
 					{
 						this.OnProcessed(new ProgressEventArgs
 						{
-							Message = $"{result?.GetErrorMessages()}",
+							Message = result.GetErrorMessages(),
 							Name = folder.FullName,
 							ProgressState = FileProgressState.Error,
 							Size = folderSize
@@ -559,8 +559,8 @@ public class FileProcessor
 
 					this.OnProcessed(new ProgressEventArgs
 					{
-						Name = tempFile.FullName,
 						Message = Resources.FileHasBeenMoved,
+						Name = tempFile.FullName,
 						ProgressState = FileProgressState.FileMoved,
 						Size = fileLength,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
@@ -677,8 +677,8 @@ public class FileProcessor
 
 					this.OnProcessed(new ProgressEventArgs
 					{
-						Name = tempFile.FullName,
 						Message = Resources.FileHasBeenMoved,
+						Name = tempFile.FullName,
 						ProgressState = FileProgressState.FileMoved,
 						Size = fileLength,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
