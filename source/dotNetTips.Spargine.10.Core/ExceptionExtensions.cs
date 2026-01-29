@@ -4,7 +4,7 @@
 // Created          : 05-04-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Core;
 /// <remarks>
 /// This class contains utility methods and properties to enhance exception handling.
 /// </remarks>
-[Information(nameof(ExceptionExtensions), Status = Status.UpdateDocumentation)]
+[Information(nameof(ExceptionExtensions), Status = Status.Available, Documentation = "https://bit.ly/SpargineExceptionExtensions")]
 public static partial class ExceptionExtensions
 {
 	/// <summary>
