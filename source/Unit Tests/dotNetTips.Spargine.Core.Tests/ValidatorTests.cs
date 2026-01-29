@@ -1143,7 +1143,7 @@ public partial class ValidatorTests
 		string testValue = null;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.ArgumentInRange(1, 10));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => testValue.ArgumentInRange(1, 10));
 	}
 
 	[TestMethod]
@@ -1853,7 +1853,7 @@ public partial class ValidatorTests
 		var condition = true;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => input.ArgumentMeetsCondition(condition));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentMeetsCondition(condition));
 	}
 
 	[TestMethod]
@@ -2506,7 +2506,7 @@ public partial class ValidatorTests
 		ICollection<int> input = null;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentNotReadOnly(input));
 	}
 
 	[TestMethod]
@@ -2584,7 +2584,7 @@ public partial class ValidatorTests
 		IList<int> input = null;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => Validator.ArgumentNotReadOnly(input));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentNotReadOnly(input));
 	}
 
 	[TestMethod]

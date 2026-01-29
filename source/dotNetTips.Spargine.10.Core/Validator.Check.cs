@@ -4,7 +4,7 @@
 // Created          : 06-26-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="Validator.Check.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
