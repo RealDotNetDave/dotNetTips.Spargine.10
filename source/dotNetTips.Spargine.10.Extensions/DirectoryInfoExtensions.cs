@@ -4,13 +4,14 @@
 // Created          : 10-08-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Extension methods designed for DirectoryInfo.</summary>
 // ***********************************************************************
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using DotNetTips.Spargine.Core;
@@ -56,9 +57,18 @@ public static class DirectoryInfoExtensions
 
 		long totalSize = 0;
 
-		foreach (var file in path.EnumerateFiles(searchPattern, searchOption))
+		var files = path.EnumerateFiles(searchPattern, searchOption);
+
+		foreach (var file in files)
 		{
-			totalSize += file.Length;
+			try
+			{
+				totalSize += file.Length;
+			}
+			catch (IOException ex)
+			{
+				Trace.WriteLine($"IOException accessing file '{file.FullName}': {ex.Message}");
+			}
 		}
 		return totalSize;
 	}
