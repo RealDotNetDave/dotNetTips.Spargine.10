@@ -5,6 +5,7 @@
 	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
 	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>DotNetTips.Spargine.10.Benchmarking</AssemblyTitle>
 	<AssemblyVersion>2026.10.1.21</AssemblyVersion>
 	<Authors>David McCarter</Authors>
 	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -18,6 +19,7 @@
 	<DebugSymbols>true</DebugSymbols>
 	<DebugType>embedded</DebugType>
 	<Description>Common classes from dotNetTips.com that can be used with BenchmarkDotNet.</Description>
+	<Deterministic>true</Deterministic>
 	<DocumentationFile>..\..\..\AppBin\DotNetTips.Spargine.10.Benchmarking.xml</DocumentationFile>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<EnablePackageValidation>false</EnablePackageValidation>
@@ -33,12 +35,16 @@
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<Nullable>enable</Nullable>
 	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
-	<PackageProjectUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.8</PackageProjectUrl>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<PackageProjectUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</PackageProjectUrl>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageReleaseNotes>--JAN 2026: Initial .NET 10 release.</PackageReleaseNotes>
 	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
+	<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+	<Product>DotNetTips.Spargine.10</Product>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
 	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.8</RepositoryUrl>
+	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
 	<RootNamespace>DotNetTips.Spargine.Benchmarking</RootNamespace>
 	<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
@@ -46,9 +52,10 @@
 	<TargetFramework>net10.0</TargetFramework>
 	<Title>DotNetTips.Spargine.Benchmarking</Title>
 	<Version>2026.10.1.21</Version>
-	<PackageReleaseNotes>--JAN 2026: Initial .NET 10 release.</PackageReleaseNotes>
   </PropertyGroup>
-  <ItemGroup>
+
+
+<ItemGroup>
 	<Compile Remove="CollectionBenchmark.PersonRecord.cs" />
   </ItemGroup>
 
@@ -63,7 +70,7 @@
 	  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	</EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
 	<None Include="..\README.md">
 	  <Pack>True</Pack>
@@ -104,4 +111,8 @@
 	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	</EmbeddedResource>
   </ItemGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+</PropertyGroup>
 </Project>

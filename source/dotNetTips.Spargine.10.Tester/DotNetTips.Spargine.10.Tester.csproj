@@ -5,6 +5,7 @@
 	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
 	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>DotNetTips.Spargine.10.Tester</AssemblyTitle>
 	<AssemblyVersion>2026.10.1.29</AssemblyVersion>
 	<Authors>David McCarter</Authors>
 	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -18,26 +19,30 @@
 	<DebugSymbols>true</DebugSymbols>
 	<DebugType>portable</DebugType>
 	<Description>Common code to help with unit tests by generating random data.</Description>
+	<Deterministic>true</Deterministic>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	<EnablePackageValidation>false</EnablePackageValidation>
 	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
 	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	<FileVersion>2026.10.1.29</FileVersion>
+	<GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
 	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-	<GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<IncludeSymbols>true</IncludeSymbols>
 	<LangVersion>latest</LangVersion>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<Nullable>enable</Nullable>
 	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<PackageProjectUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</PackageProjectUrl>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
+	<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+	<Product>DotNetTips.Spargine.10</Product>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
@@ -146,5 +151,9 @@
 	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	</EmbeddedResource>
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+	<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
 
 </Project>
