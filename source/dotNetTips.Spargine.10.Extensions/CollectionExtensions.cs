@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-19-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -102,6 +102,11 @@ public static class CollectionExtensions
 				return;
 			}
 
+			if (collection is T[])
+			{
+				ExceptionThrower.ThrowArgumentReadOnlyException("Arrays are fixed-size and do not support AddRange.", nameof(collection));
+			}
+
 			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
 			if (condition)
@@ -141,6 +146,11 @@ public static class CollectionExtensions
 				return false;
 			}
 
+			if (collection is T[])
+			{
+				ExceptionThrower.ThrowArgumentReadOnlyException("Arrays are fixed-size and do not support AddRange.", nameof(collection));
+			}
+
 			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
 			var eq = comparer ?? EqualityComparer<T>.Default;
@@ -175,6 +185,12 @@ public static class CollectionExtensions
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true)
 		{
 			items = items.ArgumentNotNull();
+
+			if (collection is T[])
+			{
+				ExceptionThrower.ThrowArgumentReadOnlyException("Arrays are fixed-size and do not support AddRange.", nameof(collection));
+			}
+
 			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
 			if (!ensureUnique)
@@ -289,6 +305,11 @@ public static class CollectionExtensions
 			if (item is null)
 			{
 				return;
+			}
+
+			if (collection is T[])
+			{
+				ExceptionThrower.ThrowArgumentReadOnlyException("Arrays are fixed-size and do not support AddRange.", nameof(collection));
 			}
 
 			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();

@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2026.10.1.22
+# dotNetTips.Spargine.10.Core - 2026.10.1.27
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -2834,7 +2834,7 @@
 
 ### System.String ToJson()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3070,7 +3070,7 @@
 
 ### System.Boolean Equals(System.Object obj)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3090,7 +3090,7 @@
 
 ### System.Int32 GetHashCode()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3133,7 +3133,7 @@
 
 ### System.TimeSpan Elapsed { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -3624,7 +3624,7 @@
 
 ### System.Boolean TryFromDisplayName(System.String displayName, T result)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3634,7 +3634,7 @@
 
 ### System.Boolean TryFromValue(System.Int32 value, T result)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -3679,7 +3679,7 @@
 
 ### System.Boolean TryParse(System.String name, T result)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3708,7 +3708,7 @@
 
 ### System.Void ClearLoggedState(System.Exception ex)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3718,7 +3718,7 @@
 
 ### System.Boolean ContainsAggregateException(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3728,7 +3728,7 @@
 
 ### System.Boolean ContainsExceptionOfType(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3738,7 +3738,7 @@
 
 ### System.Boolean ContainsMessage(System.Exception exception, System.String message)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3746,7 +3746,7 @@
 * **Description:** ContainsMessage
 * **Modified On:** 
 
-### System.Collections.Generic.IReadOnlyDictionary<System.Object, System.Object> ExtractData(System.Exception exception)
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.Object, System.Object> ExtractData(System.Exception exception)
 
 * **Status:** New
 * **Optimization Status:** None
@@ -3758,7 +3758,7 @@
 
 ### System.String FormatForDisplay(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3788,7 +3788,7 @@
 
 ### System.Collections.Generic.IReadOnlyList<System.Exception> GetAllInnerExceptions(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3820,9 +3820,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> GetMetadata(System.Exception exception)
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Object> GetMetadata(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3856,7 +3856,7 @@
 
 ### System.Boolean IsLogged(System.Exception ex)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3878,7 +3878,7 @@
 
 ### System.Void LogException(System.Exception exception, Microsoft.Extensions.Logging.ILogger logger, Microsoft.Extensions.Logging.LogLevel logLevel)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3888,7 +3888,7 @@
 
 ### System.Void SetIsLogged(System.Exception ex)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3898,7 +3898,7 @@
 
 ### System.String ToJson(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3921,7 +3921,7 @@
 
 ### System.Boolean ContainsAggregateException()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3931,7 +3931,7 @@
 
 ### System.Boolean ContainsExceptionOfType()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3941,7 +3941,7 @@
 
 ### System.Boolean ContainsMessage(System.String message)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3949,7 +3949,7 @@
 * **Description:** ContainsMessage
 * **Modified On:** 
 
-### System.Collections.Generic.IReadOnlyDictionary<System.Object, System.Object> ExtractData()
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.Object, System.Object> ExtractData()
 
 * **Status:** New
 * **Optimization Status:** None
@@ -3961,7 +3961,7 @@
 
 ### System.String FormatForDisplay()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3971,7 +3971,7 @@
 
 ### System.Collections.Generic.IReadOnlyList<System.Exception> GetAllInnerExceptions()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4003,9 +4003,9 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> GetMetadata()
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Object> GetMetadata()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4051,7 +4051,7 @@
 
 ### System.Void LogException(Microsoft.Extensions.Logging.ILogger logger, Microsoft.Extensions.Logging.LogLevel logLevel)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4061,7 +4061,7 @@
 
 ### System.String ToJson()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4643,7 +4643,7 @@
 
 ### System.String PerformAction(System.Int32& capacity, System.Action`1[[System.Text.StringBuilder, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& action)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4734,6 +4734,51 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 * **Version:** 2
+
+*****
+## DotNetTips.Spargine.Core.Internal.InternalMethods
+
+### System.Void AppendRepeatedCharsLine(System.Text.StringBuilder sb, System.Char character, System.Int32 count)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** AppendRepeatedCharsLine
+* **Modified On:** 
+
+### System.Int32 EnsureMinimum(System.Int32 value, System.Int32 minValue)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** EnsureMinimum
+* **Modified On:** 
+
+### System.Boolean IsEnumerable(System.Type type)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** IsEnumerable
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> PropertiesToDictionary(System.Object obj, System.String memberName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 11/19/2020
+* **Description:** Original code by: Diego De Vita
+* **Modified By:** David McCarter
+* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.InvalidEnumTypeException
@@ -5096,7 +5141,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.IPAddress> GetDnsServerAddresses()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5106,7 +5151,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.IPAddress> GetGatewayAddresses()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5116,7 +5161,7 @@
 
 ### System.String GetHostName()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5126,7 +5171,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.IPAddress> GetLocalIPAddresses(System.Nullable<System.Net.Sockets.AddressFamily> addressFamily)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5136,7 +5181,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.NetworkInformation.PhysicalAddress> GetMacAddresses()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5154,9 +5199,19 @@
 * **Description:** GetNetworkConnections
 * **Modified On:** 
 
+### System.String GetNetworkConnectionsReport(System.Boolean includeIPProperties)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetNetworkConnections
+* **Modified On:** 
+
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int64>> GetNetworkSpeeds()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5166,7 +5221,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Net.NetworkInformation.IPv4InterfaceStatistics>> GetNetworkStatistics(System.Nullable<System.Net.NetworkInformation.NetworkInterfaceType> interfaceType)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5176,7 +5231,7 @@
 
 ### System.Net.NetworkInformation.NetworkInterface GetPrimaryNetworkInterface()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Update
@@ -5196,7 +5251,7 @@
 
 ### System.Boolean IsConnectedToEthernet()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5206,7 +5261,7 @@
 
 ### System.Boolean IsConnectedToNetwork()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5216,7 +5271,7 @@
 
 ### System.Boolean IsConnectedToWiFi()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5226,7 +5281,7 @@
 
 ### System.Boolean IsIPv6Supported()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -5851,7 +5906,7 @@
 
 ### System.String AesGcmEncrypt(System.String plainText, System.Byte[] key, System.ReadOnlySpan<System.Byte> aad)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6242,7 +6297,7 @@
 
 ### System.Void AddMessage(System.String message)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -6940,7 +6995,7 @@
 
 ### System.Boolean IsEnumerable(System.Type type)
 
-* **Status:** Available
+* **Status:** Updated
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7892,4 +7947,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/23/2026 8:55:45 PM UTC**
+**Generated by Spargine - dotNetTips.com on 1/29/2026 1:17:30 PM UTC**

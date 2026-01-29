@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-14-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="FastSortedListTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -165,23 +165,13 @@ public class FastSortedListTests
 		var list = new FastSortedList<int>(collection);
 
 		Assert.HasCount(collection.Count, list, "List should contain all elements from the collection.");
-		for (int i = 0; i < collection.Count; i++)
+
+		var expected = collection.OrderBy(x => x).ToArray();
+
+		for (int i = 0; i < expected.Length; i++)
 		{
-			Assert.AreEqual(collection[i], list[i], $"Element at index {i} should match the collection's element.");
+			Assert.AreEqual(expected[i], list[i], $"Element at index {i} should match the sorted collection element.");
 		}
-	}
-
-	[TestMethod]
-	public void Constructor_WithCollection_ShouldMarkUnsorted()
-	{
-		var collection = new List<int> { 5, 1, 3, 2, 4 };
-		var list = new FastSortedList<int>(collection);
-
-		// Accessing the private _sorted field to verify it's set to false after initialization
-		var sortedField = typeof(FastSortedList<int>).GetField("_sorted", BindingFlags.NonPublic | BindingFlags.Instance);
-		var isSorted = (bool)sortedField.GetValue(list);
-
-		Assert.IsFalse(isSorted, "List should be marked as unsorted after initialization with a collection.");
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -934,11 +934,11 @@ public static partial class Validator
 	[Information(nameof(ArgumentNotReadOnly), "David McCarter", "1/28/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ICollection<T> ArgumentNotReadOnly<T>(this ICollection<T> input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
-		var isValid = input is not null && input!.IsReadOnly is false;
+		var isValid = input is not null && input.IsReadOnly is false && input is not T[];
 
 		if (isValid is false)
 		{
-			ExceptionThrower.ThrowArgumentReadOnlyException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), paramName);
+			ExceptionThrower.ThrowArgumentReadOnlyException(CreateExceptionMessage(errorMessage, Resources.ErrorReadOnlyCollection), paramName);
 		}
 
 		return input!;

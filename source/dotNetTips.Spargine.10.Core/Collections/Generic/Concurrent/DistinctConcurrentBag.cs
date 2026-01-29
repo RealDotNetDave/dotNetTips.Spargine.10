@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -123,7 +123,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 			throw new ArgumentNullException(nameof(item));
 		}
 
-		if (this._uniqueItems.AddIfNotExists(item))
+		if (this._uniqueItems.TryAdd(item))
 		{
 			this._bag.Add(item);
 		}

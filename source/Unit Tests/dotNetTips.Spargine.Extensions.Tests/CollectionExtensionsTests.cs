@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -88,6 +89,25 @@ public class CollectionExtensionsTests
 		people.AddIf(person, people.Count == Count);
 
 		Assert.AreEqual(Count + 1, people.Count);
+	}
+
+	[TestMethod]
+	public void AddRange_Array_ThrowsArgumentReadOnlyException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var peopleToAdd = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var array = people.ToArray();
+
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => array.AddRange(peopleToAdd));
+	}
+
+	[TestMethod]
+	public void AddRange_ImmutableList_ThrowsArgumentReadOnlyException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToImmutableList();
+		var peopleToAdd = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => people.AddRange(peopleToAdd, false));
 	}
 
 	[TestMethod]
