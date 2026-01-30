@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -249,7 +249,7 @@ public class FileProcessor
 					this.OnProcessed(new ProgressEventArgs
 					{
 						Message = Resources.FileHasBeenCopied,
-						Name = tempFile.Name,
+						Name = tempFile.FullName,
 						ProgressState = FileProgressState.FileCopied,
 						Size = tempFile.Length,
 						SpeedInMilliseconds = perf.TotalMilliseconds,
