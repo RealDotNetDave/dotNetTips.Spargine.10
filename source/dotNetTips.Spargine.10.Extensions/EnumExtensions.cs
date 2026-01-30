@@ -55,7 +55,7 @@ public static class EnumExtensions
 		/// <returns>
 		/// The description of the enum value, or its name if no description is available.
 		/// </returns>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if input is null.</exception>
 		/// <remarks>
 		/// This method delegates to <see cref="EnumHelper.GetDescription(Enum)"/> and preserves any custom enum member descriptions.
 		/// </remarks>

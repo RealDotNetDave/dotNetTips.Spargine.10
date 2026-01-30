@@ -28,72 +28,31 @@ using Microsoft.Extensions.Primitives;
 namespace DotNetTips.Spargine.Core.Cache;
 
 /// <summary>
-/// Provides a simple in-memory cache with a default expiration time. This class cannot be inherited.
+/// Represents an in-memory cache that provides a rich set of APIs for storing and retrieving
+/// data with support for expiration policies, priorities, dependencies, statistics, and
+/// single-flight cache population.
 /// </summary>
 /// <remarks>
-/// <para>This cache is built on top of <see cref="MemoryCache"/> and provides a simplified interface for adding, retrieving, and managing cached items with default and custom expiration times.</para>
-/// <para>The default expiration time for cached items is 20 minutes.</para>
-/// <para><strong>Thread Safety:</strong> This class is thread-safe. All operations can be safely called from multiple threads concurrently. The underlying <see cref="MemoryCache"/> is thread-safe, and all statistics tracking uses atomic operations.</para>
-/// <para><strong>Performance Monitoring:</strong> The cache tracks hit and miss statistics that can be accessed via <see cref="GetCacheStatistics"/> to monitor cache effectiveness.</para>
-/// <para><strong>Advanced Features:</strong></para>
+/// <para>
+/// This cache is a thin wrapper around <see cref="MemoryCache"/> that adds:
+/// </para>
 /// <list type="bullet">
-/// <item><description>Sliding expiration support for frequently accessed items</description></item>
-/// <item><description>Priority-based eviction control</description></item>
-/// <item><description>Size-aware caching with limits</description></item>
-/// <item><description>Change token support for dependency-based invalidation</description></item>
-/// <item><description>Linked cache dependencies for grouped invalidation</description></item>
-/// <item><description>Post-eviction callbacks for cleanup operations</description></item>
-/// <item><description>Single-flight pattern to prevent cache stampede</description></item>
+/// <item><description>A default absolute expiration of 20 minutes for items added without a custom timeout.</description></item>
+/// <item><description>Helpers for absolute, sliding, size-aware, and priority-based cache entries.</description></item>
+/// <item><description>Dependency-based invalidation using <see cref="CancellationTokenSource"/> and <see cref="IChangeToken"/>.</description></item>
+/// <item><description>Post-eviction callbacks for cleanup or logging.</description></item>
+/// <item><description>Batch add, get, and remove operations.</description></item>
+/// <item><description>Hit/miss statistics via <see cref="GetCacheStatistics"/> and <see cref="ResetStatistics"/>.</description></item>
+/// <item><description>
+/// A single-flight pattern through <see cref="GetOrCreateAsync{T}(string, Func{CancellationToken, Task{T}}, TimeSpan?, CancellationToken)"/>
+/// to prevent cache stampedes.
+/// </description></item>
 /// </list>
+/// <para>
+/// The class is implemented as a thread-safe singleton exposed via <see cref="Instance"/> and
+/// cannot be inherited.
+/// </para>
 /// </remarks>
-/// <example>
-/// Basic cache usage:
-/// <code>
-/// var cache = InMemoryCache.Instance;
-/// var myObject = new MyObject();
-/// cache.AddCacheItem("myKey", myObject);
-///
-/// // Retrieve the cached item
-/// var cachedObject = cache.GetCacheItem&lt;MyObject&gt;("myKey");
-/// </code>
-/// 
-/// Using sliding expiration for frequently accessed data:
-/// <code>
-/// cache.AddCacheItemWithSlidingExpiration("sessionKey", sessionData, TimeSpan.FromMinutes(5));
-/// </code>
-/// 
-/// Monitoring cache performance:
-/// <code>
-/// var stats = cache.GetCacheStatistics();
-/// Console.WriteLine($"Hit Ratio: {stats.HitRatio:P2}");
-/// Console.WriteLine($"Total Items: {stats.TotalItems}");
-/// Console.WriteLine($"Cache Hits: {stats.CacheHits}, Misses: {stats.CacheMisses}");
-/// </code>
-/// 
-/// Using cache dependencies for grouped invalidation:
-/// <code>
-/// var dependency = cache.CreateCacheDependency("user-data-dependency");
-/// cache.AddCacheItemWithDependency("user:1", userData1, TimeSpan.FromHours(1), dependency);
-/// cache.AddCacheItemWithDependency("user:2", userData2, TimeSpan.FromHours(1), dependency);
-/// 
-/// // Later, invalidate all dependent items at once
-/// cache.InvalidateDependentCacheItems("user-data-dependency");
-/// </code>
-/// 
-/// Using GetOrCreateAsync to prevent cache stampede:
-/// <code>
-/// // Multiple concurrent calls will only execute the factory once
-/// var data = await cache.GetOrCreateAsync(
-///     "expensive-data",
-///     async ct => await LoadExpensiveDataAsync(ct),
-///     TimeSpan.FromMinutes(30));
-/// </code>
-/// </example>
-/// <seealso cref="AddCacheItem{T}(string, T)"/>
-/// <seealso cref="GetCacheItem{T}(string)"/>
-/// <seealso cref="GetOrCreateAsync{T}(string, Func{CancellationToken, Task{T}}, TimeSpan?, CancellationToken)"/>
-/// <seealso cref="GetCacheStatistics"/>
-/// <seealso cref="CacheStatistics"/>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineInMemoryCache")]
 public sealed class InMemoryCache
 {

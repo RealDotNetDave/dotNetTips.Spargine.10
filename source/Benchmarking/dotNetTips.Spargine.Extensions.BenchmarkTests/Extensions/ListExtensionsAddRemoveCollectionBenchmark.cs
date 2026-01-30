@@ -4,7 +4,7 @@
 // Created          : 01-02-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsAddRemoveCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -96,10 +96,14 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	{
 		base.Setup();
 
+		this.LoadCollections();
+	}
+
+	private void LoadCollections()
+	{
 		this._peopleRecordList = this.GetPersonRecordArray().ToList();
 		this._peopleRefList = this.GetPersonRefArray().ToList();
 		this._peopleRefSubSet = this.GetPersonRefArray().TakeLast(this.Count / 10).ToList();
 		this._peopleValList = this.GetPersonValArray().ToList();
 	}
-
 }

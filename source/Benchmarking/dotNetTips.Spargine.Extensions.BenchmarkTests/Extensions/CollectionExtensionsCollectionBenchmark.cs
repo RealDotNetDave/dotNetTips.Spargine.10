@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-16-2025
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -14,6 +14,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -35,13 +36,13 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private List<Person> _peopleRefList;
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddRange) + ": List")]
-	public void AddRange01()
+	public void AddRangeList()
 	{
 		var people = this._peopleRefList;
 
-		_ = people.AddRange(this.GetPersonRefCollectionToInsert(), true);
+		var result = people.AddRange(this.GetPersonRefCollectionToInsert(), true);
 
-		this.Consume(people);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.AsReadOnlySpan))]
@@ -58,6 +59,12 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._peopleRefCollection.AsSpan();
 
 		this.Consume(result.ToArray());
+	}
+
+	[IterationSetup(Targets = new[] { nameof(AddRangeList) })]
+	public void IterationSetupRef()
+	{
+		this._peopleRefList = this.GetPersonRefArray().ToList();
 	}
 
 	/// <summary>

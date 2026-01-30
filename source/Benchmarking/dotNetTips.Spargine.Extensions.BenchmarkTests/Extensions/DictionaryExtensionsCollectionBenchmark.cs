@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,27 +32,22 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private KeyValuePair<string, Person> _personRef;
-
 	private Dictionary<string, Person> _personRefDictionary;
 	private Dictionary<string, Person> _personRefDictionaryToInsert;
 
 	[Benchmark(Description = nameof(DictionaryExtensions.AddRange))]
 	public void AddRange()
 	{
-		var people = this._personRefDictionary;
-
-		var result = people.AddRange(this._personRefDictionaryToInsert);
+		var result = this._personRefDictionary.AddRange(this._personRefDictionaryToInsert);
 
 		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd) + ": Dictionary")]
 	[BenchmarkCategory(Categories.Collections)]
-	public void GetOrAddDictionary02()
+	public void GetOrAdd()
 	{
-		var people = this._personRefDictionary;
-
-		var result = people.GetOrAdd(this.PersonRef01.Id, this.PersonRef01);
+		var result = this._personRefDictionary.GetOrAdd(this.PersonRef01.Id, this.PersonRef01);
 
 		this.Consume(result);
 	}
@@ -67,6 +62,13 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this.Consume(result);
 	}
+
+	[IterationSetup(Targets = new[] { nameof(AddRange), nameof(Upsert), nameof(GetOrAdd) })]
+	public void IterationSetupRef()
+	{
+		this._personRefDictionary = this.GetPersonRefDictionary();
+	}
+
 	public override void Setup()
 	{
 		base.Setup();
@@ -158,24 +160,10 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.Upsert))]
-	public void UpsertDictionary01()
+	public void Upsert()
 	{
-		var people = this._personRefDictionary;
-		var person = people.Last();
+		this._personRefDictionary.Upsert(this.PersonRef01.Id, this.PersonRef01);
 
-		people.Upsert(person.Key, person.Value);
-
-		this.Consume(people);
+		this.Consume(this._personRefDictionary);
 	}
-
-	[Benchmark(Description = nameof(DictionaryExtensions.Upsert) + ": New Person")]
-	public void UpsertDictionary02()
-	{
-		var people = this._personRefDictionary;
-
-		people.Upsert(this.PersonRef01.Id, this.PersonRef01);
-
-		this.Consume(people);
-	}
-
 }

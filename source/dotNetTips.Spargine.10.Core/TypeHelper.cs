@@ -271,8 +271,6 @@ public static class TypeHelper
 
 		List<Type> types = new(capacity: 16);
 
-		var assemblyCount = assemblyCollection.Length;
-
 		foreach (var assembly in assemblyCollection)
 		{
 			try

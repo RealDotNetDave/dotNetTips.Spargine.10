@@ -4,7 +4,7 @@
 // Created          : 06-10-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,11 +32,15 @@ public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(HashSetExtensions.AddIf))]
 	public void AddIf()
 	{
-		var collection = this._personRefHashSet;
+		this._personRefHashSet.AddIf(base.PersonRef01, true);
 
-		collection.AddIf(base.PersonRef01, true);
+		this.Consume(this._personRefHashSet.Count);
+	}
 
-		this.Consume(collection);
+	[IterationSetup(Targets = new[] { nameof(AddIf), nameof(Upsert) })]
+	public void IterationSetupRef()
+	{
+		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
 	}
 
 	public override void Setup()
@@ -67,11 +71,9 @@ public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(HashSetExtensions.Upsert))]
 	public void Upsert()
 	{
-		var collection = this._personRefHashSet;
+		this._personRefHashSet.Upsert(base.PersonRef01);
 
-		collection.Upsert(base.PersonRef01);
-
-		this.Consume(collection);
+		this.Consume(this._personRefHashSet.Count);
 	}
 
 }

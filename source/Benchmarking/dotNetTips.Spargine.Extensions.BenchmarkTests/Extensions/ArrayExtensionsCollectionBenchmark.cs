@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -46,7 +46,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void AddFirst_Ref()
 	{
-		var people = this._personRefArray.FastClone();
+		var people = this._personRefArray;
 
 		var result = people.AddFirst(this.PersonRef01);
 
@@ -57,7 +57,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void AddLast_Ref()
 	{
-		var people = this._personRefArray.FastClone();
+		var people = this._personRefArray;
 
 		var result = people.AddLast(this.PersonRef02);
 
@@ -270,6 +270,17 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[IterationSetup(Targets = new[] { nameof(UpsertRecord_Record) })]
+	public void IterationSetupRecord()
+	{
+		this._personRecordArray = this.GetPersonRecordArray();
+	}
+
+	[IterationSetup(Targets = new[] { nameof(AddFirst_Ref), nameof(AddLast_Ref), nameof(RemoveFirst_Ref), nameof(RemoveLast_Ref), nameof(Upsert_Ref) })]
+	public void IterationSetupRef()
+	{
+		this._personRefArray = this.GetPersonRefArray();
+	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.LastIndexOf) + ": Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
@@ -402,7 +413,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void RemoveFirst_Ref()
 	{
-		var people = this._personRefArray.FastClone();
+		var people = this._personRefArray;
 
 		var result = people.RemoveFirst();
 
@@ -413,7 +424,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void RemoveLast_Ref()
 	{
-		var people = this._personRefArray.FastClone();
+		var people = this._personRefArray;
 
 		var result = people.RemoveLast();
 
@@ -482,7 +493,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void Upsert_Ref()
 	{
-		var people = this._personRefArray.FastClone();
+		var people = this._personRefArray;
 
 		var result = people.Upsert(this.PersonRef01);
 
@@ -493,7 +504,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.RecordType)]
 	public void UpsertRecord_Record()
 	{
-		var people = this._personRecordArray.FastClone();
+		var people = this._personRecordArray;
 
 		var result = people.Upsert(this.PersonRecord01);
 

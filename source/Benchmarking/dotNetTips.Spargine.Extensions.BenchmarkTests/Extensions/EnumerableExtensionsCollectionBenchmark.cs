@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -65,7 +65,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.AddIf))]
 	public void AddIf()
 	{
-
 		var result = this._personRefEnumerable.AddIf(this.PersonRef01, true);
 
 		this.ConsumeEnumerable(result);

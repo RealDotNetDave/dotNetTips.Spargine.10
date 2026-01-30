@@ -16,31 +16,26 @@
 
 namespace DotNetTips.Spargine.Core;
 
-public static partial class ExceptionExtensions
+/// <summary>
+/// Represents metadata associated with an exception.
+/// </summary>
+/// <param name="IsLogged"> Gets or sets a value indicating whether the exception has been logged. </param>
+/// <remarks>
+/// This class is used internally to store additional information about exceptions, such as their logged state.
+/// </remarks>
+[Preserve("Used in ExceptionExtensions")]
+internal sealed record ExceptionMetadata(bool IsLogged)
 {
 	/// <summary>
-	/// Represents metadata associated with an exception.
+	/// Initializes a new instance of the <see cref="ExceptionMetadata"/> class.
 	/// </summary>
-	/// <param name="IsLogged"> Gets or sets a value indicating whether the exception has been logged. </param>
-	/// <remarks>
-	/// This class is used internally to store additional information about exceptions, such as their logged state.
-	/// </remarks>
-	[Preserve("Used in ExceptionExtensions")]
-	internal sealed record ExceptionMetadata(bool IsLogged)
+	public ExceptionMetadata() : this(false)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExceptionMetadata"/> class.
-		/// </summary>
-		public ExceptionMetadata() : this(false)
-		{
-		}
-
-		/// <summary>
-		/// Gets or sets a value indicating whether the exception has been logged.
-		/// </summary>
-		/// <value><c>true</c> if the exception has been logged; otherwise, <c>false</c>.</value>
-		public bool IsLogged { get; internal set; } = IsLogged;
-
-		private string GetDebuggerDisplay() => this.ToString();
 	}
+
+	/// <summary>
+	/// Gets or sets a value indicating whether the exception has been logged.
+	/// </summary>
+	/// <value><c>true</c> if the exception has been logged; otherwise, <c>false</c>.</value>
+	public bool IsLogged { get; internal set; } = IsLogged;
 }

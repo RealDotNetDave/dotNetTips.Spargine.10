@@ -5,7 +5,7 @@
 // Created          : 12-30-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 01-29-2026
 // ***********************************************************************
 // <copyright file="CacheStatistics.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,23 +21,23 @@ namespace DotNetTips.Spargine.Core.Cache;
 /// Represents cache statistics and metrics.
 /// </summary>
 [Information(nameof(CacheStatistics), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
-public sealed class CacheStatistics
+public record class CacheStatistics
 {
 
 	/// <summary>
 	/// Gets or sets the total number of cache hits.
 	/// </summary>
-	public long CacheHits { get; set; }
+	public long CacheHits { get; init; }
 
 	/// <summary>
 	/// Gets or sets the total number of cache misses.
 	/// </summary>
-	public long CacheMisses { get; set; }
+	public long CacheMisses { get; init; }
 
 	/// <summary>
 	/// Gets or sets the compaction percentage used when cache size limit is exceeded.
 	/// </summary>
-	public double CompactionPercentage { get; set; }
+	public double CompactionPercentage { get; init; }
 
 	/// <summary>
 	/// Gets the cache hit ratio (hits / total requests).
@@ -53,5 +53,5 @@ public sealed class CacheStatistics
 	/// <summary>
 	/// Gets or sets the total number of items currently in the cache.
 	/// </summary>
-	public int TotalItems { get; set; }
+	public int TotalItems { get; init; }
 }

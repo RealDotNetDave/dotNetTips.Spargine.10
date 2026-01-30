@@ -43,65 +43,42 @@ public static class CountryPhonePostalInfoRepository
 	private static readonly JsonSerializerOptions? _options = ConfigureSerializerOptions();
 
 	/// <summary>
-	/// Retrieves a read-only collection containing all country phone and postal information records.
+	/// Retrieves a cached, read-only collection that contains phone and postal information for all supported countries.
 	/// </summary>
 	/// <returns>
-	/// A <see cref="ReadOnlyCollection{T}"/> of <see cref="CountryPhonePostalInfo"/> containing all available country data.
-	/// The collection includes phone codes, postal code formats, and ISO country identifiers for all supported countries.
+	/// A <see cref="ReadOnlyCollection{T}"/> of <see cref="CountryPhonePostalInfo"/> instances that represent
+	/// the complete set of country phone and postal metadata available to the application.
 	/// </returns>
 	/// <remarks>
-	/// This method provides access to the complete repository of country phone and postal information.
 	/// <para>
-	/// <strong>Thread Safety:</strong>
-	/// The method is marked with <see cref="MethodImplAttribute"/> using <see cref="MethodImplOptions.Synchronized"/>,
-	/// which ensures thread-safe initialization of the cached data. Multiple concurrent calls during initial load
-	/// are serialized to prevent race conditions and duplicate deserialization.
+	/// The first invocation of this method deserializes the embedded JSON resource into memory and caches the result
+	/// in a static field. Subsequent calls return the same cached collection instance, avoiding repeated
+	/// deserialization and additional allocations.
 	/// </para>
 	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>First call: O(n) - deserializes JSON and creates ReadOnlyCollection (where n = number of countries)</description></item>
-	/// <item><description>Subsequent calls: O(1) - returns cached reference, no allocation or computation</description></item>
-	/// <item><description>Memory: Single allocation persists for application lifetime (typical size: ~250+ countries)</description></item>
-	/// </list>
+	/// The method is synchronized using <see cref="MethodImplOptions.Synchronized"/> to ensure that the underlying
+	/// data is initialized in a thread-safe manner. Only one thread at a time performs the initial deserialization,
+	/// while other threads block until initialization has completed.
 	/// </para>
 	/// <para>
-	/// <strong>Immutability:</strong>
-	/// The returned <see cref="ReadOnlyCollection{T}"/> provides read-only access to the underlying data,
-	/// preventing accidental modification of the cached country information.
+	/// The returned collection is read-only, preventing callers from modifying the underlying data. This guarantees
+	/// that the country phone and postal information remains immutable for the lifetime of the application domain.
 	/// </para>
 	/// </remarks>
 	/// <example>
-	/// Example usage for retrieving and enumerating all country data:
+	/// Retrieving all country phone and postal records:
 	/// <code>
-	/// // Get all country information
-	/// var allCountries = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo();
+	/// var countries = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo();
 	/// 
-	/// Console.WriteLine($"Total countries: {allCountries.Count}");
-	/// 
-	/// // Find all countries with a specific phone code
-	/// var northAmericanCountries = allCountries
-	///     .Where(c => c.PhoneCode?.Contains("+1") == true)
-	///     .Select(c => c.Name);
-	/// 
-	/// // Get all ISO-2 codes
-	/// var iso2Codes = allCountries
-	///     .Select(c => c.Iso2)
-	///     .OrderBy(code => code);
-	/// 
-	/// // Filter countries by postal code availability
-	/// var countriesWithPostalCodes = allCountries
-	///     .Where(c => !string.IsNullOrEmpty(c.PostalRegex))
-	///     .ToList();
+	/// foreach (var country in countries)
+	/// {
+	///     Console.WriteLine($"{country.Name} ({country.Iso2}) - Phone Code(s): {country.PhoneCode}");
+	/// }
 	/// </code>
 	/// </example>
-	/// <exception cref="InvalidOperationException">
-	/// Thrown by <see cref="DeserializeCountryPhonePostalInfo"/> if the embedded JSON resource cannot be deserialized.
-	/// This typically indicates corrupted resource data or incompatible schema changes.
-	/// </exception>
+	/// <seealso cref="CountryPhonePostalInfo"/>
 	/// <seealso cref="GetCountryPhonePostalInfo(string)"/>
 	/// <seealso cref="DeserializeCountryPhonePostalInfo"/>
-	/// <seealso cref="CountryPhonePostalInfo"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.Synchronized)]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
