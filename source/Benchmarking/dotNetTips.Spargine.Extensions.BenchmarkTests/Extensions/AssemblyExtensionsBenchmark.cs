@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-07-2024
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -30,7 +30,7 @@ public class AssemblyExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(AssemblyExtensions.GetAllInterfaces))]
 	[BenchmarkCategory(Categories.Reflection)]
-	public void GetAllInterfaces01()
+	public void GetAllInterfaces()
 	{
 		var result = Assembly.GetExecutingAssembly().GetAllInterfaces();
 
@@ -39,7 +39,7 @@ public class AssemblyExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(AssemblyExtensions.GetAllTypes))]
 	[BenchmarkCategory(Categories.Reflection)]
-	public void GetAllTypes01()
+	public void GetAllTypes()
 	{
 		var result = Assembly.GetExecutingAssembly().GetAllTypes();
 
@@ -48,7 +48,7 @@ public class AssemblyExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(AssemblyExtensions.GetInstances))]
 	[BenchmarkCategory(Categories.Reflection)]
-	public void GetInstances01()
+	public void GetInstances()
 	{
 		var result = Assembly.GetExecutingAssembly().GetInstances<AssemblyExtensionsBenchmark>();
 

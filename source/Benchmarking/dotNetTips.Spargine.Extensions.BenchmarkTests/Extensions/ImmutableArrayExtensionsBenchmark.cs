@@ -4,7 +4,7 @@
 // Created          : 07-17-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-11-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -33,7 +33,7 @@ public class ImmutableArrayExtensionsBenchmark : LargeCollectionBenchmark
 	private ImmutableArray<Person> _personRefImmutableArray;
 
 	[Benchmark(Description = nameof(ImmutableArrayExtensions.IsNotEmpty))]
-	public void HasItemsIsNotEmpty()
+	public void IsNotEmpty()
 	{
 		var result = this._personRefImmutableArray.IsNotEmpty();
 
@@ -41,7 +41,7 @@ public class ImmutableArrayExtensionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ImmutableArrayExtensions.IsNotEmpty) + ": With Count")]
-	public void HasItemsIsNotEmptyWithCount()
+	public void IsNotEmptyWithCount()
 	{
 		var result = this._personRefImmutableArray.IsNotEmpty(this.Count);
 

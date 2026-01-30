@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -85,7 +85,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": record")]
+	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": Record")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void GenerateHashCodeRecord()
 	{
@@ -94,7 +94,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.GenerateHashCode());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": ref")]
+	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": Ref")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void GenerateHashCodeRef()
 	{
@@ -103,7 +103,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.GenerateHashCode());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": val")]
+	[Benchmark(Description = nameof(ListExtensions.GenerateHashCode) + ": Val")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void GenerateHashCodeVal()
 	{
@@ -112,30 +112,13 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.GenerateHashCode());
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty))]
-	[BenchmarkCategory(Categories.Collections)]
-	public void HasItems()
-	{
-		var people = this._peopleRefList;
-
-		this.Consume(people.IsNotEmpty());
-	}
-
 	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty) + ": With Count")]
 	[BenchmarkCategory(Categories.Collections)]
-	public void HasItemsWithCount()
+	public void HIsNotEmptyWithCount()
 	{
 		var people = this._peopleRefList;
 
 		this.Consume(people.IsNotEmpty(5));
-	}
-
-	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty) + ": With Predicate")]
-	public void HasItemsWithPredicate()
-	{
-		var people = this._peopleRefList;
-
-		this.Consume(people.IsNotEmpty(p => p.BornOn.Value.Date.Month > 0));
 	}
 
 	[Benchmark(Description = "Index []: Compare with IndexAtLooped")]
@@ -161,12 +144,29 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._peopleRefList;
 
-		this.Consume(people.IsEqualTo(this._peopleRefList));
+		this.Consume(people.IsEqualTo(this._peopleRefSubSet));
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void IsNotEmpty()
+	{
+		var people = this._peopleRefList;
+
+		this.Consume(people.IsNotEmpty());
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.IsNotEmpty) + ": With Predicate")]
+	public void IsNotEmptyWithPredicate()
+	{
+		var people = this._peopleRefList;
+
+		this.Consume(people.IsNotEmpty(p => p.BornOn.Value.Date.Month > 0));
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.PerformAction) + " :Ref")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void PerformAction_Ref()
+	public void PerformActionRef()
 	{
 		var people = this._peopleRefList;
 		var sb = new StringBuilder();

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-25-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -29,7 +29,7 @@ public class ObservableCollectionExtensionsCollectionBenchmark : LargeCollection
 
 	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty))]
 	[BenchmarkCategory(Categories.Collections)]
-	public void HasItems()
+	public void IsNotEmpty()
 	{
 		var result = this._personRefObservableCollection.IsNotEmpty();
 
@@ -38,7 +38,7 @@ public class ObservableCollectionExtensionsCollectionBenchmark : LargeCollection
 
 	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty) + ": With Count")]
 	[BenchmarkCategory(Categories.Collections)]
-	public void HasItemsWithCount()
+	public void IsNotEmptyWithCount()
 	{
 		var result = this._personRefObservableCollection.IsNotEmpty(5);
 
@@ -47,7 +47,7 @@ public class ObservableCollectionExtensionsCollectionBenchmark : LargeCollection
 
 	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty) + ": With Predicate")]
 	[BenchmarkCategory(Categories.Collections)]
-	public void HasItemsWithPredicate()
+	public void IsNotEmptyWithPredicate()
 	{
 		var result = this._personRefObservableCollection.IsNotEmpty(p => p.LastName.IsNotEmpty());
 

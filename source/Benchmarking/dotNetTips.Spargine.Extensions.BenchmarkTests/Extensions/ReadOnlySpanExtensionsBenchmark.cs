@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ReadOnlySpanExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,39 +32,31 @@ public class ReadOnlySpanExtensionsBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(ReadOnlySpanExtensions.BytesToString))]
 	public void BytesToString()
 	{
-		var collection = this._bytes.AsReadOnlySpan();
-
-		var result = collection.BytesToString();
+		var result = this._bytes.AsReadOnlySpan().BytesToString();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ReadOnlySpanExtensions.PickRandom) + ": record")]
+	[Benchmark(Description = nameof(ReadOnlySpanExtensions.PickRandom) + ": Record")]
 	public void PickRandomRecord()
 	{
-		var collection = new ReadOnlySpan<PersonRecord>(this._peopleRecordArray);
-
-		var result = collection.PickRandom();
+		var result = this._peopleRecordArray.AsReadOnlySpan().PickRandom();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ReadOnlySpanExtensions.PickRandom) + ": ref")]
+	[Benchmark(Description = nameof(ReadOnlySpanExtensions.PickRandom) + ": Ref")]
 	public void PickRandomRef()
 	{
-		var collection = new ReadOnlySpan<Person>(this._personRefArray);
-
-		var result = collection.PickRandom();
+		var result = this._personRefArray.AsReadOnlySpan().PickRandom();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ReadOnlySpanExtensions.PickRandom) + ": val")]
+	[Benchmark(Description = nameof(ReadOnlySpanExtensions.PickRandom) + ": Val")]
 	public void PickRandomVal()
 	{
-		var collection = new ReadOnlySpan<Spargine.Tester.Models.ValueTypes.Person>(this._peopleValArray);
-
-		var result = collection.PickRandom();
+		var result = this._peopleValArray.AsReadOnlySpan().PickRandom();
 
 		this.Consume(result);
 	}

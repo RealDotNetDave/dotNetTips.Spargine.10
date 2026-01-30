@@ -621,6 +621,7 @@ public static class ArrayExtensions
 				var result = new T[array.Length];
 				array.CopyTo(result, 0);
 				result[index] = item;
+
 				return result;
 			}
 			else

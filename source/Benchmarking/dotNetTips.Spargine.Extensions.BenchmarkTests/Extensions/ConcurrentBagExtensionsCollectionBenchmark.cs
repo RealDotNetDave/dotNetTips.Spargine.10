@@ -4,7 +4,7 @@
 // Created          : 03-15-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-15-2025
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -48,7 +48,6 @@ public class ConcurrentBagExtensionsCollectionBenchmark : LargeCollectionBenchma
 
 		this.Consume(bag);
 	}
-
 
 	public override void Setup()
 	{

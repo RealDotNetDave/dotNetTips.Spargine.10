@@ -72,8 +72,6 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	/// </summary>
 	public override void Setup()
 	{
-		LogInfo($"Calling base.Setup(): {nameof(CollectionExtensionsCollectionBenchmark)}.");
-
 		base.Setup();
 
 		this._peopleRefCollection = this.GetPersonRefArray().ToCollection();

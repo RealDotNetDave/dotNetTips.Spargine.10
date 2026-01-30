@@ -33,35 +33,27 @@ public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 	private SortedDictionary<string, Person> _personRefSortedDictionary;
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsEmpty))]
-	public void DoesNotHaveItems()
+	public void IsEmpty()
 	{
-		var people = this._personRefSortedDictionary;
-
-		this.Consume(people.IsEmpty());
+		this.Consume(this._personRefSortedDictionary.IsEmpty());
 	}
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty))]
-	public void HaveItems()
+	public void IsNotEmpty()
 	{
-		var people = this._personRefSortedDictionary;
-
-		this.Consume(people.IsNotEmpty());
+		this.Consume(this._personRefSortedDictionary.IsNotEmpty());
 	}
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty) + ": With Count")]
-	public void HaveItemsWithCount()
+	public void IsNotEmptyWithCount()
 	{
-		var people = this._personRefSortedDictionary;
-
-		this.Consume(people.IsNotEmpty(this.Count));
+		this.Consume(this._personRefSortedDictionary.IsNotEmpty(this.Count));
 	}
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty) + ": With Predicate")]
-	public void HaveItemsWithPredicate()
+	public void IsNotEmptyWithPredicate()
 	{
-		var people = this._personRefSortedDictionary;
-
-		this.Consume(people.IsNotEmpty(p => p.Value.BornOn.Value.Date.Month > 0));
+		this.Consume(this._personRefSortedDictionary.IsNotEmpty(p => p.Value.BornOn.Value.Date.Month > 0));
 	}
 
 	public override void Setup()
@@ -74,19 +66,6 @@ public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.ToImmutable))]
 	public void ToImmutable()
 	{
-		var people = this._personRefSortedDictionary;
-
-		this.Consume(people.ToImmutable());
+		this.Consume(this._personRefSortedDictionary.ToImmutable());
 	}
-
-	//[Benchmark(Description = nameof(SortedDictionaryExtensions.Upsert))]
-	//public void Upsert()
-	//{
-	//	var people = this._personRefSortedDictionary;
-
-	//	people.Upsert(this.PersonRef01);
-
-	//	this.Consume(people);
-	//}
-
 }

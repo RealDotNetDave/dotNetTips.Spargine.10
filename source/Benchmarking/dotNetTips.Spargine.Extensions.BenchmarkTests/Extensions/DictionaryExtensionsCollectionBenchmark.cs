@@ -43,7 +43,7 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd) + ": Dictionary")]
+	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void GetOrAdd()
 	{
@@ -153,7 +153,6 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefDictionary;
 
-		// Test the extension method with a factory function
 		var result = people.TryGetValue(this._personRef.Key, key => this.PersonRef01);
 
 		this.Consume(result);

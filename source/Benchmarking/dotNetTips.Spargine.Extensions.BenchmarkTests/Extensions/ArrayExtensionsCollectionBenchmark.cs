@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
-public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
+public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 {
 
 	private const int OperationsCount = 1024;
@@ -46,9 +46,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void AddFirst_Ref()
 	{
-		var people = this._personRefArray;
-
-		var result = people.AddFirst(this.PersonRef01);
+		var result = this._personRefArray.AddFirst(this.PersonRef01);
 
 		this.Consume(result);
 	}
@@ -57,9 +55,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void AddLast_Ref()
 	{
-		var people = this._personRefArray;
-
-		var result = people.AddLast(this.PersonRef02);
+		var result = this._personRefArray.AddLast(this.PersonRef02);
 
 		this.Consume(result);
 	}
@@ -68,10 +64,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void AreEqual_Ref()
 	{
-		var people1 = this._personRefArray;
-		var people2 = this._personRefArrayHalf;
-
-		var result = people1.AreEqual(people2);
+		var result = this._personRefArray.AreEqual(this._personRefArrayHalf);
 
 		this.Consume(result);
 	}
@@ -80,10 +73,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void AreEqual_Val()
 	{
-		var people1 = this._personValArray;
-		var people2 = this._personValArrayHalf;
-
-		var result = people1.AreEqual(people2);
+		var result = this._personValArray.AreEqual(this._personValArrayHalf);
 
 		this.Consume(result);
 	}
@@ -99,9 +89,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ArrayHashCode_Ref()
 	{
-		var result = this._personRefArray;
-
-		this.Consume(result.GetHashCode());
+		this.Consume(this._personRefArray.GetHashCode());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.AsReadOnlySpan) + " : Reference")]
@@ -178,131 +166,105 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void GenerateHashCode_Ref()
 	{
-		var result = this._personRefArray.GenerateHashCode();
-
-		this.Consume(result);
+		this.Consume(this._personRefArray.GenerateHashCode());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.FastHashData) + ": byte[]")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void HashDataFastHashData()
 	{
-		var byteArray = this._byteArray;
-		var result = byteArray.FastHashData();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": as Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void HasItems_Ref()
-	{
-		var result = this._personRefArray.IsNotEmpty();
-
-		this.Consume(result);
-	}
-
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void HasItems_Val()
-	{
-		var people = this._personValArray;
-		var result = people.IsNotEmpty();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Count - Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void HasItemsWithCount_Ref()
-	{
-		var result = this._personRefArray.IsNotEmpty(this.Count);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Count - Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void HasItemsWithCount_Val()
-	{
-		var people = this._personValArray;
-		var result = people.IsNotEmpty(this.Count);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Predicate - Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void HasItemsWithPredicate_Ref()
-	{
-		var result = this._personRefArray.IsNotEmpty(p => p.LastName.IsNotEmpty());
-
-		this.Consume(result);
+		this.Consume(this._byteArray.FastHashData());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Predicate - Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void HasItemsWithPredicate_Val()
+	public void HasItemsWithPredicateVal()
 	{
-		var people = this._personValArray;
-		var result = people.IsNotEmpty(p => p.LastName.IsNotEmpty());
-
-		this.Consume(result);
+		this.Consume(this._personValArray.IsNotEmpty(p => p.LastName.IsNotEmpty()));
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.IndexOf) + ": Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void IndexOfRefReference()
 	{
-		var result = this._personRefArray.IndexOf(this.PersonRef01);
-
-		this.Consume(result);
+		this.Consume(this._personRefArray.IndexOf(this.PersonRef01));
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.IndexOf) + ": Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
 	public void IndexOfRefValue()
 	{
-		var people = this._personValArray;
-		var result = people.IndexOf(this.PersonVal01);
-
-		this.Consume(result);
+		this.Consume(this._personValArray.IndexOf(this.PersonVal01));
 	}
 
-	[IterationSetup(Targets = new[] { nameof(UpsertRecord_Record) })]
-	public void IterationSetupRecord()
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": as Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void IsNotEmptyRef()
 	{
-		this._personRecordArray = this.GetPersonRecordArray();
+		this.Consume(this._personRefArray.IsNotEmpty());
 	}
 
-	[IterationSetup(Targets = new[] { nameof(AddFirst_Ref), nameof(AddLast_Ref), nameof(RemoveFirst_Ref), nameof(RemoveLast_Ref), nameof(Upsert_Ref) })]
-	public void IterationSetupRef()
+
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void IsNotEmptyVal()
 	{
-		this._personRefArray = this.GetPersonRefArray();
+		this.Consume(this._personValArray.IsNotEmpty());
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Count - Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void IsNotEmptyWithCountRef()
+	{
+		this.Consume(this._personRefArray.IsNotEmpty(this.Count));
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Count - Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void IsNotEmptyWithCountVal()
+	{
+		this.Consume(this._personValArray.IsNotEmpty(this.Count));
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.IsNotEmpty) + ": With Predicate - Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void IsNotEmptyWithPredicateRef()
+	{
+		this.Consume(this._personRefArray.IsNotEmpty(p => p.LastName.IsNotEmpty()));
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.LastIndexOf) + ": Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void LastIndexOfRefReference()
 	{
-		var result = this._personRefArray.LastIndexOf(this.PersonRef01);
-
-		this.Consume(result);
+		this.Consume(this._personRefArray.LastIndexOf(this.PersonRef01));
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.LastIndexOf) + ": Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void LastIndexOfValValue()
+	public void LastIndexOfVal()
 	{
-		var result = this._personValArray.LastIndexOf(this.PersonVal01);
+		this.Consume(this._personValArray.LastIndexOf(this.PersonVal01));
+	}
 
-		this.Consume(result);
+	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void PerformActionRecord()
+	{
+		var byteArray = this._personRecordArray;
+		var sb = new StringBuilder();
+
+		byteArray.PerformAction((person) =>
+		{
+			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.PropertiesToString()}|");
+		});
+
+		this.Consume(sb.ToString());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " : Record (Comparison)")]
 	[BenchmarkCategory(Categories.Array, Categories.RecordType, Categories.ForComparison)]
-	public void PerformAction_Record_Comparison()
+	public void PerformActionRecordComparison()
 	{
 		var people = this._personRecordArray;
 		var sb = new StringBuilder();
@@ -317,7 +279,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void PerformAction_Ref()
+	public void PerformActionRef()
 	{
 		var sb = new StringBuilder();
 
@@ -328,7 +290,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref (Comparison)")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void PerformAction_Ref_Comparison()
+	public void PerformActionRefComparison()
 	{
 		var people = this._personRefArray;
 		var sb = new StringBuilder();
@@ -343,7 +305,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void PerformAction_Val()
+	public void PerformActionVal()
 	{
 		var people = this._personValArray;
 		var sb = new StringBuilder();
@@ -355,7 +317,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val (Comparison)")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType, Categories.ForComparison)]
-	public void PerformAction_Val_Comparison()
+	public void PerformActionValComparison()
 	{
 		var people = this._personValArray;
 		var sb = new StringBuilder();
@@ -364,21 +326,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		{
 			_ = sb.Append(CultureInfo.CurrentCulture, $"{people[index].GetHashCode()}-");
 		}
-
-		this.Consume(sb.ToString());
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Record")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void PerformActionRecord()
-	{
-		var byteArray = this._personRecordArray;
-		var sb = new StringBuilder();
-
-		byteArray.PerformAction((person) =>
-		{
-			_ = sb.Append(CultureInfo.CurrentCulture, $"{person.PropertiesToString()}|");
-		});
 
 		this.Consume(sb.ToString());
 	}
@@ -411,22 +358,18 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.RemoveFirst) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void RemoveFirst_Ref()
+	public void RemoveFirstRef()
 	{
-		var people = this._personRefArray;
-
-		var result = people.RemoveFirst();
+		var result = this._personRefArray.RemoveFirst();
 
 		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.RemoveLast) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void RemoveLast_Ref()
+	public void RemoveLastRef()
 	{
-		var people = this._personRefArray;
-
-		var result = people.RemoveLast();
+		var result = this._personRefArray.RemoveLast();
 
 		this.Consume(result);
 	}
@@ -437,7 +380,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = new ArraySegment<Person>(this._personRefArray, 0, this.HalfCount).ToArray();
 
-		this.Consume(result.Length);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
@@ -446,7 +389,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefArray.FastSelectItems(0, this.HalfCount);
 
-		this.Consume(result.Length);
+		this.Consume(result);
 	}
 
 	public override void Setup()
@@ -473,40 +416,32 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.ToDistinct) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void ToDistinct_Ref()
+	public void ToDistinctRef()
 	{
-		var result = this._personRefArrayWithDups.ToDistinct();
-
-		this.Consume(result);
+		this.Consume(this._personRefArrayWithDups.ToDistinct());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.ToFrozenSet) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void ToFrozenSet_Ref()
+	public void ToFrozenSetRef()
 	{
-		var result = this._personRefArray.ToFrozenSet();
+		this.Consume(this._personRefArray.ToFrozenSet());
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + ": Record")]
+	[BenchmarkCategory(Categories.Array, Categories.RecordType)]
+	public void UpsertRecordRecord()
+	{
+		var result = this._personRecordArray.Upsert(this.PersonRecord01);
 
 		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void Upsert_Ref()
+	public void UpsertRef()
 	{
-		var people = this._personRefArray;
-
-		var result = people.Upsert(this.PersonRef01);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + ": Record")]
-	[BenchmarkCategory(Categories.Array, Categories.RecordType)]
-	public void UpsertRecord_Record()
-	{
-		var people = this._personRecordArray;
-
-		var result = people.Upsert(this.PersonRecord01);
+		var result = this._personRefArray.Upsert(this.PersonRef01);
 
 		this.Consume(result);
 	}

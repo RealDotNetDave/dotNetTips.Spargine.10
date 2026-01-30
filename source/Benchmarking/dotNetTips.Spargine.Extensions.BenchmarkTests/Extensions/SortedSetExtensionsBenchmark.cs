@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -31,13 +31,13 @@ public class SortedSetExtensionsBenchmark : LargeCollectionBenchmark
 	private SortedSet<Person> _personRefSortedSet;
 
 	[Benchmark(Description = nameof(SortedSetExtensions.IsNotEmpty))]
-	public void HasItems()
+	public void IsNotEmpty()
 	{
 		this.Consume(this._personRefSortedSet.IsNotEmpty());
 	}
 
 	[Benchmark(Description = nameof(SortedSetExtensions.IsNotEmpty) + ": With Predicate")]
-	public void HasItemsWithPredicate()
+	public void IsNotEmptyWithPredicate()
 	{
 		this.Consume(this._personRefSortedSet.IsNotEmpty(p => p.LastName.IsNotEmpty()));
 	}
