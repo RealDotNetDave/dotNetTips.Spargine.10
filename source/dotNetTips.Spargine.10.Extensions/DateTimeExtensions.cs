@@ -28,7 +28,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// This class includes methods for converting between Unix epoch time and <see cref="DateTime"/>, finding the next or last day of the week from a given date, checking if a date range intersects with another, and more.
 /// These methods are designed to simplify common date and time operations, making code more readable and efficient.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineDateTimeExtensions", Status = Status.UpdateDocumentation)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDateTimeExtensions")]
 public static class DateTimeExtensions
 {
 
@@ -48,7 +48,7 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Calculates and return the last occurrence of a specified day of the week before
+	/// Calculates and returns the last occurrence of a specified day of the week before
 	/// or on the given <see cref="DateTimeOffset" /> input.
 	/// </summary>
 	/// <param name="input">The input.</param>
@@ -88,7 +88,7 @@ public static class DateTimeExtensions
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
 	[Information(nameof(GetWeekOfTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static int GetWeekOfTheYear(DateOnly input)
+	public static int GetWeekOfTheYear(this in DateOnly input)
 	{
 		return ISOWeek.GetWeekOfYear(input);
 	}
@@ -100,7 +100,7 @@ public static class DateTimeExtensions
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
 	[Information(nameof(GetWeekOfTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static int GetWeekOfTheYear(DateTime input)
+	public static int GetWeekOfTheYear(this in DateTime input)
 	{
 		return ISOWeek.GetWeekOfYear(input);
 	}
@@ -112,7 +112,7 @@ public static class DateTimeExtensions
 	/// <returns>The number of weeks in the specified year according to ISO 8601.</returns>
 	[Pure]
 	[Information(nameof(GetWeeksInTheYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static int GetWeeksInTheYear(in int input)
+	public static int GetWeeksInTheYear(this in int input)
 	{
 		return ISOWeek.GetWeeksInYear(input);
 	}
@@ -124,7 +124,7 @@ public static class DateTimeExtensions
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
 	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static int GetYear(DateTime input)
+	public static int GetYear(this in DateTime input)
 	{
 		return ISOWeek.GetYear(input);
 	}
@@ -136,7 +136,7 @@ public static class DateTimeExtensions
 	/// <returns>The ISO 8601 week number of the year.</returns>
 	[Pure]
 	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static int GetYear(DateOnly input)
+	public static int GetYear(this in DateOnly input)
 	{
 		return ISOWeek.GetYear(input);
 	}
@@ -150,7 +150,7 @@ public static class DateTimeExtensions
 	/// </returns>
 	[Pure]
 	[Information(nameof(GetYearEnd), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static DateTime GetYearEnd(in int input)
+	public static DateTime GetYearEnd(this in int input)
 	{
 		return ISOWeek.GetYearEnd(input);
 	}
@@ -164,7 +164,7 @@ public static class DateTimeExtensions
 	/// </returns>
 	[Pure]
 	[Information(nameof(GetYearStart), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
-	public static DateTime GetYearStart(in int input)
+	public static DateTime GetYearStart(this in int input)
 	{
 		return ISOWeek.GetYearStart(input);
 	}
@@ -330,7 +330,7 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Determines the maximum of the two <see cref="DateTime" />s.
+	/// Determines the maximum of the two <see cref="DateTimeOffset" />s.
 	/// </summary>
 	/// <param name="date">The date.</param>
 	/// <param name="compareTo">The date to compare.</param>
