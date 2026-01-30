@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// and verifying hashed passwords. It leverages AES (Advanced Encryption Standard) for encryption tasks and SHA256 for hashing,
 /// ensuring a high level of security for sensitive data handling.
 /// </summary>
-[Information(Version = "1", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
+[Information(Version = "1", Status = Status.Available, Documentation = "https://bit.ly/SpargineEncryptionHelper")]
 public static class EncryptionHelper
 {
 	private const byte FormatVersion = 1;
