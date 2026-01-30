@@ -143,6 +143,10 @@
   </ItemGroup>
 
   <ItemGroup>
+	<None Include="..\..\LICENSE.txt">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
 	<None Include="..\..\README.md">
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
