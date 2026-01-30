@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 01-30-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// This includes methods for adding or updating entries, converting dictionaries to various forms,
 /// disposing dictionary items, and more.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineDictionaryExtensions", Status = Status.UpdateDocumentation)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDictionaryExtensions")]
 public static class DictionaryExtensions
 {
 	/// <summary>
@@ -111,7 +111,7 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Disposes all disposable items within the dictionary. Each valueFunction in the dictionary that implements <see cref="IDisposable"/> will be disposed.
+	/// Disposes of all disposable items within the dictionary. Each item in the dictionary that implements <see cref="IDisposable"/> will be disposed.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary, which must implement <see cref="IDisposable"/> if they are to be disposed.</typeparam>
@@ -455,14 +455,36 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Converts the dictionary to a lookup valueFunction that returns the valueFunction for a given keyFunction or a default valueFunction if the keyFunction is not found.
+	/// Creates a lookup function from the specified dictionary that returns the value for a given key,
+	/// or a provided default value when the key is not present.
 	/// </summary>
-	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
-	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-	/// <param name="collection">The dictionary to convert to a lookup valueFunction.</param>
-	/// <param name="defaultValue">The default valueFunction to return if the keyFunction is not found.</param>
-	/// <returns>A valueFunction that takes a keyFunction and returns the corresponding valueFunction or the default valueFunction if the keyFunction is not found.</returns>
+	/// <typeparam name="TKey">The type of the dictionary keys.</typeparam>
+	/// <typeparam name="TValue">The type of the dictionary values.</typeparam>
+	/// <param name="collection">The source dictionary used for lookups. Must not be null.</param>
+	/// <param name="defaultValue">The value to return when a requested key is not found in the dictionary.</param>
+	/// <returns>
+	/// A <see cref="Func{T,TResult}"/> delegate that accepts a <typeparamref name="TKey"/> and returns the corresponding
+	/// <typeparamref name="TValue"/> if present; otherwise, returns <paramref name="defaultValue"/>.
+	/// </returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	/// <remarks>
+	/// <para>
+	/// The returned function performs O(1) average-time lookups using <see cref="IDictionary{TKey, TValue}.TryGetValue"/>.
+	/// This is useful for scenarios where a default fallback value is desired without modifying the dictionary.
+	/// </para>
+	/// <para>
+	/// If <paramref name="defaultValue"/> is a reference type and null is passed, the function will return null for missing keys.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var dict = new Dictionary&lt;string, int&gt; { ["one"] = 1 };
+	/// var lookup = dict.ToLookupWithDefault(0);
+	///
+	/// var a = lookup("one");   // returns 1
+	/// var b = lookup("two");   // returns 0 (default)
+	/// </code>
+	/// </example>
 	[Pure]
 	[return: NotNull]
 	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
