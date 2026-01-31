@@ -2,10 +2,10 @@
 
   <PropertyGroup>
 	<AnalysisLevel>none</AnalysisLevel>
-	<AssemblyVersion>2026.10.1.30</AssemblyVersion>
+	<AssemblyVersion>2026.10.1.31</AssemblyVersion>
 	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
 	<EnableNETAnalyzers>false</EnableNETAnalyzers>
-	<FileVersion>2026.10.1.30</FileVersion>
+	<FileVersion>2026.10.1.31</FileVersion>
 	<IsPackable>false</IsPackable>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<Company>dotNetTips.com - McCarter Consulting</Company>
@@ -15,7 +15,7 @@
 	<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
 	<TargetFramework>net10.0</TargetFramework>
-	<Version>2026.10.1.30</Version>
+	<Version>2026.10.1.31</Version>
 	<LangVersion>latest</LangVersion>
   </PropertyGroup>
 
