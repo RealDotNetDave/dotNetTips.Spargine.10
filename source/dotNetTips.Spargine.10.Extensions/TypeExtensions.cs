@@ -382,7 +382,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns><c>true</c> if the type is an open generic; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsOpenGeneric), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(IsOpenGeneric), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public bool IsOpenGeneric()
 		{
 			return TypeHelper.IsOpenGeneric(type);

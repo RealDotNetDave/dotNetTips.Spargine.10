@@ -147,7 +147,7 @@ public static class AssemblyHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="file"/> or <paramref name="types"/> is null.</exception>
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	[Pure]
-	[Information(nameof(FindTypesImplementing), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Updated)]
+	[Information(nameof(FindTypesImplementing), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindTypesImplementing([DisallowNull] this FileInfo file, [DisallowNull] params ReadOnlyCollection<Type> types)
 	{
 		file = file.ArgumentNotNull();

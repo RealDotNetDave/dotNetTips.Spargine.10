@@ -438,7 +438,7 @@ public static class StringBuilderExtensions
 		/// </example>
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(SetCapacity), author: "David McCarter", createdOn: "11/26/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(SetCapacity), author: "David McCarter", createdOn: "11/26/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 		public StringBuilder SetCapacity(in int capacity)
 		{
 			sb = sb.ArgumentNotNull();

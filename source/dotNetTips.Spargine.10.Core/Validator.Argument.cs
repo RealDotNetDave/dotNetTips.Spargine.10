@@ -51,7 +51,7 @@ public static partial class Validator
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the collection's count is less than <paramref name="min"/> or greater than <paramref name="max"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentCountInRange), "David McCarter", "5/25/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(ArgumentCountInRange), "David McCarter", "5/25/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static IEnumerable<T> ArgumentCountInRange<T>([DisallowNull] this IEnumerable<T> input, int min, int max, string errorMessage = "", [CallerArgumentExpression(nameof(input))] string paramName = "")
 	{
 		input = input.ArgumentNotNull();
@@ -78,7 +78,7 @@ public static partial class Validator
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> or <paramref name="predicate"/> is <c>null</c>.</exception>
 	/// <exception cref="ArgumentInvalidException">Thrown if the predicate returns <c>false</c> for the input value.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ArgumentCustom), "David McCarter", "5/25/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(ArgumentCustom), "David McCarter", "5/25/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T ArgumentCustom<T>([DisallowNull] this T input, [DisallowNull] Func<T, bool> predicate, string errorMessage = "", [CallerArgumentExpression(nameof(input))] string paramName = "")
 	{
 		input = input.ArgumentNotNull();

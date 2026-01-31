@@ -68,7 +68,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <param name="value">The string representation of the ULID.</param>
 	/// <exception cref="ArgumentException">Thrown if the value is not a valid ULID.</exception>
-	[Information(nameof(Ulid), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Ulid), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Ulid([DisallowNull] string value)
 	{
 		if (string.IsNullOrWhiteSpace(value) || value.Length != UlidLength)
@@ -85,7 +85,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information(">=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(">=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator >=(Ulid left, Ulid right) => left.CompareTo(right) >= 0;
 
 	/// <summary>
@@ -94,7 +94,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information(">", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(">", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator >(Ulid left, Ulid right) => left.CompareTo(right) > 0;
 
 	/// <summary>
@@ -103,7 +103,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
-	[Information("==", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information("==", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator ==(Ulid left, Ulid right) => left.Equals(right);
 
 	/// <summary>
@@ -112,7 +112,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information("<=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information("<=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator <=(Ulid left, Ulid right) => left.CompareTo(right) <= 0;
 
 	/// <summary>
@@ -121,7 +121,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-	[Information("<", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information("<", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator <(Ulid left, Ulid right) => left.CompareTo(right) < 0;
 
 	/// <summary>
@@ -130,7 +130,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="left">The first <see cref="Ulid"/> instance.</param>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if the ULIDs are not equal; otherwise, <c>false</c>.</returns>
-	[Information("!=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information("!=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool operator !=(Ulid left, Ulid right) => !left.Equals(right);
 
 	/// <summary>
@@ -152,7 +152,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(NewUlid), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Ulid NewUlid()
 	{
 		// Allocate all required memory on the stack to avoid heap allocations
@@ -207,7 +207,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <returns>A <see cref="Ulid"/> instance.</returns>
 	/// <exception cref="ArgumentException">Thrown if the value is not a valid ULID.</exception>
 	[return: NotNull]
-	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Ulid Parse(string value) => new(value);
 
 	/// <summary>
@@ -216,7 +216,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="value">The string representation of the ULID.</param>
 	/// <param name="ulid">The resulting <see cref="Ulid"/> instance, if successful.</param>
 	/// <returns><c>true</c> if parsing was successful; otherwise, <c>false</c>.</returns>
-	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryParse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryParse(string value, out Ulid ulid)
 	{
 		if (!string.IsNullOrWhiteSpace(value) && value.Length == UlidLength)
@@ -234,7 +234,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
 	/// <returns>An integer indicating the relative order of the ULIDs.</returns>
-	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public int CompareTo(Ulid other) => string.Compare(this._ulid, other._ulid, StringComparison.Ordinal);
 
 	/// <summary>
@@ -242,7 +242,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
 	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool Equals(Ulid other) => string.Equals(this._ulid, other._ulid, StringComparison.Ordinal);
 
 	/// <summary>
@@ -250,21 +250,21 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <param name="obj">The object to compare to.</param>
 	/// <returns><c>true</c> if the object is a <see cref="Ulid"/> and is equal to this instance; otherwise, <c>false</c>.</returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override bool Equals(object? obj) => obj is Ulid other && this.Equals(other);
 
 	/// <summary>
 	/// Gets the hash code for this instance.
 	/// </summary>
 	/// <returns>The hash code for this instance.</returns>
-	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override int GetHashCode() => this._ulid.GetHashCode(StringComparison.Ordinal);
 
 	/// <summary>
 	/// Extracts the timestamp from the Ulid.
 	/// </summary>
 	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
-	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public DateTimeOffset GetTimeStamp()
 	{
 		// Use stack allocation to avoid heap allocations
@@ -309,7 +309,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </summary>
 	/// <returns>The string representation of the ULID.</returns>
 	[return: NotNull]
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString() => this._ulid;
 
 	/// <summary>
@@ -325,7 +325,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="charIndex">The starting index in the character span where encoding begins.</param>
 	/// <param name="length">The number of characters to encode.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	private static void EncodeBase32(ReadOnlySpan<byte> bytes, Span<char> chars, int charIndex, int length)
 	{
 		const int Mask = 0x1F;
@@ -373,7 +373,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </remarks>
 	/// <returns>A byte array containing 10 random bytes.</returns>
 	[ExcludeFromCodeCoverage]
-	[Information(nameof(GenerateRandomBytes), Status = Status.New)]
+	[Information(nameof(GenerateRandomBytes), Status = Status.Available)]
 	private static byte[] GenerateRandomBytes()
 	{
 		var randomBytes = new byte[10];
@@ -390,6 +390,6 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// </remarks>
 	/// <returns>A byte array representing the current timestamp in milliseconds since the Unix epoch.</returns>
 	[ExcludeFromCodeCoverage]
-	[Information(nameof(GenerateTimeStamp), Status = Status.New)]
+	[Information(nameof(GenerateTimeStamp), Status = Status.Available)]
 	private static byte[] GenerateTimeStamp() => BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 }

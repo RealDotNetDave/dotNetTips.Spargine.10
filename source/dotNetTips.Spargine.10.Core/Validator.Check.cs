@@ -418,7 +418,7 @@ public static partial class Validator
 	/// Thrown if <paramref name="throwException"/> is <c>true</c> and <paramref name="input"/> is <c>null</c> or empty.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckIsNotNullOrEmpty), "David McCarter", "8/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(CheckIsNotNullOrEmpty), "David McCarter", "8/28/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckIsNotNullOrEmpty(this string input, in bool throwException = false, string errorMessage = ControlChars.EmptyString)
 	{
 		var isValid = string.IsNullOrEmpty(input) == false;

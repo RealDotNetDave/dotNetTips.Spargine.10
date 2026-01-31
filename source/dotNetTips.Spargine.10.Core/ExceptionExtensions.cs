@@ -153,7 +153,7 @@ public static partial class ExceptionExtensions
 		/// Extracts all key-value pairs from the <see cref="Exception.Data"/> property.
 		/// </summary>
 		/// <returns>A dictionary containing all key-value pairs from the exception's data.</returns>
-		[Information(nameof(ExtractData), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ExtractData), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyDictionary<object, object?> ExtractData()
 		{
 			exception = exception.ArgumentNotNull();
