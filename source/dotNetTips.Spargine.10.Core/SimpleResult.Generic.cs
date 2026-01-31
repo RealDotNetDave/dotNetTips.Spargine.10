@@ -26,9 +26,11 @@ namespace DotNetTips.Spargine.Core;
 /// Use for return results from methods. This type is thread-safe.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-[Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineSimpleResult")]
+[Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.Available, Documentation = "https://bit.ly/SpargineSimpleResult")]
 public class SimpleResult<T>
 {
+	//TODO: EXPLORE ADDING A LOGGER
+
 	private readonly ConcurrentBag<Exception> _exceptions = [];
 	private readonly List<string> _messages = [];
 
@@ -80,19 +82,19 @@ public class SimpleResult<T>
 	/// <summary>
 	/// Indicates if there are any errors.
 	/// </summary>
-	[Information(nameof(HasErrors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.New)]
+	[Information(nameof(HasErrors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public bool HasErrors => !this._exceptions.IsEmpty;
 
 	/// <summary>
 	/// Indicates if the result is a failure (no value or only errors).
 	/// </summary>
-	[Information(nameof(IsFailure), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.New)]
+	[Information(nameof(IsFailure), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.Available)]
 	public bool IsFailure => this.Status == ResultStatus.Failed;
 
 	/// <summary>
 	/// Indicates if the result is successful (no errors and value set).
 	/// </summary>
-	[Information(nameof(IsSuccess), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.New)]
+	[Information(nameof(IsSuccess), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.Available)]
 	public bool IsSuccess => this.Status == ResultStatus.Succeeded;
 
 	/// <summary>
@@ -103,7 +105,7 @@ public class SimpleResult<T>
 	/// Messages can be added using the <see cref="AddMessage"/> method to provide
 	/// additional context about the operation's outcome.
 	/// </remarks>
-	[Information(nameof(Messages), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.New)]
+	[Information(nameof(Messages), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.Available)]
 	public ReadOnlyCollection<string> Messages => this._messages.AsReadOnly();
 
 	/// <summary>
@@ -181,7 +183,7 @@ public class SimpleResult<T>
 	/// <summary>
 	/// Binds the result to another result-producing function.
 	/// </summary>
-	[Information(nameof(Bind), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.New)]
+	[Information(nameof(Bind), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public SimpleResult<TResult> Bind<TResult>([DisallowNull] Func<T, SimpleResult<TResult>> binder)
 	{
 		binder = binder.ArgumentNotNull();
@@ -203,7 +205,7 @@ public class SimpleResult<T>
 	/// <summary>
 	/// Deconstructs the result into value and errors.
 	/// </summary>
-	[Information(nameof(Deconstruct), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.New)]
+	[Information(nameof(Deconstruct), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public void Deconstruct(out T value, out ReadOnlyCollection<Exception> errors)
 	{
 		value = this._value;
@@ -226,7 +228,7 @@ public class SimpleResult<T>
 	/// <summary>
 	/// Maps the value to a new result if successful.
 	/// </summary>
-	[Information(nameof(Map), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.New)]
+	[Information(nameof(Map), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available]
 	public SimpleResult<TResult> Map<TResult>([DisallowNull] Func<T, TResult> mapper)
 	{
 		mapper = mapper.ArgumentNotNull();
@@ -258,7 +260,10 @@ public class SimpleResult<T>
 	/// </summary>
 	/// <returns>The value, if present, otherwise <c>default</c>.</returns>
 	[Information(nameof(OrDefault), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public T OrDefault() => this._value;
+	public T OrDefault()
+	{
+		return this._value;
+	}
 
 	/// <summary>
 	/// Sets the value associated with this result.
