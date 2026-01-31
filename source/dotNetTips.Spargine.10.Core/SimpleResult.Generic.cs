@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 01-31-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -226,9 +226,70 @@ public class SimpleResult<T>
 	public override int GetHashCode() => base.GetHashCode();
 
 	/// <summary>
-	/// Maps the value to a new result if successful.
+	/// Maps the current result's value to a new value using the provided <paramref name="mapper"/> function,
+	/// producing a new <see cref="SimpleResult{T}"/> of the mapped type.
 	/// </summary>
-	[Information(nameof(Map), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available]
+	/// <typeparam name="TResult">
+	/// The type of the value produced by the <paramref name="mapper"/> function.
+	/// </typeparam>
+	/// <param name="mapper">
+	/// A non-null function that transforms the current value of type <typeparamref name="T"/> into a value of type
+	/// <typeparamref name="TResult"/>. This function is invoked only when the current result is successful.
+	/// </param>
+	/// <returns>
+	/// A new <see cref="SimpleResult{T}"/> containing:
+	/// <list type="bullet">
+	/// <item>
+	/// <description>
+	/// <see cref="ResultStatus.Succeeded"/> with the mapped value when the current result is successful.
+	/// </description>
+	/// </item>
+	/// <item>
+	/// <description>
+	/// <see cref="ResultStatus.Failed"/> or <see cref="ResultStatus.PartialSuccess"/> (propagating existing exceptions)
+	/// when the current result is not successful. In this case, no mapping is performed and exceptions are copied to the
+	/// returned result.
+	/// </description>
+	/// </item>
+	/// </list>
+	/// </returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="mapper"/> is <see langword="null"/>.
+	/// </exception>
+	/// <remarks>
+	/// This method does not catch exceptions thrown by <paramref name="mapper"/>. If the mapper throws, the exception
+	/// will propagate to the caller. To capture mapper exceptions in the result, wrap the mapper call in a try/catch
+	/// and use <see cref="AddException(Exception)"/>.
+	/// <para>
+	/// The returned result preserves the error state of the current instance if the current instance is not successful.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Mapping a successful integer result to a string:
+	/// <code>
+	/// var r1 = new SimpleResult&lt;int&gt;(42);
+	/// var r2 = r1.Map(i => $"Value is {i}");
+	/// // r2.IsSuccess == true, r2.Value == "Value is 42"
+	/// </code>
+	/// Propagating errors when the current result has exceptions:
+	/// <code>
+	/// var r1 = new SimpleResult&lt;int&gt;(new InvalidOperationException("Boom"));
+	/// var r2 = r1.Map(i => i * 2);
+	/// // r2.IsSuccess == false, r2.Errors contains the original exception
+	/// </code>
+	/// Handling mapper exceptions:
+	/// <code>
+	/// var r1 = new SimpleResult&lt;int&gt;(7);
+	/// var r2 = r1.Map(i =>
+	/// {
+	///     if (i &lt; 10) throw new Exception("Too small");
+	///     return i * 2;
+	/// });
+	/// // Exception is thrown to caller; wrap if you need to capture:
+	/// // try { ... } catch (Exception ex) { var rErr = new SimpleResult&lt;int&gt;(); rErr.AddException(ex); }
+	/// </code>
+	/// </example>
+	[Information(nameof(Map), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public SimpleResult<TResult> Map<TResult>([DisallowNull] Func<T, TResult> mapper)
 	{
 		mapper = mapper.ArgumentNotNull();

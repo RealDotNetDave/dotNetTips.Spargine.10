@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 01-31-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Core;
 /// converting objects to and from JSON. It also provides methods to get default values, hash codes, property values,
 /// and display names for types, as well as determining if a type is a built-in .NET type or if an assembly is a .NET assembly.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTypeHelper")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTypeHelper")]
 public static class TypeHelper
 {
 	/// <summary>
@@ -915,6 +915,39 @@ public static class TypeHelper
 	/// <summary>
 	/// Gets a custom attribute of the specified type from the given property.
 	/// </summary>
+	/// <typeparam name="TAttribute">
+	/// The type of the attribute to retrieve. Must inherit from <see cref="Attribute"/>.
+	/// </typeparam>
+	/// <param name="propertyInfo">
+	/// The <see cref="PropertyInfo"/> to inspect for the attribute. Must not be <c>null</c>.
+	/// </param>
+	/// <returns>
+	/// An instance of <typeparamref name="TAttribute"/> if the attribute is found on the specified property; otherwise, <c>null</c>.
+	/// </returns>
+	/// <remarks>
+	/// Results are cached for performance using an in-memory cache keyed on the declaring type, property name,
+	/// and attribute type. This method returns the first custom attribute instance of type <typeparamref name="TAttribute"/>
+	/// applied to the property. Inherited attributes are not considered unless they are directly applied to the property.
+	/// </remarks>
+	/// <example>
+	/// Example: Retrieving a JSON serialization attribute from a property.
+	/// <code>
+	/// using System.Text.Json.Serialization;
+	///
+	/// public class Product
+	/// {
+	///     [JsonPropertyName("product_name")]
+	///     public string Name { get; set; }
+	/// }
+	///
+	/// var prop = typeof(Product).GetProperty(nameof(Product.Name));
+	/// var attr = TypeHelper.GetAttribute&lt;JsonPropertyNameAttribute&gt;(prop!);
+	/// Console.WriteLine(attr?.Name); // Output: product_name
+	/// </code>
+	/// </example>
+	/// <seealso cref="GetAttribute{TAttribute}(Type)"/>
+	/// <seealso cref="GetAttribute{TAttribute}(MethodInfo)"/>
+	/// <seealso cref="GetAttribute{TAttribute}(FieldInfo)"/>
 	[return: MaybeNull]
 	[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Updated)]
 	public static TAttribute? GetAttribute<TAttribute>([DisallowNull] PropertyInfo propertyInfo) where TAttribute : Attribute
@@ -949,7 +982,10 @@ public static class TypeHelper
 	/// <typeparam name="T">The type for which to get the default value.</typeparam>
 	/// <returns>The default value for type <typeparamref name="T"/>.</returns>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static T GetDefault<T>() => default!;
+	public static T GetDefault<T>()
+	{
+		return default!;
+	}
 
 	/// <summary>
 	/// Gets the generic type arguments of the specified <see cref="Type"/>.
@@ -1277,8 +1313,12 @@ public static class TypeHelper
 	/// <summary>
 	/// Retrieves all members of the specified type that have the specified attribute, returning them as a read-only collection.
 	/// </summary>
-	/// <typeparam name="TAttribute">The type of the attribute to search for. Must inherit from <see cref="Attribute"/>.</typeparam>
-	/// <param name="type">The <see cref="Type"/> to search for members with the specified attribute. Must not be <c>null</c>.</param>
+	/// <typeparam name="TAttribute">
+	/// The type of the attribute to search for. Must inherit from <see cref="Attribute"/>.
+	/// </typeparam>
+	/// <param name="type">
+	/// The <see cref="Type"/> to search for members with the specified attribute. Must not be <c>null</c>.
+	/// </param>
 	/// <returns>
 	/// A <see cref="ReadOnlyCollection{MemberInfo}"/> containing all members (type itself, properties, methods, fields, and events)
 	/// that have the specified attribute <typeparamref name="TAttribute"/> applied to them.
@@ -1293,21 +1333,21 @@ public static class TypeHelper
 	/// <strong>Performance Characteristics (.NET 10):</strong>
 	/// </para>
 	/// <list type="bullet">
-	/// <item><description>Results are cached internally by <see cref="GetMembersWithAttribute{TAttribute}(Type)"/> for improved performance</description></item>
-	/// <item><description>Searches both public and non-public members (properties, methods, fields, events)</description></item>
-	/// <item><description>Includes static and instance members</description></item>
-	/// <item><description>Uses <see cref="Attribute.IsDefined(MemberInfo, Type, bool)"/> for efficient attribute detection</description></item>
-	/// <item><description>Time Complexity: O(n) where n = number of members on the type</description></item>
+	/// <item><description>Results are cached internally by <see cref="GetMembersWithAttribute{TAttribute}(Type)"/> for improved performance.</description></item>
+	/// <item><description>Searches both public and non-public members (properties, methods, fields, events).</description></item>
+	/// <item><description>Includes static and instance members.</description></item>
+	/// <item><description>Uses <see cref="Attribute.IsDefined(MemberInfo, Type, bool)"/> for efficient attribute detection.</description></item>
+	/// <item><description>Time Complexity: O(n) where n = number of members on the type.</description></item>
 	/// </list>
 	/// <para>
 	/// <strong>Member Types Searched:</strong>
 	/// </para>
 	/// <list type="bullet">
-	/// <item><description>The type itself (if it has the attribute)</description></item>
-	/// <item><description>Properties (public, private, static, instance)</description></item>
-	/// <item><description>Methods (public, private, static, instance)</description></item>
-	/// <item><description>Fields (public, private, static, instance)</description></item>
-	/// <item><description>Events (public, private, static, instance)</description></item>
+	/// <item><description>The type itself (if it has the attribute).</description></item>
+	/// <item><description>Properties (public, private, static, instance).</description></item>
+	/// <item><description>Methods (public, private, static, instance).</description></item>
+	/// <item><description>Fields (public, private, static, instance).</description></item>
+	/// <item><description>Events (public, private, static, instance).</description></item>
 	/// </list>
 	/// </remarks>
 	/// <example>
@@ -1318,25 +1358,28 @@ public static class TypeHelper
 	/// {
 	///     public string Description { get; set; }
 	/// }
-	/// 
+	///
 	/// [MyCustomAttribute(Description = "This is a test class")]
 	/// public class TestClass
 	/// {
 	///     [MyCustomAttribute(Description = "Test property")]
 	///     public string Name { get; set; }
-	///     
+	///
 	///     [MyCustomAttribute(Description = "Test method")]
 	///     public void DoSomething() { }
-	///     
+	///
 	///     public void RegularMethod() { }
 	/// }
-	/// 
+	///
 	/// var members = TypeHelper.GetTypeMembersWithAttribute&lt;MyCustomAttribute&gt;(typeof(TestClass));
 	/// // Returns: ReadOnlyCollection with 3 members (TestClass type, Name property, DoSomething method)
-	/// 
+	///
 	/// foreach (var member in members)
 	/// {
-	///     var attr = TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member);
+	///     var attr = TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as Type)
+	///               ?? TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as PropertyInfo)
+	///               ?? TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as MethodInfo)
+	///               ?? TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as FieldInfo);
 	///     Console.WriteLine($"{member.Name}: {attr?.Description}");
 	/// }
 	/// // Output:
@@ -1344,89 +1387,12 @@ public static class TypeHelper
 	/// // Name: Test property
 	/// // DoSomething: Test method
 	/// </code>
-	/// 
-	/// Finding members with .NET framework attributes:
-	/// <code>
-	/// public class DataModel
-	/// {
-	///     [Obsolete("Use NewProperty instead")]
-	///     public string OldProperty { get; set; }
-	///     
-	///     public string NewProperty { get; set; }
-	///     
-	///     [Obsolete("Use NewMethod instead")]
-	///     public void OldMethod() { }
-	/// }
-	/// 
-	/// var obsoleteMembers = TypeHelper.GetTypeMembersWithAttribute&lt;ObsoleteAttribute&gt;(typeof(DataModel));
-	/// Console.WriteLine($"Found {obsoleteMembers.Count} obsolete members");
-	/// // Output: Found 2 obsolete members
-	/// </code>
-	/// 
-	/// Working with JSON serialization attributes:
-	/// <code>
-	/// using System.Text.Json.Serialization;
-	/// 
-	/// public class Product
-	/// {
-	///     public int Id { get; set; }
-	///     
-	///     [JsonPropertyName("product_name")]
-	///     public string Name { get; set; }
-	///     
-	///     [JsonIgnore]
-	///     public string InternalCode { get; set; }
-	///     
-	///     [JsonPropertyName("unit_price")]
-	///     public decimal Price { get; set; }
-	/// }
-	/// 
-	/// // Find all properties with JsonPropertyName attribute
-	/// var jsonNamedMembers = TypeHelper.GetTypeMembersWithAttribute&lt;JsonPropertyNameAttribute&gt;(typeof(Product));
-	/// foreach (var member in jsonNamedMembers.OfType&lt;PropertyInfo&gt;())
-	/// {
-	///     var attr = TypeHelper.GetAttribute&lt;JsonPropertyNameAttribute&gt;(member);
-	///     Console.WriteLine($"{member.Name} -> {attr?.Name}");
-	/// }
-	/// // Output:
-	/// // Name -> product_name
-	/// // Price -> unit_price
-	/// </code>
-	/// 
-	/// Using with data validation attributes:
-	/// <code>
-	/// using System.ComponentModel.DataAnnotations;
-	/// 
-	/// public class User
-	/// {
-	///     [Required]
-	///     [StringLength(50)]
-	///     public string Username { get; set; }
-	///     
-	///     [Required]
-	///     [EmailAddress]
-	///     public string Email { get; set; }
-	///     
-	///     public string PhoneNumber { get; set; }
-	/// }
-	/// 
-	/// // Find all required properties
-	/// var requiredMembers = TypeHelper.GetTypeMembersWithAttribute&lt;RequiredAttribute&gt;(typeof(User));
-	/// Console.WriteLine("Required properties:");
-	/// foreach (var member in requiredMembers)
-	/// {
-	///     Console.WriteLine($"  - {member.Name}");
-	/// }
-	/// // Output:
-	/// // Required properties:
-	/// //   - Username
-	/// //   - Email
-	/// </code>
 	/// </example>
 	/// <seealso cref="GetMembersWithAttribute{TAttribute}(Type)"/>
 	/// <seealso cref="GetAttribute{TAttribute}(Type)"/>
-	/// <seealso cref="HasAttribute{T}(MethodInfo)"/>
-	/// <seealso cref="Attribute"/>
+	/// <seealso cref="GetAttribute{TAttribute}(PropertyInfo)"/>
+	/// <seealso cref="GetAttribute{TAttribute}(MethodInfo)"/>
+	/// <seealso cref="GetAttribute{TAttribute}(FieldInfo)"/>
 	[return: NotNull]
 	[Information(nameof(GetTypeMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>([DisallowNull] Type type)
