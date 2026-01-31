@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// <summary>
 /// Provides helper methods for network-related operations.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineNetworkHelper")]
 public static class NetworkHelper
 {
 
