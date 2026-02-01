@@ -37,7 +37,7 @@
 	<Nullable>enable</Nullable>
 	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	<PackageProjectUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</PackageProjectUrl>
+	<PackageProjectUrl>https://bit.ly/Spargine</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
 	<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
