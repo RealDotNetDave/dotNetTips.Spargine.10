@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 /.cr
 /AppBin
+/README.md.saved.bak
+/source/Benchmarking/README.md.saved.bak
