@@ -39,6 +39,17 @@ public class DisposableFields : IDisposable
 	private bool _disposedValue;
 
 	/// <summary>
+	/// Disposes this instance.
+	/// </summary>
+	[Preserve("Part of IDisposable", "4/16/2023", "David McCarter")]
+	public void Dispose()
+	{
+		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+		this.Dispose(disposing: true);
+		GC.SuppressFinalize(this);
+	}
+
+	/// <summary>
 	/// Disposes the specified disposing.
 	/// </summary>
 	/// <param name="disposing">The disposing.</param>
@@ -53,16 +64,5 @@ public class DisposableFields : IDisposable
 
 			this._disposedValue = true;
 		}
-	}
-
-	/// <summary>
-	/// Disposes this instance.
-	/// </summary>
-	[Preserve("Part of IDisposable", "4/16/2023", "David McCarter")]
-	public void Dispose()
-	{
-		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-		this.Dispose(disposing: true);
-		GC.SuppressFinalize(this);
 	}
 }

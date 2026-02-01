@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.1.29
+# DotNetTips.Spargine.10.Extensions - 2026.10.1.31
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -112,7 +112,7 @@
 
 ### System.Void FastProcessor(T array, T action)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -367,7 +367,7 @@
 
 ### System.Void FastProcessor(T action)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -797,7 +797,7 @@
 
 ### System.Boolean AddIfNotExists(T collection, T item, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -896,7 +896,7 @@
 
 ### System.Boolean AddIfNotExists(T item, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1157,7 +1157,7 @@
 
 ### System.Int32 GetWeekOfTheYear(System.DateOnly& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1169,7 +1169,7 @@
 
 ### System.Int32 GetWeekOfTheYear(System.DateTime& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1181,7 +1181,7 @@
 
 ### System.Int32 GetWeeksInTheYear(System.Int32& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1193,7 +1193,7 @@
 
 ### System.Int32 GetYear(System.DateTime& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1205,7 +1205,7 @@
 
 ### System.Int32 GetYear(System.DateOnly& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1217,7 +1217,7 @@
 
 ### System.DateTime GetYearEnd(System.Int32& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1229,7 +1229,7 @@
 
 ### System.DateTime GetYearStart(System.Int32& input)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -1566,7 +1566,7 @@
 
 ### T ToFrozen(T list)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1590,7 +1590,7 @@
 
 ### T ToImmutable(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1614,7 +1614,7 @@
 
 ### T ToImmutableSorted(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -1650,7 +1650,7 @@
 
 ### T ToReadOnly(T dictionary)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1686,7 +1686,7 @@
 
 ### T ToSorted(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1698,7 +1698,7 @@
 
 ### T ToSorted(T collection, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1784,7 +1784,7 @@
 
 ### T AddDistinct(T collection, T items)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1808,7 +1808,7 @@
 
 ### T AddIf(T collection, T item, System.Boolean condition)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1868,7 +1868,7 @@
 
 ### T FastDistinct(T collection, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1904,7 +1904,7 @@
 
 ### System.Void FastProcessor(T collection, T action)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Update
@@ -1916,7 +1916,7 @@
 
 ### T FastProcessor(T collection, T action)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2000,7 +2000,7 @@
 
 ### System.Int32 IndexOf(T collection, T item, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2022,7 +2022,7 @@
 
 ### System.Boolean IsEmpty(T collection)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Update
 * **Unit Test Status:** Completed
@@ -2166,7 +2166,7 @@
 
 ### T ReplaceIf(T collection, T accumulatorPredicate, T replacement)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2296,7 +2296,7 @@
 
 ### T ToUniqueCollection(T collection)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2308,7 +2308,7 @@
 
 ### T Upsert(T collection, T item, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2338,7 +2338,7 @@
 
 ### T AddDistinct(T items)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2362,7 +2362,7 @@
 
 ### T AddIf(T item, System.Boolean condition)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2422,7 +2422,7 @@
 
 ### T FastDistinct(T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2458,7 +2458,7 @@
 
 ### System.Void FastProcessor(T action)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Update
@@ -2470,7 +2470,7 @@
 
 ### T FastProcessor(T action)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2554,7 +2554,7 @@
 
 ### System.Int32 IndexOf(T item, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2576,7 +2576,7 @@
 
 ### System.Boolean IsEmpty()
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Update
 * **Unit Test Status:** Completed
@@ -2708,7 +2708,7 @@
 
 ### T ReplaceIf(T accumulatorPredicate, T replacement)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2838,7 +2838,7 @@
 
 ### T ToUniqueCollection()
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2850,7 +2850,7 @@
 
 ### T Upsert(T item, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2946,7 +2946,7 @@
 
 ### T ToConcurrent(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2970,7 +2970,7 @@
 
 ### T ToImmutable(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3021,7 +3021,7 @@
 
 ### T ToConcurrent()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3045,7 +3045,7 @@
 
 ### T ToImmutable()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3357,7 +3357,7 @@
 
 ### System.Void AddRangeIfNotExists(T list, T items, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3417,7 +3417,7 @@
 
 ### T FastShuffle(T list)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3537,7 +3537,7 @@
 
 ### T Split(T list, System.Int32 size)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3643,7 +3643,7 @@
 
 ### T ToObservable(T list)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3679,7 +3679,7 @@
 
 ### T ToReadOnly(T list)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3742,7 +3742,7 @@
 
 ### System.Void AddRangeIfNotExists(T items, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3802,7 +3802,7 @@
 
 ### T FastShuffle()
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3922,7 +3922,7 @@
 
 ### T Split(System.Int32 size)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4028,7 +4028,7 @@
 
 ### T ToObservable()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4064,7 +4064,7 @@
 
 ### T ToReadOnly()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4365,7 +4365,7 @@
 
 ### System.String FormatTime(System.Double milliseconds)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4375,7 +4375,7 @@
 
 ### System.String FormatTime(System.Int64 milliseconds)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4965,7 +4965,7 @@
 
 ### T FastClone(System.Object obj)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4985,7 +4985,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> FieldsToDictionary(System.Object obj, System.String memberName, System.Boolean ignoreEmptyValues)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5332,7 +5332,7 @@
 
 ### T FastClone()
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5352,7 +5352,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> FieldsToDictionary(System.String memberName, System.Boolean ignoreEmptyValues)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5712,7 +5712,7 @@
 
 ### System.Int32 GenerateHashCode(T collection, T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -5740,7 +5740,7 @@
 
 ### System.Int32 GenerateHashCode(T comparer)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
@@ -6122,7 +6122,7 @@
 
 ### System.Text.StringBuilder SetCapacity(System.Text.StringBuilder sb, System.Int32& capacity)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -6233,7 +6233,7 @@
 
 ### System.Text.StringBuilder SetCapacity(System.Int32& capacity)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -6248,7 +6248,7 @@
 
 ### System.Int32 CalculateByteArraySize(System.String input, System.Text.Encoding encoding)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6296,7 +6296,7 @@
 
 ### System.String Concat(System.String input, System.String delimiter, System.Boolean addLineFeed, System.Collections.ObjectModel.ReadOnlyCollection<System.String> args)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6870,7 +6870,7 @@
 
 ### System.Byte[] ToBase64Bytes(System.String input)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7343,7 +7343,7 @@
 
 ### System.Boolean IsOpenGeneric(System.Type type)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7608,7 +7608,7 @@
 
 ### System.Boolean IsOpenGeneric()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -7630,4 +7630,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/30/2026 5:24:25 PM UTC**
+**Generated by Spargine - dotNetTips.com on 2/1/2026 2:34:38 PM UTC**

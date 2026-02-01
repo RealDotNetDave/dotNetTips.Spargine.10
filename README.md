@@ -10,8 +10,21 @@ Please support this project by [**clicking here**](https://github.com/sponsors/R
 # NuGet
 All of the assemblies listed below can be found on NuGet by [clicking here](https://www.nuget.org/profiles/davidmccarter).
 # Projects
+## Code Quality Stats
+### DotNetTips.Spargine
+    Unit tests: 180
+### DotNetTips.Spargine.Core
+    Unit tests: 2,043
+    Benchmark tests: 754
+### DotNetTips.Spargine.Extentions
+    Unit tests: 1,323
+    Benchmark tests: 1,878
+### DotNetTips.Spargine.Tester
+    Unit tests: 1,323
+    Benchmark tests: 124
 Below is the list of current projects in this repository
 *  	**DotNetTips.Spargine:** Windows and File I/O Targeting Library.
+    
     * **IO**
         * **DirectoryHelper**: Common methods for working with file directories.
         * **DriveHelper**: Common methods for working with disk drives.

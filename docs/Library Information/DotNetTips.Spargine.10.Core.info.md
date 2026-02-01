@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2026.10.1.29
+# DotNetTips.Spargine.10.Core - 2026.10.1.31
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -399,7 +399,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> FindTypesImplementing(System.IO.FileInfo file, System.Collections.ObjectModel.ReadOnlyCollection<System.Type> types)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -3748,7 +3748,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.Object, System.Object> ExtractData(System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -3951,7 +3951,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.Object, System.Object> ExtractData()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -4547,7 +4547,7 @@
 
 ### System.String Combine(System.Boolean& addLineFeed, System.ReadOnlySpan<System.String> args)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4559,7 +4559,7 @@
 
 ### System.String CombineWithSpace(System.ReadOnlySpan<System.String> args)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4571,7 +4571,7 @@
 
 ### System.String Concat(System.Char delimiter, System.Boolean& addLineFeed, System.String[] args)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4583,7 +4583,7 @@
 
 ### System.String Concat(System.String delimiter, System.Boolean& addLineFeed, System.Collections.ObjectModel.ReadOnlyCollection<System.String> args)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4667,7 +4667,7 @@
 
 ### System.String ToDelimitedString(T collection, System.Char delimiter)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6307,7 +6307,7 @@
 
 ### T Bind(T binder)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -6317,7 +6317,7 @@
 
 ### System.Void Deconstruct(T value, System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Exception, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& errors)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -6357,7 +6357,7 @@
 
 ### System.Boolean HasErrors { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -6367,7 +6367,7 @@
 
 ### System.Boolean IsFailure { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -6377,7 +6377,7 @@
 
 ### System.Boolean IsSuccess { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
@@ -6387,7 +6387,7 @@
 
 ### T Map(T mapper)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -6397,7 +6397,7 @@
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> Messages { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -6751,7 +6751,7 @@
 
 ### T GetAttribute(System.Type type)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6761,7 +6761,7 @@
 
 ### T GetAttribute(System.Reflection.MethodInfo methodInfo)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6771,7 +6771,7 @@
 
 ### T GetAttribute(System.Reflection.PropertyInfo propertyInfo)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6995,7 +6995,7 @@
 
 ### System.Boolean IsEnumerable(System.Type type)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7088,7 +7088,7 @@
 
 ### DotNetTips.Spargine.Core.Ulid (System.String value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7098,7 +7098,7 @@
 
 ### System.Int32 CompareTo(DotNetTips.Spargine.Core.Ulid other)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7108,7 +7108,7 @@
 
 ### System.Void EncodeBase32(System.ReadOnlySpan<System.Byte> bytes, System.Span<System.Char> chars, System.Int32 charIndex, System.Int32 length)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
@@ -7118,7 +7118,7 @@
 
 ### System.Boolean Equals(DotNetTips.Spargine.Core.Ulid other)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7128,7 +7128,7 @@
 
 ### System.Boolean Equals(System.Object obj)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7138,7 +7138,7 @@
 
 ### System.Byte[] GenerateRandomBytes()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -7148,7 +7148,7 @@
 
 ### System.Byte[] GenerateTimeStamp()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -7158,7 +7158,7 @@
 
 ### System.Int32 GetHashCode()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7168,7 +7168,7 @@
 
 ### System.DateTimeOffset GetTimeStamp()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7178,7 +7178,7 @@
 
 ### DotNetTips.Spargine.Core.Ulid NewUlid()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7188,7 +7188,7 @@
 
 ### System.Boolean op_Equality(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7198,7 +7198,7 @@
 
 ### System.Boolean op_GreaterThan(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7208,7 +7208,7 @@
 
 ### System.Boolean op_GreaterThanOrEqual(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7218,7 +7218,7 @@
 
 ### System.Boolean op_Inequality(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7228,7 +7228,7 @@
 
 ### System.Boolean op_LessThan(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7238,7 +7238,7 @@
 
 ### System.Boolean op_LessThanOrEqual(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7248,7 +7248,7 @@
 
 ### DotNetTips.Spargine.Core.Ulid Parse(System.String value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -7258,7 +7258,7 @@
 
 ### System.String ToString()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7268,7 +7268,7 @@
 
 ### System.Boolean TryParse(System.String value, DotNetTips.Spargine.Core.Ulid& ulid)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7287,7 +7287,7 @@
 
 ### T ArgumentCountInRange(T input, System.Int32 min, System.Int32 max, System.String errorMessage, System.String paramName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -7299,7 +7299,7 @@
 
 ### T ArgumentCustom(T input, T predicate, System.String errorMessage, System.String paramName)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -7875,7 +7875,7 @@
 
 ### System.Boolean CheckIsNotNullOrEmpty(System.String input, System.Boolean& throwException, System.String errorMessage)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -7947,4 +7947,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 1/30/2026 5:24:25 PM UTC**
+**Generated by Spargine - dotNetTips.com on 2/1/2026 2:34:38 PM UTC**
