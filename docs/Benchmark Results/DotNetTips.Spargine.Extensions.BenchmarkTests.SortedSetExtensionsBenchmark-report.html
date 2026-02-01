@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.SortedSetExtensionsBenchmark-20260201-035158</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6809/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.102
+  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Collections  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                </th><th>Count</th><th>Mean       </th><th>Error   </th><th>StdDev  </th><th>StdErr </th><th>Median     </th><th>Min        </th><th>Q1         </th><th>Q3         </th><th>Max        </th><th>Op/s     </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>64</td><td>51.0606 ns</td><td>0.2644 ns</td><td>0.2344 ns</td><td>0.0626 ns</td><td>51.1019 ns</td><td>50.6563 ns</td><td>50.8894 ns</td><td>51.2350 ns</td><td>51.4189 ns</td><td>19,584,579.4</td><td>6.9687 ns</td><td>14.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0044</td><td>1,432 B</td><td>0.0001</td><td>0.0001</td><td>200 B</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>128</td><td>57.7521 ns</td><td>1.1761 ns</td><td>3.2393 ns</td><td>0.3453 ns</td><td>57.5361 ns</td><td>49.0618 ns</td><td>55.7450 ns</td><td>59.9242 ns</td><td>66.7589 ns</td><td>17,315,374.3</td><td>43.8273 ns</td><td>88.00</td><td>4</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0069</td><td>1,432 B</td><td>0.0001</td><td>0.0001</td><td>3551 B</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>256</td><td>59.2423 ns</td><td>1.1870 ns</td><td>1.7767 ns</td><td>0.3244 ns</td><td>60.0476 ns</td><td>56.0309 ns</td><td>57.4888 ns</td><td>60.5591 ns</td><td>61.8482 ns</td><td>16,879,833.8</td><td>14.8378 ns</td><td>30.00</td><td>4</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0077</td><td>1,432 B</td><td>0.0001</td><td>0.0001</td><td>2476 B</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>512</td><td>67.4191 ns</td><td>1.3687 ns</td><td>3.5818 ns</td><td>0.4005 ns</td><td>67.7572 ns</td><td>60.6063 ns</td><td>64.8114 ns</td><td>69.9253 ns</td><td>74.5085 ns</td><td>14,832,590.2</td><td>39.7998 ns</td><td>80.00</td><td>5</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0031</td><td>1,432 B</td><td>0.0002</td><td>0.0002</td><td>248 B</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>1024</td><td>83.2950 ns</td><td>1.6947 ns</td><td>4.3441 ns</td><td>0.4951 ns</td><td>82.6502 ns</td><td>71.7492 ns</td><td>80.3566 ns</td><td>86.7461 ns</td><td>94.3470 ns</td><td>12,005,516.2</td><td>38.2525 ns</td><td>77.00</td><td>7</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0030</td><td>1,528 B</td><td>0.0001</td><td>0.0001</td><td>-</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>2048</td><td>84.2005 ns</td><td>2.5457 ns</td><td>7.5061 ns</td><td>0.7506 ns</td><td>82.7583 ns</td><td>69.5834 ns</td><td>78.8199 ns</td><td>91.2423 ns</td><td>102.4856 ns</td><td>11,876,412.9</td><td>49.6247 ns</td><td>100.00</td><td>7</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0033</td><td>1,432 B</td><td>0.0001</td><td>0.0001</td><td>-</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>4096</td><td>74.4851 ns</td><td>1.5065 ns</td><td>3.1447 ns</td><td>0.4320 ns</td><td>75.7432 ns</td><td>69.8814 ns</td><td>71.5034 ns</td><td>76.8256 ns</td><td>79.9283 ns</td><td>13,425,507.1</td><td>26.2840 ns</td><td>53.00</td><td>6</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0023</td><td>1,428 B</td><td>-</td><td>-</td><td>296 B</td>
+</tr><tr><td>&#39;IsNotEmpty: With Predicate&#39;</td><td>8192</td><td>79.1236 ns</td><td>1.5875 ns</td><td>2.4242 ns</td><td>0.4354 ns</td><td>79.6625 ns</td><td>74.6066 ns</td><td>77.7546 ns</td><td>81.0485 ns</td><td>82.7786 ns</td><td>12,638,456.1</td><td>15.2823 ns</td><td>31.00</td><td>7</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0019</td><td>1,432 B</td><td>-</td><td>-</td><td>312 B</td>
+</tr><tr><td>IsNotEmpty</td><td>64</td><td>0.2958 ns</td><td>0.0110 ns</td><td>0.0103 ns</td><td>0.0027 ns</td><td>0.2966 ns</td><td>0.2802 ns</td><td>0.2882 ns</td><td>0.3025 ns</td><td>0.3119 ns</td><td>3,380,940,989.1</td><td>7.4987 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>128</td><td>0.2880 ns</td><td>0.0081 ns</td><td>0.0068 ns</td><td>0.0019 ns</td><td>0.2889 ns</td><td>0.2753 ns</td><td>0.2831 ns</td><td>0.2919 ns</td><td>0.3028 ns</td><td>3,472,104,232.9</td><td>6.4991 ns</td><td>13.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>256</td><td>0.2888 ns</td><td>0.0164 ns</td><td>0.0145 ns</td><td>0.0039 ns</td><td>0.2863 ns</td><td>0.2653 ns</td><td>0.2794 ns</td><td>0.2982 ns</td><td>0.3144 ns</td><td>3,462,806,271.7</td><td>6.9981 ns</td><td>14.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>512</td><td>0.2973 ns</td><td>0.0374 ns</td><td>0.0384 ns</td><td>0.0093 ns</td><td>0.2839 ns</td><td>0.2590 ns</td><td>0.2665 ns</td><td>0.3183 ns</td><td>0.3678 ns</td><td>3,363,468,163.0</td><td>8.4953 ns</td><td>17.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>1024</td><td>0.2798 ns</td><td>0.0073 ns</td><td>0.0061 ns</td><td>0.0017 ns</td><td>0.2777 ns</td><td>0.2693 ns</td><td>0.2749 ns</td><td>0.2853 ns</td><td>0.2876 ns</td><td>3,573,795,215.0</td><td>6.4992 ns</td><td>13.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>2048</td><td>0.2728 ns</td><td>0.0361 ns</td><td>0.0494 ns</td><td>0.0097 ns</td><td>0.2472 ns</td><td>0.2184 ns</td><td>0.2339 ns</td><td>0.3224 ns</td><td>0.3627 ns</td><td>3,665,903,452.3</td><td>12.9952 ns</td><td>26.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>4096</td><td>0.2854 ns</td><td>0.0144 ns</td><td>0.0127 ns</td><td>0.0034 ns</td><td>0.2847 ns</td><td>0.2680 ns</td><td>0.2773 ns</td><td>0.2912 ns</td><td>0.3123 ns</td><td>3,504,269,690.2</td><td>6.9983 ns</td><td>14.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IsNotEmpty</td><td>8192</td><td>0.3822 ns</td><td>0.0203 ns</td><td>0.0190 ns</td><td>0.0049 ns</td><td>0.3793 ns</td><td>0.3609 ns</td><td>0.3669 ns</td><td>0.3963 ns</td><td>0.4164 ns</td><td>2,616,155,060.2</td><td>7.4975 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>84 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>64</td><td>12,017.1677 ns</td><td>61.6287 ns</td><td>54.6323 ns</td><td>14.6011 ns</td><td>12,002.6016 ns</td><td>11,909.6527 ns</td><td>11,994.7723 ns</td><td>12,020.1588 ns</td><td>12,119.3054 ns</td><td>83,214.3</td><td>-0.3005 ns</td><td>14.00</td><td>8</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.1221</td><td>5,142 B</td><td>-</td><td>-</td><td>3920 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>128</td><td>29,800.6577 ns</td><td>238.8303 ns</td><td>199.4341 ns</td><td>55.3131 ns</td><td>29,726.1093 ns</td><td>29,554.9698 ns</td><td>29,681.8069 ns</td><td>29,888.9328 ns</td><td>30,284.3185 ns</td><td>33,556.3</td><td>-21.1565 ns</td><td>13.00</td><td>9</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.2441</td><td>5,137 B</td><td>-</td><td>-</td><td>7520 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>256</td><td>71,769.2531 ns</td><td>987.2229 ns</td><td>875.1474 ns</td><td>233.8930 ns</td><td>71,561.7493 ns</td><td>70,629.8462 ns</td><td>70,962.4725 ns</td><td>72,337.2925 ns</td><td>73,146.0083 ns</td><td>13,933.5</td><td>-109.9465 ns</td><td>14.00</td><td>10</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.4883</td><td>5,147 B</td><td>-</td><td>-</td><td>14704 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>512</td><td>163,687.8116 ns</td><td>2,918.8268 ns</td><td>3,474.6560 ns</td><td>758.2321 ns</td><td>162,704.0771 ns</td><td>159,546.7773 ns</td><td>160,856.0303 ns</td><td>165,731.2012 ns</td><td>170,360.5225 ns</td><td>6,109.2</td><td>-368.6160 ns</td><td>21.00</td><td>11</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.7324</td><td>5,142 B</td><td>-</td><td>-</td><td>29056 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>1024</td><td>379,228.2872 ns</td><td>7,411.7148 ns</td><td>10,629.6607 ns</td><td>2,008.8171 ns</td><td>377,909.9609 ns</td><td>364,288.6963 ns</td><td>370,138.5010 ns</td><td>384,662.5610 ns</td><td>402,149.0967 ns</td><td>2,636.9</td><td>-990.4085 ns</td><td>28.00</td><td>12</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1.4648</td><td>5,158 B</td><td>-</td><td>-</td><td>57744 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>2048</td><td>834,104.8438 ns</td><td>4,831.1411 ns</td><td>4,519.0524 ns</td><td>1,166.8143 ns</td><td>835,331.1523 ns</td><td>826,188.9648 ns</td><td>831,075.9277 ns</td><td>837,317.3828 ns</td><td>842,262.6953 ns</td><td>1,198.9</td><td>-575.9072 ns</td><td>15.00</td><td>13</td><td>No</td><td>-</td><td>-</td><td>-</td><td>2.9297</td><td>5,158 B</td><td>-</td><td>-</td><td>115104 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>4096</td><td>1,908,769.6940 ns</td><td>8,851.3025 ns</td><td>8,279.5138 ns</td><td>2,137.7613 ns</td><td>1,907,310.6445 ns</td><td>1,892,563.5742 ns</td><td>1,903,525.7812 ns</td><td>1,915,574.6094 ns</td><td>1,924,151.2695 ns</td><td>523.9</td><td>-1,061.3806 ns</td><td>15.00</td><td>14</td><td>No</td><td>-</td><td>-</td><td>-</td><td>5.8594</td><td>5,133 B</td><td>-</td><td>-</td><td>229808 B</td>
+</tr><tr><td>ToImmutableSortedSet</td><td>8192</td><td>4,494,208.6198 ns</td><td>35,219.8652 ns</td><td>32,944.6838 ns</td><td>8,506.2808 ns</td><td>4,485,862.8906 ns</td><td>4,455,760.5469 ns</td><td>4,465,660.5469 ns</td><td>4,521,650.3906 ns</td><td>4,560,167.5781 ns</td><td>222.5</td><td>-4,245.6404 ns</td><td>15.00</td><td>15</td><td>No</td><td>-</td><td>-</td><td>-</td><td>7.8125</td><td>5,110 B</td><td>-</td><td>-</td><td>459200 B</td>
+</tr></tbody></table>
+</body>
+</html>

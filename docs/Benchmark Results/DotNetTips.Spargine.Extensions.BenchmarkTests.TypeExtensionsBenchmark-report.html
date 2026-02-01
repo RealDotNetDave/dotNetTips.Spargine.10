@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TypeExtensionsBenchmark-20260110-161445</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TypeExtensionsBenchmark-20260201-071557</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,25 +13,25 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6691/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6809/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.101
-  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.102
+  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Strings  
 </code></pre>
 
 <table>
-<thead><tr><th>Method               </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method               </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>GetAllDeclaredFields</td><td>152.1 ns</td><td>0.63 ns</td><td>0.59 ns</td><td>0.15 ns</td><td>151.2 ns</td><td>151.7 ns</td><td>152.1 ns</td><td>152.5 ns</td><td>153.2 ns</td><td>6,572,593.7</td><td>7.424 ns</td><td>15.00</td><td>1</td><td>No</td><td>0.0088</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>195 B</td>
-</tr><tr><td>GetAllDeclaredMethods</td><td>285.1 ns</td><td>2.63 ns</td><td>2.46 ns</td><td>0.63 ns</td><td>281.0 ns</td><td>283.7 ns</td><td>285.2 ns</td><td>287.6 ns</td><td>288.2 ns</td><td>3,506,985.1</td><td>7.183 ns</td><td>15.00</td><td>5</td><td>No</td><td>0.0076</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>232 B</td>
-</tr><tr><td>GetAllFields</td><td>162.9 ns</td><td>1.94 ns</td><td>1.81 ns</td><td>0.47 ns</td><td>158.9 ns</td><td>161.7 ns</td><td>163.3 ns</td><td>164.2 ns</td><td>165.5 ns</td><td>6,140,570.8</td><td>7.266 ns</td><td>15.00</td><td>2</td><td>No</td><td>0.0079</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>240 B</td>
-</tr><tr><td>GetAllMethods</td><td>358.4 ns</td><td>3.10 ns</td><td>2.90 ns</td><td>0.75 ns</td><td>354.3 ns</td><td>356.2 ns</td><td>358.7 ns</td><td>359.9 ns</td><td>363.9 ns</td><td>2,789,888.5</td><td>7.125 ns</td><td>15.00</td><td>6</td><td>No</td><td>0.0076</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>240 B</td>
-</tr><tr><td>GetAllProperties</td><td>170.6 ns</td><td>0.80 ns</td><td>0.75 ns</td><td>0.19 ns</td><td>169.8 ns</td><td>170.0 ns</td><td>170.3 ns</td><td>171.3 ns</td><td>172.2 ns</td><td>5,860,361.8</td><td>7.403 ns</td><td>15.00</td><td>3</td><td>No</td><td>0.0086</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>248 B</td>
-</tr><tr><td>GetTypeMembersWithAttribute</td><td>223.9 ns</td><td>1.12 ns</td><td>1.05 ns</td><td>0.27 ns</td><td>222.1 ns</td><td>223.2 ns</td><td>223.9 ns</td><td>224.6 ns</td><td>226.0 ns</td><td>4,466,684.5</td><td>7.365 ns</td><td>15.00</td><td>4</td><td>No</td><td>0.0126</td><td>-</td><td>-</td><td>-</td><td>1,582 B</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
+</thead><tbody><tr><td>GetAllDeclaredFields</td><td>148.5 ns</td><td>1.58 ns</td><td>1.47 ns</td><td>0.38 ns</td><td>145.7 ns</td><td>147.8 ns</td><td>148.1 ns</td><td>149.9 ns</td><td>150.4 ns</td><td>6,734,843.4</td><td>7.310 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0081</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>232 B</td>
+</tr><tr><td>GetAllDeclaredMethods</td><td>295.9 ns</td><td>2.17 ns</td><td>1.92 ns</td><td>0.51 ns</td><td>292.9 ns</td><td>295.3 ns</td><td>295.7 ns</td><td>296.9 ns</td><td>299.3 ns</td><td>3,379,759.8</td><td>6.743 ns</td><td>14.00</td><td>5</td><td>No</td><td>-</td><td>-</td><td>0.0076</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>232 B</td>
+</tr><tr><td>GetAllFields</td><td>164.1 ns</td><td>0.87 ns</td><td>0.77 ns</td><td>0.21 ns</td><td>162.8 ns</td><td>163.9 ns</td><td>164.1 ns</td><td>164.6 ns</td><td>165.7 ns</td><td>6,093,359.7</td><td>6.897 ns</td><td>14.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>0.0083</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>240 B</td>
+</tr><tr><td>GetAllMethods</td><td>366.2 ns</td><td>2.00 ns</td><td>1.87 ns</td><td>0.48 ns</td><td>363.5 ns</td><td>364.9 ns</td><td>365.7 ns</td><td>367.4 ns</td><td>369.1 ns</td><td>2,731,111.5</td><td>7.259 ns</td><td>15.00</td><td>6</td><td>No</td><td>-</td><td>-</td><td>0.0076</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>240 B</td>
+</tr><tr><td>GetAllProperties</td><td>170.9 ns</td><td>1.04 ns</td><td>0.92 ns</td><td>0.25 ns</td><td>168.8 ns</td><td>170.5 ns</td><td>171.1 ns</td><td>171.4 ns</td><td>172.0 ns</td><td>5,851,569.4</td><td>6.877 ns</td><td>14.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>0.0086</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>248 B</td>
+</tr><tr><td>GetTypeMembersWithAttribute</td><td>218.1 ns</td><td>1.41 ns</td><td>1.25 ns</td><td>0.33 ns</td><td>216.4 ns</td><td>217.1 ns</td><td>218.0 ns</td><td>218.9 ns</td><td>220.3 ns</td><td>4,585,458.0</td><td>6.834 ns</td><td>14.00</td><td>4</td><td>No</td><td>-</td><td>-</td><td>0.0126</td><td>-</td><td>1,578 B</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
 </tr></tbody></table>
 </body>
 </html>

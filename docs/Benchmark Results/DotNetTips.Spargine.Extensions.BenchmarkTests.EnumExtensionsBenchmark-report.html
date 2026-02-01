@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.EnumExtensionsBenchmark-20260131-231129</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6809/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.102
+  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Collections  
+</code></pre>
+
+<table>
+<thead><tr><th>Method  </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>GetDescription</td><td>15.19 ns</td><td>0.179 ns</td><td>0.168 ns</td><td>0.043 ns</td><td>14.96 ns</td><td>15.05 ns</td><td>15.19 ns</td><td>15.33 ns</td><td>15.50 ns</td><td>65,832,352.7</td><td>7.478 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>0.0009</td><td>-</td><td>2,361 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>GetItems</td><td>345.52 ns</td><td>2.278 ns</td><td>2.131 ns</td><td>0.550 ns</td><td>342.73 ns</td><td>343.61 ns</td><td>345.12 ns</td><td>346.99 ns</td><td>349.29 ns</td><td>2,894,166.8</td><td>7.225 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>0.0262</td><td>-</td><td>3,779 B</td><td>0.0010</td><td>0.0010</td><td>760 B</td>
+</tr></tbody></table>
+</body>
+</html>

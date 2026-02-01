@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyCollectionExtensionsBenchmark-20260201-025808</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6809/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.102
+  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Collections  
+</code></pre>
+
+<table>
+<thead><tr><th>Method    </th><th>Count</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min   </th><th>Q1    </th><th>Median</th><th>Q3    </th><th>Max   </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>GenerateHashCode</td><td>64</td><td>1,702.3 ns</td><td>9.81 ns</td><td>9.18 ns</td><td>2.37 ns</td><td>1,684.6 ns</td><td>1,696.0 ns</td><td>1,702.5 ns</td><td>1,707.5 ns</td><td>1,717.4 ns</td><td>587,423.6</td><td>6.315 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,461 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>128</td><td>3,676.9 ns</td><td>24.22 ns</td><td>22.65 ns</td><td>5.85 ns</td><td>3,638.8 ns</td><td>3,660.9 ns</td><td>3,675.5 ns</td><td>3,692.6 ns</td><td>3,719.3 ns</td><td>271,971.3</td><td>4.576 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,461 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>256</td><td>7,977.3 ns</td><td>81.21 ns</td><td>71.99 ns</td><td>19.24 ns</td><td>7,889.5 ns</td><td>7,920.8 ns</td><td>7,978.5 ns</td><td>7,999.2 ns</td><td>8,139.4 ns</td><td>125,354.9</td><td>-2.620 ns</td><td>14.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,461 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>512</td><td>17,466.4 ns</td><td>118.32 ns</td><td>104.88 ns</td><td>28.03 ns</td><td>17,297.9 ns</td><td>17,400.9 ns</td><td>17,452.0 ns</td><td>17,543.4 ns</td><td>17,684.1 ns</td><td>57,252.8</td><td>-7.016 ns</td><td>14.00</td><td>4</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,461 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>1024</td><td>42,631.9 ns</td><td>470.50 ns</td><td>440.11 ns</td><td>113.64 ns</td><td>41,957.5 ns</td><td>42,317.8 ns</td><td>42,611.7 ns</td><td>42,910.1 ns</td><td>43,331.0 ns</td><td>23,456.6</td><td>-49.318 ns</td><td>15.00</td><td>5</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,456 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>2048</td><td>90,714.3 ns</td><td>1,080.27 ns</td><td>1,010.49 ns</td><td>260.91 ns</td><td>89,043.7 ns</td><td>89,964.5 ns</td><td>90,909.9 ns</td><td>91,300.2 ns</td><td>92,675.5 ns</td><td>11,023.6</td><td>-122.954 ns</td><td>15.00</td><td>6</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,456 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>4096</td><td>184,100.1 ns</td><td>2,298.94 ns</td><td>2,150.43 ns</td><td>555.24 ns</td><td>180,854.9 ns</td><td>182,523.8 ns</td><td>184,191.7 ns</td><td>185,238.2 ns</td><td>187,917.7 ns</td><td>5,431.8</td><td>-270.119 ns</td><td>15.00</td><td>7</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,456 B</td><td>40 B</td>
+</tr><tr><td>GenerateHashCode</td><td>8192</td><td>383,118.2 ns</td><td>6,436.40 ns</td><td>6,020.61 ns</td><td>1,554.52 ns</td><td>372,744.4 ns</td><td>380,313.9 ns</td><td>382,169.7 ns</td><td>387,610.6 ns</td><td>392,788.2 ns</td><td>2,610.2</td><td>-769.758 ns</td><td>15.00</td><td>8</td><td>No</td><td>-</td><td>-</td><td>-</td><td>1,456 B</td><td>40 B</td>
+</tr></tbody></table>
+</body>
+</html>
