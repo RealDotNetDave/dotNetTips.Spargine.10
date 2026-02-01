@@ -1,5 +1,5 @@
 # DotNetTips.Spargine for Microsoft .NET 10: v2026.10.2.1 
-![](docs/Graphics/SPARGINE-10-BANNER-BACKGROUND-100.png)
+![Spargine 10](docs/Graphics/SPARGINE-10-BANNER-BACKGROUND-100.png)
 
 Open-source .NET assemblies from dotNetTips.com and [**David (dotNetDave) McCarter**](https://dotnettips.wordpress.com/about/). 
 This repository hosts the **dotNetTips.Spargine** codebase for .NET 10. Spargine encompasses foundational code that I’ve been building and perfecting since the early days of .NET 2. In addition to the core library, it includes a dedicated library to support efficient testing and another designed specifically for benchmarking your code, helping you achieve optimal performance with ease.
