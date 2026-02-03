@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified On : 02-03-2026
 // ***********************************************************************
 // <copyright file="Enumeration.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core;
 /// This allows for richer domain models with type safety, without the limitations of the built-in Enum type.
 /// </summary>
 /// <remarks>Original code by: Jimmy Bogard</remarks>
-[Information(nameof(Enumeration), Status = Status.NeedsDocumentation)]
+[Information(nameof(Enumeration), Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
 [DebuggerDisplay(nameof(DisplayName))]
 public class Enumeration : IComparable
 {
