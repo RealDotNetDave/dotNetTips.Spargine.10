@@ -36,7 +36,7 @@ public class SimpleResult<T>
 {
 	private readonly ConcurrentBag<Exception> _exceptions = [];
 	private readonly ILogger? _logger;
-	private readonly List<string> _messages = [];
+	private readonly ConcurrentBag<string> _messages = [];
 
 	/// <summary>
 	/// The value associated with this result.
@@ -52,7 +52,11 @@ public class SimpleResult<T>
 	/// Initializes a new instance of the <see cref="SimpleResult{T}" /> class.
 	/// </summary>
 	[ExcludeFromCodeCoverage]
-	public SimpleResult() => this._value = default!;
+	public SimpleResult()
+	{
+		this._value = default!;
+
+	}
 
 	/// <summary>
 	/// Initializes a new successful result.
@@ -103,25 +107,49 @@ public class SimpleResult<T>
 	/// </summary>
 	/// <returns>ReadOnlyCollection&lt;Exception&gt;.</returns>
 	[Information(nameof(Errors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public ReadOnlyCollection<Exception> Errors => this._exceptions.ToList().AsReadOnly();
+	public ReadOnlyCollection<Exception> Errors
+	{
+		get
+		{
+			return this._exceptions.ToList().AsReadOnly();
+		}
+	}
 
 	/// <summary>
 	/// Indicates if there are any errors.
 	/// </summary>
 	[Information(nameof(HasErrors), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public bool HasErrors => !this._exceptions.IsEmpty;
+	public bool HasErrors
+	{
+		get
+		{
+			return !this._exceptions.IsEmpty;
+		}
+	}
 
 	/// <summary>
 	/// Indicates if the result is a failure (no value or only errors).
 	/// </summary>
 	[Information(nameof(IsFailure), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.Available)]
-	public bool IsFailure => this.Status == ResultStatus.Failed;
+	public bool IsFailure
+	{
+		get
+		{
+			return this.Status == ResultStatus.Failed;
+		}
+	}
 
 	/// <summary>
 	/// Indicates if the result is successful (no errors and value set).
 	/// </summary>
 	[Information(nameof(IsSuccess), UnitTestStatus = UnitTestStatus.NotRequired, Status = Core.Status.Available)]
-	public bool IsSuccess => this.Status == ResultStatus.Succeeded;
+	public bool IsSuccess
+	{
+		get
+		{
+			return this.Status == ResultStatus.Succeeded;
+		}
+	}
 
 	/// <summary>
 	/// Gets the collection of messages associated with this result.
@@ -132,7 +160,13 @@ public class SimpleResult<T>
 	/// additional context about the operation's outcome.
 	/// </remarks>
 	[Information(nameof(Messages), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.Available)]
-	public ReadOnlyCollection<string> Messages => this._messages.AsReadOnly();
+	public ReadOnlyCollection<string> Messages
+	{
+		get
+		{
+			return this._messages.ToList().AsReadOnly();
+		}
+	}
 
 	/// <summary>
 	/// Indicates the status of the result.
@@ -158,7 +192,13 @@ public class SimpleResult<T>
 	/// </summary>
 	/// <value>The value of type <typeparamref name="T"/>.</value>
 	[Information(nameof(Value), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public T Value => this._value;
+	public T Value
+	{
+		get
+		{
+			return this._value;
+		}
+	}
 
 	/// <summary>
 	/// Extracts the actual result from the specified <see cref="SimpleResult{T}"/>.
@@ -248,13 +288,19 @@ public class SimpleResult<T>
 	/// </summary>
 	/// <returns>A string containing all error messages.</returns>
 	[Information(nameof(GetErrorMessages), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public string GetErrorMessages() => this.GenerateExceptionMessages();
+	public string GetErrorMessages()
+	{
+		return this.GenerateExceptionMessages();
+	}
 
 	/// <summary>
 	/// Gets the hash code for the current instance.
 	/// </summary>
 	/// <returns>An integer representing the hash code of the current instance.</returns>
-	public override int GetHashCode() => base.GetHashCode();
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
 
 	/// <summary>
 	/// Maps the current result's value to a new value using the provided <paramref name="mapper"/> function,
