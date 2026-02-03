@@ -4,12 +4,16 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-31-2026
+// Last Modified On : 02-03-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides a lightweight, thread-safe result container for method outcomes.
+// Captures a value on success, aggregates exceptions on failure, and supports
+// optional logging, diagnostic messages, and functional composition via Bind/Map.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.Concurrent;
@@ -17,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
+using Microsoft.Extensions.Logging;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -26,12 +31,11 @@ namespace DotNetTips.Spargine.Core;
 /// Use for return results from methods. This type is thread-safe.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-[Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.Available, Documentation = "https://bit.ly/SpargineSimpleResult")]
+[Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineSimpleResult")]
 public class SimpleResult<T>
 {
-	//TODO: EXPLORE ADDING A LOGGER
-
 	private readonly ConcurrentBag<Exception> _exceptions = [];
+	private readonly ILogger? _logger;
 	private readonly List<string> _messages = [];
 
 	/// <summary>
@@ -53,22 +57,44 @@ public class SimpleResult<T>
 	/// <summary>
 	/// Initializes a new successful result.
 	/// </summary>
-	/// <param name="value">The value to be stored as result.</param>
-	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public SimpleResult([DisallowNull] T value)
+	/// <param name="value">The value to be stored as the result. Cannot be <see langword="null"/>.</param>
+	/// <param name="logger">
+	/// An optional <see cref="ILogger"/> used to record diagnostic information related to the result.
+	/// If provided, it can be used by callers to log messages or errors associated with this instance.
+	/// </param>
+	/// <remarks>
+	/// This constructor marks the result as successful by setting the internal value and updating the status flags.
+	/// If <paramref name="logger"/> is supplied, it is stored for potential diagnostic or telemetry usage.
+	/// </remarks>
+	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Update, Status = Core.Status.Available)]
+	public SimpleResult([DisallowNull] T value, [AllowNull] ILogger? logger = null)
 	{
 		this._value = value.ArgumentNotNull();
 		this._valueSet = true;
+		this._logger = logger;
 	}
 
 	/// <summary>
 	/// Initializes a new unsuccessful result.
 	/// </summary>
-	/// <param name="error">The exception representing error. Cannot be <see langword="null" />.</param>
-	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
-	public SimpleResult(Exception error)
+	/// <param name="error">
+	/// The exception representing the error condition. Cannot be <see langword="null"/>.
+	/// This exception is captured and stored internally so multiple errors can be associated with a single result.
+	/// </param>
+	/// <param name="logger">
+	/// An optional <see cref="ILogger"/> used to record diagnostic information related to this result.
+	/// If provided, it may be used by callers to log messages or errors associated with the failure.
+	/// </param>
+	/// <remarks>
+	/// This constructor initializes the result in a failed state by setting the internal value to its default,
+	/// storing the optional <paramref name="logger"/>, and adding the provided <paramref name="error"/> to the
+	/// internal error collection using <see cref="AddException(Exception)"/>.
+	/// </remarks>
+	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Update, Status = Core.Status.Available)]
+	public SimpleResult(Exception error, [AllowNull] ILogger? logger = null)
 	{
 		this._value = default!;
+		this._logger = logger;
 		this.AddException(error);
 	}
 
@@ -158,6 +184,11 @@ public class SimpleResult<T>
 		error = error.ArgumentNotNull();
 
 		this._exceptions.Add(ExceptionDispatchInfo.Capture(error).SourceException);
+
+		if (this._logger is not null)
+		{
+			error.LogException(this._logger, LogLevel.Error);
+		}
 	}
 
 	/// <summary>

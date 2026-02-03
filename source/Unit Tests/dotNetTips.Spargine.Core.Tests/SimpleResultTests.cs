@@ -4,7 +4,7 @@
 // Created          : 06-16-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 02-03-2026
 // ***********************************************************************
 // <copyright file="SimpleResultTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -43,6 +44,96 @@ public class SimpleResultTests
 		Assert.IsTrue(result.HasErrors);
 		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
 		Assert.HasCount(1, result.Errors);
+	}
+
+	[TestMethod]
+	public void AddException_WithNullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			result.AddException(null));
+	}
+
+	[TestMethod]
+	public void AddMessage_AddsMultipleMessages()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+		var message1 = "First message";
+		var message2 = "Second message";
+		var message3 = "Third message";
+
+		// Act
+		result.AddMessage(message1);
+		result.AddMessage(message2);
+		result.AddMessage(message3);
+
+		// Assert
+		Assert.HasCount(3, result.Messages);
+		Assert.AreEqual(message1, result.Messages[0]);
+		Assert.AreEqual(message2, result.Messages[1]);
+		Assert.AreEqual(message3, result.Messages[2]);
+	}
+	[TestMethod]
+	public void AddMessage_AddsValidMessage()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+		var message = "Operation completed successfully";
+
+		// Act
+		result.AddMessage(message);
+
+		// Assert
+		Assert.HasCount(1, result.Messages);
+		Assert.AreEqual(message, result.Messages[0]);
+	}
+
+	[TestMethod]
+	public void AddMessage_IgnoresEmptyMessage()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act
+		result.AddMessage(string.Empty);
+		result.AddMessage("   ");
+
+		// Assert
+		Assert.IsEmpty(result.Messages);
+	}
+
+	[TestMethod]
+	public void AddMessage_IgnoresNullMessage()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act
+		result.AddMessage(null);
+
+		// Assert
+		Assert.IsEmpty(result.Messages);
+	}
+
+	[TestMethod]
+	public void Bind_ChainingMultipleTimes_WorksCorrectly()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(10);
+
+		// Act
+		var final = result
+			.Bind(i => new SimpleResult<int>(i * 2))
+			.Bind(i => new SimpleResult<int>(i + 5))
+			.Bind(i => new SimpleResult<string>(i.ToString()));
+
+		// Assert
+		Assert.IsTrue(final.IsSuccess);
+		Assert.AreEqual("25", final.Value);
 	}
 
 	[TestMethod]
@@ -76,6 +167,17 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void Bind_WithNullBinder_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			result.Bind<string>(null));
+	}
+
+	[TestMethod]
 	public void Constructor_WithException_SetsError()
 	{
 		// Arrange
@@ -90,6 +192,44 @@ public class SimpleResultTests
 		Assert.AreEqual(ResultStatus.Failed, result.Status);
 		Assert.HasCount(1, result.Errors);
 		Assert.Contains("fail", result.GetErrorMessages());
+	}
+
+	[TestMethod]
+	public void Constructor_WithExceptionAndLogger_StoresLogger()
+	{
+		// Arrange
+		var logger = new Microsoft.Extensions.Logging.Abstractions.NullLogger<SimpleResult<int>>();
+		var exception = new InvalidOperationException("Test error");
+
+		// Act
+		var result = new SimpleResult<int>(exception, logger);
+
+		// Assert
+		Assert.IsTrue(result.HasErrors);
+		Assert.HasCount(1, result.Errors);
+	}
+
+	[TestMethod]
+	public void Constructor_WithLogger_StoresLogger()
+	{
+		// Arrange
+		var logger = new Microsoft.Extensions.Logging.Abstractions.NullLogger<SimpleResult<int>>();
+		var value = 42;
+
+		// Act
+		var result = new SimpleResult<int>(value, logger);
+
+		// Assert
+		Assert.IsTrue(result.IsSuccess);
+		Assert.AreEqual(value, result.Value);
+	}
+
+	[TestMethod]
+	public void Constructor_WithNullException_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			new SimpleResult<string>((Exception)null));
 	}
 
 	[TestMethod]
@@ -121,6 +261,23 @@ public class SimpleResultTests
 		Assert.AreEqual(123, value);
 		Assert.IsNotNull(errors);
 		Assert.IsEmpty(errors);
+	}
+
+	[TestMethod]
+	public void Deconstruct_WithErrors_ReturnsValueAndErrors()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+		var exception = new InvalidOperationException("Error");
+		result.AddException(exception);
+
+		// Act
+		result.Deconstruct(out var value, out var errors);
+
+		// Assert
+		Assert.AreEqual(42, value);
+		Assert.HasCount(1, errors);
+		Assert.AreEqual(exception.Message, errors[0].Message);
 	}
 
 	[TestMethod]
@@ -235,6 +392,36 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void GetHashCode_ReturnsDifferentValuesForDifferentInstances()
+	{
+		// Arrange
+		var result1 = new SimpleResult<int>(42);
+		var result2 = new SimpleResult<int>(42);
+
+		// Act
+		var hash1 = result1.GetHashCode();
+		var hash2 = result2.GetHashCode();
+
+		// Assert
+		// Note: Different instances should have different hash codes
+		Assert.AreNotEqual(hash1, hash2);
+	}
+
+	[TestMethod]
+	public void GetHashCode_ReturnsSameValueForSameInstance()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act
+		var hash1 = result.GetHashCode();
+		var hash2 = result.GetHashCode();
+
+		// Assert
+		Assert.AreEqual(hash1, hash2);
+	}
+
+	[TestMethod]
 	public void HasErrors_TrueIfExceptionAdded()
 	{
 		// Arrange
@@ -266,6 +453,23 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void Map_ChainingMultipleTimes_WorksCorrectly()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(5);
+
+		// Act
+		var final = result
+			.Map(i => i * 2)
+			.Map(i => i + 3)
+			.Map(i => i.ToString());
+
+		// Assert
+		Assert.IsTrue(final.IsSuccess);
+		Assert.AreEqual("13", final.Value);
+	}
+
+	[TestMethod]
 	public void Map_FailedResult_PropagatesErrors()
 	{
 		// Arrange
@@ -292,6 +496,46 @@ public class SimpleResultTests
 		// Assert
 		Assert.IsTrue(mapped.IsSuccess);
 		Assert.AreEqual("21", mapped.Value);
+	}
+
+	[TestMethod]
+	public void Map_WithNullMapper_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			result.Map<string>(null));
+	}
+
+	[TestMethod]
+	public void Messages_EmptyWhenNoMessagesAdded()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act
+		var messages = result.Messages;
+
+		// Assert
+		Assert.IsNotNull(messages);
+		Assert.IsEmpty(messages);
+	}
+
+	[TestMethod]
+	public void Messages_ReturnsReadOnlyCollection()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+		result.AddMessage("Test message");
+
+		// Act
+		var messages = result.Messages;
+
+		// Assert
+		Assert.IsInstanceOfType(messages, typeof(ReadOnlyCollection<string>));
+		Assert.HasCount(1, messages);
 	}
 
 	[TestMethod]
@@ -375,6 +619,17 @@ public class SimpleResultTests
 		Assert.AreEqual(expected, result.Value);
 		Assert.IsTrue(result.TryGet(out var actual));
 		Assert.AreEqual(expected, actual);
+	}
+
+	[TestMethod]
+	public void SetValue_WithNullValue_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var result = new SimpleResult<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			result.SetValue(null));
 	}
 
 	[TestMethod]
@@ -526,6 +781,33 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void Status_Failed_WhenNoValueSet()
+	{
+		// Arrange & Act
+		var result = new SimpleResult<int>();
+
+		// Assert
+		Assert.AreEqual(ResultStatus.Failed, result.Status);
+		Assert.IsFalse(result.IsSuccess);
+		Assert.IsTrue(result.IsFailure);
+	}
+
+	[TestMethod]
+	public void Status_PartialSuccess_WhenValueSetWithErrors()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+
+		// Act
+		result.AddException(new InvalidOperationException("Error"));
+
+		// Assert
+		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
+		Assert.IsFalse(result.IsSuccess);
+		Assert.IsFalse(result.IsFailure);
+	}
+
+	[TestMethod]
 	public void Status_PartialSuccessIfValueSetAndErrors()
 	{
 		// Arrange
@@ -534,6 +816,51 @@ public class SimpleResultTests
 
 		// Assert
 		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
+	}
+
+	[TestMethod]
+	public void Status_Succeeded_WhenValueSetNoErrors()
+	{
+		// Arrange & Act
+		var result = new SimpleResult<int>(42);
+
+		// Assert
+		Assert.AreEqual(ResultStatus.Succeeded, result.Status);
+		Assert.IsTrue(result.IsSuccess);
+		Assert.IsFalse(result.IsFailure);
+	}
+
+	[TestMethod]
+	public void ThreadSafety_AddExceptionConcurrently_AllExceptionsAdded()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+		var exceptions = Enumerable.Range(0, 100)
+			.Select(i => new InvalidOperationException($"Error {i}"))
+			.ToArray();
+
+		// Act
+		Parallel.ForEach(exceptions, ex => result.AddException(ex));
+
+		// Assert
+		Assert.HasCount(100, result.Errors);
+		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
+	}
+
+	[TestMethod]
+	public void ThreadSafety_AddMessageConcurrently_AllMessagesAdded()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(42);
+		var messages = Enumerable.Range(0, 100)
+			.Select(i => $"Message {i}")
+			.ToArray();
+
+		// Act
+		Parallel.ForEach(messages, msg => result.AddMessage(msg));
+
+		// Assert
+		Assert.HasCount(100, result.Messages);
 	}
 
 	[TestMethod]
@@ -581,6 +908,20 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void ToString_WithNullValue_ReturnsEmptyString()
+	{
+		// Arrange
+		var result = new SimpleResult<string>();
+		result.SetValue(string.Empty);
+
+		// Act
+		var str = result.ToString();
+
+		// Assert
+		Assert.AreEqual(string.Empty, str);
+	}
+
+	[TestMethod]
 	public void TryGet_ReturnsFalseIfValueNotSet()
 	{
 		// Arrange
@@ -607,5 +948,19 @@ public class SimpleResultTests
 		// Assert
 		Assert.IsTrue(success);
 		Assert.AreEqual(expected, value);
+	}
+
+	[TestMethod]
+	public void Value_ReturnsCorrectValue_AfterSetValue()
+	{
+		// Arrange
+		var result = new SimpleResult<int>();
+
+		// Act
+		result.SetValue(99);
+
+		// Assert
+		Assert.AreEqual(99, result.Value);
+		Assert.IsTrue(result.IsSuccess);
 	}
 }
