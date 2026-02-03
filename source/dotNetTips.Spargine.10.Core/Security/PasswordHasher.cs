@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 02-03-2026
 // ***********************************************************************
 // <copyright file="PasswordHasher.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,8 +28,9 @@ namespace DotNetTips.Spargine.Core.Security;
 /// <summary>
 /// Provides methods for hashing and verifying passwords using multiple algorithms.
 /// </summary>
-[Information(nameof(PasswordHasher), "David McCarter", "5/14/2025", Status = Status.New)]
+[Information(nameof(PasswordHasher), "David McCarter", "5/14/2025", Status = Status.Available, Documentation = "ADD URL")]
 public static class PasswordHasher
+
 {
 	private const int Iterations = 4;
 	private const int MemorySize = 32768;
@@ -58,11 +59,15 @@ public static class PasswordHasher
 	private static byte Version => 1;
 
 	/// <summary>
-	/// Hashes a password using the specified algorithm.
+	/// Hashes the specified password using the selected hashing algorithm.
 	/// </summary>
-	/// <param name="password">The password.</param>
-	/// <param name="algorithmType">The hashing algorithm to use.</param>
-	/// <returns>System.String.</returns>
+	/// <param name="password">The non-null password to hash.</param>
+	/// <param name="algorithmType">
+	/// The hashing algorithm to use when generating the password hash. Defaults to <see cref="HashAlgorithmType.PBKDF2"/>.
+	/// </param>
+	/// <returns>
+	/// A string containing the encoded hash representation of the password for the selected algorithm.
+	/// </returns>
 	[Pure]
 	[Information(nameof(HashPassword), "David McCarter", "5/14/2025", Tags = new[] { "PBKDF2", "SHA256", "SHA3256", "SHA3384", "SHA3512", "Shake128", "Shake256", "Argon2" }, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string HashPassword([DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
@@ -84,12 +89,24 @@ public static class PasswordHasher
 	}
 
 	/// <summary>
-	/// Verifies a hashed password using the specified algorithm.
+	/// Verifies that the provided plain-text password matches the specified hashed password
+	/// using the selected hashing algorithm.
 	/// </summary>
-	/// <param name="hashedPassword">The hashed password.</param>
-	/// <param name="password">The password.</param>
-	/// <param name="algorithmType">The hashing algorithm to use.</param>
-	/// <returns>PasswordVerificationResult.</returns>
+	/// <param name="hashedPassword">
+	/// The previously generated, encoded password hash to verify against. This value must not be null or empty.
+	/// </param>
+	/// <param name="password">
+	/// The plain-text password supplied for verification. This value must not be null or empty.
+	/// </param>
+	/// <param name="algorithmType">
+	/// The hashing algorithm that was originally used to create <paramref name="hashedPassword"/>.
+	/// Defaults to <see cref="HashAlgorithmType.PBKDF2"/>.
+	/// </param>
+	/// <returns>
+	/// A <see cref="PasswordVerificationResult"/> indicating whether the supplied password matches
+	/// the stored hash (<see cref="PasswordVerificationResult.Success"/>) or not
+	/// (<see cref="PasswordVerificationResult.Failed"/>).
+	/// </returns>
 	[Pure]
 	[Information(nameof(VerifyHashedPassword), "David McCarter", "5/14/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static PasswordVerificationResult VerifyHashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
