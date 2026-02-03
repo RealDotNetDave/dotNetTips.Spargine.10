@@ -16,11 +16,11 @@
 // </summary>
 // ***********************************************************************
 
-using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
+using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 using Microsoft.Extensions.Logging;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -34,9 +34,9 @@ namespace DotNetTips.Spargine.Core;
 [Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineSimpleResult")]
 public class SimpleResult<T>
 {
-	private readonly ConcurrentBag<Exception> _exceptions = [];
+	private readonly DistinctConcurrentBag<Exception> _exceptions = [];
 	private readonly ILogger? _logger;
-	private readonly ConcurrentBag<string> _messages = [];
+	private readonly DistinctConcurrentBag<string> _messages = [];
 
 	/// <summary>
 	/// The value associated with this result.
