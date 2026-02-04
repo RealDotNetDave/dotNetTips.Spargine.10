@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-04-2026
 // ***********************************************************************
 // <copyright file="Address.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Tester.Models.RefTypes;
 [DebuggerDisplay("Id = {Id}, Address1 = {Address1}, City = {City}, Country = {Country}")]
 [Serializable]
 [XmlRoot(ElementName = "Address", Namespace = "http://DotNetTips.Spargine.Tester.Models.Ref")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTester")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public sealed class Address : IAddress<Address>
 {
 	[JsonIgnore, NonSerialized] private string _address1 = string.Empty;
@@ -75,7 +75,7 @@ public sealed class Address : IAddress<Address>
 	/// requirements.
 	/// </exception>
 	[JsonConstructor]
-	public Address(string id)
+	public Address([NotNull] string id)
 	{
 		this.Id = id;
 	}
@@ -94,7 +94,7 @@ public sealed class Address : IAddress<Address>
 	/// Thrown if any property value does not meet its length
 	/// requirements.
 	/// </exception>
-	private Address(string id, string address1, string city, string country, string postalCode)
+	private Address([NotNull] string id, string address1, string city, string country, string postalCode)
 		: this(id)
 	{
 		this.Address1 = address1;
@@ -582,7 +582,7 @@ public sealed class Address : IAddress<Address>
 	/// Thrown if <paramref name="id"/> does not meet length
 	/// requirements.
 	/// </exception>
-	public static Address Create(string id)
+	public static Address Create([NotNull] string id)
 	{
 		return new Address(id);
 	}
@@ -750,10 +750,10 @@ public sealed class Address : IAddress<Address>
 	}
 
 	/// <summary>
-	/// Debug-friendly string via project helper.
+	/// Returns a human-readable representation of this address instance for diagnostics.
 	/// </summary>
 	/// <returns>
-	/// A string representation of the address record.
+	/// A string containing the property names and values of this <see cref="Address"/> instance.
 	/// </returns>
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString()

@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Tester.Extensions;
 /// <summary>
 /// Provides extension methods for the <see cref="Person"/> class.
 /// </summary>
-[Information(nameof(PersonExtensions), Status = Status.New)]
+[Information(nameof(PersonExtensions), Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public static class PersonExtensions
 {
 	/// <summary>

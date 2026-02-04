@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-04-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Tester.Models.RefTypes;
 [DebuggerDisplay("{Email}")]
 [Serializable]
 [XmlRoot(ElementName = "Person", Namespace = "http://DotNetTips.Spargine.Tester.Models.Ref")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTester")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public sealed class Person : IPerson<Person, Address>
 {
 	[JsonIgnore, NonSerialized] private Collection<Address> _addresses = [];
@@ -55,8 +55,14 @@ public sealed class Person : IPerson<Person, Address>
 	[JsonIgnore, NonSerialized] private string _phone = string.Empty;
 
 	/// <summary>
-	/// For serializers.
+	/// Initializes a new instance of the <see cref="Person"/> class for serializers.
 	/// </summary>
+	/// <remarks>
+	/// This parameterless constructor is intended for serialization frameworks that require
+	/// a default constructor. Prefer using <see cref="Person(string, string)"/> or the
+	/// <see cref="Create(string, string, string, string, DateTimeOffset?, System.Collections.ObjectModel.Collection{DotNetTips.Spargine.Tester.Models.RefTypes.Address}?, string?, string?)"/>
+	/// factory for regular usage to ensure required fields are validated.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public Person()
 	{

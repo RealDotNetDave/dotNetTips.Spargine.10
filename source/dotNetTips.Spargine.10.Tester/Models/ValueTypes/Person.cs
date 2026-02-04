@@ -4,7 +4,7 @@
 // Created          : 10-25-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-04-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,7 +45,7 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes;
 [DebuggerDisplay("{Email}")]
 [Serializable]
 [XmlRoot(ElementName = "Person", Namespace = "http://DotNetTips.Spargine.Tester.Models.Val")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTester")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 [method: EditorBrowsable(EditorBrowsableState.Never)]
 public struct Person() : IPerson<Person, Address>
 {

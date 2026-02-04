@@ -4,7 +4,7 @@
 // Created          : 12-04-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-04-2026
 // ***********************************************************************
 // <copyright file="Address.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -41,7 +41,7 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes;
 [DebuggerDisplay("Id = {Id}, Address1 = {Address1}, City = {City}, Country = {Country}")]
 [Serializable]
 [XmlRoot(ElementName = "Address", Namespace = "http://DotNetTips.Spargine.Tester.Models.Val")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTester")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public struct Address : IAddress<Address>
 {
 	[JsonIgnore, NonSerialized] private string _address1 = string.Empty;

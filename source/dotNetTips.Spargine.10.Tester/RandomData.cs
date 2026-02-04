@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-04-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Tester;
 /// Utilizes <see cref="RandomNumberGenerator"/> for generating cryptographically secure random data where necessary.
 /// This class is designed to be thread-safe and efficient in generating large volumes of random data.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTester")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public static class RandomData
 {
 
@@ -134,14 +134,39 @@ public static class RandomData
 	public static string LongTestString => Resources.LongTestString;
 
 	/// <summary>
-	/// Generates an address of the specified type: RefTypes.Address, ValueTypes.Address, or AddressRecord.
+	/// Generates an address instance populated with random data for the specified address type.
 	/// </summary>
-	/// <typeparam name="TAddress">The type of address to generate.</typeparam>
-	/// <param name="country">The country for the address. If null, a random country is used.</param>
-	/// <param name="addressLength">The length of each address line. Default is 25.</param>
-	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
-	/// <returns>An instance of the specified address type populated with random data.</returns>
-	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
+	/// <typeparam name="TAddress">
+	/// The address type to generate. Supported types:
+	/// <list type="bullet">
+	///   <item><description><see cref="DotNetTips.Spargine.Tester.Models.RefTypes.Address"/></description></item>
+	///   <item><description><see cref="DotNetTips.Spargine.Tester.Models.ValueTypes.Address"/></description></item>
+	///   <item><description><see cref="DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord"/></description></item>
+	/// </list>
+	/// </typeparam>
+	/// <param name="country">
+	/// The country to base the address data on. If <see langword="null"/>, a random country is selected from the country repository.
+	/// </param>
+	/// <param name="addressLength">
+	/// The desired length for address lines. Must be in the range [5..100]. Default is 25.
+	/// </param>
+	/// <param name="countyProvinceLength">
+	/// The desired length for the county/province name. Must be in the range [5..50]. Default is 20.
+	/// </param>
+	/// <returns>
+	/// A new instance of <typeparamref name="TAddress"/> populated with random, length-validated fields
+	/// (Id, Address1, Address2, City, Country, CountyProvince, Phone, PostalCode, State).
+	/// </returns>
+	/// <exception cref="NotSupportedException">
+	/// Thrown when <typeparamref name="TAddress"/> is not one of the supported address types.
+	/// </exception>
+	/// <remarks>
+	/// - Uses <see cref="GenerateKey"/> for the identifier.
+	/// - Address lines are produced by <see cref="GenerateAddressLineOne(int)"/> and <see cref="GenerateAddressLineTwo(int)"/>.
+	/// - City and state are chosen from the provided or randomly selected <paramref name="country"/> (if available).
+	/// - Phone number length is based on the selected country's specification.
+	/// - Postal code formatting is based on country-specific formats via <see cref="GeneratePostalCode(Country, City)"/>.
+	/// </remarks>
 	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
 	public static TAddress GenerateAddress<TAddress>(Country? country = null, int addressLength = 25, int countyProvinceLength = 20)
 	{
@@ -432,7 +457,7 @@ public static class RandomData
 	}
 
 	/// <summary>
-	/// Generates a random email address for testing purposes.
+	/// Generates a random email address.
 	/// </summary>
 	/// <returns>
 	/// A string representing a randomly generated email address in the format 
@@ -583,7 +608,7 @@ public static class RandomData
 	}
 
 	/// <summary>
-	/// Generates a unique key using the <see cref="GenerateKey"/> method.
+	/// Generates a unique key using the <see cref="KeyGenerator"/>.
 	/// </summary>
 	/// <returns>A unique key as a string.</returns>
 	/// <example>Output: f7f0af78003d4ab194b5a4024d02112a</example>
