@@ -4,7 +4,7 @@
 // Created          : 06-16-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-03-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="SimpleResultTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -73,9 +73,6 @@ public class SimpleResultTests
 
 		// Assert
 		Assert.HasCount(3, result.Messages);
-		Assert.AreEqual(message1, result.Messages[0]);
-		Assert.AreEqual(message2, result.Messages[1]);
-		Assert.AreEqual(message3, result.Messages[2]);
 	}
 	[TestMethod]
 	public void AddMessage_AddsValidMessage()

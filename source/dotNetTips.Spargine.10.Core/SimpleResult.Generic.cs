@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-03-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -243,7 +243,7 @@ public class SimpleResult<T>
 	[Information(nameof(AddMessage), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.Available)]
 	public void AddMessage([DisallowNull] string message)
 	{
-		if (message.CheckIsNotNullOrEmpty() == false)
+		if (message.CheckIsNotNullOrEmpty() == false || string.IsNullOrWhiteSpace(message))
 		{
 			return;
 		}
