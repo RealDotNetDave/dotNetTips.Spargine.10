@@ -216,7 +216,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.SplitLines))]
+	[Benchmark(Description = nameof(StringExtensions.SplitLines) + ": LineSplitEntry")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitLines()
 	{
