@@ -4,7 +4,7 @@
 // Created          : 05-16-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-13-2025
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="PersonExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -39,7 +39,7 @@ public static class PersonExtensions
 		/// <value>
 		/// A string containing the person's first name followed by their last name, separated by a space.
 		/// </value>
-		[Information(nameof(get_FullName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(get_FullName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string FullName
 		{
 			get
@@ -54,7 +54,7 @@ public static class PersonExtensions
 		/// <value>
 		/// A <see cref="TimeSpan"/> representing the duration from the person's birth date to the current UTC date and time.
 		/// </value>
-		[Information(nameof(get_Age), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(get_Age), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public TimeSpan Age
 		{
 			get

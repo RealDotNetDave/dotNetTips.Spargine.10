@@ -167,7 +167,7 @@ public static class RandomData
 	/// - Phone number length is based on the selected country's specification.
 	/// - Postal code formatting is based on country-specific formats via <see cref="GeneratePostalCode(Country, City)"/>.
 	/// </remarks>
-	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
 	public static TAddress GenerateAddress<TAddress>(Country? country = null, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		country ??= _countries.Value.PickRandom();
@@ -226,7 +226,7 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province. Defaults to 20.</param>
 	/// <returns>A collection of addresses of the specified type for a random country.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateAddressCollection), "David McCarter", "6/1/2025", Status = Status.New)]
+	[Information(nameof(GenerateAddressCollection), "David McCarter", "6/1/2025", Status = Status.Available)]
 	public static Collection<TAddress> GenerateAddressCollection<TAddress>(in int count = 2, in int addressLength = 25, in int countyProvinceLength = 20) where TAddress : IAddress<TAddress>
 	{
 		return GenerateAddressCollection<TAddress>(_countries.Value.PickRandom()!, count, addressLength, countyProvinceLength);
@@ -666,7 +666,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] GenerateNonZeroByteArray(int count)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);
@@ -723,7 +723,7 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
 	/// <returns>An instance of the specified person type populated with random data.</returns>
 	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
-	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New, OptimizationStatus = OptimizationStatus.None)]
+	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
 	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
 		return typeof(TPerson) == typeof(Person)

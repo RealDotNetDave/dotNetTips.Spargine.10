@@ -41,7 +41,7 @@ namespace DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 /// // Id=002, LastName=Zane
 /// </code>
 /// </example>
-[Information(nameof(PersonComparerByIdThenLastName), "David McCarter", "1/23/2026", Status = Status.New)]
+[Information(nameof(PersonComparerByIdThenLastName), "David McCarter", "1/23/2026", Status = Status.Available)]
 public sealed class PersonComparerByIdThenLastName : IComparer<Person>
 {
 	/// <summary>

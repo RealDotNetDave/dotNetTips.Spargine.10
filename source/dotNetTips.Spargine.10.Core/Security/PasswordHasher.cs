@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-03-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="PasswordHasher.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -108,7 +108,7 @@ public static class PasswordHasher
 	/// (<see cref="PasswordVerificationResult.Failed"/>).
 	/// </returns>
 	[Pure]
-	[Information(nameof(VerifyHashedPassword), "David McCarter", "5/14/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(VerifyHashedPassword), "David McCarter", "5/14/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static PasswordVerificationResult VerifyHashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password, HashAlgorithmType algorithmType = HashAlgorithmType.PBKDF2)
 	{
 		hashedPassword = hashedPassword.ArgumentNotNullOrEmpty();
