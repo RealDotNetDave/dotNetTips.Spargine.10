@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-31-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1311,88 +1311,40 @@ public static class TypeHelper
 	}
 
 	/// <summary>
-	/// Retrieves all members of the specified type that have the specified attribute, returning them as a read-only collection.
+	/// Retrieves all members of the specified type that have the attribute <typeparamref name="TAttribute"/> applied.
 	/// </summary>
 	/// <typeparam name="TAttribute">
-	/// The type of the attribute to search for. Must inherit from <see cref="Attribute"/>.
+	/// The attribute type to search for. Must derive from <see cref="Attribute"/>.
 	/// </typeparam>
-	/// <param name="type">
-	/// The <see cref="Type"/> to search for members with the specified attribute. Must not be <c>null</c>.
-	/// </param>
+	/// <param name="type">The <see cref="Type"/> to inspect. Must not be <c>null</c>.</param>
 	/// <returns>
-	/// A <see cref="ReadOnlyCollection{MemberInfo}"/> containing all members (type itself, properties, methods, fields, and events)
-	/// that have the specified attribute <typeparamref name="TAttribute"/> applied to them.
+	/// A <see cref="ReadOnlyCollection{T}"/> of <see cref="MemberInfo"/> containing the type itself
+	/// and any of its members (properties, methods, fields, events) that are decorated with
+	/// <typeparamref name="TAttribute"/>.
+	/// Returns an empty collection if no matching members are found.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown when <paramref name="type"/> is <c>null</c>.
-	/// </exception>
 	/// <remarks>
-	/// This method is a convenience wrapper around <see cref="GetMembersWithAttribute{TAttribute}(Type)"/> that returns
-	/// the results as a <see cref="ReadOnlyCollection{MemberInfo}"/> instead of an <see cref="IEnumerable{MemberInfo}"/>.
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Results are cached internally by <see cref="GetMembersWithAttribute{TAttribute}(Type)"/> for improved performance.</description></item>
-	/// <item><description>Searches both public and non-public members (properties, methods, fields, events).</description></item>
-	/// <item><description>Includes static and instance members.</description></item>
-	/// <item><description>Uses <see cref="Attribute.IsDefined(MemberInfo, Type, bool)"/> for efficient attribute detection.</description></item>
-	/// <item><description>Time Complexity: O(n) where n = number of members on the type.</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Member Types Searched:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>The type itself (if it has the attribute).</description></item>
-	/// <item><description>Properties (public, private, static, instance).</description></item>
-	/// <item><description>Methods (public, private, static, instance).</description></item>
-	/// <item><description>Fields (public, private, static, instance).</description></item>
-	/// <item><description>Events (public, private, static, instance).</description></item>
-	/// </list>
+	/// This is a convenience wrapper over <see cref="GetMembersWithAttribute{TAttribute}(Type)"/>,
+	/// materializing the results into a read-only collection for easier consumption and caching
+	/// by callers that need indexable results.
 	/// </remarks>
 	/// <example>
-	/// Finding all members with a custom attribute:
 	/// <code>
 	/// [AttributeUsage(AttributeTargets.All)]
-	/// public class MyCustomAttribute : Attribute
+	/// public sealed class MyAttribute : Attribute { }
+	/// 
+	/// [MyAttribute]
+	/// public class Sample
 	/// {
-	///     public string Description { get; set; }
-	/// }
-	///
-	/// [MyCustomAttribute(Description = "This is a test class")]
-	/// public class TestClass
-	/// {
-	///     [MyCustomAttribute(Description = "Test property")]
+	///     [MyAttribute]
 	///     public string Name { get; set; }
-	///
-	///     [MyCustomAttribute(Description = "Test method")]
-	///     public void DoSomething() { }
-	///
-	///     public void RegularMethod() { }
 	/// }
-	///
-	/// var members = TypeHelper.GetTypeMembersWithAttribute&lt;MyCustomAttribute&gt;(typeof(TestClass));
-	/// // Returns: ReadOnlyCollection with 3 members (TestClass type, Name property, DoSomething method)
-	///
-	/// foreach (var member in members)
-	/// {
-	///     var attr = TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as Type)
-	///               ?? TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as PropertyInfo)
-	///               ?? TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as MethodInfo)
-	///               ?? TypeHelper.GetAttribute&lt;MyCustomAttribute&gt;(member as FieldInfo);
-	///     Console.WriteLine($"{member.Name}: {attr?.Description}");
-	/// }
-	/// // Output:
-	/// // TestClass: This is a test class
-	/// // Name: Test property
-	/// // DoSomething: Test method
+	/// 
+	/// var members = TypeHelper.GetTypeMembersWithAttribute&lt;MyAttribute&gt;(typeof(Sample));
+	/// // members contains: typeof(Sample) and PropertyInfo for Name.
 	/// </code>
 	/// </example>
-	/// <seealso cref="GetMembersWithAttribute{TAttribute}(Type)"/>
-	/// <seealso cref="GetAttribute{TAttribute}(Type)"/>
-	/// <seealso cref="GetAttribute{TAttribute}(PropertyInfo)"/>
-	/// <seealso cref="GetAttribute{TAttribute}(MethodInfo)"/>
-	/// <seealso cref="GetAttribute{TAttribute}(FieldInfo)"/>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[Information(nameof(GetTypeMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>([DisallowNull] Type type)
@@ -1721,119 +1673,38 @@ public static class TypeHelper
 	}
 
 	/// <summary>
-	/// Returns the minimum of two comparable objects.
+	/// Returns the smaller of two comparable values.
 	/// </summary>
-	/// <typeparam name="T">The type of the objects to compare. Must implement <see cref="IComparable"/>.</typeparam>
-	/// <param name="obj1">The first object to compare. Can be <c>null</c>.</param>
-	/// <param name="obj2">The second object to compare. Can be <c>null</c>.</param>
+	/// <typeparam name="T">
+	/// The type of the values to compare. Must implement <see cref="IComparable"/>.
+	/// </typeparam>
+	/// <param name="obj1">The first value to compare. May be <c>null</c>.</param>
+	/// <param name="obj2">The second value to compare. May be <c>null</c>.</param>
 	/// <returns>
-	/// <paramref name="obj1"/> if it is less than <paramref name="obj2"/>; otherwise, <paramref name="obj2"/>.
+	/// <para>
+	/// The minimum of <paramref name="obj1"/> and <paramref name="obj2"/> according to <see cref="IComparable.CompareTo(object?)"/>.
+	/// </para>
+	/// <para>
+	/// If <paramref name="obj1"/> is <c>null</c>, this implementation returns <paramref name="obj2"/>.
 	/// If both are <c>null</c>, returns <c>null</c>.
+	/// </para>
 	/// </returns>
 	/// <remarks>
-	/// This method compares two objects that implement <see cref="IComparable"/> and returns the smaller value.
-	/// The comparison is performed using the <see cref="IComparable.CompareTo"/> method.
-	/// <para>
-	/// <strong>Null Handling:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>If <paramref name="obj1"/> is <c>null</c>, returns <paramref name="obj2"/></description></item>
-	/// <item><description>If <paramref name="obj2"/> is <c>null</c>, <see cref="IComparable.CompareTo"/> treats it as less than non-null, so <paramref name="obj2"/> is returned</description></item>
-	/// <item><description>If both are <c>null</c>, returns <c>null</c></description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(1) - single comparison operation</description></item>
-	/// <item><description>Space Complexity: O(1) - no allocations</description></item>
-	/// <item><description>Uses null-conditional operator for efficient null checking</description></item>
-	/// </list>
+	/// This method is the counterpart to <see cref="Max{T}(T,T)"/> and relies on the runtime
+	/// implementation of <see cref="IComparable"/> for ordering semantics.
+	/// No special handling is performed for <c>null</c> beyond the null-conditional check on <paramref name="obj1"/>.
 	/// </remarks>
 	/// <example>
-	/// Comparing integers:
 	/// <code>
-	/// int a = 5;
-	/// int b = 10;
-	/// int min = TypeHelper.Min(a, b);
-	/// // Returns: 5
-	/// </code>
+	/// int? minInt = TypeHelper.Min(5, 10);        // 5
+	/// string? minStr = TypeHelper.Min("b", "a");  // "a" (lexicographical)
 	/// 
-	/// Comparing strings:
-	/// <code>
-	/// string str1 = "apple";
-	/// string str2 = "banana";
-	/// string min = TypeHelper.Min(str1, str2);
-	/// // Returns: "apple" (lexicographic comparison)
-	/// </code>
-	/// 
-	/// Comparing DateTime values:
-	/// <code>
-	/// DateTime date1 = new DateTime(2024, 1, 1);
-	/// DateTime date2 = new DateTime(2024, 12, 31);
-	/// DateTime min = TypeHelper.Min(date1, date2);
-	/// // Returns: 2024-01-01
-	/// </code>
-	/// 
-	/// Comparing decimal values:
-	/// <code>
-	/// decimal price1 = 19.99m;
-	/// decimal price2 = 24.99m;
-	/// decimal min = TypeHelper.Min(price1, price2);
-	/// // Returns: 19.99
-	/// </code>
-	/// 
-	/// Handling null values:
-	/// <code>
-	/// int? nullValue = null;
-	/// int? value = 42;
-	/// int? min1 = TypeHelper.Min(nullValue, value);
-	/// // Returns: 42
-	/// 
-	/// int? min2 = TypeHelper.Min(nullValue, nullValue);
-	/// // Returns: null
-	/// 
-	/// int? min3 = TypeHelper.Min(100, 50);
-	/// // Returns: 50
-	/// </code>
-	/// 
-	/// Comparing custom types implementing IComparable:
-	/// <code>
-	/// public class Priority : IComparable
-	/// {
-	///     public int Level { get; set; }
-	///     
-	///     public int CompareTo(object obj)
-	///     {
-	///         if (obj is Priority other)
-	///             return Level.CompareTo(other.Level);
-	///         return 0;
-	///     }
-	/// }
-	/// 
-	/// var p1 = new Priority { Level = 1 };
-	/// var p2 = new Priority { Level = 5 };
-	/// var minPriority = TypeHelper.Min(p1, p2);
-	/// // Returns: p1 (Level = 1)
-	/// </code>
-	/// 
-	/// Using with TimeSpan:
-	/// <code>
-	/// TimeSpan duration1 = TimeSpan.FromMinutes(30);
-	/// TimeSpan duration2 = TimeSpan.FromHours(2);
-	/// TimeSpan min = TypeHelper.Min(duration1, duration2);
-	/// // Returns: 00:30:00 (30 minutes)
-	/// </code>
-	/// 
-	/// Comparing Version objects:
-	/// <code>
-	/// Version v1 = new Version(1, 0, 0);
-	/// Version v2 = new Version(2, 0, 0);
-	/// Version min = TypeHelper.Min(v1, v2);
-	/// // Returns: 1.0.0
+	/// // With nulls
+	/// int? result1 = TypeHelper.Min(null, 3);     // 3
+	/// int? result2 = TypeHelper.Min(3, null);     // null (by current semantics)
+	/// int? result3 = TypeHelper.Min(null, null);  // null
 	/// </code>
 	/// </example>
-	/// <seealso cref="IComparable"/>
 	[Information(nameof(Min), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T? Min<T>([AllowNull] T? obj1, [AllowNull] T? obj2) where T : IComparable
 	{

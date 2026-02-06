@@ -4,7 +4,7 @@
 // Created          : 09-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="CountryPhonePostalInfoRepository.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -90,67 +90,27 @@ public static class CountryPhonePostalInfoRepository
 	}
 
 	/// <summary>
-	/// Retrieves country phone and postal information by country name or ISO code.
+	/// Retrieves country phone/postal metadata by country name or ISO code.
 	/// </summary>
 	/// <param name="countryNameOrIso">
-	/// The country identifier, which can be one of the following:
-	/// <list type="bullet">
-	/// <item><description>Full country name (e.g., "United States", "United Kingdom")</description></item>
-	/// <item><description>ISO 3166-1 alpha-2 two-letter country code (e.g., "US", "GB")</description></item>
-	/// <item><description>ISO 3166-1 alpha-3 three-letter country code (e.g., "USA", "GBR")</description></item>
-	/// </list>
-	/// Cannot be <c>null</c>.
+	/// The country identifier. Supports:
+	/// - Name (e.g., "United States")
+	/// - ISO 3166-1 alpha-2 (2 letters, e.g., "US")
+	/// - ISO 3166-1 alpha-3 (3 letters, e.g., "USA")
+	/// Must not be <c>null</c>.
 	/// </param>
 	/// <returns>
-	/// The <see cref="CountryPhonePostalInfo"/> record if a match is found; otherwise, <c>null</c>.
+	/// The matching <see cref="CountryPhonePostalInfo"/> if found; otherwise, <c>null</c>.
 	/// </returns>
 	/// <remarks>
-	/// This method performs intelligent lookup based on the input string length:
-	/// <list type="bullet">
-	/// <item><description>Length 2: Searches by ISO 3166-1 alpha-2 code</description></item>
-	/// <item><description>Length 3: Searches by ISO 3166-1 alpha-3 code</description></item>
-	/// <item><description>Other lengths: Searches by full country name</description></item>
-	/// </list>
-	/// All comparisons are case-insensitive.
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n = number of countries (~250+)</description></item>
-	/// <item><description>Uses linear search with <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/></description></item>
-	/// <item><description>Data is cached after first access via <see cref="GetCountryPhonePostalInfo()"/></description></item>
-	/// </list>
-	/// </para>
+	/// Performs case-insensitive matches against <c>Iso2</c>, <c>Iso3</c>, or <c>Name</c> based on the input length.
+	/// Uses cached data from <see cref="GetCountryPhonePostalInfo()"/> for efficient lookups.
 	/// </remarks>
 	/// <example>
-	/// Example usage:
-	/// <code>
-	/// // Lookup by ISO 3166-1 alpha-2 code
-	/// var usInfo = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("US");
-	/// Console.WriteLine(usInfo?.Name);  // Output: United States
-	/// 
-	/// // Lookup by ISO 3166-1 alpha-3 code
-	/// var usaInfo = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("USA");
-	/// Console.WriteLine(usaInfo?.PhoneCode);  // Output: +1
-	/// 
-	/// // Lookup by full country name
-	/// var ukInfo = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("United Kingdom");
-	/// Console.WriteLine(ukInfo?.Iso2);  // Output: GB
-	/// 
-	/// // Case-insensitive lookup
-	/// var franceInfo = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("fr");
-	/// Console.WriteLine(franceInfo?.Iso3);  // Output: FRA
-	/// 
-	/// // Non-existent country returns null
-	/// var invalidInfo = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("ZZ");
-	/// Console.WriteLine(invalidInfo == null);  // Output: True
-	/// </code>
+	/// var usByName = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("United States");
+	/// var usByIso2 = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("US");
+	/// var usByIso3 = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("USA");
 	/// </example>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown when <paramref name="countryNameOrIso"/> is <c>null</c>.
-	/// </exception>
-	/// <seealso cref="GetCountryPhonePostalInfo()"/>
-	/// <seealso cref="ValidatePhoneNumber(string, string, bool)"/>
-	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[Pure]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo([NotNull] string countryNameOrIso)

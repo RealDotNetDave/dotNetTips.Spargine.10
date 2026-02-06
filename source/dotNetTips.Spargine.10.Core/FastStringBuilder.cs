@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -113,77 +113,39 @@ public static class FastStringBuilder
 	}
 
 	/// <summary>
-	/// Combines an array of strings into a single string, optionally adding a line feed after each element.
+	/// Combines strings into a single string, optionally appending a platform-specific line terminator after each item.
 	/// </summary>
-	/// <param name="addLineFeed">If set to <c>true</c>, appends <see cref="Environment.NewLine"/> after each string element.</param>
-	/// <param name="args">The array of strings to combine. Must not be null.</param>
+	/// <param name="addLineFeed">
+	/// If <c>true</c>, appends <see cref="Environment.NewLine"/> after each string; otherwise, concatenates directly.
+	/// </param>
+	/// <param name="args">The strings to combine. Must not be <c>null</c>. Empty span returns <see cref="ControlChars.EmptyString"/>.</param>
 	/// <returns>
-	/// A combined string with or without line feeds after each element based on the value of <paramref name="addLineFeed"/>.
-	/// Returns an empty string if <paramref name="args"/> is empty.
+	/// A combined string of all items in <paramref name="args"/>. Returns <see cref="ControlChars.EmptyString"/> if there are no items.
 	/// </returns>
 	/// <remarks>
-	/// This method uses a pooled <see cref="StringBuilder"/> for optimal performance and reduced allocations.
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n is the number of strings in the array</description></item>
-	/// <item><description>Space Complexity: O(m) where m is the total length of all strings plus line terminators</description></item>
-	/// <item><description>Allocations: 1 (final string only, StringBuilder is pooled)</description></item>
-	/// <item><description>ReadOnlySpan parameter enables zero-copy params array handling</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Implementation Details:</strong>
-	/// This method does NOT pre-calculate capacity because:
-	/// <list type="number">
-	/// <item><description>Calculating total length would require iterating all strings (O(n) overhead)</description></item>
-	/// <item><description>When <paramref name="addLineFeed"/> is true, the line terminator length varies by platform (Windows: 2 chars, Unix: 1 char)</description></item>
-	/// <item><description>StringBuilder's default capacity (16) and doubling growth strategy handle most common cases efficiently</description></item>
-	/// <item><description>The conditional branch per element is more expensive than letting StringBuilder grow naturally for small collections</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Line Terminator Behavior:</strong>
-	/// When <paramref name="addLineFeed"/> is <c>true</c>, the method uses <see cref="StringBuilder.AppendLine(string)"/> 
-	/// which appends the platform-specific line terminator from <see cref="Environment.NewLine"/>:
-	/// <list type="bullet">
-	/// <item><description>Windows: CR+LF (\r\n)</description></item>
-	/// <item><description>Unix/Linux/macOS: LF (\n)</description></item>
-	/// </list>
-	/// </para>
+	/// Uses a pooled <see cref="StringBuilder"/> and pre-estimates capacity to minimize reallocations.
+	/// Accepts <see cref="ReadOnlySpan{T}"/> to avoid params array allocations.
 	/// </remarks>
 	/// <example>
-	/// This example demonstrates combining strings with and without line feeds:
 	/// <code>
-	/// // Simple concatenation without line feeds
-	/// var parts = new[] { "Hello", "World", "!" };
-	/// string result = FastStringBuilder.Combine(false, parts);
-	/// // Output: "HelloWorld!"
+	/// // Concatenate without line feeds
+	/// var result = FastStringBuilder.Combine(false, ["Hello", "World", "!"]);
+	/// // "HelloWorld!"
 	/// 
-	/// // Combine with line feeds (creates multi-line string)
-	/// var lines = new[] { "First line", "Second line", "Third line" };
-	/// string multiLine = FastStringBuilder.Combine(true, lines);
-	/// // Output on Windows:
-	/// // "First line\r\n
-	/// //  Second line\r\n
-	/// //  Third line\r\n"
+	/// // Concatenate with line feeds
+	/// var lines = FastStringBuilder.Combine(true, ["Line1", "Line2"]);
+	/// // Windows: "Line1\r\nLine2\r\n"  |  Unix: "Line1\nLine2\n"
 	/// 
-	/// // Using params syntax
-	/// string quick = FastStringBuilder.Combine(false, "One", "Two", "Three");
-	/// // Output: "OneTwoThree"
-	/// 
-	/// // Empty array returns empty string
-	/// string empty = FastStringBuilder.Combine(false);
-	/// // Output: ""
+	/// // Empty input
+	/// var empty = FastStringBuilder.Combine(false, ReadOnlySpan&lt;string&gt;.Empty);
+	/// // ""
 	/// </code>
 	/// </example>
-	/// <exception cref="ArgumentNullException">This exception is not thrown by this overload since ReadOnlySpan cannot be null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Combine), "David McCarter", "12/23/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string Combine(in bool addLineFeed = false, [DisallowNull] params ReadOnlySpan<string> args)
 	{
-		// Early exit for empty collection - avoids StringBuilder acquisition
 		if (args.Length == 0)
 		{
 			return ControlChars.EmptyString;
@@ -412,67 +374,29 @@ public static class FastStringBuilder
 	}
 
 	/// <summary>
-	/// Joins an enumerable collection of strings into a single string with a specified character delimiter.
+	/// Joins a sequence of strings into a single string using a single-character delimiter.
 	/// </summary>
-	/// <param name="values">The collection of strings to join. Cannot be null.</param>
-	/// <param name="delimiter">The character delimiter to insert between each string. Defaults to comma.</param>
+	/// <param name="values">The strings to join. Must not be <c>null</c>.</param>
+	/// <param name="delimiter">The delimiter character inserted between items. Defaults to <see cref="ControlChars.Comma"/>.</param>
 	/// <returns>
-	/// A single string containing all values from the collection separated by the delimiter.
-	/// Returns an empty string if the collection is empty.
+	/// A single string containing all elements of <paramref name="values"/> separated by <paramref name="delimiter"/>.
+	/// Returns <see cref="ControlChars.EmptyString"/> if <paramref name="values"/> is empty.
 	/// </returns>
 	/// <remarks>
-	/// This method uses a pooled <see cref="StringBuilder"/> for optimal performance and reduced allocations.
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n is the number of strings in the collection</description></item>
-	/// <item><description>Space Complexity: O(m) where m is the total length of all strings plus delimiters</description></item>
-	/// <item><description>Allocations: 1 (final string only, StringBuilder is pooled and enumerator may be struct-based)</description></item>
-	/// <item><description>Branchless append pattern eliminates (n-1) conditional checks</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Implementation Details:</strong>
-	/// The method uses an explicit enumerator pattern to avoid LINQ overhead and enable the compiler/JIT to optimize
-	/// for value-type enumerators (e.g., List&lt;T&gt;.Enumerator, array enumerators) which eliminates boxing allocations.
-	/// The first element is appended without a delimiter, then subsequent elements are prepended with the delimiter,
-	/// creating a branchless loop that's CPU cache-friendly and branch-predictor optimized.
-	/// </para>
-	/// <para>
-	/// <strong>Note:</strong> This method does NOT pre-calculate StringBuilder capacity because:
-	/// <list type="number">
-	/// <item><description>IEnumerable&lt;T&gt; doesn't provide count without enumeration</description></item>
-	/// <item><description>Many IEnumerable implementations (LINQ queries, generators) can't provide count efficiently</description></item>
-	/// <item><description>Double enumeration would negate performance benefits</description></item>
-	/// <item><description>StringBuilder's default capacity (16) and growth strategy handle most common cases efficiently</description></item>
-	/// </list>
-	/// For collections with known counts (arrays, lists), consider using collection-specific overloads if available.
-	/// </para>
+	/// Uses a pooled <see cref="StringBuilder"/> and an explicit enumerator with a branchless append pattern:
+	/// first element without a delimiter, remaining elements prefixed with the delimiter. Minimizes allocations and
+	/// benefits value-type enumerators (arrays, lists).
 	/// </remarks>
 	/// <example>
-	/// This example demonstrates joining strings with different delimiters:
 	/// <code>
-	/// // Join with default comma delimiter
-	/// var fruits = new[] { "Apple", "Banana", "Cherry" };
-	/// string result = FastStringBuilder.Join(fruits);
-	/// // Output: "Apple,Banana,Cherry"
+	/// var items = new[] { "A", "B", "C" };
+	/// var joined = FastStringBuilder.Join(items, ';'); // "A;B;C"
 	/// 
-	/// // Join with custom delimiter
-	/// string pipeSeparated = FastStringBuilder.Join(fruits, '|');
-	/// // Output: "Apple|Banana|Cherry"
-	/// 
-	/// // Join LINQ query (no double enumeration)
-	/// var numbers = Enumerable.Range(1, 5).Select(n => n.ToString());
-	/// string joined = FastStringBuilder.Join(numbers, '-');
-	/// // Output: "1-2-3-4-5"
-	/// 
-	/// // Empty collection returns empty string
 	/// var empty = Array.Empty&lt;string&gt;();
-	/// string emptyResult = FastStringBuilder.Join(empty);
-	/// // Output: ""
+	/// var result = FastStringBuilder.Join(empty); // ""
 	/// </code>
 	/// </example>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Join), "David McCarter", "03/04/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -510,79 +434,28 @@ public static class FastStringBuilder
 	}
 
 	/// <summary>
-	/// Joins an enumerable collection of strings into a single string with a specified string delimiter.
+	/// Joins an enumerable collection of strings into a single string using a multi-character string delimiter.
 	/// </summary>
-	/// <param name="values">The collection of strings to join. Cannot be null.</param>
-	/// <param name="delimiter">The string delimiter to insert between each string. Defaults to comma-space (", ").</param>
+	/// <param name="values">The collection of strings to join. Must not be <c>null</c>.</param>
+	/// <param name="delimiter">The string delimiter to insert between items. Defaults to <see cref="ControlChars.CommaSpace"/>.</param>
 	/// <returns>
-	/// A single string containing all values from the collection separated by the delimiter.
-	/// Returns an empty string if the collection is empty.
+	/// A single string containing all elements of <paramref name="values"/> separated by <paramref name="delimiter"/>.
+	/// Returns <see cref="ControlChars.EmptyString"/> if the collection is empty.
 	/// </returns>
 	/// <remarks>
-	/// This method uses a pooled <see cref="StringBuilder"/> for optimal performance and reduced allocations.
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n is the number of strings in the collection</description></item>
-	/// <item><description>Space Complexity: O(m) where m is the total length of all strings plus delimiters</description></item>
-	/// <item><description>Allocations: 1 (final string only, StringBuilder is pooled and enumerator may be struct-based)</description></item>
-	/// <item><description>Branchless append pattern eliminates (n-1) conditional checks</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Implementation Details:</strong>
-	/// This overload accepts multi-character string delimiters, making it suitable for complex separators
-	/// like ", " (comma-space), " | " (pipe with spaces), or custom separators like " :: ".
-	/// The method uses an explicit enumerator pattern to avoid LINQ overhead and enable the compiler/JIT to optimize
-	/// for value-type enumerators (e.g., List&lt;T&gt;.Enumerator, array enumerators) which eliminates boxing allocations.
-	/// The first element is appended without a delimiter, then subsequent elements are prepended with the delimiter,
-	/// creating a branchless loop that's CPU cache-friendly and branch-predictor optimized.
-	/// </para>
-	/// <para>
-	/// <strong>Note:</strong> This method does NOT pre-calculate StringBuilder capacity because:
-	/// <list type="number">
-	/// <item><description>IEnumerable&lt;T&gt; doesn't provide count without enumeration</description></item>
-	/// <item><description>Many IEnumerable implementations (LINQ queries, generators) can't provide count efficiently</description></item>
-	/// <item><description>Double enumeration would negate performance benefits</description></item>
-	/// <item><description>StringBuilder's default capacity (16) and growth strategy handle most common cases efficiently</description></item>
-	/// </list>
-	/// For collections with known counts and when using single-character delimiters, the char delimiter overload
-	/// may offer slightly better performance due to reduced string allocations during append operations.
-	/// </para>
+	/// Uses a pooled <see cref="StringBuilder"/> and an explicit enumerator with a branchless append pattern:
+	/// first element without a delimiter, remaining elements prefixed with the delimiter. Avoids LINQ allocations.
 	/// </remarks>
 	/// <example>
-	/// This example demonstrates joining strings with different string delimiters:
 	/// <code>
-	/// // Join with default comma-space delimiter
-	/// var fruits = new[] { "Apple", "Banana", "Cherry" };
-	/// string result = FastStringBuilder.Join(fruits);
-	/// // Output: "Apple, Banana, Cherry"
+	/// var items = new[] { "A", "B", "C" };
+	/// var joined = FastStringBuilder.Join(items, " | "); // "A | B | C"
 	/// 
-	/// // Join with custom multi-character delimiter
-	/// string pipeSeparated = FastStringBuilder.Join(fruits, " | ");
-	/// // Output: "Apple | Banana | Cherry"
-	/// 
-	/// // Join with arrow delimiter
-	/// string arrows = FastStringBuilder.Join(fruits, " -> ");
-	/// // Output: "Apple -> Banana -> Cherry"
-	/// 
-	/// // Join LINQ query (no double enumeration)
-	/// var numbers = Enumerable.Range(1, 5).Select(n => $"Item{n}");
-	/// string joined = FastStringBuilder.Join(numbers, " :: ");
-	/// // Output: "Item1 :: Item2 :: Item3 :: Item4 :: Item5"
-	/// 
-	/// // Empty collection returns empty string
 	/// var empty = Array.Empty&lt;string&gt;();
-	/// string emptyResult = FastStringBuilder.Join(empty, ", ");
-	/// // Output: ""
-	/// 
-	/// // Single element (no delimiter appended)
-	/// var single = new[] { "OnlyOne" };
-	/// string singleResult = FastStringBuilder.Join(single, ", ");
-	/// // Output: "OnlyOne"
+	/// var result = FastStringBuilder.Join(empty); // ""
 	/// </code>
 	/// </example>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Join), "David McCarter", "03/04/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -752,40 +625,21 @@ public static class FastStringBuilder
 	}
 
 	/// <summary>
-	/// Converts a dictionary to a delimited string representation, efficiently serializing key-value pairs.
+	/// Converts a dictionary to a delimited string of <c>key:value</c> pairs separated by <paramref name="delimiter"/>.
 	/// </summary>
-	/// <typeparam name="TKey">The type of the keys in the dictionary. Must be non-nullable.</typeparam>
-	/// <typeparam name="TValue">The type of the values in the dictionary. May be nullable.</typeparam>
-	/// <param name="collection">The dictionary to convert. Cannot be null.</param>
-	/// <param name="delimiter">The character delimiter to separate key-value pairs. Defaults to comma.</param>
+	/// <typeparam name="TKey">The key type (non-nullable).</typeparam>
+	/// <typeparam name="TValue">The value type (nullable allowed).</typeparam>
+	/// <param name="collection">The dictionary to serialize. Must not be <c>null</c>.</param>
+	/// <param name="delimiter">The delimiter character between pairs. Defaults to <see cref="ControlChars.Comma"/>.</param>
 	/// <returns>
-	/// A delimited string where each key-value pair is formatted as "key:value" and separated by the specified delimiter.
-	/// Returns an empty string if the dictionary is empty.
+	/// A single string containing each entry formatted as <c>key:value</c>, separated by <paramref name="delimiter"/>.
+	/// Returns <see cref="ControlChars.EmptyString"/> when <paramref name="collection"/> is <c>null</c> or empty.
 	/// </returns>
 	/// <remarks>
-	/// This method uses a pooled <see cref="StringBuilder"/> for optimal performance and reduced allocations.
-	/// The capacity is pre-calculated to minimize internal buffer reallocations during string building.
-	/// <para>
-	/// <strong>Capacity Estimation:</strong> The method estimates 22 characters per key-value pair, which accounts for:
-	/// <list type="bullet">
-	/// <item><description>Average key length: ~8 characters</description></item>
-	/// <item><description>Colon separator: 1 character</description></item>
-	/// <item><description>Average value length: ~8 characters</description></item>
-	/// <item><description>Delimiter: 1 character</description></item>
-	/// <item><description>Buffer for ToString() overhead: ~4 characters</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n is the number of dictionary entries</description></item>
-	/// <item><description>Space Complexity: O(m) where m is the total string length of all keys and values</description></item>
-	/// <item><description>Zero additional allocations after StringBuilder acquisition from pool</description></item>
-	/// </list>
-	/// </para>
+	/// Uses a pooled <see cref="StringBuilder"/> with pre-sized capacity to reduce allocations. Capacity is estimated as
+	/// <c>collection.Count * 22</c> for typical key/value sizes. Pairs are emitted in enumeration order.
 	/// </remarks>
 	/// <example>
-	/// This example demonstrates converting a dictionary to a delimited string:
 	/// <code>
 	/// var dict = new Dictionary&lt;string, int&gt;
 	/// {
@@ -794,14 +648,11 @@ public static class FastStringBuilder
 	///     ["Cherry"] = 8
 	/// };
 	/// 
-	/// string result = FastStringBuilder.ToDelimitedString(dict);
-	/// // Output: "Apple:5,Banana:3,Cherry:8"
-	/// 
-	/// string pipeSeparated = FastStringBuilder.ToDelimitedString(dict, '|');
-	/// // Output: "Apple:5|Banana:3|Cherry:8"
+	/// string csv = FastStringBuilder.ToDelimitedString(dict);        // "Apple:5,Banana:3,Cherry:8"
+	/// string pipe = FastStringBuilder.ToDelimitedString(dict, '|');  // "Apple:5|Banana:3|Cherry:8"
 	/// </code>
 	/// </example>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Not thrown; method returns empty string if <paramref name="collection"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToDelimitedString), "David McCarter", "1/1/2021", Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]

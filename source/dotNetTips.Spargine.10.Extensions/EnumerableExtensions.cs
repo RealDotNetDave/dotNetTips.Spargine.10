@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -57,69 +57,40 @@ public static class EnumerableExtensions
 	extension<T>([DisallowNull] IAsyncEnumerable<T> collection)
 	{
 		/// <summary>
-		/// Asynchronously pages the specified <see cref="IAsyncEnumerable{T}"/> into a sequence of pages, each containing up to <paramref name="pageSize"/> elements.
+		/// Asynchronously splits an <see cref="IAsyncEnumerable{T}"/> into pages of a specified size.
 		/// </summary>
-		/// <param name="pageSize">The maximum number of elements per page. Must be at least 2.</param>
+		/// <param name="pageSize">
+		/// The maximum number of elements per page. Values less than <c>2</c> are coerced to <c>2</c>
+		/// via <see cref="NumericExtensions.EnsureMinimum(int, int)"/>.
+		/// </param>
 		/// <param name="cancellationToken">
-		/// A <see cref="CancellationToken"/> that can be used to cancel the paging operation.
+		/// A <see cref="CancellationToken"/> used to observe cancellation while iterating the source sequence.
 		/// </param>
 		/// <returns>
-		/// An <see cref="IAsyncEnumerable{T}"/> where each item is a page of the original collection containing up to <paramref name="pageSize"/> elements.
-		/// The last page may contain fewer elements if the total count is not evenly divisible by <paramref name="pageSize"/>.
+		/// An <see cref="IAsyncEnumerable{T}"/> of <see cref="List{T}"/> where each list represents a page
+		/// containing up to <paramref name="pageSize"/> items. The final page may contain fewer items.
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method provides several performance enhancements:
+		/// Pages are materialized lazily as the returned async sequence is iterated. At most one page is held
+		/// in memory at any time, making this method suitable for large streaming data sources.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Deferred Execution:</b> Pages are generated on-demand only when enumerated, minimizing memory usage.</description></item>
-		/// <item><description><b>Pre-sized Lists:</b> Each page list is pre-allocated with <paramref name="pageSize"/> capacity to avoid resizing.</description></item>
-		/// <item><description><b>ConfigureAwait(false):</b> Prevents synchronization context capture for better performance in non-UI scenarios.</description></item>
-		/// <item><description><b>Cancellation Support:</b> Supports cooperative cancellation via <see cref="CancellationToken"/> using <see cref="EnumeratorCancellationAttribute"/>.</description></item>
-		/// <item><description><b>Memory Efficiency:</b> Only one page is held in memory at a time, unlike buffering the entire collection.</description></item>
-		/// </list>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// The method:
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time Complexity:</b> O(n) - Single pass through the source collection.</description></item>
-		/// <item><description><b>Space Complexity:</b> O(pageSize) - Only one page allocated at a time.</description></item>
-		/// <item><description><b>Streaming:</b> Elements are yielded as soon as a page is full, enabling true streaming scenarios.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Best Practices:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Large datasets:</b> Ideal for processing large collections without loading everything into memory.</description></item>
-		/// <item><description><b>API responses:</b> Perfect for paginated API responses to avoid memory exhaustion.</description></item>
-		/// <item><description><b>Database queries:</b> Combine with Entity Framework's async LINQ for efficient database paging.</description></item>
-		/// <item><description><b>Cancellation:</b> Always pass a cancellation token when possible to enable graceful cancellation.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>When to use:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description>Processing large collections in batches</description></item>
-		/// <item><description>Implementing pagination in ASP.NET Core APIs</description></item>
-		/// <item><description>Streaming data processing where memory is constrained</description></item>
-		/// <item><description>Parallel processing of pages (each page can be processed independently)</description></item>
+		/// <list type="number">
+		/// <item><description>Validates <paramref name="collection"/> and normalizes <paramref name="pageSize"/>.</description></item>
+		/// <item><description>Buffers incoming elements into a <see cref="List{T}"/> with preallocated capacity.</description></item>
+		/// <item><description>Yields each full page as soon as it reaches the requested size.</description></item>
+		/// <item><description>Yields a final partial page, if any elements remain.</description></item>
 		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// // Basic usage with database query
-		/// await foreach (var page in dbContext.Users.AsAsyncEnumerable().PageAsync(100))
+		/// await foreach (var page in source.PageAsync(100, cancellationToken))
 		/// {
-		///     // Process each page of 100 users
-		///     await ProcessBatchAsync(page);
-		/// }
-		/// 
-		/// // With cancellation token
-		/// await using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
-		/// await foreach (var page in largeCollection.PageAsync(50, cts.Token))
-		/// {
-		///     // Process each page with cancellation support
-		///     Console.WriteLine($"Processing page with {page.Count} items");
+		///     // page is a List&lt;T&gt; with up to 100 items
+		///     await ProcessBatchAsync(page, cancellationToken);
 		/// }
 		/// </code>
 		/// </example>
@@ -195,54 +166,27 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Finds the index of the first occurrence of an item in the collection using the specified equality comparer.
+		/// Returns the zero-based index of the first occurrence of the specified item in the collection.
 		/// </summary>
-		/// <param name="item">The item to locate in the collection. Must not be null.</param>
+		/// <param name="item">The item to locate in the collection. Must not be <c>null</c>.</param>
 		/// <param name="comparer">
-		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements; if <c>null</c>, the default equality comparer
-		/// <see cref="EqualityComparer{T}.Default"/> is used.
+		/// An optional <see cref="IEqualityComparer{T}"/> to use when comparing elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
 		/// </param>
 		/// <returns>
-		/// The zero-based index of the first occurrence of <paramref name="item"/> within the collection if found; otherwise, <c>-1</c>.
+		/// The zero-based index of the first occurrence of <paramref name="item"/> in the collection;
+		/// otherwise, <c>-1</c> if the item is not found.
 		/// </returns>
 		/// <remarks>
-		/// <para>
-		/// Performs a single forward enumeration over the source collection and compares each element using the provided <paramref name="comparer"/>.
-		/// If <paramref name="comparer"/> is <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
-		/// </para>
-		/// <para>
-		/// Performance characteristics:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements in the collection.</description></item>
-		/// <item><description><b>Space complexity:</b> O(1) - no additional allocations beyond the enumerator.</description></item>
-		/// <item><description><b>Enumeration:</b> Single-pass forward iteration.</description></item>
-		/// </list>
-		/// <para>
-		/// Recommended comparers:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Strings:</b> <see cref="StringComparer.OrdinalIgnoreCase"/> for case-insensitive, <see cref="StringComparer.Ordinal"/> for case-sensitive.</description></item>
-		/// <item><description><b>Reference equality:</b> use a reference comparer to match object instances.</description></item>
-		/// <item><description><b>Custom objects:</b> provide an <see cref="IEqualityComparer{T}"/> implementation that compares required properties.</description></item>
-		/// </list>
+		/// The method performs a linear scan over the sequence and stops at the first match.
+		/// It does not allocate intermediate collections and is suitable for small to medium-sized sequences.
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// var names = new List&lt;string&gt; { "Alice", "Bob", "Charlie" };
-		/// // Case-insensitive search
-		/// var index1 = names.IndexOf("alice", StringComparer.OrdinalIgnoreCase); // returns 0
-		///
-		/// // Default comparer (null) - case-sensitive for strings
-		/// var index2 = names.IndexOf("Bob", null); // returns 1
-		///
-		/// // Custom comparer for a Person type by Id
-		/// var people = new List&lt;Person&gt;
-		/// {
-		///     new Person { Id = 1, Name = "John" },
-		///     new Person { Id = 2, Name = "Jane" }
-		/// };
-		/// var index3 = people.IndexOf(new Person { Id = 2 }, new PersonComparer()); // returns 1
+		/// var values = new[] { "a", "b", "c" };
+		/// int index1 = values.IndexOf("b");                         // 1
+		/// int index2 = values.IndexOf("x");                         // -1
+		/// int index3 = values.IndexOf("A", StringComparer.OrdinalIgnoreCase); // 0
 		/// </code>
 		/// </example>
 		[Pure]
@@ -457,59 +401,34 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Replaces elements in the collection based on a specified condition.
+		/// Returns a new sequence in which elements are conditionally replaced with a specified value.
 		/// </summary>
-		/// <param name="accumulatorPredicate">A function that determines whether an element should be replaced, based on the element and its index.</param>
-		/// <param name="replacement">The replacement value for elements that meet the condition.</param>
-		/// <returns>A new collection with elements replaced based on the specified condition.</returns>
+		/// <param name="accumulatorPredicate">
+		/// A predicate that determines whether an element should be replaced.
+		/// The function receives the element and its zero-based index; it must return <c>true</c> to replace the element.
+		/// </param>
+		/// <param name="replacement">
+		/// The value that replaces elements for which <paramref name="accumulatorPredicate"/> returns <c>true</c>.
+		/// </param>
+		/// <returns>
+		/// An <see cref="IEnumerable{T}"/> where each element is either the original element
+		/// or <paramref name="replacement"/>, depending on the predicate result.
+		/// </returns>
 		/// <remarks>
-		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method uses deferred execution with yield return for optimal performance:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Deferred Execution:</b> Elements are processed on-demand only when enumerated.</description></item>
-		/// <item><description><b>Streaming Operation:</b> Single-pass enumeration with true lazy evaluation.</description></item>
-		/// <item><description><b>Memory Efficient:</b> No intermediate collection allocation - processes elements one at a time.</description></item>
-		/// <item><description><b>Zero Overhead:</b> Direct yield-based implementation without LINQ Select delegation.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Performance Characteristics:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time Complexity:</b> O(n) - Single pass through the source collection.</description></item>
-		/// <item><description><b>Space Complexity:</b> O(1) - No intermediate collection allocation.</description></item>
-		/// <item><description><b>Streaming:</b> True streaming operation - each element is transformed as it's enumerated.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>When to Use:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description>Transforming elements based on conditions</description></item>
-		/// <item><description>Replacing elements at specific indices</description></item>
-		/// <item><description>Chaining with other LINQ operations for complex transformations</description></item>
-		/// <item><description>Processing large collections where deferred execution provides memory benefits</description></item>
-		/// </list>
+		/// This method uses deferred execution and streams results via <c>yield return</c>.
+		/// The source sequence is enumerated exactly once and is never modified.
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var numbers = new[] { 1, 2, 3, 4, 5 };
 		/// 
-		/// // Replace values greater than 3
-		/// var result = numbers.ReplaceIf((n, itemIndex) => n > 3, 0);
-		/// // Result: { 1, 2, 3, 0, 0 }
+		/// // Replace values greater than 3 with 0
+		/// var replaced = numbers.ReplaceIf((n, index) => n > 3, 0);
+		/// // Result: 1, 2, 3, 0, 0
 		/// 
-		/// // Replace at even indices
-		/// var evens = numbers.ReplaceIf((n, itemIndex) => itemIndex % 2 == 0, -1);
-		/// // Result: { -1, 2, -1, 4, -1 }
-		/// 
-		/// // Deferred execution - no processing until enumeration
-		/// var query = numbers.ReplaceIf((n, i) => n > 2, 999);
-		/// // Nothing happens yet...
-		/// 
-		/// foreach (var item in query) // Now processing occurs
-		/// {
-		///     Console.WriteLine(item);
-		/// }
+		/// // Replace elements at even indices
+		/// var evens = numbers.ReplaceIf((n, index) => index % 2 == 0, -1);
+		/// // Result: -1, 2, -1, 4, -1
 		/// </code>
 		/// </example>
 		[Pure]
@@ -1550,68 +1469,49 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Inserts or updates an item in the collection. If the item already exists, it is updated; otherwise, it is added.
-		/// Note: This method returns a new <see cref="IEnumerable{T}"/> with the item upserted and does not modify the original collection.
+		/// Inserts or updates an item within the sequence based on value equality, returning a new sequence.
 		/// </summary>
-		/// <param name="item">The item to upsert into the collection.</param>
-		/// <param name="comparer">
-		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements.
-		/// If <c>null</c>, uses <see cref="EqualityComparer{T}.Default"/>.
+		/// <param name="item">
+		/// The item to upsert into the sequence. Must not be <c>null</c>.
+		/// If an equal element already exists, it is replaced by this value; otherwise, it is appended.
 		/// </param>
-		/// <returns>An <see cref="IEnumerable{T}"/> with the item upserted (updated if exists, added if not).</returns>
+		/// <param name="comparer">
+		/// Optional <see cref="IEqualityComparer{T}"/> used to determine element equality.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
+		/// <returns>
+		/// An <see cref="IEnumerable{T}"/> that yields all original elements with at most one element
+		/// replaced by <paramref name="item"/>; if no match is found, <paramref name="item"/> is yielded once at the end.
+		/// The original sequence is never modified.
+		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method uses deferred execution with yield return for memory efficiency:
+		/// The method enumerates the source sequence once and uses deferred execution via <c>yield return</c>.
+		/// It is suitable for building upsert-style pipelines over immutable or read-only sequences.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Deferred Execution:</b> Elements are yielded on-demand during enumeration.</description></item>
-		/// <item><description><b>Single Pass:</b> Enumerates the collection once to find and update the matching item.</description></item>
-		/// <item><description><b>Memory Efficient:</b> No intermediate List allocation when item exists in collection.</description></item>
-		/// <item><description><b>Custom Comparison:</b> Supports custom equality comparers for flexible item matching.</description></item>
-		/// </list>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// Only the first matching element (according to <paramref name="comparer"/>) is replaced; any subsequent
+		/// matches are left untouched.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Item exists:</b> O(n) with deferred execution - yields original items until match found, then yields updated item.</description></item>
-		/// <item><description><b>Item doesn't exist:</b> O(n) with deferred execution - yields all original items, then yields new item at end.</description></item>
-		/// <item><description><b>Space complexity:</b> O(1) - no intermediate collection allocation.</description></item>
-		/// </list>
-		/// <para>
-		/// <b>When to Use Custom Comparers:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Case-insensitive string comparison:</b> Use <see cref="StringComparer.OrdinalIgnoreCase"/> or <see cref="StringComparer.InvariantCultureIgnoreCase"/>.</description></item>
-		/// <item><description><b>Custom object comparison:</b> When the default <see cref="object.Equals(object)"/> behavior doesn't meet requirements.</description></item>
-		/// <item><description><b>Property-based matching:</b> ToUniqueCollection a custom comparer that matches based on specific properties (e.g., Id-based matching).</description></item>
-		/// <item><description><b>Culture-specific comparison:</b> Use culture-aware comparers for internationalized applications.</description></item>
-		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// var people = new List&lt;Person&gt; 
-		/// { 
+		/// var people = new[]
+		/// {
 		///     new Person { Id = 1, Name = "John" },
 		///     new Person { Id = 2, Name = "Jane" }
 		/// };
 		/// 
-		/// // Update existing person using default comparer
-		/// var updatedPerson = new Person { Id = 1, Name = "John Doe" };
-		/// var result = people.Upsert(updatedPerson);
+		/// var updated = new Person { Id = 1, Name = "John Doe" };
 		/// 
-		/// // Add new person
-		/// var newPerson = new Person { Id = 3, Name = "Bob" };
-		/// var result2 = people.Upsert(newPerson);
+		/// // Upsert by default equality
+		/// var result = people.Upsert(updated);
+		/// // Sequence contains updated person once, original with Id=1 is replaced.
 		/// 
-		/// // Upsert with custom comparer (match by Id only)
-		/// var personIdComparer = new PersonIdComparer();
-		/// var updated = people.Upsert(updatedPerson, personIdComparer);
-		/// // This will update the person with Id=1, even if other properties differ
-		/// 
-		/// // Case-insensitive string upsert
-		/// var names = new List&lt;string&gt; { "Alice", "Bob" };
-		/// var upserted = names.Upsert("alice", StringComparer.OrdinalIgnoreCase);
-		/// // Result: { "alice", "Bob" } - "Alice" updated to "alice"
+		/// // Upsert with custom comparer (e.g., by Id)
+		/// var resultById = people.Upsert(
+		///     updated,
+		///     new PersonIdComparer());
 		/// </code>
 		/// </example>
 		[Pure]

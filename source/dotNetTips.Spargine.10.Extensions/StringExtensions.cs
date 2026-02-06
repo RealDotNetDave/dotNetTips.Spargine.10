@@ -9,7 +9,7 @@
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Common String Extensions.</summary>
+// <summary>High-performance string utilities for .NET 10. Provides allocation-aware, SIMD-optimized extensions for validation, comparison, hashing, encoding/decoding (Base64), compression (Brotli/Deflate/GZip/ZLib), URL parsing, splitting, and formatting. Methods favor ordinal comparisons, spans, pooled StringBuilder, and guard clauses to ensure deterministic behavior, culture invariance where appropriate, and minimal GC pressure across common string operations.</summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -59,65 +59,29 @@ public static class StringExtensions
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
 	/// <summary>
-	/// Calculates the size of the byte array that will result from encoding the string using the specified encoding.
+	/// Calculates the exact number of bytes required to encode the specified <paramref name="input"/> string
+	/// using the provided <paramref name="encoding"/>. Defaults to UTF-8 when no encoding is specified.
 	/// </summary>
-	/// <param name="input">The string to calculate the byte array size for. Must not be null.</param>
-	/// <param name="encoding">The encoding to use for the calculation. Defaults to <see cref="Encoding.UTF8"/>.</param>
-	/// <returns>The size of the byte array needed to store the encoded string data.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null.</exception>
+	/// <param name="input">
+	/// The string to measure. Must not be null or empty; a guard clause validates the argument.
+	/// </param>
+	/// <param name="encoding">
+	/// The text encoding to use for byte count calculation. If <c>null</c>, <see cref="Encoding.UTF8"/> is used.
+	/// </param>
+	/// <returns>
+	/// The number of bytes required to represent <paramref name="input"/> in the specified <paramref name="encoding"/>.
+	/// Returns <c>0</c> when <paramref name="input"/> is an empty string.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="input"/> is <c>null</c>.
+	/// </exception>
+	/// <exception cref="ArgumentException">
+	/// Thrown if <paramref name="input"/> is empty.
+	/// </exception>
 	/// <remarks>
-	/// <para>
-	/// <b>Performance Optimization (.NET 10):</b> This method uses <see cref="Encoding.GetByteCount(string)"/> 
-	/// which is highly optimized in .NET 10 with SIMD acceleration for UTF-8 and ASCII encodings.
-	/// </para>
-	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>Time complexity:</b> O(n) where n is the string length</description></item>
-	/// <item><description><b>Space complexity:</b> O(1) - No allocations, only counting</description></item>
-	/// <item><description><b>SIMD acceleration:</b> UTF-8 and ASCII use vectorized operations on .NET 10</description></item>
-	/// <item><description><b>Zero allocation:</b> No temporary buffers created during counting</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Common Encodings:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><see cref="Encoding.UTF8"/> - Variable length (1-4 bytes per character)</description></item>
-	/// <item><description><see cref="Encoding.ASCII"/> - Fixed 1 byte per character (0-127 range)</description></item>
-	/// <item><description><see cref="Encoding.Unicode"/> - Fixed 2 bytes per character (UTF-16LE)</description></item>
-	/// <item><description><see cref="Encoding.UTF32"/> - Fixed 4 bytes per character</description></item>
-	/// </list>
+	/// Uses the <see cref="Encoding.GetByteCount(ReadOnlySpan{char})"/> overload to avoid intermediate allocations
+	/// and leverages .NET 10 optimizations (including SIMD for common encodings like UTF-8 and ASCII).
 	/// </remarks>
-	/// <example>
-	/// Calculate byte array sizes for different encodings:
-	/// <code>
-	/// string text = "Hello, 世界!";
-	/// 
-	/// // UTF-8: Variable length encoding
-	/// int utf8Size = text.CalculateByteArraySize();
-	/// // Returns: 13 bytes (ASCII chars = 8, Chinese chars = 6, exclamation = 1)
-	/// 
-	/// // Unicode (UTF-16): Fixed 2 bytes per character
-	/// int utf16Size = text.CalculateByteArraySize(Encoding.Unicode);
-	/// // Returns: 20 bytes (10 characters × 2 bytes)
-	/// 
-	/// // ASCII: Fixed 1 byte per character (non-ASCII replaced with '?')
-	/// int asciiSize = text.CalculateByteArraySize(Encoding.ASCII);
-	/// // Returns: 10 bytes (10 characters × 1 byte, Chinese chars replaced)
-	/// 
-	/// // UTF-32: Fixed 4 bytes per character
-	/// int utf32Size = text.CalculateByteArraySize(Encoding.UTF32);
-	/// // Returns: 40 bytes (10 characters × 4 bytes)
-	/// 
-	/// // Pre-allocate exact buffer size before encoding
-	/// byte[] buffer = new byte[text.CalculateByteArraySize(Encoding.UTF8)];
-	/// int written = Encoding.UTF8.GetBytes(text, buffer);
-	/// // buffer is exactly sized, no waste
-	/// </code>
-	/// </example>
-	/// <seealso cref="Encoding.GetByteCount(string)"/>
-	/// <seealso cref="ToByteArray(string, Encoding)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static int CalculateByteArraySize([DisallowNull] this string input, Encoding? encoding = null)
@@ -138,50 +102,25 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Calculates the total character count from an array of strings.
+	/// Computes the total number of characters across all non-null strings in the provided array.
 	/// </summary>
-	/// <param name="args">The array of strings to calculate the character count from. Can be <c>null</c>.</param>
+	/// <param name="args">Array of strings to measure. Can contain <c>null</c> entries.</param>
 	/// <returns>
-	/// The total character count of all non-null strings in the array.
+	/// The sum of <see cref="string.Length"/> for each non-null element in <paramref name="args"/>.
 	/// Returns <c>0</c> if <paramref name="args"/> is <c>null</c> or empty.
 	/// </returns>
 	/// <remarks>
-	/// This method uses <see cref="ReadOnlySpan{T}"/> for optimized iteration without bounds checking,
-	/// providing improved performance compared to traditional array enumeration.
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n = number of strings in the array</description></item>
-	/// <item><description>Space Complexity: O(1) - uses stack-allocated span with no heap allocations</description></item>
-	/// <item><description>Null strings are safely skipped without throwing exceptions</description></item>
-	/// </list>
-	/// </para>
+	/// Optimized for hot paths:
+	/// - Early-exits on <c>null</c>/empty arrays.
+	/// - Uses a classic for-loop with hoisted length to avoid bounds checks and span indexing overhead.
+	/// Commonly used to pre-size pooled <see cref="StringBuilder"/> instances (e.g., in <see cref="Concat(string, string, bool, ReadOnlyCollection{string})"/>).
 	/// </remarks>
 	/// <example>
-	/// Example usage:
-	/// <code>
-	/// // Calculate total length of multiple strings
-	/// string[] words = { "Hello", "World", "!" };
-	/// int totalLength = words.CalculateTotalLength();
-	/// // Returns: 11 (5 + 5 + 1)
-	/// 
-	/// // Handles null strings gracefully
-	/// string[] mixedArray = { "Test", null, "Data" };
-	/// int length = mixedArray.CalculateTotalLength();
-	/// // Returns: 8 (4 + 0 + 4)
-	/// 
-	/// // Returns 0 for null or empty arrays
-	/// string[] nullArray = null;
-	/// int zeroLength = nullArray.CalculateTotalLength();
-	/// // Returns: 0
-	/// </code>
+	/// var total = new[] { "a", null, "bc" }.CalculateTotalLength(); // Returns: 3
 	/// </example>
-	/// <seealso cref="string.Length"/>
-	/// <seealso cref="ReadOnlySpan{T}"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	public static int
-		CalculateTotalLength(this string[] args)
+	public static int CalculateTotalLength(this string[] args)
 	{
 		if (args is null || args.Length == 0)
 		{
@@ -333,145 +272,27 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the input string contains any of the specified character sequences.
+	/// Determines whether <paramref name="input"/> contains any of the specified substrings.
 	/// </summary>
-	/// <param name="input">The string to search within. Must not be <c>null</c> or empty.</param>
+	/// <param name="input">The source string to search. Must not be <c>null</c> or empty.</param>
 	/// <param name="stringComparison">
-	/// The string comparison rules to use when searching. Defaults to <see cref="StringComparison.OrdinalIgnoreCase"/>.
+	/// The comparison rules used for matching. Defaults to <see cref="StringComparison.OrdinalIgnoreCase"/>.
 	/// </param>
-	/// <param name="characters">
-	/// An array of strings to search for within <paramref name="input"/>. If <c>null</c> or empty, returns <c>false</c>.
-	/// </param>
+	/// <param name="characters">The substrings to search for. If <c>null</c> or empty, returns <c>false</c>.</param>
 	/// <returns>
-	/// <c>true</c> if <paramref name="input"/> contains any of the strings in <paramref name="characters"/>; otherwise, <c>false</c>.
+	/// <c>true</c> if any entry in <paramref name="characters"/> is found in <paramref name="input"/> using
+	/// the specified <paramref name="stringComparison"/>; otherwise, <c>false</c>.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is empty.</exception>
 	/// <remarks>
-	/// <para>
-	/// <b>✅ Performance Optimized (.NET 10):</b> This method uses <see cref="ReadOnlySpan{T}"/> and early termination 
-	/// to minimize allocations and improve search performance.
-	/// </para>
-	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>Time complexity:</b> O(n * m) where n = length of input, m = number of search strings</description></item>
-	/// <item><description><b>Space complexity:</b> O(1) - No allocations during search using span-based iteration</description></item>
-	/// <item><description><b>Early termination:</b> Returns immediately upon finding first match</description></item>
-	/// <item><description><b>Zero allocation:</b> Uses AsSpan() to avoid array allocations during iteration</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Optimization Note:</b>
-	/// </para>
-	/// <para>
-	/// For repeated searches with the same set of search strings, consider using <see cref="System.Buffers.SearchValues{T}"/> 
-	/// (.NET 8+) for better performance. Example:
-	/// </para>
-	/// <code>
-	/// // One-time setup (cache this)
-	/// private static readonly SearchValues&lt;string&gt; SearchTerms = SearchValues.ToUniqueCollection(
-	///     new[] { "cat", "dog", "mouse" }, 
-	///     StringComparison.OrdinalIgnoreCase);
-	/// 
-	/// // Fast lookup
-	/// if (SearchTerms.Contains(inputString))
-	/// {
-	///     // Found match
-	/// }
-	/// </code>
-	/// <para>
-	/// <b>StringComparison Options:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><see cref="StringComparison.Ordinal"/> - Binary comparison, fastest, case-sensitive</description></item>
-	/// <item><description><see cref="StringComparison.OrdinalIgnoreCase"/> - Binary comparison, case-insensitive</description></item>
-	/// <item><description><see cref="StringComparison.CurrentCulture"/> - Culture-aware, case-sensitive</description></item>
-	/// <item><description><see cref="StringComparison.CurrentCultureIgnoreCase"/> - Culture-aware, case-insensitive</description></item>
-	/// <item><description><see cref="StringComparison.InvariantCulture"/> - Invariant culture, case-sensitive</description></item>
-	/// <item><description><see cref="StringComparison.InvariantCultureIgnoreCase"/> - Invariant culture, case-insensitive</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Common Use Cases:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Checking if user input contains any prohibited words</description></item>
-	/// <item><description>Validating strings against a list of allowed/disallowed values</description></item>
-	/// <item><description>Searching for any of multiple keywords in text</description></item>
-	/// <item><description>Content filtering and moderation</description></item>
-	/// <item><description>Input validation against multiple patterns</description></item>
-	/// </list>
+	/// Performance-oriented:
+	/// - Early exit when <paramref name="characters"/> is <c>null</c> or empty.
+	/// - Validates inputs via guard clauses.
+	/// - Iterates once and returns immediately on first match.
 	/// </remarks>
 	/// <example>
-	/// Basic usage:
-	/// <code>
-	/// string text = "The quick brown fox";
-	/// bool hasAnimal = text.ContainsAny(StringComparison.OrdinalIgnoreCase, "cat", "dog", "fox");
-	/// // Returns: true (found "fox")
-	/// </code>
-	/// 
-	/// Case-insensitive search:
-	/// <code>
-	/// string input = "Hello World";
-	/// bool result = input.ContainsAny(StringComparison.OrdinalIgnoreCase, "HELLO", "GOODBYE");
-	/// // Returns: true (found "HELLO" case-insensitively)
-	/// </code>
-	/// 
-	/// Case-sensitive search:
-	/// <code>
-	/// string input = "Hello World";
-	/// bool result = input.ContainsAny(StringComparison.Ordinal, "HELLO", "World");
-	/// // Returns: true (found exact match "World")
-	/// </code>
-	/// 
-	/// No matches:
-	/// <code>
-	/// string text = "Hello World";
-	/// bool hasNumber = text.ContainsAny(StringComparison.Ordinal, "123", "456", "789");
-	/// // Returns: false (no matches found)
-	/// </code>
-	/// 
-	/// Empty or null search array:
-	/// <code>
-	/// string text = "Hello World";
-	/// bool result1 = text.ContainsAny(StringComparison.Ordinal, null);
-	/// // Returns: false
-	/// 
-	/// bool result2 = text.ContainsAny(StringComparison.Ordinal, new string[0]);
-	/// // Returns: false
-	/// </code>
-	/// 
-	/// Content filtering:
-	/// <code>
-	/// string userComment = "This is a spam message";
-	/// string[] bannedWords = { "spam", "scam", "phishing" };
-	/// 
-	/// if (userComment.ContainsAny(StringComparison.OrdinalIgnoreCase, bannedWords))
-	/// {
-	///     Console.WriteLine("Comment contains prohibited content");
-	///     // Block or flag the comment
-	/// }
-	/// </code>
-	/// 
-	/// File type validation:
-	/// <code>
-	/// string fileName = "document.pdf";
-	/// bool isAllowed = fileName.ContainsAny(
-	///     StringComparison.OrdinalIgnoreCase, 
-	///     ".pdf", ".doc", ".docx", ".txt");
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// Using default comparison (OrdinalIgnoreCase):
-	/// <code>
-	/// string text = "Error: Connection failed";
-	/// bool hasError = text.ContainsAny(characters: new[] { "error", "warning", "failure" });
-	/// // Returns: true (using default OrdinalIgnoreCase)
-	/// </code>
+	/// var hasAnimal = "The quick brown fox".ContainsAny(StringComparison.OrdinalIgnoreCase, "cat", "dog", "fox"); // true
+	/// var none = "Hello".ContainsAny(StringComparison.Ordinal, "WORLD"); // false
 	/// </example>
-	/// <seealso cref="string.Contains(string, StringComparison)"/>
-	/// <seealso cref="StringComparison"/>
-	/// <seealso cref="System.Buffers.SearchValues{T}"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input,
@@ -554,127 +375,23 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether this string matches the specified string when compared using case-insensitive ordinal comparison.
+	/// Determines whether two strings are equal using case-insensitive ordinal comparison.
 	/// </summary>
 	/// <param name="input">The first string to compare. Must not be <c>null</c>.</param>
 	/// <param name="inputToCompare">The second string to compare. Must not be <c>null</c>.</param>
 	/// <returns>
-	/// <c>true</c> if <paramref name="input"/> equals <paramref name="inputToCompare"/> when ignoring case; otherwise, <c>false</c>.
+	/// <c>true</c> if <paramref name="input"/> equals <paramref name="inputToCompare"/> using
+	/// <see cref="StringComparison.OrdinalIgnoreCase"/>; otherwise, <c>false</c>.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> or <paramref name="inputToCompare"/> is <c>null</c>.</exception>
 	/// <remarks>
-	/// <para>
-	/// <b>✅ Performance Optimized (.NET 10):</b> This method uses <see cref="string.Equals(string, StringComparison)"/> 
-	/// which is highly optimized in .NET 10 with SIMD acceleration and reference equality short-circuiting.
-	/// </para>
-	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>Time complexity:</b> O(1) for reference equality, O(n) for full comparison where n = string length</description></item>
-	/// <item><description><b>Space complexity:</b> O(1) - No allocations</description></item>
-	/// <item><description><b>SIMD acceleration:</b> Uses vectorized operations for case-insensitive comparison in .NET 10</description></item>
-	/// <item><description><b>Reference equality check:</b> Built into string.Equals for immediate return</description></item>
-	/// <item><description><b>Early exit:</b> Returns immediately when lengths differ</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Comparison Behavior:</b>
-	/// </para>
-	/// <para>
-	/// This method performs a <see cref="StringComparison.OrdinalIgnoreCase"/> comparison, which:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Ignores case differences (e.g., "Hello" equals "HELLO")</description></item>
-	/// <item><description>Uses binary (ordinal) comparison rules, not linguistic/cultural rules</description></item>
-	/// <item><description>Is culture-insensitive: Results are consistent across all cultures and locales</description></item>
-	/// <item><description>Performs byte-by-byte comparison after case normalization</description></item>
-	/// <item><description>Faster than culture-aware comparisons</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Why OrdinalIgnoreCase?</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>Performance:</b> Fastest case-insensitive comparison available</description></item>
-	/// <item><description><b>Deterministic:</b> Same result regardless of user's culture/locale settings</description></item>
-	/// <item><description><b>Predictable:</b> No unexpected linguistic transformations</description></item>
-	/// <item><description><b>Recommended:</b> Best practice for most case-insensitive comparisons per Microsoft guidelines</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Common Use Cases:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Comparing file names, file extensions, or file paths</description></item>
-	/// <item><description>Comparing configuration keys or environment variable names</description></item>
-	/// <item><description>Comparing protocol identifiers (e.g., "HTTP" vs "http")</description></item>
-	/// <item><description>Comparing command-line arguments or parameter names</description></item>
-	/// <item><description>Comparing database column names or table names</description></item>
-	/// <item><description>Comparing URL components (scheme, host, path)</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Note:</b> For linguistic/cultural comparisons (e.g., user-facing strings), use 
-	/// <see cref="string.Equals(string, StringComparison)"/> with <see cref="StringComparison.CurrentCultureIgnoreCase"/> instead.
-	/// </para>
+	/// Uses <see cref="string.Equals(string, StringComparison)"/> with <see cref="StringComparison.OrdinalIgnoreCase"/> for
+	/// high-performance, culture-invariant, case-insensitive comparison. Guard clauses validate non-null inputs.
 	/// </remarks>
 	/// <example>
-	/// Basic case-insensitive comparison:
-	/// <code>
-	/// string str1 = "Hello";
-	/// string str2 = "HELLO";
-	/// bool areEqual = str1.EqualsIgnoreCase(str2);
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// Mixed case comparison:
-	/// <code>
-	/// string protocol = "https";
-	/// bool isSecure = protocol.EqualsIgnoreCase("HTTPS");
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// Case-sensitive differences:
-	/// <code>
-	/// string text1 = "World";
-	/// string text2 = "world";
-	/// bool match = text1.EqualsIgnoreCase(text2);
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// Comparing file extensions:
-	/// <code>
-	/// string extension = ".PDF";
-	/// bool isPdf = extension.EqualsIgnoreCase(".pdf");
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// Configuration key comparison:
-	/// <code>
-	/// string configKey = "ConnectionString";
-	/// bool matches = configKey.EqualsIgnoreCase("connectionstring");
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// URL scheme validation:
-	/// <code>
-	/// string scheme = "HTTP";
-	/// if (scheme.EqualsIgnoreCase("https"))
-	/// {
-	///     // Use secure connection
-	/// }
-	/// else if (scheme.EqualsIgnoreCase("http"))
-	/// {
-	///     // Use standard connection
-	/// }
-	/// </code>
-	/// 
-	/// Different content returns false:
-	/// <code>
-	/// string str1 = "Hello";
-	/// string str2 = "World";
-	/// bool areEqual = str1.EqualsIgnoreCase(str2);
-	/// // Returns: false
-	/// </code>
+	/// string a = "Hello";
+	/// string b = "HELLO";
+	/// bool equals = a.EqualsIgnoreCase(b); // true
 	/// </example>
-	/// <seealso cref="string.Equals(string, StringComparison)"/>
 	/// <seealso cref="StringComparison.OrdinalIgnoreCase"/>
 	/// <seealso cref="FastEquals(string, string, in StringComparison)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -704,67 +421,34 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Extracts a substring from the input string that is located between the specified start and end delimiter strings.
+	/// Extracts the substring between two delimiter strings using ordinal comparison.
 	/// </summary>
-	/// <param name="input">The string from which to extract the substring. Must not be <c>null</c> or empty.</param>
-	/// <param name="start">The starting delimiter string that marks the beginning of the extraction. Must not be <c>null</c> or empty.</param>
-	/// <param name="end">The ending delimiter string that marks the end of the extraction. Must not be <c>null</c> or empty.</param>
+	/// <param name="input">The source string to search. Must not be <c>null</c> or empty.</param>
+	/// <param name="start">The starting delimiter. Must not be <c>null</c> or empty.</param>
+	/// <param name="end">The ending delimiter. Must not be <c>null</c> or empty.</param>
 	/// <returns>
-	/// A substring that begins at the index where <paramref name="start"/> is found and continues up to (but not including) 
-	/// the index where <paramref name="end"/> is found.
+	/// The substring found between <paramref name="start"/> and <paramref name="end"/> in <paramref name="input"/>.
+	/// Delimiters are excluded from the result.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/>, <paramref name="start"/>, or <paramref name="end"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown when <paramref name="input"/>, <paramref name="start"/>, or <paramref name="end"/> is empty.</exception>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="input"/>, <paramref name="start"/>, or <paramref name="end"/> is <c>null</c>.
+	/// </exception>
+	/// <exception cref="ArgumentException">
+	/// Thrown when <paramref name="input"/>, <paramref name="start"/>, or <paramref name="end"/> is empty.
+	/// </exception>
 	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown when:
-	/// <list type="bullet">
-	/// <item><description><paramref name="start"/> is not found in <paramref name="input"/>.</description></item>
-	/// <item><description><paramref name="end"/> is not found in <paramref name="input"/>.</description></item>
-	/// <item><description>The index of <paramref name="end"/> is less than or equal to the index of <paramref name="start"/>.</description></item>
-	/// </list>
+	/// Thrown when <paramref name="start"/> or <paramref name="end"/> is not found in <paramref name="input"/>,
+	/// or when the position of <paramref name="end"/> is not greater than the position of <paramref name="start"/>.
 	/// </exception>
 	/// <remarks>
-	/// This method uses <see cref="string.IndexOf(string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> 
-	/// to locate the start and end delimiter strings. The extraction uses C# range syntax (<c>[startIndex..endIndex]</c>) 
-	/// for efficient substring creation without allocations.
-	/// <para>
-	/// <strong>Important:</strong> The extracted substring does <em>not</em> include the <paramref name="start"/> 
-	/// and <paramref name="end"/> delimiter strings themselves. Only the content between these delimiters is returned.
-	/// </para>
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses ordinal comparison for culture-invariant delimiter matching</description></item>
-	/// <item><description>Leverages range syntax for zero-allocation substring extraction</description></item>
-	/// <item><description>Time Complexity: O(n) where n is the length of the input string</description></item>
-	/// <item><description>Space Complexity: O(m) where m is the length of the extracted substring</description></item>
-	/// </list>
-	/// </para>
+	/// Uses <see cref="string.IndexOf(string, StringComparison)"/> with <see cref="StringComparison.Ordinal"/> for
+	/// culture-invariant matching and C# range slicing to return the content between delimiters.
 	/// </remarks>
 	/// <example>
-	/// Basic extraction between delimiters:
-	/// <code>
-	/// string input = "The &lt;value&gt;42&lt;/value&gt; is the answer";
-	/// string result = input.Extract("&lt;value&gt;", "&lt;/value&gt;");
-	/// // Returns: "42"
-	/// </code>
-	/// 
-	/// Extracting from a formatted string:
-	/// <code>
-	/// string html = "&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;";
-	/// string content = html.Extract("&lt;span&gt;", "&lt;/span&gt;");
-	/// // Returns: "Hello World"
-	/// </code>
-	/// 
-	/// Extracting JSON-like data:
-	/// <code>
-	/// string json = "{\"name\":\"John\",\"age\":30}";
-	/// string name = json.Extract("\"name\":\"", "\"");
-	/// // Returns: "John"
-	/// </code>
+	/// string s = "Hello [World]!";
+	/// string between = s.Extract("[", "]"); // "World"
 	/// </example>
-	/// <seealso cref="string.IndexOf(string, StringComparison)"/>
-	/// <seealso cref="string.Substring(int, int)"/>
+	/// <seealso cref="StringComparison.Ordinal"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Extract), "David McCarter", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Extract([DisallowNull] this string input, [DisallowNull] string start, [DisallowNull] string end)
@@ -780,13 +464,33 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Compares two strings using the specified string comparison option.
+	/// Performs a fast, allocation-free comparison between two strings using the specified <see cref="StringComparison"/>.
 	/// </summary>
-	/// <param name="value">The first string to compare. Must not be null.</param>
-	/// <param name="valueToCompare">The second string to compare. Must not be null.</param>
-	/// <param name="comparison">The string comparison option to use. Must not be null.</param>
-	/// <returns><c>true</c> if the strings are equal according to the specified comparison option; otherwise, <c>false</c>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/>, <paramref name="valueToCompare"/>, or <paramref name="comparison"/> is null.</exception>
+	/// <param name="value">The first string to compare. Must not be <c>null</c>.</param>
+	/// <param name="valueToCompare">The second string to compare. Must not be <c>null</c>.</param>
+	/// <param name="comparison">
+	/// The comparison rule to use (e.g., <see cref="StringComparison.Ordinal"/> or <see cref="StringComparison.OrdinalIgnoreCase"/>).
+	/// Defaults to <see cref="StringComparison.Ordinal"/>.
+	/// </param>
+	/// <returns>
+	/// <c>true</c> if <paramref name="value"/> equals <paramref name="valueToCompare"/> under the specified
+	/// <paramref name="comparison"/>; otherwise, <c>false</c>.
+	/// </returns>
+	/// <remarks>
+	/// Optimized for hot paths:
+	/// - Validates inputs via guard clauses.
+	/// - Short-circuits on reference equality.
+	/// </remarks>
+	/// <example>
+	/// // Ordinal (case-sensitive)
+	/// bool a = "Hello".FastEquals("Hello");              // true
+	/// bool b = "Hello".FastEquals("hello");              // false
+	/// 
+	/// // OrdinalIgnoreCase
+	/// bool c = "Hello".FastEquals("hello", StringComparison.OrdinalIgnoreCase); // true
+	/// </example>
+	/// <seealso cref="string.Equals(string?, string?, StringComparison)"/>
+	/// <seealso cref="EqualsIgnoreCase(string, string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(FastEquals), "David McCarter", "2/16/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool FastEquals([DisallowNull] this string value, [DisallowNull] string valueToCompare, in StringComparison comparison = StringComparison.Ordinal)
@@ -873,85 +577,27 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Performs a fast, culture-invariant string replacement by replacing all occurrences of a specified string with another string.
+	/// Performs a fast, culture-invariant replacement of all occurrences of <paramref name="oldValue"/> with <paramref name="newValue"/> using ordinal comparison.
 	/// </summary>
-	/// <param name="input">The string in which to perform replacements. Must not be <c>null</c> or empty.</param>
-	/// <param name="oldValue">The string to be replaced. If this string is not found in <paramref name="input"/>, the original string is returned unchanged.</param>
-	/// <param name="newValue">The string to replace all occurrences of <paramref name="oldValue"/>. Can be <c>null</c> to remove all occurrences.</param>
+	/// <param name="input">The string to search and replace. Must not be <c>null</c> or empty.</param>
+	/// <param name="oldValue">The substring to replace. If not found, the original <paramref name="input"/> is returned.</param>
+	/// <param name="newValue">The replacement substring. Can be <c>null</c> to remove all occurrences of <paramref name="oldValue"/>.</param>
 	/// <returns>
-	/// A new string that is equivalent to <paramref name="input"/> except that all instances of <paramref name="oldValue"/> 
-	/// are replaced with <paramref name="newValue"/>. If <paramref name="oldValue"/> is not found, returns the original <paramref name="input"/> unchanged.
+	/// A new string where every occurrence of <paramref name="oldValue"/> in <paramref name="input"/> is replaced with <paramref name="newValue"/>.
+	/// If <paramref name="oldValue"/> does not occur, returns the original <paramref name="input"/>.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is empty.</exception>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is <c>null</c>.</exception>
+	/// <exception cref="ArgumentException">Thrown when <paramref name="input"/> is empty.</exception>
 	/// <remarks>
-	/// This method provides a performance-optimized replacement operation using <see cref="StringComparison.Ordinal"/> comparison,
-	/// which performs a culture-invariant, case-sensitive byte-by-byte comparison. This is the fastest string comparison method 
-	/// as it does not apply any linguistic rules during matching.
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses ordinal (binary) comparison for maximum performance</description></item>
-	/// <item><description>Culture-insensitive: Results are consistent across all cultures and locales</description></item>
-	/// <item><description>Case-sensitive: "ABC" and "abc" are treated as different strings</description></item>
-	/// <item><description>Optimized for scenarios requiring deterministic, culture-independent behavior</description></item>
-	/// <item><description>SIMD-accelerated in .NET 10 for improved throughput on large strings</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>When to Use Ordinal Comparison:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>File paths and URLs (e.g., replacing path separators)</description></item>
-	/// <item><description>XML/JSON element names and attribute keys</description></item>
-	/// <item><description>Protocol identifiers and version strings</description></item>
-	/// <item><description>Database column names and configuration keys</description></item>
-	/// <item><description>Security-sensitive comparisons where culture variations are undesirable</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Note:</strong> This method does not modify the current instance. Instead, it returns a new string 
-	/// with the replacements applied, following the immutable nature of <see cref="string"/> in .NET.
-	/// </para>
+	/// Uses <see cref="StringComparison.Ordinal"/> for deterministic, case-sensitive, culture-agnostic behavior.
+	/// Optimized with guard clauses to avoid unnecessary work when inputs are invalid.
 	/// </remarks>
 	/// <example>
-	/// Basic string replacement:
-	/// <code>
 	/// string text = "Hello World, Hello Universe";
 	/// string result = text.FastReplace("Hello", "Hi");
 	/// // Returns: "Hi World, Hi Universe"
-	/// </code>
-	/// 
-	/// Replacing path separators (case-sensitive):
-	/// <code>
-	/// string path = "C:\\Users\\Documents\\file.txt";
-	/// string unixPath = path.FastReplace("\\", "/");
-	/// // Returns: "C:/Users/Documents/file.txt"
-	/// </code>
-	/// 
-	/// Removing substrings by passing null as newValue:
-	/// <code>
-	/// string html = "&lt;div&gt;Content&lt;/div&gt;";
-	/// string stripped = html.FastReplace("&lt;div&gt;", null).FastReplace("&lt;/div&gt;", null);
-	/// // Returns: "Content"
-	/// </code>
-	/// 
-	/// Case-sensitive behavior:
-	/// <code>
-	/// string text = "Replace REPLACE replace";
-	/// string result = text.FastReplace("replace", "X");
-	/// // Returns: "Replace REPLACE X" (only lowercase "replace" is replaced)
-	/// </code>
-	/// 
-	/// Chaining multiple replacements:
-	/// <code>
-	/// string config = "server=localhost;port=5432;database=mydb";
-	/// string updated = config.FastReplace("localhost", "192.168.1.1")
-	///                       .FastReplace("5432", "3306")
-	///                       .FastReplace("mydb", "production");
-	/// // Returns: "server=192.168.1.1;port=3306;database=production"
-	/// </code>
 	/// </example>
-	/// <seealso cref="string.Replace(string, string, StringComparison)"/>
+	/// <seealso cref="string.Replace(string?, string?, StringComparison)"/>
 	/// <seealso cref="StringComparison.Ordinal"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(FastReplace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -1127,11 +773,30 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Hashes the base64Input string using the specified hashing algorithm.
+	/// Hashes the input string using the specified password hashing algorithm and returns the hash as a Base64 string.
 	/// </summary>
-	/// <param name="input">The base64Input string to hashType. Must not be null.</param>
-	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
-	/// <returns>A base64-encoded string representing the hashed password.</returns>
+	/// <param name="input">The plain-text value to hash. Must not be <c>null</c> or empty.</param>
+	/// <param name="algorithmType">
+	/// The hashing algorithm to use. Defaults to <see cref="HashAlgorithmType.PBKDF2"/>.
+	/// Other supported values include <see cref="HashAlgorithmType.Argon2"/> and <see cref="HashAlgorithmType.BCrypt"/> if enabled in <see cref="PasswordHasher"/>.
+	/// </param>
+	/// <returns>A Base64-encoded string representing the hashed value.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is <c>null</c>.</exception>
+	/// <exception cref="ArgumentException">Thrown when <paramref name="input"/> is empty.</exception>
+	/// <remarks>
+	/// This method delegates to <see cref="PasswordHasher.HashPassword(string, HashAlgorithmType)"/> and applies guard clauses for deterministic behavior.
+	/// The output includes algorithm-specific metadata (e.g., salt and parameters) as defined by <see cref="PasswordHasher"/>.
+	/// Use <see cref="VerifyHashedPassword(string, string, HashAlgorithmType)"/> for verification.
+	/// </remarks>
+	/// <example>
+	/// string password = "S3cureP@ss!";
+	/// string hashed = password.HashPassword(); // PBKDF2 by default
+	/// // Later:
+	/// var result = hashed.VerifyHashedPassword("S3cureP@ss!");
+	/// // result == PasswordVerificationResult.Success
+	/// </example>
+	/// <seealso cref="VerifyHashedPassword(string, string, HashAlgorithmType)"/>
+	/// <seealso cref="PasswordHasher"/>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(HashPassword), "David McCarter", "5/6/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1202,130 +867,28 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the string equals the specified value using ordinal comparison.
+	/// Determines whether <paramref name="input"/> equals <paramref name="value"/> using case-sensitive, culture-invariant ordinal comparison.
 	/// </summary>
 	/// <param name="input">The string to check. Can be <c>null</c>.</param>
-	/// <param name="value">The value to compare with the string. Can be <c>null</c>.</param>
+	/// <param name="value">The value to compare against. Can be <c>null</c>.</param>
 	/// <returns>
-	/// <c>true</c> if the string is not <c>null</c>, has a non-zero length, and equals <paramref name="value"/> 
-	/// using <see cref="StringComparison.Ordinal"/> comparison; otherwise, <c>false</c>.
+	/// <c>true</c> if <paramref name="input"/> is non-<c>null</c>, non-empty, has the same length as <paramref name="value"/>,
+	/// and equals <paramref name="value"/> using <see cref="StringComparison.Ordinal"/>; otherwise, <c>false</c>.
 	/// </returns>
 	/// <remarks>
-	/// This method performs two checks in sequence:
-	/// <list type="number">
-	/// <item><description>Validates that <paramref name="input"/> is not <c>null</c> and has a length greater than zero using <see cref="HasValue(string)"/>.</description></item>
-	/// <item><description>Compares <paramref name="input"/> with <paramref name="value"/> using case-sensitive, culture-invariant ordinal comparison.</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Short-circuits if input is null or empty (no comparison performed)</description></item>
-	/// <item><description>Uses <see cref="StringComparison.Ordinal"/> for fastest comparison performance</description></item>
-	/// <item><description>Culture-insensitive: Results are consistent across all cultures and locales</description></item>
-	/// <item><description>Case-sensitive: "ABC" and "abc" are treated as different strings</description></item>
-	/// <item><description>Short-circuits if input is null or empty (no comparison performed)</description></item>
-	/// <item><description>Time Complexity: O(n) where n = length of shorter string</description></item>
-	/// <item><description>Space Complexity: O(1) - no allocations</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Comparison Behavior:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Returns <c>false</c> if <paramref name="input"/> is <c>null</c></description></item>
-	/// <item><description>Returns <c>false</c> if <paramref name="input"/> is empty</description></item>
-	/// <item><description>Returns <c>false</c> if <paramref name="value"/> is <c>null</c> and <paramref name="input"/> is not <c>null</c></description></item>
-	/// <item><description>Performs byte-by-byte comparison without linguistic rules</description></item>
-	/// <item><description>Does not normalize Unicode characters before comparison</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Validating exact string matches in configuration settings</description></item>
-	/// <item><description>Comparing identifiers, keys, or codes where case sensitivity matters</description></item>
-	/// <item><description>Verifying command-line arguments or parameter values</description></item>
-	/// <item><description>Checking enumeration values as strings</description></item>
-	/// <item><description>Protocol validation where exact matches are required</description></item>
-	/// </list>
+	/// Optimized for hot paths:
+	/// - Early returns when either input is <c>null</c> or <paramref name="input"/> is empty.
+	/// - Length check avoids expensive comparison when lengths differ.
+	/// - Uses <see cref="StringComparison.Ordinal"/> for deterministic, allocation-free comparison.
 	/// </remarks>
 	/// <example>
-	/// Basic equality check:
-	/// <code>
-	/// string status = "Active";
-	/// bool isActive = status.HasValue("Active");
-	/// // Returns: true
-	/// 
-	/// bool isInactive = status.HasValue("Inactive");
-	/// // Returns: false
-	/// </code>
-	/// 
-	/// Case-sensitive comparison:
-	/// <code>
-	/// string role = "Admin";
-	/// bool match1 = role.HasValue("Admin");   // Returns: true
-	/// bool match2 = role.HasValue("admin");   // Returns: false (case mismatch)
-	/// bool match3 = role.HasValue("ADMIN");   // Returns: false (case mismatch)
-	/// </code>
-	/// 
-	/// Null and empty string handling:
-	/// <code>
-	/// string nullString = null;
-	/// bool result1 = nullString.HasValue("test");
-	/// // Returns: false (input is null)
-	/// 
-	/// string emptyString = "";
-	/// bool result2 = emptyString.HasValue("test");
-	/// // Returns: false (input is empty)
-	/// 
-	/// string value = "test";
-	/// bool result3 = value.HasValue(null);
-	/// // Returns: false (value parameter is null)
-	/// </code>
-	/// 
-	/// Validating configuration values:
-	/// <code>
-	/// string environment = GetEnvironmentVariable("ENV");
-	/// 
-	/// if (environment.HasValue("Production"))
-	/// {
-	///     // Use production settings
-	///     Console.WriteLine("Running in production mode");
-	/// }
-	/// else if (environment.HasValue("Development"))
-	/// {
-	///     // Use development settings
-	///     Console.WriteLine("Running in development mode");
-	/// }
-	/// </code>
-	/// 
-	/// Checking enumeration string values:
-	/// <code>
-	/// string statusCode = GetStatusCode();
-	/// 
-	/// if (statusCode.HasValue("SUCCESS"))
-	/// {
-	///     ProcessSuccess();
-	/// }
-	/// else if (statusCode.HasValue("ERROR"))
-	/// {
-	///     ProcessError();
-	/// }
-	/// </code>
-	/// 
-	/// Comparing with whitespace strings:
-	/// <code>
-	/// string text = "  test  ";
-	/// bool match = text.HasValue("test");
-	/// // Returns: false (whitespace makes strings different)
-	/// 
-	/// bool exactMatch = text.HasValue("  test  ");
-	/// // Returns: true (exact match including whitespace)
-	/// </code>
+	/// string s = "Admin";
+	/// bool exact = s.HasValue("Admin"); // true
+	/// bool caseMismatch = s.HasValue("admin"); // false
+	/// bool nullCompare = s.HasValue(null); // false
 	/// </example>
-	/// <seealso cref="HasValue(string)"/>
-	/// <seealso cref="string.Equals(string, string, StringComparison)"/>
 	/// <seealso cref="StringComparison.Ordinal"/>
+	/// <seealso cref="FastEquals(string, string, in StringComparison)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasValue(this string input, string value)
@@ -1347,143 +910,32 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Validates whether the string length falls within the specified range.
+	/// Determines whether <paramref name="input"/> has a length within the inclusive range
+	/// [<paramref name="minLength"/>, <paramref name="maxLength"/>].
 	/// </summary>
 	/// <param name="input">The string to validate. Can be <c>null</c>.</param>
-	/// <param name="minLength">
-	/// The minimum acceptable length for the string (inclusive). 
-	/// Must be non-negative and less than or equal to <paramref name="maxLength"/>.
-	/// </param>
-	/// <param name="maxLength">
-	/// The maximum acceptable length for the string (inclusive). 
-	/// Must be greater than or equal to <paramref name="minLength"/>.
-	/// </param>
+	/// <param name="minLength">The minimum allowed length (inclusive). Must be ≥ 0 and ≤ <paramref name="maxLength"/>.</param>
+	/// <param name="maxLength">The maximum allowed length (inclusive). Must be ≥ <paramref name="minLength"/>.</param>
 	/// <returns>
-	/// <c>true</c> if <paramref name="input"/> is not <c>null</c> and its length is within the range 
-	/// [<paramref name="minLength"/>, <paramref name="maxLength"/>]; otherwise, <c>false</c>.
+	/// <c>true</c> if <paramref name="input"/> is not <c>null</c> and its <see cref="string.Length"/> is between
+	/// <paramref name="minLength"/> and <paramref name="maxLength"/> (inclusive); otherwise, <c>false</c>.
 	/// </returns>
 	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown when:
-	/// <list type="bullet">
-	/// <item><description><paramref name="minLength"/> is less than 0</description></item>
-	/// <item><description><paramref name="minLength"/> is greater than <paramref name="maxLength"/></description></item>
-	/// <item><description><paramref name="maxLength"/> is less than <paramref name="minLength"/></description></item>
-	/// </list>
+	/// Thrown when <paramref name="minLength"/> is less than 0, or when <paramref name="minLength"/> is greater than
+	/// <paramref name="maxLength"/>, or when <paramref name="maxLength"/> is less than <paramref name="minLength"/>.
 	/// </exception>
 	/// <remarks>
-	/// This method validates that a string's length falls within an inclusive range. Both the minimum and maximum 
-	/// length values are included in the valid range.
-	/// <para>
-	/// <strong>Validation Behavior:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Returns <c>false</c> if <paramref name="input"/> is <c>null</c></description></item>
-	/// <item><description>The range is inclusive on both ends: [minLength, maxLength]</description></item>
-	/// <item><description>A string with length equal to <paramref name="minLength"/> or <paramref name="maxLength"/> returns <c>true</c></description></item>
-	/// <item><description>Empty strings (length 0) are valid only if <paramref name="minLength"/> is 0</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Validating user input length (e.g., usernames, passwords)</description></item>
-	/// <item><description>Checking string lengths before database operations with column size constraints</description></item>
-	/// <item><description>Enforcing business rules for text field lengths</description></item>
-	/// <item><description>Validating configuration values against expected length ranges</description></item>
-	/// <item><description>Pre-validating data before serialization or API calls</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Note:</strong> This method validates the current length of the string without trimming whitespace.
-	/// If you need to validate length after removing whitespace, trim the string before calling this method.
-	/// </para>
+	/// Optimized for hot paths:
+	/// - Validates range bounds once via guard clauses.
+	/// - Performs a single null check and a single length comparison.
+	/// - No allocations; O(1) time complexity.
 	/// </remarks>
 	/// <example>
-	/// Basic length validation:
-	/// <code>
-	/// string username = "john_doe";
-	/// bool isValidLength = username.HasValue(3, 20);
-	/// // Returns: true (length 8 is between 3 and 20)
-	/// </code>
-	/// 
-	/// Password length validation:
-	/// <code>
-	/// string password = "SecureP@ss123";
-	/// bool meetsRequirements = password.HasValue(8, 128);
-	/// // Returns: true (length 13 is between 8 and 128)
-	/// </code>
-	/// 
-	/// Exact length match (min == max):
-	/// <code>
-	/// string zipCode = "12345";
-	/// bool isExactLength = zipCode.HasValue(5, 5);
-	/// // Returns: true (length exactly 5)
-	/// </code>
-	/// 
-	/// Empty string handling:
-	/// <code>
-	/// string empty = "";
-	/// bool allowEmpty = empty.HasValue(0, 10);
-	/// // Returns: true (length 0 is within range)
-	/// 
-	/// bool requireNonEmpty = empty.HasValue(1, 10);
-	/// // Returns: false (length 0 is below minimum of 1)
-	/// </code>
-	/// 
-	/// Null string handling:
-	/// <code>
-	/// string nullString = null;
-	/// bool isValid = nullString.HasValue(0, 100);
-	/// // Returns: false (input is null)
-	/// </code>
-	/// 
-	/// Validating database field constraints:
-	/// <code>
-	/// string description = GetUserInput();
-	/// 
-	/// // Database column has VARCHAR(500) constraint
-	/// if (!description.HasValue(0, 500))
-	/// {
-	///     throw new ArgumentException("Description must be 500 characters or less");
-	/// }
-	/// </code>
-	/// 
-	/// Form field validation:
-	/// <code>
-	/// string firstName = textBox.Text;
-	/// string lastName = textBox2.Text;
-	/// 
-	/// bool isFirstNameValid = firstName.HasValue(1, 50);
-	/// bool isLastNameValid = lastName.HasValue(1, 50);
-	/// 
-	/// if (isFirstNameValid &amp;&amp; isLastNameValid)
-	/// {
-	///     SaveUserData(firstName, lastName);
-	/// }
-	/// </code>
-	/// 
-	/// Edge cases - boundary testing:
-	/// <code>
-	/// string text = "Hello";
-	/// 
-	/// bool test1 = text.HasValue(5, 10);  // Returns: true (exactly at minimum)
-	/// bool test2 = text.HasValue(1, 5);   // Returns: true (exactly at maximum)
-	/// bool test3 = text.HasValue(6, 10);  // Returns: false (below minimum)
-	/// bool test4 = text.HasValue(1, 4);   // Returns: false (above maximum)
-	/// </code>
-	/// 
-	/// ArgumentOutOfRangeException examples:
-	/// <code>
-	/// string text = "test";
-	/// 
-	/// // Throws ArgumentOutOfRangeException: minLength &lt; 0
-	/// bool result1 = text.HasValue(-1, 10);
-	/// 
-	/// // Throws ArgumentOutOfRangeException: minLength > maxLength
-	/// bool result2 = text.HasValue(10, 5);
-	/// </code>
+	/// string s = "Hello";
+	/// bool inRange1 = s.HasValue(1, 5);  // true
+	/// bool inRange2 = s.HasValue(6, 10); // false
+	/// bool nullInput = ((string)null).HasValue(0, 10); // false
 	/// </example>
-	/// <seealso cref="HasValue(string)"/>
-	/// <seealso cref="HasValue(string, int)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasValue(this string input, int minLength, int maxLength)
@@ -1534,94 +986,27 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Adds indentation characters to the beginning of the input string.
+	/// Prepends a sequence of <paramref name="indentationCharacter"/> to <paramref name="input"/> to produce an indented string.
 	/// </summary>
-	/// <param name="input">The string to indent. Must not be <c>null</c>.</param>
+	/// <param name="input">The string to indent. Must not be <c>null</c> when <paramref name="length"/> &gt; 0.</param>
 	/// <param name="length">
-	/// The number of indentation characters to prepend to the string. 
-	/// If <paramref name="length"/> is zero or negative, returns <see cref="string.Empty"/>.
-	/// The absolute value of <paramref name="length"/> determines the actual number of characters added.
+	/// The number of indentation characters to add. If ≤ 0, returns <see cref="string.Empty"/>.
+	/// When positive, the characters are prepended before <paramref name="input"/>.
 	/// </param>
-	/// <param name="indentationCharacter">The character to use for indentation (e.g., space ' ', tab '\t').</param>
+	/// <param name="indentationCharacter">The character to use for indentation (e.g., ' ' or '\t').</param>
 	/// <returns>
-	/// A new string with the specified indentation prepended to <paramref name="input"/>.
-	/// Returns <see cref="string.Empty"/> if <paramref name="input"/> is <c>null</c> or <paramref name="length"/> is less than or equal to zero.
+	/// A new string consisting of <paramref name="length"/> copies of <paramref name="indentationCharacter"/> followed by <paramref name="input"/>.
+	/// Returns <see cref="string.Empty"/> if <paramref name="input"/> is <c>null</c> or <paramref name="length"/> ≤ 0.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c> when <paramref name="length"/> is greater than zero.</exception>
 	/// <remarks>
-	/// This method uses a pooled <see cref="StringBuilder"/> from <see cref="ObjectPool{T}"/> to optimize memory allocation 
-	/// and reduce garbage collection pressure during string construction.
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses pooled StringBuilder to avoid heap allocations</description></item>
-	/// <item><description>Optimal for repeated indentation operations</description></item>
-	/// <item><description>Early exit for invalid inputs (null or non-positive length)</description></item>
-	/// <item><description>Time Complexity: O(n) where n = absolute value of <paramref name="length"/></description></item>
-	/// <item><description>Space Complexity: O(n + m) where n = indentation length, m = input length</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Code generation and formatting</description></item>
-	/// <item><description>Text alignment in console applications</description></item>
-	/// <item><description>Creating hierarchical or nested text structures</description></item>
-	/// <item><description>Formatting log output with indentation levels</description></item>
-	/// <item><description>Generating indented JSON, XML, or other structured text</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Note:</strong> This method creates a new string and does not modify the original <paramref name="input"/>.
-	/// </para>
+	/// Uses a pooled <see cref="StringBuilder"/> to minimize allocations. Validates inputs via guard clauses.
+	/// Time complexity O(n) where n = |<paramref name="length"/>| + <paramref name="input"/> length.
 	/// </remarks>
 	/// <example>
-	/// Basic indentation with spaces:
-	/// <code>
-	/// string text = "Hello World";
-	/// string indented = text.Indent(4, ' ');
-	/// // Returns: "    Hello World"
-	/// </code>
-	/// 
-	/// Indenting with tabs:
-	/// <code>
 	/// string code = "Console.WriteLine(\"test\");";
-	/// string indentedCode = code.Indent(2, '\t');
-	/// // Returns: "\t\tConsole.WriteLine(\"test\");"
-	/// </code>
-	/// 
-	/// Creating hierarchical text structure:
-	/// <code>
-	/// string title = "Chapter 1";
-	/// string section = "Section 1.1".Indent(2, ' ');
-	/// string subsection = "Topic 1.1.1".Indent(4, ' ');
-	/// // title: "Chapter 1"
-	/// // section: "  Section 1.1"
-	/// // subsection: "    Topic 1.1.1"
-	/// </code>
-	/// 
-	/// Zero or negative length returns empty string:
-	/// <code>
-	/// string text = "Sample";
-	/// string result1 = text.Indent(0, ' ');  // Returns: ""
-	/// string result2 = text.Indent(-5, ' '); // Returns: ""
-	/// </code>
-	/// 
-	/// Formatting nested code blocks:
-	/// <code>
-	/// var lines = new[] { "if (condition)", "{", "DoSomething();", "}" };
-	/// var formatted = new[]
-	/// {
-	///     lines[0],
-	///     lines[1],
-	///     lines[2].Indent(4, ' '),
-	///     lines[3]
-	/// };
-	/// // Produces properly indented code structure
-	/// </code>
+	/// string indented = code.Indent(4, ' ');
+	/// // "    Console.WriteLine(\"test\");"
 	/// </example>
-	/// <seealso cref="StringBuilder"/>
-	/// <seealso cref="ObjectPool{T}"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Indent([DisallowNull] this string input, in int length, [ConstantExpected] char indentationCharacter)

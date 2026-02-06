@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -233,92 +233,26 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Converts an <see cref="IDictionary{TKey, TValue}" /> to a <see cref="ConcurrentDictionary{TKey, TValue}" />.
+	/// Creates a <see cref="ConcurrentDictionary{TKey, TValue}"/> from an existing <see cref="IDictionary{TKey, TValue}"/>.
 	/// </summary>
-	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
-	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-	/// <param name="collection">The dictionary to convert. Must not be null.</param>
+	/// <typeparam name="TKey">The type of keys in the dictionary. Must be non-nullable.</typeparam>
+	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
+	/// <param name="collection">The source dictionary to copy into a concurrent dictionary. Must not be <c>null</c>.</param>
 	/// <returns>
-	/// A new <see cref="ConcurrentDictionary{TKey, TValue}"/> containing all key-value pairs from the source dictionary.
+	/// A new <see cref="ConcurrentDictionary{TKey, TValue}"/> containing all key/value pairs from <paramref name="collection"/>.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
 	/// <remarks>
-	/// <para>
-	/// This method creates a thread-safe concurrent dictionary from a regular dictionary by copying all elements.
-	/// The resulting <see cref="ConcurrentDictionary{TKey, TValue}"/> can be safely accessed by multiple threads concurrently.
-	/// </para>
-	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item>
-	/// <description>
-	/// <b>Constructor optimization:</b> Uses the <c>ConcurrentDictionary(IEnumerable&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;)</c> 
-	/// constructor which is optimized for bulk initialization from existing collections.
-	/// </description>
-	/// </item>
-	/// <item>
-	/// <description>
-	/// <b>Default concurrency level:</b> Automatically set to the number of CPU cores, providing optimal 
-	/// performance for most scenarios without manual tuning.
-	/// </description>
-	/// </item>
-	/// <item>
-	/// <description>
-	/// <b>Initial capacity:</b> Automatically sized based on the source collection count, preventing 
-	/// resize operations during initialization.
-	/// </description>
-	/// </item>
-	/// <item>
-	/// <description>
-	/// <b>Time complexity:</b> O(n) where n is the number of elements in the source dictionary.
-	/// </description>
-	/// </item>
-	/// <item>
-	/// <description>
-	/// <b>Space complexity:</b> O(n) - creates a new dictionary with all elements copied.
-	/// </description>
-	/// </item>
-	/// </list>
-	/// <para>
-	/// <b>Use Cases:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item>
-	/// <description>Converting a regular dictionary to a thread-safe version for concurrent access.</description>
-	/// </item>
-	/// <item>
-	/// <description>Preparing data for multi-threaded scenarios where frequent reads and updates occur.</description>
-	/// </item>
-	/// <item>
-	/// <description>Scenarios with many reads and many updates where <see cref="ConcurrentDictionary{TKey, TValue}"/> 
-	/// significantly outperforms locked <see cref="Dictionary{TKey, TValue}"/> access.</description>
-	/// </item>
-	/// </list>
-	/// <para>
-	/// <b>Thread Safety:</b> The resulting <see cref="ConcurrentDictionary{TKey, TValue}"/> provides 
-	/// thread-safe operations for all public members. However, the conversion itself is not thread-safe - 
-	/// ensure the source dictionary is not modified during conversion.
-	/// </para>
+	/// This method creates a new concurrent dictionary and copies the contents of the source dictionary.
+	/// The resulting collection is safe for concurrent read/write operations, but the original
+	/// <paramref name="collection"/> remains unchanged and is not synchronized with the new instance.
 	/// </remarks>
 	/// <example>
 	/// <code>
-	/// var regularDict = new Dictionary&lt;string, int&gt;
-	/// {
-	///     ["one"] = 1,
-	///     ["two"] = 2,
-	///     ["three"] = 3
-	/// };
+	/// var dict = new Dictionary&lt;string, int&gt; { ["one"] = 1, ["two"] = 2 };
+	/// ConcurrentDictionary&lt;string, int&gt; concurrent = dict.ToConcurrentDictionary();
 	/// 
-	/// // Convert to thread-safe concurrent dictionary
-	/// var concurrentDict = regularDict.ToConcurrentDictionary();
-	/// 
-	/// // Now safe for concurrent access
-	/// Parallel.For(0, 1000, i =>
-	/// {
-	///     concurrentDict.TryAdd($"key{i}", i);
-	///     concurrentDict.TryGetValue("one", out var value);
-	/// });
+	/// concurrent.TryAdd("three", 3);
+	/// // dict is unchanged; concurrent now has 3 entries.
 	/// </code>
 	/// </example>
 	[Pure]

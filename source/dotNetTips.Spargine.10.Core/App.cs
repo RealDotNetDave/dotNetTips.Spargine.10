@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -398,153 +398,48 @@ public static class App
 	/// <summary>
 	/// Retrieves a value from the application state dictionary in a thread-safe manner.
 	/// </summary>
-	/// <param name="key">The case-insensitive key to identify the state value. Must not be <c>null</c> or empty.</param>
+	/// <param name="key">The case-insensitive key identifying the state value. Must not be <c>null</c> or empty.</param>
 	/// <returns>
-	/// The value associated with the specified key, or <c>null</c> if the key does not exist in the application state.
+	/// The stored value associated with <paramref name="key"/>, or <c>null</c> if the key is not present.
 	/// </returns>
 	/// <remarks>
-	/// This method uses <see cref="ConcurrentDictionary{TKey,TValue}.TryGetValue"/> to safely retrieve values
-	/// from the thread-safe application state dictionary without requiring external synchronization.
-	/// <para>
-	/// <strong>Thread Safety:</strong>
-	/// This method is thread-safe and can be called concurrently from multiple threads without additional locking.
-	/// The underlying <see cref="ConcurrentDictionary{TKey,TValue}"/> handles all necessary synchronization internally.
-	/// </para>
-	/// <para>
-	/// <strong>Key Comparison:</strong>
-	/// The application state dictionary uses case-insensitive string comparison (<see cref="StringComparer.OrdinalIgnoreCase"/>),
-	/// meaning "Theme", "theme", and "THEME" are treated as the same key.
-	/// </para>
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(1) average case for hash-based lookup</description></item>
-	/// <item><description>Lock-free read operation - does not block concurrent reads or writes</description></item>
-	/// <item><description>No allocations for successful lookups</description></item>
-	/// </list>
-	/// </para>
+	/// Backed by a thread-safe <see cref="ConcurrentDictionary{TKey, TValue}"/> initialized with <see cref="StringComparer.OrdinalIgnoreCase"/>.
+	/// Use <see cref="SetAppState(string, object)"/> to add or update values. Guard clause validation for <paramref name="key"/>
+	/// is handled by the calling code when setting values.
 	/// </remarks>
 	/// <example>
-	/// Example usage:
-	/// <code>
-	/// // Set a value in application state
 	/// App.SetAppState("Theme", "Dark");
-	/// 
-	/// // Retrieve the value
-	/// var theme = App.GetAppState("Theme");
-	/// if (theme != null)
-	/// {
-	///     Console.WriteLine($"Current theme: {theme}");
-	/// }
-	/// 
-	/// // Case-insensitive key lookup
-	/// var sameTheme = App.GetAppState("THEME"); // Returns "Dark"
-	/// 
-	/// // Non-existent key returns null
-	/// var missing = App.GetAppState("NonExistentKey"); // Returns null
-	/// 
-	/// // Type-safe retrieval with pattern matching
-	/// if (App.GetAppState("MaxRetries") is int maxRetries)
-	/// {
-	///     Console.WriteLine($"Max retries: {maxRetries}");
-	/// }
-	/// </code>
+	/// var theme = App.GetAppState("theme"); // returns "Dark"
+	/// var missing = App.GetAppState("NotSet"); // returns null
 	/// </example>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown when <paramref name="key"/> is <c>null</c> (enforced by <see cref="ConcurrentDictionary{TKey,TValue}"/>).
-	/// </exception>
-	/// <seealso cref="SetAppState(string, object)"/>
 	[Pure]
 	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static object? GetAppState(string key)
 	{
+		//TODO: ADD DEFAULT VALUE OVERLOAD
 		return _appState.TryGetValue(key, out var value) ? value : null;
 	}
 
 	/// <summary>
-	/// Parses and retrieves command-line arguments as a read-only dictionary of key-value pairs.
+	/// Parses command-line arguments into a read-only dictionary of key/value pairs.
 	/// </summary>
 	/// <returns>
-	/// An <see cref="IReadOnlyDictionary{TKey, TValue}"/> where the key is the argument name and the value is the argument value.
-	/// Returns an empty dictionary if no command-line arguments were provided.
+	/// An <see cref="IReadOnlyDictionary{TKey, TValue}"/> mapping argument names to values.
+	/// Returns an empty dictionary when no arguments are provided.
 	/// </returns>
 	/// <remarks>
-	/// This method parses command-line arguments that follow the key=value format (e.g., --config=debug, timeout=30).
-	/// <para>
-	/// <strong>Argument Format:</strong>
-	/// <list type="bullet">
-	/// <item><description>Arguments are expected in the format: <c>key=value</c></description></item>
-	/// <item><description>Arguments without an equals sign (=) are treated as keys with empty string values</description></item>
-	/// <item><description>The first element (executable name) from <see cref="Environment.GetCommandLineArgs"/> is automatically skipped</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Parsing Behavior:</strong>
-	/// The method splits each argument on the first equals sign (=). If an argument contains multiple equals signs,
-	/// only the first one is used as a delimiter. For example:
-	/// <list type="bullet">
-	/// <item><description><c>key=value</c> → Key: "key", Value: "value"</description></item>
-	/// <item><description><c>key=value=extra</c> → Key: "key", Value: "value=extra" (parts[1] only takes first element after split)</description></item>
-	/// <item><description><c>standalone</c> → Key: "standalone", Value: "" (empty string)</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Limitations and Considerations:</strong>
-	/// <list type="bullet">
-	/// <item><description>Duplicate keys will cause an <see cref="ArgumentException"/> (from <see cref="Enumerable.ToDictionary{TSource, TKey, TElement}(IEnumerable{TSource}, Func{TSource, TKey}, Func{TSource, TElement})"/>)</description></item>
-	/// <item><description>Does not support complex argument formats (switches, flags, multi-value arguments)</description></item>
-	/// <item><description>For advanced command-line parsing, consider using <see href="https://learn.microsoft.com/en-us/dotnet/standard/commandline/">System.CommandLine</see> library</description></item>
-	/// <item><description>Arguments are case-sensitive (use appropriate string comparison if needed)</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(n) where n is the number of command-line arguments</description></item>
-	/// <item><description>Uses LINQ deferred execution with immediate materialization via <see cref="Enumerable.ToDictionary{TSource, TKey, TElement}(IEnumerable{TSource}, Func{TSource, TKey}, Func{TSource, TElement})"/></description></item>
-	/// <item><description>Allocates a new dictionary on each call (not cached)</description></item>
-	/// </list>
-	/// </para>
+	/// Expects arguments in the form <c>key=value</c>. Arguments without '=' become keys with empty string values.
+	/// The executable path (first element of <see cref="Environment.GetCommandLineArgs"/>)
+	/// is skipped. Only the first '=' is treated as the delimiter: additional '=' characters remain in the value.
+	/// Duplicate keys will throw <see cref="ArgumentException"/>.
 	/// </remarks>
 	/// <example>
-	/// Example usage scenarios:
-	/// <code>
 	/// // Command line: myapp.exe config=debug timeout=30 verbose
 	/// var args = App.GetCommandLineArguments();
-	/// 
-	/// // Result dictionary contains:
-	/// // { "config" => "debug", "timeout" => "30", "verbose" => "" }
-	/// 
-	/// // Accessing values
-	/// if (args.TryGetValue("config", out string configValue))
-	/// {
-	///     Console.WriteLine($"Config: {configValue}");  // Output: Config: debug
-	/// }
-	/// 
-	/// // Check for flag-style arguments
-	/// if (args.ContainsKey("verbose"))
-	/// {
-	///     Console.WriteLine("Verbose mode enabled");
-	/// }
-	/// 
-	/// // Parse numeric values
-	/// if (args.TryGetValue("timeout", out string timeoutStr) &amp;&amp; 
-	///     int.TryParse(timeoutStr, out int timeout))
-	/// {
-	///     Console.WriteLine($"Timeout: {timeout} seconds");
-	/// }
-	/// 
-	/// // Enumerate all arguments
-	/// foreach (var arg in args)
-	/// {
-	///     Console.WriteLine($"{arg.Key}: {arg.Value}");
-	/// }
-	/// </code>
+	/// // args["config"] == "debug"
+	/// // args["timeout"] == "30"
+	/// // args["verbose"] == ""
 	/// </example>
-	/// <exception cref="ArgumentException">
-	/// Thrown when duplicate argument keys are detected in the command line.
-	/// </exception>
-	/// <seealso cref="Environment.GetCommandLineArgs"/>
 	[Pure]
 	[Information(nameof(GetCommandLineArguments), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static IReadOnlyDictionary<string, string> GetCommandLineArguments()
@@ -819,66 +714,26 @@ public static class App
 	}
 
 	/// <summary>
-	/// Sets or updates a value in the application state dictionary in a thread-safe manner.
+	/// Stores a value in the application state dictionary using a case-insensitive key.
 	/// </summary>
-	/// <param name="key">The case-insensitive key to identify the state value. Must not be <c>null</c> or empty.</param>
-	/// <param name="value">The value to store in the application state. Must not be <c>null</c>.</param>
+	/// <param name="key">The key to identify the state value. Must not be <c>null</c> or empty.</param>
+	/// <param name="value">The value to store. Must not be <c>null</c>.</param>
 	/// <remarks>
-	/// This method stores or updates a value in the thread-safe application state dictionary using the specified key.
-	/// If the key already exists, its value is replaced; otherwise, a new key-value pair is added.
-	/// <para>
-	/// <strong>Thread Safety:</strong>
-	/// This method is thread-safe and can be called concurrently from multiple threads without additional locking.
-	/// The underlying <see cref="ConcurrentDictionary{TKey,TValue}"/> handles all necessary synchronization internally.
-	/// The indexer operation is atomic - the key-value pair is added or updated as a single operation.
-	/// </para>
-	/// <para>
-	/// <strong>Key Comparison:</strong>
-	/// The application state dictionary uses case-insensitive string comparison (<see cref="StringComparer.OrdinalIgnoreCase"/>),
-	/// meaning "Theme", "theme", and "THEME" are treated as the same key and will overwrite each other.
-	/// </para>
-	/// <para>
-	/// <strong>Performance Characteristics:</strong>
-	/// <list type="bullet">
-	/// <item><description>Time Complexity: O(1) average case for hash-based insertion/update</description></item>
-	/// <item><description>Atomic operation - no race conditions when multiple threads update the same key</description></item>
-	/// <item><description>May cause dictionary resizing if capacity is exceeded (infrequent, amortized O(1))</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Null Handling:</strong>
-	/// Both <paramref name="key"/> and <paramref name="value"/> are validated to be non-null before the operation.
-	/// Storing null values is not permitted to maintain data integrity and prevent unexpected null reference exceptions
-	/// when retrieving values with <see cref="GetAppState(string)"/>.
-	/// </para>
+	/// Uses a thread-safe <see cref="ConcurrentDictionary{TKey, TValue}"/> to store application state.
+	/// If the key already exists, its value is overwritten.
+	/// Keys are compared using <see cref="StringComparer.OrdinalIgnoreCase"/> (e.g., "Theme" and "theme" are equivalent).
+	/// Guard clauses validate inputs via <c>ArgumentNotNullOrEmpty()</c> and <c>ArgumentNotNull()</c>.
 	/// </remarks>
 	/// <example>
-	/// Example usage:
-	/// <code>
-	/// // Store a string value
+	/// // Set value
 	/// App.SetAppState("Theme", "Dark");
 	/// 
-	/// // Store an integer value
-	/// App.SetAppState("MaxRetries", 5);
-	/// 
-	/// // Store a complex object
-	/// var config = new AppConfiguration { Timeout = 30, EnableLogging = true };
-	/// App.SetAppState("Config", config);
-	/// 
-	/// // Update an existing value (case-insensitive key)
-	/// App.SetAppState("THEME", "Light"); // Overwrites the "Theme" key
-	/// 
-	/// // Thread-safe concurrent updates
-	/// Parallel.For(0, 100, i =>
-	/// {
-	///     App.SetAppState($"Item{i}", i * 10);
-	/// });
-	/// </code>
+	/// // Retrieve elsewhere
+	/// var theme = App.GetAppState("theme"); // "Dark"
 	/// </example>
 	/// <exception cref="ArgumentNullException">
-	/// Thrown when <paramref name="key"/> is <c>null</c> or empty, or when <paramref name="value"/> is <c>null</c>.
+	/// Thrown when <paramref name="key"/> is <c>null</c> or empty, or <paramref name="value"/> is <c>null</c>.
 	/// </exception>
-	/// <seealso cref="GetAppState(string)"/>
 	[Information(nameof(SetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static void SetAppState([DisallowNull] string key, [DisallowNull] object value)
 	{

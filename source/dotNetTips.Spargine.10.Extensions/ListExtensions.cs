@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-31-2026
+// Last Modified On : 02-05-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,7 +12,6 @@
 // <summary>Provides extension methods for List{T} to enhance functionality.</summary>
 // ***********************************************************************
 
-using System.Collections;
 using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
@@ -77,109 +76,24 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Adds an item to the end of the list.
+		/// Appends the specified <paramref name="item"/> to the end of the <see cref="List{T}"/>.
 		/// </summary>
-		/// <param name="item">The item to add to the end of the list.</param>
+		/// <param name="item">The item to append to the list. Must not be <c>null</c>.</param>
 		/// <remarks>
 		/// <para>
-		/// <b>✅ Performance Optimized (.NET 10):</b> This operation has <b>O(1) amortized time complexity</b> 
-		/// because <see cref="List{T}.Add(T)"/> appends to the end of the internal array without shifting elements.
+		/// This is a thin wrapper over <see cref="List{T}.Add(T)"/> and provides the same semantics and
+		/// amortized O(1) performance characteristics for appending elements.
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// If the underlying list needs to grow its internal buffer, this operation may trigger a resize,
+		/// which involves allocating a larger array and copying existing elements.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity (amortized):</b> O(1) - No element shifting required</description></item>
-		/// <item><description><b>Time complexity (worst case):</b> O(n) - When capacity must be doubled and all elements copied</description></item>
-		/// <item><description><b>Space complexity:</b> O(1) - No additional allocations unless capacity is exceeded</description></item>
-		/// <item><description><b>Frequency of resize:</b> Logarithmic - Only when count reaches capacity (doubling strategy)</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Why Is This Fast?</b>
-		/// </para>
-		/// <para>
-		/// <see cref="List{T}"/> uses an internal array with a capacity that grows dynamically. When adding to the end:
-		/// </para>
-		/// <list type="number">
-		/// <item><description><b>If Count &lt; Capacity:</b> Item is added to the next available index. O(1) - instant operation</description></item>
-		/// <item><description><b>If Count == Capacity:</b> List creates a new array with 2x capacity, copies all elements, then adds the new item. O(n) - rare</description></item>
-		/// <item><description><b>Amortized O(1):</b> Because resizing happens infrequently (exponentially less often), the average cost per insertion is constant</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Capacity Growth Strategy:</b>
-		/// </para>
-		/// <para>
-		/// <see cref="List{T}"/> doubles its capacity when full, resulting in O(log n) total resizes for n additions:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Initial capacity:</b> 0 (or constructor-specified)</description></item>
-		/// <item><description><b>First resize:</b> 4 elements</description></item>
-		/// <item><description><b>Growth sequence:</b> 4 → 8 → 16 → 32 → 64 → 128 → ...</description></item>
-		/// <item><description><b>Result:</b> Adding 1,000,000 items requires only ~20 resize operations</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Performance Comparison:</b>
-		/// </para>
-		/// <para>
-		/// Comparing <see cref="AddLast"/> (this method) to <see cref="AddFirst"/>:
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><see cref="AddLast"/>: O(1) amortized - adds to end, no shifting</description></item>
-		/// <item><description><see cref="AddFirst"/>: O(n) always - inserts at beginning, shifts all n elements</description></item>
-		/// <item><description><b>Performance ratio:</b> AddLast is ~1000x faster for large lists</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Optimization Tips:</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Pre-size for known capacity:</b> Use <c>new List&lt;T&gt;(capacity)</c> to avoid resizes</description></item>
-		/// <item><description><b>Bulk operations:</b> Use <see cref="List{T}.AddRange(IEnumerable{T})"/> for multiple items</description></item>
-		/// <item><description><b>Avoid boxing:</b> Use <see cref="List{T}"/> instead of <see cref="ArrayList"/> for value types</description></item>
-		/// </list>
-		/// <para>
-		/// <b>Benchmark Data (.NET 10):</b>
-		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>1 item to empty list:</b> ~5 ns (no resize)</description></item>
-		/// <item><description><b>1,000 items sequentially:</b> ~15 μs (few resizes)</description></item>
-		/// <item><description><b>10,000 items sequentially:</b> ~150 μs (logarithmic resizes)</description></item>
-		/// <item><description><b>1,000,000 items sequentially:</b> ~15 ms (excellent scalability)</description></item>
-		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// // Basic usage - O(1) amortized
-		/// var numbers = new List&lt;int&gt; { 1, 2, 3 };
-		/// numbers.AddLast(4);  // List becomes { 1, 2, 3, 4 }
-		/// 
-		/// // ✅ Best practice: Pre-size if you know the final count
-		/// var preSized = new List&lt;int&gt;(1000);  // No resizes for first 1000 items
-		/// for (int i = 0; i &lt; 1000; i++)
-		/// {
-		///     preSized.AddLast(i);  // O(1) every time - no resizing!
-		/// }
-		/// 
-		/// // ✅ Better: Use AddRange for bulk additions
-		/// var items = Enumerable.Range(0, 1000);
-		/// var list = new List&lt;int&gt;();
-		/// list.AddRange(items);  // More efficient than loop with AddLast
-		/// 
-		/// // Performance comparison: AddLast vs AddFirst
-		/// var listForLast = new List&lt;string&gt;();
-		/// var sw1 = Stopwatch.StartNew();
-		/// for (int i = 0; i &lt; 10000; i++)
-		/// {
-		///     listForLast.AddLast($"Item {i}");  // ~150 μs total
-		/// }
-		/// sw1.Stop();
-		/// 
-		/// var listForFirst = new List&lt;string&gt;();
-		/// var sw2 = Stopwatch.StartNew();
-		/// for (int i = 0; i &lt; 10000; i++)
-		/// {
-		///     listForFirst.AddFirst($"Item {i}");  // ~150 ms total (1000x slower!)
-		/// }
-		/// sw2.Stop();
+		/// var values = new List&lt;int&gt; { 1, 2, 3 };
+		/// values.AddLast(4);
+		/// // values == { 1, 2, 3, 4 }
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -628,6 +542,8 @@ public static class ListExtensions
 		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public List<T> FastShuffle()
 		{
+			//TODO: FIX ALL complexity: DOCUMENTATION
+
 			list = list.ArgumentNotNull();
 
 			//Using array here was slower.
@@ -640,41 +556,42 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Splits the list into multiple smaller lists of a specified size.
+		/// Splits the current <see cref="List{T}"/> into multiple contiguous chunks of the specified size.
 		/// </summary>
-		/// <param name="size">The size of each split list.</param>
-		/// <returns>A read-only collection of read-only collections, each containing a segment of the original list.</returns>
+		/// <param name="size">
+		/// The maximum number of elements in each chunk. Must be between 1 and the total number of items
+		/// in the list; the value is validated to ensure it falls within this range.
+		/// </param>
+		/// <returns>
+		/// A <see cref="ReadOnlyCollection{T}"/> of <see cref="ReadOnlyCollection{T}"/> instances,
+		/// where each inner collection represents a contiguous segment of the original list.
+		/// The final chunk may contain fewer than <paramref name="size"/> elements.
+		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> 
-		/// to access the list as a span, then slices it into chunks without creating intermediate List objects.
+		/// Internally, this method uses <see cref="List{T}.GetRange(int,int)"/> to create each chunk and
+		/// wraps it with <see cref="List{T}.AsReadOnly"/>. The outer list is then wrapped in a read-only
+		/// view to produce a fully read-only structure.
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// <b>Performance characteristics:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) - Single pass to copy elements into pre-sized arrays</description></item>
-		/// <item><description><b>Space complexity:</b> O(n) - Only allocates result arrays, no intermediate Lists</description></item>
-		/// <item><description><b>Allocations:</b> One array per chunk + ReadOnlyCollection wrappers (minimal overhead)</description></item>
+		/// <item><description>Time complexity: O(n), where n is <c>list.Count</c>.</description></item>
+		/// <item><description>Space complexity: O(n), due to per-chunk list allocations.</description></item>
 		/// </list>
 		/// <para>
-		/// <b>Comparison with GetRange approach:</b>
+		/// The original list is not modified; chunks are shallow copies of the corresponding ranges.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>OLD:</b> GetRange creates intermediate List for each chunk, then wraps it</description></item>
-		/// <item><description><b>NEW:</b> Direct span slicing copies to arrays, avoiding List allocation overhead</description></item>
-		/// <item><description><b>Result:</b> ~40-50% faster for typical chunk sizes</description></item>
-		/// </list>
 		/// </remarks>
 		/// <example>
 		/// <code>
-		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5, 6, 7 };
 		/// var chunks = numbers.Split(3);
-		/// // Result: 4 chunks
-		/// // Chunk 0: { 1, 2, 3 }
-		/// // Chunk 1: { 4, 5, 6 }
-		/// // Chunk 2: { 7, 8, 9 }
-		/// // Chunk 3: { 10 }
+		///
+		/// // chunks[0] = { 1, 2, 3 }
+		/// // chunks[1] = { 4, 5, 6 }
+		/// // chunks[2] = { 7 }
 		/// </code>
 		/// </example>
 		[Pure]
