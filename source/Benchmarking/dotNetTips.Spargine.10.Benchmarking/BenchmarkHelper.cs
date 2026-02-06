@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 02-06-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,6 +20,7 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Running;
 using DotNetTips.Spargine.Benchmarking.Properties;
 using DotNetTips.Spargine.Core;
+using DotNetTips.Spargine.Core.Diagnostics;
 using DotNetTips.Spargine.Extensions;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -76,6 +77,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// </code>
 /// </example>
 /// <seealso cref="Benchmark"/>
+[Information(description: nameof(BenchmarkHelper), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public static class BenchmarkHelper
 {
 	/// <summary>
@@ -102,7 +104,7 @@ public static class BenchmarkHelper
 	/// }
 	/// </code>
 	/// </example>
-	[Information(description: nameof(PlayErrorBeep), Status = Status.New)]
+	[Information(description: nameof(PlayErrorBeep), Status = Status.Available)]
 	public static void PlayErrorBeep()
 	{
 		Console.Beep(frequency: 800, duration: 300);
@@ -130,7 +132,7 @@ public static class BenchmarkHelper
 	/// }
 	/// </code>
 	/// </example>
-	[Information(description: nameof(PlaySuccessBeep), Status = Status.New)]
+	[Information(description: nameof(PlaySuccessBeep), Status = Status.Available)]
 	public static void PlaySuccessBeep()
 	{
 		Console.Beep(frequency: 500, duration: 300);
@@ -202,7 +204,7 @@ public static class BenchmarkHelper
 	/// <seealso cref="BenchmarkSwitcher.FromAssembly(Assembly)"/>
 	/// <seealso cref="Assembly.GetCallingAssembly"/>
 	/// <seealso cref="IConfig"/>
-	[Information(description: nameof(RunAllBenchmarks), Status = Status.New)]
+	[Information(description: nameof(RunAllBenchmarks), Status = Status.Updated)]
 	public static void RunAllBenchmarks([DisallowNull] IConfig config)
 	{
 		config = config.ArgumentNotNull();
@@ -213,11 +215,18 @@ public static class BenchmarkHelper
 
 			ConsoleLogger.Default.WriteLine(LogKind.Info, $"Running all benchmarks from assembly: {callingAssembly.GetName().Name}");
 
-			var summaries = BenchmarkSwitcher.FromAssembly(callingAssembly).RunAll(config);
+			var sw = PerformanceStopwatch.StartNew();
+
+			_ = BenchmarkSwitcher.FromAssembly(callingAssembly).RunAll(config);
+
+			var elapsed = sw.StopReset();
 
 			ConsoleLogger.Default.WriteLine(Resources.BenchmarkTestsAreCompleteRockOn);
 
+			ConsoleLogger.Default.WriteLineInfo($"Total time: {sw.ElapsedMilliseconds.FormatTime()}");
+
 			PlaySuccessBeep();
+
 			_ = Console.ReadLine();
 		}
 		catch (Exception ex)
@@ -269,7 +278,7 @@ public static class BenchmarkHelper
 	/// <seealso cref="BenchmarkRunner"/>
 	/// <seealso cref="IConfig"/>
 	/// <seealso cref="Assembly.GetCallingAssembly()"/>
-	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
+	[Information(description: nameof(RunBenchmarks), Status = Status.Updated)]
 	public static void RunBenchmarks([DisallowNull] IConfig config, [DisallowNull] params Type[] benchmarks)
 	{
 		config = config.ArgumentNotNull();
@@ -297,18 +306,33 @@ public static class BenchmarkHelper
 					nameof(benchmarks));
 			}
 
+			var sw = PerformanceStopwatch.StartNew();
+
 			// Run each benchmark type individually using BenchmarkRunner.Run()
 			// This ensures each benchmark runs in the calling assembly's context
 			// which is required for diagnosers like MemoryDiagnoser to work properly
 			foreach (var benchmarkType in benchmarks)
 			{
 				ConsoleLogger.Default.WriteLine(LogKind.Info, $"Running benchmark: {benchmarkType.Name}");
+
+				sw.AddDiagnosticEntry($"Starting benchmark: {benchmarkType.FullName} at {DateTime.Now:O}");
+
 				_ = BenchmarkRunner.Run(benchmarkType, config);
+
+				sw.RecordLap();
+
+				sw.AddDiagnosticEntry($"Benchmark completed at: {benchmarkType.FullName} at {DateTime.Now:O}");
 			}
 
 			ConsoleLogger.Default.WriteLine(Resources.BenchmarkTestsAreCompleteRockOn);
 
+			var elapsed = sw.StopReset();
+
+			ConsoleLogger.Default.WriteLineInfo($"Total time: {sw.ElapsedMilliseconds.FormatTime()}");
+			ConsoleLogger.Default.WriteLineInfo($"Laps: {sw}");
+
 			PlaySuccessBeep();
+
 			_ = Console.ReadLine();
 		}
 		catch (Exception ex)
