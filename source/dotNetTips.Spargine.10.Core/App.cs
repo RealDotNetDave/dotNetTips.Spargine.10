@@ -351,6 +351,32 @@ public static class App
 	}
 
 	/// <summary>
+	/// Clears all entries from the application state dictionary.
+	/// </summary>
+	/// <remarks>
+	/// This method removes every key/value pair stored in the application state for the current process.
+	/// It delegates to <see cref="ConcurrentDictionary{TKey, TValue}.Clear"/> on the underlying
+	/// thread-safe dictionary. Use this method with caution, as all previously stored state will be
+	/// permanently lost for the lifetime of the process.
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// App.SetAppState("Theme", "Dark");
+	/// App.SetAppState("Language", "en-US");
+	/// 
+	/// App.ClearAppState();
+	/// 
+	/// var theme = App.GetAppState("Theme");       // returns null
+	/// var language = App.GetAppState("Language"); // returns null
+	/// </code>
+	/// </example>
+	[Information(nameof(ClearAppState), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static void ClearAppState()
+	{
+		_appState.Clear();
+	}
+
+	/// <summary>
 	/// Returns the folder path for the entry assembly.
 	/// </summary>
 	/// <returns>The directory name of the process executable in the default application domain. In other application domains, this is the first executable that was executed by AppDomain.ExecuteAssembly.</returns>
@@ -690,6 +716,34 @@ public static class App
 							.Select(a => a.ToString())
 							.ToList()
 							.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Removes a value from the application state dictionary using the specified key.
+	/// </summary>
+	/// <param name="key">
+	/// The case-insensitive key that identifies the state value to remove. Must not be <c>null</c> or empty.
+	/// </param>
+	/// <returns>
+	/// <see langword="true"/> if the value associated with the specified <paramref name="key"/> was found
+	/// and removed; otherwise, <see langword="false"/>.
+	/// </returns>
+	/// <remarks>
+	/// This method delegates to <see cref="ConcurrentDictionary{TKey, TValue}.TryRemove(TKey, out TValue)"/>
+	/// on the underlying thread-safe dictionary. If the key does not exist, the method returns <see langword="false"/>
+	/// and the application state remains unchanged.
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// App.SetAppState("Theme", "Dark");
+	/// var removed = App.RemoveAppState("theme"); // returns true
+	/// var removedAgain = App.RemoveAppState("theme"); // returns false
+	/// </code>
+	/// </example>
+	[Information(nameof(RemoveAppState), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static bool RemoveAppState(string key)
+	{
+		return _appState.TryRemove(key, out _);
 	}
 
 	/// <summary>
