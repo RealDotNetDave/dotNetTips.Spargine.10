@@ -47,9 +47,7 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _personName = "David McCarter";
 	private readonly string _stringWithEllipsis = RandomData.GenerateWord(100) + "...";
 	private readonly char _testCharacter = RandomData.GenerateCharacter();
-
 	private readonly string _url = "https://api.example.com:8443/v1/users/123?include=profile,settings&format=json#section1";
-
 	private string _compressedString;
 	private string _zlibString;
 

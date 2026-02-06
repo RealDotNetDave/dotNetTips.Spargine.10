@@ -83,7 +83,7 @@ public static class StringExtensions
 	/// and leverages .NET 10 optimizations (including SIMD for common encodings like UTF-8 and ASCII).
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CalculateByteArraySize), "David McCarter", "11/6/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static int CalculateByteArraySize([DisallowNull] this string input, Encoding? encoding = null)
 	{
 		// Validate and fast-path empty strings
@@ -119,7 +119,7 @@ public static class StringExtensions
 	/// var total = new[] { "a", null, "bc" }.CalculateTotalLength(); // Returns: 3
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int CalculateTotalLength(this string[] args)
 	{
 		if (args is null || args.Length == 0)
@@ -817,7 +817,7 @@ public static class StringExtensions
 	/// Uses <see cref="string.IsNullOrWhiteSpace(string)"/> internally to check if the string is null or whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasValue(this string input)
 	{
 		return input is { Length: > 0 };
@@ -834,7 +834,7 @@ public static class StringExtensions
 	/// It is an extension method and cannot be called on a null instance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasValue(this string input, int length)
 	{
 		length = length.ArgumentInRange(min: 1, max: length);
@@ -890,7 +890,7 @@ public static class StringExtensions
 	/// <seealso cref="StringComparison.Ordinal"/>
 	/// <seealso cref="FastEquals(string, string, in StringComparison)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasValue(this string input, string value)
 	{
 		// Fast null/empty checks first
@@ -937,7 +937,7 @@ public static class StringExtensions
 	/// bool nullInput = ((string)null).HasValue(0, 10); // false
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasValue(this string input, int minLength, int maxLength)
 	{
 		// Validate range inputs once (keeps original behavior)
@@ -973,16 +973,16 @@ public static class StringExtensions
 			return false;
 		}
 
-		// Return true on the first whitespace found (early exit, O(n) worst-case)
-		for (var i = 0; i < input.Length; i++)
+		// SUGGESTION FROM COPILOT SLOWER
+		foreach (var inputItem in input)
 		{
-			if (char.IsWhiteSpace(input[i]))
+			if (!inputItem.IsAsciiWhitespace())
 			{
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	/// <summary>
