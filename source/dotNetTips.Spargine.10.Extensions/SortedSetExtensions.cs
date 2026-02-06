@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 02-06-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -98,24 +98,20 @@ public static class SortedSetExtensions
 		}
 
 		/// <summary>
-		/// Converts the specified <see cref="SortedSet{T}"/> to an <see cref="ImmutableSortedSet{T}"/>.
+		/// Converts the current <see cref="SortedSet{T}"/> to an <see cref="ImmutableSortedSet{T}"/>.
 		/// </summary>
 		/// <returns>
-		/// An <see cref="ImmutableSortedSet{T}"/> containing the elements of the original set.
+		/// An <see cref="ImmutableSortedSet{T}"/> containing all elements from the source set,
+		/// ordered according to the same comparer as the original <see cref="SortedSet{T}"/>.
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method uses <see cref="ImmutableSortedSet.CreateRange{T}(IEnumerable{T})"/>
-		/// which efficiently creates an immutable sorted set from the existing sorted collection.
+		/// This method is obsolete. Use <see cref="ToImmutable"/> instead.
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// The returned set is immutable; subsequent modifications to the original
+		/// <see cref="SortedSet{T}"/> are not reflected in the result.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) - Must copy all elements to the immutable structure</description></item>
-		/// <item><description><b>Space complexity:</b> O(n) - Creates a new immutable collection</description></item>
-		/// <item><description><b>Optimization:</b> Leverages the sorted nature of the input for efficient tree construction</description></item>
-		/// </list>
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

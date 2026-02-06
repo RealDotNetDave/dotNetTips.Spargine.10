@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 02-06-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -1179,163 +1179,17 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Determines whether the specified string is not empty.
+	/// Determines whether the specified string is not <c>null</c> and not empty.
 	/// </summary>
-	/// <param name="input">The string to check. Can be <c>null</c>.</param>
+	/// <param name="input">The string to test.</param>
 	/// <returns>
-	/// <c>true</c> if the string is not <c>null</c> and has a length greater than zero; otherwise, <c>false</c>.
+	/// <c>true</c> if <paramref name="input"/> is not <c>null</c> and its <see cref="string.Length"/> is greater than zero;
+	/// otherwise, <c>false</c>.
 	/// </returns>
 	/// <remarks>
-	/// <para>
-	/// <b>✅ Performance Optimized (.NET 10):</b> This method uses C# pattern matching with property patterns 
-	/// (<c>is { Length: > 0 }</c>) which is highly optimized by the JIT compiler for inline expansion and 
-	/// zero-allocation execution.
-	/// </para>
-	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>Time complexity:</b> O(1) - constant time, single property access</description></item>
-	/// <item><description><b>Space complexity:</b> O(1) - zero allocations</description></item>
-	/// <item><description><b>JIT optimization:</b> Fully inlined by the JIT compiler</description></item>
-	/// <item><description><b>Pattern matching:</b> Combines null check and length check in single expression</description></item>
-	/// <item><description><b>No method calls:</b> Direct IL without helper method overhead</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Pattern Matching Behavior:</b>
-	/// </para>
-	/// <para>
-	/// The pattern <c>input is { Length: > 0 }</c> is equivalent to:
-	/// </para>
-	/// <code>
-	/// input != null &amp;&amp; input.Length > 0
-	/// </code>
-	/// <para>
-	/// However, the pattern matching syntax is:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>More concise:</b> Single expression vs. multiple conditions</description></item>
-	/// <item><description><b>JIT-friendly:</b> Compiler can optimize more aggressively</description></item>
-	/// <item><description><b>Type-safe:</b> Compiler verifies property access at compile time</description></item>
-	/// <item><description><b>Null-safe:</b> No risk of NullReferenceException</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Opposite of IsEmpty:</b>
-	/// </para>
-	/// <para>
-	/// This method is the logical inverse of <see cref="IsEmpty(string?)"/>. The relationship is:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><see cref="IsEmpty(string?)"/> returns <c>true</c> when input is <c>null</c> or <c>""</c></description></item>
-	/// <item><description><see cref="IsNotEmpty(string?)"/> returns <c>true</c> when input has content (length > 0)</description></item>
-	/// <item><description><c>input.IsEmpty() == !input.IsNotEmpty()</c> (always true)</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Common Use Cases:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Validating required string input before processing</description></item>
-	/// <item><description>Guard clauses to ensure non-empty strings</description></item>
-	/// <item><description>LINQ queries filtering out empty strings</description></item>
-	/// <item><description>Conditional logic based on string presence</description></item>
-	/// <item><description>Input validation in user interfaces</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Note:</b> This method considers whitespace-only strings as "not empty". For checking if a string 
-	/// contains meaningful content (excluding whitespace), use <see cref="string.IsNullOrWhiteSpace(string)"/>.
-	/// </para>
+	/// This method is a lightweight alternative to <see cref="string.IsNullOrEmpty(string)"/> when only the
+	/// non-empty case is of interest, and uses pattern matching for fast length checking.
 	/// </remarks>
-	/// <example>
-	/// Basic usage:
-	/// <code>
-	/// string text = "Hello";
-	/// bool hasContent = text.IsNotEmpty();
-	/// // Returns: true
-	/// </code>
-	/// 
-	/// Null string:
-	/// <code>
-	/// string nullString = null;
-	/// bool result = nullString.IsNotEmpty();
-	/// // Returns: false
-	/// </code>
-	/// 
-	/// Empty string:
-	/// <code>
-	/// string empty = "";
-	/// bool result = empty.IsNotEmpty();
-	/// // Returns: false
-	/// </code>
-	/// 
-	/// Whitespace string (considered non-empty):
-	/// <code>
-	/// string spaces = "   ";
-	/// bool result = spaces.IsNotEmpty();
-	/// // Returns: true (has length > 0, even though it's only whitespace)
-	/// </code>
-	/// 
-	/// Guard clause pattern:
-	/// <code>
-	/// public void ProcessData(string data)
-	/// {
-	///     if (!data.IsNotEmpty())
-	///     {
-	///         throw new ArgumentException("Data cannot be null or empty", nameof(data));
-	///     }
-	///     
-	///     // Process non-empty data
-	///     Console.WriteLine($"Processing: {data}");
-	/// }
-	/// </code>
-	/// 
-	/// LINQ filtering:
-	/// <code>
-	/// string[] items = { "apple", "", "banana", null, "cherry", "   " };
-	/// var nonEmptyItems = items.Where(s => s.IsNotEmpty());
-	/// // Returns: { "apple", "banana", "cherry", "   " }
-	/// // Note: whitespace-only string is included
-	/// </code>
-	/// 
-	/// Conditional processing:
-	/// <code>
-	/// string userInput = GetUserInput();
-	/// 
-	/// if (userInput.IsNotEmpty())
-	/// {
-	///     SaveToDatabase(userInput);
-	///     Console.WriteLine("Input saved successfully");
-	/// }
-	/// else
-	/// {
-	///     Console.WriteLine("No input provided");
-	/// }
-	/// </code>
-	/// 
-	/// Comparison with IsEmpty:
-	/// <code>
-	/// string test1 = "Hello";
-	/// Console.WriteLine(test1.IsEmpty());      // False
-	/// Console.WriteLine(test1.IsNotEmpty());   // True
-	/// 
-	/// string test2 = "";
-	/// Console.WriteLine(test2.IsEmpty());      // True
-	/// Console.WriteLine(test2.IsNotEmpty());   // False
-	/// 
-	/// string test3 = null;
-	/// Console.WriteLine(test3.IsEmpty());      // True
-	/// Console.WriteLine(test3.IsNotEmpty());   // False
-	/// </code>
-	/// 
-	/// Using in collection initialization:
-	/// <code>
-	/// var names = new List&lt;string&gt; { "Alice", "", "Bob", null, "Charlie" };
-	/// var validNames = names.Where(name => name.IsNotEmpty()).ToList();
-	/// // Returns: { "Alice", "Bob", "Charlie" }
-	/// </code>
-	/// </example>
-	/// <seealso cref="IsEmpty(string?)"/>
-	/// <seealso cref="string.IsNullOrEmpty(string)"/>
-	/// <seealso cref="string.IsNullOrWhiteSpace(string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsNotEmpty), "David McCarter", "8/18/20", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsNotEmpty(this string? input) => input is { Length: > 0 };
@@ -1450,107 +1304,30 @@ public static class StringExtensions
 		return input;
 	}
 
-
 	/// <summary>
-	/// Splits a string into substrings using a single character delimiter and returns them as a read-only collection.
+	/// Splits the specified string into a read-only collection of substrings using a single character delimiter.
 	/// </summary>
 	/// <param name="input">The string to split. Must not be <c>null</c> or empty.</param>
 	/// <param name="options">
-	/// A bitwise combination of <see cref="StringSplitOptions"/> values that specifies whether to trim substrings 
-	/// and include empty substrings in the returned collection.
+	/// A bitwise combination of <see cref="StringSplitOptions"/> values that specifies whether to trim
+	/// substrings and whether to remove empty substrings from the result.
 	/// </param>
 	/// <param name="delimiter">
 	/// The character delimiter used to separate substrings. Defaults to <see cref="ControlChars.Comma"/>.
 	/// </param>
 	/// <returns>
-	/// A <see cref="ReadOnlyCollection{T}"/> of strings containing the substrings delimited by <paramref name="delimiter"/>.
-	/// The returned collection is immutable and provides thread-safe read access.
+	/// A <see cref="ReadOnlyCollection{T}"/> of strings containing the substrings that were delimited by
+	/// <paramref name="delimiter"/> in <paramref name="input"/>. The behavior regarding empty and trimmed
+	/// entries is controlled by <paramref name="options"/>.
 	/// </returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is empty.</exception>
 	/// <remarks>
-	/// This method wraps the standard <see cref="string.Split(char[], StringSplitOptions)"/> method and returns the result 
-	/// as a read-only collection for improved immutability and type safety.
-	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses case-sensitive ordinal comparison for delimiter matching</description></item>
-	/// <item><description>Culture-insensitive: Behavior is consistent across all cultures</description></item>
-	/// <item><description>Wraps result in <see cref="ReadOnlyCollection{T}"/> for immutability</description></item>
-	/// <item><description>Time Complexity: O(n) where n = length of input string</description></item>
-	/// <item><description>Space Complexity: O(m) where m = number of resulting substrings</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>StringSplitOptions Behavior:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><see cref="StringSplitOptions.None"/> - Includes empty entries and preserves whitespace</description></item>
-	/// <item><description><see cref="StringSplitOptions.RemoveEmptyEntries"/> - Excludes empty string elements from the result</description></item>
-	/// <item><description><see cref="StringSplitOptions.TrimEntries"/> - Trims whitespace from each substring (.NET 5+)</description></item>
-	/// <item><description>Flags can be combined using bitwise OR: <c>RemoveEmptyEntries | TrimEntries</c></description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Parsing CSV data or comma-separated values</description></item>
-	/// <item><description>Processing delimited configuration strings</description></item>
-	/// <item><description>Splitting user input into tokens</description></item>
-	/// <item><description>Parsing file paths with custom separators</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Note:</strong> Delimiter characters are not included in the returned substrings. Adjacent delimiters 
-	/// produce empty strings in the result unless <see cref="StringSplitOptions.RemoveEmptyEntries"/> is specified.
-	/// </para>
+	/// This method validates <paramref name="input"/> and <paramref name="options"/>, then calls
+	/// <see cref="string.Split(char[], StringSplitOptions)"/> with the specified <paramref name="delimiter"/>
+	/// and wraps the resulting array in a read-only collection via <see cref="Array.AsReadOnly{T}(T[])"/>.
+	/// It is useful when an immutable view of the split results is desired.
 	/// </remarks>
-	/// <example>
-	/// Basic splitting with default comma delimiter:
-	/// <code>
-	/// string data = "apple,banana,cherry";
-	/// var fruits = data.Split(StringSplitOptions.None);
-	/// // Returns: ReadOnlyCollection { "apple", "banana", "cherry" }
-	/// </code>
-	/// 
-	/// Removing empty entries:
-	/// <code>
-	/// string data = "one,,two,,,three";
-	/// var items = data.Split(StringSplitOptions.RemoveEmptyEntries);
-	/// // Returns: ReadOnlyCollection { "one", "two", "three" }
-	/// </code>
-	/// 
-	/// Splitting with custom delimiter:
-	/// <code>
-	/// string path = "C:\\Users\\Documents\\file.txt";
-	/// var parts = path.Split(StringSplitOptions.RemoveEmptyEntries, '\\');
-	/// // Returns: ReadOnlyCollection { "C:", "Users", "Documents", "file.txt" }
-	/// </code>
-	/// 
-	/// Combining options to trim and remove empty entries:
-	/// <code>
-	/// string data = "  alpha  ,  , beta  , gamma  ";
-	/// var cleaned = data.Split(StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-	/// // Returns: ReadOnlyCollection { "alpha", "beta", "gamma" }
-	/// </code>
-	/// 
-	/// Splitting with semicolon delimiter:
-	/// <code>
-	/// string config = "key1=value1;key2=value2;key3=value3";
-	/// var pairs = config.Split(StringSplitOptions.None, ';');
-	/// // Returns: ReadOnlyCollection { "key1=value1", "key2=value2", "key3=value3" }
-	/// </code>
-	/// 
-	/// Processing tab-separated data:
-	/// <code>
-	/// string tsvRow = "Name\tAge\tCity";
-	/// var columns = tsvRow.Split(StringSplitOptions.None, '\t');
-	/// // Returns: ReadOnlyCollection { "Name", "Age", "City" }
-	/// </code>
-	/// </example>
-	/// <seealso cref="string.Split(char[], StringSplitOptions)"/>
-	/// <seealso cref="ReadOnlyCollection{T}"/>
-	/// <seealso cref="StringSplitOptions"/>
-	/// <seealso cref="Array.AsReadOnly{T}(T[])"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, StringSplitOptions options, [ConstantExpected] char delimiter = ControlChars.Comma)
@@ -1606,161 +1383,25 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits a multi-line string into individual lines using a zero-allocation enumerator pattern.
+	/// Splits a multi-line string into individual lines using a zero-allocation enumerator.
 	/// </summary>
 	/// <param name="input">The string to split into lines. Must not be <c>null</c> or empty.</param>
 	/// <returns>
-	/// A <see cref="LineSplitEnumerator"/> that enables efficient enumeration over each line in the string.
-	/// This is a ref struct enumerator that provides zero-allocation iteration.
+	/// A <see cref="LineSplitEnumerator"/> that can be used in a <c>foreach</c> loop to enumerate each line
+	/// as a <see cref="ReadOnlySpan{char}"/> without allocating intermediate strings.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is empty.</exception>
 	/// <remarks>
-	/// This method provides a high-performance, allocation-free way to iterate over lines in a string by leveraging
-	/// <see cref="ReadOnlySpan{T}"/> and the <see cref="LineSplitEnumerator"/> ref struct pattern.
 	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Zero heap allocations - uses stack-only ref struct enumerator</description></item>
-	/// <item><description>No string copying - operates directly on the original string's memory</description></item>
-	/// <item><description>Recognizes all standard line terminators: \r, \n, and \r\n</description></item>
-	/// <item><description>SIMD-accelerated line break detection on supported platforms</description></item>
-	/// <item><description>Time Complexity: O(n) where n = length of input string</description></item>
-	/// <item><description>Space Complexity: O(1) - no heap allocations during enumeration</description></item>
-	/// </list>
+	/// The method validates <paramref name="input"/> via guard clauses and then constructs a
+	/// <see cref="LineSplitEnumerator"/> over the underlying character data. Enumeration recognizes standard
+	/// line terminators (<c>\r</c>, <c>\n</c>, and <c>\r\n</c>) and does not include them in the returned spans.
 	/// </para>
 	/// <para>
-	/// <strong>Performance Optimization (.NET 10):</strong>
+	/// Because <see cref="LineSplitEnumerator"/> is a <c>ref struct</c>, it is stack-only and cannot be boxed,
+	/// captured by lambdas, stored in fields, or used across <c>await</c> boundaries; it is intended for high‑performance,
+	/// synchronous line processing in tight loops.
 	/// </para>
-	/// <para>
-	/// This implementation avoids the overhead of calling <see cref="MemoryExtensions.AsSpan(string)"/> 
-	/// by using implicit conversion. In .NET 10, the JIT can optimize the direct passing of the string 
-	/// to the <see cref="LineSplitEnumerator"/> constructor, which internally accesses the string data 
-	/// without additional method calls.
-	/// </para>
-	/// <para>
-	/// <strong>Why This Is Faster:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>OLD (.NET 8):</b> <c>new LineSplitEnumerator(input.AsSpan())</c> - Explicit AsSpan() call adds overhead</description></item>
-	/// <item><description><b>NEW (.NET 10):</b> <c>new LineSplitEnumerator(input)</c> - Direct conversion optimized by JIT</description></item>
-	/// <item><description>The LineSplitEnumerator constructor accepts ReadOnlySpan&lt;char&gt; which has implicit conversion from string</description></item>
-	/// <item><description>JIT recognizes this pattern and eliminates unnecessary intermediate steps</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Line Terminator Support:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Carriage Return (CR): '\r' - Classic Mac OS line endings</description></item>
-	/// <item><description>Line Feed (LF): '\n' - Unix/Linux/macOS line endings</description></item>
-	/// <item><description>Carriage Return + Line Feed (CRLF): '\r\n' - Windows line endings</description></item>
-	/// <item><description>Handles mixed line endings within the same string</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Processing large text files or logs line-by-line without allocations</description></item>
-	/// <item><description>Parsing CSV, TSV, or other line-delimited data formats</description></item>
-	/// <item><description>Analyzing multi-line configuration files or scripts</description></item>
-	/// <item><description>High-performance text processing in tight loops</description></item>
-	/// <item><description>Real-time log processing with minimal GC pressure</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Important Notes:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><see cref="LineSplitEnumerator"/> is a ref struct and cannot be stored in fields or used in async methods</description></item>
-	/// <item><description>The enumerator returns <see cref="ReadOnlySpan{T}"/> instances that reference the original string</description></item>
-	/// <item><description>Line terminators are not included in the returned spans</description></item>
-	/// <item><description>Empty lines (consecutive line breaks) are preserved as empty spans</description></item>
-	/// <item><description>The last line is included even if it doesn't end with a line terminator</description></item>
-	/// </list>
 	/// </remarks>
-	/// <example>
-	/// Basic line-by-line enumeration:
-	/// <code>
-	/// string multiLineText = "Line 1\nLine 2\nLine 3";
-	/// 
-	/// foreach (var line in multiLineText.SplitLines())
-	/// {
-	///     Console.WriteLine($"Length: {line.Length}, Content: {line}");
-	/// }
-	/// // Output:
-	/// // Length: 6, Content: Line 1
-	/// // Length: 6, Content: Line 2
-	/// // Length: 6, Content: Line 3
-	/// </code>
-	/// 
-	/// Processing mixed line endings:
-	/// <code>
-	/// string mixedText = "Windows\r\nUnix\nMac\rEnd";
-	/// 
-	/// foreach (var line in mixedText.SplitLines())
-	/// {
-	///     Console.WriteLine(line.ToString());
-	/// }
-	/// // Output:
-	/// // Windows
-	/// // Unix
-	/// // Mac
-	/// // End
-	/// </code>
-	/// 
-	/// Handling empty lines:
-	/// <code>
-	/// string textWithEmptyLines = "First\n\nThird\n";
-	/// 
-	/// int lineCount = 0;
-	/// foreach (var line in textWithEmptyLines.SplitLines())
-	/// {
-	///     lineCount++;
-	///     Console.WriteLine($"Line {lineCount}: '{line}' (Length: {line.Length})");
-	/// }
-	/// // Output:
-	/// // Line 1: 'First' (Length: 5)
-	/// // Line 2: '' (Length: 0)
-	/// // Line 3: 'Third' (Length: 5)
-	/// // Line 4: '' (Length: 0)
-	/// </code>
-	/// 
-	/// Zero-allocation log processing:
-	/// <code>
-	/// string logData = File.ReadAllText("large.log");
-	/// int errorCount = 0;
-	/// 
-	/// // No allocations during enumeration
-	/// foreach (var line in logData.SplitLines())
-	/// {
-	///     if (line.Contains("ERROR", StringComparison.OrdinalIgnoreCase))
-	///     {
-	///         errorCount++;
-	///     }
-	/// }
-	/// 
-	/// Console.WriteLine($"Found {errorCount} errors");
-	/// </code>
-	/// 
-	/// Manual enumerator usage (advanced):
-	/// <code>
-	/// string text = "Alpha\nBeta\nGamma";
-	/// var enumerator = text.SplitLines();
-	/// 
-	/// while (enumerator.MoveNext())
-	/// {
-	///     ReadOnlySpan&lt;char&gt; currentLine = enumerator.Current;
-	///     // Process line without allocation
-	///     if (currentLine.Length > 3)
-	///     {
-	///         Console.WriteLine($"Long line: {currentLine}");
-	///     }
-	/// }
-	/// </code>
-	/// </example>
-	/// <seealso cref="LineSplitEnumerator"/>
-	/// <seealso cref="ReadOnlySpan{T}"/>
-	/// <seealso cref="string.Split(char[], StringSplitOptions)"/>
-	/// <seealso cref="MemoryExtensions"/>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SplitLines), "David McCarter", "6/9/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed)]
@@ -1774,119 +1415,22 @@ public static class StringExtensions
 	/// <summary>
 	/// Splits a comma-delimited string into a read-only collection of non-empty substrings.
 	/// </summary>
-	/// <param name="input">The string to split. Must not be <c>null</c> or empty.</param>
+	/// <param name="input">The comma-delimited string to split. Must not be <c>null</c> or empty.</param>
 	/// <returns>
-	/// A <see cref="ReadOnlyCollection{T}"/> of strings containing all non-empty substrings from the comma-delimited input.
-	/// The collection is immutable and provides thread-safe read access. Leading and trailing whitespace is trimmed from the input.
+	/// A <see cref="ReadOnlyCollection{T}"/> of strings containing all non-empty segments from the trimmed
+	/// <paramref name="input"/>, split on <see cref="ControlChars.Comma"/>. Empty entries are removed.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is empty.</exception>
 	/// <remarks>
-	/// This method is a convenience wrapper that combines trimming, splitting by comma, and removing empty entries 
-	/// in a single operation. It automatically trims the input string before splitting.
 	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses <see cref="ControlChars.Comma"/> as the fixed delimiter</description></item>
-	/// <item><description>Automatically applies <see cref="StringSplitOptions.RemoveEmptyEntries"/></description></item>
-	/// <item><description>Trims input string before processing</description></item>
-	/// <item><description>Returns immutable <see cref="ReadOnlyCollection{T}"/> for type safety</description></item>
-	/// <item><description>Time Complexity: O(n) where n = length of input string</description></item>
-	/// <item><description>Space Complexity: O(m) where m = number of non-empty substrings</description></item>
-	/// </list>
+	/// This method first validates and trims <paramref name="input"/>, then splits it on commas using
+	/// <see cref="string.Split(char[], StringSplitOptions)"/> with <see cref="StringSplitOptions.RemoveEmptyEntries"/>.
+	/// The resulting array is then wrapped in a read-only collection for safe, immutable consumption.
 	/// </para>
 	/// <para>
-	/// <strong>Behavior Details:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Empty strings between consecutive commas are excluded from results</description></item>
-	/// <item><description>Leading and trailing commas do not produce empty entries</description></item>
-	/// <item><description>Whitespace-only entries between commas are included (not trimmed individually)</description></item>
-	/// <item><description>The delimiter (comma) is never included in the returned substrings</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Parsing CSV data where empty values should be ignored</description></item>
-	/// <item><description>Processing comma-separated lists from configuration files</description></item>
-	/// <item><description>Splitting tag lists or keyword strings</description></item>
-	/// <item><description>Parsing user input with optional comma-separated values</description></item>
-	/// <item><description>Processing enumeration strings or flag lists</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Note:</strong> This method only trims the entire input string, not individual substrings. 
-	/// If you need to trim whitespace from each resulting substring, consider using 
-	/// <see cref="Split(string, StringSplitOptions, char)"/> with 
-	/// <see cref="StringSplitOptions.RemoveEmptyEntries"/> | <see cref="StringSplitOptions.TrimEntries"/>.
+	/// It is a convenience helper for common comma-separated scenarios where empty items should be ignored
+	/// and the caller only needs an immutable, read-only view of the results.
 	/// </para>
 	/// </remarks>
-	/// <example>
-	/// Basic comma-separated list:
-	/// <code>
-	/// string data = "apple,banana,cherry";
-	/// var fruits = data.SplitRemoveEmpty();
-	/// // Returns: ReadOnlyCollection { "apple", "banana", "cherry" }
-	/// </code>
-	/// 
-	/// Handling empty entries between commas:
-	/// <code>
-	/// string data = "one,,two,,,three";
-	/// var items = data.SplitRemoveEmpty();
-	/// // Returns: ReadOnlyCollection { "one", "two", "three" }
-	/// </code>
-	/// 
-	/// Leading and trailing commas:
-	/// <code>
-	/// string data = ",alpha,beta,gamma,";
-	/// var values = data.SplitRemoveEmpty();
-	/// // Returns: ReadOnlyCollection { "alpha", "beta", "gamma" }
-	/// </code>
-	/// 
-	/// Whitespace handling (input trimmed, but entries not individually trimmed):
-	/// <code>
-	/// string data = "  red, green , blue  ";
-	/// var colors = data.SplitRemoveEmpty();
-	/// // Returns: ReadOnlyCollection { "red", " green ", " blue" }
-	/// // Note: Individual entries retain their internal whitespace
-	/// </code>
-	/// 
-	/// Empty string after trimming:
-	/// <code>
-	/// string data = "   ";
-	/// var empty = data.SplitRemoveEmpty();
-	/// // Returns: ReadOnlyCollection { } (empty collection)
-	/// </code>
-	/// 
-	/// Processing configuration values:
-	/// <code>
-	/// string configValue = "Debug,Release,Test";
-	/// var configurations = configValue.SplitRemoveEmpty();
-	/// foreach (var config in configurations)
-	/// {
-	///     Console.WriteLine($"Configuration: {config}");
-	/// }
-	/// // Output:
-	/// // Configuration: Debug
-	/// // Configuration: Release
-	/// // Configuration: Test
-	/// </code>
-	/// 
-	/// Using with LINQ:
-	/// <code>
-	/// string tags = "c#,dotnet,,azure,,,cloud";
-	/// var uniqueTags = tags.SplitRemoveEmpty()
-	///                      .Select(t => t.Trim())
-	///                      .Distinct()
-	///                      .OrderBy(t => t);
-	/// // Returns sorted unique tags with whitespace trimmed
-	/// </code>
-	/// </example>
-	/// <seealso cref="Split(string, StringSplitOptions, char)"/>
-	/// <seealso cref="DelimitedStringToArray(string, char)"/>
-	/// <seealso cref="ReadOnlyCollection{T}"/>
-	/// <seealso cref="StringSplitOptions.RemoveEmptyEntries"/>
-	/// <seealso cref="ControlChars.Comma"/>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SplitRemoveEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -1930,123 +1474,41 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Extracts a substring from the specified range of the string and trims leading and trailing whitespace from the result.
+	/// Extracts a substring from the specified range of the string and trims leading and trailing whitespace.
 	/// </summary>
-	/// <param name="input">The string from which to extract and trim the substring. Can be <c>null</c> or empty.</param>
-	/// <param name="startIndex">The zero-based starting character position of the substring. Must be non-negative.</param>
-	/// <param name="length">The number of characters in the substring. Must be non-negative.</param>
+	/// <param name="input">
+	/// The source string from which to extract the substring. Can be <c>null</c> or empty.
+	/// </param>
+	/// <param name="startIndex">
+	/// The zero-based starting character position of the substring. Must be greater than or equal to zero.
+	/// </param>
+	/// <param name="length">
+	/// The number of characters to include in the substring. Must be greater than or equal to zero.
+	/// </param>
 	/// <returns>
-	/// A new string that represents the trimmed substring starting at <paramref name="startIndex"/> with the specified <paramref name="length"/>.
-	/// Returns <see cref="ControlChars.EmptyString"/> if <paramref name="input"/> is <c>null</c> or empty.
-	/// Leading and trailing whitespace characters are removed from the extracted substring.
+	/// A new string that represents the substring of <paramref name="input"/> starting at
+	/// <paramref name="startIndex"/> with the specified <paramref name="length"/>, with all leading and
+	/// trailing whitespace removed. Returns <see cref="ControlChars.EmptyString"/> if
+	/// <paramref name="input"/> is <c>null</c> or empty.
 	/// </returns>
 	/// <exception cref="ArgumentOutOfRangeException">
-	/// Thrown when:
-	/// <list type="bullet">
-	/// <item><description><paramref name="startIndex"/> is less than zero.</description></item>
-	/// <item><description><paramref name="length"/> is less than zero.</description></item>
-	/// <item><description><paramref name="startIndex"/> + <paramref name="length"/> exceeds the length of <paramref name="input"/>.</description></item>
-	/// </list>
+	/// Thrown when <paramref name="startIndex"/> is less than 0, <paramref name="length"/> is less than 0,
+	/// or <paramref name="startIndex"/> + <paramref name="length"/> exceeds the length of
+	/// <paramref name="input"/>.
 	/// </exception>
 	/// <remarks>
-	/// This method combines substring extraction with whitespace trimming in a single operation, providing
-	/// a convenient alternative to chaining <see cref="string.Substring(int, int)"/> with <see cref="string.Trim()"/>.
 	/// <para>
-	/// <strong>Performance Characteristics (.NET 10):</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses <see cref="MemoryExtensions.AsSpan(string, int, int)"/> for zero-allocation substring extraction</description></item>
-	/// <item><description>Converts span to string before calling <see cref="string.Trim()"/> to remove whitespace</description></item>
-	/// <item><description>Early exit returns empty string for null or empty input</description></item>
-	/// <item><description>Time Complexity: O(n) where n = <paramref name="length"/></description></item>
-	/// <item><description>Space Complexity: O(n) for the resulting trimmed string</description></item>
-	/// <item><description>Two string allocations: one for span conversion, one for trim result</description></item>
-	/// </list>
+	/// This method combines substring extraction and trimming into a single operation. It uses
+	/// string.AsSpan() to slice the underlying characters without intermediate allocations,
+	/// then converts the span to a string and invokes <see cref="string.Trim()"/> to remove leading and
+	/// trailing whitespace.
 	/// </para>
 	/// <para>
-	/// <strong>Whitespace Characters:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Space (U+0020), Tab (U+0009), Line Feed (U+000A), Carriage Return (U+000D)</description></item>
-	/// <item><description>All Unicode whitespace characters as defined by <see cref="char.IsWhiteSpace(char)"/></description></item>
-	/// <item><description>Includes non-breaking spaces, zero-width spaces, and other Unicode whitespace</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Common Use Cases:</strong>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Extracting and cleaning substrings from fixed-width formatted data</description></item>
-	/// <item><description>Parsing delimited text where fields may contain leading/trailing whitespace</description></item>
-	/// <item><description>Processing log file entries with fixed-position fields</description></item>
-	/// <item><description>Extracting tokens from parsed strings while removing padding</description></item>
-	/// <item><description>Working with CSV or TSV data that needs whitespace normalization</description></item>
-	/// </list>
-	/// <para>
-	/// <strong>Note:</strong> This method creates a new string and does not modify the original <paramref name="input"/>.
-	/// The substring is extracted first, then whitespace is trimmed from the result.
+	/// When <paramref name="input"/> is <c>null</c> or empty, the method returns
+	/// <see cref="ControlChars.EmptyString"/> instead of throwing, preserving the original behavior
+	/// used throughout Spargine.
 	/// </para>
 	/// </remarks>
-	/// <example>
-	/// Basic substring extraction with trimming:
-	/// <code>
-	/// string text = "  Hello World  ";
-	/// string result = text.SubstringTrim(2, 11);
-	/// // Returns: "Hello World" (leading/trailing spaces removed)
-	/// </code>
-	/// 
-	/// Extracting from fixed-width data:
-	/// <code>
-	/// string record = "John      Doe       30";
-	/// string firstName = record.SubstringTrim(0, 10);   // Returns: "John"
-	/// string lastName = record.SubstringTrim(10, 12);   // Returns: "Doe"
-	/// string age = record.SubstringTrim(22, 2);         // Returns: "30"
-	/// </code>
-	/// 
-	/// Handling null or empty strings:
-	/// <code>
-	/// string nullString = null;
-	/// string result = nullString.SubstringTrim(0, 5);
-	/// // Returns: "" (empty string)
-	/// 
-	/// string emptyString = "";
-	/// string result2 = emptyString.SubstringTrim(0, 0);
-	/// // Returns: "" (empty string)
-	/// </code>
-	/// 
-	/// Parsing delimited data:
-	/// <code>
-	/// string csv = "Alpha, Beta , Gamma ";
-	/// int start = 0;
-	/// int commaPos = csv.IndexOf(',');
-	/// string field1 = csv.SubstringTrim(start, commaPos);
-	/// // Returns: "Alpha" (comma and spaces trimmed)
-	/// </code>
-	/// 
-	/// ArgumentOutOfRangeException examples:
-	/// <code>
-	/// string text = "Hello";
-	/// 
-	/// // Throws ArgumentOutOfRangeException: startIndex &lt; 0
-	/// string result1 = text.SubstringTrim(-1, 5);
-	/// 
-	/// // Throws ArgumentOutOfRangeException: length &lt; 0
-	/// string result2 = text.SubstringTrim(0, -1);
-	/// 
-	/// // Throws ArgumentOutOfRangeException: startIndex + length &gt; text.Length
-	/// string result3 = text.SubstringTrim(3, 10);
-	/// </code>
-	/// 
-	/// Extracting and cleaning log entries:
-	/// <code>
-	/// string logLine = "[2024-01-04]   ERROR   Database connection failed   ";
-	/// string timestamp = logLine.SubstringTrim(1, 10);    // Returns: "2024-01-04"
-	/// string level = logLine.SubstringTrim(13, 10);       // Returns: "ERROR"
-	/// string message = logLine.SubstringTrim(24, 30);     // Returns: "Database connection failed"
-	/// </code>
-	/// </example>
-	/// <seealso cref="string.Substring(int, int)"/>
-	/// <seealso cref="string.Trim()"/>
-	/// <seealso cref="MemoryExtensions.AsSpan(string, int, int)"/>
-	/// <seealso cref="ControlChars.EmptyString"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[return: NotNull]
 	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -2067,139 +1529,26 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Encodes the input string into its Base64 representation using ASCII encoding.
+	/// Encodes the specified string into a Base64 string using ASCII encoding.
 	/// </summary>
-	/// <param name="input">The string to encode. Must not be <c>null</c> or empty.</param>
-	/// <returns>A Base64 encoded string representation of the input.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="input"/> is empty.</exception>
+	/// <param name="input">
+	/// The string to encode. Must not be <c>null</c> or empty; validated via guard clauses.
+	/// Only characters in the ASCII range (U+0000–U+007F) are preserved exactly.
+	/// </param>
+	/// <returns>
+	/// A Base64-encoded string representing the ASCII byte sequence of <paramref name="input"/>.
+	/// </returns>
 	/// <remarks>
 	/// <para>
-	/// <b>✅ Performance Optimized (.NET 10):</b> This method uses <see cref="Convert.ToBase64String(byte[])"/> 
-	/// which is highly optimized in .NET 10 with vectorized SIMD operations for faster encoding.
+	/// This method uses a cached <see cref="ASCIIEncoding"/> instance and <see cref="Convert.ToBase64String(byte[])"/>
+	/// for high-throughput encoding in .NET 10.
 	/// </para>
 	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>Time complexity:</b> O(n) where n is the length of the input string</description></item>
-	/// <item><description><b>Space complexity:</b> O(n) - allocates byte array and Base64 string</description></item>
-	/// <item><description><b>SIMD acceleration:</b> Uses vectorized operations for Base64 encoding in .NET 10</description></item>
-	/// <item><description><b>Encoding:</b> Uses ASCII encoding (1 byte per character, 0-127 range only)</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Important - ASCII Encoding Limitation:</b>
-	/// </para>
-	/// <para>
-	/// This method uses <see cref="ASCIIEncoding"/> which only supports characters in the range 0-127 (U+0000 to U+007F).
-	/// Characters outside this range (e.g., accented letters, emoji, non-Latin scripts) will be replaced with '?' (question mark).
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description><b>✅ Safe for:</b> English letters (A-Z, a-z), numbers (0-9), basic punctuation</description></item>
-	/// <item><description><b>❌ Unsafe for:</b> Unicode characters, accented letters (é, ñ, ü), emoji, Asian characters</description></item>
-	/// <item><description><b>Replacement:</b> Non-ASCII characters are silently replaced with '?' during encoding</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Alternative Encodings:</b>
-	/// </para>
-	/// <para>
-	/// If you need to preserve Unicode characters, consider using <see cref="Encoding.UTF8"/> instead:
-	/// </para>
-	/// <code>
-	/// // For Unicode support, use UTF-8 encoding
-	/// string input = "Hello 世界!"; // Contains Chinese characters
-	/// byte[] bytes = Encoding.UTF8.GetBytes(input);
-	/// string base64 = Convert.ToBase64String(bytes);
-	/// // Decoding
-	/// byte[] decodedBytes = Convert.FromBase64String(base64);
-	/// string decoded = Encoding.UTF8.GetString(decodedBytes); // Returns: "Hello 世界!"
-	/// </code>
-	/// <para>
-	/// <b>Base64 Encoding Format:</b>
-	/// </para>
-	/// <para>
-	/// Base64 encoding converts binary data into a text representation using 64 printable ASCII characters:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>A-Z (uppercase letters)</description></item>
-	/// <item><description>a-z (lowercase letters)</description></item>
-	/// <item><description>0-9 (digits)</description></item>
-	/// <item><description>+ and / (symbols)</description></item>
-	/// <item><description>= (padding character)</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Output Size:</b> Base64 encoding increases the size by approximately 33%. For every 3 bytes of input, 
-	/// you get 4 characters of Base64 output.
-	/// </para>
-	/// <para>
-	/// <b>Common Use Cases:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Encoding binary data for transmission over text-based protocols (email, HTTP)</description></item>
-	/// <item><description>Storing binary data in text-based formats (JSON, XML)</description></item>
-	/// <item><description>Encoding authentication tokens and API keys</description></item>
-	/// <item><description>Data URLs for embedding images in HTML/CSS</description></item>
-	/// <item><description>Encoding configuration data that must be human-readable but preserve binary accuracy</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Note:</b> Base64 encoding is <b>not encryption</b>. It's a reversible encoding scheme that provides no security.
-	/// Base64 encoded data can be easily decoded by anyone.
+	/// Non-ASCII characters (code points &gt; 0x7F) are replaced with <c>'?'</c> by <see cref="ASCIIEncoding"/>,
+	/// so this API is appropriate only for pure ASCII text (e.g., protocol tokens, headers, identifiers).
+	/// For full Unicode preservation, prefer a UTF-8 based encoder instead.
 	/// </para>
 	/// </remarks>
-	/// <example>
-	/// Basic Base64 encoding:
-	/// <code>
-	/// string text = "Hello, World!";
-	/// string encoded = text.ToBase64();
-	/// // Returns: "SGVsbG8sIFdvcmxkIQ=="
-	/// </code>
-	/// 
-	/// ASCII-only characters work correctly:
-	/// <code>
-	/// string ascii = "ABC123!@#";
-	/// string encoded = ascii.ToBase64();
-	/// // Returns: "QUJDMTIzIUAj"
-	/// // Can be decoded back perfectly using FromBase64()
-	/// </code>
-	/// 
-	/// ⚠️ Non-ASCII characters are replaced with '?':
-	/// <code>
-	/// string unicode = "Café";
-	/// string encoded = unicode.ToBase64();
-	/// // Returns encoding of "Caf?" because 'é' (U+00E9) is replaced with '?'
-	/// // ❌ Original text is LOST during encoding!
-	/// </code>
-	/// 
-	/// Encoding binary-safe ASCII data:
-	/// <code>
-	/// string data = "user:password";
-	/// string authHeader = data.ToBase64();
-	/// // Returns: "dXNlcjpwYXNzd29yZA=="
-	/// // Used in HTTP Basic Authentication headers
-	/// </code>
-	/// 
-	/// Round-trip encoding and decoding (ASCII only):
-	/// <code>
-	/// string original = "Test123";
-	/// string encoded = original.ToBase64();
-	/// string decoded = encoded.FromBase64();
-	/// bool matches = original == decoded; // Returns: true (for ASCII only!)
-	/// </code>
-	/// 
-	/// Size increase demonstration:
-	/// <code>
-	/// string small = "Hi";       // 2 characters
-	/// string encoded = small.ToBase64();
-	/// // Returns: "SGk=" (4 characters - 100% size increase)
-	/// 
-	/// string medium = "Hello";   // 5 characters
-	/// string encoded2 = medium.ToBase64();
-	/// // Returns: "SGVsbG8=" (8 characters - 60% size increase)
-	/// </code>
-	/// </example>
-	/// <seealso cref="FromBase64(string)"/>
-	/// <seealso cref="Convert.ToBase64String(byte[])"/>
-	/// <seealso cref="ASCIIEncoding"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToBase64), "David McCarter", "10/8/2020", "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ToBase64([DisallowNull] this string input)
@@ -2391,142 +1740,19 @@ public static class StringExtensions
 	/// </summary>
 	/// <param name="input">The string to trim. Can be <c>null</c>.</param>
 	/// <returns>
-	/// A new string with all leading and trailing whitespace characters removed, or <c>null</c> if <paramref name="input"/> is <c>null</c>.
-	/// If the input string is empty or contains only whitespace, returns <see cref="string.Empty"/>.
+	/// A new string with all leading and trailing whitespace characters removed, or <c>null</c> if
+	/// <paramref name="input"/> is <c>null</c>. If the input string is empty or contains only whitespace,
+	/// returns <see cref="string.Empty"/>.
 	/// </returns>
 	/// <remarks>
-	/// <para>
-	/// <b>✅ Performance Optimized (.NET 10):</b> This method uses <see cref="string.Trim()"/> which is highly optimized 
-	/// in .NET 10 with SIMD acceleration for faster whitespace detection and removal.
-	/// </para>
-	/// <para>
-	/// <b>Performance Characteristics:</b>
-	/// </para>
+	/// This method is a null-safe wrapper around <see cref="string.Trim()"/>. It:
 	/// <list type="bullet">
-	/// <item><description><b>Time complexity:</b> O(n) where n is the length of the string</description></item>
-	/// <item><description><b>Space complexity:</b> O(k) where k is the length of the trimmed result</description></item>
-	/// <item><description><b>SIMD acceleration:</b> Uses vectorized operations for whitespace scanning in .NET 10</description></item>
-	/// <item><description><b>String interning:</b> If trim removes nothing, returns the original string instance (zero allocation)</description></item>
-	/// <item><description><b>Early exit:</b> Returns immediately for null input</description></item>
+	/// <item>Returns <c>null</c> unchanged.</item>
+	/// <item>Returns <see cref="string.Empty"/> for empty or whitespace-only values.</item>
+	/// <item>Relies on <see cref="string.Trim()"/>, which is SIMD-optimized in .NET 10 and returns the original
+	/// instance when no trimming is required (avoiding extra allocations).</item>
 	/// </list>
-	/// <para>
-	/// <b>Whitespace Characters Removed:</b>
-	/// </para>
-	/// <para>
-	/// The <see cref="string.Trim()"/> method removes all leading and trailing instances of whitespace characters as defined by 
-	/// <see cref="char.IsWhiteSpace(char)"/>, which includes:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Space (U+0020)</description></item>
-	/// <item><description>Character Tabulation (U+0009)</description></item>
-	/// <item><description>Line Feed (U+000A)</description></item>
-	/// <item><description>Line Tabulation (U+000B)</description></item>
-	/// <item><description>Form Feed (U+000C)</description></item>
-	/// <item><description>Carriage Return (U+000D)</description></item>
-	/// <item><description>Next Line (U+0085)</description></item>
-	/// <item><description>Non-breaking Space (U+00A0)</description></item>
-	/// <item><description>All other Unicode space separators (category Zs)</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Return Value Behavior:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>If <paramref name="input"/> is <c>null</c>, returns <c>null</c></description></item>
-	/// <item><description>If <paramref name="input"/> is empty, returns <see cref="string.Empty"/></description></item>
-	/// <item><description>If <paramref name="input"/> contains only whitespace, returns <see cref="string.Empty"/></description></item>
-	/// <item><description>If no whitespace exists at start or end, returns the original <paramref name="input"/> instance (no allocation)</description></item>
-	/// <item><description>Otherwise, returns a new string with whitespace removed</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Performance Optimization in .NET 10:</b>
-	/// </para>
-	/// <para>
-	/// The <see cref="string.Trim()"/> method in .NET 10 includes several optimizations:
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>SIMD-accelerated whitespace scanning for faster detection</description></item>
-	/// <item><description>Early termination when no trimming is needed</description></item>
-	/// <item><description>Optimized for common ASCII whitespace (space, tab)</description></item>
-	/// <item><description>Single-pass algorithm that identifies trim ranges efficiently</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Common Use Cases:</b>
-	/// </para>
-	/// <list type="bullet">
-	/// <item><description>Normalizing user input from forms or text fields</description></item>
-	/// <item><description>Cleaning data read from files or external sources</description></item>
-	/// <item><description>Processing strings that may have formatting whitespace</description></item>
-	/// <item><description>Preparing strings for comparison or storage</description></item>
-	/// <item><description>Sanitizing configuration values</description></item>
-	/// </list>
-	/// <para>
-	/// <b>Note:</b> This method does not trim whitespace from the interior of the string, only from the beginning and end.
-	/// </para>
 	/// </remarks>
-	/// <example>
-	/// Basic trimming:
-	/// <code>
-	/// string text = "  Hello World  ";
-	/// string trimmed = text.ToTrimmed();
-	/// // Returns: "Hello World"
-	/// </code>
-	/// 
-	/// Null handling:
-	/// <code>
-	/// string nullString = null;
-	/// string result = nullString.ToTrimmed();
-	/// // Returns: null
-	/// </code>
-	/// 
-	/// Empty string handling:
-	/// <code>
-	/// string empty = "";
-	/// string result = empty.ToTrimmed();
-	/// // Returns: "" (string.Empty)
-	/// </code>
-	/// 
-	/// Whitespace-only string:
-	/// <code>
-	/// string spaces = "     ";
-	/// string result = spaces.ToTrimmed();
-	/// // Returns: "" (string.Empty)
-	/// </code>
-	/// 
-	/// No trimming needed (returns same instance):
-	/// <code>
-	/// string clean = "Hello";
-	/// string result = clean.ToTrimmed();
-	/// // Returns: "Hello" (same reference as input - zero allocation!)
-	/// Console.WriteLine(ReferenceEquals(clean, result)); // True
-	/// </code>
-	/// 
-	/// Various whitespace characters:
-	/// <code>
-	/// string text = "\t  Hello\n\r  ";
-	/// string trimmed = text.ToTrimmed();
-	/// // Returns: "Hello"
-	/// </code>
-	/// 
-	/// Processing user input:
-	/// <code>
-	/// string userInput = textBox.Text;
-	/// string cleanInput = userInput.ToTrimmed();
-	/// if (cleanInput == null || cleanInput.Length == 0)
-	/// {
-	///     // Handle empty input
-	/// }
-	/// </code>
-	/// 
-	/// Safe chaining with null:
-	/// <code>
-	/// string result = GetOptionalValue()?.ToTrimmed();
-	/// // If GetOptionalValue() returns null, result is null (no NullReferenceException)
-	/// </code>
-	/// </example>
-	/// <seealso cref="string.Trim()"/>
-	/// <seealso cref="string.TrimStart()"/>
-	/// <seealso cref="string.TrimEnd()"/>
-	/// <seealso cref="char.IsWhiteSpace(char)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToTrimmed), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string? ToTrimmed([AllowNull] this string input)

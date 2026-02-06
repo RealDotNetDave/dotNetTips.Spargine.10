@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 02-06-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -109,42 +109,38 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Adds a range of items to the list if they do not already exist in the list, using a custom equality comparer.
+		/// Adds a range of items to the list only if they do not already exist in the list.
 		/// </summary>
-		/// <param name="items">The items to add if not already present.</param>
+		/// <param name="items">
+		/// The items to add if not already present in the target list. If <paramref name="items"/> is <c>null</c>,
+		/// the method returns without modifying the list.
+		/// </param>
 		/// <param name="comparer">
-		/// The <see cref="IEqualityComparer{T}"/> to use for comparing elements for equality.
+		/// The <see cref="IEqualityComparer{T}"/> used to determine item equality.
 		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
 		/// </param>
 		/// <remarks>
 		/// <para>
-		/// This method uses a <see cref="HashSet{T}"/> for O(1) lookups to efficiently determine which items are new.
-		/// The comparer (or the default comparer if null) is used both for the HashSet and for equality comparisons.
+		/// This method builds a <see cref="HashSet{T}"/> from the existing list contents using the specified comparer
+		/// to provide O(1) average-time lookups when determining whether each candidate item is already present.
+		/// Only items that are not in the set are appended to the list.
 		/// </para>
 		/// <para>
 		/// <b>Performance characteristics:</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description>Time complexity: O(n + m) where n is the list size and m is the number of items to add</description></item>
-		/// <item><description>Space complexity: O(n) for the temporary HashSet</description></item>
-		/// <item><description>Significantly faster than repeated Contains() calls for large collections</description></item>
+		/// <item><description>Time complexity: O(n + m), where <c>n</c> is the current list size and <c>m</c> is the number of items to add.</description></item>
+		/// <item><description>Space complexity: O(n) for the temporary <see cref="HashSet{T}"/>.</description></item>
+		/// <item><description>Typically much faster than repeatedly calling <see cref="List{T}.Contains(T)"/> for large collections.</description></item>
 		/// </list>
 		/// </remarks>
 		/// <example>
-		/// This example shows how to add items with a case-insensitive string comparer:
 		/// <code>
-		/// var names = new List&lt;string&gt; { "Alice", "Bob" };
-		/// var newNames = new[] { "alice", "Charlie", "ALICE" };
-		/// 
-		/// // With custom comparer
-		/// names.AddRangeIfNotExists(newNames, StringComparer.OrdinalIgnoreCase);
-		/// // Result: names contains { "Alice", "Bob", "Charlie" }
-		/// // "alice" and "ALICE" are not added because they match "Alice" using the comparer
-		/// 
-		/// // With default comparer (null)
-		/// var numbers = new List&lt;int&gt; { 1, 2, 3 };
-		/// numbers.AddRangeIfNotExists(new[] { 2, 4, 5 }, null);
-		/// // Result: numbers contains { 1, 2, 3, 4, 5 }
+		/// var list = new List&lt;int&gt; { 1, 2, 3 };
+		/// var items = new[] { 2, 3, 4, 5 };
+		///
+		/// list.AddRangeIfNotExists(items);
+		/// // list now contains: { 1, 2, 3, 4, 5 }
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -523,12 +519,17 @@ public static class ListExtensions
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Characteristics (.NET 10):</b>
+		/// The method shuffles the list in-place using a <see cref="Span{T}"/> view over the underlying
+		/// storage for optimal performance, and then materializes the shuffled contents into a new list.
+		/// The original <see cref="List{T}"/> is not preserved; its order is modified as part of the shuffle.
+		/// </para>
+		/// <para>
+		/// <b>Performance characteristics (.NET 10):</b>
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><b>Time complexity:</b> O(n) where n is the number of elements.</description></item>
-		/// <item><description><b>Space complexity:</b> O(n) for the copied and shuffled list.</description></item>
-		/// <item><description><b>Allocations:</b> One new list allocation for the result; avoids mutating the source.</description></item>
+		/// <item><description><b>Time complexity:</b> O(n), where n is the number of elements.</description></item>
+		/// <item><description><b>Space complexity:</b> O(n) for the returned list.</description></item>
+		/// <item><description><b>Allocations:</b> One new list allocation for the result; the shuffle itself is allocation-free.</description></item>
 		/// </list>
 		/// </remarks>
 		/// <example>
@@ -542,7 +543,6 @@ public static class ListExtensions
 		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public List<T> FastShuffle()
 		{
-			//TODO: FIX ALL complexity: DOCUMENTATION
 
 			list = list.ArgumentNotNull();
 
@@ -560,7 +560,8 @@ public static class ListExtensions
 		/// </summary>
 		/// <param name="size">
 		/// The maximum number of elements in each chunk. Must be between 1 and the total number of items
-		/// in the list; the value is validated to ensure it falls within this range.
+		/// in the list; values outside this range cause an <see cref="ArgumentOutOfRangeException"/> to be thrown
+		/// by the underlying validation helper.
 		/// </param>
 		/// <returns>
 		/// A <see cref="ReadOnlyCollection{T}"/> of <see cref="ReadOnlyCollection{T}"/> instances,
@@ -570,8 +571,8 @@ public static class ListExtensions
 		/// <remarks>
 		/// <para>
 		/// Internally, this method uses <see cref="List{T}.GetRange(int,int)"/> to create each chunk and
-		/// wraps it with <see cref="List{T}.AsReadOnly"/>. The outer list is then wrapped in a read-only
-		/// view to produce a fully read-only structure.
+		/// wraps it with <see cref="List{T}.AsReadOnly"/>. The outer list of chunks is then wrapped as
+		/// a read-only collection before being returned.
 		/// </para>
 		/// <para>
 		/// <b>Performance characteristics:</b>
@@ -581,7 +582,7 @@ public static class ListExtensions
 		/// <item><description>Space complexity: O(n), due to per-chunk list allocations.</description></item>
 		/// </list>
 		/// <para>
-		/// The original list is not modified; chunks are shallow copies of the corresponding ranges.
+		/// The original list is not modified; each chunk is a shallow copy of a contiguous range of elements.
 		/// </para>
 		/// </remarks>
 		/// <example>
