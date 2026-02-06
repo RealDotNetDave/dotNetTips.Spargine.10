@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 02-06-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Core;
 /// This class serves as a utility for accessing various application and system properties such as culture information, OS details, and processor information.
 /// It also provides methods for changing culture settings, retrieving environment variables, and managing application processes.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineApp", Status = Status.Available)]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineApp")]
 public static class App
 {
 
@@ -398,9 +398,15 @@ public static class App
 	/// <summary>
 	/// Retrieves a value from the application state dictionary in a thread-safe manner.
 	/// </summary>
-	/// <param name="key">The case-insensitive key identifying the state value. Must not be <c>null</c> or empty.</param>
+	/// <param name="key">
+	/// The case-insensitive key identifying the state value. Must not be <c>null</c> or empty.
+	/// </param>
+	/// <param name="defaultValue">
+	/// The value to return when the specified <paramref name="key"/> does not exist in the application state.
+	/// Defaults to <c>null</c>.
+	/// </param>
 	/// <returns>
-	/// The stored value associated with <paramref name="key"/>, or <c>null</c> if the key is not present.
+	/// The stored value associated with <paramref name="key"/>, or <paramref name="defaultValue"/> if the key is not present.
 	/// </returns>
 	/// <remarks>
 	/// Backed by a thread-safe <see cref="ConcurrentDictionary{TKey, TValue}"/> initialized with <see cref="StringComparer.OrdinalIgnoreCase"/>.
@@ -409,15 +415,15 @@ public static class App
 	/// </remarks>
 	/// <example>
 	/// App.SetAppState("Theme", "Dark");
-	/// var theme = App.GetAppState("theme"); // returns "Dark"
-	/// var missing = App.GetAppState("NotSet"); // returns null
+	/// var theme = App.GetAppState("theme");               // returns "Dark"
+	/// var missing = App.GetAppState("NotSet");            // returns null
+	/// var withDefault = App.GetAppState("NotSet", "Blue"); // returns "Blue"
 	/// </example>
 	[Pure]
-	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static object? GetAppState(string key)
+	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Updated)]
+	public static object? GetAppState(string key, object? defaultValue = null)
 	{
-		//TODO: ADD DEFAULT VALUE OVERLOAD
-		return _appState.TryGetValue(key, out var value) ? value : null;
+		return _appState.TryGetValue(key, out var value) ? value : defaultValue;
 	}
 
 	/// <summary>
