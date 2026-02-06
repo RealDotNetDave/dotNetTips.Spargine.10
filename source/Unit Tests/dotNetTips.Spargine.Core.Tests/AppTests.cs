@@ -28,6 +28,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DotNetTips.Spargine.Core.Tests;
 
 [ExcludeFromCodeCoverage]
+public class AppConfig : Config<GlobalConfig>
+{
+
+	public Values TestValues { get; set; } = new Values();
+
+}
+
+[ExcludeFromCodeCoverage]
 [TestClass]
 public class AppTests
 {
@@ -183,14 +191,18 @@ public class AppTests
 	[TestMethod]
 	public void GetAppState_ReturnsValue_WhenKeyExists()
 	{
-		const string key = "TestKey";
-		const string value = "TestValue";
-		App.SetAppState(key, value);
+		const string key1 = "TestKey1";
+		const string value1 = "TestValue1";
+		App.SetAppState(key1, value1);
 
-		var result = App.GetAppState(key);
+		const string key2 = "TestKey2";
+		const string value2 = "TestValue2";
+		App.SetAppState(key2, value2);
+
+		var result = App.GetAppState(key1);
 
 		Assert.IsNotNull(result, "Should return a value for an existing key.");
-		Assert.AreEqual(value, result, "Returned value should match the set value.");
+		Assert.AreEqual(value1, result, "Returned value should match the set value.");
 	}
 
 	[TestMethod]
@@ -355,7 +367,7 @@ public class AppTests
 	public void GetLocalizedString_ReturnsLocalizedValue_WhenKeyAndCultureExist()
 	{
 		// Arrange
-		// "WelcomeMessage" should exist in your .resx for this to pass, otherwise adjust the key and culture.
+		// "WelcomeMessage" should exist in your .resx for this to pass, otherwise adjust the key1 and culture.
 		var key = "WelcomeMessage";
 		var culture = "en-US";
 		var expected = Resources.ResourceManager.GetString(key, new CultureInfo(culture)) ?? string.Empty;
@@ -385,7 +397,7 @@ public class AppTests
 	public void GetLocalizedString_UsesCurrentUICulture_WhenCultureNameIsNullOrEmpty()
 	{
 		// Arrange
-		// "WelcomeMessage" should exist in your .resx for this to pass, otherwise adjust the key.
+		// "WelcomeMessage" should exist in your .resx for this to pass, otherwise adjust the key1.
 		var key = "WelcomeMessage";
 		var expected = Resources.ResourceManager.GetString(key, App.CurrentUICulture) ?? string.Empty;
 
@@ -540,14 +552,6 @@ public class GlobalConfig
 	public GlobalConfig()
 	{
 	}
-
-}
-
-[ExcludeFromCodeCoverage]
-public class AppConfig : Config<GlobalConfig>
-{
-
-	public Values TestValues { get; set; } = new Values();
 
 }
 
