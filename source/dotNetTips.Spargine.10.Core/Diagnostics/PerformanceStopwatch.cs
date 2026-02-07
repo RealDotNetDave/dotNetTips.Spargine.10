@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-09-2026
+// Last Modified On : 02-07-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1242,7 +1242,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <code>
 	/// var stopwatch = PerformanceStopwatch.StartNew("APIBenchmark");
 	/// 
-	/// for (int i = 0; i &lt; 10; i++)
+	/// for (int lap = 0; lap &lt; 10; lap++)
 	/// {
 	///     await CallApiEndpoint();
 	///     stopwatch.RecordLap();
@@ -1441,10 +1441,10 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <code>
 	/// var stopwatch = PerformanceStopwatch.StartNew("BatchJob");
 	/// 
-	/// for (int i = 0; i &lt; 5; i++)
+	/// for (int lap = 0; lap &lt; 5; lap++)
 	/// {
-	///     await ProcessBatchItem(i);
-	///     stopwatch.AddDiagnosticEntry($"Batch item {i} processed");
+	///     await ProcessBatchItem(lap);
+	///     stopwatch.AddDiagnosticEntry($"Batch item {lap} processed");
 	/// }
 	/// 
 	/// stopwatch.Stop();
@@ -1507,175 +1507,6 @@ public sealed class PerformanceStopwatch : Stopwatch
 	public ReadOnlyCollection<string> GetDiagnosticMessages()
 	{
 		return this.Diagnostics.Select(d => d.ToString()).ToList().AsReadOnly();
-	}
-
-	/// <summary>
-	/// Gets the current elapsed time formatted as a human-readable string with milliseconds precision.
-	/// </summary>
-	/// <returns>
-	/// A formatted string in the format "Elapsed Time: X.XX ms" where X.XX represents the elapsed time 
-	/// in milliseconds formatted using the <see cref="TimeSpan.TotalMilliseconds"/> value.
-	/// </returns>
-	/// <remarks>
-	/// This method provides a convenient way to display the current elapsed time in a consistent, 
-	/// human-readable format suitable for logging, console output, and diagnostic reports.
-	/// <para>
-	/// <strong>Formatting Details:</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses the <c>FormatTime()</c> extension method for consistent time formatting across the application</description></item>
-	/// <item><description>Always includes the "Elapsed Time: " prefix for clarity in output</description></item>
-	/// <item><description>Time is expressed in milliseconds as a decimal value</description></item>
-	/// <item><description>The stopwatch does NOT need to be stopped to call this method - it returns the current elapsed time</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Performance Considerations:</strong>
-	/// <list type="bullet">
-	/// <item><description>This is a lightweight operation that creates a single string</description></item>
-	/// <item><description>Marked with <see cref="MethodImplOptions.AggressiveInlining"/> for optimal performance</description></item>
-	/// <item><description>Can be called repeatedly without performance concerns</description></item>
-	/// <item><description>Returns a snapshot of the current elapsed time; the stopwatch continues running if not stopped</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Thread Safety:</strong>
-	/// This method is thread-safe and can be called from multiple threads concurrently. Each call 
-	/// returns an independent string representing the elapsed time at the moment of the call.
-	/// </para>
-	/// <para>
-	/// <strong>Use Cases:</strong>
-	/// <list type="bullet">
-	/// <item><description>Quick console output of elapsed time during development and debugging</description></item>
-	/// <item><description>Simple logging of operation duration</description></item>
-	/// <item><description>Building performance reports using the <see cref="GetSummaryReport"/> method</description></item>
-	/// <item><description>Displaying timing information in user interfaces</description></item>
-	/// <item><description>Creating human-readable diagnostic messages</description></item>
-	/// </list>
-	/// </para>
-	/// <para>
-	/// <strong>Comparison with Related Methods:</strong>
-	/// <list type="bullet">
-	/// <item><description><see cref="GetElapsedTimeString"/> - Returns simple formatted elapsed time (this method)</description></item>
-	/// <item><description><see cref="GetSummaryReport"/> - Returns complete report including laps and diagnostics</description></item>
-	/// <item><description><see cref="ExportToJson"/> - Returns structured JSON data</description></item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-	/// <example>
-	/// Basic usage for console output:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNew("DataProcessing");
-	/// 
-	/// await ProcessData();
-	/// 
-	/// // Get elapsed time while running
-	/// Console.WriteLine(stopwatch.GetElapsedTimeString());
-	/// // Output: Elapsed Time: 1234.56 ms
-	/// 
-	/// await ProcessMoreData();
-	/// 
-	/// stopwatch.Stop();
-	/// Console.WriteLine(stopwatch.GetElapsedTimeString());
-	/// // Output: Elapsed Time: 2456.78 ms
-	/// </code>
-	/// 
-	/// Using in logging scenarios:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNew("APICall");
-	/// 
-	/// try
-	/// {
-	///     var response = await CallExternalApi();
-	///     
-	///     stopwatch.Stop();
-	///     logger.LogInformation(stopwatch.GetElapsedTimeString());
-	///     // Logs: "Elapsed Time: 523.45 ms"
-	///     
-	///     return response;
-	/// }
-	/// catch (Exception ex)
-	/// {
-	///     logger.LogError("API call failed. {ElapsedTime}", stopwatch.GetElapsedTimeString());
-	///     throw;
-	/// }
-	/// </code>
-	/// 
-	/// Periodic progress reporting:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNew("BatchProcessing");
-	/// 
-	/// for (int i = 0; i &lt; items.Count; i++)
-	/// {
-	///     await ProcessItem(items[i]);
-	///     
-	///     // Report progress every 100 items
-	///     if ((i + 1) % 100 == 0)
-	///     {
-	///         Console.WriteLine($"Processed {i + 1} items. {stopwatch.GetElapsedTimeString()}");
-	///         // Output: Processed 100 items. Elapsed Time: 5234.12 ms
-	///     }
-	/// }
-	/// 
-	/// stopwatch.Stop();
-	/// Console.WriteLine($"Batch complete. {stopwatch.GetElapsedTimeString()}");
-	/// </code>
-	/// 
-	/// Building custom reports:
-	/// <code>
-	/// var stopwatch = PerformanceStopwatch.StartNew("ReportGeneration");
-	/// 
-	/// var data = await CollectData();
-	/// stopwatch.RecordLap();
-	/// 
-	/// var processed = await ProcessData(data);
-	/// stopwatch.RecordLap();
-	/// 
-	/// var report = await FormatReport(processed);
-	/// stopwatch.Stop();
-	/// 
-	/// var summary = new StringBuilder();
-	/// summary.AppendLine("Performance Summary");
-	/// summary.AppendLine("===================");
-	/// summary.AppendLine(stopwatch.GetElapsedTimeString());
-	/// summary.AppendLine($"Total Laps: {stopwatch.GetLaps().Count}");
-	/// 
-	/// Console.WriteLine(summary.ToString());
-	/// /* Output:
-	/// Performance Summary
-	/// ===================
-	/// Elapsed Time: 3456.78 ms
-	/// Total Laps: 2
-	/// */
-	/// </code>
-	/// 
-	/// Comparing multiple operations:
-	/// <code>
-	/// var stopwatch1 = PerformanceStopwatch.StartNew("Operation1");
-	/// await PerformOperation1();
-	/// stopwatch1.Stop();
-	/// 
-	/// var stopwatch2 = PerformanceStopwatch.StartNew("Operation2");
-	/// await PerformOperation2();
-	/// stopwatch2.Stop();
-	/// 
-	/// Console.WriteLine($"Operation 1: {stopwatch1.GetElapsedTimeString()}");
-	/// Console.WriteLine($"Operation 2: {stopwatch2.GetElapsedTimeString()}");
-	/// 
-	/// if (stopwatch1.Elapsed > stopwatch2.Elapsed)
-	/// {
-	///     Console.WriteLine("Operation 2 was faster");
-	/// }
-	/// </code>
-	/// </example>
-	/// <seealso cref="GetSummaryReport"/>
-	/// <seealso cref="ToString"/>
-	/// <seealso cref="TimeSpan.TotalMilliseconds"/>
-	[Pure]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetElapsedTimeString), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public string GetElapsedTimeString()
-	{
-		return $"Elapsed Time: {this.Elapsed.TotalMilliseconds.FormatTime()}";
 	}
 
 	/// <summary>
@@ -1748,9 +1579,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <code>
 	/// var stopwatch = PerformanceStopwatch.StartNew("IterativeProcessing");
 	/// 
-	/// for (int i = 0; i &lt; 5; i++)
+	/// for (int lap = 0; lap &lt; 5; lap++)
 	/// {
-	///     await ProcessIteration(i);
+	///     await ProcessIteration(lap);
 	///     stopwatch.RecordLap();
 	/// }
 	/// 
@@ -1759,9 +1590,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// var laps = stopwatch.GetLaps();
 	/// Console.WriteLine($"Total laps recorded: {laps.Count}");
 	/// 
-	/// for (int i = 0; i &lt; laps.Count; i++)
+	/// for (int lap = 0; lap &lt; laps.Count; lap++)
 	/// {
-	///     Console.WriteLine($"Lap {i}: {laps[i].TotalMilliseconds:F2}ms");
+	///     Console.WriteLine($"Lap {lap}: {laps[lap].TotalMilliseconds:F2}ms");
 	/// }
 	/// 
 	/// /* Output (sorted by duration):
@@ -1793,10 +1624,10 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// 
 	/// Console.WriteLine($"Query 1 duration: {laps[0].TotalMilliseconds:F2}ms");
 	/// 
-	/// for (int i = 1; i &lt; laps.Count; i++)
+	/// for (int lap = 1; lap &lt; laps.Count; lap++)
 	/// {
-	///     var duration = laps[i] - laps[i - 1];
-	///     Console.WriteLine($"Query {i + 1} duration: {duration.TotalMilliseconds:F2}ms");
+	///     var duration = laps[lap] - laps[lap - 1];
+	///     Console.WriteLine($"Query {lap + 1} duration: {duration.TotalMilliseconds:F2}ms");
 	/// }
 	/// 
 	/// /* Output:
@@ -1824,9 +1655,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// {
 	///     // Calculate individual lap durations
 	///     var lapDurations = new List&lt;TimeSpan&gt; { laps[0] };
-	///     for (int i = 1; i &lt; laps.Count; i++)
+	///     for (int lap = 1; lap &lt; laps.Count; lap++)
 	///     {
-	///         lapDurations.Add(laps[i] - laps[i - 1]);
+	///         lapDurations.Add(laps[lap] - laps[lap - 1]);
 	///     }
 	///     
 	///     var fastest = lapDurations.Min();
@@ -1861,10 +1692,10 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// report.AppendLine();
 	/// report.AppendLine("Lap Details:");
 	/// 
-	/// for (int i = 0; i &lt; laps.Count; i++)
+	/// for (int lap = 0; lap &lt; laps.Count; lap++)
 	/// {
-	///     var duration = i == 0 ? laps[0] : laps[i] - laps[i - 1];
-	///     report.AppendLine($"  Batch {i + 1}: {duration.TotalMilliseconds:F2}ms (cumulative: {laps[i].TotalMilliseconds:F2}ms)");
+	///     var duration = lap == 0 ? laps[0] : laps[lap] - laps[lap - 1];
+	///     report.AppendLine($"  Batch {lap + 1}: {duration.TotalMilliseconds:F2}ms (cumulative: {laps[lap].TotalMilliseconds:F2}ms)");
 	/// }
 	/// 
 	/// await File.WriteAllTextAsync("lap-report.txt", report.ToString());
@@ -1877,9 +1708,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// 
 	/// // First run
 	/// var stopwatch1 = PerformanceStopwatch.StartNew("Run1");
-	/// for (int i = 0; i &lt; 10; i++)
+	/// for (int lap = 0; lap &lt; 10; lap++)
 	/// {
-	///     await PerformTask(i);
+	///     await PerformTask(lap);
 	///     stopwatch1.RecordLap();
 	/// }
 	/// stopwatch1.Stop();
@@ -1887,9 +1718,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// 
 	/// // Second run
 	/// var stopwatch2 = PerformanceStopwatch.StartNew("Run2");
-	/// for (int i = 0; i &lt; 10; i++)
+	/// for (int lap = 0; lap &lt; 10; lap++)
 	/// {
-	///     await PerformTask(i);
+	///     await PerformTask(lap);
 	///     stopwatch2.RecordLap();
 	/// }
 	/// stopwatch2.Stop();
@@ -1935,22 +1766,36 @@ public sealed class PerformanceStopwatch : Stopwatch
 
 		try
 		{
-			_ = sb.AppendLine($"Performance Report - {this.Title}").AppendLine(this.GetElapsedTimeString());
+			_ = sb.AppendLine(string.IsNullOrEmpty(this.Title)
+					? "Performance Report"
+					: $"Performance Report - {this.Title}");
+			_ = sb.AppendLine("===============================");
+			_ = sb.AppendLine(this.GetTotalTimeString());
+			_ = sb.AppendLine();
 
-			var lapCount = 0;
-
-			foreach (var lap in laps)
+			if (laps.Count > 0)
 			{
-				_ = sb.AppendLine($"Lap {lapCount++}: {lap.TotalMilliseconds.FormatTime()}");
+				_ = sb.AppendLine("Laps:");
+
+				for (var lap = 0; lap < laps.Count; lap++)
+				{
+					_ = sb.AppendLine($"Lap {lap}: {laps[lap].TotalMilliseconds.FormatTime()}");
+				}
+
+				_ = sb.AppendLine();
 			}
 
-			foreach (var entry in diagnosticEntries)
+			if (diagnosticEntries.Count > 0)
 			{
-				_ = sb.AppendFormat(CultureInfo.InvariantCulture,
-					"{0:u}: {1} - {2}\n",
-					entry.Timestamp,
-					entry.Message,
-					entry.Elapsed.TotalMilliseconds.FormatTime());
+				_ = sb.AppendLine("Diagnostics:");
+
+				foreach (var entry in diagnosticEntries)
+				{
+					_ = sb.AppendFormat(CultureInfo.InvariantCulture,
+						"{0:u}: {1}\n",
+						entry.Timestamp,
+						entry.Message);
+				}
 			}
 
 			return sb.ToString();
@@ -1959,6 +1804,175 @@ public sealed class PerformanceStopwatch : Stopwatch
 		{
 			_stringBuilderPool.Value.Return(sb.Clear());
 		}
+	}
+
+	/// <summary>
+	/// Gets the current elapsed time formatted as a human-readable string with milliseconds precision.
+	/// </summary>
+	/// <returns>
+	/// A formatted string in the format "Elapsed Time: X.XX ms" where X.XX represents the elapsed time 
+	/// in milliseconds formatted using the <see cref="TimeSpan.TotalMilliseconds"/> value.
+	/// </returns>
+	/// <remarks>
+	/// This method provides a convenient way to display the current elapsed time in a consistent, 
+	/// human-readable format suitable for logging, console output, and diagnostic reports.
+	/// <para>
+	/// <strong>Formatting Details:</strong>
+	/// <list type="bullet">
+	/// <item><description>Uses the <c>FormatTime()</c> extension method for consistent time formatting across the application</description></item>
+	/// <item><description>Always includes the "Elapsed Time: " prefix for clarity in output</description></item>
+	/// <item><description>Time is expressed in milliseconds as a decimal value</description></item>
+	/// <item><description>The stopwatch does NOT need to be stopped to call this method - it returns the current elapsed time</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Performance Considerations:</strong>
+	/// <list type="bullet">
+	/// <item><description>This is a lightweight operation that creates a single string</description></item>
+	/// <item><description>Marked with <see cref="MethodImplOptions.AggressiveInlining"/> for optimal performance</description></item>
+	/// <item><description>Can be called repeatedly without performance concerns</description></item>
+	/// <item><description>Returns a snapshot of the current elapsed time; the stopwatch continues running if not stopped</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Thread Safety:</strong>
+	/// This method is thread-safe and can be called from multiple threads concurrently. Each call 
+	/// returns an independent string representing the elapsed time at the moment of the call.
+	/// </para>
+	/// <para>
+	/// <strong>Use Cases:</strong>
+	/// <list type="bullet">
+	/// <item><description>Quick console output of elapsed time during development and debugging</description></item>
+	/// <item><description>Simple logging of operation duration</description></item>
+	/// <item><description>Building performance reports using the <see cref="GetSummaryReport"/> method</description></item>
+	/// <item><description>Displaying timing information in user interfaces</description></item>
+	/// <item><description>Creating human-readable diagnostic messages</description></item>
+	/// </list>
+	/// </para>
+	/// <para>
+	/// <strong>Comparison with Related Methods:</strong>
+	/// <list type="bullet">
+	/// <item><description><see cref="GetTotalTimeString"/> - Returns simple formatted elapsed time (this method)</description></item>
+	/// <item><description><see cref="GetSummaryReport"/> - Returns complete report including laps and diagnostics</description></item>
+	/// <item><description><see cref="ExportToJson"/> - Returns structured JSON data</description></item>
+	/// </list>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Basic usage for console output:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNew("DataProcessing");
+	/// 
+	/// await ProcessData();
+	/// 
+	/// // Get elapsed time while running
+	/// Console.WriteLine(stopwatch.GetTotalTimeString());
+	/// // Output: Elapsed Time: 1234.56 ms
+	/// 
+	/// await ProcessMoreData();
+	/// 
+	/// stopwatch.Stop();
+	/// Console.WriteLine(stopwatch.GetTotalTimeString());
+	/// // Output: Elapsed Time: 2456.78 ms
+	/// </code>
+	/// 
+	/// Using in logging scenarios:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNew("APICall");
+	/// 
+	/// try
+	/// {
+	///     var response = await CallExternalApi();
+	///     
+	///     stopwatch.Stop();
+	///     logger.LogInformation(stopwatch.GetTotalTimeString());
+	///     // Logs: "Elapsed Time: 523.45 ms"
+	///     
+	///     return response;
+	/// }
+	/// catch (Exception ex)
+	/// {
+	///     logger.LogError("API call failed. {ElapsedTime}", stopwatch.GetTotalTimeString());
+	///     throw;
+	/// }
+	/// </code>
+	/// 
+	/// Periodic progress reporting:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNew("BatchProcessing");
+	/// 
+	/// for (int lap = 0; lap &lt; items.Count; lap++)
+	/// {
+	///     await ProcessItem(items[lap]);
+	///     
+	///     // Report progress every 100 items
+	///     if ((lap + 1) % 100 == 0)
+	///     {
+	///         Console.WriteLine($"Processed {lap + 1} items. {stopwatch.GetTotalTimeString()}");
+	///         // Output: Processed 100 items. Elapsed Time: 5234.12 ms
+	///     }
+	/// }
+	/// 
+	/// stopwatch.Stop();
+	/// Console.WriteLine($"Batch complete. {stopwatch.GetTotalTimeString()}");
+	/// </code>
+	/// 
+	/// Building custom reports:
+	/// <code>
+	/// var stopwatch = PerformanceStopwatch.StartNew("ReportGeneration");
+	/// 
+	/// var data = await CollectData();
+	/// stopwatch.RecordLap();
+	/// 
+	/// var processed = await ProcessData(data);
+	/// stopwatch.RecordLap();
+	/// 
+	/// var report = await FormatReport(processed);
+	/// stopwatch.Stop();
+	/// 
+	/// var summary = new StringBuilder();
+	/// summary.AppendLine("Performance Summary");
+	/// summary.AppendLine("===================");
+	/// summary.AppendLine(stopwatch.GetTotalTimeString());
+	/// summary.AppendLine($"Total Laps: {stopwatch.GetLaps().Count}");
+	/// 
+	/// Console.WriteLine(summary.ToString());
+	/// /* Output:
+	/// Performance Summary
+	/// ===================
+	/// Elapsed Time: 3456.78 ms
+	/// Total Laps: 2
+	/// */
+	/// </code>
+	/// 
+	/// Comparing multiple operations:
+	/// <code>
+	/// var stopwatch1 = PerformanceStopwatch.StartNew("Operation1");
+	/// await PerformOperation1();
+	/// stopwatch1.Stop();
+	/// 
+	/// var stopwatch2 = PerformanceStopwatch.StartNew("Operation2");
+	/// await PerformOperation2();
+	/// stopwatch2.Stop();
+	/// 
+	/// Console.WriteLine($"Operation 1: {stopwatch1.GetTotalTimeString()}");
+	/// Console.WriteLine($"Operation 2: {stopwatch2.GetTotalTimeString()}");
+	/// 
+	/// if (stopwatch1.Elapsed > stopwatch2.Elapsed)
+	/// {
+	///     Console.WriteLine("Operation 2 was faster");
+	/// }
+	/// </code>
+	/// </example>
+	/// <seealso cref="GetSummaryReport"/>
+	/// <seealso cref="ToString"/>
+	/// <seealso cref="TimeSpan.TotalMilliseconds"/>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetTotalTimeString), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public string GetTotalTimeString()
+	{
+		return $"Total Time: {this.Elapsed.TotalMilliseconds.FormatTime()}";
 	}
 
 	/// <summary>
@@ -2284,9 +2298,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <code>
 	/// var stopwatch = PerformanceStopwatch.StartNew("BatchProcessing");
 	/// 
-	/// for (int i = 0; i &lt; items.Count; i++)
+	/// for (int lap = 0; lap &lt; items.Count; lap++)
 	/// {
-	///     await ProcessItem(items[i]);
+	///     await ProcessItem(items[lap]);
 	///     stopwatch.RecordLap(); // Record time after each item
 	/// }
 	/// 
@@ -2336,9 +2350,9 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// 
 	/// var laps = stopwatch.GetLaps();
 	/// var durations = new List&lt;TimeSpan&gt; { laps[0] };
-	/// for (int i = 1; i &lt; laps.Count; i++)
+	/// for (int lap = 1; lap &lt; laps.Count; lap++)
 	/// {
-	///     durations.Add(laps[i] - laps[i - 1]);
+	///     durations.Add(laps[lap] - laps[lap - 1]);
 	/// }
 	/// 
 	/// var average = TimeSpan.FromMilliseconds(durations.Average(d => d.TotalMilliseconds));
@@ -2645,7 +2659,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	}
 
 	/// <summary>
-	/// Stops and resets the stopwatch, returning the elapsed time. Fires telemetry and threshold events if configured.
+	/// Stops and resets the stopwatch to 0, returning the elapsed time. Fires telemetry and threshold events if configured.
 	/// </summary>
 	/// <returns>The elapsed time before reset.</returns>
 	[Information(nameof(StopReset), "David McCarter", "11/11/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -2915,24 +2929,24 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <code>
 	/// var stopwatch = PerformanceStopwatch.StartNew("BatchProcessing");
 	/// 
-	/// for (int i = 0; i &lt; batches.Count; i++)
+	/// for (int lap = 0; lap &lt; batches.Count; lap++)
 	/// {
-	///     await ProcessBatch(batches[i]);
+	///     await ProcessBatch(batches[lap]);
 	///     
 	///     // Send progress telemetry every 10 batches
-	///     if ((i + 1) % 10 == 0)
+	///     if ((lap + 1) % 10 == 0)
 	///     {
 	///         var progressProps = new Dictionary&lt;string, string&gt;
 	///         {
-	///             ["BatchesProcessed"] = (i + 1).ToString(),
+	///             ["BatchesProcessed"] = (lap + 1).ToString(),
 	///             ["TotalBatches"] = batches.Count.ToString(),
-	///             ["ProgressPercent"] = ((i + 1) * 100 / batches.Count).ToString()
+	///             ["ProgressPercent"] = ((lap + 1) * 100 / batches.Count).ToString()
 	///         };
 	///         
 	///         stopwatch.TrackTelemetry(
 	///             telemetryClient,
 	///             "Batch.Progress",
-	///             $"Processed {i + 1} of {batches.Count} batches",
+	///             $"Processed {lap + 1} of {batches.Count} batches",
 	///             progressProps
 	///         );
 	///     }
