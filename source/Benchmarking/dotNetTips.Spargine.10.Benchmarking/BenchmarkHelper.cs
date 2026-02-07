@@ -291,6 +291,8 @@ public static class BenchmarkHelper
 
 		try
 		{
+			config = config.AddLogger(ConsoleLogger.Default);
+
 			// Get the calling assembly to ensure benchmarks run in the correct assembly context
 			// This is critical for diagnosers like MemoryDiagnoser to work properly
 			var callingAssembly = Assembly.GetCallingAssembly();
@@ -301,9 +303,8 @@ public static class BenchmarkHelper
 			if (invalidTypes.Length > 0)
 			{
 				var typeNamesCheck = string.Join(", ", invalidTypes.Select(t => t.FullName));
-				ExceptionThrower.ThrowArgumentException(
-					$"All benchmark types must be from the calling assembly. Invalid types: {typeNamesCheck}",
-					nameof(benchmarks));
+
+				ExceptionThrower.ThrowArgumentException($"All benchmark types must be from the calling assembly. Invalid types: {typeNamesCheck}", nameof(benchmarks));
 			}
 
 			var sw = PerformanceStopwatch.StartNew();
@@ -313,7 +314,7 @@ public static class BenchmarkHelper
 			// which is required for diagnosers like MemoryDiagnoser to work properly
 			foreach (var benchmarkType in benchmarks)
 			{
-				ConsoleLogger.Default.WriteLine(LogKind.Info, $"Running benchmark: {benchmarkType.Name}");
+				ConsoleLogger.Default.WriteLineInfo($"Running benchmark: {benchmarkType.Name}");
 
 				sw.AddDiagnosticEntry($"Starting benchmark: {benchmarkType.FullName} at {DateTime.Now:O}");
 
@@ -326,10 +327,10 @@ public static class BenchmarkHelper
 
 			ConsoleLogger.Default.WriteLine(Resources.BenchmarkTestsAreCompleteRockOn);
 
-			var elapsed = sw.StopReset();
+			sw.Stop();
 
-			ConsoleLogger.Default.WriteLineInfo($"Total time: {sw.ElapsedMilliseconds.FormatTime()}");
-			ConsoleLogger.Default.WriteLineInfo($"Laps: {sw}");
+			ConsoleLogger.Default.WriteLineStatistic($"Total time: {sw.ElapsedMilliseconds.FormatTime()}");
+			ConsoleLogger.Default.WriteLineStatistic($"Laps: {sw}");
 
 			PlaySuccessBeep();
 
@@ -339,7 +340,9 @@ public static class BenchmarkHelper
 		{
 			ConsoleLogger.Default.WriteLine(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
 			ConsoleLogger.Default.WriteLine(ex.Message);
+
 			PlayErrorBeep();
+
 			_ = Console.ReadLine();
 		}
 	}
