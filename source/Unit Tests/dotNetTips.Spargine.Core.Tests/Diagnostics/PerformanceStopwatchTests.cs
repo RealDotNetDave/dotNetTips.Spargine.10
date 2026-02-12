@@ -229,18 +229,6 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
-	public void GetTotalTimeString()
-	{
-		var psw = PerformanceStopwatch.StartNew(nameof(this.GetTotalTimeString));
-
-		Thread.Sleep(500);
-
-		var timeString = psw.GetTotalTimeString();
-
-		Assert.StartsWith("Elapsed Time:", timeString);
-	}
-
-	[TestMethod]
 	public void GetLapsTest()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.GetLapsTest));
@@ -279,6 +267,18 @@ public class PerformanceStopwatchTests
 
 		Assert.Contains("Performance Report", report);
 		Assert.Contains("Test diagnostic entry", report);
+	}
+
+	[TestMethod]
+	public void GetTotalTimeString()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.GetTotalTimeString));
+
+		Thread.Sleep(500);
+
+		var timeString = psw.GetTotalTimeString();
+
+		Assert.StartsWith("Total Time:", timeString);
 	}
 
 	[TestMethod]

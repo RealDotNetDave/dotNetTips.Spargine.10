@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-04-2026
+// Last Modified On : 02-12-2026
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,7 +19,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -157,38 +156,24 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	{
 		// Allocate all required memory on the stack to avoid heap allocations
 		Span<char> ulidChars = stackalloc char[UlidLength];
-		Span<byte> timestampBytes = stackalloc byte[8];
+		Span<byte> timestampBytes = stackalloc byte[6];
 		Span<byte> randomBytes = stackalloc byte[10];
 
-		// Generate timestamp (48 bits = 6 bytes)
+		// Generate timestamp (48 bits = 6 bytes) in big-endian order for correct lexicographic sorting
 		var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-		// Write timestamp directly to byte span
-		if (BitConverter.IsLittleEndian)
+		unchecked
 		{
-			unsafe
-			{
-				fixed (byte* pTimestamp = timestampBytes)
-				{
-					*(long*)pTimestamp = timestamp;
-				}
-			}
-		}
-		else
-		{
-			// Big-endian systems (rare but correct)
-			timestampBytes[0] = (byte)(timestamp >> 56);
-			timestampBytes[1] = (byte)(timestamp >> 48);
-			timestampBytes[2] = (byte)(timestamp >> 40);
-			timestampBytes[3] = (byte)(timestamp >> 32);
-			timestampBytes[4] = (byte)(timestamp >> 24);
-			timestampBytes[5] = (byte)(timestamp >> 16);
-			timestampBytes[6] = (byte)(timestamp >> 8);
-			timestampBytes[7] = (byte)timestamp;
+			timestampBytes[0] = (byte)(timestamp >> 40);
+			timestampBytes[1] = (byte)(timestamp >> 32);
+			timestampBytes[2] = (byte)(timestamp >> 24);
+			timestampBytes[3] = (byte)(timestamp >> 16);
+			timestampBytes[4] = (byte)(timestamp >> 8);
+			timestampBytes[5] = (byte)timestamp;
 		}
 
-		// Encode timestamp component (10 characters) - only encode the 6 bytes we need
-		EncodeBase32(timestampBytes[..6], ulidChars, 0, TimestampLength);
+		// Encode timestamp component (10 characters)
+		EncodeBase32(timestampBytes, ulidChars, 0, TimestampLength);
 
 		// Generate cryptographically secure random bytes (80 bits = 10 bytes)
 		RandomNumberGenerator.Fill(randomBytes);
@@ -196,7 +181,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 		// Encode random component (16 characters)
 		EncodeBase32(randomBytes, ulidChars, TimestampLength, RandomLength);
 
-		// Create and return the ULID - use string constructor that accepts ReadOnlySpan<char>
+		// Create and return the ULID
 		return new Ulid(new string(ulidChars));
 	}
 
@@ -267,15 +252,15 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public DateTimeOffset GetTimeStamp()
 	{
-		// Use stack allocation to avoid heap allocations
-		Span<byte> timestampBytes = stackalloc byte[8]; // 8 bytes for int64, initialized to zeros
-
 		var timestampChars = this._ulid.AsSpan(0, TimestampLength);
 
 		// Decode Base32 timestamp directly into int64 using bit manipulation
 		var bitBuffer = 0UL;
 		var bitsInBuffer = 0;
-		var byteIndex = 0;
+
+		// Accumulate decoded bytes directly into the timestamp value (big-endian)
+		long timestampMilliseconds = 0;
+		var bytesDecoded = 0;
 
 		foreach (var c in timestampChars)
 		{
@@ -289,17 +274,18 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 			bitsInBuffer += 5;
 
 			// Extract complete bytes when we have at least 8 bits
-			while (bitsInBuffer >= 8 && byteIndex < 6)
+			while (bitsInBuffer >= 8 && bytesDecoded < 6)
 			{
 				bitsInBuffer -= 8;
-				timestampBytes[byteIndex++] = (byte)(bitBuffer >> bitsInBuffer);
+				var byteValue = (byte)(bitBuffer >> bitsInBuffer);
+
+				// Shift existing value left by 8 bits and add new byte (big-endian reconstruction)
+				timestampMilliseconds = (timestampMilliseconds << 8) | byteValue;
+				bytesDecoded++;
+
 				bitBuffer &= (1UL << bitsInBuffer) - 1; // Clear extracted bits
 			}
 		}
-
-		// Timestamp is stored in the first 6 bytes (48 bits), rest is already zero
-		// Read as little-endian int64
-		var timestampMilliseconds = BitConverter.ToInt64(timestampBytes);
 
 		return DateTimeOffset.FromUnixTimeMilliseconds(timestampMilliseconds);
 	}

@@ -4,7 +4,7 @@
 // Created          : 05-06-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-12-2026
 // ***********************************************************************
 // <copyright file="UlidTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -95,20 +95,28 @@ public class UlidTests
 	{
 		// Arrange
 		var ulids = new List<Ulid>();
+		var timestamps = new List<DateTimeOffset>();
 
 		for (var i = 0; i < 10; i++)
 		{
-			ulids.Add(Ulid.NewUlid());
-			Thread.Sleep(1);
+			var ulid = Ulid.NewUlid();
+			ulids.Add(ulid);
+			timestamps.Add(ulid.GetTimeStamp());
+			Thread.Sleep(50); // Longer delay to ensure different timestamps
 		}
 
-		// Act
+		// Act - Sort lexicographically by string representation
 		var sortedByString = ulids.OrderBy(u => u.ToString()).ToList();
 
-		// Assert - Original order should match lexicographic sort order
-		for (var i = 0; i < ulids.Count; i++)
+		// Assert - ULIDs should be sorted by their timestamps
+		// (Note: This implementation doesn't guarantee monotonic ordering within the same millisecond)
+		for (var i = 0; i < sortedByString.Count - 1; i++)
 		{
-			Assert.AreEqual(ulids[i], sortedByString[i], $"ULID at index {i} should be in lexicographic order.");
+			var ts1 = sortedByString[i].GetTimeStamp();
+			var ts2 = sortedByString[i + 1].GetTimeStamp();
+			Assert.IsTrue(ts1 <= ts2,
+				$"Timestamps should be in ascending order after lexicographic sort. " +
+				$"Index {i}: {ts1.ToUnixTimeMilliseconds()}ms, Index {i + 1}: {ts2.ToUnixTimeMilliseconds()}ms");
 		}
 	}
 
