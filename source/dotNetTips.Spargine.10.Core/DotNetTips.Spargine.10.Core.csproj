@@ -115,12 +115,12 @@
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
-	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.2" />
-	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
-	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.2" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.3" />
+	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.3" />
 	<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	<PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="All" />
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

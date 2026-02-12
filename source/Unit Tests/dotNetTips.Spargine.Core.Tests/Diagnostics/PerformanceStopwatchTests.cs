@@ -229,15 +229,15 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
-	public void GetElapsedTimeStringTest()
+	public void GetTotalTimeString()
 	{
-		var psw = PerformanceStopwatch.StartNew(nameof(this.GetElapsedTimeStringTest));
+		var psw = PerformanceStopwatch.StartNew(nameof(this.GetTotalTimeString));
 
 		Thread.Sleep(500);
 
-		var elapsedTimeString = psw.GetElapsedTimeString();
+		var timeString = psw.GetTotalTimeString();
 
-		Assert.StartsWith("Elapsed Time:", elapsedTimeString);
+		Assert.StartsWith("Elapsed Time:", timeString);
 	}
 
 	[TestMethod]
