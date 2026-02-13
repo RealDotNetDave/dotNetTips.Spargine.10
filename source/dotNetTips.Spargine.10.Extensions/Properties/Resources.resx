@@ -271,4 +271,7 @@
   <data name="TheInputStringIsNotAValidBase64String" xml:space="preserve">
     <value>The input string is not a valid Base64 String.</value>
   </data>
+  <data name="ArraysAreFixedSize" xml:space="preserve">
+    <value>Arrays are fixed-size and do not support adding items.</value>
+  </data>
 </root>

@@ -773,30 +773,37 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Hashes the input string using the specified password hashing algorithm and returns the hash as a Base64 string.
+	/// Hashes the specified plain-text value using the configured password hashing algorithm.
 	/// </summary>
-	/// <param name="input">The plain-text value to hash. Must not be <c>null</c> or empty.</param>
-	/// <param name="algorithmType">
-	/// The hashing algorithm to use. Defaults to <see cref="HashAlgorithmType.PBKDF2"/>.
-	/// Other supported values include <see cref="HashAlgorithmType.Argon2"/> and <see cref="HashAlgorithmType.BCrypt"/> if enabled in <see cref="PasswordHasher"/>.
+	/// <param name="input">
+	/// The plain-text value to hash. This value must not be <c>null</c> or empty and is validated
+	/// via guard clauses before hashing.
 	/// </param>
-	/// <returns>A Base64-encoded string representing the hashed value.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown when <paramref name="input"/> is empty.</exception>
+	/// <param name="algorithmType">
+	/// The password hashing algorithm to use. Defaults to <see cref="HashAlgorithmType.PBKDF2"/>.
+	/// Other supported values are determined by the underlying <see cref="PasswordHasher"/> implementation.
+	/// </param>
+	/// <returns>
+	/// A Base64-encoded string containing the hashed representation of <paramref name="input"/>,
+	/// including any algorithm-specific metadata required for verification.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="input"/> is <c>null</c>.
+	/// </exception>
+	/// <exception cref="ArgumentException">
+	/// Thrown when <paramref name="input"/> is empty or consists only of whitespace.
+	/// </exception>
 	/// <remarks>
-	/// This method delegates to <see cref="PasswordHasher.HashPassword(string, HashAlgorithmType)"/> and applies guard clauses for deterministic behavior.
-	/// The output includes algorithm-specific metadata (e.g., salt and parameters) as defined by <see cref="PasswordHasher"/>.
-	/// Use <see cref="VerifyHashedPassword(string, string, HashAlgorithmType)"/> for verification.
+	/// <para>
+	/// This method delegates to <see cref="PasswordHasher.HashPassword(string, HashAlgorithmType)"/> after
+	/// validating the <paramref name="input"/> argument. The resulting hash can be verified later using
+	/// <see cref="VerifyHashedPassword(string, string, HashAlgorithmType)"/>.
+	/// </para>
+	/// <para>
+	/// The exact hash format, salt handling, and iteration parameters are defined by
+	/// <see cref="PasswordHasher"/> and may vary depending on the selected <paramref name="algorithmType"/>.
+	/// </para>
 	/// </remarks>
-	/// <example>
-	/// string password = "S3cureP@ss!";
-	/// string hashed = password.HashPassword(); // PBKDF2 by default
-	/// // Later:
-	/// var result = hashed.VerifyHashedPassword("S3cureP@ss!");
-	/// // result == PasswordVerificationResult.Success
-	/// </example>
-	/// <seealso cref="VerifyHashedPassword(string, string, HashAlgorithmType)"/>
-	/// <seealso cref="PasswordHasher"/>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(HashPassword), "David McCarter", "5/6/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1383,25 +1390,35 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits a multi-line string into individual lines using a zero-allocation enumerator.
+	/// Splits the specified string into lines using a high-performance <see cref="LineSplitEnumerator"/>.
 	/// </summary>
-	/// <param name="input">The string to split into lines. Must not be <c>null</c> or empty.</param>
+	/// <param name="input">The string to split into individual lines. Must not be <c>null</c> or empty.</param>
 	/// <returns>
-	/// A <see cref="LineSplitEnumerator"/> that can be used in a <c>foreach</c> loop to enumerate each line
-	/// as a <see cref="ReadOnlySpan{char}"/> without allocating intermediate strings.
+	/// A <see cref="LineSplitEnumerator"/> that can be used in a <c>foreach</c> loop to iterate over each line
+	/// in <paramref name="input"/> without additional allocations.
 	/// </returns>
 	/// <remarks>
 	/// <para>
-	/// The method validates <paramref name="input"/> via guard clauses and then constructs a
-	/// <see cref="LineSplitEnumerator"/> over the underlying character data. Enumeration recognizes standard
-	/// line terminators (<c>\r</c>, <c>\n</c>, and <c>\r\n</c>) and does not include them in the returned spans.
+	/// This method first validates that <paramref name="input"/> is not <c>null</c> or empty and then returns a
+	/// <see cref="LineSplitEnumerator"/> that enumerates lines efficiently using spans. It is designed for
+	/// performance‑critical scenarios where traditional <see cref="string.Split(string[], StringSplitOptions)"/>
+	/// would create unnecessary intermediate string allocations.
 	/// </para>
 	/// <para>
-	/// Because <see cref="LineSplitEnumerator"/> is a <c>ref struct</c>, it is stack-only and cannot be boxed,
-	/// captured by lambdas, stored in fields, or used across <c>await</c> boundaries; it is intended for high‑performance,
-	/// synchronous line processing in tight loops.
+	/// The returned enumerator supports <c>foreach</c>-style iteration, yielding each line as it is encountered.
+	/// Line termination characters (such as <c>'\r'</c> and <c>'\n'</c>) are not included in the returned slices.
 	/// </para>
 	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var text = "Line1\r\nLine2\nLine3";
+	/// 
+	/// foreach (var line in text.SplitLines())
+	/// {
+	///     Console.WriteLine(line.ToString());
+	/// }
+	/// </code>
+	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SplitLines), "David McCarter", "6/9/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed)]

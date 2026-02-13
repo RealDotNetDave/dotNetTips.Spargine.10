@@ -70,6 +70,15 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arrays are fixed-size and do not support adding items..
+        /// </summary>
+        internal static string ArraysAreFixedSize {
+            get {
+                return ResourceManager.GetString("ArraysAreFixedSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bytes.
         /// </summary>
         internal static string Bytes {

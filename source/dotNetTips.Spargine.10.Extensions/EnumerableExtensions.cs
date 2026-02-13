@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 02-13-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -79,7 +79,6 @@ public static class EnumerableExtensions
 		/// The method:
 		/// </para>
 		/// <list type="number">
-		/// <item><description>Validates <paramref name="collection"/> and normalizes <paramref name="pageSize"/>.</description></item>
 		/// <item><description>Buffers incoming elements into a <see cref="List{T}"/> with preallocated capacity.</description></item>
 		/// <item><description>Yields each full page as soon as it reaches the requested size.</description></item>
 		/// <item><description>Yields a final partial page, if any elements remain.</description></item>
