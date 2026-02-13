@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-13-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -63,7 +63,7 @@ public class DateTimeExtensionsTests : UnitTester
 	[TestMethod]
 	public void DateTimeLocalTimeFromUtcTest()
 	{
-		var now = Clock.LocalTime;
+		var now = DateTime.Now;
 
 		var result = now.LocalTimeFromUtc(timezoneFromUtc: -5);
 
@@ -527,7 +527,7 @@ public class DateTimeExtensionsTests : UnitTester
 	[TestMethod]
 	public void IsInRangeThrowsExceptionTestDateTime()
 	{
-		var now = Clock.LocalTime;
+		var now = DateTime.Now;
 
 		var result1 = now.IsInRangeThrowsException(now.Subtract(new TimeSpan(days: 1, hours: 0, minutes: 0, seconds: 0)), now.AddDays(value: 1), paramName: "TEST");
 
@@ -941,7 +941,7 @@ public class DateTimeExtensionsTests : UnitTester
 	[TestMethod]
 	public void ToFromMilliEpochTimeTest()
 	{
-		var currentTime = Clock.LocalTime;
+		var currentTime = DateTime.Now;
 		var epochTime = currentTime.ToMilliEpochTime();
 
 		//PrintResult(epochTime, nameof(this.ToFromMilliEpochTimeTest));
