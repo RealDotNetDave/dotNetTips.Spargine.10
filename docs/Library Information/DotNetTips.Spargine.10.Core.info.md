@@ -2991,6 +2991,66 @@
 *****
 ## DotNetTips.Spargine.Core.Devices.Clock
 
+### System.DayOfWeek CurrentDayOfWeek { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** CurrentDayOfWeek
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 CurrentDayOfYear { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** CurrentDayOfYear
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 CurrentQuarter { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** CurrentQuarter
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.DayOfWeek CurrentUtcDayOfWeek { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** CurrentUtcDayOfWeek
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 CurrentUtcQuarter { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** CurrentUtcQuarter
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Int32 DaysInCurrentMonth { get; set; }
 
 * **Status:** Available
@@ -3015,6 +3075,78 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Int32 DaysInMonth(System.Int32& year, System.Int32& month)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** DaysInMonth
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 DaysRemainingInMonth { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** DaysRemainingInMonth
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int32 DaysRemainingInYear { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** DaysRemainingInYear
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.DateTimeOffset FirstDayOfCurrentMonth { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** FirstDayOfCurrentMonth
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsCurrentUtcYearLeapYear { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** IsCurrentUtcYearLeapYear
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsCurrentYearLeapYear { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** IsCurrentYearLeapYear
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean IsLeapYear(System.Int32& year)
 
 * **Status:** Available
@@ -3027,7 +3159,43 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.DateTime LocalTime { get; set; }
+### System.Boolean IsWeekday { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** IsWeekday
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsWeekend { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** IsWeekend
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.DateTimeOffset LastDayOfCurrentMonth { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** LastDayOfCurrentMonth
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.DateTimeOffset LocalTime { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3036,6 +3204,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 11/11/2020
 * **Description:** LocalTime
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.TimeSpan LocalUtcOffset { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** LocalUtcOffset
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -3063,7 +3243,43 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.DateTime UtcTime { get; set; }
+### System.DateTimeOffset Today { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** Today
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int64 UnixTimestamp { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** UnixTimestamp
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int64 UnixTimestampMilliseconds { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/13/2026
+* **Description:** UnixTimestampMilliseconds
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.DateTimeOffset UtcTime { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7965,4 +8181,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 2/12/2026 7:15:14 PM UTC**
+**Generated by Spargine - dotNetTips.com on 2/13/2026 8:21:26 PM UTC**

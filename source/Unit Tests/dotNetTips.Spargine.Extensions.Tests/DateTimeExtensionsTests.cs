@@ -258,7 +258,7 @@ public class DateTimeExtensionsTests : UnitTester
 	[TestMethod]
 	public void DateTimeToFormattedStringTest()
 	{
-		var now = Clock.LocalTime;
+		var now = DateTime.Now;
 
 		var result = now.ToFormattedString(DateTimeFormat.FullDateLongTime);
 
