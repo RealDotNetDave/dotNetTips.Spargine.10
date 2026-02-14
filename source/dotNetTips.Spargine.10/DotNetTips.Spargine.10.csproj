@@ -6,7 +6,7 @@
 	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
 	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 	<AssemblyTitle>DotNetTips.Spargine.10</AssemblyTitle>
-	<AssemblyVersion>2026.10.2.13</AssemblyVersion>
+	<AssemblyVersion>2026.10.2.14</AssemblyVersion>
 	<Authors>David McCarter</Authors>
 	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
@@ -25,7 +25,7 @@
 	<EnablePackageValidation>false</EnablePackageValidation>
 	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
 	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	<FileVersion>2026.10.2.13</FileVersion>
+	<FileVersion>2026.10.2.14</FileVersion>
 	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -52,7 +52,7 @@
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<TargetFramework>net10.0</TargetFramework>
 	<Title>DotNetTips.Spargine.10</Title>
-	<Version>2026.10.2.13</Version>
+	<Version>2026.10.2.14</Version>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -119,8 +119,8 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
-	<PackageReference Include="System.Management" Version="10.0.3" />
-	<PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.3" />
+	<PackageReference Include="System.Management" Version="10.0.2" />
+	<PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -6,7 +6,7 @@
 	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
 	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 	<AssemblyTitle>DotNetTips.Spargine.10.Core</AssemblyTitle>
-	<AssemblyVersion>2026.10.2.13</AssemblyVersion>
+	<AssemblyVersion>2026.10.2.14</AssemblyVersion>
 	<Authors>David McCarter</Authors>
 	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
@@ -25,7 +25,7 @@
 	<EnablePackageValidation>false</EnablePackageValidation>
 	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
 	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	<FileVersion>2026.10.2.13</FileVersion>
+	<FileVersion>2026.10.2.14</FileVersion>
 	<GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
 	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -53,7 +53,7 @@
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<TargetFramework>net10.0</TargetFramework>
 	<Title>DotNetTips.Spargine.10.Core</Title>
-	<Version>2026.10.2.13</Version>
+	<Version>2026.10.2.14</Version>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -118,7 +118,7 @@
 	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
-	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.3" />
+	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.0" />
 	<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	<PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103" PrivateAssets="All" />

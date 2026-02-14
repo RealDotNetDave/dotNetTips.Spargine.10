@@ -2,13 +2,13 @@
 
   <PropertyGroup>
 	<AnalysisLevel>none</AnalysisLevel>
-	<AssemblyVersion>2026.10.2.13</AssemblyVersion>
+	<AssemblyVersion>2026.10.2.14</AssemblyVersion>
 	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
 	<Company>dotNetTips.com - McCarter Consulting</Company>
 	<Configurations>Debug;Release</Configurations>
 	<Copyright>McCarter Consulting (David McCarter)</Copyright>
 	<EnableNETAnalyzers>false</EnableNETAnalyzers>
-	<FileVersion>2026.10.2.13</FileVersion>
+	<FileVersion>2026.10.2.14</FileVersion>
 	<IsPackable>false</IsPackable>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
@@ -16,7 +16,7 @@
 	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
 	<TargetFramework>net10.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
-	<Version>2026.10.2.13</Version>
+	<Version>2026.10.2.14</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	<OutputPath>..\..\..\AppBin</OutputPath>
@@ -25,8 +25,8 @@
 	<OutputPath>..\..\..\AppBin</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-	<PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.3" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.2" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
 	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
 	<PackageReference Include="MSTest.TestAdapter" Version="4.1.0" />
 	<PackageReference Include="MSTest.TestFramework" Version="4.1.0" />
