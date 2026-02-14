@@ -63,26 +63,42 @@ public static class EnumerableExtensions
 		/// Performs a membership check using the most efficient strategy available for the underlying sequence.
 		/// </summary>
 		/// <param name="searchItem">The value to locate in the sequence. Must not be <c>null</c>.</param>
+		/// <param name="comparer">
+		/// An optional <see cref="IComparer{T}"/> to use for comparison operations.
+		/// If <c>null</c>, <see cref="Comparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>
 		/// <c>true</c> if <paramref name="searchItem"/> is present; otherwise, <c>false</c>.
 		/// </returns>
 		/// <remarks>
-		/// Hash-based collections (such as <c>HashSet&lt;T&gt;</c>) are queried directly for O(1) lookup. When the source is a
-		/// <c>List&lt;T&gt;</c> or a <c>T[]</c>, the method uses span-based binary search for O(log n) lookup, which assumes the data
-		/// is already sorted using the default comparer. All other enumerable types fall back to a linear scan.
+		/// <para>
+		/// When no custom <paramref name="comparer"/> is provided, hash-based collections (such as <c>HashSet&lt;T&gt;</c>) 
+		/// are queried directly for O(1) lookup using the set's internal comparer.
+		/// </para>
+		/// <para>
+		/// When a custom <paramref name="comparer"/> is provided, all collection types use the specified comparer 
+		/// for consistent comparison behavior.
+		/// </para>
+		/// <para>
+		/// When the source is a <c>List&lt;T&gt;</c> or a <c>T[]</c>, the method uses span-based binary search for 
+		/// O(log n) lookup. This assumes the data is already sorted according to the comparer's rules.
+		/// </para>
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FastContains), "David McCarter", "2/14/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
-		public bool FastContains(T searchItem)
+		public bool FastContains(T searchItem, [AllowNull] IComparer<T>? comparer = null)
 		{
 			if (list is null || searchItem is null)
 			{
 				return false;
 			}
 
-			// Fast path: HashSet<T> - O(1) hash-based lookup
-			if (list is HashSet<T> hashSet)
+			// Use provided comparer or default
+			var comp = comparer ?? Comparer<T>.Default;
+
+			// Fast path: HashSet<T> - O(1) hash-based lookup only when using default comparer
+			if (list is HashSet<T> hashSet && comparer is null)
 			{
 				return hashSet.Contains(searchItem);
 			}
@@ -91,17 +107,25 @@ public static class EnumerableExtensions
 			if (list is List<T> typedList)
 			{
 				var span = CollectionsMarshal.AsSpan(typedList);
-				return span.BinarySearch(searchItem) >= 0;
+				return span.BinarySearch(searchItem, comp) >= 0;
 			}
 
 			// Fast path: Array - O(log n) binary search via Span
 			if (list is T[] array)
 			{
-				return array.AsSpan().BinarySearch(searchItem) >= 0;
+				return array.AsSpan().BinarySearch(searchItem, comp) >= 0;
 			}
 
-			// Fallback: O(n) linear search for other collection types
-			return list.Contains(searchItem);
+			// Fallback: O(n) linear search using the comparer
+			foreach (var item in list)
+			{
+				if (comp.Compare(item, searchItem) == 0)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 
