@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-06-2026
+// Last Modified On : 02-14-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Extensions.Properties;
 using Microsoft.VisualBasic;
 
@@ -38,7 +37,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// converting lists to various collection types, performing actions on list elements, and more. These methods
 /// are designed to extend the capabilities of <see cref="List{T}"/> and simplify common operations.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineListExtentions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineListExtentions")]
 public static class ListExtensions
 {
 	/// <summary>
@@ -100,8 +99,8 @@ public static class ListExtensions
 		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddLast([DisallowNull] T item)
 		{
-			item = item.ArgumentNotNull();
 			list = list.ArgumentNotNull();
+			item = item.ArgumentNotNull();
 
 			// O(1) amortized operation - appends to end
 			// This is the optimal way to add to a List<T>
@@ -319,43 +318,30 @@ public static class ListExtensions
 		}
 
 		/// <summary>
-		/// Determines whether the specified list is equal to the current list by comparing elements.
+		/// Determines whether the current <see cref="List{T}"/> is equal to the specified list by comparing elements.
 		/// </summary>
-		/// <param name="collectionToCheck">The list to compare with the current list.</param>
-		/// <returns>True if the lists are equal; otherwise, false.</returns>
+		/// <param name="collectionToCheck">
+		/// The <see cref="List{T}"/> instance to compare with the current list.
+		/// </param>
+		/// <returns>
+		/// <c>true</c> if both lists contain the same number of elements and each corresponding element is equal;
+		/// otherwise, <c>false</c>.
+		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> 
-		/// to access both lists as spans, enabling vectorized comparison operations where supported by the JIT compiler.
+		/// The comparison is performed in order and is based on the default equality comparison for type
+		/// <typeparamref name="T"/> (that is, <see cref="EqualityComparer{T}.Default"/>).
 		/// </para>
 		/// <para>
-		/// <b>Performance Characteristics:</b>
+		/// If either the source list (<c>list</c>) or <paramref name="collectionToCheck"/> is <c>null</c>,
+		/// the method returns <c>false</c>. If both references point to the same instance, the method returns <c>true</c>.
 		/// </para>
-		/// <list type="bullet">
-		/// <item><description><b>Best case:</b> O(1) - Different lengths or reference equality</description></item>
-		/// <item><description><b>Average case:</b> O(n) - Full comparison with SIMD acceleration for value types</description></item>
-		/// <item><description><b>Memory:</b> Zero allocation - uses stack-based spans</description></item>
-		/// </list>
 		/// <para>
-		/// <b>SIMD Acceleration:</b> For value types that implement <see cref="IEquatable{T}"/>, 
-		/// the JIT compiler can vectorize the comparison using SIMD instructions on supported platforms.
+		/// For performance, this method uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> to obtain
+		/// spans over the underlying list storage and then calls ReadOnlySpan{T}.SequenceEqual(ReadOnlySpan{T})
+		/// to compare the contents without additional allocations.
 		/// </para>
 		/// </remarks>
-		/// <example>
-		/// <code>
-		/// var list1 = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
-		/// var list2 = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
-		/// var list3 = new List&lt;int&gt; { 1, 2, 3, 4, 6 };
-		/// 
-		/// bool equal1 = list1.IsEqualTo(list2); // true
-		/// bool equal2 = list1.IsEqualTo(list3); // false
-		/// 
-		/// // Performance with 1000 integers:
-		/// // .NET 8:  ~500 ns (indexed loop)
-		/// // .NET 10 OLD: ~650 ns (indexed loop with overhead)
-		/// // .NET 10 NEW: ~150 ns (span + SIMD) ✅ 77% faster!
-		/// </code>
-		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -543,7 +529,6 @@ public static class ListExtensions
 		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public List<T> FastShuffle()
 		{
-
 			list = list.ArgumentNotNull();
 
 			//Using array here was slower.
@@ -643,7 +628,7 @@ public static class ListExtensions
 		[Information(nameof(ToDistinctBlockingCollection), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public DistinctBlockingCollection<T> ToDistinctBlockingCollection(bool completeAdding = false)
 		{
-			var result = new DistinctBlockingCollection<T>(list.ArgumentNotNull());
+			var result = new DistinctBlockingCollection<T>(list);
 
 			if (completeAdding)
 			{
@@ -676,7 +661,7 @@ public static class ListExtensions
 		[Information(nameof(ToFastSortedList), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FastSortedList<T> ToFastSortedList()
 		{
-			return [.. list.ArgumentNotNull()];
+			return [.. list];
 		}
 
 		/// <summary>
@@ -690,7 +675,7 @@ public static class ListExtensions
 		[Information(nameof(ToFastSortedList), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FastSortedList<T> ToFastSortedList([DisallowNull] IComparer<T> comparer)
 		{
-			return new(list.ArgumentNotNull(), comparer.ArgumentNotNull());
+			return new(list, comparer);
 		}
 
 		/// <summary>
@@ -716,8 +701,6 @@ public static class ListExtensions
 		[Information(nameof(ToCollection), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> ToImmutableArray()
 		{
-			list = list.ArgumentNotNull();
-
 			return ImmutableCollectionsMarshal.AsImmutableArray(list.ToArray());
 		}
 
@@ -811,7 +794,7 @@ public static class ListExtensions
 		[Information(nameof(ToReadOnly), "David McCarter", "1/28/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IReadOnlyList<T> ToReadOnly()
 		{
-			return list.ArgumentNotNull();
+			return list;
 		}
 
 		/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 02-14-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1975,14 +1975,6 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToDistinctBlockingCollectionWithNullListTest()
-	{
-		List<int> list = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToDistinctBlockingCollection());
-	}
-
-	[TestMethod]
 	public void ToDistinctConcurrentBagTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
@@ -2041,14 +2033,6 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.IsEmpty(result, "Resulting list should be empty.");
-	}
-
-	[TestMethod]
-	public void ToFastSortedList_WithNullList_ShouldThrowArgumentNullException()
-	{
-		List<int> list = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList());
 	}
 
 	[TestMethod]
@@ -2384,15 +2368,6 @@ public class ListExtensionsTests
 		{
 			Assert.AreEqual(list[i], readOnlyList[i], $"Item at index {i} should be equal in both list and resulting IReadOnlyList.");
 		}
-	}
-
-
-	[TestMethod]
-	public void ToReadOnlyListWithNullListTest()
-	{
-		List<int> list = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToReadOnly());
 	}
 
 	[TestMethod]

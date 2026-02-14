@@ -53,6 +53,58 @@ public static class EnumerableExtensions
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
+	/// <summary>
+	/// Provides optimized containment helpers for comparable sequences by supplying fast-path logic that
+	/// adapts to the underlying collection type.
+	/// </summary>
+	extension<T>([DisallowNull] IEnumerable<T> list) where T : IComparable<T>
+	{
+		/// <summary>
+		/// Performs a membership check using the most efficient strategy available for the underlying sequence.
+		/// </summary>
+		/// <param name="searchItem">The value to locate in the sequence. Must not be <c>null</c>.</param>
+		/// <returns>
+		/// <c>true</c> if <paramref name="searchItem"/> is present; otherwise, <c>false</c>.
+		/// </returns>
+		/// <remarks>
+		/// Hash-based collections (such as <c>HashSet&lt;T&gt;</c>) are queried directly for O(1) lookup. When the source is a
+		/// <c>List&lt;T&gt;</c> or a <c>T[]</c>, the method uses span-based binary search for O(log n) lookup, which assumes the data
+		/// is already sorted using the default comparer. All other enumerable types fall back to a linear scan.
+		/// </remarks>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastContains), "David McCarter", "2/14/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public bool FastContains(T searchItem)
+		{
+			if (list is null || searchItem is null)
+			{
+				return false;
+			}
+
+			// Fast path: HashSet<T> - O(1) hash-based lookup
+			if (list is HashSet<T> hashSet)
+			{
+				return hashSet.Contains(searchItem);
+			}
+
+			// Fast path: List<T> - O(log n) binary search via Span
+			if (list is List<T> typedList)
+			{
+				var span = CollectionsMarshal.AsSpan(typedList);
+				return span.BinarySearch(searchItem) >= 0;
+			}
+
+			// Fast path: Array - O(log n) binary search via Span
+			if (list is T[] array)
+			{
+				return array.AsSpan().BinarySearch(searchItem) >= 0;
+			}
+
+			// Fallback: O(n) linear search for other collection types
+			return list.Contains(searchItem);
+		}
+	}
+
 	///<summary>Extension methods for <see cref="IAsyncEnumerable{T}"/></summary>
 	extension<T>([DisallowNull] IAsyncEnumerable<T> collection)
 	{
