@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="JsonSerializationTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -148,6 +148,100 @@ public class JsonSerializationTests
 		var people = RandomData.GeneratePersonRefCollection(2);
 		var json = JsonSerialization.Serialize(people);
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 0));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_FromFile_CountGreaterThanArrayLength_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(5);
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json"));
+
+		try
+		{
+			JsonSerialization.SerializeToFile(people, file);
+
+			// Act & Assert
+			_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+				() => JsonSerialization.LoadCollectionFromJson<Person>(file, 10));
+		}
+		finally
+		{
+			if (file.Exists)
+			{
+				file.Delete();
+			}
+		}
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_FromFile_CountLessThanOne_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(2);
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json"));
+
+		try
+		{
+			JsonSerialization.SerializeToFile(people, file);
+
+			// Act & Assert
+			_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+				() => JsonSerialization.LoadCollectionFromJson<Person>(file, 0));
+		}
+		finally
+		{
+			if (file.Exists)
+			{
+				file.Delete();
+			}
+		}
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_FromFile_FileDoesNotExist_ThrowsFileNotFoundException()
+	{
+		// Arrange
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json"));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(
+			() => JsonSerialization.LoadCollectionFromJson<Person>(file, 5));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_FromFile_NullFile_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(
+			() => JsonSerialization.LoadCollectionFromJson<Person>((FileInfo)null, 5));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_FromFile_ReturnsArray()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(_collectionCount);
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json"));
+
+		try
+		{
+			JsonSerialization.SerializeToFile(people, file);
+
+			// Act
+			var result = JsonSerialization.LoadCollectionFromJson<Person>(file, _collectionCount);
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(_collectionCount, result.Length);
+		}
+		finally
+		{
+			if (file.Exists)
+			{
+				file.Delete();
+			}
+		}
 	}
 
 	[TestMethod]

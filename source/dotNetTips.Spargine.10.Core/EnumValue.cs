@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="EnumValue.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ public record EnumValue
 	/// <param name="value">The integer value of the enumeration.</param>
 	/// <param name="name">The name of the enumeration. This cannot be null.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/> is null or empty.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public EnumValue(in int value, [NotNull] string name)
 	{
 		this.Value = value;

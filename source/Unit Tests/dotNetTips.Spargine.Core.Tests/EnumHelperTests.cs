@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="EnumHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DotNetTips.Spargine.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -25,6 +24,83 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class EnumHelperTests
 {
+
+	[TestMethod]
+	public void EnumValue_Constructor_MaxIntValue_CreatesInstance()
+	{
+		// Arrange
+		const int value = int.MaxValue;
+		const string name = "MaxValue";
+
+		// Act
+		var enumValue = new EnumValue(value, name);
+
+		// Assert
+		Assert.AreEqual(value, enumValue.Value);
+		Assert.AreEqual(name, enumValue.Name);
+	}
+
+	[TestMethod]
+	public void EnumValue_Constructor_MinIntValue_CreatesInstance()
+	{
+		// Arrange
+		const int value = int.MinValue;
+		const string name = "MinValue";
+
+		// Act
+		var enumValue = new EnumValue(value, name);
+
+		// Assert
+		Assert.AreEqual(value, enumValue.Value);
+		Assert.AreEqual(name, enumValue.Name);
+	}
+
+	[TestMethod]
+	public void EnumValue_Constructor_NegativeValue_CreatesInstance()
+	{
+		// Arrange
+		const int value = -1;
+		const string name = "Invalid";
+
+		// Act
+		var enumValue = new EnumValue(value, name);
+
+		// Assert
+		Assert.AreEqual(value, enumValue.Value);
+		Assert.AreEqual(name, enumValue.Name);
+	}
+
+
+	[TestMethod]
+	public void EnumValue_Constructor_ValidParameters_CreatesInstance()
+	{
+		// Arrange
+		const int value = 42;
+		const string name = "TestEnum";
+
+		// Act
+		var enumValue = new EnumValue(value, name);
+
+		// Assert
+		Assert.IsNotNull(enumValue);
+		Assert.AreEqual(value, enumValue.Value);
+		Assert.AreEqual(name, enumValue.Name);
+	}
+
+	[TestMethod]
+	public void EnumValue_Constructor_ZeroValue_CreatesInstance()
+	{
+		// Arrange
+		const int value = 0;
+		const string name = "None";
+
+		// Act
+		var enumValue = new EnumValue(value, name);
+
+		// Assert
+		Assert.AreEqual(value, enumValue.Value);
+		Assert.AreEqual(name, enumValue.Name);
+	}
 	[TestMethod]
 	public void GetDescription_ReturnsEnumMemberValue_IfPresent()
 	{
