@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -330,6 +330,89 @@ public class RandomDataTests
 		var character = RandomData.GenerateCharacter('A', 'C');
 
 		Assert.IsNotNull(character);
+	}
+
+	[TestMethod]
+	public void GenerateCoordinateCollection_AllCoordinatesHaveValues()
+	{
+		// Arrange
+		const int count = 5;
+
+		// Act
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>(count);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(count, result.Count);
+
+		foreach (var coordinate in result)
+		{
+			Assert.IsNotNull(coordinate);
+			// Verify coordinates have been assigned (they should be non-default values in most cases)
+			Assert.IsNotNull(coordinate.ToString());
+		}
+	}
+
+
+	[TestMethod]
+	public void GenerateCoordinateCollection_DefaultCount_ReturnsTwoCoordinates()
+	{
+		// Act
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(2, result.Count);
+	}
+
+	[TestMethod]
+	public void GenerateCoordinateCollection_InvalidCount_UsesDefaultValue()
+	{
+		// Arrange & Act
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>(0);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(2, result.Count);
+	}
+
+	[TestMethod]
+	public void GenerateCoordinateCollection_LargeCount_ReturnsAllCoordinates()
+	{
+		// Arrange
+		const int count = 1000;
+
+		// Act
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>(count);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(count, result.Count);
+	}
+
+	[TestMethod]
+	public void GenerateCoordinateCollection_ReturnsReadOnlyCollection()
+	{
+		// Arrange & Act
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>(5);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsInstanceOfType<System.Collections.ObjectModel.ReadOnlyCollection<Coordinate>>(result);
+	}
+
+	[TestMethod]
+	public void GenerateCoordinateCollection_SpecifiedCount_ReturnsCorrectNumber()
+	{
+		// Arrange
+		const int count = 10;
+
+		// Act
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>(count);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(count, result.Count);
 	}
 
 	[TestMethod]
