@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="NumericFormat.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -23,8 +23,14 @@ namespace DotNetTips.Spargine.Extensions;
 /// Implements the <see cref="Enumeration" />
 /// </summary>
 /// <seealso cref="Enumeration" />
-public class NumericFormat : Enumeration
+[Information(nameof(NumericFormat), Status = Status.UpdateDocumentation)]
+public sealed class NumericFormat : Enumeration
 {
+
+	/// <summary>
+	/// Binary format (.NET 8+). Example: 1111111111111111111111111111111
+	/// </summary>
+	public static readonly NumericFormat Binary = new(11, "B");
 
 	/// <summary>
 	/// Custom format. Example: $2,147,483,647.00
@@ -32,7 +38,12 @@ public class NumericFormat : Enumeration
 	public static readonly NumericFormat Currency = new(0, "C");
 
 	/// <summary>
-	/// Custom format. Example: 2147483647
+	/// Currency without decimals. Example: $2,147,483,647
+	/// </summary>
+	public static readonly NumericFormat CurrencyWholeNumber = new(12, "C0");
+
+	/// <summary>
+	/// Custom format. Example: 21474836.47
 	/// </summary>
 	public static readonly NumericFormat Decimal = new(1, "D");
 
@@ -47,6 +58,11 @@ public class NumericFormat : Enumeration
 	public static readonly NumericFormat FixedPoint = new(3, "F");
 
 	/// <summary>
+	/// Custom format with four decimal places. Example: 2,147,483,647.0000
+	/// </summary>
+	public static readonly NumericFormat FourDecimalPlaces = new(15, "N4");
+
+	/// <summary>
 	/// Custom format. Example: 2147483647
 	/// </summary>
 	public static readonly NumericFormat General = new(4, "G");
@@ -57,9 +73,19 @@ public class NumericFormat : Enumeration
 	public static readonly NumericFormat Hexadecimal = new(5, "X");
 
 	/// <summary>
+	/// Lowercase hexadecimal format. Example: 7fffffff
+	/// </summary>
+	public static readonly NumericFormat HexadecimalLower = new(16, "x");
+
+	/// <summary>
 	/// Custom format. Example: 2,147,483,647.00
 	/// </summary>
 	public static readonly NumericFormat Number = new(6, "N");
+
+	/// <summary>
+	/// Custom format with one decimal place. Example: 2,147,483,647.0
+	/// </summary>
+	public static readonly NumericFormat OneDecimalPlace = new(14, "N1");
 
 	/// <summary>
 	/// Custom format. Example: 214,748,364,700.00%
@@ -67,9 +93,24 @@ public class NumericFormat : Enumeration
 	public static readonly NumericFormat Percent = new(7, "P");
 
 	/// <summary>
+	/// Percent without decimals. Example: 214,748,364,700%
+	/// </summary>
+	public static readonly NumericFormat PercentWholeNumber = new(13, "P0");
+
+	/// <summary>
 	/// Custom format. Example:  8.988465674311579E+307
 	/// </summary>
 	public static readonly NumericFormat RoundTrip = new(8, "R");
+
+	/// <summary>
+	/// Custom format. Example: 2,147,483,647.00
+	/// </summary>
+	public static readonly NumericFormat TwoDecimalPlaces = new(10, "N2");
+
+	/// <summary>
+	/// Custom format. Example: 2,147,483,647
+	/// </summary>
+	public static readonly NumericFormat WholeNumber = new(9, "N0");
 
 	/// <summary>  
 	/// Initializes a new instance of the <see cref="NumericFormat"/> class.  
