@@ -47,7 +47,7 @@ internal sealed class Program
 		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config, true,
+		BenchmarkHelper.RunBenchmarks(config,
 			typeof(EnumerationBenchmark)
 		);
 
