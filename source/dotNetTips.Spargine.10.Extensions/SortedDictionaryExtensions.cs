@@ -117,12 +117,12 @@ public static class SortedDictionaryExtensions
 	/// <param name="key">The key.</param>
 	/// <param name="value">The value.</param>
 	/// <returns>TValue.</returns>
-	[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TValue Upsert<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] TValue value) where TKey : notnull
 	{
 		collection.ArgumentNotNull()[key.ArgumentNotNull()] = value;
 
-		return value!;
+		return value;
 	}
 
 }

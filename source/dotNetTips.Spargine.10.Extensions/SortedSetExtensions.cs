@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-06-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -116,7 +116,7 @@ public static class SortedSetExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Obsolete("Use ToImmutable() method instead. This method will be removed at the end of 2026.")]
-		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToImmutableSortedSet), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Obsolete)]
 		public ImmutableSortedSet<T> ToImmutableSortedSet()
 		{
 			return collection.ToImmutable();
@@ -129,7 +129,7 @@ public static class SortedSetExtensions
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 		public ImmutableSortedSet<T> ToImmutable()
 		{
 			return ImmutableSortedSet.CreateRange(collection.ArgumentNotNull());

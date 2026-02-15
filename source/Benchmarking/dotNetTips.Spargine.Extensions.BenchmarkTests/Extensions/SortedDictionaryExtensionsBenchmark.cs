@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,8 +13,10 @@
 // ***********************************************************************
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -29,6 +31,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 {
+	private ReadOnlyCollection<Person> _peopleUpsertNew;
 
 	private SortedDictionary<string, Person> _personRefSortedDictionary;
 
@@ -61,11 +64,27 @@ public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this._personRefSortedDictionary = this.GetPersonRefDictionary().ToSorted();
+		this._peopleUpsertNew = RandomData.GeneratePersonRefCollection(10);
 	}
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.ToImmutable))]
 	public void ToImmutable()
 	{
 		this.Consume(this._personRefSortedDictionary.ToImmutable());
+	}
+
+	[Benchmark(Description = nameof(SortedDictionaryExtensions.Upsert))]
+	public void Upsert()
+	{
+		var collection = this._personRefSortedDictionary.FastBinaryClone<SortedDictionary<string, Person>>();
+
+		// Add existing
+		collection.Upsert(this.PersonRefLookupLast);
+
+		// Add new
+		foreach (var person in this._peopleUpsertNew)
+		{
+			this.Consume(collection.Upsert(person.Id, person));
+		}
 	}
 }

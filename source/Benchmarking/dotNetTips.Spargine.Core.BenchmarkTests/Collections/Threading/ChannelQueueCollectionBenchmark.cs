@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Queues;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 

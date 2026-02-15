@@ -4,7 +4,7 @@
 // Created          : 01-03-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionary.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -253,7 +253,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="updateValueFactory">The function to generate a new value for an existing key.</param>
 	/// <returns>The new value for the key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public TValue AddOrUpdate([DisallowNull] TKey key, [DisallowNull] TValue addValue, [DisallowNull] Func<TKey, TValue, TValue> updateValueFactory)
 	{
 		key = key.ArgumentNotNull();
@@ -288,7 +288,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="comparer">The comparer to use when comparing values.</param>
 	/// <returns><c>true</c> if the dictionary contains an element with the specified value; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool ContainsValue([DisallowNull] TValue value, [AllowNull] IEqualityComparer<TValue>? comparer = null)
 	{
 		value = value.ArgumentNotNull();
@@ -312,7 +312,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <returns>The value associated with the specified key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> or <paramref name="value"/> is null.</exception>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public TValue GetOrAdd([DisallowNull] TKey key, [DisallowNull] TValue value)
 	{
 		key = key.ArgumentNotNull();
@@ -336,7 +336,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <returns>The value associated with the specified key.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> or <paramref name="valueFactory"/> is null.</exception>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public TValue GetOrAdd([DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFactory)
 	{
 		key = key.ArgumentNotNull();
@@ -360,7 +360,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public TValue GetValueOrDefault([DisallowNull] TKey key)
 	{
 		key = key.ArgumentNotNull();
@@ -379,7 +379,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <returns>An <see cref="ImmutableDictionary{TKey, TValue}"/> containing all current key-value pairs.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public ImmutableDictionary<TKey, TValue> ToImmutableDictionary()
 	{
 		return ImmutableDictionary.CreateRange(this);
@@ -403,7 +403,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="value">The value of the element to add.</param>
 	/// <returns><c>true</c> if the key/value pair was added; <c>false</c> if the key already exists.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> or <paramref name="value"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public new bool TryAdd([DisallowNull] TKey key, [DisallowNull] TValue value)
 	{
 		key = key.ArgumentNotNull();
@@ -426,7 +426,7 @@ public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISe
 	/// <param name="comparisonValue">The value to compare with the existing value.</param>
 	/// <returns><c>true</c> if the value was updated; <c>false</c> if the key doesn't exist or the comparison failed.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/>, <paramref name="newValue"/>, or <paramref name="comparisonValue"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryUpdate([DisallowNull] TKey key, [DisallowNull] TValue newValue, [DisallowNull] TValue comparisonValue)
 	{
 		key = key.ArgumentNotNull();
