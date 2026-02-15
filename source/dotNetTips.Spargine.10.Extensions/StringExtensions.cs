@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-06-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -550,7 +550,7 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
+	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.New)]
 	public static string FastFormat([DisallowNull] this string format, int bufferSize = 256, params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();

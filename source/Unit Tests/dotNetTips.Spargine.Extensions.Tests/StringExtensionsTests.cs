@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -20,7 +20,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Security;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Extensions.Tests.Properties;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -525,6 +524,173 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result, "Expected to return true for the same strings ignoring case.");
+	}
+
+
+	[TestMethod]
+	public void FastFormat_BasicPlaceholder_FormatsCorrectly()
+	{
+		// Arrange
+		var format = "Hello {0}!";
+		var name = "World";
+
+		// Act
+		var result = format.FastFormat(args: name);
+
+		// Assert
+		Assert.AreEqual("Hello World!", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_BufferSizeTooLarge_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		var format = "Hello {0}!";
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => format.FastFormat(1025, "World"));
+	}
+
+	[TestMethod]
+	public void FastFormat_BufferSizeTooSmall_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		var format = "Hello {0}!";
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => format.FastFormat(0, "World"));
+	}
+
+	[TestMethod]
+	public void FastFormat_DefaultBufferSize_WorksCorrectly()
+	{
+		// Arrange
+		var format = "Hello {0}!";
+
+		// Act
+		var result = format.FastFormat(args: "World");
+
+		// Assert
+		Assert.AreEqual("Hello World!", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_EmptyFormat_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var format = string.Empty;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => format.FastFormat(args: "test"));
+	}
+
+	[TestMethod]
+	public void FastFormat_LargeResultExceedsBuffer_FallsBackToStringBuilder()
+	{
+		// Arrange
+		var format = "Result: {0}";
+		var largeString = new string('X', 300);
+
+		// Act
+		var result = format.FastFormat(100, largeString);
+
+		// Assert
+		Assert.IsTrue(result.Length > 100);
+		Assert.IsTrue(result.Contains(largeString));
+	}
+
+	[TestMethod]
+	public void FastFormat_MaxBufferSize_WorksCorrectly()
+	{
+		// Arrange
+		var format = "Hello {0}!";
+
+		// Act
+		var result = format.FastFormat(1024, "World");
+
+		// Assert
+		Assert.AreEqual("Hello World!", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_MultiplePlaceholders_FormatsCorrectly()
+	{
+		// Arrange
+		var format = "Hello {0} {1}, welcome to {2}!";
+		var firstName = "John";
+		var lastName = "Doe";
+		var place = "Spargine";
+
+		// Act
+		var result = format.FastFormat(256, firstName, lastName, place);
+
+		// Assert
+		Assert.AreEqual("Hello John Doe, welcome to Spargine!", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_NoArgs_ReturnsFormatStringAsIs()
+	{
+		// Arrange
+		var format = "Hello World!";
+
+		// Act
+		var result = format.FastFormat();
+
+		// Assert
+		Assert.AreEqual("Hello World!", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_NullArgValue_FormatsCorrectly()
+	{
+		// Arrange
+		var format = "Value: {0}";
+
+		// Act
+		var result = format.FastFormat(args: (object)null);
+
+		// Assert
+		Assert.AreEqual("Value: ", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_NullFormat_ThrowsArgumentNullException()
+	{
+		// Arrange
+		string format = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => format.FastFormat(args: "test"));
+	}
+
+	[TestMethod]
+	public void FastFormat_WithDateTimeFormatSpecifier_FormatsCorrectly()
+	{
+		// Arrange
+		var format = "The time is {0:HH:mm:ss}";
+		var dateTime = new DateTime(2026, 2, 15, 14, 30, 45);
+
+		// Act
+		var result = format.FastFormat(args: dateTime);
+
+		// Assert
+		Assert.AreEqual("The time is 14:30:45", result);
+	}
+
+	[TestMethod]
+	public void FastFormat_WithNumericFormatSpecifier_FormatsCorrectly()
+	{
+		// Arrange
+		var format = "Total: {0:N2}";
+		var value = 1234.5678m;
+
+		// Act
+		var result = format.FastFormat(args: value);
+
+		// Assert
+		Assert.IsTrue(result.StartsWith("Total:"));
+		Assert.IsTrue(result.Contains("1"));
 	}
 
 	[TestMethod]
