@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -159,7 +159,7 @@ public class SimpleResult<T>
 	/// Messages can be added using the <see cref="AddMessage"/> method to provide
 	/// additional context about the operation's outcome.
 	/// </remarks>
-	[Information(nameof(Messages), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.Available)]
+	[Information(nameof(Messages), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public ReadOnlyCollection<string> Messages
 	{
 		get
@@ -240,7 +240,7 @@ public class SimpleResult<T>
 	/// This method allows associating informational or diagnostic messages with a result,
 	/// which can be useful for providing additional context about the operation's outcome.
 	/// </remarks>
-	[Information(nameof(AddMessage), UnitTestStatus = UnitTestStatus.None, Status = Core.Status.Available)]
+	[Information(nameof(AddMessage), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public void AddMessage([DisallowNull] string message)
 	{
 		if (message.CheckIsNotNullOrEmpty() == false || string.IsNullOrWhiteSpace(message))

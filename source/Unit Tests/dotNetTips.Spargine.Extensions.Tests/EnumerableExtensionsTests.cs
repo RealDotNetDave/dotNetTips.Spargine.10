@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -794,6 +794,230 @@ public class EnumerableExtensionsTests
 
 		// Assert
 		Assert.IsFalse((bool?)strings.FastAny(s => s.StartsWith("z", StringComparison.Ordinal)));
+	}
+
+	[TestMethod]
+	public void FastContains_EmptyCollection_ReturnsFalse()
+	{
+		// Arrange
+		var emptyList = new List<int>();
+
+		// Act
+		var result = emptyList.FastContains(5);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_FallbackLinearSearch_ItemExists_ReturnsTrue()
+	{
+		// Arrange - LinkedList uses fallback linear search
+		IEnumerable<int> linkedList = new LinkedList<int>([5, 3, 8, 1, 9]);
+
+		// Act
+		var result = linkedList.FastContains(8);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_FallbackLinearSearch_ItemNotExists_ReturnsFalse()
+	{
+		// Arrange - LinkedList uses fallback linear search
+		IEnumerable<int> linkedList = new LinkedList<int>([5, 3, 8, 1, 9]);
+
+		// Act
+		var result = linkedList.FastContains(99);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_HashSet_ItemExists_ReturnsTrue()
+	{
+		// Arrange
+		IEnumerable<int> hashSet = new HashSet<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = hashSet.FastContains(3);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_HashSet_ItemNotExists_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> hashSet = new HashSet<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = hashSet.FastContains(99);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_HashSetWithCustomComparer_UsesLinearSearch()
+	{
+		// Arrange - When custom comparer is provided, HashSet should NOT use its internal Contains
+		IEnumerable<int> hashSet = new HashSet<int> { 10, 20, 30, 40, 50 };
+		var moduloComparer = Comparer<int>.Create((x, y) => (x % 10).CompareTo(y % 10));
+
+		// Act - 100 % 10 == 0, and 10 % 10 == 0, so should find a match
+		var result = hashSet.FastContains(100, moduloComparer);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_LargeCollection_ItemExists_ReturnsTrue()
+	{
+		// Arrange - Large sorted list
+		var largeList = Enumerable.Range(1, 10000).ToList();
+
+		// Act
+		var result = largeList.FastContains(5000);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_NullCollection_ReturnsFalse()
+	{
+		// Arrange
+		IEnumerable<int> nullCollection = null;
+
+		// Act
+		var result = nullCollection.FastContains(5);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_NullSearchItem_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "cherry" };
+
+		// Act
+		var result = collection.FastContains(null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_SingleItemCollection_ItemExists_ReturnsTrue()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 };
+
+		// Act
+		var result = singleItem.FastContains(42);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_SingleItemCollection_ItemNotExists_ReturnsFalse()
+	{
+		// Arrange
+		var singleItem = new List<int> { 42 };
+
+		// Act
+		var result = singleItem.FastContains(99);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_SortedArray_ItemExists_ReturnsTrue()
+	{
+		// Arrange - Array must be sorted for binary search
+		var sortedArray = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+		// Act
+		var result = sortedArray.FastContains(7);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_SortedArray_ItemNotExists_ReturnsFalse()
+	{
+		// Arrange - Array must be sorted for binary search
+		var sortedArray = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+		// Act
+		var result = sortedArray.FastContains(99);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_SortedList_ItemExists_ReturnsTrue()
+	{
+		// Arrange - List must be sorted for binary search
+		var sortedList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+		// Act
+		var result = sortedList.FastContains(5);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_SortedList_ItemNotExists_ReturnsFalse()
+	{
+		// Arrange - List must be sorted for binary search
+		var sortedList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+		// Act
+		var result = sortedList.FastContains(99);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void FastContains_WithCustomComparer_UsesComparer()
+	{
+		// Arrange - Sorted list with custom comparer
+		var sortedList = new List<int> { 1, 2, 3, 4, 5 };
+		var reverseComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
+		sortedList.Sort(reverseComparer); // Sort descending: 5, 4, 3, 2, 1
+
+		// Act
+		var result = sortedList.FastContains(3, reverseComparer);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FastContains_WithStrings_ItemExists_ReturnsTrue()
+	{
+		// Arrange - Sorted string list
+		var sortedStrings = new List<string> { "apple", "banana", "cherry", "date", "elderberry" };
+
+		// Act
+		var result = sortedStrings.FastContains("cherry");
+
+		// Assert
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
