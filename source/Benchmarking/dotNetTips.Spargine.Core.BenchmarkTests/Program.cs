@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-01-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -44,12 +44,12 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		//BenchmarkHelper.RunBenchmarks(config,
-		//	typeof(PasswordGeneratorBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(EnumerationBenchmark)
+		);
 
 	}
 }

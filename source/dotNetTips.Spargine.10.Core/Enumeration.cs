@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-03-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="Enumeration.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -197,7 +197,7 @@ public class Enumeration : IComparable
 	/// <returns>
 	/// <c>true</c> if a matching enumeration instance is found; otherwise, <c>false</c>.
 	/// </returns>
-	[Information(nameof(TryFromDisplayName), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryFromDisplayName), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryFromDisplayName<T>(string displayName, [NotNullWhen(true)] out T? result) where T : Enumeration
 	{
 		if (string.IsNullOrWhiteSpace(displayName))
@@ -222,7 +222,7 @@ public class Enumeration : IComparable
 	/// <returns>
 	/// <c>true</c> if a matching enumeration instance is found; otherwise, <c>false</c>.
 	/// </returns>
-	[Information(nameof(TryFromValue), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryFromValue), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryFromValue<T>(int value, [NotNullWhen(true)] out T? result) where T : Enumeration
 	{
 		result = GetAll<T>().FirstOrDefault(item => item.Value == value);

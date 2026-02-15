@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -133,6 +133,36 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void DoesNotHaveItemsIsEmptyEnumerableRef()
 	{
 		var result = this._personRefEnumerable.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastContains) + ": Array<ref>")]
+	public void FastContainsArrayRef()
+	{
+		var people = this._personRefArray;
+
+		var result = people.FastContains(this.PersonRefLookupLast);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastContains) + ": IEumerable<ref>")]
+	public void FastContainsEnumberableRef()
+	{
+		var people = this._personRefEnumerable;
+
+		var result = people.FastContains(this.PersonRefLookupLast);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastContains) + ": HashSet<ref>")]
+	public void FastContainsHashSetRef()
+	{
+		var people = this._personRefHashSet;
+
+		var result = people.FastContains(this.PersonRefLookupLast);
 
 		this.Consume(result);
 	}
@@ -452,6 +482,14 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = people.StartsWith(this._personRefEnumerableStart);
 
 		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
+	public void ToReadOnlyCollection()
+	{
+		var result = this._personRefEnumerable.ToReadOnlyCollection();
+
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ToUniqueCollection))]
