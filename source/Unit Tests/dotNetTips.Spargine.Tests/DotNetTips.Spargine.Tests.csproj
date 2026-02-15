@@ -2,20 +2,20 @@
 
   <PropertyGroup>
 	<AnalysisLevel>none</AnalysisLevel>
-	<AssemblyVersion>2026.10.2.14</AssemblyVersion>
+	<AssemblyVersion>2026.10.2.15</AssemblyVersion>
 	<BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
 	<Company>dotNetTips.com - McCarter Consulting</Company>
 	<Configurations>Debug;Release</Configurations>
 	<Copyright>McCarter Consulting (David McCarter)</Copyright>
 	<EnableNETAnalyzers>false</EnableNETAnalyzers>
-	<FileVersion>2026.10.2.14</FileVersion>
+	<FileVersion>2026.10.2.15</FileVersion>
 	<IsPackable>false</IsPackable>
 	<NeutralLanguage>en-US</NeutralLanguage>
 	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
 	<TargetFramework>net10.0-windows</TargetFramework>
-	<Version>2026.10.2.14</Version>
+	<Version>2026.10.2.15</Version>
 	<LangVersion>latest</LangVersion>
   </PropertyGroup>
 
