@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="AppTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -107,6 +107,48 @@ public class AppTests
 
 		App.ChangeCulture("en-US");
 		App.ChangeUICulture("en-US");
+	}
+
+	[TestMethod]
+	public void ClearAppState_AllowsNewEntriesAfterClear()
+	{
+		// Arrange
+		App.SetAppState("PreClearKey", "PreClearValue");
+		App.ClearAppState();
+
+		// Act
+		App.SetAppState("PostClearKey", "PostClearValue");
+
+		// Assert
+		Assert.IsNull(App.GetAppState("PreClearKey"), "Pre-clear key should be null.");
+		Assert.AreEqual("PostClearValue", App.GetAppState("PostClearKey"), "Post-clear key should be retrievable.");
+	}
+
+	[TestMethod]
+	public void ClearAppState_OnEmptyState_DoesNotThrow()
+	{
+		// Arrange - ensure state is clear first
+		App.ClearAppState();
+
+		// Act & Assert - should not throw on empty state
+		App.ClearAppState();
+	}
+
+	[TestMethod]
+	public void ClearAppState_RemovesAllEntries()
+	{
+		// Arrange
+		App.SetAppState("ClearTest1", "Value1");
+		App.SetAppState("ClearTest2", "Value2");
+		App.SetAppState("ClearTest3", "Value3");
+
+		// Act
+		App.ClearAppState();
+
+		// Assert
+		Assert.IsNull(App.GetAppState("ClearTest1"), "ClearTest1 should be null after clearing.");
+		Assert.IsNull(App.GetAppState("ClearTest2"), "ClearTest2 should be null after clearing.");
+		Assert.IsNull(App.GetAppState("ClearTest3"), "ClearTest3 should be null after clearing.");
 	}
 
 	[TestMethod]
@@ -509,6 +551,64 @@ public class AppTests
 		var result = App.ReferencedAssemblies();
 
 		Assert.IsGreaterThan(0, result.FastLongCount());
+	}
+
+	[TestMethod]
+	public void RemoveAppState_IsCaseInsensitive()
+	{
+		// Arrange
+		App.SetAppState("CaseTestKey", "TestValue");
+
+		// Act
+		var result = App.RemoveAppState("CASETESTKEY");
+
+		// Assert
+		Assert.IsTrue(result, "Should successfully remove key using different case.");
+		Assert.IsNull(App.GetAppState("CaseTestKey"), "Key should be removed regardless of case.");
+	}
+
+	[TestMethod]
+	public void RemoveAppState_ReturnsFalse_WhenCalledTwice()
+	{
+		// Arrange
+		const string key = "DoubleRemoveKey";
+		App.SetAppState(key, "TestValue");
+
+		// Act
+		var firstRemove = App.RemoveAppState(key);
+		var secondRemove = App.RemoveAppState(key);
+
+		// Assert
+		Assert.IsTrue(firstRemove, "First removal should return true.");
+		Assert.IsFalse(secondRemove, "Second removal should return false.");
+	}
+
+	[TestMethod]
+	public void RemoveAppState_ReturnsFalse_WhenKeyDoesNotExist()
+	{
+		// Arrange
+		const string key = "NonExistentRemoveKey";
+
+		// Act
+		var result = App.RemoveAppState(key);
+
+		// Assert
+		Assert.IsFalse(result, "Should return false when key does not exist.");
+	}
+
+	[TestMethod]
+	public void RemoveAppState_ReturnsTrue_WhenKeyExists()
+	{
+		// Arrange
+		const string key = "RemoveTestKey";
+		App.SetAppState(key, "TestValue");
+
+		// Act
+		var result = App.RemoveAppState(key);
+
+		// Assert
+		Assert.IsTrue(result, "Should return true when removing an existing key.");
+		Assert.IsNull(App.GetAppState(key), "Key should no longer exist after removal.");
 	}
 
 	[TestMethod]

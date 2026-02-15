@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="EnumerationTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -155,7 +154,7 @@ public class EnumerationTests
 	public void GetAll_ReturnsAllEnumerationInstances()
 	{
 		var allNumericFormats = Enumeration.GetAll<NumericFormat>().ToList();
-		Assert.HasCount(9, allNumericFormats);
+		Assert.HasCount(17, allNumericFormats);
 		Assert.Contains(NumericFormat.Currency, allNumericFormats);
 		Assert.Contains(NumericFormat.Decimal, allNumericFormats);
 		Assert.Contains(NumericFormat.Percent, allNumericFormats);

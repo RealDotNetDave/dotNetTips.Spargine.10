@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-06-2026
+// Last Modified On : 02-15-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -370,7 +370,7 @@ public static class App
 	/// var language = App.GetAppState("Language"); // returns null
 	/// </code>
 	/// </example>
-	[Information(nameof(ClearAppState), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(ClearAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static void ClearAppState()
 	{
 		_appState.Clear();
@@ -740,7 +740,7 @@ public static class App
 	/// var removedAgain = App.RemoveAppState("theme"); // returns false
 	/// </code>
 	/// </example>
-	[Information(nameof(RemoveAppState), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(RemoveAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static bool RemoveAppState(string key)
 	{
 		return _appState.TryRemove(key, out _);
