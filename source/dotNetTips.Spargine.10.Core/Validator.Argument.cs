@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -138,7 +138,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!;
+			input = defaultValue;
 		}
 		else if (isValid is false)
 		{
@@ -169,7 +169,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!;
+			input = defaultValue;
 		}
 		else if (isValid is false)
 		{
@@ -253,7 +253,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!.Value;
+			input = defaultValue.Value;
 		}
 		else if (isValid is false)
 		{
@@ -283,7 +283,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!.Value;
+			input = defaultValue.Value;
 		}
 		else if (isValid is false)
 		{
@@ -313,7 +313,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!.Value;
+			input = defaultValue.Value;
 		}
 		else if (isValid is false)
 		{
@@ -343,7 +343,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!.Value;
+			input = defaultValue.Value;
 		}
 		else if (isValid is false)
 		{
@@ -373,7 +373,7 @@ public static partial class Validator
 
 		if (isValid is false && defaultValue is not null)
 		{
-			input = defaultValue!.Value;
+			input = defaultValue.Value;
 		}
 		else if (isValid is false)
 		{
@@ -429,7 +429,7 @@ public static partial class Validator
 	[Information(nameof(ArgumentInRange), "David McCarter", "2/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static TimeOnly ArgumentInRange(this TimeOnly input, in TimeOnly min, in TimeOnly max, in TimeOnly? defaultValue = null, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
-		var isValid = input!.CheckIsInRange(min, max);
+		var isValid = input.CheckIsInRange(min, max);
 
 		if (isValid is false && defaultValue.HasValue)
 		{
@@ -465,7 +465,7 @@ public static partial class Validator
 	{
 		input = input.ArgumentNotNull();
 
-		var isValid = input!.Length.CheckIsInRange(min, max);
+		var isValid = input.Length.CheckIsInRange(min, max);
 
 		if (isValid is false && string.IsNullOrEmpty(defaultValue) is false)
 		{
@@ -476,7 +476,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentOutOfRangeException(CreateExceptionMessage(errorMessage, string.Format(CultureInfo.CurrentCulture, InvalidStringLengthFormat, min, max)), paramName);
 		}
 
-		return trim ? input!.Trim() : input!;
+		return trim ? input.Trim() : input;
 	}
 
 	/// <summary>
@@ -501,7 +501,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentNullException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -525,7 +525,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentNullException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -574,7 +574,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentNullException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -599,7 +599,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentNullException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionSizeIsNotValid), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -620,14 +620,14 @@ public static partial class Validator
 	{
 		input = input.ArgumentNotNull();
 
-		var isValid = input!.TryGetNonEnumeratedCount(out var collectionCount) && collectionCount == count;
+		var isValid = input.TryGetNonEnumeratedCount(out var collectionCount) && collectionCount == count;
 
 		if (isValid is false)
 		{
 			ExceptionThrower.ThrowArgumentOutOfRangeException(CreateExceptionMessage(errorMessage, "Collection has no items."), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -649,10 +649,10 @@ public static partial class Validator
 	[Information(nameof(ArgumentMatched), "David McCarter", "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ArgumentMatched([DisallowNull] this string input, [DisallowNull] Regex match, bool trim = true, string? defaultValue = null, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
-		input = input!.ArgumentNotNullOrEmpty(trim: trim);
+		input = input.ArgumentNotNullOrEmpty(trim: trim);
 		match = match.ArgumentNotNull();
 
-		var isValid = match!.IsMatch(input);
+		var isValid = match.IsMatch(input);
 
 		if (isValid is false && string.IsNullOrEmpty(defaultValue) is false)
 		{
@@ -663,7 +663,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.ErrorStringIsNotValid), paramName);
 		}
 
-		return trim ? input!.Trim() : input!;
+		return trim ? input.Trim() : input;
 	}
 
 	/// <summary>
@@ -682,7 +682,7 @@ public static partial class Validator
 	{
 		var isValid = input is not null && condition;
 
-		return isValid is false ? defaultValue : input!;
+		return isValid is false ? defaultValue : input;
 	}
 
 	/// <summary>
@@ -707,7 +707,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.ErrorInvalidValue), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -772,7 +772,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentNullException(CreateExceptionMessage(errorMessage, Resources.ErrorCollectionIsNullOrHasNoItems), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -831,7 +831,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentNullException(CreateExceptionMessage(errorMessage, Resources.ErrorUriCannotBeNull), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -921,7 +921,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentReadOnlyException(CreateExceptionMessage(errorMessage, Resources.ErrorListCannotBeReadOnly), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -947,7 +947,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentReadOnlyException(CreateExceptionMessage(errorMessage, Resources.ErrorReadOnlyCollection), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>
@@ -974,7 +974,7 @@ public static partial class Validator
 			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.ErrorInvalidType), paramName);
 		}
 
-		return input!;
+		return input;
 	}
 
 	/// <summary>

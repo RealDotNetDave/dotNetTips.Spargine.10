@@ -4,7 +4,7 @@
 // Created          : 10-25-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-04-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -172,7 +172,7 @@ public struct Person() : IPerson<Person, Address>
 	[Information(nameof(CellPhone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string CellPhone
 	{
-		readonly get { return this._cellPhone!; }
+		readonly get { return this._cellPhone; }
 		set
 		{
 			var safeValue = value ?? string.Empty;
@@ -247,7 +247,7 @@ public struct Person() : IPerson<Person, Address>
 	[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public string FirstName
 	{
-		readonly get { return this._firstName!; }
+		readonly get { return this._firstName; }
 		set
 		{
 			var safeValue = value ?? string.Empty;
@@ -315,7 +315,7 @@ public struct Person() : IPerson<Person, Address>
 	[Information(nameof(LastName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string LastName
 	{
-		readonly get { return this._lastName!; }
+		readonly get { return this._lastName; }
 		set
 		{
 			var safeValue = value ?? string.Empty;
@@ -351,7 +351,7 @@ public struct Person() : IPerson<Person, Address>
 	[Information(nameof(Phone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Phone
 	{
-		readonly get { return this._phone!; }
+		readonly get { return this._phone; }
 		set
 		{
 			var safeValue = value ?? string.Empty;

@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-11-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="ServiceProxy.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -88,6 +88,7 @@ public abstract class ServiceProxy<T> : IDisposable where T : ICommunicationObje
 	/// is first accessed. The channel factory and channel creation are deferred until needed,
 	/// implementing a lazy initialization pattern.
 	/// </remarks>
+	[Preserve("Do not change to primary constructor. This constructor is used by derived classes to pass the service endpoint.")]
 	protected ServiceProxy([NotNull] ServiceEndpoint serviceEndpoint)
 	{
 		this._serviceEndpoint = serviceEndpoint;

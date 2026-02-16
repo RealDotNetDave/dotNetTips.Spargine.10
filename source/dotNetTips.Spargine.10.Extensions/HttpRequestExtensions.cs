@@ -4,7 +4,7 @@
 // Created          : 06-01-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-19-2025
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -119,7 +119,7 @@ public static class HttpRequestExtensions
 
 		if (!request.TryGetBody(out var bytes))
 		{
-			value = default!;
+			value = default;
 			return false;
 		}
 
@@ -131,7 +131,7 @@ public static class HttpRequestExtensions
 		}
 		catch (ArgumentNullException)
 		{
-			value = default!;
+			value = default;
 			return false;
 		}
 	}

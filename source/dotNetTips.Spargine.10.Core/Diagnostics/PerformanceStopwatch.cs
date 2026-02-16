@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-07-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -24,7 +24,6 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Logging;
 using DotNetTips.Spargine.Core.Properties;
 using Microsoft.ApplicationInsights;
@@ -2678,7 +2677,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 
 		if (this._telemetry != null && !string.IsNullOrWhiteSpace(this._operationName))
 		{
-			this.TrackTelemetry(this._telemetry, this._operationName!, this._telemetryMessage ?? string.Empty, this._telemetryProperties);
+			this.TrackTelemetry(this._telemetry, this._operationName, this._telemetryMessage ?? string.Empty, this._telemetryProperties);
 		}
 
 		return result;
@@ -2742,7 +2741,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 
 		if (this._telemetry != null && !string.IsNullOrWhiteSpace(this._operationName))
 		{
-			this.TrackTelemetry(this._telemetry, this._operationName!, this._telemetryMessage ?? string.Empty, this._telemetryProperties);
+			this.TrackTelemetry(this._telemetry, this._operationName, this._telemetryMessage ?? string.Empty, this._telemetryProperties);
 		}
 
 		return result;

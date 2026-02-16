@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -324,7 +324,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	{
 		item = item.ArgumentNotNull();
 
-		_ = this.AddInternal(item, this._comparer.GetHashCode(item!), false);
+		_ = this.AddInternal(item, this._comparer.GetHashCode(item), false);
 	}
 
 	/// <summary>
@@ -553,7 +553,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	{
 		item = item.ArgumentNotNull();
 
-		return this.AddInternal(item, this._comparer.GetHashCode(item!), acquireLock: true);
+		return this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true);
 	}
 
 	/// <summary>

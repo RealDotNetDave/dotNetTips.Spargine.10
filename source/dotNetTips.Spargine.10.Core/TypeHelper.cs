@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1414,7 +1414,7 @@ public static class TypeHelper
 				break;
 			}
 
-			currentType = currentType.BaseType!;
+			currentType = currentType.BaseType;
 		}
 
 		// Cache the result for future use

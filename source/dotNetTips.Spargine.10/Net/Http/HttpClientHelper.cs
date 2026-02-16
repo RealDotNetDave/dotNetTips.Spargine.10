@@ -4,7 +4,7 @@
 // Created          : 01-11-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -75,7 +75,7 @@ public static class HttpClientHelper
 		{
 			var response = await Client.GetAsync(url, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-			return response!;
+			return response;
 		}
 		catch (TaskCanceledException ex) when (cancellationToken.IsCancellationRequested)
 		{

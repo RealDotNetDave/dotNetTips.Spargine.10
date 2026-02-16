@@ -18,7 +18,6 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Extensions;
 using Microsoft.Extensions.ObjectPool;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)

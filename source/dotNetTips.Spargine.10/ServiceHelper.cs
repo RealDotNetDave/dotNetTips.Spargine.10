@@ -4,7 +4,7 @@
 // Created          : 03-15-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="ServiceHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -497,7 +497,7 @@ public static class ServiceHelper
 	/// </exception>
 	private static void StartDependentServices(in ServiceController[] services, in ILogger? logger = null)
 	{
-		foreach (var serviceDependsOn in services!)
+		foreach (var serviceDependsOn in services)
 		{
 			if (serviceDependsOn.Status != ServiceControllerStatus.Running)
 			{
@@ -530,7 +530,7 @@ public static class ServiceHelper
 	/// </exception>
 	private static void StopDependentServices(ServiceController[] services, ILogger? logger = null)
 	{
-		foreach (var serviceDependsOn in services!)
+		foreach (var serviceDependsOn in services)
 		{
 			if (serviceDependsOn.Status != ServiceControllerStatus.Stopped)
 			{

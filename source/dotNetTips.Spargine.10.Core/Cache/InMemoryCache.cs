@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,7 +19,6 @@ using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using DotNetTips.Spargine.Core;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 
@@ -779,7 +778,7 @@ public sealed class InMemoryCache
 
 		if (this.Cache.TryGetValue(key, out var item))
 		{
-			_ = this.Cache.Set(key, item!, new MemoryCacheEntryOptions().SetAbsoluteExpiration(newTimeout));
+			_ = this.Cache.Set(key, item, new MemoryCacheEntryOptions().SetAbsoluteExpiration(newTimeout));
 			return true;
 		}
 

@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -1061,7 +1061,7 @@ public static class ObjectExtensions
 			obj = obj.ArgumentNotNull();
 
 			return MessagePack.MessagePackSerializer.Deserialize<T>(
-				MessagePack.MessagePackSerializer.Serialize(obj))!;
+				MessagePack.MessagePackSerializer.Serialize(obj));
 		}
 
 		/// <summary>
@@ -1124,7 +1124,7 @@ public static class ObjectExtensions
 			obj = obj.ArgumentNotNull();
 
 			return MessagePack.MessagePackSerializer.Deserialize<T>(
-				MessagePack.MessagePackSerializer.Serialize(obj, options), options)!;
+				MessagePack.MessagePackSerializer.Serialize(obj, options), options);
 		}
 
 		/// <summary>

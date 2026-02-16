@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -1348,7 +1348,7 @@ public static class RandomData
 			Addresses = GenerateAddressCollection<Address>(personData.Country, addressCount, addressLength, countyProvinceLength)
 				.Select(address => address)
 				.Where(address => address is not null)
-				.ToCollection()!,
+				.ToCollection(),
 			BornOn = personData.BornOn,
 			CellPhone = personData.CellPhone,
 			Email = personData.Email,
@@ -1382,7 +1382,7 @@ public static class RandomData
 		{
 			Addresses = GenerateAddressCollection<Models.ValueTypes.Address>(personData.Country, addressCount, addressLength, countyProvinceLength)
 				.Select(address => address)
-				.ToCollection()!,
+				.ToCollection(),
 			BornOn = personData.BornOn,
 			CellPhone = personData.CellPhone,
 			Email = personData.Email,
