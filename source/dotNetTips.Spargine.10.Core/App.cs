@@ -4,12 +4,17 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides application-level utilities including system and process information, culture management,
+// environment variable access, processor details, diagnostic reporting, and thread-safe application
+// state storage via ConcurrentDictionary. Designed for centralized access to runtime information
+// and cross-cutting application concerns in .NET 10 applications.
+// </summary>
 // ***********************************************************************
 
 using System.Collections;
@@ -38,7 +43,7 @@ namespace DotNetTips.Spargine.Core;
 /// This class serves as a utility for accessing various application and system properties such as culture information, OS details, and processor information.
 /// It also provides methods for changing culture settings, retrieving environment variables, and managing application processes.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineApp")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineApp")]
 public static class App
 {
 
@@ -71,7 +76,7 @@ public static class App
 	/// <summary>
 	/// Gets the application information.
 	/// </summary>
-	/// <value>The application information, including company, configuration, copyright, description, file version, memory allocated, memory info, product, thread allocated bytes, _title, total allocated bytes, and version.</value>
+	/// <value>The application information, including company, configuration, copyright, description, file version, memory allocated, memory info, product, thread allocated bytes, title, total allocated bytes, and version.</value>
 	/// <example>Example usage:
 	/// <code>
 	/// var appInfo = App.AppInfo;
@@ -414,11 +419,7 @@ public static class App
 	[Information(nameof(GenerateDiagnosticReport), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateDiagnosticReport()
 	{
-		return $@"
-			Application: {AppInfo.Product} v{AppInfo.Version}
-			OS: {OSDescription} ({OSArchitecture})
-			Framework: {FrameworkDescription}
-			Memory Usage: {WorkingSet / 1024 / 1024} MB";
+		return $"Application: {AppInfo.Product} v{AppInfo.Version} OS: {OSDescription} ({OSArchitecture}) Framework: {FrameworkDescription} Memory Usage: {WorkingSet / 1024 / 1024} MB";
 	}
 
 	/// <summary>

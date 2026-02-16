@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="AppTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -174,6 +174,7 @@ public class AppTests
 
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}
+
 	[TestMethod]
 	public void GenerateDiagnosticReport_ReturnsExpectedContent()
 	{
