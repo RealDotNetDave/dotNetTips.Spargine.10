@@ -247,21 +247,6 @@ public static class BenchmarkHelper
 
 	/// <summary>
 	/// Runs the specified benchmark types using the provided BenchmarkDotNet configuration.
-	/// Saves a human-readable timing summary report to the BenchmarkDotNet artifacts directory.
-	/// </summary>
-	/// <param name="config">
-	/// The BenchmarkDotNet configuration used to run the benchmarks. Must not be <c>null</c>.
-	/// </param>
-	/// <param name="benchmarks">
-	/// One or more benchmark types to execute. Each type must be defined in the calling assembly and
-	/// contain methods marked with <see cref="BenchmarkAttribute"/>. Must not be <c>null</c>.
-	/// </param>
-	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
-	public static void RunBenchmarks([DisallowNull] IConfig config, [DisallowNull] params Type[] benchmarks)
-		=> RunBenchmarks(config, saveResults: true, benchmarks);
-
-	/// <summary>
-	/// Runs the specified benchmark types using the provided BenchmarkDotNet configuration.
 	/// Optionally saves a human-readable timing summary report to the BenchmarkDotNet artifacts directory.
 	/// </summary>
 	/// <param name="config">

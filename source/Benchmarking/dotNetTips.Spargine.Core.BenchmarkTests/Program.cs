@@ -49,7 +49,7 @@ internal sealed class Program
 		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config,
+		BenchmarkHelper.RunBenchmarks(config, true,
 			typeof(EnumerationBenchmark),
 			typeof(AutoDefaultDictionaryCollectionBenchmark),
 			typeof(ChannelQueueCollectionBenchmark)
