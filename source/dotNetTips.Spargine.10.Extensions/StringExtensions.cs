@@ -1055,7 +1055,7 @@ public static class StringExtensions
 		// SUGGESTION FROM COPILOT SLOWER
 		foreach (var inputItem in input)
 		{
-			if (!inputItem.IsAsciiWhitespace())
+			if (!inputItem.IsAsciiWhitespace)
 			{
 				return false;
 			}
