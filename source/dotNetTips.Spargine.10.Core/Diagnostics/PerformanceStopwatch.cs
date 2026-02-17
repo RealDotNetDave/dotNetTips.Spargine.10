@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 02-17-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Core.Diagnostics;
 /// A thread-safe, high-precision stopwatch with enhanced diagnostics, lap support, telemetry, and logging capabilities.
 /// </summary>
 [DebuggerDisplay("Elapsed: {ElapsedMilliseconds}ms, Title: {Title}")]
-[Information(nameof(PerformanceStopwatch), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "https://bit.ly/SparginePerformanceStopwatch")]
+[Information(nameof(PerformanceStopwatch), "David McCarter", "11/11/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SparginePerformanceStopwatch")]
 public sealed class PerformanceStopwatch : Stopwatch
 {
 	/// <summary>
@@ -574,6 +574,97 @@ public sealed class PerformanceStopwatch : Stopwatch
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get;
+	}
+
+	/// <summary>
+	/// Calculates the elapsed time since a starting high-resolution timestamp using the system performance counter.
+	/// </summary>
+	/// <param name="startingTimestamp">
+	/// The starting timestamp captured from <see cref="Stopwatch.GetTimestamp"/>.
+	/// </param>
+	/// <returns>
+	/// A <see cref="TimeSpan"/> representing the elapsed time from <paramref name="startingTimestamp"/> to now.
+	/// </returns>
+	/// <remarks>
+	/// This method is a thin wrapper around <see cref="Stopwatch.GetElapsedTime(long)"/> providing a convenient
+	/// entry point on <see cref="PerformanceStopwatch"/>.
+	/// </remarks>
+	/// <example>
+	/// Measure elapsed time from a captured timestamp:
+	/// <code>
+	/// long start = PerformanceStopwatch.GetTimeStamp();
+	/// // ... do work ...
+	/// TimeSpan elapsed = PerformanceStopwatch.GetElapsedTime(start);
+	/// Console.WriteLine($"Elapsed: {elapsed.TotalMilliseconds:F2} ms");
+	/// </code>
+	/// </example>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static new TimeSpan GetElapsedTime(long startingTimestamp)
+	{
+		return Stopwatch.GetElapsedTime(startingTimestamp);
+	}
+
+	/// <summary>
+	/// Calculates the elapsed time between two high-resolution timestamps using the system performance counter.
+	/// </summary>
+	/// <param name="startingTimestamp">
+	/// The starting timestamp captured from <see cref="Stopwatch.GetTimestamp"/>.
+	/// </param>
+	/// <param name="endingTimestamp">
+	/// The ending timestamp captured from <see cref="Stopwatch.GetTimestamp"/>.
+	/// </param>
+	/// <returns>
+	/// A <see cref="TimeSpan"/> representing the elapsed time between <paramref name="startingTimestamp"/> and <paramref name="endingTimestamp"/>.
+	/// </returns>
+	/// <remarks>
+	/// This method is a thin wrapper around <see cref="Stopwatch.GetElapsedTime(long, long)"/> providing a convenient
+	/// entry point on <see cref="PerformanceStopwatch"/>.
+	/// </remarks>
+	/// <example>
+	/// Measure elapsed time between two timestamps:
+	/// <code>
+	/// long start = PerformanceStopwatch.GetTimeStamp();
+	/// // ... do work ...
+	/// long end = PerformanceStopwatch.GetTimeStamp();
+	/// TimeSpan elapsed = PerformanceStopwatch.GetElapsedTime(start, end);
+	/// Console.WriteLine($"Elapsed: {elapsed.TotalMilliseconds:F2} ms");
+	/// </code>
+	/// </example>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static new TimeSpan GetElapsedTime(long startingTimestamp, long endingTimestamp)
+	{
+		return Stopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
+	}
+
+	/// <summary>
+	/// Gets the current high-resolution timestamp from the system's performance counter.
+	/// </summary>
+	/// <returns>
+	/// A 64-bit integer representing the current tick count retrieved from <see cref="Stopwatch.GetTimestamp"/>.
+	/// </returns>
+	/// <remarks>
+	/// This method returns the raw timer value, which can be used for precise interval measurements
+	/// when combined with <see cref="Stopwatch.Frequency"/> to convert ticks to time units.
+	/// </remarks>
+	/// <example>
+	/// Converting the timestamp to milliseconds:
+	/// <code>
+	/// long start = PerformanceStopwatch.GetTimeStamp();
+	/// // ... do work ...
+	/// long end = PerformanceStopwatch.GetTimeStamp();
+	/// double elapsedMs = (end - start) * 1000.0 / Stopwatch.Frequency;
+	/// </code>
+	/// </example>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetTimestamp), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static long GetTimeStamp()
+	{
+		return Stopwatch.GetTimestamp();
 	}
 
 	/// <summary>
