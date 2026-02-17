@@ -48,6 +48,7 @@
 	<RootNamespace>DotNetTips.Spargine.Benchmarking</RootNamespace>
 	<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+	<ServerGarbageCollection>true</ServerGarbageCollection>
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<TargetFramework>net10.0</TargetFramework>
 	<Title>DotNetTips.Spargine.Benchmarking</Title>
@@ -55,7 +56,7 @@
   </PropertyGroup>
 
 
-<ItemGroup>
+  <ItemGroup>
 	<Compile Remove="CollectionBenchmark.PersonRecord.cs" />
   </ItemGroup>
 
@@ -116,7 +117,7 @@
 	</EmbeddedResource>
   </ItemGroup>
 
-	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-</PropertyGroup>
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+	<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
 </Project>
