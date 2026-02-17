@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Devices;
 /// Some of this code is from the Microsoft.VisualBasic.dll.
 /// </remarks>
 [ExcludeFromCodeCoverage(Justification = "Not needed due to just using the <see cref=\"DateTime\"/> type.")]
-[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineClock")]
 public static class Clock
 {
 

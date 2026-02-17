@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// making it easier to perform tasks such as getting all types, interfaces, or instances of a specific type within an assembly,
 /// and filtering them based on various criteria. These methods are designed to simplify common reflection-based tasks.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineAssemblyExtensions", Status = Status.Available)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineAssemblyExtensions")]
 public static class AssemblyExtensions
 {
 	///<summary></summary>

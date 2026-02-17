@@ -4,7 +4,7 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -75,6 +75,50 @@ public static class ReadOnlyCollectionExtensions
 			}
 
 			return hash;
+		}
+
+		/// <summary>
+		/// Attempts to get the element at the specified index.
+		/// </summary>
+		/// <param name="index">The zero-based index of the element to retrieve.</param>
+		/// <param name="value">When this method returns, contains the element at the specified index, or the default value if the index is out of range.</param>
+		/// <returns>
+		/// <c>true</c> if the element was successfully retrieved; otherwise, <c>false</c>.
+		/// </returns>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(TryGetValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public bool TryGetValue(int index, out T? value)
+		{
+			if (collection is null || index < 0 || index >= collection.Count)
+			{
+				value = default;
+				return false;
+			}
+
+			value = collection.ElementAt(index);
+			return true;
+		}
+
+		/// <summary>
+		/// Gets the element at the specified index, or the default value if the index is out of range.
+		/// </summary>
+		/// <param name="index">The zero-based index of the element to retrieve.</param>
+		/// <param name="defaultValue">The default value to return if the index is out of range.</param>
+		/// <returns>
+		/// The element at the specified index, or <paramref name="defaultValue"/> if the index is out of range.
+		/// </returns>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(GetValueOrDefault), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public T? GetValueOrDefault(int index, T? defaultValue = default)
+		{
+			if (collection is null || index < 0 || index >= collection.Count)
+			{
+				return defaultValue;
+			}
+
+			return collection.ElementAt(index);
 		}
 
 		/// <summary>

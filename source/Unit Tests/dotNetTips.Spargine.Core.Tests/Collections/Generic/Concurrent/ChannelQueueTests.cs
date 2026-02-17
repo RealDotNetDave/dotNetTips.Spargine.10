@@ -838,7 +838,7 @@ public class ChannelQueueTests
 		queue.Lock();
 
 		// Act
-		var result = queue.TryPeek(out var item);
+		var result = queue.TryPeek(out var _);
 
 		// Assert
 		Assert.IsFalse(result);

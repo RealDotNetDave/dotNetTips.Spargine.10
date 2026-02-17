@@ -24,7 +24,6 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Data.Models;
 using DotNetTips.Spargine.Core.Properties;
 using DotNetTips.Spargine.Core.RegularExpressions;
@@ -36,7 +35,7 @@ namespace DotNetTips.Spargine.Core.Data;
 /// <summary>
 /// Provides methods for accessing and validating country phone and postal information.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineCountryPhonePostalInfoRepository")]
 public static class CountryPhonePostalInfoRepository
 {
 	private static ReadOnlyCollection<CountryPhonePostalInfo>? _countries;

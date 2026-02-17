@@ -4,14 +4,12 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-22-2023
+// Last Modified On : 02-16-2026
 // ***********************************************************************
 // <copyright file="EnumItem.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>
-// Class to supply the description and value for an Enum.
-// </summary>
+// <summary>Class to supply the description and value for an Enum.</summary>
 // ***********************************************************************
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -24,7 +22,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Class EnumItem.
 /// </summary>
 /// <typeparam name="T">Generic type parameter.</typeparam>
-public record EnumItem<T>
+public sealed record EnumItem<T>
 {
 
 	/// <summary>

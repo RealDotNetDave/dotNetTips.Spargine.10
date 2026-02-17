@@ -352,7 +352,9 @@ public class CollectionRandomizerTests
 
 		// Exhaust the collection
 		for (int i = 0; i < collection.Count; i++)
+		{
 			randomizer.GetNext();
+		}
 
 		// Act & Assert
 		randomizer.Reset();

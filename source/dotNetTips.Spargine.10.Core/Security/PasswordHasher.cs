@@ -17,7 +17,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
-using DotNetTips.Spargine.Core;
 using Konscious.Security.Cryptography;
 using Org.BouncyCastle.Crypto.Digests;
 
@@ -28,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// <summary>
 /// Provides methods for hashing and verifying passwords using multiple algorithms.
 /// </summary>
-[Information(nameof(PasswordHasher), "David McCarter", "5/14/2025", Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(PasswordHasher), "David McCarter", "5/14/2025", Status = Status.Available, Documentation = "https://bit.ly/SparginePasswordHasher")]
 public static class PasswordHasher
 
 {
