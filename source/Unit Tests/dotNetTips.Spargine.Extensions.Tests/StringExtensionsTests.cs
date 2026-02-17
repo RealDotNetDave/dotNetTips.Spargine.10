@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-17-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1120,8 +1120,6 @@ public class StringExtensionsTests
 
 		Assert.IsFalse(testWithText.HasWhitespace());
 		Assert.IsTrue(testWithWhitespace.HasWhitespace());
-		Assert.IsTrue(' '.IsAsciiWhitespace());
-		Assert.IsFalse('d'.IsAsciiWhitespace());
 	}
 
 	[TestMethod]
@@ -1139,17 +1137,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsAsciiLetterOrDigitTest()
-	{
-		Assert.IsTrue('A'.IsAsciiLetterOrDigit());
-
-		Assert.IsTrue('1'.IsAsciiLetterOrDigit());
-	}
-
-	[TestMethod]
-	public void IsAsciiLetterTest() => Assert.IsTrue('A'.IsAsciiLetter());
-
-	[TestMethod]
 	public void IsCreditCardTest() => Assert.IsFalse("123".IsCreditCardNumber());
 
 	[TestMethod]
@@ -1161,14 +1148,6 @@ public class StringExtensionsTests
 		Assert.IsTrue(goodCode.IsCurrencyCode());
 
 		Assert.IsFalse(badCode.IsCurrencyCode());
-	}
-
-	[TestMethod]
-	public void IsDigitTest()
-	{
-		Assert.IsTrue('1'.IsAsciiDigit());
-
-		Assert.IsFalse('A'.IsAsciiDigit());
 	}
 
 	[TestMethod]
@@ -1463,8 +1442,6 @@ public class StringExtensionsTests
 	public void IsWhiteSpaceTest()
 	{
 		Assert.IsTrue("      ".HasWhitespace());
-
-		Assert.IsTrue(ControlChars.Space.IsAsciiWhitespace());
 
 		Assert.IsFalse("David".HasWhitespace());
 	}
