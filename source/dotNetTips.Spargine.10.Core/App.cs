@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 02-19-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -447,7 +447,7 @@ public static class App
 	/// var withDefault = App.GetAppState("NotSet", "Blue"); // returns "Blue"
 	/// </example>
 	[Pure]
-	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Updated)]
+	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static object? GetAppState(string key, object? defaultValue = null)
 	{
 		return _appState.TryGetValue(key, out var value) ? value : defaultValue;
