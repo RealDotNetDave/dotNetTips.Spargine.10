@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 02-19-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -281,6 +281,7 @@ public class FileProcessor
 		return successCount;
 	}
 
+	//![](BF30B28B33B5AB5FD046DBD4833764B3_1.png)
 	/// <summary>
 	/// Deletes the specified files.
 	/// </summary>
@@ -309,6 +310,7 @@ public class FileProcessor
 	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int DeleteFiles(IEnumerable<FileInfo> files, CancellationToken cancellationToken = default)
 	{
+
 		if (files is null)
 		{
 			return 0;
