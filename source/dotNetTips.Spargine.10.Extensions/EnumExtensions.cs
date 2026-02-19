@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified On : 02-19-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -12,8 +12,11 @@
 // <summary>Extension methods designed for Enum.</summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using DotNetTips.Spargine.Core;
 
@@ -24,7 +27,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for the <see cref="Enum" /> type, enhancing enum functionality with additional utilities such as getting descriptions, parsing, and retrieving items.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static class EnumExtensions
 {
 	/// <summary>
@@ -63,6 +66,140 @@ public static class EnumExtensions
 		public string? GetDescription()
 		{
 			return EnumHelper.GetDescription(input);
+		}
+
+		/// <summary>
+		/// Gets the 32-bit integer value of the enum.
+		/// </summary>
+		/// <value>The integer representation of the enum value.</value>
+		[Information(nameof(get_ToInt32), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public int ToInt32
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get => Convert.ToInt32(input, CultureInfo.InvariantCulture);
+		}
+
+		/// <summary>
+		/// Gets the 64-bit integer value of the enum.
+		/// </summary>
+		/// <value>The long integer representation of the enum value.</value>
+		[Information(nameof(get_ToInt64), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public long ToInt64
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get => Convert.ToInt64(input, CultureInfo.InvariantCulture);
+		}
+
+		/// <summary>
+		/// Gets the custom attribute of type <typeparamref name="TAttribute"/> applied to the enum value.
+		/// </summary>
+		/// <typeparam name="TAttribute">The type of attribute to retrieve.</typeparam>
+		/// <returns>The custom attribute if found; otherwise, null.</returns>
+		[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public TAttribute? GetAttribute<TAttribute>() where TAttribute : Attribute
+		{
+			var memberInfo = input.GetType().GetMember(input.ToString());
+
+			return memberInfo.Length > 0 ? memberInfo[0].GetCustomAttribute<TAttribute>() : null;
+		}
+
+		/// <summary>
+		/// Gets the display name from the <see cref="DisplayAttribute"/> if present; otherwise returns the enum's name.
+		/// </summary>
+		/// <returns>The display name or enum name.</returns>
+		[Information(nameof(GetDisplayName), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public string GetDisplayName()
+		{
+			var displayAttribute = input.GetAttribute<DisplayAttribute>();
+			return displayAttribute?.GetName() ?? input.ToString();
+		}
+
+		/// <summary>
+		/// Gets the individual flag values that are set in a flag enum.
+		/// </summary>
+		/// <returns>A collection of individual flag values that are set.</returns>
+		/// <exception cref="ArgumentException">Thrown if the enum type is not decorated with <see cref="FlagsAttribute"/>.</exception>
+		[Information(nameof(GetSetFlags), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public ReadOnlyCollection<Enum> GetSetFlags()
+		{
+			var enumType = input.GetType();
+
+			if (!enumType.IsDefined(typeof(FlagsAttribute), false))
+			{
+				ExceptionThrower.ThrowArgumentException($"Enum type {enumType.Name} is not a flags enumeration.", nameof(input));
+			}
+
+			var flags = new List<Enum>();
+			var values = Enum.GetValues(enumType);
+
+			foreach (Enum value in values)
+			{
+				if (input.HasFlag(value) && Convert.ToInt64(value, CultureInfo.InvariantCulture) != 0)
+				{
+					flags.Add(value);
+				}
+			}
+
+			return flags.ToReadOnlyCollection();
+		}
+
+		/// <summary>
+		/// Gets the count of flags set in a flag enum.
+		/// </summary>
+		/// <value>The number of individual flags set.</value>
+		[Information(nameof(get_FlagCount), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public int FlagCount
+		{
+			get
+			{
+				var enumType = input.GetType();
+
+				if (!enumType.IsDefined(typeof(FlagsAttribute), false))
+				{
+					return 1;
+				}
+
+				var count = 0;
+				var value = Convert.ToInt64(input, CultureInfo.InvariantCulture);
+
+				while (value != 0)
+				{
+					count += (int)(value & 1);
+					value >>= 1;
+				}
+
+				return count;
+			}
+		}
+
+		/// <summary>
+		/// Gets the next enum value in sequence, or the first value if at the end.
+		/// </summary>
+		/// <returns>The next enum value.</returns>
+		[Information(nameof(Next), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public Enum Next()
+		{
+			var values = Enum.GetValues(input.GetType());
+			var index = Array.IndexOf(values, input);
+
+			return (index == -1 || index == values.Length - 1)
+				? (Enum)values.GetValue(0)!
+				: (Enum)values.GetValue(index + 1)!;
+		}
+
+		/// <summary>
+		/// Gets the previous enum value in sequence, or the last value if at the beginning.
+		/// </summary>
+		/// <returns>The previous enum value.</returns>
+		[Information(nameof(Previous), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		public Enum Previous()
+		{
+			var values = Enum.GetValues(input.GetType());
+			var index = Array.IndexOf(values, input);
+
+			return (index <= 0)
+				? (Enum)values.GetValue(values.Length - 1)!
+				: (Enum)values.GetValue(index - 1)!;
 		}
 
 		/// <summary>
