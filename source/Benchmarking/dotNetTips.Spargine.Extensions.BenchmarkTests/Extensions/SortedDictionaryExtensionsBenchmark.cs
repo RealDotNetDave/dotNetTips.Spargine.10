@@ -32,7 +32,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 {
 	private ReadOnlyCollection<Person> _peopleUpsertNew;
-
 	private SortedDictionary<string, Person> _personRefSortedDictionary;
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsEmpty))]

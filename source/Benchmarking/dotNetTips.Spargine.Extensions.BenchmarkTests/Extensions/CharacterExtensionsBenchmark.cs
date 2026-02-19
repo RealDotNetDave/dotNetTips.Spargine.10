@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 
@@ -25,58 +24,58 @@ public class CharacterExtensionsBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(CharacterExtensions.GetDigitValue))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public int GetDigitValue()
+	public void GetDigitValue()
 	{
-		return 'a'.GetDigitValue();
+		this.Consume('a'.GetDigitValue());
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiControl))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsAsciiControl()
+	public void IsAsciiControl()
 	{
-		return '\t'.IsAsciiControl;
+		this.Consume('\t'.IsAsciiControl);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiPunctuation))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsAsciiPunctuation()
+	public void IsAsciiPunctuation()
 	{
-		return '.'.IsAsciiPunctuation;
+		this.Consume('.'.IsAsciiPunctuation);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiUpper))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsAsciiUpper()
+	public void IsAsciiUpper()
 	{
-		return 'A'.IsAsciiUpper;
+		this.Consume('A'.IsAsciiUpper);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiWhitespace))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsAsciiWhitespace()
+	public void IsAsciiWhitespace()
 	{
-		return ' '.IsAsciiWhitespace;
+		this.Consume(' '.IsAsciiWhitespace);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsHexDigit))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsHexDigit()
+	public void IsHexDigit()
 	{
-		return 'F'.IsHexDigit;
+		this.Consume('F'.IsHexDigit);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsNewLine))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsNewLine()
+	public void IsNewLine()
 	{
-		return '\n'.IsNewLine;
+		this.Consume('\n'.IsNewLine);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsUnicodeDigit))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public bool IsUnicodeDigit()
+	public void IsUnicodeDigit()
 	{
-		return '5'.IsUnicodeDigit;
+		this.Consume('5'.IsUnicodeDigit);
 	}
 
 	public override void Setup()
@@ -87,15 +86,15 @@ public class CharacterExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(CharacterExtensions.ToAsciiLower))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public char ToAsciiLower()
+	public void ToAsciiLower()
 	{
-		return 'A'.ToAsciiLower();
+		this.Consume('A'.ToAsciiLower());
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.ToAsciiUpper))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public char ToAsciiUpper()
+	public void ToAsciiUpper()
 	{
-		return 'a'.ToAsciiUpper();
+		this.Consume('a'.ToAsciiUpper());
 	}
 }

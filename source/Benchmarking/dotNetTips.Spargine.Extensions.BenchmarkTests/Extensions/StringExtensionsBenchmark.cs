@@ -464,20 +464,20 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(StringExtensions.Split) + ": With Count")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void Split_WithCount()
-	{
-		var result = this.LongTestString.Split(StringSplitOptions.TrimEntries, 2, ControlChars.Comma);
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(StringExtensions.SplitRemoveEmpty))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void SplitRemoveEmpty()
 	{
 		var result = this.LongTestString.SplitRemoveEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.Split) + ": With Count")]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public void SplitWithCount()
+	{
+		var result = this.LongTestString.Split(StringSplitOptions.TrimEntries, 2, ControlChars.Comma);
 
 		this.Consume(result);
 	}

@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 02-19-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -157,9 +157,9 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 
 	[Benchmark(OperationsPerInvoke = OperationsCount, Description = nameof(ArrayExtensions.FastLongCount) + ": Ref")]
 	[BenchmarkCategory(Categories.Array)]
-	public long FastLongCountArrayRef()
+	public void FastLongCountArrayRef()
 	{
-		return this._personRefArray.FastLongCount();
+		this.Consume(this._personRefArray.FastLongCount());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Reference")]
