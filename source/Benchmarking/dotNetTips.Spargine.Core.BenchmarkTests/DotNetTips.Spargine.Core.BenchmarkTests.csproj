@@ -16,6 +16,7 @@
 		<FileVersion>2026.10.2.15</FileVersion>
 		<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 		<IsPublishable>False</IsPublishable>
+	  <LangVersion>latest</LangVersion>
 		<NeutralLanguage>en</NeutralLanguage>
 		<Nullable>annotations</Nullable>
 		<NullableContextOptions>enable</NullableContextOptions>

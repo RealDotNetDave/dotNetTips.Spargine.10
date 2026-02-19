@@ -26,6 +26,7 @@
 	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
 	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	<FileVersion>2026.10.2.15</FileVersion>
+	<GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
 	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -48,6 +49,7 @@
 	<RootNamespace>DotNetTips.Spargine.Extensions</RootNamespace>
 	<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+	<SelfContained>true</SelfContained>
 	<ServerGarbageCollection>true</ServerGarbageCollection>
 	<SignAssembly>false</SignAssembly>
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -73,7 +75,6 @@
 	<WarningLevel>9999</WarningLevel>
 	<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
 	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-	<Optimize>false</Optimize>
 	<NoWarn />
   </PropertyGroup>
 

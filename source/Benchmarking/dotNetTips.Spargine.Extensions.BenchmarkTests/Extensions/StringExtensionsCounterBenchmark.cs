@@ -15,6 +15,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
@@ -293,22 +294,22 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	//TODO: CAUSES BENCHMARK TESTS TO CRASH
-	//[Benchmark(Description = nameof(StringExtensions.ToBrotliStringAsync))]
-	//[BenchmarkCategory(Categories.New, Categories.Strings)]
-	//public async Task ToBrotliAsync()
-	//{
-	//	var result = await this._crlfString.ToBrotliStringAsync().ConfigureAwait(false);
+	[Benchmark(Description = nameof(StringExtensions.ToBrotliStringAsync))]
+	[BenchmarkCategory(Categories.New, Categories.Strings)]
+	public async Task ToBrotliAsync()
+	{
+		var result = await this._crlfString.ToBrotliStringAsync().ConfigureAwait(false);
 
-	//	await this.ConsumeAsync(result).ConfigureAwait(false);
-	//}
+		await this.ConsumeAsync(result).ConfigureAwait(false);
+	}
 
-	//[Benchmark(Description = nameof(StringExtensions.ToGZipStringAsync))]
-	//[BenchmarkCategory(Categories.New, Categories.Strings)]
-	//public async Task ToGZipAsync()
-	//{
-	//	var result = await this._crlfString.ToGZipStringAsync().ConfigureAwait(false);
+	[Benchmark(Description = nameof(StringExtensions.ToGZipStringAsync))]
+	[BenchmarkCategory(Categories.New, Categories.Strings)]
+	public async Task ToGZipAsync()
+	{
+		var result = await this._crlfString.ToGZipStringAsync().ConfigureAwait(false);
 
-	//	await this.ConsumeAsync(result).ConfigureAwait(false);
-	//}
+		await this.ConsumeAsync(result).ConfigureAwait(false);
+	}
 
 }

@@ -48,9 +48,9 @@ internal sealed class Program
 
 		// Run Selected Tests
 		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(EnumerableExtensionsCollectionBenchmark),
-			typeof(SortedDictionaryExtensionsBenchmark),
-			typeof(SortedSetExtensionsBenchmark)
+			typeof(StringExtensionsBenchmark),
+			typeof(CharacterExtensionsBenchmark)
+			//typeof(SortedSetExtensionsBenchmark)
 			//typeof(EnumerableExtensionsConvertingCollectionBenchmark),
 			//typeof(ObjectExtensionsBenchmark)
 			);

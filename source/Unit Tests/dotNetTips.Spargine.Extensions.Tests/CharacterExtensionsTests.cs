@@ -4,7 +4,7 @@
 // Created          : 02-17-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-17-2026
+// Last Modified On : 02-19-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -56,22 +56,6 @@ public class CharacterExtensionsTests
 		Assert.IsFalse('a'.IsAsciiControl);
 		Assert.IsFalse(' '.IsAsciiControl);
 		Assert.IsFalse('5'.IsAsciiControl);
-	}
-
-	[TestMethod]
-	public void IsAsciiLower_LowercaseLetter_ReturnsTrue()
-	{
-		Assert.IsTrue('a'.IsAsciiLower);
-		Assert.IsTrue('z'.IsAsciiLower);
-		Assert.IsTrue('m'.IsAsciiLower);
-	}
-
-	[TestMethod]
-	public void IsAsciiLower_NonLowercase_ReturnsFalse()
-	{
-		Assert.IsFalse('A'.IsAsciiLower);
-		Assert.IsFalse('Z'.IsAsciiLower);
-		Assert.IsFalse('5'.IsAsciiLower);
 	}
 
 	[TestMethod]
@@ -158,6 +142,22 @@ public class CharacterExtensionsTests
 		Assert.IsFalse('\t'.IsNewLine);
 		Assert.IsFalse('a'.IsNewLine);
 	}
+	[TestMethod]
+	public void IsUnicodeDigit_AsciiDigit_ReturnsTrue()
+	{
+		Assert.IsTrue('0'.IsUnicodeDigit);
+		Assert.IsTrue('5'.IsUnicodeDigit);
+		Assert.IsTrue('9'.IsUnicodeDigit);
+	}
+
+	[TestMethod]
+	public void IsUnicodeDigit_NonDigit_ReturnsFalse()
+	{
+		Assert.IsFalse('a'.IsUnicodeDigit);
+		Assert.IsFalse('Z'.IsUnicodeDigit);
+		Assert.IsFalse('!'.IsUnicodeDigit);
+		Assert.IsFalse(' '.IsUnicodeDigit);
+	}
 
 	[TestMethod]
 	public void ToAsciiLower_NonUppercase_ReturnsSameCharacter()
@@ -178,17 +178,17 @@ public class CharacterExtensionsTests
 	[TestMethod]
 	public void ToAsciiUpper_LowercaseLetter_ReturnsUppercase()
 	{
-		Assert.AreEqual('A', 'a'.ToAsciiUpper);
-		Assert.AreEqual('Z', 'z'.ToAsciiUpper);
-		Assert.AreEqual('M', 'm'.ToAsciiUpper);
+		Assert.AreEqual('A', 'a'.ToAsciiUpper());
+		Assert.AreEqual('Z', 'z'.ToAsciiUpper());
+		Assert.AreEqual('M', 'm'.ToAsciiUpper());
 	}
 
 	[TestMethod]
 	public void ToAsciiUpper_NonLowercase_ReturnsSameCharacter()
 	{
-		Assert.AreEqual('A', 'A'.ToAsciiUpper);
-		Assert.AreEqual('5', '5'.ToAsciiUpper);
-		Assert.AreEqual('!', '!'.ToAsciiUpper);
+		Assert.AreEqual('A', 'A'.ToAsciiUpper());
+		Assert.AreEqual('5', '5'.ToAsciiUpper());
+		Assert.AreEqual('!', '!'.ToAsciiUpper());
 	}
 
 }

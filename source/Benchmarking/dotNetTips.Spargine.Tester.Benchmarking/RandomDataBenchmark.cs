@@ -17,6 +17,7 @@ using System.IO;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Data;
+using DotNetTips.Spargine.Tester.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -337,6 +338,23 @@ public class RandomDataBenchmark : Benchmark
 	{
 		var result = RandomData.GenerateWords(10, 5, 10);
 
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(PersonExtensions.get_Age))]
+	[BenchmarkCategory(Categories.New)]
+	public void PersonGetAge()
+	{
+		var result = this.PersonRef01.Age;
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(PersonExtensions.get_FullName))]
+	[BenchmarkCategory(Categories.New)]
+	public void PersonGetFullName()
+	{
+		var result = this.PersonRef01.FullName;
 		this.Consume(result);
 	}
 

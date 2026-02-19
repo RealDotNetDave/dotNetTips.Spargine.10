@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 02-19-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -46,7 +46,6 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _oneToSevenAlpha = RandomData.GenerateWord(7);
 	private readonly string _personName = "David McCarter";
 	private readonly string _stringWithEllipsis = RandomData.GenerateWord(100) + "...";
-	private readonly char _testCharacter = RandomData.GenerateCharacter();
 	private readonly string _url = "https://api.example.com:8443/v1/users/123?include=profile,settings&format=json#section1";
 	private string _compressedString;
 	private string _zlibString;
@@ -285,41 +284,6 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(CharacterExtensions.IsAsciiDigit))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void IsAsciiDigit()
-	{
-		var result = this._testCharacter.IsAsciiDigit();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(CharacterExtensions.IsAsciiLetter))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void IsAsciiLetter()
-	{
-		var result = this._testCharacter.IsAsciiLetter();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(CharacterExtensions.IsAsciiLetterOrDigit))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void IsAsciiLetterOrDigit()
-	{
-		var result = this._testCharacter.IsAsciiLetterOrDigit();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(CharacterExtensions.IsAsciiWhitespace))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void IsAsciiWhitespace()
-	{
-		var result = this._testCharacter.IsAsciiWhitespace();
-
-		this.Consume(result);
-	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsCreditCardNumber))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
