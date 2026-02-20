@@ -72,22 +72,22 @@ public static class EnumExtensions
 		/// Gets the 32-bit integer value of the enum.
 		/// </summary>
 		/// <value>The integer representation of the enum value.</value>
-		[Information(nameof(get_ToInt32), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
-		public int ToInt32
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ToInt32), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		public int ToInt32()
 		{
-			[MethodImpl(MethodImplOptions.AggressiveInlining)]
-			get => Convert.ToInt32(input, CultureInfo.InvariantCulture);
+			return Convert.ToInt32(input, CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
 		/// Gets the 64-bit integer value of the enum.
 		/// </summary>
 		/// <value>The long integer representation of the enum value.</value>
-		[Information(nameof(get_ToInt64), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
-		public long ToInt64
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ToInt64), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		public long ToInt64()
 		{
-			[MethodImpl(MethodImplOptions.AggressiveInlining)]
-			get => Convert.ToInt64(input, CultureInfo.InvariantCulture);
+			return Convert.ToInt64(input, CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>

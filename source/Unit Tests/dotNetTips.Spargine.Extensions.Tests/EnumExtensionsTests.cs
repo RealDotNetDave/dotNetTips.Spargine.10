@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 02-20-2026
 // ***********************************************************************
 // <copyright file="EnumExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -239,12 +239,12 @@ public class EnumExtensionsTests
 	public void ToInt32_ReturnsCorrectIntegerValue()
 	{
 		var value = TestEnum.WithDescription;
-		var intValue = value.ToInt32;
+		var intValue = value.ToInt32();
 
 		Assert.AreEqual(0, intValue);
 
 		var value2 = TestEnum.WithoutDescription;
-		var intValue2 = value2.ToInt32;
+		var intValue2 = value2.ToInt32();
 
 		Assert.AreEqual(1, intValue2);
 	}
@@ -253,12 +253,12 @@ public class EnumExtensionsTests
 	public void ToInt64_ReturnsCorrectLongValue()
 	{
 		var value = TestEnum.WithDescription;
-		var longValue = value.ToInt64;
+		var longValue = value.ToInt64();
 
 		Assert.AreEqual(0L, longValue);
 
 		var value2 = TestEnum.WithoutDescription;
-		var longValue2 = value2.ToInt64;
+		var longValue2 = value2.ToInt64();
 
 		Assert.AreEqual(1L, longValue2);
 	}

@@ -681,94 +681,94 @@
 *****
 ## DotNetTips.Spargine.Extensions.CharacterExtensions
 
-### System.Boolean IsAsciiDigit(System.Char character)
+### System.Int32 GetDigitValue(System.Char character)
 
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/10/2021
-* **Description:** IsAsciiDigit
+* **CreatedOn:** 2/16/2026
+* **Description:** GetDigitValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsAsciiLetter(System.Char character)
+### System.Char ToAsciiLower(System.Char character)
 
-* **Status:** Available
+* **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/30/2020
-* **Description:** IsAsciiLetter
+* **CreatedOn:** 2/16/2026
+* **Description:** ToAsciiLower
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsAsciiLetterOrDigit(System.Char character)
+### System.Char ToAsciiUpper(System.Char character)
 
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/30/2020
-* **Description:** IsAsciiLetterOrDigit
-* **Modified By:** David McCarter
-* **Modified On:** 
-
-### System.Boolean IsAsciiWhitespace(System.Char character)
-
-* **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
-* **Unit Test Status:** Completed
-* **Author:** David McCarter
-* **CreatedOn:** 6/10/2021
-* **Description:** IsAsciiWhitespace
+* **CreatedOn:** 2/16/2026
+* **Description:** ToAsciiUpper
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Extensions.CharacterExtensions.<G>$617F055EF883302AD66AFAF0ACA83DC6
 
-### System.Boolean IsAsciiDigit()
+### System.Int32 GetDigitValue()
 
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/10/2021
-* **Description:** IsAsciiDigit
+* **CreatedOn:** 2/16/2026
+* **Description:** GetDigitValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsAsciiLetter()
+### System.Boolean IsAsciiControl { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/30/2020
-* **Description:** IsAsciiLetter
+* **CreatedOn:** 2/16/2026
+* **Description:** IsAsciiControl
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsAsciiLetterOrDigit()
+### System.Boolean IsAsciiPunctuation { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/30/2020
-* **Description:** IsAsciiLetterOrDigit
+* **CreatedOn:** 2/16/2026
+* **Description:** IsAsciiPunctuation
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsAsciiWhitespace()
+### System.Boolean IsAsciiUpper { get; set; }
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** IsAsciiUpper
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsAsciiWhitespace { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -777,6 +777,66 @@
 * **Author:** David McCarter
 * **CreatedOn:** 6/10/2021
 * **Description:** IsAsciiWhitespace
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsHexDigit { get; set; }
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** IsHexDigit
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsNewLine { get; set; }
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** IsNewLine
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsUnicodeDigit { get; set; }
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 6/10/2021
+* **Description:** IsUnicodeDigit
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Char ToAsciiLower()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** ToAsciiLower
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Char ToAsciiUpper()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Completed
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** ToAsciiUpper
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -859,7 +919,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Not Required
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/2/2021
@@ -1868,7 +1928,7 @@
 
 ### System.Boolean FastContains(T list, T searchItem, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
@@ -2350,7 +2410,7 @@
 
 ### System.Boolean FastContains(T searchItem, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
@@ -2890,6 +2950,16 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumExtensions
 
+### T GetAttribute(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetAttribute
+* **Modified On:** 
+
 ### System.String GetDescription(System.Enum input)
 
 * **Status:** Available
@@ -2898,6 +2968,16 @@
 * **Unit Test Status:** Not Required
 * **CreatedOn:** 
 * **Description:** GetDescription
+* **Modified On:** 
+
+### System.String GetDisplayName(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetDisplayName
 * **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems(System.Enum input)
@@ -2910,6 +2990,26 @@
 * **Description:** GetItems
 * **Modified On:** 
 
+### System.Collections.ObjectModel.ReadOnlyCollection<System.Enum> GetSetFlags(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetSetFlags
+* **Modified On:** 
+
+### System.Enum Next(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Next
+* **Modified On:** 
+
 ### T Parse(System.String name)
 
 * **Status:** Available
@@ -2920,8 +3020,58 @@
 * **Description:** Parse
 * **Modified On:** 
 
+### System.Enum Previous(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Previous
+* **Modified On:** 
+
+### System.Int32 ToInt32(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** ToInt32
+* **Modified On:** 
+
+### System.Int64 ToInt64(System.Enum input)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** ToInt64
+* **Modified On:** 
+
 *****
 ## DotNetTips.Spargine.Extensions.EnumExtensions.<G>$8E5C3F0AE356A7A1CAD4B372112D6A6D
+
+### System.Int32 FlagCount { get; set; }
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** get_FlagCount
+* **Modified On:** 
+
+### T GetAttribute()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetAttribute
+* **Modified On:** 
 
 ### System.String GetDescription()
 
@@ -2933,6 +3083,16 @@
 * **Description:** GetDescription
 * **Modified On:** 
 
+### System.String GetDisplayName()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetDisplayName
+* **Modified On:** 
+
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems()
 
 * **Status:** Available
@@ -2941,6 +3101,56 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetItems
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyCollection<System.Enum> GetSetFlags()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetSetFlags
+* **Modified On:** 
+
+### System.Enum Next()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Next
+* **Modified On:** 
+
+### System.Enum Previous()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** Previous
+* **Modified On:** 
+
+### System.Int32 ToInt32()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** ToInt32
+* **Modified On:** 
+
+### System.Int64 ToInt64()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** ToInt64
 * **Modified On:** 
 
 *****
@@ -5749,6 +5959,18 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### T GetValueOrDefault(T collection, System.Int32 index, T defaultValue)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** GetValueOrDefault
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
@@ -5759,6 +5981,18 @@
 * **CreatedOn:** 6/15/2022
 * **Description:** IsNotEmpty
 * **Documentation:** https://bit.ly/SpargineAug2022
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean TryGetValue(T collection, System.Int32 index, T value)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** TryGetValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -5777,6 +6011,18 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### T GetValueOrDefault(System.Int32 index, T defaultValue)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** GetValueOrDefault
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
@@ -5787,6 +6033,18 @@
 * **CreatedOn:** 6/15/2022
 * **Description:** IsNotEmpty
 * **Documentation:** https://bit.ly/SpargineAug2022
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean TryGetValue(System.Int32 index, T value)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/16/2026
+* **Description:** TryGetValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -5960,7 +6218,7 @@
 
 ### T ToImmutable(T collection)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6011,7 +6269,7 @@
 
 ### T ToImmutable()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6443,7 +6701,7 @@
 
 ### System.String FastFormat(System.String format, System.Int32 bufferSize, System.Object[] args)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -7669,4 +7927,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 2/16/2026 1:16:17 PM UTC**
+**Generated by Spargine - dotNetTips.com on 2/20/2026 3:44:23 PM UTC**

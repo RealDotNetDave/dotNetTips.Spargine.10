@@ -13,6 +13,8 @@
 // ***********************************************************************
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

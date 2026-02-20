@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2026.10.2.15
+# dotNetTips.Spargine.10.Core - 2026.10.2.15
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -47,7 +47,7 @@
 
 ### System.Void ClearAppState()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -121,7 +121,7 @@
 
 ### System.Object GetAppState(System.String key, System.Object defaultValue)
 
-* **Status:** Updated
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -327,7 +327,7 @@
 
 ### System.Boolean RemoveAppState(System.String key)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -2993,7 +2993,7 @@
 
 ### System.DayOfWeek CurrentDayOfWeek { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3005,7 +3005,7 @@
 
 ### System.Int32 CurrentDayOfYear { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3017,7 +3017,7 @@
 
 ### System.Int32 CurrentQuarter { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3029,7 +3029,7 @@
 
 ### System.DayOfWeek CurrentUtcDayOfWeek { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3041,7 +3041,7 @@
 
 ### System.Int32 CurrentUtcQuarter { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3089,7 +3089,7 @@
 
 ### System.Int32 DaysRemainingInMonth { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3101,7 +3101,7 @@
 
 ### System.Int32 DaysRemainingInYear { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3113,7 +3113,7 @@
 
 ### System.DateTimeOffset FirstDayOfCurrentMonth { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3125,7 +3125,7 @@
 
 ### System.Boolean IsCurrentUtcYearLeapYear { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3137,7 +3137,7 @@
 
 ### System.Boolean IsCurrentYearLeapYear { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3161,7 +3161,7 @@
 
 ### System.Boolean IsWeekday { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3173,7 +3173,7 @@
 
 ### System.Boolean IsWeekend { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3185,7 +3185,7 @@
 
 ### System.DateTimeOffset LastDayOfCurrentMonth { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3209,7 +3209,7 @@
 
 ### System.TimeSpan LocalUtcOffset { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3243,21 +3243,21 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.DateTimeOffset Today { get; set; }
+### System.DateTimeOffset TodayMidnight { get; set; }
 
-* **Status:** New
+* **Status:** Updated
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
 * **CreatedOn:** 2/13/2026
-* **Description:** Today
+* **Description:** TodayMidnight
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 ### System.Int64 UnixTimestamp { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3269,7 +3269,7 @@
 
 ### System.Int64 UnixTimestampMilliseconds { get; set; }
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
@@ -3490,6 +3490,30 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.TimeSpan GetElapsedTime(System.Int64 startingTimestamp)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/17/2026
+* **Description:** GetElapsedTime
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.TimeSpan GetElapsedTime(System.Int64 startingTimestamp, System.Int64 endingTimestamp)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/17/2026
+* **Description:** GetElapsedTime
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.TimeSpan> GetLaps()
 
 * **Status:** Available
@@ -3511,6 +3535,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 5/8/2025
 * **Description:** GetSummaryReport
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Int64 GetTimeStamp()
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 2/17/2026
+* **Description:** GetTimestamp
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -8181,4 +8217,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 2/16/2026 1:16:17 PM UTC**
+**Generated by Spargine - dotNetTips.com on 2/20/2026 3:44:23 PM UTC**
