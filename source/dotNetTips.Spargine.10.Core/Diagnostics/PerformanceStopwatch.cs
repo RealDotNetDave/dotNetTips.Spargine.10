@@ -600,7 +600,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </example>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public static new TimeSpan GetElapsedTime(long startingTimestamp)
 	{
 		return Stopwatch.GetElapsedTime(startingTimestamp);
@@ -634,7 +634,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </example>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public static new TimeSpan GetElapsedTime(long startingTimestamp, long endingTimestamp)
 	{
 		return Stopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
@@ -661,7 +661,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </example>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetTimestamp), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetTimestamp), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public static long GetTimeStamp()
 	{
 		return Stopwatch.GetTimestamp();

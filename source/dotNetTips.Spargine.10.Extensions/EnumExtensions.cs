@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 02-20-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -72,7 +72,7 @@ public static class EnumExtensions
 		/// Gets the 32-bit integer value of the enum.
 		/// </summary>
 		/// <value>The integer representation of the enum value.</value>
-		[Information(nameof(get_ToInt32), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(get_ToInt32), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public int ToInt32
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -83,7 +83,7 @@ public static class EnumExtensions
 		/// Gets the 64-bit integer value of the enum.
 		/// </summary>
 		/// <value>The long integer representation of the enum value.</value>
-		[Information(nameof(get_ToInt64), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(get_ToInt64), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public long ToInt64
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -95,7 +95,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <typeparam name="TAttribute">The type of attribute to retrieve.</typeparam>
 		/// <returns>The custom attribute if found; otherwise, null.</returns>
-		[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public TAttribute? GetAttribute<TAttribute>() where TAttribute : Attribute
 		{
 			var memberInfo = input.GetType().GetMember(input.ToString());
@@ -107,7 +107,7 @@ public static class EnumExtensions
 		/// Gets the display name from the <see cref="DisplayAttribute"/> if present; otherwise returns the enum's name.
 		/// </summary>
 		/// <returns>The display name or enum name.</returns>
-		[Information(nameof(GetDisplayName), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(GetDisplayName), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public string GetDisplayName()
 		{
 			var displayAttribute = input.GetAttribute<DisplayAttribute>();
@@ -119,7 +119,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <returns>A collection of individual flag values that are set.</returns>
 		/// <exception cref="ArgumentException">Thrown if the enum type is not decorated with <see cref="FlagsAttribute"/>.</exception>
-		[Information(nameof(GetSetFlags), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(GetSetFlags), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public ReadOnlyCollection<Enum> GetSetFlags()
 		{
 			var enumType = input.GetType();
@@ -147,7 +147,7 @@ public static class EnumExtensions
 		/// Gets the count of flags set in a flag enum.
 		/// </summary>
 		/// <value>The number of individual flags set.</value>
-		[Information(nameof(get_FlagCount), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(get_FlagCount), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public int FlagCount
 		{
 			get
@@ -176,7 +176,7 @@ public static class EnumExtensions
 		/// Gets the next enum value in sequence, or the first value if at the end.
 		/// </summary>
 		/// <returns>The next enum value.</returns>
-		[Information(nameof(Next), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(Next), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public Enum Next()
 		{
 			var values = Enum.GetValues(input.GetType());
@@ -191,7 +191,7 @@ public static class EnumExtensions
 		/// Gets the previous enum value in sequence, or the last value if at the beginning.
 		/// </summary>
 		/// <returns>The previous enum value.</returns>
-		[Information(nameof(Previous), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(Previous), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public Enum Previous()
 		{
 			var values = Enum.GetValues(input.GetType());

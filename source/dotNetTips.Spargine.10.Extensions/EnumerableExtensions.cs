@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-20-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Provides a collection of static methods for querying objects that implement <see cref="IEnumerable{T}"/>.
 /// These extensions add functionality for adding, checking, and manipulating elements within enumerable collections.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
 {
 	/// <summary>
@@ -86,7 +86,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastContains), "David McCarter", "2/14/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+		[Information(nameof(FastContains), "David McCarter", "2/14/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public bool FastContains(T searchItem, [AllowNull] IComparer<T>? comparer = null)
 		{
 			if (list is null || searchItem is null)

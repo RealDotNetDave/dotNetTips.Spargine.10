@@ -87,7 +87,7 @@ public static class ReadOnlyCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(TryGetValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(TryGetValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 		public bool TryGetValue(int index, out T? value)
 		{
 			if (collection is null || index < 0 || index >= collection.Count)
@@ -110,7 +110,7 @@ public static class ReadOnlyCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetValueOrDefault), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(GetValueOrDefault), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 		public T? GetValueOrDefault(int index, T? defaultValue = default)
 		{
 			if (collection is null || index < 0 || index >= collection.Count)

@@ -915,7 +915,7 @@ public class DateTimeExtensionsTests : UnitTester
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsTrue(result.Contains("@"));
-		// Should contain a day name (Monday, Tuesday, etc.) not "Yesterday" or "Today"
+		// Should contain a day name (Monday, Tuesday, etc.) not "Yesterday" or "TodayMidnight"
 		Assert.IsFalse(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
 		Assert.IsFalse(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
 	}

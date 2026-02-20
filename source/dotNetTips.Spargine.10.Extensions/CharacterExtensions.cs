@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 02-20-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,7 +45,7 @@ public static class CharacterExtensions
 		/// <remarks>
 		/// This property uses <see cref="char.IsDigit(char)"/> and is not limited to ASCII digits (<c>0</c>-<c>9</c>).
 		/// </remarks>
-		[Information("IsUnicodeDigit", author: "David McCarter", createdOn: "6/10/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsUnicodeDigit", author: "David McCarter", createdOn: "6/10/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsUnicodeDigit
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -58,7 +58,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is an ASCII uppercase letter; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiUpper
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -71,7 +71,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is a hexadecimal digit; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsHexDigit", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsHexDigit", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsHexDigit
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -84,7 +84,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is a newline character; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsNewLine", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsNewLine", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNewLine
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -97,7 +97,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is an ASCII punctuation character; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsAsciiPunctuation", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsAsciiPunctuation", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiPunctuation
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -110,7 +110,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is an ASCII control character; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsAsciiControl", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsAsciiControl", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiControl
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -123,9 +123,10 @@ public static class CharacterExtensions
 		/// <value>
 		/// The uppercase equivalent of the character if it is a lowercase ASCII letter; otherwise, the original character.
 		/// </value>
-		[Information("ToAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("ToAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public char ToAsciiUpper()
 		{
+			//TODO: BENCHMARK TOUPPER.
 			return character is >= 'a' and <= 'z' ? (char)(character - 32) : character;
 		}
 
@@ -137,6 +138,7 @@ public static class CharacterExtensions
 		[Information(nameof(ToAsciiLower), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public char ToAsciiLower()
 		{
+			//TODO: BENCHMARK TOLOWER.
 			return character is >= 'A' and <= 'Z' ? (char)(character + 32) : character;
 		}
 
@@ -145,7 +147,7 @@ public static class CharacterExtensions
 		/// </summary>
 		/// <returns>The numeric value (0-9) if the character is a digit; otherwise, -1.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetDigitValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(GetDigitValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int GetDigitValue()
 		{
 			return character is >= '0' and <= '9' ? character - '0' : -1;
@@ -160,7 +162,7 @@ public static class CharacterExtensions
 		/// <remarks>
 		/// This property checks if the character is a whitespace character using <see cref="char.IsWhiteSpace(char)"/>.
 		/// </remarks>
-		[Information("IsAsciiWhitespace", author: "David McCarter", createdOn: "6/10/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information("IsAsciiWhitespace", author: "David McCarter", createdOn: "6/10/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiWhitespace
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]

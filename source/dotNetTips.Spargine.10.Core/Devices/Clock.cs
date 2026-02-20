@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-13-2026
+// Last Modified On : 02-20-2026
 // ***********************************************************************
 // <copyright file="Clock.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Devices;
 /// Some of this code is from the Microsoft.VisualBasic.dll.
 /// </remarks>
 [ExcludeFromCodeCoverage(Justification = "Not needed due to just using the <see cref=\"DateTime\"/> type.")]
-[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineClock")]
+[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineClock")]
 public static class Clock
 {
 
@@ -40,7 +40,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The current day of the week.</value>
 	[Pure]
-	[Information(nameof(CurrentDayOfWeek), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(CurrentDayOfWeek), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static DayOfWeek CurrentDayOfWeek
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -52,7 +52,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The current day of the year.</value>
 	[Pure]
-	[Information(nameof(CurrentDayOfYear), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(CurrentDayOfYear), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static int CurrentDayOfYear
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -64,7 +64,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The current quarter.</value>
 	[Pure]
-	[Information(nameof(CurrentQuarter), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(CurrentQuarter), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static int CurrentQuarter
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -76,7 +76,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The current UTC day of the week.</value>
 	[Pure]
-	[Information(nameof(CurrentUtcDayOfWeek), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(CurrentUtcDayOfWeek), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static DayOfWeek CurrentUtcDayOfWeek
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -88,7 +88,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The current UTC quarter.</value>
 	[Pure]
-	[Information(nameof(CurrentUtcQuarter), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(CurrentUtcQuarter), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static int CurrentUtcQuarter
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -130,7 +130,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The number of days remaining in the current month.</value>
 	[Pure]
-	[Information(nameof(DaysRemainingInMonth), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(DaysRemainingInMonth), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static int DaysRemainingInMonth
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -142,7 +142,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The number of days remaining in the current year.</value>
 	[Pure]
-	[Information(nameof(DaysRemainingInYear), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(DaysRemainingInYear), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static int DaysRemainingInYear
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -154,7 +154,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The first day of the current month at midnight.</value>
 	[Pure]
-	[Information(nameof(FirstDayOfCurrentMonth), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(FirstDayOfCurrentMonth), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static DateTimeOffset FirstDayOfCurrentMonth
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -166,7 +166,7 @@ public static class Clock
 	/// </summary>
 	/// <value><c>true</c> if the current UTC year is a leap year; otherwise, <c>false</c>.</value>
 	[Pure]
-	[Information(nameof(IsCurrentUtcYearLeapYear), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(IsCurrentUtcYearLeapYear), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static bool IsCurrentUtcYearLeapYear
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -178,7 +178,7 @@ public static class Clock
 	/// </summary>
 	/// <value><c>true</c> if the current local year is a leap year; otherwise, <c>false</c>.</value>
 	[Pure]
-	[Information(nameof(IsCurrentYearLeapYear), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(IsCurrentYearLeapYear), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static bool IsCurrentYearLeapYear
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -190,7 +190,7 @@ public static class Clock
 	/// </summary>
 	/// <value><c>true</c> if today is a weekday; otherwise, <c>false</c>.</value>
 	[Pure]
-	[Information(nameof(IsWeekday), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(IsWeekday), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static bool IsWeekday
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -202,7 +202,7 @@ public static class Clock
 	/// </summary>
 	/// <value><c>true</c> if today is a weekend; otherwise, <c>false</c>.</value>
 	[Pure]
-	[Information(nameof(IsWeekend), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(IsWeekend), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static bool IsWeekend
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -214,7 +214,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The last day of the current month at midnight.</value>
 	[Pure]
-	[Information(nameof(LastDayOfCurrentMonth), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(LastDayOfCurrentMonth), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static DateTimeOffset LastDayOfCurrentMonth
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -241,7 +241,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The current UTC offset for the local time zone.</value>
 	[Pure]
-	[Information(nameof(LocalUtcOffset), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(LocalUtcOffset), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static TimeSpan LocalUtcOffset
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -281,10 +281,10 @@ public static class Clock
 	/// <summary>
 	/// Gets midnight (start of day) for today in local time.
 	/// </summary>
-	/// <value>Today's date at midnight.</value>
+	/// <value>TodayMidnight's date at midnight.</value>
 	[Pure]
-	[Information(nameof(Today), "David McCarter", "2/13/2026", Status = Status.New)]
-	public static DateTimeOffset Today
+	[Information(nameof(TodayMidnight), "David McCarter", "2/13/2026", Status = Status.Updated)]
+	public static DateTimeOffset TodayMidnight
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get => LocalTime.Date;
@@ -295,7 +295,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The Unix timestamp.</value>
 	[Pure]
-	[Information(nameof(UnixTimestamp), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(UnixTimestamp), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static long UnixTimestamp
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -307,7 +307,7 @@ public static class Clock
 	/// </summary>
 	/// <value>The Unix timestamp in milliseconds.</value>
 	[Pure]
-	[Information(nameof(UnixTimestampMilliseconds), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(UnixTimestampMilliseconds), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static long UnixTimestampMilliseconds
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

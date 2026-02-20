@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 02-20-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -129,7 +129,7 @@ public static class SortedSetExtensions
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableSortedSet<T> ToImmutable()
 		{
 			return ImmutableSortedSet.CreateRange(collection.ArgumentNotNull());

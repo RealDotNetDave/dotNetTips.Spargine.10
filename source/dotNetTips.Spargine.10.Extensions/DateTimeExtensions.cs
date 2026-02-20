@@ -470,7 +470,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The date.</param>
 	/// <returns>System.String.</returns>
 	/// <example>
-	/// Output: Today @ 10:27:43 am
+	/// Output: TodayMidnight @ 10:27:43 am
 	/// </example>
 	[Pure]
 	[return: NotNull]
@@ -486,7 +486,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The input.</param>
 	/// <returns>System.String.</returns>
 	/// <example>
-	/// Output: Today @ 10:27:43 am
+	/// Output: TodayMidnight @ 10:27:43 am
 	/// </example>
 	[Pure]
 	[return: NotNull]
@@ -535,7 +535,7 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Formats the specified <see cref="DateTime"/> as a friendly date string, such as "Today @ 10:27:43 am" or "Yesterday @ 10:27:43 am".
+	/// Formats the specified <see cref="DateTime"/> as a friendly date string, such as "TodayMidnight @ 10:27:43 am" or "Yesterday @ 10:27:43 am".
 	/// </summary>
 	/// <param name="input">The <see cref="DateTime"/> to format.</param>
 	/// <returns>A friendly date string representation of the input date.</returns>
