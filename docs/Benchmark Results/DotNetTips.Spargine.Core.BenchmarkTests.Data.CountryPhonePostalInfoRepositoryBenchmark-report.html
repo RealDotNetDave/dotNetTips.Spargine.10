@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.Data.CountryPhonePostalInfoRepositoryBenchmark-20260124-224139</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Data.CountryPhonePostalInfoRepositoryBenchmark-20260220-043352</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,22 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6809/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6937/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.102
-  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.103
+  [Host]     : .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=**NEW**  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                 </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method                 </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;ValidatePhoneNumber: US&#39;</td><td>1,302.23 ns</td><td>13.400 ns</td><td>11.879 ns</td><td>3.175 ns</td><td>1,283.25 ns</td><td>1,296.12 ns</td><td>1,300.53 ns</td><td>1,308.75 ns</td><td>1,326.78 ns</td><td>767,912.4</td><td>5.413 ns</td><td>14.00</td><td>3</td><td>No</td><td>0.0591</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>0.0038</td><td>0.0038</td><td>1712 B</td>
-</tr><tr><td>&#39;ValidatePostalCode: US-Full&#39;</td><td>704.92 ns</td><td>5.659 ns</td><td>5.294 ns</td><td>1.367 ns</td><td>695.91 ns</td><td>700.35 ns</td><td>705.35 ns</td><td>709.65 ns</td><td>711.78 ns</td><td>1,418,604.8</td><td>6.817 ns</td><td>15.00</td><td>2</td><td>No</td><td>0.0010</td><td>-</td><td>-</td><td>-</td><td>6,848 B</td><td>-</td><td>-</td><td>56 B</td>
-</tr><tr><td>GetCountryPhonePostalInfo</td><td>18.86 ns</td><td>0.092 ns</td><td>0.077 ns</td><td>0.021 ns</td><td>18.71 ns</td><td>18.82 ns</td><td>18.86 ns</td><td>18.91 ns</td><td>18.98 ns</td><td>53,026,886.6</td><td>6.489 ns</td><td>13.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>191 B</td><td>-</td><td>-</td><td>-</td>
+</thead><tbody><tr><td>&#39;ValidatePhoneNumber: US&#39;</td><td>1,298.18 ns</td><td>9.884 ns</td><td>9.245 ns</td><td>2.387 ns</td><td>1,287.74 ns</td><td>1,291.11 ns</td><td>1,294.40 ns</td><td>1,304.89 ns</td><td>1,317.54 ns</td><td>770,312.2</td><td>6.306 ns</td><td>15.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0553</td><td>NA</td><td>1712 B</td>
+</tr><tr><td>&#39;ValidatePostalCode: US-Full&#39;</td><td>723.60 ns</td><td>3.860 ns</td><td>3.611 ns</td><td>0.932 ns</td><td>719.10 ns</td><td>720.78 ns</td><td>723.59 ns</td><td>726.22 ns</td><td>729.62 ns</td><td>1,381,971.5</td><td>7.034 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0010</td><td>8,037 B</td><td>56 B</td>
+</tr><tr><td>GetCountryPhonePostalInfo</td><td>19.33 ns</td><td>0.131 ns</td><td>0.123 ns</td><td>0.032 ns</td><td>18.99 ns</td><td>19.30 ns</td><td>19.33 ns</td><td>19.39 ns</td><td>19.50 ns</td><td>51,740,856.3</td><td>7.484 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>-</td><td>191 B</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

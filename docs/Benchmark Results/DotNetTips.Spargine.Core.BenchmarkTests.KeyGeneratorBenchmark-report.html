@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.KeyGeneratorBenchmark-20260124-190744</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.KeyGeneratorBenchmark-20260220-002058</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,23 +13,23 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6809/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.6937/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.102
-  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.103
+  [Host]     : .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=**NEW**  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                      </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Code Size</th><th>Gen0</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method                      </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Gen0</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GenerateKey: With Prefix&#39;</td><td>101.08 ns</td><td>0.681 ns</td><td>0.569 ns</td><td>0.158 ns</td><td>100.36 ns</td><td>100.57 ns</td><td>101.12 ns</td><td>101.24 ns</td><td>102.40 ns</td><td>9,893,278.3</td><td>6.421 ns</td><td>13.00</td><td>2</td><td>No</td><td>818 B</td><td>0.0063</td><td>-</td><td>-</td><td>-</td><td>0.0002</td><td>0.0002</td><td>184 B</td>
-</tr><tr><td>&#39;GenerateSortableKey: With Prefix&#39;</td><td>124.08 ns</td><td>1.401 ns</td><td>1.310 ns</td><td>0.338 ns</td><td>121.66 ns</td><td>123.26 ns</td><td>124.29 ns</td><td>124.72 ns</td><td>126.51 ns</td><td>8,059,157.7</td><td>7.331 ns</td><td>15.00</td><td>4</td><td>No</td><td>2,183 B</td><td>0.0057</td><td>-</td><td>-</td><td>-</td><td>0.0002</td><td>0.0002</td><td>-</td>
-</tr><tr><td>GenerateKey</td><td>86.90 ns</td><td>0.803 ns</td><td>0.751 ns</td><td>0.194 ns</td><td>85.52 ns</td><td>86.60 ns</td><td>86.87 ns</td><td>87.38 ns</td><td>88.52 ns</td><td>11,507,872.9</td><td>7.403 ns</td><td>15.00</td><td>1</td><td>No</td><td>802 B</td><td>0.0025</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
-</tr><tr><td>GenerateSortableKey</td><td>108.90 ns</td><td>0.902 ns</td><td>0.844 ns</td><td>0.218 ns</td><td>107.71 ns</td><td>108.36 ns</td><td>108.80 ns</td><td>109.37 ns</td><td>110.56 ns</td><td>9,182,612.0</td><td>7.391 ns</td><td>15.00</td><td>3</td><td>No</td><td>1,480 B</td><td>0.0025</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
+</thead><tbody><tr><td>&#39;GenerateKey: With Prefix&#39;</td><td>101.80 ns</td><td>1.012 ns</td><td>0.897 ns</td><td>0.240 ns</td><td>100.09 ns</td><td>101.21 ns</td><td>101.86 ns</td><td>102.53 ns</td><td>103.07 ns</td><td>9,823,624.1</td><td>6.880 ns</td><td>14.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>818 B</td><td>0.0060</td><td>-</td><td>0.0002</td><td>0.0002</td><td>184 B</td>
+</tr><tr><td>&#39;GenerateSortableKey: With Prefix&#39;</td><td>124.96 ns</td><td>0.831 ns</td><td>0.736 ns</td><td>0.197 ns</td><td>123.57 ns</td><td>124.58 ns</td><td>125.07 ns</td><td>125.42 ns</td><td>126.34 ns</td><td>8,002,833.6</td><td>6.902 ns</td><td>14.00</td><td>4</td><td>No</td><td>-</td><td>-</td><td>2,183 B</td><td>0.0060</td><td>-</td><td>-</td><td>-</td><td>184 B</td>
+</tr><tr><td>GenerateKey</td><td>87.35 ns</td><td>0.605 ns</td><td>0.536 ns</td><td>0.143 ns</td><td>86.26 ns</td><td>87.04 ns</td><td>87.46 ns</td><td>87.70 ns</td><td>88.13 ns</td><td>11,448,726.3</td><td>6.928 ns</td><td>14.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>802 B</td><td>0.0029</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
+</tr><tr><td>GenerateSortableKey</td><td>110.94 ns</td><td>0.830 ns</td><td>0.776 ns</td><td>0.200 ns</td><td>109.87 ns</td><td>110.24 ns</td><td>110.86 ns</td><td>111.40 ns</td><td>112.59 ns</td><td>9,014,211.2</td><td>7.400 ns</td><td>15.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>1,480 B</td><td>0.0027</td><td>-</td><td>-</td><td>-</td><td>88 B</td>
 </tr></tbody></table>
 </body>
 </html>

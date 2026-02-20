@@ -1,10 +1,10 @@
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordPBKDF2()
        sub       rsp,28
-       mov       rcx,2B1756E06C0
-       call      qword ptr [7FF86ED1EE08]; DotNetTips.Spargine.Core.Security.PasswordHasher.HashPasswordPBKDF2(System.String)
+       mov       rcx,2D6AB3306C0
+       call      qword ptr [7FFB6A59EDA8]; DotNetTips.Spargine.Core.Security.PasswordHasher.HashPasswordPBKDF2(System.String)
        nop
        add       rsp,28
        ret
@@ -62,7 +62,7 @@
        lea       rcx,[rsi+10]
        mov       [rbp-98],rcx
        mov       edx,100
-       call      qword ptr [7FF86EC4ED48]; System.Security.Cryptography.RandomNumberGeneratorImplementation.GetBytes(Byte*, Int32)
+       call      qword ptr [7FFB6A4CEC10]; System.Security.Cryptography.RandomNumberGeneratorImplementation.GetBytes(Byte*, Int32)
        xor       ecx,ecx
        mov       [rbp-98],rcx
        mov       [rbp-98],rcx
@@ -71,8 +71,8 @@
        lea       rdi,[rbx+0C]
        mov       ebx,[rbx+8]
        lea       r14,[rsi+10]
-       mov       rcx,2B1756D8E10
-       call      qword ptr [7FF86EDC7768]; System.Security.Cryptography.Rfc2898DeriveBytes.ValidateHashAlgorithm(System.Security.Cryptography.HashAlgorithmName)
+       mov       rcx,2D6AB328E10
+       call      qword ptr [7FFB6A637708]; System.Security.Cryptography.Rfc2898DeriveBytes.ValidateHashAlgorithm(System.Security.Cryptography.HashAlgorithmName)
        mov       rcx,offset MT_System.Byte[]
        mov       edx,20
        call      CORINFO_HELP_NEWARR_1_VC
@@ -84,20 +84,20 @@
        mov       dword ptr [rbp-0D8],100
        mov       [rbp-0F0],rcx
        mov       dword ptr [rbp-0E8],20
-       mov       rcx,2B1756D8E10
+       mov       rcx,2D6AB328E10
        mov       [rsp+20],rcx
        lea       rcx,[rbp-0D0]
        lea       rdx,[rbp-0E0]
        lea       r8,[rbp-0F0]
        mov       r9d,186A0
-       call      qword ptr [7FF86EDC7798]; System.Security.Cryptography.Rfc2898DeriveBytes.Pbkdf2Core(System.ReadOnlySpan`1<Char>, System.ReadOnlySpan`1<Byte>, System.Span`1<Byte>, Int32, System.Security.Cryptography.HashAlgorithmName)
-       mov       rcx,270E08020E8
+       call      qword ptr [7FFB6A637738]; System.Security.Cryptography.Rfc2898DeriveBytes.Pbkdf2Core(System.ReadOnlySpan`1<Char>, System.ReadOnlySpan`1<Byte>, System.Span`1<Byte>, Int32, System.Security.Cryptography.HashAlgorithmName)
+       mov       rcx,2962C4000F0
        mov       rbx,[rcx]
        mov       edi,121
-       mov       rcx,270E0800C90
+       mov       rcx,29616400C90
        mov       r14,[rcx]
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+40]
+       mov       rcx,[rcx+30]
        cmp       dword ptr [rcx+238],9
        jle       near ptr M01_L34
        mov       rcx,[rcx+240]
@@ -139,7 +139,7 @@ M01_L02:
        lea       rcx,[r13+11]
        lea       rdx,[rsi+10]
        mov       r8d,100
-       call      qword ptr [7FF86E655818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED5818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)
        mov       ebx,[r15+8]
        mov       rsi,rbx
        cmp       r15,r13
@@ -169,7 +169,7 @@ M01_L04:
        add       r13,10
        mov       edx,184
        mov       rcx,offset MT_System.String
-       call      00007FF8CE2AAFE0
+       call      00007FFBC9B2AFA0
        lea       rcx,[rax+0C]
        mov       edx,[rax+8]
        mov       edx,[rax+8]
@@ -192,15 +192,15 @@ M01_L05:
        lea       r9,[rsi-20]
        cmp       r9,r8
        jb        near ptr M01_L09
-       vmovups   ymm0,[7FF86EE94660]
-       vbroadcastf128 ymm1,xmmword ptr [7FF86EE94680]
-       vbroadcastss ymm2,dword ptr [7FF86EE94690]
-       vbroadcastss ymm3,dword ptr [7FF86EE94694]
-       vbroadcastss ymm4,dword ptr [7FF86EE94698]
-       vbroadcastss ymm5,dword ptr [7FF86EE9469C]
-       vbroadcastss ymm6,dword ptr [7FF86EE946A0]
-       vbroadcastss ymm7,dword ptr [7FF86EE946A4]
-       vmovups   ymm8,[7FF86EE946C0]
+       vmovups   ymm0,[7FFB6A704800]
+       vbroadcastf128 ymm1,xmmword ptr [7FFB6A704820]
+       vbroadcastss ymm2,dword ptr [7FFB6A704830]
+       vbroadcastss ymm3,dword ptr [7FFB6A704834]
+       vbroadcastss ymm4,dword ptr [7FFB6A704838]
+       vbroadcastss ymm5,dword ptr [7FFB6A70483C]
+       vbroadcastss ymm6,dword ptr [7FFB6A704840]
+       vbroadcastss ymm7,dword ptr [7FFB6A704844]
+       vmovups   ymm8,[7FFB6A704860]
        vpermd    ymm8,ymm8,[r13]
        add       r13,0FFFFFFFFFFFFFFFC
        nop
@@ -225,12 +225,12 @@ M01_L06:
        jmp       short M01_L06
 M01_L07:
        mov       ecx,1149
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       edx,ebx
        xor       ecx,ecx
-       call      qword ptr [7FF86EF150B0]
+       call      qword ptr [7FFB6A784B88]
        int       3
 M01_L08:
        lea       r8,[r13+4]
@@ -241,14 +241,14 @@ M01_L09:
        lea       r9,[rsi-10]
        cmp       r9,r8
        jb        near ptr M01_L11
-       vmovups   xmm0,[7FF86EE946E0]
-       vmovups   xmm1,[7FF86EE94680]
-       vbroadcastss xmm2,dword ptr [7FF86EE94690]
-       vbroadcastss xmm3,dword ptr [7FF86EE94694]
-       vbroadcastss xmm4,dword ptr [7FF86EE94698]
-       vbroadcastss xmm5,dword ptr [7FF86EE9469C]
-       vbroadcastss xmm6,dword ptr [7FF86EE946A0]
-       vbroadcastss xmm7,dword ptr [7FF86EE946A4]
+       vmovups   xmm0,[7FFB6A704880]
+       vmovups   xmm1,[7FFB6A704820]
+       vbroadcastss xmm2,dword ptr [7FFB6A704830]
+       vbroadcastss xmm3,dword ptr [7FFB6A704834]
+       vbroadcastss xmm4,dword ptr [7FFB6A704838]
+       vbroadcastss xmm5,dword ptr [7FFB6A70483C]
+       vbroadcastss xmm6,dword ptr [7FFB6A704840]
+       vbroadcastss xmm7,dword ptr [7FFB6A704844]
 M01_L10:
        vmovups   xmm8,[r8]
        vpshufb   xmm8,xmm8,xmm0
@@ -270,7 +270,7 @@ M01_L10:
        cmp       r8,rbx
        je        near ptr M01_L14
 M01_L11:
-       mov       r10,7FF8BD2B5420
+       mov       r10,7FFB82CE5420
        add       rsi,0FFFFFFFFFFFFFFFE
        cmp       r8,rsi
        jae       short M01_L13
@@ -375,22 +375,22 @@ M01_L19:
        jmp       near ptr M01_L32
 M01_L20:
        mov       rcx,r13
-       call      00007FF8CE24FF20
+       call      00007FFBC9AAF400
        mov       ecx,3003FFC
        bt        ecx,eax
        jb        short M01_L21
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF14348]
+       call      qword ptr [7FFB6A7842D0]
        mov       rdi,rax
        mov       ecx,25F
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       rdx,rdi
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2C5DD0]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -403,31 +403,31 @@ M01_L22:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF14360]
+       call      qword ptr [7FFB6A7842E8]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86E87FED0]
+       call      qword ptr [7FFB6A0FFED0]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
 M01_L23:
        mov       rcx,r13
-       call      00007FF8CE24FF20
+       call      00007FFBC9AAF400
        mov       ecx,3003FFC
        bt        ecx,eax
        jb        short M01_L24
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF14348]
+       call      qword ptr [7FFB6A7842D0]
        mov       rsi,rax
        mov       ecx,25F
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       rdx,rsi
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2C5DD0]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -440,15 +440,15 @@ M01_L25:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF14360]
+       call      qword ptr [7FFB6A7842E8]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86E87FED0]
+       call      qword ptr [7FFB6A0FFED0]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
 M01_L26:
-       call      qword ptr [7FF86E7C7138]
+       call      qword ptr [7FFB6A047138]
        int       3
 M01_L27:
        sar       r8d,2
@@ -520,28 +520,28 @@ M01_L32:
        ret
 M01_L33:
        mov       ecx,503
-       mov       rdx,7FF86EAEB730
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A36B768
+       call      qword ptr [7FFB6A0F7738]
        mov       rcx,rax
-       call      qword ptr [7FF86EDCE820]
+       call      qword ptr [7FFB6A63E7A8]
        int       3
 M01_L34:
        mov       ecx,9
-       call      qword ptr [7FF86EDCF048]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A63EFD0]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M01_L00
 M01_L35:
        mov       rcx,r13
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       edi,eax
        mov       r12d,[r13+8]
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],5
        mov       edx,edi
        mov       r8d,r12d
        mov       rcx,r14
-       call      qword ptr [7FF86EF15020]
+       call      qword ptr [7FFB6A784AF8]
        jmp       near ptr M01_L01
 M01_L36:
        mov       rcx,[rbx+10]
@@ -553,23 +553,23 @@ M01_L36:
        mov       r13,[rcx+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E59B1EC],0
+       cmp       byte ptr [7FFB69E1B1E4],0
        je        short M01_L37
-       call      qword ptr [7FF86EF15038]
+       call      qword ptr [7FFB6A784B10]
        mov       edi,eax
        jmp       short M01_L39
 M01_L37:
        mov       ecx,0A
-       call      qword ptr [7FF86EF15050]
+       call      qword ptr [7FFB6A784B28]
        mov       edi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF15050]
+       call      qword ptr [7FFB6A784B28]
        lea       ecx,[rdi-1]
        mov       [rax+10],ecx
        movzx     eax,di
        test      eax,eax
        jne       short M01_L38
-       call      qword ptr [7FF86EF15068]
+       call      qword ptr [7FFB6A784B40]
        mov       edi,eax
        jmp       short M01_L39
 M01_L38:
@@ -579,7 +579,7 @@ M01_L39:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,edi
        xor       edx,edx
-       div       dword ptr [7FF86E59B1E0]
+       div       dword ptr [7FFB69E1B1D8]
        mov       edi,edx
        xor       r12d,r12d
        jmp       near ptr M01_L43
@@ -593,7 +593,7 @@ M01_L40:
        xor       edx,edx
        mov       [rbp-108],rdx
        mov       rcx,rax
-       call      qword ptr [7FF86EBCD5D8]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A44D5D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rbp-110]
        mov       rcx,[rax+8]
        mov       edx,[rax+10]
@@ -609,7 +609,7 @@ M01_L40:
        mov       [rax+10],edx
 M01_L41:
        mov       rcx,rax
-       call      qword ptr [7FF86E656820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69ED6820]; System.Threading.Monitor.Exit(System.Object)
        mov       rcx,[rbp-108]
        test      rcx,rcx
        jne       short M01_L44
@@ -634,25 +634,25 @@ M01_L46:
        cmp       byte ptr [r14+9D],0
        je        near ptr M01_L01
        mov       rcx,r13
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       edi,eax
        mov       r12d,[r13+8]
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],5
        mov       edx,edi
        mov       r8d,r12d
        mov       rcx,r14
-       call      qword ptr [7FF86EF15020]
+       call      qword ptr [7FFB6A784AF8]
        jmp       near ptr M01_L01
 M01_L47:
        mov       edi,200
        jmp       short M01_L49
 M01_L48:
        mov       ecx,121
-       mov       rdx,2B1756D6F28
-       call      qword ptr [7FF86E87D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
+       mov       rdx,2D6AB326F28
+       call      qword ptr [7FFB6A0FD770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
 M01_L49:
        cmp       edi,800
        jge       short M01_L50
@@ -664,27 +664,27 @@ M01_L49:
 M01_L50:
        mov       ecx,edi
        xor       edx,edx
-       call      qword ptr [7FF86EF15008]
+       call      qword ptr [7FFB6A784AE0]
        mov       r13,rax
 M01_L51:
        cmp       byte ptr [r14+9D],0
        je        near ptr M01_L01
        cmp       [r13],r13b
        mov       rcx,r13
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       edi,eax
        mov       r12d,[r13+8]
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],0FFFFFFFF
        mov       edx,edi
        mov       r8d,r12d
        mov       rcx,r14
-       call      qword ptr [7FF86EF15020]
+       call      qword ptr [7FFB6A784AF8]
        mov       r12d,[r13+8]
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       rcx,[rbx+10]
        mov       edx,1
@@ -696,14 +696,14 @@ M01_L51:
        mov       rcx,r14
        mov       edx,edi
        mov       r8d,r12d
-       call      qword ptr [7FF86EF15080]
+       call      qword ptr [7FFB6A784B58]
        jmp       near ptr M01_L01
 M01_L52:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
 M01_L53:
        sub       rsp,38
-       mov       rcx,270E08020E8
+       mov       rcx,2962C4000F0
        mov       rbx,[rcx]
        cmp       qword ptr [rbp-0F8],0
        je        near ptr M01_L57
@@ -716,7 +716,7 @@ M01_L53:
        xor       esi,1F
        add       esi,0FFFFFFFD
        mov       rax,gs:[58]
-       mov       rax,[rax+40]
+       mov       rax,[rax+30]
        cmp       dword ptr [rax+238],9
        jle       short M01_L54
        mov       rax,[rax+240]
@@ -725,13 +725,13 @@ M01_L53:
        jne       short M01_L55
 M01_L54:
        mov       ecx,9
-       call      qword ptr [7FF86EDCF048]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A63EFD0]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
 M01_L55:
        mov       rdi,[rax+10]
        test      rdi,rdi
        jne       short M01_L56
        mov       rcx,rbx
-       call      qword ptr [7FF86EDC7A68]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
+       call      qword ptr [7FFB6A637A08]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
        mov       rdi,rax
 M01_L56:
        xor       r14d,r14d
@@ -750,18 +750,18 @@ M01_L56:
        jmp       short M01_L58
 M01_L57:
        mov       ecx,2
-       call      qword ptr [7FF86E87C1C8]
+       call      qword ptr [7FFB6A0FC1C8]
        int       3
 M01_L58:
        mov       rcx,rax
        mov       rdx,r8
-       call      qword ptr [7FF86E6557E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
        jmp       short M01_L60
 M01_L59:
        mov       rdx,r8
        shr       rdx,3
        mov       rcx,rax
-       call      qword ptr [7FF86EF151A0]
+       call      qword ptr [7FFB6A784C78]
 M01_L60:
        mov       ecx,10
        shlx      ecx,ecx,esi
@@ -771,15 +771,15 @@ M01_L60:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF15158]
+       call      qword ptr [7FFB6A784C30]
        mov       r14,rax
        mov       ecx,29B
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       rdx,r14
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2C5DD0]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -806,28 +806,28 @@ M01_L61:
        jne       short M01_L62
        mov       rcx,rbx
        mov       edx,esi
-       call      qword ptr [7FF86EF15170]
+       call      qword ptr [7FFB6A784C48]
 M01_L62:
        mov       r15,[rax+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E59B1EC],0
+       cmp       byte ptr [7FFB69E1B1E4],0
        je        short M01_L63
-       call      qword ptr [7FF86EF15038]
+       call      qword ptr [7FFB6A784B10]
        mov       edi,eax
        jmp       short M01_L65
 M01_L63:
        mov       ecx,0A
-       call      qword ptr [7FF86EF15050]
+       call      qword ptr [7FFB6A784B28]
        mov       edi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF15050]
+       call      qword ptr [7FFB6A784B28]
        lea       ecx,[rdi-1]
        mov       [rax+10],ecx
        movzx     eax,di
        test      eax,eax
        jne       short M01_L64
-       call      qword ptr [7FF86EF15068]
+       call      qword ptr [7FFB6A784B40]
        mov       edi,eax
        jmp       short M01_L65
 M01_L64:
@@ -837,7 +837,7 @@ M01_L65:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,edi
        xor       edx,edx
-       div       dword ptr [7FF86E59B1E0]
+       div       dword ptr [7FFB69E1B1D8]
        mov       edi,edx
        xor       r12d,r12d
        jmp       near ptr M01_L72
@@ -851,7 +851,7 @@ M01_L66:
        xor       edx,edx
        mov       [rbp-0BC],edx
        mov       rcx,rax
-       call      qword ptr [7FF86EBCD5D8]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A44D5D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rbp-118]
        mov       rcx,[rax+8]
        mov       r8d,[rax+10]
@@ -874,7 +874,7 @@ M01_L67:
        mov       dword ptr [rbp-0BC],1
 M01_L68:
        mov       rcx,rax
-       call      qword ptr [7FF86E656820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69ED6820]; System.Threading.Monitor.Exit(System.Object)
        cmp       dword ptr [rbp-0BC],0
        je        short M01_L70
        jmp       short M01_L73
@@ -897,34 +897,34 @@ M01_L73:
 M01_L74:
        xor       r15d,r15d
 M01_L75:
-       mov       rax,270E0800C90
+       mov       rax,29616400C90
        mov       rdi,[rax]
        cmp       byte ptr [rdi+9D],0
        je        near ptr M01_L79
        mov       rcx,[rbp-0F8]
        cmp       dword ptr [rcx+8],0
        je        near ptr M01_L79
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r13d,eax
        mov       rcx,[rbp-0F8]
        mov       r12d,[rcx+8]
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       [rsp+20],eax
        mov       rcx,rdi
        mov       r8d,r13d
        mov       r9d,r12d
        mov       edx,3
-       call      qword ptr [7FF86EF145B8]
+       call      qword ptr [7FFB6A784540]
        test      r15d,r14d
        jne       short M01_L79
        mov       rcx,[rbp-0F8]
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r15d,eax
        mov       rcx,[rbp-0F8]
        mov       r13d,[rcx+8]
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        test      r14d,r14d
        jne       short M01_L77
@@ -943,7 +943,7 @@ M01_L78:
        mov       rcx,rdi
        mov       edx,r15d
        mov       r8d,r13d
-       call      qword ptr [7FF86EF15188]
+       call      qword ptr [7FFB6A784C60]
 M01_L79:
        nop
        vzeroupper
@@ -952,7 +952,7 @@ M01_L79:
 ; Total bytes of code 3731
 ```
 
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordSHA256()
@@ -983,9 +983,9 @@ M01_L79:
        xor       edi,edi
        lea       r14,[rsi+20]
 M00_L00:
-       mov       rcx,1DC9D8020E8
+       mov       rcx,216690020F0
        mov       rcx,[rcx]
-       mov       rdx,21D32748E10
+       mov       rdx,256FDF38E10
        mov       [rbp-50],rdx
        xor       edx,edx
        mov       [rbp-48],edx
@@ -1011,8 +1011,8 @@ M00_L01:
        lea       r13,[rcx+0C]
        mov       r12d,[rcx+8]
        add       r12d,r12d
-       mov       dword ptr [rbp-68],51A52A14
-       mov       dword ptr [rbp-70],431E25BD
+       mov       dword ptr [rbp-68],0FE849EE6
+       mov       dword ptr [rbp-70],0CE6C8664
        cmp       r12d,8
        jb        short M00_L03
        mov       eax,r12d
@@ -1039,7 +1039,7 @@ M00_L02:
        mov       [rbp-68],ecx
        lea       rcx,[rbp-68]
        lea       rdx,[rbp-70]
-       call      qword ptr [7FF86EDBD2A8]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
+       call      qword ptr [7FFB6A64D3B0]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
        add       r13,8
        mov       eax,[rbp-5C]
        dec       eax
@@ -1059,7 +1059,7 @@ M00_L04:
        mov       [rbp-68],ecx
        lea       rcx,[rbp-68]
        lea       rdx,[rbp-70]
-       call      qword ptr [7FF86EDBD2A8]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
+       call      qword ptr [7FFB6A64D3B0]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
 M00_L05:
        mov       ecx,r12d
        and       rcx,7
@@ -1075,22 +1075,22 @@ M00_L06:
        mov       [rbp-68],ecx
        lea       rcx,[rbp-68]
        lea       rdx,[rbp-70]
-       call      qword ptr [7FF86EDBD2A8]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
+       call      qword ptr [7FFB6A64D3B0]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
        lea       rcx,[rbp-68]
        lea       rdx,[rbp-70]
-       call      qword ptr [7FF86EDBD2A8]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
+       call      qword ptr [7FFB6A64D3B0]; System.Marvin.Block(UInt32 ByRef, UInt32 ByRef)
        mov       ecx,[rbp-70]
        xor       ecx,[rbp-68]
 M00_L07:
        mov       edx,[rbp-48]
-       call      qword ptr [7FF86EBE7BE8]; System.HashCode.Combine[[System.Int32, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]](Int32, Int32)
+       call      qword ptr [7FFB6A477BE8]; System.HashCode.Combine[[System.Int32, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]](Int32, Int32)
        mov       r13d,eax
        xor       r8d,r8d
        mov       [rbp-58],r8
        mov       r8d,r13d
        mov       rdx,r15
        mov       rcx,offset MT_System.Collections.Concurrent.ConcurrentDictionary<System.ValueTuple<System.String, Interop+BCrypt+BCryptOpenAlgorithmProviderFlags>, System.ValueTuple<Microsoft.Win32.SafeHandles.SafeBCryptAlgorithmHandle, System.Int32>>
-       call      qword ptr [7FF86ED3F3C0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].GetBucket(Tables<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>,System.ValueTuple`2<System.__Canon,Int32>>, Int32)
+       call      qword ptr [7FFB6A5CF4B0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].GetBucket(Tables<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>,System.ValueTuple`2<System.__Canon,Int32>>, Int32)
        mov       r12,rax
        test      r12,r12
        je        near ptr M00_L17
@@ -1103,9 +1103,9 @@ M00_L08:
        vmovdqu   xmmword ptr [rbp-90],xmm0
        lea       rdx,[rbp-80]
        lea       r8,[rbp-90]
-       mov       rcx,1DC9D802100
+       mov       rcx,21669002108
        mov       rcx,[rcx]
-       call      qword ptr [7FF86ED9F500]; System.Collections.Generic.GenericEqualityComparer`1[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib]].Equals(System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>, System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>)
+       call      qword ptr [7FFB6A62F928]; System.Collections.Generic.GenericEqualityComparer`1[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib]].Equals(System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>, System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>)
        test      eax,eax
        je        near ptr M00_L16
        mov       rdx,[r12+28]
@@ -1125,15 +1125,15 @@ M00_L09:
        lea       rdx,[rbp-40]
        xor       r8d,r8d
        xor       r9d,r9d
-       call      qword ptr [7FF86ED3F900]; Interop+BCrypt.BCryptCreateHash(Microsoft.Win32.SafeHandles.SafeBCryptAlgorithmHandle, Microsoft.Win32.SafeHandles.SafeBCryptHashHandle ByRef, IntPtr, Int32, System.ReadOnlySpan`1<Byte>, Int32, BCryptCreateHashFlags)
+       call      qword ptr [7FFB6A5CF9F0]; Interop+BCrypt.BCryptCreateHash(Microsoft.Win32.SafeHandles.SafeBCryptAlgorithmHandle, Microsoft.Win32.SafeHandles.SafeBCryptHashHandle ByRef, IntPtr, Int32, System.ReadOnlySpan`1<Byte>, Int32, BCryptCreateHashFlags)
        mov       edi,eax
        cmp       edi,0C000000D
        jne       short M00_L12
        mov       rcx,[rbp-40]
        cmp       [rcx],ecx
-       call      qword ptr [7FF86E770298]; System.Runtime.InteropServices.SafeHandle.Dispose()
+       call      qword ptr [7FFB6A000298]; System.Runtime.InteropServices.SafeHandle.Dispose()
        mov       rcx,rsi
-       call      qword ptr [7FF86ED977E8]; System.Security.Cryptography.HashProviderCng.Reset()
+       call      qword ptr [7FFB6A627C10]; System.Security.Cryptography.HashProviderCng.Reset()
        jmp       short M00_L13
 M00_L10:
        mov       ecx,80
@@ -1170,12 +1170,12 @@ M00_L13:
        shl       eax,3
        mov       [rbx+10],eax
        mov       [rbp-0B8],rbx
-       mov       rcx,21D32750698
+       mov       rcx,256FDF406C0
        mov       rdx,rbx
-       call      qword ptr [7FF86ED3ED18]; DotNetTips.Spargine.Core.Security.PasswordHasher.HashPasswordSHA(System.String, System.Security.Cryptography.HashAlgorithm)
+       call      qword ptr [7FFB6A5CEE08]; DotNetTips.Spargine.Core.Security.PasswordHasher.HashPasswordSHA(System.String, System.Security.Cryptography.HashAlgorithm)
        mov       rsi,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86ED96C98]; System.Security.Cryptography.HashAlgorithm.Dispose()
+       call      qword ptr [7FFB6A6270C0]; System.Security.Cryptography.HashAlgorithm.Dispose()
        mov       rax,rsi
        add       rsp,0B8
        pop       rbx
@@ -1201,15 +1201,15 @@ M00_L16:
        test      r12,r12
        jne       near ptr M00_L08
 M00_L17:
-       mov       rcx,21D32748E10
+       mov       rcx,256FDF38E10
        xor       r8d,r8d
        xor       edx,edx
-       call      qword ptr [7FF86ED3F438]; Interop+BCrypt.BCryptOpenAlgorithmProvider(System.String, System.String, BCryptOpenAlgorithmProviderFlags)
+       call      qword ptr [7FFB6A5CF528]; Interop+BCrypt.BCryptOpenAlgorithmProvider(System.String, System.String, BCryptOpenAlgorithmProviderFlags)
        mov       r15,rax
        mov       rcx,r15
-       mov       rdx,21D32750758
-       call      qword ptr [7FF86ED3F510]; Interop+BCrypt.BCryptGetDWordProperty(Microsoft.Win32.SafeHandles.SafeBCryptHandle, System.String)
-       mov       rdx,21D32748E10
+       mov       rdx,256FDF40780
+       call      qword ptr [7FFB6A5CF600]; Interop+BCrypt.BCryptGetDWordProperty(Microsoft.Win32.SafeHandles.SafeBCryptHandle, System.String)
+       mov       rdx,256FDF38E10
        mov       [rbp-80],rdx
        xor       edx,edx
        mov       [rbp-78],edx
@@ -1217,9 +1217,9 @@ M00_L17:
        mov       [rbp-98],eax
        lea       rdx,[rbp-80]
        lea       r8,[rbp-0A0]
-       mov       rcx,1DC9D8020E8
+       mov       rcx,216690020F0
        mov       rcx,[rcx]
-       call      qword ptr [7FF86ED3F588]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].TryAdd(System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>, System.ValueTuple`2<System.__Canon,Int32>)
+       call      qword ptr [7FFB6A5CF678]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].TryAdd(System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>, System.ValueTuple`2<System.__Canon,Int32>)
        test      eax,eax
        jne       near ptr M00_L00
        jmp       near ptr M00_L21
@@ -1228,12 +1228,12 @@ M00_L18:
        vmovdqu   xmmword ptr [rbp-80],xmm0
        lea       r8,[rbp-80]
        mov       rdx,r13
-       call      qword ptr [7FF86ED3F3F0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].GetHashCode(System.Collections.Generic.IEqualityComparer`1<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>>, System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>)
+       call      qword ptr [7FFB6A5CF4E0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].GetHashCode(System.Collections.Generic.IEqualityComparer`1<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>>, System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>)
        mov       r12d,eax
        mov       r8d,r12d
        mov       rdx,r15
        mov       rcx,offset MT_System.Collections.Concurrent.ConcurrentDictionary<System.ValueTuple<System.String, Interop+BCrypt+BCryptOpenAlgorithmProviderFlags>, System.ValueTuple<Microsoft.Win32.SafeHandles.SafeBCryptAlgorithmHandle, System.Int32>>
-       call      qword ptr [7FF86ED3F3C0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].GetBucket(Tables<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>,System.ValueTuple`2<System.__Canon,Int32>>, Int32)
+       call      qword ptr [7FFB6A5CF4B0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].GetBucket(Tables<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>,System.ValueTuple`2<System.__Canon,Int32>>, Int32)
        mov       r15,rax
        test      r15,r15
        je        near ptr M00_L17
@@ -1247,7 +1247,7 @@ M00_L19:
        lea       r8,[rbp-90]
        lea       rdx,[rbp-80]
        mov       rcx,r13
-       mov       r11,7FF86E5C0A80
+       mov       r11,7FFB69E50A80
        call      qword ptr [r11]
        test      eax,eax
        jne       short M00_L22
@@ -1260,9 +1260,9 @@ M00_L21:
        cmp       [r15],r15b
        mov       rcx,r15
        mov       edx,1
-       call      qword ptr [7FF86E67C798]; System.Runtime.InteropServices.SafeHandle.InternalRelease(Boolean)
+       call      qword ptr [7FFB69F0C780]; System.Runtime.InteropServices.SafeHandle.InternalRelease(Boolean)
        mov       rcx,r15
-       call      qword ptr [7FF86E677B10]; System.GC.SuppressFinalize(System.Object)
+       call      qword ptr [7FFB69F07AF8]; System.GC.SuppressFinalize(System.Object)
        jmp       near ptr M00_L00
 M00_L22:
        mov       rdx,[r15+28]
@@ -1271,15 +1271,15 @@ M00_L22:
 M00_L23:
        mov       rcx,[rbp-40]
        cmp       [rcx],ecx
-       call      qword ptr [7FF86E770298]; System.Runtime.InteropServices.SafeHandle.Dispose()
+       call      qword ptr [7FFB6A000298]; System.Runtime.InteropServices.SafeHandle.Dispose()
        mov       ecx,edi
-       call      qword ptr [7FF86EDBC3A8]
+       call      qword ptr [7FFB6A64C390]
        mov       rcx,rax
        call      CORINFO_HELP_THROW
        int       3
        sub       rsp,38
        mov       rcx,[rbp-0B8]
-       call      qword ptr [7FF86ED96C98]; System.Security.Cryptography.HashAlgorithm.Dispose()
+       call      qword ptr [7FFB6A6270C0]; System.Security.Cryptography.HashAlgorithm.Dispose()
        nop
        add       rsp,38
        ret
@@ -1305,7 +1305,7 @@ M00_L23:
 ```assembly
 ; System.HashCode.Combine[[System.Int32, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]](Int32, Int32)
        imul      eax,ecx,0C2B2AE3D
-       add       eax,0AF38EC6E
+       add       eax,93C543B0
        rol       eax,11
        imul      eax,27D4EB2F
        imul      ecx,edx,0C2B2AE3D
@@ -1374,8 +1374,8 @@ M04_L00:
        pop       rdi
        jmp       rax
 M04_L01:
-       mov       rdx,7FF86ED7BBF0
-       call      qword ptr [7FF86E67C5D0]; System.Runtime.CompilerServices.GenericsHelpers.Class(IntPtr, IntPtr)
+       mov       rdx,7FFB6A60BBA8
+       call      qword ptr [7FFB69F0C5B8]; System.Runtime.CompilerServices.GenericsHelpers.Class(IntPtr, IntPtr)
        jmp       short M04_L00
 ; Total bytes of code 75
 ```
@@ -1413,7 +1413,7 @@ M04_L01:
        mov       [rbp-48],rcx
        mov       [rbp-4C],ecx
        mov       byte ptr [rbp-0A4],0
-       mov       rcx,21D32750858
+       mov       rcx,256FDF40880
        mov       rax,offset MT_Microsoft.Win32.SafeHandles.SafeBCryptHashHandle
        mov       eax,[rax]
        and       eax,0C0000
@@ -1422,7 +1422,7 @@ M04_L01:
        movzx     eax,al
        test      eax,eax
        jne       near ptr M05_L12
-       call      qword ptr [7FF86E677C00]; System.RuntimeType.CreateInstanceOfT()
+       call      qword ptr [7FFB69F07BE8]; System.RuntimeType.CreateInstanceOfT()
 M05_L00:
        xor       ecx,ecx
        mov       [rbp-60],rcx
@@ -1454,20 +1454,20 @@ M05_L01:
        lea       rdx,[rbp-48]
        mov       r8,rdi
        mov       r9d,r14d
-       mov       rax,7FF86ECDDEB8
+       mov       rax,7FFB6A56DEB8
        mov       [rbp-90],rax
        lea       rax,[M05_L02]
        mov       [rbp-80],rax
        lea       rax,[rbp-0A0]
        mov       [r15+8],rax
        mov       byte ptr [r15+4],0
-       mov       rax,7FF8FD113EB0
+       mov       rax,7FFBFA783EB0
        call      rax
 M05_L02:
        mov       byte ptr [r15+4],1
-       cmp       dword ptr [7FF8CE5BF778],0
+       cmp       dword ptr [7FFBC9E3F778],0
        je        short M05_L03
-       call      qword ptr [7FF8CE5AD608]; CORINFO_HELP_STOP_FOR_GC
+       call      qword ptr [7FFBC9E2D608]; CORINFO_HELP_STOP_FOR_GC
 M05_L03:
        mov       rcx,[rbp-98]
        mov       [r15+8],rcx
@@ -1485,7 +1485,7 @@ M05_L03:
        jmp       near ptr M05_L11
 M05_L04:
        mov       rcx,rbx
-       call      qword ptr [7FF86E67C9C0]; System.Object.GetType()
+       call      qword ptr [7FFB69F0C9A8]; System.Object.GetType()
        mov       rcx,[rax+10]
        test      rcx,rcx
        je        short M05_L09
@@ -1502,19 +1502,19 @@ M05_L06:
        mov       rbx,rax
        mov       rcx,rbx
        mov       rdx,rsi
-       call      qword ptr [7FF86EDBC438]
+       call      qword ptr [7FFB6A64C420]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
 M05_L07:
        mov       rcx,[rbx+8]
-       call      qword ptr [7FF86E7E4A80]; System.RuntimeType.IsFullNameRoundtripCompatible(System.RuntimeType)
+       call      qword ptr [7FFB6A074A68]; System.RuntimeType.IsFullNameRoundtripCompatible(System.RuntimeType)
        test      eax,eax
        je        short M05_L10
        lea       rdx,[rbx+20]
        mov       rcx,rbx
        mov       r8d,3
-       call      qword ptr [7FF86E7E4A98]; System.RuntimeType+RuntimeTypeCache.ConstructName(System.String ByRef, System.TypeNameFormatFlags)
+       call      qword ptr [7FFB6A074A80]; System.RuntimeType+RuntimeTypeCache.ConstructName(System.String ByRef, System.TypeNameFormatFlags)
        mov       rsi,rax
        jmp       short M05_L06
 M05_L08:
@@ -1524,7 +1524,7 @@ M05_L08:
        jmp       short M05_L04
 M05_L09:
        mov       rcx,rax
-       call      qword ptr [7FF86E677C60]; System.RuntimeType.InitializeCache()
+       call      qword ptr [7FFB69F07C48]; System.RuntimeType.InitializeCache()
        mov       rbx,rax
        jmp       short M05_L05
 M05_L10:
@@ -1548,7 +1548,7 @@ M05_L12:
        xor       edx,edx
        mov       [rbp-60],rdx
        lea       rdx,[rbp-60]
-       call      qword ptr [7FF86EDB76C0]
+       call      qword ptr [7FFB6A6476A8]
        mov       rax,[rbp-60]
        jmp       near ptr M05_L00
        sub       rsp,38
@@ -1610,17 +1610,17 @@ M05_L19:
        jne       short M05_L15
        jmp       short M05_L21
 M05_L20:
-       call      qword ptr [7FF86EDB72D0]
+       call      qword ptr [7FFB6A6472B8]
        int       3
 M05_L21:
        test      edx,edx
        je        short M05_L22
-       call      00007FF8CE2A8520
+       call      00007FFBC9B284E0
        mov       esi,eax
        mov       rcx,[rbx+8]
-       call      00007FF86E6691E8
+       call      00007FFB69EF91E8
        mov       ecx,esi
-       call      00007FF8CE2A8540
+       call      00007FFBC9B28500
 M05_L22:
        mov       rcx,[rbx]
        test      dword ptr [rcx],100000
@@ -1635,7 +1635,7 @@ M05_L23:
        jmp       short M05_L22
 M05_L24:
        mov       rcx,rbx
-       call      00007FF8CE2702E0
+       call      00007FFBC9AF3AB0
 M05_L25:
        cmp       byte ptr [rbp-0A8],0
        je        near ptr M05_L42
@@ -1695,7 +1695,7 @@ M05_L33:
        jmp       near ptr M05_L39
 M05_L34:
        mov       rcx,rbx
-       call      qword ptr [7FF86E67C9C0]; System.Object.GetType()
+       call      qword ptr [7FFB69F0C9A8]; System.Object.GetType()
        mov       rcx,[rax+10]
        test      rcx,rcx
        je        short M05_L35
@@ -1705,14 +1705,14 @@ M05_L34:
        jmp       short M05_L36
 M05_L35:
        mov       rcx,rax
-       call      qword ptr [7FF86E677C60]; System.RuntimeType.InitializeCache()
+       call      qword ptr [7FFB69F07C48]; System.RuntimeType.InitializeCache()
        mov       rbx,rax
 M05_L36:
        mov       rsi,[rbx+20]
        test      rsi,rsi
        jne       short M05_L38
        mov       rcx,[rbx+8]
-       call      qword ptr [7FF86E7E4A80]; System.RuntimeType.IsFullNameRoundtripCompatible(System.RuntimeType)
+       call      qword ptr [7FFB6A074A68]; System.RuntimeType.IsFullNameRoundtripCompatible(System.RuntimeType)
        test      eax,eax
        jne       short M05_L37
        xor       esi,esi
@@ -1721,7 +1721,7 @@ M05_L37:
        lea       rdx,[rbx+20]
        mov       rcx,rbx
        mov       r8d,3
-       call      qword ptr [7FF86E7E4A98]; System.RuntimeType+RuntimeTypeCache.ConstructName(System.String ByRef, System.TypeNameFormatFlags)
+       call      qword ptr [7FFB6A074A80]; System.RuntimeType+RuntimeTypeCache.ConstructName(System.String ByRef, System.TypeNameFormatFlags)
        mov       rsi,rax
 M05_L38:
        mov       rcx,offset MT_System.ObjectDisposedException
@@ -1729,20 +1729,20 @@ M05_L38:
        mov       rbx,rax
        mov       rcx,rbx
        mov       rdx,rsi
-       call      qword ptr [7FF86EDBC438]
+       call      qword ptr [7FFB6A64C420]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
 M05_L39:
        test      ecx,ecx
        je        short M05_L42
-       call      00007FF8CE2A8520
+       call      00007FFBC9B284E0
        mov       esi,eax
        mov       rcx,offset MT_Microsoft.Win32.SafeHandles.SafeBCryptHashHandle
        cmp       [rbx],rcx
        jne       short M05_L40
        mov       rcx,[rbx+8]
-       call      00007FF86E6691E8
+       call      00007FFB69EF91E8
        jmp       short M05_L41
 M05_L40:
        mov       rcx,rbx
@@ -1751,7 +1751,7 @@ M05_L40:
        call      qword ptr [rax+38]
 M05_L41:
        mov       ecx,esi
-       call      00007FF8CE2A8540
+       call      00007FFBC9B28500
 M05_L42:
        nop
        add       rsp,38
@@ -1768,12 +1768,12 @@ M05_L42:
        jne       short M06_L01
        mov       rcx,rbx
        mov       edx,1
-       call      qword ptr [7FF86E67C798]; System.Runtime.InteropServices.SafeHandle.InternalRelease(Boolean)
+       call      qword ptr [7FFB69F0C780]; System.Runtime.InteropServices.SafeHandle.InternalRelease(Boolean)
 M06_L00:
        mov       rcx,rbx
        add       rsp,20
        pop       rbx
-       jmp       qword ptr [7FF86E677B10]; System.GC.SuppressFinalize(System.Object)
+       jmp       qword ptr [7FFB69F07AF8]; System.GC.SuppressFinalize(System.Object)
 M06_L01:
        mov       rcx,rbx
        mov       edx,1
@@ -1831,15 +1831,15 @@ M07_L05:
        lea       rdx,[rsp+50]
        xor       r8d,r8d
        xor       r9d,r9d
-       call      qword ptr [7FF86ED3F900]; Interop+BCrypt.BCryptCreateHash(Microsoft.Win32.SafeHandles.SafeBCryptAlgorithmHandle, Microsoft.Win32.SafeHandles.SafeBCryptHashHandle ByRef, IntPtr, Int32, System.ReadOnlySpan`1<Byte>, Int32, BCryptCreateHashFlags)
+       call      qword ptr [7FFB6A5CF9F0]; Interop+BCrypt.BCryptCreateHash(Microsoft.Win32.SafeHandles.SafeBCryptAlgorithmHandle, Microsoft.Win32.SafeHandles.SafeBCryptHashHandle ByRef, IntPtr, Int32, System.ReadOnlySpan`1<Byte>, Int32, BCryptCreateHashFlags)
        mov       esi,eax
        test      esi,esi
        je        short M07_L06
        mov       rcx,[rsp+50]
        cmp       [rcx],ecx
-       call      qword ptr [7FF86E770298]; System.Runtime.InteropServices.SafeHandle.Dispose()
+       call      qword ptr [7FFB6A000298]; System.Runtime.InteropServices.SafeHandle.Dispose()
        mov       ecx,esi
-       call      qword ptr [7FF86EDBC3A8]
+       call      qword ptr [7FFB6A64C390]
        mov       rcx,rax
        call      CORINFO_HELP_THROW
        int       3
@@ -1848,19 +1848,19 @@ M07_L06:
        mov       rdx,[rsp+50]
        test      rcx,rcx
        jne       short M07_L07
-       call      qword ptr [7FF86EDB6B20]
+       call      qword ptr [7FFB6A646B08]
        int       3
 M07_L07:
-       call      00007FF8CE26C9B0
+       call      00007FFBC9AF07E0
        mov       rsi,rax
        test      rsi,rsi
        je        near ptr M07_L00
        mov       rcx,rsi
        mov       edx,1
-       mov       rax,[7FF86EDA0748]
+       mov       rax,[7FFB6A630BB0]
        call      qword ptr [rax+30]
        mov       rcx,rsi
-       call      qword ptr [7FF86E677B10]; System.GC.SuppressFinalize(System.Object)
+       call      qword ptr [7FFB69F07AF8]; System.GC.SuppressFinalize(System.Object)
        jmp       near ptr M07_L00
 ; Total bytes of code 243
 ```
@@ -1874,7 +1874,7 @@ M07_L07:
        sub       rsp,20
        mov       rax,rcx
        mov       rbx,rdx
-       mov       rcx,1DC9D800220
+       mov       rcx,21669000220
        mov       rcx,[rcx]
        test      rax,rax
        je        short M08_L00
@@ -1882,19 +1882,19 @@ M07_L07:
        jle       short M08_L02
 M08_L00:
        mov       rdx,rax
-       call      qword ptr [7FF86E6AF860]; System.Text.Encoding.GetBytes(System.String)
+       call      qword ptr [7FFB69F3F860]; System.Text.Encoding.GetBytes(System.String)
 M08_L01:
        mov       rcx,rbx
        mov       rdx,rax
        cmp       [rcx],ecx
-       call      qword ptr [7FF86ED3F978]; System.Security.Cryptography.HashAlgorithm.ComputeHash(Byte[])
+       call      qword ptr [7FFB6A5CFA68]; System.Security.Cryptography.HashAlgorithm.ComputeHash(Byte[])
        mov       rcx,rax
        add       rsp,20
        pop       rbx
-       jmp       qword ptr [7FF86EAF4000]; System.Convert.ToBase64String(Byte[])
+       jmp       qword ptr [7FFB6A384000]; System.Convert.ToBase64String(Byte[])
 M08_L02:
        mov       rdx,rax
-       call      qword ptr [7FF86EBEE9D0]; System.Text.UTF8Encoding+UTF8EncodingSealed.GetBytesForSmallInput(System.String)
+       call      qword ptr [7FFB6A47E9D0]; System.Text.UTF8Encoding+UTF8EncodingSealed.GetBytesForSmallInput(System.String)
        jmp       short M08_L01
 ; Total bytes of code 83
 ```
@@ -1916,12 +1916,12 @@ M08_L02:
        cmp       [rdi],dil
        mov       rcx,rdi
        mov       edx,1
-       call      qword ptr [7FF86E67C798]; System.Runtime.InteropServices.SafeHandle.InternalRelease(Boolean)
+       call      qword ptr [7FFB69F0C780]; System.Runtime.InteropServices.SafeHandle.InternalRelease(Boolean)
        mov       rcx,[rdi]
        test      dword ptr [rcx],100000
        je        short M09_L00
        mov       rcx,rdi
-       call      00007FF8CE2702E0
+       call      00007FFBC9AF3AB0
 M09_L00:
        cmp       qword ptr [rsi+18],0
        jne       short M09_L04
@@ -1933,7 +1933,7 @@ M09_L02:
        pop       rbx
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FF86E677B10]; System.GC.SuppressFinalize(System.Object)
+       jmp       qword ptr [7FFB69F07AF8]; System.GC.SuppressFinalize(System.Object)
 M09_L03:
        mov       rcx,rsi
        mov       edx,1
@@ -1945,7 +1945,7 @@ M09_L04:
        mov       rcx,[rsi+18]
        xor       eax,eax
        mov       [rsi+18],rax
-       call      qword ptr [7FF86EDB7FA8]
+       call      qword ptr [7FFB6A647F90]
        jmp       short M09_L01
 M09_L05:
        mov       rcx,rbx
@@ -1969,7 +1969,7 @@ M09_L05:
        mov       rdx,r9
        mov       r8,rax
        mov       r9d,r10d
-       call      qword ptr [7FF8BC55BD38]
+       call      qword ptr [7FFBD19CBD38]
        mov       ebx,eax
        test      ebx,ebx
        jne       short M10_L00
@@ -1980,11 +1980,11 @@ M09_L05:
 M10_L00:
        mov       rcx,[rsp+28]
        cmp       [rcx],ecx
-       call      qword ptr [7FF8BC55A8D0]; Precode of System.Runtime.InteropServices.SafeHandle.Dispose()
+       call      qword ptr [7FFBD19CA8D0]; Precode of System.Runtime.InteropServices.SafeHandle.Dispose()
        mov       ecx,ebx
-       call      qword ptr [7FF8BC55BDC8]
+       call      qword ptr [7FFBD19CBDC8]
        mov       rcx,rax
-       call      qword ptr [7FF8BC558348]; CORINFO_HELP_THROW
+       call      qword ptr [7FFBD19C8348]; CORINFO_HELP_THROW
        int       3
 ; Total bytes of code 89
 ```
@@ -2000,7 +2000,7 @@ M10_L00:
        mov       [rsp+28],r8d
        lea       r8,[rsp+38]
        mov       r9d,4
-       call      qword ptr [7FF8BC55BCF0]
+       call      qword ptr [7FFBD19CBCF0]
        mov       ecx,eax
        test      ecx,ecx
        jne       short M11_L00
@@ -2011,17 +2011,17 @@ M10_L00:
        pop       rbx
        ret
 M11_L00:
-       call      qword ptr [7FF8BC55BDC8]
+       call      qword ptr [7FFBD19CBDC8]
        mov       rcx,rax
-       call      qword ptr [7FF8BC558348]; CORINFO_HELP_THROW
+       call      qword ptr [7FFBD19C8348]; CORINFO_HELP_THROW
        int       3
 M11_L01:
-       call      qword ptr [7FF8BC558BC0]
+       call      qword ptr [7FFBD19C8BC0]
        mov       rbx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF8BC55A660]
+       call      qword ptr [7FFBD19CA660]
        mov       rcx,rbx
-       call      qword ptr [7FF8BC558348]; CORINFO_HELP_THROW
+       call      qword ptr [7FFBD19C8348]; CORINFO_HELP_THROW
        int       3
 ; Total bytes of code 115
 ```
@@ -2058,7 +2058,7 @@ M11_L01:
        mov       rcx,[rbp+10]
        mov       r9,[rbp-18]
        mov       rdx,[rbp-20]
-       call      qword ptr [7FF86ED3F5A0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].TryAddInternal(Tables<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>,System.ValueTuple`2<System.__Canon,Int32>>, System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>, System.Nullable`1<Int32>, System.ValueTuple`2<System.__Canon,Int32>, Boolean, Boolean, System.ValueTuple`2<System.__Canon,Int32> ByRef)
+       call      qword ptr [7FFB6A5CF690]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[Interop+BCrypt+BCryptOpenAlgorithmProviderFlags, System.Security.Cryptography]], System.Private.CoreLib],[System.ValueTuple`2[[System.__Canon, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]].TryAddInternal(Tables<System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>,System.ValueTuple`2<System.__Canon,Int32>>, System.ValueTuple`2<System.__Canon,BCryptOpenAlgorithmProviderFlags>, System.Nullable`1<Int32>, System.ValueTuple`2<System.__Canon,Int32>, Boolean, Boolean, System.ValueTuple`2<System.__Canon,Int32> ByRef)
        nop
        add       rsp,80
        pop       rbp
@@ -2093,8 +2093,8 @@ M11_L01:
        jmp       short M13_L01
 M13_L00:
        mov       rcx,[rbp-38]
-       mov       rdx,7FF86ED7B768
-       call      qword ptr [7FF86E67C5D0]; System.Runtime.CompilerServices.GenericsHelpers.Class(IntPtr, IntPtr)
+       mov       rdx,7FFB6A60B720
+       call      qword ptr [7FFB69F0C5B8]; System.Runtime.CompilerServices.GenericsHelpers.Class(IntPtr, IntPtr)
        mov       [rbp-20],rax
 M13_L01:
        mov       rax,[rbp+20]
@@ -2125,8 +2125,8 @@ M13_L02:
        jmp       short M13_L04
 M13_L03:
        mov       rcx,[rbp-48]
-       mov       rdx,7FF86ED7AA78
-       call      qword ptr [7FF86E67C5D0]; System.Runtime.CompilerServices.GenericsHelpers.Class(IntPtr, IntPtr)
+       mov       rdx,7FFB6A60AA30
+       call      qword ptr [7FFB69F0C5B8]; System.Runtime.CompilerServices.GenericsHelpers.Class(IntPtr, IntPtr)
        mov       [rbp-10],rax
 M13_L04:
        mov       rax,[rbp-10]
@@ -2205,32 +2205,32 @@ M14_L05:
        jne       near ptr M14_L00
        test      ecx,ecx
        je        short M14_L09
-       call      00007FF8CE2A8520
+       call      00007FFBC9B284E0
        mov       esi,eax
        mov       rcx,offset MT_Microsoft.Win32.SafeHandles.SafeBCryptHashHandle
        cmp       [rbx],rcx
        jne       near ptr M14_L18
        mov       rcx,[rbx+8]
-       mov       rax,7FF86ECDD6B8
+       mov       rax,7FFB6A56D6B8
        mov       [rbp-60],rax
        lea       rax,[M14_L06]
        mov       [rbp-50],rax
        lea       rax,[rbp-70]
        mov       [rdi+8],rax
        mov       byte ptr [rdi+4],0
-       mov       rax,7FF8FD113C80
+       mov       rax,7FFBFA783C80
        call      rax
 M14_L06:
        mov       byte ptr [rdi+4],1
-       cmp       dword ptr [7FF8CE5BF778],0
+       cmp       dword ptr [7FFBC9E3F778],0
        je        short M14_L07
-       call      qword ptr [7FF8CE5AD608]; CORINFO_HELP_STOP_FOR_GC
+       call      qword ptr [7FFBC9E2D608]; CORINFO_HELP_STOP_FOR_GC
 M14_L07:
        mov       rcx,[rbp-68]
        mov       [rdi+8],rcx
 M14_L08:
        mov       ecx,esi
-       call      00007FF8CE2A8540
+       call      00007FFBC9B28500
 M14_L09:
        nop
        add       rsp,58
@@ -2248,7 +2248,7 @@ M14_L10:
        jmp       near ptr M14_L03
 M14_L11:
        mov       rcx,rbx
-       call      qword ptr [7FF86E67C9C0]; System.Object.GetType()
+       call      qword ptr [7FFB69F0C9A8]; System.Object.GetType()
        mov       rcx,[rax+10]
        test      rcx,rcx
        je        short M14_L16
@@ -2265,19 +2265,19 @@ M14_L13:
        mov       rbx,rax
        mov       rcx,rbx
        mov       rdx,rsi
-       call      qword ptr [7FF86EDBC438]
+       call      qword ptr [7FFB6A64C420]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
 M14_L14:
        mov       rcx,[rbx+8]
-       call      qword ptr [7FF86E7E4A80]; System.RuntimeType.IsFullNameRoundtripCompatible(System.RuntimeType)
+       call      qword ptr [7FFB6A074A68]; System.RuntimeType.IsFullNameRoundtripCompatible(System.RuntimeType)
        test      eax,eax
        je        short M14_L17
        lea       rdx,[rbx+20]
        mov       rcx,rbx
        mov       r8d,3
-       call      qword ptr [7FF86E7E4A98]; System.RuntimeType+RuntimeTypeCache.ConstructName(System.String ByRef, System.TypeNameFormatFlags)
+       call      qword ptr [7FFB6A074A80]; System.RuntimeType+RuntimeTypeCache.ConstructName(System.String ByRef, System.TypeNameFormatFlags)
        mov       rsi,rax
        jmp       short M14_L13
 M14_L15:
@@ -2289,7 +2289,7 @@ M14_L15:
        jmp       near ptr M14_L02
 M14_L16:
        mov       rcx,rax
-       call      qword ptr [7FF86E677C60]; System.RuntimeType.InitializeCache()
+       call      qword ptr [7FFB69F07C48]; System.RuntimeType.InitializeCache()
        mov       rbx,rax
        jmp       short M14_L12
 M14_L17:
@@ -2310,23 +2310,23 @@ M14_L18:
        je        short M15_L01
        mov       rax,[rcx]
        test      dword ptr [rax],100000
-       jne       short M15_L00
+       je        short M15_L00
        add       rsp,28
-       ret
+       jmp       near ptr 00007FFBC9AF3AB0
 M15_L00:
        add       rsp,28
-       jmp       near ptr 00007FF8CE2702E0
+       ret
 M15_L01:
        mov       ecx,707
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       rcx,rax
-       call      qword ptr [7FF86EDB65E0]
+       call      qword ptr [7FFB6A6465C8]
        int       3
 ; Total bytes of code 65
 ```
 
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordSHA3256()
@@ -2387,7 +2387,7 @@ M00_L00:
        test      dword ptr [r10],1000000
        jne       near ptr M00_L13
        mov       rcx,r8
-       call      qword ptr [7FF86E6757E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F157E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M00_L01:
        mov       r8,[rbx+10]
        mov       r9d,[r8+8]
@@ -2406,16 +2406,16 @@ M00_L03:
        mov       [rbx+1C],r8d
        mov       byte ptr [rbx+24],0
        mov       dword ptr [rbx+20],100
-       mov       r8,220BE000220
+       mov       r8,17550C00220
        mov       rsi,[r8]
-       mov       r8,26152EA06A4
+       mov       r8,1B5E5D606CC
        mov       [rbp-40],r8
        mov       rdi,[rbp-40]
        lea       r8,[rbp-48]
        lea       r9,[rbp-50]
        mov       rcx,rdi
        mov       edx,40
-       call      qword ptr [7FF86E67FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
+       call      qword ptr [7FFB69F1FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
        sub       rax,rdi
        mov       r9,rax
        shr       r9,3F
@@ -2437,7 +2437,7 @@ M00_L04:
        mov       r14d,[rdi+8]
        test      r14d,r14d
        jl        near ptr M00_L16
-       mov       rcx,26152EA06A4
+       mov       rcx,1B5E5D606CC
        mov       [rbp-58],rcx
        mov       r15,[rbp-58]
        mov       [rbp-60],rdi
@@ -2454,7 +2454,7 @@ M00_L05:
        mov       edx,40
        mov       r8,r13
        mov       r9d,r12d
-       call      qword ptr [7FF86E67FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
+       call      qword ptr [7FFB69F1FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
        mov       rcx,[rbp-68]
        sub       rcx,r15
        mov       rdx,rcx
@@ -2473,13 +2473,13 @@ M00_L06:
        mov       r9d,r14d
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED3F030]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
+       call      qword ptr [7FFB6A5DEF70]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
        mov       esi,[rbx+20]
        sar       esi,3
-       mov       rcx,220BE0020E0
+       mov       rcx,17550C020E8
        mov       rcx,[rcx]
        mov       edx,esi
-       call      qword ptr [7FF86ED99328]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FFB6A638640]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp-78],rax
        mov       ecx,[rbx+1C]
        test      cl,7
@@ -2497,12 +2497,12 @@ M00_L06:
        mov       rcx,rbx
        mov       rdx,[rbp-78]
        xor       r8d,r8d
-       call      qword ptr [7FF86ED97D30]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.DoFinal(Byte[], Int32)
+       call      qword ptr [7FFB6A637008]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.DoFinal(Byte[], Int32)
        mov       rcx,[rbp-78]
        mov       r8d,esi
        xor       edx,edx
        xor       r9d,r9d
-       call      qword ptr [7FF86EE47900]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
+       call      qword ptr [7FFB6A6E7858]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
        mov       rbx,rax
        jmp       near ptr M00_L10
 M00_L07:
@@ -2510,11 +2510,11 @@ M00_L07:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED97380
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A636658
+       call      qword ptr [7FFB6A137738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A305D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -2523,11 +2523,11 @@ M00_L08:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED97380
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A636658
+       call      qword ptr [7FFB6A137738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A305D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -2536,11 +2536,11 @@ M00_L09:
        int       3
        int       3
 M00_L10:
-       mov       rcx,220BE002100
+       mov       rcx,17550C02108
        mov       rcx,[rcx]
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED99330]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A638648]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        mov       rax,rbx
        add       rsp,88
        pop       rbx
@@ -2563,27 +2563,27 @@ M00_L11:
        add       rax,r9
        jmp       near ptr M00_L00
 M00_L12:
-       call      qword ptr [7FF86EF94900]
+       call      qword ptr [7FFB6A834900]
        int       3
 M00_L13:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EF94918]
+       call      qword ptr [7FFB6A834918]
        jmp       near ptr M00_L01
 M00_L14:
        mov       rcx,rsi
        mov       rdx,rdi
        mov       r8d,40
-       call      qword ptr [7FF86EF94300]
+       call      qword ptr [7FFB6A8340A8]
        add       r14d,eax
        jns       near ptr M00_L04
 M00_L15:
-       call      qword ptr [7FF86EC6E1D8]
+       call      qword ptr [7FFB6A6ED0B0]
        int       3
 M00_L16:
        mov       ecx,0B
        xor       edx,edx
-       call      qword ptr [7FF86EC65908]
+       call      qword ptr [7FFB6A505908]
        int       3
 M00_L17:
        xor       r13d,r13d
@@ -2597,18 +2597,18 @@ M00_L18:
        mov       rdx,r15
        mov       r8d,40
        mov       r9,r13
-       call      qword ptr [7FF86EF94420]
+       call      qword ptr [7FFB6A8341C8]
        jmp       near ptr M00_L06
 M00_L19:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
        sub       rsp,48
-       mov       rcx,220BE002100
+       mov       rcx,17550C02108
        mov       rcx,[rcx]
        mov       rdx,[rcx]
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED99330]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A638648]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        add       rsp,48
        ret
 ; Total bytes of code 1086
@@ -2692,7 +2692,7 @@ M01_L08:
 M01_L09:
        cmp       [rcx],cl
        pop       rbx
-       jmp       qword ptr [7FF86EE4FD98]
+       jmp       qword ptr [7FFB6A6EFD50]
 ; Total bytes of code 231
 ```
 ```assembly
@@ -2755,7 +2755,7 @@ M02_L06:
        pop       rdi
        ret
 M02_L07:
-       vbroadcastss xmm0,dword ptr [7FF86EF17EA0]
+       vbroadcastss xmm0,dword ptr [7FFB6A7B2C60]
        vptest    xmm0,xmmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-10]
@@ -2774,7 +2774,7 @@ M02_L08:
        jne       short M02_L11
        jmp       short M02_L08
 M02_L09:
-       vbroadcastss ymm0,dword ptr [7FF86EF17EA0]
+       vbroadcastss ymm0,dword ptr [7FFB6A7B2C60]
        vptest    ymm0,ymmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-20]
@@ -2814,17 +2814,17 @@ M02_L15:
        lea       r11,[rcx+r11*2]
        cmp       edx,8
        jl        near ptr M02_L20
-       vbroadcastss xmm0,dword ptr [7FF86EF17EA4]
+       vbroadcastss xmm0,dword ptr [7FFB6A7B2C64]
        lea       rdx,[r11-10]
 M02_L16:
        vmovups   xmm1,[rcx]
        add       rcx,10
        vpaddusw  xmm2,xmm1,xmm0
-       vpminuw   xmm3,xmm1,[7FF86EF17EB0]
+       vpminuw   xmm3,xmm1,[7FFB6A7B2C70]
        vpor      xmm2,xmm2,xmm3
        vpmovmskb ebx,xmm2
        popcnt    ebx,ebx
-       vpaddw    xmm2,xmm1,[7FF86EF17EC0]
+       vpaddw    xmm2,xmm1,[7FFB6A7B2C80]
        vpcmpgtw  xmm2,xmm0,xmm2
        vpmovmskb esi,xmm2
 M02_L17:
@@ -2916,7 +2916,7 @@ M02_L23:
        jb        near ptr M03_L10
        mov       rbx,rcx
        vmovups   ymm0,[rbx]
-       vbroadcastss ymm1,dword ptr [7FF86EF17810]
+       vbroadcastss ymm1,dword ptr [7FFB6A7B2590]
        vptest    ymm1,ymm0
        jne       near ptr M03_L08
        mov       rsi,r8
@@ -3013,7 +3013,7 @@ M03_L09:
 M03_L10:
        mov       rbx,rcx
        vmovups   xmm0,[rbx]
-       vbroadcastss xmm1,dword ptr [7FF86EF17810]
+       vbroadcastss xmm1,dword ptr [7FFB6A7B2590]
        vptest    xmm1,xmm0
        je        short M03_L11
        xor       ebx,ebx
@@ -3136,7 +3136,7 @@ M03_L27:
        jmp       short M03_L29
 M03_L28:
        vmovups   xmm0,[rcx]
-       vptest    xmm0,xmmword ptr [7FF86EF17820]
+       vptest    xmm0,xmmword ptr [7FFB6A7B25A0]
        jne       short M03_L30
        vpackuswb xmm0,xmm0,xmm0
        vmovq     qword ptr [r8],xmm0
@@ -3598,11 +3598,11 @@ M04_L04:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED97380
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A636658
+       call      qword ptr [7FFB6A137738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A305D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -3611,11 +3611,11 @@ M04_L05:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED97380
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A636658
+       call      qword ptr [7FFB6A137738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A305D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -3623,7 +3623,7 @@ M04_L06:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6757A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F157A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L07:
        test      al,18
@@ -3696,7 +3696,7 @@ M04_L14:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6766E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F166E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L15:
        mov       [rsp+20],esi
@@ -3704,7 +3704,7 @@ M04_L15:
        mov       [rsp+28],ecx
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EE4DAA0]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       call      qword ptr [7FFB6A6EE0A0]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
        jmp       near ptr M04_L02
 M04_L16:
        xor       r13d,r13d
@@ -3714,18 +3714,18 @@ M04_L16:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EBEC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A48C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        mov       r13d,r15d
        mov       rdx,[rbx+10]
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED3F048]
+       call      qword ptr [7FFB6A5DEF88]
        jmp       short M04_L18
 M04_L17:
        lea       r8d,[rbp+r13]
        mov       rcx,rbx
        mov       rdx,rdi
-       call      qword ptr [7FF86ED3F048]
+       call      qword ptr [7FFB6A5DEF88]
        add       r13d,r14d
 M04_L18:
        mov       r15d,esi
@@ -3737,7 +3737,7 @@ M04_L18:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        xor       r9d,r9d
-       call      qword ptr [7FF86EBEC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A48C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        shl       r15d,3
        mov       [rbx+1C],r15d
        jmp       near ptr M04_L03
@@ -3756,7 +3756,7 @@ M04_L18:
        sub       rsp,38
        mov       rsi,rcx
        mov       ebx,edx
-       mov       rcx,220BE000C90
+       mov       rcx,17550C00C90
        mov       rdi,[rcx]
        lea       ecx,[rbx-1]
        or        ecx,0F
@@ -3765,7 +3765,7 @@ M04_L18:
        xor       ebp,1F
        add       ebp,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+40]
+       mov       rcx,[rcx+38]
        cmp       dword ptr [rcx+238],9
        jle       short M05_L02
        mov       rcx,[rcx+240]
@@ -3802,22 +3802,22 @@ M05_L01:
        ret
 M05_L02:
        mov       ecx,9
-       call      qword ptr [7FF86EE4EF28]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6EEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       short M05_L00
 M05_L03:
        mov       rcx,r14
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        cmp       [rsi],sil
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF949A8]
+       call      qword ptr [7FFB6A8349A8]
        jmp       short M05_L01
 M05_L04:
        mov       rcx,[rsi+10]
@@ -3830,23 +3830,23 @@ M05_L04:
        mov       r14,[rcx+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E5BB1D4],0
+       cmp       byte ptr [7FFB69E5B1D4],0
        je        short M05_L05
-       call      qword ptr [7FF86EF949C0]
+       call      qword ptr [7FFB6A8349C0]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L05:
        mov       ecx,0A
-       call      qword ptr [7FF86EF949D8]
+       call      qword ptr [7FFB6A8349D8]
        mov       ebx,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF949D8]
+       call      qword ptr [7FFB6A8349D8]
        lea       ecx,[rbx-1]
        mov       [rax+10],ecx
        movzx     eax,bx
        test      eax,eax
        jne       short M05_L06
-       call      qword ptr [7FF86EF949F0]
+       call      qword ptr [7FFB6A8349F0]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L06:
@@ -3856,7 +3856,7 @@ M05_L07:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,ebx
        xor       edx,edx
-       div       dword ptr [7FF86E5BB1C8]
+       div       dword ptr [7FFB69E5B1C8]
        mov       ebx,edx
        xor       r15d,r15d
        jmp       short M05_L11
@@ -3868,7 +3868,7 @@ M05_L08:
        cmp       [r13],r13b
        xor       r12d,r12d
        mov       rcx,r13
-       call      qword ptr [7FF86EBED500]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A48D5D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rcx,[r13+8]
        mov       eax,[r13+10]
        dec       eax
@@ -3882,7 +3882,7 @@ M05_L08:
        mov       [r13+10],eax
 M05_L09:
        mov       rcx,r13
-       call      qword ptr [7FF86E676820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69F16820]; System.Threading.Monitor.Exit(System.Object)
        test      r12,r12
        jne       short M05_L12
        inc       ebx
@@ -3906,17 +3906,17 @@ M05_L14:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        mov       rcx,r14
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF949A8]
+       call      qword ptr [7FFB6A8349A8]
        jmp       near ptr M05_L01
 M05_L15:
        mov       ecx,10
@@ -3925,7 +3925,7 @@ M05_L15:
 M05_L16:
        test      ebx,ebx
        jne       short M05_L17
-       mov       rax,26152E962A0
+       mov       rax,1B5E5D562A0
        add       rsp,38
        pop       rbx
        pop       rbp
@@ -3938,8 +3938,8 @@ M05_L16:
        ret
 M05_L17:
        mov       ecx,ebx
-       mov       rdx,26152E96F28
-       call      qword ptr [7FF86E89D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
+       mov       rdx,1B5E5D56F28
+       call      qword ptr [7FFB6A13D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
 M05_L18:
        cmp       ebx,800
        jge       short M05_L19
@@ -3951,27 +3951,27 @@ M05_L18:
 M05_L19:
        mov       ecx,ebx
        xor       edx,edx
-       call      qword ptr [7FF86EF94990]
+       call      qword ptr [7FFB6A834990]
        mov       r14,rax
 M05_L20:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        cmp       [r14],r14b
        mov       rcx,r14
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],0FFFFFFFF
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF949A8]
+       call      qword ptr [7FFB6A8349A8]
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       rcx,[rsi+10]
        mov       edx,1
@@ -3983,7 +3983,7 @@ M05_L20:
        mov       rcx,rdi
        mov       edx,ebx
        mov       r8d,r15d
-       call      qword ptr [7FF86EF94A08]
+       call      qword ptr [7FFB6A834A08]
        jmp       near ptr M05_L01
 M05_L21:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -3997,13 +3997,13 @@ M05_L21:
        mov       rbx,rcx
        movsxd    r9,dword ptr [rbx+20]
        mov       rcx,rbx
-       call      qword ptr [7FF86EE47780]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
+       call      qword ptr [7FFB6A6E76D8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
        mov       rdx,offset MT_Org.BouncyCastle.Crypto.Digests.Sha3Digest
        cmp       [rbx],rdx
        jne       short M06_L00
        mov       edx,[rbx+20]
        mov       rcx,rbx
-       call      qword ptr [7FF86ED3EFB8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Init(Int32)
+       call      qword ptr [7FFB6A5DEEF8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Init(Int32)
        mov       eax,[rbx+20]
        sar       eax,3
        add       rsp,20
@@ -4082,7 +4082,7 @@ M07_L01:
 M07_L02:
        movsxd    rdx,eax
        mov       rcx,offset MT_System.String
-       call      00007FF8CE2AAFE0
+       call      00007FFBC9B2AFA0
        mov       rsi,rax
        test      edi,edi
        jne       near ptr M07_L31
@@ -4117,15 +4117,15 @@ M07_L03:
        lea       rax,[rdi-20]
        cmp       rax,r9
        jb        near ptr M07_L07
-       vmovups   ymm0,[7FF86EF224A0]
-       vbroadcastf128 ymm1,xmmword ptr [7FF86EF224C0]
-       vbroadcastss ymm2,dword ptr [7FF86EF224D0]
-       vbroadcastss ymm3,dword ptr [7FF86EF224D4]
-       vbroadcastss ymm4,dword ptr [7FF86EF224D8]
-       vbroadcastss ymm5,dword ptr [7FF86EF224DC]
-       vbroadcastss ymm6,dword ptr [7FF86EF224E0]
-       vbroadcastss ymm7,dword ptr [7FF86EF224E4]
-       vmovups   ymm8,[7FF86EF22500]
+       vmovups   ymm0,[7FFB6A7BD1E0]
+       vbroadcastf128 ymm1,xmmword ptr [7FFB6A7BD200]
+       vbroadcastss ymm2,dword ptr [7FFB6A7BD210]
+       vbroadcastss ymm3,dword ptr [7FFB6A7BD214]
+       vbroadcastss ymm4,dword ptr [7FFB6A7BD218]
+       vbroadcastss ymm5,dword ptr [7FFB6A7BD21C]
+       vbroadcastss ymm6,dword ptr [7FFB6A7BD220]
+       vbroadcastss ymm7,dword ptr [7FFB6A7BD224]
+       vmovups   ymm8,[7FFB6A7BD240]
        vpermd    ymm8,ymm8,[rbp]
        add       rbp,0FFFFFFFFFFFFFFFC
 M07_L04:
@@ -4149,12 +4149,12 @@ M07_L04:
        jmp       short M07_L04
 M07_L05:
        mov       ecx,1149
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E54000
+       call      qword ptr [7FFB6A137738]
        mov       r8,rax
        mov       edx,ebp
        mov       ecx,esi
-       call      qword ptr [7FF86EF94A38]
+       call      qword ptr [7FFB6A834A38]
        int       3
 M07_L06:
        lea       r9,[rbp+4]
@@ -4166,7 +4166,7 @@ M07_L07:
        cmp       rax,r9
        jae       near ptr M07_L28
 M07_L08:
-       mov       r8,7FF8BD2B5420
+       mov       r8,7FFB82CE5420
        add       rdi,0FFFFFFFFFFFFFFFE
        cmp       r9,rdi
        jae       short M07_L10
@@ -4289,35 +4289,35 @@ M07_L17:
        ret
 M07_L18:
        mov       ecx,1139
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E54000
+       call      qword ptr [7FFB6A137738]
        mov       rcx,rax
-       call      qword ptr [7FF86EE4E700]
+       call      qword ptr [7FFB6A6EE718]
        int       3
 M07_L19:
        mov       ecx,0B3
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E54000
+       call      qword ptr [7FFB6A137738]
        mov       rdx,rax
        mov       ecx,ebx
-       call      qword ptr [7FF86EE4E6D0]
+       call      qword ptr [7FFB6A6EE6E8]
        int       3
 M07_L20:
        mov       ecx,1149
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E54000
+       call      qword ptr [7FFB6A137738]
        mov       rdx,rax
        mov       ecx,esi
-       call      qword ptr [7FF86EE4E6D0]
+       call      qword ptr [7FFB6A6EE6E8]
        int       3
 M07_L21:
-       call      qword ptr [7FF86E7E7138]
+       call      qword ptr [7FFB6A087138]
        int       3
 M07_L22:
        mov       rcx,offset MT_System.Int32
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF94438]
+       call      qword ptr [7FFB6A8341E0]
        mov       rsi,rax
        mov       [rbx+8],edi
        mov       rcx,offset MT_System.ArgumentException
@@ -4325,20 +4325,20 @@ M07_L22:
        mov       rdi,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EE4F438]
+       call      qword ptr [7FFB6A6EF438]
        mov       rbx,rax
        mov       ecx,1157
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E54000
+       call      qword ptr [7FFB6A137738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rdi
-       call      qword ptr [7FF86EA65DD0]
+       call      qword ptr [7FFB6A305DD0]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
 M07_L23:
-       mov       rax,26152E90008
+       mov       rax,1B5E5D50008
        jmp       near ptr M07_L17
 M07_L24:
        xor       eax,eax
@@ -4362,7 +4362,7 @@ M07_L26:
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
        mov       rcx,rdi
-       call      qword ptr [7FF86EE4FD20]
+       call      qword ptr [7FFB6A6EFD20]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
@@ -4372,16 +4372,16 @@ M07_L27:
        jmp       near ptr M07_L03
 M07_L28:
        vmovups   xmm0,[r9]
-       vpshufb   xmm0,xmm0,[7FF86EF22520]
-       vpand     xmm1,xmm0,[7FF86EF22530]
-       vpmulhuw  xmm1,xmm1,[7FF86EF22540]
-       vpand     xmm0,xmm0,[7FF86EF22550]
-       vpmullw   xmm0,xmm0,[7FF86EF22560]
+       vpshufb   xmm0,xmm0,[7FFB6A7BD260]
+       vpand     xmm1,xmm0,[7FFB6A7BD270]
+       vpmulhuw  xmm1,xmm1,[7FFB6A7BD280]
+       vpand     xmm0,xmm0,[7FFB6A7BD290]
+       vpmullw   xmm0,xmm0,[7FFB6A7BD2A0]
        vpor      xmm0,xmm0,xmm1
-       vpsubusb  xmm1,xmm0,[7FF86EF22570]
-       vpcmpgtb  xmm2,xmm0,[7FF86EF22580]
+       vpsubusb  xmm1,xmm0,[7FFB6A7BD2B0]
+       vpcmpgtb  xmm2,xmm0,[7FFB6A7BD2C0]
        vpsubb    xmm1,xmm1,xmm2
-       vmovups   xmm2,[7FF86EF224C0]
+       vmovups   xmm2,[7FFB6A7BD200]
        vpshufb   xmm1,xmm2,xmm1
        vpaddb    xmm0,xmm1,xmm0
        vmovups   [r10],xmm0
@@ -4433,7 +4433,7 @@ M07_L33:
        mov       [rsp+20],edi
        mov       r9d,ebx
        xor       r8d,r8d
-       call      qword ptr [7FF86EF94450]
+       call      qword ptr [7FFB6A8341F8]
        xor       eax,eax
        mov       [rsp+40],rax
        mov       [rsp+48],rax
@@ -4467,7 +4467,7 @@ M07_L34:
        xor       r14d,1F
        add       r14d,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+40]
+       mov       rcx,[rcx+38]
        cmp       dword ptr [rcx+238],9
        jle       near ptr M08_L05
        mov       rcx,[rcx+240]
@@ -4494,7 +4494,7 @@ M08_L01:
        test      dword ptr [rcx],1000000
        jne       near ptr M08_L08
        mov       rcx,rax
-       call      qword ptr [7FF86E6757E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F157E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M08_L02:
        mov       ecx,10
        shlx      ecx,ecx,r14d
@@ -4512,7 +4512,7 @@ M08_L02:
        test      r15,r15
        jne       near ptr M08_L10
 M08_L03:
-       mov       rcx,220BE000C90
+       mov       rcx,17550C00C90
        mov       rsi,[rcx]
        cmp       byte ptr [rsi+9D],0
        jne       near ptr M08_L25
@@ -4529,35 +4529,35 @@ M08_L04:
        ret
 M08_L05:
        mov       ecx,9
-       call      qword ptr [7FF86EE4EF28]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6EEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M08_L00
 M08_L06:
        mov       rcx,rdi
-       call      qword ptr [7FF86EE47918]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
+       call      qword ptr [7FFB6A6E7870]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
        mov       r15,rax
        jmp       near ptr M08_L01
 M08_L07:
        mov       ecx,2
-       call      qword ptr [7FF86E89C1C8]
+       call      qword ptr [7FFB6A13C1C8]
        int       3
 M08_L08:
        shr       rdx,3
        mov       rcx,rax
-       call      qword ptr [7FF86EF94918]
+       call      qword ptr [7FFB6A834918]
        jmp       near ptr M08_L02
 M08_L09:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbp,rax
-       call      qword ptr [7FF86EF94AE0]
+       call      qword ptr [7FFB6A834AE0]
        mov       rbx,rax
        mov       ecx,29B
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E54000
+       call      qword ptr [7FFB6A137738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rbp
-       call      qword ptr [7FF86EA65DD0]
+       call      qword ptr [7FFB6A305DD0]
        mov       rcx,rbp
        call      CORINFO_HELP_THROW
        int       3
@@ -4571,28 +4571,28 @@ M08_L10:
        jne       short M08_L11
        mov       rcx,rdi
        mov       edx,r14d
-       call      qword ptr [7FF86EF94AF8]
+       call      qword ptr [7FFB6A834AF8]
 M08_L11:
        mov       r12,[rax+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E5BB1D4],0
+       cmp       byte ptr [7FFB69E5B1D4],0
        je        short M08_L12
-       call      qword ptr [7FF86EF949C0]
+       call      qword ptr [7FFB6A8349C0]
        mov       esi,eax
        jmp       short M08_L14
 M08_L12:
        mov       ecx,0A
-       call      qword ptr [7FF86EF949D8]
+       call      qword ptr [7FFB6A8349D8]
        mov       esi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF949D8]
+       call      qword ptr [7FFB6A8349D8]
        lea       ecx,[rsi-1]
        mov       [rax+10],ecx
        movzx     eax,si
        test      eax,eax
        jne       short M08_L13
-       call      qword ptr [7FF86EF949F0]
+       call      qword ptr [7FFB6A8349F0]
        mov       esi,eax
        jmp       short M08_L14
 M08_L13:
@@ -4602,7 +4602,7 @@ M08_L14:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,esi
        xor       edx,edx
-       div       dword ptr [7FF86E5BB1C8]
+       div       dword ptr [7FFB69E5B1C8]
        mov       esi,edx
        xor       eax,eax
        jmp       near ptr M08_L21
@@ -4616,7 +4616,7 @@ M08_L15:
        xor       r8d,r8d
        mov       [rsp+3C],r8d
        mov       rcx,rdx
-       call      qword ptr [7FF86EBED500]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A48D5D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rsp+30]
        mov       rcx,[rax+8]
        mov       r8d,[rax+10]
@@ -4639,7 +4639,7 @@ M08_L16:
        mov       dword ptr [rsp+3C],1
 M08_L17:
        mov       rcx,rax
-       call      qword ptr [7FF86E676820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69F16820]; System.Threading.Monitor.Exit(System.Object)
        cmp       dword ptr [rsp+3C],0
        je        short M08_L19
        jmp       short M08_L22
@@ -4669,25 +4669,25 @@ M08_L25:
        test      ebp,ebp
        je        near ptr M08_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r15d,eax
        mov       [rsp+44],ebp
        cmp       [rdi],dil
        mov       rcx,rdi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       [rsp+20],eax
        mov       rcx,rsi
        mov       r8d,r15d
        mov       r9d,[rsp+44]
        mov       edx,3
-       call      qword ptr [7FF86EF942E8]
+       call      qword ptr [7FFB6A8348E8]
        test      r12d,r13d
        jne       near ptr M08_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       rcx,rdi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A39C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        test      r13d,r13d
        jne       short M08_L26
@@ -4703,7 +4703,7 @@ M08_L27:
        mov       rcx,rsi
        mov       edx,ebx
        mov       r8d,ebp
-       call      qword ptr [7FF86EF94B10]
+       call      qword ptr [7FFB6A834B10]
        jmp       near ptr M08_L04
 M08_L28:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -4711,7 +4711,7 @@ M08_L28:
 ; Total bytes of code 913
 ```
 
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordSHA3384()
@@ -4752,17 +4752,17 @@ M08_L28:
        xor       r8d,r8d
        mov       r10,[rdx]
        cmp       dword ptr [r10+4],18
-       jne       near ptr M00_L11
+       jne       near ptr M00_L12
 M00_L00:
        mov       r9d,r8d
        neg       r9d
        test      r8d,r8d
-       jg        near ptr M00_L12
+       jg        near ptr M00_L11
        test      r9d,r9d
-       jl        near ptr M00_L12
+       jl        near ptr M00_L11
        lea       r8d,[r9+rcx]
        cmp       r8d,[rdx+8]
-       ja        near ptr M00_L12
+       ja        near ptr M00_L11
        movzx     edx,word ptr [r10]
        mov       r8d,r9d
        imul      r8,rdx
@@ -4772,7 +4772,7 @@ M00_L00:
        test      dword ptr [r10],1000000
        jne       near ptr M00_L13
        mov       rcx,r8
-       call      qword ptr [7FF86E6757E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F057E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M00_L01:
        mov       r8,[rbx+10]
        mov       r9d,[r8+8]
@@ -4791,16 +4791,16 @@ M00_L03:
        mov       [rbx+1C],r8d
        mov       byte ptr [rbx+24],0
        mov       dword ptr [rbx+20],180
-       mov       r8,24CCB400220
+       mov       r8,22D2BC00220
        mov       rsi,[r8]
-       mov       r8,28D604406CC
+       mov       r8,26DC0DB06CC
        mov       [rbp-40],r8
        mov       rdi,[rbp-40]
        lea       r8,[rbp-48]
        lea       r9,[rbp-50]
        mov       rcx,rdi
        mov       edx,40
-       call      qword ptr [7FF86E67FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
+       call      qword ptr [7FFB69F0FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
        sub       rax,rdi
        mov       r9,rax
        shr       r9,3F
@@ -4822,7 +4822,7 @@ M00_L04:
        mov       r14d,[rdi+8]
        test      r14d,r14d
        jl        near ptr M00_L16
-       mov       rcx,28D604406CC
+       mov       rcx,26DC0DB06CC
        mov       [rbp-58],rcx
        mov       r15,[rbp-58]
        mov       [rbp-60],rdi
@@ -4839,7 +4839,7 @@ M00_L05:
        mov       edx,40
        mov       r8,r13
        mov       r9d,r12d
-       call      qword ptr [7FF86E67FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
+       call      qword ptr [7FFB69F0FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
        mov       rcx,[rbp-68]
        sub       rcx,r15
        mov       rdx,rcx
@@ -4858,13 +4858,13 @@ M00_L06:
        mov       r9d,r14d
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED3EF70]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
+       call      qword ptr [7FFB6A5CF030]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
        mov       esi,[rbx+20]
        sar       esi,3
-       mov       rcx,24CCB4020E8
+       mov       rcx,22D2BC020E8
        mov       rcx,[rcx]
        mov       edx,esi
-       call      qword ptr [7FF86ED98700]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FFB6A628C10]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp-78],rax
        mov       ecx,[rbx+1C]
        test      cl,7
@@ -4882,12 +4882,12 @@ M00_L06:
        mov       rcx,rbx
        mov       rdx,[rbp-78]
        xor       r8d,r8d
-       call      qword ptr [7FF86ED97108]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.DoFinal(Byte[], Int32)
+       call      qword ptr [7FFB6A6275D8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.DoFinal(Byte[], Int32)
        mov       rcx,[rbp-78]
        mov       r8d,esi
        xor       edx,edx
        xor       r9d,r9d
-       call      qword ptr [7FF86EE47840]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
+       call      qword ptr [7FFB6A6D7918]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
        mov       rbx,rax
        jmp       near ptr M00_L10
 M00_L07:
@@ -4895,11 +4895,11 @@ M00_L07:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED96758
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A626C28
+       call      qword ptr [7FFB6A127738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A2F5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -4908,11 +4908,11 @@ M00_L08:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED96758
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A626C28
+       call      qword ptr [7FFB6A127738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A2F5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -4921,11 +4921,11 @@ M00_L09:
        int       3
        int       3
 M00_L10:
-       mov       rcx,24CCB402108
+       mov       rcx,22D2BC02108
        mov       rcx,[rcx]
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED98708]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A628C18]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        mov       rax,rbx
        add       rsp,88
        pop       rbx
@@ -4938,6 +4938,9 @@ M00_L10:
        pop       rbp
        ret
 M00_L11:
+       call      qword ptr [7FFB6A824918]
+       int       3
+M00_L12:
        mov       r9d,[r10+4]
        add       r9d,0FFFFFFE8
        shr       r9d,3
@@ -4947,28 +4950,25 @@ M00_L11:
        movsxd    r9,r9d
        add       rax,r9
        jmp       near ptr M00_L00
-M00_L12:
-       call      qword ptr [7FF86EF947E0]
-       int       3
 M00_L13:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EF947F8]
+       call      qword ptr [7FFB6A824930]
        jmp       near ptr M00_L01
 M00_L14:
        mov       rcx,rsi
        mov       rdx,rdi
        mov       r8d,40
-       call      qword ptr [7FF86EF940A8]
+       call      qword ptr [7FFB6A824318]
        add       r14d,eax
        jns       near ptr M00_L04
 M00_L15:
-       call      qword ptr [7FF86EE4D098]
+       call      qword ptr [7FFB6A6DD0B0]
        int       3
 M00_L16:
        mov       ecx,0B
        xor       edx,edx
-       call      qword ptr [7FF86EC65908]
+       call      qword ptr [7FFB6A4F5908]
        int       3
 M00_L17:
        xor       r13d,r13d
@@ -4982,18 +4982,18 @@ M00_L18:
        mov       rdx,r15
        mov       r8d,40
        mov       r9,r13
-       call      qword ptr [7FF86EF941C8]
+       call      qword ptr [7FFB6A824438]
        jmp       near ptr M00_L06
 M00_L19:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
        sub       rsp,48
-       mov       rcx,24CCB402108
+       mov       rcx,22D2BC02108
        mov       rcx,[rcx]
        mov       rdx,[rcx]
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED98708]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A628C18]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        add       rsp,48
        ret
 ; Total bytes of code 1086
@@ -5077,7 +5077,7 @@ M01_L08:
 M01_L09:
        cmp       [rcx],cl
        pop       rbx
-       jmp       qword ptr [7FF86EE4FD50]
+       jmp       qword ptr [7FFB6A6DFDB0]
 ; Total bytes of code 231
 ```
 ```assembly
@@ -5140,7 +5140,7 @@ M02_L06:
        pop       rdi
        ret
 M02_L07:
-       vbroadcastss xmm0,dword ptr [7FF86EF12BA0]
+       vbroadcastss xmm0,dword ptr [7FFB6A7A7BA0]
        vptest    xmm0,xmmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-10]
@@ -5159,7 +5159,7 @@ M02_L08:
        jne       short M02_L11
        jmp       short M02_L08
 M02_L09:
-       vbroadcastss ymm0,dword ptr [7FF86EF12BA0]
+       vbroadcastss ymm0,dword ptr [7FFB6A7A7BA0]
        vptest    ymm0,ymmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-20]
@@ -5199,17 +5199,17 @@ M02_L15:
        lea       r11,[rcx+r11*2]
        cmp       edx,8
        jl        near ptr M02_L20
-       vbroadcastss xmm0,dword ptr [7FF86EF12BA4]
+       vbroadcastss xmm0,dword ptr [7FFB6A7A7BA4]
        lea       rdx,[r11-10]
 M02_L16:
        vmovups   xmm1,[rcx]
        add       rcx,10
        vpaddusw  xmm2,xmm1,xmm0
-       vpminuw   xmm3,xmm1,[7FF86EF12BB0]
+       vpminuw   xmm3,xmm1,[7FFB6A7A7BB0]
        vpor      xmm2,xmm2,xmm3
        vpmovmskb ebx,xmm2
        popcnt    ebx,ebx
-       vpaddw    xmm2,xmm1,[7FF86EF12BC0]
+       vpaddw    xmm2,xmm1,[7FFB6A7A7BC0]
        vpcmpgtw  xmm2,xmm0,xmm2
        vpmovmskb esi,xmm2
 M02_L17:
@@ -5301,7 +5301,7 @@ M02_L23:
        jb        near ptr M03_L10
        mov       rbx,rcx
        vmovups   ymm0,[rbx]
-       vbroadcastss ymm1,dword ptr [7FF86EF124F0]
+       vbroadcastss ymm1,dword ptr [7FFB6A7A7530]
        vptest    ymm1,ymm0
        jne       near ptr M03_L08
        mov       rsi,r8
@@ -5398,7 +5398,7 @@ M03_L09:
 M03_L10:
        mov       rbx,rcx
        vmovups   xmm0,[rbx]
-       vbroadcastss xmm1,dword ptr [7FF86EF124F0]
+       vbroadcastss xmm1,dword ptr [7FFB6A7A7530]
        vptest    xmm1,xmm0
        je        short M03_L11
        xor       ebx,ebx
@@ -5521,7 +5521,7 @@ M03_L27:
        jmp       short M03_L29
 M03_L28:
        vmovups   xmm0,[rcx]
-       vptest    xmm0,xmmword ptr [7FF86EF12500]
+       vptest    xmm0,xmmword ptr [7FFB6A7A7540]
        jne       short M03_L30
        vpackuswb xmm0,xmm0,xmm0
        vmovq     qword ptr [r8],xmm0
@@ -5983,11 +5983,11 @@ M04_L04:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED96758
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A626C28
+       call      qword ptr [7FFB6A127738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A2F5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -5996,11 +5996,11 @@ M04_L05:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED96758
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB6A626C28
+       call      qword ptr [7FFB6A127738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA65D28]
+       call      qword ptr [7FFB6A2F5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -6008,7 +6008,7 @@ M04_L06:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6757A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F057A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L07:
        test      al,18
@@ -6081,7 +6081,7 @@ M04_L14:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6766E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F066E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L15:
        mov       [rsp+20],esi
@@ -6089,7 +6089,7 @@ M04_L15:
        mov       [rsp+28],ecx
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EE4DAA0]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       call      qword ptr [7FFB6A6DDAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
        jmp       near ptr M04_L02
 M04_L16:
        xor       r13d,r13d
@@ -6099,18 +6099,18 @@ M04_L16:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EBEC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A47C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        mov       r13d,r15d
        mov       rdx,[rbx+10]
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED3EF88]
+       call      qword ptr [7FFB6A5CF048]
        jmp       short M04_L18
 M04_L17:
        lea       r8d,[rbp+r13]
        mov       rcx,rbx
        mov       rdx,rdi
-       call      qword ptr [7FF86ED3EF88]
+       call      qword ptr [7FFB6A5CF048]
        add       r13d,r14d
 M04_L18:
        mov       r15d,esi
@@ -6122,7 +6122,7 @@ M04_L18:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        xor       r9d,r9d
-       call      qword ptr [7FF86EBEC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A47C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        shl       r15d,3
        mov       [rbx+1C],r15d
        jmp       near ptr M04_L03
@@ -6141,7 +6141,7 @@ M04_L18:
        sub       rsp,38
        mov       rsi,rcx
        mov       ebx,edx
-       mov       rcx,24CCB400C90
+       mov       rcx,22D2BC00C90
        mov       rdi,[rcx]
        lea       ecx,[rbx-1]
        or        ecx,0F
@@ -6150,7 +6150,7 @@ M04_L18:
        xor       ebp,1F
        add       ebp,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+40]
+       mov       rcx,[rcx+30]
        cmp       dword ptr [rcx+238],9
        jle       short M05_L02
        mov       rcx,[rcx+240]
@@ -6187,22 +6187,22 @@ M05_L01:
        ret
 M05_L02:
        mov       ecx,9
-       call      qword ptr [7FF86EE4EF28]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6DEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       short M05_L00
 M05_L03:
        mov       rcx,r14
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        cmp       [rsi],sil
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF94888]
+       call      qword ptr [7FFB6A8249C0]
        jmp       short M05_L01
 M05_L04:
        mov       rcx,[rsi+10]
@@ -6215,23 +6215,23 @@ M05_L04:
        mov       r14,[rcx+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E5BB1D4],0
+       cmp       byte ptr [7FFB69E4B1D4],0
        je        short M05_L05
-       call      qword ptr [7FF86EF948A0]
+       call      qword ptr [7FFB6A8249D8]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L05:
        mov       ecx,0A
-       call      qword ptr [7FF86EF948B8]
+       call      qword ptr [7FFB6A8249F0]
        mov       ebx,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF948B8]
+       call      qword ptr [7FFB6A8249F0]
        lea       ecx,[rbx-1]
        mov       [rax+10],ecx
        movzx     eax,bx
        test      eax,eax
        jne       short M05_L06
-       call      qword ptr [7FF86EF948D0]
+       call      qword ptr [7FFB6A824A08]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L06:
@@ -6241,7 +6241,7 @@ M05_L07:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,ebx
        xor       edx,edx
-       div       dword ptr [7FF86E5BB1C8]
+       div       dword ptr [7FFB69E4B1C8]
        mov       ebx,edx
        xor       r15d,r15d
        jmp       short M05_L11
@@ -6253,7 +6253,7 @@ M05_L08:
        cmp       [r13],r13b
        xor       r12d,r12d
        mov       rcx,r13
-       call      qword ptr [7FF86EBED5D8]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A47D5D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rcx,[r13+8]
        mov       eax,[r13+10]
        dec       eax
@@ -6267,7 +6267,7 @@ M05_L08:
        mov       [r13+10],eax
 M05_L09:
        mov       rcx,r13
-       call      qword ptr [7FF86E676820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69F06820]; System.Threading.Monitor.Exit(System.Object)
        test      r12,r12
        jne       short M05_L12
        inc       ebx
@@ -6291,17 +6291,17 @@ M05_L14:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        mov       rcx,r14
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF94888]
+       call      qword ptr [7FFB6A8249C0]
        jmp       near ptr M05_L01
 M05_L15:
        mov       ecx,10
@@ -6310,7 +6310,7 @@ M05_L15:
 M05_L16:
        test      ebx,ebx
        jne       short M05_L17
-       mov       rax,28D604362A0
+       mov       rax,26DC0DA62A0
        add       rsp,38
        pop       rbx
        pop       rbp
@@ -6323,8 +6323,8 @@ M05_L16:
        ret
 M05_L17:
        mov       ecx,ebx
-       mov       rdx,28D60436F28
-       call      qword ptr [7FF86E89D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
+       mov       rdx,26DC0DA6F28
+       call      qword ptr [7FFB6A12D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
 M05_L18:
        cmp       ebx,800
        jge       short M05_L19
@@ -6336,27 +6336,27 @@ M05_L18:
 M05_L19:
        mov       ecx,ebx
        xor       edx,edx
-       call      qword ptr [7FF86EF94870]
+       call      qword ptr [7FFB6A8249A8]
        mov       r14,rax
 M05_L20:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        cmp       [r14],r14b
        mov       rcx,r14
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],0FFFFFFFF
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF94888]
+       call      qword ptr [7FFB6A8249C0]
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       rcx,[rsi+10]
        mov       edx,1
@@ -6368,7 +6368,7 @@ M05_L20:
        mov       rcx,rdi
        mov       edx,ebx
        mov       r8d,r15d
-       call      qword ptr [7FF86EF948E8]
+       call      qword ptr [7FFB6A824A20]
        jmp       near ptr M05_L01
 M05_L21:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -6382,13 +6382,13 @@ M05_L21:
        mov       rbx,rcx
        movsxd    r9,dword ptr [rbx+20]
        mov       rcx,rbx
-       call      qword ptr [7FF86EE476C0]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
+       call      qword ptr [7FFB6A6D7798]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
        mov       rdx,offset MT_Org.BouncyCastle.Crypto.Digests.Sha3Digest
        cmp       [rbx],rdx
        jne       short M06_L00
        mov       edx,[rbx+20]
        mov       rcx,rbx
-       call      qword ptr [7FF86ED3EEF8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Init(Int32)
+       call      qword ptr [7FFB6A5CEFB8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Init(Int32)
        mov       eax,[rbx+20]
        sar       eax,3
        add       rsp,20
@@ -6467,7 +6467,7 @@ M07_L01:
 M07_L02:
        movsxd    rdx,eax
        mov       rcx,offset MT_System.String
-       call      00007FF8CE2AAFE0
+       call      00007FFBC9B2AFA0
        mov       rsi,rax
        test      edi,edi
        jne       near ptr M07_L32
@@ -6502,15 +6502,15 @@ M07_L03:
        lea       rax,[rdi-20]
        cmp       rax,r9
        jb        near ptr M07_L07
-       vmovups   ymm0,[7FF86EF1D060]
-       vbroadcastf128 ymm1,xmmword ptr [7FF86EF1D080]
-       vbroadcastss ymm2,dword ptr [7FF86EF1D090]
-       vbroadcastss ymm3,dword ptr [7FF86EF1D094]
-       vbroadcastss ymm4,dword ptr [7FF86EF1D098]
-       vbroadcastss ymm5,dword ptr [7FF86EF1D09C]
-       vbroadcastss ymm6,dword ptr [7FF86EF1D0A0]
-       vbroadcastss ymm7,dword ptr [7FF86EF1D0A4]
-       vmovups   ymm8,[7FF86EF1D0C0]
+       vmovups   ymm0,[7FFB6A7B2140]
+       vbroadcastf128 ymm1,xmmword ptr [7FFB6A7B2160]
+       vbroadcastss ymm2,dword ptr [7FFB6A7B2170]
+       vbroadcastss ymm3,dword ptr [7FFB6A7B2174]
+       vbroadcastss ymm4,dword ptr [7FFB6A7B2178]
+       vbroadcastss ymm5,dword ptr [7FFB6A7B217C]
+       vbroadcastss ymm6,dword ptr [7FFB6A7B2180]
+       vbroadcastss ymm7,dword ptr [7FFB6A7B2184]
+       vmovups   ymm8,[7FFB6A7B21A0]
        vpermd    ymm8,ymm8,[rbp]
        add       rbp,0FFFFFFFFFFFFFFFC
 M07_L04:
@@ -6534,12 +6534,12 @@ M07_L04:
        jmp       short M07_L04
 M07_L05:
        mov       ecx,1149
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       r8,rax
        mov       edx,ebp
        mov       ecx,esi
-       call      qword ptr [7FF86EF94918]
+       call      qword ptr [7FFB6A824A50]
        int       3
 M07_L06:
        lea       r9,[rbp+4]
@@ -6552,16 +6552,16 @@ M07_L07:
        jb        short M07_L09
 M07_L08:
        vmovups   xmm0,[r9]
-       vpshufb   xmm0,xmm0,[7FF86EF1D0E0]
-       vpand     xmm1,xmm0,[7FF86EF1D0F0]
-       vpmulhuw  xmm1,xmm1,[7FF86EF1D100]
-       vpand     xmm0,xmm0,[7FF86EF1D110]
-       vpmullw   xmm0,xmm0,[7FF86EF1D120]
+       vpshufb   xmm0,xmm0,[7FFB6A7B21C0]
+       vpand     xmm1,xmm0,[7FFB6A7B21D0]
+       vpmulhuw  xmm1,xmm1,[7FFB6A7B21E0]
+       vpand     xmm0,xmm0,[7FFB6A7B21F0]
+       vpmullw   xmm0,xmm0,[7FFB6A7B2200]
        vpor      xmm0,xmm0,xmm1
-       vpsubusb  xmm1,xmm0,[7FF86EF1D130]
-       vpcmpgtb  xmm2,xmm0,[7FF86EF1D140]
+       vpsubusb  xmm1,xmm0,[7FFB6A7B2210]
+       vpcmpgtb  xmm2,xmm0,[7FFB6A7B2220]
        vpsubb    xmm1,xmm1,xmm2
-       vmovups   xmm2,[7FF86EF1D080]
+       vmovups   xmm2,[7FFB6A7B2160]
        vpshufb   xmm1,xmm2,xmm1
        vpaddb    xmm0,xmm1,xmm0
        vmovups   [r10],xmm0
@@ -6572,7 +6572,7 @@ M07_L08:
        cmp       r9,r11
        je        near ptr M07_L12
 M07_L09:
-       mov       r8,7FF8BD2B5420
+       mov       r8,7FFB82CE5420
        add       rdi,0FFFFFFFFFFFFFFFE
        cmp       r9,rdi
        jae       short M07_L11
@@ -6666,35 +6666,35 @@ M07_L17:
        ret
 M07_L18:
        mov       ecx,1139
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       rcx,rax
-       call      qword ptr [7FF86EE4E700]
+       call      qword ptr [7FFB6A6DE718]
        int       3
 M07_L19:
        mov       ecx,0B3
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       rdx,rax
        mov       ecx,ebx
-       call      qword ptr [7FF86EE4E6D0]
+       call      qword ptr [7FFB6A6DE6E8]
        int       3
 M07_L20:
        mov       ecx,1149
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       rdx,rax
        mov       ecx,esi
-       call      qword ptr [7FF86EE4E6D0]
+       call      qword ptr [7FFB6A6DE6E8]
        int       3
 M07_L21:
-       call      qword ptr [7FF86E7E7138]
+       call      qword ptr [7FFB6A077138]
        int       3
 M07_L22:
        mov       rcx,offset MT_System.Int32
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF941E0]
+       call      qword ptr [7FFB6A824450]
        mov       rsi,rax
        mov       [rbx+8],edi
        mov       rcx,offset MT_System.ArgumentException
@@ -6702,20 +6702,20 @@ M07_L22:
        mov       rdi,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EE4F438]
+       call      qword ptr [7FFB6A6DF450]
        mov       rbx,rax
        mov       ecx,1157
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rdi
-       call      qword ptr [7FF86EA65DD0]
+       call      qword ptr [7FFB6A2F5DD0]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
 M07_L23:
-       mov       rax,28D60430008
+       mov       rax,26DC0DA0008
        jmp       near ptr M07_L17
 M07_L24:
        xor       eax,eax
@@ -6739,7 +6739,7 @@ M07_L26:
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
        mov       rcx,rdi
-       call      qword ptr [7FF86EE4FD20]
+       call      qword ptr [7FFB6A6DFD38]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
@@ -6820,7 +6820,7 @@ M07_L34:
        mov       [rsp+20],edi
        mov       r9d,ebx
        xor       r8d,r8d
-       call      qword ptr [7FF86EF941F8]
+       call      qword ptr [7FFB6A824468]
        xor       eax,eax
        mov       [rsp+40],rax
        mov       [rsp+48],rax
@@ -6854,7 +6854,7 @@ M07_L35:
        xor       r14d,1F
        add       r14d,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+40]
+       mov       rcx,[rcx+30]
        cmp       dword ptr [rcx+238],9
        jle       near ptr M08_L05
        mov       rcx,[rcx+240]
@@ -6881,7 +6881,7 @@ M08_L01:
        test      dword ptr [rcx],1000000
        jne       near ptr M08_L08
        mov       rcx,rax
-       call      qword ptr [7FF86E6757E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69F057E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M08_L02:
        mov       ecx,10
        shlx      ecx,ecx,r14d
@@ -6899,7 +6899,7 @@ M08_L02:
        test      r15,r15
        jne       near ptr M08_L10
 M08_L03:
-       mov       rcx,24CCB400C90
+       mov       rcx,22D2BC00C90
        mov       rsi,[rcx]
        cmp       byte ptr [rsi+9D],0
        jne       near ptr M08_L25
@@ -6916,35 +6916,35 @@ M08_L04:
        ret
 M08_L05:
        mov       ecx,9
-       call      qword ptr [7FF86EE4EF28]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6DEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M08_L00
 M08_L06:
        mov       rcx,rdi
-       call      qword ptr [7FF86EE47858]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
+       call      qword ptr [7FFB6A6D7930]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
        mov       r15,rax
        jmp       near ptr M08_L01
 M08_L07:
        mov       ecx,2
-       call      qword ptr [7FF86E89C1C8]
+       call      qword ptr [7FFB6A12C1C8]
        int       3
 M08_L08:
        shr       rdx,3
        mov       rcx,rax
-       call      qword ptr [7FF86EF947F8]
+       call      qword ptr [7FFB6A824930]
        jmp       near ptr M08_L02
 M08_L09:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbp,rax
-       call      qword ptr [7FF86EF949C0]
+       call      qword ptr [7FFB6A824AF8]
        mov       rbx,rax
        mov       ecx,29B
-       mov       rdx,7FF86E5B4000
-       call      qword ptr [7FF86E897738]
+       mov       rdx,7FFB69E44000
+       call      qword ptr [7FFB6A127738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rbp
-       call      qword ptr [7FF86EA65DD0]
+       call      qword ptr [7FFB6A2F5DD0]
        mov       rcx,rbp
        call      CORINFO_HELP_THROW
        int       3
@@ -6958,28 +6958,28 @@ M08_L10:
        jne       short M08_L11
        mov       rcx,rdi
        mov       edx,r14d
-       call      qword ptr [7FF86EF949D8]
+       call      qword ptr [7FFB6A824B10]
 M08_L11:
        mov       r12,[rax+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E5BB1D4],0
+       cmp       byte ptr [7FFB69E4B1D4],0
        je        short M08_L12
-       call      qword ptr [7FF86EF948A0]
+       call      qword ptr [7FFB6A8249D8]
        mov       esi,eax
        jmp       short M08_L14
 M08_L12:
        mov       ecx,0A
-       call      qword ptr [7FF86EF948B8]
+       call      qword ptr [7FFB6A8249F0]
        mov       esi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF948B8]
+       call      qword ptr [7FFB6A8249F0]
        lea       ecx,[rsi-1]
        mov       [rax+10],ecx
        movzx     eax,si
        test      eax,eax
        jne       short M08_L13
-       call      qword ptr [7FF86EF948D0]
+       call      qword ptr [7FFB6A824A08]
        mov       esi,eax
        jmp       short M08_L14
 M08_L13:
@@ -6989,7 +6989,7 @@ M08_L14:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,esi
        xor       edx,edx
-       div       dword ptr [7FF86E5BB1C8]
+       div       dword ptr [7FFB69E4B1C8]
        mov       esi,edx
        xor       eax,eax
        jmp       near ptr M08_L21
@@ -7003,7 +7003,7 @@ M08_L15:
        xor       r8d,r8d
        mov       [rsp+3C],r8d
        mov       rcx,rdx
-       call      qword ptr [7FF86EBED5D8]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A47D5D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rsp+30]
        mov       rcx,[rax+8]
        mov       r8d,[rax+10]
@@ -7026,7 +7026,7 @@ M08_L16:
        mov       dword ptr [rsp+3C],1
 M08_L17:
        mov       rcx,rax
-       call      qword ptr [7FF86E676820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69F06820]; System.Threading.Monitor.Exit(System.Object)
        cmp       dword ptr [rsp+3C],0
        je        short M08_L19
        jmp       short M08_L22
@@ -7056,25 +7056,25 @@ M08_L25:
        test      ebp,ebp
        je        near ptr M08_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r15d,eax
        mov       [rsp+44],ebp
        cmp       [rdi],dil
        mov       rcx,rdi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       [rsp+20],eax
        mov       rcx,rsi
        mov       r8d,r15d
        mov       r9d,[rsp+44]
        mov       edx,3
-       call      qword ptr [7FF86EF947C8]
+       call      qword ptr [7FFB6A824300]
        test      r12d,r13d
        jne       near ptr M08_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       rcx,rdi
-       call      qword ptr [7FF86EAFC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A38C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        test      r13d,r13d
        jne       short M08_L26
@@ -7090,7 +7090,7 @@ M08_L27:
        mov       rcx,rsi
        mov       edx,ebx
        mov       r8d,ebp
-       call      qword ptr [7FF86EF949F0]
+       call      qword ptr [7FFB6A824B28]
        jmp       near ptr M08_L04
 M08_L28:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -7098,7 +7098,7 @@ M08_L28:
 ; Total bytes of code 913
 ```
 
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordSHA3512()
@@ -7159,7 +7159,7 @@ M00_L00:
        test      dword ptr [r10],1000000
        jne       near ptr M00_L13
        mov       rcx,r8
-       call      qword ptr [7FF86E6557E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EF57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M00_L01:
        mov       r8,[rbx+10]
        mov       r9d,[r8+8]
@@ -7178,16 +7178,16 @@ M00_L03:
        mov       [rbx+1C],r8d
        mov       byte ptr [rbx+24],0
        mov       dword ptr [rbx+20],200
-       mov       r8,258ACC00220
+       mov       r8,1DC95400220
        mov       rsi,[r8]
-       mov       r8,29941BE06CC
+       mov       r8,21D2A6B06CC
        mov       [rbp-40],r8
        mov       rdi,[rbp-40]
        lea       r8,[rbp-48]
        lea       r9,[rbp-50]
        mov       rcx,rdi
        mov       edx,40
-       call      qword ptr [7FF86E65FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
+       call      qword ptr [7FFB69EFFAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
        sub       rax,rdi
        mov       r9,rax
        shr       r9,3F
@@ -7209,7 +7209,7 @@ M00_L04:
        mov       r14d,[rdi+8]
        test      r14d,r14d
        jl        near ptr M00_L16
-       mov       rcx,29941BE06CC
+       mov       rcx,21D2A6B06CC
        mov       [rbp-58],rcx
        mov       r15,[rbp-58]
        mov       [rbp-60],rdi
@@ -7226,7 +7226,7 @@ M00_L05:
        mov       edx,40
        mov       r8,r13
        mov       r9d,r12d
-       call      qword ptr [7FF86E65FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
+       call      qword ptr [7FFB69EFFAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
        mov       rcx,[rbp-68]
        sub       rcx,r15
        mov       rdx,rcx
@@ -7245,13 +7245,13 @@ M00_L06:
        mov       r9d,r14d
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED1F048]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
+       call      qword ptr [7FFB6A5AEB50]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
        mov       esi,[rbx+20]
        sar       esi,3
-       mov       rcx,258C2C000F0
+       mov       rcx,1DC954020E8
        mov       rcx,[rcx]
        mov       edx,esi
-       call      qword ptr [7FF86ED79080]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FFB6A608378]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp-78],rax
        mov       ecx,[rbx+1C]
        test      cl,7
@@ -7269,12 +7269,12 @@ M00_L06:
        mov       rcx,rbx
        mov       rdx,[rbp-78]
        xor       r8d,r8d
-       call      qword ptr [7FF86ED77A88]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.DoFinal(Byte[], Int32)
+       call      qword ptr [7FFB6A606B60]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.DoFinal(Byte[], Int32)
        mov       rcx,[rbp-78]
        mov       r8d,esi
        xor       edx,edx
        xor       r9d,r9d
-       call      qword ptr [7FF86EE27918]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
+       call      qword ptr [7FFB6A6C7420]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
        mov       rbx,rax
        jmp       near ptr M00_L10
 M00_L07:
@@ -7282,11 +7282,11 @@ M00_L07:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED770D8
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A6061B0
+       call      qword ptr [7FFB6A117738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2E5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -7295,11 +7295,11 @@ M00_L08:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED770D8
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A6061B0
+       call      qword ptr [7FFB6A117738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2E5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -7308,11 +7308,11 @@ M00_L09:
        int       3
        int       3
 M00_L10:
-       mov       rcx,258C2C00110
+       mov       rcx,1DC95402108
        mov       rcx,[rcx]
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED79088]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A608380]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        mov       rax,rbx
        add       rsp,88
        pop       rbx
@@ -7335,27 +7335,27 @@ M00_L11:
        add       rax,r9
        jmp       near ptr M00_L00
 M00_L12:
-       call      qword ptr [7FF86EF74918]
+       call      qword ptr [7FFB6A824798]
        int       3
 M00_L13:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EF74930]
+       call      qword ptr [7FFB6A8247B0]
        jmp       near ptr M00_L01
 M00_L14:
        mov       rcx,rsi
        mov       rdx,rdi
        mov       r8d,40
-       call      qword ptr [7FF86EF741F8]
+       call      qword ptr [7FFB6A824060]
        add       r14d,eax
        jns       near ptr M00_L04
 M00_L15:
-       call      qword ptr [7FF86EE2D0B0]
+       call      qword ptr [7FFB6A6CD068]
        int       3
 M00_L16:
        mov       ecx,0B
        xor       edx,edx
-       call      qword ptr [7FF86EC45908]
+       call      qword ptr [7FFB6A4E5908]
        int       3
 M00_L17:
        xor       r13d,r13d
@@ -7369,18 +7369,18 @@ M00_L18:
        mov       rdx,r15
        mov       r8d,40
        mov       r9,r13
-       call      qword ptr [7FF86EF74318]
+       call      qword ptr [7FFB6A824180]
        jmp       near ptr M00_L06
 M00_L19:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
        sub       rsp,48
-       mov       rcx,258C2C00110
+       mov       rcx,1DC95402108
        mov       rcx,[rcx]
        mov       rdx,[rcx]
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED79088]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A608380]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        add       rsp,48
        ret
 ; Total bytes of code 1086
@@ -7464,7 +7464,7 @@ M01_L08:
 M01_L09:
        cmp       [rcx],cl
        pop       rbx
-       jmp       qword ptr [7FF86EE2FDE0]
+       jmp       qword ptr [7FFB6A6CFD38]
 ; Total bytes of code 231
 ```
 ```assembly
@@ -7527,7 +7527,7 @@ M02_L06:
        pop       rdi
        ret
 M02_L07:
-       vbroadcastss xmm0,dword ptr [7FF86EEF7CA0]
+       vbroadcastss xmm0,dword ptr [7FFB6A7920E0]
        vptest    xmm0,xmmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-10]
@@ -7546,7 +7546,7 @@ M02_L08:
        jne       short M02_L11
        jmp       short M02_L08
 M02_L09:
-       vbroadcastss ymm0,dword ptr [7FF86EEF7CA0]
+       vbroadcastss ymm0,dword ptr [7FFB6A7920E0]
        vptest    ymm0,ymmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-20]
@@ -7586,17 +7586,17 @@ M02_L15:
        lea       r11,[rcx+r11*2]
        cmp       edx,8
        jl        near ptr M02_L20
-       vbroadcastss xmm0,dword ptr [7FF86EEF7CA4]
+       vbroadcastss xmm0,dword ptr [7FFB6A7920E4]
        lea       rdx,[r11-10]
 M02_L16:
        vmovups   xmm1,[rcx]
        add       rcx,10
        vpaddusw  xmm2,xmm1,xmm0
-       vpminuw   xmm3,xmm1,[7FF86EEF7CB0]
+       vpminuw   xmm3,xmm1,[7FFB6A7920F0]
        vpor      xmm2,xmm2,xmm3
        vpmovmskb ebx,xmm2
        popcnt    ebx,ebx
-       vpaddw    xmm2,xmm1,[7FF86EEF7CC0]
+       vpaddw    xmm2,xmm1,[7FFB6A792100]
        vpcmpgtw  xmm2,xmm0,xmm2
        vpmovmskb esi,xmm2
 M02_L17:
@@ -7688,7 +7688,7 @@ M02_L23:
        jb        near ptr M03_L10
        mov       rbx,rcx
        vmovups   ymm0,[rbx]
-       vbroadcastss ymm1,dword ptr [7FF86EEF7630]
+       vbroadcastss ymm1,dword ptr [7FFB6A791A30]
        vptest    ymm1,ymm0
        jne       near ptr M03_L08
        mov       rsi,r8
@@ -7785,7 +7785,7 @@ M03_L09:
 M03_L10:
        mov       rbx,rcx
        vmovups   xmm0,[rbx]
-       vbroadcastss xmm1,dword ptr [7FF86EEF7630]
+       vbroadcastss xmm1,dword ptr [7FFB6A791A30]
        vptest    xmm1,xmm0
        je        short M03_L11
        xor       ebx,ebx
@@ -7908,7 +7908,7 @@ M03_L27:
        jmp       short M03_L29
 M03_L28:
        vmovups   xmm0,[rcx]
-       vptest    xmm0,xmmword ptr [7FF86EEF7640]
+       vptest    xmm0,xmmword ptr [7FFB6A791A40]
        jne       short M03_L30
        vpackuswb xmm0,xmm0,xmm0
        vmovq     qword ptr [r8],xmm0
@@ -8370,11 +8370,11 @@ M04_L04:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED770D8
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A6061B0
+       call      qword ptr [7FFB6A117738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2E5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -8383,11 +8383,11 @@ M04_L05:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED770D8
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A6061B0
+       call      qword ptr [7FFB6A117738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2E5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -8395,7 +8395,7 @@ M04_L06:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EF57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L07:
        test      al,18
@@ -8468,7 +8468,7 @@ M04_L14:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6566E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EF66E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L15:
        mov       [rsp+20],esi
@@ -8476,7 +8476,7 @@ M04_L15:
        mov       [rsp+28],ecx
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EE2DAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       call      qword ptr [7FFB6A6CDA70]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
        jmp       near ptr M04_L02
 M04_L16:
        xor       r13d,r13d
@@ -8486,18 +8486,18 @@ M04_L16:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EBCC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A46C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        mov       r13d,r15d
        mov       rdx,[rbx+10]
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED1F060]
+       call      qword ptr [7FFB6A5AEB68]
        jmp       short M04_L18
 M04_L17:
        lea       r8d,[rbp+r13]
        mov       rcx,rbx
        mov       rdx,rdi
-       call      qword ptr [7FF86ED1F060]
+       call      qword ptr [7FFB6A5AEB68]
        add       r13d,r14d
 M04_L18:
        mov       r15d,esi
@@ -8509,7 +8509,7 @@ M04_L18:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        xor       r9d,r9d
-       call      qword ptr [7FF86EBCC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A46C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        shl       r15d,3
        mov       [rbx+1C],r15d
        jmp       near ptr M04_L03
@@ -8528,7 +8528,7 @@ M04_L18:
        sub       rsp,38
        mov       rsi,rcx
        mov       ebx,edx
-       mov       rcx,258ACC00C90
+       mov       rcx,1DC95400C90
        mov       rdi,[rcx]
        lea       ecx,[rbx-1]
        or        ecx,0F
@@ -8537,7 +8537,7 @@ M04_L18:
        xor       ebp,1F
        add       ebp,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+30]
+       mov       rcx,[rcx+38]
        cmp       dword ptr [rcx+238],9
        jle       short M05_L02
        mov       rcx,[rcx+240]
@@ -8574,22 +8574,22 @@ M05_L01:
        ret
 M05_L02:
        mov       ecx,9
-       call      qword ptr [7FF86EE2EF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6CEEE0]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       short M05_L00
 M05_L03:
        mov       rcx,r14
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        cmp       [rsi],sil
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF749C0]
+       call      qword ptr [7FFB6A824840]
        jmp       short M05_L01
 M05_L04:
        mov       rcx,[rsi+10]
@@ -8602,23 +8602,23 @@ M05_L04:
        mov       r14,[rcx+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E59B1D4],0
+       cmp       byte ptr [7FFB69E3B1D4],0
        je        short M05_L05
-       call      qword ptr [7FF86EF749D8]
+       call      qword ptr [7FFB6A824858]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L05:
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A824870]
        mov       ebx,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A824870]
        lea       ecx,[rbx-1]
        mov       [rax+10],ecx
        movzx     eax,bx
        test      eax,eax
        jne       short M05_L06
-       call      qword ptr [7FF86EF74A08]
+       call      qword ptr [7FFB6A824888]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L06:
@@ -8628,7 +8628,7 @@ M05_L07:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,ebx
        xor       edx,edx
-       div       dword ptr [7FF86E59B1C8]
+       div       dword ptr [7FFB69E3B1C8]
        mov       ebx,edx
        xor       r15d,r15d
        jmp       short M05_L11
@@ -8640,7 +8640,7 @@ M05_L08:
        cmp       [r13],r13b
        xor       r12d,r12d
        mov       rcx,r13
-       call      qword ptr [7FF86EBCD5D8]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A46D500]; System.Threading.Monitor.Enter(System.Object)
        mov       rcx,[r13+8]
        mov       eax,[r13+10]
        dec       eax
@@ -8654,7 +8654,7 @@ M05_L08:
        mov       [r13+10],eax
 M05_L09:
        mov       rcx,r13
-       call      qword ptr [7FF86E656820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69EF6820]; System.Threading.Monitor.Exit(System.Object)
        test      r12,r12
        jne       short M05_L12
        inc       ebx
@@ -8678,17 +8678,17 @@ M05_L14:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        mov       rcx,r14
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF749C0]
+       call      qword ptr [7FFB6A824840]
        jmp       near ptr M05_L01
 M05_L15:
        mov       ecx,10
@@ -8697,7 +8697,7 @@ M05_L15:
 M05_L16:
        test      ebx,ebx
        jne       short M05_L17
-       mov       rax,29941BD62A0
+       mov       rax,21D2A6A62A0
        add       rsp,38
        pop       rbx
        pop       rbp
@@ -8710,8 +8710,8 @@ M05_L16:
        ret
 M05_L17:
        mov       ecx,ebx
-       mov       rdx,29941BD6F28
-       call      qword ptr [7FF86E87D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
+       mov       rdx,21D2A6A6F28
+       call      qword ptr [7FFB6A11D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
 M05_L18:
        cmp       ebx,800
        jge       short M05_L19
@@ -8723,27 +8723,27 @@ M05_L18:
 M05_L19:
        mov       ecx,ebx
        xor       edx,edx
-       call      qword ptr [7FF86EF749A8]
+       call      qword ptr [7FFB6A824828]
        mov       r14,rax
 M05_L20:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        cmp       [r14],r14b
        mov       rcx,r14
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],0FFFFFFFF
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF749C0]
+       call      qword ptr [7FFB6A824840]
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       rcx,[rsi+10]
        mov       edx,1
@@ -8755,7 +8755,7 @@ M05_L20:
        mov       rcx,rdi
        mov       edx,ebx
        mov       r8d,r15d
-       call      qword ptr [7FF86EF74A20]
+       call      qword ptr [7FFB6A8248A0]
        jmp       near ptr M05_L01
 M05_L21:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -8769,13 +8769,13 @@ M05_L21:
        mov       rbx,rcx
        movsxd    r9,dword ptr [rbx+20]
        mov       rcx,rbx
-       call      qword ptr [7FF86EE27798]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
+       call      qword ptr [7FFB6A6C72A0]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
        mov       rdx,offset MT_Org.BouncyCastle.Crypto.Digests.Sha3Digest
        cmp       [rbx],rdx
        jne       short M06_L00
        mov       edx,[rbx+20]
        mov       rcx,rbx
-       call      qword ptr [7FF86ED1EFD0]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Init(Int32)
+       call      qword ptr [7FFB6A5AEAD8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Init(Int32)
        mov       eax,[rbx+20]
        sar       eax,3
        add       rsp,20
@@ -8854,7 +8854,7 @@ M07_L01:
 M07_L02:
        movsxd    rdx,eax
        mov       rcx,offset MT_System.String
-       call      00007FF8CE2AAFE0
+       call      00007FFBC9B2AFA0
        mov       rsi,rax
        test      edi,edi
        jne       near ptr M07_L31
@@ -8889,15 +8889,15 @@ M07_L03:
        lea       rax,[rdi-20]
        cmp       rax,r9
        jb        near ptr M07_L07
-       vmovups   ymm0,[7FF86EF02340]
-       vbroadcastf128 ymm1,xmmword ptr [7FF86EF02360]
-       vbroadcastss ymm2,dword ptr [7FF86EF02370]
-       vbroadcastss ymm3,dword ptr [7FF86EF02374]
-       vbroadcastss ymm4,dword ptr [7FF86EF02378]
-       vbroadcastss ymm5,dword ptr [7FF86EF0237C]
-       vbroadcastss ymm6,dword ptr [7FF86EF02380]
-       vbroadcastss ymm7,dword ptr [7FF86EF02384]
-       vmovups   ymm8,[7FF86EF023A0]
+       vmovups   ymm0,[7FFB6A79C9C0]
+       vbroadcastf128 ymm1,xmmword ptr [7FFB6A79C9E0]
+       vbroadcastss ymm2,dword ptr [7FFB6A79C9F0]
+       vbroadcastss ymm3,dword ptr [7FFB6A79C9F4]
+       vbroadcastss ymm4,dword ptr [7FFB6A79C9F8]
+       vbroadcastss ymm5,dword ptr [7FFB6A79C9FC]
+       vbroadcastss ymm6,dword ptr [7FFB6A79CA00]
+       vbroadcastss ymm7,dword ptr [7FFB6A79CA04]
+       vmovups   ymm8,[7FFB6A79CA20]
        vpermd    ymm8,ymm8,[rbp]
        add       rbp,0FFFFFFFFFFFFFFFC
 M07_L04:
@@ -8921,12 +8921,12 @@ M07_L04:
        jmp       short M07_L04
 M07_L05:
        mov       ecx,1149
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E34000
+       call      qword ptr [7FFB6A117738]
        mov       r8,rax
        mov       edx,ebp
        mov       ecx,esi
-       call      qword ptr [7FF86EF74A50]
+       call      qword ptr [7FFB6A8248D0]
        int       3
 M07_L06:
        lea       r9,[rbp+4]
@@ -8939,16 +8939,16 @@ M07_L07:
        jb        short M07_L09
 M07_L08:
        vmovups   xmm0,[r9]
-       vpshufb   xmm0,xmm0,[7FF86EF023C0]
-       vpand     xmm1,xmm0,[7FF86EF023D0]
-       vpmulhuw  xmm1,xmm1,[7FF86EF023E0]
-       vpand     xmm0,xmm0,[7FF86EF023F0]
-       vpmullw   xmm0,xmm0,[7FF86EF02400]
+       vpshufb   xmm0,xmm0,[7FFB6A79CA40]
+       vpand     xmm1,xmm0,[7FFB6A79CA50]
+       vpmulhuw  xmm1,xmm1,[7FFB6A79CA60]
+       vpand     xmm0,xmm0,[7FFB6A79CA70]
+       vpmullw   xmm0,xmm0,[7FFB6A79CA80]
        vpor      xmm0,xmm0,xmm1
-       vpsubusb  xmm1,xmm0,[7FF86EF02410]
-       vpcmpgtb  xmm2,xmm0,[7FF86EF02420]
+       vpsubusb  xmm1,xmm0,[7FFB6A79CA90]
+       vpcmpgtb  xmm2,xmm0,[7FFB6A79CAA0]
        vpsubb    xmm1,xmm1,xmm2
-       vmovups   xmm2,[7FF86EF02360]
+       vmovups   xmm2,[7FFB6A79C9E0]
        vpshufb   xmm1,xmm2,xmm1
        vpaddb    xmm0,xmm1,xmm0
        vmovups   [r10],xmm0
@@ -8959,7 +8959,7 @@ M07_L08:
        cmp       r9,r11
        je        near ptr M07_L12
 M07_L09:
-       mov       r8,7FF8BD2B5420
+       mov       r8,7FFB82CE5420
        add       rdi,0FFFFFFFFFFFFFFFE
        cmp       r9,rdi
        jae       short M07_L11
@@ -9082,35 +9082,35 @@ M07_L19:
        ret
 M07_L20:
        mov       ecx,1139
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E34000
+       call      qword ptr [7FFB6A117738]
        mov       rcx,rax
-       call      qword ptr [7FF86EE2E718]
+       call      qword ptr [7FFB6A6CE6B8]
        int       3
 M07_L21:
        mov       ecx,0B3
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E34000
+       call      qword ptr [7FFB6A117738]
        mov       rdx,rax
        mov       ecx,ebx
-       call      qword ptr [7FF86EE2E6E8]
+       call      qword ptr [7FFB6A6CE688]
        int       3
 M07_L22:
        mov       ecx,1149
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E34000
+       call      qword ptr [7FFB6A117738]
        mov       rdx,rax
        mov       ecx,esi
-       call      qword ptr [7FF86EE2E6E8]
+       call      qword ptr [7FFB6A6CE688]
        int       3
 M07_L23:
-       call      qword ptr [7FF86E7C7138]
+       call      qword ptr [7FFB6A067138]
        int       3
 M07_L24:
        mov       rcx,offset MT_System.Int32
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF74330]
+       call      qword ptr [7FFB6A824198]
        mov       rsi,rax
        mov       [rbx+8],edi
        mov       rcx,offset MT_System.ArgumentException
@@ -9118,20 +9118,20 @@ M07_L24:
        mov       rdi,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EE2F450]
+       call      qword ptr [7FFB6A6CF3F0]
        mov       rbx,rax
        mov       ecx,1157
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E34000
+       call      qword ptr [7FFB6A117738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rdi
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2E5DD0]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
 M07_L25:
-       mov       rax,29941BD0008
+       mov       rax,21D2A6A0008
        jmp       near ptr M07_L19
 M07_L26:
        xor       eax,eax
@@ -9155,7 +9155,7 @@ M07_L28:
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
        mov       rcx,rdi
-       call      qword ptr [7FF86EE2FD38]
+       call      qword ptr [7FFB6A6CFCD8]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
@@ -9204,7 +9204,7 @@ M07_L33:
        mov       [rsp+20],edi
        mov       r9d,ebx
        xor       r8d,r8d
-       call      qword ptr [7FF86EF74348]
+       call      qword ptr [7FFB6A8241B0]
        xor       eax,eax
        mov       [rsp+40],rax
        mov       [rsp+48],rax
@@ -9238,7 +9238,7 @@ M07_L34:
        xor       r14d,1F
        add       r14d,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+30]
+       mov       rcx,[rcx+38]
        cmp       dword ptr [rcx+238],9
        jle       near ptr M08_L05
        mov       rcx,[rcx+240]
@@ -9265,7 +9265,7 @@ M08_L01:
        test      dword ptr [rcx],1000000
        jne       near ptr M08_L08
        mov       rcx,rax
-       call      qword ptr [7FF86E6557E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EF57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M08_L02:
        mov       ecx,10
        shlx      ecx,ecx,r14d
@@ -9283,7 +9283,7 @@ M08_L02:
        test      r15,r15
        jne       near ptr M08_L10
 M08_L03:
-       mov       rcx,258ACC00C90
+       mov       rcx,1DC95400C90
        mov       rsi,[rcx]
        cmp       byte ptr [rsi+9D],0
        jne       near ptr M08_L25
@@ -9300,35 +9300,35 @@ M08_L04:
        ret
 M08_L05:
        mov       ecx,9
-       call      qword ptr [7FF86EE2EF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6CEEE0]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M08_L00
 M08_L06:
        mov       rcx,rdi
-       call      qword ptr [7FF86EE27930]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
+       call      qword ptr [7FFB6A6C7438]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
        mov       r15,rax
        jmp       near ptr M08_L01
 M08_L07:
        mov       ecx,2
-       call      qword ptr [7FF86E87C1C8]
+       call      qword ptr [7FFB6A11C1C8]
        int       3
 M08_L08:
        shr       rdx,3
        mov       rcx,rax
-       call      qword ptr [7FF86EF74930]
+       call      qword ptr [7FFB6A8247B0]
        jmp       near ptr M08_L02
 M08_L09:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbp,rax
-       call      qword ptr [7FF86EF74AF8]
+       call      qword ptr [7FFB6A824978]
        mov       rbx,rax
        mov       ecx,29B
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E34000
+       call      qword ptr [7FFB6A117738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rbp
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2E5DD0]
        mov       rcx,rbp
        call      CORINFO_HELP_THROW
        int       3
@@ -9342,28 +9342,28 @@ M08_L10:
        jne       short M08_L11
        mov       rcx,rdi
        mov       edx,r14d
-       call      qword ptr [7FF86EF74B10]
+       call      qword ptr [7FFB6A824990]
 M08_L11:
        mov       r12,[rax+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E59B1D4],0
+       cmp       byte ptr [7FFB69E3B1D4],0
        je        short M08_L12
-       call      qword ptr [7FF86EF749D8]
+       call      qword ptr [7FFB6A824858]
        mov       esi,eax
        jmp       short M08_L14
 M08_L12:
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A824870]
        mov       esi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A824870]
        lea       ecx,[rsi-1]
        mov       [rax+10],ecx
        movzx     eax,si
        test      eax,eax
        jne       short M08_L13
-       call      qword ptr [7FF86EF74A08]
+       call      qword ptr [7FFB6A824888]
        mov       esi,eax
        jmp       short M08_L14
 M08_L13:
@@ -9373,7 +9373,7 @@ M08_L14:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,esi
        xor       edx,edx
-       div       dword ptr [7FF86E59B1C8]
+       div       dword ptr [7FFB69E3B1C8]
        mov       esi,edx
        xor       eax,eax
        jmp       near ptr M08_L21
@@ -9387,7 +9387,7 @@ M08_L15:
        xor       r8d,r8d
        mov       [rsp+3C],r8d
        mov       rcx,rdx
-       call      qword ptr [7FF86EBCD5D8]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A46D500]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rsp+30]
        mov       rcx,[rax+8]
        mov       r8d,[rax+10]
@@ -9410,7 +9410,7 @@ M08_L16:
        mov       dword ptr [rsp+3C],1
 M08_L17:
        mov       rcx,rax
-       call      qword ptr [7FF86E656820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69EF6820]; System.Threading.Monitor.Exit(System.Object)
        cmp       dword ptr [rsp+3C],0
        je        short M08_L19
        jmp       short M08_L22
@@ -9440,25 +9440,25 @@ M08_L25:
        test      ebp,ebp
        je        near ptr M08_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r15d,eax
        mov       [rsp+44],ebp
        cmp       [rdi],dil
        mov       rcx,rdi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       [rsp+20],eax
        mov       rcx,rsi
        mov       r8d,r15d
        mov       r9d,[rsp+44]
        mov       edx,3
-       call      qword ptr [7FF86EF741E0]
+       call      qword ptr [7FFB6A824780]
        test      r12d,r13d
        jne       near ptr M08_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       rcx,rdi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A37C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        test      r13d,r13d
        jne       short M08_L26
@@ -9474,7 +9474,7 @@ M08_L27:
        mov       rcx,rsi
        mov       edx,ebx
        mov       r8d,ebp
-       call      qword ptr [7FF86EF74B28]
+       call      qword ptr [7FFB6A8249A8]
        jmp       near ptr M08_L04
 M08_L28:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -9482,7 +9482,7 @@ M08_L28:
 ; Total bytes of code 913
 ```
 
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordShake128()
@@ -9543,7 +9543,7 @@ M00_L00:
        test      dword ptr [r10],1000000
        jne       near ptr M00_L13
        mov       rcx,r8
-       call      qword ptr [7FF86E6857E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EE57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M00_L01:
        mov       r8,[rbx+10]
        mov       r9d,[r8+8]
@@ -9562,16 +9562,16 @@ M00_L03:
        mov       [rbx+1C],r8d
        mov       byte ptr [rbx+24],0
        mov       dword ptr [rbx+20],80
-       mov       r8,2C0DB000220
+       mov       r8,209A0800220
        mov       rsi,[r8]
-       mov       r8,301700006CC
+       mov       r8,24A357806CC
        mov       [rbp-40],r8
        mov       rdi,[rbp-40]
        lea       r8,[rbp-48]
        lea       r9,[rbp-50]
        mov       rcx,rdi
        mov       edx,40
-       call      qword ptr [7FF86E68FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
+       call      qword ptr [7FFB69EEFAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
        sub       rax,rdi
        mov       r9,rax
        shr       r9,3F
@@ -9593,7 +9593,7 @@ M00_L04:
        mov       r14d,[rdi+8]
        test      r14d,r14d
        jl        near ptr M00_L16
-       mov       rcx,301700006CC
+       mov       rcx,24A357806CC
        mov       [rbp-58],rcx
        mov       r15,[rbp-58]
        mov       [rbp-60],rdi
@@ -9610,7 +9610,7 @@ M00_L05:
        mov       edx,40
        mov       r8,r13
        mov       r9d,r12d
-       call      qword ptr [7FF86E68FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
+       call      qword ptr [7FFB69EEFAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
        mov       rcx,[rbp-68]
        sub       rcx,r15
        mov       rdx,rcx
@@ -9629,12 +9629,12 @@ M00_L06:
        mov       r9d,r14d
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED4EF58]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
-       mov       rcx,2C0DB0020E8
+       call      qword ptr [7FFB6A5AEF70]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
+       mov       rcx,209A08020E8
        mov       rsi,[rcx]
        mov       rcx,rsi
        mov       edx,10
-       call      qword ptr [7FF86EDA8BB8]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FFB6A6087B8]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp-78],rax
        cmp       byte ptr [rbx+24],0
        jne       short M00_L07
@@ -9654,14 +9654,14 @@ M00_L07:
        mov       rdx,[rbp-78]
        xor       r8d,r8d
        mov       r9d,80
-       call      qword ptr [7FF86EE576D8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
+       call      qword ptr [7FFB6A6B76F0]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
        mov       rcx,rbx
-       call      qword ptr [7FF86EDA7458]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Reset()
+       call      qword ptr [7FFB6A607018]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Reset()
        mov       rcx,[rbp-78]
        xor       edx,edx
        mov       r8d,10
        xor       r9d,r9d
-       call      qword ptr [7FF86EE57858]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
+       call      qword ptr [7FFB6A6B7870]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
        mov       rbx,rax
        jmp       short M00_L10
 M00_L08:
@@ -9669,11 +9669,11 @@ M00_L08:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA75D28]
+       call      qword ptr [7FFB6A2D5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -9685,7 +9685,7 @@ M00_L10:
        mov       rcx,rsi
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86EDA8BC0]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A6087C0]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        mov       rax,rbx
        add       rsp,88
        pop       rbx
@@ -9708,27 +9708,27 @@ M00_L11:
        add       rax,r9
        jmp       near ptr M00_L00
 M00_L12:
-       call      qword ptr [7FF86EFA47F8]
+       call      qword ptr [7FFB6A804918]
        int       3
 M00_L13:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EFA4810]
+       call      qword ptr [7FFB6A804930]
        jmp       near ptr M00_L01
 M00_L14:
        mov       rcx,rsi
        mov       rdx,rdi
        mov       r8d,40
-       call      qword ptr [7FF86EFA41C8]
+       call      qword ptr [7FFB6A804090]
        add       r14d,eax
        jns       near ptr M00_L04
 M00_L15:
-       call      qword ptr [7FF86EE5D0B0]
+       call      qword ptr [7FFB6A6BD0B0]
        int       3
 M00_L16:
        mov       ecx,0B
        xor       edx,edx
-       call      qword ptr [7FF86EC75908]
+       call      qword ptr [7FFB6A4D5908]
        int       3
 M00_L17:
        xor       r13d,r13d
@@ -9742,18 +9742,18 @@ M00_L18:
        mov       rdx,r15
        mov       r8d,40
        mov       r9,r13
-       call      qword ptr [7FF86EFA42E8]
+       call      qword ptr [7FFB6A8041B0]
        jmp       near ptr M00_L06
 M00_L19:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
        sub       rsp,48
-       mov       rcx,2C0DB0020E8
+       mov       rcx,209A08020E8
        mov       rsi,[rcx]
        mov       rcx,rsi
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86EDA8BC0]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A6087C0]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        nop
        add       rsp,48
        ret
@@ -9838,7 +9838,7 @@ M01_L08:
 M01_L09:
        cmp       [rcx],cl
        pop       rbx
-       jmp       qword ptr [7FF86EE5FDB0]
+       jmp       qword ptr [7FFB6A6BFD68]
 ; Total bytes of code 231
 ```
 ```assembly
@@ -9901,7 +9901,7 @@ M02_L06:
        pop       rdi
        ret
 M02_L07:
-       vbroadcastss xmm0,dword ptr [7FF86EF27AC0]
+       vbroadcastss xmm0,dword ptr [7FFB6A781EE0]
        vptest    xmm0,xmmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-10]
@@ -9920,7 +9920,7 @@ M02_L08:
        jne       short M02_L11
        jmp       short M02_L08
 M02_L09:
-       vbroadcastss ymm0,dword ptr [7FF86EF27AC0]
+       vbroadcastss ymm0,dword ptr [7FFB6A781EE0]
        vptest    ymm0,ymmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-20]
@@ -9960,17 +9960,17 @@ M02_L15:
        lea       r11,[rcx+r11*2]
        cmp       edx,8
        jl        near ptr M02_L20
-       vbroadcastss xmm0,dword ptr [7FF86EF27AC4]
+       vbroadcastss xmm0,dword ptr [7FFB6A781EE4]
        lea       rdx,[r11-10]
 M02_L16:
        vmovups   xmm1,[rcx]
        add       rcx,10
        vpaddusw  xmm2,xmm1,xmm0
-       vpminuw   xmm3,xmm1,[7FF86EF27AD0]
+       vpminuw   xmm3,xmm1,[7FFB6A781EF0]
        vpor      xmm2,xmm2,xmm3
        vpmovmskb ebx,xmm2
        popcnt    ebx,ebx
-       vpaddw    xmm2,xmm1,[7FF86EF27AE0]
+       vpaddw    xmm2,xmm1,[7FFB6A781F00]
        vpcmpgtw  xmm2,xmm0,xmm2
        vpmovmskb esi,xmm2
 M02_L17:
@@ -10062,7 +10062,7 @@ M02_L23:
        jb        near ptr M03_L10
        mov       rbx,rcx
        vmovups   ymm0,[rbx]
-       vbroadcastss ymm1,dword ptr [7FF86EF27410]
+       vbroadcastss ymm1,dword ptr [7FFB6A781830]
        vptest    ymm1,ymm0
        jne       near ptr M03_L08
        mov       rsi,r8
@@ -10159,7 +10159,7 @@ M03_L09:
 M03_L10:
        mov       rbx,rcx
        vmovups   xmm0,[rbx]
-       vbroadcastss xmm1,dword ptr [7FF86EF27410]
+       vbroadcastss xmm1,dword ptr [7FFB6A781830]
        vptest    xmm1,xmm0
        je        short M03_L11
        xor       ebx,ebx
@@ -10282,7 +10282,7 @@ M03_L27:
        jmp       short M03_L29
 M03_L28:
        vmovups   xmm0,[rcx]
-       vptest    xmm0,xmmword ptr [7FF86EF27420]
+       vptest    xmm0,xmmword ptr [7FFB6A781840]
        jne       short M03_L30
        vpackuswb xmm0,xmm0,xmm0
        vmovq     qword ptr [r8],xmm0
@@ -10708,27 +10708,17 @@ M03_L69:
        lea       r11,[rdx+r8]
        lea       rdi,[rcx+r8]
        cmp       r8,10
-       jbe       short M04_L04
-       cmp       r8,40
-       ja        near ptr M04_L10
+       ja        short M04_L02
+       test      al,18
+       je        near ptr M04_L08
+       mov       rax,[r10]
+       mov       [r9],rax
+       mov       r10,[r11-8]
+       mov       [rdi-8],r10
 M04_L00:
-       vmovups   xmm0,[rdx]
-       vmovups   [rcx],xmm0
-       cmp       r8,20
-       jbe       short M04_L01
-       vmovups   xmm0,[rdx+10]
-       vmovups   [rcx+10],xmm0
-       cmp       r8,30
-       jbe       short M04_L01
-       vmovups   xmm0,[rdx+20]
-       vmovups   [rcx+20],xmm0
-M04_L01:
-       vmovups   xmm0,[r11-10]
-       vmovups   [rdi-10],xmm0
-M04_L02:
        shl       esi,3
        add       [rbx+1C],esi
-M04_L03:
+M04_L01:
        vzeroupper
        add       rsp,30
        pop       rbx
@@ -10739,24 +10729,34 @@ M04_L03:
        pop       r14
        pop       r15
        ret
+M04_L02:
+       cmp       r8,40
+       ja        near ptr M04_L10
+M04_L03:
+       vmovups   xmm0,[rdx]
+       vmovups   [rcx],xmm0
+       cmp       r8,20
+       jbe       short M04_L04
+       vmovups   xmm0,[rdx+10]
+       vmovups   [rcx+10],xmm0
+       cmp       r8,30
+       jbe       short M04_L04
+       vmovups   xmm0,[rdx+20]
+       vmovups   [rcx+20],xmm0
 M04_L04:
-       test      al,18
-       je        near ptr M04_L08
-       mov       rax,[r10]
-       mov       [r9],rax
-       mov       r10,[r11-8]
-       mov       [rdi-8],r10
-       jmp       short M04_L02
+       vmovups   xmm0,[r11-10]
+       vmovups   [rdi-10],xmm0
+       jmp       short M04_L00
 M04_L05:
        mov       rcx,offset MT_System.InvalidOperationException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA75D28]
+       call      qword ptr [7FFB6A2D5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -10765,11 +10765,11 @@ M04_L06:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA75D28]
+       call      qword ptr [7FFB6A2D5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -10777,8 +10777,8 @@ M04_L07:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6857A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-       jmp       near ptr M04_L02
+       call      qword ptr [7FFB69EE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       jmp       near ptr M04_L00
 M04_L08:
        test      al,4
        je        short M04_L09
@@ -10786,17 +10786,17 @@ M04_L08:
        mov       [r9],eax
        mov       r10d,[r11-4]
        mov       [rdi-4],r10d
-       jmp       near ptr M04_L02
+       jmp       near ptr M04_L00
 M04_L09:
        test      rax,rax
-       je        near ptr M04_L02
-       movzx     r10d,byte ptr [r10]
-       mov       [r9],r10b
+       je        near ptr M04_L00
+       movzx     r8d,byte ptr [r10]
+       mov       [r9],r8b
        test      al,2
-       je        near ptr M04_L02
+       je        near ptr M04_L00
        movsx     r9,word ptr [r11-2]
        mov       [rdi-2],r9w
-       jmp       near ptr M04_L02
+       jmp       near ptr M04_L00
 M04_L10:
        cmp       r8,800
        ja        near ptr M04_L14
@@ -10829,29 +10829,29 @@ M04_L12:
        jne       short M04_L12
        and       r8,3F
        cmp       r8,10
-       ja        near ptr M04_L00
-       jmp       near ptr M04_L01
+       ja        near ptr M04_L03
+       jmp       near ptr M04_L04
 M04_L13:
        cmp       r9,r10
        jne       short M04_L14
        cmp       [r10],r10b
-       jmp       near ptr M04_L02
+       jmp       near ptr M04_L00
 M04_L14:
        cmp       [r9],r9b
        cmp       [r10],r10b
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6866E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
-       jmp       near ptr M04_L02
+       call      qword ptr [7FFB69EE66E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       jmp       near ptr M04_L00
 M04_L15:
        mov       [rsp+20],esi
        xor       ecx,ecx
        mov       [rsp+28],ecx
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EE5DAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
-       jmp       near ptr M04_L02
+       call      qword ptr [7FFB6A6BDAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       jmp       near ptr M04_L00
 M04_L16:
        xor       r13d,r13d
        test      r9d,r9d
@@ -10860,18 +10860,18 @@ M04_L16:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EBFC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A45C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        mov       r13d,r15d
        mov       rdx,[rbx+10]
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED4EF70]
+       call      qword ptr [7FFB6A5AEF88]
        jmp       short M04_L18
 M04_L17:
        lea       r8d,[rbp+r13]
        mov       rcx,rbx
        mov       rdx,rdi
-       call      qword ptr [7FF86ED4EF70]
+       call      qword ptr [7FFB6A5AEF88]
        add       r13d,r14d
 M04_L18:
        mov       r15d,esi
@@ -10883,10 +10883,10 @@ M04_L18:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        xor       r9d,r9d
-       call      qword ptr [7FF86EBFC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A45C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        shl       r15d,3
        mov       [rbx+1C],r15d
-       jmp       near ptr M04_L03
+       jmp       near ptr M04_L01
 ; Total bytes of code 885
 ```
 ```assembly
@@ -10902,7 +10902,7 @@ M04_L18:
        sub       rsp,38
        mov       rsi,rcx
        mov       ebx,edx
-       mov       rcx,2C0DB000C90
+       mov       rcx,209A0800C90
        mov       rdi,[rcx]
        lea       ecx,[rbx-1]
        or        ecx,0F
@@ -10948,22 +10948,22 @@ M05_L01:
        ret
 M05_L02:
        mov       ecx,9
-       call      qword ptr [7FF86EE5EF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6BEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       short M05_L00
 M05_L03:
        mov       rcx,r14
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        cmp       [rsi],sil
        mov       rcx,rsi
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EFA49C0]
+       call      qword ptr [7FFB6A804B10]
        jmp       short M05_L01
 M05_L04:
        mov       rcx,[rsi+10]
@@ -10976,23 +10976,23 @@ M05_L04:
        mov       r14,[rcx+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E5CB1D4],0
+       cmp       byte ptr [7FFB69E2B1D4],0
        je        short M05_L05
-       call      qword ptr [7FF86EFA49D8]
+       call      qword ptr [7FFB6A804A38]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L05:
        mov       ecx,0A
-       call      qword ptr [7FF86EFA49F0]
+       call      qword ptr [7FFB6A804A50]
        mov       ebx,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EFA49F0]
+       call      qword ptr [7FFB6A804A50]
        lea       ecx,[rbx-1]
        mov       [rax+10],ecx
        movzx     eax,bx
        test      eax,eax
        jne       short M05_L06
-       call      qword ptr [7FF86EFA4A08]
+       call      qword ptr [7FFB6A804A68]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L06:
@@ -11002,7 +11002,7 @@ M05_L07:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,ebx
        xor       edx,edx
-       div       dword ptr [7FF86E5CB1C8]
+       div       dword ptr [7FFB69E2B1C8]
        mov       ebx,edx
        xor       r15d,r15d
        jmp       short M05_L11
@@ -11014,7 +11014,7 @@ M05_L08:
        cmp       [r13],r13b
        xor       r12d,r12d
        mov       rcx,r13
-       call      qword ptr [7FF86EBFD5C0]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A45D2D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rcx,[r13+8]
        mov       eax,[r13+10]
        dec       eax
@@ -11028,7 +11028,7 @@ M05_L08:
        mov       [r13+10],eax
 M05_L09:
        mov       rcx,r13
-       call      qword ptr [7FF86E686820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69EE6820]; System.Threading.Monitor.Exit(System.Object)
        test      r12,r12
        jne       short M05_L12
        inc       ebx
@@ -11052,17 +11052,17 @@ M05_L14:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        mov       rcx,r14
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EFA49C0]
+       call      qword ptr [7FFB6A804B10]
        jmp       near ptr M05_L01
 M05_L15:
        mov       ecx,10
@@ -11071,7 +11071,7 @@ M05_L15:
 M05_L16:
        test      ebx,ebx
        jne       short M05_L17
-       mov       rax,3016FFF62A0
+       mov       rax,24A357762A0
        add       rsp,38
        pop       rbx
        pop       rbp
@@ -11084,8 +11084,8 @@ M05_L16:
        ret
 M05_L17:
        mov       ecx,ebx
-       mov       rdx,3016FFF6F28
-       call      qword ptr [7FF86E8AD770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
+       mov       rdx,24A35776F28
+       call      qword ptr [7FFB6A10D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
 M05_L18:
        cmp       ebx,800
        jge       short M05_L19
@@ -11097,27 +11097,27 @@ M05_L18:
 M05_L19:
        mov       ecx,ebx
        xor       edx,edx
-       call      qword ptr [7FF86EFA49A8]
+       call      qword ptr [7FFB6A804AF8]
        mov       r14,rax
 M05_L20:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        cmp       [r14],r14b
        mov       rcx,r14
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],0FFFFFFFF
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EFA49C0]
+       call      qword ptr [7FFB6A804B10]
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       rcx,[rsi+10]
        mov       edx,1
@@ -11129,7 +11129,7 @@ M05_L20:
        mov       rcx,rdi
        mov       edx,ebx
        mov       r8d,r15d
-       call      qword ptr [7FF86EFA4A20]
+       call      qword ptr [7FFB6A804B28]
        jmp       near ptr M05_L01
 M05_L21:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -11154,18 +11154,18 @@ M05_L21:
        cmp       byte ptr [rbx+24],0
        jne       short M06_L00
        mov       rcx,rbx
-       call      qword ptr [7FF86EE576F0]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.PadAndSwitchToSqueezingPhase()
+       call      qword ptr [7FFB6A6B7708]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.PadAndSwitchToSqueezingPhase()
 M06_L00:
        test      dil,7
        jne       near ptr M06_L12
        xor       r14d,r14d
        cmp       r14,rdi
-       jge       near ptr M06_L10
+       jge       near ptr M06_L08
 M06_L01:
        cmp       dword ptr [rbx+1C],0
        jne       near ptr M06_L05
        mov       rcx,rbx
-       call      qword ptr [7FF86EE57768]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.KeccakPermutation()
+       call      qword ptr [7FFB6A6B7780]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.KeccakPermutation()
        mov       rcx,[rbx+8]
        mov       edx,[rbx+18]
        sar       edx,6
@@ -11283,30 +11283,20 @@ M06_L06:
        lea       r11,[r8+r9]
        lea       r15,[rcx+r9]
        cmp       r9,10
-       jbe       short M06_L11
-       cmp       r9,40
-       ja        near ptr M06_L18
+       ja        short M06_L09
+       test      r10b,18
+       je        near ptr M06_L16
+       mov       r10,[rdx]
+       mov       [rax],r10
+       mov       rdx,[r11-8]
+       mov       [r15-8],rdx
 M06_L07:
-       vmovups   xmm0,[r8]
-       vmovups   [rcx],xmm0
-       cmp       r9,20
-       jbe       short M06_L08
-       vmovups   xmm0,[r8+10]
-       vmovups   [rcx+10],xmm0
-       cmp       r9,30
-       jbe       short M06_L08
-       vmovups   xmm0,[r8+20]
-       vmovups   [rcx+20],xmm0
-M06_L08:
-       vmovups   xmm0,[r11-10]
-       vmovups   [r15-10],xmm0
-M06_L09:
        sub       [rbx+1C],r13d
        movsxd    rcx,r13d
        add       r14,rcx
        cmp       r14,rdi
        jl        near ptr M06_L01
-M06_L10:
+M06_L08:
        vzeroupper
        add       rsp,38
        pop       rbx
@@ -11318,24 +11308,34 @@ M06_L10:
        pop       r14
        pop       r15
        ret
+M06_L09:
+       cmp       r9,40
+       ja        near ptr M06_L18
+M06_L10:
+       vmovups   xmm0,[r8]
+       vmovups   [rcx],xmm0
+       cmp       r9,20
+       jbe       short M06_L11
+       vmovups   xmm0,[r8+10]
+       vmovups   [rcx+10],xmm0
+       cmp       r9,30
+       jbe       short M06_L11
+       vmovups   xmm0,[r8+20]
+       vmovups   [rcx+20],xmm0
 M06_L11:
-       test      r10b,18
-       je        near ptr M06_L16
-       mov       r10,[rdx]
-       mov       [rax],r10
-       mov       rdx,[r11-8]
-       mov       [r15-8],rdx
-       jmp       short M06_L09
+       vmovups   xmm0,[r11-10]
+       vmovups   [r15-10],xmm0
+       jmp       short M06_L07
 M06_L12:
        mov       rcx,offset MT_System.InvalidOperationException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,2900F
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA75D28]
+       call      qword ptr [7FFB6A2D5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -11391,8 +11391,8 @@ M06_L14:
 M06_L15:
        mov       rcx,rax
        mov       r8,r10
-       call      qword ptr [7FF86E6857A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-       jmp       near ptr M06_L09
+       call      qword ptr [7FFB69EE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       jmp       near ptr M06_L07
 M06_L16:
        test      r10b,4
        je        short M06_L17
@@ -11400,17 +11400,17 @@ M06_L16:
        mov       [rax],r10d
        mov       edx,[r11-4]
        mov       [r15-4],edx
-       jmp       near ptr M06_L09
+       jmp       near ptr M06_L07
 M06_L17:
        test      r10,r10
-       je        near ptr M06_L09
-       movzx     edx,byte ptr [rdx]
-       mov       [rax],dl
+       je        near ptr M06_L07
+       movzx     r9d,byte ptr [rdx]
+       mov       [rax],r9b
        test      r10b,2
-       je        near ptr M06_L09
+       je        near ptr M06_L07
        movsx     rax,word ptr [r11-2]
        mov       [r15-2],ax
-       jmp       near ptr M06_L09
+       jmp       near ptr M06_L07
 M06_L18:
        cmp       r9,800
        ja        near ptr M06_L22
@@ -11430,8 +11430,8 @@ M06_L18:
        sub       r10,r9
        mov       r9,r10
 M06_L19:
-       mov       rdx,r9
-       shr       rdx,6
+       mov       rax,r9
+       shr       rax,6
 M06_L20:
        vmovdqu   ymm0,ymmword ptr [r8]
        vmovdqu   ymmword ptr [rcx],ymm0
@@ -11439,36 +11439,36 @@ M06_L20:
        vmovdqu   ymmword ptr [rcx+20],ymm0
        add       rcx,40
        add       r8,40
-       dec       rdx
+       dec       rax
        jne       short M06_L20
        and       r9,3F
        cmp       r9,10
-       ja        near ptr M06_L07
-       jmp       near ptr M06_L08
+       ja        near ptr M06_L10
+       jmp       near ptr M06_L11
 M06_L21:
        cmp       rax,rdx
        jne       short M06_L22
        cmp       [rdx],dl
-       jmp       near ptr M06_L09
+       jmp       near ptr M06_L07
 M06_L22:
        cmp       [rax],al
        cmp       [rdx],dl
        mov       rcx,rax
        mov       r8,r10
-       call      qword ptr [7FF86E6866E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
-       jmp       near ptr M06_L09
+       call      qword ptr [7FFB69EE66E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       jmp       near ptr M06_L07
 M06_L23:
        mov       [rsp+20],r15d
        xor       ecx,ecx
        mov       [rsp+28],ecx
        mov       rcx,rax
        mov       r8,rsi
-       call      qword ptr [7FF86EE5DAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
-       jmp       near ptr M06_L09
+       call      qword ptr [7FFB6A6BDAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       jmp       near ptr M06_L07
 M06_L24:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
-; Total bytes of code 1191
+; Total bytes of code 1193
 ```
 ```assembly
 ; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Reset()
@@ -11519,7 +11519,7 @@ M07_L01:
        test      dword ptr [r10],1000000
        jne       near ptr M07_L11
        mov       rcx,r8
-       call      qword ptr [7FF86E6857E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EE57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M07_L02:
        mov       rax,[rbx+10]
        mov       ecx,[rax+8]
@@ -11556,16 +11556,16 @@ M07_L06:
        call      CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,28E9F
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       rbx,rax
        mov       ecx,28EFF
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EA75DD0]
+       call      qword ptr [7FFB6A2D5DD0]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
@@ -11582,11 +11582,11 @@ M07_L08:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F13
-       mov       rdx,7FF86EDA6A98
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB6A606658
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA75D28]
+       call      qword ptr [7FFB6A2D5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -11601,12 +11601,12 @@ M07_L09:
        add       rax,r9
        jmp       near ptr M07_L01
 M07_L10:
-       call      qword ptr [7FF86EFA47F8]
+       call      qword ptr [7FFB6A804918]
        int       3
 M07_L11:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EFA4810]
+       call      qword ptr [7FFB6A804930]
        jmp       near ptr M07_L02
 M07_L12:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -11671,7 +11671,7 @@ M08_L01:
 M08_L02:
        movsxd    rdx,eax
        mov       rcx,offset MT_System.String
-       call      00007FF8CE2AAFE0
+       call      00007FFBC9B2AFA0
        mov       rsi,rax
        test      edi,edi
        jne       near ptr M08_L32
@@ -11712,16 +11712,16 @@ M08_L04:
        jb        short M08_L06
 M08_L05:
        vmovups   xmm0,[r9]
-       vpshufb   xmm0,xmm0,[7FF86EF31880]
-       vpand     xmm1,xmm0,[7FF86EF31890]
-       vpmulhuw  xmm1,xmm1,[7FF86EF318A0]
-       vpand     xmm0,xmm0,[7FF86EF318B0]
-       vpmullw   xmm0,xmm0,[7FF86EF318C0]
+       vpshufb   xmm0,xmm0,[7FFB6A78CA60]
+       vpand     xmm1,xmm0,[7FFB6A78CA70]
+       vpmulhuw  xmm1,xmm1,[7FFB6A78CA80]
+       vpand     xmm0,xmm0,[7FFB6A78CA90]
+       vpmullw   xmm0,xmm0,[7FFB6A78CAA0]
        vpor      xmm0,xmm0,xmm1
-       vpsubusb  xmm1,xmm0,[7FF86EF318D0]
-       vpcmpgtb  xmm2,xmm0,[7FF86EF318E0]
+       vpsubusb  xmm1,xmm0,[7FFB6A78CAB0]
+       vpcmpgtb  xmm2,xmm0,[7FFB6A78CAC0]
        vpsubb    xmm1,xmm1,xmm2
-       vmovups   xmm2,[7FF86EF318F0]
+       vmovups   xmm2,[7FFB6A78CAD0]
        vpshufb   xmm1,xmm2,xmm1
        vpaddb    xmm0,xmm1,xmm0
        vmovups   [r10],xmm0
@@ -11732,7 +11732,7 @@ M08_L05:
        cmp       r9,r11
        je        near ptr M08_L09
 M08_L06:
-       mov       r8,7FF8BD2B5420
+       mov       r8,7FFB82CE5420
        add       rdi,0FFFFFFFFFFFFFFFE
        cmp       r9,rdi
        jae       short M08_L08
@@ -11838,44 +11838,44 @@ M08_L15:
        ret
 M08_L16:
        mov       ecx,1149
-       mov       rdx,7FF86E5C4000
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB69E24000
+       call      qword ptr [7FFB6A107738]
        mov       r8,rax
        mov       edx,ebp
        mov       ecx,esi
-       call      qword ptr [7FF86EFA4A50]
+       call      qword ptr [7FFB6A804960]
        int       3
 M08_L17:
        mov       ecx,1139
-       mov       rdx,7FF86E5C4000
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB69E24000
+       call      qword ptr [7FFB6A107738]
        mov       rcx,rax
-       call      qword ptr [7FF86EE5E718]
+       call      qword ptr [7FFB6A6BE718]
        int       3
 M08_L18:
        mov       ecx,0B3
-       mov       rdx,7FF86E5C4000
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB69E24000
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       ecx,ebx
-       call      qword ptr [7FF86EE5E6E8]
+       call      qword ptr [7FFB6A6BE6E8]
        int       3
 M08_L19:
        mov       ecx,1149
-       mov       rdx,7FF86E5C4000
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB69E24000
+       call      qword ptr [7FFB6A107738]
        mov       rdx,rax
        mov       ecx,esi
-       call      qword ptr [7FF86EE5E6E8]
+       call      qword ptr [7FFB6A6BE6E8]
        int       3
 M08_L20:
-       call      qword ptr [7FF86E7F7138]
+       call      qword ptr [7FFB6A057138]
        int       3
 M08_L21:
        mov       rcx,offset MT_System.Int32
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EFA4300]
+       call      qword ptr [7FFB6A8041C8]
        mov       rsi,rax
        mov       [rbx+8],edi
        mov       rcx,offset MT_System.ArgumentException
@@ -11883,20 +11883,20 @@ M08_L21:
        mov       rdi,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EE5F450]
+       call      qword ptr [7FFB6A6BF450]
        mov       rbx,rax
        mov       ecx,1157
-       mov       rdx,7FF86E5C4000
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB69E24000
+       call      qword ptr [7FFB6A107738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rdi
-       call      qword ptr [7FF86EA75DD0]
+       call      qword ptr [7FFB6A2D5DD0]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
 M08_L22:
-       mov       rax,3016FFF0008
+       mov       rax,24A35770008
        jmp       near ptr M08_L15
 M08_L23:
        xor       eax,eax
@@ -11920,7 +11920,7 @@ M08_L25:
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
        mov       rcx,rdi
-       call      qword ptr [7FF86EE5FD38]
+       call      qword ptr [7FFB6A6BFD38]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
@@ -11929,20 +11929,20 @@ M08_L26:
        lea       eax,[r9+r9*2]
        jmp       near ptr M08_L03
 M08_L27:
-       vmovups   ymm0,[7FF86EF31900]
+       vmovups   ymm0,[7FFB6A78CAE0]
        vpermd    ymm0,ymm0,[rbp]
        add       rbp,0FFFFFFFFFFFFFFFC
 M08_L28:
-       vpshufb   ymm0,ymm0,[7FF86EF31920]
-       vpand     ymm1,ymm0,[7FF86EF31940]
-       vpmulhuw  ymm1,ymm1,[7FF86EF31960]
-       vpand     ymm0,ymm0,[7FF86EF31980]
-       vpmullw   ymm0,ymm0,[7FF86EF319A0]
+       vpshufb   ymm0,ymm0,[7FFB6A78CB00]
+       vpand     ymm1,ymm0,[7FFB6A78CB20]
+       vpmulhuw  ymm1,ymm1,[7FFB6A78CB40]
+       vpand     ymm0,ymm0,[7FFB6A78CB60]
+       vpmullw   ymm0,ymm0,[7FFB6A78CB80]
        vpor      ymm0,ymm0,ymm1
-       vpsubusb  ymm1,ymm0,[7FF86EF319C0]
-       vpcmpgtb  ymm2,ymm0,[7FF86EF319E0]
+       vpsubusb  ymm1,ymm0,[7FFB6A78CBA0]
+       vpcmpgtb  ymm2,ymm0,[7FFB6A78CBC0]
        vpsubb    ymm1,ymm1,ymm2
-       vbroadcastf128 ymm2,xmmword ptr [7FF86EF318F0]
+       vbroadcastf128 ymm2,xmmword ptr [7FFB6A78CAD0]
        vpshufb   ymm1,ymm2,ymm1
        vpaddb    ymm0,ymm1,ymm0
        vmovups   [r8],ymm0
@@ -12012,7 +12012,7 @@ M08_L34:
        mov       [rsp+20],edi
        mov       r9d,ebx
        xor       r8d,r8d
-       call      qword ptr [7FF86EFA4318]
+       call      qword ptr [7FFB6A8041E0]
        xor       eax,eax
        mov       [rsp+38],rax
        mov       [rsp+40],rax
@@ -12073,7 +12073,7 @@ M09_L01:
        test      dword ptr [rcx],1000000
        jne       near ptr M09_L08
        mov       rcx,rax
-       call      qword ptr [7FF86E6857E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69EE57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M09_L02:
        mov       ecx,10
        shlx      ecx,ecx,r14d
@@ -12091,7 +12091,7 @@ M09_L02:
        test      r15,r15
        jne       near ptr M09_L10
 M09_L03:
-       mov       rcx,2C0DB000C90
+       mov       rcx,209A0800C90
        mov       rsi,[rcx]
        cmp       byte ptr [rsi+9D],0
        jne       near ptr M09_L25
@@ -12108,35 +12108,35 @@ M09_L04:
        ret
 M09_L05:
        mov       ecx,9
-       call      qword ptr [7FF86EE5EF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6BEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M09_L00
 M09_L06:
        mov       rcx,rdi
-       call      qword ptr [7FF86EE57870]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
+       call      qword ptr [7FFB6A6B7888]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
        mov       r15,rax
        jmp       near ptr M09_L01
 M09_L07:
        mov       ecx,2
-       call      qword ptr [7FF86E8AC1C8]
+       call      qword ptr [7FFB6A10C1C8]
        int       3
 M09_L08:
        shr       rdx,3
        mov       rcx,rax
-       call      qword ptr [7FF86EFA4810]
+       call      qword ptr [7FFB6A804930]
        jmp       near ptr M09_L02
 M09_L09:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbp,rax
-       call      qword ptr [7FF86EFA4AF8]
+       call      qword ptr [7FFB6A804A08]
        mov       rbx,rax
        mov       ecx,29B
-       mov       rdx,7FF86E5C4000
-       call      qword ptr [7FF86E8A7738]
+       mov       rdx,7FFB69E24000
+       call      qword ptr [7FFB6A107738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rbp
-       call      qword ptr [7FF86EA75DD0]
+       call      qword ptr [7FFB6A2D5DD0]
        mov       rcx,rbp
        call      CORINFO_HELP_THROW
        int       3
@@ -12150,28 +12150,28 @@ M09_L10:
        jne       short M09_L11
        mov       rcx,rdi
        mov       edx,r14d
-       call      qword ptr [7FF86EFA4B10]
+       call      qword ptr [7FFB6A804A20]
 M09_L11:
        mov       r12,[rax+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E5CB1D4],0
+       cmp       byte ptr [7FFB69E2B1D4],0
        je        short M09_L12
-       call      qword ptr [7FF86EFA49D8]
+       call      qword ptr [7FFB6A804A38]
        mov       esi,eax
        jmp       short M09_L14
 M09_L12:
        mov       ecx,0A
-       call      qword ptr [7FF86EFA49F0]
+       call      qword ptr [7FFB6A804A50]
        mov       esi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EFA49F0]
+       call      qword ptr [7FFB6A804A50]
        lea       ecx,[rsi-1]
        mov       [rax+10],ecx
        movzx     eax,si
        test      eax,eax
        jne       short M09_L13
-       call      qword ptr [7FF86EFA4A08]
+       call      qword ptr [7FFB6A804A68]
        mov       esi,eax
        jmp       short M09_L14
 M09_L13:
@@ -12181,7 +12181,7 @@ M09_L14:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,esi
        xor       edx,edx
-       div       dword ptr [7FF86E5CB1C8]
+       div       dword ptr [7FFB69E2B1C8]
        mov       esi,edx
        xor       eax,eax
        jmp       near ptr M09_L21
@@ -12195,7 +12195,7 @@ M09_L15:
        xor       r8d,r8d
        mov       [rsp+3C],r8d
        mov       rcx,rdx
-       call      qword ptr [7FF86EBFD5C0]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A45D2D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rsp+30]
        mov       rcx,[rax+8]
        mov       r8d,[rax+10]
@@ -12218,7 +12218,7 @@ M09_L16:
        mov       dword ptr [rsp+3C],1
 M09_L17:
        mov       rcx,rax
-       call      qword ptr [7FF86E686820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69EE6820]; System.Threading.Monitor.Exit(System.Object)
        cmp       dword ptr [rsp+3C],0
        je        short M09_L19
        jmp       short M09_L22
@@ -12248,25 +12248,25 @@ M09_L25:
        test      ebp,ebp
        je        near ptr M09_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r15d,eax
        mov       [rsp+44],ebp
        cmp       [rdi],dil
        mov       rcx,rdi
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       [rsp+20],eax
        mov       rcx,rsi
        mov       r8d,r15d
        mov       r9d,[rsp+44]
        mov       edx,3
-       call      qword ptr [7FF86EFA41B0]
+       call      qword ptr [7FFB6A804900]
        test      r12d,r13d
        jne       near ptr M09_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       rcx,rdi
-       call      qword ptr [7FF86EB0C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A36C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        test      r13d,r13d
        jne       short M09_L26
@@ -12282,7 +12282,7 @@ M09_L27:
        mov       rcx,rsi
        mov       edx,ebx
        mov       r8d,ebp
-       call      qword ptr [7FF86EFA4B28]
+       call      qword ptr [7FFB6A804A80]
        jmp       near ptr M09_L04
 M09_L28:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -12290,7 +12290,7 @@ M09_L28:
 ; Total bytes of code 913
 ```
 
-## .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.PasswordHasherBenchmark.HashPasswordShake256()
@@ -12351,7 +12351,7 @@ M00_L00:
        test      dword ptr [r10],1000000
        jne       near ptr M00_L13
        mov       rcx,r8
-       call      qword ptr [7FF86E6557E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M00_L01:
        mov       r8,[rbx+10]
        mov       r9d,[r8+8]
@@ -12370,16 +12370,16 @@ M00_L03:
        mov       [rbx+1C],r8d
        mov       byte ptr [rbx+24],0
        mov       dword ptr [rbx+20],100
-       mov       r8,26C17800220
+       mov       r8,22A78C00220
        mov       rsi,[r8]
-       mov       r8,2ACAC9E06A4
+       mov       r8,26B0DC906CC
        mov       [rbp-40],r8
        mov       rdi,[rbp-40]
        lea       r8,[rbp-48]
        lea       r9,[rbp-50]
        mov       rcx,rdi
        mov       edx,40
-       call      qword ptr [7FF86E65FAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
+       call      qword ptr [7FFB69EDFAB0]; System.Text.Unicode.Utf16Utility.GetPointerToFirstInvalidChar(Char*, Int32, Int64 ByRef, Int32 ByRef)
        sub       rax,rdi
        mov       r9,rax
        shr       r9,3F
@@ -12401,7 +12401,7 @@ M00_L04:
        mov       r14d,[rdi+8]
        test      r14d,r14d
        jl        near ptr M00_L16
-       mov       rcx,2ACAC9E06A4
+       mov       rcx,26B0DC906CC
        mov       [rbp-58],rcx
        mov       r15,[rbp-58]
        mov       [rbp-60],rdi
@@ -12418,7 +12418,7 @@ M00_L05:
        mov       edx,40
        mov       r8,r13
        mov       r9d,r12d
-       call      qword ptr [7FF86E65FAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
+       call      qword ptr [7FFB69EDFAE0]; System.Text.Unicode.Utf8Utility.TranscodeToUtf8(Char*, Int32, Byte*, Int32, Char* ByRef, Byte* ByRef)
        mov       rcx,[rbp-68]
        sub       rcx,r15
        mov       rdx,rcx
@@ -12437,12 +12437,12 @@ M00_L06:
        mov       r9d,r14d
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED1F030]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
-       mov       rcx,26C178020E0
+       call      qword ptr [7FFB6A59EFE8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Absorb(Byte[], Int32, Int32)
+       mov       rcx,22A78C020E8
        mov       rsi,[rcx]
        mov       rcx,rsi
        mov       edx,20
-       call      qword ptr [7FF86ED794A0]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FFB6A5F8F68]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp-78],rax
        cmp       byte ptr [rbx+24],0
        jne       short M00_L07
@@ -12462,14 +12462,14 @@ M00_L07:
        mov       rdx,[rbp-78]
        xor       r8d,r8d
        mov       r9d,100
-       call      qword ptr [7FF86EE277B0]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
+       call      qword ptr [7FFB6A6A7780]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Squeeze(Byte[], Int32, Int64)
        mov       rcx,rbx
-       call      qword ptr [7FF86ED77D40]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Reset()
+       call      qword ptr [7FFB6A5F75E8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.Reset()
        mov       rcx,[rbp-78]
        xor       edx,edx
        mov       r8d,20
        xor       r9d,r9d
-       call      qword ptr [7FF86EE27930]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
+       call      qword ptr [7FFB6A6A7900]; System.Convert.ToBase64String(Byte[], Int32, Int32, System.Base64FormattingOptions)
        mov       rbx,rax
        jmp       short M00_L10
 M00_L08:
@@ -12477,11 +12477,11 @@ M00_L08:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2C5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -12493,7 +12493,7 @@ M00_L10:
        mov       rcx,rsi
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED794A8]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A5F8F70]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        mov       rax,rbx
        add       rsp,88
        pop       rbx
@@ -12516,27 +12516,27 @@ M00_L11:
        add       rax,r9
        jmp       near ptr M00_L00
 M00_L12:
-       call      qword ptr [7FF86EF74918]
+       call      qword ptr [7FFB6A7F4918]
        int       3
 M00_L13:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EF74930]
+       call      qword ptr [7FFB6A7F4930]
        jmp       near ptr M00_L01
 M00_L14:
        mov       rcx,rsi
        mov       rdx,rdi
        mov       r8d,40
-       call      qword ptr [7FF86EF74318]
+       call      qword ptr [7FFB6A7F4210]
        add       r14d,eax
        jns       near ptr M00_L04
 M00_L15:
-       call      qword ptr [7FF86EC4E1C0]
+       call      qword ptr [7FFB6A6AD0B0]
        int       3
 M00_L16:
        mov       ecx,0B
        xor       edx,edx
-       call      qword ptr [7FF86EC45908]
+       call      qword ptr [7FFB6A4C5908]
        int       3
 M00_L17:
        xor       r13d,r13d
@@ -12550,18 +12550,18 @@ M00_L18:
        mov       rdx,r15
        mov       r8d,40
        mov       r9,r13
-       call      qword ptr [7FF86EF74438]
+       call      qword ptr [7FFB6A7F4438]
        jmp       near ptr M00_L06
 M00_L19:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
        sub       rsp,48
-       mov       rcx,26C178020E0
+       mov       rcx,22A78C020E8
        mov       rsi,[rcx]
        mov       rcx,rsi
        mov       rdx,[rbp-78]
        mov       r8d,1
-       call      qword ptr [7FF86ED794A8]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
+       call      qword ptr [7FFB6A5F8F70]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].Return(Byte[], Boolean)
        nop
        add       rsp,48
        ret
@@ -12646,7 +12646,7 @@ M01_L08:
 M01_L09:
        cmp       [rcx],cl
        pop       rbx
-       jmp       qword ptr [7FF86EE2FDB0]
+       jmp       qword ptr [7FFB6A6AFED0]
 ; Total bytes of code 231
 ```
 ```assembly
@@ -12709,7 +12709,7 @@ M02_L06:
        pop       rdi
        ret
 M02_L07:
-       vbroadcastss xmm0,dword ptr [7FF86EEF7B20]
+       vbroadcastss xmm0,dword ptr [7FFB6A777DE0]
        vptest    xmm0,xmmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-10]
@@ -12728,7 +12728,7 @@ M02_L08:
        jne       short M02_L11
        jmp       short M02_L08
 M02_L09:
-       vbroadcastss ymm0,dword ptr [7FF86EEF7B20]
+       vbroadcastss ymm0,dword ptr [7FFB6A777DE0]
        vptest    ymm0,ymmword ptr [rax]
        jne       near ptr M02_L00
        lea       rbx,[r11+r10*2-20]
@@ -12768,17 +12768,17 @@ M02_L15:
        lea       r11,[rcx+r11*2]
        cmp       edx,8
        jl        near ptr M02_L20
-       vbroadcastss xmm0,dword ptr [7FF86EEF7B24]
+       vbroadcastss xmm0,dword ptr [7FFB6A777DE4]
        lea       rdx,[r11-10]
 M02_L16:
        vmovups   xmm1,[rcx]
        add       rcx,10
        vpaddusw  xmm2,xmm1,xmm0
-       vpminuw   xmm3,xmm1,[7FF86EEF7B30]
+       vpminuw   xmm3,xmm1,[7FFB6A777DF0]
        vpor      xmm2,xmm2,xmm3
        vpmovmskb ebx,xmm2
        popcnt    ebx,ebx
-       vpaddw    xmm2,xmm1,[7FF86EEF7B40]
+       vpaddw    xmm2,xmm1,[7FFB6A777E00]
        vpcmpgtw  xmm2,xmm0,xmm2
        vpmovmskb esi,xmm2
 M02_L17:
@@ -12870,7 +12870,7 @@ M02_L23:
        jb        near ptr M03_L10
        mov       rbx,rcx
        vmovups   ymm0,[rbx]
-       vbroadcastss ymm1,dword ptr [7FF86EEF7490]
+       vbroadcastss ymm1,dword ptr [7FFB6A777750]
        vptest    ymm1,ymm0
        jne       near ptr M03_L08
        mov       rsi,r8
@@ -12967,7 +12967,7 @@ M03_L09:
 M03_L10:
        mov       rbx,rcx
        vmovups   xmm0,[rbx]
-       vbroadcastss xmm1,dword ptr [7FF86EEF7490]
+       vbroadcastss xmm1,dword ptr [7FFB6A777750]
        vptest    xmm1,xmm0
        je        short M03_L11
        xor       ebx,ebx
@@ -13090,7 +13090,7 @@ M03_L27:
        jmp       short M03_L29
 M03_L28:
        vmovups   xmm0,[rcx]
-       vptest    xmm0,xmmword ptr [7FF86EEF74A0]
+       vptest    xmm0,xmmword ptr [7FFB6A777760]
        jne       short M03_L30
        vpackuswb xmm0,xmm0,xmm0
        vmovq     qword ptr [r8],xmm0
@@ -13552,11 +13552,11 @@ M04_L04:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F39
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2C5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -13565,11 +13565,11 @@ M04_L05:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F89
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2C5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -13577,7 +13577,7 @@ M04_L06:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L07:
        test      al,18
@@ -13650,7 +13650,7 @@ M04_L14:
        mov       rcx,r9
        mov       rdx,r10
        mov       r8,rax
-       call      qword ptr [7FF86E6566E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED66E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M04_L02
 M04_L15:
        mov       [rsp+20],esi
@@ -13658,7 +13658,7 @@ M04_L15:
        mov       [rsp+28],ecx
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EE2DAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       call      qword ptr [7FFB6A6ADAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
        jmp       near ptr M04_L02
 M04_L16:
        xor       r13d,r13d
@@ -13668,18 +13668,18 @@ M04_L16:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        mov       edx,ebp
-       call      qword ptr [7FF86EBCC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A44C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        mov       r13d,r15d
        mov       rdx,[rbx+10]
        mov       rcx,rbx
        xor       r8d,r8d
-       call      qword ptr [7FF86ED1F048]
+       call      qword ptr [7FFB6A59F000]
        jmp       short M04_L18
 M04_L17:
        lea       r8d,[rbp+r13]
        mov       rcx,rbx
        mov       rdx,rdi
-       call      qword ptr [7FF86ED1F048]
+       call      qword ptr [7FFB6A59F000]
        add       r13d,r14d
 M04_L18:
        mov       r15d,esi
@@ -13691,7 +13691,7 @@ M04_L18:
        mov       r8,[rbx+10]
        mov       rcx,rdi
        xor       r9d,r9d
-       call      qword ptr [7FF86EBCC858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
+       call      qword ptr [7FFB6A44C858]; System.Array.Copy(System.Array, Int32, System.Array, Int32, Int32)
        shl       r15d,3
        mov       [rbx+1C],r15d
        jmp       near ptr M04_L03
@@ -13710,7 +13710,7 @@ M04_L18:
        sub       rsp,38
        mov       rsi,rcx
        mov       ebx,edx
-       mov       rcx,26C17800C90
+       mov       rcx,22A78C00C90
        mov       rdi,[rcx]
        lea       ecx,[rbx-1]
        or        ecx,0F
@@ -13719,7 +13719,7 @@ M04_L18:
        xor       ebp,1F
        add       ebp,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+30]
+       mov       rcx,[rcx+38]
        cmp       dword ptr [rcx+238],9
        jle       short M05_L02
        mov       rcx,[rcx+240]
@@ -13756,22 +13756,22 @@ M05_L01:
        ret
 M05_L02:
        mov       ecx,9
-       call      qword ptr [7FF86EE2EF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6AEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       short M05_L00
 M05_L03:
        mov       rcx,r14
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        cmp       [rsi],sil
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF749C0]
+       call      qword ptr [7FFB6A7F49C0]
        jmp       short M05_L01
 M05_L04:
        mov       rcx,[rsi+10]
@@ -13784,23 +13784,23 @@ M05_L04:
        mov       r14,[rcx+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E59B1D4],0
+       cmp       byte ptr [7FFB69E1B1D4],0
        je        short M05_L05
-       call      qword ptr [7FF86EF749D8]
+       call      qword ptr [7FFB6A7F49D8]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L05:
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A7F49F0]
        mov       ebx,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A7F49F0]
        lea       ecx,[rbx-1]
        mov       [rax+10],ecx
        movzx     eax,bx
        test      eax,eax
        jne       short M05_L06
-       call      qword ptr [7FF86EF74A08]
+       call      qword ptr [7FFB6A7F4A08]
        mov       ebx,eax
        jmp       short M05_L07
 M05_L06:
@@ -13810,7 +13810,7 @@ M05_L07:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,ebx
        xor       edx,edx
-       div       dword ptr [7FF86E59B1C8]
+       div       dword ptr [7FFB69E1B1C8]
        mov       ebx,edx
        xor       r15d,r15d
        jmp       short M05_L11
@@ -13822,7 +13822,7 @@ M05_L08:
        cmp       [r13],r13b
        xor       r12d,r12d
        mov       rcx,r13
-       call      qword ptr [7FF86EBCD500]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A44D2D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rcx,[r13+8]
        mov       eax,[r13+10]
        dec       eax
@@ -13836,7 +13836,7 @@ M05_L08:
        mov       [r13+10],eax
 M05_L09:
        mov       rcx,r13
-       call      qword ptr [7FF86E656820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69ED6820]; System.Threading.Monitor.Exit(System.Object)
        test      r12,r12
        jne       short M05_L12
        inc       ebx
@@ -13860,17 +13860,17 @@ M05_L14:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        mov       rcx,r14
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       [rsp+20],ebp
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF749C0]
+       call      qword ptr [7FFB6A7F49C0]
        jmp       near ptr M05_L01
 M05_L15:
        mov       ecx,10
@@ -13879,7 +13879,7 @@ M05_L15:
 M05_L16:
        test      ebx,ebx
        jne       short M05_L17
-       mov       rax,2ACAC9D62A0
+       mov       rax,26B0DC862A0
        add       rsp,38
        pop       rbx
        pop       rbp
@@ -13892,8 +13892,8 @@ M05_L16:
        ret
 M05_L17:
        mov       ecx,ebx
-       mov       rdx,2ACAC9D6F28
-       call      qword ptr [7FF86E87D770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
+       mov       rdx,26B0DC86F28
+       call      qword ptr [7FFB6A0FD770]; System.ArgumentOutOfRangeException.ThrowIfNegative[[System.Int32, System.Private.CoreLib]](Int32, System.String)
 M05_L18:
        cmp       ebx,800
        jge       short M05_L19
@@ -13905,27 +13905,27 @@ M05_L18:
 M05_L19:
        mov       ecx,ebx
        xor       edx,edx
-       call      qword ptr [7FF86EF749A8]
+       call      qword ptr [7FFB6A7F49A8]
        mov       r14,rax
 M05_L20:
        cmp       byte ptr [rdi+9D],0
        je        near ptr M05_L01
        cmp       [r14],r14b
        mov       rcx,r14
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       dword ptr [rsp+20],0FFFFFFFF
        mov       edx,ebx
        mov       r8d,r15d
        mov       rcx,rdi
-       call      qword ptr [7FF86EF749C0]
+       call      qword ptr [7FFB6A7F49C0]
        mov       r15d,[r14+8]
        mov       rcx,rsi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        mov       rcx,[rsi+10]
        mov       edx,1
@@ -13937,7 +13937,7 @@ M05_L20:
        mov       rcx,rdi
        mov       edx,ebx
        mov       r8d,r15d
-       call      qword ptr [7FF86EF74A20]
+       call      qword ptr [7FFB6A7F4A20]
        jmp       near ptr M05_L01
 M05_L21:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -13956,24 +13956,24 @@ M05_L21:
        push      rbx
        sub       rsp,38
        mov       rbx,rcx
-       mov       rdi,rdx
+       mov       rsi,rdx
        mov       ebp,r8d
-       mov       rsi,r9
+       mov       rdi,r9
        cmp       byte ptr [rbx+24],0
        jne       short M06_L00
        mov       rcx,rbx
-       call      qword ptr [7FF86EE277C8]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.PadAndSwitchToSqueezingPhase()
+       call      qword ptr [7FFB6A6A7798]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.PadAndSwitchToSqueezingPhase()
 M06_L00:
-       test      sil,7
+       test      dil,7
        jne       near ptr M06_L11
        xor       r14d,r14d
-       cmp       r14,rsi
+       cmp       r14,rdi
        jge       near ptr M06_L10
 M06_L01:
        cmp       dword ptr [rbx+1C],0
        jne       near ptr M06_L05
        mov       rcx,rbx
-       call      qword ptr [7FF86EE27840]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.KeccakPermutation()
+       call      qword ptr [7FFB6A6A7810]; Org.BouncyCastle.Crypto.Digests.KeccakDigest.KeccakPermutation()
        mov       rcx,[rbx+8]
        mov       edx,[rbx+18]
        sar       edx,6
@@ -14034,7 +14034,7 @@ M06_L04:
 M06_L05:
        mov       ecx,[rbx+1C]
        movsxd    r15,ecx
-       mov       r13,rsi
+       mov       r13,rdi
        sub       r13,r14
        cmp       r15,r13
        jle       near ptr M06_L13
@@ -14050,10 +14050,10 @@ M06_L06:
        sar       r15d,3
        test      rax,rax
        je        near ptr M06_L23
-       test      rdi,rdi
+       test      rsi,rsi
        je        near ptr M06_L23
        mov       rcx,[rax]
-       cmp       rcx,[rdi]
+       cmp       rcx,[rsi]
        jne       near ptr M06_L23
        cmp       dword ptr [rcx+4],18
        jne       near ptr M06_L23
@@ -14065,7 +14065,7 @@ M06_L06:
        cmp       r8d,[rax+8]
        ja        near ptr M06_L23
        lea       r8d,[r9+r15]
-       cmp       r8d,[rdi+8]
+       cmp       r8d,[rsi+8]
        ja        near ptr M06_L23
        movzx     r8d,word ptr [rcx]
        mov       r10d,r15d
@@ -14074,7 +14074,7 @@ M06_L06:
        lea       rdx,[rax+rdx+10]
        mov       eax,r9d
        imul      r8,rax
-       lea       rax,[rdi+r8+10]
+       lea       rax,[rsi+r8+10]
        test      dword ptr [rcx],1000000
        jne       near ptr M06_L14
        mov       rcx,rax
@@ -14112,7 +14112,7 @@ M06_L09:
        sub       [rbx+1C],r13d
        movsxd    rcx,r13d
        add       r14,rcx
-       cmp       r14,rsi
+       cmp       r14,rdi
        jl        near ptr M06_L01
 M06_L10:
        vzeroupper
@@ -14131,11 +14131,11 @@ M06_L11:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,2900F
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2C5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -14191,7 +14191,7 @@ M06_L13:
 M06_L14:
        mov       rcx,rax
        mov       r8,r10
-       call      qword ptr [7FF86E6557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M06_L09
 M06_L15:
        test      r10b,18
@@ -14263,15 +14263,15 @@ M06_L22:
        cmp       [rdx],dl
        mov       rcx,rax
        mov       r8,r10
-       call      qword ptr [7FF86E6566E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED66E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       near ptr M06_L09
 M06_L23:
        mov       [rsp+20],r15d
        xor       ecx,ecx
        mov       [rsp+28],ecx
        mov       rcx,rax
-       mov       r8,rdi
-       call      qword ptr [7FF86EE2DAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
+       mov       r8,rsi
+       call      qword ptr [7FFB6A6ADAB8]; System.Array.CopyImpl(System.Array, Int32, System.Array, Int32, Int32, Boolean)
        jmp       near ptr M06_L09
 M06_L24:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -14331,7 +14331,7 @@ M07_L01:
        test      dword ptr [r10],1000000
        jne       near ptr M07_L10
        mov       rcx,r8
-       call      qword ptr [7FF86E6557E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M07_L02:
        mov       rax,[rbx+10]
        mov       ecx,[rax+8]
@@ -14364,16 +14364,16 @@ M07_L05:
        call      CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       ecx,28E9F
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       rbx,rax
        mov       ecx,28EFF
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2C5DD0]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
@@ -14390,11 +14390,11 @@ M07_L07:
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
        mov       ecx,28F13
-       mov       rdx,7FF86ED77380
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB6A5F6C28
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FF86EA45D28]
+       call      qword ptr [7FFB6A2C5D28]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -14409,12 +14409,12 @@ M07_L08:
        add       rax,r9
        jmp       near ptr M07_L01
 M07_L09:
-       call      qword ptr [7FF86EF74918]
+       call      qword ptr [7FFB6A7F4918]
        int       3
 M07_L10:
        shr       rdx,3
        mov       rcx,r8
-       call      qword ptr [7FF86EF74930]
+       call      qword ptr [7FFB6A7F4930]
        jmp       near ptr M07_L02
 M07_L11:
        call      CORINFO_HELP_RNGCHKFAIL
@@ -14481,7 +14481,7 @@ M08_L01:
 M08_L02:
        movsxd    rdx,eax
        mov       rcx,offset MT_System.String
-       call      00007FF8CE2AAFE0
+       call      00007FFBC9B2AFA0
        mov       rsi,rax
        test      edi,edi
        jne       near ptr M08_L31
@@ -14516,15 +14516,15 @@ M08_L03:
        lea       rax,[rdi-20]
        cmp       rax,r9
        jb        near ptr M08_L07
-       vmovups   ymm0,[7FF86EF01C00]
-       vbroadcastf128 ymm1,xmmword ptr [7FF86EF01C20]
-       vbroadcastss ymm2,dword ptr [7FF86EF01C30]
-       vbroadcastss ymm3,dword ptr [7FF86EF01C34]
-       vbroadcastss ymm4,dword ptr [7FF86EF01C38]
-       vbroadcastss ymm5,dword ptr [7FF86EF01C3C]
-       vbroadcastss ymm6,dword ptr [7FF86EF01C40]
-       vbroadcastss ymm7,dword ptr [7FF86EF01C44]
-       vmovups   ymm8,[7FF86EF01C60]
+       vmovups   ymm0,[7FFB6A781CE0]
+       vbroadcastf128 ymm1,xmmword ptr [7FFB6A781D00]
+       vbroadcastss ymm2,dword ptr [7FFB6A781D10]
+       vbroadcastss ymm3,dword ptr [7FFB6A781D14]
+       vbroadcastss ymm4,dword ptr [7FFB6A781D18]
+       vbroadcastss ymm5,dword ptr [7FFB6A781D1C]
+       vbroadcastss ymm6,dword ptr [7FFB6A781D20]
+       vbroadcastss ymm7,dword ptr [7FFB6A781D24]
+       vmovups   ymm8,[7FFB6A781D40]
        vpermd    ymm8,ymm8,[rbp]
        add       rbp,0FFFFFFFFFFFFFFFC
 M08_L04:
@@ -14548,12 +14548,12 @@ M08_L04:
        jmp       short M08_L04
 M08_L05:
        mov       ecx,1149
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       edx,ebp
        mov       ecx,esi
-       call      qword ptr [7FF86EF74A50]
+       call      qword ptr [7FFB6A7F4A50]
        int       3
 M08_L06:
        lea       r9,[rbp+4]
@@ -14565,7 +14565,7 @@ M08_L07:
        cmp       rax,r9
        jae       near ptr M08_L28
 M08_L08:
-       mov       r8,7FF8BD2B5420
+       mov       r8,7FFB82CE5420
        add       rdi,0FFFFFFFFFFFFFFFE
        cmp       r9,rdi
        jae       short M08_L10
@@ -14688,35 +14688,35 @@ M08_L17:
        ret
 M08_L18:
        mov       ecx,1139
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       rcx,rax
-       call      qword ptr [7FF86EE2E718]
+       call      qword ptr [7FFB6A6AE718]
        int       3
 M08_L19:
        mov       ecx,0B3
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       ecx,ebx
-       call      qword ptr [7FF86EE2E6E8]
+       call      qword ptr [7FFB6A6AE6E8]
        int       3
 M08_L20:
        mov       ecx,1149
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       rdx,rax
        mov       ecx,esi
-       call      qword ptr [7FF86EE2E6E8]
+       call      qword ptr [7FFB6A6AE6E8]
        int       3
 M08_L21:
-       call      qword ptr [7FF86E7C7138]
+       call      qword ptr [7FFB6A047138]
        int       3
 M08_L22:
        mov       rcx,offset MT_System.Int32
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FF86EF74450]
+       call      qword ptr [7FFB6A7F4450]
        mov       rsi,rax
        mov       [rbx+8],edi
        mov       rcx,offset MT_System.ArgumentException
@@ -14724,20 +14724,20 @@ M08_L22:
        mov       rdi,rax
        mov       rdx,rbx
        mov       rcx,rsi
-       call      qword ptr [7FF86EE2F450]
+       call      qword ptr [7FFB6A6AF450]
        mov       rbx,rax
        mov       ecx,1157
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rdi
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2C5DD0]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
 M08_L23:
-       mov       rax,2ACAC9D0008
+       mov       rax,26B0DC80008
        jmp       near ptr M08_L17
 M08_L24:
        xor       eax,eax
@@ -14761,7 +14761,7 @@ M08_L26:
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
        mov       rcx,rdi
-       call      qword ptr [7FF86EE2FD38]
+       call      qword ptr [7FFB6A6AFE58]
        mov       rcx,rdi
        call      CORINFO_HELP_THROW
        int       3
@@ -14771,16 +14771,16 @@ M08_L27:
        jmp       near ptr M08_L03
 M08_L28:
        vmovups   xmm0,[r9]
-       vpshufb   xmm0,xmm0,[7FF86EF01C80]
-       vpand     xmm1,xmm0,[7FF86EF01C90]
-       vpmulhuw  xmm1,xmm1,[7FF86EF01CA0]
-       vpand     xmm0,xmm0,[7FF86EF01CB0]
-       vpmullw   xmm0,xmm0,[7FF86EF01CC0]
+       vpshufb   xmm0,xmm0,[7FFB6A781D60]
+       vpand     xmm1,xmm0,[7FFB6A781D70]
+       vpmulhuw  xmm1,xmm1,[7FFB6A781D80]
+       vpand     xmm0,xmm0,[7FFB6A781D90]
+       vpmullw   xmm0,xmm0,[7FFB6A781DA0]
        vpor      xmm0,xmm0,xmm1
-       vpsubusb  xmm1,xmm0,[7FF86EF01CD0]
-       vpcmpgtb  xmm2,xmm0,[7FF86EF01CE0]
+       vpsubusb  xmm1,xmm0,[7FFB6A781DB0]
+       vpcmpgtb  xmm2,xmm0,[7FFB6A781DC0]
        vpsubb    xmm1,xmm1,xmm2
-       vmovups   xmm2,[7FF86EF01C20]
+       vmovups   xmm2,[7FFB6A781D00]
        vpshufb   xmm1,xmm2,xmm1
        vpaddb    xmm0,xmm1,xmm0
        vmovups   [r10],xmm0
@@ -14832,7 +14832,7 @@ M08_L33:
        mov       [rsp+20],edi
        mov       r9d,ebx
        xor       r8d,r8d
-       call      qword ptr [7FF86EF74468]
+       call      qword ptr [7FFB6A7F4468]
        xor       eax,eax
        mov       [rsp+40],rax
        mov       [rsp+48],rax
@@ -14866,7 +14866,7 @@ M08_L34:
        xor       r14d,1F
        add       r14d,0FFFFFFFD
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+30]
+       mov       rcx,[rcx+38]
        cmp       dword ptr [rcx+238],9
        jle       near ptr M09_L05
        mov       rcx,[rcx+240]
@@ -14893,7 +14893,7 @@ M09_L01:
        test      dword ptr [rcx],1000000
        jne       near ptr M09_L08
        mov       rcx,rax
-       call      qword ptr [7FF86E6557E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
+       call      qword ptr [7FFB69ED57E8]; System.SpanHelpers.ClearWithoutReferences(Byte ByRef, UIntPtr)
 M09_L02:
        mov       ecx,10
        shlx      ecx,ecx,r14d
@@ -14911,7 +14911,7 @@ M09_L02:
        test      r15,r15
        jne       near ptr M09_L10
 M09_L03:
-       mov       rcx,26C17800C90
+       mov       rcx,22A78C00C90
        mov       rsi,[rcx]
        cmp       byte ptr [rsi+9D],0
        jne       near ptr M09_L25
@@ -14928,35 +14928,35 @@ M09_L04:
        ret
 M09_L05:
        mov       ecx,9
-       call      qword ptr [7FF86EE2EF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFB6A6AEF40]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M09_L00
 M09_L06:
        mov       rcx,rdi
-       call      qword ptr [7FF86EE27948]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
+       call      qword ptr [7FFB6A6A7918]; System.Buffers.SharedArrayPool`1[[System.Byte, System.Private.CoreLib]].InitializeTlsBucketsAndTrimming()
        mov       r15,rax
        jmp       near ptr M09_L01
 M09_L07:
        mov       ecx,2
-       call      qword ptr [7FF86E87C1C8]
+       call      qword ptr [7FFB6A0FC1C8]
        int       3
 M09_L08:
        shr       rdx,3
        mov       rcx,rax
-       call      qword ptr [7FF86EF74930]
+       call      qword ptr [7FFB6A7F4930]
        jmp       near ptr M09_L02
 M09_L09:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbp,rax
-       call      qword ptr [7FF86EF74AF8]
+       call      qword ptr [7FFB6A7F4AF8]
        mov       rbx,rax
        mov       ecx,29B
-       mov       rdx,7FF86E594000
-       call      qword ptr [7FF86E877738]
+       mov       rdx,7FFB69E14000
+       call      qword ptr [7FFB6A0F7738]
        mov       r8,rax
        mov       rdx,rbx
        mov       rcx,rbp
-       call      qword ptr [7FF86EA45DD0]
+       call      qword ptr [7FFB6A2C5DD0]
        mov       rcx,rbp
        call      CORINFO_HELP_THROW
        int       3
@@ -14970,28 +14970,28 @@ M09_L10:
        jne       short M09_L11
        mov       rcx,rdi
        mov       edx,r14d
-       call      qword ptr [7FF86EF74B10]
+       call      qword ptr [7FFB6A7F4B10]
 M09_L11:
        mov       r12,[rax+8]
        mov       rcx,offset MT_System.Threading.ProcessorIdCache
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       cmp       byte ptr [7FF86E59B1D4],0
+       cmp       byte ptr [7FFB69E1B1D4],0
        je        short M09_L12
-       call      qword ptr [7FF86EF749D8]
+       call      qword ptr [7FFB6A7F49D8]
        mov       esi,eax
        jmp       short M09_L14
 M09_L12:
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A7F49F0]
        mov       esi,[rax+10]
        mov       ecx,0A
-       call      qword ptr [7FF86EF749F0]
+       call      qword ptr [7FFB6A7F49F0]
        lea       ecx,[rsi-1]
        mov       [rax+10],ecx
        movzx     eax,si
        test      eax,eax
        jne       short M09_L13
-       call      qword ptr [7FF86EF74A08]
+       call      qword ptr [7FFB6A7F4A08]
        mov       esi,eax
        jmp       short M09_L14
 M09_L13:
@@ -15001,7 +15001,7 @@ M09_L14:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetNonGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        mov       eax,esi
        xor       edx,edx
-       div       dword ptr [7FF86E59B1C8]
+       div       dword ptr [7FFB69E1B1C8]
        mov       esi,edx
        xor       eax,eax
        jmp       near ptr M09_L21
@@ -15015,7 +15015,7 @@ M09_L15:
        xor       r8d,r8d
        mov       [rsp+3C],r8d
        mov       rcx,rdx
-       call      qword ptr [7FF86EBCD500]; System.Threading.Monitor.Enter(System.Object)
+       call      qword ptr [7FFB6A44D2D8]; System.Threading.Monitor.Enter(System.Object)
        mov       rax,[rsp+30]
        mov       rcx,[rax+8]
        mov       r8d,[rax+10]
@@ -15038,7 +15038,7 @@ M09_L16:
        mov       dword ptr [rsp+3C],1
 M09_L17:
        mov       rcx,rax
-       call      qword ptr [7FF86E656820]; System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFB69ED6820]; System.Threading.Monitor.Exit(System.Object)
        cmp       dword ptr [rsp+3C],0
        je        short M09_L19
        jmp       short M09_L22
@@ -15068,25 +15068,25 @@ M09_L25:
        test      ebp,ebp
        je        near ptr M09_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r15d,eax
        mov       [rsp+44],ebp
        cmp       [rdi],dil
        mov       rcx,rdi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       [rsp+20],eax
        mov       rcx,rsi
        mov       r8d,r15d
        mov       r9d,[rsp+44]
        mov       edx,3
-       call      qword ptr [7FF86EF74300]
+       call      qword ptr [7FFB6A7F4420]
        test      r12d,r13d
        jne       near ptr M09_L04
        mov       rcx,rbx
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       ebx,eax
        mov       rcx,rdi
-       call      qword ptr [7FF86EADC918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FFB6A35C918]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       r9d,eax
        test      r13d,r13d
        jne       short M09_L26
@@ -15102,7 +15102,7 @@ M09_L27:
        mov       rcx,rsi
        mov       edx,ebx
        mov       r8d,ebp
-       call      qword ptr [7FF86EF74B28]
+       call      qword ptr [7FFB6A7F4B28]
        jmp       near ptr M09_L04
 M09_L28:
        call      CORINFO_HELP_RNGCHKFAIL

@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark-20260219-175456</title>
+
+<style type="text/css">
+    pre { margin: 0px; }
+    table { border-collapse:collapse; }
+    td.perMethod { border-top: 1px black solid; }
+    tr.evenMap td { background-color: #F5F5F5; }  
+</style>
+
+<style type='text/css'>
+    td.label:hover { cursor: pointer; background-color: yellow !important; }
+    td.highlighted { background-color: yellow !important; }
+</style></head><body>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script>$(document).ready(function () {
+    var selectedIndex = 0;
+
+    function highlight() {
+        $('td.reference.highlighted').removeClass('highlighted');
+
+        var selectedLabel = $(this).attr('data-label');
+        if (selectedLabel) {
+            $('td.reference[data-reference=' + selectedLabel + ']').addClass('highlighted');
+        }
+        selectedIndex = 0;
+    }
+
+    function selectNext() {
+        var $highlighted = $('td.reference.highlighted');
+        var selected = $highlighted[selectedIndex++ % $highlighted.length];
+
+        if (selected) {
+            var selectedReference = $(selected).attr('id');
+            if (selectedReference) {
+                window.location.hash = '#' + selectedReference;
+            }
+        }
+    }
+
+    $('td.label').on('click', highlight);
+
+    $(document).on('keydown', function (event) {
+        if (event.keyCode == 114) { // F3
+            event.preventDefault();
+            // Remap F3 to some other key that the browser doesn't care about
+            selectNext();
+        }
+    });
+});</script>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiControl()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiPunctuation()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiUpper()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiWhitespace()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsHexDigit()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsNewLine()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsUnicodeDigit()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       byte ptr [rax+4C],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.GetDigitValue()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rax+38],0FFFFFFFF</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.ToAsciiLower()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       word ptr [rax+48],61</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.ToAsciiUpper()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rax,[rcx+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       word ptr [rax+48],41</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+</body></html>
