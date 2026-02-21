@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified On : 02-21-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -126,7 +126,6 @@ public static class CharacterExtensions
 		[Information("ToAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public char ToAsciiUpper()
 		{
-			//TODO: BENCHMARK TOUPPER.
 			return character is >= 'a' and <= 'z' ? (char)(character - 32) : character;
 		}
 
@@ -138,7 +137,6 @@ public static class CharacterExtensions
 		[Information(nameof(ToAsciiLower), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public char ToAsciiLower()
 		{
-			//TODO: BENCHMARK TOLOWER.
 			return character is >= 'A' and <= 'Z' ? (char)(character + 32) : character;
 		}
 

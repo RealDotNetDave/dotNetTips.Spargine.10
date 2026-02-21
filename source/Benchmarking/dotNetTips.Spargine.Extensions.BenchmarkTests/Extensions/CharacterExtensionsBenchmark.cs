@@ -4,7 +4,7 @@
 // Created          : 02-19-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 02-21-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -84,17 +84,31 @@ public class CharacterExtensionsBenchmark : Benchmark
 
 	}
 
-	[Benchmark(Description = nameof(CharacterExtensions.ToAsciiLower))]
+	[Benchmark(Description = "To Lower: " + nameof(CharacterExtensions.ToAsciiLower))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void ToAsciiLower()
+	public void ToLowerToAsciiLower()
 	{
 		this.Consume('A'.ToAsciiLower());
 	}
 
-	[Benchmark(Description = nameof(CharacterExtensions.ToAsciiUpper))]
+	[Benchmark(Description = "To Lower: char.ToLower()")]
+	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
+	public void ToLowerToLower()
+	{
+		this.Consume(char.ToLower('A'));
+	}
+
+	[Benchmark(Description = "To Upper: " + nameof(CharacterExtensions.ToAsciiUpper))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
-	public void ToAsciiUpper()
+	public void ToUpperToAsciiUpper()
 	{
 		this.Consume('a'.ToAsciiUpper());
+	}
+
+	[Benchmark(Description = "To Upper: char.ToUpper()")]
+	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
+	public void ToUpperToUpper()
+	{
+		this.Consume(char.ToUpper('a'));
 	}
 }

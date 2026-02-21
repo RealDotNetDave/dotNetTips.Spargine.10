@@ -293,7 +293,6 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this.Consume(result.Length);
 	}
 
-	//TODO: CAUSES BENCHMARK TESTS TO CRASH
 	[Benchmark(Description = nameof(StringExtensions.ToBrotliStringAsync))]
 	[BenchmarkCategory(Categories.New, Categories.Strings)]
 	public async Task ToBrotliAsync()
