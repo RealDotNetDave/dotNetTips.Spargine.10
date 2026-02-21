@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified On : 02-21-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -550,10 +550,9 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FastFormat([DisallowNull] this string format, int bufferSize = 256, params object?[] args)
 	{
-		// TODO: BENCHMARK COMPARE TO String.Format and StringBuilder.AppendFormat for various sizes and argument counts to validate performance benefits
 		format = format.ArgumentNotNullOrEmpty();
 		bufferSize = bufferSize.ArgumentInRange(min: 1, max: 1024);
 

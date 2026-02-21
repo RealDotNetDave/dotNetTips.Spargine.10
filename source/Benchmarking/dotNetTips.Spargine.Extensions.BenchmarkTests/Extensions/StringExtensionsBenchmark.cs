@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 02-21-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -40,6 +40,8 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _delimitedString = RandomData.GenerateWords(100).ToDelimitedString();
 	private readonly string _domainAddress = "www.dotnettips.com";
 	private readonly string _emailAddress = RandomData.GenerateEmailAddress();
+	private readonly DateTime _formatDateTime = new DateTime(2026, 2, 15, 14, 30, 45);
+	private readonly string _formatString = "The time is {0:HH:mm:ss}";
 	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeHash();
 	private readonly string _isbn = "0525505997";
 	private readonly string _nullTestString = null;
@@ -203,6 +205,20 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = "Format: " + nameof(StringExtensions.FastFormat))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void FormatFastFormat()
+	{
+		this.Consume(this._formatString.FastFormat(args: this._formatDateTime));
+	}
+
+	[Benchmark(Description = "Format: string.Format()")]
+	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
+	public void FormatStringFormat()
+	{
+		this.Consume(string.Format(this._formatString, this._formatDateTime));
+	}
+
 	[Benchmark(Description = nameof(StringExtensions.FromBase64))]
 	[BenchmarkCategory(Categories.Strings, Categories.New)]
 	public void FromBase64()
@@ -212,6 +228,7 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	//TODO: FIX BENCHMARKS BELOW - THEY ARE NOT WORKING PROPERLY
 	//[Benchmark(Description = nameof(StringExtensions.FromDeflateStringAsync))]
 	//[BenchmarkCategory(Categories.Strings)]
 	//public async Task FromDeflateStringAsync()
