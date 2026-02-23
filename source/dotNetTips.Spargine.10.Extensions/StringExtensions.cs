@@ -550,28 +550,24 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FastFormat([DisallowNull] this string format, int bufferSize = 256, params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
 		bufferSize = bufferSize.ArgumentInRange(min: 1, max: 1024);
 
-		// Use pooled StringBuilder for formatting
-		var sb = _stringBuilderPool.Value.Get().Clear();
+		// Use pooled StringBuilder for formatting with pre-allocated capacity
+		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
+			// Clear and ensure capacity in one operation
+			_ = sb.Clear().EnsureCapacity(bufferSize);
+
+			// Format directly into the StringBuilder
 			_ = sb.AppendFormat(CultureInfo.InvariantCulture, format, args);
 
-			// Try to use stackalloc for small results
-			if (sb.Length <= bufferSize)
-			{
-				Span<char> buffer = stackalloc char[bufferSize];
-				sb.CopyTo(0, buffer, sb.Length);
-				return buffer[..sb.Length].ToString();
-			}
-
-			// Fall back to StringBuilder.ToString() for larger results
+			// StringBuilder.ToString() is highly optimized in .NET 10
 			return sb.ToString();
 		}
 		finally
@@ -1044,7 +1040,7 @@ public static class StringExtensions
 	/// This method uses <see cref="char.IsWhiteSpace(char)"/> to check each character in the string for whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasWhitespace([DisallowNull] this string input)
 	{
 		if (input is null)

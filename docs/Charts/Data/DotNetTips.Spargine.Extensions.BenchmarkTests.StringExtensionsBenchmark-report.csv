@@ -1,60 +1,62 @@
-Method,Categories,Mean,Allocated
-'DefaultIfNull + Default Value: Null Test',Strings,1.8354,0 B
-'DefaultIfNull + Default Value',Strings,1.7831,0 B
-'DefaultIfNullOrEmpty + Default Value: Null Test',Strings,1.7375,0 B
-'DefaultIfNullOrEmpty + Default Value',Strings,1.5612,0 B
-'HasValue: Length',"Strings,**NEW**",2.2509,0 B
-'HasValue: Min & Max Count',"Strings,**NEW**",0,0 B
-'HasValue: String',"Strings,**NEW**",0.2353,0 B
-'Parse Url: Uri',"Strings,**FOR COMPARISON**",480.4859,448 B
-'Split: With Count',"Strings,**NEW**",405.2398,2104 B
-'ToByteArray: ASCII',Strings,177.4158,1000 B
-'ToByteArray: BigEndianUnicode',Strings,"3,130.46",1968 B
-'ToByteArray: Default',Strings,275.7891,1000 B
-'ToByteArray: Latin1',Strings,352.6005,6663 B
-'ToByteArray: Unicode',Strings,442.6665,45985 B
-'ToByteArray: UTF32',Strings,"5,263.16",4128 B
-'ToByteArray: UTF8',Strings,274.4198,0 B
-CombineToString,Strings,457.7779,2448 B
-ComputeHash,Strings,"5,195.12",2288 B
-Concat,Strings,542.549,0 B
-ContainsAny,Strings,54.6636,24 B
-DefaultIfNull,Strings,1.8137,0 B
-DefaultIfNullOrEmpty,Strings,1.5675,0 B
-DelimitedStringToArray,Strings,"1,264.44",3224 B
-EqualsIgnoreCase,Strings,6.823,0 B
-EqualsOrBothNullOrEmpty,Strings,0.2688,0 B
-Extract,"Strings,**NEW**",25.802,56 B
-FastIsNullOrEmpty,"Strings,**NEW**",0.3403,0 B
-FastParseUrl,Strings,73.6528,4815 B
-FastReplace,Strings,31.7976,0 B
-FromBase64,"Strings,**NEW**",130.8218,0 B
-HasValue,Strings,0.0168,0 B
-HasWhitespace,"Strings,**NEW**",0.6075,0 B
-Indent,Strings,266.4538,1984 B
-IsCreditCardNumber,"Strings,**NEW**",20.107,0 B
-IsCurrencyCode,"Strings,**NEW**",25.9884,0 B
-IsDomainAddress,"Strings,**NEW**",42.9039,0 B
-IsEmailAddress,"Strings,**NEW**",102.0457,0 B
-IsEmpty,"Strings,**NEW**",0.0001,0 B
-IsFirstLastName,"Strings,**NEW**",65.6412,0 B
-IsGuid,Strings,187.5362,96 B
-IsISBN,"Strings,**NEW**",53.528,0 B
-IsMacAddress,Strings,50.9383,0 B
-IsNotEmpty,"Strings,**NEW**",0.0108,0 B
-IsOneToSevenAlpha,"Strings,**NEW**",26.7971,0 B
-IsScientific,"Strings,**NEW**",75.2417,0 B
-IsStringSHA1Hash,"Strings,**NEW**",320.7166,0 B
-IsUrl,"Strings,**NEW**",23.1274,0 B
-IsValidString,"Strings,**NEW**","5,544.04",0 B
-ReplaceEllipsisWithPeriod,"Strings,**NEW**",33.1773,224 B
-Split,"Strings,**NEW**",605.7574,0 B
-SplitRemoveEmpty,"Strings,**NEW**",511.1386,2456 B
-StartsWithOrdinal,Strings,0,0 B
-StartsWithOrdinalIgnoreCase,Strings,0.0002,0 B
-SubstringTrim,Strings,21.3955,0 B
-ToBase64,"Strings,**NEW**",594.4487,3608 B
-ToBase64Bytes,"Strings,**NEW**",33.1241,96 B
-ToByteArrayFromBase64,"Strings,**NEW**",81.6836,176 B
-ToTitleCase,Strings,71.5223,144 B
-ToTrimmed,Strings,238.6232,1960 B
+Method,Mean,Error,Allocated
+'DefaultIfNull + Default Value: Null Test',1.8686,0.0211,0 B
+'DefaultIfNull + Default Value',1.7714,0.0076,0 B
+'DefaultIfNullOrEmpty + Default Value: Null Test',1.8064,0.0241,0 B
+'DefaultIfNullOrEmpty + Default Value',1.9995,0.013,0 B
+'Format: FastFormat',119.2146,0.8943,120 B
+'Format: string.Format()',88.0039,0.6282,0 B
+'HasValue: Length',2.2071,0.0157,0 B
+'HasValue: Min & Max Count',0.2295,0.0113,0 B
+'HasValue: String',0.2316,0.0083,0 B
+'Parse Url: Uri',473.8463,4.6223,448 B
+'Split: With Count',375.2197,7.5329,2104 B
+'ToByteArray: ASCII',176.8131,2.3559,1000 B
+'ToByteArray: BigEndianUnicode',"3,085.77",34.0575,1968 B
+'ToByteArray: Default',279.3351,5.5473,0 B
+'ToByteArray: Latin1',354.4997,6.9788,0 B
+'ToByteArray: Unicode',434.8266,4.0088,1968 B
+'ToByteArray: UTF32',"5,250.85",52.6408,4128 B
+'ToByteArray: UTF8',273.1721,5.4387,1000 B
+CombineToString,460.3092,3.6776,0 B
+ComputeHash,"5,194.66",24.4817,2288 B
+Concat,531.5439,10.6471,2544 B
+ContainsAny,57.4516,0.4053,24 B
+DefaultIfNull,1.7179,0.0171,0 B
+DefaultIfNullOrEmpty,1.7562,0.0214,0 B
+DelimitedStringToArray,"1,262.20",9.5989,3224 B
+EqualsIgnoreCase,7.0834,0.0639,0 B
+EqualsOrBothNullOrEmpty,0.2917,0.0124,0 B
+Extract,25.7096,0.1741,56 B
+FastIsNullOrEmpty,0.327,0.0124,0 B
+FastParseUrl,72.7928,1.4597,0 B
+FastReplace,31.8808,0.3214,48 B
+FromBase64,136.749,1.0673,208 B
+HasValue,0,0,0 B
+HasWhitespace,0.6208,0.0137,0 B
+Indent,265.4154,5.0433,1984 B
+IsCreditCardNumber,21.2842,0.1385,0 B
+IsCurrencyCode,23.2856,0.2521,0 B
+IsDomainAddress,43.2447,0.3549,0 B
+IsEmailAddress,92.6034,0.4505,0 B
+IsEmpty,0,0,0 B
+IsFirstLastName,63.8024,0.3499,0 B
+IsGuid,189.126,1.161,96 B
+IsISBN,55.2432,0.3484,0 B
+IsMacAddress,51.4474,0.4478,0 B
+IsNotEmpty,0.0038,0.0071,0 B
+IsOneToSevenAlpha,26.156,0.2066,0 B
+IsScientific,71.4397,0.5285,0 B
+IsStringSHA1Hash,324.1372,2.0663,0 B
+IsUrl,22.8705,0.2209,0 B
+IsValidString,"5,538.74",51.6444,0 B
+ReplaceEllipsisWithPeriod,32.093,0.6966,224 B
+Split,584.3384,11.6837,2448 B
+SplitRemoveEmpty,497.4648,9.9496,0 B
+StartsWithOrdinal,0.0161,0.0074,0 B
+StartsWithOrdinalIgnoreCase,0.0153,0.008,0 B
+SubstringTrim,21.1097,0.1767,363 B
+ToBase64,597.0435,7.8343,3608 B
+ToBase64Bytes,32.3631,0.2344,85 B
+ToByteArrayFromBase64,82.4985,0.7056,176 B
+ToTitleCase,72.1991,0.4086,144 B
+ToTrimmed,238.542,3.2694,1960 B
