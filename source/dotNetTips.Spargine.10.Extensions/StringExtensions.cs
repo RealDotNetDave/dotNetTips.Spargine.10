@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-21-2026
+// Last Modified On : 02-23-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -557,17 +557,12 @@ public static class StringExtensions
 		bufferSize = bufferSize.ArgumentInRange(min: 1, max: 1024);
 
 		// Use pooled StringBuilder for formatting with pre-allocated capacity
-		var sb = _stringBuilderPool.Value.Get();
+		var sb = _stringBuilderPool.Value.Get().ClearSetCapacity(bufferSize);
 
 		try
 		{
-			// Clear and ensure capacity in one operation
-			_ = sb.Clear().EnsureCapacity(bufferSize);
-
-			// Format directly into the StringBuilder
 			_ = sb.AppendFormat(CultureInfo.InvariantCulture, format, args);
 
-			// StringBuilder.ToString() is highly optimized in .NET 10
 			return sb.ToString();
 		}
 		finally
