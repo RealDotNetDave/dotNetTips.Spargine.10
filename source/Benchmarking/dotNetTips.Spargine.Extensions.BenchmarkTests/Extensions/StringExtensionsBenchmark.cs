@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-21-2026
+// Last Modified On : 02-24-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -203,13 +203,6 @@ public class StringExtensionsBenchmark : Benchmark
 		var result = input.FastReplace("Hello", "Googbye");
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = "Format: " + nameof(StringExtensions.FastFormat))]
-	[BenchmarkCategory(Categories.Strings)]
-	public void FormatFastFormat()
-	{
-		this.Consume(this._formatString.FastFormat(args: this._formatDateTime));
 	}
 
 	[Benchmark(Description = "Format: string.Format()")]

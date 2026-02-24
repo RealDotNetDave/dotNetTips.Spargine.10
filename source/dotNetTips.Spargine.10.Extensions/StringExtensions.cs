@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-23-2026
+// Last Modified On : 02-24-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -506,69 +506,6 @@ public static class StringExtensions
 
 		// Use AsSpan for efficient comparison without allocations
 		return value.AsSpan().Equals(valueToCompare.AsSpan(), comparison);
-	}
-
-	/// <summary>
-	/// Formats a string with placeholder substitution using a stack-allocated buffer for high performance.
-	/// </summary>
-	/// <param name="format">
-	/// The composite format string containing placeholders (e.g., <c>"Hello {0} {1}, the time is {2:HH:mm:ss}"</c>).
-	/// Must not be <c>null</c> or empty.
-	/// </param>
-	/// <param name="bufferSize">
-	/// The size of the stack-allocated buffer. Must be between 1 and 1024. Defaults to 256.
-	/// If the formatted result exceeds this size, a heap allocation will occur.
-	/// </param>
-	/// <param name="args">The objects to format and substitute into the placeholders.</param>
-	/// <returns>The formatted string with all placeholders replaced by the corresponding arguments.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="format"/> is <c>null</c>.</exception>
-	/// <exception cref="ArgumentException">Thrown when <paramref name="format"/> is empty.</exception>
-	/// <exception cref="FormatException">Thrown when the format string is invalid or an index is out of range.</exception>
-	/// <remarks>
-	/// <para>
-	/// This method uses a pooled <see cref="StringBuilder"/> for formatting and attempts to copy the result
-	/// to a stack-allocated buffer when the output fits within <paramref name="bufferSize"/>.
-	/// </para>
-	/// <para>
-	/// <strong>Performance Optimizations:</strong>
-	/// <list type="bullet">
-	/// <item><description>Uses <c>stackalloc</c> to avoid heap allocations for small strings.</description></item>
-	/// <item><description>Leverages pooled <see cref="StringBuilder"/> to minimize GC pressure.</description></item>
-	/// <item><description>Falls back to direct <see cref="StringBuilder.ToString()"/> for larger results.</description></item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-	/// <example>
-	/// <code>
-	/// string firstName = "John";
-	/// string lastName = "Doe";
-	/// DateTime now = DateTime.Now;
-	/// 
-	/// // Format with placeholders
-	/// string result = "Hello {0} {1}, the time is {2:HH:mm:ss}".FastFormat(256, firstName, lastName, now);
-	/// // Result: "Hello John Doe, the time is 14:30:45"
-	/// </code>
-	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastFormat), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string FastFormat([DisallowNull] this string format, int bufferSize = 256, params object?[] args)
-	{
-		format = format.ArgumentNotNullOrEmpty();
-		bufferSize = bufferSize.ArgumentInRange(min: 1, max: 1024);
-
-		// Use pooled StringBuilder for formatting with pre-allocated capacity
-		var sb = _stringBuilderPool.Value.Get().ClearSetCapacity(bufferSize);
-
-		try
-		{
-			_ = sb.AppendFormat(CultureInfo.InvariantCulture, format, args);
-
-			return sb.ToString();
-		}
-		finally
-		{
-			_stringBuilderPool.Value.Return(sb);
-		}
 	}
 
 	/// <summary>
