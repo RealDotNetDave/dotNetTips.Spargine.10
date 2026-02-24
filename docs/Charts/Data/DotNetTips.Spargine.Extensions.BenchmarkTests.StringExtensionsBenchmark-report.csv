@@ -1,62 +1,62 @@
-Method,Mean,Error,Allocated
-'DefaultIfNull + Default Value: Null Test',1.8686,0.0211,0 B
-'DefaultIfNull + Default Value',1.7714,0.0076,0 B
-'DefaultIfNullOrEmpty + Default Value: Null Test',1.8064,0.0241,0 B
-'DefaultIfNullOrEmpty + Default Value',1.9995,0.013,0 B
-'Format: FastFormat',119.2146,0.8943,120 B
-'Format: string.Format()',88.0039,0.6282,0 B
-'HasValue: Length',2.2071,0.0157,0 B
-'HasValue: Min & Max Count',0.2295,0.0113,0 B
-'HasValue: String',0.2316,0.0083,0 B
-'Parse Url: Uri',473.8463,4.6223,448 B
-'Split: With Count',375.2197,7.5329,2104 B
-'ToByteArray: ASCII',176.8131,2.3559,1000 B
-'ToByteArray: BigEndianUnicode',"3,085.77",34.0575,1968 B
-'ToByteArray: Default',279.3351,5.5473,0 B
-'ToByteArray: Latin1',354.4997,6.9788,0 B
-'ToByteArray: Unicode',434.8266,4.0088,1968 B
-'ToByteArray: UTF32',"5,250.85",52.6408,4128 B
-'ToByteArray: UTF8',273.1721,5.4387,1000 B
-CombineToString,460.3092,3.6776,0 B
-ComputeHash,"5,194.66",24.4817,2288 B
-Concat,531.5439,10.6471,2544 B
-ContainsAny,57.4516,0.4053,24 B
-DefaultIfNull,1.7179,0.0171,0 B
-DefaultIfNullOrEmpty,1.7562,0.0214,0 B
-DelimitedStringToArray,"1,262.20",9.5989,3224 B
-EqualsIgnoreCase,7.0834,0.0639,0 B
-EqualsOrBothNullOrEmpty,0.2917,0.0124,0 B
-Extract,25.7096,0.1741,56 B
-FastIsNullOrEmpty,0.327,0.0124,0 B
-FastParseUrl,72.7928,1.4597,0 B
-FastReplace,31.8808,0.3214,48 B
-FromBase64,136.749,1.0673,208 B
-HasValue,0,0,0 B
-HasWhitespace,0.6208,0.0137,0 B
-Indent,265.4154,5.0433,1984 B
-IsCreditCardNumber,21.2842,0.1385,0 B
-IsCurrencyCode,23.2856,0.2521,0 B
-IsDomainAddress,43.2447,0.3549,0 B
-IsEmailAddress,92.6034,0.4505,0 B
-IsEmpty,0,0,0 B
-IsFirstLastName,63.8024,0.3499,0 B
-IsGuid,189.126,1.161,96 B
-IsISBN,55.2432,0.3484,0 B
-IsMacAddress,51.4474,0.4478,0 B
-IsNotEmpty,0.0038,0.0071,0 B
-IsOneToSevenAlpha,26.156,0.2066,0 B
-IsScientific,71.4397,0.5285,0 B
-IsStringSHA1Hash,324.1372,2.0663,0 B
-IsUrl,22.8705,0.2209,0 B
-IsValidString,"5,538.74",51.6444,0 B
-ReplaceEllipsisWithPeriod,32.093,0.6966,224 B
-Split,584.3384,11.6837,2448 B
-SplitRemoveEmpty,497.4648,9.9496,0 B
-StartsWithOrdinal,0.0161,0.0074,0 B
-StartsWithOrdinalIgnoreCase,0.0153,0.008,0 B
-SubstringTrim,21.1097,0.1767,363 B
-ToBase64,597.0435,7.8343,3608 B
-ToBase64Bytes,32.3631,0.2344,85 B
-ToByteArrayFromBase64,82.4985,0.7056,176 B
-ToTitleCase,72.1991,0.4086,144 B
-ToTrimmed,238.542,3.2694,1960 B
+Method,Mean,Allocated
+'DefaultIfNull + Default Value: Null Test',1.8879,0 B
+'DefaultIfNull + Default Value',1.7329,0 B
+'DefaultIfNullOrEmpty + Default Value: Null Test',1.7587,0 B
+'DefaultIfNullOrEmpty + Default Value',1.9972,0 B
+'Format: FastFormat',109.2912,0 B
+'Format: string.Format()',88.6104,0 B
+'HasValue: Length',2.2357,0 B
+'HasValue: Min & Max Count',0.0192,0 B
+'HasValue: String',0.0698,0 B
+'Parse Url: Uri',475.0554,0 B
+'Split: With Count',404.6824,2104 B
+'ToByteArray: ASCII',160.3596,1000 B
+'ToByteArray: BigEndianUnicode',"2,935.20",1968 B
+'ToByteArray: Default',269.4363,1000 B
+'ToByteArray: Latin1',357.0938,1144 B
+'ToByteArray: Unicode',432.1771,1968 B
+'ToByteArray: UTF32',"5,134.10",4128 B
+'ToByteArray: UTF8',274.5097,804 B
+CombineToString,464.7413,2448 B
+ComputeHash,"5,220.23",2288 B
+Concat,526.338,0 B
+ContainsAny,56.6564,24 B
+DefaultIfNull,1.6178,0 B
+DefaultIfNullOrEmpty,1.7558,0 B
+DelimitedStringToArray,"1,277.29",3224 B
+EqualsIgnoreCase,6.888,0 B
+EqualsOrBothNullOrEmpty,0.2282,0 B
+Extract,26.6938,244 B
+FastIsNullOrEmpty,0.328,0 B
+FastParseUrl,73.0981,0 B
+FastReplace,31.576,48 B
+FromBase64,134.9097,208 B
+HasValue,0.0002,0 B
+HasWhitespace,0.6166,0 B
+Indent,277.7806,1984 B
+IsCreditCardNumber,20.0778,0 B
+IsCurrencyCode,23.5382,0 B
+IsDomainAddress,41.5076,0 B
+IsEmailAddress,"2,431.78",0 B
+IsEmpty,0,0 B
+IsFirstLastName,64.2779,0 B
+IsGuid,197.0424,96 B
+IsISBN,53.8665,0 B
+IsMacAddress,51.7987,0 B
+IsNotEmpty,0,0 B
+IsOneToSevenAlpha,27.1643,0 B
+IsScientific,73.8605,0 B
+IsStringSHA1Hash,327.8877,0 B
+IsUrl,23.127,0 B
+IsValidString,"5,572.19",0 B
+ReplaceEllipsisWithPeriod,32.8573,224 B
+Split,589.4866,2448 B
+SplitRemoveEmpty,518.4814,0 B
+StartsWithOrdinal,0.0147,0 B
+StartsWithOrdinalIgnoreCase,0.0165,0 B
+SubstringTrim,21.2859,0 B
+ToBase64,600.0614,3608 B
+ToBase64Bytes,32.162,96 B
+ToByteArrayFromBase64,81.9981,176 B
+ToTitleCase,72.6783,144 B
+ToTrimmed,251.2501,1960 B
