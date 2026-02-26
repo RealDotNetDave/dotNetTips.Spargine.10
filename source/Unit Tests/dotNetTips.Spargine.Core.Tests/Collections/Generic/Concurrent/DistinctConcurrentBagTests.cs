@@ -577,7 +577,7 @@ public class DistinctConcurrentBagTests
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
 		{
-			return new DistinctConcurrentBag<string>((IEqualityComparer<string>)null);
+			return new DistinctConcurrentBag<string>(null as IEqualityComparer<string>);
 		});
 	}
 

@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-18-2025
+// Last Modified On : 02-26-2026
 // ***********************************************************************
 // <copyright file="FileProcessorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -387,8 +387,6 @@ public class FileProcessorTests
 		// Assert
 		Assert.IsTrue(exceptionThrown);
 	}
-
-#nullable disable
 
 	/// <summary>
 	/// Defines the test method DeleteFilesTest.
