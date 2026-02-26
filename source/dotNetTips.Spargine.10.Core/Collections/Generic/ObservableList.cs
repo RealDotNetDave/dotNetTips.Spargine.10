@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 02-26-2026
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -188,7 +188,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="item">The element to add to the set.</param>
 	/// <returns><see langword="true"/> if the element is added to the <see cref="ObservableList{T}"/>; <see langword="false"/> if the element is already present.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool Add(T item)
 	{
 		if (item is null)
@@ -196,6 +196,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 			return false;
 		}
 
+		// Check first to avoid spurious PropertyChanging event
 		if (this._set.Contains(item))
 		{
 			return false;
@@ -203,10 +204,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		this.OnCountPropertyChanging();
 
+		// Add will succeed since we already checked Contains
 		_ = this._set.Add(item);
 
 		this.OnCollectionChanged(NotifyCollectionChangedAction.Add, item);
-
 		this.OnCountPropertyChanged();
 
 		return true;
@@ -228,28 +229,39 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// list.AddRange(new[] { 1, 2, 3, 4, 5 });
 	/// </code>
 	/// </example>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void AddRange([DisallowNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
 
-		var addedItems = new List<T>();
+		// Collect items to add WITHOUT mutating yet
+		var itemsToAdd = items is ICollection<T> collection
+			? new List<T>(collection.Count)
+			: new List<T>();
 
 		foreach (var item in items)
 		{
-			if (item is not null && this._set.Add(item))
+			if (item is not null && !this._set.Contains(item))
 			{
-				addedItems.Add(item);
+				itemsToAdd.Add(item);
 			}
 		}
 
-		if (addedItems.Count == 0)
+		if (itemsToAdd.Count == 0)
 		{
 			return;
 		}
 
+		// Notify BEFORE mutation
 		this.OnCountPropertyChanging();
-		this.OnCollectionChanged(addedItems, ObservableHashSetSingletons.NoItems);
+
+		// Now mutate
+		foreach (var item in itemsToAdd)
+		{
+			_ = this._set.Add(item);
+		}
+
+		this.OnCollectionChanged(itemsToAdd, ObservableHashSetSingletons.NoItems);
 		this.OnCountPropertyChanged();
 	}
 
@@ -261,10 +273,11 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// to indicate all items have been removed. It also raises the <see cref="PropertyChanging"/> and <see cref="PropertyChanged"/>
 	/// events for the "Count" property before and after the collection is cleared, respectively.
 	/// </remarks>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void Clear()
 	{
-		if (this._set.FastLongCount() == 0)
+		// Use Count directly - it's O(1) for HashSet
+		if (this._set.Count == 0)
 		{
 			return;
 		}
@@ -287,7 +300,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns><see langword="true"/> if the <see cref="ObservableList{T}"/> contains the specified element; otherwise, <see langword="false"/>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool Contains([NotNullWhen(true)] T item)
 	{
 		return item is null ? false : this._set.Contains(item);
@@ -299,7 +312,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="array">The one-dimensional array that is the destination of the elements copied from
 	/// the <see cref="ObservableList{T}"/>. The array must have zero-based indexing.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="array"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void CopyTo([DisallowNull] T[] array)
 	{
 		this._set.CopyTo(array.ArgumentNotNull());
@@ -312,7 +325,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// the <see cref="ObservableList{T}"/>. The array must have zero-based indexing.</param>
 	/// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="array"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void CopyTo([DisallowNull] T[] array, int arrayIndex)
 	{
 		this._set.CopyTo(array.ArgumentNotNull(), arrayIndex);
@@ -326,7 +339,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
 	/// <param name="count">The number of elements to copy to <paramref name="array"/>.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="array"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void CopyTo([DisallowNull] T[] array, int arrayIndex, int count)
 	{
 		this._set.CopyTo(array.ArgumentNotNull(), arrayIndex, count);
@@ -359,7 +372,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// This method uses the <see cref="HashSet{T}.ExceptWith"/> method of the underlying <see cref="HashSet{T}"/> to perform this operation.
 	/// </para>
 	/// </remarks>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void ExceptWith([DisallowNull] IEnumerable<T> other)
 	{
 		other = other.ArgumentNotNull();
@@ -368,7 +381,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		copy.ExceptWith(other);
 
-		if (copy.FastLongCount() == this._set.FastLongCount())
+		if (copy.Count == this._set.Count)
 		{
 			return;
 		}
@@ -405,7 +418,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <returns>The first element, or default(T).</returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual T? FirstOrDefault()
 	{
 		return this._set.Count > 0 ? this._set.First() : default;
@@ -451,7 +464,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// // Resulting set: { 3, 4 }
 	/// </code>
 	/// </example>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void IntersectWith([DisallowNull] IEnumerable<T> other)
 	{
 		other = other.ArgumentNotNull();
@@ -460,7 +473,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		copy.IntersectWith(other);
 
-		if (copy.FastLongCount() == this._set.FastLongCount())
+		if (copy.Count == this._set.Count)
 		{
 			return;
 		}
@@ -481,7 +494,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>.</param>
 	/// <returns><see langword="true"/> if the current <see cref="ObservableList{T}"/> is a proper subset of <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool IsProperSubsetOf([NotNullWhen(true)] IEnumerable<T> other)
 	{
 		return this._set.IsProperSubsetOf(other.ArgumentNotNull());
@@ -492,7 +506,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>.</param>
 	/// <returns><see langword="true"/> if the <see cref="ObservableList{T}"/> is a proper superset of <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool IsProperSupersetOf([NotNullWhen(true)] IEnumerable<T> other)
 	{
 		return this._set.IsProperSupersetOf(other.ArgumentNotNull());
@@ -503,7 +518,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>.</param>
 	/// <returns><see langword="true"/> if the <see cref="ObservableList{T}"/> is a subset of <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool IsSubsetOf([NotNullWhen(true)] IEnumerable<T> other)
 	{
 		return this._set.IsSubsetOf(other.ArgumentNotNull());
@@ -514,7 +530,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>.</param>
 	/// <returns><see langword="true"/> if the <see cref="ObservableList{T}"/> is a superset of <paramref name="other"/>; otherwise, <see langword="false"/>.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool IsSupersetOf([NotNullWhen(true)] IEnumerable<T> other)
 	{
 		return this._set.IsSupersetOf(other.ArgumentNotNull());
@@ -525,7 +542,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <returns>The last element, or default(T).</returns>
 	[Pure]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual T? LastOrDefault()
 	{
 		return this._set.Count > 0 ? this._set.Last() : default;
@@ -537,7 +554,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>.</param>
 	/// <returns><see langword="true"/> if the current set and the specified collection share at least one common element; otherwise, <see langword="false"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="other"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool Overlaps([DisallowNull] IEnumerable<T> other)
 	{
 		return this._set.Overlaps(other.ArgumentNotNull());
@@ -549,11 +567,12 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="item">The item to remove.</param>
 	/// <returns><see langword="true"/> if item was successfully removed from the <see cref="ObservableList{T}"/>; otherwise, <see langword="false"/>. This method also returns <see langword="false"/> if item is not found in the original <see cref="ObservableList{T}"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool Remove(T item)
 	{
 		item = item.ArgumentNotNull();
 
+		// Check first to avoid spurious PropertyChanging event
 		if (!this._set.Contains(item))
 		{
 			return false;
@@ -561,10 +580,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		this.OnCountPropertyChanging();
 
+		// Remove will succeed since we already checked Contains
 		_ = this._set.Remove(item);
 
 		this.OnCollectionChanged(NotifyCollectionChangedAction.Remove, item);
-
 		this.OnCountPropertyChanged();
 
 		return true;
@@ -581,31 +600,42 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// a single <see cref="CollectionChanged"/> event after all items are removed. Items not found 
 	/// in the collection are silently ignored.
 	/// </remarks>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual int RemoveRange([DisallowNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
 
-		var removedItems = new List<T>();
+		// First pass: identify items to remove WITHOUT mutating
+		var itemsToRemove = items is ICollection<T> collection
+			? new List<T>(collection.Count)
+			: new List<T>();
 
 		foreach (var item in items)
 		{
-			if (this._set.Remove(item))
+			if (item is not null && this._set.Contains(item))
 			{
-				removedItems.Add(item);
+				itemsToRemove.Add(item);
 			}
 		}
 
-		if (removedItems.Count == 0)
+		if (itemsToRemove.Count == 0)
 		{
 			return 0;
 		}
 
+		// Notify BEFORE mutation
 		this.OnCountPropertyChanging();
-		this.OnCollectionChanged(ObservableHashSetSingletons.NoItems, removedItems);
+
+		// Now mutate
+		foreach (var item in itemsToRemove)
+		{
+			_ = this._set.Remove(item);
+		}
+
+		this.OnCollectionChanged(ObservableHashSetSingletons.NoItems, itemsToRemove);
 		this.OnCountPropertyChanged();
 
-		return removedItems.Count;
+		return itemsToRemove.Count;
 	}
 
 	/// <summary>
@@ -614,31 +644,30 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="match">The <see cref="Predicate{T}"/> delegate that defines the conditions of the elements to remove.</param>
 	/// <returns>The number of elements removed from the <see cref="ObservableList{T}"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="match"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual int RemoveWhere([DisallowNull] Predicate<T> match)
 	{
 		match = match.ArgumentNotNull();
 
-		var copy = new HashSet<T>(this._set, this._set.Comparer);
+		// Find items to remove first - avoids creating a full HashSet copy
+		var itemsToRemove = this._set.Where(item => match(item)).ToList();
 
-		var removedCount = copy.RemoveWhere(match);
-
-		if (removedCount == 0)
+		if (itemsToRemove.Count == 0)
 		{
 			return 0;
 		}
 
-		var removed = this._set.Where(i => !copy.Contains(i)).ToList();
-
 		this.OnCountPropertyChanging();
 
-		this._set = copy;
+		foreach (var item in itemsToRemove)
+		{
+			_ = this._set.Remove(item);
+		}
 
-		this.OnCollectionChanged(ObservableHashSetSingletons.NoItems, removed);
-
+		this.OnCollectionChanged(ObservableHashSetSingletons.NoItems, itemsToRemove);
 		this.OnCountPropertyChanged();
 
-		return removedCount;
+		return itemsToRemove.Count;
 	}
 
 	/// <summary>
@@ -647,7 +676,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="items">The items to replace the collection with.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void Reset([DisallowNull] IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -675,7 +704,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>.</param>
 	/// <returns><see langword="true"/> if the current <see cref="ObservableList{T}"/> set is equal to the specified collection; otherwise, <see langword="false"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="other"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool SetEquals([DisallowNull] IEnumerable<T> other)
 	{
 		return this._set.SetEquals(other.ArgumentNotNull());
@@ -686,7 +716,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>. This collection must not be null.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="other"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void SymmetricExceptWith([DisallowNull] IEnumerable<T> other)
 	{
 		other = other.ArgumentNotNull();
@@ -698,7 +728,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 		var removed = this._set.Where(i => !copy.Contains(i)).ToList();
 		var added = copy.Where(i => !this._set.Contains(i)).ToList();
 
-		if (removed.FastLongCount() == 0 && added.FastLongCount() == 0)
+		// Use Count directly - it's O(1) for List<T>
+		if (removed.Count == 0 && added.Count == 0)
 		{
 			return;
 		}
@@ -718,7 +749,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns>An array containing all elements from the collection.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual T[] ToArray()
 	{
 		return [.. this._set];
@@ -730,7 +761,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <returns>A List containing all elements from the collection.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual List<T> ToList()
 	{
 		return [.. this._set];
@@ -751,7 +782,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="equalValue">The value to search for.</param>
 	/// <param name="actualValue">The value from the set that equals the search value, if found; otherwise the default value for T.</param>
 	/// <returns>true if a value was found; otherwise false.</returns>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Pure]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual bool TryGetValue(T equalValue, [MaybeNullWhen(false)] out T actualValue)
 	{
 		return this._set.TryGetValue(equalValue, out actualValue);
@@ -762,7 +794,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="other">The collection to compare to the current <see cref="ObservableList{T}"/>. This collection must not be null.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="other"/> is <see langword="null"/>.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public virtual void UnionWith([DisallowNull] IEnumerable<T> other)
 	{
 		other = other.ArgumentNotNull();
@@ -771,7 +803,8 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 
 		copy.UnionWith(other);
 
-		if (copy.FastLongCount() == this._set.FastLongCount())
+		// Use Count directly - it's O(1) for HashSet
+		if (copy.Count == this._set.Count)
 		{
 			return;
 		}
