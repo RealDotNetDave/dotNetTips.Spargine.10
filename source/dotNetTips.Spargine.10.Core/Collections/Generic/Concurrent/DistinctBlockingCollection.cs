@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified On : 02-26-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollection.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -90,7 +90,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
 	/// <exception cref="InvalidOperationException">Thrown if the item already exists in the collection.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Add), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Add), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public new void Add([DisallowNull] T item, CancellationToken cancellationToken = default)
 	{
 		item = item.ArgumentNotNull();
@@ -108,7 +108,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns>The number of unique items successfully added.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(AddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int AddRange(IEnumerable<T> items, CancellationToken cancellationToken = default)
 	{
 		items = items.ArgumentNotNull();
@@ -131,7 +131,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// Removes all items from the <see cref="DistinctBlockingCollection{T}"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clear), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Clear), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void Clear()
 	{
 		while (this.TryTake(out _))
@@ -148,7 +148,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// to remove from memory.</remarks>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Clone", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information("Clone", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public DistinctBlockingCollection<T> Clone() => JsonSerialization.Deserialize<DistinctBlockingCollection<T>>(JsonSerialization.Serialize(this));
 
 	/// <summary>
@@ -158,7 +158,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns><see langword="true" /> if <paramref name="item" /> was successfully removed from the <see cref="DistinctBlockingCollection{T}"/>; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if <paramref name="item" /> is not found in the original collection.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Contains), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Contains), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool Contains(T item)
 	{
 		//SUGGESTION FROM COPILOT BREAKS THIS METHOD
@@ -186,7 +186,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ContainsAny), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool ContainsAny(IEnumerable<T> items)
 	{
 		items = items.ArgumentNotNull();
@@ -201,7 +201,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns><see langword="true" /> if <paramref name="item" /> was successfully removed from the <see cref="DistinctBlockingCollection{T}"/>; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if <paramref name="item" /> is not found in the original collection.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Remove), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Remove), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool Remove(T item)
 	{
 		return this.TryTake(out item!);
@@ -214,7 +214,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns><see langword="true" /> if <paramref name="item" /> could be added; otherwise, <see langword="false" />. If the item is a duplicate, and the underlying collection does not accept duplicate items, then <see langword="false" /> is returned.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public new bool TryAdd(T item)
 	{
 		return item is null || !this.IsNotInCollection(item) ? false : base.TryAdd(item);
@@ -229,7 +229,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns><see langword="true" /> if the <paramref name="item" /> could be added to the collection within the specified time; otherwise, <see langword="false" />. If the item is a duplicate, and the underlying collection does not accept duplicate items, then <see langword="false" /> is returned.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public new bool TryAdd([AllowNull] T item, [ConstantExpected(Min = 1, Max = int.MaxValue)] int millisecondsTimeout)
 	{
 		return item is null ? false : this.IsNotInCollection(item) && base.TryAdd(item, millisecondsTimeout);
@@ -243,7 +243,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns><see langword="true" /> if the <paramref name="item" /> could be added to the collection within the specified time span; otherwise, <see langword="false" />. If the item is a duplicate, and the underlying collection does not accept duplicate items, then <see langword="false" /> is returned.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public new bool TryAdd(T item, TimeSpan timeout)
 	{
 		return item is null ? false : this.IsNotInCollection(item) && base.TryAdd(item, timeout);
@@ -261,7 +261,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// false. If the item is a duplicate, and the underlying collection does not accept duplicate items, then false is returned.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryAdd), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public new bool TryAdd(T item, [ConstantExpected(Min = 1, Max = int.MaxValue)] int millisecondsTimeout, CancellationToken cancellationToken = default)
 	{
 		return item is null ? false : this.IsNotInCollection(item) && base.TryAdd(item, millisecondsTimeout, cancellationToken);
@@ -276,7 +276,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// <returns>The number of unique items successfully added within the timeout period.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryAddRange), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int TryAddRange(IEnumerable<T> items, [ConstantExpected(Min = 1, Max = int.MaxValue)] int millisecondsTimeout = 0, CancellationToken cancellationToken = default)
 	{
 		items = items.ArgumentNotNull();
