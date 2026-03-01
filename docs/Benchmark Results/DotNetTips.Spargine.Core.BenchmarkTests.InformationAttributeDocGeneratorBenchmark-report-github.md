@@ -9,6 +9,6 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 
 ```
-| Method                              | Mean         | Error      | StdDev     | StdErr   | Min          | Q1           | Median       | Q3           | Max          | Op/s    | CI99.9% Margin | Iterations | Rank | Baseline | Completed Work Items | Lock Contentions | Gen0   | Exceptions | Allocated |
-|------------------------------------ |-------------:|-----------:|-----------:|---------:|-------------:|-------------:|-------------:|-------------:|-------------:|--------:|---------------:|-----------:|-----:|--------- |---------------------:|-----------------:|-------:|-----------:|----------:|
-| GenerateMarkdownDocumentForAssembly | 166,697.7 ns | 1,266.5 ns | 1,122.7 ns | 300.1 ns | 164,707.9 ns | 166,153.7 ns | 166,405.5 ns | 167,391.4 ns | 168,897.5 ns | 5,998.9 |      -143.0 ns |      14.00 |    1 | No       |                    - |                - | 3.9063 |          - | 122.46 KB |
+| Method                              | Mean         | Error    | StdDev   | StdErr   | Min          | Q1           | Median       | Q3           | Max          | Op/s    | CI99.9% Margin | Iterations | Rank | Baseline | Exceptions | Completed Work Items | Lock Contentions | Gen0   | Allocated |
+|------------------------------------ |-------------:|---------:|---------:|---------:|-------------:|-------------:|-------------:|-------------:|-------------:|--------:|---------------:|-----------:|-----:|--------- |-----------:|---------------------:|-----------------:|-------:|----------:|
+| GenerateMarkdownDocumentForAssembly | 163,439.2 ns | 862.2 ns | 720.0 ns | 199.7 ns | 161,923.0 ns | 163,084.9 ns | 163,760.7 ns | 163,816.1 ns | 164,484.4 ns | 6,118.5 |      -93.35 ns |      13.00 |    1 | No       |          - |                    - |                - | 3.9063 | 122.46 KB |

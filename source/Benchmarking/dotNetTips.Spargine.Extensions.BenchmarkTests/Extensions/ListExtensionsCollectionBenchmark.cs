@@ -121,7 +121,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.IsNotEmpty(5));
 	}
 
-	[Benchmark(Description = "Index []: Compare with IndexAtLooped")]
+	[Benchmark(Description = "Index []: Compare with IndexAtLooped-Half Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void Index()
 	{
@@ -130,7 +130,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.IndexAtLooped))]
+	[Benchmark(Description = nameof(ListExtensions.IndexAtLooped) + ": Half Count")]
 	public void IndexAtLooped()
 	{
 		var result = this._peopleRefList.IndexAtLooped(this.HalfCount);

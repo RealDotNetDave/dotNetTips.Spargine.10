@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-26-2026
+// Last Modified On : 03-01-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,7 +35,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
 
 		people.Add(this.PersonRef01);
-		people.Add(this.PersonRef01);
+		people.Add(this.PersonRef02);
 
 		this.Consume(people);
 	}
@@ -78,7 +78,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Async, Categories.New)]
 	public void CopyTo()
 	{
-		Person[] people = null;
+		var people = new Person[this._peopleRefDistinctConcurrentBag.Count];
 
 		this._peopleRefDistinctConcurrentBag.CopyTo(people, 0);
 
@@ -140,7 +140,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
 
 		this.Consume(people.TryAdd(this.PersonRef01));
-		this.Consume(people.TryAdd(this.PersonRef01));
+		this.Consume(people.TryAdd(this.PersonRef02));
 
 	}
 

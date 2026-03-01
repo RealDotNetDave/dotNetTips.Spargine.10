@@ -374,7 +374,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "Select Items: ArraySegment")]
+	[Benchmark(Description = "Select Items: ArraySegment-HalfCount")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void SelectItemsArraySegment()
 	{
@@ -383,7 +383,7 @@ public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems))]
+	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems) + ": Half Count")]
 	[BenchmarkCategory(Categories.Collections, Categories.New)]
 	public void SelectItemsFastSelectItems()
 	{

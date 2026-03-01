@@ -61,7 +61,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Initializes a new instance of the <see cref="DistinctConcurrentBag{T}"/> class with a custom comparer.
 	/// </summary>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> to use for comparing items.</param>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public DistinctConcurrentBag([NotNull] IEqualityComparer<T> comparer)
 	{
 		this._uniqueItems = new ConcurrentHashSet<T>(comparer.ArgumentNotNull());

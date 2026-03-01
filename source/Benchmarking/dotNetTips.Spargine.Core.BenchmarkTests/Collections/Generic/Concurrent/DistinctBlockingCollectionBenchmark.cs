@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-26-2026
+// Last Modified On : 02-27-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
 
 		people.Add(this.PersonRef01);
-		people.Add(this.PersonRef01);
+		people.Add(this.PersonRef02);
 
 		this.Consume(people);
 	}
@@ -110,7 +110,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
 
 		this.Consume(people.TryAdd(this.PersonRef01));
-		this.Consume(people.TryAdd(this.PersonRef01));
+		this.Consume(people.TryAdd(this.PersonRef02));
 
 		this.Consume(people);
 	}
@@ -131,7 +131,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
 
 		this.Consume(people.TryAdd(this.PersonRef01, 10));
-		this.Consume(people.TryAdd(this.PersonRef01, 10));
+		this.Consume(people.TryAdd(this.PersonRef02, 10));
 
 		this.Consume(people);
 	}
@@ -143,7 +143,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
 
 		this.Consume(people.TryAdd(this.PersonRef01, 10, CancellationToken.None));
-		this.Consume(people.TryAdd(this.PersonRef01, 10, CancellationToken.None));
+		this.Consume(people.TryAdd(this.PersonRef02, 10, CancellationToken.None));
 
 		this.Consume(people);
 	}
@@ -155,7 +155,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
 
 		this.Consume(people.TryAdd(this.PersonRef01, TimeSpan.FromMilliseconds(10)));
-		this.Consume(people.TryAdd(this.PersonRef01, TimeSpan.FromMilliseconds(10)));
+		this.Consume(people.TryAdd(this.PersonRef02, TimeSpan.FromMilliseconds(10)));
 
 		this.Consume(people);
 	}

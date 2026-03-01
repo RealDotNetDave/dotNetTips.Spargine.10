@@ -84,7 +84,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 		this.Consume(array);
 	}
 
-	[Benchmark(Description = nameof(ObservableList<>.CopyTo) + " with index and count")]
+	[Benchmark(Description = nameof(ObservableList<>.CopyTo) + " with index and count(half)")]
 	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
 	public void CopyToWithIndexAndCount()
 	{

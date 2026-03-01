@@ -405,7 +405,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="match"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual IEnumerable<T> FindAll([DisallowNull] Predicate<T> match)
 	{
 		match = match.ArgumentNotNull();

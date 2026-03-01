@@ -353,7 +353,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.ConsumeEnumerable(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.Partition))]
+	[Benchmark(Description = nameof(EnumerableExtensions.Partition) + ": Half Count")]
 	public void Partition()
 	{
 		foreach (var partition in this._personRefEnumerable.Partition(this.HalfCount))
@@ -362,7 +362,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		}
 	}
 
-	[Benchmark(Description = "Chunk (compare to Partition)")]
+	[Benchmark(Description = "Chunk (compare to Partition) - Half Count")]
 	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
 	public void PartitionChunk()
 	{
@@ -459,7 +459,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.ConsumeEnumerable(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count")]
+	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + "With Count(Half)")]
 	public void ShuffleFastShuffleWithCount()
 	{
 		var result = this._personRefEnumerable.FastShuffle(this.HalfCount);
