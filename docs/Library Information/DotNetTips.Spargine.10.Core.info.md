@@ -1,4 +1,4 @@
-# dotNetTips.Spargine.10.Core - 2026.10.2.15
+# DotNetTips.Spargine.10.Core - 2026.10.2.15
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -1651,7 +1651,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Add
@@ -1661,7 +1661,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** AddRange
@@ -1671,7 +1671,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Clear
@@ -1681,7 +1681,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Clone
@@ -1691,7 +1691,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Contains
@@ -1701,7 +1701,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ContainsAny
@@ -1731,7 +1731,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Remove
@@ -1741,7 +1741,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryAdd
@@ -1751,7 +1751,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryAdd
@@ -1761,7 +1761,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryAdd
@@ -1771,7 +1771,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryAdd
@@ -1781,7 +1781,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryAddRange
@@ -1814,7 +1814,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1824,7 +1824,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1834,7 +1834,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** AddRange
@@ -1844,7 +1844,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1854,7 +1854,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1864,7 +1864,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ContainsAny
@@ -1874,7 +1874,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1924,7 +1924,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1934,7 +1934,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** RemoveRange
@@ -1944,7 +1944,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToArray
@@ -1954,7 +1954,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToFrozenSet
@@ -1964,7 +1964,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToList
@@ -1974,7 +1974,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -1984,7 +1984,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryGetValue
@@ -1994,7 +1994,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryPeek
@@ -2004,7 +2004,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2220,7 +2220,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2230,7 +2230,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2240,7 +2240,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2260,7 +2260,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2270,7 +2270,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2280,7 +2280,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2290,7 +2290,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2320,7 +2320,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2330,7 +2330,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2340,7 +2340,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2350,7 +2350,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2360,7 +2360,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2370,7 +2370,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2390,7 +2390,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2400,7 +2400,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2410,7 +2410,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2420,7 +2420,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2430,7 +2430,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2440,7 +2440,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2450,7 +2450,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2460,7 +2460,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2470,7 +2470,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2480,7 +2480,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2500,7 +2500,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2510,7 +2510,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2530,7 +2530,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -2540,7 +2540,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Modified By:** UNKNOWN
@@ -8217,4 +8217,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 2/20/2026 3:44:23 PM UTC**
+**Generated by Spargine - dotNetTips.com on 3/1/2026 10:20:16 PM UTC**
