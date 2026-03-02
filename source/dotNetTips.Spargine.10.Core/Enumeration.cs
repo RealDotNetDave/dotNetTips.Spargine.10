@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 03-02-2026
 // ***********************************************************************
 // <copyright file="Enumeration.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -146,7 +146,7 @@ public class Enumeration : IComparable
 	/// <returns>An instance of the enumeration type that matches the given display name.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="displayName"/> is null or empty.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when no matching enumeration instance is found.</exception>
-	[Information(nameof(FromDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FromDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static T FromDisplayName<T>([DisallowNull] string displayName) where T : Enumeration
 	{
 		displayName = displayName.ArgumentNotNullOrEmpty();
@@ -161,7 +161,7 @@ public class Enumeration : IComparable
 	/// <param name="value">The integer value of the enumeration instance.</param>
 	/// <returns>An instance of the enumeration type that matches the given integer value.</returns>
 	/// <exception cref="InvalidOperationException">Thrown when no matching enumeration instance is found.</exception>
-	[Information(nameof(FromValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FromValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static T FromValue<T>(int value) where T : Enumeration
 	{
 		return Parse<T>(value.ToString(CultureInfo.CurrentCulture), item => item.Value == value);
@@ -296,15 +296,18 @@ public class Enumeration : IComparable
 	/// <returns>An instance of the enumeration that matches the predicate.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when the predicate is null.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when no matching item is found.</exception>
-	private static T Parse<T>(string description, [DisallowNull] in Func<T, bool> predicate) where T : Enumeration
+	private static T Parse<T>(string description, [DisallowNull] Func<T, bool> predicate) where T : Enumeration
 	{
-		var matchingItem = GetAll<T>().FirstOrDefault(predicate);
-
-		if (matchingItem is null)
+		foreach (var item in GetAll<T>())
 		{
-			ExceptionThrower.ThrowArgumentNullException($"Is not a valid {description} in {typeof(T)}.", nameof(predicate));
+			if (predicate(item))
+			{
+				return item;
+			}
 		}
 
-		return matchingItem;
+		ExceptionThrower.ThrowArgumentNullException($"Is not a valid {description} in {typeof(T)}.", nameof(predicate));
+
+		return default;
 	}
 }

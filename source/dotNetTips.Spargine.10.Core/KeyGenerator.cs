@@ -4,7 +4,7 @@
 // Created          : 05-30-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 03-02-2026
 // ***********************************************************************
 // <copyright file="KeyGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -320,10 +320,17 @@ public static class KeyGenerator
 	/// <seealso cref="GenerateKey()"/>
 	/// <seealso cref="GenerateSortableKey(string)"/>
 	[return: NotNull]
-	[Information(nameof(GenerateKey), "David McCarter", "5/30/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateKey), "David McCarter", "5/30/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GenerateKey([DisallowNull] string prefix)
 	{
-		return $"{prefix.ArgumentNotNull()}_{Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)}";
+		prefix = prefix.ArgumentNotNull();
+
+		return string.Create(prefix.Length + 33, prefix, static (span, p) =>
+		{
+			p.AsSpan().CopyTo(span);
+			span[p.Length] = '_';
+			_ = Guid.NewGuid().TryFormat(span[(p.Length + 1)..], out _, "N");
+		});
 	}
 
 	/// <summary>

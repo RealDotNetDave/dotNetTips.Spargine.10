@@ -4,7 +4,7 @@
 // Created          : 06-10-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 03-02-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,7 +32,7 @@ public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(HashSetExtensions.AddIf))]
 	public void AddIf()
 	{
-		this._personRefHashSet.AddIf(base.PersonRef01, true);
+		this._personRefHashSet.AddIf(this.PersonRef01, true);
 
 		this.Consume(this._personRefHashSet.Count);
 	}
