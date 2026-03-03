@@ -97,7 +97,7 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.ToFrozen))]
-	public void ToFrozenDictionary()
+	public void ToFrozen()
 	{
 		var people = this._personRefDictionary.ToFrozen();
 
@@ -105,9 +105,17 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.ToImmutable))]
-	public void ToImmutableDictionary()
+	public void ToImmutable()
 	{
 		var people = this._personRefDictionary.ToImmutable();
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.ToImmutableSorted))]
+	public void ToImmutableSorted()
+	{
+		var people = this._personRefDictionary.ToImmutableSorted();
 
 		this.Consume(people);
 	}

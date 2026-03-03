@@ -364,7 +364,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToImmutableSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToImmutableSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
