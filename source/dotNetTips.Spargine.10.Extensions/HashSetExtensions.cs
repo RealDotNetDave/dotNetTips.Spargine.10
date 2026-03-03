@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-02-2026
+// Last Modified On : 03-03-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -41,7 +41,7 @@ public static class HashSetExtensions
 		/// <param name="item">The item to add to the hash set.</param>
 		/// <param name="condition">The condition that determines whether the item should be added.</param>
 		[Pure]
-		[Information(nameof(AddIf), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddIf), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void AddIf([DisallowNull] T item, bool condition)
 		{
 			if (!condition)

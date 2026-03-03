@@ -320,7 +320,7 @@ public static class KeyGenerator
 	/// <seealso cref="GenerateKey()"/>
 	/// <seealso cref="GenerateSortableKey(string)"/>
 	[return: NotNull]
-	[Information(nameof(GenerateKey), "David McCarter", "5/30/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GenerateKey), "David McCarter", "5/30/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateKey([DisallowNull] string prefix)
 	{
 		prefix = prefix.ArgumentNotNull();

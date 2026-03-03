@@ -44,14 +44,14 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		//BenchmarkHelper.RunAllBenchmarks(config);
+		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			//typeof(ObservableListBenchmark),
-			typeof(KeyGeneratorBenchmark),
-			typeof(EnumerationBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	//typeof(ObservableListBenchmark),
+		//	typeof(KeyGeneratorBenchmark),
+		//	typeof(EnumerationBenchmark)
+		//);
 
 	}
 }
