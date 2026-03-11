@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 03-11-2026
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -131,8 +131,11 @@ public class FastSortedList<T> : List<T>
 	[Information(BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public new void Add([DisallowNull] T item)
 	{
-		base.Add(item.ArgumentNotNull());
-		this._sorted = false;
+		lock (this._lock)
+		{
+			base.Add(item.ArgumentNotNull());
+			this._sorted = false;
+		}
 	}
 
 	/// <summary>
@@ -144,8 +147,11 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new void AddRange([DisallowNull] IEnumerable<T> items)
 	{
-		base.AddRange(items.ArgumentNotNull());
-		this._sorted = false;
+		lock (this._lock)
+		{
+			base.AddRange(items.ArgumentNotNull());
+			this._sorted = false;
+		}
 	}
 
 	/// <summary>
@@ -155,8 +161,11 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new void Clear()
 	{
-		base.Clear();
-		this._sorted = false;
+		lock (this._lock)
+		{
+			base.Clear();
+			this._sorted = false;
+		}
 	}
 
 	/// <summary>
@@ -180,7 +189,13 @@ public class FastSortedList<T> : List<T>
 	/// <returns><see langword="true" /> if <paramref name="item"/> is successfully removed; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if <paramref name="item"/> was not found in the <see cref="FastSortedList{T}"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public new bool Remove([DisallowNull] T item) => base.Remove(item);
+	public new bool Remove([DisallowNull] T item)
+	{
+		lock (this._lock)
+		{
+			return base.Remove(item.ArgumentNotNull());
+		}
+	}
 
 	/// <summary>
 	/// Removes the element at the specified index of the <see cref="FastSortedList{T}"/>.
@@ -188,7 +203,13 @@ public class FastSortedList<T> : List<T>
 	/// <param name="index">The zero-based index of the element to remove.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
-	public new void RemoveAt(int index) => base.RemoveAt(index);
+	public new void RemoveAt(int index)
+	{
+		lock (this._lock)
+		{
+			base.RemoveAt(index);
+		}
+	}
 
 	/// <summary>
 	/// Converts the <see cref="FastSortedList{T}"/> to an array.
@@ -200,9 +221,12 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new T[] ToArray()
 	{
-		this.SortCollection();
+		lock (this._lock)
+		{
+			this.SortCollection();
 
-		return base.ToArray();
+			return base.ToArray();
+		}
 	}
 
 	/// <summary>
@@ -215,9 +239,12 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public IImmutableList<T> ToImmutableList()
 	{
-		this.SortCollection();
+		lock (this._lock)
+		{
+			this.SortCollection();
 
-		return ImmutableList.CreateRange(this);
+			return ImmutableList.CreateRange(this);
+		}
 	}
 
 	/// <summary>
@@ -230,9 +257,12 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public IList<T> ToList()
 	{
-		this.SortCollection();
+		lock (this._lock)
+		{
+			this.SortCollection();
 
-		return [.. base.ToArray()];
+			return [.. base.ToArray()];
+		}
 	}
 
 	/// <summary>
