@@ -48,7 +48,7 @@ internal sealed class Program
 
 		// Run Selected Tests
 		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	//typeof(ObservableListBenchmark),
+		//typeof(FastSortedListCreateAddBenchmark)
 		//	typeof(KeyGeneratorBenchmark),
 		//	typeof(EnumerationBenchmark)
 		//);

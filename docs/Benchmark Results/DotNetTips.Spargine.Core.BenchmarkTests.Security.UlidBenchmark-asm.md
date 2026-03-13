@@ -1,4 +1,4 @@
-## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark.UlidGetHashCode()
@@ -6,13 +6,13 @@
        push      rbx
        sub       rsp,28
        mov       rbx,rcx
-       mov       rcx,2BADB4020E8
+       mov       rcx,18A1FC000F0
        mov       rcx,[rcx]
        test      rcx,rcx
        je        short M00_L01
 M00_L00:
        cmp       [rcx],ecx
-       call      qword ptr [7FFB69F1AAC0]; System.MulticastDelegate.GetHashCode()
+       call      qword ptr [7FF823F4AAC0]; System.MulticastDelegate.GetHashCode()
        mov       rcx,[rbx+60]
        mov       [rcx+38],eax
        add       rsp,28
@@ -25,10 +25,10 @@ M00_L01:
        mov       rsi,rax
        mov       rcx,rsi
        xor       edx,edx
-       mov       r8,7FFB6A5AAE08
-       mov       r9,7FFB69E2D0B0
-       call      qword ptr [7FFB69EE6EB0]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
-       mov       rcx,2BADB4020E8
+       mov       r8,7FF82460B138
+       mov       r9,7FF823E5D0B0
+       call      qword ptr [7FF823F16E98]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
+       mov       rcx,18A1FC000F0
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
        mov       rcx,rsi
@@ -58,10 +58,10 @@ M01_L00:
        cmp       qword ptr [rbx+20],0
        je        short M01_L05
        mov       rcx,rbx
-       call      qword ptr [7FFB69EEC9A8]; System.Object.GetType()
+       call      qword ptr [7FF823F1C9A8]; System.Object.GetType()
        mov       rbx,rax
        mov       rcx,rbx
-       call      00007FFBC9AD37B0
+       call      00007FF883AFE4B0
        test      eax,eax
        je        short M01_L02
 M01_L01:
@@ -78,7 +78,7 @@ M01_L02:
        pop       rbp
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FFB69EEE928]; System.Runtime.CompilerServices.RuntimeHelpers.<GetHashCode>g__GetHashCodeWorker|15_0(System.Object)
+       jmp       qword ptr [7FF823F1E970]; System.Runtime.CompilerServices.RuntimeHelpers.<GetHashCode>g__GetHashCodeWorker|15_0(System.Object)
 M01_L03:
        mov       rcx,[rbx+18]
        mov       rdx,[rbx+20]
@@ -87,11 +87,11 @@ M01_L03:
        pop       rbp
        pop       rsi
        pop       rdi
-       jmp       qword ptr [7FFB6A616610]
+       jmp       qword ptr [7FF8246767C0]
 M01_L04:
        mov       rdx,[rbx+28]
        mov       rcx,offset MT_System.Delegate
-       call      qword ptr [7FFB69EE6850]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+       call      qword ptr [7FF823F16850]; System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
        test      rax,rax
        je        near ptr M01_L00
        mov       rcx,rax
@@ -110,15 +110,15 @@ M01_L05:
        jmp       short M01_L07
 M01_L06:
        mov       rcx,[rbx+8]
-       call      qword ptr [7FFB6A36C978]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FF8243CCBB8]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        mov       esi,eax
        shl       esi,5
        add       esi,eax
 M01_L07:
        mov       rcx,rbx
-       call      qword ptr [7FFB69EEC9A8]; System.Object.GetType()
+       call      qword ptr [7FF823F1C9A8]; System.Object.GetType()
        mov       rcx,rax
-       call      qword ptr [7FFB6A36C978]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
+       call      qword ptr [7FF8243CCBB8]; System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object)
        add       eax,esi
        jmp       near ptr M01_L01
 M01_L08:
@@ -162,7 +162,7 @@ M01_L11:
        mov       rdi,r9
        lea       rcx,[rbx+8]
        mov       rdx,rbx
-       call      qword ptr [7FFB83946FD0]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FF883967FD0]; CORINFO_HELP_ASSIGN_REF
        mov       [rbx+18],rdi
        mov       [rbx+20],rsi
        pop       rbx
@@ -172,7 +172,7 @@ M01_L11:
 ; Total bytes of code 37
 ```
 
-## .NET 10.0.3 (10.0.3, 10.0.326.7603), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark.NewUlid()
@@ -182,7 +182,7 @@ M01_L11:
        xor       eax,eax
        mov       [rsp+20],rax
        mov       rbx,rcx
-       mov       rcx,1AB368000F0
+       mov       rcx,1BB2C0020E8
        mov       rax,[rcx]
        test      rax,rax
        je        short M00_L01
@@ -204,10 +204,10 @@ M00_L01:
        mov       rsi,rax
        mov       rcx,rsi
        xor       edx,edx
-       mov       r8,7FFB6A5CAE98
-       mov       r9,7FFB69E4D0B0
-       call      qword ptr [7FFB69F06EB0]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
-       mov       rcx,1AB368000F0
+       mov       r8,7FF82460B150
+       mov       r9,7FF823E5D0B0
+       call      qword ptr [7FF823F16E98]; System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
+       mov       rcx,1BB2C0020E8
        mov       rdx,rsi
        call      CORINFO_HELP_ASSIGN_REF
        mov       rax,rsi
@@ -224,7 +224,7 @@ M00_L01:
        mov       rdi,r9
        lea       rcx,[rbx+8]
        mov       rdx,rbx
-       call      qword ptr [7FFB83946FD0]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FF883967FD0]; CORINFO_HELP_ASSIGN_REF
        mov       [rbx+18],rdi
        mov       [rbx+20],rsi
        pop       rbx
