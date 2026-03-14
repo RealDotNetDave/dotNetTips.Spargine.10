@@ -4,7 +4,7 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -133,8 +133,8 @@ public static class ReadOnlyCollectionExtensions
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
 		{
-			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
+			actionPredicate = actionPredicate.ArgumentNotNull();
+			return collection is not null && collection.Any(actionPredicate);
 		}
-
 	}
 }

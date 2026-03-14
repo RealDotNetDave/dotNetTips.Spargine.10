@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-03-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -38,10 +38,16 @@ public class ReadOnlyCollectionExtensionsBenchmark : LargeCollectionBenchmark
 		this.Consume(this._personRefReadOnlyCollection.GetValueOrDefault(this.HalfCount, this.PersonRef01));
 	}
 
-	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.IsNotEmpty))]
-	public void IsNotEmpty()
+	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.IsNotEmpty) + ": Found")]
+	public void IsNotEmptyFound()
 	{
-		this.Consume(this._personRefReadOnlyCollection.IsNotEmpty(x => x != null));
+		this.Consume(this._personRefReadOnlyCollection.IsNotEmpty(x => x.Id == this.PersonRef01.Id));
+	}
+
+	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.IsNotEmpty) + ": NotFound")]
+	public void IsNotEmptyNotFound()
+	{
+		this.Consume(this._personRefReadOnlyCollection.IsNotEmpty(_ => false));
 	}
 
 	public override void Setup()
