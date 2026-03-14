@@ -4,7 +4,7 @@
 // Created          : 07-31-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="ClockTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -394,6 +394,21 @@ public class ClockTests
 	}
 
 	[TestMethod]
+	public void StartOfToday_ReturnsCurrentDate()
+	{
+		// Arrange
+		var localTime = Clock.LocalTime;
+
+		// Act
+		var result = Clock.StartOfToday;
+
+		// Assert
+		Assert.AreEqual(localTime.Year, result.Year);
+		Assert.AreEqual(localTime.Month, result.Month);
+		Assert.AreEqual(localTime.Day, result.Day);
+	}
+
+	[TestMethod]
 	public void TickCount_Increments()
 	{
 		// Arrange
@@ -442,25 +457,10 @@ public class ClockTests
 	}
 
 	[TestMethod]
-	public void TodayMidnight_ReturnsCurrentDate()
-	{
-		// Arrange
-		var localTime = Clock.LocalTime;
-
-		// Act
-		var result = Clock.TodayMidnight;
-
-		// Assert
-		Assert.AreEqual(localTime.Year, result.Year);
-		Assert.AreEqual(localTime.Month, result.Month);
-		Assert.AreEqual(localTime.Day, result.Day);
-	}
-
-	[TestMethod]
 	public void TodayMidnight_ReturnsMidnight()
 	{
 		// Act
-		var result = Clock.TodayMidnight;
+		var result = Clock.StartOfToday;
 
 		// Assert
 		Assert.AreEqual(0, result.Hour);

@@ -104,7 +104,7 @@
 	</PackageReference>
 	<PackageReference Include="linq2db" Version="6.1.0" />
 	<PackageReference Include="MessagePack" Version="3.1.4" />
-	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.4" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
 	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.4" />
 	<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="4.14.0">
 	  <PrivateAssets>all</PrivateAssets>

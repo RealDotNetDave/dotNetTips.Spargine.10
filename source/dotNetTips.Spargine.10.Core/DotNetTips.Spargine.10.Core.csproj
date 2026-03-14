@@ -116,7 +116,7 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.4" />
-	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.4" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
 	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.4" />
 	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.4" />
 	<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
