@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -331,7 +331,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="retries"/> is outside the valid range (1-255).</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(MoveDirectory), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
+	[Information(nameof(MoveDirectory), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public static SimpleResult<int> MoveDirectory([DisallowNull] DirectoryInfo source, [DisallowNull] DirectoryInfo destination, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5)
 	{
 		source = source.ArgumentExists();

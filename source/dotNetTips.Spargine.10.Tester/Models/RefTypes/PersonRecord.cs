@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="PersonRecord.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -512,7 +512,7 @@ public sealed record PersonRecord : IPerson<PersonRecord, AddressRecord>
 	/// Thrown if <paramref name="person"/> is null.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Update, Status = Status.Updated)]
+	[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 	public static PersonRecord ToPersonRecord([NotNull] in ValueTypes.Person person)
 	{
 		_ = person.ArgumentNotNull();

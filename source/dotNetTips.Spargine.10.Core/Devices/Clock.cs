@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="Clock.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Devices;
 /// Some of this code is from the Microsoft.VisualBasic.dll.
 /// </remarks>
 [ExcludeFromCodeCoverage(Justification = "Not needed due to just using the <see cref=\"DateTime\"/> type.")]
-[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineClock")]
+[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineClock")]
 public static class Clock
 {
 
@@ -249,6 +249,18 @@ public static class Clock
 	}
 
 	/// <summary>
+	/// Gets midnight (start of day) for today in local time.
+	/// </summary>
+	/// <value>TodayMidnight's date at midnight.</value>
+	[Pure]
+	[Information(nameof(StartOfToday), "David McCarter", "2/13/2026", Status = Status.Available)]
+	public static DateTimeOffset StartOfToday
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get => LocalTime.Date;
+	}
+
+	/// <summary>
 	/// Gets the current tick count by utilizing <see cref="Environment.TickCount"/>.
 	/// </summary>
 	/// <value>The tick count since the system started.</value>
@@ -276,18 +288,6 @@ public static class Clock
 		{
 			return Environment.TickCount64;
 		}
-	}
-
-	/// <summary>
-	/// Gets midnight (start of day) for today in local time.
-	/// </summary>
-	/// <value>TodayMidnight's date at midnight.</value>
-	[Pure]
-	[Information(nameof(TodayMidnight), "David McCarter", "2/13/2026", Status = Status.Updated)]
-	public static DateTimeOffset TodayMidnight
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get => LocalTime.Date;
 	}
 
 	/// <summary>

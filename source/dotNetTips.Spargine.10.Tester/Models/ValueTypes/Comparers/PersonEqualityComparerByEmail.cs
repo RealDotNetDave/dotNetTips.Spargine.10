@@ -4,7 +4,7 @@
 // Created          : 01-23-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 03-14-2026
 // ***********************************************************************
 // <copyright file="PersonEqualityComparerByEmail.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,7 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
 /// <summary>
 /// Provides equality comparison for <see cref="Person"/> objects based on their email addresses.
 /// </summary>
-[Information(Status = Status.Updated)]
+[Information(Status = Status.Available)]
 public sealed class PersonEqualityComparerByEmail : IEqualityComparer<Person>
 {
 	/// <summary>
