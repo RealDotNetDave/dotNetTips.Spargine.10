@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 03-15-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -142,107 +142,52 @@ public static class BenchmarkHelper
 
 	/// <summary>
 	/// Runs all benchmark tests found in the calling assembly using the specified configuration.
-	/// This method automatically discovers all benchmark classes in the assembly that called this method
-	/// and executes them with the provided BenchmarkDotNet configuration.
 	/// </summary>
-	/// <param name="config">The BenchmarkDotNet configuration to use for running the benchmarks.
-	/// This controls aspects such as exporters, diagnosers, job configurations, and other benchmark execution settings.
-	/// Must not be null.</param>
+	/// <param name="config">
+	/// The BenchmarkDotNet <see cref="IConfig"/> instance used to run the benchmarks.
+	/// This controls jobs, diagnosers, exporters, loggers, and other execution settings.
+	/// Must not be <c>null</c>.
+	/// </param>
 	/// <remarks>
 	/// <para>
-	/// This method uses <see cref="Assembly.GetCallingAssembly"/> to automatically determine which
-	/// assembly contains the benchmark classes to run. This allows the method to be called from
-	/// different benchmark test projects without modification, making it highly reusable across
-	/// multiple benchmark assemblies.
+	/// This method is intended to be called from a benchmark project’s <c>Program.cs</c> file to
+	/// execute every benchmark that derives from <see cref="Benchmark"/> in the calling assembly.
+	/// It uses <see cref="Assembly.GetCallingAssembly"/> to discover all non-abstract classes
+	/// assignable to <see cref="Benchmark"/> and then delegates execution to the private
+	/// <see cref="Run(IConfig,bool,Type[],Assembly)"/> helper, which handles validation, timing,
+	/// logging, and optional result persistence.
 	/// </para>
 	/// <para>
-	/// The method leverages <see cref="BenchmarkSwitcher"/> to discover
-	/// all types in the calling assembly that contain benchmark methods (marked with [Benchmark] attribute).
-	/// It then executes all discovered benchmarks using the provided configuration.
+	/// The discovered benchmark types are filtered using:
 	/// </para>
+	/// <list type="bullet">
+	/// <item><description><see cref="Type.IsClass"/> is <c>true</c> (only classes are considered).</description></item>
+	/// <item><description><see cref="Type.IsAbstract"/> is <c>false</c> (abstract base benchmarks are skipped).</description></item>
+	/// <item><description><see cref="Type"/> is assignable to <see cref="Benchmark"/>.</description></item>
+	/// </list>
 	/// <para>
-	/// <strong>Assembly Context:</strong> This method runs benchmarks in the calling assembly's context,
-	/// which ensures proper operation with diagnosers like <see cref="MemoryDiagnoserAttribute"/>. 
-	/// The use of <see cref="Assembly.GetCallingAssembly"/> guarantees that BenchmarkDotNet spawns 
-	/// the benchmark process from the correct assembly context.
-	/// </para>
-	/// <para>
-	/// After all benchmarks complete, the method logs completion status to the console
-	/// using <see cref="ConsoleLogger"/>. This provides immediate feedback about the execution status and results.
-	/// </para>
-	/// <para>
-	/// <strong>Typical Usage Pattern:</strong>
-	/// This method is designed to be called from a Program.cs file in benchmark test projects:
+	/// This overload passes <c>true</c> for the <c>saveResults</c> parameter, which causes
+	/// <see cref="Run(IConfig,bool,Type[],Assembly)"/> to write the aggregated timing summary
+	/// to the BenchmarkDotNet artifacts directory via <see cref="SaveReportToFile(IConfig,string)"/>,
+	/// in addition to logging it to the console.
 	/// </para>
 	/// </remarks>
-	/// <example>
-	/// <code>
-	/// // In dotNetTips.Spargine.Core.BenchmarkTests/Program.cs
-	/// using BenchmarkDotNet.Configs;
-	/// using DotNetTips.Spargine.Benchmarking;
-	/// 
-	/// var config = DefaultConfig.Instance
-	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
-	/// 
-	/// BenchmarkHelper.RunAllBenchmarks(config);
-	/// </code>
-	/// <code>
-	/// // In dotNetTips.Spargine.Extensions.BenchmarkTests/Program.cs
-	/// using BenchmarkDotNet.Configs;
-	/// using BenchmarkDotNet.Jobs;
-	/// using DotNetTips.Spargine.Benchmarking;
-	/// 
-	/// var config = ManualConfig.ToUniqueCollection(DefaultConfig.Instance)
-	///     .AddJob(Job.Default.WithWarmupCount(2))
-	///     .AddJob(Job.Default.WithIterationCount(5));
-	/// 
-	/// BenchmarkHelper.RunAllBenchmarks(config);
-	/// </code>
-	/// </example>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="config"/> is null.</exception>
-	/// <seealso cref="BenchmarkSwitcher"/>
-	/// <seealso cref="BenchmarkSwitcher.FromAssembly(Assembly)"/>
-	/// <seealso cref="Assembly.GetCallingAssembly"/>
-	/// <seealso cref="IConfig"/>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="config"/> is <c>null</c>.
+	/// </exception>
 	[Information(description: nameof(RunAllBenchmarks), Status = Status.Updated)]
 	public static void RunAllBenchmarks([DisallowNull] IConfig config)
 	{
 		config = config.ArgumentNotNull();
 
-		try
-		{
-			config = config.AddLogger(ConsoleLogger.Default);
+		var callingAssembly = Assembly.GetCallingAssembly();
 
-			var callingAssembly = Assembly.GetCallingAssembly();
+		// Find all classes that inherit from Benchmark in the calling assembly
+		var benchmarkTypes = callingAssembly.GetTypes()
+			.Where(t => typeof(Benchmark).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+			.ToArray();
 
-			ConsoleLogger.Default.WriteLineInfo($"Running all benchmarks from assembly: {callingAssembly.GetName().Name}");
-			ConsoleLogger.Default.WriteLineInfo(string.Empty);
-
-			var sw = PerformanceStopwatch.StartNew();
-
-			_ = BenchmarkSwitcher.FromAssembly(callingAssembly).RunAll(config);
-
-			sw.Stop();
-
-			ConsoleLogger.Default.WriteLineInfo(string.Empty);
-			ConsoleLogger.Default.WriteLineInfo(Resources.BenchmarkTestsAreCompleteRockOn);
-			ConsoleLogger.Default.WriteLineInfo(string.Empty);
-
-			ConsoleLogger.Default.WriteLineInfo($"Total time: {sw.ElapsedMilliseconds.FormatTime()}");
-
-			PlaySuccessBeep();
-
-			_ = Console.ReadLine();
-		}
-		catch (Exception ex)
-		{
-			ConsoleLogger.Default.WriteLineError(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
-			ConsoleLogger.Default.WriteLineError(ex.Message);
-
-			PlayErrorBeep();
-
-			_ = Console.ReadLine();
-		}
+		Run(config, saveResults: true, benchmarkTypes, callingAssembly);
 	}
 
 	/// <summary>
@@ -250,16 +195,60 @@ public static class BenchmarkHelper
 	/// Optionally saves a human-readable timing summary report to the BenchmarkDotNet artifacts directory.
 	/// </summary>
 	/// <param name="config">
-	/// The BenchmarkDotNet configuration used to run the benchmarks. Must not be <c>null</c>.
+	/// The BenchmarkDotNet <see cref="IConfig"/> instance used to run the benchmarks.
+	/// This controls jobs, diagnosers, exporters, loggers, and other execution settings.
+	/// Must not be <c>null</c>.
 	/// </param>
 	/// <param name="saveResults">
-	/// When set to <c>true</c>, the aggregated timing summary is persisted to the BenchmarkDotNet 
-	/// artifacts directory. When <c>false</c>, the summary is only written to the console.
+	/// When set to <c>true</c>, a consolidated timing summary produced by
+	/// <see cref="PerformanceStopwatch.GetSummaryReport"/> is written to a file in the
+	/// BenchmarkDotNet artifacts directory via <see cref="SaveReportToFile(IConfig, string)"/>.
+	/// When <c>false</c>, the summary is only written to the console.
 	/// </param>
 	/// <param name="benchmarks">
-	/// One or more benchmark types to execute. Each type must be defined in the calling assembly and
-	/// contain methods marked with <see cref="BenchmarkAttribute"/>. Must not be <c>null</c>.
+	/// One or more benchmark <see cref="Type"/> objects to execute.
+	/// Each type must:
+	/// <list type="bullet">
+	/// <item><description>Inherit from <see cref="Benchmark"/></description></item>
+	/// <item><description>Be defined in the calling assembly</description></item>
+	/// <item><description>Contain at least one method decorated with <see cref="BenchmarkAttribute"/></description></item>
+	/// </list>
+	/// Passing <c>null</c> or an empty array results in an <see cref="ArgumentException"/>.
 	/// </param>
+	/// <remarks>
+	/// <para>
+	/// This overload is intended for selectively running a subset of benchmarks from a given
+	/// assembly. It should typically be called from a benchmark project’s <c>Program.cs</c>:
+	/// </para>
+	/// <code>
+	/// using BenchmarkDotNet.Configs;
+	/// using DotNetTips.Spargine.Benchmarking;
+	/// 
+	/// var config = DefaultConfig.Instance
+	///     .WithOptions(ConfigOptions.DisableOptimizationsValidator);
+	/// 
+	/// BenchmarkHelper.RunBenchmarks(
+	///     config,
+	///     saveResults: true,
+	///     typeof(StringExtensionsBenchmark),
+	///     typeof(CollectionExtensionsCollectionBenchmark));
+	/// </code>
+	/// <para>
+	/// The method:
+	/// </para>
+	/// <list type="number">
+	/// <item><description>Validates input arguments and ensures at least one benchmark type is provided.</description></item>
+	/// <item><description>Resolves the calling assembly using <see cref="Assembly.GetCallingAssembly"/> to ensure benchmarks run in the correct context for diagnosers (for example, <see cref="MemoryDiagnoserAttribute"/>).</description></item>
+	/// <item><description>Delegates to a private <c>Run</c> helper that validates each type (inheritance and assembly), runs each benchmark type via BenchmarkRunner.Run(Type, IConfig), and aggregates timing information with <see cref="PerformanceStopwatch"/>.</description></item>
+	/// </list>
+	/// </remarks>
+	/// <exception cref="ArgumentException">
+	/// Thrown when:
+	/// <list type="bullet">
+	/// <item><description><paramref name="benchmarks"/> is <c>null</c> or empty.</description></item>
+	/// <item><description>Any provided type does not inherit from <see cref="Benchmark"/> or is not defined in the calling assembly.</description></item>
+	/// </list>
+	/// </exception>
 	[Information(description: nameof(RunBenchmarks), Status = Status.Updated)]
 	public static void RunBenchmarks([DisallowNull] IConfig config, bool saveResults, [DisallowNull] params Type[] benchmarks)
 	{
@@ -271,23 +260,84 @@ public static class BenchmarkHelper
 			ExceptionThrower.ThrowArgumentException(Resources.AtLeastOneBenchmarkTypeMustBeProvided, nameof(benchmarks));
 		}
 
+		// Get the calling assembly to ensure benchmarks run in the correct assembly context
+		// This is critical for diagnosers like MemoryDiagnoser to work properly
+		var callingAssembly = Assembly.GetCallingAssembly();
+
+		Run(config, saveResults, benchmarks, callingAssembly);
+	}
+
+	/// <summary>
+	/// Executes the specified benchmark types using the provided configuration and assembly context.
+	/// </summary>
+	/// <param name="config">
+	/// The BenchmarkDotNet <see cref="IConfig"/> instance that defines jobs, diagnosers, exporters,
+	/// loggers, and other settings used when running the benchmarks. Must not be <c>null</c>.
+	/// </param>
+	/// <param name="saveResults">
+	/// When set to <c>true</c>, a consolidated timing summary generated by
+	/// <see cref="PerformanceStopwatch.GetSummaryReport"/> is persisted to the BenchmarkDotNet
+	/// artifacts directory via <see cref="SaveReportToFile(IConfig, string)"/>. When <c>false</c>,
+	/// the summary is only written to the console.
+	/// </param>
+	/// <param name="benchmarks">
+	/// An array of benchmark <see cref="Type"/> instances to execute. Each type is expected to:
+	/// <list type="bullet">
+	/// <item><description>Inherit from <see cref="Benchmark"/>.</description></item>
+	/// <item><description>Be defined in the <paramref name="callingAssembly"/>.</description></item>
+	/// <item><description>Contain one or more methods decorated with <see cref="BenchmarkAttribute"/>.</description></item>
+	/// </list>
+	/// This method assumes <paramref name="benchmarks"/> has already been validated for null/empty
+	/// by the public <see cref="RunBenchmarks(IConfig, bool, Type[])"/> overload.
+	/// </param>
+	/// <param name="callingAssembly">
+	/// The assembly that is considered the owning context for the benchmark types. All entries in
+	/// <paramref name="benchmarks"/> must be defined in this assembly; otherwise an
+	/// <see cref="ArgumentException"/> is thrown. Using the correct assembly context is critical
+	/// for diagnosers such as <see cref="MemoryDiagnoserAttribute"/> to function properly.
+	/// </param>
+	/// <remarks>
+	/// <para>
+	/// This private helper centralizes the core benchmark execution logic for
+	/// <see cref="RunBenchmarks(IConfig, bool, Type[])"/>:
+	/// </para>
+	/// <list type="number">
+	/// <item><description>Validates that each benchmark type inherits from <see cref="Benchmark"/> and is defined in <paramref name="callingAssembly"/>.</description></item>
+	/// <item><description>Attaches <see cref="ConsoleLogger.Default"/> to the configuration for consistent console output.</description></item>
+	/// <item><description>Uses <see cref="PerformanceStopwatch"/> to record per-type timing and build an aggregated summary.</description></item>
+	/// <item><description>For each benchmark type, materializes benchmark cases via <see cref="BenchmarkConverter.TypeToBenchmarks(Type, IConfig)"/> and executes them using <see cref="BenchmarkRunner.Run(Type, IConfig)"/>.</description></item>
+	/// </list>
+	/// <para>
+	/// On successful completion of all benchmarks, a success beep is played via <see cref="PlaySuccessBeep"/>,
+	/// a timing summary is optionally saved to disk when <paramref name="saveResults"/> is <c>true</c>, and
+	/// the method waits for user input using <see cref="Console.ReadLine"/> to keep the console open.
+	/// </para>
+	/// <para>
+	/// If any exception is thrown during validation or execution, the error is logged to
+	/// <see cref="ConsoleLogger.Default"/>, an error beep is played via <see cref="PlayErrorBeep"/>, and the
+	/// method again waits for user input before returning.
+	/// </para>
+	/// </remarks>
+	/// <exception cref="ArgumentException">
+	/// Thrown when one or more types in <paramref name="benchmarks"/> do not inherit from
+	/// <see cref="Benchmark"/> or are not defined in <paramref name="callingAssembly"/>.
+	/// </exception>
+	private static void Run(IConfig config, bool saveResults, Type[] benchmarks, Assembly callingAssembly)
+	{
 		try
 		{
-			config = config.AddLogger(ConsoleLogger.Default);
-
-			// Get the calling assembly to ensure benchmarks run in the correct assembly context
-			// This is critical for diagnosers like MemoryDiagnoser to work properly
-			var callingAssembly = Assembly.GetCallingAssembly();
-
 			// Verify all benchmark types are from the calling assembly
-			var invalidTypes = benchmarks.Where(t => t.Assembly != callingAssembly).ToArray();
+			var invalidTypes = benchmarks.Where(t => !typeof(Benchmark).IsAssignableFrom(t) || t.Assembly != callingAssembly).ToArray();
 
 			if (invalidTypes.Length > 0)
 			{
 				var typeNamesCheck = string.Join(", ", invalidTypes.Select(t => t.FullName));
 
-				ExceptionThrower.ThrowArgumentException($"All benchmark types must be from the calling assembly. Invalid types: {typeNamesCheck}", nameof(benchmarks));
+				ExceptionThrower.ThrowArgumentException($"All benchmark types must inherit from {nameof(Benchmark)} and be from the calling assembly. Invalid types: {typeNamesCheck}", nameof(benchmarks));
 			}
+
+
+			config = config.AddLogger(ConsoleLogger.Default);
 
 			var sw = PerformanceStopwatch.StartNew();
 

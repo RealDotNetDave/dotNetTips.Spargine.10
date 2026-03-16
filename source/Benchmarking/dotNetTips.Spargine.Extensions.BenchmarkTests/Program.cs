@@ -48,8 +48,8 @@ internal sealed class Program
 
 		// Run Selected Tests
 		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	//typeof(CharacterExtensionsBenchmark),
-		//	typeof(HashSetExtensionsCollectionBenchmark)
+		//	 typeof(CharacterExtensionsBenchmark)
+		//	//	typeof(HashSetExtensionsCollectionBenchmark)
 		//	//typeof(ListExtensionsCollectionBenchmark)
 		//	);
 
