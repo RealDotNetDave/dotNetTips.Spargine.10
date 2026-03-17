@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-06-2026
+// Last Modified On : 03-16-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// This class provides methods to preload PersonRecord collections to improve benchmark test speed and efficiency.
 /// </summary>
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
-public partial class CollectionBenchmark : Benchmark
+public abstract partial class CollectionBenchmark : Benchmark
 {
 	/// <summary>
 	/// Half count
@@ -152,35 +152,29 @@ public partial class CollectionBenchmark : Benchmark
 		this.LoadCoordinateCollections();
 		this.LoadPersonCollections();
 
-		// Cache arrays to avoid multiple enumerations and improve performance
-		var personRefArray = this.GetPersonRefArray();
-		var personRecordArray = this.GetPersonRecordArray();
-		var personValArray = this.GetPersonValArray();
-
-		// Load lookup values
-		this.PersonEmailHalf = personRefArray[this.HalfCount].Email;
-		this.PersonEmailLast = personRefArray.Last().Email;
-		this.PersonFirstNameHalf = personRefArray[this.HalfCount].FirstName;
-		this.PersonFirstNameLast = personRefArray.Last().FirstName;
-		this.PersonLastNameHalf = personRefArray[this.HalfCount].LastName;
-		this.PersonLastNameLast = personRefArray.Last().LastName;
-		this.PersonRecordLookupHalf = personRecordArray[this.HalfCount];
-		this.PersonRecordLookupLast = personRecordArray.Last();
-		this.PersonRefLookupHalf = personRefArray[this.HalfCount];
-		this.PersonRefLookupLast = personRefArray.Last();
-		this.PersonValLookupHalf = personValArray[this.HalfCount];
-		this.PersonValLookupLast = personValArray.Last();
+		// Load lookup values directly from source lists (no clone needed for read-only access)
+		this.PersonEmailHalf = this._personRefList[this.HalfCount].Email;
+		this.PersonEmailLast = this._personRefList[^1].Email;
+		this.PersonFirstNameHalf = this._personRefList[this.HalfCount].FirstName;
+		this.PersonFirstNameLast = this._personRefList[^1].FirstName;
+		this.PersonLastNameHalf = this._personRefList[this.HalfCount].LastName;
+		this.PersonLastNameLast = this._personRefList[^1].LastName;
+		this.PersonRecordLookupHalf = this._personRecordList[this.HalfCount];
+		this.PersonRecordLookupLast = this._personRecordList[^1];
+		this.PersonRefLookupHalf = this._personRefList[this.HalfCount];
+		this.PersonRefLookupLast = this._personRefList[^1];
+		this.PersonValLookupHalf = this._personValList[this.HalfCount];
+		this.PersonValLookupLast = this._personValList[^1];
 
 		// Load insert collections
 		this.LoadInsertCollections();
-
 	}
 
 	/// <summary>
 	/// Loads a specified number of <see cref="PersonRecord"/> objects from embedded resources. 
 	/// If count is greater than 10,000, the remainder of the objects are generated randomly.
 	/// </summary>
-	/// <param name="count">The number of <see cref="PersonRecord"/> objects to load. The value must be in the range of 1 to 10000.</param>
+	/// <param name="count">The number of <see cref="PersonRecord"/> objects to load.</param>
 	/// <returns>An array of <see cref="PersonRecord"/> objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
 	internal static List<PersonRecord> LoadPeopleRecordCollection(int count)
@@ -248,7 +242,7 @@ public partial class CollectionBenchmark : Benchmark
 	/// <returns>An array of <see cref="PersonRecord"/>.</returns>
 	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert()
 	{
-		return this._peopleRecordToInsert;
+		return [.. this._peopleRecordToInsert];
 	}
 
 	/// <summary>
@@ -257,7 +251,7 @@ public partial class CollectionBenchmark : Benchmark
 	/// <returns>An array of <see cref="Person"/>.</returns>
 	protected virtual Person[] GetPersonRefCollectionToInsert()
 	{
-		return this._peopleRefToInsert;
+		return [.. this._peopleRefToInsert];
 	}
 
 	/// <summary>
@@ -266,7 +260,7 @@ public partial class CollectionBenchmark : Benchmark
 	/// <returns>An array of <see cref="Tester.Models.ValueTypes.Person"/>.</returns>
 	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert()
 	{
-		return this._peopleValToInsert;
+		return [.. this._peopleValToInsert];
 	}
 
 	/// <summary>

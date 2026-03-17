@@ -4,7 +4,7 @@
 // Created          : 04-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-07-2025
+// Last Modified On : 03-16-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,20 +30,27 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// </summary>
 public partial class CollectionBenchmark
 {
+	private Tester.Models.RefTypes.Coordinate[] _coordinateRefArray;
+	private Coordinate[] _coordinateValArray;
 
 	/// <summary>
-	/// The coordinate array.
+	/// Gets a clone of the Coordinate array. This method ensures that benchmarks operate on a fresh copy of the data,
+	/// preventing modifications from affecting subsequent benchmark runs.
 	/// </summary>
-	private Coordinate[] _coordinateArray;
-
-
-	/// <summary>
-	/// Loads the coordinate collections into memory. This includes both a list and an array of Coordinate objects,
-	/// populated to the maximum count specified for the benchmark. This method is called to prepare data for benchmark tests.
-	/// </summary>
-	protected void LoadCoordinateCollections()
+	/// <returns>A clone of the Coordinate array.</returns>
+	public Tester.Models.RefTypes.Coordinate[] GetCoordinateRefArray()
 	{
-		this._coordinateArray = [.. RandomData.GenerateCoordinateCollection<Coordinate>(this.MaxCount)];
+		return [.. this._coordinateRefArray];
+	}
+
+	/// <summary>
+	/// Gets a clone of the Coordinate list as a <see cref="Collection{T}"/>.
+	/// Similar to <see cref="GetCoordinateValArray"/>, this method provides a fresh copy of the data for benchmark tests.
+	/// </summary>
+	/// <returns>A clone of the Coordinate list as a Collection.</returns>
+	public Collection<Tester.Models.RefTypes.Coordinate> GetCoordinateRefCollection()
+	{
+		return this._coordinateRefArray.AsSpan().ToArray().ToCollection();
 	}
 
 	/// <summary>
@@ -53,7 +60,7 @@ public partial class CollectionBenchmark
 	/// <returns>A clone of the Coordinate array.</returns>
 	public Coordinate[] GetCoordinateValArray()
 	{
-		return this._coordinateArray.FastClone<Coordinate[]>();
+		return [.. this._coordinateValArray];
 	}
 
 	/// <summary>
@@ -63,6 +70,16 @@ public partial class CollectionBenchmark
 	/// <returns>A clone of the Coordinate list as a Collection.</returns>
 	public Collection<Coordinate> GetCoordinateValCollection()
 	{
-		return this._coordinateArray.FastClone<Coordinate[]>().ToCollection();
+		return this._coordinateValArray.AsSpan().ToArray().ToCollection();
+	}
+
+	/// <summary>
+	/// Loads the coordinate collections into memory. This includes both a list and an array of Coordinate objects,
+	/// populated to the maximum count specified for the benchmark. This method is called to prepare data for benchmark tests.
+	/// </summary>
+	protected void LoadCoordinateCollections()
+	{
+		this._coordinateValArray = [.. RandomData.GenerateCoordinateCollection<Coordinate>(this.MaxCount)];
+		this._coordinateRefArray = [.. RandomData.GenerateCoordinateCollection<Tester.Models.RefTypes.Coordinate>(this.MaxCount)];
 	}
 }

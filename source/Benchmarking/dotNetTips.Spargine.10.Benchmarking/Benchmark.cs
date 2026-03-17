@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 03-16-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// methods for consuming objects, generating random data, and updating test entities. 
 /// It also includes properties for accessing various test data and configurations.
 /// Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter], [Atlassian],
-/// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub], [HardwareCounters],
+/// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GcServer(true)], [GitHub], [HardwareCounters],
 /// [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn], [MValueColumn], [NamespaceColumn],
 /// [NativeMemoryProfiler], [PlainExporter], [SkewnessColumn], [StackOverflow],
 /// [TailCallDiagnoser], [ThreadingDiagnoser]
@@ -56,7 +56,6 @@ namespace DotNetTips.Spargine.Benchmarking;
 [EvaluateOverhead]
 [ExceptionDiagnoser]
 [Full]
-[GcServer(true)]
 [InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 [IterationsColumn]
 [JsonExporter(indentJson: true)]
@@ -67,7 +66,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [StopOnFirstError(true)]
 [ThreadingDiagnoser]
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.UpdateDocumentation)]
-public class Benchmark
+public abstract class Benchmark
 {
 
 	/// <summary>
@@ -284,8 +283,6 @@ public class Benchmark
 	/// <value>The consumer instance.</value>
 	private Consumer Consumer { get; } = new();
 
-
-
 	/// <summary>
 	/// Simulates work by computing the hash code of the provided item object.
 	/// This method is designed for benchmarking scenarios where a consistent, 
@@ -339,18 +336,19 @@ public class Benchmark
 
 	/// <summary>
 	/// Consumes the specified object asynchronously using the Benchmark.Consumer property to prevent the JIT compiler from optimizing away the code being benchmarked.
-	/// This method wraps the synchronous consume operation in a Task to be awaited, ensuring compatibility with async workflows.
+	/// This method performs the consume operation synchronously and returns a completed <see cref="ValueTask"/>,
+	/// avoiding <see cref="Task.Run(Action)"/> overhead (closure allocation, thread pool scheduling) that would
+	/// pollute <see cref="MemoryDiagnoser"/> and <see cref="ThreadingDiagnoser"/> results.
 	/// </summary>
 	/// <typeparam name="T">The type of the object to consume.</typeparam>
 	/// <param name="obj">The object to consume.</param>
-	/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
-	/// <returns>A Task representing the asynchronous operation.</returns>
+	/// <returns>A <see cref="ValueTask"/> representing the completed operation.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public Task ConsumeAsync<T>(T obj, CancellationToken cancellationToken = default)
+	public ValueTask ConsumeAsync<T>(T obj)
 	{
-		return Task.Run(() => this.Consumer.Consume(obj), cancellationToken);
+		this.Consumer.Consume(obj);
+		return ValueTask.CompletedTask;
 	}
-
 
 	/// <summary>
 	/// Iterates over the specified <see cref="IDictionary{TKey, TValue}"/> and consumes each value using <see cref="Consume{T}(T)"/>.
@@ -451,7 +449,7 @@ public class Benchmark
 	public byte[] GetByteArray(int count = 1)
 	{
 		count = count.ArgumentInRange(1);
-		return this._byteArrayCache.GetOrAdd(count, RandomData.GenerateByteArray(count));
+		return [.. this._byteArrayCache.GetOrAdd(count, RandomData.GenerateByteArray)];
 	}
 
 	/// <summary>
@@ -470,7 +468,7 @@ public class Benchmark
 
 		var key = $"{count}-{wordMinLength}-{wordMaxLength}";
 
-		return this._stringArrayCache.GetOrAdd(key, _ => [.. RandomData.GenerateWords(count, wordMinLength, wordMaxLength)]);
+		return [.. this._stringArrayCache.GetOrAdd(key, _ => [.. RandomData.GenerateWords(count, wordMinLength, wordMaxLength)])];
 	}
 
 	/// <summary>
@@ -509,7 +507,7 @@ public class Benchmark
 	{
 		ConsoleLogger.Default.WriteLine(LogKind.Info, $"Setup(): {nameof(Benchmark)}.");
 
-		this.Base64String = this.LongTestString.Substring(1, 50).ToBase64();
+		this.Base64String = this.LongTestString.Substring(0, 50).ToBase64();
 		this.CoordinateVal01 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
 		this.CoordinateVal02 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
 		this.CoordinateRef01 = RandomData.GenerateCoordinate<Coordinate>();
@@ -651,9 +649,7 @@ public class Benchmark
 	{
 		coordinate = coordinate.ArgumentNotNull();
 
-		coordinate.X = 100;
-		coordinate.Y = 200;
-		coordinate.Z = 300;
+		coordinate.X = 0x64;
 
 		return coordinate;
 	}

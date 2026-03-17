@@ -4,7 +4,7 @@
 // Created          : 04-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-21-2025
+// Last Modified On : 03-16-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,7 +33,7 @@ public partial class CollectionBenchmark
 	/// <summary>
 	/// The maximum number of people data that can be loaded from resources.
 	/// </summary>
-	private const int MaxPeopleDataCount = 10000;
+	private const int MaxPeopleDataCount = 10_000;
 
 	/// <summary>
 	/// The person record list.
@@ -57,7 +57,8 @@ public partial class CollectionBenchmark
 	/// <returns>A clone of the PersonRecord array.</returns>
 	public PersonRecord[] GetPersonRecordArray()
 	{
-		return [.. this._personRecordList.FastClone<PersonRecord[]>()];
+		return System.Runtime.InteropServices.CollectionsMarshal.AsSpan(
+			this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList)).ToArray();
 	}
 
 	/// <summary>
@@ -66,7 +67,15 @@ public partial class CollectionBenchmark
 	/// <returns>A dictionary of PersonRecord indexed by string.</returns>
 	public Dictionary<string, PersonRecord> GetPersonRecordDictionary()
 	{
-		return this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList).ToDictionary(p => p.Id, StringComparer.OrdinalIgnoreCase);
+		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
+		var dictionary = new Dictionary<string, PersonRecord>(cloned.Count, StringComparer.OrdinalIgnoreCase);
+
+		foreach (var person in System.Runtime.InteropServices.CollectionsMarshal.AsSpan(cloned))
+		{
+			dictionary[person.Id] = person;
+		}
+
+		return dictionary;
 	}
 
 	/// <summary>
@@ -75,7 +84,8 @@ public partial class CollectionBenchmark
 	/// <returns>An array of Person reference types.</returns>
 	public Person[] GetPersonRefArray()
 	{
-		return [.. this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList)];
+		return System.Runtime.InteropServices.CollectionsMarshal.AsSpan(
+			this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList)).ToArray();
 	}
 
 	/// <summary>
@@ -84,9 +94,15 @@ public partial class CollectionBenchmark
 	/// <returns>A dictionary of Person reference types indexed by string.</returns>
 	public Dictionary<string, Person> GetPersonRefDictionary()
 	{
-		return this._personRefList
-			.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList)
-			.ToDictionary(p => p.Id, StringComparer.OrdinalIgnoreCase);
+		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
+		var dictionary = new Dictionary<string, Person>(cloned.Count, StringComparer.OrdinalIgnoreCase);
+
+		foreach (var person in System.Runtime.InteropServices.CollectionsMarshal.AsSpan(cloned))
+		{
+			dictionary[person.Id] = person;
+		}
+
+		return dictionary;
 	}
 
 	/// <summary>
@@ -95,7 +111,8 @@ public partial class CollectionBenchmark
 	/// <returns>An array of Person value types.</returns>
 	public Tester.Models.ValueTypes.Person[] GetPersonValArray()
 	{
-		return [.. this._personValList.FastClone(typeInfo: Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.PersonList)];
+		return System.Runtime.InteropServices.CollectionsMarshal.AsSpan(
+			this._personValList.FastClone(typeInfo: Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.PersonList)).ToArray();
 	}
 
 	/// <summary>
@@ -103,9 +120,15 @@ public partial class CollectionBenchmark
 	/// </summary>
 	public Dictionary<string, Tester.Models.ValueTypes.Person> GetPersonValDictionary()
 	{
-		return this._personValList
-			.FastClone(typeInfo: Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.PersonList)
-			.ToDictionary(p => p.Id, StringComparer.OrdinalIgnoreCase);
+		var cloned = this._personValList.FastClone(typeInfo: Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.PersonList);
+		var dictionary = new Dictionary<string, Tester.Models.ValueTypes.Person>(cloned.Count, StringComparer.OrdinalIgnoreCase);
+
+		foreach (var person in System.Runtime.InteropServices.CollectionsMarshal.AsSpan(cloned))
+		{
+			dictionary[person.Id] = person;
+		}
+
+		return dictionary;
 	}
 
 	/// <summary>

@@ -182,10 +182,19 @@ public static class BenchmarkHelper
 
 		var callingAssembly = Assembly.GetCallingAssembly();
 
+		ConsoleLogger.Default.WriteLineInfo($"Discovering {nameof(Benchmark)}-derived classes in assembly: {callingAssembly.GetName().Name}");
+
 		// Find all classes that inherit from Benchmark in the calling assembly
 		var benchmarkTypes = callingAssembly.GetTypes()
 			.Where(t => typeof(Benchmark).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
 			.ToArray();
+
+		if (benchmarkTypes.Length == 0)
+		{
+			ConsoleLogger.Default.WriteLineInfo(
+				$"No {nameof(Benchmark)}-derived benchmark classes found in assembly: {callingAssembly.GetName().Name}");
+			return;
+		}
 
 		Run(config, saveResults: true, benchmarkTypes, callingAssembly);
 	}
@@ -333,7 +342,8 @@ public static class BenchmarkHelper
 			{
 				var typeNamesCheck = string.Join(", ", invalidTypes.Select(t => t.FullName));
 
-				ExceptionThrower.ThrowArgumentException($"All benchmark types must inherit from {nameof(Benchmark)} and be from the calling assembly. Invalid types: {typeNamesCheck}", nameof(benchmarks));
+				ExceptionThrower.ThrowArgumentException(
+					$"All benchmark types must inherit from {nameof(Benchmark)} and be from the calling assembly. Invalid types: {typeNamesCheck}", nameof(benchmarks));
 			}
 
 
@@ -384,17 +394,13 @@ public static class BenchmarkHelper
 			}
 
 			PlaySuccessBeep();
-
-			_ = Console.ReadLine();
 		}
 		catch (Exception ex)
 		{
 			ConsoleLogger.Default.WriteLineError(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
-			ConsoleLogger.Default.WriteLineError(ex.Message);
+			ConsoleLogger.Default.WriteLineError(ex.ToString());
 
 			PlayErrorBeep();
-
-			_ = Console.ReadLine();
 		}
 	}
 
