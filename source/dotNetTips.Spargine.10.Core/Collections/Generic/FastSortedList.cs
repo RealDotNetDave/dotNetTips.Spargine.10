@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-11-2026
+// Last Modified On : 03-19-2026
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -18,6 +18,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -32,8 +33,6 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFastSortedList")]
 public class FastSortedList<T> : List<T>
 {
-	//TODO: WORK ON ALLOCATIONS IN .NET 10
-
 	/// <summary>
 	/// The comparer used for sorting the list.
 	/// </summary>
@@ -47,7 +46,7 @@ public class FastSortedList<T> : List<T>
 	/// <summary>
 	/// True or False if the list has been sorted.
 	/// </summary>
-	private bool _sorted;
+	private volatile bool _sorted;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FastSortedList{T}"/> class.
@@ -108,7 +107,7 @@ public class FastSortedList<T> : List<T>
 	public FastSortedList([DisallowNull] in IEnumerable<T> collection, in IComparer<T> comparer) : base(collection)
 	{
 		this._comparer = comparer;
-		this.SortCollection();
+		this.SortCollectionCore();
 	}
 
 	/// <summary>
@@ -155,6 +154,28 @@ public class FastSortedList<T> : List<T>
 	}
 
 	/// <summary>
+	/// Returns a <see cref="ReadOnlySpan{T}"/> over the sorted contents of the list without allocating a new collection.
+	/// This method ensures the collection is sorted before returning the span, if it has not been sorted already.
+	/// </summary>
+	/// <returns>A <see cref="ReadOnlySpan{T}"/> over the sorted elements.</returns>
+	/// <remarks>
+	/// The returned span is only valid while the list is not structurally modified.
+	/// This is the most allocation-friendly way to read the sorted data.
+	/// </remarks>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.None)]
+	public ReadOnlySpan<T> AsReadOnlySpan()
+	{
+		lock (this._lock)
+		{
+			this.SortCollectionCore();
+
+			return CollectionsMarshal.AsSpan(this);
+		}
+	}
+
+	/// <summary>
 	/// Removes all elements from the <see cref="FastSortedList{T}"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -178,8 +199,12 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new Enumerator GetEnumerator()
 	{
-		this.SortCollection();
-		return base.GetEnumerator();
+		lock (this._lock)
+		{
+			this.SortCollectionCore();
+
+			return base.GetEnumerator();
+		}
 	}
 
 	/// <summary>
@@ -223,7 +248,7 @@ public class FastSortedList<T> : List<T>
 	{
 		lock (this._lock)
 		{
-			this.SortCollection();
+			this.SortCollectionCore();
 
 			return base.ToArray();
 		}
@@ -241,7 +266,7 @@ public class FastSortedList<T> : List<T>
 	{
 		lock (this._lock)
 		{
-			this.SortCollection();
+			this.SortCollectionCore();
 
 			return ImmutableList.CreateRange(this);
 		}
@@ -259,7 +284,7 @@ public class FastSortedList<T> : List<T>
 	{
 		lock (this._lock)
 		{
-			this.SortCollection();
+			this.SortCollectionCore();
 
 			return [.. base.ToArray()];
 		}
@@ -267,25 +292,19 @@ public class FastSortedList<T> : List<T>
 
 	/// <summary>
 	/// Sorts the items in the collection if they have not been sorted yet.
-	/// This method checks the <see cref="_sorted"/> flag before performing the sort operation to ensure that sorting is only done when necessary.
+	/// This must only be called while <see cref="_lock"/> is already held.
+	/// Uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> to sort the backing
+	/// buffer directly, avoiding the indirection of <see cref="List{T}.Sort(IComparer{T})"/>.
 	/// </summary>
 	[Information(Status = Status.Available)]
-	private void SortCollection()
+	private void SortCollectionCore()
 	{
 		if (this._sorted)
 		{
 			return;
 		}
 
-		lock (this._lock)
-		{
-			if (this._sorted)
-			{
-				return;
-			}
-
-			this.Sort(this._comparer);
-			this._sorted = true;
-		}
+		CollectionsMarshal.AsSpan(this).Sort(this._comparer);
+		this._sorted = true;
 	}
 }
