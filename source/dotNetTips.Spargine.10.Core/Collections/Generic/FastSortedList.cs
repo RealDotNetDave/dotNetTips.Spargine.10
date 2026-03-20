@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-19-2026
+// Last Modified On : 03-20-2026
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -37,11 +37,6 @@ public class FastSortedList<T> : List<T>
 	/// The comparer used for sorting the list.
 	/// </summary>
 	private readonly IComparer<T> _comparer;
-
-	/// <summary>
-	/// Lock object for thread safety.
-	/// </summary>
-	private readonly Lock _lock = new();
 
 	/// <summary>
 	/// True or False if the list has been sorted.
@@ -130,11 +125,8 @@ public class FastSortedList<T> : List<T>
 	[Information(BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public new void Add([DisallowNull] T item)
 	{
-		lock (this._lock)
-		{
-			base.Add(item.ArgumentNotNull());
-			this._sorted = false;
-		}
+		base.Add(item.ArgumentNotNull());
+		this._sorted = false;
 	}
 
 	/// <summary>
@@ -146,11 +138,8 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new void AddRange([DisallowNull] IEnumerable<T> items)
 	{
-		lock (this._lock)
-		{
-			base.AddRange(items.ArgumentNotNull());
-			this._sorted = false;
-		}
+		base.AddRange(items);
+		this._sorted = false;
 	}
 
 	/// <summary>
@@ -167,12 +156,9 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.None)]
 	public ReadOnlySpan<T> AsReadOnlySpan()
 	{
-		lock (this._lock)
-		{
-			this.SortCollectionCore();
+		this.SortCollectionCore();
 
-			return CollectionsMarshal.AsSpan(this);
-		}
+		return CollectionsMarshal.AsSpan(this);
 	}
 
 	/// <summary>
@@ -182,11 +168,8 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new void Clear()
 	{
-		lock (this._lock)
-		{
-			base.Clear();
-			this._sorted = false;
-		}
+		base.Clear();
+		this._sorted = false;
 	}
 
 	/// <summary>
@@ -199,12 +182,9 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new Enumerator GetEnumerator()
 	{
-		lock (this._lock)
-		{
-			this.SortCollectionCore();
+		this.SortCollectionCore();
 
-			return base.GetEnumerator();
-		}
+		return base.GetEnumerator();
 	}
 
 	/// <summary>
@@ -216,10 +196,7 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new bool Remove([DisallowNull] T item)
 	{
-		lock (this._lock)
-		{
-			return base.Remove(item.ArgumentNotNull());
-		}
+		return base.Remove(item.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -230,10 +207,7 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new void RemoveAt(int index)
 	{
-		lock (this._lock)
-		{
-			base.RemoveAt(index);
-		}
+		base.RemoveAt(index);
 	}
 
 	/// <summary>
@@ -246,12 +220,9 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public new T[] ToArray()
 	{
-		lock (this._lock)
-		{
-			this.SortCollectionCore();
+		this.SortCollectionCore();
 
-			return base.ToArray();
-		}
+		return base.ToArray();
 	}
 
 	/// <summary>
@@ -264,12 +235,9 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public IImmutableList<T> ToImmutableList()
 	{
-		lock (this._lock)
-		{
-			this.SortCollectionCore();
+		this.SortCollectionCore();
 
-			return ImmutableList.CreateRange(this);
-		}
+		return ImmutableList.CreateRange(this);
 	}
 
 	/// <summary>
@@ -282,17 +250,13 @@ public class FastSortedList<T> : List<T>
 	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public IList<T> ToList()
 	{
-		lock (this._lock)
-		{
-			this.SortCollectionCore();
+		this.SortCollectionCore();
 
-			return [.. base.ToArray()];
-		}
+		return [.. base.ToArray()];
 	}
 
 	/// <summary>
 	/// Sorts the items in the collection if they have not been sorted yet.
-	/// This must only be called while <see cref="_lock"/> is already held.
 	/// Uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> to sort the backing
 	/// buffer directly, avoiding the indirection of <see cref="List{T}.Sort(IComparer{T})"/>.
 	/// </summary>
