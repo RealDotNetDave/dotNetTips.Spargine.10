@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-15-2026
+// Last Modified On : 03-20-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -271,9 +271,8 @@ public static class BenchmarkHelper
 
 		// Get the calling assembly to ensure benchmarks run in the correct assembly context
 		// This is critical for diagnosers like MemoryDiagnoser to work properly
-		var callingAssembly = Assembly.GetCallingAssembly();
 
-		Run(config, saveResults, benchmarks, callingAssembly);
+		Run(config, saveResults, benchmarks, Assembly.GetCallingAssembly());
 	}
 
 	/// <summary>
@@ -401,6 +400,11 @@ public static class BenchmarkHelper
 			ConsoleLogger.Default.WriteLineError(ex.ToString());
 
 			PlayErrorBeep();
+		}
+		finally
+		{
+			// Leave this at the end of the method to ensure the console stays open after benchmarks complete or if an error occurs
+			_ = Console.ReadLine();
 		}
 	}
 
