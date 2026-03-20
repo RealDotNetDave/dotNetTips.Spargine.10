@@ -181,22 +181,34 @@ public static class BenchmarkHelper
 		config = config.ArgumentNotNull();
 
 		var callingAssembly = Assembly.GetCallingAssembly();
+		var assemblyName = callingAssembly.GetName().Name;
 
-		ConsoleLogger.Default.WriteLineInfo($"Discovering {nameof(Benchmark)}-derived classes in assembly: {callingAssembly.GetName().Name}");
+		ConsoleLogger.Default.WriteLineInfo($"Discovering {nameof(Benchmark)}-derived classes in assembly: {assemblyName}");
 
-		// Find all classes that inherit from Benchmark in the calling assembly
-		var benchmarkTypes = callingAssembly.GetTypes()
-			.Where(t => typeof(Benchmark).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
-			.ToArray();
+		// Find all concrete classes that inherit from Benchmark in the calling assembly.
+		// Cheap flag checks (IsClass, IsAbstract) short-circuit before the costlier IsAssignableFrom reflection call.
+		var allTypes = callingAssembly.GetTypes();
+		var benchmarkBaseType = typeof(Benchmark);
+		var benchmarkTypes = new List<Type>(capacity: 16);
 
-		if (benchmarkTypes.Length == 0)
+		for (var typeIndex = 0; typeIndex < allTypes.Length; typeIndex++)
+		{
+			var type = allTypes[typeIndex];
+
+			if (type.IsClass && !type.IsAbstract && benchmarkBaseType.IsAssignableFrom(type))
+			{
+				benchmarkTypes.Add(type);
+			}
+		}
+
+		if (benchmarkTypes.Count == 0)
 		{
 			ConsoleLogger.Default.WriteLineInfo(
-				$"No {nameof(Benchmark)}-derived benchmark classes found in assembly: {callingAssembly.GetName().Name}");
+				$"No {nameof(Benchmark)}-derived benchmark classes found in assembly: {assemblyName}");
 			return;
 		}
 
-		Run(config, saveResults: true, benchmarkTypes, callingAssembly);
+		Run(config, saveResults: true, [.. benchmarkTypes], callingAssembly);
 	}
 
 	/// <summary>
@@ -262,15 +274,7 @@ public static class BenchmarkHelper
 	public static void RunBenchmarks([DisallowNull] IConfig config, bool saveResults, [DisallowNull] params Type[] benchmarks)
 	{
 		config = config.ArgumentNotNull();
-		benchmarks = benchmarks.ArgumentNotNull();
-
-		if (benchmarks.Length == 0)
-		{
-			ExceptionThrower.ThrowArgumentException(Resources.AtLeastOneBenchmarkTypeMustBeProvided, nameof(benchmarks));
-		}
-
-		// Get the calling assembly to ensure benchmarks run in the correct assembly context
-		// This is critical for diagnosers like MemoryDiagnoser to work properly
+		benchmarks = benchmarks.ArgumentItemsExists();
 
 		Run(config, saveResults, benchmarks, Assembly.GetCallingAssembly());
 	}
@@ -334,17 +338,28 @@ public static class BenchmarkHelper
 	{
 		try
 		{
-			// Verify all benchmark types are from the calling assembly
-			var invalidTypes = benchmarks.Where(t => !typeof(Benchmark).IsAssignableFrom(t) || t.Assembly != callingAssembly).ToArray();
+			// Verify all benchmark types inherit from Benchmark and belong to the calling assembly.
+			// Assembly reference comparison is cheaper than IsAssignableFrom, so check it first.
+			var benchmarkBaseType = typeof(Benchmark);
+			var invalidTypes = new List<Type>(capacity: 4);
 
-			if (invalidTypes.Length > 0)
+			for (var typeIndex = 0; typeIndex < benchmarks.Length; typeIndex++)
 			{
-				var typeNamesCheck = string.Join(", ", invalidTypes.Select(t => t.FullName));
+				var type = benchmarks[typeIndex];
+
+				if (type.Assembly != callingAssembly || !benchmarkBaseType.IsAssignableFrom(type))
+				{
+					invalidTypes.Add(type);
+				}
+			}
+
+			if (invalidTypes.Count > 0)
+			{
+				var typeNamesCheck = string.Join(ControlChars.CommaSpace, invalidTypes.Select(static t => t.FullName));
 
 				ExceptionThrower.ThrowArgumentException(
 					$"All benchmark types must inherit from {nameof(Benchmark)} and be from the calling assembly. Invalid types: {typeNamesCheck}", nameof(benchmarks));
 			}
-
 
 			config = config.AddLogger(ConsoleLogger.Default);
 
@@ -352,20 +367,23 @@ public static class BenchmarkHelper
 
 			sw.AddDiagnosticEntry($"Found {benchmarks.Length} benchmark classes to run.");
 
+			var benchmarkCount = benchmarks.Length;
+
 			// Run each benchmark type individually using BenchmarkRunner.Run()
 			// This ensures each benchmark runs in the calling assembly's context
 			// which is required for diagnosers like MemoryDiagnoser to work properly
-			for (var benchmarkIndex = 0; benchmarkIndex < benchmarks.Length; benchmarkIndex++)
+			for (var benchmarkIndex = 0; benchmarkIndex < benchmarkCount; benchmarkIndex++)
 			{
 				var benchmarkType = benchmarks[benchmarkIndex];
+				var benchmarkName = benchmarkType.Name;
 
-				ConsoleLogger.Default.WriteLineInfo($"Running benchmark {benchmarkIndex + 1} of {benchmarks.Length}: {benchmarkType.Name}");
+				ConsoleLogger.Default.WriteLineInfo($"Running benchmark {benchmarkIndex + 1} of {benchmarkCount}: {benchmarkName}");
 
 				ConsoleLogger.Default.WriteLineInfo(string.Empty);
 
 				using var runInfo = BenchmarkConverter.TypeToBenchmarks(benchmarkType, config);
 
-				sw.AddDiagnosticEntry($"Starting benchmark: {benchmarkType.Name} - Test Count: {runInfo.BenchmarksCases.Length}");
+				sw.AddDiagnosticEntry($"Starting benchmark: {benchmarkName} - Test Count: {runInfo.BenchmarksCases.Length}");
 
 				var startTime = sw.Elapsed;
 
@@ -375,7 +393,7 @@ public static class BenchmarkHelper
 
 				sw.RecordLap();
 
-				sw.AddDiagnosticEntry($"Benchmark completed: {benchmarkType.Name} - Runtime: {totalBenchmarkTime.MillisecondsToString()}");
+				sw.AddDiagnosticEntry($"Benchmark completed: {benchmarkName} - Runtime: {totalBenchmarkTime.MillisecondsToString()}");
 			}
 
 			ConsoleLogger.Default.WriteLineInfo(string.Empty);
@@ -385,7 +403,7 @@ public static class BenchmarkHelper
 			sw.Stop();
 
 			var summary = sw.GetSummaryReport();
-			ConsoleLogger.Default.WriteLineInfo($"{summary}");
+			ConsoleLogger.Default.WriteLineInfo(summary);
 
 			if (saveResults)
 			{

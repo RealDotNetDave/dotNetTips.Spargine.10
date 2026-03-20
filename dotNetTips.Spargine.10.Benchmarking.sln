@@ -1,11 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11415.280 d18.0
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{0E1E9F10-D542-4BEC-A6E1-D68DC87F2CF4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.github\copilot-spargine.md = .github\copilot-spargine.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetTips.Spargine.Tester.BenchmarkTests", "source\Benchmarking\dotNetTips.Spargine.Tester.Benchmarking\DotNetTips.Spargine.Tester.BenchmarkTests.csproj", "{2F5484B8-E5F1-4EF8-B09A-7A4AD8707BB4}"
