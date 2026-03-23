@@ -16,3 +16,9 @@
 - Favor extension methods
 - Keep APIs lightweight and efficient
 - Avoid unnecessary abstractions
+
+## Repository rules
+- Follow the repository `.editorconfig` exactly.
+- Prefer analyzer-compliant code.
+- Obey naming rules, formatting rules, and code-style severities defined in `.editorconfig`.
+- When proposing edits, avoid introducing analyzer warnings or style violations.
