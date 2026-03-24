@@ -4,12 +4,15 @@
 // Created          : 01-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-22-2025
+// Last Modified On : 03-24-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
-// <summary>Extension methods for Assembly.</summary>
+// <summary>
+// Provides high-performance extension methods for <see cref="Assembly"/> supporting
+// type discovery, interface extraction, and instance creation via reflection.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
@@ -44,22 +47,25 @@ public static class AssemblyExtensions
 		/// It validates that the provided assembly is not null before proceeding with the extraction.</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
 			assembly = assembly.ArgumentNotNull();
 
-			var interfaces = new List<Type>();
+			var types = assembly.GetTypes();
+			var interfaceSet = new HashSet<Type>();
 
-			// USING SPAN CAUSES ISSUES. FrozenSet is slower. Recommendation from CoPilot is slower.
-			var array = assembly.GetTypes();
-
-			foreach (var arrayItem in array)
+			foreach (var type in types)
 			{
-				interfaces.AddRange(arrayItem.GetInterfaces());
+				var typeInterfaces = type.GetInterfaces();
+
+				foreach (var iface in typeInterfaces)
+				{
+					_ = interfaceSet.Add(iface);
+				}
 			}
 
-			return interfaces.Distinct().ToReadOnlyCollection();
+			return new List<Type>(interfaceSet).AsReadOnly();
 		}
 
 		/// <summary>
@@ -71,7 +77,7 @@ public static class AssemblyExtensions
 		/// such as when creating instances or performing reflection-based processing.</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetAllTypes), "David McCarter", "221/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllTypes), "David McCarter", "221/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllTypes()
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -87,7 +93,9 @@ public static class AssemblyExtensions
 				}
 			}
 
-			return result.ToReadOnlyCollection();
+			result.TrimExcess();
+
+			return result.AsReadOnly();
 		}
 
 		/// <summary>
@@ -100,7 +108,7 @@ public static class AssemblyExtensions
 		/// of each found type using the default constructor.</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -110,7 +118,15 @@ public static class AssemblyExtensions
 
 			foreach (var type in types)
 			{
-				if (!type.IsInterface && !type.IsAbstract && !type.IsGenericType && targetType.IsAssignableFrom(type))
+				// Check cheapest conditions first to short-circuit early.
+				// IsAbstract covers both abstract classes AND interfaces,
+				// so the separate IsInterface check is redundant.
+				if (type.IsAbstract || type.IsGenericType)
+				{
+					continue;
+				}
+
+				if (targetType.IsAssignableFrom(type))
 				{
 					if (Activator.CreateInstance(type) is T instance)
 					{
@@ -129,7 +145,7 @@ public static class AssemblyExtensions
 		/// Original code from: oqtane.framework</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetTypes([DisallowNull] Type type)
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -138,16 +154,17 @@ public static class AssemblyExtensions
 			var types = assembly.GetTypes();
 			var result = new List<Type>(types.Length);
 
-			foreach (var t in types)
+			foreach (var candidateType in types)
 			{
-				if (!t.IsAbstract && type.IsAssignableFrom(t))
+				if (!candidateType.IsAbstract && type.IsAssignableFrom(candidateType))
 				{
-					result.Add(t);
+					result.Add(candidateType);
 				}
 			}
 
-			return result.ToReadOnlyCollection();
+			result.TrimExcess();
 
+			return result.AsReadOnly();
 		}
 	}
 }
