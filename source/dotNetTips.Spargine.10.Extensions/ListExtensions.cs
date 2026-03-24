@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-14-2026
+// Last Modified On : 03-24-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -143,7 +143,7 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -154,6 +154,31 @@ public static class ListExtensions
 			list = list.ArgumentNotNull();
 
 			var eq = comparer ?? EqualityComparer<T>.Default;
+
+			// When the list is empty, every item is new — skip building
+			// a HashSet from zero elements and just deduplicate the incoming items.
+			if (list.Count == 0)
+			{
+				var seen = new HashSet<T>(eq);
+
+				foreach (var item in items)
+				{
+					if (seen.Add(item))
+					{
+						list.Add(item);
+					}
+				}
+
+				return;
+			}
+
+			// Pre-size the capacity hint when the incoming collection
+			// exposes a count, avoiding potential list re-allocations.
+			if (items is ICollection<T> itemsCollection)
+			{
+				_ = list.EnsureCapacity(list.Count + itemsCollection.Count);
+			}
+
 			var existingItems = new HashSet<T>(list, eq);
 
 			foreach (var item in items)
@@ -174,6 +199,8 @@ public static class ListExtensions
 		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
+			list = list.ArgumentNotNull();
+
 			return CollectionsMarshal.AsSpan(list);
 		}
 
@@ -186,6 +213,8 @@ public static class ListExtensions
 		[Information(nameof(AsSpan), "David McCarter", "8/3/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
+			list = list.ArgumentNotNull();
+
 			return CollectionsMarshal.AsSpan(list);
 		}
 
@@ -198,7 +227,7 @@ public static class ListExtensions
 		[Information(nameof(ClearNulls), author: "David McCarter", createdOn: "8/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool ClearNulls()
 		{
-			return list is null ? false : list.RemoveAll(p => p is null) > 0;
+			return list is null ? false : list.RemoveAll(static p => p is null) > 0;
 		}
 
 		/// <summary>
@@ -282,7 +311,7 @@ public static class ListExtensions
 		/// <exception cref="ArgumentException">Thrown if the list is empty.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T IndexAtLooped(in int index)
 		{
 			list = list.ArgumentNotNull();
@@ -294,25 +323,10 @@ public static class ListExtensions
 				ExceptionThrower.ThrowArgumentException(Resources.CollectionIsEmpty, nameof(list));
 			}
 
-			var isPowerOfTwo = (count & (count - 1)) == 0;
-
-			int indexWrap;
-
-			if (isPowerOfTwo)
-			{
-				var mask = count - 1;
-				indexWrap = index & mask;
-
-				if (index < 0)
-				{
-					indexWrap = (count + (index % count)) & mask;
-				}
-			}
-			else
-			{
-				indexWrap = index % count;
-				indexWrap += (indexWrap >> 31) & count;
-			}
+			// Branchless wrap that handles both positive and negative indices.
+			// The modulo result for negative values in C# is negative (or zero),
+			// so we add count and take modulo again to normalize into [0, count).
+			var indexWrap = ((index % count) + count) % count;
 
 			return list[indexWrap];
 		}
@@ -344,7 +358,7 @@ public static class ListExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck)
 		{
 			if (list is null || collectionToCheck is null)
@@ -357,15 +371,21 @@ public static class ListExtensions
 				return true;
 			}
 
-			if (list.Count != collectionToCheck.Count)
+			var count = list.Count;
+
+			if (count != collectionToCheck.Count)
 			{
 				return false;
 			}
 
-			var span1 = CollectionsMarshal.AsSpan(list);
-			var span2 = CollectionsMarshal.AsSpan(collectionToCheck);
+			// Both counts are equal — if zero, both are empty and equal.
+			// Avoids two CollectionsMarshal.AsSpan calls for empty lists.
+			if (count == 0)
+			{
+				return true;
+			}
 
-			return span1.SequenceEqual(span2);
+			return CollectionsMarshal.AsSpan(list).SequenceEqual(CollectionsMarshal.AsSpan(collectionToCheck));
 		}
 
 		/// <summary>
@@ -583,22 +603,28 @@ public static class ListExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Split), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Split), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlyCollection<ReadOnlyCollection<T>> Split(int size)
 		{
 			list = list.ArgumentNotNull();
 			size = size.ArgumentInRange(min: 1, max: list.Count);
 
 			var listCount = list.Count;
-			var chunks = (int)Math.Ceiling((double)listCount / size);
+
+			// Integer ceiling division — avoids int→double conversion,
+			// floating-point division, Math.Ceiling, and double→int cast.
+			var chunks = (listCount + size - 1) / size;
 			var result = new List<ReadOnlyCollection<T>>(chunks);
+			var sourceSpan = CollectionsMarshal.AsSpan(list);
 
 			for (var index = 0; index < listCount; index += size)
 			{
 				var chunkSize = Math.Min(size, listCount - index);
 
-				// GetRange creates a new List with internal optimizations and wraps it
-				result.Add(list.GetRange(index, chunkSize).AsReadOnly());
+				// Slice the span and copy directly to an array, wrapping it
+				// in ReadOnlyCollection<T>. Avoids the intermediate List<T>
+				// allocation that GetRange produces per chunk.
+				result.Add(new ReadOnlyCollection<T>(sourceSpan.Slice(index, chunkSize).ToArray()));
 			}
 
 			return result.AsReadOnly();
@@ -628,6 +654,8 @@ public static class ListExtensions
 		[Information(nameof(ToDistinctBlockingCollection), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public DistinctBlockingCollection<T> ToDistinctBlockingCollection(bool completeAdding = false)
 		{
+			list = list.ArgumentNotNull();
+
 			var result = new DistinctBlockingCollection<T>(list);
 
 			if (completeAdding)
@@ -648,6 +676,8 @@ public static class ListExtensions
 		[Information(nameof(ToDistinctConcurrentBag), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public DistinctConcurrentBag<T> ToDistinctConcurrentBag()
 		{
+			list = list.ArgumentNotNull();
+
 			return [.. list];
 		}
 
@@ -661,6 +691,8 @@ public static class ListExtensions
 		[Information(nameof(ToFastSortedList), "David McCarter", "10/21/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FastSortedList<T> ToFastSortedList()
 		{
+			list = list.ArgumentNotNull();
+
 			return [.. list];
 		}
 
@@ -675,6 +707,9 @@ public static class ListExtensions
 		[Information(nameof(ToFastSortedList), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FastSortedList<T> ToFastSortedList([DisallowNull] IComparer<T> comparer)
 		{
+			list = list.ArgumentNotNull();
+			comparer = comparer.ArgumentNotNull();
+
 			return new(list, comparer);
 		}
 
@@ -710,19 +745,23 @@ public static class ListExtensions
 		/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 		/// <returns>A task representing the asynchronous operation, with a <see cref="List{T}"/> result.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public async Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			list = list.ArgumentNotNull();
 
-			var returnList = new List<T>();
+			var listCount = list.Count;
+			var returnList = new List<T>(listCount);
 
 			await Task.Yield();
 
-			foreach (var element in list)
+
+			var span = CollectionsMarshal.AsSpan(list);
+
+			for (var index = 0; index < span.Length; index++)
 			{
 				cancellationToken.ThrowIfCancellationRequested();
-				returnList.Add(element);
+				returnList.Add(span[index]);
 			}
 
 			return returnList;
