@@ -4,12 +4,17 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-13-2026
+// Last Modified On : 03-24-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods for the ICollection types.</summary>
+// <summary>
+// Provides high-performance extension methods for <see cref="ICollection{T}"/>, including conditional addition
+// (<see cref="CollectionExtensions.AddIf"/>), uniqueness-checked insertion (<see cref="CollectionExtensions.AddIfNotExists"/>),
+// bulk addition (<see cref="CollectionExtensions.AddRange"/>), upsert operations (<see cref="CollectionExtensions.Upsert"/>),
+// and zero-copy span conversions (<see cref="CollectionExtensions.AsSpan"/>, <see cref="CollectionExtensions.AsReadOnlySpan"/>).
+// </summary>
 // ***********************************************************************
 using System.Collections.Frozen;
 using System.Collections.Immutable;
@@ -17,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 using Microsoft.VisualBasic;
 
@@ -38,19 +44,25 @@ public static class CollectionExtensions
 {
 
 	/// <summary>
-	/// Upserts (updates or inserts) the specified item into the <see cref="ICollection{T}"/>.
-	/// If an item with the same ID already exists in the collection, it is replaced with the new item.
-	/// Otherwise, the new item is added to the collection.
+	/// Inserts a new item into the collection or replaces the existing item that has the same <see cref="IDataModel{T, TKey}.Id"/> value.
 	/// </summary>
-	/// <typeparam name="T">The type of the elements in the collection.</typeparam>
-	/// <typeparam name="TKey">The type of the key used to identify items in the collection.</typeparam>
-	/// <param name="collection">The collection where the item will be upserted.</param>
-	/// <param name="item">The item to upsert into the collection. Must not be null.</param>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="item"/> is null.</exception>
-	/// <exception cref="ArgumentReadOnlyException">Thrown if <paramref name="collection"/> is read-only.</exception>
+	/// <typeparam name="T">
+	/// The collection item type. Must implement <see cref="IDataModel{T, TKey}"/> so identity can be resolved from <c>Id</c>.
+	/// </typeparam>
+	/// <typeparam name="TKey">The identifier type for <typeparamref name="T"/>.</typeparam>
+	/// <param name="collection">The target collection to update.</param>
+	/// <param name="item">
+	/// The item to upsert. If <see langword="null"/>, no operation is performed.
+	/// </param>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="collection"/> is <see langword="null"/>.
+	/// </exception>
+	/// <exception cref="NotSupportedException">
+	/// Thrown by the underlying collection when remove/add operations are not supported.
+	/// </exception>
 	/// <remarks>
-	/// This method ensures that the collection will not contain duplicate items based on their ID.
-	/// It is a convenient way to update an existing item or add a new item without having to manually check for its existence.
+	/// This method performs a linear search to find an existing item with the same <c>Id</c>, removes it if found,
+	/// and then adds <paramref name="item"/>. This guarantees at most one item with the same identifier in the collection.
 	/// </remarks>
 	[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void Upsert<T, TKey>([DisallowNull] this ICollection<T> collection, [AllowNull] T item) where T : IDataModel<T, TKey> where TKey : notnull
@@ -60,7 +72,7 @@ public static class CollectionExtensions
 			return;
 		}
 
-		collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
+		collection = collection.ArgumentNotNull();
 
 		// Find the existing item by ID and remove it if found
 		var existingItem = collection.FirstOrDefault(p => Equals(p.Id, item.Id));
@@ -107,7 +119,7 @@ public static class CollectionExtensions
 				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
 			}
 
-			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
+			collection = collection.ArgumentNotNull();
 
 			if (condition)
 			{
@@ -151,7 +163,7 @@ public static class CollectionExtensions
 				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
 			}
 
-			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
+			collection = collection.ArgumentNotNull();
 
 			var eq = comparer ?? EqualityComparer<T>.Default;
 
@@ -181,7 +193,7 @@ public static class CollectionExtensions
 		/// // myCollection now contains the unique items from newItems.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddRange), "David McCarter", "11/7/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRange), "David McCarter", "11/7/2023", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true)
 		{
 			items = items.ArgumentNotNull();
@@ -191,15 +203,42 @@ public static class CollectionExtensions
 				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
 			}
 
-			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
+			collection = collection.ArgumentNotNull();
 
 			if (!ensureUnique)
 			{
+				// Fast path: List<T>.AddRange uses Array.Copy internally for
+				// ICollection<T> sources, avoiding per-item virtual dispatch.
+				if (collection is List<T> list)
+				{
+					list.AddRange(items);
+				}
+				else
+				{
+					foreach (var item in items)
+					{
+						collection.Add(item);
+					}
+				}
+
+				return true;
+			}
+
+			// When the collection is already a set, leverage its native
+			// uniqueness guarantee — no separate HashSet allocation needed.
+			if (collection is ISet<T> set)
+			{
+				var addedAnyToSet = false;
+
 				foreach (var item in items)
 				{
-					collection.Add(item);
+					if (set.Add(item))
+					{
+						addedAnyToSet = true;
+					}
 				}
-				return true;
+
+				return addedAnyToSet;
 			}
 
 			var addedAny = false;
@@ -245,15 +284,30 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
-			if (collection is null)
+			collection = collection.ArgumentNotNull();
+
+			// Zero-allocation fast path for List<T> — returns a span
+			// directly over the internal backing array.
+			if (collection is List<T> list)
 			{
-				ExceptionThrower.ThrowArgumentNullException(nameof(collection));
+				return CollectionsMarshal.AsSpan(list);
 			}
 
-			return new([.. collection]);
+			// Zero-allocation fast path for arrays.
+			if (collection is T[] array)
+			{
+				return array;
+			}
+
+			// General path: pre-allocate exact-sized array and use
+			// CopyTo (typically Array.Copy) instead of enumerator-based spread.
+			var result = new T[collection.Count];
+			collection.CopyTo(result, 0);
+
+			return result;
 		}
 
 		/// <summary>
@@ -267,10 +321,30 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
-			return new([.. collection]);
+			collection = collection.ArgumentNotNull();
+
+			// Zero-allocation fast path for List<T> — returns a span
+			// directly over the internal backing array.
+			if (collection is List<T> list)
+			{
+				return CollectionsMarshal.AsSpan(list);
+			}
+
+			// Zero-allocation fast path for arrays.
+			if (collection is T[] array)
+			{
+				return array;
+			}
+
+			// General path: pre-allocate exact-sized array and use
+			// CopyTo (typically Array.Copy) instead of enumerator-based spread.
+			var result = new T[collection.Count];
+			collection.CopyTo(result, 0);
+
+			return result;
 		}
 
 		/// <summary>
@@ -285,10 +359,12 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet()
 		{
-			return FrozenSet.ToFrozenSet(collection);
+			collection = collection.ArgumentNotNull();
+
+			return collection.Count == 0 ? FrozenSet<T>.Empty : FrozenSet.ToFrozenSet(collection);
 		}
 
 		/// <summary>
@@ -299,7 +375,7 @@ public static class CollectionExtensions
 		/// <param name="item">The item to upsert into the collection. If <c>null</c>, the method returns without modifying the collection.</param>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void Upsert([AllowNull] in T item)
 		{
 			if (item is null)
@@ -313,6 +389,33 @@ public static class CollectionExtensions
 			}
 
 			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
+
+			// Short-circuit when the collection is empty — avoids
+			// a fruitless O(n) scan inside Remove.
+			if (collection.Count == 0)
+			{
+				collection.Add(item);
+				return;
+			}
+
+			// Fast path for List<T>: find the index and replace in-place.
+			// Avoids the O(n) element shift that List<T>.Remove causes
+			// when it compacts the internal array after removal.
+			if (collection is List<T> list)
+			{
+				var index = list.IndexOf(item);
+
+				if (index >= 0)
+				{
+					list[index] = item;
+				}
+				else
+				{
+					list.Add(item);
+				}
+
+				return;
+			}
 
 			_ = collection.Remove(item);
 

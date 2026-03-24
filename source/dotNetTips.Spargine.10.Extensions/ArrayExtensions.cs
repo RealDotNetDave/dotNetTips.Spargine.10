@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified On : 03-23-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -79,7 +79,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddFirst([AllowNull] in T item)
 		{
 			if (item is null)
@@ -89,10 +89,11 @@ public static class ArrayExtensions
 
 			array = array.ArgumentNotNull();
 
-			var result = new T[array.LongLength + 1];
+			var length = array.Length;
+			var result = new T[length + 1];
 			result[0] = item;
 
-			array.CopyTo(result.AsSpan(1));
+			Array.Copy(array, 0, result, 1, length);
 
 			return result;
 		}
@@ -124,10 +125,9 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] T item)
 		{
-			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
 			return Array.IndexOf(array, item);
@@ -161,10 +161,9 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int LastIndexOf([DisallowNull] T[] item)
 		{
-			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
 			return Array.LastIndexOf(array, item);
@@ -186,8 +185,6 @@ public static class ArrayExtensions
 			{
 				return array;
 			}
-
-			array = array.ArgumentNotNull();
 
 			return condition ? array.AddLast(item) : array;
 		}
@@ -238,7 +235,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			if (item is null)
@@ -248,7 +245,13 @@ public static class ArrayExtensions
 
 			array = array.ArgumentNotNull();
 
-			return [.. array, item];
+			var length = array.Length;
+			var result = new T[length + 1];
+
+			Array.Copy(array, 0, result, 0, length);
+			result[length] = item;
+
+			return result;
 		}
 
 		/// <summary>
@@ -271,12 +274,12 @@ public static class ArrayExtensions
 		/// <returns>A <see cref="ReadOnlySpan{T}"/> over the array.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			array = array.ArgumentNotNull();
 
-			return new(array);
+			return array;
 		}
 
 		/// <summary>
@@ -537,13 +540,16 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] RemoveFirst()
 		{
 			array = array.ArgumentItemsExists();
 
-			var result = new T[array.LongLength - 1];
-			Array.Copy(array, 1, result, 0, array.LongLength - 1);
+			var newLength = (int)array.LongLength - 1;
+			var result = new T[newLength];
+
+			array.AsSpan(1, newLength).CopyTo(result);
+
 			return result;
 		}
 
@@ -554,14 +560,15 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] RemoveLast()
 		{
 			array = array.ArgumentItemsExists();
 
-			var result = new T[array.LongLength - 1];
+			var newLength = (int)array.LongLength - 1;
+			var result = new T[newLength];
 
-			array.AsSpan(0, (int)array.LongLength - 1).CopyTo(result);
+			array.AsSpan(0, newLength).CopyTo(result);
 
 			return result;
 		}
