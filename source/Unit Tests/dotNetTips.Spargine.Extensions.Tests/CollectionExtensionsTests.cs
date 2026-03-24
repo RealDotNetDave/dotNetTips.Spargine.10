@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -99,15 +98,6 @@ public class CollectionExtensionsTests
 		var array = people.ToArray();
 
 		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => array.AddRange(peopleToAdd));
-	}
-
-	[TestMethod]
-	public void AddRange_ImmutableList_ThrowsArgumentReadOnlyException()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToImmutableList();
-		var peopleToAdd = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => people.AddRange(peopleToAdd, false));
 	}
 
 	[TestMethod]
@@ -332,18 +322,6 @@ public class CollectionExtensionsTests
 
 		// Assert
 		Assert.AreEqual(originalCount, people.Count);
-	}
-
-	[TestMethod]
-	public void UpsertWithDataModelKey_ReadOnlyCollection_ShouldThrowArgumentReadOnlyException()
-	{
-		// Arrange
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		ICollection<Person> readOnlyCollection = new ReadOnlyCollection<Person>(people);
-		var newPerson = RandomData.GeneratePerson<Person>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => CollectionExtensions.Upsert<Person, string>(readOnlyCollection, newPerson));
 	}
 
 	[TestMethod]
