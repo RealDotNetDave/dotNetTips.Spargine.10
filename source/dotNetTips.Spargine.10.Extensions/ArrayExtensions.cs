@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-23-2026
+// Last Modified On : 03-25-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -82,12 +82,12 @@ public static class ArrayExtensions
 		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddFirst([AllowNull] in T item)
 		{
+			array = array.ArgumentNotNull();
+
 			if (item is null)
 			{
 				return array;
 			}
-
-			array = array.ArgumentNotNull();
 
 			var length = array.Length;
 			var result = new T[length + 1];
@@ -143,7 +143,7 @@ public static class ArrayExtensions
 		/// <remarks>
 		/// This method wraps the <see cref="Array.LastIndexOf{T}(T[], T)"/> method to provide a convenient extension method syntax.
 		/// The array is searched backward starting at the last element and ending at the first element.
-		/// The method performs an equality comparison by calling the <c>T.Equals</c> method on every element. 
+		/// The method performs an equality comparison by calling the <c>T.Equals</c> method on every element.
 		/// If type <typeparamref name="T"/> overrides the <see cref="object.Equals(object)"/> method, that override is used for the comparison.
 		/// This is an O(n) operation, where n is the length of the array.
 		/// </remarks>
@@ -154,15 +154,15 @@ public static class ArrayExtensions
 		/// int[] numbers = { 10, 20, 30, 20, 50 };
 		/// int index = numbers.LastIndexOf(20);
 		/// Console.WriteLine(index); // Output: 3
-		/// 
+		///
 		/// int notFound = numbers.LastIndexOf(99);
 		/// Console.WriteLine(notFound); // Output: -1
 		/// </code>
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public int LastIndexOf([DisallowNull] T[] item)
+		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public int LastIndexOf([DisallowNull] T item)
 		{
 			item = item.ArgumentNotNull();
 
@@ -176,6 +176,7 @@ public static class ArrayExtensions
 		/// <param name="condition">The condition that determines whether the item should be added.</param>
 		/// <returns>A new array with the item added if the condition is true; otherwise, the original array.</returns>
 		/// <exception cref="ArgumentNullException">Thrown if the array or item is null.</exception>
+		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(AddIf), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
@@ -238,12 +239,12 @@ public static class ArrayExtensions
 		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
+			array = array.ArgumentNotNull();
+
 			if (item is null)
 			{
 				return array;
 			}
-
-			array = array.ArgumentNotNull();
 
 			var length = array.Length;
 			var result = new T[length + 1];
@@ -289,12 +290,15 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] FastClone()
 		{
 			array = array.ArgumentNotNull();
 
-			return (T[])array.Clone();
+			var result = new T[array.Length];
+			array.AsSpan().CopyTo(result);
+
+			return result;
 		}
 
 		/// <summary>
@@ -324,15 +328,13 @@ public static class ArrayExtensions
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when array or <paramref name="action"/> is null.</exception>
 		/// <example>
-		/// This example shows how to use <see cref="FastProcessor{T}"/> to process all elements in an array.
+		/// This example shows how to use FastProcessor to process all elements in an array.
 		/// <code>
 		/// int[] numbers = { 1, 2, 3, 4, 5 };
 		/// numbers.FastProcessor(n => Console.WriteLine(n * 2));
 		/// // Output: 2, 4, 6, 8, 10
 		/// </code>
 		/// </example>
-		[Pure]
-		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "11/8/2021", OptimizationStatus = OptimizationStatus.Optimize, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void FastProcessor([DisallowNull] Action<T> action)
@@ -355,10 +357,27 @@ public static class ArrayExtensions
 		/// <returns>A hash code representing the contents of the array.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public int GenerateHashCode()
 		{
-			return array.ArgumentNotNull().Where(t => t is not null).Aggregate(6551, (accumulator, t) => accumulator ^= (accumulator << 5) ^ EqualityComparer<T>.Default.GetHashCode(t));
+			array = array.ArgumentNotNull();
+
+			var hashCode = 6551;
+
+			ref var start = ref MemoryMarshal.GetArrayDataReference(array);
+			var length = array.Length;
+
+			for (var index = 0; index < length; index++)
+			{
+				var element = Unsafe.Add(ref start, index);
+
+				if (element is not null)
+				{
+					hashCode ^= (hashCode << 5) ^ EqualityComparer<T>.Default.GetHashCode(element);
+				}
+			}
+
+			return hashCode;
 		}
 
 		/// <summary>
@@ -370,7 +389,7 @@ public static class ArrayExtensions
 		/// <remarks>
 		/// This method provides a safe way to check if an array has elements without throwing exceptions.
 		/// It returns <c>false</c> if the array reference is null, making it suitable for defensive programming patterns.
-		/// The method uses <see cref="Array.LongLength"/> to support arrays with more than <see cref="int.MaxValue"/> elements.
+		/// The method uses <see cref="Array.Length"/> to check the element count.
 		/// This is the inverse operation of IsEmpty.
 		/// </remarks>
 		/// <example>
@@ -443,7 +462,7 @@ public static class ArrayExtensions
 		/// <remarks>
 		/// This method provides a safe way to verify that an array has an exact number of elements without throwing exceptions.
 		/// It returns <c>false</c> if the array reference is null, making it suitable for defensive programming patterns.
-		/// The method uses <see cref="Array.LongLength"/> to support arrays with more than <see cref="int.MaxValue"/> elements.
+		/// The method uses <see cref="Array.Length"/> to compare against the specified <paramref name="count"/>.
 		/// This is useful for validation scenarios where you need to ensure an array has a specific size before processing.
 		/// </remarks>
 		/// <example>
@@ -474,51 +493,19 @@ public static class ArrayExtensions
 		/// </summary>
 		/// <param name="action">The action to perform on each element.</param>
 		/// <remarks>
-		/// <para>
-		/// This method uses different strategies based on the element type and array size:
-		/// </para>
-		/// <list type="bullet">
-		/// <item>
-		/// <description>
-		/// <b>Value types:</b> Uses sequential <c>foreach</c> iteration to avoid boxing overhead 
-		/// and maintain cache-friendly memory access patterns. Parallel processing of value types 
-		/// often performs worse due to false sharing and cache line contention.
-		/// </description>
-		/// </item>
-		/// <item>
-		/// <description>
-		/// <b>Reference types (small arrays):</b> Uses sequential iteration for arrays with fewer 
-		/// than 100 elements, as parallel overhead exceeds the benefits for small datasets.
-		/// </description>
-		/// </item>
-		/// <item>
-		/// <description>
-		/// <b>Reference types (large arrays):</b> Uses Parallel.For to leverage 
-		/// multiple CPU cores when processing arrays with 100 or more elements, provided the 
-		/// action delegate performs non-trivial work.
-		/// </description>
-		/// </item>
-		/// </list>
-		/// <para>
-		/// <b>Thread Safety Note:</b> This method does not provide thread-safety guarantees for 
-		/// the action delegate. If the action modifies shared state or the array itself, you must 
-		/// provide appropriate synchronization.
-		/// </para>
-		/// <para>
-		/// <b>Performance Note:</b> For lightweight actions (e.g., simple property access or 
-		/// arithmetic), sequential iteration may outperform parallel processing even for large 
-		/// arrays due to thread scheduling overhead and cache effects.
-		/// </para>
+		/// This method iterates sequentially over the array using <see cref="MemoryExtensions.AsSpan{T}(T[])"/>
+		/// for efficient, bounds-checked access. The action delegate is invoked once per element in array order.
+		/// For higher-throughput iteration that bypasses bounds checking, consider using <c>FastProcessor</c> instead.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when array or <paramref name="action"/> is null.</exception>
 		/// <example>
+		/// This example shows how to use PerformAction to process all elements in an array.
 		/// <code>
 		/// int[] numbers = { 1, 2, 3, 4, 5 };
 		/// numbers.PerformAction(n => Console.WriteLine(n * 2));
 		/// // Output: 2, 4, 6, 8, 10
 		/// </code>
 		/// </example>
-		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void PerformAction([DisallowNull] Action<T> action)
@@ -545,7 +532,7 @@ public static class ArrayExtensions
 		{
 			array = array.ArgumentItemsExists();
 
-			var newLength = (int)array.LongLength - 1;
+			var newLength = array.Length - 1;
 			var result = new T[newLength];
 
 			array.AsSpan(1, newLength).CopyTo(result);
@@ -557,6 +544,7 @@ public static class ArrayExtensions
 		/// Removes the last item in the array.
 		/// </summary>
 		/// <returns>A new array with the last item removed.</returns>
+		/// <exception cref="ArgumentNullException">array cannot be null or empty.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -565,7 +553,7 @@ public static class ArrayExtensions
 		{
 			array = array.ArgumentItemsExists();
 
-			var newLength = (int)array.LongLength - 1;
+			var newLength = array.Length - 1;
 			var result = new T[newLength];
 
 			array.AsSpan(0, newLength).CopyTo(result);
@@ -581,7 +569,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T[] ToDistinct()
 		{
 			return [.. array.ArgumentNotNull().Distinct()];
@@ -597,7 +585,7 @@ public static class ArrayExtensions
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet()
 		{
-			return FrozenSet.ToFrozenSet(array);
+			return FrozenSet.ToFrozenSet(array.ArgumentNotNull());
 		}
 
 		/// <summary>
@@ -609,7 +597,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public T[] Upsert([AllowNull] T item)
 		{
 			array = array.ArgumentNotNull();
@@ -619,23 +607,18 @@ public static class ArrayExtensions
 				return array;
 			}
 
-			var span = array.AsSpan();
-			var index = span.IndexOf(item);
+			var index = array.AsSpan().IndexOf(item);
 
-			if (index >= 0)
+			if (index < 0)
 			{
-				// Item exists - create new array with updated item
-				var result = new T[array.Length];
-				array.CopyTo(result, 0);
-				result[index] = item;
-
-				return result;
-			}
-			else
-			{
-				// Item doesn't exist - add to end
 				return array.AddLast(item);
 			}
+
+			var result = new T[array.Length];
+			array.AsSpan().CopyTo(result);
+			result[index] = item;
+
+			return result;
 		}
 
 	}

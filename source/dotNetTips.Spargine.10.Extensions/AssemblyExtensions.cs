@@ -16,6 +16,7 @@
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Reflection;
@@ -36,7 +37,10 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineAssemblyExtensions")]
 public static class AssemblyExtensions
 {
-	///<summary></summary>
+	/// <summary>
+	/// Provides extension methods for <see cref="Assembly"/> instances supporting type discovery and instantiation.
+	/// </summary>
+	/// <param name="assembly">The assembly instance to extend.</param>
 	extension([DisallowNull] Assembly assembly)
 	{
 		/// <summary>
@@ -45,9 +49,10 @@ public static class AssemblyExtensions
 		/// <returns>A read-only collection of <see cref="Type" /> objects representing the interfaces defined in the specified assembly.</returns>
 		/// <remarks>This method extracts all interfaces from the types defined in the specified assembly, ensuring no duplicates are returned.
 		/// It validates that the provided assembly is not null before proceeding with the extraction.</remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -65,24 +70,38 @@ public static class AssemblyExtensions
 				}
 			}
 
-			return new List<Type>(interfaceSet).AsReadOnly();
+			var result = new Type[interfaceSet.Count];
+			interfaceSet.CopyTo(result);
+
+			return Array.AsReadOnly(result);
 		}
 
 		/// <summary>
-		/// Gets all types in an <see cref="Assembly" />.
-		/// This method filters out abstract types and returns a read-only collection of the remaining types.
+		/// Gets all non-abstract types in an <see cref="Assembly" />.
 		/// </summary>
 		/// <returns>A read-only collection of <see cref="Type" /> objects representing the non-abstract types defined in the specified assembly.</returns>
 		/// <remarks>This method is useful for scenarios where you need to work with concrete types defined in an assembly,
-		/// such as when creating instances or performing reflection-based processing.</remarks>
+		/// such as when creating instances or performing reflection-based processing.
+		/// If a <see cref="ReflectionTypeLoadException"/> occurs, the method gracefully returns only the successfully loaded types.</remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetAllTypes), "David McCarter", "221/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllTypes), "David McCarter", "1/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllTypes()
 		{
 			assembly = assembly.ArgumentNotNull();
 
-			var types = assembly.GetTypes();
+			Type[] types;
+
+			try
+			{
+				types = assembly.GetTypes();
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				types = ex.Types.Where(static type => type is not null).ToArray()!;
+			}
+
 			var result = new List<Type>(types.Length);
 
 			foreach (var type in types)
@@ -101,11 +120,15 @@ public static class AssemblyExtensions
 		/// <summary>
 		/// Gets all instances of a specified type <typeparamref name="T" /> within the assembly.
 		/// </summary>
-		/// <typeparam name="T">The type of instances to find. This type must be a class.</typeparam>
+		/// <typeparam name="T">The type of instances to find. This type must be a class with a parameterless constructor.</typeparam>
 		/// <returns>An enumerable of instances of the specified type <typeparamref name="T" />.</returns>
-		/// <remarks>This method searches the assembly for types that are assignable to <typeparamref name="T" />,
-		/// are not interfaces, are not abstract, and are not generic types. It then attempts to create an instance
-		/// of each found type using the default constructor.</remarks>
+		/// <remarks>
+		/// This method searches the assembly for non-abstract, non-generic types that are assignable to <typeparamref name="T" />
+		/// and attempts to create an instance of each using <see cref="Activator.CreateInstance(Type)"/>.
+		/// Types that lack a parameterless constructor are skipped and logged via <see cref="Trace.WriteLine(string?)"/>.
+		/// If a <see cref="ReflectionTypeLoadException"/> occurs during type discovery, only the successfully loaded types are processed.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
 		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -113,25 +136,46 @@ public static class AssemblyExtensions
 		{
 			assembly = assembly.ArgumentNotNull();
 
-			var types = assembly.GetTypes();
+			Type[] types;
+
+			try
+			{
+				types = assembly.GetTypes();
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				types = ex.Types.Where(static type => type is not null).ToArray()!;
+			}
+
 			var targetType = typeof(T);
 
 			foreach (var type in types)
 			{
-				// Check cheapest conditions first to short-circuit early.
-				// IsAbstract covers both abstract classes AND interfaces,
-				// so the separate IsInterface check is redundant.
 				if (type.IsAbstract || type.IsGenericType)
 				{
 					continue;
 				}
 
-				if (targetType.IsAssignableFrom(type))
+				if (!targetType.IsAssignableFrom(type))
 				{
-					if (Activator.CreateInstance(type) is T instance)
-					{
-						yield return instance;
-					}
+					continue;
+				}
+
+				T? instance = null;
+
+				try
+				{
+					instance = Activator.CreateInstance(type) as T;
+				}
+				catch (MissingMethodException ex)
+				{
+					// Type has no parameterless constructor — skip.
+					Trace.WriteLine($"Type {type.FullName} has no parameterless constructor: {ex.Message}");
+				}
+
+				if (instance is not null)
+				{
+					yield return instance;
 				}
 			}
 		}
@@ -143,6 +187,7 @@ public static class AssemblyExtensions
 		/// <returns>A read-only collection of types that are assignable to the specified type and are not abstract.</returns>
 		/// <remarks>This method is useful for finding all concrete implementations or subclasses of a given type within an assembly.
 		/// Original code from: oqtane.framework</remarks>
+		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> or <paramref name="type"/> is null.</exception>
 		[Pure]
 		[return: NotNull]
 		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
