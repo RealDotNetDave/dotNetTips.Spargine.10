@@ -30,7 +30,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
-public class ArrayExtensionsCollectionBenchmark : SmallCollectionBenchmark
+public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
 	private const int OperationsCount = 1024;

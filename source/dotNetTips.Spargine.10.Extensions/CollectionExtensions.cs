@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-24-2026
+// Last Modified On : 03-25-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,7 +22,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 using Microsoft.VisualBasic;
 
@@ -203,42 +202,15 @@ public static class CollectionExtensions
 				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
 			}
 
-			collection = collection.ArgumentNotNull();
+			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
 			if (!ensureUnique)
 			{
-				// Fast path: List<T>.AddRange uses Array.Copy internally for
-				// ICollection<T> sources, avoiding per-item virtual dispatch.
-				if (collection is List<T> list)
-				{
-					list.AddRange(items);
-				}
-				else
-				{
-					foreach (var item in items)
-					{
-						collection.Add(item);
-					}
-				}
-
-				return true;
-			}
-
-			// When the collection is already a set, leverage its native
-			// uniqueness guarantee — no separate HashSet allocation needed.
-			if (collection is ISet<T> set)
-			{
-				var addedAnyToSet = false;
-
 				foreach (var item in items)
 				{
-					if (set.Add(item))
-					{
-						addedAnyToSet = true;
-					}
+					collection.Add(item);
 				}
-
-				return addedAnyToSet;
+				return true;
 			}
 
 			var addedAny = false;
@@ -289,25 +261,7 @@ public static class CollectionExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			// Zero-allocation fast path for List<T> — returns a span
-			// directly over the internal backing array.
-			if (collection is List<T> list)
-			{
-				return CollectionsMarshal.AsSpan(list);
-			}
-
-			// Zero-allocation fast path for arrays.
-			if (collection is T[] array)
-			{
-				return array;
-			}
-
-			// General path: pre-allocate exact-sized array and use
-			// CopyTo (typically Array.Copy) instead of enumerator-based spread.
-			var result = new T[collection.Count];
-			collection.CopyTo(result, 0);
-
-			return result;
+			return new([.. collection]);
 		}
 
 		/// <summary>
@@ -324,27 +278,7 @@ public static class CollectionExtensions
 		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
-			collection = collection.ArgumentNotNull();
-
-			// Zero-allocation fast path for List<T> — returns a span
-			// directly over the internal backing array.
-			if (collection is List<T> list)
-			{
-				return CollectionsMarshal.AsSpan(list);
-			}
-
-			// Zero-allocation fast path for arrays.
-			if (collection is T[] array)
-			{
-				return array;
-			}
-
-			// General path: pre-allocate exact-sized array and use
-			// CopyTo (typically Array.Copy) instead of enumerator-based spread.
-			var result = new T[collection.Count];
-			collection.CopyTo(result, 0);
-
-			return result;
+			return new([.. collection]);
 		}
 
 		/// <summary>
@@ -359,7 +293,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet()
 		{
 			collection = collection.ArgumentNotNull();

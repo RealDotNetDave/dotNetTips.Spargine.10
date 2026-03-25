@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-24-2026
+// Last Modified On : 03-25-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -323,10 +323,25 @@ public static class ListExtensions
 				ExceptionThrower.ThrowArgumentException(Resources.CollectionIsEmpty, nameof(list));
 			}
 
-			// Branchless wrap that handles both positive and negative indices.
-			// The modulo result for negative values in C# is negative (or zero),
-			// so we add count and take modulo again to normalize into [0, count).
-			var indexWrap = ((index % count) + count) % count;
+			var isPowerOfTwo = (count & (count - 1)) == 0;
+
+			int indexWrap;
+
+			if (isPowerOfTwo)
+			{
+				var mask = count - 1;
+				indexWrap = index & mask;
+
+				if (index < 0)
+				{
+					indexWrap = (count + (index % count)) & mask;
+				}
+			}
+			else
+			{
+				indexWrap = index % count;
+				indexWrap += (indexWrap >> 31) & count;
+			}
 
 			return list[indexWrap];
 		}
@@ -371,21 +386,15 @@ public static class ListExtensions
 				return true;
 			}
 
-			var count = list.Count;
-
-			if (count != collectionToCheck.Count)
+			if (list.Count != collectionToCheck.Count)
 			{
 				return false;
 			}
 
-			// Both counts are equal — if zero, both are empty and equal.
-			// Avoids two CollectionsMarshal.AsSpan calls for empty lists.
-			if (count == 0)
-			{
-				return true;
-			}
+			var span1 = CollectionsMarshal.AsSpan(list);
+			var span2 = CollectionsMarshal.AsSpan(collectionToCheck);
 
-			return CollectionsMarshal.AsSpan(list).SequenceEqual(CollectionsMarshal.AsSpan(collectionToCheck));
+			return span1.SequenceEqual(span2);
 		}
 
 		/// <summary>
@@ -610,21 +619,15 @@ public static class ListExtensions
 			size = size.ArgumentInRange(min: 1, max: list.Count);
 
 			var listCount = list.Count;
-
-			// Integer ceiling division — avoids int→double conversion,
-			// floating-point division, Math.Ceiling, and double→int cast.
-			var chunks = (listCount + size - 1) / size;
+			var chunks = (int)Math.Ceiling((double)listCount / size);
 			var result = new List<ReadOnlyCollection<T>>(chunks);
-			var sourceSpan = CollectionsMarshal.AsSpan(list);
 
 			for (var index = 0; index < listCount; index += size)
 			{
 				var chunkSize = Math.Min(size, listCount - index);
 
-				// Slice the span and copy directly to an array, wrapping it
-				// in ReadOnlyCollection<T>. Avoids the intermediate List<T>
-				// allocation that GetRange produces per chunk.
-				result.Add(new ReadOnlyCollection<T>(sourceSpan.Slice(index, chunkSize).ToArray()));
+				// GetRange creates a new List with internal optimizations and wraps it
+				result.Add(list.GetRange(index, chunkSize).AsReadOnly());
 			}
 
 			return result.AsReadOnly();
@@ -745,23 +748,19 @@ public static class ListExtensions
 		/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 		/// <returns>A task representing the asynchronous operation, with a <see cref="List{T}"/> result.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public async Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			list = list.ArgumentNotNull();
 
-			var listCount = list.Count;
-			var returnList = new List<T>(listCount);
+			var returnList = new List<T>();
 
 			await Task.Yield();
 
-
-			var span = CollectionsMarshal.AsSpan(list);
-
-			for (var index = 0; index < span.Length; index++)
+			foreach (var element in list)
 			{
 				cancellationToken.ThrowIfCancellationRequested();
-				returnList.Add(span[index]);
+				returnList.Add(element);
 			}
 
 			return returnList;

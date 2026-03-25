@@ -4,7 +4,7 @@
 // Created          : 01-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-24-2026
+// Last Modified On : 03-25-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -47,7 +47,7 @@ public static class AssemblyExtensions
 		/// It validates that the provided assembly is not null before proceeding with the extraction.</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -77,7 +77,7 @@ public static class AssemblyExtensions
 		/// such as when creating instances or performing reflection-based processing.</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetAllTypes), "David McCarter", "221/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllTypes), "David McCarter", "221/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllTypes()
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -108,7 +108,7 @@ public static class AssemblyExtensions
 		/// of each found type using the default constructor.</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -145,7 +145,7 @@ public static class AssemblyExtensions
 		/// Original code from: oqtane.framework</remarks>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetTypes([DisallowNull] Type type)
 		{
 			assembly = assembly.ArgumentNotNull();
