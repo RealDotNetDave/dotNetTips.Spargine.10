@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-11-2026
+// Last Modified On : 03-26-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 
@@ -36,9 +37,18 @@ namespace DotNetTips.Spargine.Tester;
 /// <param name="outputDirectory">The directory where output files will be saved. Defaults to the current directory if not specified.</param>
 [ExcludeFromCodeCoverage]
 [DebuggerStepThrough]
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineUnitTester")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineUnitTester")]
 public abstract class UnitTester(string? outputDirectory = null)
 {
+
+	/// <summary>
+	/// Cached <see cref="JsonSerializerOptions"/> instance for JSON serialization to avoid repeated allocation.
+	/// </summary>
+	private static readonly JsonSerializerOptions _jsonSerializerOptions = new()
+	{
+		WriteIndented = true,
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+	};
 
 	/// <summary>
 	/// Gets the output directory where files will be saved.
@@ -48,6 +58,113 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </value>
 	[Information(nameof(OutputDirectory), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string OutputDirectory { get; } = outputDirectory ?? App.ExecutingFolder();
+
+	/// <summary>
+	/// Deletes all files matching the specified search pattern from the output directory.
+	/// </summary>
+	/// <param name="searchPattern">The search pattern to match files for deletion. Defaults to "*.txt".</param>
+	/// <returns>The number of files deleted.</returns>
+	/// <remarks>
+	/// Files that cannot be deleted (e.g., locked by another process) are silently skipped.
+	/// </remarks>
+	[DebuggerStepThrough]
+	[Information(nameof(CleanupOutputDirectory), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public int CleanupOutputDirectory(string searchPattern = "*.txt")
+	{
+		if (!Directory.Exists(this.OutputDirectory))
+		{
+			return 0;
+		}
+
+		var files = Directory.GetFiles(this.OutputDirectory, searchPattern);
+		var deletedCount = 0;
+
+		for (var fileIndex = 0; fileIndex < files.Length; fileIndex++)
+		{
+			try
+			{
+				File.Delete(files[fileIndex]);
+				deletedCount++;
+			}
+			catch (IOException)
+			{
+				// File is locked — skip silently.
+			}
+			catch (UnauthorizedAccessException)
+			{
+				// No permission — skip silently.
+			}
+		}
+
+		return deletedCount;
+	}
+
+	/// <summary>
+	/// Executes the specified action and returns the elapsed time, optionally printing the result to the debug output.
+	/// </summary>
+	/// <param name="action">The action to measure. Cannot be null.</param>
+	/// <param name="printResult">If <c>true</c>, prints the elapsed time to the debug output. Defaults to <c>true</c>.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// </param>
+	/// <returns>A <see cref="TimeSpan"/> representing the elapsed time of the action.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="action"/> is null.</exception>
+	[DebuggerStepThrough]
+	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public TimeSpan MeasureAction([NotNull] Action action, bool printResult = true, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		action = action.ArgumentNotNull();
+
+		var startTimestamp = Stopwatch.GetTimestamp();
+
+		action();
+
+		var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
+
+		if (printResult)
+		{
+			Debug.WriteLine(new string(ControlChars.Equal, 80));
+			Debug.WriteLineIf(methodName.HasValue(), $"Method: {methodName}");
+			Debug.WriteLine($"Elapsed: {elapsed.TotalMilliseconds:F4} ms");
+			Debug.WriteLine(new string(ControlChars.Equal, 80));
+		}
+
+		return elapsed;
+	}
+
+	/// <summary>
+	/// Executes the specified asynchronous action and returns the elapsed time, optionally printing the result to the debug output.
+	/// </summary>
+	/// <param name="asyncAction">The asynchronous action to measure. Cannot be null.</param>
+	/// <param name="printResult">If <c>true</c>, prints the elapsed time to the debug output. Defaults to <c>true</c>.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// </param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="TimeSpan"/> representing the elapsed time.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="asyncAction"/> is null.</exception>
+	[AsyncStateMachine(typeof(Task))]
+	[DebuggerStepThrough]
+	[Information(nameof(MeasureActionAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public async Task<TimeSpan> MeasureActionAsync([NotNull] Func<Task> asyncAction, bool printResult = true, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		asyncAction = asyncAction.ArgumentNotNull();
+
+		var startTimestamp = Stopwatch.GetTimestamp();
+
+		await asyncAction().ConfigureAwait(false);
+
+		var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
+
+		if (printResult)
+		{
+			Debug.WriteLine(new string(ControlChars.Equal, 80));
+			Debug.WriteLineIf(methodName.HasValue(), $"Method: {methodName}");
+			Debug.WriteLine($"Elapsed: {elapsed.TotalMilliseconds:F4} ms");
+			Debug.WriteLine(new string(ControlChars.Equal, 80));
+		}
+
+		return elapsed;
+	}
 
 	/// <summary>
 	/// Writes the specified input string to the debug output.
@@ -127,6 +244,35 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		Debug.WriteLineIf(methodName.HasValue(), $"Method: {methodName}");
 		Debug.WriteLine(input.PropertiesToString(propertySelector));
+	}
+
+	/// <summary>
+	/// Serializes the specified object to JSON and saves it to a file in the output directory.
+	/// </summary>
+	/// <typeparam name="T">The type of the object to serialize.</typeparam>
+	/// <param name="input">The object to serialize and save. Cannot be null.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// </param>
+	/// <returns>The full path of the saved JSON file.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null.</exception>
+	[DebuggerStepThrough]
+	[Information(nameof(SaveAsJsonToFile), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public string SaveAsJsonToFile<T>([NotNull] T input, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		input = input.ArgumentNotNull();
+
+		var json = JsonSerializer.Serialize(input, _jsonSerializerOptions);
+
+		var fileName = methodName.FastIsNullOrEmpty()
+			? $"{RandomData.GenerateKey()}.json"
+			: $"{methodName}_{DateTime.Now.ToString("yyyyMMdd_HHmmssfff", System.Globalization.CultureInfo.InvariantCulture)}.json";
+
+		var filePath = Path.Combine(this.OutputDirectory, fileName);
+
+		File.WriteAllText(filePath, json);
+
+		return filePath;
 	}
 
 	/// <summary>
@@ -410,6 +556,31 @@ public abstract class UnitTester(string? outputDirectory = null)
 	}
 
 	/// <summary>
+	/// Asynchronously saves the specified input string to a file in the output directory.
+	/// </summary>
+	/// <param name="input">The string content to save. Cannot be null or empty.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// </param>
+	/// <returns>A task containing the full path of the saved file, or <see cref="string.Empty"/> if the input is null or empty.</returns>
+	[AsyncStateMachine(typeof(Task))]
+	[DebuggerStepThrough]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public async Task<string> SaveToFileAsync([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		if (input.IsNullOrEmpty())
+		{
+			return string.Empty;
+		}
+
+		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
+
+		await File.WriteAllTextAsync(filePath, input, CancellationToken.None).ConfigureAwait(false);
+
+		return filePath;
+	}
+
+	/// <summary>
 	/// Asynchronously saves the properties of each object in a collection to a file in the current directory.
 	/// </summary>
 	/// <typeparam name="T">The type of the objects in the collection.</typeparam>
@@ -440,6 +611,39 @@ public abstract class UnitTester(string? outputDirectory = null)
 			.ToArray();
 
 		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
+
+		return filePath;
+	}
+
+	/// <summary>
+	/// Asynchronously saves the properties of an object to a file in the output directory.
+	/// </summary>
+	/// <typeparam name="T">The type of the object.</typeparam>
+	/// <param name="input">The object whose properties will be saved. Cannot be null.</param>
+	/// <param name="propertySelector">A function that determines which properties to include. Cannot be null.</param>
+	/// <param name="methodName">
+	/// The name of the calling method. This is automatically populated by the compiler unless explicitly provided.
+	/// </param>
+	/// <returns>A task containing the full path of the saved file, or <see cref="string.Empty"/> if the content is empty.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.</exception>
+	[AsyncStateMachine(typeof(Task))]
+	[DebuggerStepThrough]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public async Task<string> SaveToFileAsync<T>([NotNull] T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	{
+		input = input.ArgumentNotNull();
+		propertySelector = propertySelector.ArgumentNotNull();
+
+		var content = input.PropertiesToString(propertySelector);
+
+		if (string.IsNullOrEmpty(content))
+		{
+			return string.Empty;
+		}
+
+		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
+
+		await File.WriteAllTextAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
 
 		return filePath;
 	}
@@ -548,7 +752,11 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <seealso cref="SaveToFile(string, string)"/>
 	private static string GenerateFileName([NotNull] string methodName)
 	{
-		var fileName = methodName.FastIsNullOrEmpty() ? $"{RandomData.GenerateKey}.txt" : $"{methodName}.txt";
+		var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmssfff", System.Globalization.CultureInfo.InvariantCulture);
+
+		var fileName = methodName.FastIsNullOrEmpty()
+			? $"{RandomData.GenerateKey}_{timestamp}.txt"
+			: $"{methodName}_{timestamp}.txt";
 
 		return fileName;
 	}

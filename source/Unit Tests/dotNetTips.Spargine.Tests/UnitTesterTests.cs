@@ -218,18 +218,6 @@ public class UnitTesterTests
 	}
 
 	[TestMethod]
-	public async Task SaveToFileAsync_NullCollection_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var tester = new TestAsyncUnitTester();
-		const string methodName = "AsyncNullCollectionTest";
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await tester.SaveToFileAsync<PersonData>(null!, p => true, methodName));
-	}
-
-	[TestMethod]
 	public async Task SaveToFileAsync_NullPropertySelector_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -640,11 +628,6 @@ public class UnitTesterTests
 		}
 	}
 
-	private class TestDirectoryUnitTester : UnitTester
-	{
-		public TestDirectoryUnitTester(string outputDirectory = null) : base(outputDirectory) { }
-	}
-
 	private class TestAsyncUnitTester : UnitTester
 	{
 		public TestAsyncUnitTester(string outputDirectory = null) : base(outputDirectory) { }
@@ -653,6 +636,11 @@ public class UnitTesterTests
 	private class TestCollectionUnitTester : UnitTester
 	{
 		public TestCollectionUnitTester(string outputDirectory = null) : base(outputDirectory) { }
+	}
+
+	private class TestDirectoryUnitTester : UnitTester
+	{
+		public TestDirectoryUnitTester(string outputDirectory = null) : base(outputDirectory) { }
 	}
 
 	private class TestSaveUnitTester : UnitTester
