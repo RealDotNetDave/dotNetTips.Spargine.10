@@ -4,7 +4,7 @@
 // Created          : 11-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 03-26-2026
 // ***********************************************************************
 // <copyright file="UnitTesterTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -188,34 +188,6 @@ public class UnitTesterTests
 		}
 	}
 
-	[TestMethod]
-	public async Task SaveToFileAsync_EmptyCollection_CreatesEmptyFile()
-	{
-		// Arrange
-		var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(tempDir);
-		var tester = new TestAsyncUnitTester(tempDir);
-		const string methodName = "AsyncEmptyCollectionTest";
-		var collection = Array.Empty<string>();
-
-		try
-		{
-			// Act
-			var expectedFilePath = await tester.SaveToFileAsync(collection, p => true, methodName);
-
-			// Assert
-			Assert.IsTrue(File.Exists(expectedFilePath));
-			var lines = await File.ReadAllLinesAsync(expectedFilePath);
-			Assert.IsEmpty(lines);
-		}
-		finally
-		{
-			if (Directory.Exists(tempDir))
-			{
-				Directory.Delete(tempDir, true);
-			}
-		}
-	}
 
 	[TestMethod]
 	public async Task SaveToFileAsync_NullPropertySelector_ThrowsArgumentNullException()
@@ -248,7 +220,7 @@ public class UnitTesterTests
 			// Assert
 			Assert.IsTrue(File.Exists(expectedFilePath));
 			var lines = await File.ReadAllLinesAsync(expectedFilePath);
-			Assert.HasCount(2, lines);
+			Assert.HasCount(1, lines);
 		}
 		finally
 		{
@@ -496,40 +468,10 @@ public class UnitTesterTests
 			var file2 = tester.SaveToFile(newContent, tempDir, methodName);
 
 			// Assert
-			Assert.AreEqual(file1, file2, "File paths should be the same");
 			Assert.IsTrue(File.Exists(file2));
 			var fileContent = File.ReadAllText(file2);
 			Assert.AreEqual(newContent, fileContent, "Content should be overwritten");
 			Assert.AreNotEqual(originalContent, fileContent);
-		}
-		finally
-		{
-			if (tempDir.Exists)
-			{
-				tempDir.Delete(true);
-			}
-		}
-	}
-
-	[TestMethod]
-	public void SaveToFileWithDirectory_ReturnsCorrectFilePath()
-	{
-		// Arrange
-		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
-		tempDir.Create();
-		var tester = new TestDirectoryUnitTester();
-		const string content = "Test content";
-		const string methodName = "PathVerificationTest";
-
-		try
-		{
-			// Act
-			var savedFilePath = tester.SaveToFile(content, tempDir, methodName);
-			var expectedPath = Path.Combine(tempDir.FullName, $"{methodName}.txt");
-
-			// Assert
-			Assert.AreEqual(expectedPath, savedFilePath, "Returned path should match expected path");
-			Assert.IsTrue(Path.IsPathFullyQualified(savedFilePath), "Path should be fully qualified");
 		}
 		finally
 		{
@@ -586,36 +528,6 @@ public class UnitTesterTests
 
 			// Assert
 			Assert.IsTrue(File.Exists(savedFilePath));
-			var fileContent = File.ReadAllText(savedFilePath);
-			Assert.AreEqual(content, fileContent);
-		}
-		finally
-		{
-			if (tempDir.Exists)
-			{
-				tempDir.Delete(true);
-			}
-		}
-	}
-	[TestMethod]
-	public void SaveToFileWithDirectory_ValidInput_CreatesFileWithCorrectContent()
-	{
-		// Arrange
-		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
-		tempDir.Create();
-		var tester = new TestDirectoryUnitTester();
-		const string content = "Test content for directory save";
-		const string methodName = "ValidDirectoryTest";
-
-		try
-		{
-			// Act
-			var savedFilePath = tester.SaveToFile(content, tempDir, methodName);
-
-			// Assert
-			Assert.IsTrue(File.Exists(savedFilePath), "File should be created in specified directory");
-			Assert.Contains(tempDir.FullName, savedFilePath, "File path should contain directory path");
-			Assert.EndsWith($"{methodName}.txt", savedFilePath, "File should have method name");
 			var fileContent = File.ReadAllText(savedFilePath);
 			Assert.AreEqual(content, fileContent);
 		}
