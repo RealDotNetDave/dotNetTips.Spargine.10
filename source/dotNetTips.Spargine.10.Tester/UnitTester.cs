@@ -18,6 +18,7 @@
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -266,7 +267,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		var fileName = methodName.FastIsNullOrEmpty()
 			? $"{RandomData.GenerateKey()}.json"
-			: $"{methodName}_{DateTime.Now.ToString("yyyyMMdd_HHmmssfff", System.Globalization.CultureInfo.InvariantCulture)}.json";
+			: $"{methodName}_{DateTime.Now.ToString("yyyyMMdd_HHmmssfff", CultureInfo.InvariantCulture)}.json";
 
 		var filePath = Path.Combine(this.OutputDirectory, fileName);
 
@@ -752,7 +753,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <seealso cref="SaveToFile(string, string)"/>
 	private static string GenerateFileName([NotNull] string methodName)
 	{
-		var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmssfff", System.Globalization.CultureInfo.InvariantCulture);
+		var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmssfff", CultureInfo.InvariantCulture);
 
 		var fileName = methodName.FastIsNullOrEmpty()
 			? $"{RandomData.GenerateKey}_{timestamp}.txt"
