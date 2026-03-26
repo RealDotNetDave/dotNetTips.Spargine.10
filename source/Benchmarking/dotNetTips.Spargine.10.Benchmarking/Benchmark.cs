@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-16-2026
+// Last Modified On : 03-26-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// methods for consuming objects, generating random data, and updating test entities. 
 /// It also includes properties for accessing various test data and configurations.
 /// Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter], [Atlassian],
-/// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GcServer(true)], [GitHub], [HardwareCounters],
+/// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub], [HardwareCounters],
 /// [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn], [MValueColumn], [NamespaceColumn],
 /// [NativeMemoryProfiler], [PlainExporter], [SkewnessColumn], [StackOverflow],
 /// [TailCallDiagnoser], [ThreadingDiagnoser]
@@ -56,6 +56,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [EvaluateOverhead]
 [ExceptionDiagnoser]
 [Full]
+[GcServer(true)]
 [InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 [IterationsColumn]
 [JsonExporter(indentJson: true)]

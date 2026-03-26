@@ -154,31 +154,6 @@ public static class ListExtensions
 			list = list.ArgumentNotNull();
 
 			var eq = comparer ?? EqualityComparer<T>.Default;
-
-			// When the list is empty, every item is new — skip building
-			// a HashSet from zero elements and just deduplicate the incoming items.
-			if (list.Count == 0)
-			{
-				var seen = new HashSet<T>(eq);
-
-				foreach (var item in items)
-				{
-					if (seen.Add(item))
-					{
-						list.Add(item);
-					}
-				}
-
-				return;
-			}
-
-			// Pre-size the capacity hint when the incoming collection
-			// exposes a count, avoiding potential list re-allocations.
-			if (items is ICollection<T> itemsCollection)
-			{
-				_ = list.EnsureCapacity(list.Count + itemsCollection.Count);
-			}
-
 			var existingItems = new HashSet<T>(list, eq);
 
 			foreach (var item in items)
@@ -311,7 +286,7 @@ public static class ListExtensions
 		/// <exception cref="ArgumentException">Thrown if the list is empty.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T IndexAtLooped(in int index)
 		{
 			list = list.ArgumentNotNull();
@@ -373,7 +348,7 @@ public static class ListExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck)
 		{
 			if (list is null || collectionToCheck is null)

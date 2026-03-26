@@ -57,23 +57,19 @@ public static class AssemblyExtensions
 		{
 			assembly = assembly.ArgumentNotNull();
 
-			var types = assembly.GetTypes();
-			var interfaceSet = new HashSet<Type>();
+			var interfaces = new List<Type>();
 
-			foreach (var type in types)
+			// USING SPAN CAUSES ISSUES.
+			// FrozenSet is slower.
+			// Recommendation from CoPilot is slower.
+			var array = assembly.GetTypes();
+
+			foreach (var arrayItem in array)
 			{
-				var typeInterfaces = type.GetInterfaces();
-
-				foreach (var iface in typeInterfaces)
-				{
-					_ = interfaceSet.Add(iface);
-				}
+				interfaces.AddRange(arrayItem.GetInterfaces());
 			}
 
-			var result = new Type[interfaceSet.Count];
-			interfaceSet.CopyTo(result);
-
-			return Array.AsReadOnly(result);
+			return interfaces.Distinct().ToReadOnlyCollection();
 		}
 
 		/// <summary>
@@ -91,17 +87,7 @@ public static class AssemblyExtensions
 		{
 			assembly = assembly.ArgumentNotNull();
 
-			Type[] types;
-
-			try
-			{
-				types = assembly.GetTypes();
-			}
-			catch (ReflectionTypeLoadException ex)
-			{
-				types = ex.Types.Where(static type => type is not null).ToArray()!;
-			}
-
+			var types = assembly.GetTypes();
 			var result = new List<Type>(types.Length);
 
 			foreach (var type in types)
@@ -112,9 +98,7 @@ public static class AssemblyExtensions
 				}
 			}
 
-			result.TrimExcess();
-
-			return result.AsReadOnly();
+			return result.ToReadOnlyCollection();
 		}
 
 		/// <summary>
@@ -131,51 +115,22 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
 			assembly = assembly.ArgumentNotNull();
 
-			Type[] types;
-
-			try
-			{
-				types = assembly.GetTypes();
-			}
-			catch (ReflectionTypeLoadException ex)
-			{
-				types = ex.Types.Where(static type => type is not null).ToArray()!;
-			}
-
+			var types = assembly.GetTypes();
 			var targetType = typeof(T);
 
 			foreach (var type in types)
 			{
-				if (type.IsAbstract || type.IsGenericType)
+				if (!type.IsInterface && !type.IsAbstract && !type.IsGenericType && targetType.IsAssignableFrom(type))
 				{
-					continue;
-				}
-
-				if (!targetType.IsAssignableFrom(type))
-				{
-					continue;
-				}
-
-				T? instance = null;
-
-				try
-				{
-					instance = Activator.CreateInstance(type) as T;
-				}
-				catch (MissingMethodException ex)
-				{
-					// Type has no parameterless constructor — skip.
-					Trace.WriteLine($"Type {type.FullName} has no parameterless constructor: {ex.Message}");
-				}
-
-				if (instance is not null)
-				{
-					yield return instance;
+					if (Activator.CreateInstance(type) is T instance)
+					{
+						yield return instance;
+					}
 				}
 			}
 		}
@@ -190,7 +145,7 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> or <paramref name="type"/> is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetTypes([DisallowNull] Type type)
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -199,17 +154,16 @@ public static class AssemblyExtensions
 			var types = assembly.GetTypes();
 			var result = new List<Type>(types.Length);
 
-			foreach (var candidateType in types)
+			foreach (var t in types)
 			{
-				if (!candidateType.IsAbstract && type.IsAssignableFrom(candidateType))
+				if (!t.IsAbstract && type.IsAssignableFrom(t))
 				{
-					result.Add(candidateType);
+					result.Add(t);
 				}
 			}
 
-			result.TrimExcess();
+			return result.ToReadOnlyCollection();
 
-			return result.AsReadOnly();
 		}
 	}
 }

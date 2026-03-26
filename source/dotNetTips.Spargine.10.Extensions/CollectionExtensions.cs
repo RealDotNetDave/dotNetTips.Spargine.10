@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-25-2026
+// Last Modified On : 03-26-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -259,7 +259,10 @@ public static class CollectionExtensions
 		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
-			collection = collection.ArgumentNotNull();
+			if (collection is null)
+			{
+				ExceptionThrower.ThrowArgumentNullException(nameof(collection));
+			}
 
 			return new([.. collection]);
 		}
