@@ -55,7 +55,6 @@ public static class DictionaryExtensions
 		}
 
 		key = key.ArgumentNotNull();
-		collection = collection.ArgumentNotNull();
 
 		return collection.TryAdd(key, value);
 	}
@@ -206,7 +205,6 @@ public static class DictionaryExtensions
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
-
 		if (collection.TryGetValue(key, out var item) is false)
 		{
 			collection.Add(key, value);
@@ -350,7 +348,7 @@ public static class DictionaryExtensions
 	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", Status = Status.Available)]
 	public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		return collection.ToImmutable();
+		return [.. collection];
 	}
 
 	/// <summary>

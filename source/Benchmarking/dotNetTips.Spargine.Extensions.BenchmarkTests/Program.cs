@@ -51,7 +51,8 @@ internal sealed class Program
 			 typeof(ArrayExtensionsCollectionBenchmark),
 				typeof(CollectionExtensionsCollectionBenchmark),
 			typeof(ListExtensionsCollectionBenchmark),
-			typeof(ListExtensionsAddRemoveCollectionBenchmark)
+			typeof(ListExtensionsAddRemoveCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark)
 			);
 
 	}
