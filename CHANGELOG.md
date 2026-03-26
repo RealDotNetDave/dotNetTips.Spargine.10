@@ -155,7 +155,26 @@ This document summarizes all notable changes made to the Spargine 10 repository 
 |---|---|
 | Total commits | ~80 |
 | New extension methods | 15+ |
-| New/enhanced unit test classes | 10+ |
-| New benchmark classes | 6+ |
 | Version bumps | 4 (2026.10.2.1 → 2026.10.3.1) |
 | NuGet packages updated | 10+ |
+
+### Unit Tests
+
+| Project | Test Classes | Test Methods |
+|---|---|---|
+| DotNetTips.Spargine.10.Benchmarking.Tests | 1 | 1 |
+| dotNetTips.Spargine.Core.Tests | 45 | 2,128 |
+| dotNetTips.Spargine.Extensions.Tests | 27 | 1,370 |
+| dotNetTips.Spargine.Tester.Tests | 18 | 348 |
+| dotNetTips.Spargine.Tests | 11 | 205 |
+| **Total** | **102** | **4,052** |
+
+### Benchmark Tests
+
+| Project | Benchmark Classes | Benchmark Methods |
+|---|---|---|
+| dotNetTips.Spargine.BenchmarkTests | 2 | 7 |
+| dotNetTips.Spargine.Core.BenchmarkTests | 28 | 318 |
+| dotNetTips.Spargine.Extensions.BenchmarkTests | 28 | 360 |
+| dotNetTips.Spargine.Tester.BenchmarkTests | 3 | 49 |
+| **Total** | **61** | **734** |
