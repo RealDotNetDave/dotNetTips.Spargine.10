@@ -49,6 +49,10 @@ public class HttpEventListenersTests : IDisposable
 				_ = await this._httpClient.GetStringAsync("https://c-sharpcorner.com");
 			}
 		}
+		catch (HttpRequestException)
+		{
+			Assert.Inconclusive("Network request failed. This test requires network access.");
+		}
 		catch
 		{
 			Assert.Fail();
@@ -64,6 +68,10 @@ public class HttpEventListenersTests : IDisposable
 			{
 				_ = await this._httpClient.GetStringAsync("https://c-sharpcorner.com");
 			}
+		}
+		catch (HttpRequestException)
+		{
+			Assert.Inconclusive("Network request failed. This test requires network access.");
 		}
 		catch
 		{
@@ -83,6 +91,10 @@ public class HttpEventListenersTests : IDisposable
 					_ = await this._httpClient.GetStringAsync("https://c-sharpcorner.com");
 				}
 			}
+		}
+		catch (HttpRequestException)
+		{
+			Assert.Inconclusive("Network request failed. This test requires network access.");
 		}
 		catch (Exception ex)
 		{

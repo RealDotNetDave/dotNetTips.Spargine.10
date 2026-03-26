@@ -63,8 +63,5 @@
 	</EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="C:\Users\david\.nuget\packages\mstest.testadapter\4.0.2\buildTransitive\net9.0\\Microsoft.TestPlatform.AdapterUtilities.dll" />
-  </ItemGroup>
 
 </Project>

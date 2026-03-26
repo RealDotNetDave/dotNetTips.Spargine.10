@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
@@ -161,11 +162,17 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 			sb.AppendLine(TypeHelper.GetTypeDisplayName(item, fullName: true, includeGenericParameterNames: true, includeGenericParameters: true));
 		}
 
-		File.WriteAllText(@"C:\dotNetTips.com\IDisposableTypes-10.txt", sb.ToString());
+		File.WriteAllText(Path.Combine(Path.GetTempPath(), "IDisposableTypes-10.txt"), sb.ToString());
 
-		var dir = new DirectoryInfo("C:\\Windows\\assembly\\NativeImages_v4.0.30319_64");
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		{
+			var dir = new DirectoryInfo("C:\\Windows\\assembly\\NativeImages_v4.0.30319_64");
 
-		var files = Directory.GetFiles(dir.FullName, "*.dll", SearchOption.AllDirectories).Where(p => AssemblyHelper.IsDotNetAssembly(new FileInfo(p))).ToArray();
+			if (dir.Exists)
+			{
+				var files = Directory.GetFiles(dir.FullName, "*.dll", SearchOption.AllDirectories).Where(p => AssemblyHelper.IsDotNetAssembly(new FileInfo(p))).ToArray();
+			}
+		}
 	}
 
 	[TestMethod]

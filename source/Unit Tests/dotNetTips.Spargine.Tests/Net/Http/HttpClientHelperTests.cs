@@ -14,6 +14,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Net.Http;
@@ -61,7 +62,16 @@ public class HttpClientHelperTests
 		var url = new Uri("https://httpbin.org/get");
 
 		// Act
-		var response = await HttpClientHelper.GetHttpResponseAsync(url);
+		HttpResponseMessage response;
+		try
+		{
+			response = await HttpClientHelper.GetHttpResponseAsync(url);
+		}
+		catch (HttpRequestException)
+		{
+			Assert.Inconclusive("Network request failed. This test requires network access.");
+			return;
+		}
 
 		// Assert
 		Assert.IsNotNull(response);
@@ -89,7 +99,16 @@ public class HttpClientHelperTests
 		var url = new Uri("https://httpbin.org/stream/1");
 
 		// Act
-		var stream = await HttpClientHelper.GetStreamAsync(url);
+		Stream stream;
+		try
+		{
+			stream = await HttpClientHelper.GetStreamAsync(url);
+		}
+		catch (HttpRequestException)
+		{
+			Assert.Inconclusive("Network request failed. This test requires network access.");
+			return;
+		}
 
 		// Assert
 		Assert.IsNotNull(stream);

@@ -1,0 +1,77 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test-cross-platform:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore source/Unit\ Tests/dotNetTips.Spargine.Core.Tests/DotNetTips.Spargine.Core.Tests.csproj
+
+      - name: Build
+        run: dotnet build source/Unit\ Tests/dotNetTips.Spargine.Core.Tests/DotNetTips.Spargine.Core.Tests.csproj --no-restore --configuration Release
+
+      - name: Run Core Tests
+        run: dotnet test source/Unit\ Tests/dotNetTips.Spargine.Core.Tests/DotNetTips.Spargine.Core.Tests.csproj --no-build --configuration Release --verbosity normal
+
+      - name: Restore Extensions Tests dependencies
+        run: dotnet restore source/Unit\ Tests/dotNetTips.Spargine.Extensions.Tests/DotNetTips.Spargine.Extensions.Tests.csproj
+
+      - name: Build Extensions Tests
+        run: dotnet build source/Unit\ Tests/dotNetTips.Spargine.Extensions.Tests/DotNetTips.Spargine.Extensions.Tests.csproj --no-restore --configuration Release
+
+      - name: Run Extensions Tests
+        run: dotnet test source/Unit\ Tests/dotNetTips.Spargine.Extensions.Tests/DotNetTips.Spargine.Extensions.Tests.csproj --no-build --configuration Release --verbosity normal
+
+      - name: Restore Tester Tests dependencies
+        run: dotnet restore source/Unit\ Tests/dotNetTips.Spargine.Tester.Tests/DotNetTips.Spargine.Tester.Tests.csproj
+
+      - name: Build Tester Tests
+        run: dotnet build source/Unit\ Tests/dotNetTips.Spargine.Tester.Tests/DotNetTips.Spargine.Tester.Tests.csproj --no-restore --configuration Release
+
+      - name: Run Tester Tests
+        run: dotnet test source/Unit\ Tests/dotNetTips.Spargine.Tester.Tests/DotNetTips.Spargine.Tester.Tests.csproj --no-build --configuration Release --verbosity normal
+
+  test-windows-only:
+    name: Test Windows-Only
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore source\Unit Tests\dotNetTips.Spargine.Tests\DotNetTips.Spargine.Tests.csproj
+
+      - name: Build
+        run: dotnet build "source\Unit Tests\dotNetTips.Spargine.Tests\DotNetTips.Spargine.Tests.csproj" --no-restore --configuration Release
+
+      - name: Run Windows Tests
+        run: dotnet test "source\Unit Tests\dotNetTips.Spargine.Tests\DotNetTips.Spargine.Tests.csproj" --no-build --configuration Release --verbosity normal
