@@ -4,6 +4,7 @@
 - Use FastStringBuilder and other Spargine optimized utilities
 - Use Spargine validation helpers instead of manual checks
 - Use Spargine performance utilities where applicable
+- For unit tests and benchmark test, use data from the dotNetTips.Spargine.10.Tester assembly whenever possible
 
 ## Performance
 

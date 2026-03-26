@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 03-26-2026
 // ***********************************************************************
 // <copyright file="ThreadExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,6 +16,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using DotNetTips.Spargine.Core.Devices;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -24,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class ThreadExtensionsTests
+public class ThreadExtensionsTests : UnitTester
 {
 
 	[TestMethod]
@@ -89,18 +90,14 @@ public class ThreadExtensionsTests
 	[TestMethod]
 	public void WaitUntil_ValidInterval_WaitsCorrectly()
 	{
-		// Arrange
 		var thread = Thread.CurrentThread;
 		var interval = TimeSpan.FromTicks(1000);
 
-		// Act
-		var startTime = TimeSpan.FromTicks(Clock.LocalTime.Ticks);
-		thread.WaitUntil(interval);
-		var endTime = TimeSpan.FromTicks(Clock.LocalTime.Ticks);
+		var elapsed = this.MeasureAction(() => thread.WaitUntil(interval), printResult: false);
 
-		// Assert
-		Assert.IsTrue(endTime - startTime >= interval, "The method should wait for at least the specified interval.");
+		Assert.IsTrue(elapsed >= interval, $"The method should wait for at least the specified interval. Expected: {interval}, Actual: {elapsed}");
 	}
+
 
 	[TestMethod]
 	public void WaitUntil_ValidIntervalAndIterations_WaitsCorrectly()
