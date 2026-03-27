@@ -1,0 +1,8 @@
+{
+  "excludePatterns": [],
+  "incrementOnBuild": true,
+  "incrementStrategy": "revision",
+  "releaseBuildsOnly": false,
+  "syncMode": "autoIncrement",
+  "version": "2026.10.3.9"
+}
