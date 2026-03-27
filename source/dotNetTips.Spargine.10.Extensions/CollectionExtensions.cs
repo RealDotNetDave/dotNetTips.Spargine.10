@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-26-2026
+// Last Modified On : 03-27-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -23,6 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
+using DotNetTips.Spargine.Extensions.Properties;
 using Microsoft.VisualBasic;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -113,12 +114,12 @@ public static class CollectionExtensions
 				return;
 			}
 
+			collection = collection.ArgumentNotNull();
+
 			if (collection is T[])
 			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
+				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
 			}
-
-			collection = collection.ArgumentNotNull();
 
 			if (condition)
 			{
@@ -157,12 +158,12 @@ public static class CollectionExtensions
 				return false;
 			}
 
+			collection = collection.ArgumentNotNull();
+
 			if (collection is T[])
 			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
+				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
 			}
-
-			collection = collection.ArgumentNotNull();
 
 			var eq = comparer ?? EqualityComparer<T>.Default;
 
@@ -192,17 +193,20 @@ public static class CollectionExtensions
 		/// // myCollection now contains the unique items from newItems.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddRange), "David McCarter", "11/7/2023", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRange), "David McCarter", "11/7/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true)
 		{
-			items = items.ArgumentNotNull();
+			if (items is null)
+			{
+				return false;
+			}
+
+			collection = collection.ArgumentNotNull();
 
 			if (collection is T[])
 			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
+				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
 			}
-
-			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
 			if (!ensureUnique)
 			{
@@ -256,7 +260,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			if (collection is null)
@@ -278,9 +282,11 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
+			collection = collection.ArgumentNotNull();
+
 			return new([.. collection]);
 		}
 
@@ -320,12 +326,12 @@ public static class CollectionExtensions
 				return;
 			}
 
+			collection = collection.ArgumentNotNull();
+
 			if (collection is T[])
 			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Properties.Resources.ArraysAreFixedSize, nameof(collection));
+				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
 			}
-
-			collection = collection.ArgumentNotNull().ArgumentNotReadOnly();
 
 			// Short-circuit when the collection is empty — avoids
 			// a fruitless O(n) scan inside Remove.
