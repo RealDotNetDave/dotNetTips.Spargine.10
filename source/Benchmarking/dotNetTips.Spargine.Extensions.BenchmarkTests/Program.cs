@@ -10,7 +10,7 @@
 //     David McCarter
 // </copyright>
 // <summary>
-// Benchmark Runtime: 18 hours
+// Benchmark Runtime: 18.5 hours
 // Benchmark count: 1,878
 // </summary>
 // ***********************************************************************
@@ -44,12 +44,12 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		//BenchmarkHelper.RunAllBenchmarks(config);
+		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			 typeof(ArrayExtensionsCollectionBenchmark)
-			);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	 typeof(ArrayExtensionsCollectionBenchmark)
+		//	);
 
 	}
 }

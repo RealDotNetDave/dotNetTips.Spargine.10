@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TypeExtensionsBenchmark-20260316-125731</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TypeExtensionsBenchmark-20260329-072718</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -16,22 +16,22 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7058/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.104
-  [Host]     : .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Strings  
 </code></pre>
 
 <table>
-<thead><tr><th>Method               </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method               </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>GetAllDeclaredFields</td><td>163.2 ns</td><td>1.22 ns</td><td>1.01 ns</td><td>0.28 ns</td><td>161.8 ns</td><td>162.5 ns</td><td>163.1 ns</td><td>164.0 ns</td><td>165.2 ns</td><td>6,125,625.2</td><td>6.359 ns</td><td>13.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0088</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>195 B</td>
-</tr><tr><td>GetAllDeclaredMethods</td><td>307.0 ns</td><td>3.76 ns</td><td>3.52 ns</td><td>0.91 ns</td><td>302.9 ns</td><td>304.1 ns</td><td>305.9 ns</td><td>309.5 ns</td><td>314.4 ns</td><td>3,257,293.8</td><td>7.045 ns</td><td>15.00</td><td>4</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0076</td><td>NA</td><td>-</td><td>-</td><td>232 B</td>
-</tr><tr><td>GetAllFields</td><td>156.6 ns</td><td>2.32 ns</td><td>2.17 ns</td><td>0.56 ns</td><td>153.6 ns</td><td>154.8 ns</td><td>156.5 ns</td><td>158.1 ns</td><td>161.1 ns</td><td>6,386,780.1</td><td>7.220 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0083</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>240 B</td>
-</tr><tr><td>GetAllMethods</td><td>399.6 ns</td><td>7.01 ns</td><td>6.21 ns</td><td>1.66 ns</td><td>391.4 ns</td><td>395.4 ns</td><td>397.4 ns</td><td>403.3 ns</td><td>412.9 ns</td><td>2,502,212.5</td><td>6.170 ns</td><td>14.00</td><td>5</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0067</td><td>NA</td><td>-</td><td>-</td><td>240 B</td>
-</tr><tr><td>GetAllProperties</td><td>177.1 ns</td><td>2.83 ns</td><td>4.41 ns</td><td>0.78 ns</td><td>172.0 ns</td><td>174.3 ns</td><td>175.8 ns</td><td>178.4 ns</td><td>189.0 ns</td><td>5,646,278.4</td><td>15.611 ns</td><td>32.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0086</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>248 B</td>
-</tr><tr><td>GetTypeMembersWithAttribute</td><td>229.3 ns</td><td>3.61 ns</td><td>3.55 ns</td><td>0.89 ns</td><td>223.8 ns</td><td>225.9 ns</td><td>229.9 ns</td><td>231.8 ns</td><td>235.8 ns</td><td>4,360,340.3</td><td>7.556 ns</td><td>16.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>-</td><td>0.0126</td><td>1,563 B</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
+</thead><tbody><tr><td>GetAllDeclaredFields</td><td>151.7 ns</td><td>0.67 ns</td><td>0.63 ns</td><td>0.16 ns</td><td>150.6 ns</td><td>151.3 ns</td><td>151.5 ns</td><td>152.2 ns</td><td>153.0 ns</td><td>6,592,090.0</td><td>7.419 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>0.0081</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>232 B</td>
+</tr><tr><td>GetAllDeclaredMethods</td><td>300.3 ns</td><td>2.37 ns</td><td>2.22 ns</td><td>0.57 ns</td><td>297.2 ns</td><td>298.6 ns</td><td>300.0 ns</td><td>301.7 ns</td><td>305.0 ns</td><td>3,330,121.3</td><td>7.214 ns</td><td>15.00</td><td>4</td><td>No</td><td>-</td><td>0.0076</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>232 B</td>
+</tr><tr><td>GetAllFields</td><td>170.6 ns</td><td>1.63 ns</td><td>1.53 ns</td><td>0.39 ns</td><td>167.8 ns</td><td>169.5 ns</td><td>170.8 ns</td><td>171.4 ns</td><td>173.5 ns</td><td>5,862,383.7</td><td>7.303 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>0.0083</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>240 B</td>
+</tr><tr><td>GetAllMethods</td><td>371.6 ns</td><td>2.85 ns</td><td>2.53 ns</td><td>0.68 ns</td><td>368.2 ns</td><td>369.5 ns</td><td>372.0 ns</td><td>373.1 ns</td><td>377.4 ns</td><td>2,691,061.9</td><td>6.662 ns</td><td>14.00</td><td>5</td><td>No</td><td>-</td><td>0.0024</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>240 B</td>
+</tr><tr><td>GetAllProperties</td><td>172.0 ns</td><td>1.05 ns</td><td>0.87 ns</td><td>0.24 ns</td><td>170.3 ns</td><td>171.3 ns</td><td>172.1 ns</td><td>172.7 ns</td><td>173.2 ns</td><td>5,813,250.5</td><td>6.379 ns</td><td>13.00</td><td>2</td><td>No</td><td>-</td><td>0.0086</td><td>-</td><td>-</td><td>NA</td><td>0.0005</td><td>0.0005</td><td>248 B</td>
+</tr><tr><td>GetTypeMembersWithAttribute</td><td>220.7 ns</td><td>1.10 ns</td><td>1.03 ns</td><td>0.27 ns</td><td>219.5 ns</td><td>219.9 ns</td><td>220.5 ns</td><td>221.1 ns</td><td>222.8 ns</td><td>4,531,139.9</td><td>7.367 ns</td><td>15.00</td><td>3</td><td>No</td><td>-</td><td>0.0126</td><td>-</td><td>-</td><td>1,566 B</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
 </tr></tbody></table>
 </body>
 </html>
