@@ -368,6 +368,7 @@ public static class BenchmarkHelper
 			sw.AddDiagnosticEntry($"Found {benchmarks.Length} benchmark classes to run.");
 
 			var benchmarkCount = benchmarks.Length;
+			var totalTestCount = 0;
 
 			// Run each benchmark type individually using BenchmarkRunner.Run()
 			// This ensures each benchmark runs in the calling assembly's context
@@ -383,7 +384,10 @@ public static class BenchmarkHelper
 
 				using var runInfo = BenchmarkConverter.TypeToBenchmarks(benchmarkType, config);
 
-				sw.AddDiagnosticEntry($"Starting benchmark: {benchmarkName} - Test Count: {runInfo.BenchmarksCases.Length}");
+				var testCount = runInfo.BenchmarksCases.Length;
+				totalTestCount += testCount;
+
+				sw.AddDiagnosticEntry($"Starting benchmark: {benchmarkName} - Test Count: {testCount}");
 
 				var startTime = sw.Elapsed;
 
@@ -399,6 +403,8 @@ public static class BenchmarkHelper
 			ConsoleLogger.Default.WriteLineInfo(string.Empty);
 			ConsoleLogger.Default.WriteLineInfo(Resources.BenchmarkTestsAreCompleteRockOn);
 			ConsoleLogger.Default.WriteLineInfo(string.Empty);
+
+			sw.AddDiagnosticEntry($"Total benchmark tests across all classes: {totalTestCount}");
 
 			sw.Stop();
 

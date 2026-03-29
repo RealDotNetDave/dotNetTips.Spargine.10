@@ -11,7 +11,7 @@
 // </copyright>
 // <summary>
 // Benchmark Runtime: 18.5 hours
-// Benchmark count: 1,878
+// Benchmark count: 1,975
 // </summary>
 // ***********************************************************************
 using BenchmarkDotNet.Configs;
