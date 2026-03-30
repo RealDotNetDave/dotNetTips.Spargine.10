@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-26-2026
+// Last Modified On : 03-29-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -69,7 +69,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// Files that cannot be deleted (e.g., locked by another process) are silently skipped.
 	/// </remarks>
 	[DebuggerStepThrough]
-	[Information(nameof(CleanupOutputDirectory), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(CleanupOutputDirectory), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int CleanupOutputDirectory(string searchPattern = "*.txt")
 	{
 		if (!Directory.Exists(this.OutputDirectory))
@@ -111,7 +111,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <returns>A <see cref="TimeSpan"/> representing the elapsed time of the action.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="action"/> is null.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public TimeSpan MeasureAction([NotNull] Action action, bool printResult = true, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		action = action.ArgumentNotNull();
@@ -145,7 +145,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="asyncAction"/> is null.</exception>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
-	[Information(nameof(MeasureActionAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(MeasureActionAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task<TimeSpan> MeasureActionAsync([NotNull] Func<Task> asyncAction, bool printResult = true, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		asyncAction = asyncAction.ArgumentNotNull();
@@ -258,7 +258,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <returns>The full path of the saved JSON file.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveAsJsonToFile), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(SaveAsJsonToFile), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveAsJsonToFile<T>([NotNull] T input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();
@@ -566,7 +566,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <returns>A task containing the full path of the saved file, or <see cref="string.Empty"/> if the input is null or empty.</returns>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		if (input.IsNullOrEmpty())
@@ -629,7 +629,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.</exception>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();

@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-26-2026
+// Last Modified On : 03-30-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -18,6 +18,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading.Channels;
+using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Properties;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -405,33 +406,38 @@ public sealed class ChannelQueue<T>
 		item = item.ArgumentNotNull();
 		idempotencyKey = idempotencyKey.ArgumentNotNullOrEmpty();
 
-		var now = UtcNowMs();
-		var expiryTime = ToExpiryMs(dedupeWindow);
+		// Single timestamp for both "now" check and expiry calculation,
+		// eliminating the redundant DateTimeOffset.UtcNow call inside ToExpiryMs.
+		var nowMs = UtcNowMs();
+		var expiryTime = dedupeWindow is { } window
+			? nowMs + (long)window.TotalMilliseconds
+			: long.MaxValue;
 
-		// Opportunistically clean up expired entry for this specific key
-		if (this._idempotencyKeys.TryGetValue(idempotencyKey, out var existingExpiry) && existingExpiry < now)
-		{
-			// Try to remove the expired key
-			// It's okay if another thread removes it first - TryRemove is idempotent
-			_ = this._idempotencyKeys.TryRemove(idempotencyKey, out _);
-		}
-
-		// Try to add the key - first writer wins
-		// This is the idempotency gate
+		// Fast path: attempt TryAdd first (most common case is a new key)
 		if (!this._idempotencyKeys.TryAdd(idempotencyKey, expiryTime))
 		{
-			return false; // Key already exists (either unexpired or just added by another thread)
+			// Key already exists — check if it's expired
+			if (!this._idempotencyKeys.TryGetValue(idempotencyKey, out var existingExpiry) || existingExpiry >= nowMs)
+			{
+				return false; // Key is still valid (not expired) or was removed by another thread
+			}
+
+			// Expired key — remove and retry the add
+			_ = this._idempotencyKeys.TryRemove(idempotencyKey, out _);
+
+			if (!this._idempotencyKeys.TryAdd(idempotencyKey, expiryTime))
+			{
+				return false; // Another thread claimed the key first
+			}
 		}
 
-		// At this point, we "own" the idempotency key
-		// Now try to write to the channel
+		// We own the idempotency key — try to write to the channel
 		if (this._channel.Writer.TryWrite(item))
 		{
-			return true; // Success: both key was added AND item was written
+			return true;
 		}
 
-		// Channel write failed (likely full) - must roll back the key
-		// to allow future attempts
+		// Channel write failed (likely full) — roll back the key to allow future attempts
 		_ = this._idempotencyKeys.TryRemove(idempotencyKey, out _);
 
 		return false;
@@ -564,10 +570,12 @@ public sealed class ChannelQueue<T>
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static long ToExpiryMs(TimeSpan? window)
-		=> window is null ? long.MaxValue : DateTimeOffset.UtcNow.Add(window.Value).ToUnixTimeMilliseconds();
+	{
+		return window is null ? long.MaxValue : DateTimeOffset.UtcNow.Add(window.Value).ToUnixTimeMilliseconds();
+	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static long UtcNowMs() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+	private static long UtcNowMs() => Clock.UnixTimestampMilliseconds;
 
 
 }

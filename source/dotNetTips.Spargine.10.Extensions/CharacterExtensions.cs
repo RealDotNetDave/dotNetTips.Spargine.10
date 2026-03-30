@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-21-2026
+// Last Modified On : 03-29-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for <see cref="char"/> to determine ASCII character types.
 /// </summary>
-[Information(Status = Status.UpdateDocumentation, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class CharacterExtensions
 {
 	/// <summary>
@@ -134,7 +134,7 @@ public static class CharacterExtensions
 		/// </summary>
 		/// <returns>The lowercase equivalent of the character if it is an uppercase ASCII letter; otherwise, the original character.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToAsciiLower), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(ToAsciiLower), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public char ToAsciiLower()
 		{
 			return character is >= 'A' and <= 'Z' ? (char)(character + 32) : character;

@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Implements the <see cref="Enumeration" />
 /// </summary>
 /// <seealso cref="Enumeration" />
-[Information(nameof(NumericFormat), Status = Status.UpdateDocumentation)]
+[Information(nameof(NumericFormat), Status = Status.NeedsDocumentation)]
 public sealed class NumericFormat : Enumeration
 {
 

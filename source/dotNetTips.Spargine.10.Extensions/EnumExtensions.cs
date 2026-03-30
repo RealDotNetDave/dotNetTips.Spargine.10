@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified On : 03-29-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for the <see cref="Enum" /> type, enhancing enum functionality with additional utilities such as getting descriptions, parsing, and retrieving items.
 /// </summary>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumHandling")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static class EnumExtensions
 {
 	/// <summary>

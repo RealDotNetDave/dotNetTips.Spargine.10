@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 03-29-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core;
 /// Use for return results from methods. This type is thread-safe.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-[Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineSimpleResult")]
+[Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.Available, Documentation = "https://bit.ly/SpargineSimpleResult")]
 public class SimpleResult<T>
 {
 	private readonly DistinctConcurrentBag<Exception> _exceptions = [];
@@ -59,17 +59,11 @@ public class SimpleResult<T>
 	}
 
 	/// <summary>
-	/// Initializes a new successful result.
+	/// Initializes a new instance of the <see cref="SimpleResult{T}"/> class
+	/// with the specified value and an optional logger.
 	/// </summary>
-	/// <param name="value">The value to be stored as the result. Cannot be <see langword="null"/>.</param>
-	/// <param name="logger">
-	/// An optional <see cref="ILogger"/> used to record diagnostic information related to the result.
-	/// If provided, it can be used by callers to log messages or errors associated with this instance.
-	/// </param>
-	/// <remarks>
-	/// This constructor marks the result as successful by setting the internal value and updating the status flags.
-	/// If <paramref name="logger"/> is supplied, it is stored for potential diagnostic or telemetry usage.
-	/// </remarks>
+	/// <param name="value">The value produced by the operation. Must not be <see langword="null"/>.</param>
+	/// <param name="logger">An optional <see cref="ILogger"/> instance used for logging. Can be <see langword="null"/>.</param>
 	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Update, Status = Core.Status.Available)]
 	public SimpleResult([DisallowNull] T value, [AllowNull] ILogger? logger = null)
 	{
@@ -79,21 +73,12 @@ public class SimpleResult<T>
 	}
 
 	/// <summary>
-	/// Initializes a new unsuccessful result.
+	/// Initializes a new instance of the <see cref="SimpleResult{T}"/> class
+	/// representing a failed operation with the specified error.
 	/// </summary>
-	/// <param name="error">
-	/// The exception representing the error condition. Cannot be <see langword="null"/>.
-	/// This exception is captured and stored internally so multiple errors can be associated with a single result.
-	/// </param>
-	/// <param name="logger">
-	/// An optional <see cref="ILogger"/> used to record diagnostic information related to this result.
-	/// If provided, it may be used by callers to log messages or errors associated with the failure.
-	/// </param>
-	/// <remarks>
-	/// This constructor initializes the result in a failed state by setting the internal value to its default,
-	/// storing the optional <paramref name="logger"/>, and adding the provided <paramref name="error"/> to the
-	/// internal error collection using <see cref="AddException(Exception)"/>.
-	/// </remarks>
+	/// <param name="error">The exception that caused the operation to fail.</param>
+	/// <param name="logger">An optional <see cref="ILogger"/> instance for logging. Can be <see langword="null"/>.</param>
+
 	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Update, Status = Core.Status.Available)]
 	public SimpleResult(Exception error, [AllowNull] ILogger? logger = null)
 	{

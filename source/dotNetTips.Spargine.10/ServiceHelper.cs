@@ -4,7 +4,7 @@
 // Created          : 03-15-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 03-29-2026
 // ***********************************************************************
 // <copyright file="ServiceHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -41,7 +41,7 @@ namespace DotNetTips.Spargine;
 /// library, which provides a wide range of utilities and helper methods for .NET developers.
 /// </remarks>
 [SupportedOSPlatform("windows")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineServiceHelper")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineServiceHelper")]
 public static class ServiceHelper
 {
 	private static readonly CompositeFormat _processHasBeenKilled = CompositeFormat.Parse(Resources.ProcessHasBeenKilled);
@@ -377,7 +377,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NeedsUpdate, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NeedsUpdate, Status = Status.Available)]
 	public static ServiceActionResult StopService([DisallowNull] string serviceName, bool stopServicesDependedOn = false, bool stopDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();

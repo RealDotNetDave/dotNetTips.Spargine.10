@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-14-2026
+// Last Modified On : 03-29-2026
 // ***********************************************************************
 // <copyright file="Clock.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Devices;
 /// Some of this code is from the Microsoft.VisualBasic.dll.
 /// </remarks>
 [ExcludeFromCodeCoverage(Justification = "Not needed due to just using the <see cref=\"DateTime\"/> type.")]
-[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineClock")]
+[Information(nameof(Clock), "David McCarter", "11/11/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineClock")]
 public static class Clock
 {
 
@@ -334,7 +334,7 @@ public static class Clock
 	/// <returns>The number of days in the specified month.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DaysInMonth), "David McCarter", "2/13/2026", Status = Status.New)]
+	[Information(nameof(DaysInMonth), "David McCarter", "2/13/2026", Status = Status.Available)]
 	public static int DaysInMonth(in int year, in int month)
 	{
 		return DateTime.DaysInMonth(year, month);
