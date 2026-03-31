@@ -15,6 +15,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DotNetTips.Spargine.Core.Collections;
@@ -605,7 +606,7 @@ public class CollectionRandomizerTests
 
 		// Act & Assert
 		Assert.AreEqual(0, randomizer.Count);
-		Assert.ThrowsExactly<InvalidValueException<System.Collections.Immutable.ImmutableArray<int>>>(() => randomizer.GetNext());
+		Assert.ThrowsExactly<InvalidValueException<ImmutableArray<int>>>(() => randomizer.GetNext());
 	}
 
 	[TestMethod]
