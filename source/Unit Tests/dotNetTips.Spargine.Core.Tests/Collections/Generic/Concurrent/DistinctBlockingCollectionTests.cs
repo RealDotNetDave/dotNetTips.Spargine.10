@@ -927,4 +927,169 @@ public class DistinctBlockingCollectionTests
 		Assert.IsTrue(collection.Contains("test1"));
 	}
 
+	/// <summary>
+	/// Defines the test method ConstructorWithNullCollectionTest.
+	/// </summary>
+	[TestMethod]
+	public void ConstructorWithNullCollectionTest()
+	{
+		// Arrange & Act
+		var collection = new DistinctBlockingCollection<string>(null);
+
+		// Assert
+		Assert.IsNotNull(collection);
+		Assert.IsEmpty(collection);
+	}
+
+	/// <summary>
+	/// Defines the test method ConstructorWithEmptyCollectionTest.
+	/// </summary>
+	[TestMethod]
+	public void ConstructorWithEmptyCollectionTest()
+	{
+		// Arrange
+		var emptyList = new List<string>();
+
+		// Act
+		var collection = new DistinctBlockingCollection<string>(emptyList);
+
+		// Assert
+		Assert.IsNotNull(collection);
+		Assert.IsEmpty(collection);
+	}
+
+	/// <summary>
+	/// Defines the test method ConstructorWithNullItemsInCollectionTest.
+	/// </summary>
+	[TestMethod]
+	public void ConstructorWithNullItemsInCollectionTest()
+	{
+		// Arrange
+		var items = new List<string> { "test1", null, "test2", null };
+
+		// Act
+		var collection = new DistinctBlockingCollection<string>(items);
+
+		// Assert
+		Assert.IsNotNull(collection);
+		Assert.HasCount(2, collection);
+		Assert.IsTrue(collection.Contains("test1"));
+		Assert.IsTrue(collection.Contains("test2"));
+	}
+
+	/// <summary>
+	/// Defines the test method ConstructorWithDuplicateItemsTest.
+	/// </summary>
+	[TestMethod]
+	public void ConstructorWithDuplicateItemsTest()
+	{
+		// Arrange
+		var items = new List<string> { "test1", "test1" };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => new DistinctBlockingCollection<string>(items));
+	}
+
+	/// <summary>
+	/// Defines the test method AddDuplicateItemTest.
+	/// </summary>
+	[TestMethod]
+	public void AddDuplicateItemTest()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("test1");
+
+		// Act
+		collection.Add("test1");
+
+		// Assert - duplicate should be silently ignored
+		Assert.HasCount(1, collection);
+	}
+
+	/// <summary>
+	/// Defines the test method ContainsNullItemReturnsFalseTest.
+	/// </summary>
+	[TestMethod]
+	public void ContainsNullItemReturnsFalseTest()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("test1");
+
+		// Act
+		var result = collection.Contains(null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	/// <summary>
+	/// Defines the test method ContainsNonExistingItemReturnsFalseTest.
+	/// </summary>
+	[TestMethod]
+	public void ContainsNonExistingItemReturnsFalseTest()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("test1");
+
+		// Act
+		var result = collection.Contains("nonexistent");
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	/// <summary>
+	/// Defines the test method TryAddDuplicateItemReturnsFalseTest.
+	/// </summary>
+	[TestMethod]
+	public void TryAddDuplicateItemReturnsFalseTest()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+		collection.Add("test1");
+
+		// Act
+		var result = collection.TryAdd("test1");
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.HasCount(1, collection);
+	}
+
+	/// <summary>
+	/// Defines the test method CloneEmptyCollectionTest.
+	/// </summary>
+	[TestMethod]
+	public void CloneEmptyCollectionTest()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+
+		// Act
+		var clone = collection.Clone();
+
+		// Assert
+		Assert.IsNotNull(clone);
+		Assert.IsEmpty(clone);
+	}
+
+	/// <summary>
+	/// Defines the test method TryAddWithMillisecondsTimeoutAndCancellationTokenNullItemTest.
+	/// </summary>
+	[TestMethod]
+	public void TryAddWithMillisecondsTimeoutAndCancellationTokenNullItemTest()
+	{
+		// Arrange
+		var collection = new DistinctBlockingCollection<string>();
+
+		// Act
+		var result = collection.TryAdd(null, 1000, CancellationToken.None);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
 }
