@@ -153,7 +153,7 @@ public class FastSortedList<T> : List<T>
 	/// </remarks>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.None)]
+	[Information(Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed)]
 	public ReadOnlySpan<T> AsReadOnlySpan()
 	{
 		this.SortCollectionCore();
