@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -1106,5 +1107,90 @@ public class DistinctConcurrentBagTests
 
 	#endregion
 
+	[TestMethod]
+	public void Constructor_WithNullCollection_ShouldThrowNullReferenceException()
+	{
+		Assert.ThrowsExactly<NullReferenceException>(() => new DistinctConcurrentBag<int>(null as IEnumerable<int>));
+	}
+
+	[TestMethod]
+	public void Constructor_WithCollectionContainingDuplicates_ShouldAddOnlyUniqueItems()
+	{
+		var initialItems = new List<int> { 1, 2, 2, 3, 3, 3 };
+
+		var bag = new DistinctConcurrentBag<int>(initialItems);
+
+		Assert.AreEqual(3, bag.Count);
+		Assert.IsTrue(bag.Contains(1));
+		Assert.IsTrue(bag.Contains(2));
+		Assert.IsTrue(bag.Contains(3));
+	}
+
+	[TestMethod]
+	public void Contains_WithNullItem_ShouldReturnFalse()
+	{
+		var bag = new DistinctConcurrentBag<string> { "apple", "banana" };
+
+		var result = bag.Contains(null);
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Remove_WithNullItem_ShouldThrowArgumentNullException()
+	{
+		var bag = new DistinctConcurrentBag<string> { "apple" };
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.Remove(null));
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithNullItemsInCollection_ShouldSkipNulls()
+	{
+		var bag = new DistinctConcurrentBag<string> { "a", "b", "c" };
+		var itemsToRemove = new[] { "a", null, "c" };
+
+		var removedCount = bag.RemoveRange(itemsToRemove);
+
+		Assert.AreEqual(2, removedCount);
+		Assert.AreEqual(1, bag.Count);
+		Assert.IsTrue(bag.Contains("b"));
+	}
+
+	[TestMethod]
+	public void TryAdd_WithNullItem_ShouldThrowArgumentNullException()
+	{
+		var bag = new DistinctConcurrentBag<string>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.TryAdd(null));
+	}
+
+	[TestMethod]
+	public void TryPeek_EmptyBag_ShouldReturnFalse()
+	{
+		var bag = new DistinctConcurrentBag<int>();
+
+		var result = bag.TryPeek(42, out var actualValue);
+
+		Assert.IsFalse(result);
+		Assert.AreEqual(default(int), actualValue);
+	}
+
+	[TestMethod]
+	public void NonGenericGetEnumerator_ShouldReturnAllItems()
+	{
+		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
+
+		var enumerable = (IEnumerable)bag;
+		var items = new List<int>();
+
+		foreach (int item in enumerable)
+		{
+			items.Add(item);
+		}
+
+		Assert.AreEqual(3, items.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, items);
+	}
 
 }
