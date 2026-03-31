@@ -37,9 +37,9 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\dotNetTips.Spargine.10.Core.csproj" />
-    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\dotNetTips.Spargine.10.Extensions.csproj" />
-    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\dotNetTips.Spargine.10.Tester.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
