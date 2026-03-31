@@ -57,6 +57,132 @@ public class CacheStatisticsTests
 	}
 
 	[TestMethod]
+	public void Equality_DifferentValues_AreNotEqual()
+	{
+		// Arrange
+		var stats1 = new CacheStatistics
+		{
+			CacheHits = 10,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+		var stats2 = new CacheStatistics
+		{
+			CacheHits = 20,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+
+		// Act & Assert
+		Assert.AreNotEqual(stats1, stats2);
+	}
+
+	[TestMethod]
+	public void Equality_SameValues_AreEqual()
+	{
+		// Arrange
+		var stats1 = new CacheStatistics
+		{
+			CacheHits = 10,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+		var stats2 = new CacheStatistics
+		{
+			CacheHits = 10,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+
+		// Act & Assert
+		Assert.AreEqual(stats1, stats2);
+	}
+
+	[TestMethod]
+	public void GetHashCode_DifferentValues_ReturnsDifferentHashCode()
+	{
+		// Arrange
+		var stats1 = new CacheStatistics
+		{
+			CacheHits = 10,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+		var stats2 = new CacheStatistics
+		{
+			CacheHits = 20,
+			CacheMisses = 10,
+			CompactionPercentage = 0.75,
+			TotalItems = 30
+		};
+
+		// Act & Assert
+		Assert.AreNotEqual(stats1.GetHashCode(), stats2.GetHashCode());
+	}
+
+	[TestMethod]
+	public void GetHashCode_SameValues_ReturnsSameHashCode()
+	{
+		// Arrange
+		var stats1 = new CacheStatistics
+		{
+			CacheHits = 10,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+		var stats2 = new CacheStatistics
+		{
+			CacheHits = 10,
+			CacheMisses = 5,
+			CompactionPercentage = 0.5,
+			TotalItems = 15
+		};
+
+		// Act & Assert
+		Assert.AreEqual(stats1.GetHashCode(), stats2.GetHashCode());
+	}
+
+	[TestMethod]
+	public void HitRatio_CalculatesCorrectRatio()
+	{
+		// Arrange
+		var stats = new CacheStatistics
+		{
+			CacheHits = 75,
+			CacheMisses = 25
+		};
+
+		// Act
+		var result = stats.HitRatio;
+
+		// Assert
+		Assert.AreEqual(0.75, result, 0.001);
+	}
+
+	[TestMethod]
+	public void HitRatio_WhenEqualHitsAndMisses_ReturnsHalf()
+	{
+		// Arrange
+		var stats = new CacheStatistics
+		{
+			CacheHits = 50,
+			CacheMisses = 50
+		};
+
+		// Act
+		var result = stats.HitRatio;
+
+		// Assert
+		Assert.AreEqual(0.5, result, 0.001);
+	}
+
+	[TestMethod]
 	public void HitRatio_WhenNoRequests_ReturnsZero()
 	{
 		// Arrange
@@ -108,86 +234,6 @@ public class CacheStatisticsTests
 	}
 
 	[TestMethod]
-	public void HitRatio_WhenEqualHitsAndMisses_ReturnsHalf()
-	{
-		// Arrange
-		var stats = new CacheStatistics
-		{
-			CacheHits = 50,
-			CacheMisses = 50
-		};
-
-		// Act
-		var result = stats.HitRatio;
-
-		// Assert
-		Assert.AreEqual(0.5, result, 0.001);
-	}
-
-	[TestMethod]
-	public void HitRatio_CalculatesCorrectRatio()
-	{
-		// Arrange
-		var stats = new CacheStatistics
-		{
-			CacheHits = 75,
-			CacheMisses = 25
-		};
-
-		// Act
-		var result = stats.HitRatio;
-
-		// Assert
-		Assert.AreEqual(0.75, result, 0.001);
-	}
-
-	[TestMethod]
-	public void Equality_SameValues_AreEqual()
-	{
-		// Arrange
-		var stats1 = new CacheStatistics
-		{
-			CacheHits = 10,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-		var stats2 = new CacheStatistics
-		{
-			CacheHits = 10,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-
-		// Act & Assert
-		Assert.AreEqual(stats1, stats2);
-	}
-
-	[TestMethod]
-	public void Equality_DifferentValues_AreNotEqual()
-	{
-		// Arrange
-		var stats1 = new CacheStatistics
-		{
-			CacheHits = 10,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-		var stats2 = new CacheStatistics
-		{
-			CacheHits = 20,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-
-		// Act & Assert
-		Assert.AreNotEqual(stats1, stats2);
-	}
-
-	[TestMethod]
 	public void ToString_ReturnsNonEmptyString()
 	{
 		// Arrange
@@ -228,51 +274,5 @@ public class CacheStatisticsTests
 		Assert.AreEqual(0.5, modified.CompactionPercentage);
 		Assert.AreEqual(15, modified.TotalItems);
 		Assert.AreNotEqual(original, modified);
-	}
-
-	[TestMethod]
-	public void GetHashCode_SameValues_ReturnsSameHashCode()
-	{
-		// Arrange
-		var stats1 = new CacheStatistics
-		{
-			CacheHits = 10,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-		var stats2 = new CacheStatistics
-		{
-			CacheHits = 10,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-
-		// Act & Assert
-		Assert.AreEqual(stats1.GetHashCode(), stats2.GetHashCode());
-	}
-
-	[TestMethod]
-	public void GetHashCode_DifferentValues_ReturnsDifferentHashCode()
-	{
-		// Arrange
-		var stats1 = new CacheStatistics
-		{
-			CacheHits = 10,
-			CacheMisses = 5,
-			CompactionPercentage = 0.5,
-			TotalItems = 15
-		};
-		var stats2 = new CacheStatistics
-		{
-			CacheHits = 20,
-			CacheMisses = 10,
-			CompactionPercentage = 0.75,
-			TotalItems = 30
-		};
-
-		// Act & Assert
-		Assert.AreNotEqual(stats1.GetHashCode(), stats2.GetHashCode());
 	}
 }
