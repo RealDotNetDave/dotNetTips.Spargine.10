@@ -1,48 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<AnalysisLevel>latest-recommended</AnalysisLevel>
-	<AssemblyVersion>2026.10.3.1</AssemblyVersion>
-	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-	<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
-	<Company>dotNetTips.com - McCarter Consulting</Company>
-	<Configurations>Release</Configurations>
-	<Copyright>McCarter Consulting (David McCarter)</Copyright>
-	<DebugSymbols>true</DebugSymbols>
-	<DebugType>none</DebugType>
-	<Description>DotNetTips.Spargine.Tester.BenchmarkTests</Description>
-	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-	<FileVersion>2026.10.3.1</FileVersion>
-	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-	<IsPublishable>False</IsPublishable>
-	<LangVersion>latest</LangVersion>
-	<NeutralLanguage>en</NeutralLanguage>
-	<Nullable>annotations</Nullable>
-	<NullableContextOptions>enable</NullableContextOptions>
-	<OldToolsVersion>2.0</OldToolsVersion>
-	<OutputType>Exe</OutputType>
-	<Platforms>AnyCPU</Platforms>
-	<PlatformTarget>AnyCPU</PlatformTarget>
-	<ServerGarbageCollection>true</ServerGarbageCollection>
-	<SignAssembly>False</SignAssembly>
-	<TargetFramework>net10.0</TargetFramework>
-	<Version>2026.10.3.1</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <AssemblyVersion>2026.10.4.1</AssemblyVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
+    <Company>dotNetTips.com - McCarter Consulting</Company>
+    <Configurations>Release</Configurations>
+    <Copyright>McCarter Consulting (David McCarter)</Copyright>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Description>DotNetTips.Spargine.Tester.BenchmarkTests</Description>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <FileVersion>2026.10.4.1</FileVersion>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <IsPublishable>False</IsPublishable>
+    <LangVersion>latest</LangVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Nullable>annotations</Nullable>
+    <NullableContextOptions>enable</NullableContextOptions>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <OutputType>Exe</OutputType>
+    <Platforms>AnyCPU</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <SignAssembly>False</SignAssembly>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>2026.10.4.1</Version>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	<OutputPath>..\..\..\AppBin\</OutputPath>
+    <OutputPath>..\..\..\AppBin\</OutputPath>
   </PropertyGroup>
-
   <ItemGroup>
-	<PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
-	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
   </ItemGroup>
-
   <ItemGroup>
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
-	<ProjectReference Include="..\dotNetTips.Spargine.10.Benchmarking\DotNetTips.Spargine.10.Benchmarking.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
+    <ProjectReference Include="..\dotNetTips.Spargine.10.Benchmarking\DotNetTips.Spargine.10.Benchmarking.csproj" />
   </ItemGroup>
-
 </Project>
