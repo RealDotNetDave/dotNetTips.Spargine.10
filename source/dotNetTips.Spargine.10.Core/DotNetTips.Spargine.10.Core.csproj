@@ -61,7 +61,10 @@
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
     <WarningsAsErrors Condition="$(ContinuousIntegrationBuild) == 'true' OR '$(Configuration)' == 'Release'">(WarningsAsErrors);NU1900;NU1901;NU1902;NU1903;NU1904</WarningsAsErrors>
-    <PackageReleaseNotes>--JAN 2026: Initial .NET 10 release.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+	  --JAN 2026: Initial .NET 10 release.
+	  --APR 2026: Updated dependencies and added new helper methods.
+	</PackageReleaseNotes>
     <PackAsTool>False</PackAsTool>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

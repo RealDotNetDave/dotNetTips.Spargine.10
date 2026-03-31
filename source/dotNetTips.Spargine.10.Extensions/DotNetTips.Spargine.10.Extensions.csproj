@@ -1,138 +1,141 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <AnalysisLevel>latest-recommended</AnalysisLevel>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-    <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
-    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
-    <AssemblyTitle>DotNetTips.Spargine.10.Extensions</AssemblyTitle>
-    <AssemblyVersion>2026.10.4.1</AssemblyVersion>
-    <Authors>David McCarter</Authors>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
-    <BaseOutputPath>..\..\AppBin</BaseOutputPath>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <Company>dotNetTips.com - McCarter Consulting</Company>
-    <Configurations>Debug;Release</Configurations>
-    <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Description>Extensions methods for Spargine.</Description>
-    <Deterministic>true</Deterministic>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <EnablePackageValidation>false</EnablePackageValidation>
-    <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.4.1</FileVersion>
-    <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <IncludeSymbols>true</IncludeSymbols>
-    <LangVersion>latest</LangVersion>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <Nullable>enable</Nullable>
-    <PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageProjectUrl>https://bit.ly/Spargine</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
-    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <Product>DotNetTips.Spargine.10</Product>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
-    <RootNamespace>DotNetTips.Spargine.Extensions</RootNamespace>
-    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-    <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    <SelfContained>true</SelfContained>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
-    <SignAssembly>false</SignAssembly>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <TargetFramework>net10.0</TargetFramework>
-    <Title>DotNetTips.Spargine.10.Extensions</Title>
-    <Version>2026.10.4.1</Version>
+	<AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+	<AnalysisLevel>latest-recommended</AnalysisLevel>
+	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
+	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>DotNetTips.Spargine.10.Extensions</AssemblyTitle>
+	<AssemblyVersion>2026.10.4.1</AssemblyVersion>
+	<Authors>David McCarter</Authors>
+	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
+	<BaseOutputPath>..\..\AppBin</BaseOutputPath>
+	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+	<Company>dotNetTips.com - McCarter Consulting</Company>
+	<Configurations>Debug;Release</Configurations>
+	<Copyright>McCarter Consulting (David McCarter)</Copyright>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>portable</DebugType>
+	<Description>Extensions methods for Spargine.</Description>
+	<Deterministic>true</Deterministic>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<EnableNETAnalyzers>true</EnableNETAnalyzers>
+	<EnablePackageValidation>false</EnablePackageValidation>
+	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
+	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	<FileVersion>2026.10.4.1</FileVersion>
+	<GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
+	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<IncludeSymbols>true</IncludeSymbols>
+	<LangVersion>latest</LangVersion>
+	<NeutralLanguage>en-US</NeutralLanguage>
+	<Nullable>enable</Nullable>
+	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<PackageProjectUrl>https://bit.ly/Spargine</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
+	<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+	<Product>DotNetTips.Spargine.10</Product>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
+	<RootNamespace>DotNetTips.Spargine.Extensions</RootNamespace>
+	<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+	<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+	<SelfContained>true</SelfContained>
+	<ServerGarbageCollection>true</ServerGarbageCollection>
+	<SignAssembly>false</SignAssembly>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<TargetFramework>net10.0</TargetFramework>
+	<Title>DotNetTips.Spargine.10.Extensions</Title>
+	<Version>2026.10.4.1</Version>
   </PropertyGroup>
   <PropertyGroup>
-    <NuGetAudit>true</NuGetAudit>
-    <NuGetAuditMode>all</NuGetAuditMode>
-    <NuGetAuditLevel>low</NuGetAuditLevel>
-    <WarningsAsErrors Condition="$(ContinuousIntegrationBuild) == 'true' OR '$(Configuration)' == 'Release'">
+	<NuGetAudit>true</NuGetAudit>
+	<NuGetAuditMode>all</NuGetAuditMode>
+	<NuGetAuditLevel>low</NuGetAuditLevel>
+	<WarningsAsErrors Condition="$(ContinuousIntegrationBuild) == 'true' OR '$(Configuration)' == 'Release'">
 	  (WarningsAsErrors);NU1900;NU1901;NU1902;NU1903;NU1904
 	</WarningsAsErrors>
-    <PackageReleaseNotes>--JAN 2026: Initial .NET 10 release.</PackageReleaseNotes>
+	<PackageReleaseNotes>
+	  --JAN 2026: Initial .NET 10 release.
+	  --APR 2026: Updated dependencies and added new helper methods.
+	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <OutputPath>..\..\AppBin\</OutputPath>
-    <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
-    <WarningLevel>9999</WarningLevel>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <NoWarn />
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<OutputPath>..\..\AppBin\</OutputPath>
+	<DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
+	<WarningLevel>9999</WarningLevel>
+	<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	<NoWarn />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\AppBin\</OutputPath>
-    <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	<OutputPath>..\..\AppBin\</OutputPath>
+	<DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
+	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
+	<Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SPARGINE-ICON-GRAPHIC-SMALL.png">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+	<EmbeddedResource Include="SPARGINE-ICON-GRAPHIC-SMALL.png">
+	  <Pack>true</Pack>
+	  <PackagePath>\</PackagePath>
+	  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	</EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="linq2db" Version="6.1.0" />
-    <PackageReference Include="MessagePack" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.4" />
-    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="4.14.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+	<PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="linq2db" Version="6.1.0" />
+	<PackageReference Include="MessagePack" Version="3.1.4" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+	<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.4" />
+	<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="4.14.0">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+	<Compile Update="Properties\Resources.Designer.cs">
+	  <DesignTime>True</DesignTime>
+	  <AutoGen>True</AutoGen>
+	  <DependentUpon>Resources.resx</DependentUpon>
+	</Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+	<EmbeddedResource Update="Properties\Resources.resx">
+	  <Generator>ResXFileCodeGenerator</Generator>
+	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	</EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+	<None Include="..\..\LICENSE.txt">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+	<ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
   </ItemGroup>
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 </Project>
