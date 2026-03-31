@@ -1108,12 +1108,9 @@ public class DistinctConcurrentBagTests
 	#endregion
 
 	[TestMethod]
-	public void Constructor_WithNullCollection_ShouldThrowArgumentNullException()
+	public void Constructor_WithNullCollection_ShouldThrowNullReferenceException()
 	{
-		Assert.ThrowsExactly<NullReferenceException>(() =>
-		{
-			return new DistinctConcurrentBag<int>(null as IEnumerable<int>);
-		});
+		Assert.ThrowsExactly<NullReferenceException>(() => new DistinctConcurrentBag<int>(null as IEnumerable<int>));
 	}
 
 	[TestMethod]
