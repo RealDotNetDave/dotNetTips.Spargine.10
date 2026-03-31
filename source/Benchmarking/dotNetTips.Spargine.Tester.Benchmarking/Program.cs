@@ -11,7 +11,7 @@
 // </copyright>
 // <summary>
 // Benchmark Runtime: 
-// Benchmark count: 124 benchmarks.
+// Benchmark count: 126 benchmarks.
 // </summary>
 // ***********************************************************************
 

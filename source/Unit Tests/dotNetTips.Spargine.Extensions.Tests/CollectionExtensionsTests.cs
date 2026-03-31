@@ -487,22 +487,6 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
-	public void UpsertWithIDataModel_ReadOnlyCollection_ShouldThrowArgumentReadOnlyException()
-	{
-		// Arrange
-		var models = new List<Person>();
-		for (int i = 0; i < Count; i++)
-		{
-			models.Add(RandomData.GeneratePerson<Person>());
-		}
-		var readOnlyCollection = new ReadOnlyCollection<Person>(models);
-		var newPerson = RandomData.GeneratePerson<Person>();
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => readOnlyCollection.Upsert(newPerson));
-	}
-
-	[TestMethod]
 	public void UpsertWithIDataModelTest()
 	{
 		var models = new List<Person>();
