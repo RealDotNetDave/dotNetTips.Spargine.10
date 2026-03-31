@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -277,6 +278,91 @@ public class FastSortedListTests
 		var newList = list.ToList();
 
 		Assert.IsTrue(newList.SequenceEqual(new[] { 1, 2, 3 }), "ToList should sort the list before creating a new list.");
+	}
+
+	[TestMethod]
+	public void AsReadOnlySpan_ShouldSort()
+	{
+		var list = new FastSortedList<int> { 5, 3, 4, 1, 2 };
+		var span = list.AsReadOnlySpan();
+
+		Assert.AreEqual(5, span.Length, "Span length should match list count.");
+		Assert.IsTrue(span.SequenceEqual(new[] { 1, 2, 3, 4, 5 }), "AsReadOnlySpan should sort the list before returning the span.");
+	}
+
+	[TestMethod]
+	public void AsReadOnlySpan_EmptyList_ShouldReturnEmptySpan()
+	{
+		var list = new FastSortedList<int>();
+		var span = list.AsReadOnlySpan();
+
+		Assert.AreEqual(0, span.Length, "Span should be empty for an empty list.");
+	}
+
+	[TestMethod]
+	public void AsReadOnlySpan_WithCustomComparer_ShouldSortDescending()
+	{
+		var comparer = Comparer<int>.Create((x, y) => y.CompareTo(x)); // Descending
+		var list = new FastSortedList<int>(comparer) { 1, 3, 2 };
+		var span = list.AsReadOnlySpan();
+
+		Assert.IsTrue(span.SequenceEqual(new[] { 3, 2, 1 }), "AsReadOnlySpan should sort using the custom comparer.");
+	}
+
+	[TestMethod]
+	public void Remove_NullItem_ShouldThrowArgumentNullException()
+	{
+		var list = new FastSortedList<string> { "a", "b" };
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.Remove(null), "Removing a null item should throw ArgumentNullException.");
+	}
+
+	[TestMethod]
+	public void Remove_NonExistentItem_ShouldReturnFalse()
+	{
+		var list = new FastSortedList<int> { 1, 2, 3 };
+		var result = list.Remove(99);
+
+		Assert.IsFalse(result, "Removing a non-existent item should return false.");
+	}
+
+	[TestMethod]
+	public void Remove_ExistingItem_ShouldReturnTrueAndRemove()
+	{
+		var list = new FastSortedList<int> { 1, 2, 3 };
+		var result = list.Remove(2);
+
+		Assert.IsTrue(result, "Removing an existing item should return true.");
+		Assert.HasCount(2, list, "List should have one fewer element after removal.");
+	}
+
+	[TestMethod]
+	public void AddRange_ShouldAddAllItemsAndSort()
+	{
+		var list = new FastSortedList<int>();
+		list.AddRange(new[] { 5, 3, 1, 4, 2 });
+
+		var array = list.ToArray();
+
+		Assert.HasCount(5, list, "List should contain all added items.");
+		Assert.IsTrue(array.SequenceEqual(new[] { 1, 2, 3, 4, 5 }), "Items should be sorted after retrieval.");
+	}
+
+	[TestMethod]
+	public void Clear_ShouldRemoveAllItems()
+	{
+		var list = new FastSortedList<int> { 1, 2, 3 };
+		list.Clear();
+
+		Assert.IsEmpty(list, "List should be empty after clearing.");
+	}
+
+	[TestMethod]
+	public void Constructor_Default_ShouldInitializeEmptyList()
+	{
+		var list = new FastSortedList<int>();
+
+		Assert.IsEmpty(list, "Default constructor should create an empty list.");
 	}
 
 }
