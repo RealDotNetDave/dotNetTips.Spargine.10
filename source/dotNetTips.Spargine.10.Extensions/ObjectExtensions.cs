@@ -26,6 +26,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
+using MessagePack;
 using Microsoft.Extensions.ObjectPool;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -45,15 +46,9 @@ namespace DotNetTips.Spargine.Extensions;
 public static class ObjectExtensions
 {
 	private const string Item = "Item";
-
-	/// <summary>
-	/// The built in type names
-	/// </summary>
+#pragma warning disable IDE0052 // Remove unread private members - false positive: used in extension block (PropertiesToDictionary, FieldsToDictionary)
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
-
-	/// <summary>
-	/// The string builder pool for efficient string building operations.
-	/// </summary>
+#pragma warning restore IDE0052
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
@@ -1060,8 +1055,8 @@ public static class ObjectExtensions
 		{
 			obj = obj.ArgumentNotNull();
 
-			return MessagePack.MessagePackSerializer.Deserialize<T>(
-				MessagePack.MessagePackSerializer.Serialize(obj));
+			return MessagePackSerializer.Deserialize<T>(
+				MessagePackSerializer.Serialize(obj));
 		}
 
 		/// <summary>
@@ -1119,12 +1114,12 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public T FastBinaryClone<T>([AllowNull] MessagePack.MessagePackSerializerOptions options = null)
+		public T FastBinaryClone<T>([AllowNull] MessagePackSerializerOptions options = null)
 		{
 			obj = obj.ArgumentNotNull();
 
-			return MessagePack.MessagePackSerializer.Deserialize<T>(
-				MessagePack.MessagePackSerializer.Serialize(obj, options), options);
+			return MessagePackSerializer.Deserialize<T>(
+				MessagePackSerializer.Serialize(obj, options), options);
 		}
 
 		/// <summary>

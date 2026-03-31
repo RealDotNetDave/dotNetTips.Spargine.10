@@ -18,7 +18,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
 using System.ServiceModel.Security;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Tests.Logging;
 using DotNetTips.Spargine.Extensions;
 using Microsoft.Extensions.Logging;
@@ -1078,7 +1077,7 @@ internal class MockLogger : ILogger
 
 	public bool IsEnabled(LogLevel logLevel) => true; // Always enabled
 
-	public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+	public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
 	{
 		this.LoggedLevels.Add(logLevel);
 		this.LoggedMessages.Add(formatter(state, exception));
