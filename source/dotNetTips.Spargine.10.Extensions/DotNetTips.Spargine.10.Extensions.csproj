@@ -71,7 +71,7 @@
 	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <OutputPath>..\..\AppBin\</OutputPath>
     <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
     <WarningLevel>9999</WarningLevel>
@@ -82,7 +82,7 @@
     <OutputPath>..\..\AppBin\</OutputPath>
     <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
