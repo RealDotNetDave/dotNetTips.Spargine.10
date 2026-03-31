@@ -1582,6 +1582,361 @@ public class ObservableListTests
 	}
 
 
+	// ============================================================================
+	// Additional Tests for Missing Code Paths
+	// ============================================================================
+
+	[TestMethod]
+	public void Constructor_Default_ShouldCreateEmptyList()
+	{
+		// Arrange & Act
+		var list = new ObservableList<int>();
+
+		// Assert
+		Assert.AreEqual(0, list.Count, "Default constructor should create an empty list.");
+		Assert.IsNotNull(list.Comparer, "Default constructor should set a comparer.");
+	}
+
+	[TestMethod]
+	public void Add_DuplicateItem_ShouldReturnFalse()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		var result = this._observableList.Add(1);
+
+		// Assert
+		Assert.IsFalse(result, "Add should return false for duplicate item.");
+		Assert.AreEqual(1, this._observableList.Count, "Count should not change when duplicate is added.");
+		Assert.IsEmpty(this._collectionChangedEvents, "CollectionChanged event should not be raised for duplicate.");
+		Assert.IsEmpty(this._propertyChangedEvents, "PropertyChanged event should not be raised for duplicate.");
+	}
+
+	[TestMethod]
+	public void AddRange_WithAllDuplicates_ShouldNotTriggerEvents()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		var items = new[] { 1, 2 };
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		this._observableList.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(2, this._observableList.Count, "Count should remain unchanged.");
+		Assert.IsEmpty(this._collectionChangedEvents, "No events should be triggered when all items are duplicates.");
+		Assert.IsEmpty(this._propertyChangedEvents, "No property events should be triggered.");
+	}
+
+	[TestMethod]
+	public void Clear_OnEmptyList_ShouldNotTriggerEvents()
+	{
+		// Arrange
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		this._observableList.Clear();
+
+		// Assert
+		Assert.AreEqual(0, this._observableList.Count, "Count should remain 0.");
+		Assert.IsEmpty(this._collectionChangedEvents, "CollectionChanged event should not be raised on empty list.");
+		Assert.IsEmpty(this._propertyChangedEvents, "PropertyChanged event should not be raised on empty list.");
+	}
+
+	[TestMethod]
+	public void Contains_WithNull_ShouldReturnFalse()
+	{
+		// Arrange
+		var list = new ObservableList<string>();
+		list.Add("test");
+
+		// Act
+		var result = list.Contains(null);
+
+		// Assert
+		Assert.IsFalse(result, "Contains should return false for null item.");
+	}
+
+	[TestMethod]
+	public void FirstOrDefault_WithEmptyList_ShouldReturnDefault()
+	{
+		// Act
+		var result = this._observableList.FirstOrDefault();
+
+		// Assert
+		Assert.AreEqual(default(int), result, "FirstOrDefault should return default(int) for empty list.");
+	}
+
+	[TestMethod]
+	public void LastOrDefault_WithEmptyList_ShouldReturnDefault()
+	{
+		// Act
+		var result = this._observableList.LastOrDefault();
+
+		// Assert
+		Assert.AreEqual(default(int), result, "LastOrDefault should return default(int) for empty list.");
+	}
+
+	[TestMethod]
+	public void GetEnumerator_ShouldIterateAllItems()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		this._observableList.Add(3);
+		var items = new List<int>();
+
+		// Act
+		using (var enumerator = this._observableList.GetEnumerator())
+		{
+			while (enumerator.MoveNext())
+			{
+				items.Add(enumerator.Current);
+			}
+		}
+
+		// Assert
+		Assert.HasCount(3, items, "Enumerator should iterate all items.");
+		Assert.IsTrue(items.Contains(1), "Enumerator should include 1.");
+		Assert.IsTrue(items.Contains(2), "Enumerator should include 2.");
+		Assert.IsTrue(items.Contains(3), "Enumerator should include 3.");
+	}
+
+	[TestMethod]
+	public void ICollectionAdd_ShouldAddItem()
+	{
+		// Arrange
+		ICollection<int> collection = new ObservableList<int>();
+
+		// Act
+		collection.Add(42);
+
+		// Assert
+		Assert.AreEqual(1, collection.Count, "ICollection.Add should add the item.");
+		Assert.IsTrue(collection.Contains(42), "Collection should contain the added item.");
+	}
+
+	[TestMethod]
+	public void IEnumerableGetEnumerator_ShouldIterateAllItems()
+	{
+		// Arrange
+		this._observableList.Add(10);
+		this._observableList.Add(20);
+		this._observableList.Add(30);
+		var items = new List<int>();
+
+		// Act - use the non-generic IEnumerable interface
+		System.Collections.IEnumerable enumerable = this._observableList;
+		foreach (var item in enumerable)
+		{
+			items.Add((int)item);
+		}
+
+		// Assert
+		Assert.HasCount(3, items, "IEnumerable enumerator should iterate all items.");
+		Assert.IsTrue(items.Contains(10), "Enumerator should include 10.");
+		Assert.IsTrue(items.Contains(20), "Enumerator should include 20.");
+		Assert.IsTrue(items.Contains(30), "Enumerator should include 30.");
+	}
+
+	[TestMethod]
+	public void IEnumerableGenericGetEnumerator_ShouldIterateAllItems()
+	{
+		// Arrange
+		this._observableList.Add(100);
+		this._observableList.Add(200);
+		var items = new List<int>();
+
+		// Act - use the generic IEnumerable<T> interface
+		IEnumerable<int> enumerable = this._observableList;
+		foreach (var item in enumerable)
+		{
+			items.Add(item);
+		}
+
+		// Assert
+		Assert.HasCount(2, items, "IEnumerable<T> enumerator should iterate all items.");
+		Assert.IsTrue(items.Contains(100), "Enumerator should include 100.");
+		Assert.IsTrue(items.Contains(200), "Enumerator should include 200.");
+	}
+
+	[TestMethod]
+	public void Remove_NullItem_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var list = new ObservableList<string>();
+		list.Add("test");
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.Remove(null), "Remove should throw ArgumentNullException for null item.");
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithNullItemsInCollection_ShouldSkipNulls()
+	{
+		// Arrange
+		var list = new ObservableList<string>();
+		list.Add("a");
+		list.Add("b");
+		list.Add("c");
+		var itemsToRemove = new[] { "a", null, "c" };
+
+		// Act
+		int removedCount = list.RemoveRange(itemsToRemove);
+
+		// Assert
+		Assert.AreEqual(2, removedCount, "Should remove 2 items, skipping nulls.");
+		Assert.AreEqual(1, list.Count, "List should contain 1 item after removal.");
+		Assert.IsTrue(list.Contains("b"), "List should still contain 'b'.");
+	}
+
+	[TestMethod]
+	public void RemoveWhere_ShouldTriggerSingleCollectionChangedEvent()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		this._observableList.Add(3);
+		this._observableList.Add(4);
+		this._collectionChangedEvents.Clear();
+
+		// Act
+		this._observableList.RemoveWhere(x => x > 2);
+
+		// Assert
+		Assert.HasCount(1, this._collectionChangedEvents, "RemoveWhere should trigger a single CollectionChanged event.");
+		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
+	}
+
+	[TestMethod]
+	public void EnsureCapacity_WithZero_ShouldReturnCapacity()
+	{
+		// Act
+		int capacity = this._observableList.EnsureCapacity(0);
+
+		// Assert
+		Assert.IsGreaterThanOrEqualTo(0, capacity, "EnsureCapacity(0) should return a non-negative capacity.");
+	}
+
+	[TestMethod]
+	public void ExceptWith_ShouldTriggerCollectionAndPropertyChangedEvents()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		this._observableList.Add(3);
+		var otherCollection = new List<int> { 2, 3 };
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		this._observableList.ExceptWith(otherCollection);
+
+		// Assert
+		Assert.HasCount(1, this._collectionChangedEvents, "ExceptWith should trigger a CollectionChanged event.");
+		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
+		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "PropertyChanged should be raised for Count.");
+	}
+
+	[TestMethod]
+	public void IntersectWith_ShouldTriggerCollectionAndPropertyChangedEvents()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		this._observableList.Add(3);
+		var otherCollection = new List<int> { 2, 3 };
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		this._observableList.IntersectWith(otherCollection);
+
+		// Assert
+		Assert.HasCount(1, this._collectionChangedEvents, "IntersectWith should trigger a CollectionChanged event.");
+		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
+		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "PropertyChanged should be raised for Count.");
+	}
+
+	[TestMethod]
+	public void SymmetricExceptWith_ShouldTriggerCollectionAndPropertyChangedEvents()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		this._observableList.Add(3);
+		var otherCollection = new List<int> { 3, 4, 5 };
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		this._observableList.SymmetricExceptWith(otherCollection);
+
+		// Assert
+		Assert.HasCount(1, this._collectionChangedEvents, "SymmetricExceptWith should trigger a CollectionChanged event.");
+		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
+		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "PropertyChanged should be raised for Count.");
+	}
+
+	[TestMethod]
+	public void UnionWith_ShouldTriggerCollectionAndPropertyChangedEvents()
+	{
+		// Arrange
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		var otherCollection = new List<int> { 3, 4 };
+		this._collectionChangedEvents.Clear();
+		this._propertyChangedEvents.Clear();
+
+		// Act
+		this._observableList.UnionWith(otherCollection);
+
+		// Assert
+		Assert.HasCount(1, this._collectionChangedEvents, "UnionWith should trigger a CollectionChanged event.");
+		Assert.AreEqual(NotifyCollectionChangedAction.Replace, this._collectionChangedEvents[0].Action, "Event action should be Replace.");
+		Assert.IsTrue(this._propertyChangedEvents.Exists(e => e.PropertyName == "Count"), "PropertyChanged should be raised for Count.");
+	}
+
+	[TestMethod]
+	public void Comparer_WithDefaultComparer_ShouldReturnDefaultEqualityComparer()
+	{
+		// Arrange
+		var list = new ObservableList<int>();
+
+		// Act
+		var comparer = list.Comparer;
+
+		// Assert
+		Assert.AreEqual(EqualityComparer<int>.Default, comparer, "Default comparer should be EqualityComparer<int>.Default.");
+	}
+
+	[TestMethod]
+	public void CopyTo_NullArrayOverload_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		this._observableList.Add(1);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.CopyTo(null), "CopyTo(array) should throw ArgumentNullException for null array.");
+	}
+
+	[TestMethod]
+	public void CopyTo_WithCount_NullArray_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		this._observableList.Add(1);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.CopyTo(null, 0, 1), "CopyTo(array, index, count) should throw ArgumentNullException for null array.");
+	}
+
 	internal class CustomIntComparer : IEqualityComparer<int>
 	{
 
