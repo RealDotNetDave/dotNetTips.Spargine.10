@@ -1267,9 +1267,16 @@ public class ConcurrentHashSetTests
 		IEnumerable enumerable = hashSet;
 		var items = new List<int>();
 		var enumerator = enumerable.GetEnumerator();
-		while (enumerator.MoveNext())
+		try
 		{
-			items.Add((int)enumerator.Current);
+			while (enumerator.MoveNext())
+			{
+				items.Add((int)enumerator.Current);
+			}
+		}
+		finally
+		{
+			(enumerator as IDisposable)?.Dispose();
 		}
 
 		// Assert
