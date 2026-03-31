@@ -1,4 +1,4 @@
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogErrorFastLoggerBenchmark()
@@ -59,13 +59,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,4
-       call      qword ptr [7FF8245FFCF0]
+       call      qword ptr [7FF997E4FFC0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,4
-       call      qword ptr [7FF8245FFD20]
+       call      qword ptr [7FF997EE4000]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -78,17 +78,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245FFD38]
+       call      qword ptr [7FF997EE4018]
        int       3
 M00_L09:
-       mov       r11,7FF823E50BB8
+       mov       r11,7FF997740BE8
        mov       edx,4
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E50BB0
+       mov       r11,7FF997740BE0
        mov       edx,4
        call      qword ptr [r11]
        mov       esi,eax
@@ -96,19 +96,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF82466D868
-       call      qword ptr [7FF823F05920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997ED3900
+       call      qword ptr [7FF9977F5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,22726DD0A28
+       mov       rcx,2B037C20A28
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],12C
-       mov       rcx,22726DD09A8
+       mov       rcx,2B037C209A8
        mov       [rsp+38],rcx
-       mov       rcx,22726DD09D8
+       mov       rcx,2B037C209D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogErrorMessageStruct
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,1E6A7C00148
+       mov       r8,26FB8C00158
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -141,7 +141,7 @@ M00_L11:
        mov       edx,esi
        ror       edx,5
        add       eax,edx
-       mov       rdx,1E691C00A10
+       mov       rdx,26FA2C00A10
        mov       rdx,[rdx]
        mov       rdx,[rdx+8]
        movsxd    r8,eax
@@ -175,7 +175,7 @@ M01_L00:
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246C3BD0
+       mov       rcx,7FF997F018B0
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rax,rbp
        add       rsp,20
@@ -198,7 +198,7 @@ M01_L01:
        cmp       r10d,8
        jl        near ptr M01_L00
 M01_L02:
-       mov       rcx,7FF8246C3BD4
+       mov       rcx,7FF997F018B4
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
@@ -211,7 +211,7 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82407FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99796FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 274
 ```
 ```assembly
@@ -223,11 +223,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823F05C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF9977F5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogCriticalILoggerBenchmark()
@@ -244,18 +244,18 @@ M02_L00:
        mov       rsi,[rcx+140]
        test      rbx,rbx
        je        near ptr M00_L00
-       mov       rcx,2C646C01A90
+       mov       rcx,27143001A90
        mov       rcx,[rcx]
        xor       edx,edx
        mov       [rsp+68],rdx
-       mov       rdx,306DBA409A8
+       mov       rdx,2B1D83B0958
        mov       [rsp+78],rdx
        mov       [rsp+70],rcx
        xor       ecx,ecx
        mov       [rsp+80],rcx
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824688668
+       mov       r8,7FF997EF7390
        call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        xor       r8d,r8d
        mov       [rsp+58],r8
@@ -263,7 +263,7 @@ M02_L00:
        vmovdqu   ymm0,ymmword ptr [rsp+68]
        vmovdqu   ymmword ptr [rsp+38],ymm0
        mov       [rsp+20],rsi
-       mov       r8,2C65CC00140
+       mov       r8,27159000140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+58]
@@ -279,10 +279,10 @@ M02_L00:
        ret
 M00_L00:
        mov       ecx,191
-       mov       rdx,7FF824378FE0
-       call      qword ptr [7FF824127798]
+       mov       rdx,7FF997BE8FE0
+       call      qword ptr [7FF997A37798]
        mov       rcx,rax
-       call      qword ptr [7FF8246966A0]
+       call      qword ptr [7FF997F065F8]
        int       3
 ; Total bytes of code 257
 ```
@@ -302,7 +302,7 @@ M00_L00:
        mov       r9d,r8d
        ror       r9d,5
        add       r10d,r9d
-       mov       r9,2C646C00A10
+       mov       r9,27143000A10
        mov       r9,[r9]
        mov       r9,[r9+8]
        movsxd    r11,r10d
@@ -362,11 +362,11 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82407FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99798FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 205
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugILoggerBenchmark()
@@ -379,18 +379,18 @@ M01_L02:
        mov       rbx,[rcx+138]
        test      rbx,rbx
        je        near ptr M00_L00
-       mov       rcx,19BAFC01A90
+       mov       rcx,23206C01A90
        mov       rcx,[rcx]
        xor       edx,edx
        mov       [rsp+60],rdx
-       mov       rdx,1DC449F09A8
+       mov       rdx,2729BCA09A8
        mov       [rsp+70],rdx
        mov       [rsp+68],rcx
        xor       ecx,ecx
        mov       [rsp+78],rcx
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824687B18
+       mov       r8,7FF997ED8378
        call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        xor       r8d,r8d
        mov       [rsp+50],r8
@@ -398,7 +398,7 @@ M01_L02:
        vmovdqu   ymm0,ymmword ptr [rsp+60]
        vmovdqu   ymmword ptr [rsp+30],ymm0
        mov       [rsp+20],r8
-       mov       r8,19BC5C00140
+       mov       r8,2321CC00140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+50]
@@ -413,10 +413,10 @@ M01_L02:
        ret
 M00_L00:
        mov       ecx,191
-       mov       rdx,7FF824388FE0
-       call      qword ptr [7FF824137798]
+       mov       rdx,7FF997BC8FE0
+       call      qword ptr [7FF997A17798]
        mov       rcx,rax
-       call      qword ptr [7FF8246A6688]
+       call      qword ptr [7FF997EE66B8]
        int       3
 ; Total bytes of code 236
 ```
@@ -436,7 +436,7 @@ M00_L00:
        mov       r9d,r8d
        ror       r9d,5
        add       r10d,r9d
-       mov       r9,19BAFC00A10
+       mov       r9,23206C00A10
        mov       r9,[r9]
        mov       r9,[r9+8]
        movsxd    r11,r10d
@@ -496,11 +496,11 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82408FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99796FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 205
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogErrorILoggerBenchmark()
@@ -517,18 +517,18 @@ M01_L02:
        mov       rsi,[rcx+140]
        test      rbx,rbx
        je        near ptr M00_L00
-       mov       rcx,2E7B5001A90
+       mov       rcx,19418801A90
        mov       rcx,[rcx]
        xor       edx,edx
        mov       [rsp+68],rdx
-       mov       rdx,32849FF09A8
+       mov       rdx,1D4AD8E09A8
        mov       [rsp+78],rdx
        mov       [rsp+70],rcx
        xor       ecx,ecx
        mov       [rsp+80],rcx
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824628C20
+       mov       r8,7FF997EE8378
        call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        xor       r8d,r8d
        mov       [rsp+58],r8
@@ -536,7 +536,7 @@ M01_L02:
        vmovdqu   ymm0,ymmword ptr [rsp+68]
        vmovdqu   ymmword ptr [rsp+38],ymm0
        mov       [rsp+20],rsi
-       mov       r8,2E7CB000118
+       mov       r8,1942E800140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+58]
@@ -552,10 +552,10 @@ M01_L02:
        ret
 M00_L00:
        mov       ecx,191
-       mov       rdx,7FF824378FE0
-       call      qword ptr [7FF824127798]
+       mov       rdx,7FF997BD8FE0
+       call      qword ptr [7FF997A27798]
        mov       rcx,rax
-       call      qword ptr [7FF824674528]
+       call      qword ptr [7FF997EF66A0]
        int       3
 ; Total bytes of code 254
 ```
@@ -575,7 +575,7 @@ M00_L00:
        mov       r9d,r8d
        ror       r9d,5
        add       r10d,r9d
-       mov       r9,2E7B5000A10
+       mov       r9,19418800A10
        mov       r9,[r9]
        mov       r9,[r9+8]
        movsxd    r11,r10d
@@ -635,11 +635,11 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82407FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 205
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationILoggerBenchmark()
@@ -656,18 +656,18 @@ M01_L02:
        mov       rsi,[rcx+140]
        test      rbx,rbx
        je        near ptr M00_L00
-       mov       rcx,1A646801A90
+       mov       rcx,20E58C01A90
        mov       rcx,[rcx]
        xor       edx,edx
        mov       [rsp+68],rdx
-       mov       rdx,1E6DB9A09A8
+       mov       rdx,24EEDDC09A8
        mov       [rsp+78],rdx
        mov       [rsp+70],rcx
        xor       ecx,ecx
        mov       [rsp+80],rcx
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824638C10
+       mov       r8,7FF997E78C10
        call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        xor       r8d,r8d
        mov       [rsp+58],r8
@@ -675,7 +675,7 @@ M01_L02:
        vmovdqu   ymm0,ymmword ptr [rsp+68]
        vmovdqu   ymmword ptr [rsp+38],ymm0
        mov       [rsp+20],rsi
-       mov       r8,1A65C800118
+       mov       r8,20E6EC00118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+58]
@@ -691,10 +691,10 @@ M01_L02:
        ret
 M00_L00:
        mov       ecx,191
-       mov       rdx,7FF824388FE0
-       call      qword ptr [7FF824137798]
+       mov       rdx,7FF997BC8FE0
+       call      qword ptr [7FF997A17798]
        mov       rcx,rax
-       call      qword ptr [7FF8246845E8]
+       call      qword ptr [7FF997EC4618]
        int       3
 ; Total bytes of code 257
 ```
@@ -714,7 +714,7 @@ M00_L00:
        mov       r9d,r8d
        ror       r9d,5
        add       r10d,r9d
-       mov       r9,1A646800A10
+       mov       r9,20E58C00A10
        mov       r9,[r9]
        mov       r9,[r9+8]
        movsxd    r11,r10d
@@ -774,11 +774,11 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82408FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99796FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 205
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogTraceILoggerBenchmark()
@@ -795,18 +795,18 @@ M01_L02:
        mov       rsi,[rcx+140]
        test      rbx,rbx
        je        near ptr M00_L00
-       mov       rcx,1DE55401A90
+       mov       rcx,26C3E401A90
        mov       rcx,[rcx]
        xor       edx,edx
        mov       [rsp+68],rdx
-       mov       rdx,21EEA5309A8
+       mov       rdx,2ACD33F09A8
        mov       [rsp+78],rdx
        mov       [rsp+70],rcx
        xor       ecx,ecx
        mov       [rsp+80],rcx
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824658368
+       mov       r8,7FF997E88E28
        call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        xor       r8d,r8d
        mov       [rsp+58],r8
@@ -814,7 +814,7 @@ M01_L02:
        vmovdqu   ymm0,ymmword ptr [rsp+68]
        vmovdqu   ymmword ptr [rsp+38],ymm0
        mov       [rsp+20],rsi
-       mov       r8,1DE6B400140
+       mov       r8,26C3E402110
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+58]
@@ -830,10 +830,10 @@ M01_L02:
        ret
 M00_L00:
        mov       ecx,191
-       mov       rdx,7FF824358FE0
-       call      qword ptr [7FF824107798]
+       mov       rdx,7FF997BD8FE0
+       call      qword ptr [7FF997A27798]
        mov       rcx,rax
-       call      qword ptr [7FF824676628]
+       call      qword ptr [7FF997ED4528]
        int       3
 ; Total bytes of code 254
 ```
@@ -853,7 +853,7 @@ M00_L00:
        mov       r9d,r8d
        ror       r9d,5
        add       r10d,r9d
-       mov       r9,1DE55400A10
+       mov       r9,26C3E400A10
        mov       r9,[r9]
        mov       r9,[r9+8]
        movsxd    r11,r10d
@@ -913,11 +913,11 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82405FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 205
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogWarningILoggerBenchmark()
@@ -934,18 +934,18 @@ M01_L02:
        mov       rsi,[rcx+140]
        test      rbx,rbx
        je        near ptr M00_L00
-       mov       rcx,22314801A90
+       mov       rcx,12CEC801A90
        mov       rcx,[rcx]
        xor       edx,edx
        mov       [rsp+68],rdx
-       mov       rdx,263A97709A8
+       mov       rdx,16D818409A8
        mov       [rsp+78],rdx
        mov       [rsp+70],rcx
        xor       ecx,ecx
        mov       [rsp+80],rcx
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824608588
+       mov       r8,7FF997E88588
        call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        xor       r8d,r8d
        mov       [rsp+58],r8
@@ -953,7 +953,7 @@ M01_L02:
        vmovdqu   ymm0,ymmword ptr [rsp+68]
        vmovdqu   ymmword ptr [rsp+38],ymm0
        mov       [rsp+20],rsi
-       mov       r8,22314802110
+       mov       r8,12D02800118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+58]
@@ -969,10 +969,10 @@ M01_L02:
        ret
 M00_L00:
        mov       ecx,191
-       mov       rdx,7FF824358FE0
-       call      qword ptr [7FF824107798]
+       mov       rdx,7FF997BD8FE0
+       call      qword ptr [7FF997A27798]
        mov       rcx,rax
-       call      qword ptr [7FF824654558]
+       call      qword ptr [7FF997ED45E8]
        int       3
 ; Total bytes of code 257
 ```
@@ -992,7 +992,7 @@ M00_L00:
        mov       r9d,r8d
        ror       r9d,5
        add       r10d,r9d
-       mov       r9,22314800A10
+       mov       r9,12CEC800A10
        mov       r9,[r9]
        mov       r9,[r9+8]
        movsxd    r11,r10d
@@ -1052,11 +1052,11 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82405FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 205
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogCriticalFastLoggerBenchmark()
@@ -1120,13 +1120,13 @@ M00_L06:
        lea       r15,[rdi+rcx*8+10]
        mov       rcx,r15
        mov       edx,5
-       call      qword ptr [7FF8245D7F18]
+       call      qword ptr [7FF997E6FCA8]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r15]
        lea       r8,[rsp+50]
        mov       ecx,5
-       call      qword ptr [7FF8245D7F48]
+       call      qword ptr [7FF997E6FCD8]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -1139,17 +1139,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+50]
-       call      qword ptr [7FF8245D7F60]
+       call      qword ptr [7FF997E6FCF0]
        int       3
 M00_L09:
-       mov       r11,7FF823E409E0
+       mov       r11,7FF997750B28
        mov       edx,5
        call      qword ptr [r11]
        mov       edi,eax
        jmp       near ptr M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E409D8
+       mov       r11,7FF997750B20
        mov       edx,5
        call      qword ptr [r11]
        mov       edi,eax
@@ -1157,19 +1157,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824618428
-       call      qword ptr [7FF823EF5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997ED7FA8
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rdi,rax
-       mov       rcx,32956280A38
+       mov       rcx,18A5D090A38
        mov       [rsp+40],rcx
        mov       dword ptr [rsp+48],38F
-       mov       rcx,329562809A8
+       mov       rcx,18A5D0909A8
        mov       [rsp+30],rcx
-       mov       rcx,329562809E0
+       mov       rcx,18A5D0909E0
        mov       [rsp+38],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogCriticalMessageStruct
-       call      qword ptr [7FF823EF5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,2E8D7400118
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,149DE000140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+40]
@@ -1194,25 +1194,24 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       call      qword ptr [7FF883968C18]
-       mov       rcx,[rax]
-       add       rcx,8
-       mov       rax,[rdi]
-       mov       r8d,ebx
-       rol       r8d,5
-       add       r8d,eax
+       mov       rcx,[rdi]
+       mov       eax,ebx
+       rol       eax,5
+       add       eax,ecx
        mov       edx,esi
        ror       edx,5
-       add       r8d,edx
-       mov       rdx,[rcx]
-       movsxd    r10,r8d
-       mov       r9,9E3779B97F4A7C15
-       imul      r10,r9
-       movzx     ecx,byte ptr [rdx+10]
-       shr       r10,cl
-       xor       ecx,ecx
+       add       eax,edx
+       mov       rdx,149C8000A10
+       mov       rdx,[rdx]
+       mov       rdx,[rdx+8]
+       movsxd    r8,eax
+       mov       r10,9E3779B97F4A7C15
+       imul      r8,r10
+       movzx     r10d,byte ptr [rdx+10]
+       shrx      r8,r8,r10
+       xor       r10d,r10d
 M01_L00:
-       lea       r9d,[r10+1]
+       lea       r9d,[r8+1]
        movsxd    r9,r9d
        imul      r9,30
        lea       r9,[rdx+r9+10]
@@ -1221,9 +1220,9 @@ M01_L00:
        mov       r14,[r9+10]
        mov       r15,[r9+18]
        mov       r13,[r9+20]
-       cmp       r8d,ebp
+       cmp       eax,ebp
        jne       short M01_L01
-       mov       rbp,rax
+       mov       rbp,rcx
        sub       rbp,r14
        mov       r14,rbx
        sub       r14,r15
@@ -1232,10 +1231,13 @@ M01_L00:
        sub       r14,r13
        or        rbp,r14
        jne       short M01_L01
-       mov       rax,[r9+28]
+       mov       rbp,[r9+28]
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
+       mov       rcx,7FF997F33128
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rbp
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -1248,18 +1250,19 @@ M01_L00:
 M01_L01:
        test      r11d,r11d
        je        short M01_L02
-       inc       ecx
-       add       r10d,ecx
+       inc       r10d
+       add       r8d,r10d
        mov       r9d,[rdx+8]
        add       r9d,0FFFFFFFE
-       and       r10d,r9d
-       cmp       ecx,8
-       jl        short M01_L00
+       and       r8d,r9d
+       cmp       r10d,8
+       jl        near ptr M01_L00
 M01_L02:
-       mov       r8,rsi
+       mov       rcx,7FF997F3312C
+       call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
-       lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
+       mov       r8,rsi
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -1268,8 +1271,8 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [rax]
-; Total bytes of code 239
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+; Total bytes of code 274
 ```
 ```assembly
 ; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
@@ -1280,11 +1283,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EF5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogCriticalFastLoggerExtensionsBenchmark()
@@ -1348,13 +1351,13 @@ M00_L06:
        lea       r15,[rdi+rcx*8+10]
        mov       rcx,r15
        mov       edx,5
-       call      qword ptr [7FF8245D7FD8]
+       call      qword ptr [7FF997E6FCF0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r15]
        lea       r8,[rsp+50]
        mov       ecx,5
-       call      qword ptr [7FF8245DC018]
+       call      qword ptr [7FF997E6FD20]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -1367,17 +1370,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+50]
-       call      qword ptr [7FF8245DC030]
+       call      qword ptr [7FF997E6FD38]
        int       3
 M00_L09:
-       mov       r11,7FF823E409E0
+       mov       r11,7FF997750B28
        mov       edx,5
        call      qword ptr [r11]
        mov       edi,eax
        jmp       near ptr M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E409D8
+       mov       r11,7FF997750B20
        mov       edx,5
        call      qword ptr [r11]
        mov       edi,eax
@@ -1385,19 +1388,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824618840
-       call      qword ptr [7FF823EF5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EE7FA8
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rdi,rax
-       mov       rcx,25C0BF70A48
+       mov       rcx,24A3B9F0A48
        mov       [rsp+40],rcx
        mov       dword ptr [rsp+48],38F
-       mov       rcx,25C0BF709A8
+       mov       rcx,24A3B9F09A8
        mov       [rsp+30],rcx
-       mov       rcx,25C0BF709E0
+       mov       rcx,24A3B9F09E0
        mov       [rsp+38],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogCriticalMessageStruct
-       call      qword ptr [7FF823EF5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,21B77002110
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,209BCC00140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+40]
@@ -1422,7 +1425,236 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       call      qword ptr [7FF883968C18]
+       mov       rcx,[rdi]
+       mov       eax,ebx
+       rol       eax,5
+       add       eax,ecx
+       mov       edx,esi
+       ror       edx,5
+       add       eax,edx
+       mov       rdx,209A6C00A10
+       mov       rdx,[rdx]
+       mov       rdx,[rdx+8]
+       movsxd    r8,eax
+       mov       r10,9E3779B97F4A7C15
+       imul      r8,r10
+       movzx     r10d,byte ptr [rdx+10]
+       shrx      r8,r8,r10
+       xor       r10d,r10d
+M01_L00:
+       lea       r9d,[r8+1]
+       movsxd    r9,r9d
+       imul      r9,30
+       lea       r9,[rdx+r9+10]
+       mov       r11d,[r9]
+       mov       ebp,[r9+8]
+       mov       r14,[r9+10]
+       mov       r15,[r9+18]
+       mov       r13,[r9+20]
+       cmp       eax,ebp
+       jne       short M01_L01
+       mov       rbp,rcx
+       sub       rbp,r14
+       mov       r14,rbx
+       sub       r14,r15
+       or        rbp,r14
+       mov       r14,rsi
+       sub       r14,r13
+       or        rbp,r14
+       jne       short M01_L01
+       mov       rbp,[r9+28]
+       and       r11d,0FFFFFFFE
+       cmp       r11d,[r9]
+       jne       short M01_L02
+       mov       rcx,7FF997F331C0
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rbp
+       add       rsp,20
+       pop       rbx
+       pop       rbp
+       pop       rsi
+       pop       rdi
+       pop       r13
+       pop       r14
+       pop       r15
+       ret
+M01_L01:
+       test      r11d,r11d
+       je        short M01_L02
+       inc       r10d
+       add       r8d,r10d
+       mov       r9d,[rdx+8]
+       add       r9d,0FFFFFFFE
+       and       r8d,r9d
+       cmp       r10d,8
+       jl        near ptr M01_L00
+M01_L02:
+       mov       rcx,7FF997F331C4
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rdi
+       mov       rdx,rbx
+       mov       r8,rsi
+       add       rsp,20
+       pop       rbx
+       pop       rbp
+       pop       rsi
+       pop       rdi
+       pop       r13
+       pop       r14
+       pop       r15
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+; Total bytes of code 274
+```
+```assembly
+; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rax,[rcx+20]
+       mov       rax,[rax-18]
+       mov       rdx,rax
+       test      dl,1
+       jne       short M02_L00
+       ret
+M02_L00:
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+; Total bytes of code 23
+```
+
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+
+```assembly
+; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugFastLoggerExtensionsBenchmark()
+       push      r14
+       push      rdi
+       push      rsi
+       push      rbp
+       push      rbx
+       sub       rsp,60
+       xor       eax,eax
+       mov       [rsp+38],rax
+       vxorps    xmm4,xmm4,xmm4
+       vmovdqu   ymmword ptr [rsp+40],ymm4
+       mov       rbx,[rcx+138]
+       mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+       cmp       [rbx],rcx
+       jne       near ptr M00_L10
+       mov       rcx,[rbx+8]
+       mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+       cmp       [rcx],rdx
+       jne       near ptr M00_L09
+       mov       rsi,[rcx+18]
+       test      rsi,rsi
+       je        short M00_L05
+       xor       ecx,ecx
+       mov       [rsp+58],rcx
+       xor       edi,edi
+       mov       ebp,[rsi+8]
+       cmp       ebp,edi
+       jg        short M00_L06
+M00_L00:
+       cmp       qword ptr [rsp+58],0
+       jne       short M00_L08
+M00_L01:
+       cmp       ebp,edi
+       setg      sil
+       movzx     esi,sil
+M00_L02:
+       xor       ecx,ecx
+       mov       [rsp+58],rcx
+M00_L03:
+       test      esi,esi
+       jne       near ptr M00_L11
+M00_L04:
+       add       rsp,60
+       pop       rbx
+       pop       rbp
+       pop       rsi
+       pop       rdi
+       pop       r14
+       ret
+M00_L05:
+       xor       esi,esi
+       jmp       short M00_L02
+M00_L06:
+       mov       ecx,edi
+       lea       rcx,[rcx+rcx*4]
+       lea       r14,[rsi+rcx*8+10]
+       mov       rcx,r14
+       mov       edx,1
+       call      qword ptr [7FF997E27FD8]
+       test      eax,eax
+       je        short M00_L07
+       mov       rdx,[r14]
+       lea       r8,[rsp+58]
+       mov       ecx,1
+       call      qword ptr [7FF997E2C018]
+       test      eax,eax
+       jne       short M00_L00
+M00_L07:
+       inc       edi
+       cmp       ebp,edi
+       jg        short M00_L06
+       jmp       short M00_L00
+M00_L08:
+       mov       rcx,[rsp+58]
+       cmp       dword ptr [rcx+10],0
+       jle       short M00_L01
+       mov       rcx,[rsp+58]
+       call      qword ptr [7FF997E2C030]
+       int       3
+M00_L09:
+       mov       r11,7FF9977309E0
+       mov       edx,1
+       call      qword ptr [r11]
+       mov       esi,eax
+       jmp       short M00_L03
+M00_L10:
+       mov       rcx,rbx
+       mov       r11,7FF9977309D8
+       mov       edx,1
+       call      qword ptr [r11]
+       mov       esi,eax
+       jmp       near ptr M00_L03
+M00_L11:
+       mov       rcx,rbx
+       mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+       mov       r8,7FF997E68830
+       call      qword ptr [7FF9977E5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       rsi,rax
+       mov       rcx,250AF9E8290
+       mov       [rsp+48],rcx
+       mov       dword ptr [rsp+50],0C8
+       mov       rcx,250AF9F09A8
+       mov       [rsp+38],rcx
+       mov       rcx,250AF9F09D8
+       mov       [rsp+40],rcx
+       mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogDebugMessageStruct
+       call      qword ptr [7FF9977E5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,21030800118
+       mov       r8,[r8]
+       mov       [rsp+28],r8
+       lea       r8,[rsp+48]
+       lea       r9,[rsp+38]
+       mov       rcx,rbx
+       mov       edx,1
+       xor       eax,eax
+       mov       [rsp+20],rax
+       call      rsi
+       jmp       near ptr M00_L04
+; Total bytes of code 433
+```
+```assembly
+; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       push      r15
+       push      r14
+       push      r13
+       push      rdi
+       push      rsi
+       push      rbp
+       push      rbx
+       sub       rsp,20
+       mov       rdi,rcx
+       mov       rbx,rdx
+       mov       rsi,r8
+       call      qword ptr [7FF9EF978C18]
        mov       rcx,[rax]
        add       rcx,8
        mov       rax,[rdi]
@@ -1508,240 +1740,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EF5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF9977E5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-
-```assembly
-; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugFastLoggerExtensionsBenchmark()
-       push      r14
-       push      rdi
-       push      rsi
-       push      rbp
-       push      rbx
-       sub       rsp,60
-       xor       eax,eax
-       mov       [rsp+38],rax
-       vxorps    xmm4,xmm4,xmm4
-       vmovdqu   ymmword ptr [rsp+40],ymm4
-       mov       rbx,[rcx+138]
-       mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
-       cmp       [rbx],rcx
-       jne       near ptr M00_L10
-       mov       rcx,[rbx+8]
-       mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
-       cmp       [rcx],rdx
-       jne       near ptr M00_L09
-       mov       rsi,[rcx+18]
-       test      rsi,rsi
-       je        short M00_L05
-       xor       ecx,ecx
-       mov       [rsp+58],rcx
-       xor       edi,edi
-       mov       ebp,[rsi+8]
-       cmp       ebp,edi
-       jg        short M00_L06
-M00_L00:
-       cmp       qword ptr [rsp+58],0
-       jne       short M00_L08
-M00_L01:
-       cmp       ebp,edi
-       setg      sil
-       movzx     esi,sil
-M00_L02:
-       xor       ecx,ecx
-       mov       [rsp+58],rcx
-M00_L03:
-       test      esi,esi
-       jne       near ptr M00_L11
-M00_L04:
-       add       rsp,60
-       pop       rbx
-       pop       rbp
-       pop       rsi
-       pop       rdi
-       pop       r14
-       ret
-M00_L05:
-       xor       esi,esi
-       jmp       short M00_L02
-M00_L06:
-       mov       ecx,edi
-       lea       rcx,[rcx+rcx*4]
-       lea       r14,[rsi+rcx*8+10]
-       mov       rcx,r14
-       mov       edx,1
-       call      qword ptr [7FF8245EFCA8]
-       test      eax,eax
-       je        short M00_L07
-       mov       rdx,[r14]
-       lea       r8,[rsp+58]
-       mov       ecx,1
-       call      qword ptr [7FF8245EFCD8]
-       test      eax,eax
-       jne       short M00_L00
-M00_L07:
-       inc       edi
-       cmp       ebp,edi
-       jg        short M00_L06
-       jmp       short M00_L00
-M00_L08:
-       mov       rcx,[rsp+58]
-       cmp       dword ptr [rcx+10],0
-       jle       short M00_L01
-       mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245EFCF0]
-       int       3
-M00_L09:
-       mov       r11,7FF823E30B28
-       mov       edx,1
-       call      qword ptr [r11]
-       mov       esi,eax
-       jmp       short M00_L03
-M00_L10:
-       mov       rcx,rbx
-       mov       r11,7FF823E30B20
-       mov       edx,1
-       call      qword ptr [r11]
-       mov       esi,eax
-       jmp       near ptr M00_L03
-M00_L11:
-       mov       rcx,rbx
-       mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824667F98
-       call      qword ptr [7FF823EE5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
-       mov       rsi,rax
-       mov       rcx,2B88E728290
-       mov       [rsp+48],rcx
-       mov       dword ptr [rsp+50],0C8
-       mov       rcx,2B88E7309A8
-       mov       [rsp+38],rcx
-       mov       rcx,2B88E7309D8
-       mov       [rsp+40],rcx
-       mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogDebugMessageStruct
-       call      qword ptr [7FF823EE5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,2780F800140
-       mov       r8,[r8]
-       mov       [rsp+28],r8
-       lea       r8,[rsp+48]
-       lea       r9,[rsp+38]
-       mov       rcx,rbx
-       mov       edx,1
-       xor       eax,eax
-       mov       [rsp+20],rax
-       call      rsi
-       jmp       near ptr M00_L04
-; Total bytes of code 433
-```
-```assembly
-; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
-       push      r15
-       push      r14
-       push      r13
-       push      rdi
-       push      rsi
-       push      rbp
-       push      rbx
-       sub       rsp,20
-       mov       rdi,rcx
-       mov       rbx,rdx
-       mov       rsi,r8
-       mov       rcx,[rdi]
-       mov       eax,ebx
-       rol       eax,5
-       add       eax,ecx
-       mov       edx,esi
-       ror       edx,5
-       add       eax,edx
-       mov       rdx,277F9800A10
-       mov       rdx,[rdx]
-       mov       rdx,[rdx+8]
-       movsxd    r8,eax
-       mov       r10,9E3779B97F4A7C15
-       imul      r8,r10
-       movzx     r10d,byte ptr [rdx+10]
-       shrx      r8,r8,r10
-       xor       r10d,r10d
-M01_L00:
-       lea       r9d,[r8+1]
-       movsxd    r9,r9d
-       imul      r9,30
-       lea       r9,[rdx+r9+10]
-       mov       r11d,[r9]
-       mov       ebp,[r9+8]
-       mov       r14,[r9+10]
-       mov       r15,[r9+18]
-       mov       r13,[r9+20]
-       cmp       eax,ebp
-       jne       short M01_L01
-       mov       rbp,rcx
-       sub       rbp,r14
-       mov       r14,rbx
-       sub       r14,r15
-       or        rbp,r14
-       mov       r14,rsi
-       sub       r14,r13
-       or        rbp,r14
-       jne       short M01_L01
-       mov       rbp,[r9+28]
-       and       r11d,0FFFFFFFE
-       cmp       r11d,[r9]
-       jne       short M01_L02
-       mov       rcx,7FF8246B30A8
-       call      CORINFO_HELP_COUNTPROFILE32
-       mov       rax,rbp
-       add       rsp,20
-       pop       rbx
-       pop       rbp
-       pop       rsi
-       pop       rdi
-       pop       r13
-       pop       r14
-       pop       r15
-       ret
-M01_L01:
-       test      r11d,r11d
-       je        short M01_L02
-       inc       r10d
-       add       r8d,r10d
-       mov       r9d,[rdx+8]
-       add       r9d,0FFFFFFFE
-       and       r8d,r9d
-       cmp       r10d,8
-       jl        near ptr M01_L00
-M01_L02:
-       mov       rcx,7FF8246B30AC
-       call      CORINFO_HELP_COUNTPROFILE32
-       mov       rcx,rdi
-       mov       rdx,rbx
-       mov       r8,rsi
-       add       rsp,20
-       pop       rbx
-       pop       rbp
-       pop       rsi
-       pop       rdi
-       pop       r13
-       pop       r14
-       pop       r15
-       jmp       qword ptr [7FF82405FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
-; Total bytes of code 274
-```
-```assembly
-; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rax,[rcx+20]
-       mov       rax,[rax-18]
-       mov       rdx,rax
-       test      dl,1
-       jne       short M02_L00
-       ret
-M02_L00:
-       jmp       qword ptr [7FF823EE5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
-; Total bytes of code 23
-```
-
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugFastLoggerBenchmark()
@@ -1802,13 +1805,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,1
-       call      qword ptr [7FF82460FC60]
+       call      qword ptr [7FF997E47F18]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,1
-       call      qword ptr [7FF82460FC90]
+       call      qword ptr [7FF997E47F48]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -1821,17 +1824,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF82460FCA8]
+       call      qword ptr [7FF997E47F60]
        int       3
 M00_L09:
-       mov       r11,7FF823E50B28
+       mov       r11,7FF9977509E0
        mov       edx,1
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E50B20
+       mov       r11,7FF9977509D8
        mov       edx,1
        call      qword ptr [r11]
        mov       esi,eax
@@ -1839,19 +1842,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824677F98
-       call      qword ptr [7FF823F05920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997E881B8
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,1E454518290
+       mov       rcx,1DE5DDA8290
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],0C8
-       mov       rcx,1E4545209A8
+       mov       rcx,1DE5DDB09A8
        mov       [rsp+38],rcx
-       mov       rcx,1E4545209D8
+       mov       rcx,1DE5DDB09D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogDebugMessageStruct
-       call      qword ptr [7FF823F05728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,1A3D5400140
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,19DDEC00118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -1877,24 +1880,25 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       mov       rcx,[rdi]
-       mov       eax,ebx
-       rol       eax,5
-       add       eax,ecx
+       call      qword ptr [7FF9EF978C18]
+       mov       rcx,[rax]
+       add       rcx,8
+       mov       rax,[rdi]
+       mov       r8d,ebx
+       rol       r8d,5
+       add       r8d,eax
        mov       edx,esi
        ror       edx,5
-       add       eax,edx
-       mov       rdx,1A3BF400A10
-       mov       rdx,[rdx]
-       mov       rdx,[rdx+8]
-       movsxd    r8,eax
-       mov       r10,9E3779B97F4A7C15
-       imul      r8,r10
-       movzx     r10d,byte ptr [rdx+10]
-       shrx      r8,r8,r10
-       xor       r10d,r10d
+       add       r8d,edx
+       mov       rdx,[rcx]
+       movsxd    r10,r8d
+       mov       r9,9E3779B97F4A7C15
+       imul      r10,r9
+       movzx     ecx,byte ptr [rdx+10]
+       shr       r10,cl
+       xor       ecx,ecx
 M01_L00:
-       lea       r9d,[r8+1]
+       lea       r9d,[r10+1]
        movsxd    r9,r9d
        imul      r9,30
        lea       r9,[rdx+r9+10]
@@ -1903,9 +1907,9 @@ M01_L00:
        mov       r14,[r9+10]
        mov       r15,[r9+18]
        mov       r13,[r9+20]
-       cmp       eax,ebp
+       cmp       r8d,ebp
        jne       short M01_L01
-       mov       rbp,rcx
+       mov       rbp,rax
        sub       rbp,r14
        mov       r14,rbx
        sub       r14,r15
@@ -1914,13 +1918,10 @@ M01_L00:
        sub       r14,r13
        or        rbp,r14
        jne       short M01_L01
-       mov       rbp,[r9+28]
+       mov       rax,[r9+28]
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246D3198
-       call      CORINFO_HELP_COUNTPROFILE32
-       mov       rax,rbp
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -1933,19 +1934,18 @@ M01_L00:
 M01_L01:
        test      r11d,r11d
        je        short M01_L02
-       inc       r10d
-       add       r8d,r10d
+       inc       ecx
+       add       r10d,ecx
        mov       r9d,[rdx+8]
        add       r9d,0FFFFFFFE
-       and       r8d,r9d
-       cmp       r10d,8
-       jl        near ptr M01_L00
+       and       r10d,r9d
+       cmp       ecx,8
+       jl        short M01_L00
 M01_L02:
-       mov       rcx,7FF8246D319C
-       call      CORINFO_HELP_COUNTPROFILE32
+       mov       r8,rsi
        mov       rcx,rdi
        mov       rdx,rbx
-       mov       r8,rsi
+       lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -1954,8 +1954,8 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82407FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
-; Total bytes of code 274
+       jmp       qword ptr [rax]
+; Total bytes of code 239
 ```
 ```assembly
 ; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
@@ -1966,11 +1966,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823F05C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogErrorFastLoggerExtensionsBenchmark()
@@ -2031,13 +2031,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,4
-       call      qword ptr [7FF8245FFCD8]
+       call      qword ptr [7FF997E57FD8]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,4
-       call      qword ptr [7FF8245FFD08]
+       call      qword ptr [7FF997E5C018]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -2050,17 +2050,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245FFD20]
+       call      qword ptr [7FF997E5C030]
        int       3
 M00_L09:
-       mov       r11,7FF823E40B28
+       mov       r11,7FF9977609E0
        mov       edx,4
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E40B20
+       mov       r11,7FF9977609D8
        mov       edx,4
        call      qword ptr [r11]
        mov       esi,eax
@@ -2068,19 +2068,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824678288
-       call      qword ptr [7FF823EF5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997E98830
+       call      qword ptr [7FF997815920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,27482E70A38
+       mov       rcx,2017F310A38
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],12C
-       mov       rcx,27482E709A8
+       mov       rcx,2017F3109A8
        mov       [rsp+38],rcx
-       mov       rcx,27482E709D8
+       mov       rcx,2017F3109D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogErrorMessageStruct
-       call      qword ptr [7FF823EF5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,23404000140
+       call      qword ptr [7FF997815728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1C100400118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -2106,24 +2106,25 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       mov       rcx,[rdi]
-       mov       eax,ebx
-       rol       eax,5
-       add       eax,ecx
+       call      qword ptr [7FF9EF978C18]
+       mov       rcx,[rax]
+       add       rcx,8
+       mov       rax,[rdi]
+       mov       r8d,ebx
+       rol       r8d,5
+       add       r8d,eax
        mov       edx,esi
        ror       edx,5
-       add       eax,edx
-       mov       rdx,233EE000A10
-       mov       rdx,[rdx]
-       mov       rdx,[rdx+8]
-       movsxd    r8,eax
-       mov       r10,9E3779B97F4A7C15
-       imul      r8,r10
-       movzx     r10d,byte ptr [rdx+10]
-       shrx      r8,r8,r10
-       xor       r10d,r10d
+       add       r8d,edx
+       mov       rdx,[rcx]
+       movsxd    r10,r8d
+       mov       r9,9E3779B97F4A7C15
+       imul      r10,r9
+       movzx     ecx,byte ptr [rdx+10]
+       shr       r10,cl
+       xor       ecx,ecx
 M01_L00:
-       lea       r9d,[r8+1]
+       lea       r9d,[r10+1]
        movsxd    r9,r9d
        imul      r9,30
        lea       r9,[rdx+r9+10]
@@ -2132,9 +2133,9 @@ M01_L00:
        mov       r14,[r9+10]
        mov       r15,[r9+18]
        mov       r13,[r9+20]
-       cmp       eax,ebp
+       cmp       r8d,ebp
        jne       short M01_L01
-       mov       rbp,rcx
+       mov       rbp,rax
        sub       rbp,r14
        mov       r14,rbx
        sub       r14,r15
@@ -2143,13 +2144,10 @@ M01_L00:
        sub       r14,r13
        or        rbp,r14
        jne       short M01_L01
-       mov       rbp,[r9+28]
+       mov       rax,[r9+28]
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246C31C0
-       call      CORINFO_HELP_COUNTPROFILE32
-       mov       rax,rbp
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -2162,19 +2160,18 @@ M01_L00:
 M01_L01:
        test      r11d,r11d
        je        short M01_L02
-       inc       r10d
-       add       r8d,r10d
+       inc       ecx
+       add       r10d,ecx
        mov       r9d,[rdx+8]
        add       r9d,0FFFFFFFE
-       and       r8d,r9d
-       cmp       r10d,8
-       jl        near ptr M01_L00
+       and       r10d,r9d
+       cmp       ecx,8
+       jl        short M01_L00
 M01_L02:
-       mov       rcx,7FF8246C31C4
-       call      CORINFO_HELP_COUNTPROFILE32
+       mov       r8,rsi
        mov       rcx,rdi
        mov       rdx,rbx
-       mov       r8,rsi
+       lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -2183,8 +2180,8 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82406FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
-; Total bytes of code 274
+       jmp       qword ptr [rax]
+; Total bytes of code 239
 ```
 ```assembly
 ; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
@@ -2195,11 +2192,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EF5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997815C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogExceptionFastLoggerBenchmark()
@@ -2263,13 +2260,13 @@ M00_L06:
        lea       r15,[rdi+rcx*8+10]
        mov       rcx,r15
        mov       edx,4
-       call      qword ptr [7FF8245FF7B0]
+       call      qword ptr [7FF997E6FCC0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r15]
        lea       r8,[rsp+50]
        mov       ecx,4
-       call      qword ptr [7FF8245FF7E0]
+       call      qword ptr [7FF997E6FCF0]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -2282,17 +2279,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+50]
-       call      qword ptr [7FF8245FF7F8]
+       call      qword ptr [7FF997E6FD08]
        int       3
 M00_L09:
-       mov       r11,7FF823E50B28
+       mov       r11,7FF997750B28
        mov       edx,4
        call      qword ptr [r11]
        mov       edi,eax
        jmp       near ptr M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E50B20
+       mov       r11,7FF997750B20
        mov       edx,4
        call      qword ptr [r11]
        mov       edi,eax
@@ -2300,19 +2297,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824676BA8
-       call      qword ptr [7FF823F05920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EE7FA8
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rdi,rax
-       mov       rcx,2756DA30A30
+       mov       rcx,2007D350A30
        mov       [rsp+40],rcx
        mov       dword ptr [rsp+48],1F4
-       mov       rcx,2756DA309A8
+       mov       rcx,2007D3509A8
        mov       [rsp+30],rcx
-       mov       rcx,2756DA309D8
+       mov       rcx,2007D3509D8
        mov       [rsp+38],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogExceptionMessageStruct
-       call      qword ptr [7FF823F05728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,234EEC00140
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1BFFE400140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+40]
@@ -2344,7 +2341,7 @@ M00_L11:
        mov       edx,esi
        ror       edx,5
        add       eax,edx
-       mov       rdx,234D8C00A10
+       mov       rdx,1BFE8400A10
        mov       rdx,[rdx]
        mov       rdx,[rdx+8]
        movsxd    r8,eax
@@ -2378,7 +2375,7 @@ M01_L00:
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246D2E00
+       mov       rcx,7FF997F33198
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rax,rbp
        add       rsp,20
@@ -2401,7 +2398,7 @@ M01_L01:
        cmp       r10d,8
        jl        near ptr M01_L00
 M01_L02:
-       mov       rcx,7FF8246D2E04
+       mov       rcx,7FF997F3319C
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
@@ -2414,7 +2411,7 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82407FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 274
 ```
 ```assembly
@@ -2426,11 +2423,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823F05C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogExceptionFastLoggerExtensionsBenchmark()
@@ -2494,13 +2491,13 @@ M00_L06:
        lea       r15,[rdi+rcx*8+10]
        mov       rcx,r15
        mov       edx,4
-       call      qword ptr [7FF82460F6C0]
+       call      qword ptr [7FF997E6FCC0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r15]
        lea       r8,[rsp+50]
        mov       ecx,4
-       call      qword ptr [7FF82460F6F0]
+       call      qword ptr [7FF997E6FCF0]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -2513,17 +2510,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+50]
-       call      qword ptr [7FF82460F708]
+       call      qword ptr [7FF997E6FD08]
        int       3
 M00_L09:
-       mov       r11,7FF823E60B28
+       mov       r11,7FF997750B28
        mov       edx,4
        call      qword ptr [r11]
        mov       edi,eax
        jmp       near ptr M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E60B20
+       mov       r11,7FF997750B20
        mov       edx,4
        call      qword ptr [r11]
        mov       edi,eax
@@ -2531,19 +2528,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824686340
-       call      qword ptr [7FF823F15920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EE7FA8
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rdi,rax
-       mov       rcx,20D398F0A40
+       mov       rcx,21514790A40
        mov       [rsp+40],rcx
        mov       dword ptr [rsp+48],1F4
-       mov       rcx,20D398F09A8
+       mov       rcx,215147909A8
        mov       [rsp+30],rcx
-       mov       rcx,20D398F09D8
+       mov       rcx,215147909D8
        mov       [rsp+38],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogExceptionMessageStruct
-       call      qword ptr [7FF823F15728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,1CCBA800140
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1D495800140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+40]
@@ -2575,7 +2572,7 @@ M00_L11:
        mov       edx,esi
        ror       edx,5
        add       eax,edx
-       mov       rdx,1CCA4800A10
+       mov       rdx,1D47F800A10
        mov       rdx,[rdx]
        mov       rdx,[rdx+8]
        movsxd    r8,eax
@@ -2609,7 +2606,7 @@ M01_L00:
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246E33E8
+       mov       rcx,7FF997F330B8
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rax,rbp
        add       rsp,20
@@ -2632,7 +2629,7 @@ M01_L01:
        cmp       r10d,8
        jl        near ptr M01_L00
 M01_L02:
-       mov       rcx,7FF8246E33EC
+       mov       rcx,7FF997F330BC
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
@@ -2645,7 +2642,7 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82408FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 274
 ```
 ```assembly
@@ -2657,11 +2654,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823F15C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationFastLoggerBenchmark()
@@ -2722,13 +2719,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,2
-       call      qword ptr [7FF8245EF7B0]
+       call      qword ptr [7FF997E47FC0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,2
-       call      qword ptr [7FF8245EF7E0]
+       call      qword ptr [7FF997E4C000]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -2741,17 +2738,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245EF7F8]
+       call      qword ptr [7FF997E4C018]
        int       3
 M00_L09:
-       mov       r11,7FF823E40B28
+       mov       r11,7FF9977509E0
        mov       edx,2
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E40B20
+       mov       r11,7FF9977509D8
        mov       edx,2
        call      qword ptr [r11]
        mov       esi,eax
@@ -2759,19 +2756,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824666BA8
-       call      qword ptr [7FF823EF5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997E88840
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,32E268E0A30
+       mov       rcx,2EA720C0A30
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],190
-       mov       rcx,32E268E09A8
+       mov       rcx,2EA720C09A8
        mov       [rsp+38],rcx
-       mov       rcx,32E268E09D8
+       mov       rcx,2EA720C09D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogInformationMessageStruct
-       call      qword ptr [7FF823EF5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,2EDA7800140
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,2A9F3000118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -2797,236 +2794,7 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       mov       rcx,[rdi]
-       mov       eax,ebx
-       rol       eax,5
-       add       eax,ecx
-       mov       edx,esi
-       ror       edx,5
-       add       eax,edx
-       mov       rdx,2ED91800A10
-       mov       rdx,[rdx]
-       mov       rdx,[rdx+8]
-       movsxd    r8,eax
-       mov       r10,9E3779B97F4A7C15
-       imul      r8,r10
-       movzx     r10d,byte ptr [rdx+10]
-       shrx      r8,r8,r10
-       xor       r10d,r10d
-M01_L00:
-       lea       r9d,[r8+1]
-       movsxd    r9,r9d
-       imul      r9,30
-       lea       r9,[rdx+r9+10]
-       mov       r11d,[r9]
-       mov       ebp,[r9+8]
-       mov       r14,[r9+10]
-       mov       r15,[r9+18]
-       mov       r13,[r9+20]
-       cmp       eax,ebp
-       jne       short M01_L01
-       mov       rbp,rcx
-       sub       rbp,r14
-       mov       r14,rbx
-       sub       r14,r15
-       or        rbp,r14
-       mov       r14,rsi
-       sub       r14,r13
-       or        rbp,r14
-       jne       short M01_L01
-       mov       rbp,[r9+28]
-       and       r11d,0FFFFFFFE
-       cmp       r11d,[r9]
-       jne       short M01_L02
-       mov       rcx,7FF8246C3198
-       call      CORINFO_HELP_COUNTPROFILE32
-       mov       rax,rbp
-       add       rsp,20
-       pop       rbx
-       pop       rbp
-       pop       rsi
-       pop       rdi
-       pop       r13
-       pop       r14
-       pop       r15
-       ret
-M01_L01:
-       test      r11d,r11d
-       je        short M01_L02
-       inc       r10d
-       add       r8d,r10d
-       mov       r9d,[rdx+8]
-       add       r9d,0FFFFFFFE
-       and       r8d,r9d
-       cmp       r10d,8
-       jl        near ptr M01_L00
-M01_L02:
-       mov       rcx,7FF8246C319C
-       call      CORINFO_HELP_COUNTPROFILE32
-       mov       rcx,rdi
-       mov       rdx,rbx
-       mov       r8,rsi
-       add       rsp,20
-       pop       rbx
-       pop       rbp
-       pop       rsi
-       pop       rdi
-       pop       r13
-       pop       r14
-       pop       r15
-       jmp       qword ptr [7FF82406FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
-; Total bytes of code 274
-```
-```assembly
-; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rax,[rcx+20]
-       mov       rax,[rax-18]
-       mov       rdx,rax
-       test      dl,1
-       jne       short M02_L00
-       ret
-M02_L00:
-       jmp       qword ptr [7FF823EF5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
-; Total bytes of code 23
-```
-
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-
-```assembly
-; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationFastLoggerExtensionsBenchmark()
-       push      r14
-       push      rdi
-       push      rsi
-       push      rbp
-       push      rbx
-       sub       rsp,60
-       xor       eax,eax
-       mov       [rsp+38],rax
-       vxorps    xmm4,xmm4,xmm4
-       vmovdqu   ymmword ptr [rsp+40],ymm4
-       mov       rbx,[rcx+138]
-       mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
-       cmp       [rbx],rcx
-       jne       near ptr M00_L10
-       mov       rcx,[rbx+8]
-       mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
-       cmp       [rcx],rdx
-       jne       near ptr M00_L09
-       mov       rsi,[rcx+18]
-       test      rsi,rsi
-       je        short M00_L05
-       xor       ecx,ecx
-       mov       [rsp+58],rcx
-       xor       edi,edi
-       mov       ebp,[rsi+8]
-       cmp       ebp,edi
-       jg        short M00_L06
-M00_L00:
-       cmp       qword ptr [rsp+58],0
-       jne       short M00_L08
-M00_L01:
-       cmp       ebp,edi
-       setg      sil
-       movzx     esi,sil
-M00_L02:
-       xor       ecx,ecx
-       mov       [rsp+58],rcx
-M00_L03:
-       test      esi,esi
-       jne       near ptr M00_L11
-M00_L04:
-       add       rsp,60
-       pop       rbx
-       pop       rbp
-       pop       rsi
-       pop       rdi
-       pop       r14
-       ret
-M00_L05:
-       xor       esi,esi
-       jmp       short M00_L02
-M00_L06:
-       mov       ecx,edi
-       lea       rcx,[rcx+rcx*4]
-       lea       r14,[rsi+rcx*8+10]
-       mov       rcx,r14
-       mov       edx,2
-       call      qword ptr [7FF8245DC000]
-       test      eax,eax
-       je        short M00_L07
-       mov       rdx,[r14]
-       lea       r8,[rsp+58]
-       mov       ecx,2
-       call      qword ptr [7FF8245DC030]
-       test      eax,eax
-       jne       short M00_L00
-M00_L07:
-       inc       edi
-       cmp       ebp,edi
-       jg        short M00_L06
-       jmp       short M00_L00
-M00_L08:
-       mov       rcx,[rsp+58]
-       cmp       dword ptr [rcx+10],0
-       jle       short M00_L01
-       mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245DC048]
-       int       3
-M00_L09:
-       mov       r11,7FF823E409E0
-       mov       edx,2
-       call      qword ptr [r11]
-       mov       esi,eax
-       jmp       short M00_L03
-M00_L10:
-       mov       rcx,rbx
-       mov       r11,7FF823E409D8
-       mov       edx,2
-       call      qword ptr [r11]
-       mov       esi,eax
-       jmp       near ptr M00_L03
-M00_L11:
-       mov       rcx,rbx
-       mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824618840
-       call      qword ptr [7FF823EF5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
-       mov       rsi,rax
-       mov       rcx,2B448900A48
-       mov       [rsp+48],rcx
-       mov       dword ptr [rsp+50],190
-       mov       rcx,2B4489009A8
-       mov       [rsp+38],rcx
-       mov       rcx,2B4489009D8
-       mov       [rsp+40],rcx
-       mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogInformationMessageStruct
-       call      qword ptr [7FF823EF5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,273B3802110
-       mov       r8,[r8]
-       mov       [rsp+28],r8
-       lea       r8,[rsp+48]
-       lea       r9,[rsp+38]
-       mov       rcx,rbx
-       mov       edx,2
-       xor       eax,eax
-       mov       [rsp+20],rax
-       call      rsi
-       jmp       near ptr M00_L04
-; Total bytes of code 433
-```
-```assembly
-; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
-       push      r15
-       push      r14
-       push      r13
-       push      rdi
-       push      rsi
-       push      rbp
-       push      rbx
-       sub       rsp,20
-       mov       rdi,rcx
-       mov       rbx,rdx
-       mov       rsi,r8
-       call      qword ptr [7FF883968C18]
+       call      qword ptr [7FF9EF978C18]
        mov       rcx,[rax]
        add       rcx,8
        mov       rax,[rdi]
@@ -3112,11 +2880,240 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EF5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+
+```assembly
+; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationFastLoggerExtensionsBenchmark()
+       push      r14
+       push      rdi
+       push      rsi
+       push      rbp
+       push      rbx
+       sub       rsp,60
+       xor       eax,eax
+       mov       [rsp+38],rax
+       vxorps    xmm4,xmm4,xmm4
+       vmovdqu   ymmword ptr [rsp+40],ymm4
+       mov       rbx,[rcx+138]
+       mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+       cmp       [rbx],rcx
+       jne       near ptr M00_L10
+       mov       rcx,[rbx+8]
+       mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+       cmp       [rcx],rdx
+       jne       near ptr M00_L09
+       mov       rsi,[rcx+18]
+       test      rsi,rsi
+       je        short M00_L05
+       xor       ecx,ecx
+       mov       [rsp+58],rcx
+       xor       edi,edi
+       mov       ebp,[rsi+8]
+       cmp       ebp,edi
+       jg        short M00_L06
+M00_L00:
+       cmp       qword ptr [rsp+58],0
+       jne       short M00_L08
+M00_L01:
+       cmp       ebp,edi
+       setg      sil
+       movzx     esi,sil
+M00_L02:
+       xor       ecx,ecx
+       mov       [rsp+58],rcx
+M00_L03:
+       test      esi,esi
+       jne       near ptr M00_L11
+M00_L04:
+       add       rsp,60
+       pop       rbx
+       pop       rbp
+       pop       rsi
+       pop       rdi
+       pop       r14
+       ret
+M00_L05:
+       xor       esi,esi
+       jmp       short M00_L02
+M00_L06:
+       mov       ecx,edi
+       lea       rcx,[rcx+rcx*4]
+       lea       r14,[rsi+rcx*8+10]
+       mov       rcx,r14
+       mov       edx,2
+       call      qword ptr [7FF997E6FBA0]
+       test      eax,eax
+       je        short M00_L07
+       mov       rdx,[r14]
+       lea       r8,[rsp+58]
+       mov       ecx,2
+       call      qword ptr [7FF997E6FBD0]
+       test      eax,eax
+       jne       short M00_L00
+M00_L07:
+       inc       edi
+       cmp       ebp,edi
+       jg        short M00_L06
+       jmp       short M00_L00
+M00_L08:
+       mov       rcx,[rsp+58]
+       cmp       dword ptr [rcx+10],0
+       jle       short M00_L01
+       mov       rcx,[rsp+58]
+       call      qword ptr [7FF997E6FBE8]
+       int       3
+M00_L09:
+       mov       r11,7FF997750B28
+       mov       edx,2
+       call      qword ptr [r11]
+       mov       esi,eax
+       jmp       short M00_L03
+M00_L10:
+       mov       rcx,rbx
+       mov       r11,7FF997750B20
+       mov       edx,2
+       call      qword ptr [r11]
+       mov       esi,eax
+       jmp       near ptr M00_L03
+M00_L11:
+       mov       rcx,rbx
+       mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+       mov       r8,7FF997EE6FC0
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       rsi,rax
+       mov       rcx,258485D0A48
+       mov       [rsp+48],rcx
+       mov       dword ptr [rsp+50],190
+       mov       rcx,258485D09A8
+       mov       [rsp+38],rcx
+       mov       rcx,258485D09D8
+       mov       [rsp+40],rcx
+       mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogInformationMessageStruct
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,217C9400140
+       mov       r8,[r8]
+       mov       [rsp+28],r8
+       lea       r8,[rsp+48]
+       lea       r9,[rsp+38]
+       mov       rcx,rbx
+       mov       edx,2
+       xor       eax,eax
+       mov       [rsp+20],rax
+       call      rsi
+       jmp       near ptr M00_L04
+; Total bytes of code 433
+```
+```assembly
+; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       push      r15
+       push      r14
+       push      r13
+       push      rdi
+       push      rsi
+       push      rbp
+       push      rbx
+       sub       rsp,20
+       mov       rdi,rcx
+       mov       rbx,rdx
+       mov       rsi,r8
+       mov       rcx,[rdi]
+       mov       eax,ebx
+       rol       eax,5
+       add       eax,ecx
+       mov       edx,esi
+       ror       edx,5
+       add       eax,edx
+       mov       rdx,217B3400A10
+       mov       rdx,[rdx]
+       mov       rdx,[rdx+8]
+       movsxd    r8,eax
+       mov       r10,9E3779B97F4A7C15
+       imul      r8,r10
+       movzx     r10d,byte ptr [rdx+10]
+       shrx      r8,r8,r10
+       xor       r10d,r10d
+M01_L00:
+       lea       r9d,[r8+1]
+       movsxd    r9,r9d
+       imul      r9,30
+       lea       r9,[rdx+r9+10]
+       mov       r11d,[r9]
+       mov       ebp,[r9+8]
+       mov       r14,[r9+10]
+       mov       r15,[r9+18]
+       mov       r13,[r9+20]
+       cmp       eax,ebp
+       jne       short M01_L01
+       mov       rbp,rcx
+       sub       rbp,r14
+       mov       r14,rbx
+       sub       r14,r15
+       or        rbp,r14
+       mov       r14,rsi
+       sub       r14,r13
+       or        rbp,r14
+       jne       short M01_L01
+       mov       rbp,[r9+28]
+       and       r11d,0FFFFFFFE
+       cmp       r11d,[r9]
+       jne       short M01_L02
+       mov       rcx,7FF997F324E0
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rbp
+       add       rsp,20
+       pop       rbx
+       pop       rbp
+       pop       rsi
+       pop       rdi
+       pop       r13
+       pop       r14
+       pop       r15
+       ret
+M01_L01:
+       test      r11d,r11d
+       je        short M01_L02
+       inc       r10d
+       add       r8d,r10d
+       mov       r9d,[rdx+8]
+       add       r9d,0FFFFFFFE
+       and       r8d,r9d
+       cmp       r10d,8
+       jl        near ptr M01_L00
+M01_L02:
+       mov       rcx,7FF997F324E4
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rdi
+       mov       rdx,rbx
+       mov       r8,rsi
+       add       rsp,20
+       pop       rbx
+       pop       rbp
+       pop       rsi
+       pop       rdi
+       pop       r13
+       pop       r14
+       pop       r15
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+; Total bytes of code 274
+```
+```assembly
+; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rax,[rcx+20]
+       mov       rax,[rax-18]
+       mov       rdx,rax
+       test      dl,1
+       jne       short M02_L00
+       ret
+M02_L00:
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+; Total bytes of code 23
+```
+
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogStoredProcedureErrorFastLoggerExtensionsBenchmark()
@@ -3180,13 +3177,13 @@ M00_L06:
        lea       r15,[rdi+rcx*8+10]
        mov       rcx,r15
        mov       edx,4
-       call      qword ptr [7FF8245EFCC0]
+       call      qword ptr [7FF997E5F2D0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r15]
        lea       r8,[rsp+50]
        mov       ecx,4
-       call      qword ptr [7FF8245EFCF0]
+       call      qword ptr [7FF997E5F300]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -3199,17 +3196,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+50]
-       call      qword ptr [7FF8245EFD08]
+       call      qword ptr [7FF997E5F318]
        int       3
 M00_L09:
-       mov       r11,7FF823E30B30
+       mov       r11,7FF997760B28
        mov       edx,4
        call      qword ptr [r11]
        mov       edi,eax
        jmp       near ptr M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E30B28
+       mov       r11,7FF997760B20
        mov       edx,4
        call      qword ptr [r11]
        mov       edi,eax
@@ -3217,19 +3214,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824668298
-       call      qword ptr [7FF823EE5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EC8840
+       call      qword ptr [7FF997815920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rdi,rax
-       mov       rcx,1A75D430A60
+       mov       rcx,20400E70A10
        mov       [rsp+40],rcx
        mov       dword ptr [rsp+48],2BC
-       mov       rcx,1A75D4309A8
+       mov       rcx,20400E70958
        mov       [rsp+30],rcx
-       mov       rcx,1A75D4309E0
+       mov       rcx,20400E70990
        mov       [rsp+38],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogStoredProcedureErrorStruct
-       call      qword ptr [7FF823EE5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,166C8402138
+       call      qword ptr [7FF997815728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1C381C00118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+40]
@@ -3261,7 +3258,7 @@ M00_L11:
        mov       edx,esi
        ror       edx,5
        add       eax,edx
-       mov       rdx,166C8400A10
+       mov       rdx,1C36BC00A10
        mov       rdx,[rdx]
        mov       rdx,[rdx+8]
        movsxd    r8,eax
@@ -3295,7 +3292,7 @@ M01_L00:
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246B3198
+       mov       rcx,7FF997F39B10
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rax,rbp
        add       rsp,20
@@ -3318,7 +3315,7 @@ M01_L01:
        cmp       r10d,8
        jl        near ptr M01_L00
 M01_L02:
-       mov       rcx,7FF8246B319C
+       mov       rcx,7FF997F39B14
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
@@ -3331,7 +3328,7 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82405FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99798FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 274
 ```
 ```assembly
@@ -3343,11 +3340,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EE5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997815C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogStoredProcedureNoRecordsFoundFastLoggerExtensionsBenchmark()
@@ -3408,13 +3405,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,4
-       call      qword ptr [7FF8245C7EE8]
+       call      qword ptr [7FF997E4F330]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,4
-       call      qword ptr [7FF8245C7F18]
+       call      qword ptr [7FF997E4F360]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -3427,17 +3424,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245C7F30]
+       call      qword ptr [7FF997E4F378]
        int       3
 M00_L09:
-       mov       r11,7FF823E309E0
+       mov       r11,7FF997750B28
        mov       edx,4
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E309D8
+       mov       r11,7FF997750B20
        mov       edx,4
        call      qword ptr [r11]
        mov       esi,eax
@@ -3445,19 +3442,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF8246081B8
-       call      qword ptr [7FF823EE5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EB9278
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,185A0F70A70
+       mov       rcx,210D6610A70
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],2BD
-       mov       rcx,185A0F709A8
+       mov       rcx,210D66109A8
        mov       [rsp+38],rcx
-       mov       rcx,185A0F709E0
+       mov       rcx,210D66109E0
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogStoredProcedureNoRecordsFoundStruct
-       call      qword ptr [7FF823EE5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,14522000118
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1D057400118
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -3483,25 +3480,24 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       call      qword ptr [7FF883968C18]
-       mov       rcx,[rax]
-       add       rcx,8
-       mov       rax,[rdi]
-       mov       r8d,ebx
-       rol       r8d,5
-       add       r8d,eax
+       mov       rcx,[rdi]
+       mov       eax,ebx
+       rol       eax,5
+       add       eax,ecx
        mov       edx,esi
        ror       edx,5
-       add       r8d,edx
-       mov       rdx,[rcx]
-       movsxd    r10,r8d
-       mov       r9,9E3779B97F4A7C15
-       imul      r10,r9
-       movzx     ecx,byte ptr [rdx+10]
-       shr       r10,cl
-       xor       ecx,ecx
+       add       eax,edx
+       mov       rdx,1D041400A10
+       mov       rdx,[rdx]
+       mov       rdx,[rdx+8]
+       movsxd    r8,eax
+       mov       r10,9E3779B97F4A7C15
+       imul      r8,r10
+       movzx     r10d,byte ptr [rdx+10]
+       shrx      r8,r8,r10
+       xor       r10d,r10d
 M01_L00:
-       lea       r9d,[r10+1]
+       lea       r9d,[r8+1]
        movsxd    r9,r9d
        imul      r9,30
        lea       r9,[rdx+r9+10]
@@ -3510,9 +3506,9 @@ M01_L00:
        mov       r14,[r9+10]
        mov       r15,[r9+18]
        mov       r13,[r9+20]
-       cmp       r8d,ebp
+       cmp       eax,ebp
        jne       short M01_L01
-       mov       rbp,rax
+       mov       rbp,rcx
        sub       rbp,r14
        mov       r14,rbx
        sub       r14,r15
@@ -3521,10 +3517,13 @@ M01_L00:
        sub       r14,r13
        or        rbp,r14
        jne       short M01_L01
-       mov       rax,[r9+28]
+       mov       rbp,[r9+28]
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
+       mov       rcx,7FF997F2A260
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rbp
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -3537,18 +3536,19 @@ M01_L00:
 M01_L01:
        test      r11d,r11d
        je        short M01_L02
-       inc       ecx
-       add       r10d,ecx
+       inc       r10d
+       add       r8d,r10d
        mov       r9d,[rdx+8]
        add       r9d,0FFFFFFFE
-       and       r10d,r9d
-       cmp       ecx,8
-       jl        short M01_L00
+       and       r8d,r9d
+       cmp       r10d,8
+       jl        near ptr M01_L00
 M01_L02:
-       mov       r8,rsi
+       mov       rcx,7FF997F2A264
+       call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
-       lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
+       mov       r8,rsi
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -3557,8 +3557,8 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [rax]
-; Total bytes of code 239
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+; Total bytes of code 274
 ```
 ```assembly
 ; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
@@ -3569,11 +3569,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EE5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogTraceFastLoggerBenchmark()
@@ -3634,13 +3634,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        xor       edx,edx
-       call      qword ptr [7FF8245EFCF0]
+       call      qword ptr [7FF997E6FCF0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        xor       ecx,ecx
-       call      qword ptr [7FF8245EFD20]
+       call      qword ptr [7FF997E6FD20]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -3653,17 +3653,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245EFD38]
+       call      qword ptr [7FF997E6FD38]
        int       3
 M00_L09:
-       mov       r11,7FF823E30B28
+       mov       r11,7FF997750B28
        xor       edx,edx
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E30B20
+       mov       r11,7FF997750B20
        xor       edx,edx
        call      qword ptr [r11]
        mov       esi,eax
@@ -3671,19 +3671,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824668298
-       call      qword ptr [7FF823EE5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EE8298
+       call      qword ptr [7FF997805920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,1D832870A28
+       mov       rcx,1E82A590A28
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],64
-       mov       rcx,1D8328709A8
+       mov       rcx,1E82A5909A8
        mov       [rsp+38],rcx
-       mov       rcx,1D8328709D8
+       mov       rcx,1E82A5909D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogTraceMessageStruct
-       call      qword ptr [7FF823EE5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,197B3800140
+       call      qword ptr [7FF997805728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1A7AB400140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -3716,7 +3716,7 @@ M00_L11:
        mov       edx,esi
        ror       edx,5
        add       eax,edx
-       mov       rdx,1979D800A10
+       mov       rdx,1A795400A10
        mov       rdx,[rdx]
        mov       rdx,[rdx+8]
        movsxd    r8,eax
@@ -3750,7 +3750,7 @@ M01_L00:
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
-       mov       rcx,7FF8246B3198
+       mov       rcx,7FF997F33160
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rax,rbp
        add       rsp,20
@@ -3773,7 +3773,7 @@ M01_L01:
        cmp       r10d,8
        jl        near ptr M01_L00
 M01_L02:
-       mov       rcx,7FF8246B319C
+       mov       rcx,7FF997F33164
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
@@ -3786,7 +3786,7 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [7FF82405FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+       jmp       qword ptr [7FF99797FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
 ; Total bytes of code 274
 ```
 ```assembly
@@ -3798,11 +3798,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EE5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF997805C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogTraceFastLoggerExtensionsBenchmark()
@@ -3863,13 +3863,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        xor       edx,edx
-       call      qword ptr [7FF8245CC000]
+       call      qword ptr [7FF997E27F00]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        xor       ecx,ecx
-       call      qword ptr [7FF8245CC030]
+       call      qword ptr [7FF997E27F30]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -3882,17 +3882,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245CC048]
+       call      qword ptr [7FF997E27F48]
        int       3
 M00_L09:
-       mov       r11,7FF823E309E0
+       mov       r11,7FF9977309E0
        xor       edx,edx
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E309D8
+       mov       r11,7FF9977309D8
        xor       edx,edx
        call      qword ptr [r11]
        mov       esi,eax
@@ -3900,19 +3900,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824608840
-       call      qword ptr [7FF823EE5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997E681B8
+       call      qword ptr [7FF9977E5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,29DCB3A0A38
+       mov       rcx,23386E80A38
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],64
-       mov       rcx,29DCB3A09A8
+       mov       rcx,23386E809A8
        mov       [rsp+38],rcx
-       mov       rcx,29DCB3A09D8
+       mov       rcx,23386E809D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogTraceMessageStruct
-       call      qword ptr [7FF823EE5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,25D36402110
+       call      qword ptr [7FF9977E5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1F2F2002110
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -3938,7 +3938,7 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       call      qword ptr [7FF883968C18]
+       call      qword ptr [7FF9EF978C18]
        mov       rcx,[rax]
        add       rcx,8
        mov       rax,[rdi]
@@ -4024,11 +4024,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EE5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF9977E5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogWarningFastLoggerExtensionsBenchmark()
@@ -4089,13 +4089,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,3
-       call      qword ptr [7FF8245FC018]
+       call      qword ptr [7FF997E4FCF0]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,3
-       call      qword ptr [7FF8245FC048]
+       call      qword ptr [7FF997E4FD20]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -4108,17 +4108,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245FC060]
+       call      qword ptr [7FF997E4FD38]
        int       3
 M00_L09:
-       mov       r11,7FF823E609E0
+       mov       r11,7FF997730B28
        mov       edx,3
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E609D8
+       mov       r11,7FF997730B20
        mov       edx,3
        call      qword ptr [r11]
        mov       esi,eax
@@ -4126,19 +4126,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824638840
-       call      qword ptr [7FF823F15920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997EC8298
+       call      qword ptr [7FF9977E5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,29A3F400A40
+       mov       rcx,2094A120A40
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],258
-       mov       rcx,29A3F4009A8
+       mov       rcx,2094A1209A8
        mov       [rsp+38],rcx
-       mov       rcx,29A3F4009D8
+       mov       rcx,2094A1209D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogWarningMessageStruct
-       call      qword ptr [7FF823F15728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,259C0400118
+       call      qword ptr [7FF9977E5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,1C8CB000140
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -4164,25 +4164,24 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       call      qword ptr [7FF883968C18]
-       mov       rcx,[rax]
-       add       rcx,8
-       mov       rax,[rdi]
-       mov       r8d,ebx
-       rol       r8d,5
-       add       r8d,eax
+       mov       rcx,[rdi]
+       mov       eax,ebx
+       rol       eax,5
+       add       eax,ecx
        mov       edx,esi
        ror       edx,5
-       add       r8d,edx
-       mov       rdx,[rcx]
-       movsxd    r10,r8d
-       mov       r9,9E3779B97F4A7C15
-       imul      r10,r9
-       movzx     ecx,byte ptr [rdx+10]
-       shr       r10,cl
-       xor       ecx,ecx
+       add       eax,edx
+       mov       rdx,1C8B5000A10
+       mov       rdx,[rdx]
+       mov       rdx,[rdx+8]
+       movsxd    r8,eax
+       mov       r10,9E3779B97F4A7C15
+       imul      r8,r10
+       movzx     r10d,byte ptr [rdx+10]
+       shrx      r8,r8,r10
+       xor       r10d,r10d
 M01_L00:
-       lea       r9d,[r10+1]
+       lea       r9d,[r8+1]
        movsxd    r9,r9d
        imul      r9,30
        lea       r9,[rdx+r9+10]
@@ -4191,9 +4190,9 @@ M01_L00:
        mov       r14,[r9+10]
        mov       r15,[r9+18]
        mov       r13,[r9+20]
-       cmp       r8d,ebp
+       cmp       eax,ebp
        jne       short M01_L01
-       mov       rbp,rax
+       mov       rbp,rcx
        sub       rbp,r14
        mov       r14,rbx
        sub       r14,r15
@@ -4202,10 +4201,13 @@ M01_L00:
        sub       r14,r13
        or        rbp,r14
        jne       short M01_L01
-       mov       rax,[r9+28]
+       mov       rbp,[r9+28]
        and       r11d,0FFFFFFFE
        cmp       r11d,[r9]
        jne       short M01_L02
+       mov       rcx,7FF997F130D0
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rbp
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -4218,18 +4220,19 @@ M01_L00:
 M01_L01:
        test      r11d,r11d
        je        short M01_L02
-       inc       ecx
-       add       r10d,ecx
+       inc       r10d
+       add       r8d,r10d
        mov       r9d,[rdx+8]
        add       r9d,0FFFFFFFE
-       and       r10d,r9d
-       cmp       ecx,8
-       jl        short M01_L00
+       and       r8d,r9d
+       cmp       r10d,8
+       jl        near ptr M01_L00
 M01_L02:
-       mov       r8,rsi
+       mov       rcx,7FF997F130D4
+       call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rdi
        mov       rdx,rbx
-       lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
+       mov       r8,rsi
        add       rsp,20
        pop       rbx
        pop       rbp
@@ -4238,8 +4241,8 @@ M01_L02:
        pop       r13
        pop       r14
        pop       r15
-       jmp       qword ptr [rax]
-; Total bytes of code 239
+       jmp       qword ptr [7FF99795FFA8]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointerSlow(System.Object, IntPtr, IntPtr)
+; Total bytes of code 274
 ```
 ```assembly
 ; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
@@ -4250,11 +4253,11 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823F15C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF9977E5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
-## .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogWarningFastLoggerBenchmark()
@@ -4315,13 +4318,13 @@ M00_L06:
        lea       r14,[rsi+rcx*8+10]
        mov       rcx,r14
        mov       edx,3
-       call      qword ptr [7FF8245D7FC0]
+       call      qword ptr [7FF997E3C018]
        test      eax,eax
        je        short M00_L07
        mov       rdx,[r14]
        lea       r8,[rsp+58]
        mov       ecx,3
-       call      qword ptr [7FF8245DC000]
+       call      qword ptr [7FF997E3C048]
        test      eax,eax
        jne       short M00_L00
 M00_L07:
@@ -4334,17 +4337,17 @@ M00_L08:
        cmp       dword ptr [rcx+10],0
        jle       short M00_L01
        mov       rcx,[rsp+58]
-       call      qword ptr [7FF8245DC018]
+       call      qword ptr [7FF997E3C060]
        int       3
 M00_L09:
-       mov       r11,7FF823E409E0
+       mov       r11,7FF9977409E0
        mov       edx,3
        call      qword ptr [r11]
        mov       esi,eax
        jmp       short M00_L03
 M00_L10:
        mov       rcx,rbx
-       mov       r11,7FF823E409D8
+       mov       r11,7FF9977409D8
        mov       edx,3
        call      qword ptr [r11]
        mov       esi,eax
@@ -4352,19 +4355,19 @@ M00_L10:
 M00_L11:
        mov       rcx,rbx
        mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
-       mov       r8,7FF824618840
-       call      qword ptr [7FF823EF5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+       mov       r8,7FF997E787F8
+       call      qword ptr [7FF9977F5920]; System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
        mov       rsi,rax
-       mov       rcx,1DB719A0A28
+       mov       rcx,1962BF40A28
        mov       [rsp+48],rcx
        mov       dword ptr [rsp+50],258
-       mov       rcx,1DB719A09A8
+       mov       rcx,1962BF409A8
        mov       [rsp+38],rcx
-       mov       rcx,1DB719A09D8
+       mov       rcx,1962BF409D8
        mov       [rsp+40],rcx
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogWarningMessageStruct
-       call      qword ptr [7FF823EF5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       r8,19ADC802110
+       call      qword ptr [7FF9977F5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       r8,15597002110
        mov       r8,[r8]
        mov       [rsp+28],r8
        lea       r8,[rsp+48]
@@ -4390,7 +4393,7 @@ M00_L11:
        mov       rdi,rcx
        mov       rbx,rdx
        mov       rsi,r8
-       call      qword ptr [7FF883968C18]
+       call      qword ptr [7FF9EF978C18]
        mov       rcx,[rax]
        add       rcx,8
        mov       rax,[rdi]
@@ -4476,7 +4479,7 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FF823EF5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FF9977F5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 

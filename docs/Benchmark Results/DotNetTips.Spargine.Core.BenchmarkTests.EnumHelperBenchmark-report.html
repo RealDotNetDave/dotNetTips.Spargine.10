@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.EnumHelperBenchmark-20260312-181043</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.EnumHelperBenchmark-20260330-170552</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -16,18 +16,18 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7058/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.104
-  [Host]     : .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.4 (10.0.4, 10.0.426.12010), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 </code></pre>
 
 <table>
-<thead><tr><th>Method         </th><th>Categories          </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Gen0</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method         </th><th>Categories          </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>GetDescription</td><td>**NEW**</td><td>14.53 ns</td><td>0.211 ns</td><td>0.198 ns</td><td>0.051 ns</td><td>14.28 ns</td><td>14.37 ns</td><td>14.53 ns</td><td>14.63 ns</td><td>14.92 ns</td><td>68,811,384.3</td><td>7.474 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>-</td><td>2,354 B</td><td>0.0010</td><td>-</td><td>0.0000</td><td>0.0000</td><td>-</td>
-</tr><tr><td>GetDescriptionNoCache</td><td>**NEW**,**FOR COMPARISON**</td><td>879.06 ns</td><td>4.939 ns</td><td>4.378 ns</td><td>1.170 ns</td><td>869.21 ns</td><td>876.57 ns</td><td>879.52 ns</td><td>881.77 ns</td><td>885.44 ns</td><td>1,137,580.3</td><td>6.415 ns</td><td>14.00</td><td>3</td><td>No</td><td>-</td><td>-</td><td>3,663 B</td><td>0.0076</td><td>-</td><td>-</td><td>-</td><td>248 B</td>
-</tr><tr><td>GetItems</td><td></td><td>11.55 ns</td><td>0.060 ns</td><td>0.054 ns</td><td>0.014 ns</td><td>11.46 ns</td><td>11.52 ns</td><td>11.55 ns</td><td>11.57 ns</td><td>11.67 ns</td><td>86,548,499.6</td><td>6.993 ns</td><td>14.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+</thead><tbody><tr><td>GetDescription</td><td>**NEW**</td><td>14.99 ns</td><td>0.112 ns</td><td>0.105 ns</td><td>0.027 ns</td><td>14.83 ns</td><td>14.92 ns</td><td>15.00 ns</td><td>15.05 ns</td><td>15.17 ns</td><td>66,708,526.6</td><td>7.486 ns</td><td>15.00</td><td>2</td><td>No</td><td>0.0009</td><td>-</td><td>-</td><td>2,354 B</td><td>-</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>GetDescriptionNoCache</td><td>**NEW**,**FOR COMPARISON**</td><td>935.39 ns</td><td>4.691 ns</td><td>4.388 ns</td><td>1.133 ns</td><td>927.40 ns</td><td>932.04 ns</td><td>935.18 ns</td><td>939.05 ns</td><td>941.97 ns</td><td>1,069,072.0</td><td>6.934 ns</td><td>15.00</td><td>3</td><td>No</td><td>0.0076</td><td>-</td><td>-</td><td>3,663 B</td><td>-</td><td>-</td><td>-</td><td>248 B</td>
+</tr><tr><td>GetItems</td><td></td><td>12.07 ns</td><td>0.039 ns</td><td>0.036 ns</td><td>0.009 ns</td><td>12.02 ns</td><td>12.04 ns</td><td>12.07 ns</td><td>12.09 ns</td><td>12.14 ns</td><td>82,877,193.8</td><td>7.495 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>-</td><td>-</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>
