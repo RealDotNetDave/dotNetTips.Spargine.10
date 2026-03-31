@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.Benchmarking v2026.10.2.1 for .NET 10
+# DotNetTips.Spargine.Benchmarking v2026.10.4.1 for .NET 10
 ![Spargine 10](SPARGINE-10-BANNER-BACKGROUND-100.png)
 Open-source .NET assembly from dotNetTips.com and David (dotNetDave) McCarter for benchmarking code using BenchmarkDotNet. 
 This repository is for the dotNetTips.Spargine code for .NET 10. Please support this project by [**clicking here**]("https://github.com/sponsors/RealDotNetDave).
@@ -10,6 +10,7 @@ All of the Spargine assemblies listed below can be found on NuGet by
 [**clicking here**](https://www.nuget.org/profiles/davidmccarter)
 
 * **Benchmark**: Abstract base class featuring common benchmarking methods, supplemented with default attributes.
+* **BenchmarkHelper**: BenchmarkHelper provides utility methods to run BenchmarkDotNet benchmarks with minimal boilerplate.
 * **CollectionBenchmark**: Base class for tests utilizing collections, with additional functionality to preload collections for enhanced benchmark test speed.
 * **CounterBenchmark**: Abstract class designed for benchmark tests that involve a counter.
 * **LargeCollectionBenchmark**: Class for performing benchmark tests on large collections with count values set to 64, 128, 256, 512, 1024, 2048, 4096, and 8192.
