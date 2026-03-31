@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -1183,6 +1184,457 @@ public class ConcurrentHashSetTests
 		Assert.AreEqual(1, hashSet.Count, "Count should be 1.");
 		Assert.IsFalse(hashSet.Contains(person1), "Person1 should no longer be in the set.");
 		Assert.IsTrue(hashSet.Contains(person2), "Person2 should still be in the set.");
+	}
+
+	// ==================== Constructor Null Argument Validation Tests ====================
+
+	[TestMethod]
+	public void Constructor_Default_InitializesCorrectly()
+	{
+		// Arrange & Act
+		var hashSet = new ConcurrentHashSet<int>();
+
+		// Assert
+		Assert.AreEqual(0, hashSet.Count, "Count should be 0 for a default-constructed ConcurrentHashSet.");
+		Assert.IsTrue(hashSet.IsEmpty, "IsEmpty should be true for a default-constructed ConcurrentHashSet.");
+		Assert.IsFalse(hashSet.IsReadOnly, "IsReadOnly should be false.");
+	}
+
+	[TestMethod]
+	public void Constructor_WithNullCollection_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>((IEnumerable<int>)null));
+	}
+
+	[TestMethod]
+	public void Constructor_WithNullComparer_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>((IEqualityComparer<int>)null));
+	}
+
+	[TestMethod]
+	public void Constructor_WithCollectionAndNullComparer_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(collection, null));
+	}
+
+	[TestMethod]
+	public void Constructor_WithNullCollectionAndComparer_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(null, EqualityComparer<int>.Default));
+	}
+
+	[TestMethod]
+	public void Constructor_WithConcurrencyLevelAndNullCollection_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(2, null, EqualityComparer<int>.Default));
+	}
+
+	[TestMethod]
+	public void Constructor_WithConcurrencyLevelCollectionAndNullComparer_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 3 };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(2, collection, null));
+	}
+
+	[TestMethod]
+	public void Constructor_WithConcurrencyLevelCapacityAndNullComparer_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(2, 10, null));
+	}
+
+	// ==================== Explicit Interface Implementation Tests ====================
+
+	[TestMethod]
+	public void IEnumerable_NonGeneric_GetEnumerator_EnumeratesAllItems()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int> { 1, 2, 3 };
+
+		// Act - Use non-generic IEnumerable interface
+		IEnumerable enumerable = hashSet;
+		var items = new List<int>();
+		var enumerator = enumerable.GetEnumerator();
+		while (enumerator.MoveNext())
+		{
+			items.Add((int)enumerator.Current);
+		}
+
+		// Assert
+		Assert.HasCount(3, items, "Non-generic enumerator should iterate over all items.");
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, items, "Enumerated items should match set contents.");
+	}
+
+	[TestMethod]
+	public void IEnumerable_Generic_GetEnumerator_EnumeratesAllItems()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<string> { "a", "b", "c" };
+
+		// Act - Cast to IEnumerable<T> to use explicit interface
+		IEnumerable<string> enumerable = hashSet;
+		var items = new List<string>();
+		using (var enumerator = enumerable.GetEnumerator())
+		{
+			while (enumerator.MoveNext())
+			{
+				items.Add(enumerator.Current);
+			}
+		}
+
+		// Assert
+		Assert.HasCount(3, items, "Generic enumerator should iterate over all items.");
+		CollectionAssert.AreEquivalent(new List<string> { "a", "b", "c" }, items, "Enumerated items should match set contents.");
+	}
+
+	[TestMethod]
+	public void GetEnumerator_EmptySet_ReturnsEmptyEnumeration()
+	{
+		// Arrange
+		var hashSet = new ConcurrentHashSet<int>();
+
+		// Act
+		var items = new List<int>();
+		foreach (var item in hashSet)
+		{
+			items.Add(item);
+		}
+
+		// Assert
+		Assert.IsEmpty(items, "Enumerating an empty set should return no items.");
+	}
+
+	// ==================== CopyTo Edge Case Tests ====================
+
+	[TestMethod]
+	public void CopyTo_EmptySet_CopiesNothing()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int>();
+		var array = new int[3];
+
+		// Act
+		set.CopyTo(array, 0);
+
+		// Assert
+		Assert.AreEqual(0, array[0], "Array should remain unchanged.");
+		Assert.AreEqual(0, array[1], "Array should remain unchanged.");
+		Assert.AreEqual(0, array[2], "Array should remain unchanged.");
+	}
+
+	[TestMethod]
+	public void CopyTo_ArrayTooSmallWithOffset_ThrowsException()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
+		var array = new int[4];
+
+		// Act & Assert - 3 items starting at index 2 would overflow array of size 4
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => set.CopyTo(array, 2));
+	}
+
+	// ==================== AddRange Additional Edge Case Tests ====================
+
+	[TestMethod]
+	public void AddRange_AllDuplicates_ReturnsZero()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
+		var itemsToAdd = new[] { 1, 2, 3 };
+
+		// Act
+		var result = set.AddRange(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(0, result, "AddRange should return 0 when all items are duplicates.");
+		Assert.AreEqual(3, set.Count, "Count should remain unchanged.");
+	}
+
+	[TestMethod]
+	public void AddRange_LargeCollection_AddsAllItems()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int>();
+		var itemsToAdd = Enumerable.Range(0, 1000).ToArray();
+
+		// Act
+		var result = set.AddRange(itemsToAdd);
+
+		// Assert
+		Assert.AreEqual(1000, result, "AddRange should add all unique items.");
+		Assert.AreEqual(1000, set.Count, "Set count should match.");
+	}
+
+	// ==================== Table Growth / Resize Tests ====================
+
+	[TestMethod]
+	public void Add_ManyItems_TriggersTableGrowth()
+	{
+		// Arrange - Default constructor sets growLockArray = true
+		var hashSet = new ConcurrentHashSet<int>();
+
+		// Act - Add enough items to trigger GrowTable (default capacity is 31)
+		for (int i = 0; i < 500; i++)
+		{
+			hashSet.Add(i);
+		}
+
+		// Assert - All items should still be present after table growth
+		Assert.AreEqual(500, hashSet.Count, "All items should be present after table growth.");
+		for (int i = 0; i < 500; i++)
+		{
+			Assert.IsTrue(hashSet.Contains(i), $"Item {i} should be in the set after table growth.");
+		}
+	}
+
+	[TestMethod]
+	public void Add_ManyItems_WithFixedLockArray_TriggersTableGrowth()
+	{
+		// Arrange - Using concurrencyLevel+capacity constructor sets growLockArray = false
+		var hashSet = new ConcurrentHashSet<int>(2, 4);
+
+		// Act - Add enough items to trigger GrowTable without lock array growth
+		for (int i = 0; i < 500; i++)
+		{
+			hashSet.Add(i);
+		}
+
+		// Assert
+		Assert.AreEqual(500, hashSet.Count, "All items should be present after table growth with fixed lock array.");
+		for (int i = 0; i < 500; i++)
+		{
+			Assert.IsTrue(hashSet.Contains(i), $"Item {i} should be in the set.");
+		}
+	}
+
+	// ==================== ToArray Concurrent Tests ====================
+
+	[TestMethod]
+	public void ToArray_ConcurrentAccess_ThreadSafe()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int>();
+		for (int i = 0; i < 100; i++)
+		{
+			set.Add(i);
+		}
+
+		var tasks = new List<Task<int[]>>();
+
+		// Act - Multiple threads call ToArray concurrently
+		for (int taskId = 0; taskId < 10; taskId++)
+		{
+			tasks.Add(Task.Run(() => set.ToArray()));
+		}
+		Task.WaitAll(tasks.ToArray());
+
+		// Assert - All snapshots should have the same items
+		foreach (var task in tasks)
+		{
+			Assert.HasCount(100, task.Result, "Each ToArray snapshot should contain all 100 items.");
+		}
+	}
+
+	// ==================== Contains Edge Case Tests ====================
+
+	[TestMethod]
+	public void Contains_AfterRemoval_ReturnsFalse()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
+		set.TryRemove(2);
+
+		// Act & Assert
+		Assert.IsFalse(set.Contains(2), "Contains should return false for a removed item.");
+		Assert.IsTrue(set.Contains(1), "Contains should return true for remaining items.");
+		Assert.IsTrue(set.Contains(3), "Contains should return true for remaining items.");
+	}
+
+	[TestMethod]
+	public void Contains_EmptySet_ReturnsFalse()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int>();
+
+		// Act & Assert
+		Assert.IsFalse(set.Contains(42), "Contains should return false for empty set.");
+	}
+
+	// ==================== Clear Edge Case Tests ====================
+
+	[TestMethod]
+	public void Clear_ThenAddItems_WorksCorrectly()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
+		set.Clear();
+
+		// Act
+		set.Add(10);
+		set.Add(20);
+
+		// Assert
+		Assert.AreEqual(2, set.Count, "Count should be 2 after adding items to a cleared set.");
+		Assert.IsTrue(set.Contains(10), "Set should contain newly added item.");
+		Assert.IsTrue(set.Contains(20), "Set should contain newly added item.");
+		Assert.IsFalse(set.Contains(1), "Set should not contain items from before Clear.");
+	}
+
+	// ==================== ICollection<T> Interface Tests ====================
+
+	[TestMethod]
+	public void ICollection_Add_WorksViaInterface()
+	{
+		// Arrange
+		ICollection<int> collection = new ConcurrentHashSet<int>();
+
+		// Act
+		collection.Add(1);
+		collection.Add(2);
+		collection.Add(3);
+
+		// Assert
+		Assert.AreEqual(3, collection.Count, "ICollection.Add should add items.");
+		Assert.IsTrue(collection.Contains(1), "Collection should contain added item.");
+	}
+
+	[TestMethod]
+	public void ICollection_Remove_WorksViaInterface()
+	{
+		// Arrange
+		ICollection<int> collection = new ConcurrentHashSet<int>();
+		collection.Add(1);
+		collection.Add(2);
+		collection.Add(3);
+
+		// Act
+		var result = collection.Remove(2);
+
+		// Assert
+		Assert.IsTrue(result, "ICollection.Remove should return true for existing item.");
+		Assert.AreEqual(2, collection.Count, "Count should decrease.");
+		Assert.IsFalse(collection.Contains(2), "Removed item should not be in collection.");
+	}
+
+	[TestMethod]
+	public void ICollection_Clear_WorksViaInterface()
+	{
+		// Arrange
+		ICollection<int> collection = new ConcurrentHashSet<int>();
+		collection.Add(1);
+		collection.Add(2);
+
+		// Act
+		collection.Clear();
+
+		// Assert
+		Assert.AreEqual(0, collection.Count, "Collection should be empty after Clear.");
+	}
+
+	// ==================== IReadOnlyCollection<T> Interface Tests ====================
+
+	[TestMethod]
+	public void IReadOnlyCollection_Count_WorksViaInterface()
+	{
+		// Arrange
+		IReadOnlyCollection<int> readOnlyCollection = new ConcurrentHashSet<int> { 1, 2, 3 };
+
+		// Assert
+		Assert.AreEqual(3, readOnlyCollection.Count, "IReadOnlyCollection.Count should return correct count.");
+	}
+
+	[TestMethod]
+	public void IReadOnlyCollection_GetEnumerator_WorksViaInterface()
+	{
+		// Arrange
+		IReadOnlyCollection<int> readOnlyCollection = new ConcurrentHashSet<int> { 10, 20, 30 };
+		var items = new List<int>();
+
+		// Act
+		foreach (var item in readOnlyCollection)
+		{
+			items.Add(item);
+		}
+
+		// Assert
+		Assert.HasCount(3, items, "Should enumerate all items via IReadOnlyCollection.");
+		CollectionAssert.AreEquivalent(new List<int> { 10, 20, 30 }, items);
+	}
+
+	// ==================== TryPeek with Value Types ====================
+
+	[TestMethod]
+	public void TryPeek_ValueType_ReturnsCorrectDefault()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int> { 1, 2, 3 };
+
+		// Act
+		var result = set.TryPeek(99, out var actualValue);
+
+		// Assert
+		Assert.IsFalse(result, "TryPeek should return false for non-existing value type.");
+		Assert.AreEqual(0, actualValue, "ActualValue should be default(int) = 0.");
+	}
+
+	// ==================== Constructor with Collection Tests ====================
+
+	[TestMethod]
+	public void Constructor_WithEmptyCollection_InitializesEmpty()
+	{
+		// Arrange
+		var emptyCollection = Array.Empty<int>();
+
+		// Act
+		var hashSet = new ConcurrentHashSet<int>(emptyCollection);
+
+		// Assert
+		Assert.AreEqual(0, hashSet.Count, "Should be empty when initialized with empty collection.");
+		Assert.IsTrue(hashSet.IsEmpty, "IsEmpty should be true.");
+	}
+
+	[TestMethod]
+	public void Constructor_WithDuplicateCollection_RemovesDuplicates()
+	{
+		// Arrange
+		var collectionWithDuplicates = new List<int> { 1, 2, 2, 3, 3, 3 };
+
+		// Act
+		var hashSet = new ConcurrentHashSet<int>(collectionWithDuplicates);
+
+		// Assert
+		Assert.AreEqual(3, hashSet.Count, "Should only contain unique items from the collection.");
+	}
+
+	// ==================== LINQ Integration Tests ====================
+
+	[TestMethod]
+	public void LinqOperations_WorkWithConcurrentHashSet()
+	{
+		// Arrange
+		var set = new ConcurrentHashSet<int> { 1, 2, 3, 4, 5 };
+
+		// Act
+		var evenItems = set.Where(x => x % 2 == 0).ToList();
+		var sum = set.Sum();
+		var any = set.Any(x => x > 3);
+
+		// Assert
+		Assert.HasCount(2, evenItems, "LINQ Where should filter correctly.");
+		Assert.AreEqual(15, sum, "LINQ Sum should compute correctly.");
+		Assert.IsTrue(any, "LINQ Any should return true for matching predicate.");
 	}
 
 }
