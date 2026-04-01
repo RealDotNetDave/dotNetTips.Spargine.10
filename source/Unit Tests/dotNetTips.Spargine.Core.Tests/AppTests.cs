@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="AppTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,11 +16,13 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Tests.Properties;
 using DotNetTips.Spargine.Extensions;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -643,6 +645,247 @@ public class AppTests
 		// Assert
 		var result = App.GetAppState(key);
 		Assert.AreEqual(value2, result, "Value should be overwritten with the latest value.");
+	}
+
+	[TestMethod]
+	public void ChangeCulture_WithNullString_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.ChangeCulture((string)null));
+	}
+
+	[TestMethod]
+	public void ChangeCulture_WithEmptyString_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.ChangeCulture(string.Empty));
+	}
+
+	[TestMethod]
+	public void ChangeCulture_WithNullCultureInfo_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.ChangeCulture((CultureInfo)null));
+	}
+
+	[TestMethod]
+	public void ChangeUICulture_WithNullString_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.ChangeUICulture(null));
+	}
+
+	[TestMethod]
+	public void ChangeUICulture_WithEmptyString_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.ChangeUICulture(string.Empty));
+	}
+
+	[TestMethod]
+	public void SetAppState_WithNullKey_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.SetAppState(null, "TestValue"));
+	}
+
+	[TestMethod]
+	public void SetAppState_WithEmptyKey_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.SetAppState(string.Empty, "TestValue"));
+	}
+
+	[TestMethod]
+	public void SetAppState_WithNullValue_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.SetAppState("TestKey", null));
+	}
+
+	[TestMethod]
+	public void SetAppState_IsCaseInsensitive()
+	{
+		// Arrange
+		var key = RandomData.GenerateWord(10);
+		var value = RandomData.GenerateWord(10);
+
+		// Act
+		App.SetAppState(key.ToLowerInvariant(), value);
+		var result = App.GetAppState(key.ToUpperInvariant());
+
+		// Assert
+		Assert.AreEqual(value, result, "App state should be case-insensitive for keys.");
+	}
+
+	[TestMethod]
+	public void GetAppState_ReturnsDefaultValue_WhenKeyDoesNotExist()
+	{
+		// Arrange
+		var defaultValue = RandomData.GenerateWord(10);
+
+		// Act
+		var result = App.GetAppState("NonExistentKeyForDefaultTest", defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result, "Should return the default value when key does not exist.");
+	}
+
+	[TestMethod]
+	public void GetAppState_ReturnsStoredValue_NotDefaultValue_WhenKeyExists()
+	{
+		// Arrange
+		var key = RandomData.GenerateKey();
+		var storedValue = RandomData.GenerateWord(10);
+		var defaultValue = RandomData.GenerateWord(10);
+		App.SetAppState(key, storedValue);
+
+		// Act
+		var result = App.GetAppState(key, defaultValue);
+
+		// Assert
+		Assert.AreEqual(storedValue, result, "Should return the stored value, not the default value.");
+	}
+
+	[TestMethod]
+	public void GetAppState_IsCaseInsensitive()
+	{
+		// Arrange
+		var key = RandomData.GenerateWord(10);
+		var value = RandomData.GenerateWord(10);
+		App.SetAppState(key.ToLowerInvariant(), value);
+
+		// Act
+		var result = App.GetAppState(key.ToUpperInvariant());
+
+		// Assert
+		Assert.AreEqual(value, result, "App state retrieval should be case-insensitive.");
+	}
+
+	[TestMethod]
+	public void GetLocalizedString_ThrowsArgumentNullException_WhenResourceManagerIsNull()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.GetLocalizedString(null, "SomeKey", "en-US"));
+	}
+
+	[TestMethod]
+	public void RemoveAppState_WithNullKey_ThrowsException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => App.RemoveAppState(null));
+	}
+
+	[TestMethod]
+	public void ChangeCulture_WithCultureInfo_ChangesBothCurrentAndUICulture()
+	{
+		// Arrange
+		var originalCulture = CultureInfo.CurrentCulture;
+		var originalUICulture = CultureInfo.CurrentUICulture;
+		var testCulture = new CultureInfo("de-DE");
+
+		// Act
+		App.ChangeCulture(testCulture);
+
+		// Assert
+		Assert.AreEqual(testCulture, CultureInfo.CurrentCulture, "Current culture should be changed.");
+		Assert.AreEqual(testCulture, CultureInfo.CurrentUICulture, "Current UI culture should also be changed.");
+
+		// Cleanup
+		CultureInfo.CurrentCulture = originalCulture;
+		CultureInfo.CurrentUICulture = originalUICulture;
+	}
+
+	[TestMethod]
+	public void GetCultureNames_ReturnsCachedResult_WhenCalledTwice()
+	{
+		// Act
+		var first = App.GetCultureNames();
+		var second = App.GetCultureNames();
+
+		// Assert
+		Assert.AreSame(first, second, "Subsequent calls should return the same cached instance.");
+	}
+
+	[TestMethod]
+	public void GenerateDiagnosticReport_IsNotNullOrEmpty()
+	{
+		// Act
+		var report = App.GenerateDiagnosticReport();
+
+		// Assert
+		Assert.IsFalse(string.IsNullOrEmpty(report), "Diagnostic report should not be null or empty.");
+	}
+
+	[TestMethod]
+	public void ExecutingFolder_ReturnsNonEmptyPath()
+	{
+		// Act
+		var folder = App.ExecutingFolder();
+
+		// Assert
+		Assert.IsFalse(string.IsNullOrEmpty(folder), "Executing folder should not be null or empty.");
+		Assert.IsTrue(Directory.Exists(folder), "Executing folder path should be a valid directory.");
+	}
+
+	[TestMethod]
+	public void AppInfo_HasNonNullProperties()
+	{
+		// Act
+		var info = App.AppInfo;
+
+		// Assert
+		Assert.IsNotNull(info);
+		Assert.IsNotNull(info.Company);
+		Assert.IsNotNull(info.Product);
+		Assert.IsNotNull(info.Version);
+	}
+
+	[TestMethod]
+	public void IsRunning_ReturnsTrueForCurrentProcess()
+	{
+		// Act
+		var result = App.IsRunning();
+
+		// Assert
+		Assert.IsTrue(result, "IsRunning should return true since the current process is running.");
+	}
+
+	[TestMethod]
+	public void ReferencedAssemblies_ContainsEntries()
+	{
+		// Act
+		var assemblies = App.ReferencedAssemblies();
+
+		// Assert
+		Assert.IsNotNull(assemblies);
+		Assert.IsGreaterThan(0, assemblies.Count);
+	}
+
+	[TestMethod]
+	public void GetEnvironmentVariables_ContainsPathVariable()
+	{
+		// Act
+		var vars = App.GetEnvironmentVariables();
+
+		// Assert
+		Assert.IsNotNull(vars);
+		Assert.IsGreaterThan(0, vars.Count);
+	}
+
+	[TestMethod]
+	public void MaxDegreeOfParallelism_ReturnsPositiveValue()
+	{
+		// Act
+		var result = App.MaxDegreeOfParallelism();
+
+		// Assert
+		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void SetAppState_WithRandomData_RoundTrips()
+	{
+		// Arrange
+		var key = RandomData.GenerateKey();
+		var value = RandomData.GenerateWord(15);
+
+		// Act
+		App.SetAppState(key, value);
+		var result = App.GetAppState(key);
+
+		// Assert
+		Assert.AreEqual(value, result, "Random data should round-trip through app state.");
 	}
 }
 
