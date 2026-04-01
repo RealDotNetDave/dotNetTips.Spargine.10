@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="LoggingHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -29,6 +29,36 @@ public class LoggingHelperTests
 {
 
 	private readonly ILogger _logger = new NullLogger<LoggingHelperTests>();
+
+	[TestMethod]
+	public void LogAppDomainEvents_NullLogger_ThrowsArgumentNullException()
+	{
+		// Arrange
+		ILogger logger = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.LogAppDomainEvents(logger));
+	}
+
+	[TestMethod]
+	public void LogAppDomainFirstChanceException_NullLogger_ThrowsArgumentNullException()
+	{
+		// Arrange
+		ILogger logger = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.LogAppDomainFirstChanceException(logger));
+	}
+
+	[TestMethod]
+	public void LogAppDomainUnhandledException_NullLogger_ThrowsArgumentNullException()
+	{
+		// Arrange
+		ILogger logger = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.LogAppDomainUnhandledException(logger));
+	}
 
 	[TestMethod]
 	public void LogApplicationInformation_NullLogger_ThrowsArgumentNullException()
@@ -86,9 +116,57 @@ public class LoggingHelperTests
 	}
 
 	[TestMethod]
+	public void LogComputerInformation_NullLogger_ThrowsArgumentNullException()
+	{
+		// Arrange
+		ILogger logger = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.LogComputerInformation(logger));
+	}
+
+	[TestMethod]
+	public void LogComputerInformation_WithEnabledLogger_LogsComputerInfo()
+	{
+		// Arrange
+		var logger = new MockLogger();
+
+		// Act
+		LoggingHelper.LogComputerInformation(logger);
+
+		// Assert
+		Assert.IsTrue(logger.LoggedMessages.Count > 0, "Should log computer information.");
+		Assert.IsTrue(logger.LoggedLevels.All(l => l == LogLevel.Information), "All messages should be logged at Information level.");
+	}
+
+	[TestMethod]
 	public void LogComputerInformationTest()
 	{
 		LoggingHelper.LogComputerInformation(this._logger);
+	}
+
+	[TestMethod]
+	public void RetrieveAllExceptionMessages_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.RetrieveAllExceptionMessages(exception));
+	}
+
+	[TestMethod]
+	public void RetrieveAllExceptionMessages_SingleException_ReturnsSingleMessage()
+	{
+		// Arrange
+		var testException = new InvalidOperationException("Single error message");
+
+		// Act
+		var result = LoggingHelper.RetrieveAllExceptionMessages(testException);
+
+		// Assert
+		Assert.AreEqual(1, result.Count);
+		Assert.AreEqual("Single error message", result[0]);
 	}
 
 	[TestMethod]
@@ -100,6 +178,31 @@ public class LoggingHelperTests
 
 		Assert.AreEqual(2, result.Count);
 	}
+
+	[TestMethod]
+	public void RetrieveAllExceptions_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.RetrieveAllExceptions(exception));
+	}
+
+	[TestMethod]
+	public void RetrieveAllExceptions_SingleException_ReturnsSingleException()
+	{
+		// Arrange
+		var testException = new InvalidOperationException("Single error");
+
+		// Act
+		var result = LoggingHelper.RetrieveAllExceptions(testException);
+
+		// Assert
+		Assert.AreEqual(1, result.Count);
+		Assert.IsInstanceOfType<InvalidOperationException>(result[0]);
+	}
+
 	[TestMethod]
 	public void RetrieveAllExceptionsTest()
 	{
