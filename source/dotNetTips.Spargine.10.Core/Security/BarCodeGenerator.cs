@@ -1,11 +1,33 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.10.Core
+// Author           : David McCarter
+// Created          : 04-01-2026
+//
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
+// ***********************************************************************
+// <copyright file="BarCodeGenerator.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary>
+// Provides HMAC-based barcode generation and validation using HMAC-SHA256 signatures
+// with Crockford Base32 encoding. Supports key rotation, expiry checking, and clock skew tolerance.
+// </summary>
+// ***********************************************************************
 using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using DotNetTips.Spargine.Core;
 
+//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
+
 namespace DotNetTips.Spargine.Core.Security;
 
+/// <summary>
+/// Provides HMAC-based barcode generation and validation using HMAC-SHA256 signatures
+/// with Crockford Base32 encoding. Supports key rotation, expiry checking, and clock skew tolerance.
+/// </summary>
 public static class BarcodeGenerator
 {
 	private const string ALG = "alg";
@@ -35,6 +57,22 @@ public static class BarcodeGenerator
 		return sig;
 	}
 
+	/// <summary>
+	/// Builds an HMAC-signed barcode string containing the specified ticket and performance identifiers,
+	/// expiry, issuer, and key identifier. The barcode includes a truncated HMAC-SHA256 signature
+	/// encoded using Crockford Base32.
+	/// </summary>
+	/// <param name="ticketId">The unique ticket identifier.</param>
+	/// <param name="performanceId">The unique performance identifier.</param>
+	/// <param name="expiresUtc">The UTC expiration time for the barcode.</param>
+	/// <param name="issuer">The barcode issuer.</param>
+	/// <param name="key">The HMAC key (16–64 bytes).</param>
+	/// <param name="kid">The key identifier.</param>
+	/// <param name="macLenBytes">The truncated MAC length in bytes (1–32). Defaults to 10.</param>
+	/// <returns>A pipe-delimited barcode string with an appended HMAC signature.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="ticketId"/>, <paramref name="performanceId"/>, <paramref name="issuer"/>, or <paramref name="kid"/> is null or empty.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="key"/> length or <paramref name="macLenBytes"/> is out of range.</exception>
+	[Information(nameof(BuildHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static string BuildHmacBarcode(string ticketId, string performanceId, DateTimeOffset expiresUtc, string issuer, byte[] key, string kid, int macLenBytes = DefaultMacLenBytes)
 	{
 		ticketId = ticketId.ArgumentNotNullOrEmpty();
@@ -53,6 +91,18 @@ public static class BarcodeGenerator
 	}
 
 
+	/// <summary>
+	/// Validates an HMAC-signed barcode by verifying its structure, algorithm, optional expiry,
+	/// and cryptographic signature against the provided key ring.
+	/// </summary>
+	/// <param name="barcode">The barcode string to validate.</param>
+	/// <param name="keysByKid">A dictionary mapping key identifiers to their HMAC keys.</param>
+	/// <param name="fields">When this method returns, contains the parsed key-value pairs from the barcode payload.</param>
+	/// <param name="macLenBytes">The expected truncated MAC length in bytes (1–32). Defaults to 10.</param>
+	/// <param name="maxSkew">Optional maximum clock skew tolerance added to the current time.</param>
+	/// <param name="pastExpiryGrace">Optional grace period added to the expiry time for recently-expired barcodes.</param>
+	/// <returns><see langword="true"/> if the barcode is valid; otherwise, <see langword="false"/>.</returns>
+	[Information(nameof(ValidateHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static bool ValidateHmacBarcode(string barcode, IReadOnlyDictionary<string, byte[]> keysByKid, out Dictionary<string, string> fields, int macLenBytes = DefaultMacLenBytes, TimeSpan? maxSkew = null, TimeSpan? pastExpiryGrace = null)
 	{
 		fields = new(StringComparer.OrdinalIgnoreCase);
@@ -67,7 +117,9 @@ public static class BarcodeGenerator
 			return false;
 		}
 
+#pragma warning disable CA1062 // Validate arguments of public methods - validated by CheckIsNotNull above
 		if (keysByKid.Count == 0)
+#pragma warning restore CA1062 // Validate arguments of public methods
 		{
 			return false;
 		}
@@ -116,7 +168,7 @@ public static class BarcodeGenerator
 		{
 			providedSig = Crockford32.Decode(sigPart);
 		}
-		catch
+		catch (FormatException)
 		{
 			return false;
 		}
@@ -276,42 +328,3 @@ internal static class Crockford32
 	}
 }
 
-// ----------- Demo (remove in production if you like) -----------
-internal static class Program
-{
-	private const string Kid = "2025-08a";
-
-	// Example 32-byte key (DEV ONLY!). In prod, load from your secret store.
-	private static readonly byte[] DevKey = Convert.FromBase64String("3LHykMQCAZPQTWGNVqwm+9UZQLk32hmnR0gVLC9Nhfw=");
-
-	private static readonly IReadOnlyDictionary<string, byte[]> KeyRing = new Dictionary<string, byte[]>
-	{
-		[Kid] = DevKey
-	};
-
-	private static void Main()
-	{
-		var tid = "01J9E8W3S1S9P8WQKD3B3CP9T7";              // ULID/Guid/etc.
-		var pid = "01J9E8W6D4SQFK6E9RWQ2Z6B2D";              // ULID/Guid/etc.
-		var exp = DateTimeOffset.UtcNow.AddHours(8);
-		var issuer = "CTIX";
-
-		// Build code
-		var code = BarcodeGenerator.BuildHmacBarcode(tid, pid, exp, issuer, DevKey, Kid);
-		Console.WriteLine("BARCODE:\n" + code + "\n");
-
-		// Validate
-		var ok = BarcodeGenerator.ValidateHmacBarcode(
-			code,
-			keysByKid: KeyRing,
-			out var fields,
-			pastExpiryGrace: TimeSpan.FromMinutes(30),
-			maxSkew: TimeSpan.FromMinutes(2));
-
-		Console.WriteLine("VALID: " + ok);
-		foreach (var kv in fields)
-		{
-			Console.WriteLine($"{kv.Key} = {kv.Value}");
-		}
-	}
-}
