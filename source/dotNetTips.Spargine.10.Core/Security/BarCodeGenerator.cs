@@ -18,7 +18,6 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -28,6 +27,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// Provides HMAC-based barcode generation and validation using HMAC-SHA256 signatures
 /// with Crockford Base32 encoding. Supports key rotation, expiry checking, and clock skew tolerance.
 /// </summary>
+[Information(nameof(BarcodeGenerator), "David McCarter", "03/01/2026", Status = Status.NeedsDocumentation)]
 public static class BarcodeGenerator
 {
 	private const string ALG = "alg";
@@ -40,22 +40,6 @@ public static class BarcodeGenerator
 	private const string SIG = "sig";
 	private const string TID = "tid";
 	private const string V = "v";
-
-	private static byte[] ComputeHmacTruncated(string payload, byte[] key, int macLenBytes)
-	{
-		using var hmac = new HMACSHA256(key);
-		var full = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
-
-		if (macLenBytes >= full.Length)
-		{
-			return full;
-		}
-
-		var sig = new byte[macLenBytes];
-		Buffer.BlockCopy(full, 0, sig, 0, macLenBytes);
-
-		return sig;
-	}
 
 	/// <summary>
 	/// Builds an HMAC-signed barcode string containing the specified ticket and performance identifiers,
@@ -216,6 +200,22 @@ public static class BarcodeGenerator
 		}
 		return false;
 	}
+
+	private static byte[] ComputeHmacTruncated(string payload, byte[] key, int macLenBytes)
+	{
+		using var hmac = new HMACSHA256(key);
+		var full = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+
+		if (macLenBytes >= full.Length)
+		{
+			return full;
+		}
+
+		var sig = new byte[macLenBytes];
+		Buffer.BlockCopy(full, 0, sig, 0, macLenBytes);
+
+		return sig;
+	}
 }
 
 internal static class Crockford32
@@ -224,28 +224,6 @@ internal static class Crockford32
 	private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
 	private static readonly sbyte[] Map = BuildMap();
-
-	private static sbyte[] BuildMap()
-	{
-		var map = Enumerable.Repeat<sbyte>(-1, 128).ToArray();
-		for (var i = 0; i < Alphabet.Length; i++)
-		{
-			map[Alphabet[i]] = (sbyte)i;
-		}
-		// Ambiguity aliases
-		map['I'] = map['1'] = map['L'] = map['1'];
-		map['O'] = map['0'] = map['0'];
-		// Lowercase support
-		for (var c = 'a'; c <= 'z'; c++)
-		{
-			var up = char.ToUpperInvariant(c);
-			if (up < 128 && map[up] >= 0)
-			{
-				map[c] = map[up];
-			}
-		}
-		return map;
-	}
 
 	public static byte[] Decode(string text)
 	{
@@ -325,6 +303,28 @@ internal static class Crockford32
 			_ = sb.Append(Alphabet[index]);
 		}
 		return sb.ToString();
+	}
+
+	private static sbyte[] BuildMap()
+	{
+		var map = Enumerable.Repeat<sbyte>(-1, 128).ToArray();
+		for (var i = 0; i < Alphabet.Length; i++)
+		{
+			map[Alphabet[i]] = (sbyte)i;
+		}
+		// Ambiguity aliases
+		map['I'] = map['1'] = map['L'] = map['1'];
+		map['O'] = map['0'] = map['0'];
+		// Lowercase support
+		for (var c = 'a'; c <= 'z'; c++)
+		{
+			var up = char.ToUpperInvariant(c);
+			if (up < 128 && map[up] >= 0)
+			{
+				map[c] = map[up];
+			}
+		}
+		return map;
 	}
 }
 
