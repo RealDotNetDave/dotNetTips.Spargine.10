@@ -75,7 +75,7 @@ public class EncryptionHelperTests
 	}
 
 	[TestMethod]
-	public void AesDecrypt_EmptyCipherText_ThrowsArgumentException()
+	public void AesDecrypt_EmptyCipherText_ThrowsArgumentNullException()
 	{
 		// Act and Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -134,7 +134,7 @@ public class EncryptionHelperTests
 	}
 
 	[TestMethod]
-	public void AesEncrypt_EmptyPlainText_ThrowsArgumentException()
+	public void AesEncrypt_EmptyPlainText_ThrowsArgumentNullException()
 	{
 		// Act and Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
