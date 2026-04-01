@@ -622,7 +622,7 @@ public class PerformanceStopwatchTests
 
 		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp);
 
-		Assert.IsTrue(elapsed.TotalMilliseconds >= 0);
+		Assert.IsGreaterThanOrEqualTo(50, elapsed.TotalMilliseconds);
 	}
 
 	[TestMethod]
@@ -636,7 +636,7 @@ public class PerformanceStopwatchTests
 
 		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
 
-		Assert.IsTrue(elapsed.TotalMilliseconds >= 0);
+		Assert.IsGreaterThanOrEqualTo(50, elapsed.TotalMilliseconds);
 	}
 
 	[TestMethod]
