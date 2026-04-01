@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,7 +15,6 @@
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DotNetTips.Spargine.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -34,7 +33,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray<int>.Empty;
 
 		// Assert
-		Assert.IsFalse((bool?)array.IsNotEmpty());
+		Assert.IsFalse(array.IsNotEmpty());
 	}
 
 	[TestMethod]

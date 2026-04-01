@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -561,6 +561,19 @@ public class DistinctConcurrentBagTests
 	}
 
 	[TestMethod]
+	public void Constructor_WithCollectionContainingDuplicates_ShouldAddOnlyUniqueItems()
+	{
+		var initialItems = new List<int> { 1, 2, 2, 3, 3, 3 };
+
+		var bag = new DistinctConcurrentBag<int>(initialItems);
+
+		Assert.AreEqual(3, bag.Count);
+		Assert.IsTrue(bag.Contains(1));
+		Assert.IsTrue(bag.Contains(2));
+		Assert.IsTrue(bag.Contains(3));
+	}
+
+	[TestMethod]
 	public void Constructor_WithComparer_ShouldUseCustomComparer()
 	{
 		var comparer = StringComparer.OrdinalIgnoreCase;
@@ -572,13 +585,18 @@ public class DistinctConcurrentBagTests
 		Assert.AreEqual(1, bag.Count);
 		Assert.IsTrue(bag.Contains("hello"));
 	}
+	[TestMethod]
+	public void Constructor_WithNullCollection_ShouldThrowNullReferenceException()
+	{
+		Assert.ThrowsExactly<NullReferenceException>(() => new DistinctConcurrentBag<int>(null as IEnumerable<int>));
+	}
 
 	[TestMethod]
 	public void Constructor_WithNullComparer_ShouldThrowArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
 		{
-			return new DistinctConcurrentBag<string>(null as IEqualityComparer<string>);
+			return new DistinctConcurrentBag<string>((IEqualityComparer<string>)null);
 		});
 	}
 
@@ -594,6 +612,16 @@ public class DistinctConcurrentBagTests
 	{
 		var bag = new DistinctConcurrentBag<int> { 1 };
 		Assert.IsTrue(bag.Contains(1));
+	}
+
+	[TestMethod]
+	public void Contains_WithNullItem_ShouldReturnFalse()
+	{
+		var bag = new DistinctConcurrentBag<string> { "apple", "banana" };
+
+		var result = bag.Contains(null);
+
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -717,6 +745,63 @@ public class DistinctConcurrentBagTests
 		bag.Clear();
 
 		Assert.IsTrue(bag.IsEmpty);
+	}
+
+	[TestMethod]
+	public void NonGenericGetEnumerator_ShouldReturnAllItems()
+	{
+		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
+
+		var enumerable = (IEnumerable)bag;
+		var items = new List<int>();
+
+		foreach (int item in enumerable)
+		{
+			items.Add(item);
+		}
+
+		Assert.AreEqual(3, items.Count);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, items);
+	}
+
+	[TestMethod]
+	public void Remove_WithNullItem_ShouldThrowArgumentNullException()
+	{
+		var bag = new DistinctConcurrentBag<string> { "apple" };
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.Remove(null));
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithNullItemsInCollection_ShouldSkipNulls()
+	{
+		var bag = new DistinctConcurrentBag<string> { "a", "b", "c" };
+		var itemsToRemove = new[] { "a", null, "c" };
+
+		var removedCount = bag.RemoveRange(itemsToRemove);
+
+		Assert.AreEqual(2, removedCount);
+		Assert.AreEqual(1, bag.Count);
+		Assert.IsTrue(bag.Contains("b"));
+	}
+
+	[TestMethod]
+	public void TryAdd_WithNullItem_ShouldThrowArgumentNullException()
+	{
+		var bag = new DistinctConcurrentBag<string>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.TryAdd(null));
+	}
+
+	[TestMethod]
+	public void TryPeek_EmptyBag_ShouldReturnFalse()
+	{
+		var bag = new DistinctConcurrentBag<int>();
+
+		var result = bag.TryPeek(42, out var actualValue);
+
+		Assert.IsFalse(result);
+		Assert.AreEqual(default(int), actualValue);
 	}
 
 	#region IsEmpty Tests
@@ -1107,90 +1192,5 @@ public class DistinctConcurrentBagTests
 
 	#endregion
 
-	[TestMethod]
-	public void Constructor_WithNullCollection_ShouldThrowNullReferenceException()
-	{
-		Assert.ThrowsExactly<NullReferenceException>(() => new DistinctConcurrentBag<int>(null as IEnumerable<int>));
-	}
-
-	[TestMethod]
-	public void Constructor_WithCollectionContainingDuplicates_ShouldAddOnlyUniqueItems()
-	{
-		var initialItems = new List<int> { 1, 2, 2, 3, 3, 3 };
-
-		var bag = new DistinctConcurrentBag<int>(initialItems);
-
-		Assert.AreEqual(3, bag.Count);
-		Assert.IsTrue(bag.Contains(1));
-		Assert.IsTrue(bag.Contains(2));
-		Assert.IsTrue(bag.Contains(3));
-	}
-
-	[TestMethod]
-	public void Contains_WithNullItem_ShouldReturnFalse()
-	{
-		var bag = new DistinctConcurrentBag<string> { "apple", "banana" };
-
-		var result = bag.Contains(null);
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void Remove_WithNullItem_ShouldThrowArgumentNullException()
-	{
-		var bag = new DistinctConcurrentBag<string> { "apple" };
-
-		Assert.ThrowsExactly<ArgumentNullException>(() => bag.Remove(null));
-	}
-
-	[TestMethod]
-	public void RemoveRange_WithNullItemsInCollection_ShouldSkipNulls()
-	{
-		var bag = new DistinctConcurrentBag<string> { "a", "b", "c" };
-		var itemsToRemove = new[] { "a", null, "c" };
-
-		var removedCount = bag.RemoveRange(itemsToRemove);
-
-		Assert.AreEqual(2, removedCount);
-		Assert.AreEqual(1, bag.Count);
-		Assert.IsTrue(bag.Contains("b"));
-	}
-
-	[TestMethod]
-	public void TryAdd_WithNullItem_ShouldThrowArgumentNullException()
-	{
-		var bag = new DistinctConcurrentBag<string>();
-
-		Assert.ThrowsExactly<ArgumentNullException>(() => bag.TryAdd(null));
-	}
-
-	[TestMethod]
-	public void TryPeek_EmptyBag_ShouldReturnFalse()
-	{
-		var bag = new DistinctConcurrentBag<int>();
-
-		var result = bag.TryPeek(42, out var actualValue);
-
-		Assert.IsFalse(result);
-		Assert.AreEqual(default(int), actualValue);
-	}
-
-	[TestMethod]
-	public void NonGenericGetEnumerator_ShouldReturnAllItems()
-	{
-		var bag = new DistinctConcurrentBag<int> { 1, 2, 3 };
-
-		var enumerable = (IEnumerable)bag;
-		var items = new List<int>();
-
-		foreach (int item in enumerable)
-		{
-			items.Add(item);
-		}
-
-		Assert.AreEqual(3, items.Count);
-		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, items);
-	}
 
 }

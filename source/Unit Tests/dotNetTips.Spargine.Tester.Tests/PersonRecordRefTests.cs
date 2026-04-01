@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-10-2025
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="PersonRecordRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -15,7 +15,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -179,8 +178,8 @@ public class PersonRecordRefTests
 		Assert.IsTrue(p1 >= p2 || p2 >= p1);
 		Assert.IsFalse(p1 < null);
 		Assert.IsTrue(p1 > null);
-		Assert.IsTrue((PersonRecord)null < p1);
-		Assert.IsFalse((PersonRecord)null > p1);
+		Assert.IsTrue(null < p1);
+		Assert.IsFalse(null > p1);
 	}
 
 	[TestMethod]

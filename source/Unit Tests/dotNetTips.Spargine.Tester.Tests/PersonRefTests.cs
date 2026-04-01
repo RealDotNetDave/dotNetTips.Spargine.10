@@ -4,7 +4,7 @@
 // Created          : 01-28-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="PersonRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -15,7 +15,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -331,18 +330,11 @@ public class PersonRefTests
 	[TestMethod]
 	public void OperatorEquals_BothNull_ReturnsTrue()
 	{
-		// Arrange
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 		Person person1 = null;
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 		Person person2 = null;
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
 		// Act
-#pragma warning disable CS8604 // Possible null reference argument.
 		var result = person1 == person2;
-#pragma warning restore CS8604 // Possible null reference argument.
 
 		// Assert
 		Assert.IsTrue(result);

@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-14-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1162,7 +1162,7 @@ public class ListExtensionsTests
 		var list2 = new List<decimal> { 1.1m, 2.2m, 3.3m };
 
 		// Assert
-		Assert.IsTrue((bool?)list1.IsEqualTo(list2));
+		Assert.IsTrue(list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]

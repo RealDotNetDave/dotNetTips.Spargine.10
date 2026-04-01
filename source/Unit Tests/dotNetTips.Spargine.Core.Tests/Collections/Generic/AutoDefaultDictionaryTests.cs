@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -156,6 +156,29 @@ public class AutoDefaultDictionaryTests
 	}
 
 	[TestMethod]
+	public void ConstructorWithComparer_ShouldUseCaseInsensitiveComparer()
+	{
+		// Arrange
+		var comparer = StringComparer.OrdinalIgnoreCase;
+		var dictionary = new AutoDefaultDictionary<string, string>(comparer);
+		dictionary["Key"] = "value1";
+
+		// Act
+		var value = dictionary["key"];
+
+		// Assert - case-insensitive comparer means "key" and "Key" are the same key
+		Assert.AreEqual("value1", value);
+		Assert.HasCount(1, dictionary);
+	}
+
+	[TestMethod]
+	public void ConstructorWithDefaultValue_NullDefaultValue_ShouldThrowArgumentNullException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(null!));
+	}
+
+	[TestMethod]
 	public void ConstructorWithDefaultValue_ShouldInitializeWithSpecifiedDefaultValue()
 	{
 		// Arrange
@@ -167,6 +190,16 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual(defaultValue, value);
+	}
+
+	[TestMethod]
+	public void ConstructorWithDefaultValueAndComparer_NullDefaultValue_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var comparer = EqualityComparer<int>.Default;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((string)null!, comparer));
 	}
 
 	[TestMethod]
@@ -279,6 +312,16 @@ public class AutoDefaultDictionaryTests
 	}
 
 	[TestMethod]
+	public void ConstructorWithDictionaryAndOnMissingKey_NullOnMissingKey_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(initialDictionary, (Func<int, string>)null!));
+	}
+
+	[TestMethod]
 	public void ConstructorWithDictionaryAndOnMissingKey_ShouldInitializeWithFunction()
 	{
 		// Arrange
@@ -335,6 +378,26 @@ public class AutoDefaultDictionaryTests
 	}
 
 	[TestMethod]
+	public void ConstructorWithKeyValuePairsAndDefaultValue_NullDefaultValue_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var keyValuePairs = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(1, "one") };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(keyValuePairs, (string)null!));
+	}
+
+	[TestMethod]
+	public void ConstructorWithKeyValuePairsAndOnMissingKey_NullOnMissingKey_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var keyValuePairs = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(1, "one") };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(keyValuePairs, (Func<int, string>)null!));
+	}
+
+	[TestMethod]
 	public void ConstructorWithKeyValuePairsAndOnMissingKey_ShouldInitializeWithFunction()
 	{
 		// Arrange
@@ -358,6 +421,13 @@ public class AutoDefaultDictionaryTests
 	}
 
 	[TestMethod]
+	public void ConstructorWithOnMissingKey_NullOnMissingKey_ShouldThrowArgumentNullException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((Func<int, string>)null!));
+	}
+
+	[TestMethod]
 	public void ConstructorWithOnMissingKey_ShouldInitializeWithFunction()
 	{
 		// Arrange
@@ -369,6 +439,16 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.AreEqual("Missing: 1", value);
+	}
+
+	[TestMethod]
+	public void ConstructorWithOnMissingKeyAndComparer_NullOnMissingKey_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var comparer = EqualityComparer<int>.Default;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((Func<int, string>)null!, comparer));
 	}
 
 	[TestMethod]
@@ -394,6 +474,21 @@ public class AutoDefaultDictionaryTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ContainsValue(null!));
+	}
+
+	[TestMethod]
+	public void ContainsValue_WithCustomComparer_ShouldReturnFalse()
+	{
+		// Arrange
+		var dictionary = new AutoDefaultDictionary<int, string>("default");
+		dictionary[1] = "VALUE1";
+		var comparer = StringComparer.OrdinalIgnoreCase;
+
+		// Act
+		var result = dictionary.ContainsValue("nonexistent", comparer);
+
+		// Assert
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -435,6 +530,20 @@ public class AutoDefaultDictionaryTests
 
 		// Act
 		var result = dictionary.ContainsValue("value1");
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ContainsValue_WithExplicitDefaultComparer_ShouldReturnTrue()
+	{
+		// Arrange
+		var dictionary = new AutoDefaultDictionary<int, string>("default");
+		dictionary[1] = "value1";
+
+		// Act
+		var result = dictionary.ContainsValue("value1", EqualityComparer<string>.Default);
 
 		// Assert
 		Assert.IsTrue(result);
@@ -541,6 +650,17 @@ public class AutoDefaultDictionaryTests
 		// Assert
 		Assert.AreEqual("existingValue", result);
 		Assert.HasCount(1, dictionary);
+	}
+
+	[TestMethod]
+	public void GetOrAdd_WithFactory_NullKey_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		var dictionary = new AutoDefaultDictionary<string, string>("default");
+		Func<string, string> valueFactory = key => $"Generated_{key}";
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.GetOrAdd(null!, valueFactory));
 	}
 
 	[TestMethod]
@@ -656,6 +776,36 @@ public class AutoDefaultDictionaryTests
 	}
 
 	[TestMethod]
+	public void IndexerGet_WithOnMissingKeyNull_ShouldReturnDefaultValue()
+	{
+		// Arrange - use constructor that does NOT set _onMissingKey
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, "fallback");
+
+		// Act - access a missing key; _onMissingKey is null so _defaultValue is used
+		var value = dictionary[99];
+
+		// Assert
+		Assert.AreEqual("fallback", value);
+		Assert.IsTrue(dictionary.ContainsKey(99));
+	}
+
+	[TestMethod]
+	public void IndexerSet_ShouldOverwriteExistingValue()
+	{
+		// Arrange
+		var dictionary = new AutoDefaultDictionary<int, string>("default");
+		dictionary[1] = "originalValue";
+
+		// Act
+		dictionary[1] = "newValue";
+
+		// Assert
+		Assert.AreEqual("newValue", dictionary[1]);
+		Assert.HasCount(1, dictionary);
+	}
+
+	[TestMethod]
 	public void IndexerSet_ShouldSetValue()
 	{
 		// Arrange
@@ -680,6 +830,20 @@ public class AutoDefaultDictionaryTests
 
 		// Assert
 		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void OnMissingKeyFactory_WithDictionaryAndDefaultValueConstructor_ShouldReturnNull()
+	{
+		// Arrange
+		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
+		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, "default");
+
+		// Act
+		var result = dictionary.OnMissingKeyFactory;
+
+		// Assert
+		Assert.IsNull(result);
 	}
 
 	[TestMethod]
@@ -862,169 +1026,5 @@ public class AutoDefaultDictionaryTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryUpdate(1, null!, "oldValue"));
-	}
-
-	[TestMethod]
-	public void ConstructorWithDefaultValue_NullDefaultValue_ShouldThrowArgumentNullException()
-	{
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((string)null!));
-	}
-
-	[TestMethod]
-	public void ConstructorWithOnMissingKey_NullOnMissingKey_ShouldThrowArgumentNullException()
-	{
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((Func<int, string>)null!));
-	}
-
-	[TestMethod]
-	public void ConstructorWithDictionaryAndOnMissingKey_NullOnMissingKey_ShouldThrowArgumentNullException()
-	{
-		// Arrange
-		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(initialDictionary, (Func<int, string>)null!));
-	}
-
-	[TestMethod]
-	public void ConstructorWithKeyValuePairsAndDefaultValue_NullDefaultValue_ShouldThrowArgumentNullException()
-	{
-		// Arrange
-		var keyValuePairs = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(1, "one") };
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(keyValuePairs, (string)null!));
-	}
-
-	[TestMethod]
-	public void ConstructorWithKeyValuePairsAndOnMissingKey_NullOnMissingKey_ShouldThrowArgumentNullException()
-	{
-		// Arrange
-		var keyValuePairs = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(1, "one") };
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>(keyValuePairs, (Func<int, string>)null!));
-	}
-
-	[TestMethod]
-	public void ConstructorWithDefaultValueAndComparer_NullDefaultValue_ShouldThrowArgumentNullException()
-	{
-		// Arrange
-		var comparer = EqualityComparer<int>.Default;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((string)null!, comparer));
-	}
-
-	[TestMethod]
-	public void ConstructorWithOnMissingKeyAndComparer_NullOnMissingKey_ShouldThrowArgumentNullException()
-	{
-		// Arrange
-		var comparer = EqualityComparer<int>.Default;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((Func<int, string>)null!, comparer));
-	}
-
-	[TestMethod]
-	public void ContainsValue_WithCustomComparer_ShouldReturnFalse()
-	{
-		// Arrange
-		var dictionary = new AutoDefaultDictionary<int, string>("default");
-		dictionary[1] = "VALUE1";
-		var comparer = StringComparer.OrdinalIgnoreCase;
-
-		// Act
-		var result = dictionary.ContainsValue("nonexistent", comparer);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void ContainsValue_WithExplicitDefaultComparer_ShouldReturnTrue()
-	{
-		// Arrange
-		var dictionary = new AutoDefaultDictionary<int, string>("default");
-		dictionary[1] = "value1";
-
-		// Act
-		var result = dictionary.ContainsValue("value1", EqualityComparer<string>.Default);
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void GetOrAdd_WithFactory_NullKey_ShouldThrowArgumentNullException()
-	{
-		// Arrange
-		var dictionary = new AutoDefaultDictionary<string, string>("default");
-		Func<string, string> valueFactory = key => $"Generated_{key}";
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.GetOrAdd(null!, valueFactory));
-	}
-
-	[TestMethod]
-	public void OnMissingKeyFactory_WithDictionaryAndDefaultValueConstructor_ShouldReturnNull()
-	{
-		// Arrange
-		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
-		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, "default");
-
-		// Act
-		var result = dictionary.OnMissingKeyFactory;
-
-		// Assert
-		Assert.IsNull(result);
-	}
-
-	[TestMethod]
-	public void IndexerSet_ShouldOverwriteExistingValue()
-	{
-		// Arrange
-		var dictionary = new AutoDefaultDictionary<int, string>("default");
-		dictionary[1] = "originalValue";
-
-		// Act
-		dictionary[1] = "newValue";
-
-		// Assert
-		Assert.AreEqual("newValue", dictionary[1]);
-		Assert.HasCount(1, dictionary);
-	}
-
-	[TestMethod]
-	public void IndexerGet_WithOnMissingKeyNull_ShouldReturnDefaultValue()
-	{
-		// Arrange - use constructor that does NOT set _onMissingKey
-		var initialDictionary = new Dictionary<int, string> { { 1, "one" } };
-		var dictionary = new AutoDefaultDictionary<int, string>(initialDictionary, "fallback");
-
-		// Act - access a missing key; _onMissingKey is null so _defaultValue is used
-		var value = dictionary[99];
-
-		// Assert
-		Assert.AreEqual("fallback", value);
-		Assert.IsTrue(dictionary.ContainsKey(99));
-	}
-
-	[TestMethod]
-	public void ConstructorWithComparer_ShouldUseCaseInsensitiveComparer()
-	{
-		// Arrange
-		var comparer = StringComparer.OrdinalIgnoreCase;
-		var dictionary = new AutoDefaultDictionary<string, string>(comparer);
-		dictionary["Key"] = "value1";
-
-		// Act
-		var value = dictionary["key"];
-
-		// Assert - case-insensitive comparer means "key" and "Key" are the same key
-		Assert.AreEqual("value1", value);
-		Assert.HasCount(1, dictionary);
 	}
 }

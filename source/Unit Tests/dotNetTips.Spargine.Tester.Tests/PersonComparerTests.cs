@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.Tester.Tests
+// Author           : David McCarter
+// Created          : 03-31-2026
+//
+// Last Modified By : David McCarter
+// Last Modified On : 04-01-2026
+// ***********************************************************************
+// <copyright file="PersonComparerTests.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
@@ -62,9 +75,7 @@ namespace DotNetTips.Spargine.Tester.Tests
 		{
 			var comparer = new PersonEqualityComparer();
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
 			Assert.AreEqual(0, comparer.GetHashCode(null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 		}
 
 		[TestMethod]

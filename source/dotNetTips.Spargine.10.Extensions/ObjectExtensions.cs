@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -1064,11 +1064,11 @@ public static class ObjectExtensions
 		/// Use this when you need to control serialization behavior such as resolvers, security settings, or compression.
 		/// </summary>
 		/// <typeparam name="T">The type of the object.</typeparam>
-		/// <param name="options">The <see cref="MessagePack.MessagePackSerializerOptions"/> to use for serialization and deserialization. If null, the default options are used.</param>
+		/// <param name="options">The <see cref="MessagePackSerializerOptions"/> to use for serialization and deserialization. If null, the default options are used.</param>
 		/// <returns>A deep clone of the object.</returns>
 		/// <remarks>
 		/// <para>
-		/// This overload allows customization of MessagePack serialization behavior through <see cref="MessagePack.MessagePackSerializerOptions"/>.
+		/// This overload allows customization of MessagePack serialization behavior through <see cref="MessagePackSerializerOptions"/>.
 		/// Common customization scenarios include:
 		/// </para>
 		/// <list type="bullet">

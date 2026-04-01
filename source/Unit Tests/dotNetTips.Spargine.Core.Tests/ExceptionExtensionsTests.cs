@@ -4,7 +4,7 @@
 // Created          : 05-05-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -255,6 +255,7 @@ public class ExceptionExtensionsTests
 	{
 		// Arrange
 		Exception exception = null;
+
 		try
 		{
 			throw new ArgumentException("Invalid argument");

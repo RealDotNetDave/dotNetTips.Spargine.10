@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -347,7 +347,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([1, 2, 3, 4, 5]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]

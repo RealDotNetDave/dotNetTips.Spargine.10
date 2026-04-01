@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,7 +13,9 @@
 // ***********************************************************************
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -270,9 +272,7 @@ public class RandomDataTests
 	public void GenerateAddressCollection_InvalidCountry_ThrowsException()
 	{
 		// Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
 		Assert.ThrowsExactly<ArgumentNullException>(() => RandomData.GenerateAddressCollection<Address>(null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 	}
 
 	[TestMethod]
@@ -398,7 +398,7 @@ public class RandomDataTests
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsInstanceOfType<System.Collections.ObjectModel.ReadOnlyCollection<Coordinate>>(result);
+		Assert.IsInstanceOfType<ReadOnlyCollection<Coordinate>>(result);
 	}
 
 	[TestMethod]
@@ -738,7 +738,7 @@ public class RandomDataTests
 		// Arrange
 		const int iterations = 100;
 		const int count = 256;
-		var results = new System.Collections.Concurrent.ConcurrentBag<byte[]>();
+		var results = new ConcurrentBag<byte[]>();
 
 		// Act
 		Parallel.For(0, iterations, _ =>
