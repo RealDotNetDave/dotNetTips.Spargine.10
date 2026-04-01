@@ -4,7 +4,7 @@
 // Created          : 01-18-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-09-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatchTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,10 +12,14 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Diagnostics;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -607,5 +611,130 @@ public class PerformanceStopwatchTests
 		var result = psw.ToString();
 
 		Assert.Contains("Test message", result);
+	}
+
+	[TestMethod]
+	public void GetElapsedTime_WithStartingTimestamp_ReturnsPositiveTimeSpan()
+	{
+		var startingTimestamp = Stopwatch.GetTimestamp();
+
+		Thread.Sleep(100);
+
+		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp);
+
+		Assert.IsTrue(elapsed.TotalMilliseconds >= 0);
+	}
+
+	[TestMethod]
+	public void GetElapsedTime_WithStartAndEndTimestamp_ReturnsPositiveTimeSpan()
+	{
+		var startingTimestamp = Stopwatch.GetTimestamp();
+
+		Thread.Sleep(100);
+
+		var endingTimestamp = Stopwatch.GetTimestamp();
+
+		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
+
+		Assert.IsTrue(elapsed.TotalMilliseconds >= 0);
+	}
+
+	[TestMethod]
+	public void GetTimeStamp_ReturnsPositiveValue()
+	{
+		var timestamp = PerformanceStopwatch.GetTimeStamp();
+
+		Assert.IsTrue(timestamp > 0);
+	}
+
+	[TestMethod]
+	public void TrackTelemetryTest()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetryTest));
+		var configuration = new TelemetryConfiguration
+		{
+			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
+		};
+		var telemetryClient = new TelemetryClient(configuration);
+
+		Thread.Sleep(100);
+
+		psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message");
+
+		Assert.IsNotNull(psw);
+	}
+
+	[TestMethod]
+	public void TrackTelemetry_WithProperties_Test()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetry_WithProperties_Test));
+		var configuration = new TelemetryConfiguration
+		{
+			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
+		};
+		var telemetryClient = new TelemetryClient(configuration);
+		var properties = new Dictionary<string, string>
+		{
+			["Key1"] = "Value1",
+			["Key2"] = "Value2"
+		};
+
+		Thread.Sleep(100);
+
+		psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message", properties);
+
+		Assert.IsTrue(properties.ContainsKey("Title"));
+		Assert.IsTrue(properties.ContainsKey("ElapsedMs"));
+		Assert.IsTrue(properties.ContainsKey("Message"));
+	}
+
+	[TestMethod]
+	public void TrackTelemetry_WithNullTelemetry_ThrowsArgumentNullException()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetry_WithNullTelemetry_ThrowsArgumentNullException));
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.TrackTelemetry(null, "TestOperation"));
+	}
+
+	[TestMethod]
+	public void WithTelemetryTest()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.WithTelemetryTest));
+		var configuration = new TelemetryConfiguration
+		{
+			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
+		};
+		var telemetryClient = new TelemetryClient(configuration);
+
+		var result = psw.WithTelemetry(telemetryClient, "TestOperation", "Test message");
+
+		Assert.AreSame(psw, result);
+	}
+
+	[TestMethod]
+	public void WithTelemetry_WithNullTelemetry_ThrowsArgumentNullException()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.WithTelemetry_WithNullTelemetry_ThrowsArgumentNullException));
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.WithTelemetry(null, "TestOperation"));
+	}
+
+	[TestMethod]
+	public void WithTelemetry_WithProperties_Test()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.WithTelemetry_WithProperties_Test));
+		var configuration = new TelemetryConfiguration
+		{
+			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
+		};
+		var telemetryClient = new TelemetryClient(configuration);
+		var properties = new Dictionary<string, string>
+		{
+			["Key1"] = "Value1"
+		};
+
+		var result = psw.WithTelemetry(telemetryClient, "TestOperation", "Test message", properties);
+
+		Assert.AreSame(psw, result);
 	}
 }
