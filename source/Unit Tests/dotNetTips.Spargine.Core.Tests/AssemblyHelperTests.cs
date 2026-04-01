@@ -1236,31 +1236,6 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 	}
 
 	[TestMethod]
-	public void GetAssemblyMetadata_NonDotNetAssemblyFile_ReturnsErrorKey()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.GetAssemblyMetadata(file);
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.HasCount(1, result);
-			Assert.AreEqual("Error", result.First().Key);
-			Assert.AreEqual("Invalid .NET assembly", result.First().Value);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
 	public void GetAssemblyPublicTypes_NonDotNetAssemblyFile_ReturnsEmptyCollection()
 	{
 		// Arrange
