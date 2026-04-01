@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-28-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="LoggingHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
