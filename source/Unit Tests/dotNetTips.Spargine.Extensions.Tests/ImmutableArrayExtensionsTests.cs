@@ -73,7 +73,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Assert
-		Assert.IsTrue((bool?)array.IsNotEmpty(3));
+		Assert.IsTrue(array.IsNotEmpty(3));
 	}
 
 	[TestMethod]

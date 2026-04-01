@@ -402,7 +402,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([10, 20, 3, 30]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -413,7 +413,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([1, 2, 3]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]

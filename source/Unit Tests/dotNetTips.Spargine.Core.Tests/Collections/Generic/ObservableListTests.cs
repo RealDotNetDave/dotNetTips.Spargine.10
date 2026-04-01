@@ -219,7 +219,7 @@ public class ObservableListTests
 		var list = new ObservableList<int>(collection);
 
 		Assert.AreEqual(collection.Count, list.Count, "List should contain all elements from the collection.");
-		for (int i = 0; i < collection.Count; i++)
+		for (var i = 0; i < collection.Count; i++)
 		{
 			Assert.IsTrue(list.Contains(collection[i]), $"List should contain the element {collection[i]}.");
 		}

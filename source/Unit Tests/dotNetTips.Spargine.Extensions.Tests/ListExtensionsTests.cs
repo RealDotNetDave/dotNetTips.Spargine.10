@@ -1173,7 +1173,7 @@ public class ListExtensionsTests
 		var list2 = new List<int> { 1, 2, 3 };
 
 		// Assert
-		Assert.IsFalse((bool?)list1.IsEqualTo(list2));
+		Assert.IsFalse(list1.IsEqualTo(list2));
 	}
 
 	[TestMethod]
