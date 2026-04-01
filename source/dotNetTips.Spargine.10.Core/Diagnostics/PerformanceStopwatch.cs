@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -600,7 +600,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </example>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static new TimeSpan GetElapsedTime(long startingTimestamp)
 	{
 		return Stopwatch.GetElapsedTime(startingTimestamp);
@@ -634,7 +634,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </example>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetElapsedTime), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static new TimeSpan GetElapsedTime(long startingTimestamp, long endingTimestamp)
 	{
 		return Stopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
@@ -661,7 +661,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// </example>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetTimestamp), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetTimestamp), "David McCarter", "02/17/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static long GetTimeStamp()
 	{
 		return Stopwatch.GetTimestamp();
@@ -3126,7 +3126,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="WithTelemetry"/>
 	/// <seealso cref="StartNewWithTelemetry"/>
 	/// <seealso cref="TelemetryClient"/>
-	[Information(nameof(TrackTelemetry), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(TrackTelemetry), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void TrackTelemetry([DisallowNull] TelemetryClient telemetry, string operationName, string message = ControlChars.EmptyString, IDictionary<string, string>? properties = null)
 	{
 		telemetry = telemetry.ArgumentNotNull();
@@ -3152,7 +3152,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <param name="message">A custom message to include with the telemetry event.</param>
 	/// <param name="properties">Optional key/value properties to attach to the telemetry.</param>
 	/// <returns>The current instance for fluent configuration.</returns>
-	[Information(nameof(WithTelemetry), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(WithTelemetry), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public PerformanceStopwatch WithTelemetry([DisallowNull] TelemetryClient telemetry, string operationName, string? message = null, IDictionary<string, string>? properties = null)
 	{
 		this._telemetry = telemetry.ArgumentNotNull();
