@@ -28,6 +28,7 @@ namespace DotNetTips.Spargine.Core.Tests.Security;
 public class PasswordGeneratorTests
 {
 
+	// Must match the combined character pool (Uppercase + Lowercase + Digits + SpecialChars) in PasswordGenerator.
 	private const string ValidCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
 
 	[TestMethod]
@@ -111,7 +112,7 @@ public class PasswordGeneratorTests
 		}
 
 		// Assert
-		Assert.IsTrue(passwords.Count > 1, "Multiple calls should produce different passwords.");
+		Assert.IsTrue(passwords.Count >= 48, "50 calls with length 16 should produce at least 48 unique passwords.");
 	}
 
 	[TestMethod]
