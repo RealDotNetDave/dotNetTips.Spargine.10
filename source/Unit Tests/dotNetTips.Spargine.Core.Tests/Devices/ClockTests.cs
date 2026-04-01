@@ -27,6 +27,16 @@ public class ClockTests
 {
 
 	[TestMethod]
+	public void CurrentDayOfWeek_MatchesLocalTimeDayOfWeek()
+	{
+		// Act
+		var result = Clock.CurrentDayOfWeek;
+
+		// Assert
+		Assert.AreEqual(Clock.LocalTime.DayOfWeek, result);
+	}
+
+	[TestMethod]
 	public void CurrentDayOfWeek_ReturnsValidDayOfWeek()
 	{
 		// Act
@@ -34,6 +44,16 @@ public class ClockTests
 
 		// Assert
 		Assert.IsTrue(Enum.IsDefined(typeof(DayOfWeek), result));
+	}
+
+	[TestMethod]
+	public void CurrentDayOfYear_MatchesLocalTimeDayOfYear()
+	{
+		// Act
+		var result = Clock.CurrentDayOfYear;
+
+		// Assert
+		Assert.AreEqual(Clock.LocalTime.DayOfYear, result);
 	}
 
 	[TestMethod]
@@ -71,6 +91,16 @@ public class ClockTests
 	}
 
 	[TestMethod]
+	public void CurrentUtcDayOfWeek_MatchesUtcTimeDayOfWeek()
+	{
+		// Act
+		var result = Clock.CurrentUtcDayOfWeek;
+
+		// Assert
+		Assert.AreEqual(Clock.UtcTime.DayOfWeek, result);
+	}
+
+	[TestMethod]
 	public void CurrentUtcDayOfWeek_ReturnsValidDayOfWeek()
 	{
 		// Act
@@ -105,6 +135,20 @@ public class ClockTests
 	}
 
 	[TestMethod]
+	public void DaysInCurrentMonth_MatchesDateTimeDaysInMonth()
+	{
+		// Arrange
+		var now = DateTime.Now;
+		var expected = DateTime.DaysInMonth(now.Year, now.Month);
+
+		// Act
+		var result = Clock.DaysInCurrentMonth;
+
+		// Assert
+		Assert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
 	public void DaysInCurrentMonth_ReturnsValidRange()
 	{
 		// Act
@@ -112,6 +156,20 @@ public class ClockTests
 
 		// Assert
 		Assert.IsTrue(result >= 28 && result <= 31);
+	}
+
+	[TestMethod]
+	public void DaysInCurrentUtcMonth_MatchesDateTimeDaysInMonth()
+	{
+		// Arrange
+		var utcNow = DateTime.UtcNow;
+		var expected = DateTime.DaysInMonth(utcNow.Year, utcNow.Month);
+
+		// Act
+		var result = Clock.DaysInCurrentUtcMonth;
+
+		// Assert
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod]
@@ -139,6 +197,20 @@ public class ClockTests
 	}
 
 	[TestMethod]
+	public void DaysInMonth_December_Returns31()
+	{
+		// Arrange
+		var year = 2026;
+		var month = 12;
+
+		// Act
+		var result = Clock.DaysInMonth(year, month);
+
+		// Assert
+		Assert.AreEqual(31, result);
+	}
+
+	[TestMethod]
 	public void DaysInMonth_January_Returns31()
 	{
 		// Arrange
@@ -150,6 +222,20 @@ public class ClockTests
 
 		// Assert
 		Assert.AreEqual(31, result);
+	}
+
+	[TestMethod]
+	public void DaysInMonth_June_Returns30()
+	{
+		// Arrange
+		var year = 2026;
+		var month = 6;
+
+		// Act
+		var result = Clock.DaysInMonth(year, month);
+
+		// Assert
+		Assert.AreEqual(30, result);
 	}
 
 	[TestMethod]
@@ -194,6 +280,16 @@ public class ClockTests
 	}
 
 	[TestMethod]
+	public void DaysRemainingInMonth_IsLessThanDaysInMonth()
+	{
+		// Act
+		var result = Clock.DaysRemainingInMonth;
+
+		// Assert
+		Assert.IsTrue(result < Clock.DaysInCurrentMonth);
+	}
+
+	[TestMethod]
 	public void DaysRemainingInMonth_ReturnsNonNegativeValue()
 	{
 		// Act
@@ -201,6 +297,20 @@ public class ClockTests
 
 		// Assert
 		Assert.IsTrue(result >= 0);
+	}
+
+	[TestMethod]
+	public void DaysRemainingInYear_ReturnsCorrectValue()
+	{
+		// Arrange
+		var localTime = Clock.LocalTime;
+		var expected = (new DateTime(localTime.Year, 12, 31) - localTime.Date).Days;
+
+		// Act
+		var result = Clock.DaysRemainingInYear;
+
+		// Assert
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod]
@@ -221,6 +331,16 @@ public class ClockTests
 
 		// Assert
 		Assert.IsTrue(result <= 366);
+	}
+
+	[TestMethod]
+	public void FirstDayOfCurrentMonth_HasLocalTimeOffset()
+	{
+		// Act
+		var result = Clock.FirstDayOfCurrentMonth;
+
+		// Assert
+		Assert.AreEqual(Clock.LocalTime.Offset, result.Offset);
 	}
 
 	[TestMethod]
@@ -339,6 +459,16 @@ public class ClockTests
 
 		// Assert
 		Assert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	public void LastDayOfCurrentMonth_HasLocalTimeOffset()
+	{
+		// Act
+		var result = Clock.LastDayOfCurrentMonth;
+
+		// Assert
+		Assert.AreEqual(Clock.LocalTime.Offset, result.Offset);
 	}
 
 	[TestMethod]
@@ -515,6 +645,20 @@ public class ClockTests
 
 		// Assert
 		Assert.IsTrue(result > 0);
+	}
+
+	[TestMethod]
+	public void UnixTimestampMilliseconds_ReturnsReasonableValue()
+	{
+		// Arrange - Unix timestamp in milliseconds for Jan 1, 2020 and Jan 1, 2030
+		var minTimestamp = 1577836800000L; // 2020-01-01
+		var maxTimestamp = 1893456000000L; // 2030-01-01
+
+		// Act
+		var result = Clock.UnixTimestampMilliseconds;
+
+		// Assert
+		Assert.IsTrue(result >= minTimestamp && result <= maxTimestamp);
 	}
 
 	[TestMethod]
