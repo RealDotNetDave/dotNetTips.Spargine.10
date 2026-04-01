@@ -71,6 +71,57 @@ public class CountryPhonePostalInfoRepositoryTests
 	}
 
 	[TestMethod]
+	public void GetCountryPhonePostalInfo_InvalidIso3_ReturnsNull()
+	{
+		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("ZZZ");
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void GetCountryPhonePostalInfo_InvalidCountryName_ReturnsNull()
+	{
+		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("Nonexistent Country");
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void GetCountryPhonePostalInfo_CaseInsensitiveIso2_ReturnsInfo()
+	{
+		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("us");
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual("United States", result.Name);
+	}
+
+	[TestMethod]
+	public void GetCountryPhonePostalInfo_CaseInsensitiveIso3_ReturnsInfo()
+	{
+		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("usa");
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual("United States", result.Name);
+	}
+
+	[TestMethod]
+	public void GetCountryPhonePostalInfo_CaseInsensitiveName_ReturnsInfo()
+	{
+		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("united states");
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual("United States", result.Name);
+	}
+
+	[TestMethod]
+	public void GetCountryPhonePostalInfo_SingleCharInput_ReturnsNull()
+	{
+		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("X");
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
 	public void ValidatePhoneNumber_NullCountry_ReturnsFalse()
 	{
 		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("ZZ", "1234567890");
@@ -169,6 +220,86 @@ public class CountryPhonePostalInfoRepositoryTests
 	public void ValidatePostalCodeUSValidTest()
 	{
 		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", "92130");
+
+		Assert.AreEqual(PostalCodeState.Valid, result);
+	}
+
+	[TestMethod]
+	public void ValidatePhoneNumber_FormattedNumber_ReturnsTrue()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("United States", "(555) 666-7777");
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ValidatePhoneNumber_WithIso2_ValidNumber_ReturnsTrue()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("US", "5556667777");
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ValidatePhoneNumber_WithIso3_ValidNumber_ReturnsTrue()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("USA", "5556667777");
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ValidatePhoneNumber_ValidCountryCode_WrongLength_ReturnsFalse()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("United States", "1-555-66", true);
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ValidatePhoneNumber_EmptyPhoneNumber_ReturnsFalse()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("United States", "");
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ValidatePostalCode_EmptyPostalCode_ReturnsInvalid()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", "");
+
+		Assert.AreEqual(PostalCodeState.Invalid, result);
+	}
+
+	[TestMethod]
+	public void ValidatePostalCode_NullPostalCode_ReturnsInvalid()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", null);
+
+		Assert.AreEqual(PostalCodeState.Invalid, result);
+	}
+
+	[TestMethod]
+	public void ValidatePostalCode_CountryWithNoPostalRegex_ReturnsUnknown()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("Angola", "12345");
+
+		Assert.AreEqual(PostalCodeState.Unknown, result);
+	}
+
+	[TestMethod]
+	public void ValidatePostalCode_WithIso2_ValidCode_ReturnsValid()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("US", "92130");
+
+		Assert.AreEqual(PostalCodeState.Valid, result);
+	}
+
+	[TestMethod]
+	public void ValidatePostalCode_WithIso3_ValidCode_ReturnsValid()
+	{
+		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("USA", "92130");
 
 		Assert.AreEqual(PostalCodeState.Valid, result);
 	}
