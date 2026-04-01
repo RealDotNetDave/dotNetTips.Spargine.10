@@ -1150,21 +1150,50 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 	public void DoesAssemblyReference_NonDotNetAssemblyFile_ReturnsFalse()
 	{
 		// Arrange
+		using var tempAssembly = CreateTempNonDotNetAssembly(out var file);
+
+		// Act
+		var result = AssemblyHelper.DoesAssemblyReference(file, "System.Runtime");
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	private static IDisposable CreateTempNonDotNetAssembly(out FileInfo file)
+	{
 		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
 		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
+		file = new FileInfo(tempFile);
 
-		try
+		return new TempFileDeleter(tempFile);
+	}
+
+	private sealed class TempFileDeleter : IDisposable
+	{
+		private readonly string _path;
+
+		public TempFileDeleter(string path)
 		{
-			// Act
-			var result = AssemblyHelper.DoesAssemblyReference(file, "System.Runtime");
-
-			// Assert
-			Assert.IsFalse(result);
+			_path = path;
 		}
-		finally
+
+		public void Dispose()
 		{
-			File.Delete(tempFile);
+			try
+			{
+				if (File.Exists(_path))
+				{
+					File.Delete(_path);
+				}
+			}
+			catch (IOException)
+			{
+				// Ignore cleanup errors in tests.
+			}
+			catch (UnauthorizedAccessException)
+			{
+				// Ignore cleanup errors in tests.
+			}
 		}
 	}
 
