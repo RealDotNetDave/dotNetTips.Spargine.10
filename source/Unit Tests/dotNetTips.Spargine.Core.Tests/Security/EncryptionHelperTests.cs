@@ -101,8 +101,8 @@ public class EncryptionHelperTests
 	[TestMethod]
 	public void AesDecrypt_InvalidCipherText_ThrowsInvalidOperationException()
 	{
-		// Arrange - use invalid base64 that will cause decryption failure
-		var invalidCipher = Convert.ToBase64String(new byte[32]);
+		// Arrange - use Base64 for a byte array whose length is not a multiple of the AES block size
+		var invalidCipher = Convert.ToBase64String(new byte[31]);
 
 		// Act and Assert
 		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
