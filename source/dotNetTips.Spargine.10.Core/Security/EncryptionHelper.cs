@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-19-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -357,7 +357,7 @@ public static class EncryptionHelper
 	/// A randomly generated 32-byte key suitable for AES-GCM.
 	/// </returns>
 	[Pure]
-	[Information(nameof(GenerateAesGcmKey), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GenerateAesGcmKey), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static byte[] GenerateAesGcmKey()
 	{
 		var key = new byte[32]; // 256-bit
