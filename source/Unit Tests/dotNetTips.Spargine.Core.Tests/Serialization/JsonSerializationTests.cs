@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-07-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="JsonSerializationTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -413,5 +413,251 @@ public class JsonSerializationTests
 	{
 		var file = new FileInfo(Path.GetTempFileName());
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.SerializeToFile(null, file));
+	}
+
+	[TestMethod]
+	public void Deserialize_NullJson_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Deserialize<Person>(null));
+	}
+
+	[TestMethod]
+	public void Deserialize_EmptyJson_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Deserialize<Person>(string.Empty));
+	}
+
+	[TestMethod]
+	public void Deserialize_WithOptions_NullJson_ThrowsArgumentNullException()
+	{
+		var options = new JsonSerializerOptions();
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Deserialize<Person>(null, options));
+	}
+
+	[TestMethod]
+	public void Deserialize_WithTypeInfo_NullJson_ThrowsArgumentNullException()
+	{
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.Deserialize<Person>(null, typeInfo));
+	}
+
+	[TestMethod]
+	public void DeserializeFromFile_NullFile_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.DeserializeFromFile<Person>(null));
+	}
+
+	[TestMethod]
+	public void JsonEqual_EqualArrays_ReturnsTrue()
+	{
+		var actual = "[1,2,3]";
+		var expected = "[1,2,3]";
+
+		Assert.IsTrue(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_DifferentArrayLengths_ReturnsFalse()
+	{
+		var actual = "[1,2,3]";
+		var expected = "[1,2]";
+
+		Assert.IsFalse(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_DifferentArrayElements_ReturnsFalse()
+	{
+		var actual = "[1,2,3]";
+		var expected = "[1,2,4]";
+
+		Assert.IsFalse(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_NestedObjects_ReturnsTrue()
+	{
+		var actual = "{\"outer\":{\"inner\":\"value\"}}";
+		var expected = "{\"outer\":{\"inner\":\"value\"}}";
+
+		Assert.IsTrue(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_DifferentValueKinds_ReturnsFalse()
+	{
+		var actual = "{\"key\":\"1\"}";
+		var expected = "{\"key\":1}";
+
+		Assert.IsFalse(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_BooleanValues_ReturnsTrue()
+	{
+		var actual = "{\"flag\":true}";
+		var expected = "{\"flag\":true}";
+
+		Assert.IsTrue(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_DifferentBooleanValues_ReturnsFalse()
+	{
+		var actual = "{\"flag\":true}";
+		var expected = "{\"flag\":false}";
+
+		Assert.IsFalse(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_NullValues_ReturnsTrue()
+	{
+		var actual = "{\"key\":null}";
+		var expected = "{\"key\":null}";
+
+		Assert.IsTrue(JsonSerialization.JsonEqual(actual, expected));
+	}
+
+	[TestMethod]
+	public void JsonEqual_StringValues_ReturnsCorrectResult()
+	{
+		var actual = "{\"key\":\"hello\"}";
+		var expected = "{\"key\":\"hello\"}";
+
+		Assert.IsTrue(JsonSerialization.JsonEqual(actual, expected));
+
+		var different = "{\"key\":\"world\"}";
+
+		Assert.IsFalse(JsonSerialization.JsonEqual(actual, different));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_NullJson_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json: null, count: 1));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_CountGreaterThanArrayLength_ThrowsArgumentOutOfRangeException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(5);
+		var json = JsonSerialization.Serialize(people);
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 10));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_WithTypeInfo_NullJson_ThrowsArgumentNullException()
+	{
+		var info = PersonRefJsonSerializerContext.Default.Person;
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json: null, count: 1, info: info));
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_WithTypeInfo_CountGreaterThanArrayLength_ThrowsArgumentOutOfRangeException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(5);
+		var json = JsonSerialization.Serialize(people);
+		var info = PersonRefJsonSerializerContext.Default.Person;
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json, 10, info));
+	}
+
+	[TestMethod]
+	public void Serialize_WithOptions_ReturnsJson()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var options = new JsonSerializerOptions { WriteIndented = true };
+
+		var json = JsonSerialization.Serialize(person, options);
+
+		Assert.IsTrue(string.IsNullOrEmpty(json) is false);
+	}
+
+	[TestMethod]
+	public void Serialize_WithNullOptions_ReturnsJson()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var json = JsonSerialization.Serialize(person, (JsonSerializerOptions)null);
+
+		Assert.IsTrue(string.IsNullOrEmpty(json) is false);
+	}
+
+	[TestMethod]
+	public void Serialize_WithTypeInfo_ReturnsJson()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+
+		var json = JsonSerialization.Serialize(person, typeInfo);
+
+		Assert.IsTrue(string.IsNullOrEmpty(json) is false);
+	}
+
+	[TestMethod]
+	public void SerializeToFile_WithOptions_WritesFile()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var options = new JsonSerializerOptions { WriteIndented = true };
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json"));
+
+		try
+		{
+			JsonSerialization.SerializeToFile(person, file, options);
+
+			Assert.IsTrue(File.Exists(file.FullName));
+			Assert.IsTrue(new FileInfo(file.FullName).Length > 0);
+		}
+		finally
+		{
+			if (file.Exists)
+			{
+				file.Delete();
+			}
+		}
+	}
+
+	[TestMethod]
+	public void Deserialize_ValidJson_ReturnsCorrectObject()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var json = JsonSerialization.Serialize(person);
+
+		var result = JsonSerialization.Deserialize<Person>(json);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(person.Email, result.Email);
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_ReturnsCorrectCount()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10);
+		var json = JsonSerialization.Serialize(people);
+
+		var result = JsonSerialization.LoadCollectionFromJson<Person>(json, 5);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(5, result.Length);
+	}
+
+	[TestMethod]
+	public void LoadCollectionFromJson_EmptyJson_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json: string.Empty, count: 1));
+	}
+
+	[TestMethod]
+	public void JsonEqual_EmptyObjects_ReturnsTrue()
+	{
+		Assert.IsTrue(JsonSerialization.JsonEqual("{}", "{}"));
+	}
+
+	[TestMethod]
+	public void JsonEqual_EmptyArrays_ReturnsTrue()
+	{
+		Assert.IsTrue(JsonSerialization.JsonEqual("[]", "[]"));
 	}
 }
