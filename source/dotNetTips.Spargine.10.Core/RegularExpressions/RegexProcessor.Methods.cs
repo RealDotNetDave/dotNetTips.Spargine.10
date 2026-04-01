@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-16-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="RegexProcessor.Methods.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -65,7 +65,7 @@ public static partial class RegexProcessor
 	/// </code>
 	/// </example>
 	/// <exception cref="ArgumentNullException">Thrown if the input string is null.</exception>
-	[Information(nameof(ExtractVersion), "David McCarter", "4/9/2025", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ExtractVersion), "David McCarter", "4/9/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ExtractVersion(string input) => ExtractVersionRegex().Match(input).Value;
 
 	/// <summary>
