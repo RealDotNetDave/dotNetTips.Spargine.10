@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-05-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,6 +20,7 @@ using System.Security;
 using System.ServiceModel.Security;
 using DotNetTips.Spargine.Core.Tests.Logging;
 using DotNetTips.Spargine.Extensions;
+using DotNetTips.Spargine.Tester;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -55,6 +56,16 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void ClearLoggedState_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.ClearLoggedState());
+	}
+
+	[TestMethod]
 	public void ContainsAggregateException_ShouldReturnFalseIfNoAggregateExceptionExists()
 	{
 		// Arrange
@@ -78,6 +89,30 @@ public class ExceptionExtensionsTests
 
 		// Assert
 		Assert.IsTrue(containsAggregate);
+	}
+
+	[TestMethod]
+	public void ContainsAggregateException_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.ContainsAggregateException());
+	}
+
+	[TestMethod]
+	public void ContainsAggregateException_InnerAggregateException_ReturnsTrue()
+	{
+		// Arrange
+		var inner = new AggregateException("Inner aggregate", new Exception("Nested"));
+		var outer = new Exception("Outer exception", inner);
+
+		// Act
+		var result = outer.ContainsAggregateException();
+
+		// Assert
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -136,6 +171,36 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void ContainsMessage_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.ContainsMessage("test"));
+	}
+
+	[TestMethod]
+	public void ContainsMessage_NullMessage_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var exception = new Exception("Test exception");
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.ContainsMessage(null));
+	}
+
+	[TestMethod]
+	public void ContainsMessage_EmptyMessage_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var exception = new Exception("Test exception");
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.ContainsMessage(string.Empty));
+	}
+
+	[TestMethod]
 	public void ExtractData_WithData_ReturnsAllKeyValuePairs()
 	{
 		var exception = new Exception("Test exception");
@@ -158,6 +223,16 @@ public class ExceptionExtensionsTests
 
 		Assert.IsNotNull(data);
 		Assert.IsEmpty(data);
+	}
+
+	[TestMethod]
+	public void ExtractData_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.ExtractData());
 	}
 
 	[TestMethod]
@@ -343,6 +418,42 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void FromHierarchy_SingleParam_WithValidInput_ShouldReturnHierarchy()
+	{
+		// Arrange
+		var innerEx = new InvalidOperationException("Inner exception");
+		var ex = new Exception("Outer exception", innerEx);
+
+		// Act
+		var hierarchy = ex.FromHierarchy(e => e.InnerException!).ToList();
+
+		// Assert
+		Assert.HasCount(2, hierarchy);
+		Assert.AreEqual("Outer exception", hierarchy[0].Message);
+		Assert.AreEqual("Inner exception", hierarchy[1].Message);
+	}
+
+	[TestMethod]
+	public void FromHierarchy_SingleParam_NullSource_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception ex = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => ex.FromHierarchy(e => e.InnerException!).ToList());
+	}
+
+	[TestMethod]
+	public void FromHierarchy_SingleParam_NullAccumulator_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var ex = new Exception("Test exception");
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => ex.FromHierarchy((Func<Exception, Exception>)null).ToList());
+	}
+
+	[TestMethod]
 	public void GetAllInnerExceptions_WithMultipleInnerExceptions_ReturnsAll()
 	{
 		var innerMost = new Exception("Innermost exception");
@@ -382,6 +493,16 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void GetAllInnerExceptions_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.GetAllInnerExceptions());
+	}
+
+	[TestMethod]
 	public void GetAllMessagesTest()
 	{
 		var innerEx = new SecurityException("Message from SecurityException", new DataMisalignedException("Cannot access service!"));
@@ -391,6 +512,32 @@ public class ExceptionExtensionsTests
 		var messages = ex.GetAllMessages();
 
 		Assert.IsTrue(messages.IsNotEmpty());
+	}
+
+	[TestMethod]
+	public void GetAllMessages_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.GetAllMessages());
+	}
+
+	[TestMethod]
+	public void GetAllMessages_WithCustomDelimiter_UsesDelimiter()
+	{
+		// Arrange
+		var innerEx = new Exception("Inner message");
+		var ex = new Exception("Outer message", innerEx);
+
+		// Act
+		var messages = ex.GetAllMessages('|');
+
+		// Assert
+		Assert.Contains("Outer message", messages);
+		Assert.Contains("Inner message", messages);
+		Assert.Contains("|", messages);
 	}
 
 	[TestMethod]
@@ -434,6 +581,16 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void GetAllMessagesWithStackTrace_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.GetAllMessagesWithStackTrace());
+	}
+
+	[TestMethod]
 	public void GetMetadata_ShouldReturnCorrectMetadata()
 	{
 		// Arrange
@@ -446,6 +603,30 @@ public class ExceptionExtensionsTests
 		// Assert
 		Assert.IsTrue(metadata.ContainsKey("IsLogged"));
 		Assert.IsTrue((bool?)metadata["IsLogged"]);
+	}
+
+	[TestMethod]
+	public void GetMetadata_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.GetMetadata());
+	}
+
+	[TestMethod]
+	public void GetMetadata_WithoutIsLogged_ReturnsEmptyDictionary()
+	{
+		// Arrange
+		var exception = new Exception(RandomData.GenerateWord(10));
+
+		// Act
+		var metadata = exception.GetMetadata();
+
+		// Assert
+		Assert.IsNotNull(metadata);
+		Assert.IsEmpty(metadata);
 	}
 
 
@@ -537,6 +718,19 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsCritical_AccessViolationException_ReturnsTrue()
+	{
+		// Arrange
+		var exception = new AccessViolationException();
+
+		// Act
+		var result = exception.IsCritical();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
 	public void IsFatal_ArgumentNullException_ReturnsFalse()
 	{
 		// Arrange
@@ -595,6 +789,16 @@ public class ExceptionExtensionsTests
 
 		// Assert
 		Assert.IsFalse(isLogged);
+	}
+
+	[TestMethod]
+	public void IsLogged_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.IsLogged());
 	}
 
 	[TestMethod]
@@ -867,6 +1071,119 @@ public class ExceptionExtensionsTests
 	}
 
 	[TestMethod]
+	public void LogException_WithInnerException_WarningLevel_LogsAll()
+	{
+		// Arrange
+		var innerMessage = RandomData.GenerateWord(10);
+		var outerMessage = RandomData.GenerateWord(10);
+		var innerException = new InvalidOperationException(innerMessage);
+		var outerException = new Exception(outerMessage, innerException);
+		var logger = new MockLogger();
+		outerException.ClearLoggedState();
+
+		// Act
+		outerException.LogException(logger, LogLevel.Warning);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count >= 2, "Should log outer and inner exceptions");
+	}
+
+	[TestMethod]
+	public void LogException_WithInnerException_TraceLevel_LogsAll()
+	{
+		// Arrange
+		var innerMessage = RandomData.GenerateWord(10);
+		var outerMessage = RandomData.GenerateWord(10);
+		var innerException = new InvalidOperationException(innerMessage);
+		var outerException = new Exception(outerMessage, innerException);
+		var logger = new MockLogger();
+		outerException.ClearLoggedState();
+
+		// Act
+		outerException.LogException(logger, LogLevel.Trace);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count >= 2, "Should log outer and inner exceptions");
+	}
+
+	[TestMethod]
+	public void LogException_WithInnerException_DebugLevel_LogsAll()
+	{
+		// Arrange
+		var innerMessage = RandomData.GenerateWord(10);
+		var outerMessage = RandomData.GenerateWord(10);
+		var innerException = new InvalidOperationException(innerMessage);
+		var outerException = new Exception(outerMessage, innerException);
+		var logger = new MockLogger();
+		outerException.ClearLoggedState();
+
+		// Act
+		outerException.LogException(logger, LogLevel.Debug);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count >= 2, "Should log outer and inner exceptions");
+	}
+
+	[TestMethod]
+	public void LogException_WithInnerException_InformationLevel_LogsAll()
+	{
+		// Arrange
+		var innerMessage = RandomData.GenerateWord(10);
+		var outerMessage = RandomData.GenerateWord(10);
+		var innerException = new InvalidOperationException(innerMessage);
+		var outerException = new Exception(outerMessage, innerException);
+		var logger = new MockLogger();
+		outerException.ClearLoggedState();
+
+		// Act
+		outerException.LogException(logger, LogLevel.Information);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count >= 2, "Should log outer and inner exceptions");
+	}
+
+	[TestMethod]
+	public void LogException_WithInnerException_CriticalLevel_LogsAll()
+	{
+		// Arrange
+		var innerMessage = RandomData.GenerateWord(10);
+		var outerMessage = RandomData.GenerateWord(10);
+		var innerException = new InvalidOperationException(innerMessage);
+		var outerException = new Exception(outerMessage, innerException);
+		var logger = new MockLogger();
+		outerException.ClearLoggedState();
+
+		// Act
+		outerException.LogException(logger, LogLevel.Critical);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+		Assert.IsTrue(logger.LoggedMessages.Count >= 2, "Should log outer and inner exceptions");
+	}
+
+	[TestMethod]
+	public void LogException_WithInnerException_NoneLevel_SetsIsLogged()
+	{
+		// Arrange
+		var innerMessage = RandomData.GenerateWord(10);
+		var outerMessage = RandomData.GenerateWord(10);
+		var innerException = new InvalidOperationException(innerMessage);
+		var outerException = new Exception(outerMessage, innerException);
+		var logger = new MockLogger();
+		outerException.ClearLoggedState();
+
+		// Act
+		outerException.LogException(logger, LogLevel.None);
+
+		// Assert
+		Assert.IsTrue(outerException.IsLogged());
+	}
+
+	[TestMethod]
 	public void SetIsLogged_ShouldSetIsLoggedToTrue()
 	{
 		// Arrange
@@ -877,6 +1194,16 @@ public class ExceptionExtensionsTests
 
 		// Assert
 		Assert.IsTrue(exception.IsLogged());
+	}
+
+	[TestMethod]
+	public void SetIsLogged_NullException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Exception exception = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => exception.SetIsLogged());
 	}
 
 	[TestMethod]
@@ -1044,6 +1371,21 @@ public class ExceptionExtensionsTests
 
 		Assert.IsNotNull(result);
 		Assert.AreEqual("Inner exception", result.Message);
+	}
+
+	[TestMethod]
+	public void TraverseFor_WithMatchingOuterType_ShouldReturnOuterException()
+	{
+		// Arrange
+		var innerEx = new Exception("Inner exception");
+		var ex = new InvalidOperationException("Outer exception", innerEx);
+
+		// Act
+		var result = ex.TraverseFor<InvalidOperationException>();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual("Outer exception", result.Message);
 	}
 
 	[TestMethod]
