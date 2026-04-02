@@ -297,7 +297,7 @@ public class ExecutionHelperTests
 		public List<LogLevel> LoggedLevels { get; } = [];
 		public List<string> LoggedMessages { get; } = [];
 
-		public IDisposable BeginScope<TState>(TState state) where TState : notnull => null!;
+		public IDisposable BeginScope<TState>(TState state) where TState : notnull => new NoOpDisposable();
 
 		public bool IsEnabled(LogLevel logLevel) => true;
 
@@ -305,6 +305,11 @@ public class ExecutionHelperTests
 		{
 			this.LoggedLevels.Add(logLevel);
 			this.LoggedMessages.Add(formatter(state, exception));
+		}
+
+		private sealed class NoOpDisposable : IDisposable
+		{
+			public void Dispose() { }
 		}
 	}
 
