@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="NetworkHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -15,7 +15,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using DotNetTips.Spargine.Core.Network;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -88,7 +90,7 @@ public class NetworkHelperTests : UnitTester
 	{
 		var result = NetworkHelper.GetDnsServerAddresses();
 
-		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<System.Net.IPAddress>), "The result should be a ReadOnlyCollection.");
+		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<IPAddress>), "The result should be a ReadOnlyCollection.");
 	}
 
 	[TestMethod]
@@ -97,7 +99,7 @@ public class NetworkHelperTests : UnitTester
 		var result = NetworkHelper.GetGatewayAddresses();
 
 		Assert.IsNotNull(result, "Gateway addresses should not be null.");
-		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<System.Net.IPAddress>), "Result should be a ReadOnlyCollection.");
+		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<IPAddress>), "Result should be a ReadOnlyCollection.");
 	}
 
 	[TestMethod]
@@ -113,14 +115,14 @@ public class NetworkHelperTests : UnitTester
 	{
 		var result = NetworkHelper.GetGatewayAddresses();
 
-		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<System.Net.IPAddress>), "The result should be a ReadOnlyCollection.");
+		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<IPAddress>), "The result should be a ReadOnlyCollection.");
 	}
 
 	[TestMethod]
 	public void GetHostName_MatchesSystemHostname()
 	{
 		var result = NetworkHelper.GetHostName();
-		var expected = System.Net.Dns.GetHostName();
+		var expected = Dns.GetHostName();
 
 		Assert.AreEqual(expected, result, "Hostname should match system DNS hostname.");
 	}
@@ -145,26 +147,26 @@ public class NetworkHelperTests : UnitTester
 	[TestMethod]
 	public void GetLocalIPAddresses_WithIPv4Filter_ReturnsOnlyIPv4Addresses()
 	{
-		var result = NetworkHelper.GetLocalIPAddresses(System.Net.Sockets.AddressFamily.InterNetwork);
+		var result = NetworkHelper.GetLocalIPAddresses(AddressFamily.InterNetwork);
 
 		Assert.IsNotNull(result, "Result should not be null.");
 
 		foreach (var address in result)
 		{
-			Assert.AreEqual(System.Net.Sockets.AddressFamily.InterNetwork, address.AddressFamily, "All addresses should be IPv4.");
+			Assert.AreEqual(AddressFamily.InterNetwork, address.AddressFamily, "All addresses should be IPv4.");
 		}
 	}
 
 	[TestMethod]
 	public void GetLocalIPAddresses_WithIPv6Filter_ReturnsOnlyIPv6Addresses()
 	{
-		var result = NetworkHelper.GetLocalIPAddresses(System.Net.Sockets.AddressFamily.InterNetworkV6);
+		var result = NetworkHelper.GetLocalIPAddresses(AddressFamily.InterNetworkV6);
 
 		Assert.IsNotNull(result, "Result should not be null.");
 
 		foreach (var address in result)
 		{
-			Assert.AreEqual(System.Net.Sockets.AddressFamily.InterNetworkV6, address.AddressFamily, "All addresses should be IPv6.");
+			Assert.AreEqual(AddressFamily.InterNetworkV6, address.AddressFamily, "All addresses should be IPv6.");
 		}
 	}
 
@@ -174,7 +176,7 @@ public class NetworkHelperTests : UnitTester
 		var result = NetworkHelper.GetLocalIPAddresses();
 
 		Assert.IsNotNull(result, "The result should not be null.");
-		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<System.Net.IPAddress>), "The result should be a ReadOnlyCollection.");
+		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<IPAddress>), "The result should be a ReadOnlyCollection.");
 	}
 
 	[TestMethod]
@@ -289,7 +291,7 @@ public class NetworkHelperTests : UnitTester
 	{
 		var result = NetworkHelper.GetNetworkStatistics();
 
-		foreach (var (interfaceName, statistics) in result)
+		foreach (var (_, statistics) in result)
 		{
 			Assert.IsNotNull(statistics, "Statistics should not be null.");
 			Assert.IsGreaterThanOrEqualTo(0, statistics.BytesReceived, "Bytes received should be non-negative.");

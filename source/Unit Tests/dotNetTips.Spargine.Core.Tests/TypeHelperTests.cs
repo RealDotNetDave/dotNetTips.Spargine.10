@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,13 +14,16 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.AccessControl;
@@ -2430,10 +2433,10 @@ public class TypeHelperTests : UnitTester
 	public void IsBuiltInTypeTest_ConcurrentCollections_ReturnsTrue()
 	{
 		// Test concurrent collection types
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.ConcurrentDictionary<,>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.ConcurrentQueue<>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.ConcurrentStack<>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Concurrent.BlockingCollection<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ConcurrentDictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ConcurrentQueue<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ConcurrentStack<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(BlockingCollection<>)));
 	}
 
 	[TestMethod]
@@ -2461,12 +2464,12 @@ public class TypeHelperTests : UnitTester
 	public void IsBuiltInTypeTest_ImmutableCollections_ReturnsTrue()
 	{
 		// Test immutable collection types
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableArray<>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableList<>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableDictionary<,>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableHashSet<>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableQueue<>)));
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Collections.Immutable.ImmutableStack<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ImmutableArray<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ImmutableList<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ImmutableDictionary<,>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ImmutableHashSet<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ImmutableQueue<>)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ImmutableStack<>)));
 	}
 
 	[TestMethod]
@@ -2500,7 +2503,7 @@ public class TypeHelperTests : UnitTester
 	public void IsBuiltInTypeTest_NumericTypes_ReturnsTrue()
 	{
 		// Test numeric types including newer ones
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(System.Numerics.BigInteger)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(BigInteger)));
 		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Half)));
 	}
 

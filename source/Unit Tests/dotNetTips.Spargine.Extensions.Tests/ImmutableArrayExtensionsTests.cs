@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -43,7 +43,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Assert
-		Assert.IsTrue((bool?)array.IsNotEmpty());
+		Assert.IsTrue(array.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -53,7 +53,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray<int>.Empty;
 
 		// Assert
-		Assert.IsFalse((bool?)array.IsNotEmpty(3));
+		Assert.IsFalse(array.IsNotEmpty(3));
 	}
 
 	[TestMethod]
@@ -63,7 +63,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray.Create(1, 2, 3);
 
 		// Assert
-		Assert.IsFalse((bool?)array.IsNotEmpty(2));
+		Assert.IsFalse(array.IsNotEmpty(2));
 	}
 
 	[TestMethod]
@@ -83,7 +83,7 @@ public class ImmutableArrayExtensionsTests
 		var array = ImmutableArray<int>.Empty;
 
 		// Assert
-		Assert.IsFalse((bool?)array.IsNotEmpty(x => x > 1));
+		Assert.IsFalse(array.IsNotEmpty(x => x > 1));
 	}
 
 	[TestMethod]
@@ -101,7 +101,7 @@ public class ImmutableArrayExtensionsTests
 
 
 		// Assert
-		Assert.IsTrue((bool?)array.IsNotEmpty(x => x > 1));
+		Assert.IsTrue(array.IsNotEmpty(x => x > 1));
 	}
 
 	[TestMethod]

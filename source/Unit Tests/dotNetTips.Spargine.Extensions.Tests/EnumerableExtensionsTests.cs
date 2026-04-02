@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -358,7 +358,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([1, 10, 20]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -369,7 +369,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([10, 20, 3]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -380,7 +380,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([2, 3, 4]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -391,7 +391,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([10, 20, 30]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -424,7 +424,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -435,7 +435,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([9999, 20000, 30000]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -446,7 +446,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([20000, 30000, 40000]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -457,7 +457,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([1, 2, 3]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -467,7 +467,7 @@ public class EnumerableExtensionsTests
 		var collection = new List<int> { 1, 2, 3 };
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(null));
+		Assert.IsFalse(collection.ContainsAny(null));
 	}
 
 	[TestMethod]
@@ -478,7 +478,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([42]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -489,7 +489,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([99]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -500,7 +500,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([10, 3, 20]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -511,7 +511,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([10, 3, 20]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -526,7 +526,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<Person>([RandomData.GeneratePerson<Person>()]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -538,7 +538,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<Person>([person]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -549,7 +549,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<string>(["grape", "banana", "orange"]);
 
 		// Assert
-		Assert.IsTrue((bool?)collection.ContainsAny(items));
+		Assert.IsTrue(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -560,7 +560,7 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<string>(["grape", "orange", "mango"]);
 
 		// Assert
-		Assert.IsFalse((bool?)collection.ContainsAny(items));
+		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
 	[TestMethod]
@@ -616,7 +616,7 @@ public class EnumerableExtensionsTests
 		var numbers = new List<int> { 10, 20, 30 }.AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)numbers.FastAny(n => n > 5));
+		Assert.IsTrue(numbers.FastAny(n => n > 5));
 	}
 
 	[TestMethod]
@@ -626,7 +626,7 @@ public class EnumerableExtensionsTests
 		var numbers = new int[] { 1, 2, 3, 4, 5 };
 
 		// Assert
-		Assert.IsTrue((bool?)numbers.FastAny(n => n % 2 == 0));
+		Assert.IsTrue(numbers.FastAny(n => n % 2 == 0));
 	}
 
 	[TestMethod]
@@ -652,7 +652,7 @@ public class EnumerableExtensionsTests
 		var deferred = Enumerable.Range(1, 10).Where(x => x % 2 == 0);
 
 		// Assert
-		Assert.IsTrue((bool?)deferred.FastAny(n => n == 6));
+		Assert.IsTrue(deferred.FastAny(n => n == 6));
 	}
 
 	[TestMethod]
@@ -662,7 +662,7 @@ public class EnumerableExtensionsTests
 		var emptyCollection = new List<int>().AsEnumerable();
 
 		// Assert
-		Assert.IsFalse((bool?)emptyCollection.FastAny(n => n > 0));
+		Assert.IsFalse(emptyCollection.FastAny(n => n > 0));
 	}
 
 	[TestMethod]
@@ -672,7 +672,7 @@ public class EnumerableExtensionsTests
 		var numbers = new List<int> { 10, 2, 3 }.AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)numbers.FastAny(n => n > 5));
+		Assert.IsTrue(numbers.FastAny(n => n > 5));
 	}
 
 	[TestMethod]
@@ -682,7 +682,7 @@ public class EnumerableExtensionsTests
 		var largeCollection = Enumerable.Range(1, Count).AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)largeCollection.FastAny(n => n == Count));
+		Assert.IsTrue(largeCollection.FastAny(n => n == Count));
 	}
 
 	[TestMethod]
@@ -692,7 +692,7 @@ public class EnumerableExtensionsTests
 		var numbers = new List<int> { 1, 2, 10 }.AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)numbers.FastAny(n => n > 5));
+		Assert.IsTrue(numbers.FastAny(n => n > 5));
 	}
 
 	[TestMethod]
@@ -702,7 +702,7 @@ public class EnumerableExtensionsTests
 		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)numbers.FastAny(n => n > 3));
+		Assert.IsTrue(numbers.FastAny(n => n > 3));
 	}
 
 	[TestMethod]
@@ -712,7 +712,7 @@ public class EnumerableExtensionsTests
 		var numbers = new List<int> { 1, 2, 3 }.AsEnumerable();
 
 		// Assert
-		Assert.IsFalse((bool?)numbers.FastAny(n => n > 10));
+		Assert.IsFalse(numbers.FastAny(n => n > 10));
 	}
 
 	[TestMethod]
@@ -742,7 +742,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)people.FastAny(p => p.Email.Contains("@", StringComparison.Ordinal)));
+		Assert.IsTrue(people.FastAny(p => p.Email.Contains("@", StringComparison.Ordinal)));
 	}
 
 	[TestMethod]
@@ -752,7 +752,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		// Assert
-		Assert.IsFalse((bool?)people.FastAny(p => p.Id == "non-existent-id-12345"));
+		Assert.IsFalse(people.FastAny(p => p.Id == "non-existent-id-12345"));
 	}
 
 	[TestMethod]
@@ -762,7 +762,7 @@ public class EnumerableExtensionsTests
 		var singleItem = new List<int> { 42 }.AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)singleItem.FastAny(n => n == 42));
+		Assert.IsTrue(singleItem.FastAny(n => n == 42));
 	}
 
 	[TestMethod]
@@ -773,7 +773,7 @@ public class EnumerableExtensionsTests
 
 
 		// Assert
-		Assert.IsFalse((bool?)singleItem.FastAny(n => n == 100));
+		Assert.IsFalse(singleItem.FastAny(n => n == 100));
 	}
 
 	[TestMethod]
@@ -783,7 +783,7 @@ public class EnumerableExtensionsTests
 		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
 
 		// Assert
-		Assert.IsTrue((bool?)strings.FastAny(s => s.StartsWith("b", StringComparison.Ordinal)));
+		Assert.IsTrue(strings.FastAny(s => s.StartsWith("b", StringComparison.Ordinal)));
 	}
 
 	[TestMethod]
@@ -793,7 +793,7 @@ public class EnumerableExtensionsTests
 		var strings = new List<string> { "apple", "banana", "cherry" }.AsEnumerable();
 
 		// Assert
-		Assert.IsFalse((bool?)strings.FastAny(s => s.StartsWith("z", StringComparison.Ordinal)));
+		Assert.IsFalse(strings.FastAny(s => s.StartsWith("z", StringComparison.Ordinal)));
 	}
 
 	[TestMethod]

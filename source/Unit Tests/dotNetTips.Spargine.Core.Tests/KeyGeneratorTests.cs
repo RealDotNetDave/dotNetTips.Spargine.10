@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="KeyGeneratorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,12 +13,14 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNetTips.Spargine.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -604,7 +606,7 @@ public class KeyGeneratorTests
 	{
 		// Arrange
 		const int count = 100;
-		var keys = new System.Collections.Concurrent.ConcurrentBag<string>();
+		var keys = new ConcurrentBag<string>();
 
 		// Act
 		Parallel.For(0, count, _ =>
@@ -647,7 +649,7 @@ public class KeyGeneratorTests
 
 		// Assert - Version 7 GUIDs have specific characteristics
 		// The key should be parseable back to a valid GUID
-		Assert.IsTrue(Guid.TryParse(key, out var parsedGuid), "Key should be parseable as a valid GUID.");
+		Assert.IsTrue(Guid.TryParse(key, out var _), "Key should be parseable as a valid GUID.");
 	}
 
 	[TestMethod]

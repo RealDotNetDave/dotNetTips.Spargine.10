@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -184,7 +184,6 @@ public class CollectionExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		people = people.FastShuffle();
-		var personFromCollection = people.First();
 		var person = RandomData.GeneratePerson<Person>();
 		var personRecords = RandomData.GeneratePersonRecordCollection(Count).ToList();
 		var personRecord = RandomData.GeneratePerson<PersonRecord>();

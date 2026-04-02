@@ -4,7 +4,7 @@
 // Created          : 07-12-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="CollectionRandomizerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -555,7 +555,9 @@ public class CollectionRandomizerTests
 
 		var secondRun = new List<int>();
 		for (int i = 0; i < collection.Count; i++)
+		{
 			secondRun.Add(randomizer.GetNext());
+		}
 
 		// Assert
 		// After reset, the sequence should be a permutation of the original collection
