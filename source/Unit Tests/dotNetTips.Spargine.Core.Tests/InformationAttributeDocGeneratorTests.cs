@@ -97,7 +97,7 @@ public class InformationAttributeDocGeneratorTests
 	[TestMethod]
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Tester_ToFile()
 	{
-		GetDocPath("DotNetTips.Spargine.10.Tester.dll", out var filePath, out var outputPath);
+		GetDocPath("DotNetTips.Spargine.10.Tester.dll", out var _, out var outputPath);
 
 		var assembly = Assembly.GetAssembly(typeof(RandomData));
 

@@ -1820,7 +1820,7 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
 
-		Assert.IsNotNull((object)people.PickRandom());
+		Assert.IsNotNull(people.PickRandom());
 	}
 
 	[TestMethod]

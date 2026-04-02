@@ -1256,7 +1256,7 @@ public class EnumerableExtensionsTests
 
 		var result = numbers.FastLongCount(n => n > 0);
 
-		Assert.AreEqual((long)largeCount, result);
+		Assert.AreEqual(largeCount, result);
 		Assert.IsInstanceOfType<long>(result);
 	}
 
@@ -1318,7 +1318,7 @@ public class EnumerableExtensionsTests
 		var expectedCount = people.Count(p => p.FirstName.Contains('a', StringComparison.OrdinalIgnoreCase));
 		var result = people.FastLongCount(p => p.FirstName.Contains('a', StringComparison.OrdinalIgnoreCase));
 
-		Assert.AreEqual((long)expectedCount, result);
+		Assert.AreEqual(expectedCount, result);
 	}
 
 	[TestMethod]

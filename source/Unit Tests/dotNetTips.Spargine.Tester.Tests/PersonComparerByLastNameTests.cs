@@ -30,7 +30,7 @@ public class PersonComparerByLastNameTests
 		var person2 = new Person("id2xxxxxxx", "test2@xxxxexample.com") { LastName = "Smith" };
 		var comparer = new Models.RefTypes.Comparers.PersonComparerByLastName();
 
-		int result = comparer.Compare(person1, person2);
+		var result = comparer.Compare(person1, person2);
 
 		Assert.IsLessThan(0, result);
 	}

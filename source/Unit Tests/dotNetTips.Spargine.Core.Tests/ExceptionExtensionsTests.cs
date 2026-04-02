@@ -612,7 +612,7 @@ public class ExceptionExtensionsTests
 
 		// Assert
 		Assert.IsTrue(metadata.ContainsKey("IsLogged"));
-		Assert.IsTrue(metadata["IsLogged"]);
+		Assert.IsTrue((bool?)metadata["IsLogged"]);
 	}
 
 	[TestMethod]
