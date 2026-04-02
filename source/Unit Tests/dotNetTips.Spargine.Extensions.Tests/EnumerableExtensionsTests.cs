@@ -1210,7 +1210,7 @@ public class EnumerableExtensionsTests
 
 		var result = people.FastLongCount(p => p != null);
 
-		Assert.AreEqual((long)Count, result);
+		Assert.AreEqual(Count, result);
 	}
 
 	[TestMethod]

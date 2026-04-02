@@ -1339,7 +1339,6 @@ public class ListExtensionsTests
 	{
 		// Arrange
 		var person1 = new Person { Id = "1234567890", FirstName = "John", LastName = "Doe" };
-		var person2 = new Person { Id = "1234567890", FirstName = "John", LastName = "Doe" };
 		var list1 = new List<Person> { person1 };
 		var list2 = new List<Person> { person1 }; // Same reference
 

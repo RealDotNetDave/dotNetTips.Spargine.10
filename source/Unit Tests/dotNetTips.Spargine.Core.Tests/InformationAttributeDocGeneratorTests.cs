@@ -67,7 +67,7 @@ public class InformationAttributeDocGeneratorTests
 	[TestMethod]
 	public void GenerateMarkdownDocumentForAssembly_ValidAssembly_Extensions_ToFile()
 	{
-		GetDocPath("DotNetTips.Spargine.10.Extensions.dll", out var filePath, out var outputPath);
+		GetDocPath("DotNetTips.Spargine.10.Extensions.dll", out var _, out var outputPath);
 
 		var assembly = Assembly.GetAssembly(typeof(ListExtensions));
 

@@ -169,7 +169,6 @@ public class CollectionExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 		people = people.FastShuffle();
-		var personFromCollection = people.First();
 		Person nullPerson = null;
 
 		// TEST
