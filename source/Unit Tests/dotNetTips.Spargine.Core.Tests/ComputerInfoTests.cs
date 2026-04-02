@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-28-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ComputerInfoTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -80,6 +80,32 @@ public class ComputerInfoTests
 
 		// Assert
 		Assert.AreEqual(expectedThreadId, actualThreadId, "The CurrentManagedTreadId property should return the correct thread ID.");
+	}
+
+	[TestMethod]
+	public void CurrentStackTrace_ShouldReturnNonEmptyStackTrace()
+	{
+		// Arrange
+		var computerInfo = new ComputerInfo();
+
+		// Act
+		var stackTrace = computerInfo.CurrentStackTrace;
+
+		// Assert
+		Assert.IsFalse(string.IsNullOrWhiteSpace(stackTrace), "CurrentStackTrace should return a non-empty string.");
+	}
+
+	[TestMethod]
+	public void CurrentSystemTickCount_ShouldReturnNonNegativeValue()
+	{
+		// Arrange
+		var computerInfo = new ComputerInfo();
+
+		// Act
+		var tickCount = computerInfo.CurrentSystemTickCount;
+
+		// Assert
+		Assert.IsTrue(tickCount != 0, "CurrentSystemTickCount should return a non-zero value.");
 	}
 
 	[TestMethod]
