@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-10-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="EnumerationTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -238,6 +238,233 @@ public class EnumerationTests
 	public void ValueTest()
 	{
 		Assert.IsNotNull(DateTimeFormat.MonthDay.Value);
+	}
+
+	[TestMethod]
+	public void CompareTo_Null_ReturnsPositive()
+	{
+		var result = NumericFormat.Currency.CompareTo(null);
+		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void Equals_DifferentEnumerationType_SameValue_ReturnsFalse()
+	{
+		// DateTimeFormat.FullDateLongTime has value 0, NumericFormat.Currency has value 0
+		Assert.IsFalse(DateTimeFormat.FullDateLongTime.Equals(NumericFormat.Currency));
+	}
+
+	[TestMethod]
+	public void FromDisplayName_InvalidDisplayName_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Enumeration.FromDisplayName<NumericFormat>("NonExistentDisplayName"));
+	}
+
+	[TestMethod]
+	public void ToString_ReturnsDisplayName()
+	{
+		var format = NumericFormat.Currency;
+		Assert.AreEqual(format.DisplayName, format.ToString());
+	}
+
+	[TestMethod]
+	public void TryFromDisplayName_EmptyDisplayName_ReturnsFalseAndNullResult()
+	{
+		var success = Enumeration.TryFromDisplayName<NumericFormat>(string.Empty, out var result);
+		Assert.IsFalse(success);
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void TryFromDisplayName_WhitespaceDisplayName_ReturnsFalseAndNullResult()
+	{
+		var success = Enumeration.TryFromDisplayName<NumericFormat>("   ", out var result);
+		Assert.IsFalse(success);
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void OperatorEqual_SameValue_ReturnsTrue()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left == right);
+	}
+
+	[TestMethod]
+	public void OperatorEqual_DifferentValue_ReturnsFalse()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Decimal;
+		Assert.IsFalse(left == right);
+	}
+
+	[TestMethod]
+	public void OperatorEqual_BothNull_ReturnsTrue()
+	{
+		NumericFormat left = null;
+		NumericFormat right = null;
+		Assert.IsTrue(left == right);
+	}
+
+	[TestMethod]
+	public void OperatorEqual_LeftNull_ReturnsFalse()
+	{
+		NumericFormat left = null;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left == right);
+	}
+
+	[TestMethod]
+	public void OperatorEqual_RightNull_ReturnsFalse()
+	{
+		var left = NumericFormat.Currency;
+		NumericFormat right = null;
+		Assert.IsFalse(left == right);
+	}
+
+	[TestMethod]
+	public void OperatorNotEqual_DifferentValue_ReturnsTrue()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Decimal;
+		Assert.IsTrue(left != right);
+	}
+
+	[TestMethod]
+	public void OperatorNotEqual_SameValue_ReturnsFalse()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left != right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThan_LeftGreaterThanRight_ReturnsTrue()
+	{
+		var left = NumericFormat.Decimal;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left > right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThan_LeftEqualToRight_ReturnsFalse()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left > right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThan_LeftNull_ReturnsFalse()
+	{
+		NumericFormat left = null;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left > right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThanOrEqual_LeftGreaterThanRight_ReturnsTrue()
+	{
+		var left = NumericFormat.Decimal;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left >= right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThanOrEqual_LeftEqualToRight_ReturnsTrue()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left >= right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThanOrEqual_LeftLessThanRight_ReturnsFalse()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Decimal;
+		Assert.IsFalse(left >= right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThanOrEqual_BothNull_ReturnsTrue()
+	{
+		NumericFormat left = null;
+		NumericFormat right = null;
+		Assert.IsTrue(left >= right);
+	}
+
+	[TestMethod]
+	public void OperatorGreaterThanOrEqual_LeftNull_RightNotNull_ReturnsFalse()
+	{
+		NumericFormat left = null;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left >= right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThan_LeftLessThanRight_ReturnsTrue()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Decimal;
+		Assert.IsTrue(left < right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThan_LeftEqualToRight_ReturnsFalse()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left < right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThan_LeftNull_RightNotNull_ReturnsTrue()
+	{
+		NumericFormat left = null;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left < right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThan_BothNull_ReturnsFalse()
+	{
+		NumericFormat left = null;
+		NumericFormat right = null;
+		Assert.IsFalse(left < right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThanOrEqual_LeftLessThanRight_ReturnsTrue()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Decimal;
+		Assert.IsTrue(left <= right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThanOrEqual_LeftEqualToRight_ReturnsTrue()
+	{
+		var left = NumericFormat.Currency;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left <= right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThanOrEqual_LeftGreaterThanRight_ReturnsFalse()
+	{
+		var left = NumericFormat.Decimal;
+		var right = NumericFormat.Currency;
+		Assert.IsFalse(left <= right);
+	}
+
+	[TestMethod]
+	public void OperatorLessThanOrEqual_LeftNull_ReturnsTrue()
+	{
+		NumericFormat left = null;
+		var right = NumericFormat.Currency;
+		Assert.IsTrue(left <= right);
 	}
 
 }
