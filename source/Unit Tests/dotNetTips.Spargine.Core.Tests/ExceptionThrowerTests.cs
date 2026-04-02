@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-14-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ExceptionThrowerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,6 +19,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text.Json;
 using DotNetTips.Spargine.Extensions;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -113,6 +114,21 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
+	public void CreateFileNotFoundException_WithNullMessageTwoParams_UsesDefaultMessage()
+	{
+		// Arrange
+		var fileName = RandomData.GenerateRandomFileName();
+
+		// Act
+		var ex = ExceptionThrower.CreateFileNotFoundException(null, fileName);
+
+		// Assert
+		Assert.IsNotNull(ex);
+		Assert.AreEqual(fileName, ex.FileName);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(ex.Message));
+	}
+
+	[TestMethod]
 	public void DefaultIfNull_NonNullValue_ReturnsOriginalValue()
 	{
 		// Arrange
@@ -149,8 +165,28 @@ public class ExceptionThrowerTests
 	[TestMethod]
 	public void ThrowArgumentException_WithMessage_ThrowsArgumentException()
 	{
+		// Arrange
+		var message = RandomData.GenerateWord(10);
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentException>(() => ExceptionThrower.ThrowArgumentException("Test message", "paramName"));
+		_ = Assert.ThrowsExactly<ArgumentException>(() => ExceptionThrower.ThrowArgumentException(message, "paramName"));
+	}
+
+	[TestMethod]
+	public void ThrowArgumentException_WithNullMessage_ThrowsArgumentException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => ExceptionThrower.ThrowArgumentException(null, "paramName"));
+	}
+
+	[TestMethod]
+	public void ThrowArgumentException_WithNullMessageAndInnerException_ThrowsArgumentException()
+	{
+		// Arrange
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => ExceptionThrower.ThrowArgumentException(null, inner));
 	}
 
 	[TestMethod]
@@ -203,6 +239,16 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
+	public void ThrowArgumentNullException_WithNullMessageAndInnerException_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ExceptionThrower.ThrowArgumentNullException(null, inner));
+	}
+
+	[TestMethod]
 	public void ThrowArgumentNullException_WithParamName_ThrowsArgumentNullException()
 	{
 		// Act & Assert
@@ -231,6 +277,16 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
+	public void ThrowArgumentOutOfRangeException_WithNullMessageAndInnerException_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => ExceptionThrower.ThrowArgumentOutOfRangeException(null, inner));
+	}
+
+	[TestMethod]
 	public void ThrowArgumentOutOfRangeException_WithParamName_ThrowsArgumentOutOfRangeException()
 	{
 		// Act & Assert
@@ -254,8 +310,21 @@ public class ExceptionThrowerTests
 	[TestMethod]
 	public void ThrowDirectoryNotFoundException_WithInnerException_ThrowsArgumentInvalidException()
 	{
+		// Arrange
+		var inner = new Exception(RandomData.GenerateWord(10));
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowDirectoryNotFoundException("Test message", new Exception("Inner exception")));
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowDirectoryNotFoundException("Test message", inner));
+	}
+
+	[TestMethod]
+	public void ThrowDirectoryNotFoundException_WithNullMessageAndInnerException_ThrowsArgumentInvalidException()
+	{
+		// Arrange
+		var inner = new Exception(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowDirectoryNotFoundException(null, inner));
 	}
 
 	[TestMethod]
@@ -282,8 +351,11 @@ public class ExceptionThrowerTests
 	[TestMethod]
 	public void ThrowFileNotFoundException_WithMessage_ThrowsFileNotFoundException()
 	{
+		// Arrange
+		var fileName = RandomData.GenerateRandomFileName();
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException("Test message", "nonexistent.txt"));
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException("Test message", fileName));
 	}
 
 	[TestMethod]
@@ -301,10 +373,31 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
+	public void ThrowFileNotFoundException_WithNullMessageAndFileName_ThrowsFileNotFoundException()
+	{
+		// Arrange
+		var fileName = RandomData.GenerateRandomFileName();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException(null, fileName));
+	}
+
+	[TestMethod]
 	public void ThrowFileNotFoundException_WithNullMessageAndInnerException_ThrowsFileNotFoundException()
 	{
 		// Act & Assert
 		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException(null, (Exception)null));
+	}
+
+	[TestMethod]
+	public void ThrowFileNotFoundException_WithNullMessageFileNameAndInnerException_ThrowsFileNotFoundException()
+	{
+		// Arrange
+		var fileName = RandomData.GenerateRandomFileName();
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<FileNotFoundException>(() => ExceptionThrower.ThrowFileNotFoundException(null, fileName, inner));
 	}
 
 	[TestMethod]
@@ -317,8 +410,31 @@ public class ExceptionThrowerTests
 	[TestMethod]
 	public void ThrowInvalidCastException_WithMessage_ThrowsInvalidCastException()
 	{
+		// Arrange
+		var paramName = RandomData.GenerateWord(5);
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidCastException("Test message", "paramName"));
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidCastException("Test message", paramName));
+	}
+
+	[TestMethod]
+	public void ThrowInvalidCastException_WithNullMessage_ThrowsInvalidCastException()
+	{
+		// Arrange
+		var paramName = RandomData.GenerateWord(5);
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidCastException(null, paramName));
+	}
+
+	[TestMethod]
+	public void ThrowInvalidCastException_WithNullMessageAndInnerException_ThrowsInvalidCastException()
+	{
+		// Arrange
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidCastException(null, inner));
 	}
 
 	[TestMethod]
@@ -333,6 +449,16 @@ public class ExceptionThrowerTests
 	{
 		// Act & Assert
 		_ = Assert.ThrowsExactly<InvalidEnumTypeException>(() => ExceptionThrower.ThrowInvalidEnumTypeException(null));
+	}
+
+	[TestMethod]
+	public void ThrowInvalidEnumTypeException_WithMessageAndInnerException_ThrowsInvalidCastException()
+	{
+		// Arrange
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidEnumTypeException("Test message", inner));
 	}
 
 	[TestMethod]
@@ -486,8 +612,18 @@ public class ExceptionThrowerTests
 	[TestMethod]
 	public void ThrowMessageNotQueuedException_WithMessage_ThrowsMessageNotQueuedException()
 	{
+		// Arrange
+		var message = RandomData.GenerateWord(10);
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException("Test message"));
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(message));
+	}
+
+	[TestMethod]
+	public void ThrowMessageNotQueuedException_WithNullMessageSingleParam_ThrowsMessageNotQueuedException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null));
 	}
 
 	[TestMethod]
@@ -604,6 +740,16 @@ public class ExceptionThrowerTests
 	{
 		// Act & Assert
 		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException(null));
+	}
+
+	[TestMethod]
+	public void ThrowNetworkConnectionException_WithNullMessageAndInnerException_ThrowsNetworkConnectionException()
+	{
+		// Arrange
+		var inner = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<NetworkConnectionException>(() => ExceptionThrower.ThrowNetworkConnectionException(null, inner));
 	}
 
 	[TestMethod]
