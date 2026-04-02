@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-03-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -785,9 +785,6 @@ public class FastStringBuilderTests
 		Assert.IsNotNull(result);
 	}
 
-	/// <summary>
-	/// Defines the test method RemoveStringTest.
-	/// </summary>
 	[TestMethod]
 	public void RemoveStringTest()
 	{
@@ -1007,6 +1004,107 @@ public class FastStringBuilderTests
 		Assert.Contains("Key1:  ", result);
 		Assert.Contains("Key2:\t", result);
 		Assert.Contains("Key3:\n", result);
+	}
+
+	[TestMethod]
+	public void Concat_CharDelimiter_NullArgsTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+		{
+			_ = FastStringBuilder.Concat(ControlChars.Comma, false, null);
+		});
+	}
+
+	[TestMethod]
+	public void Concat_StringDelimiter_NullArgsTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+		{
+			_ = FastStringBuilder.Concat(ControlChars.CommaSpace, false, (System.Collections.ObjectModel.ReadOnlyCollection<string>)null);
+		});
+	}
+
+	[TestMethod]
+	public void Join_CharDelimiter_NullValuesTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+		{
+			_ = FastStringBuilder.Join((IEnumerable<string>)null, ';');
+		});
+	}
+
+	[TestMethod]
+	public void Join_CharDelimiter_EmptyCollectionTest()
+	{
+		var result = FastStringBuilder.Join(Array.Empty<string>(), ';');
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void Join_CharDelimiter_SingleItemTest()
+	{
+		var word = RandomData.GenerateWord(WordMinLength, WordMaxLength);
+		var result = FastStringBuilder.Join(new[] { word }, ';');
+		Assert.AreEqual(word, result);
+	}
+
+	[TestMethod]
+	public void Join_StringDelimiter_NullValuesTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+		{
+			_ = FastStringBuilder.Join((IEnumerable<string>)null, " | ");
+		});
+	}
+
+	[TestMethod]
+	public void Join_StringDelimiter_EmptyCollectionTest()
+	{
+		var result = FastStringBuilder.Join(Array.Empty<string>(), " | ");
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void Join_StringDelimiter_SingleItemTest()
+	{
+		var word = RandomData.GenerateWord(WordMinLength, WordMaxLength);
+		var result = FastStringBuilder.Join(new[] { word }, " | ");
+		Assert.AreEqual(word, result);
+	}
+
+	[TestMethod]
+	public void Format_EmptyArgsTest()
+	{
+		var result = FastStringBuilder.Format("Hello {0}", Array.Empty<string>());
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void Remove_EntireStringTest()
+	{
+		var result = FastStringBuilder.Remove("test", "test");
+		Assert.AreEqual(ControlChars.EmptyString, result);
+	}
+
+	[TestMethod]
+	public void Remove_AtEndOfStringTest()
+	{
+		var result = FastStringBuilder.Remove("Hello world", "world");
+		Assert.AreEqual("Hello ", result);
+	}
+
+	[TestMethod]
+	public void Remove_AtStartOfStringTest()
+	{
+		var result = FastStringBuilder.Remove("Hello world", "Hello");
+		Assert.AreEqual(" world", result);
+	}
+
+	[TestMethod]
+	public void Remove_ConsecutiveOccurrencesTest()
+	{
+		var result = FastStringBuilder.Remove("testtest", "test");
+		Assert.AreEqual(ControlChars.EmptyString, result);
 	}
 
 }
