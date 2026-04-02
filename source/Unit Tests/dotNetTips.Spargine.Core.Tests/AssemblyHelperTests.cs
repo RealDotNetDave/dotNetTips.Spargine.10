@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -39,7 +40,7 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 	public AssemblyHelperTests()
 	{
 		this._testOutputDirectory = Path.Combine(Path.GetTempPath(), "UnitTesterTests");
-		Directory.CreateDirectory(this._testOutputDirectory);
+		_ = Directory.CreateDirectory(this._testOutputDirectory);
 		this._unitTester = new TestUnitTester(this._testOutputDirectory);
 	}
 
@@ -63,6 +64,19 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 
 		// Assert
 		Assert.IsFalse(result, $"Expected the assembly not to reference {referencedAssemblyName}, but it does.");
+	}
+
+	[TestMethod]
+	public void DoesAssemblyReference_NonDotNetAssemblyFile_ReturnsFalse()
+	{
+		// Arrange
+		using var tempAssembly = CreateTempNonDotNetAssembly(out var file);
+
+		// Act
+		var result = AssemblyHelper.DoesAssemblyReference(file, "System.Runtime");
+
+		// Assert
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -108,6 +122,28 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 
 		// Assert
 		Assert.IsFalse(result, $"Expected the type {typeName} not to exist in the assembly, but it does.");
+	}
+
+	[TestMethod]
+	public void DoesTypeExistInAssembly_NonDotNetAssemblyFile_ReturnsFalse()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.DoesTypeExistInAssembly(file, typeof(AssemblyHelper).FullName!);
+
+			// Assert
+			Assert.IsFalse(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
 	}
 
 	[TestMethod]
@@ -277,6 +313,29 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 	}
 
 	[TestMethod]
+	public void GetAssemblyCustomAttributes_NonDotNetAssemblyFile_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.GetAssemblyCustomAttributes(file);
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsEmpty(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
+	}
+
+	[TestMethod]
 	public void GetAssemblyCustomAttributes_NullAssemblyFile_ThrowsArgumentNullException()
 	{
 		// Act
@@ -310,6 +369,28 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 
 		// Assert
 		Assert.IsNull(entryPoint, "Expected null for an assembly without an entry point, but got a value.");
+	}
+
+	[TestMethod]
+	public void GetAssemblyEntryPoint_NonDotNetAssemblyFile_ReturnsNull()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.GetAssemblyEntryPoint(file);
+
+			// Assert
+			Assert.IsNull(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
 	}
 
 	[TestMethod]
@@ -479,6 +560,46 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 	}
 
 	[TestMethod]
+	public void GetAssemblyPublicTypes_NonDotNetAssemblyFile_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.GetAssemblyPublicTypes(file);
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsEmpty(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
+	}
+
+	[TestMethod]
+	public void GetAssemblyTypes_CalledTwice_ReturnsCachedResults()
+	{
+		// Arrange
+		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
+
+		// Act
+		var result1 = AssemblyHelper.GetAssemblyTypes(assemblyFile);
+		var result2 = AssemblyHelper.GetAssemblyTypes(assemblyFile);
+
+		// Assert
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count);
+		Assert.AreSame(result1, result2, "Expected the same cached instance to be returned on subsequent calls.");
+	}
+
+	[TestMethod]
 	public void GetDependentAssemblies_AssemblyWithNoDependencies_ReturnsEmptyCollection()
 	{
 		// Arrange
@@ -490,6 +611,29 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 		// Assert
 		Assert.IsNotNull(dependentAssemblies, "Expected a non-null collection of dependent assemblies.");
 		Assert.IsEmpty(dependentAssemblies, "Expected an empty collection for an assembly with no dependencies.");
+	}
+
+	[TestMethod]
+	public void GetDependentAssemblies_NonDotNetAssemblyFile_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.GetDependentAssemblies(file);
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsEmpty(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
 	}
 
 	[TestMethod]
@@ -530,6 +674,29 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 		// Assert
 		Assert.IsNotNull(methods, "Expected a non-null collection of methods.");
 		Assert.IsEmpty(methods, "Expected an empty collection for a non-existent type.");
+	}
+
+	[TestMethod]
+	public void GetMethodsInType_NonDotNetAssemblyFile_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.GetMethodsInType(file, typeof(AssemblyHelper).FullName!);
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsEmpty(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
 	}
 
 	[TestMethod]
@@ -705,7 +872,7 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 	public void GetNetSdkDllFiles_PerformanceTest_CompletesReasonablyFast()
 	{
 		// Arrange
-		var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+		var stopwatch = Stopwatch.StartNew();
 
 		// Act
 		var result = AssemblyHelper.GetNetSdkDllFiles(SDKVersion);
@@ -917,6 +1084,28 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 	}
 
 	[TestMethod]
+	public void IsDotNetAssembly_NonDotNetFile_ReturnsFalse()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(100));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act
+			var result = AssemblyHelper.IsDotNetAssembly(file);
+
+			// Assert
+			Assert.IsFalse(result);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
+	}
+
+	[TestMethod]
 	public void IsDotNetAssembly_NonExistentFile_ThrowsFileNotFoundException()
 	{
 		// Arrange
@@ -931,6 +1120,19 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.IsDotNetAssembly(null));
+	}
+
+	[TestMethod]
+	public void IsDotNetAssembly_ValidDotNetAssembly_ReturnsTrue()
+	{
+		// Arrange
+		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
+
+		// Act
+		var result = AssemblyHelper.IsDotNetAssembly(assemblyFile);
+
+		// Assert
+		Assert.IsTrue(result, "Expected the core assembly to be identified as a valid .NET assembly.");
 	}
 
 	[TestMethod]
@@ -1062,6 +1264,32 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 	}
 
 	[TestMethod]
+	public void UnloadAssembly_NonDotNetAssemblyFile_DoesNotThrow()
+	{
+		// Arrange
+		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
+		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
+		var file = new FileInfo(tempFile);
+
+		try
+		{
+			// Act - should not throw, just return
+			AssemblyHelper.UnloadAssembly(file);
+		}
+		finally
+		{
+			File.Delete(tempFile);
+		}
+	}
+
+	[TestMethod]
+	public void UnloadAssembly_NullAssemblyFile_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.UnloadAssembly(null!));
+	}
+
+	[TestMethod]
 	public void UnloadAssembly_ValidAssembly_DoesNotThrow()
 	{
 		// Arrange
@@ -1146,19 +1374,6 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 		Assert.AreEqual(new Version(3, 1, 4), result, "Expected version 3.1.4, but got a different result.");
 	}
 
-	[TestMethod]
-	public void DoesAssemblyReference_NonDotNetAssemblyFile_ReturnsFalse()
-	{
-		// Arrange
-		using var tempAssembly = CreateTempNonDotNetAssembly(out var file);
-
-		// Act
-		var result = AssemblyHelper.DoesAssemblyReference(file, "System.Runtime");
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
 	private static IDisposable CreateTempNonDotNetAssembly(out FileInfo file)
 	{
 		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
@@ -1174,16 +1389,16 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 
 		public TempFileDeleter(string path)
 		{
-			_path = path;
+			this._path = path;
 		}
 
 		public void Dispose()
 		{
 			try
 			{
-				if (File.Exists(_path))
+				if (File.Exists(this._path))
 				{
-					File.Delete(_path);
+					File.Delete(this._path);
 				}
 			}
 			catch (IOException)
@@ -1195,220 +1410,6 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 				// Ignore cleanup errors in tests.
 			}
 		}
-	}
-
-	[TestMethod]
-	public void DoesTypeExistInAssembly_NonDotNetAssemblyFile_ReturnsFalse()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.DoesTypeExistInAssembly(file, typeof(AssemblyHelper).FullName!);
-
-			// Assert
-			Assert.IsFalse(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void GetAssemblyCustomAttributes_NonDotNetAssemblyFile_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.GetAssemblyCustomAttributes(file);
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.IsEmpty(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void GetAssemblyEntryPoint_NonDotNetAssemblyFile_ReturnsNull()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.GetAssemblyEntryPoint(file);
-
-			// Assert
-			Assert.IsNull(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void GetAssemblyPublicTypes_NonDotNetAssemblyFile_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.GetAssemblyPublicTypes(file);
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.IsEmpty(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void GetAssemblyTypes_CalledTwice_ReturnsCachedResults()
-	{
-		// Arrange
-		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
-
-		// Act
-		var result1 = AssemblyHelper.GetAssemblyTypes(assemblyFile);
-		var result2 = AssemblyHelper.GetAssemblyTypes(assemblyFile);
-
-		// Assert
-		Assert.IsNotNull(result1);
-		Assert.IsNotNull(result2);
-		Assert.AreEqual(result1.Count, result2.Count);
-		Assert.AreSame(result1, result2, "Expected the same cached instance to be returned on subsequent calls.");
-	}
-
-	[TestMethod]
-	public void GetDependentAssemblies_NonDotNetAssemblyFile_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.GetDependentAssemblies(file);
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.IsEmpty(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void GetMethodsInType_NonDotNetAssemblyFile_ReturnsEmptyCollection()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.GetMethodsInType(file, typeof(AssemblyHelper).FullName!);
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.IsEmpty(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void IsDotNetAssembly_NonDotNetFile_ReturnsFalse()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(100));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act
-			var result = AssemblyHelper.IsDotNetAssembly(file);
-
-			// Assert
-			Assert.IsFalse(result);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void IsDotNetAssembly_ValidDotNetAssembly_ReturnsTrue()
-	{
-		// Arrange
-		var assemblyFile = new FileInfo(typeof(AssemblyHelper).Assembly.Location);
-
-		// Act
-		var result = AssemblyHelper.IsDotNetAssembly(assemblyFile);
-
-		// Assert
-		Assert.IsTrue(result, "Expected the core assembly to be identified as a valid .NET assembly.");
-	}
-
-	[TestMethod]
-	public void UnloadAssembly_NonDotNetAssemblyFile_DoesNotThrow()
-	{
-		// Arrange
-		var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dll");
-		File.WriteAllText(tempFile, RandomData.GenerateWord(50));
-		var file = new FileInfo(tempFile);
-
-		try
-		{
-			// Act - should not throw, just return
-			AssemblyHelper.UnloadAssembly(file);
-		}
-		finally
-		{
-			File.Delete(tempFile);
-		}
-	}
-
-	[TestMethod]
-	public void UnloadAssembly_NullAssemblyFile_ThrowsArgumentNullException()
-	{
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => AssemblyHelper.UnloadAssembly(null!));
 	}
 
 	private class TestUnitTester : UnitTester

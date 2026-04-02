@@ -203,7 +203,7 @@ public class TempFileManagerTests
 	{
 		// Arrange
 		var manager = new TempFileManager();
-		bool finalizeCalled = false;
+		var finalizeCalled = false;
 
 		// Act
 		await (manager as IAsyncDisposable).DisposeAsync();

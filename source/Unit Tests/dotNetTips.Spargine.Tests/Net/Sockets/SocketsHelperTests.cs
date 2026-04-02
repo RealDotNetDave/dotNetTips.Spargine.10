@@ -37,7 +37,7 @@ public class SocketsHelperTests
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 		{
-			await SocketsHelper.ConnectTcpAsync(context, cancellationToken);
+			_ = await SocketsHelper.ConnectTcpAsync(context, cancellationToken);
 		});
 	}
 

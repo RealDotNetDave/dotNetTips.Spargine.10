@@ -11,10 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
@@ -124,7 +126,7 @@ public class FileProcessorTests
 		}
 
 		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyCancelled"));
-		var cts = new System.Threading.CancellationTokenSource();
+		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>
@@ -143,7 +145,7 @@ public class FileProcessorTests
 			processor.CopyFiles(files, destination, cancellationToken: cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
-		catch (System.OperationCanceledException)
+		catch (OperationCanceledException)
 		{
 			exceptionThrown = true;
 		}
@@ -244,7 +246,7 @@ public class FileProcessorTests
 		}
 
 		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalCancelled"));
-		var cts = new System.Threading.CancellationTokenSource();
+		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>
@@ -263,7 +265,7 @@ public class FileProcessorTests
 			processor.CopyFilesWithOriginalPath(files, destination, cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
-		catch (System.OperationCanceledException)
+		catch (OperationCanceledException)
 		{
 			exceptionThrown = true;
 		}
@@ -360,7 +362,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var cts = new System.Threading.CancellationTokenSource();
+		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>
@@ -379,7 +381,7 @@ public class FileProcessorTests
 			processor.DeleteFiles(files, cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
-		catch (System.OperationCanceledException)
+		catch (OperationCanceledException)
 		{
 			exceptionThrown = true;
 		}
@@ -527,7 +529,7 @@ public class FileProcessorTests
 			folders.Add(newPath);
 		}
 
-		var cts = new System.Threading.CancellationTokenSource();
+		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>
@@ -546,7 +548,7 @@ public class FileProcessorTests
 			processor.DeleteFolders(folders, recursive: true, cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
-		catch (System.OperationCanceledException)
+		catch (OperationCanceledException)
 		{
 			exceptionThrown = true;
 		}
@@ -717,7 +719,7 @@ public class FileProcessorTests
 		}
 
 		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveCancelled"));
-		var cts = new System.Threading.CancellationTokenSource();
+		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>
@@ -736,7 +738,7 @@ public class FileProcessorTests
 			processor.MoveFiles(files, destination, cancellationToken: cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
-		catch (System.OperationCanceledException)
+		catch (OperationCanceledException)
 		{
 			exceptionThrown = true;
 		}
@@ -840,7 +842,7 @@ public class FileProcessorTests
 		}
 
 		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalCancelled"));
-		var cts = new System.Threading.CancellationTokenSource();
+		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>
@@ -859,7 +861,7 @@ public class FileProcessorTests
 			processor.MoveFilesWithOriginalPath(files, destination, cancellationToken: cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
-		catch (System.OperationCanceledException)
+		catch (OperationCanceledException)
 		{
 			exceptionThrown = true;
 		}

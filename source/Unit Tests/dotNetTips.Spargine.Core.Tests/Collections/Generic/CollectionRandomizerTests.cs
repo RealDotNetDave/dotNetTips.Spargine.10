@@ -209,7 +209,7 @@ public class CollectionRandomizerTests
 		{
 			while (true) // Intentionally infinite loop to force the exception
 			{
-				randomizer.GetNext();
+				_ = randomizer.GetNext();
 			}
 		});
 	}

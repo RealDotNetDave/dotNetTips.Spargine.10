@@ -132,8 +132,8 @@ public class ExceptionThrowerTests
 	public void DefaultIfNull_NonNullValue_ReturnsOriginalValue()
 	{
 		// Arrange
-		string value = "original";
-		string defaultValue = "default";
+		var value = "original";
+		var defaultValue = "default";
 
 		// Act
 		var result = value.DefaultIfNull(defaultValue);
@@ -318,16 +318,6 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
-	public void ThrowDirectoryNotFoundException_WithNullMessageAndInnerException_ThrowsArgumentInvalidException()
-	{
-		// Arrange
-		var inner = new Exception(RandomData.GenerateWord(10));
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowDirectoryNotFoundException(null, inner));
-	}
-
-	[TestMethod]
 	public void ThrowDirectoryNotFoundException_WithMessage_ThrowsDirectoryNotFoundException()
 	{
 		// Act & Assert
@@ -339,6 +329,16 @@ public class ExceptionThrowerTests
 	{
 		// Act & Assert
 		_ = Assert.ThrowsExactly<DirectoryNotFoundException>(() => ExceptionThrower.ThrowDirectoryNotFoundException(null, new DirectoryInfo("nonexistent")));
+	}
+
+	[TestMethod]
+	public void ThrowDirectoryNotFoundException_WithNullMessageAndInnerException_ThrowsArgumentInvalidException()
+	{
+		// Arrange
+		var inner = new Exception(RandomData.GenerateWord(10));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => ExceptionThrower.ThrowDirectoryNotFoundException(null, inner));
 	}
 
 	[TestMethod]
@@ -445,13 +445,6 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
-	public void ThrowInvalidEnumTypeException_WithNullMessage_ThrowsInvalidEnumTypeException()
-	{
-		// Act & Assert
-		_ = Assert.ThrowsExactly<InvalidEnumTypeException>(() => ExceptionThrower.ThrowInvalidEnumTypeException(null));
-	}
-
-	[TestMethod]
 	public void ThrowInvalidEnumTypeException_WithMessageAndInnerException_ThrowsInvalidCastException()
 	{
 		// Arrange
@@ -459,6 +452,13 @@ public class ExceptionThrowerTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<InvalidCastException>(() => ExceptionThrower.ThrowInvalidEnumTypeException("Test message", inner));
+	}
+
+	[TestMethod]
+	public void ThrowInvalidEnumTypeException_WithNullMessage_ThrowsInvalidEnumTypeException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidEnumTypeException>(() => ExceptionThrower.ThrowInvalidEnumTypeException(null));
 	}
 
 	[TestMethod]
@@ -620,13 +620,6 @@ public class ExceptionThrowerTests
 	}
 
 	[TestMethod]
-	public void ThrowMessageNotQueuedException_WithNullMessageSingleParam_ThrowsMessageNotQueuedException()
-	{
-		// Act & Assert
-		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null));
-	}
-
-	[TestMethod]
 	public void ThrowMessageNotQueuedException_WithMessageAndInnerExceptionAndNullUserMessage_ThrowsMessageNotQueuedException()
 	{
 		// Act & Assert
@@ -709,6 +702,13 @@ public class ExceptionThrowerTests
 	{
 		// Act & Assert
 		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null, null, new Exception("Inner exception")));
+	}
+
+	[TestMethod]
+	public void ThrowMessageNotQueuedException_WithNullMessageSingleParam_ThrowsMessageNotQueuedException()
+	{
+		// Act & Assert
+		_ = Assert.ThrowsExactly<MessageNotQueuedException>(() => ExceptionThrower.ThrowMessageNotQueuedException(null));
 	}
 
 	[TestMethod]
