@@ -80,8 +80,8 @@ public class PerformanceStopwatchTests
 
 		Thread.Sleep(500);
 
-		psw.StopReset(this._logger, "Test message 1");
-		psw.StopReset(this._logger, "Test message 2");
+		_ = psw.StopReset(this._logger, "Test message 1");
+		_ = psw.StopReset(this._logger, "Test message 2");
 
 		Assert.IsNotEmpty(psw.Diagnostics);
 
@@ -233,6 +233,32 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
+	public void GetElapsedTime_WithStartAndEndTimestamp_ReturnsPositiveTimeSpan()
+	{
+		var startingTimestamp = Stopwatch.GetTimestamp();
+
+		Thread.Sleep(100);
+
+		var endingTimestamp = Stopwatch.GetTimestamp();
+
+		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
+
+		Assert.IsGreaterThanOrEqualTo(50, elapsed.TotalMilliseconds);
+	}
+
+	[TestMethod]
+	public void GetElapsedTime_WithStartingTimestamp_ReturnsPositiveTimeSpan()
+	{
+		var startingTimestamp = Stopwatch.GetTimestamp();
+
+		Thread.Sleep(100);
+
+		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp);
+
+		Assert.IsGreaterThanOrEqualTo(50, elapsed.TotalMilliseconds);
+	}
+
+	[TestMethod]
 	public void GetLapsTest()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.GetLapsTest));
@@ -271,6 +297,14 @@ public class PerformanceStopwatchTests
 
 		Assert.Contains("Performance Report", report);
 		Assert.Contains("Test diagnostic entry", report);
+	}
+
+	[TestMethod]
+	public void GetTimeStamp_ReturnsPositiveValue()
+	{
+		var timestamp = PerformanceStopwatch.GetTimeStamp();
+
+		Assert.IsTrue(timestamp > 0);
 	}
 
 	[TestMethod]
@@ -614,54 +648,11 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
-	public void GetElapsedTime_WithStartingTimestamp_ReturnsPositiveTimeSpan()
+	public void TrackTelemetry_WithNullTelemetry_ThrowsArgumentNullException()
 	{
-		var startingTimestamp = Stopwatch.GetTimestamp();
+		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetry_WithNullTelemetry_ThrowsArgumentNullException));
 
-		Thread.Sleep(100);
-
-		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp);
-
-		Assert.IsGreaterThanOrEqualTo(50, elapsed.TotalMilliseconds);
-	}
-
-	[TestMethod]
-	public void GetElapsedTime_WithStartAndEndTimestamp_ReturnsPositiveTimeSpan()
-	{
-		var startingTimestamp = Stopwatch.GetTimestamp();
-
-		Thread.Sleep(100);
-
-		var endingTimestamp = Stopwatch.GetTimestamp();
-
-		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
-
-		Assert.IsGreaterThanOrEqualTo(50, elapsed.TotalMilliseconds);
-	}
-
-	[TestMethod]
-	public void GetTimeStamp_ReturnsPositiveValue()
-	{
-		var timestamp = PerformanceStopwatch.GetTimeStamp();
-
-		Assert.IsTrue(timestamp > 0);
-	}
-
-	[TestMethod]
-	public void TrackTelemetryTest()
-	{
-		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetryTest));
-		var configuration = new TelemetryConfiguration
-		{
-			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
-		};
-		var telemetryClient = new TelemetryClient(configuration);
-
-		Thread.Sleep(100);
-
-		psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message");
-
-		Assert.IsNotNull(psw);
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.TrackTelemetry(null, "TestOperation"));
 	}
 
 	[TestMethod]
@@ -689,26 +680,20 @@ public class PerformanceStopwatchTests
 	}
 
 	[TestMethod]
-	public void TrackTelemetry_WithNullTelemetry_ThrowsArgumentNullException()
+	public void TrackTelemetryTest()
 	{
-		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetry_WithNullTelemetry_ThrowsArgumentNullException));
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => psw.TrackTelemetry(null, "TestOperation"));
-	}
-
-	[TestMethod]
-	public void WithTelemetryTest()
-	{
-		var psw = PerformanceStopwatch.StartNew(nameof(this.WithTelemetryTest));
+		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetryTest));
 		var configuration = new TelemetryConfiguration
 		{
 			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
 		};
 		var telemetryClient = new TelemetryClient(configuration);
 
-		var result = psw.WithTelemetry(telemetryClient, "TestOperation", "Test message");
+		Thread.Sleep(100);
 
-		Assert.AreSame(psw, result);
+		psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message");
+
+		Assert.IsNotNull(psw);
 	}
 
 	[TestMethod]
@@ -734,6 +719,21 @@ public class PerformanceStopwatchTests
 		};
 
 		var result = psw.WithTelemetry(telemetryClient, "TestOperation", "Test message", properties);
+
+		Assert.AreSame(psw, result);
+	}
+
+	[TestMethod]
+	public void WithTelemetryTest()
+	{
+		var psw = PerformanceStopwatch.StartNew(nameof(this.WithTelemetryTest));
+		var configuration = new TelemetryConfiguration
+		{
+			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
+		};
+		var telemetryClient = new TelemetryClient(configuration);
+
+		var result = psw.WithTelemetry(telemetryClient, "TestOperation", "Test message");
 
 		Assert.AreSame(psw, result);
 	}

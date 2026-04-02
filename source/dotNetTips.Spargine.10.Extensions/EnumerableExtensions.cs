@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -410,14 +410,11 @@ public static class EnumerableExtensions
 				return lambda.Compile();
 			});
 
-			if (accessor is not Func<T, object?> typedAccessor)
-			{
-				throw new InvalidOperationException($"Cached delegate for property accessor is not of expected type Func<{typeof(T).Name}, object?>.");
-			}
-
-			return descending
+			return accessor is not Func<T, object?> typedAccessor
+				? throw new InvalidOperationException($"Cached delegate for property accessor is not of expected type Func<{typeof(T).Name}, object?>.")
+				: (IEnumerable<T>)(descending
 				? collection.OrderByDescending(typedAccessor)
-				: collection.OrderBy(typedAccessor);
+				: collection.OrderBy(typedAccessor));
 		}
 
 		/// <summary>

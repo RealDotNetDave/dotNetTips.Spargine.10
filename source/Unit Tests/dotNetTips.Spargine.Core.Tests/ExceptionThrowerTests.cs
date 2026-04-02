@@ -146,7 +146,7 @@ public class ExceptionThrowerTests
 	{
 		// Arrange
 		string value = null;
-		string defaultValue = "default";
+		var defaultValue = "default";
 
 		// Act
 		var result = value.DefaultIfNull(defaultValue);

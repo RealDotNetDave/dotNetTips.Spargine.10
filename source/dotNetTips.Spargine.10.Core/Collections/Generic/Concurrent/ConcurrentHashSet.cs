@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -526,7 +526,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 
 			if (count == 0)
 			{
-				return Array.Empty<T>();
+				return [];
 			}
 
 			var array = new T[count];

@@ -98,7 +98,7 @@ public class ObservableListTests
 		var customComparer = new CustomIntComparer();
 		var list = new ObservableList<int>(customComparer);
 
-		list.Add(1);
+		_ = list.Add(1);
 		bool added = list.Add(-1); // Attempt to add a duplicate according to the custom comparer
 
 		Assert.IsFalse(added, "Adding -1 should return false as it is considered a duplicate of 1.");

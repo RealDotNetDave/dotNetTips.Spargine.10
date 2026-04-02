@@ -4,7 +4,7 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-14-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -113,12 +113,7 @@ public static class ReadOnlyCollectionExtensions
 		[Information(nameof(GetValueOrDefault), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T? GetValueOrDefault(int index, T? defaultValue = default)
 		{
-			if (collection is null || index < 0 || index >= collection.Count)
-			{
-				return defaultValue;
-			}
-
-			return collection.ElementAt(index);
+			return collection is null || index < 0 || index >= collection.Count ? defaultValue : collection.ElementAt(index);
 		}
 
 		/// <summary>

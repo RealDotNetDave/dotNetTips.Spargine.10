@@ -1339,7 +1339,7 @@ public class EnumerableExtensionsTests
 
 		var result = numbers.FastLongCount(n => n % 2 == 0);
 
-		Assert.AreEqual((long)(Count / 2), result);
+		Assert.AreEqual((Count / 2), result);
 	}
 
 	[TestMethod]

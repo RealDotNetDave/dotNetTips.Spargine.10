@@ -18,7 +18,6 @@ using System.IO;
 using System.Linq;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.IO;
-using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -31,7 +30,7 @@ public class PathHelperTests : IDisposable
 
 	private readonly string _testDirectory = Path.Combine(Path.GetTempPath(), "PathHelperTests");
 
-	public void Dispose()
+	public PathHelperTests()
 	{
 		if (Directory.Exists(this._testDirectory))
 		{
@@ -78,6 +77,14 @@ public class PathHelperTests : IDisposable
 	{
 		var result = PathHelper.CombinePaths(true, this._testDirectory, "SubDirectory");
 		Assert.IsTrue(result.CheckExists());
+	}
+
+	public void Dispose()
+	{
+		if (Directory.Exists(this._testDirectory))
+		{
+			Directory.Delete(this._testDirectory, true);
+		}
 	}
 
 	[TestMethod]
@@ -166,14 +173,6 @@ public class PathHelperTests : IDisposable
 		var filter = "filename*.txt";
 		var result = PathHelper.HasInvalidFilterChars(filter);
 		Assert.IsFalse(result, "Wildcards should not be considered as invalid characters.");
-	}
-
-	public PathHelperTests()
-	{
-		if (Directory.Exists(this._testDirectory))
-		{
-			Directory.Delete(this._testDirectory, true);
-		}
 	}
 
 	[TestMethod]

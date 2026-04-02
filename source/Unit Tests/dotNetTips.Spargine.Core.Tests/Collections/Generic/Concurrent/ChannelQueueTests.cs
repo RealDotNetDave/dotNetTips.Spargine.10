@@ -423,9 +423,9 @@ public class ChannelQueueTests
 		var queue = new ChannelQueue<int>(options);
 
 		// Act - Write more items than capacity
-		queue.TryWrite(1);
-		queue.TryWrite(2);
-		queue.TryWrite(3); // Should drop 1
+		_ = queue.TryWrite(1);
+		_ = queue.TryWrite(2);
+		_ = queue.TryWrite(3); // Should drop 1
 
 		// Assert
 		Assert.AreEqual(capacity, queue.Count);

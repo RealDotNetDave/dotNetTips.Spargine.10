@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-28-2026
+// Last Modified On : 04-02-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -182,12 +182,7 @@ public static class ArrayExtensions
 		[Information(nameof(AddIf), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 		public T[] AddIf([AllowNull] in T item, bool condition)
 		{
-			if (item is null)
-			{
-				return array;
-			}
-
-			return condition ? array.AddLast(item) : array;
+			return item is null ? array : condition ? array.AddLast(item) : array;
 		}
 
 		/// <summary>
