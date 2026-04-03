@@ -286,7 +286,7 @@ public class UlidTests
 	public void Ulid_Constructor_WhitespaceValue_ThrowsArgumentException()
 	{
 		// Arrange
-		var whitespaceValue = "                          "; // 26 spaces
+		var whitespaceValue = new string(' ', 26);
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(whitespaceValue));
@@ -646,7 +646,7 @@ public class UlidTests
 	public void Ulid_TryParse_WhitespaceString_ReturnsFalse()
 	{
 		// Arrange
-		var whitespaceValue = "                          "; // 26 spaces
+		var whitespaceValue = new string(' ', 26);
 
 		// Act
 		var result = Ulid.TryParse(whitespaceValue, out var parsedUlid);
