@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-06-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="UlidTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -238,6 +238,21 @@ public class UlidTests
 	}
 
 	[TestMethod]
+	public void Ulid_CompareTo_SameValues_ReturnsZero()
+	{
+		// Arrange
+		var ulidString = Ulid.NewUlid().ToString();
+		var ulid1 = new Ulid(ulidString);
+		var ulid2 = new Ulid(ulidString);
+
+		// Act
+		var result = ulid1.CompareTo(ulid2);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
 	public void Ulid_Constructor_EmptyValue_ThrowsArgumentException()
 	{
 		// Arrange
@@ -265,6 +280,16 @@ public class UlidTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(nullValue));
+	}
+
+	[TestMethod]
+	public void Ulid_Constructor_WhitespaceValue_ThrowsArgumentException()
+	{
+		// Arrange
+		var whitespaceValue = new string(' ', 26);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(whitespaceValue));
 	}
 
 	[TestMethod]
@@ -411,6 +436,20 @@ public class UlidTests
 	}
 
 	[TestMethod]
+	public void Ulid_OperatorEquals_DifferentValues_ReturnsFalse()
+	{
+		// Arrange
+		var ulid1 = Ulid.NewUlid();
+		var ulid2 = Ulid.NewUlid();
+
+		// Act
+		var result = ulid1 == ulid2;
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void Ulid_OperatorEquals_SameValues_ReturnsTrue()
 	{
 		// Arrange
@@ -533,6 +572,34 @@ public class UlidTests
 	}
 
 	[TestMethod]
+	public void Ulid_ToString_ReturnsOriginalValue()
+	{
+		// Arrange
+		var validUlid = "GDJYD3WV04FJ4SN35XMEC2G3S5";
+		var ulid = new Ulid(validUlid);
+
+		// Act
+		var result = ulid.ToString();
+
+		// Assert
+		Assert.AreEqual(validUlid, result);
+	}
+
+	[TestMethod]
+	public void Ulid_TryParse_EmptyString_ReturnsFalse()
+	{
+		// Arrange
+		var emptyValue = string.Empty;
+
+		// Act
+		var result = Ulid.TryParse(emptyValue, out var parsedUlid);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.AreEqual(default, parsedUlid);
+	}
+
+	[TestMethod]
 	public void Ulid_TryParse_InvalidUlidString_ReturnsFalse()
 	{
 		// Arrange
@@ -540,6 +607,20 @@ public class UlidTests
 
 		// Act
 		var result = Ulid.TryParse(invalidUlid, out var parsedUlid);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.AreEqual(default, parsedUlid);
+	}
+
+	[TestMethod]
+	public void Ulid_TryParse_NullString_ReturnsFalse()
+	{
+		// Arrange
+		string nullValue = null;
+
+		// Act
+		var result = Ulid.TryParse(nullValue, out var parsedUlid);
 
 		// Assert
 		Assert.IsFalse(result);
@@ -559,6 +640,20 @@ public class UlidTests
 		// Assert
 		Assert.IsTrue(result);
 		Assert.AreEqual(ulid, parsedUlid);
+	}
+
+	[TestMethod]
+	public void Ulid_TryParse_WhitespaceString_ReturnsFalse()
+	{
+		// Arrange
+		var whitespaceValue = new string(' ', 26);
+
+		// Act
+		var result = Ulid.TryParse(whitespaceValue, out var parsedUlid);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.AreEqual(default, parsedUlid);
 	}
 
 	[TestClass]
