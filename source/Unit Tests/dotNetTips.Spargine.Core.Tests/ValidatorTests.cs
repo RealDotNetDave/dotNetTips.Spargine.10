@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-28-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="ValidatorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -4186,6 +4186,72 @@ public partial class ValidatorTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.ArgumentNotNull(collection, errorMessage, paramName: nameof(collection)));
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_Array_Empty_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var input = Array.Empty<int>();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentItemsExists());
+	}
+
+	[TestMethod]
+	public void ArgumentItemsExists_IReadOnlyList_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IReadOnlyList<int> input = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ArgumentItemsExists());
+	}
+
+	[TestMethod]
+	public void ArgumentNotReadOnly_ICollection_ArrayInput_ThrowsArgumentReadOnlyException()
+	{
+		// Arrange
+		ICollection<int> input = new[] { 1, 2, 3 };
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentReadOnlyException>(() => input.ArgumentNotReadOnly());
+	}
+
+	[TestMethod]
+	public void CheckItemsExists_SlowPath_WithItems_ReturnsTrue()
+	{
+		// Arrange - Where() prevents TryGetNonEnumeratedCount from succeeding, forcing the Any() path
+		var input = RandomData.GeneratePersonRefCollection(10).Where(p => p is not null);
+
+		// Act
+		var result = input.CheckItemsExists();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void CheckItemsExists_SlowPath_Empty_ReturnsFalse()
+	{
+		// Arrange - Where() with impossible condition forces slow path returning empty
+		var input = new List<int> { 1, 2, 3 }.Where(x => x > 100);
+
+		// Act
+		var result = input.CheckItemsExists();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void CheckItemsExists_SlowPath_Empty_WithThrowException_ThrowsInvalidValueException()
+	{
+		// Arrange - Where() with impossible condition forces slow path returning empty
+		var input = new List<int> { 1, 2, 3 }.Where(x => x > 100);
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<InvalidValueException<IEnumerable<int>>>(() => input.CheckItemsExists(throwException: true));
 	}
 
 	[GeneratedRegex(@"^\w+$")]
