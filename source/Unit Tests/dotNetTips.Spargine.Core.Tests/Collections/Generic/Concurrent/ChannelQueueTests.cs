@@ -35,6 +35,16 @@ public class ChannelQueueTests
 {
 
 	[TestMethod]
+	public void Acknowledge_NonExistentKey_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+
+		// Act & Assert
+		Assert.IsFalse(queue.Acknowledge("nonexistent-key"), "Acknowledge should return false for a key that was never added.");
+	}
+
+	[TestMethod]
 	public void Acknowledge_RemovesKey_ReturnsTrue()
 	{
 		var queue = new ChannelQueue<int>();
@@ -64,7 +74,7 @@ public class ChannelQueueTests
 	{
 		// Arrange
 		var queue = new ChannelQueue<string>();
-		queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
+		_ = queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
 		Thread.Sleep(10);
 
 		// Act & Assert - Multiple calls should not throw
@@ -235,6 +245,22 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void Clear_AlsoClearsIdempotencyKeys()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var key = "clear-test-key";
+		queue.TryWriteOnce("item1", key);
+
+		// Act
+		queue.Clear();
+
+		// Assert - Key should be cleared, allowing new write with same key
+		var result = queue.TryWriteOnce("item2", key);
+		Assert.IsTrue(result, "After Clear, idempotency keys should be removed, allowing reuse.");
+	}
+
+	[TestMethod]
 	public void Clear_RemovesAllItems()
 	{
 		var queue = new ChannelQueue<int>();
@@ -254,6 +280,17 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void Completion_IsNotCompletedInitially()
+	{
+		// Arrange & Act
+		var queue = new ChannelQueue<int>();
+
+		// Assert
+		Assert.IsNotNull(queue.Completion);
+		Assert.IsFalse(queue.Completion.IsCompleted, "Completion task should not be completed initially.");
+	}
+
+	[TestMethod]
 	public void Constructor_Default_IsUnbounded()
 	{
 		var channel = new ChannelQueue<int>();
@@ -263,6 +300,19 @@ public class ChannelQueueTests
 			channel.WriteAsync(i).Wait();
 		}
 		Assert.IsGreaterThan(0, channel.Count, "Channel should allow adding many items, indicating it's unbounded.");
+	}
+
+	[TestMethod]
+	public void Constructor_DefaultTimeout_IsFiveMinutes()
+	{
+		// Arrange & Act
+		var queue = new ChannelQueue<int>();
+
+		// Assert
+		var actualTimeout = queue.GetType()
+			.GetField("_cancellationTimeout", BindingFlags.NonPublic | BindingFlags.Instance)!
+			.GetValue(queue);
+		Assert.AreEqual(TimeSpan.FromMinutes(5), actualTimeout, "The default cancellation timeout should be 5 minutes.");
 	}
 
 	[TestMethod]
@@ -506,6 +556,22 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void Constructor_WithTimeoutOnly_SetsTimeout()
+	{
+		// Arrange
+		var timeout = TimeSpan.FromSeconds(30);
+
+		// Act
+		var queue = new ChannelQueue<int>(timeout);
+
+		// Assert
+		var actualTimeout = queue.GetType()
+			.GetField("_cancellationTimeout", BindingFlags.NonPublic | BindingFlags.Instance)!
+			.GetValue(queue);
+		Assert.AreEqual(timeout, actualTimeout, "The cancellation timeout should be set correctly.");
+	}
+
+	[TestMethod]
 	public async Task Count_AfterAddingItems_CorrectCount()
 	{
 		var channel = new ChannelQueue<int>();
@@ -543,6 +609,16 @@ public class ChannelQueueTests
 	{
 		var channel = new ChannelQueue<int>();
 		Assert.IsGreaterThanOrEqualTo(0, channel.Count, "Count should be supported and non-negative for an unbounded channel.");
+	}
+
+	[TestMethod]
+	public void IsCompleted_InitiallyFalse()
+	{
+		// Arrange & Act
+		var queue = new ChannelQueue<int>();
+
+		// Assert
+		Assert.IsFalse(queue.IsCompleted, "IsCompleted should be false for a new channel.");
 	}
 
 	[TestMethod]
@@ -596,6 +672,35 @@ public class ChannelQueueTests
 		}
 
 		CollectionAssert.AreEqual(items, readItems, "All items written to the channel should be read by ListenAsync.");
+	}
+
+	[TestMethod]
+	public async Task ListenAsync_WithCancellation_StopsEnumeration()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>(cancellationTimeout: TimeSpan.FromMilliseconds(100));
+		await queue.WriteAsync(1);
+		await queue.WriteAsync(2);
+
+		using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100));
+
+		// Act
+		var readItems = new List<int>();
+
+		try
+		{
+			await foreach (var item in queue.ListenAsync(cts.Token))
+			{
+				readItems.Add(item);
+			}
+		}
+		catch (OperationCanceledException)
+		{
+			// Expected - cancellation stops enumeration
+		}
+
+		// Assert - Should have read available items before cancellation
+		Assert.IsTrue(readItems.Count <= 2, "Should stop reading after cancellation.");
 	}
 
 	[TestMethod]
@@ -706,6 +811,18 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void ReadAsync_WithKeyResolver_NullResolver_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		queue.TryWrite("item");
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			queue.ReadAsync(null!).AsTask().GetAwaiter().GetResult());
+	}
+
+	[TestMethod]
 	public async Task ReadAsync_WithKeyResolver_RemovesKey()
 	{
 		var queue = new ChannelQueue<string>();
@@ -714,6 +831,24 @@ public class ChannelQueueTests
 		var result = await queue.ReadAsync(s => key);
 		Assert.AreEqual("hello", result, "ReadAsync with key resolver should return the correct item.");
 		Assert.IsFalse(queue.Acknowledge(key), "Key should be removed after ReadAsync with key resolver.");
+	}
+
+	[TestMethod]
+	public async Task ReadAsync_WithKeyResolver_ResolvesAndRemovesKey()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+		var key = "resolver-key";
+		queue.TryWriteOnce("test-value", key);
+
+		// Act
+		var result = await queue.ReadAsync(item => key);
+
+		// Assert
+		Assert.AreEqual("test-value", result);
+
+		// Key should have been removed, allowing re-enqueue
+		Assert.IsTrue(queue.TryWriteOnce("new-value", key), "Key should be removed after ReadAsync with resolver.");
 	}
 
 	[TestMethod]
@@ -910,6 +1045,25 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void TryRead_AfterLock_ReturnsItemsThenFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+		queue.TryWrite(1);
+		queue.TryWrite(2);
+		queue.Lock();
+
+		// Act & Assert - Can still read existing items
+		Assert.IsTrue(queue.TryRead(out var item1));
+		Assert.AreEqual(1, item1);
+		Assert.IsTrue(queue.TryRead(out var item2));
+		Assert.AreEqual(2, item2);
+
+		// No more items
+		Assert.IsFalse(queue.TryRead(out _));
+	}
+
+	[TestMethod]
 	public void TryRead_ReturnsFalseWhenEmpty()
 	{
 		var queue = new ChannelQueue<int>();
@@ -923,6 +1077,20 @@ public class ChannelQueueTests
 		queue.WriteAsync(42).Wait();
 		Assert.IsTrue(queue.TryRead(out var value), "TryRead should return true when an item is present.");
 		Assert.AreEqual(42, value, "TryRead should output the correct value.");
+	}
+
+	[TestMethod]
+	public void TryWrite_AfterLock_ReturnsFalse()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+		queue.Lock();
+
+		// Act
+		var result = queue.TryWrite(42);
+
+		// Assert
+		Assert.IsFalse(result, "TryWrite should return false after channel is locked.");
 	}
 
 	[TestMethod]
@@ -946,132 +1114,20 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
+	public void TryWrite_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => queue.TryWrite(null!));
+	}
+
+	[TestMethod]
 	public void TryWrite_ReturnsTrueWhenPossible()
 	{
 		var queue = new ChannelQueue<int>();
 		Assert.IsTrue(queue.TryWrite(99), "TryWrite should return true when the channel can accept the item.");
-	}
-
-	[TestMethod]
-	public void TryWriteOnce_DuplicateKey_ReturnsFalse()
-	{
-		var queue = new ChannelQueue<int>();
-		var key = "dup-key";
-		Assert.IsTrue(queue.TryWriteOnce(1, key), "First TryWriteOnce should succeed.");
-		Assert.IsFalse(queue.TryWriteOnce(2, key), "Second TryWriteOnce with same key should fail.");
-	}
-
-	[TestMethod]
-	public void TryWriteOnce_ExpiredKey_AllowsRequeue()
-	{
-		var queue = new ChannelQueue<int>();
-		var key = "expire-key";
-
-		Assert.IsTrue(queue.TryWriteOnce(1, key, TimeSpan.FromMilliseconds(1)), "First TryWriteOnce should succeed.");
-
-		Thread.Sleep(10);
-
-		Assert.IsTrue(queue.TryWriteOnce(2, key, TimeSpan.FromMilliseconds(1)), "TryWriteOnce should succeed after key expires.");
-	}
-
-	[TestMethod]
-	public async Task WriteAsync_AfterLock_ThrowsChannelClosedException()
-	{
-		// Arrange
-		var channel = new ChannelQueue<int>();
-		channel.Lock(); // Lock the channel to prevent further writes
-
-		// Act & Assert
-		try
-		{
-			await channel.WriteAsync(42);
-			Assert.Fail("WriteAsync should throw an InvalidOperationException when attempting to write to a locked channel.");
-		}
-		catch (InvalidOperationException)
-		{
-			// Expected exception
-		}
-	}
-
-	[TestMethod]
-	public async Task WriteAsync_LockQueue_PreventsFurtherWrites()
-	{
-		// Arrange
-		var channel = new ChannelQueue<int>();
-		var items = Enumerable.Range(1, 5);
-
-		await channel.WriteAsync(items, true);
-
-		// Act & Assert
-		try
-		{
-			await channel.WriteAsync(6);
-			Assert.Fail("WriteAsync should throw an InvalidOperationException when attempting to write to a locked channel.");
-		}
-		catch (InvalidOperationException)
-		{
-			// Expected exception
-		}
-	}
-
-	[TestMethod]
-	public async Task WriteOnceAsync_DuplicateKey_ReturnsFalse()
-	{
-		var queue = new ChannelQueue<int>();
-		var key = "async-key";
-		Assert.IsTrue(await queue.WriteOnceAsync(1, key), "First WriteOnceAsync should succeed.");
-		Assert.IsFalse(await queue.WriteOnceAsync(2, key), "Second WriteOnceAsync with same key should fail.");
-	}
-
-	[TestMethod]
-	public async Task WriteOnceAsync_ExpiredKey_AllowsReenqueue()
-	{
-		var queue = new ChannelQueue<int>();
-		var key = "async-expire-key";
-		Assert.IsTrue(await queue.WriteOnceAsync(1, key, TimeSpan.FromMilliseconds(1)), "First WriteOnceAsync should succeed.");
-		await Task.Delay(10);
-		Assert.IsTrue(await queue.WriteOnceAsync(2, key, TimeSpan.FromMilliseconds(1)), "WriteOnceAsync should succeed after key expires.");
-	}
-
-	[TestMethod]
-	public async Task ListenAsync_WithCancellation_StopsEnumeration()
-	{
-		// Arrange
-		var queue = new ChannelQueue<int>(cancellationTimeout: TimeSpan.FromMilliseconds(100));
-		await queue.WriteAsync(1);
-		await queue.WriteAsync(2);
-
-		using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100));
-
-		// Act
-		var readItems = new List<int>();
-
-		try
-		{
-			await foreach (var item in queue.ListenAsync(cts.Token))
-			{
-				readItems.Add(item);
-			}
-		}
-		catch (OperationCanceledException)
-		{
-			// Expected - cancellation stops enumeration
-		}
-
-		// Assert - Should have read available items before cancellation
-		Assert.IsTrue(readItems.Count <= 2, "Should stop reading after cancellation.");
-	}
-
-	[TestMethod]
-	public void ReadAsync_WithKeyResolver_NullResolver_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-		queue.TryWrite("item");
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.ReadAsync(null!).AsTask().GetAwaiter().GetResult());
 	}
 
 	[TestMethod]
@@ -1096,71 +1152,36 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
-	public void WriteAsync_NullItem_ThrowsArgumentNullException()
+	public void TryWriteOnce_DuplicateKey_ReturnsFalse()
+	{
+		var queue = new ChannelQueue<int>();
+		var key = "dup-key";
+		Assert.IsTrue(queue.TryWriteOnce(1, key), "First TryWriteOnce should succeed.");
+		Assert.IsFalse(queue.TryWriteOnce(2, key), "Second TryWriteOnce with same key should fail.");
+	}
+
+	[TestMethod]
+	public void TryWriteOnce_EmptyKey_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var queue = new ChannelQueue<string>();
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.WriteAsync((string)null!).GetAwaiter().GetResult());
+			queue.TryWriteOnce("item", string.Empty));
 	}
 
 	[TestMethod]
-	public void WriteAsync_NullItems_ThrowsArgumentNullException()
+	public void TryWriteOnce_ExpiredKey_AllowsRequeue()
 	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.WriteAsync((IEnumerable<string>)null!).GetAwaiter().GetResult());
-	}
-
-	[TestMethod]
-	public async Task WriteAsync_Collection_WithoutLock_QueueRemainsOpen()
-	{
-		// Arrange
 		var queue = new ChannelQueue<int>();
-		var items = new[] { 1, 2, 3 };
+		var key = "expire-key";
 
-		// Act - Write without locking
-		await queue.WriteAsync(items, lockQueue: false);
+		Assert.IsTrue(queue.TryWriteOnce(1, key, TimeSpan.FromMilliseconds(1)), "First TryWriteOnce should succeed.");
 
-		// Assert - Queue should remain open for additional writes
-		Assert.AreEqual(3, queue.Count);
-		Assert.IsFalse(queue.IsCompleted, "Queue should not be completed when lockQueue is false.");
-		await queue.WriteAsync(4);
-		Assert.AreEqual(4, queue.Count);
-	}
+		Thread.Sleep(10);
 
-	[TestMethod]
-	public async Task WriteOnceAsync_AfterLock_ThrowsInvalidOperationException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<int>();
-		queue.Lock();
-
-		// Act & Assert
-		try
-		{
-			await queue.WriteOnceAsync(1, "locked-key");
-			Assert.Fail("WriteOnceAsync should throw InvalidOperationException when channel is locked.");
-		}
-		catch (InvalidOperationException)
-		{
-			// Expected exception
-		}
-	}
-
-	[TestMethod]
-	public void TryWrite_NullItem_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => queue.TryWrite(null!));
+		Assert.IsTrue(queue.TryWriteOnce(2, key, TimeSpan.FromMilliseconds(1)), "TryWriteOnce should succeed after key expires.");
 	}
 
 	[TestMethod]
@@ -1186,185 +1207,43 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
-	public void TryWriteOnce_EmptyKey_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.TryWriteOnce("item", string.Empty));
-	}
-
-	[TestMethod]
-	public void WriteOnceAsync_NullItem_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.WriteOnceAsync(null!, "key").GetAwaiter().GetResult());
-	}
-
-	[TestMethod]
-	public void WriteOnceAsync_NullKey_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.WriteOnceAsync("item", null!).GetAwaiter().GetResult());
-	}
-
-	[TestMethod]
-	public void WriteOnceAsync_EmptyKey_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			queue.WriteOnceAsync("item", string.Empty).GetAwaiter().GetResult());
-	}
-
-	[TestMethod]
-	public void Clear_AlsoClearsIdempotencyKeys()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-		var key = "clear-test-key";
-		queue.TryWriteOnce("item1", key);
-
-		// Act
-		queue.Clear();
-
-		// Assert - Key should be cleared, allowing new write with same key
-		var result = queue.TryWriteOnce("item2", key);
-		Assert.IsTrue(result, "After Clear, idempotency keys should be removed, allowing reuse.");
-	}
-
-	[TestMethod]
-	public void Constructor_WithTimeoutOnly_SetsTimeout()
-	{
-		// Arrange
-		var timeout = TimeSpan.FromSeconds(30);
-
-		// Act
-		var queue = new ChannelQueue<int>(timeout);
-
-		// Assert
-		var actualTimeout = queue.GetType()
-			.GetField("_cancellationTimeout", BindingFlags.NonPublic | BindingFlags.Instance)!
-			.GetValue(queue);
-		Assert.AreEqual(timeout, actualTimeout, "The cancellation timeout should be set correctly.");
-	}
-
-	[TestMethod]
-	public void Constructor_DefaultTimeout_IsFiveMinutes()
-	{
-		// Arrange & Act
-		var queue = new ChannelQueue<int>();
-
-		// Assert
-		var actualTimeout = queue.GetType()
-			.GetField("_cancellationTimeout", BindingFlags.NonPublic | BindingFlags.Instance)!
-			.GetValue(queue);
-		Assert.AreEqual(TimeSpan.FromMinutes(5), actualTimeout, "The default cancellation timeout should be 5 minutes.");
-	}
-
-	[TestMethod]
-	public void TryWrite_AfterLock_ReturnsFalse()
+	public void TryWriteOnce_WithDedupeWindow_KeyExpiresAfterWindow()
 	{
 		// Arrange
 		var queue = new ChannelQueue<int>();
-		queue.Lock();
+		var key = "timed-key";
+		var window = TimeSpan.FromMilliseconds(50);
 
-		// Act
-		var result = queue.TryWrite(42);
+		// Act - First write succeeds
+		Assert.IsTrue(queue.TryWriteOnce(1, key, window));
 
-		// Assert
-		Assert.IsFalse(result, "TryWrite should return false after channel is locked.");
+		// Duplicate within window should fail
+		Assert.IsFalse(queue.TryWriteOnce(2, key, window));
+
+		// Wait for window to expire
+		Thread.Sleep(100);
+
+		// After expiry, write should succeed
+		Assert.IsTrue(queue.TryWriteOnce(3, key, window));
 	}
 
 	[TestMethod]
-	public void IsCompleted_InitiallyFalse()
-	{
-		// Arrange & Act
-		var queue = new ChannelQueue<int>();
-
-		// Assert
-		Assert.IsFalse(queue.IsCompleted, "IsCompleted should be false for a new channel.");
-	}
-
-	[TestMethod]
-	public async Task WriteAsync_Collection_WritesAllItems()
+	public async Task WriteAsync_AfterLock_ThrowsChannelClosedException()
 	{
 		// Arrange
-		var queue = new ChannelQueue<int>();
-		var items = Enumerable.Range(1, 10).ToList();
+		var channel = new ChannelQueue<int>();
+		channel.Lock(); // Lock the channel to prevent further writes
 
-		// Act
-		await queue.WriteAsync(items);
-
-		// Assert
-		Assert.AreEqual(10, queue.Count, "All items should be written to the queue.");
-
-		var readItems = new List<int>();
-		while (queue.TryRead(out var item))
+		// Act & Assert
+		try
 		{
-			readItems.Add(item);
+			await channel.WriteAsync(42);
+			Assert.Fail("WriteAsync should throw an InvalidOperationException when attempting to write to a locked channel.");
 		}
-
-		CollectionAssert.AreEqual(items, readItems, "All items should be readable in order.");
-	}
-
-	[TestMethod]
-	public async Task ReadAsync_WithKeyResolver_ResolvesAndRemovesKey()
-	{
-		// Arrange
-		var queue = new ChannelQueue<string>();
-		var key = "resolver-key";
-		queue.TryWriteOnce("test-value", key);
-
-		// Act
-		var result = await queue.ReadAsync(item => key);
-
-		// Assert
-		Assert.AreEqual("test-value", result);
-
-		// Key should have been removed, allowing re-enqueue
-		Assert.IsTrue(queue.TryWriteOnce("new-value", key), "Key should be removed after ReadAsync with resolver.");
-	}
-
-	[TestMethod]
-	public void Acknowledge_NonExistentKey_ReturnsFalse()
-	{
-		// Arrange
-		var queue = new ChannelQueue<int>();
-
-		// Act & Assert
-		Assert.IsFalse(queue.Acknowledge("nonexistent-key"), "Acknowledge should return false for a key that was never added.");
-	}
-
-	[TestMethod]
-	public void TryRead_AfterLock_ReturnsItemsThenFalse()
-	{
-		// Arrange
-		var queue = new ChannelQueue<int>();
-		queue.TryWrite(1);
-		queue.TryWrite(2);
-		queue.Lock();
-
-		// Act & Assert - Can still read existing items
-		Assert.IsTrue(queue.TryRead(out var item1));
-		Assert.AreEqual(1, item1);
-		Assert.IsTrue(queue.TryRead(out var item2));
-		Assert.AreEqual(2, item2);
-
-		// No more items
-		Assert.IsFalse(queue.TryRead(out _));
+		catch (InvalidOperationException)
+		{
+			// Expected exception
+		}
 	}
 
 	[TestMethod]
@@ -1390,24 +1269,156 @@ public class ChannelQueueTests
 	}
 
 	[TestMethod]
-	public void TryWriteOnce_WithDedupeWindow_KeyExpiresAfterWindow()
+	public async Task WriteAsync_Collection_WithoutLock_QueueRemainsOpen()
 	{
 		// Arrange
 		var queue = new ChannelQueue<int>();
-		var key = "timed-key";
-		var window = TimeSpan.FromMilliseconds(50);
+		var items = new[] { 1, 2, 3 };
 
-		// Act - First write succeeds
-		Assert.IsTrue(queue.TryWriteOnce(1, key, window));
+		// Act - Write without locking
+		await queue.WriteAsync(items, lockQueue: false);
 
-		// Duplicate within window should fail
-		Assert.IsFalse(queue.TryWriteOnce(2, key, window));
+		// Assert - Queue should remain open for additional writes
+		Assert.AreEqual(3, queue.Count);
+		Assert.IsFalse(queue.IsCompleted, "Queue should not be completed when lockQueue is false.");
+		await queue.WriteAsync(4);
+		Assert.AreEqual(4, queue.Count);
+	}
 
-		// Wait for window to expire
-		Thread.Sleep(100);
+	[TestMethod]
+	public async Task WriteAsync_Collection_WritesAllItems()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+		var items = Enumerable.Range(1, 10).ToList();
 
-		// After expiry, write should succeed
-		Assert.IsTrue(queue.TryWriteOnce(3, key, window));
+		// Act
+		await queue.WriteAsync(items);
+
+		// Assert
+		Assert.AreEqual(10, queue.Count, "All items should be written to the queue.");
+
+		var readItems = new List<int>();
+		while (queue.TryRead(out var item))
+		{
+			readItems.Add(item);
+		}
+
+		CollectionAssert.AreEqual(items, readItems, "All items should be readable in order.");
+	}
+
+	[TestMethod]
+	public async Task WriteAsync_LockQueue_PreventsFurtherWrites()
+	{
+		// Arrange
+		var channel = new ChannelQueue<int>();
+		var items = Enumerable.Range(1, 5);
+
+		await channel.WriteAsync(items, true);
+
+		// Act & Assert
+		try
+		{
+			await channel.WriteAsync(6);
+			Assert.Fail("WriteAsync should throw an InvalidOperationException when attempting to write to a locked channel.");
+		}
+		catch (InvalidOperationException)
+		{
+			// Expected exception
+		}
+	}
+
+	[TestMethod]
+	public void WriteAsync_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			queue.WriteAsync((string)null!).GetAwaiter().GetResult());
+	}
+
+	[TestMethod]
+	public void WriteAsync_NullItems_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			queue.WriteAsync((IEnumerable<string>)null!).GetAwaiter().GetResult());
+	}
+
+	[TestMethod]
+	public async Task WriteOnceAsync_AfterLock_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<int>();
+		queue.Lock();
+
+		// Act & Assert
+		try
+		{
+			await queue.WriteOnceAsync(1, "locked-key");
+			Assert.Fail("WriteOnceAsync should throw InvalidOperationException when channel is locked.");
+		}
+		catch (InvalidOperationException)
+		{
+			// Expected exception
+		}
+	}
+
+	[TestMethod]
+	public async Task WriteOnceAsync_DuplicateKey_ReturnsFalse()
+	{
+		var queue = new ChannelQueue<int>();
+		var key = "async-key";
+		Assert.IsTrue(await queue.WriteOnceAsync(1, key), "First WriteOnceAsync should succeed.");
+		Assert.IsFalse(await queue.WriteOnceAsync(2, key), "Second WriteOnceAsync with same key should fail.");
+	}
+
+	[TestMethod]
+	public void WriteOnceAsync_EmptyKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			queue.WriteOnceAsync("item", string.Empty).GetAwaiter().GetResult());
+	}
+
+	[TestMethod]
+	public async Task WriteOnceAsync_ExpiredKey_AllowsReenqueue()
+	{
+		var queue = new ChannelQueue<int>();
+		var key = "async-expire-key";
+		Assert.IsTrue(await queue.WriteOnceAsync(1, key, TimeSpan.FromMilliseconds(1)), "First WriteOnceAsync should succeed.");
+		await Task.Delay(10);
+		Assert.IsTrue(await queue.WriteOnceAsync(2, key, TimeSpan.FromMilliseconds(1)), "WriteOnceAsync should succeed after key expires.");
+	}
+
+	[TestMethod]
+	public void WriteOnceAsync_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			queue.WriteOnceAsync(null!, "key").GetAwaiter().GetResult());
+	}
+
+	[TestMethod]
+	public void WriteOnceAsync_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var queue = new ChannelQueue<string>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			queue.WriteOnceAsync("item", null!).GetAwaiter().GetResult());
 	}
 
 	[TestMethod]
@@ -1429,17 +1440,6 @@ public class ChannelQueueTests
 
 		// After expiry, write should succeed
 		Assert.IsTrue(await queue.WriteOnceAsync(3, key, window));
-	}
-
-	[TestMethod]
-	public void Completion_IsNotCompletedInitially()
-	{
-		// Arrange & Act
-		var queue = new ChannelQueue<int>();
-
-		// Assert
-		Assert.IsNotNull(queue.Completion);
-		Assert.IsFalse(queue.Completion.IsCompleted, "Completion task should not be completed initially.");
 	}
 
 }

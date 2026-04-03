@@ -4,7 +4,7 @@
 // Created          : 02-05-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="RegexProcessorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Core.Tests;
+namespace DotNetTips.Spargine.Core.Tests.RegularExpressions;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -121,6 +121,71 @@ public class RegexProcessorTests
 		result = RegexProcessor.ContainsWord("Sevendust");
 
 		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void ExtractVersion_EmptyInput_ReturnsEmptyString()
+	{
+		// Arrange
+		var input = string.Empty;
+
+		// Act
+		var result = RegexProcessor.ExtractVersion(input);
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void ExtractVersion_FullVersionInput_ReturnsVersion()
+	{
+		// Arrange
+		var input = "App version 10.20.30.40 released";
+
+		// Act
+		var result = RegexProcessor.ExtractVersion(input);
+
+		// Assert
+		Assert.AreEqual("10.20.30.40", result);
+	}
+
+	[TestMethod]
+	public void ExtractVersion_MajorMinorOnly_ReturnsVersion()
+	{
+		// Arrange
+		var input = "v2.5";
+
+		// Act
+		var result = RegexProcessor.ExtractVersion(input);
+
+		// Assert
+		Assert.AreEqual("2.5", result);
+	}
+
+	[TestMethod]
+	public void ExtractVersion_NoVersionInInput_ReturnsEmptyString()
+	{
+		// Arrange
+		var input = "No version here";
+
+		// Act
+		var result = RegexProcessor.ExtractVersion(input);
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void ExtractVersion_ValidInput_ReturnsVersion()
+	{
+		// Arrange
+		var input = "Version 1.2.3";
+
+		// Act
+		var result = RegexProcessor.ExtractVersion(input);
+
+		// Assert
+		Assert.AreEqual("1.2.3", result);
 	}
 
 	[TestMethod]
@@ -397,6 +462,16 @@ public class RegexProcessorTests
 	}
 
 	[TestMethod]
+	public void IsGuid_NullInput_ReturnsFalse()
+	{
+		// Act
+		var result = RegexProcessor.IsGuid(null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void IsGuid_ValidInput_ReturnsTrue()
 	{
 		// Arrange
@@ -662,6 +737,16 @@ public class RegexProcessorTests
 
 		// Act
 		var result = RegexProcessor.IsMACAddress(input);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsMACAddress_NullInput_ReturnsFalse()
+	{
+		// Act
+		var result = RegexProcessor.IsMACAddress(null);
 
 		// Assert
 		Assert.IsFalse(result);
@@ -1203,6 +1288,19 @@ public class RegexProcessorTests
 		// Assert
 		Assert.IsNull(result);
 	}
+
+	[TestMethod]
+	public void ReplaceCrLf_NullReplacement_ReturnsInput()
+	{
+		// Arrange
+		var input = "Line1\r\nLine2";
+
+		// Act
+		var result = RegexProcessor.ReplaceCrLf(input, null);
+
+		// Assert
+		Assert.AreEqual(input, result);
+	}
 	[TestMethod]
 	public void ReplaceCrLf_ValidInput_ReturnsModifiedString()
 	{
@@ -1243,126 +1341,16 @@ public class RegexProcessorTests
 	}
 
 	[TestMethod]
-	public void ReplaceSpaces_ValidInput_ReturnsStringWithoutSpaces()
+	public void ReplaceSpaces_CustomReplacement_ReturnsModifiedString()
 	{
 		// Arrange
 		var input = "Hello World";
 
 		// Act
-		var result = RegexProcessor.ReplaceSpaces(input);
+		var result = RegexProcessor.ReplaceSpaces(input, "-");
 
 		// Assert
-		Assert.AreEqual("Hello_World", result);
-	}
-
-	[TestMethod]
-	public void ReplaceSpacesTest()
-	{
-		var result = RegexProcessor.ReplaceSpaces("dotnettips");
-
-		Assert.AreEqual(10, result.Length);
-
-		result = RegexProcessor.ReplaceSpaces("dot nett ip s");
-
-		Assert.AreEqual(13, result.Length);
-	}
-
-	[TestMethod]
-	public void ExtractVersion_ValidInput_ReturnsVersion()
-	{
-		// Arrange
-		var input = "Version 1.2.3";
-
-		// Act
-		var result = RegexProcessor.ExtractVersion(input);
-
-		// Assert
-		Assert.AreEqual("1.2.3", result);
-	}
-
-	[TestMethod]
-	public void ExtractVersion_FullVersionInput_ReturnsVersion()
-	{
-		// Arrange
-		var input = "App version 10.20.30.40 released";
-
-		// Act
-		var result = RegexProcessor.ExtractVersion(input);
-
-		// Assert
-		Assert.AreEqual("10.20.30.40", result);
-	}
-
-	[TestMethod]
-	public void ExtractVersion_NoVersionInInput_ReturnsEmptyString()
-	{
-		// Arrange
-		var input = "No version here";
-
-		// Act
-		var result = RegexProcessor.ExtractVersion(input);
-
-		// Assert
-		Assert.AreEqual(string.Empty, result);
-	}
-
-	[TestMethod]
-	public void ExtractVersion_EmptyInput_ReturnsEmptyString()
-	{
-		// Arrange
-		var input = string.Empty;
-
-		// Act
-		var result = RegexProcessor.ExtractVersion(input);
-
-		// Assert
-		Assert.AreEqual(string.Empty, result);
-	}
-
-	[TestMethod]
-	public void ExtractVersion_MajorMinorOnly_ReturnsVersion()
-	{
-		// Arrange
-		var input = "v2.5";
-
-		// Act
-		var result = RegexProcessor.ExtractVersion(input);
-
-		// Assert
-		Assert.AreEqual("2.5", result);
-	}
-
-	[TestMethod]
-	public void IsGuid_NullInput_ReturnsFalse()
-	{
-		// Act
-		var result = RegexProcessor.IsGuid(null);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void IsMACAddress_NullInput_ReturnsFalse()
-	{
-		// Act
-		var result = RegexProcessor.IsMACAddress(null);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void ReplaceCrLf_NullReplacement_ReturnsInput()
-	{
-		// Arrange
-		var input = "Line1\r\nLine2";
-
-		// Act
-		var result = RegexProcessor.ReplaceCrLf(input, null);
-
-		// Assert
-		Assert.AreEqual(input, result);
+		Assert.AreEqual("Hello-World", result);
 	}
 
 	[TestMethod]
@@ -1389,15 +1377,27 @@ public class RegexProcessorTests
 	}
 
 	[TestMethod]
-	public void ReplaceSpaces_CustomReplacement_ReturnsModifiedString()
+	public void ReplaceSpaces_ValidInput_ReturnsStringWithoutSpaces()
 	{
 		// Arrange
 		var input = "Hello World";
 
 		// Act
-		var result = RegexProcessor.ReplaceSpaces(input, "-");
+		var result = RegexProcessor.ReplaceSpaces(input);
 
 		// Assert
-		Assert.AreEqual("Hello-World", result);
+		Assert.AreEqual("Hello_World", result);
+	}
+
+	[TestMethod]
+	public void ReplaceSpacesTest()
+	{
+		var result = RegexProcessor.ReplaceSpaces("dotnettips");
+
+		Assert.AreEqual(10, result.Length);
+
+		result = RegexProcessor.ReplaceSpaces("dot nett ip s");
+
+		Assert.AreEqual(13, result.Length);
 	}
 }

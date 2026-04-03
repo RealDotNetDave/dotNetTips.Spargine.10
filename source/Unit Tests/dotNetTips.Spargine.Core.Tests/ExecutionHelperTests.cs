@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-02-2026
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="ExecutionHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -32,36 +32,9 @@ public class ExecutionHelperTests
 	private const int RetryWait = 10;
 
 	[TestMethod]
-	public void ProgressiveRetryTest()
-	{
-		var result = ExecutionHelper.ProgressiveRetry(() =>
-		{
-			var types = TypeHelper.BuiltInTypeNames();
-		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
-
-		Assert.IsNotNull(result);
-		Assert.AreEqual(1, result.Value);
-		Assert.IsFalse(result.HasErrors);
-	}
-
-	[TestMethod]
 	public void ProgressiveRetry_NullOperation_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ExecutionHelper.ProgressiveRetry(null!));
-	}
-
-	[TestMethod]
-	public void ProgressiveRetry_RetryCountZero_ThrowsArgumentOutOfRangeException()
-	{
-		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
-			ExecutionHelper.ProgressiveRetry(() => { }, retryCount: 0, retryWaitMilliseconds: RetryWait));
-	}
-
-	[TestMethod]
-	public void ProgressiveRetry_RetryWaitZero_ThrowsArgumentOutOfRangeException()
-	{
-		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
-			ExecutionHelper.ProgressiveRetry(() => { }, retryCount: RetryCount, retryWaitMilliseconds: 0));
 	}
 
 	[TestMethod]
@@ -103,15 +76,17 @@ public class ExecutionHelperTests
 	}
 
 	[TestMethod]
-	public void ProgressiveRetry_WithNullLogger_DoesNotThrow()
+	public void ProgressiveRetry_RetryCountZero_ThrowsArgumentOutOfRangeException()
 	{
-		var result = ExecutionHelper.ProgressiveRetry(() =>
-		{
-			throw new InvalidOperationException("Test failure");
-		}, retryCount: 1, retryWaitMilliseconds: RetryWait, logger: null);
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
+			ExecutionHelper.ProgressiveRetry(() => { }, retryCount: 0, retryWaitMilliseconds: RetryWait));
+	}
 
-		Assert.IsNotNull(result);
-		Assert.IsTrue(result.HasErrors);
+	[TestMethod]
+	public void ProgressiveRetry_RetryWaitZero_ThrowsArgumentOutOfRangeException()
+	{
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
+			ExecutionHelper.ProgressiveRetry(() => { }, retryCount: RetryCount, retryWaitMilliseconds: 0));
 	}
 
 	[TestMethod]
@@ -135,38 +110,15 @@ public class ExecutionHelperTests
 	}
 
 	[TestMethod]
-	public async Task ProgressiveRetryAsyncTest()
+	public void ProgressiveRetry_WithNullLogger_DoesNotThrow()
 	{
-		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
+		var result = ExecutionHelper.ProgressiveRetry(() =>
 		{
-			var types = TypeHelper.BuiltInTypeNames();
-			return Task.CompletedTask;
-		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
+			throw new InvalidOperationException("Test failure");
+		}, retryCount: 1, retryWaitMilliseconds: RetryWait, logger: null);
 
 		Assert.IsNotNull(result);
-		Assert.AreEqual(1, result.Value);
-		Assert.IsFalse(result.HasErrors);
-	}
-
-	[TestMethod]
-	public async Task ProgressiveRetryAsync_NullFunction_ThrowsArgumentNullException()
-	{
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await ExecutionHelper.ProgressiveRetryAsync(null!));
-	}
-
-	[TestMethod]
-	public async Task ProgressiveRetryAsync_RetryCountZero_ThrowsArgumentOutOfRangeException()
-	{
-		await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(async () =>
-			await ExecutionHelper.ProgressiveRetryAsync(() => Task.CompletedTask, retryCount: 0, retryWaitMilliseconds: RetryWait));
-	}
-
-	[TestMethod]
-	public async Task ProgressiveRetryAsync_RetryWaitZero_ThrowsArgumentOutOfRangeException()
-	{
-		await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(async () =>
-			await ExecutionHelper.ProgressiveRetryAsync(() => Task.CompletedTask, retryCount: RetryCount, retryWaitMilliseconds: 0));
+		Assert.IsTrue(result.HasErrors);
 	}
 
 	[TestMethod]
@@ -210,35 +162,39 @@ public class ExecutionHelperTests
 	}
 
 	[TestMethod]
-	public async Task ProgressiveRetryAsync_WithNullLogger_DoesNotThrow()
+	public async Task ProgressiveRetryAsync_NullFunction_ThrowsArgumentNullException()
 	{
-		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
-		{
-			throw new InvalidOperationException("Test failure");
-		}, retryCount: 1, retryWaitMilliseconds: RetryWait, logger: null);
-
-		Assert.IsNotNull(result);
-		Assert.IsTrue(result.HasErrors);
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await ExecutionHelper.ProgressiveRetryAsync(null!));
 	}
 
 	[TestMethod]
-	public async Task ProgressiveRetryAsync_WithLogger_LogsErrors()
+	public async Task ProgressiveRetryAsync_RetryCountZero_ThrowsArgumentOutOfRangeException()
 	{
-		var logger = new MockLogger();
+		await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(async () =>
+			await ExecutionHelper.ProgressiveRetryAsync(() => Task.CompletedTask, retryCount: 0, retryWaitMilliseconds: RetryWait));
+	}
+
+	[TestMethod]
+	public async Task ProgressiveRetryAsync_RetryWaitZero_ThrowsArgumentOutOfRangeException()
+	{
+		await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(async () =>
+			await ExecutionHelper.ProgressiveRetryAsync(() => Task.CompletedTask, retryCount: RetryCount, retryWaitMilliseconds: 0));
+	}
+
+	[TestMethod]
+	public async Task ProgressiveRetryAsync_WithAlreadyCancelledToken_ThrowsAndReturnsErrors()
+	{
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
 
 		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
 		{
-			throw new InvalidOperationException("Test failure");
-		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait, logger: logger);
+			return Task.CompletedTask;
+		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait, cancellationToken: cts.Token);
 
 		Assert.IsNotNull(result);
 		Assert.IsTrue(result.HasErrors);
-		Assert.AreEqual(RetryCount, logger.LoggedLevels.Count);
-
-		foreach (var level in logger.LoggedLevels)
-		{
-			Assert.AreEqual(LogLevel.Error, level);
-		}
 	}
 
 	[TestMethod]
@@ -265,27 +221,71 @@ public class ExecutionHelperTests
 	}
 
 	[TestMethod]
-	public async Task ProgressiveRetryAsync_WithAlreadyCancelledToken_ThrowsAndReturnsErrors()
-	{
-		using var cts = new CancellationTokenSource();
-		cts.Cancel();
-
-		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
-		{
-			return Task.CompletedTask;
-		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait, cancellationToken: cts.Token);
-
-		Assert.IsNotNull(result);
-		Assert.IsTrue(result.HasErrors);
-	}
-
-	[TestMethod]
 	public async Task ProgressiveRetryAsync_WithDefaultCancellationToken_Succeeds()
 	{
 		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
 		{
 			return Task.CompletedTask;
 		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait, cancellationToken: default);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(1, result.Value);
+		Assert.IsFalse(result.HasErrors);
+	}
+
+	[TestMethod]
+	public async Task ProgressiveRetryAsync_WithLogger_LogsErrors()
+	{
+		var logger = new MockLogger();
+
+		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
+		{
+			throw new InvalidOperationException("Test failure");
+		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait, logger: logger);
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.HasErrors);
+		Assert.AreEqual(RetryCount, logger.LoggedLevels.Count);
+
+		foreach (var level in logger.LoggedLevels)
+		{
+			Assert.AreEqual(LogLevel.Error, level);
+		}
+	}
+
+	[TestMethod]
+	public async Task ProgressiveRetryAsync_WithNullLogger_DoesNotThrow()
+	{
+		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
+		{
+			throw new InvalidOperationException("Test failure");
+		}, retryCount: 1, retryWaitMilliseconds: RetryWait, logger: null);
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.HasErrors);
+	}
+
+	[TestMethod]
+	public async Task ProgressiveRetryAsyncTest()
+	{
+		var result = await ExecutionHelper.ProgressiveRetryAsync(() =>
+		{
+			var types = TypeHelper.BuiltInTypeNames();
+			return Task.CompletedTask;
+		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(1, result.Value);
+		Assert.IsFalse(result.HasErrors);
+	}
+
+	[TestMethod]
+	public void ProgressiveRetryTest()
+	{
+		var result = ExecutionHelper.ProgressiveRetry(() =>
+		{
+			_ = TypeHelper.BuiltInTypeNames();
+		}, retryCount: RetryCount, retryWaitMilliseconds: RetryWait);
 
 		Assert.IsNotNull(result);
 		Assert.AreEqual(1, result.Value);

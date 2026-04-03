@@ -16,9 +16,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -44,6 +44,24 @@ public class SimpleResultTests
 		Assert.IsTrue(result.HasErrors);
 		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
 		Assert.HasCount(1, result.Errors);
+	}
+
+	[TestMethod]
+	public void AddException_WithLogger_LogsException()
+	{
+		// Arrange
+		var logger = new NullLogger<SimpleResult<int>>();
+		var value = RandomData.GenerateInteger(1, 100);
+		var result = new SimpleResult<int>(value, logger);
+		var exception = new InvalidOperationException(RandomData.GenerateWord(10));
+
+		// Act
+		result.AddException(exception);
+
+		// Assert
+		Assert.IsTrue(result.HasErrors);
+		Assert.HasCount(1, result.Errors);
+		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
 	}
 
 	[TestMethod]
@@ -150,6 +168,39 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void Bind_FailedResult_PropagatesMultipleErrors()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(new InvalidOperationException("error1"));
+		result.AddException(new ArgumentException("error2"));
+		result.AddException(new FormatException("error3"));
+
+		// Act
+		var bound = result.Bind(i => new SimpleResult<string>(i.ToString()));
+
+		// Assert
+		Assert.HasCount(3, bound.Errors);
+		Assert.AreEqual(ResultStatus.Failed, bound.Status);
+	}
+
+	[TestMethod]
+	public void Bind_PartialSuccessResult_PropagatesErrors()
+	{
+		// Arrange
+		var value = RandomData.GenerateInteger(1, 100);
+		var result = new SimpleResult<int>(value);
+		result.AddException(new InvalidOperationException(RandomData.GenerateWord(10)));
+
+		// Act
+		var bound = result.Bind(i => new SimpleResult<string>(i.ToString()));
+
+		// Assert
+		Assert.IsTrue(bound.HasErrors);
+		Assert.AreEqual(ResultStatus.Failed, bound.Status);
+		Assert.HasCount(1, bound.Errors);
+	}
+
+	[TestMethod]
 	public void Bind_SuccessfulResult_BindsValue()
 	{
 		// Arrange
@@ -195,7 +246,7 @@ public class SimpleResultTests
 	public void Constructor_WithExceptionAndLogger_StoresLogger()
 	{
 		// Arrange
-		var logger = new Microsoft.Extensions.Logging.Abstractions.NullLogger<SimpleResult<int>>();
+		var logger = new NullLogger<SimpleResult<int>>();
 		var exception = new InvalidOperationException("Test error");
 
 		// Act
@@ -210,7 +261,7 @@ public class SimpleResultTests
 	public void Constructor_WithLogger_StoresLogger()
 	{
 		// Arrange
-		var logger = new Microsoft.Extensions.Logging.Abstractions.NullLogger<SimpleResult<int>>();
+		var logger = new NullLogger<SimpleResult<int>>();
 		var value = 42;
 
 		// Act
@@ -227,6 +278,14 @@ public class SimpleResultTests
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
 			new SimpleResult<string>((Exception)null));
+	}
+
+	[TestMethod]
+	public void Constructor_WithNullValue_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			new SimpleResult<string>((string)null!));
 	}
 
 	[TestMethod]
@@ -389,6 +448,22 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void GetErrorMessages_WithInnerException_IncludesInnerMessages()
+	{
+		// Arrange
+		var innerEx = new InvalidOperationException("inner error");
+		var outerEx = new ArgumentException("outer error", innerEx);
+		var result = new SimpleResult<int>(outerEx);
+
+		// Act
+		var messages = result.GetErrorMessages();
+
+		// Assert
+		Assert.Contains("outer error", messages);
+		Assert.Contains("inner error", messages);
+	}
+
+	[TestMethod]
 	public void GetHashCode_ReturnsDifferentValuesForDifferentInstances()
 	{
 		// Arrange
@@ -479,6 +554,39 @@ public class SimpleResultTests
 		// Assert
 		Assert.IsTrue(mapped.HasErrors);
 		Assert.AreEqual(ResultStatus.Failed, mapped.Status);
+	}
+
+	[TestMethod]
+	public void Map_FailedResult_PropagatesMultipleErrors()
+	{
+		// Arrange
+		var result = new SimpleResult<int>(new InvalidOperationException("error1"));
+		result.AddException(new ArgumentException("error2"));
+		result.AddException(new FormatException("error3"));
+
+		// Act
+		var mapped = result.Map(i => i.ToString());
+
+		// Assert
+		Assert.HasCount(3, mapped.Errors);
+		Assert.AreEqual(ResultStatus.Failed, mapped.Status);
+	}
+
+	[TestMethod]
+	public void Map_PartialSuccessResult_PropagatesErrors()
+	{
+		// Arrange
+		var value = RandomData.GenerateInteger(1, 100);
+		var result = new SimpleResult<int>(value);
+		result.AddException(new InvalidOperationException(RandomData.GenerateWord(10)));
+
+		// Act
+		var mapped = result.Map(i => i.ToString());
+
+		// Assert
+		Assert.IsTrue(mapped.HasErrors);
+		Assert.AreEqual(ResultStatus.Failed, mapped.Status);
+		Assert.HasCount(1, mapped.Errors);
 	}
 
 	[TestMethod]
@@ -861,6 +969,19 @@ public class SimpleResultTests
 	}
 
 	[TestMethod]
+	public void ToString_DefaultConstructor_NullValue_ReturnsEmptyString()
+	{
+		// Arrange
+		var result = new SimpleResult<string>();
+
+		// Act
+		var str = result.ToString();
+
+		// Assert
+		Assert.AreEqual(string.Empty, str);
+	}
+
+	[TestMethod]
 	public void ToString_ReturnsErrorMessagesIfHasErrors()
 	{
 		// Arrange
@@ -959,126 +1080,5 @@ public class SimpleResultTests
 		// Assert
 		Assert.AreEqual(99, result.Value);
 		Assert.IsTrue(result.IsSuccess);
-	}
-
-	[TestMethod]
-	public void Constructor_WithNullValue_ThrowsArgumentNullException()
-	{
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			new SimpleResult<string>((string)null!));
-	}
-
-	[TestMethod]
-	public void AddException_WithLogger_LogsException()
-	{
-		// Arrange
-		var logger = new Microsoft.Extensions.Logging.Abstractions.NullLogger<SimpleResult<int>>();
-		var value = RandomData.GenerateInteger(1, 100);
-		var result = new SimpleResult<int>(value, logger);
-		var exception = new InvalidOperationException(RandomData.GenerateWord(10));
-
-		// Act
-		result.AddException(exception);
-
-		// Assert
-		Assert.IsTrue(result.HasErrors);
-		Assert.HasCount(1, result.Errors);
-		Assert.AreEqual(ResultStatus.PartialSuccess, result.Status);
-	}
-
-	[TestMethod]
-	public void ToString_DefaultConstructor_NullValue_ReturnsEmptyString()
-	{
-		// Arrange
-		var result = new SimpleResult<string>();
-
-		// Act
-		var str = result.ToString();
-
-		// Assert
-		Assert.AreEqual(string.Empty, str);
-	}
-
-	[TestMethod]
-	public void Bind_PartialSuccessResult_PropagatesErrors()
-	{
-		// Arrange
-		var value = RandomData.GenerateInteger(1, 100);
-		var result = new SimpleResult<int>(value);
-		result.AddException(new InvalidOperationException(RandomData.GenerateWord(10)));
-
-		// Act
-		var bound = result.Bind(i => new SimpleResult<string>(i.ToString()));
-
-		// Assert
-		Assert.IsTrue(bound.HasErrors);
-		Assert.AreEqual(ResultStatus.Failed, bound.Status);
-		Assert.HasCount(1, bound.Errors);
-	}
-
-	[TestMethod]
-	public void Map_PartialSuccessResult_PropagatesErrors()
-	{
-		// Arrange
-		var value = RandomData.GenerateInteger(1, 100);
-		var result = new SimpleResult<int>(value);
-		result.AddException(new InvalidOperationException(RandomData.GenerateWord(10)));
-
-		// Act
-		var mapped = result.Map(i => i.ToString());
-
-		// Assert
-		Assert.IsTrue(mapped.HasErrors);
-		Assert.AreEqual(ResultStatus.Failed, mapped.Status);
-		Assert.HasCount(1, mapped.Errors);
-	}
-
-	[TestMethod]
-	public void Bind_FailedResult_PropagatesMultipleErrors()
-	{
-		// Arrange
-		var result = new SimpleResult<int>(new InvalidOperationException("error1"));
-		result.AddException(new ArgumentException("error2"));
-		result.AddException(new FormatException("error3"));
-
-		// Act
-		var bound = result.Bind(i => new SimpleResult<string>(i.ToString()));
-
-		// Assert
-		Assert.HasCount(3, bound.Errors);
-		Assert.AreEqual(ResultStatus.Failed, bound.Status);
-	}
-
-	[TestMethod]
-	public void Map_FailedResult_PropagatesMultipleErrors()
-	{
-		// Arrange
-		var result = new SimpleResult<int>(new InvalidOperationException("error1"));
-		result.AddException(new ArgumentException("error2"));
-		result.AddException(new FormatException("error3"));
-
-		// Act
-		var mapped = result.Map(i => i.ToString());
-
-		// Assert
-		Assert.HasCount(3, mapped.Errors);
-		Assert.AreEqual(ResultStatus.Failed, mapped.Status);
-	}
-
-	[TestMethod]
-	public void GetErrorMessages_WithInnerException_IncludesInnerMessages()
-	{
-		// Arrange
-		var innerEx = new InvalidOperationException("inner error");
-		var outerEx = new ArgumentException("outer error", innerEx);
-		var result = new SimpleResult<int>(outerEx);
-
-		// Act
-		var messages = result.GetErrorMessages();
-
-		// Assert
-		Assert.Contains("outer error", messages);
-		Assert.Contains("inner error", messages);
 	}
 }

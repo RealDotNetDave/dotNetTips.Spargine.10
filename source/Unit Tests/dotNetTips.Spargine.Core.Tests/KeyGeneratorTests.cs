@@ -20,6 +20,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNetTips.Spargine.Core;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -337,6 +339,13 @@ public class KeyGeneratorTests
 	}
 
 	[TestMethod]
+	public void GenerateCustomKey_WithEmptyItems_ShouldThrowArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateCustomKey('-', true, []));
+	}
+
+	[TestMethod]
 	public void GenerateCustomKey_WithEmptyStringsInItems_HandlesEmpty()
 	{
 		// Arrange
@@ -355,13 +364,6 @@ public class KeyGeneratorTests
 		Assert.Contains("End", result);
 		// Should have consecutive separators for empty string
 		Assert.Contains("--", result);
-	}
-
-	[TestMethod]
-	public void GenerateCustomKey_WithEmptyItems_ShouldThrowArgumentNullException()
-	{
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateCustomKey('-', true, []));
 	}
 
 	[TestMethod]
@@ -469,6 +471,38 @@ public class KeyGeneratorTests
 	}
 
 	[TestMethod]
+	public void GenerateKey_WithoutPrefix_MultipleRapidGenerations_AllUnique()
+	{
+		// Arrange
+		const int count = 1000;
+		var keys = new HashSet<string>();
+
+		// Act
+		for (var i = 0; i < count; i++)
+		{
+			keys.Add(KeyGenerator.GenerateKey());
+		}
+
+		// Assert
+		Assert.AreEqual(count, keys.Count, "All generated keys should be unique.");
+	}
+
+	[TestMethod]
+	public void GenerateKey_WithoutPrefix_ShouldReturnValidGuidString()
+	{
+		// Act
+		var key = KeyGenerator.GenerateKey();
+
+		// Assert
+		Assert.IsFalse(string.IsNullOrWhiteSpace(key), "Generated key should not be null or whitespace.");
+		Assert.AreEqual(32, key.Length, "Generated key should have a length of 32 characters (GUID without dashes).");
+
+		var isValidGuid = Guid.TryParseExact(key, "N", out var parsedGuid);
+		Assert.IsTrue(isValidGuid, "Generated key should be a valid GUID without dashes.");
+		Assert.IsNotNull(parsedGuid, "Parsed GUID should not be null.");
+	}
+
+	[TestMethod]
 	public void GenerateKey_WithPrefix_MultipleInvocations_GenerateUniqueKeys()
 	{
 		// Arrange
@@ -503,38 +537,6 @@ public class KeyGeneratorTests
 		var guidPart = result[(prefix.Length + 1)..];
 		Assert.AreEqual(32, guidPart.Length);
 		Assert.IsTrue(Guid.TryParseExact(guidPart, "N", out _));
-	}
-
-	[TestMethod]
-	public void GenerateKey_WithoutPrefix_MultipleRapidGenerations_AllUnique()
-	{
-		// Arrange
-		const int count = 1000;
-		var keys = new HashSet<string>();
-
-		// Act
-		for (var i = 0; i < count; i++)
-		{
-			keys.Add(KeyGenerator.GenerateKey());
-		}
-
-		// Assert
-		Assert.AreEqual(count, keys.Count, "All generated keys should be unique.");
-	}
-
-	[TestMethod]
-	public void GenerateKey_WithoutPrefix_ShouldReturnValidGuidString()
-	{
-		// Act
-		var key = KeyGenerator.GenerateKey();
-
-		// Assert
-		Assert.IsFalse(string.IsNullOrWhiteSpace(key), "Generated key should not be null or whitespace.");
-		Assert.AreEqual(32, key.Length, "Generated key should have a length of 32 characters (GUID without dashes).");
-
-		var isValidGuid = Guid.TryParseExact(key, "N", out var parsedGuid);
-		Assert.IsTrue(isValidGuid, "Generated key should be a valid GUID without dashes.");
-		Assert.IsNotNull(parsedGuid, "Parsed GUID should not be null.");
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 05-05-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-07-2025
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="WIP.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,7 +14,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using DotNetTips.Spargine.Core.Devices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

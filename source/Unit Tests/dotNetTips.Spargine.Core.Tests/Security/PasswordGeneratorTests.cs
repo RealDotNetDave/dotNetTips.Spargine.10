@@ -35,7 +35,7 @@ public class PasswordGeneratorTests
 	public void GeneratePassword_ContainsRequiredCharacters()
 	{
 		// Arrange
-		int length = 12;
+		var length = 12;
 
 		// Act
 		var password = PasswordGenerator.GeneratePassword(length);

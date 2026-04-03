@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="NetworkHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -238,7 +238,7 @@ public class NetworkHelperTests : UnitTester
 
 		this.PrintToDebug(result);
 
-		var file = this.SaveToFile(result, nameof(this.GetNetworkConnectionsReport));
+		_ = this.SaveToFile(result, nameof(this.GetNetworkConnectionsReport));
 
 		Assert.IsFalse(string.IsNullOrWhiteSpace(result), "The network connections report should not be null or empty.");
 	}
