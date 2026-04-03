@@ -51,7 +51,7 @@ public class ChannelQueueTests
 	{
 		// Arrange
 		var queue = new ChannelQueue<string>();
-		queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
+		_ = queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
 
 		queue.Clear();
 
@@ -645,7 +645,7 @@ public class ChannelQueueTests
 		{
 			channel.WriteAsync(2).Wait();
 		}
-		catch (AggregateException ex) when (ex.InnerException is ChannelClosedException || ex.InnerException is InvalidOperationException)
+		catch (AggregateException ex) when ((ex.InnerException is ChannelClosedException) || (ex.InnerException is InvalidOperationException))
 		{
 			// Expected exception
 			return;

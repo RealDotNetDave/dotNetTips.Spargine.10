@@ -4,7 +4,7 @@
 // Created          : 02-17-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 04-01-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,9 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)

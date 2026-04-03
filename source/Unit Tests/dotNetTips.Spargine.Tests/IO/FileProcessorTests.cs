@@ -378,7 +378,7 @@ public class FileProcessorTests
 		var exceptionThrown = false;
 		try
 		{
-			processor.DeleteFiles(files, cts.Token);
+			_ = processor.DeleteFiles(files, cts.Token);
 			Assert.Fail("Expected OperationCanceledException was not thrown.");
 		}
 		catch (OperationCanceledException)

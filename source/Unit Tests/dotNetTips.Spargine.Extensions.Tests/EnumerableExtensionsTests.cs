@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -104,7 +104,7 @@ public class EnumerableExtensionsTests
 		Assert.AreEqual(0, enumeratedCount);
 
 		// Now enumerate
-		var result = query.ToList();
+		_ = query.ToList();
 		Assert.AreEqual(3, enumeratedCount); // Original 3 items enumerated
 	}
 
@@ -1230,7 +1230,7 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
 		var result = people.FastLongCount(p =>
-			p.Age.TotalDays > 25 &&
+			(p.Age.TotalDays > 25) &&
 			p.Email.Contains("@", StringComparison.Ordinal) &&
 			!string.IsNullOrEmpty(p.LastName));
 
@@ -1339,7 +1339,7 @@ public class EnumerableExtensionsTests
 
 		var result = numbers.FastLongCount(n => n % 2 == 0);
 
-		Assert.AreEqual((Count / 2), result);
+		Assert.AreEqual(Count / 2, result);
 	}
 
 	[TestMethod]
@@ -1928,7 +1928,7 @@ public class EnumerableExtensionsTests
 		var numbers = new List<int> { 1, 2, 3, 4, 5 };
 
 		// Act
-		var result = numbers.FastProcessor(n => n % 2 == 0 ? n * 2 : n * 3);
+		var result = numbers.FastProcessor(n => (n % 2 == 0) ? (n * 2) : (n * 3));
 
 		// Assert
 		CollectionAssert.AreEqual(new[] { 3, 4, 9, 8, 15 }, result.ToArray());
@@ -4377,7 +4377,7 @@ public class EnumerableExtensionsTests
 	{
 		var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }.AsEnumerable();
 
-		var result = numbers.ReplaceIf((n, i) => n % 2 == 0 && i < 5, -1).ToList();
+		var result = numbers.ReplaceIf((n, i) => (n % 2 == 0) && (i < 5), -1).ToList();
 
 		CollectionAssert.AreEqual(new List<int> { 1, -1, 3, -1, 5, 6, 7, 8, 9, 10 }, result);
 	}

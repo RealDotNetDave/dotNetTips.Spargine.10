@@ -99,7 +99,7 @@ public class DirectoryHelperTests
 		directory.Create();
 
 		// Act
-		DirectoryHelper.DeleteDirectory(directory);
+		_ = DirectoryHelper.DeleteDirectory(directory);
 
 		// Assert
 		Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The directory should have been deleted.");

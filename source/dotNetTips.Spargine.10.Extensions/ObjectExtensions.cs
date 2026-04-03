@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -219,7 +219,7 @@ public static class ObjectExtensions
 		{
 			if (obj is IAsyncDisposable asyncDisposable)
 			{
-				var result = asyncDisposable.DisposeAsync();
+				var task = asyncDisposable.DisposeAsync();
 			}
 			else
 			{

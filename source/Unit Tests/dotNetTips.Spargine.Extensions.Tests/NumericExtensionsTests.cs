@@ -4,7 +4,7 @@
 // Created          : 12-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="NumericExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,12 +31,12 @@ public class NumericExtensionsTests : UnitTester
 	public void Average_IntsWithRounding_ReturnsCorrectAverage()
 	{
 		// Arrange
-		int a = 10;
-		int b = 21; // This will test if the method correctly handles rounding.
-		int expectedResult = 15; // Expected to round down from 15.5 to 15
+		var a = 10;
+		var b = 21; // This will test if the method correctly handles rounding.
+		var expectedResult = 15; // Expected to round down from 15.5 to 15
 
 		// Act
-		int result = NumericExtensions.Average(a, b);
+		var result = NumericExtensions.Average(a, b);
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "The average of 10 and 21 should be 15, demonstrating rounding down.");

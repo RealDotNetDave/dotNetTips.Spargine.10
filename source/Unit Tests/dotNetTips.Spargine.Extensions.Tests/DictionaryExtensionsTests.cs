@@ -13,10 +13,9 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -215,7 +214,7 @@ public class DictionaryExtensionsTests
 	{
 		// Arrange
 		var items = new string[] { null, null, null };
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var collection = new ReadOnlyCollection<string>(items);
 		var comparer = EqualityComparer<string>.Default;
 
 		// Act
@@ -231,7 +230,7 @@ public class DictionaryExtensionsTests
 	{
 		// Arrange
 		var items = new[] { "Apple", null, "Banana", null, "Cherry" };
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var collection = new ReadOnlyCollection<string>(items);
 		var comparer = EqualityComparer<string>.Default;
 
 		// Act
@@ -248,7 +247,7 @@ public class DictionaryExtensionsTests
 	{
 		// Arrange
 		var items = new[] { "apple", "BANANA", "Cherry" };
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var collection = new ReadOnlyCollection<string>(items);
 		var comparer = StringComparer.OrdinalIgnoreCase;
 
 		// Act
@@ -265,7 +264,7 @@ public class DictionaryExtensionsTests
 	{
 		// Arrange
 		var items = new[] { "Apple", "apple" };
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var collection = new ReadOnlyCollection<string>(items);
 		var caseSensitiveComparer = StringComparer.Ordinal;
 		var caseInsensitiveComparer = StringComparer.OrdinalIgnoreCase;
 
@@ -282,7 +281,7 @@ public class DictionaryExtensionsTests
 	public void GenerateHashCodeWithComparer_EmptyCollection_ReturnsInitialHashValue()
 	{
 		// Arrange
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(Array.Empty<string>());
+		var collection = new ReadOnlyCollection<string>(Array.Empty<string>());
 		var comparer = EqualityComparer<string>.Default;
 
 		// Act
@@ -298,7 +297,7 @@ public class DictionaryExtensionsTests
 	{
 		// Arrange
 		var items = new[] { 1, 2, 3, 4, 5 };
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<int>(items);
+		var collection = new ReadOnlyCollection<int>(items);
 		var comparer = EqualityComparer<int>.Default;
 
 		// Act
@@ -315,7 +314,7 @@ public class DictionaryExtensionsTests
 	{
 		// Arrange
 		var items = new[] { "Apple", "Banana", "Cherry" };
-		var collection = new System.Collections.ObjectModel.ReadOnlyCollection<string>(items);
+		var collection = new ReadOnlyCollection<string>(items);
 		var comparer = EqualityComparer<string>.Default;
 
 		// Act

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -89,7 +89,7 @@ public static class EnumerableExtensions
 		[Information(nameof(FastContains), "David McCarter", "2/14/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 		public bool FastContains(T searchItem, [AllowNull] IComparer<T>? comparer = null)
 		{
-			if (list is null || searchItem is null)
+			if ((list is null) || (searchItem is null))
 			{
 				return false;
 			}
@@ -98,7 +98,7 @@ public static class EnumerableExtensions
 			var comp = comparer ?? Comparer<T>.Default;
 
 			// Fast path: HashSet<T> - O(1) hash-based lookup only when using default comparer
-			if (list is HashSet<T> hashSet && comparer is null)
+			if ((list is HashSet<T> hashSet) && (comparer is null))
 			{
 				return hashSet.Contains(searchItem);
 			}
@@ -172,7 +172,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
 		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
@@ -378,13 +378,13 @@ public static class EnumerableExtensions
 
 			var parts = sortExpression.Split(ControlChars.Space, StringSplitOptions.RemoveEmptyEntries);
 
-			if (parts.Length == 0 || string.IsNullOrEmpty(parts[0]))
+			if ((parts.Length == 0) || string.IsNullOrEmpty(parts[0]))
 			{
 				return collection;
 			}
 
 			var property = parts[0];
-			var descending = parts.Length > 1 && parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
+			var descending = (parts.Length > 1) && parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
 
 			var cacheKey = $"{typeof(T).FullName}.{property}";
 
@@ -410,11 +410,11 @@ public static class EnumerableExtensions
 				return lambda.Compile();
 			});
 
-			return accessor is not Func<T, object?> typedAccessor
+			return (accessor is not Func<T, object?> typedAccessor)
 				? throw new InvalidOperationException($"Cached delegate for property accessor is not of expected type Func<{typeof(T).Name}, object?>.")
-				: (IEnumerable<T>)(descending
+				: ((IEnumerable<T>)(descending
 				? collection.OrderByDescending(typedAccessor)
-				: collection.OrderBy(typedAccessor));
+				: collection.OrderBy(typedAccessor)));
 		}
 
 		/// <summary>
@@ -654,7 +654,7 @@ public static class EnumerableExtensions
 		[Information(nameof(StartsWith), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 		public bool StartsWith([AllowNull] in IEnumerable<T> second)
 		{
-			if (collection is null || second is null)
+			if ((collection is null) || (second is null))
 			{
 				return false;
 			}
@@ -689,7 +689,7 @@ public static class EnumerableExtensions
 		[Information(nameof(StructuralSequenceEqual), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
 		public bool StructuralSequenceEqual([AllowNull] IEnumerable<T> second)
 		{
-			if (collection is null || second is null)
+			if ((collection is null) || (second is null))
 			{
 				return false;
 			}
@@ -786,7 +786,7 @@ public static class EnumerableExtensions
 		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public string ToDelimitedString([ConstantExpected] char delimiter = ControlChars.Comma)
 		{
-			if (collection is null || collection.FastLongCount() == 0)
+			if ((collection is null) || (collection.FastLongCount() == 0))
 			{
 				return string.Empty;
 			}
@@ -1056,7 +1056,7 @@ public static class EnumerableExtensions
 			separator = separator.ArgumentNotNull();
 
 			//RECOMENDATION FROM COPILOT SLOWER.
-			return collection.CheckItemsExists() is false
+			return (collection.CheckItemsExists() is false)
 				? string.Empty
 				: string.Join(separator.ArgumentNotNullOrEmpty(defaultValue: ControlChars.DefaultSeparator), collection);
 		}
@@ -1221,7 +1221,7 @@ public static class EnumerableExtensions
 		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool ContainsAny([AllowNull] params ReadOnlyCollection<T> items)
 		{
-			if (collection is null || items is null || items.Count == 0)
+			if ((collection is null) || (items is null) || (items.Count == 0))
 			{
 				return false;
 			}
@@ -1428,7 +1428,7 @@ public static class EnumerableExtensions
 			// Value types: use size-based optimization; honor comparer
 			if (typeof(T).IsValueType)
 			{
-				return collection.Count() > 256
+				return (collection.Count() > 256)
 					? collection.Distinct(comparer)
 					: new HashSet<T>(collection, comparer);
 			}
@@ -1436,7 +1436,7 @@ public static class EnumerableExtensions
 			// Reference types: use size-based optimization; honor comparer
 			if (collection is ICollection<T> refCollection)
 			{
-				return refCollection.Count > 2048
+				return (refCollection.Count > 2048)
 					? collection.Distinct(comparer)
 					: new HashSet<T>(collection, comparer);
 			}
@@ -1682,7 +1682,7 @@ public static class EnumerableExtensions
 		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddDistinct([AllowNull] params IEnumerable<T> items)
 		{
-			if (collection == null || items == null || items.Count() == 0)
+			if ((collection == null) || (items == null) || (items.Count() == 0))
 			{
 				return collection ?? [];
 			}
@@ -1704,7 +1704,7 @@ public static class EnumerableExtensions
 		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public bool IsNotEmpty(in int count)
 		{
-			return collection is null ? false : collection.Count() == count;
+			return (collection is null) ? false : (collection.Count() == count);
 		}
 
 		/// <summary>
@@ -1822,7 +1822,7 @@ public static class EnumerableExtensions
 			}
 
 			// Append item only when condition is true and item is non-null
-			if (condition && item is not null)
+			if (condition && (item is not null))
 			{
 				yield return item;
 			}

@@ -84,8 +84,8 @@ public class CollectionRandomizerTests
 
 		// Act
 		var countBefore = randomizer.Count;
-		randomizer.GetNext();
-		randomizer.GetNext();
+		_ = randomizer.GetNext();
+		_ = randomizer.GetNext();
 		var countAfter = randomizer.Count;
 
 		// Assert

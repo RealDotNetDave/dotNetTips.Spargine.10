@@ -33,7 +33,7 @@ public class LinqExtensionsTests
 	{
 		// Arrange
 		var data = new[] { 1, 2, 3, 4, 5 }.AsQueryable();
-		bool condition = false;
+		var condition = false;
 		Func<IQueryable<int>, IQueryable<int>>[] transforms = {
 				query => query.Where(x => x > 2),
 				query => query.OrderByDescending(x => x)
