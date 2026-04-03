@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-29-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -64,7 +64,7 @@ public class SimpleResult<T>
 	/// </summary>
 	/// <param name="value">The value produced by the operation. Must not be <see langword="null"/>.</param>
 	/// <param name="logger">An optional <see cref="ILogger"/> instance used for logging. Can be <see langword="null"/>.</param>
-	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Update, Status = Core.Status.Available)]
+	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public SimpleResult([DisallowNull] T value, [AllowNull] ILogger? logger = null)
 	{
 		this._value = value.ArgumentNotNull();
@@ -79,7 +79,7 @@ public class SimpleResult<T>
 	/// <param name="error">The exception that caused the operation to fail.</param>
 	/// <param name="logger">An optional <see cref="ILogger"/> instance for logging. Can be <see langword="null"/>.</param>
 
-	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Update, Status = Core.Status.Available)]
+	[Information(nameof(SimpleResult), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public SimpleResult(Exception error, [AllowNull] ILogger? logger = null)
 	{
 		this._value = default!;
@@ -160,8 +160,8 @@ public class SimpleResult<T>
 	/// <see cref="ResultStatus.Succeeded"/> if the result is successful; 
 	/// <see cref="ResultStatus.PartialSuccess"/> if there are exceptions but a value is present;
 	/// otherwise, <see cref="ResultStatus.Failed"/>.
-	/// </value>>
-	[Information(nameof(Status), UnitTestStatus = UnitTestStatus.WIP, Status = Core.Status.Available)]
+	/// </value>
+	[Information(nameof(Status), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public ResultStatus Status
 	{
 		get

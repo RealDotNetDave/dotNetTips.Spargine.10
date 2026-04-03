@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-24-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-03-2026
 // ***********************************************************************
 // <copyright file="KeyGeneratorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -20,7 +20,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DotNetTips.Spargine.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -359,6 +358,13 @@ public class KeyGeneratorTests
 	}
 
 	[TestMethod]
+	public void GenerateCustomKey_WithEmptyItems_ShouldThrowArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateCustomKey('-', true, []));
+	}
+
+	[TestMethod]
 	public void GenerateCustomKey_WithNullItems_ShouldThrowArgumentException()
 	{
 		// Act & Assert
@@ -460,6 +466,60 @@ public class KeyGeneratorTests
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateKey(null));
+	}
+
+	[TestMethod]
+	public void GenerateKey_WithPrefix_MultipleInvocations_GenerateUniqueKeys()
+	{
+		// Arrange
+		var prefix = RandomData.GenerateWord(5, 10);
+
+		// Act
+		var key1 = KeyGenerator.GenerateKey(prefix);
+		var key2 = KeyGenerator.GenerateKey(prefix);
+		var key3 = KeyGenerator.GenerateKey(prefix);
+
+		// Assert
+		Assert.AreNotEqual(key1, key2);
+		Assert.AreNotEqual(key2, key3);
+		Assert.AreNotEqual(key1, key3);
+	}
+
+	[TestMethod]
+	public void GenerateKey_WithPrefix_ReturnsCorrectFormat()
+	{
+		// Arrange
+		var prefix = RandomData.GenerateWord(5, 10);
+
+		// Act
+		var result = KeyGenerator.GenerateKey(prefix);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.StartsWith($"{prefix}_", result);
+		Assert.AreEqual(prefix.Length + 33, result.Length);
+
+		// Verify the GUID part is valid
+		var guidPart = result[(prefix.Length + 1)..];
+		Assert.AreEqual(32, guidPart.Length);
+		Assert.IsTrue(Guid.TryParseExact(guidPart, "N", out _));
+	}
+
+	[TestMethod]
+	public void GenerateKey_WithoutPrefix_MultipleRapidGenerations_AllUnique()
+	{
+		// Arrange
+		const int count = 1000;
+		var keys = new HashSet<string>();
+
+		// Act
+		for (var i = 0; i < count; i++)
+		{
+			keys.Add(KeyGenerator.GenerateKey());
+		}
+
+		// Assert
+		Assert.AreEqual(count, keys.Count, "All generated keys should be unique.");
 	}
 
 	[TestMethod]
@@ -657,5 +717,66 @@ public class KeyGeneratorTests
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => KeyGenerator.GenerateSortableKey(null));
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_WithPrefix_KeysAreSortableByTime()
+	{
+		// Arrange
+		var prefix = RandomData.GenerateWord(5, 10);
+		var keys = new List<string>();
+
+		for (var i = 0; i < 10; i++)
+		{
+			keys.Add(KeyGenerator.GenerateSortableKey(prefix));
+			Thread.Sleep(2);
+		}
+
+		// Act
+		var sortedKeys = keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
+
+		// Assert - Original order should match lexicographic sort order
+		for (var i = 0; i < keys.Count; i++)
+		{
+			Assert.AreEqual(keys[i], sortedKeys[i],
+				$"Prefixed sortable key at index {i} should maintain chronological order when sorted.");
+		}
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_WithPrefix_MultipleInvocations_GenerateUniqueKeys()
+	{
+		// Arrange
+		var prefix = RandomData.GenerateWord(5, 10);
+
+		// Act
+		var key1 = KeyGenerator.GenerateSortableKey(prefix);
+		var key2 = KeyGenerator.GenerateSortableKey(prefix);
+		var key3 = KeyGenerator.GenerateSortableKey(prefix);
+
+		// Assert
+		Assert.AreNotEqual(key1, key2);
+		Assert.AreNotEqual(key2, key3);
+		Assert.AreNotEqual(key1, key3);
+	}
+
+	[TestMethod]
+	public void GenerateSortableKey_WithPrefix_ReturnsCorrectFormat()
+	{
+		// Arrange
+		var prefix = RandomData.GenerateWord(5, 10);
+
+		// Act
+		var result = KeyGenerator.GenerateSortableKey(prefix);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.StartsWith($"{prefix}_", result);
+		Assert.AreEqual(prefix.Length + 33, result.Length);
+
+		// Verify the GUID part is valid
+		var guidPart = result[(prefix.Length + 1)..];
+		Assert.AreEqual(32, guidPart.Length);
+		Assert.IsTrue(Guid.TryParseExact(guidPart, "N", out _));
 	}
 }
