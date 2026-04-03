@@ -160,7 +160,7 @@ public class SimpleResult<T>
 	/// <see cref="ResultStatus.Succeeded"/> if the result is successful; 
 	/// <see cref="ResultStatus.PartialSuccess"/> if there are exceptions but a value is present;
 	/// otherwise, <see cref="ResultStatus.Failed"/>.
-	/// </value>>
+	/// </value>
 	[Information(nameof(Status), UnitTestStatus = UnitTestStatus.Completed, Status = Core.Status.Available)]
 	public ResultStatus Status
 	{
