@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-04-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -32,6 +32,15 @@ public class ArrayExtensionsTests
 {
 
 	[TestMethod]
+	public void AddFirst_NullArray_ThrowsArgumentNullException()
+	{
+		Person[] array = null;
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.AddFirst(person));
+	}
+
+	[TestMethod]
 	public void AddFirstNullTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
@@ -41,9 +50,6 @@ public class ArrayExtensionsTests
 		Assert.AreEqual(10, result.Length);
 	}
 
-	/// <summary>
-	/// Defines the test method AddFirstTest.
-	/// </summary>
 	[TestMethod]
 	public void AddFirstTest()
 	{
@@ -56,6 +62,17 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddIf_ConditionFalse_ReturnsOriginalArray()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = people.AddIf(person, false);
+
+		Assert.AreEqual(10, result.Length);
+	}
+
+	[TestMethod]
 	public void AddIfNullTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
@@ -65,9 +82,6 @@ public class ArrayExtensionsTests
 		Assert.AreEqual(10, result.Length);
 	}
 
-	/// <summary>
-	/// Defines the test method AddIfTest.
-	/// </summary>
 	[TestMethod]
 	public void AddIfTest()
 	{
@@ -79,9 +93,15 @@ public class ArrayExtensionsTests
 		Assert.AreEqual(11, result.Length);
 	}
 
-	/// <summary>
-	/// Defines the test method AddLastTest.
-	/// </summary>
+	[TestMethod]
+	public void AddLast_NullArray_ThrowsArgumentNullException()
+	{
+		Person[] array = null;
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.AddLast(person));
+	}
+
 	[TestMethod]
 	public void AddLastTest()
 	{
@@ -166,9 +186,17 @@ public class ArrayExtensionsTests
 		Assert.IsTrue(result);
 	}
 
-	/// <summary>
-	/// Defines the test method AreEqualTest.
-	/// </summary>
+	[TestMethod]
+	public void AreEqual_SecondArrayNull_ReturnsFalse()
+	{
+		var array1 = new[] { 1, 2, 3 };
+		int[] array2 = null;
+
+		var result = array1.AreEqual(array2);
+
+		Assert.IsFalse(result);
+	}
+
 	[TestMethod]
 	public void AreEqualTest()
 	{
@@ -183,6 +211,14 @@ public class ArrayExtensionsTests
 		Assert.IsFalse(people1.AreEqual(arrayToCheck: null));
 	}
 
+
+	[TestMethod]
+	public void AsReadOnlySpan_NullArray_ThrowsArgumentNullException()
+	{
+		string[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.AsReadOnlySpan());
+	}
 
 	[TestMethod]
 	public void AsReadOnlySpanTest()
@@ -231,9 +267,6 @@ public class ArrayExtensionsTests
 		Assert.AreEqual("0FA0B1C2", result);
 	}
 
-	/// <summary>
-	/// Defines the test method BytesToStringTest.
-	/// </summary>
 	[TestMethod]
 	public void BytesToStringTest()
 	{
@@ -244,9 +277,6 @@ public class ArrayExtensionsTests
 		Assert.IsGreaterThan(100, result.Length);
 	}
 
-	/// <summary>
-	/// Defines the test method CloneTest.
-	/// </summary>
 	[TestMethod]
 	public void CloneFastCloneTest()
 	{
@@ -257,9 +287,14 @@ public class ArrayExtensionsTests
 		Assert.IsTrue(people.AreEqual(result));
 	}
 
-	/// <summary>
-	/// Defines the test method ContainsAnyTest.
-	/// </summary>
+	[TestMethod]
+	public void FastClone_NullArray_ThrowsArgumentNullException()
+	{
+		Person[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.FastClone());
+	}
+
 	[TestMethod]
 	public void ContainsAnyTest()
 	{
@@ -287,16 +322,37 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastLongCount_NullArray_ThrowsArgumentNullException()
+	{
+		int[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.FastLongCount());
+	}
+
+	[TestMethod]
 	public void FastLongCount_ReturnsCorrectLength()
 	{
 		var arr = new[] { 1, 2, 3, 4, 5 };
 
-		Assert.AreEqual(5, arr.Length);
+		Assert.AreEqual(5L, arr.FastLongCount());
 	}
 
-	/// <summary>
-	/// Defines the test method FastProcessorTest.
-	/// </summary>
+	[TestMethod]
+	public void FastProcessor_NullAction_ThrowsArgumentNullException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => people.FastProcessor((Action<Person>)null));
+	}
+
+	[TestMethod]
+	public void FastProcessor_NullArray_ThrowsArgumentNullException()
+	{
+		Person[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.FastProcessor(p => { }));
+	}
+
 	[TestMethod]
 	public void FastProcessorTest()
 	{
@@ -308,6 +364,30 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastSelectItems_InvalidCount_ThrowsArgumentOutOfRangeException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => people.FastSelectItems(0, 11));
+	}
+
+	[TestMethod]
+	public void FastSelectItems_InvalidStartIndex_ThrowsArgumentOutOfRangeException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => people.FastSelectItems(-1, 2));
+	}
+
+	[TestMethod]
+	public void FastSelectItems_NullArray_ThrowsArgumentNullException()
+	{
+		Person[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.FastSelectItems(0, 1));
+	}
+
+	[TestMethod]
 	public void FastSelectItemsTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
@@ -315,6 +395,24 @@ public class ArrayExtensionsTests
 		var result = people.FastSelectItems(0, 2);
 
 		Assert.AreEqual(2, result.Length);
+	}
+
+	[TestMethod]
+	public void GenerateHashCode_ArrayWithNullElements_ReturnsHashCode()
+	{
+		var arr = new string[] { "a", null, "c" };
+
+		var hashCode = arr.GenerateHashCode();
+
+		Assert.AreNotEqual(0, hashCode);
+	}
+
+	[TestMethod]
+	public void GenerateHashCode_NullArray_ThrowsArgumentNullException()
+	{
+		string[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.GenerateHashCode());
 	}
 
 	[TestMethod]
@@ -525,6 +623,14 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsNotEmpty_EmptyArray_ReturnsFalse()
+	{
+		var arr = Array.Empty<int>();
+
+		Assert.IsFalse(arr.IsNotEmpty());
+	}
+
+	[TestMethod]
 	public void IsNotEmpty_WithCount_ReturnsExpected()
 	{
 		var arr = new[] { 1, 2, 3 };
@@ -543,6 +649,14 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsNotEmpty_WithNullFunc_ReturnsFalse()
+	{
+		var arr = new[] { 1, 2, 3 };
+
+		Assert.IsFalse(arr.IsNotEmpty((Func<int, bool>)null));
+	}
+
+	[TestMethod]
 	public void IsNotEmpty_WithNullArray_ReturnsFalse()
 	{
 		int[] arr = null;
@@ -550,9 +664,6 @@ public class ArrayExtensionsTests
 		Assert.IsFalse(arr.IsNotEmpty());
 	}
 
-	/// <summary>
-	/// Defines the test method HasItemsTest.
-	/// </summary>
 	[TestMethod]
 	public void IsNotEmptyTest()
 	{
@@ -564,9 +675,6 @@ public class ArrayExtensionsTests
 		Assert.IsFalse(nullPeople.IsNotEmpty());
 	}
 
-	/// <summary>
-	/// Defines the test method HasItemsTestWithCount.
-	/// </summary>
 	[TestMethod]
 	public void IsNotEmptyTestWithCount()
 	{
@@ -581,9 +689,6 @@ public class ArrayExtensionsTests
 
 	}
 
-	/// <summary>
-	/// Defines the test method HasItemsTestWithFunction.
-	/// </summary>
 	[TestMethod]
 	public void IsNotEmptyTestWithFunction()
 	{
@@ -597,6 +702,16 @@ public class ArrayExtensionsTests
 		Assert.IsFalse(nullCollection.IsNotEmpty(selector));
 
 		Assert.IsFalse(nullCollection.IsNotEmpty(null));
+	}
+
+	[TestMethod]
+	public void LastIndexOf_DuplicateItems_ReturnsLastOccurrence()
+	{
+		var numbers = new[] { 10, 20, 30, 20, 50 };
+
+		var result = numbers.LastIndexOf(20);
+
+		Assert.AreEqual(3, result);
 	}
 
 	[TestMethod]
@@ -712,6 +827,16 @@ public class ArrayExtensionsTests
 		Assert.AreEqual(2, result);
 	}
 
+	[TestMethod]
+	public void LastIndexOf_ItemNotFound_ReturnsMinusOne()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		var result = numbers.LastIndexOf(99);
+
+		Assert.AreEqual(-1, result);
+	}
+
 
 	[TestMethod]
 	public void LastIndexOf_NullItem_ThrowsArgumentNullException()
@@ -816,6 +941,14 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void PerformAction_NullActionOnArray_ThrowsArgumentNullException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => people.PerformAction(null));
+	}
+
+	[TestMethod]
 	public void PerformAction_NullOrEmptyArray_DoesNothing()
 	{
 		// Arrange
@@ -842,9 +975,6 @@ public class ArrayExtensionsTests
 		Assert.AreEqual("Hello, world!", result);
 	}
 
-	/// <summary>
-	/// Defines the test method PerformActionTest_Ref.
-	/// </summary>
 	[TestMethod]
 	public void PerformActionTest_Ref()
 	{
@@ -856,9 +986,6 @@ public class ArrayExtensionsTests
 		Assert.IsGreaterThan(1000, sb.Length);
 	}
 
-	/// <summary>
-	/// Defines the test method PerformActionTest_Val.
-	/// </summary>
 	[TestMethod]
 	public void PerformActionTest_Val()
 	{
@@ -868,6 +995,14 @@ public class ArrayExtensionsTests
 		people.PerformAction((person) => _ = sb.Append($"{person.ToString()}|"));
 
 		Assert.IsGreaterThan(100, sb.Length);
+	}
+
+	[TestMethod]
+	public void RemoveFirst_EmptyArray_ThrowsArgumentNullException()
+	{
+		var array = Array.Empty<int>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.RemoveFirst());
 	}
 
 	[TestMethod]
@@ -955,9 +1090,6 @@ public class ArrayExtensionsTests
 		CollectionAssert.AreEqual(new[] { 1, 2, 3, 4 }, result);
 	}
 
-	/// <summary>
-	/// Defines the test method RemoveLastTest.
-	/// </summary>
 	[TestMethod]
 	public void RemoveLastTest()
 	{
@@ -969,6 +1101,14 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToDistinct_NullArray_ThrowsArgumentNullException()
+	{
+		string[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.ToDistinct());
+	}
+
+	[TestMethod]
 	public void ToDistinct_RemovesDuplicates()
 	{
 		var arr = new[] { 1, 2, 2, 3, 3, 3 };
@@ -977,9 +1117,6 @@ public class ArrayExtensionsTests
 		CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, result);
 	}
 
-	/// <summary>
-	/// Defines the test method ToDistinctTest.
-	/// </summary>
 	[TestMethod]
 	public void ToDistinctTest()
 	{
@@ -988,6 +1125,14 @@ public class ArrayExtensionsTests
 		words = words.AddLast(words.First());
 
 		Assert.AreEqual(10, words.ToDistinct().Length);
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_NullArray_ThrowsArgumentNullException()
+	{
+		string[] array = null;
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.ToFrozenSet());
 	}
 
 	[TestMethod]
@@ -1012,12 +1157,22 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
-	public void Upsert_EmptyArrayOrItem_ReturnsOriginal()
+	public void Upsert_NullArray_ThrowsArgumentNullException()
 	{
-		var arr2 = new int[0];
-		var result = arr2.Upsert(0);
+		Person[] array = null;
+		var person = RandomData.GeneratePerson<Person>();
 
-		Assert.HasCount(1, result);
+		Assert.ThrowsExactly<ArgumentNullException>(() => array.Upsert(person));
+	}
+
+	[TestMethod]
+	public void Upsert_NullItem_ReturnsOriginalArray()
+	{
+		var people = RandomData.GeneratePersonRefCollection(10).ToArray();
+
+		var result = people.Upsert(null);
+
+		Assert.HasCount(10, result);
 	}
 
 	[TestMethod]
@@ -1068,9 +1223,6 @@ public class ArrayExtensionsTests
 		Assert.IsTrue(result.Contains(newPerson), "The new item should be present in the array after upserting.");
 	}
 
-	/// <summary>
-	/// Defines the test method UpsertTest01.
-	/// </summary>
 	[TestMethod]
 	public void UpsertTest01()
 	{
