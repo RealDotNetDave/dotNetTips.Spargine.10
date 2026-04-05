@@ -401,11 +401,13 @@ public class ArrayExtensionsTests
 	[TestMethod]
 	public void GenerateHashCode_ArrayWithNullElements_ReturnsHashCode()
 	{
-		var arr = new string[] { "a", null, "c" };
+		var arrayWithNullElements = new string[] { "a", null, "c" };
+		var arrayWithoutNullElements = new string[] { "a", "c" };
 
-		var hashCode = arr.GenerateHashCode();
+		var hashCodeWithNullElements = arrayWithNullElements.GenerateHashCode();
+		var hashCodeWithoutNullElements = arrayWithoutNullElements.GenerateHashCode();
 
-		Assert.AreNotEqual(0, hashCode);
+		Assert.AreEqual(hashCodeWithoutNullElements, hashCodeWithNullElements);
 	}
 
 	[TestMethod]
