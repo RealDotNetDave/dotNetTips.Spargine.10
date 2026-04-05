@@ -1175,6 +1175,7 @@ public class ArrayExtensionsTests
 
 		var result = people.Upsert(null);
 
+		Assert.AreSame(people, result, "Upsert should return the original array instance when the item is null.");
 		Assert.HasCount(10, result);
 	}
 
