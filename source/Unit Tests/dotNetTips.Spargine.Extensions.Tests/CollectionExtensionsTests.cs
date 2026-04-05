@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -32,6 +32,15 @@ public class CollectionExtensionsTests
 {
 
 	private const int Count = 100;
+
+	[TestMethod]
+	public void AddIfNotExists_Array_ThrowsArgumentReadOnlyException()
+	{
+		ICollection<Person> collection = RandomData.GeneratePersonRefCollection(Count).ToArray();
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => collection.AddIfNotExists(person));
+	}
 
 	[TestMethod]
 	public void AddIfNotExistsSingleItemTest()
@@ -67,6 +76,26 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddIf_Array_ThrowsArgumentReadOnlyException()
+	{
+		ICollection<Person> collection = RandomData.GeneratePersonRefCollection(Count).ToArray();
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => collection.AddIf(person, true));
+	}
+
+	[TestMethod]
+	public void AddIf_ConditionFalse_ShouldNotAddItem()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var person = RandomData.GeneratePerson<Person>();
+
+		people.AddIf(person, false);
+
+		Assert.AreEqual(Count, people.Count);
+	}
+
+	[TestMethod]
 	public void AddIfNullTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
@@ -91,6 +120,16 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddRange_AllDuplicates_EnsureUnique_ReturnsFalse()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		// Try to add the same items that already exist
+		Assert.IsFalse(people.AddRange(people.ToList(), ensureUnique: true));
+		Assert.HasCount(Count, people);
+	}
+
+	[TestMethod]
 	public void AddRange_Array_ThrowsArgumentReadOnlyException()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
@@ -98,6 +137,16 @@ public class CollectionExtensionsTests
 		var array = people.ToArray();
 
 		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => array.AddRange(peopleToAdd));
+	}
+
+	[TestMethod]
+	public void AddRange_NullItems_ReturnsFalse()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		List<Person> nullItems = null;
+
+		Assert.IsFalse(people.AddRange(nullItems, ensureUnique: true));
+		Assert.HasCount(Count, people);
 	}
 
 	[TestMethod]
@@ -140,6 +189,12 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
+	public void AsSpan_NullCollection_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.AsSpan<Person>(null));
+	}
+
+	[TestMethod]
 	public void AsSpanTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
@@ -148,6 +203,23 @@ public class CollectionExtensionsTests
 		var span = collection.AsSpan();
 		Assert.AreEqual(collection.Count, span.Length);
 		Assert.IsTrue(span.SequenceEqual(collection.AsReadOnlySpan()));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_EmptyCollection_ReturnsEmptyFrozenSet()
+	{
+		var collection = new Collection<Person>();
+
+		var frozenSet = collection.ToFrozenSet();
+
+		Assert.IsNotNull(frozenSet);
+		Assert.HasCount(0, frozenSet);
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_NullCollection_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.ToFrozenSet<Person>(null));
 	}
 
 	[TestMethod]
@@ -162,6 +234,43 @@ public class CollectionExtensionsTests
 		{
 			Assert.Contains(person, frozenSet);
 		}
+	}
+
+	[TestMethod]
+	public void Upsert_Array_ThrowsArgumentReadOnlyException()
+	{
+		ICollection<Person> collection = RandomData.GeneratePersonRefCollection(Count).ToArray();
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => collection.Upsert(person));
+	}
+
+	[TestMethod]
+	public void Upsert_NonListCollection_ExistingItem_ShouldReplace()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var collection = new Collection<Person>(people);
+		var existingPerson = collection.First();
+
+		// Upsert existing item to exercise non-List<T> Remove + Add path
+		collection.Upsert(existingPerson);
+
+		Assert.HasCount(Count, collection);
+		Assert.IsTrue(collection.Contains(existingPerson));
+	}
+
+	[TestMethod]
+	public void Upsert_NonListCollection_NewItem_ShouldAdd()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var collection = new Collection<Person>(people);
+		var newPerson = RandomData.GeneratePerson<Person>();
+
+		// Upsert new item to exercise non-List<T> path where Remove returns false
+		collection.Upsert(newPerson);
+
+		Assert.HasCount(Count + 1, collection);
+		Assert.IsTrue(collection.Contains(newPerson));
 	}
 
 	[TestMethod]
