@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -310,7 +310,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToFrozen() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToFrozenDictionary), "David McCarter", "6/3/2024", Status = Status.Available)]
+	[Information(nameof(ToFrozenDictionary), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static FrozenDictionary<TKey, TValue> ToFrozenDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
 	{
 		return list.ToFrozen();
@@ -345,7 +345,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToImmutable() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", Status = Status.Available)]
+	[Information(nameof(ToImmutableDictionary), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return [.. collection];
@@ -456,7 +456,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToReadOnly() instead. Method will be removed at the end of 2026.")]
-	[Information(nameof(ToReadOnlyCollection), "David McCarter", "11/6/2023", Status = Status.Available)]
+	[Information(nameof(ToReadOnlyCollection), "David McCarter", "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyCollection<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> dictionary) where TKey : notnull
 	{
 		return dictionary.ToReadOnly();
@@ -585,7 +585,7 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Obsolete("Use ToReadOnly() instead. Method will be removed at the end of 2026.")]
-	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToReadOnlyDictionary), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return new(collection.ArgumentNotNull());
@@ -635,7 +635,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[Obsolete("Use ToSorted() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToSortedDictionary), "David McCarter", "6/27/2022", Status = Status.Available)]
+	[Information(nameof(ToSortedDictionary), "David McCarter", "6/27/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		return collection.ToSorted();
@@ -653,7 +653,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[Obsolete("Use ToSorted() instead. This method will be removed at the end of 2026.")]
-	[Information(nameof(ToSortedDictionary), Status = Status.Available)]
+	[Information(nameof(ToSortedDictionary), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] IComparer<TKey> comparer) where TKey : notnull
 	{
 		return collection.ToSorted(comparer);
