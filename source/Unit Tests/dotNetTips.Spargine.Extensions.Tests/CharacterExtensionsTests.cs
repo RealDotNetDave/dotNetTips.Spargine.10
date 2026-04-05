@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-17-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -33,6 +34,14 @@ public class CharacterExtensionsTests
 	}
 
 	[TestMethod]
+	public void GetDigitValue_BoundaryCharacters_ReturnsNegativeOne()
+	{
+		// '/' is the character just before '0', ':' is just after '9'
+		Assert.AreEqual(-1, '/'.GetDigitValue());
+		Assert.AreEqual(-1, ':'.GetDigitValue());
+	}
+
+	[TestMethod]
 	public void GetDigitValue_NonDigit_ReturnsNegativeOne()
 	{
 		Assert.AreEqual(-1, 'a'.GetDigitValue());
@@ -49,11 +58,35 @@ public class CharacterExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsAsciiControl_DelCharacter_ReturnsTrue()
+	{
+		// DEL (127) is an ASCII control character
+		Assert.IsTrue('\x7F'.IsAsciiControl);
+	}
+
+	[TestMethod]
+	public void IsAsciiControl_NonAsciiControl_ReturnsFalse()
+	{
+		// U+0080 is a control character but not ASCII (> 127)
+		Assert.IsFalse('\u0080'.IsAsciiControl);
+		Assert.IsFalse('\u0085'.IsAsciiControl);
+	}
+
+	[TestMethod]
 	public void IsAsciiControl_NonControl_ReturnsFalse()
 	{
 		Assert.IsFalse('a'.IsAsciiControl);
 		Assert.IsFalse(' '.IsAsciiControl);
 		Assert.IsFalse('5'.IsAsciiControl);
+	}
+
+	[TestMethod]
+	public void IsAsciiPunctuation_NonAsciiPunctuation_ReturnsFalse()
+	{
+		// U+3002 (CJK period '。') is punctuation but not ASCII
+		Assert.IsFalse('\u3002'.IsAsciiPunctuation);
+		// U+00AB (left guillemet '«') is punctuation but not ASCII
+		Assert.IsFalse('\u00AB'.IsAsciiPunctuation);
 	}
 
 	[TestMethod]
@@ -71,6 +104,14 @@ public class CharacterExtensionsTests
 		Assert.IsTrue(','.IsAsciiPunctuation);
 		Assert.IsTrue('!'.IsAsciiPunctuation);
 		Assert.IsTrue('?'.IsAsciiPunctuation);
+	}
+
+	[TestMethod]
+	public void IsAsciiUpper_BoundaryCharacters_ReturnsFalse()
+	{
+		// '@' is the character just before 'A', '[' is just after 'Z'
+		Assert.IsFalse('@'.IsAsciiUpper);
+		Assert.IsFalse('['.IsAsciiUpper);
 	}
 
 	[TestMethod]
@@ -149,12 +190,29 @@ public class CharacterExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsUnicodeDigit_NonAsciiDigit_ReturnsTrue()
+	{
+		// U+0663 is Arabic-Indic Digit Three '٣'
+		Assert.IsTrue('\u0663'.IsUnicodeDigit);
+		// U+0967 is Devanagari Digit One '१'
+		Assert.IsTrue('\u0967'.IsUnicodeDigit);
+	}
+
+	[TestMethod]
 	public void IsUnicodeDigit_NonDigit_ReturnsFalse()
 	{
 		Assert.IsFalse('a'.IsUnicodeDigit);
 		Assert.IsFalse('Z'.IsUnicodeDigit);
 		Assert.IsFalse('!'.IsUnicodeDigit);
 		Assert.IsFalse(' '.IsUnicodeDigit);
+	}
+
+	[TestMethod]
+	public void ToAsciiLower_BoundaryCharacters_ReturnsSameCharacter()
+	{
+		// '@' is the character just before 'A', '[' is just after 'Z'
+		Assert.AreEqual('@', '@'.ToAsciiLower());
+		Assert.AreEqual('[', '['.ToAsciiLower());
 	}
 
 	[TestMethod]
@@ -166,11 +224,28 @@ public class CharacterExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToAsciiLower_RandomUppercase_ReturnsLowercase()
+	{
+		var upper = RandomData.GenerateCharacter('A', 'Z');
+		var expected = (char)(upper + 32);
+
+		Assert.AreEqual(expected, upper.ToAsciiLower());
+	}
+
+	[TestMethod]
 	public void ToAsciiLower_UppercaseLetter_ReturnsLowercase()
 	{
 		Assert.AreEqual('a', 'A'.ToAsciiLower());
 		Assert.AreEqual('z', 'Z'.ToAsciiLower());
 		Assert.AreEqual('m', 'M'.ToAsciiLower());
+	}
+
+	[TestMethod]
+	public void ToAsciiUpper_BoundaryCharacters_ReturnsSameCharacter()
+	{
+		// '`' is the character just before 'a', '{' is just after 'z'
+		Assert.AreEqual('`', '`'.ToAsciiUpper());
+		Assert.AreEqual('{', '{'.ToAsciiUpper());
 	}
 
 	[TestMethod]
@@ -187,6 +262,15 @@ public class CharacterExtensionsTests
 		Assert.AreEqual('A', 'A'.ToAsciiUpper());
 		Assert.AreEqual('5', '5'.ToAsciiUpper());
 		Assert.AreEqual('!', '!'.ToAsciiUpper());
+	}
+
+	[TestMethod]
+	public void ToAsciiUpper_RandomLowercase_ReturnsUppercase()
+	{
+		var lower = RandomData.GenerateCharacter('a', 'z');
+		var expected = (char)(lower - 32);
+
+		Assert.AreEqual(expected, lower.ToAsciiUpper());
 	}
 
 }
