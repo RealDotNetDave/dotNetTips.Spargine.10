@@ -53,7 +53,7 @@ public static class DataTableExtensions
 	/// <returns><c>true</c> if [is database null] [the specified value]; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(HasRows), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsDBNull), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsDBNull([DisallowNull] this object value)
 	{
 		return Convert.IsDBNull(value);
