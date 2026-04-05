@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,12 +15,16 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Tester;
+using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Extensions.Tests;
 
+[ExcludeFromCodeCoverage]
 [TestClass]
 public class ConcurrentBagExtensionsTests
 {
@@ -155,17 +159,18 @@ public class ConcurrentBagExtensionsTests
 	public void AddRange_ReferenceTypeItems_AddsAllItemsToBag()
 	{
 		// Arrange
-		var bag = new ConcurrentBag<object>();
-		var items = new List<object> { new object(), new object(), new object() };
+		var bag = new ConcurrentBag<Person>();
+		var people = RandomData.GeneratePersonRefCollection(3);
+		var items = new List<Person>(people);
 
 		// Act
 		bag.AddRange(items);
 
 		// Assert
 		Assert.HasCount(3, bag);
-		foreach (var item in items)
+		foreach (var person in people)
 		{
-			CollectionAssert.Contains(bag.ToList(), item);
+			CollectionAssert.Contains(bag.ToList(), person);
 		}
 	}
 
@@ -188,17 +193,20 @@ public class ConcurrentBagExtensionsTests
 	public void AddRange_StringItems_AddsAllStringsToBag()
 	{
 		// Arrange
-		var bag = new ConcurrentBag<string> { "a", "b" };
-		var items = new List<string> { "c", "d", "e" };
+		var word1 = RandomData.GenerateWord(5);
+		var word2 = RandomData.GenerateWord(5);
+		var word3 = RandomData.GenerateWord(5);
+		var bag = new ConcurrentBag<string> { RandomData.GenerateWord(5), RandomData.GenerateWord(5) };
+		var items = new List<string> { word1, word2, word3 };
 
 		// Act
 		bag.AddRange(items);
 
 		// Assert
 		Assert.HasCount(5, bag);
-		CollectionAssert.Contains(bag, "c");
-		CollectionAssert.Contains(bag, "d");
-		CollectionAssert.Contains(bag, "e");
+		CollectionAssert.Contains(bag.ToList(), word1);
+		CollectionAssert.Contains(bag.ToList(), word2);
+		CollectionAssert.Contains(bag.ToList(), word3);
 	}
 	[TestMethod]
 	public void AddRange_ValidItems_AddsAllItemsToBag()
@@ -229,6 +237,21 @@ public class ConcurrentBagExtensionsTests
 
 		// Assert
 		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void RemoveRange_ItemsNotInBag_ReturnsAllOriginalItems()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<int> { 1, 2, 3 };
+		var items = new List<int> { 10, 20, 30 };
+
+		// Act
+		var result = bag.RemoveRange(items);
+
+		// Assert
+		Assert.HasCount(3, result);
+		CollectionAssert.AreEquivalent(new List<int> { 1, 2, 3 }, result.ToList());
 	}
 
 	[TestMethod]
@@ -294,8 +317,21 @@ public class ConcurrentBagExtensionsTests
 		// Arrange
 		var bag = new ConcurrentBag<int>();
 
+		// Act
+		var result = bag.ToList();
+
 		// Assert
-		Assert.IsEmpty(bag);
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void ToList_NullBag_ThrowsArgumentNullException()
+	{
+		// Arrange
+		ConcurrentBag<int> bag = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => bag.ToList());
 	}
 
 	[TestMethod]
@@ -304,11 +340,13 @@ public class ConcurrentBagExtensionsTests
 		// Arrange
 		var bag = new ConcurrentBag<int> { 1, 2, 3 };
 
+		// Act
+		var result = bag.ToList();
 
 		// Assert
-		Assert.HasCount(3, bag);
-		CollectionAssert.Contains(bag, 1);
-		CollectionAssert.Contains(bag, 2);
-		CollectionAssert.Contains(bag, 3);
+		Assert.HasCount(3, result);
+		CollectionAssert.Contains(result, 1);
+		CollectionAssert.Contains(result, 2);
+		CollectionAssert.Contains(result, 3);
 	}
 }
