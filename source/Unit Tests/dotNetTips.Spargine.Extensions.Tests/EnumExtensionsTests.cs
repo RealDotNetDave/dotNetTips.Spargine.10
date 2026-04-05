@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="EnumExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -76,6 +76,24 @@ public class EnumExtensionsTests
 		var count = value.FlagCount;
 
 		Assert.AreEqual(1, count);
+	}
+
+	[TestMethod]
+	public void FlagCount_WithNoneFlag_ReturnsZero()
+	{
+		var value = TestFlagsEnum.None;
+		var count = value.FlagCount;
+
+		Assert.AreEqual(0, count);
+	}
+
+	[TestMethod]
+	public void FlagCount_WithAllFlags_ReturnsThree()
+	{
+		var value = TestFlagsEnum.All;
+		var count = value.FlagCount;
+
+		Assert.AreEqual(3, count);
 	}
 
 	[TestMethod]
@@ -187,6 +205,25 @@ public class EnumExtensionsTests
 		var value = TestEnum.WithDescription;
 
 		Assert.ThrowsExactly<ArgumentException>(() => value.GetSetFlags());
+	}
+
+	[TestMethod]
+	public void GetSetFlags_WithNoneFlag_ReturnsEmptyCollection()
+	{
+		var value = TestFlagsEnum.None;
+		var flags = value.GetSetFlags();
+
+		Assert.IsEmpty(flags);
+	}
+
+	[TestMethod]
+	public void GetSetFlags_WithSingleFlag_ReturnsSingleFlag()
+	{
+		var value = TestFlagsEnum.Execute;
+		var flags = value.GetSetFlags();
+
+		Assert.HasCount(1, flags);
+		Assert.IsTrue(flags.Contains(TestFlagsEnum.Execute));
 	}
 
 	[TestMethod]
