@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -15,7 +15,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Devices;
-using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -24,12 +23,9 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class DateTimeExtensionsTests : UnitTester
+public class DateTimeExtensionsTests
 {
 
-	/// <summary>
-	/// Defines the test method DateTimeIntersectsTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeIntersectsTest()
 	{
@@ -42,9 +38,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeIsInRangeTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeIsInRangeTest()
 	{
@@ -57,9 +50,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeLocalTimeFromUtcTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeLocalTimeFromUtcTest()
 	{
@@ -72,9 +62,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result >= now);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeMaxTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeMaxTest()
 	{
@@ -87,9 +74,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result == now);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetGetLastDayOfWeekTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetGetLastDayOfWeekTest()
 	{
@@ -100,9 +84,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result <= Clock.LocalTime);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetGetNextDayOfWeekTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetGetNextDayOfWeekTest()
 	{
@@ -113,9 +94,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result >= Clock.LocalTime);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetIntersectsTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetIntersectsTest()
 	{
@@ -128,9 +106,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetIsInRangeTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetIsInRangeTest()
 	{
@@ -143,9 +118,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetMaxTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetMaxTest()
 	{
@@ -158,9 +130,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result == now);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetNextDayOfTheWeekTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetNextDayOfTheWeekTest()
 	{
@@ -173,9 +142,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result >= now);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetTimeUntilNextHourTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetTimeUntilNextHourTest()
 	{
@@ -186,9 +152,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsLessThanOrEqualTo(60, result.TotalMinutes);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetTimeUntilNextMinuteTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetTimeUntilNextMinuteTest()
 	{
@@ -199,9 +162,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsLessThanOrEqualTo(60, result.TotalSeconds);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeOffsetToFriendlyStringTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeOffsetToFriendlyStringTest()
 	{
@@ -212,9 +172,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeSubtractTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeSubtractTest()
 	{
@@ -226,9 +183,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.AreEqual(now.Add(-timeSpan), result);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeTimeUntilNextHourTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeTimeUntilNextHourTest()
 	{
@@ -239,9 +193,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsLessThanOrEqualTo(60, result.TotalMinutes);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeTimeUntilNextMinuteTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeTimeUntilNextMinuteTest()
 	{
@@ -252,9 +203,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsLessThanOrEqualTo(60, result.TotalSeconds);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeToFormattedStringTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeToFormattedStringTest()
 	{
@@ -356,9 +304,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsGreaterThan(5, result.Length);
 	}
 
-	/// <summary>
-	/// Defines the test method DateTimeToFriendlyStringTest.
-	/// </summary>
 	[TestMethod]
 	public void DateTimeToFriendlyStringTest()
 	{
@@ -369,9 +314,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(string.IsNullOrEmpty(result) is false);
 	}
 
-	/// <summary>
-	/// Defines the test method GetLastDayOfWeekTest.
-	/// </summary>
 	[TestMethod]
 	public void GetLastDayOfWeekTest()
 	{
@@ -382,9 +324,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.AreEqual(DayOfWeek.Sunday, result.DayOfWeek);
 	}
 
-	/// <summary>
-	/// Defines the test method GetNextDayOfWeekTest.
-	/// </summary>
 	[TestMethod]
 	public void GetNextDayOfWeekTest()
 	{
@@ -521,9 +460,6 @@ public class DateTimeExtensionsTests : UnitTester
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => dto.IsInRangeThrowsException(dto.AddDays(1), dto.AddDays(2), "param"));
 	}
 
-	/// <summary>
-	/// Defines the test method IsInRangeThrowsExceptionTestDateTime.
-	/// </summary>
 	[TestMethod]
 	public void IsInRangeThrowsExceptionTestDateTime()
 	{
@@ -536,9 +472,6 @@ public class DateTimeExtensionsTests : UnitTester
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(5), "TEST"));
 	}
 
-	/// <summary>
-	/// Defines the test method IsInRangeThrowsExceptionTestDateTimeOffset.
-	/// </summary>
 	[TestMethod]
 	public void IsInRangeThrowsExceptionTestDateTimeOffset()
 	{
@@ -551,9 +484,6 @@ public class DateTimeExtensionsTests : UnitTester
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => now.IsInRangeThrowsException(now.AddDays(1), now.AddDays(5), "TEST"));
 	}
 
-	/// <summary>
-	/// Defines the test method IsInRangeThrowsExceptionTestTimeSpan.
-	/// </summary>
 	[TestMethod]
 	public void IsInRangeThrowsExceptionTestTimeSpan()
 	{
@@ -592,9 +522,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result < now);
 	}
 
-	/// <summary>
-	/// Defines the test method TimeSpanIsInRangeTest.
-	/// </summary>
 	[TestMethod]
 	public void TimeSpanIsInRangeTest()
 	{
@@ -935,9 +862,6 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(result.Contains("@"));
 	}
 
-	/// <summary>
-	/// Defines the test method ToFromMilliEpochTimeTest.
-	/// </summary>
 	[TestMethod]
 	public void ToFromMilliEpochTimeTest()
 	{
@@ -954,6 +878,84 @@ public class DateTimeExtensionsTests : UnitTester
 		Assert.IsTrue(convertedTime >= currentTime.Subtract(new TimeSpan(0, 5, 0)));
 
 		//PrintResult(convertedTime, nameof(this.ToFromMilliEpochTimeTest));
+	}
+
+	[TestMethod]
+	public void Intersects_DateTime_NonOverlapping_ReturnsFalse()
+	{
+		var now = Clock.LocalTime;
+
+		var result = now.Intersects(endDate: now.AddDays(5), intersectingStartDate: now.AddDays(10), intersectingEndDate: now.AddDays(20));
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Intersects_DateTimeOffset_NonOverlapping_ReturnsFalse()
+	{
+		var now = DateTimeOffset.Now;
+
+		var result = now.Intersects(now.AddDays(5), now.AddDays(10), now.AddDays(20));
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsInRange_DateTime_OutOfRange_ReturnsFalse()
+	{
+		var now = Clock.LocalTime;
+
+		var result = now.IsInRange(beginningTime: now.AddDays(1), endTime: now.AddDays(10));
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Max_DateTime_CompareToIsGreater_ReturnsCompareTo()
+	{
+		var now = Clock.LocalTime;
+		var later = now.AddDays(1);
+
+		var result = now.Max(later);
+
+		Assert.AreEqual(later, result);
+	}
+
+	[TestMethod]
+	public void ToFriendlyDateString_DateTime_OlderThanSixDays_ReturnsLongDate()
+	{
+		var oldDate = DateTime.Today.AddDays(-10).AddHours(15);
+
+		var result = oldDate.ToFriendlyDateString();
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.IsTrue(result.Contains("@"));
+		Assert.IsFalse(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+		Assert.IsFalse(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
+	}
+
+	[TestMethod]
+	public void GetLastDayOfWeek_InputDayLessThanOrEqualTarget_Works()
+	{
+		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input < target, hits else branch
+		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
+
+		var result = monday.GetLastDayOfWeek(DayOfWeek.Friday);
+
+		Assert.AreEqual(DayOfWeek.Friday, result.DayOfWeek);
+		Assert.IsTrue(result < monday);
+	}
+
+	[TestMethod]
+	public void GetNextDayOfWeek_InputDayLessThanTarget_Works()
+	{
+		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input < target, hits if branch
+		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
+
+		var result = monday.GetNextDayOfWeek(DayOfWeek.Friday);
+
+		Assert.AreEqual(DayOfWeek.Friday, result.DayOfWeek);
+		Assert.IsTrue(result > monday);
 	}
 
 }
