@@ -937,7 +937,7 @@ public class DateTimeExtensionsTests
 	[TestMethod]
 	public void GetLastDayOfWeek_InputDayLessThanOrEqualTarget_Works()
 	{
-		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input < target, hits else branch
+		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input <= target, hits else branch
 		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
 
 		var result = monday.GetLastDayOfWeek(DayOfWeek.Friday);
