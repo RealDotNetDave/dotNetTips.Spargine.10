@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="DataTableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -40,7 +40,7 @@ public static class DataTableExtensions
 	/// <returns><c>true</c> if the specified table has rows; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(HasRows), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(HasRows), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool HasRows([AllowNull] this DataTable table)
 	{
 		return (table is not null) && (table.Rows is not null) && (table.Rows.Count > 0);
@@ -53,7 +53,7 @@ public static class DataTableExtensions
 	/// <returns><c>true</c> if [is database null] [the specified value]; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(HasRows), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(HasRows), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsDBNull([DisallowNull] this object value)
 	{
 		return Convert.IsDBNull(value);
