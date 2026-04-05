@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -30,9 +30,6 @@ public class DictionaryExtensionsTests
 {
 	private const int Count = 256;
 
-	/// <summary>
-	/// Defines the test method AddIfNotExistDictionaryTest.
-	/// </summary>
 	[TestMethod]
 	public void AddIfNotExistDictionaryTest()
 	{
@@ -138,6 +135,52 @@ public class DictionaryExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddRange_WithAllExistingKeys_ReturnsFalse()
+	{
+		// Arrange
+		var dict = new Dictionary<string, int> { { "a", 1 }, { "b", 2 } };
+		var items = new[] { "a", "b" };
+		Func<string, string> keyFunc = s => s;
+		Func<string, int> valueFunc = s => s.Length;
+
+		// Act
+		var result = dict.AddRange(items, keyFunc, valueFunc);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.HasCount(2, dict);
+	}
+
+	[TestMethod]
+	public void AddRange_WithEmptyItems_ReturnsFalse()
+	{
+		// Arrange
+		var dict = new Dictionary<string, int>();
+		var items = Array.Empty<string>();
+		Func<string, string> keyFunc = s => s;
+		Func<string, int> valueFunc = s => s.Length;
+
+		// Act
+		var result = dict.AddRange(items, keyFunc, valueFunc);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void AddRange_WithNullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, int> dict = null;
+		var items = new[] { "a", "b" };
+		Func<string, string> keyFunc = s => s;
+		Func<string, int> valueFunc = s => s.Length;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dict.AddRange(items, keyFunc, valueFunc));
+	}
+
+	[TestMethod]
 	public void AddRange_WithNullItems_ReturnsFalse()
 	{
 		var dict = new Dictionary<string, int>();
@@ -148,6 +191,19 @@ public class DictionaryExtensionsTests
 		var result = dict.AddRange(items, keyFunc, valueFunc);
 
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void AddRange_WithNullKeyFunction_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var dict = new Dictionary<string, int>();
+		var items = new[] { "a", "b" };
+		Func<string, string> keyFunc = null;
+		Func<string, int> valueFunc = s => s.Length;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dict.AddRange(items, keyFunc, valueFunc));
 	}
 
 	[TestMethod]
@@ -163,9 +219,6 @@ public class DictionaryExtensionsTests
 		Assert.IsFalse(result);
 	}
 
-	/// <summary>
-	/// Defines the test method AddRangeDictionaryTest01.
-	/// </summary>
 	[TestMethod]
 	public void AddRangeDictionaryTest01()
 	{
@@ -196,9 +249,16 @@ public class DictionaryExtensionsTests
 		Assert.IsTrue(d2.IsDisposed);
 	}
 
-	/// <summary>
-	/// Defines the test method AddRangeDictionaryTest02.
-	/// </summary>
+	[TestMethod]
+	public void DisposeCollection_WithEmptyCollection_DoesNotThrow()
+	{
+		// Arrange
+		var list = new List<KeyValuePair<object, IDisposable>>();
+
+		// Act & Assert - should not throw
+		list.DisposeCollection<object, IDisposable>();
+	}
+
 	[TestMethod]
 	public void FastCountTest()
 	{
@@ -324,9 +384,29 @@ public class DictionaryExtensionsTests
 		Assert.IsTrue(hashCode != 0);
 	}
 
-	/// <summary>
-	/// Defines the test method GetOrAddTest.
-	/// </summary>
+	[TestMethod]
+	public void GetOrAdd_WithNullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, Person> dictionary = null;
+		var person = RandomData.GeneratePerson<Person>();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.GetOrAdd(person.Id, person));
+	}
+
+	[TestMethod]
+	public void GetOrAdd_WithNullValue_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, Person>();
+		var person = RandomData.GeneratePerson<Person>();
+		Person nullPerson = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.GetOrAdd(person.Id, nullPerson));
+	}
+
 	[TestMethod]
 	public void GetOrAddTest()
 	{
@@ -344,9 +424,95 @@ public class DictionaryExtensionsTests
 		Assert.AreEqual(Count + 1, people.Count);
 	}
 
-	/// <summary>
-	/// Defines the test method ToConcurrentDictionaryTest.
-	/// </summary>
+	[TestMethod]
+	public void IsNotEmpty_WithEmptyDictionary_ReturnsFalse()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int>();
+
+		// Act
+		var result = DictionaryExtensions.IsNotEmpty(dictionary, kvp => kvp.Value > 0);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithMatchingPredicate_ReturnsTrue()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+		var result = DictionaryExtensions.IsNotEmpty(people, kvp => kvp.Value is not null);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithNonMatchingPredicate_ReturnsFalse()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int> { { "a", 1 }, { "b", 2 } };
+
+		// Act
+		var result = DictionaryExtensions.IsNotEmpty(dictionary, kvp => kvp.Value > 100);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithNullCollection_ReturnsFalse()
+	{
+		// Arrange
+		IDictionary<string, int> dictionary = null;
+
+		// Act
+		var result = DictionaryExtensions.IsNotEmpty(dictionary, kvp => kvp.Value > 0);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithNullPredicate_ReturnsFalse()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int> { { "a", 1 } };
+
+		// Act
+		var result = DictionaryExtensions.IsNotEmpty(dictionary, null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void ToConcurrentDictionary_WithEmptyDictionary_ReturnsEmptyConcurrentDictionary()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int>();
+
+		// Act
+		var result = dictionary.ToConcurrentDictionary();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void ToConcurrentDictionary_WithNullDictionary_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, int> dictionary = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToConcurrentDictionary());
+	}
+
 	[TestMethod]
 	public void ToConcurrentDictionaryTest()
 	{
@@ -356,9 +522,7 @@ public class DictionaryExtensionsTests
 
 		Assert.IsNotEmpty(result);
 	}
-	/// <summary>
-	/// Defines the test method ToDelimitedDictionaryTest.
-	/// </summary>
+
 	[TestMethod]
 	public void ToDelimitedDictionaryTest()
 	{
@@ -391,7 +555,6 @@ public class DictionaryExtensionsTests
 		}
 	}
 
-
 	[TestMethod]
 	public void ToFrozenDictionaryWithEmptyDictionaryTest()
 	{
@@ -411,6 +574,62 @@ public class DictionaryExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFrozenDictionary_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToFrozenDictionary();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotEmpty(result);
+		Assert.HasCount(people.Count, result);
+	}
+
+	[TestMethod]
+	public void ToImmutable_WithEmptyDictionary_ReturnsEmptyImmutableDictionary()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int>();
+
+		// Act
+		var result = dictionary.ToImmutable();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void ToImmutable_WithNullDictionary_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, int> dictionary = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToImmutable());
+	}
+
+	[TestMethod]
+	public void ToImmutableDictionary_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToImmutableDictionary();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotEmpty(result);
+		Assert.HasCount(people.Count, result);
+	}
+
+	[TestMethod]
 	public void ToImmutableDictionaryTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
@@ -418,6 +637,22 @@ public class DictionaryExtensionsTests
 		var result = people.ToImmutable();
 
 		Assert.IsNotEmpty(result);
+	}
+
+	[TestMethod]
+	public void ToImmutableSortedDictionary_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToImmutableSortedDictionary();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotEmpty(result);
+		Assert.HasCount(people.Count, result);
 	}
 
 	[TestMethod]
@@ -501,7 +736,31 @@ public class DictionaryExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToLookupWithDefault(0));
 	}
 
+	[TestMethod]
+	public void ToReadOnly_WithNullDictionary_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, int> dictionary = null;
 
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToReadOnly());
+	}
+
+	[TestMethod]
+	public void ToReadOnlyCollection_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToReadOnlyCollection();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(Count, result.Count);
+	}
 
 	[TestMethod]
 	public void ToReadOnlyCollectionTest()
@@ -516,6 +775,22 @@ public class DictionaryExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToReadOnlyDictionary_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToReadOnlyDictionary();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(Count, result.Count);
+	}
+
+	[TestMethod]
 	public void ToReadOnlyDictionaryTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
@@ -525,6 +800,69 @@ public class DictionaryExtensionsTests
 		// Test
 		Assert.IsNotNull(result);
 		Assert.AreEqual(Count, result.Count);
+	}
+
+	[TestMethod]
+	public void ToSorted_WithEmptyDictionary_ReturnsEmptySortedDictionary()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int>();
+
+		// Act
+		var result = dictionary.ToSorted();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void ToSorted_WithNullDictionary_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, int> dictionary = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSorted());
+	}
+
+	[TestMethod]
+	public void ToSortedDictionary_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToSortedDictionary();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotEmpty(result);
+		Assert.HasCount(people.Count, result);
+	}
+
+	[TestMethod]
+	public void ToSortedDictionary_Obsolete_WithComparer_ReturnsExpectedResult()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int>
+	{
+		{ "b", 2 },
+		{ "a", 1 },
+		{ "c", 3 }
+	};
+		var comparer = Comparer<string>.Default;
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = dictionary.ToSortedDictionary(comparer);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+		CollectionAssert.AreEqual(new[] { "a", "b", "c" }, result.Keys.ToArray());
 	}
 
 	[TestMethod]
@@ -611,9 +949,6 @@ public class DictionaryExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.ToSorted(comparer));
 	}
 
-	/// <summary>
-	/// Defines the test method ToSortedDictionaryTest.
-	/// </summary>
 	[TestMethod]
 	public void ToSortedDictionaryTest()
 	{
@@ -623,7 +958,6 @@ public class DictionaryExtensionsTests
 
 		Assert.IsNotEmpty(result);
 	}
-
 
 	[TestMethod]
 	public void TryGetKey_WithExistingKey_ReturnsValue()
@@ -689,9 +1023,33 @@ public class DictionaryExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryGetValue("key3", func));
 	}
 
-	/// <summary>
-	/// Defines the test method UpsertDictionaryTest.
-	/// </summary>
+	[TestMethod]
+	public void TryGetKey_WithNullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var dictionary = new Dictionary<string, int>
+	{
+		{ "key1", 1 },
+		{ "key2", 2 }
+	};
+		Func<string, int> func = key => 0;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryGetValue(null, func));
+	}
+
+	[TestMethod]
+	public void Upsert_WithNullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IDictionary<string, int> dictionary = null;
+		var key = "key1";
+		var value = 42;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.Upsert(key, value));
+	}
+
 	[TestMethod]
 	public void UpsertDictionaryTest()
 	{
