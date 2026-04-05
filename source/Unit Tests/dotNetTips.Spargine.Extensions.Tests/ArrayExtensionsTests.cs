@@ -69,6 +69,7 @@ public class ArrayExtensionsTests
 
 		var result = people.AddIf(person, false);
 
+		Assert.AreSame(people, result);
 		Assert.AreEqual(10, result.Length);
 	}
 
