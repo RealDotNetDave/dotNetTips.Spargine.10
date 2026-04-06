@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-01-2018
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -43,7 +43,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="headers"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(AddRequestId), author: "David McCarter", createdOn: "3/18/2024", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(AddRequestId), author: "David McCarter", createdOn: "3/18/2024", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AddRequestId([DisallowNull] this HttpRequestHeaders headers)
 	{
 		headers = headers.ArgumentNotNull();
@@ -65,7 +65,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[Pure]
-	[Information(nameof(GetRawBodyBytesAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetRawBodyBytesAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<byte[]> GetRawBodyBytesAsync([DisallowNull] this HttpRequest request, CancellationToken cancellationToken = default)
 	{
 		request = request.ArgumentNotNull();
@@ -89,7 +89,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> or <paramref name="encoding"/> is null.</exception>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[Pure]
-	[Information(nameof(GetRawBodyStringAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetRawBodyStringAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<string> GetRawBodyStringAsync([DisallowNull] this HttpRequest request, [DisallowNull] Encoding encoding, CancellationToken cancellationToken = default)
 	{
 		request = request.ArgumentNotNull();
@@ -112,7 +112,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">request</exception>
 	/// <remarks>Original code by Jerry Nixon</remarks>
 	[Pure]
-	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, out T? value)
 	{
 		request = request.ArgumentNotNull();
@@ -147,7 +147,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentException">HttpRequest has no body.</exception>
 	/// <remarks>Original code by Jerry Nixon</remarks>
 	[Pure]
-	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody([DisallowNull] this HttpRequest request, out byte[] value)
 	{
 		request = request.ArgumentNotNull();
