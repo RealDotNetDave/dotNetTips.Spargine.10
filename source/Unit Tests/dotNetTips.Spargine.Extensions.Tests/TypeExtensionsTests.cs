@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-06-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="TypeExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -38,9 +39,6 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 public class TypeExtensionsTests
 {
 
-	/// <summary>
-	/// Defines the attribute method GetAbstractMethodsTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAbstractMethodsTest()
 	{
@@ -51,6 +49,15 @@ public class TypeExtensionsTests
 		result = typeof(DataTable).GetAllAbstractMethods();
 
 		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void GetAllConstructorsTest()
+	{
+		var result = typeof(Person).GetAllConstructors();
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Any());
 	}
 
 	[TestMethod]
@@ -69,9 +76,6 @@ public class TypeExtensionsTests
 		Assert.IsGreaterThan(0, result.Count());
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetAllFieldsTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAllFieldsTest()
 	{
@@ -84,9 +88,6 @@ public class TypeExtensionsTests
 		Assert.IsGreaterThanOrEqualTo(8, result2.Count());
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetAllMethodsTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAllMethodsTest()
 	{
@@ -114,9 +115,6 @@ public class TypeExtensionsTests
 		}
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetAttributeFieldTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAttributeFieldTest()
 	{
@@ -125,9 +123,6 @@ public class TypeExtensionsTests
 		Assert.IsNull(typeof(TestType).GetAllFields().FirstOrDefault().GetAttribute<XmlIgnoreAttribute>());
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetAttributeMethodTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAttributeMethodTest()
 	{
@@ -142,9 +137,6 @@ public class TypeExtensionsTests
 		Assert.IsNull(result2);
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetAttributePropertyTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAttributePropertyTest()
 	{
@@ -159,9 +151,6 @@ public class TypeExtensionsTests
 		Assert.IsNull(result2);
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetAttributeTypeTest.
-	/// </summary>
 	[TestMethod]
 	public void GetAttributeTypeTest()
 	{
@@ -174,9 +163,21 @@ public class TypeExtensionsTests
 		Assert.IsNull(result2);
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetGenericMethodsTest.
-	/// </summary>
+	[TestMethod]
+	public void GetGenericArgumentsTest()
+	{
+		var result1 = typeof(List<string>).GetGenericArguments();
+
+		Assert.IsNotNull(result1);
+		Assert.AreEqual(1, result1.Length);
+		Assert.AreEqual(typeof(string), result1[0]);
+
+		var result2 = typeof(string).GetGenericArguments();
+
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(0, result2.Length);
+	}
+
 	[TestMethod]
 	public void GetGenericMethodsTest()
 	{
@@ -204,9 +205,6 @@ public class TypeExtensionsTests
 
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetPublicMethodsTest.
-	/// </summary>
 	[TestMethod]
 	public void GetPublicMethodsTest()
 	{
@@ -215,9 +213,6 @@ public class TypeExtensionsTests
 		Assert.IsGreaterThanOrEqualTo(30, result.Count);
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetStaticMethodsTest.
-	/// </summary>
 	[TestMethod]
 	public void GetStaticMethodsTest()
 	{
@@ -226,9 +221,6 @@ public class TypeExtensionsTests
 		Assert.AreEqual(1, result.Count);
 	}
 
-	/// <summary>
-	/// Defines the attribute method GetTypeMembersWithGivenAttributeTest.
-	/// </summary>
 	[TestMethod]
 	public void GetTypeMembersWithGivenAttributeTest()
 	{
@@ -245,6 +237,19 @@ public class TypeExtensionsTests
 		Assert.IsEmpty(result2);
 	}
 
+	[TestMethod]
+	public void HasAttributeTest()
+	{
+		var method = typeof(TestType).GetAllMethods().FirstOrDefault(p => string.Compare(p.Name, "get_UserName", StringComparison.Ordinal) == 0);
+
+		var result1 = method.HasAttribute<CompilerGeneratedAttribute>();
+
+		Assert.IsTrue(result1);
+
+		var result2 = method.HasAttribute<XmlIgnoreAttribute>();
+
+		Assert.IsFalse(result2);
+	}
 
 	[TestMethod]
 	public void HasBaseClassTest()
@@ -259,11 +264,79 @@ public class TypeExtensionsTests
 	}
 
 	[TestMethod]
+	public void HasMethodTest()
+	{
+		var result1 = typeof(TestType).HasMethod("Invoke");
+
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(TestType).HasMethod("NonExistentMethod");
+
+		Assert.IsFalse(result2);
+
+		var result3 = typeof(TestType).HasMethod("GetName", BindingFlags.Public | BindingFlags.Static);
+
+		Assert.IsTrue(result3);
+	}
+
+	[TestMethod]
 	public void HasParameterlessConstructorTest()
 	{
-		var result = typeof(Person).HasParameterlessConstructor();
+		var result1 = typeof(Person).HasParameterlessConstructor();
 
-		Assert.IsTrue(result);
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(Uri).HasParameterlessConstructor();
+
+		Assert.IsFalse(result2);
+	}
+
+	[TestMethod]
+	public void HasPropertyTest()
+	{
+		var result1 = typeof(TestType).HasProperty("UserName");
+
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(TestType).HasProperty("NonExistentProperty");
+
+		Assert.IsFalse(result2);
+	}
+
+	[TestMethod]
+	public void ImplementsInterfaceTest()
+	{
+		var result1 = typeof(List<string>).ImplementsInterface(typeof(IEnumerable));
+
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(TestType).ImplementsInterface(typeof(IDisposable));
+
+		Assert.IsFalse(result2);
+	}
+
+	[TestMethod]
+	public void IsAssignableToTest()
+	{
+		var result1 = typeof(string).IsAssignableTo(typeof(object));
+
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(object).IsAssignableTo(typeof(string));
+
+		Assert.IsFalse(result2);
+	}
+
+	[TestMethod]
+	public void IsClosedGenericTest()
+	{
+		var result1 = typeof(List<string>).IsClosedGeneric();
+
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(string).IsClosedGeneric();
+
+		Assert.IsFalse(result2);
 	}
 
 	[TestMethod]
@@ -290,9 +363,6 @@ public class TypeExtensionsTests
 		Assert.IsFalse(result2);
 	}
 
-	/// <summary>
-	/// Defines the attribute method IsNumericTest.
-	/// </summary>
 	[TestMethod]
 	public void IsNumericTest()
 	{
@@ -301,6 +371,18 @@ public class TypeExtensionsTests
 
 		Assert.IsTrue(people.GetType().IsEnumerable());
 		Assert.IsFalse(person.GetType().IsEnumerable());
+	}
+
+	[TestMethod]
+	public void IsOpenGenericTest()
+	{
+		var result1 = typeof(List<>).IsOpenGeneric();
+
+		Assert.IsTrue(result1);
+
+		var result2 = typeof(List<string>).IsOpenGeneric();
+
+		Assert.IsFalse(result2);
 	}
 
 	[TestMethod]
