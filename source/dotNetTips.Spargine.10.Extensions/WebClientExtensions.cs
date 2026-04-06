@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="WebClientExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -41,7 +41,7 @@ public static class WebClientExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/> is null.</exception>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="url"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConvertFrom), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ConvertFrom), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T? ConvertFrom<T>([DisallowNull] this WebClient client, [DisallowNull] Uri url)
 		where T : class
 	{
