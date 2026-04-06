@@ -189,7 +189,7 @@ public class SocketExtensionsTests
 		var endpoint = new IPEndPoint(IPAddress.Loopback, 80);
 
 		// Act & Assert
-		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => socket.TryConnect(endpoint, 0));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => socket.TryConnect(endpoint, 0));
 	}
 
 	[TestMethod]
