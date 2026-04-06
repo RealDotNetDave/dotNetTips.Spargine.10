@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-12-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="MathExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,6 +14,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -23,6 +24,50 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class MathExtensionsTests
 {
+
+	[TestMethod]
+	public void Add_NegativeNumbers_ReturnsSum()
+	{
+		// Arrange
+		int input = -10;
+		int add = -5;
+		double expectedResult = -15;
+
+		// Act
+		double result = input.Add(add);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Adding two negative numbers should return their sum.");
+	}
+
+	[TestMethod]
+	public void Add_TwoPositiveIntegers_ReturnsSum()
+	{
+		// Arrange
+		int input = RandomData.GenerateInteger(1, 1000);
+		int add = RandomData.GenerateInteger(1, 1000);
+		double expectedResult = input + add;
+
+		// Act
+		double result = input.Add(add);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Adding two positive integers should return their sum.");
+	}
+
+	[TestMethod]
+	public void Add_WithZero_ReturnsOriginalValue()
+	{
+		// Arrange
+		int input = RandomData.GenerateInteger(1, 1000);
+		double expectedResult = input;
+
+		// Act
+		double result = input.Add(0);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Adding zero should return the original value.");
+	}
 
 	[TestMethod]
 	public void CalculatePercent_DoubleNegativeDifference_ReturnsExpectedPercentage()
@@ -73,6 +118,37 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedPercentage, result, "The calculated percentage should be zero when both values are the same.");
+	}
+
+	[TestMethod]
+	public void CalculatePercent_DoubleZeroFirstValue_ReturnsInfinity()
+	{
+		// Arrange
+		double first = 0.0;
+		double second = 100.0;
+
+		// Act
+		double result = first.CalculatePercent(second);
+
+		// Assert
+		Assert.IsTrue(double.IsPositiveInfinity(result), "Dividing by zero first value for doubles should return positive infinity.");
+	}
+
+	[TestMethod]
+	public void CalculatePercent_IntegerNegativeDifference_ReturnsExpectedPercentage()
+	{
+		// Arrange
+		int first = 200;
+		int second = 100;
+
+		// Integer division truncates: (100 - 200) / 200 * 100 = -100 / 200 * 100 = 0 * 100 = 0
+		double expectedPercentage = 0.0;
+
+		// Act
+		double result = first.CalculatePercent(second);
+
+		// Assert
+		Assert.AreEqual(expectedPercentage, result, "The calculated percentage should reflect integer division behavior.");
 	}
 
 	[TestMethod]
@@ -156,6 +232,23 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
+	public void CalculatePercent_LongNegativeDifference_ReturnsExpectedPercentage()
+	{
+		// Arrange
+		long first = 200L;
+		long second = 100L;
+
+		// Long integer division truncates: (100 - 200) / 200 * 100 = -100 / 200 * 100 = 0 * 100 = 0
+		double expectedPercentage = 0.0;
+
+		// Act
+		double result = first.CalculatePercent(second);
+
+		// Assert
+		Assert.AreEqual(expectedPercentage, result, "The calculated percentage should reflect long integer division behavior.");
+	}
+
+	[TestMethod]
 	public void CalculatePercent_LongZeroFirstValue_ThrowsDivideByZeroException()
 	{
 		// Arrange
@@ -218,6 +311,20 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
+	public void CalculatePercent_TimeSpanZeroFirstValue_ReturnsInfinity()
+	{
+		// Arrange
+		var first = TimeSpan.Zero;
+		var second = TimeSpan.FromMilliseconds(100);
+
+		// Act
+		var result = first.CalculatePercent(second);
+
+		// Assert
+		Assert.IsTrue(double.IsPositiveInfinity(result), "Dividing by zero first value for TimeSpan should return positive infinity.");
+	}
+
+	[TestMethod]
 	public void IsPrime_GivenNegativeNumber_ReturnsFalse()
 	{
 		// Arrange
@@ -241,6 +348,71 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result, "The method should return false for a non-prime number.");
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenNumberDivisibleByCountInLoop_ReturnsFalse()
+	{
+		// Arrange - 25 is divisible by 5, which is the first count value in the loop
+		int number = 25;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsFalse(result, "The method should return false for 25, which is divisible by 5 in the loop.");
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenNumberDivisibleByCountPlusTwoInLoop_ReturnsFalse()
+	{
+		// Arrange - 49 is divisible by 7 (count + 2 where count = 5)
+		int number = 49;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsFalse(result, "The method should return false for 49, which is divisible by 7 in the loop.");
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenNumberDivisibleByThree_ReturnsFalse()
+	{
+		// Arrange - 9 is odd but divisible by 3
+		int number = 9;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsFalse(result, "The method should return false for 9, which is divisible by 3.");
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenEvenNumberGreaterThanThree_ReturnsFalse()
+	{
+		// Arrange - 6 is even and greater than 3
+		int number = 6;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsFalse(result, "The method should return false for 6, which is even and greater than 3.");
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenLargePrimePassingLoop_ReturnsTrue()
+	{
+		// Arrange - 29 is prime and requires the loop to verify
+		int number = 29;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsTrue(result, "The method should return true for 29, a prime number that requires loop verification.");
 	}
 
 	[TestMethod]
@@ -877,6 +1049,68 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
+	public void Round_DecimalValueWithDigitsAndToZeroRounding_ReturnsRoundedValue()
+	{
+		// Arrange
+		decimal value = 2.85m;
+		int digits = 1;
+		MidpointRounding mode = MidpointRounding.ToZero;
+		int expectedResult = 3;
+
+		// Act
+		int result = MathExtensions.Round(value, digits, mode);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Rounding 2.85 to 1 decimal place with ToZero should result in 3.");
+	}
+
+	[TestMethod]
+	public void Round_DoubleValueWithDigitsAndToZeroRounding_ReturnsRoundedValue()
+	{
+		// Arrange
+		double value = 2.85;
+		int digits = 1;
+		MidpointRounding mode = MidpointRounding.ToZero;
+		int expectedResult = 3;
+
+		// Act
+		int result = MathExtensions.Round(value, digits, mode);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Rounding 2.85 to 1 decimal place with ToZero should result in 3.");
+	}
+
+	[TestMethod]
+	public void Subtract_NegativeNumbers_ReturnsDifference()
+	{
+		// Arrange
+		int input = -10;
+		int subtract = -5;
+		double expectedResult = -5;
+
+		// Act
+		double result = MathExtensions.Subtract(input, subtract);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Subtracting -5 from -10 should result in -5.");
+	}
+
+	[TestMethod]
+	public void Subtract_ResultIsNegative_ReturnsNegativeDifference()
+	{
+		// Arrange
+		int input = 5;
+		int subtract = 10;
+		double expectedResult = -5;
+
+		// Act
+		double result = MathExtensions.Subtract(input, subtract);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Subtracting 10 from 5 should result in -5.");
+	}
+
+	[TestMethod]
 	public void Subtract_TwoIntegers_ReturnsDifference()
 	{
 		// Arrange
@@ -889,6 +1123,20 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "Subtracting 5 from 10 should result in 5.");
+	}
+
+	[TestMethod]
+	public void Subtract_WithZero_ReturnsOriginalValue()
+	{
+		// Arrange
+		int input = RandomData.GenerateInteger(1, 1000);
+		double expectedResult = input;
+
+		// Act
+		double result = MathExtensions.Subtract(input, 0);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Subtracting zero should return the original value.");
 	}
 
 }
