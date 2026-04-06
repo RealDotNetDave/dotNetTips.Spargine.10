@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-19-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="HttpResponseHeaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,7 +28,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// This class simplifies the process of converting <see cref="HttpResponseHeader"/> enumeration values to their corresponding string names.
 /// It is particularly useful for logging, debugging, or any scenario where the string representation of an HTTP response header is needed.
 /// </remarks>
-[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 public static class HttpResponseHeaderExtensions
 {
 
@@ -75,7 +75,7 @@ public static class HttpResponseHeaderExtensions
 	/// <returns>System.String.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetName([DisallowNull] this HttpResponseHeader header)
 	{
 		header = header.ArgumentDefined();
@@ -91,7 +91,7 @@ public static class HttpResponseHeaderExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="headers"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetRequestId), author: "David McCarter", createdOn: "3/18/2024", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetRequestId), author: "David McCarter", createdOn: "3/18/2024", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetRequestId([DisallowNull] this HttpResponseHeaders headers)
 	{
 		headers = headers.ArgumentNotNull();
