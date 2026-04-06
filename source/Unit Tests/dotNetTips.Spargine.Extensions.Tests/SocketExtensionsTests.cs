@@ -176,6 +176,49 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
+	public void TryConnect_WindowsPlatform_TimeoutLessThanOne_ThrowsArgumentOutOfRangeException()
+	{
+		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		{
+			Assert.Inconclusive("This test requires Windows.");
+			return;
+		}
+
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Loopback, 80);
+
+		// Act & Assert
+		_ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => socket.TryConnect(endpoint, 0));
+	}
+
+	[TestMethod]
+	public void TryConnect_WindowsPlatform_PendingConnectionTimesOut_ReturnsFalse()
+	{
+		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		{
+			Assert.Inconclusive("This test requires Windows.");
+			return;
+		}
+
+		// Arrange
+		// Use a documentation-only TEST-NET address so ConnectAsync does not complete
+		// immediately with a local listener and instead exercises the timeout path.
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
+		const int timeout = 200;
+		var started = Environment.TickCount64;
+
+		// Act
+		var result = socket.TryConnect(endpoint, timeout);
+		var elapsed = Environment.TickCount64 - started;
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsTrue(elapsed >= timeout - 25, $"Expected TryConnect to wait approximately {timeout}ms before timing out, but it returned after {elapsed}ms.");
+	}
+
+	[TestMethod]
 	public void TryConnect_WindowsPlatform_SuccessfulConnection_ReturnsTrue()
 	{
 		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
