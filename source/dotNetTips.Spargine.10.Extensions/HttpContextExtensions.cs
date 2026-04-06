@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-04-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-19-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="HttpContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -41,7 +41,7 @@ public static class HttpContextExtensions
 	/// <returns>System.String.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information("Original code from: https://edi.wang/post/2017/10/16/get-client-ip-aspnet-20", "David McCarter", "9/04/2017", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information("Original code from: https://edi.wang/post/2017/10/16/get-client-ip-aspnet-20", "David McCarter", "9/04/2017", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetRemoteIPAddress([DisallowNull] this HttpContext context)
 	{
 		return context.ArgumentNotNull().Connection.RemoteIpAddress.ToString();
