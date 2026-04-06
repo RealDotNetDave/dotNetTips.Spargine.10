@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-22-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="SocketExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -39,7 +39,7 @@ public static class SocketExtensions
 	/// <param name="address">The address.</param>
 	/// <returns>System.Int32.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static int BindToAnonymousPort([DisallowNull] this Socket socket, [DisallowNull] IPAddress address)
 	{
 		socket = socket.ArgumentNotNull();
@@ -58,7 +58,7 @@ public static class SocketExtensions
 	/// <param name="socket">The <see cref="Socket"/> to modify.</param>
 	/// <param name="force">if set to <c>true</c>, the <paramref name="socket"/> is forced into non-blocking mode.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void ForceNonBlocking([DisallowNull] this Socket socket, bool force)
 	{
 		socket = socket.ArgumentNotNull();
@@ -77,7 +77,7 @@ public static class SocketExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> or <paramref name="remoteEndpoint"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeout"/> is less than 1.</exception>
 	/// <exception cref="PlatformNotSupportedException">Thrown when the operation is not supported on the current platform, specifically non-Windows platforms.</exception>
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryConnect([DisallowNull] this Socket socket, [DisallowNull] EndPoint remoteEndpoint, int millisecondsTimeout)
 	{
 		socket = socket.ArgumentNotNull();
