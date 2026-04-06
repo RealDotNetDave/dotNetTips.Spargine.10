@@ -210,14 +210,10 @@ public class SocketExtensionsTests
 			return;
 		}
 
-		// Arrange - Get a free port then close the socket so nothing is listening
-		using var tempSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		tempSocket.Bind(new IPEndPoint(IPAddress.Loopback, 0));
-		var closedPort = ((IPEndPoint)tempSocket.LocalEndPoint!).Port;
-		tempSocket.Close();
-
+		// Arrange - Use a reserved test-network address so the connection attempt fails
+		// deterministically without depending on a recently released local port.
 		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		var endpoint = new IPEndPoint(IPAddress.Loopback, closedPort);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65535);
 
 		// Act
 		var result = socket.TryConnect(endpoint, 100);
