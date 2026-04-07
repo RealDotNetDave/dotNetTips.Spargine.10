@@ -137,6 +137,8 @@ public class RandomCreditCardNumberGeneratorTests
 		// Assert
 		foreach (var number in creditCardNumbers)
 		{
+			Assert.IsNotNull(number);
+			Assert.IsNotEmpty(number);
 			Assert.IsTrue(LuhnCheck(number));
 		}
 	}
