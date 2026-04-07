@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-23-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="PersonEqualityComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,7 +30,7 @@ public class PersonEqualityComparer : IEqualityComparer<Person>
 	/// <param name="x">The first object of type to compare.</param>
 	/// <param name="y">The second object of type to compare.</param>
 	/// <returns><see langword="true" /> if the specified objects are equal; otherwise, <see langword="false" />.</returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool Equals(Person x, Person y) => x.Equals(y);
 
 	/// <summary>
