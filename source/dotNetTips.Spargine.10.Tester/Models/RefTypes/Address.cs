@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-03-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-04-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="Address.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -469,7 +469,7 @@ public sealed class Address : IAddress<Address>
 	/// Thrown if <paramref name="address"/> is null.
 	/// </exception>
 	[return: NotNull]
-	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information("op_Implicit", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static implicit operator Address(in AddressRecord address)
 	{
 		return ToAddress(address);
