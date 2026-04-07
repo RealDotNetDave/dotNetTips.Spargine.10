@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -744,7 +744,7 @@ public static class RandomData
 	/// This method leverages <see cref="GenerateFirstName"/> and <see cref="GenerateLastName"/> to create each <see cref="PersonName"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonNames), "David McCarter", "12/15/2023", UnitTestStatus = UnitTestStatus.Update, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePersonNames), "David McCarter", "12/15/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<PersonName> GeneratePersonNames(int count = 2)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 2);
