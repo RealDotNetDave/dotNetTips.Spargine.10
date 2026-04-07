@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-04-2019
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -138,7 +138,7 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// Zero: This instance occurs in the same position in the sort order as <paramref name="obj"/>.
 	/// Greater than zero: This instance follows <paramref name="obj"/> in the sort order.</returns>
 	/// <exception cref="ArgumentException">Thrown when <paramref name="obj"/> is not of type <see cref="Coordinate"/>.</exception>
-	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public readonly int CompareTo(object? obj)
 	{
 		if (obj is not Coordinate)

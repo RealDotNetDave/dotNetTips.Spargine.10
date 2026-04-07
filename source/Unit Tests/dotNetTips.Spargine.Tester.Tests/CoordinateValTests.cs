@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-28-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 11-13-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="CoordinateValTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -30,8 +30,8 @@ public class CoordinateValTests
 	public void Coordinate_CompareTo_DifferentValues_ReturnsNonZero()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(4, 5, 6);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X + 1, coordinate1.Y + 1, coordinate1.Z + 1);
 
 		// Act
 		var result = coordinate1.CompareTo(coordinate2);
@@ -59,23 +59,23 @@ public class CoordinateValTests
 	}
 
 	[TestMethod]
-	public void Coordinate_CompareTo_InvalidObjectType_ShouldThrowArgumentException()
+	public void Coordinate_CompareTo_InvalidObjectType_ShouldThrowArgumentInvalidException()
 	{
 		// Arrange
-		var coord = new Coordinate(1, 2, 3);
+		var coord = RandomData.GenerateCoordinate<Coordinate>();
 		var invalidObject = new object();
 
-		// Act
+		// Act & Assert
 		Assert.ThrowsExactly<ArgumentInvalidException>(() => coord.CompareTo(invalidObject));
 	}
 
 	[TestMethod]
-	public void Coordinate_CompareTo_NullObject_ShouldThrowArgumentException()
+	public void Coordinate_CompareTo_NullObject_ShouldThrowArgumentInvalidException()
 	{
 		// Arrange
-		var coord = new Coordinate(1, 2, 3);
+		var coord = RandomData.GenerateCoordinate<Coordinate>();
 
-		// Act
+		// Act & Assert
 		Assert.ThrowsExactly<ArgumentInvalidException>(() => coord.CompareTo(null));
 	}
 
@@ -83,8 +83,8 @@ public class CoordinateValTests
 	public void Coordinate_CompareTo_SameValues_ReturnsZero()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(1, 2, 3);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
 
 		// Act
 		var result = coordinate1.CompareTo(coordinate2);
@@ -122,6 +122,19 @@ public class CoordinateValTests
 	}
 
 	[TestMethod]
+	public void Coordinate_CompareTo_ValidObjectCoordinate_ReturnsExpectedResult()
+	{
+		// Arrange
+		var coord1 = new Coordinate(1, 2, 3);
+		object coord2 = new Coordinate(1, 2, 3);
+		object coord3 = new Coordinate(4, 5, 6);
+
+		// Act & Assert
+		Assert.AreEqual(0, coord1.CompareTo(coord2));
+		Assert.IsLessThan(0, coord1.CompareTo(coord3));
+	}
+
+	[TestMethod]
 	public void Coordinate_ComparisonOperators_ShouldReturnExpectedResults()
 	{
 		// Arrange
@@ -134,6 +147,34 @@ public class CoordinateValTests
 		Assert.IsTrue(coord1 >= coord2);
 		Assert.IsTrue(coord1 < coord3);
 		Assert.IsTrue(coord3 > coord1);
+		Assert.IsFalse(coord3 < coord1);
+		Assert.IsFalse(coord1 > coord3);
+		Assert.IsFalse(coord3 <= coord1);
+		Assert.IsFalse(coord1 >= coord3);
+	}
+
+	[TestMethod]
+	public void Coordinate_Constructor_DefaultStruct_ShouldHaveZeroValues()
+	{
+		// Arrange & Act
+		var coordinate = default(Coordinate);
+
+		// Assert
+		Assert.AreEqual(0, coordinate.X);
+		Assert.AreEqual(0, coordinate.Y);
+		Assert.AreEqual(0, coordinate.Z);
+	}
+
+	[TestMethod]
+	public void Coordinate_Constructor_DefaultZ_ShouldBeZero()
+	{
+		// Arrange & Act
+		var coordinate = new Coordinate(10, 20);
+
+		// Assert
+		Assert.AreEqual(10, coordinate.X);
+		Assert.AreEqual(20, coordinate.Y);
+		Assert.AreEqual(0, coordinate.Z);
 	}
 
 	[TestMethod]
@@ -152,6 +193,7 @@ public class CoordinateValTests
 		Assert.AreEqual(y, coordinate.Y);
 		Assert.AreEqual(z, coordinate.Z);
 	}
+
 	[TestMethod]
 	public void Coordinate_Constructor_ValidParameters_CreatesInstance()
 	{
@@ -189,8 +231,8 @@ public class CoordinateValTests
 	public void Coordinate_Equals_DifferentValues_ReturnsFalse()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(4, 5, 6);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X + 1, coordinate1.Y + 1, coordinate1.Z + 1);
 
 		// Act
 		var result = coordinate1.Equals(coordinate2);
@@ -200,11 +242,52 @@ public class CoordinateValTests
 	}
 
 	[TestMethod]
+	public void Coordinate_Equals_NullObject_ReturnsFalse()
+	{
+		// Arrange
+		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
+
+		// Act
+		var result = coordinate.Equals(null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Coordinate_Equals_ObjectDifferentType_ReturnsFalse()
+	{
+		// Arrange
+		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
+		var differentType = new object();
+
+		// Act
+		var result = coordinate.Equals(differentType);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Coordinate_Equals_ObjectSameValues_ReturnsTrue()
+	{
+		// Arrange
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		object coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
+
+		// Act
+		var result = coordinate1.Equals(coordinate2);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
 	public void Coordinate_Equals_SameValues_ReturnsTrue()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(1, 2, 3);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
 
 		// Act
 		var result = coordinate1.Equals(coordinate2);
@@ -246,8 +329,8 @@ public class CoordinateValTests
 	public void Coordinate_GetHashCode_SameValues_ReturnsSameHashCode()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(1, 2, 3);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
 
 		// Act
 		var hashCode1 = coordinate1.GetHashCode();
@@ -274,8 +357,8 @@ public class CoordinateValTests
 	public void Coordinate_OperatorEquals_SameValues_ReturnsTrue()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(1, 2, 3);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
 
 		// Act
 		var result = coordinate1 == coordinate2;
@@ -288,14 +371,45 @@ public class CoordinateValTests
 	public void Coordinate_OperatorNotEquals_DifferentValues_ReturnsTrue()
 	{
 		// Arrange
-		var coordinate1 = new Coordinate(1, 2, 3);
-		var coordinate2 = new Coordinate(4, 5, 6);
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X + 1, coordinate1.Y + 1, coordinate1.Z + 1);
 
 		// Act
 		var result = coordinate1 != coordinate2;
 
 		// Assert
 		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Coordinate_OperatorNotEquals_SameValues_ReturnsFalse()
+	{
+		// Arrange
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
+
+		// Act
+		var result = coordinate1 != coordinate2;
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Coordinate_Properties_SetAndGet()
+	{
+		// Arrange
+		var coordinate = new Coordinate(0, 0, 0);
+
+		// Act
+		coordinate.X = 42;
+		coordinate.Y = 84;
+		coordinate.Z = 126;
+
+		// Assert
+		Assert.AreEqual(42, coordinate.X);
+		Assert.AreEqual(84, coordinate.Y);
+		Assert.AreEqual(126, coordinate.Z);
 	}
 
 	[TestMethod]
@@ -310,6 +424,20 @@ public class CoordinateValTests
 
 		// Assert
 		Assert.AreEqual(expectedString, result);
+	}
+
+	[TestMethod]
+	public void Coordinate_ToString_ReturnsNonEmptyString()
+	{
+		// Arrange
+		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
+
+		// Act
+		var result = coordinate.ToString();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreNotEqual(string.Empty, result);
 	}
 
 	[TestMethod]
