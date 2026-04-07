@@ -4,7 +4,7 @@
 // Created          : 04-06-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="ProcessExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,20 +28,26 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 public class ProcessExtensionsTests
 {
 
-	private static Process CreateExitedProcess()
+	[TestMethod]
+	public void EnsureHighPriority_ExitedProcess_WithLogger_ThrowsArgumentException()
 	{
-		var process = Process.Start(new ProcessStartInfo
-		{
-			FileName = "/bin/echo",
-			Arguments = "test",
-			RedirectStandardOutput = true,
-			UseShellExecute = false,
-			CreateNoWindow = true,
-		});
+		// Arrange
+		using var process = CreateExitedProcess();
+		var logger = new MockLogger();
 
-		process!.WaitForExit();
+		// Act & Assert - InvalidOperationException is caught, but the LoggerMessage.Define
+		// format string is empty while expecting 1 parameter, causing ArgumentException
+		_ = Assert.ThrowsExactly<ArgumentException>(() => process.EnsureHighPriority(logger));
+	}
 
-		return process;
+	[TestMethod]
+	public void EnsureHighPriority_ExitedProcess_WithNullLogger_DoesNotThrow()
+	{
+		// Arrange
+		using var process = CreateExitedProcess();
+
+		// Act & Assert - InvalidOperationException is caught internally when logger is null
+		process.EnsureHighPriority(null);
 	}
 
 	// ========================
@@ -59,17 +65,7 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void EnsureHighPriority_ExitedProcess_WithNullLogger_DoesNotThrow()
-	{
-		// Arrange
-		using var process = CreateExitedProcess();
-
-		// Act & Assert - InvalidOperationException is caught internally when logger is null
-		process.EnsureHighPriority(null);
-	}
-
-	[TestMethod]
-	public void EnsureHighPriority_ExitedProcess_WithLogger_ThrowsArgumentException()
+	public void EnsureLowPriority_ExitedProcess_WithLogger_ThrowsArgumentException()
 	{
 		// Arrange
 		using var process = CreateExitedProcess();
@@ -77,7 +73,17 @@ public class ProcessExtensionsTests
 
 		// Act & Assert - InvalidOperationException is caught, but the LoggerMessage.Define
 		// format string is empty while expecting 1 parameter, causing ArgumentException
-		_ = Assert.ThrowsExactly<ArgumentException>(() => process.EnsureHighPriority(logger));
+		_ = Assert.ThrowsExactly<ArgumentException>(() => process.EnsureLowPriority(logger));
+	}
+
+	[TestMethod]
+	public void EnsureLowPriority_ExitedProcess_WithNullLogger_DoesNotThrow()
+	{
+		// Arrange
+		using var process = CreateExitedProcess();
+
+		// Act & Assert - InvalidOperationException is caught internally when logger is null
+		process.EnsureLowPriority(null);
 	}
 
 	// ========================
@@ -105,39 +111,10 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void EnsureLowPriority_ExitedProcess_WithNullLogger_DoesNotThrow()
+	public void RunProcessAndIgnoreOutput_EmptyArguments_ThrowsArgumentNullException()
 	{
-		// Arrange
-		using var process = CreateExitedProcess();
-
-		// Act & Assert - InvalidOperationException is caught internally when logger is null
-		process.EnsureLowPriority(null);
-	}
-
-	[TestMethod]
-	public void EnsureLowPriority_ExitedProcess_WithLogger_ThrowsArgumentException()
-	{
-		// Arrange
-		using var process = CreateExitedProcess();
-		var logger = new MockLogger();
-
-		// Act & Assert - InvalidOperationException is caught, but the LoggerMessage.Define
-		// format string is empty while expecting 1 parameter, causing ArgumentException
-		_ = Assert.ThrowsExactly<ArgumentException>(() => process.EnsureLowPriority(logger));
-	}
-
-	// ==================================
-	// RunProcessAndIgnoreOutput Tests
-	// ==================================
-
-	[TestMethod]
-	public void RunProcessAndIgnoreOutput_NullFileName_ThrowsArgumentNullException()
-	{
-		// Arrange
-		string fileName = null;
-
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => fileName.RunProcessAndIgnoreOutput("arg", TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndIgnoreOutput(string.Empty, TimeSpan.FromSeconds(5)));
 	}
 
 	[TestMethod]
@@ -157,11 +134,26 @@ public class ProcessExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndIgnoreOutput(null, TimeSpan.FromSeconds(5)));
 	}
 
+	// ==================================
+	// RunProcessAndIgnoreOutput Tests
+	// ==================================
+
 	[TestMethod]
-	public void RunProcessAndIgnoreOutput_EmptyArguments_ThrowsArgumentNullException()
+	public void RunProcessAndIgnoreOutput_NullFileName_ThrowsArgumentNullException()
 	{
+		// Arrange
+		string fileName = null;
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndIgnoreOutput(string.Empty, TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => fileName.RunProcessAndIgnoreOutput("arg", TimeSpan.FromSeconds(5)));
+	}
+
+	[TestMethod]
+	public void RunProcessAndIgnoreOutput_TimedOutProcess_ThrowsInvalidOperationException()
+	{
+		// Act & Assert - Kill() is called but ExitCode is accessed before the process fully exits
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
+			"/bin/sleep".RunProcessAndIgnoreOutput("60", TimeSpan.FromMilliseconds(1)));
 	}
 
 	[TestMethod]
@@ -175,25 +167,10 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void RunProcessAndIgnoreOutput_TimedOutProcess_ThrowsInvalidOperationException()
+	public void RunProcessAndReadOutput_EmptyArguments_ThrowsArgumentNullException()
 	{
-		// Act & Assert - Kill() is called but ExitCode is accessed before the process fully exits
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
-			"/bin/sleep".RunProcessAndIgnoreOutput("60", TimeSpan.FromMilliseconds(1)));
-	}
-
-	// ==================================
-	// RunProcessAndReadOutput Tests
-	// ==================================
-
-	[TestMethod]
-	public void RunProcessAndReadOutput_NullFileName_ThrowsArgumentNullException()
-	{
-		// Arrange
-		string fileName = null;
-
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => fileName.RunProcessAndReadOutput("arg", TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndReadOutput(string.Empty, TimeSpan.FromSeconds(5)));
 	}
 
 	[TestMethod]
@@ -213,11 +190,26 @@ public class ProcessExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndReadOutput(null, TimeSpan.FromSeconds(5)));
 	}
 
+	// ==================================
+	// RunProcessAndReadOutput Tests
+	// ==================================
+
 	[TestMethod]
-	public void RunProcessAndReadOutput_EmptyArguments_ThrowsArgumentNullException()
+	public void RunProcessAndReadOutput_NullFileName_ThrowsArgumentNullException()
 	{
+		// Arrange
+		string fileName = null;
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndReadOutput(string.Empty, TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => fileName.RunProcessAndReadOutput("arg", TimeSpan.FromSeconds(5)));
+	}
+
+	[TestMethod]
+	public void RunProcessAndReadOutput_TimedOutProcess_ThrowsInvalidOperationException()
+	{
+		// Act & Assert - Kill() is called but ExitCode is accessed before the process fully exits
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
+			"/bin/sleep".RunProcessAndReadOutput("60", TimeSpan.FromMilliseconds(1)));
 	}
 
 	[TestMethod]
@@ -232,11 +224,43 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void RunProcessAndReadOutput_TimedOutProcess_ThrowsInvalidOperationException()
+	public void TrySetPriority_ExitedProcess_WithLogger_ReturnsFalse()
 	{
-		// Act & Assert - Kill() is called but ExitCode is accessed before the process fully exits
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
-			"/bin/sleep".RunProcessAndReadOutput("60", TimeSpan.FromMilliseconds(1)));
+		// Arrange
+		using var process = CreateExitedProcess();
+		var logger = new MockLogger();
+
+		// Act
+		var result = process.TrySetPriority(ProcessPriorityClass.Normal, logger);
+
+		// Assert
+		Assert.IsFalse(result, "TrySetPriority should return false for an exited process.");
+		Assert.IsTrue(logger.LoggedLevels.Count > 0, "Logger should have recorded an error.");
+		Assert.AreEqual(LogLevel.Error, logger.LoggedLevels[0]);
+	}
+
+	[TestMethod]
+	public void TrySetPriority_ExitedProcess_WithNullLogger_ReturnsFalse()
+	{
+		// Arrange
+		using var process = CreateExitedProcess();
+
+		// Act
+		var result = process.TrySetPriority(ProcessPriorityClass.Normal, null);
+
+		// Assert
+		Assert.IsFalse(result, "TrySetPriority should return false for an exited process.");
+	}
+
+	[TestMethod]
+	public void TrySetPriority_InvalidPriority_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		using var process = Process.GetCurrentProcess();
+		var invalidPriority = (ProcessPriorityClass)int.MaxValue;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => process.TrySetPriority(invalidPriority, null));
 	}
 
 	// =======================
@@ -257,17 +281,6 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void TrySetPriority_InvalidPriority_ThrowsArgumentOutOfRangeException()
-	{
-		// Arrange
-		using var process = Process.GetCurrentProcess();
-		var invalidPriority = (ProcessPriorityClass)int.MaxValue;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => process.TrySetPriority(invalidPriority, null));
-	}
-
-	[TestMethod]
 	public void TrySetPriority_ValidProcessAndPriority_ReturnsTrue()
 	{
 		// Arrange
@@ -280,33 +293,20 @@ public class ProcessExtensionsTests
 		Assert.IsTrue(result, "TrySetPriority should return true for a valid process and priority.");
 	}
 
-	[TestMethod]
-	public void TrySetPriority_ExitedProcess_WithNullLogger_ReturnsFalse()
+	private static Process CreateExitedProcess()
 	{
-		// Arrange
-		using var process = CreateExitedProcess();
+		var process = Process.Start(new ProcessStartInfo
+		{
+			FileName = "/bin/echo",
+			Arguments = "test",
+			RedirectStandardOutput = true,
+			UseShellExecute = false,
+			CreateNoWindow = true,
+		});
 
-		// Act
-		var result = process.TrySetPriority(ProcessPriorityClass.Normal, null);
+		process.WaitForExit();
 
-		// Assert
-		Assert.IsFalse(result, "TrySetPriority should return false for an exited process.");
-	}
-
-	[TestMethod]
-	public void TrySetPriority_ExitedProcess_WithLogger_ReturnsFalse()
-	{
-		// Arrange
-		using var process = CreateExitedProcess();
-		var logger = new MockLogger();
-
-		// Act
-		var result = process.TrySetPriority(ProcessPriorityClass.Normal, logger);
-
-		// Assert
-		Assert.IsFalse(result, "TrySetPriority should return false for an exited process.");
-		Assert.IsTrue(logger.LoggedLevels.Count > 0, "Logger should have recorded an error.");
-		Assert.AreEqual(LogLevel.Error, logger.LoggedLevels[0]);
+		return process;
 	}
 }
 

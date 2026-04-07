@@ -46,12 +46,12 @@ public class NumericExtensionsTests : UnitTester
 	public void Average_MixedDecimals_ReturnsCorrectAverage()
 	{
 		// Arrange
-		decimal a = -10.5m;
-		decimal b = 20.5m;
-		decimal expectedResult = 5.0m;
+		var a = -10.5m;
+		var b = 20.5m;
+		var expectedResult = 5.0m;
 
 		// Act
-		decimal result = NumericExtensions.Average(a, b);
+		var result = NumericExtensions.Average(a, b);
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "The average of -10.5 and 20.5 should be 5.0.");

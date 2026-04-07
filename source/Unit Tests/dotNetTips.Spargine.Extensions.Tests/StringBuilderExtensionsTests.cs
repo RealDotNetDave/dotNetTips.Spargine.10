@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -18,7 +18,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,6 +30,16 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class StringBuilderExtensionsTests
 {
+
+	[TestMethod]
+	public void AppendBytesEmptyArrayTest()
+	{
+		var sb = new StringBuilder();
+
+		sb.AppendBytes([]);
+
+		Assert.AreEqual("'0x'", sb.ToString());
+	}
 
 	[TestMethod]
 	public void AppendBytesNullTest()
@@ -50,6 +59,52 @@ public class StringBuilderExtensionsTests
 		sb.AppendBytes(byteArray);
 
 		Assert.IsGreaterThan(50, sb.Length);
+	}
+
+	[TestMethod]
+	public void AppendKeyValueNoQuotesNoCommaTest()
+	{
+		var sb = new StringBuilder();
+		var key = "Name";
+		var value = RandomData.GenerateWord(10);
+
+		sb.AppendKeyValue(key, value, includeQuotes: false, includeComma: false);
+
+		var result = sb.ToString();
+
+		Assert.AreEqual($"{key}={value}", result, "Should format as key=value without quotes or comma.");
+	}
+
+	[TestMethod]
+	public void AppendKeyValueNoQuotesWithCommaTest()
+	{
+		var sb = new StringBuilder();
+		var key = "Name";
+		var value = RandomData.GenerateWord(10);
+
+		sb.AppendKeyValue(key, value, includeQuotes: false, includeComma: true);
+
+		var result = sb.ToString();
+
+		Assert.AreEqual($"{key}={value}{ControlChars.DefaultSeparator}", result, "Should format as key=value with comma separator.");
+	}
+
+	[TestMethod]
+	public void AppendKeyValueNullKeyTest()
+	{
+		var sb = new StringBuilder();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendKeyValue(null, "TestValue"));
+	}
+
+	[TestMethod]
+	public void AppendKeyValueNullValueTest()
+	{
+		var sb = new StringBuilder();
+
+		sb.AppendKeyValue("TestKey", null);
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when value is null.");
 	}
 
 	[TestMethod]
@@ -83,6 +138,50 @@ public class StringBuilderExtensionsTests
 	}
 
 	[TestMethod]
+	public void AppendKeyValueWithBackslashInValueTest()
+	{
+		var sb = new StringBuilder();
+		var key = "Path";
+		var value = "C:\\path";
+
+		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
+
+		var result = sb.ToString();
+
+		Assert.IsTrue(result.Contains("\\\\"), "Backslash in value should be escaped with backslash.");
+		Assert.AreEqual("Path=\"C:\\\\path\"", result);
+	}
+
+	[TestMethod]
+	public void AppendKeyValueWithQuoteInValueTest()
+	{
+		var sb = new StringBuilder();
+		var key = "Path";
+		var value = "hello\"world";
+
+		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
+
+		var result = sb.ToString();
+
+		Assert.IsTrue(result.Contains("\\\""), "Double quote in value should be escaped with backslash.");
+		Assert.AreEqual("Path=\"hello\\\"world\"", result);
+	}
+
+	[TestMethod]
+	public void AppendKeyValueWithQuotesNoCommaTest()
+	{
+		var sb = new StringBuilder();
+		var key = "Name";
+		var value = RandomData.GenerateWord(10);
+
+		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
+
+		var result = sb.ToString();
+
+		Assert.AreEqual($"{key}=\"{value}\"", result, "Should format as key=\"value\" without comma.");
+	}
+
+	[TestMethod]
 	public void AppendValues01()
 	{
 		var sb = new StringBuilder();
@@ -113,6 +212,132 @@ public class StringBuilderExtensionsTests
 		pool.AppendValues(", ", RandomData.GenerateWord(100), RandomData.GenerateWord(100));
 
 		Assert.IsGreaterThan(10, pool.Length);
+	}
+
+	[TestMethod]
+	public void AppendValuesEmptyCollectionStringTest()
+	{
+		var sb = new StringBuilder();
+		var emptyValues = Enumerable.Empty<string>();
+
+		sb.AppendValues(", ", emptyValues);
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty for an empty collection.");
+	}
+
+	[TestMethod]
+	public void AppendValuesGenericEmptyCollectionTest()
+	{
+		var sb = new StringBuilder();
+		var emptyValues = new List<string>();
+
+		sb.AppendValues(", ", emptyValues, (value) => sb.Append(value));
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty for an empty collection.");
+	}
+
+	[TestMethod]
+	public void AppendValuesGenericNullJoinActionTest()
+	{
+		var sb = new StringBuilder();
+		var values = RandomData.GenerateWords(count: 3, minLength: 5, maxLength: 7);
+		Action<string> nullAction = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", values, nullAction));
+	}
+
+	[TestMethod]
+	public void AppendValuesGenericNullValuesTest()
+	{
+		var sb = new StringBuilder();
+		IEnumerable<string> nullValues = null;
+
+		sb.AppendValues(", ", nullValues, (value) => sb.Append(value));
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when values is null.");
+	}
+
+	[TestMethod]
+	public void AppendValuesGenericWithJoinActionTest()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 5);
+
+		sb.AppendValues(", ", people, (person) => sb.Append(person.FirstName));
+
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values.");
+	}
+
+	[TestMethod]
+	public void AppendValuesNullValuesStringTest()
+	{
+		var sb = new StringBuilder();
+		IEnumerable<string> nullValues = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(ControlChars.CommaSpace, nullValues));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithEmptySeparatorTest()
+	{
+		var sb = new StringBuilder();
+		var values = RandomData.GenerateWords(count: 3, minLength: 5, maxLength: 7);
+
+		sb.AppendValues(string.Empty, values);
+
+		Assert.IsGreaterThan(0, sb.Length);
+		Assert.IsTrue(sb.ToString().Contains(ControlChars.DefaultSeparator), "Should use default separator when empty separator is provided.");
+	}
+
+	[TestMethod]
+	public void AppendValuesWithParamEmptyCollectionTest()
+	{
+		var sb = new StringBuilder();
+		var emptyPeople = new List<Person>();
+
+		sb.AppendValues(", ", emptyPeople, "format", (person, fmt) =>
+		{
+			_ = sb.Append(person.FirstName);
+		});
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty for an empty collection.");
+	}
+
+	[TestMethod]
+	public void AppendValuesWithParamNullJoinActionTest()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+		Action<Person, string> nullAction = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, "format", nullAction));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithParamNullParamTest()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+		string nullParam = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, nullParam, (person, fmt) =>
+		{
+			_ = sb.Append(person.FirstName);
+		}));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithParamNullValuesTest()
+	{
+		var sb = new StringBuilder();
+		IEnumerable<Person> nullValues = null;
+
+		sb.AppendValues(", ", nullValues, "format", (person, fmt) =>
+		{
+			_ = sb.Append(person.FirstName);
+		});
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when values is null.");
 	}
 
 
@@ -167,6 +392,56 @@ public class StringBuilderExtensionsTests
 	}
 
 	[TestMethod]
+	public void AppendValuesWithTwoParamsNullJoinActionTest()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+		Action<StringBuilder, Person, string, string> nullAction = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, "param1", "param2", nullAction));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithTwoParamsNullParam1Test()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+		string nullParam1 = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, nullParam1, "param2", (StringBuilder builder, Person person, string p1, string p2) =>
+		{
+			_ = builder.Append(person.FirstName);
+		}));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithTwoParamsNullParam2Test()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+		string nullParam2 = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, "param1", nullParam2, (StringBuilder builder, Person person, string p1, string p2) =>
+		{
+			_ = builder.Append(person.FirstName);
+		}));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithTwoParamsNullValuesTest()
+	{
+		var sb = new StringBuilder();
+		IEnumerable<Person> nullValues = null;
+
+		sb.AppendValues(", ", nullValues, "param1", "param2", (StringBuilder builder, Person person, string p1, string p2) =>
+		{
+			_ = builder.Append(person.FirstName);
+		});
+
+		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when values is null.");
+	}
+
+	[TestMethod]
 	public void AppendValuesWithTwoParamsTest()
 	{
 		var sb = new StringBuilder();
@@ -191,6 +466,18 @@ public class StringBuilderExtensionsTests
 	}
 
 	[TestMethod]
+	public void ClearSetCapacityMethodChainingTest()
+	{
+		var sb = new StringBuilder("Hello World");
+
+		var result = sb.ClearSetCapacity(100);
+
+		Assert.AreSame(sb, result, "ClearSetCapacity should return the same StringBuilder instance for chaining.");
+		Assert.AreEqual(0, sb.Length, "StringBuilder should be cleared.");
+		Assert.AreEqual(100, sb.Capacity, "Capacity should be set to 100.");
+	}
+
+	[TestMethod]
 	public void ClearSetCapacityNegativeCapacityTest()
 	{
 		var sb = new StringBuilder("Initial content");
@@ -207,6 +494,14 @@ public class StringBuilderExtensionsTests
 
 		// Verify the capacity is set correctly
 		Assert.IsGreaterThanOrEqualTo(0, sb.Capacity, "StringBuilder capacity should be non-negative.");
+	}
+
+	[TestMethod]
+	public void ClearSetCapacityNullStringBuilderTest()
+	{
+		StringBuilder sb = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.ClearSetCapacity(100));
 	}
 	[TestMethod]
 	public void ClearSetCapacityTest()
@@ -416,302 +711,6 @@ public class StringBuilderExtensionsTests
 		// Verify the StringBuilder remains valid
 		Assert.AreEqual(0, sb.Length, "StringBuilder length should be zero.");
 		Assert.IsGreaterThanOrEqualTo(0, sb.Capacity, "StringBuilder capacity should be non-negative.");
-	}
-
-	[TestMethod]
-	public void AppendBytesEmptyArrayTest()
-	{
-		var sb = new StringBuilder();
-
-		sb.AppendBytes([]);
-
-		Assert.AreEqual("'0x'", sb.ToString());
-	}
-
-	[TestMethod]
-	public void AppendKeyValueNullValueTest()
-	{
-		var sb = new StringBuilder();
-
-		sb.AppendKeyValue("TestKey", null);
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when value is null.");
-	}
-
-	[TestMethod]
-	public void AppendKeyValueNullKeyTest()
-	{
-		var sb = new StringBuilder();
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendKeyValue(null, "TestValue"));
-	}
-
-	[TestMethod]
-	public void AppendKeyValueNoQuotesNoCommaTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Name";
-		var value = RandomData.GenerateWord(10);
-
-		sb.AppendKeyValue(key, value, includeQuotes: false, includeComma: false);
-
-		var result = sb.ToString();
-
-		Assert.AreEqual($"{key}={value}", result, "Should format as key=value without quotes or comma.");
-	}
-
-	[TestMethod]
-	public void AppendKeyValueWithQuotesNoCommaTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Name";
-		var value = RandomData.GenerateWord(10);
-
-		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
-
-		var result = sb.ToString();
-
-		Assert.AreEqual($"{key}=\"{value}\"", result, "Should format as key=\"value\" without comma.");
-	}
-
-	[TestMethod]
-	public void AppendKeyValueNoQuotesWithCommaTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Name";
-		var value = RandomData.GenerateWord(10);
-
-		sb.AppendKeyValue(key, value, includeQuotes: false, includeComma: true);
-
-		var result = sb.ToString();
-
-		Assert.AreEqual($"{key}={value}{ControlChars.DefaultSeparator}", result, "Should format as key=value with comma separator.");
-	}
-
-	[TestMethod]
-	public void AppendKeyValueWithQuoteInValueTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Path";
-		var value = "hello\"world";
-
-		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
-
-		var result = sb.ToString();
-
-		Assert.IsTrue(result.Contains("\\\""), "Double quote in value should be escaped with backslash.");
-		Assert.AreEqual("Path=\"hello\\\"world\"", result);
-	}
-
-	[TestMethod]
-	public void AppendKeyValueWithBackslashInValueTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Path";
-		var value = "C:\\path";
-
-		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
-
-		var result = sb.ToString();
-
-		Assert.IsTrue(result.Contains("\\\\"), "Backslash in value should be escaped with backslash.");
-		Assert.AreEqual("Path=\"C:\\\\path\"", result);
-	}
-
-	[TestMethod]
-	public void AppendValuesNullValuesStringTest()
-	{
-		var sb = new StringBuilder();
-		IEnumerable<string> nullValues = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(ControlChars.CommaSpace, nullValues));
-	}
-
-	[TestMethod]
-	public void AppendValuesEmptyCollectionStringTest()
-	{
-		var sb = new StringBuilder();
-		var emptyValues = Enumerable.Empty<string>();
-
-		sb.AppendValues(", ", emptyValues);
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty for an empty collection.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithEmptySeparatorTest()
-	{
-		var sb = new StringBuilder();
-		var values = RandomData.GenerateWords(count: 3, minLength: 5, maxLength: 7);
-
-		sb.AppendValues(string.Empty, values);
-
-		Assert.IsGreaterThan(0, sb.Length);
-		Assert.IsTrue(sb.ToString().Contains(ControlChars.DefaultSeparator), "Should use default separator when empty separator is provided.");
-	}
-
-	[TestMethod]
-	public void AppendValuesGenericWithJoinActionTest()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 5);
-
-		sb.AppendValues(", ", people, (person) => sb.Append(person.FirstName));
-
-		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values.");
-	}
-
-	[TestMethod]
-	public void AppendValuesGenericNullValuesTest()
-	{
-		var sb = new StringBuilder();
-		IEnumerable<string> nullValues = null;
-
-		sb.AppendValues(", ", nullValues, (value) => sb.Append(value));
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when values is null.");
-	}
-
-	[TestMethod]
-	public void AppendValuesGenericNullJoinActionTest()
-	{
-		var sb = new StringBuilder();
-		var values = RandomData.GenerateWords(count: 3, minLength: 5, maxLength: 7);
-		Action<string> nullAction = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", values, nullAction));
-	}
-
-	[TestMethod]
-	public void AppendValuesGenericEmptyCollectionTest()
-	{
-		var sb = new StringBuilder();
-		var emptyValues = new List<string>();
-
-		sb.AppendValues(", ", emptyValues, (value) => sb.Append(value));
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty for an empty collection.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithParamNullValuesTest()
-	{
-		var sb = new StringBuilder();
-		IEnumerable<Person> nullValues = null;
-
-		sb.AppendValues(", ", nullValues, "format", (person, fmt) =>
-		{
-			_ = sb.Append(person.FirstName);
-		});
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when values is null.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithParamNullParamTest()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-		string nullParam = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, nullParam, (person, fmt) =>
-		{
-			_ = sb.Append(person.FirstName);
-		}));
-	}
-
-	[TestMethod]
-	public void AppendValuesWithParamNullJoinActionTest()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-		Action<Person, string> nullAction = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, "format", nullAction));
-	}
-
-	[TestMethod]
-	public void AppendValuesWithParamEmptyCollectionTest()
-	{
-		var sb = new StringBuilder();
-		var emptyPeople = new List<Person>();
-
-		sb.AppendValues(", ", emptyPeople, "format", (person, fmt) =>
-		{
-			_ = sb.Append(person.FirstName);
-		});
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty for an empty collection.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithTwoParamsNullValuesTest()
-	{
-		var sb = new StringBuilder();
-		IEnumerable<Person> nullValues = null;
-
-		sb.AppendValues(", ", nullValues, "param1", "param2", (StringBuilder builder, Person person, string p1, string p2) =>
-		{
-			_ = builder.Append(person.FirstName);
-		});
-
-		Assert.AreEqual(0, sb.Length, "StringBuilder should remain empty when values is null.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithTwoParamsNullParam1Test()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-		string nullParam1 = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, nullParam1, "param2", (StringBuilder builder, Person person, string p1, string p2) =>
-		{
-			_ = builder.Append(person.FirstName);
-		}));
-	}
-
-	[TestMethod]
-	public void AppendValuesWithTwoParamsNullParam2Test()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-		string nullParam2 = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, "param1", nullParam2, (StringBuilder builder, Person person, string p1, string p2) =>
-		{
-			_ = builder.Append(person.FirstName);
-		}));
-	}
-
-	[TestMethod]
-	public void AppendValuesWithTwoParamsNullJoinActionTest()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-		Action<StringBuilder, Person, string, string> nullAction = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.AppendValues(", ", people, "param1", "param2", nullAction));
-	}
-
-	[TestMethod]
-	public void ClearSetCapacityNullStringBuilderTest()
-	{
-		StringBuilder sb = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => sb.ClearSetCapacity(100));
-	}
-
-	[TestMethod]
-	public void ClearSetCapacityMethodChainingTest()
-	{
-		var sb = new StringBuilder("Hello World");
-
-		var result = sb.ClearSetCapacity(100);
-
-		Assert.AreSame(sb, result, "ClearSetCapacity should return the same StringBuilder instance for chaining.");
-		Assert.AreEqual(0, sb.Length, "StringBuilder should be cleared.");
-		Assert.AreEqual(100, sb.Capacity, "Capacity should be set to 100.");
 	}
 
 }

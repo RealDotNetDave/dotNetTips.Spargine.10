@@ -315,6 +315,18 @@ public class DateTimeExtensionsTests
 	}
 
 	[TestMethod]
+	public void GetLastDayOfWeek_InputDayLessThanOrEqualTarget_Works()
+	{
+		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input <= target, hits else branch
+		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
+
+		var result = monday.GetLastDayOfWeek(DayOfWeek.Friday);
+
+		Assert.AreEqual(DayOfWeek.Friday, result.DayOfWeek);
+		Assert.IsTrue(result < monday);
+	}
+
+	[TestMethod]
 	public void GetLastDayOfWeekTest()
 	{
 		var dateTime = DateTimeOffset.Parse("1/1/2020");
@@ -322,6 +334,18 @@ public class DateTimeExtensionsTests
 		var result = dateTime.GetLastDayOfWeek(DayOfWeek.Sunday);
 
 		Assert.AreEqual(DayOfWeek.Sunday, result.DayOfWeek);
+	}
+
+	[TestMethod]
+	public void GetNextDayOfWeek_InputDayLessThanTarget_Works()
+	{
+		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input < target, hits if branch
+		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
+
+		var result = monday.GetNextDayOfWeek(DayOfWeek.Friday);
+
+		Assert.AreEqual(DayOfWeek.Friday, result.DayOfWeek);
+		Assert.IsTrue(result > monday);
 	}
 
 	[TestMethod]
@@ -434,6 +458,36 @@ public class DateTimeExtensionsTests
 	}
 
 	[TestMethod]
+	public void Intersects_DateTime_NonOverlapping_ReturnsFalse()
+	{
+		var now = Clock.LocalTime;
+
+		var result = now.Intersects(endDate: now.AddDays(5), intersectingStartDate: now.AddDays(10), intersectingEndDate: now.AddDays(20));
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Intersects_DateTimeOffset_NonOverlapping_ReturnsFalse()
+	{
+		var now = DateTimeOffset.Now;
+
+		var result = now.Intersects(now.AddDays(5), now.AddDays(10), now.AddDays(20));
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsInRange_DateTime_OutOfRange_ReturnsFalse()
+	{
+		var now = Clock.LocalTime;
+
+		var result = now.IsInRange(beginningTime: now.AddDays(1), endTime: now.AddDays(10));
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void IsInRange_DateTimeOffset_Works()
 	{
 		var now = DateTimeOffset.Now;
@@ -502,6 +556,17 @@ public class DateTimeExtensionsTests
 		var utc = DateTime.UtcNow;
 		var local = utc.LocalTimeFromUtc(0);
 		Assert.AreEqual(utc.ToUniversalTime(), local);
+	}
+
+	[TestMethod]
+	public void Max_DateTime_CompareToIsGreater_ReturnsCompareTo()
+	{
+		var now = Clock.LocalTime;
+		var later = now.AddDays(1);
+
+		var result = now.Max(later);
+
+		Assert.AreEqual(later, result);
 	}
 
 	[TestMethod]
@@ -711,6 +776,19 @@ public class DateTimeExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFriendlyDateString_DateTime_OlderThanSixDays_ReturnsLongDate()
+	{
+		var oldDate = DateTime.Today.AddDays(-10).AddHours(15);
+
+		var result = oldDate.ToFriendlyDateString();
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.IsTrue(result.Contains("@"));
+		Assert.IsFalse(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
+		Assert.IsFalse(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
+	}
+
+	[TestMethod]
 	public void ToFriendlyDateString_DateTimeOffset_ContainsTimeInLowerCase()
 	{
 		// Arrange
@@ -878,84 +956,6 @@ public class DateTimeExtensionsTests
 		Assert.IsTrue(convertedTime >= currentTime.Subtract(new TimeSpan(0, 5, 0)));
 
 		//PrintResult(convertedTime, nameof(this.ToFromMilliEpochTimeTest));
-	}
-
-	[TestMethod]
-	public void Intersects_DateTime_NonOverlapping_ReturnsFalse()
-	{
-		var now = Clock.LocalTime;
-
-		var result = now.Intersects(endDate: now.AddDays(5), intersectingStartDate: now.AddDays(10), intersectingEndDate: now.AddDays(20));
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void Intersects_DateTimeOffset_NonOverlapping_ReturnsFalse()
-	{
-		var now = DateTimeOffset.Now;
-
-		var result = now.Intersects(now.AddDays(5), now.AddDays(10), now.AddDays(20));
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void IsInRange_DateTime_OutOfRange_ReturnsFalse()
-	{
-		var now = Clock.LocalTime;
-
-		var result = now.IsInRange(beginningTime: now.AddDays(1), endTime: now.AddDays(10));
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void Max_DateTime_CompareToIsGreater_ReturnsCompareTo()
-	{
-		var now = Clock.LocalTime;
-		var later = now.AddDays(1);
-
-		var result = now.Max(later);
-
-		Assert.AreEqual(later, result);
-	}
-
-	[TestMethod]
-	public void ToFriendlyDateString_DateTime_OlderThanSixDays_ReturnsLongDate()
-	{
-		var oldDate = DateTime.Today.AddDays(-10).AddHours(15);
-
-		var result = oldDate.ToFriendlyDateString();
-
-		Assert.IsFalse(string.IsNullOrEmpty(result));
-		Assert.IsTrue(result.Contains("@"));
-		Assert.IsFalse(result.StartsWith("Today", StringComparison.OrdinalIgnoreCase));
-		Assert.IsFalse(result.StartsWith("Yesterday", StringComparison.OrdinalIgnoreCase));
-	}
-
-	[TestMethod]
-	public void GetLastDayOfWeek_InputDayLessThanOrEqualTarget_Works()
-	{
-		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input <= target, hits else branch
-		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
-
-		var result = monday.GetLastDayOfWeek(DayOfWeek.Friday);
-
-		Assert.AreEqual(DayOfWeek.Friday, result.DayOfWeek);
-		Assert.IsTrue(result < monday);
-	}
-
-	[TestMethod]
-	public void GetNextDayOfWeek_InputDayLessThanTarget_Works()
-	{
-		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input < target, hits if branch
-		var monday = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero); // 2024-01-01 is a Monday
-
-		var result = monday.GetNextDayOfWeek(DayOfWeek.Friday);
-
-		Assert.AreEqual(DayOfWeek.Friday, result.DayOfWeek);
-		Assert.IsTrue(result > monday);
 	}
 
 }

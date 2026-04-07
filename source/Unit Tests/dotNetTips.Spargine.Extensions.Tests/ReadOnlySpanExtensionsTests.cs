@@ -4,7 +4,7 @@
 // Created          : 07-11-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="ReadOnlySpanExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

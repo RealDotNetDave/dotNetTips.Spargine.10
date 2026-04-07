@@ -539,6 +539,22 @@ public class DictionaryExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFrozenDictionary_Obsolete_ReturnsExpectedResult()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
+
+		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
+		var result = people.ToFrozenDictionary();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+		// Assert
+		Assert.IsNotEmpty(result);
+		Assert.HasCount(people.Count, result);
+	}
+
+	[TestMethod]
 	public void ToFrozenDictionaryTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
@@ -571,22 +587,6 @@ public class DictionaryExtensionsTests
 		Dictionary<string, Person> nullDictionary = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => nullDictionary.ToFrozen());
-	}
-
-	[TestMethod]
-	public void ToFrozenDictionary_Obsolete_ReturnsExpectedResult()
-	{
-		// Arrange
-		var people = RandomData.GeneratePersonRefCollection(Count).ToDictionary(p => p.Id);
-
-		// Act
-#pragma warning disable CS0618 // Type or member is obsolete
-		var result = people.ToFrozenDictionary();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-		// Assert
-		Assert.IsNotEmpty(result);
-		Assert.HasCount(people.Count, result);
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 04-06-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="WebClientExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -32,30 +32,6 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class WebClientExtensionsTests
 {
-
-	[DataContract]
-	private sealed class JsonTestData
-	{
-
-		[DataMember]
-		public string Name { get; set; }
-
-		[DataMember]
-		public int Value { get; set; }
-
-	}
-
-	private static int GetAvailablePort()
-	{
-		using (var listener = new TcpListener(IPAddress.Loopback, 0))
-		{
-			listener.Start();
-			var port = ((IPEndPoint)listener.LocalEndpoint).Port;
-			listener.Stop();
-
-			return port;
-		}
-	}
 
 	[TestMethod]
 	public void ConvertFrom_EmptyResponse_ReturnsNull()
@@ -88,7 +64,7 @@ public class WebClientExtensionsTests
 				Assert.IsNull(result);
 			}
 
-			serverTask.Wait(TimeSpan.FromSeconds(5));
+			_ = serverTask.Wait(TimeSpan.FromSeconds(5));
 			listener.Stop();
 		}
 	}
@@ -154,6 +130,30 @@ public class WebClientExtensionsTests
 			serverTask.Wait(TimeSpan.FromSeconds(5));
 			listener.Stop();
 		}
+	}
+
+	private static int GetAvailablePort()
+	{
+		using (var listener = new TcpListener(IPAddress.Loopback, 0))
+		{
+			listener.Start();
+			var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+			listener.Stop();
+
+			return port;
+		}
+	}
+
+	[DataContract]
+	private sealed class JsonTestData
+	{
+
+		[DataMember]
+		public string Name { get; set; }
+
+		[DataMember]
+		public int Value { get; set; }
+
 	}
 
 }

@@ -29,20 +29,60 @@ public class DirectoryInfoExtensionsTests
 {
 
 	[TestMethod]
-	public void GetSize_NullPath_ThrowsArgumentNullException()
+	public void GetSize_AllDirectories_IncludesSubdirectories()
 	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryInfoExtensions.GetSize(null));
+		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempPath);
+		var subDir = directory.CreateSubdirectory("child");
+
+		try
+		{
+			_ = RandomData.GenerateFiles(subDir.FullName, count: 2, fileLength: 512);
+
+			var topOnlySize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.TopDirectoryOnly);
+			var allDirsSize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
+
+			Assert.AreEqual(0, topOnlySize);
+			Assert.IsTrue(allDirsSize > 0);
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
 	}
 
 	[TestMethod]
-	public void GetSize_NullSearchPattern_ThrowsArgumentNullException()
+	public void GetSize_DefaultParameters_ReturnsPositiveSize()
+	{
+		var generatedFiles = RandomData.GenerateFiles(count: 3, fileLength: 512);
+		var directory = new DirectoryInfo(generatedFiles.Path);
+
+		try
+		{
+			var result = directory.GetSize();
+
+			Assert.IsTrue(result > 0);
+		}
+		finally
+		{
+			foreach (var file in generatedFiles.Files)
+			{
+				File.Delete(file);
+			}
+		}
+	}
+
+	[TestMethod]
+	public void GetSize_EmptyDirectory_ReturnsZero()
 	{
 		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		var directory = Directory.CreateDirectory(tempPath);
 
 		try
 		{
-			_ = Assert.ThrowsExactly<ArgumentNullException>(() => directory.GetSize(null));
+			var result = directory.GetSize();
+
+			Assert.AreEqual(0, result);
 		}
 		finally
 		{
@@ -83,105 +123,20 @@ public class DirectoryInfoExtensionsTests
 	}
 
 	[TestMethod]
-	public void GetSize_EmptyDirectory_ReturnsZero()
+	public void GetSize_NullPath_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryInfoExtensions.GetSize(null));
+	}
+
+	[TestMethod]
+	public void GetSize_NullSearchPattern_ThrowsArgumentNullException()
 	{
 		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		var directory = Directory.CreateDirectory(tempPath);
 
 		try
 		{
-			var result = directory.GetSize();
-
-			Assert.AreEqual(0, result);
-		}
-		finally
-		{
-			directory.Delete(true);
-		}
-	}
-
-	[TestMethod]
-	public void GetSize_DefaultParameters_ReturnsPositiveSize()
-	{
-		var generatedFiles = RandomData.GenerateFiles(count: 3, fileLength: 512);
-		var directory = new DirectoryInfo(generatedFiles.Path);
-
-		try
-		{
-			var result = directory.GetSize();
-
-			Assert.IsTrue(result > 0);
-		}
-		finally
-		{
-			foreach (var file in generatedFiles.Files)
-			{
-				File.Delete(file);
-			}
-		}
-	}
-
-	[TestMethod]
-	public void GetSize_WithWildcardPattern_ReturnsPositiveSize()
-	{
-		var generatedFiles = RandomData.GenerateFiles(count: 3, fileLength: 512);
-		var directory = new DirectoryInfo(generatedFiles.Path);
-
-		try
-		{
-			var result = directory.GetSize(ControlChars.WildcardAllFiles);
-
-			Assert.IsTrue(result > 0);
-		}
-		finally
-		{
-			foreach (var file in generatedFiles.Files)
-			{
-				File.Delete(file);
-			}
-		}
-	}
-
-	[TestMethod]
-	public void GetSize_TopDirectoryOnly_ReturnsTopLevelSize()
-	{
-		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-		var directory = Directory.CreateDirectory(tempPath);
-		var subDir = directory.CreateSubdirectory("subdir");
-
-		try
-		{
-			var topFiles = RandomData.GenerateFiles(tempPath, count: 2, fileLength: 256);
-			var subFiles = RandomData.GenerateFiles(subDir.FullName, count: 2, fileLength: 256);
-
-			var topOnlySize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.TopDirectoryOnly);
-			var allDirsSize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
-
-			Assert.IsTrue(topOnlySize > 0);
-			Assert.IsTrue(allDirsSize > topOnlySize);
-		}
-		finally
-		{
-			directory.Delete(true);
-		}
-	}
-
-	[TestMethod]
-	public void GetSize_AllDirectories_IncludesSubdirectories()
-	{
-		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-		var directory = Directory.CreateDirectory(tempPath);
-		var subDir = directory.CreateSubdirectory("child");
-
-		try
-		{
-			var subFiles = RandomData.GenerateFiles(subDir.FullName, count: 2, fileLength: 512);
-
-			var topOnlySize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.TopDirectoryOnly);
-			var allDirsSize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
-
-			Assert.AreEqual(0, topOnlySize);
-			Assert.IsTrue(allDirsSize > 0);
+			_ = Assert.ThrowsExactly<ArgumentNullException>(() => directory.GetSize(null));
 		}
 		finally
 		{
@@ -214,6 +169,51 @@ public class DirectoryInfoExtensionsTests
 		finally
 		{
 			directory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public void GetSize_TopDirectoryOnly_ReturnsTopLevelSize()
+	{
+		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempPath);
+		var subDir = directory.CreateSubdirectory("subdir");
+
+		try
+		{
+			var topFiles = RandomData.GenerateFiles(tempPath, count: 2, fileLength: 256);
+			var subFiles = RandomData.GenerateFiles(subDir.FullName, count: 2, fileLength: 256);
+
+			var topOnlySize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.TopDirectoryOnly);
+			var allDirsSize = directory.GetSize(ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
+
+			Assert.IsTrue(topOnlySize > 0);
+			Assert.IsTrue(allDirsSize > topOnlySize);
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public void GetSize_WithWildcardPattern_ReturnsPositiveSize()
+	{
+		var generatedFiles = RandomData.GenerateFiles(count: 3, fileLength: 512);
+		var directory = new DirectoryInfo(generatedFiles.Path);
+
+		try
+		{
+			var result = directory.GetSize(ControlChars.WildcardAllFiles);
+
+			Assert.IsTrue(result > 0);
+		}
+		finally
+		{
+			foreach (var file in generatedFiles.Files)
+			{
+				File.Delete(file);
+			}
 		}
 	}
 

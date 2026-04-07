@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -39,7 +39,6 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 public class EnumerableExtensionsTests
 {
 	private const int Count = 1024;
-	private const string TestData = "TEST DATA";
 
 	[TestMethod]
 	public void AddDistinct_EmptyItems_ReturnsOriginal()
@@ -3944,26 +3943,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void OrderByOrdinalTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-
-		var result = people.OrderByOrdinal(p => p.Email);
-
-		Assert.IsTrue(result.IsNotEmpty());
-	}
-
-	[TestMethod]
-	public void OrderByTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-
-		var result = people.OrderBy("Email desc");
-
-		Assert.IsTrue(result.IsNotEmpty());
-	}
-
-	[TestMethod]
 	public void OrderBy_Ascending_ReturnsOrderedResults()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
@@ -3975,6 +3954,17 @@ public class EnumerableExtensionsTests
 		{
 			Assert.IsTrue(string.Compare(result[i - 1].Email, result[i].Email, StringComparison.Ordinal) <= 0);
 		}
+	}
+
+	[TestMethod]
+	public void OrderBy_CacheHit_ReturnsSameResults()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result1 = people.OrderBy("Email").ToList();
+		var result2 = people.OrderBy("Email").ToList();
+
+		Assert.IsTrue(result1.SequenceEqual(result2));
 	}
 
 	[TestMethod]
@@ -4003,17 +3993,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void OrderBy_WhitespaceOnlySortExpression_ReturnsOriginal()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-
-		var result = people.OrderBy("   ");
-
-		Assert.IsTrue(result.IsNotEmpty());
-		Assert.IsTrue(result.SequenceEqual(people));
-	}
-
-	[TestMethod]
 	public void OrderBy_InvalidPropertyName_ReturnsCollectionOrderedByNull()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
@@ -4032,14 +4011,34 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void OrderBy_CacheHit_ReturnsSameResults()
+	public void OrderBy_WhitespaceOnlySortExpression_ReturnsOriginal()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
 
-		var result1 = people.OrderBy("Email").ToList();
-		var result2 = people.OrderBy("Email").ToList();
+		var result = people.OrderBy("   ");
 
-		Assert.IsTrue(result1.SequenceEqual(result2));
+		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsTrue(result.SequenceEqual(people));
+	}
+
+	[TestMethod]
+	public void OrderByOrdinalTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.OrderByOrdinal(p => p.Email);
+
+		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	[TestMethod]
+	public void OrderByTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.OrderBy("Email desc");
+
+		Assert.IsTrue(result.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -4649,15 +4648,39 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void StartsWithTest()
+	public void StartsWith_BothEmpty_ReturnsTrue()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count);
-		var people1 = people.Take(5);
-		var people2 = people1;
+		var first = Enumerable.Empty<int>();
+		var second = Enumerable.Empty<int>();
 
-		Assert.IsTrue(people.StartsWith(people.Take(5)));
+		Assert.IsTrue(first.StartsWith(second));
+	}
 
-		Assert.IsTrue(people1.StartsWith(people2));
+	[TestMethod]
+	public void StartsWith_EmptySecond_ReturnsTrue()
+	{
+		var first = new List<int> { 1, 2, 3 }.AsEnumerable();
+		var second = Enumerable.Empty<int>();
+
+		Assert.IsTrue(first.StartsWith(second));
+	}
+
+	[TestMethod]
+	public void StartsWith_FirstShorterThanSecond_ReturnsFalse()
+	{
+		var first = new List<int> { 1, 2 }.AsEnumerable();
+		var second = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		Assert.IsFalse(first.StartsWith(second));
+	}
+
+	[TestMethod]
+	public void StartsWith_NonMatchingElements_ReturnsFalse()
+	{
+		var first = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+		var second = new List<int> { 1, 2, 99 }.AsEnumerable();
+
+		Assert.IsFalse(first.StartsWith(second));
 	}
 
 	[TestMethod]
@@ -4686,49 +4709,51 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void StartsWith_NonMatchingElements_ReturnsFalse()
+	public void StartsWithTest()
 	{
-		var first = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
-		var second = new List<int> { 1, 2, 99 }.AsEnumerable();
+		var people = RandomData.GeneratePersonRefCollection(Count);
+		var people1 = people.Take(5);
+		var people2 = people1;
 
-		Assert.IsFalse(first.StartsWith(second));
+		Assert.IsTrue(people.StartsWith(people.Take(5)));
+
+		Assert.IsTrue(people1.StartsWith(people2));
 	}
 
 	[TestMethod]
-	public void StartsWith_FirstShorterThanSecond_ReturnsFalse()
-	{
-		var first = new List<int> { 1, 2 }.AsEnumerable();
-		var second = new List<int> { 1, 2, 3 }.AsEnumerable();
-
-		Assert.IsFalse(first.StartsWith(second));
-	}
-
-	[TestMethod]
-	public void StartsWith_EmptySecond_ReturnsTrue()
-	{
-		var first = new List<int> { 1, 2, 3 }.AsEnumerable();
-		var second = Enumerable.Empty<int>();
-
-		Assert.IsTrue(first.StartsWith(second));
-	}
-
-	[TestMethod]
-	public void StartsWith_BothEmpty_ReturnsTrue()
+	public void StructuralSequenceEqual_BothEmpty_ReturnsTrue()
 	{
 		var first = Enumerable.Empty<int>();
 		var second = Enumerable.Empty<int>();
 
-		Assert.IsTrue(first.StartsWith(second));
+		Assert.IsTrue(first.StructuralSequenceEqual(second));
 	}
 
 	[TestMethod]
-	public void StructuralSequenceEqualTest()
+	public void StructuralSequenceEqual_DifferentElements_ReturnsFalse()
 	{
-		var people1 = RandomData.GeneratePersonRefCollection(Count);
+		var first = new List<int> { 1, 2, 3 }.AsEnumerable();
+		var second = new List<int> { 1, 2, 99 }.AsEnumerable();
 
-		var people2 = RandomData.GeneratePersonRefCollection(Count);
+		Assert.IsFalse(first.StructuralSequenceEqual(second));
+	}
 
-		Assert.IsFalse(people1.StructuralSequenceEqual(people2));
+	[TestMethod]
+	public void StructuralSequenceEqual_EqualSequences_ReturnsTrue()
+	{
+		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+		var copy = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
+
+		Assert.IsTrue(numbers.StructuralSequenceEqual(copy));
+	}
+
+	[TestMethod]
+	public void StructuralSequenceEqual_FirstLongerThanSecond_ReturnsFalse()
+	{
+		var first = new List<int> { 1, 2, 3, 4 }.AsEnumerable();
+		var second = new List<int> { 1, 2, 3 }.AsEnumerable();
+
+		Assert.IsFalse(first.StructuralSequenceEqual(second));
 	}
 
 	[TestMethod]
@@ -4757,33 +4782,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void StructuralSequenceEqual_EqualSequences_ReturnsTrue()
-	{
-		var numbers = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
-		var copy = new List<int> { 1, 2, 3, 4, 5 }.AsEnumerable();
-
-		Assert.IsTrue(numbers.StructuralSequenceEqual(copy));
-	}
-
-	[TestMethod]
-	public void StructuralSequenceEqual_DifferentElements_ReturnsFalse()
-	{
-		var first = new List<int> { 1, 2, 3 }.AsEnumerable();
-		var second = new List<int> { 1, 2, 99 }.AsEnumerable();
-
-		Assert.IsFalse(first.StructuralSequenceEqual(second));
-	}
-
-	[TestMethod]
-	public void StructuralSequenceEqual_FirstLongerThanSecond_ReturnsFalse()
-	{
-		var first = new List<int> { 1, 2, 3, 4 }.AsEnumerable();
-		var second = new List<int> { 1, 2, 3 }.AsEnumerable();
-
-		Assert.IsFalse(first.StructuralSequenceEqual(second));
-	}
-
-	[TestMethod]
 	public void StructuralSequenceEqual_SecondLongerThanFirst_ReturnsFalse()
 	{
 		var first = new List<int> { 1, 2, 3 }.AsEnumerable();
@@ -4793,12 +4791,13 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void StructuralSequenceEqual_BothEmpty_ReturnsTrue()
+	public void StructuralSequenceEqualTest()
 	{
-		var first = Enumerable.Empty<int>();
-		var second = Enumerable.Empty<int>();
+		var people1 = RandomData.GeneratePersonRefCollection(Count);
 
-		Assert.IsTrue(first.StructuralSequenceEqual(second));
+		var people2 = RandomData.GeneratePersonRefCollection(Count);
+
+		Assert.IsFalse(people1.StructuralSequenceEqual(people2));
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DotNetTips.Spargine.Tester;
-using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -89,13 +88,6 @@ public class ImmutableArrayExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasItems_WithPredicate_NullPredicate_ThrowsArgumentNullException()
-	{
-		// Act
-		Assert.IsFalse(ImmutableArray.Create(1, 2, 3).IsNotEmpty(null));
-	}
-
-	[TestMethod]
 	public void HasItems_WithPredicate_NoMatch_ReturnsFalse()
 	{
 		// Arrange
@@ -103,6 +95,13 @@ public class ImmutableArrayExtensionsTests
 
 		// Assert
 		Assert.IsFalse(people.IsNotEmpty(p => p.Email == "no-match@invalid.test"));
+	}
+
+	[TestMethod]
+	public void HasItems_WithPredicate_NullPredicate_ThrowsArgumentNullException()
+	{
+		// Act
+		Assert.IsFalse(ImmutableArray.Create(1, 2, 3).IsNotEmpty(null));
 	}
 
 	[TestMethod]

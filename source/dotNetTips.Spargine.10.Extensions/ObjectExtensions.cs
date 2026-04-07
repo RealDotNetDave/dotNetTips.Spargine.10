@@ -475,10 +475,9 @@ public static class ObjectExtensions
 			// Remove empty values if ignoreNulls is true
 			if (ignoreNulls)
 			{
-				properties = new Dictionary<string, string>(
-					properties.Where(p => !string.IsNullOrEmpty(p.Value))
-						.ToDictionary(pair => pair.Key, pair => pair.Value)
-				);
+				properties = new Dictionary<string, string>(properties.Where(p => !string.IsNullOrEmpty(p.Value))
+.ToDictionary(pair => pair.Key, pair => pair.Value)
+);
 			}
 
 			var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));

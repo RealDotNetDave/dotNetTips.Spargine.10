@@ -28,6 +28,22 @@ public class DataTableExtensionsTests
 {
 
 	[TestMethod]
+	public void HasRows_EmptyTable_ReturnsFalse()
+	{
+		// Arrange
+		using (var table = new DataTable())
+		{
+			table.Columns.Add("Name", typeof(string));
+
+			// Act
+			var result = table.HasRows();
+
+			// Assert
+			Assert.IsFalse(result);
+		}
+	}
+
+	[TestMethod]
 	public void HasRows_NullTable_ReturnsFalse()
 	{
 		// Arrange
@@ -41,25 +57,13 @@ public class DataTableExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasRows_EmptyTable_ReturnsFalse()
+	public void HasRows_TableWithMultipleRows_ReturnsTrue()
 	{
 		// Arrange
 		var table = new DataTable();
 		table.Columns.Add("Name", typeof(string));
-
-		// Act
-		var result = table.HasRows();
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void HasRows_TableWithRows_ReturnsTrue()
-	{
-		// Arrange
-		var table = new DataTable();
-		table.Columns.Add("Name", typeof(string));
+		table.Rows.Add(RandomData.GenerateWord(10));
+		table.Rows.Add(RandomData.GenerateWord(10));
 		table.Rows.Add(RandomData.GenerateWord(10));
 
 		// Act
@@ -70,13 +74,11 @@ public class DataTableExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasRows_TableWithMultipleRows_ReturnsTrue()
+	public void HasRows_TableWithRows_ReturnsTrue()
 	{
 		// Arrange
 		var table = new DataTable();
 		table.Columns.Add("Name", typeof(string));
-		table.Rows.Add(RandomData.GenerateWord(10));
-		table.Rows.Add(RandomData.GenerateWord(10));
 		table.Rows.Add(RandomData.GenerateWord(10));
 
 		// Act
@@ -100,10 +102,10 @@ public class DataTableExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsDBNull_WithStringValue_ReturnsFalse()
+	public void IsDBNull_WithIntValue_ReturnsFalse()
 	{
 		// Arrange
-		object value = RandomData.GenerateWord(10);
+		object value = 42;
 
 		// Act
 		var result = value.IsDBNull();
@@ -113,10 +115,10 @@ public class DataTableExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsDBNull_WithIntValue_ReturnsFalse()
+	public void IsDBNull_WithStringValue_ReturnsFalse()
 	{
 		// Arrange
-		object value = 42;
+		object value = RandomData.GenerateWord(10);
 
 		// Act
 		var result = value.IsDBNull();

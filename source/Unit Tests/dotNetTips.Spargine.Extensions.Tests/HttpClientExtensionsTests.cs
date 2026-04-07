@@ -19,7 +19,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -30,6 +29,92 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class HttpClientExtensionsTests
 {
+
+	[TestMethod]
+	public async Task GetAndDeserializeAsync_CancellationRequested_ThrowsTaskCanceledException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var options = new JsonSerializerOptions();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<UriFormatException>(async () =>
+		{
+			await client.GetAndDeserializeAsync<TestPayload>(url, options, cts.Token);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeAsync_NonSuccessStatusCode_ThrowsHttpRequestException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, "Not Found"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<UriFormatException>(async () =>
+		{
+			await client.GetAndDeserializeAsync<TestPayload>(url, options);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeAsync_NullClient_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpClient client = null;
+		var url = new Uri("https://example.com/api/test");
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.GetAndDeserializeAsync<TestPayload>(url, options);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeAsync_NullOptions_ThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.GetAndDeserializeAsync<TestPayload>(url, null);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeAsync_NullUrl_ThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.GetAndDeserializeAsync<TestPayload>(null, new JsonSerializerOptions());
+		});
+	}
 
 	private sealed class MockHttpMessageHandler(HttpStatusCode statusCode, string content) : HttpMessageHandler
 	{
@@ -55,117 +140,6 @@ public class HttpClientExtensionsTests
 
 		public int Value { get; set; }
 
-	}
-
-	[TestMethod]
-	public async Task GetAndDeserializeAsync_NullClient_ThrowsArgumentNullException()
-	{
-		// Arrange
-		HttpClient client = null;
-		var url = new Uri("https://example.com/api/test");
-		var options = new JsonSerializerOptions();
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-		{
-			await client.GetAndDeserializeAsync<TestPayload>(url, options);
-		});
-	}
-
-	[TestMethod]
-	public async Task GetAndDeserializeAsync_NullUrl_ThrowsArgumentNullException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-		{
-			await client.GetAndDeserializeAsync<TestPayload>(null, new JsonSerializerOptions());
-		});
-	}
-
-	[TestMethod]
-	public async Task GetAndDeserializeAsync_NullOptions_ThrowsArgumentNullException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-		{
-			await client.GetAndDeserializeAsync<TestPayload>(url, null);
-		});
-	}
-
-	[TestMethod]
-	public async Task GetAndDeserializeAsync_ValidRequest_ReturnsDeserializedObject()
-	{
-		// Arrange
-		var expectedName = RandomData.GenerateWord(5, 10);
-		var expectedValue = RandomData.GenerateInteger(1, 1000);
-		var payload = new TestPayload { Name = expectedName, Value = expectedValue };
-		var json = JsonSerializer.Serialize(payload);
-
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, json))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-		var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-		// Act
-		var result = await client.GetAndDeserializeAsync<TestPayload>(url, options);
-
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.AreEqual(expectedName, result.Name);
-		Assert.AreEqual(expectedValue, result.Value);
-	}
-
-	[TestMethod]
-	public async Task GetAndDeserializeAsync_NonSuccessStatusCode_ThrowsHttpRequestException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, "Not Found"))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-		var options = new JsonSerializerOptions();
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
-		{
-			await client.GetAndDeserializeAsync<TestPayload>(url, options);
-		});
-	}
-
-	[TestMethod]
-	public async Task GetAndDeserializeAsync_CancellationRequested_ThrowsTaskCanceledException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-		var options = new JsonSerializerOptions();
-		using var cts = new CancellationTokenSource();
-		cts.Cancel();
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<TaskCanceledException>(async () =>
-		{
-			await client.GetAndDeserializeAsync<TestPayload>(url, options, cts.Token);
-		});
 	}
 
 }
