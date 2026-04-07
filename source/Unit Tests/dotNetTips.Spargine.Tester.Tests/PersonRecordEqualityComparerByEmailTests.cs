@@ -93,12 +93,12 @@ public class PersonRecordEqualityComparerByEmailTests
 	}
 
 	[TestMethod]
-	public void GetHashCode_ValidPerson_ReturnsNonZero()
+	public void GetHashCode_ValidPerson_ReturnsEmailHashCodeIgnoringCase()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
 		var person = RandomData.GeneratePerson<PersonRecord>();
 
-		Assert.AreNotEqual(0, comparer.GetHashCode(person));
+		Assert.AreEqual(person.Email.GetHashCode(StringComparison.OrdinalIgnoreCase), comparer.GetHashCode(person));
 	}
 
 	[TestMethod]
