@@ -76,9 +76,10 @@ public class PersonRecordEqualityComparerByEmailTests
 	public void Equals_DifferentEmail_ReturnsFalse()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
-		var person1 = RandomData.GeneratePerson<PersonRecord>();
-		var person2 = RandomData.GeneratePerson<PersonRecord>();
+		var person1 = new PersonRecord("person1@example.com", "1234567890");
+		var person2 = new PersonRecord("person2@example.com", "0987654321");
 
+		Assert.AreNotEqual(person1.Email, person2.Email);
 		Assert.IsFalse(comparer.Equals(person1, person2));
 	}
 
