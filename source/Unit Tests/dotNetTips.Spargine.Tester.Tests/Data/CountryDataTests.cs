@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="CountryDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -125,5 +125,63 @@ public class CountryDataTests
 		var country = CountryRepository.GetCountry(CountryName.UnitedStates);
 
 		Assert.IsNotNull(country);
+	}
+
+	[TestMethod]
+	public void GetCountry_UndefinedEnum_ThrowsArgumentOutOfRangeException()
+	{
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => CountryRepository.GetCountry((CountryName)999));
+	}
+
+	[TestMethod]
+	public void GetCountry_InvalidIso3_ReturnsNull()
+	{
+		var country = CountryRepository.GetCountry("ZZZ");
+		Assert.IsNull(country);
+	}
+
+	[TestMethod]
+	public void GetCountry_ByIso2_CaseInsensitive_ReturnsCountry()
+	{
+		var country = CountryRepository.GetCountry("us");
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+	}
+
+	[TestMethod]
+	public void GetCountry_ByIso3_CaseInsensitive_ReturnsCountry()
+	{
+		var country = CountryRepository.GetCountry("usa");
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+	}
+
+	[TestMethod]
+	public void GetCountry_ByName_CaseInsensitive_ReturnsCountry()
+	{
+		var country = CountryRepository.GetCountry("united states");
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+	}
+
+	[TestMethod]
+	public void GetCountries_ReturnsSameReference()
+	{
+		var countries1 = CountryRepository.GetCountries();
+		var countries2 = CountryRepository.GetCountries();
+		Assert.AreSame(countries1, countries2);
+	}
+
+	[TestMethod]
+	public void GetCountry_ByEnum_VerifiesCountryProperties()
+	{
+		var country = CountryRepository.GetCountry(CountryName.UnitedStates);
+
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+		Assert.AreEqual("US", country.Iso2);
+		Assert.AreEqual("USA", country.Iso3);
+		Assert.AreEqual("Washington", country.Capital);
+		Assert.AreEqual("USD", country.Currency);
 	}
 }
