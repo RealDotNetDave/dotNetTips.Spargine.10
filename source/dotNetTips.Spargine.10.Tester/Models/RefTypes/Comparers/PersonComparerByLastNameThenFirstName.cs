@@ -3,23 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-13-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
-// ***********************************************************************
-// <copyright file="PersonComparerByLastNameThenFirstName.cs" company="dotNetTips.com - McCarter Consulting">
-//     McCarter Consulting (David McCarter)
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-
-// ***********************************************************************
-// Assembly         : DotNetTips.Spargine.10.Tester
-// Author           : David McCarter
-// Created          : 06-13-2025
-//
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastNameThenFirstName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -58,7 +43,7 @@ public sealed class PersonComparerByLastNameThenFirstName : IComparer<Person>
 	/// </item>
 	/// </list>
 	/// </returns>
-	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int Compare(Person? x, Person? y)
 	{
 		var lastNameComparison = string.Compare(x?.LastName ?? string.Empty, y?.LastName ?? string.Empty, StringComparison.Ordinal);
