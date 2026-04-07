@@ -4,7 +4,7 @@
 // Created          : 12-06-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -128,6 +128,7 @@ public class ConcurrentHashSetTests
 				set.AddRange(items);
 			}));
 		}
+
 		Task.WaitAll(tasks.ToArray());
 
 		// Assert

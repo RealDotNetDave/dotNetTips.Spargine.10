@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="ObservableListTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -1788,10 +1788,12 @@ public class ObservableListTests
 		// Arrange
 		var capacity = 100;
 		this._observableList = new ObservableList<int>(new int[capacity]);
+
 		for (int i = 0; i < 10; i++)
 		{
 			this._observableList.Add(i);
 		}
+
 		// Assuming the internal data structure is a List<T> or similar,
 		// after adding 10 items, the capacity would be significantly higher than the count.
 
