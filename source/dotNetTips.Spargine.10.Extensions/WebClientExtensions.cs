@@ -26,6 +26,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Provides extension methods for <see cref="WebClient"/> to enhance its functionality,
 /// including methods for converting JSON data to objects.
 /// </summary>
+[Obsolete("The WebClient class is considered obsolete. Consider using HttpClient for modern applications. This type will be removed in a future version.", true)]
 [Information(Status = Status.Available)]
 public static class WebClientExtensions
 {
@@ -40,6 +41,7 @@ public static class WebClientExtensions
 	/// <returns>An instance of type <typeparamref name="T"/> populated with data from the JSON string; otherwise, null if the JSON data is empty.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/> is null.</exception>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="url"/> is null.</exception>
+	[Obsolete("The WebClient class is considered obsolete. Consider using HttpClient for modern applications. This type will be removed in a future version.", true)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConvertFrom), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T? ConvertFrom<T>([DisallowNull] this WebClient client, [DisallowNull] Uri url)
