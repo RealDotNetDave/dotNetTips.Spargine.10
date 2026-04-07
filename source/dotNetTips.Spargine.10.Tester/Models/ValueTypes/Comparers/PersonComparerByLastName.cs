@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-23-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,6 +44,6 @@ public sealed class PersonComparerByLastName : IComparer<Person>
 	/// </item>
 	/// </list>
 	/// </returns>
-	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Compare), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int Compare(Person x, Person y) => string.Compare(x.LastName, y.LastName, StringComparison.Ordinal);
 }
