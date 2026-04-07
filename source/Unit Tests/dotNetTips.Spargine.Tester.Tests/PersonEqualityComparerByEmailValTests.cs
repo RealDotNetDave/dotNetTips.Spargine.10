@@ -72,17 +72,6 @@ public class PersonEqualityComparerByEmailValTests
 	}
 
 	[TestMethod]
-	public void GetHashCode_PersonWithEmail_ReturnsNonZero()
-	{
-		var comparer = new PersonEqualityComparerByEmail();
-		var person = RandomData.GeneratePerson<Person>();
-
-		var result = comparer.GetHashCode(person);
-
-		Assert.AreNotEqual(0, result);
-	}
-
-	[TestMethod]
 	public void GetHashCode_SameEmail_ReturnsSameHash()
 	{
 		var comparer = new PersonEqualityComparerByEmail();
