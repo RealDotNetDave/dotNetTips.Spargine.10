@@ -40,6 +40,14 @@ public class CountryDataTests
 	}
 
 	[TestMethod]
+	public void GetCountries_ReturnsSameReference()
+	{
+		var countries1 = CountryRepository.GetCountries();
+		var countries2 = CountryRepository.GetCountries();
+		Assert.AreSame(countries1, countries2);
+	}
+
+	[TestMethod]
 	public void GetCountriesPhoneInfoTest()
 	{
 		var countries = CountryRepository.GetCountries();
@@ -74,6 +82,27 @@ public class CountryDataTests
 	}
 
 	[TestMethod]
+	public void GetCountry_ByEnum_VerifiesCountryProperties()
+	{
+		var country = CountryRepository.GetCountry(CountryName.UnitedStates);
+
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+		Assert.AreEqual("US", country.Iso2);
+		Assert.AreEqual("USA", country.Iso3);
+		Assert.AreEqual("Washington", country.Capital);
+		Assert.AreEqual("USD", country.Currency);
+	}
+
+	[TestMethod]
+	public void GetCountry_ByIso2_CaseInsensitive_ReturnsCountry()
+	{
+		var country = CountryRepository.GetCountry("us");
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+	}
+
+	[TestMethod]
 	public void GetCountry_ByIso2_ReturnsCountry()
 	{
 		var country = CountryRepository.GetCountry("US");
@@ -82,9 +111,25 @@ public class CountryDataTests
 	}
 
 	[TestMethod]
+	public void GetCountry_ByIso3_CaseInsensitive_ReturnsCountry()
+	{
+		var country = CountryRepository.GetCountry("usa");
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+	}
+
+	[TestMethod]
 	public void GetCountry_ByIso3_ReturnsCountry()
 	{
 		var country = CountryRepository.GetCountry("USA");
+		Assert.IsNotNull(country);
+		Assert.AreEqual("United States", country.Name);
+	}
+
+	[TestMethod]
+	public void GetCountry_ByName_CaseInsensitive_ReturnsCountry()
+	{
+		var country = CountryRepository.GetCountry("united states");
 		Assert.IsNotNull(country);
 		Assert.AreEqual("United States", country.Name);
 	}
@@ -105,6 +150,13 @@ public class CountryDataTests
 	}
 
 	[TestMethod]
+	public void GetCountry_InvalidIso3_ReturnsNull()
+	{
+		var country = CountryRepository.GetCountry("ZZZ");
+		Assert.IsNull(country);
+	}
+
+	[TestMethod]
 	public void GetCountry_InvalidName_ReturnsNull()
 	{
 		var country = CountryRepository.GetCountry("NotACountry");
@@ -114,8 +166,14 @@ public class CountryDataTests
 	[TestMethod]
 	public void GetCountry_NullOrEmpty_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry(null! as string));
+		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry(null as string));
 		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry(string.Empty));
+	}
+
+	[TestMethod]
+	public void GetCountry_UndefinedEnum_ThrowsArgumentOutOfRangeException()
+	{
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => CountryRepository.GetCountry((CountryName)999));
 	}
 
 
@@ -125,63 +183,5 @@ public class CountryDataTests
 		var country = CountryRepository.GetCountry(CountryName.UnitedStates);
 
 		Assert.IsNotNull(country);
-	}
-
-	[TestMethod]
-	public void GetCountry_UndefinedEnum_ThrowsArgumentOutOfRangeException()
-	{
-		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => CountryRepository.GetCountry((CountryName)999));
-	}
-
-	[TestMethod]
-	public void GetCountry_InvalidIso3_ReturnsNull()
-	{
-		var country = CountryRepository.GetCountry("ZZZ");
-		Assert.IsNull(country);
-	}
-
-	[TestMethod]
-	public void GetCountry_ByIso2_CaseInsensitive_ReturnsCountry()
-	{
-		var country = CountryRepository.GetCountry("us");
-		Assert.IsNotNull(country);
-		Assert.AreEqual("United States", country.Name);
-	}
-
-	[TestMethod]
-	public void GetCountry_ByIso3_CaseInsensitive_ReturnsCountry()
-	{
-		var country = CountryRepository.GetCountry("usa");
-		Assert.IsNotNull(country);
-		Assert.AreEqual("United States", country.Name);
-	}
-
-	[TestMethod]
-	public void GetCountry_ByName_CaseInsensitive_ReturnsCountry()
-	{
-		var country = CountryRepository.GetCountry("united states");
-		Assert.IsNotNull(country);
-		Assert.AreEqual("United States", country.Name);
-	}
-
-	[TestMethod]
-	public void GetCountries_ReturnsSameReference()
-	{
-		var countries1 = CountryRepository.GetCountries();
-		var countries2 = CountryRepository.GetCountries();
-		Assert.AreSame(countries1, countries2);
-	}
-
-	[TestMethod]
-	public void GetCountry_ByEnum_VerifiesCountryProperties()
-	{
-		var country = CountryRepository.GetCountry(CountryName.UnitedStates);
-
-		Assert.IsNotNull(country);
-		Assert.AreEqual("United States", country.Name);
-		Assert.AreEqual("US", country.Iso2);
-		Assert.AreEqual("USA", country.Iso3);
-		Assert.AreEqual("Washington", country.Capital);
-		Assert.AreEqual("USD", country.Currency);
 	}
 }
