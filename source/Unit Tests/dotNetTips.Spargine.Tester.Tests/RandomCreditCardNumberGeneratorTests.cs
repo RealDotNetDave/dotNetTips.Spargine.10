@@ -190,6 +190,7 @@ public class RandomCreditCardNumberGeneratorTests
 		// Assert
 		foreach (var number in creditCardNumbers)
 		{
+			Assert.IsNotNull(number);
 			Assert.IsTrue(number.Length is 15 or 16);
 		}
 	}
