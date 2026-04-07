@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
@@ -79,7 +80,6 @@ public class PersonRecordEqualityComparerByEmailTests
 		var person1 = new PersonRecord("person1@example.com", "1234567890");
 		var person2 = new PersonRecord("person2@example.com", "0987654321");
 
-		Assert.AreNotEqual(person1.Email, person2.Email);
 		Assert.IsFalse(comparer.Equals(person1, person2));
 	}
 
