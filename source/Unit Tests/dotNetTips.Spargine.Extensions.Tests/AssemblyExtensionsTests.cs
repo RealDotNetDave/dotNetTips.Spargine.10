@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-07-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using DotNetTips.Spargine.Extensions;
@@ -43,9 +44,31 @@ public class AssemblyExtensionsTests
 	}
 
 	[TestMethod]
+	public void GetAllInterfaces_ValidAssembly_AllResultsAreInterfaces()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+
+		var result = assembly.GetAllInterfaces();
+
+		Assert.IsNotEmpty(result);
+		Assert.IsTrue(result.All(t => t.IsInterface));
+	}
+
+	[TestMethod]
 	public void GetAllTypes_NullAssembly_ThrowsArgumentNullException()
 	{
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((Assembly)null).GetAllTypes());
+	}
+
+	[TestMethod]
+	public void GetAllTypes_ValidAssembly_ExcludesAbstractTypes()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+
+		var result = assembly.GetAllTypes();
+
+		Assert.IsNotEmpty(result);
+		Assert.IsTrue(result.All(t => !t.IsAbstract));
 	}
 
 	[TestMethod]
@@ -60,6 +83,27 @@ public class AssemblyExtensionsTests
 	public void GetInstances_NullAssembly_ThrowsArgumentNullException()
 	{
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => ((Assembly)null).GetInstances<AssemblyExtensionsTests>().ToList());
+	}
+
+	[TestMethod]
+	public void GetInstances_NoMatchingType_ReturnsEmpty()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+
+		var result = assembly.GetInstances<Stream>().ToList();
+
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void GetInstances_ValidAssembly_ReturnsCorrectInstanceType()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+
+		var result = assembly.GetInstances<AssemblyExtensionsTests>().ToList();
+
+		Assert.IsNotEmpty(result);
+		Assert.IsTrue(result.All(i => i is AssemblyExtensionsTests));
 	}
 
 	[TestMethod]
@@ -98,6 +142,28 @@ public class AssemblyExtensionsTests
 
 		// Act and Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => assembly.GetTypes(null));
+	}
+
+	[TestMethod]
+	public void GetTypes_NoMatchingType_ReturnsEmptyCollection()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+
+		var result = assembly.GetTypes(typeof(Stream));
+
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void GetTypes_ValidInputs_AllResultsAreNonAbstractAndAssignable()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+		var targetType = typeof(AssemblyExtensionsTests);
+
+		var result = assembly.GetTypes(targetType);
+
+		Assert.IsNotEmpty(result);
+		Assert.IsTrue(result.All(t => !t.IsAbstract && targetType.IsAssignableFrom(t)));
 	}
 
 	[TestMethod]

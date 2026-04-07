@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -73,7 +73,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <value>The integer representation of the enum value.</value>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToInt32), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(ToInt32), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int ToInt32()
 		{
 			return Convert.ToInt32(input, CultureInfo.InvariantCulture);
@@ -84,7 +84,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <value>The long integer representation of the enum value.</value>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToInt64), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(ToInt64), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public long ToInt64()
 		{
 			return Convert.ToInt64(input, CultureInfo.InvariantCulture);
@@ -95,7 +95,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <typeparam name="TAttribute">The type of attribute to retrieve.</typeparam>
 		/// <returns>The custom attribute if found; otherwise, null.</returns>
-		[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public TAttribute? GetAttribute<TAttribute>() where TAttribute : Attribute
 		{
 			var memberInfo = input.GetType().GetMember(input.ToString());
@@ -107,7 +107,7 @@ public static class EnumExtensions
 		/// Gets the display name from the <see cref="DisplayAttribute"/> if present; otherwise returns the enum's name.
 		/// </summary>
 		/// <returns>The display name or enum name.</returns>
-		[Information(nameof(GetDisplayName), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(GetDisplayName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string GetDisplayName()
 		{
 			var displayAttribute = input.GetAttribute<DisplayAttribute>();
@@ -119,7 +119,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <returns>A collection of individual flag values that are set.</returns>
 		/// <exception cref="ArgumentException">Thrown if the enum type is not decorated with <see cref="FlagsAttribute"/>.</exception>
-		[Information(nameof(GetSetFlags), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(GetSetFlags), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Enum> GetSetFlags()
 		{
 			var enumType = input.GetType();
@@ -147,7 +147,7 @@ public static class EnumExtensions
 		/// Gets the count of flags set in a flag enum.
 		/// </summary>
 		/// <value>The number of individual flags set.</value>
-		[Information(nameof(get_FlagCount), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(get_FlagCount), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int FlagCount
 		{
 			get
@@ -176,7 +176,7 @@ public static class EnumExtensions
 		/// Gets the next enum value in sequence, or the first value if at the end.
 		/// </summary>
 		/// <returns>The next enum value.</returns>
-		[Information(nameof(Next), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(Next), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Enum Next()
 		{
 			var values = Enum.GetValues(input.GetType());
@@ -191,7 +191,7 @@ public static class EnumExtensions
 		/// Gets the previous enum value in sequence, or the last value if at the beginning.
 		/// </summary>
 		/// <returns>The previous enum value.</returns>
-		[Information(nameof(Previous), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+		[Information(nameof(Previous), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Enum Previous()
 		{
 			var values = Enum.GetValues(input.GetType());

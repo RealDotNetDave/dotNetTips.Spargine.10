@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -65,7 +65,7 @@ public static class HashSetExtensions
 		[Pure]
 		[return: NotNull]
 		[Obsolete("Use ToConcurrent() instead. This method will be removed at the end of 2026.", false)]
-		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", Status = Status.Available)]
+		[Information(nameof(ToConcurrentHashSet), "David McCarter", "12/3/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ConcurrentHashSet<T> ToConcurrentHashSet()
 		{
 			return collection.ToConcurrent();
@@ -97,7 +97,7 @@ public static class HashSetExtensions
 		[Pure]
 		[return: NotNull]
 		[Obsolete("Use ToImmutable() instead. This method will be removed at the end of 2026.")]
-		[Information(nameof(ToImmutableHashSet), "David McCarter", "11/21/2020", Status = Status.Available)]
+		[Information(nameof(ToImmutableHashSet), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableHashSet<T> ToImmutableHashSet()
 		{
 			return [.. collection.ArgumentNotNull()];

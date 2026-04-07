@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-05-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -87,7 +87,7 @@ public static class DataReaderExtensions
 	/// <returns>ReadOnlyCollection&lt;System.String&gt;.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ToCsv([DisallowNull] this IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter = ControlChars.Comma)
 	{
 		dataReader = dataReader.ArgumentNotNull();

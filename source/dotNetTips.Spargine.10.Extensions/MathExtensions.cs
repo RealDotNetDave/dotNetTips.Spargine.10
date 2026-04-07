@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-19-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="MathExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -35,7 +35,7 @@ public static class MathExtensions
 	/// <returns>The sum of the input value and the specified number.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Add), author: "David McCarter", createdOn: "7/19/2022", Status = Status.Available, Documentation = "https://bit.ly/SpargineNov2022")]
+	[Information(nameof(Add), author: "David McCarter", createdOn: "7/19/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineNov2022")]
 	public static double Add(this int input, int add) => input + add;
 
 	/// <summary>
@@ -260,7 +260,7 @@ public static class MathExtensions
 	/// <returns>The difference between the input value and the specified number.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Subtract), author: "David McCarter", createdOn: "7/19/2022", Status = Status.Available, Documentation = "https://bit.ly/SpargineNov2022")]
+	[Information(nameof(Subtract), author: "David McCarter", createdOn: "7/19/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineNov2022")]
 	public static double Subtract(this int input, int subtract) => input - subtract;
 
 }

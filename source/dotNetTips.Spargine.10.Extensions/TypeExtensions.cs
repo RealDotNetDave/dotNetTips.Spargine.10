@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-04-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="TypeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -37,7 +37,7 @@ public static class TypeExtensions
 	/// <returns>The custom attribute of type <typeparamref name="TAttribute"/> if found; otherwise, null.</returns>
 	[return: MaybeNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] this MethodInfo methodInfo) where TAttribute : Attribute
 	{
 		return TypeHelper.GetAttribute<TAttribute>(methodInfo);
@@ -52,7 +52,7 @@ public static class TypeExtensions
 	/// <exception cref="ArgumentNullException">Thrown when the propertyInfo is null.</exception>
 	[return: MaybeNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] this PropertyInfo propertyInfo) where TAttribute : Attribute
 	{
 		return TypeHelper.GetAttribute<TAttribute>(propertyInfo);
@@ -71,7 +71,7 @@ public static class TypeExtensions
 	/// </exception>
 	[return: MaybeNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] this FieldInfo fieldInfo) where TAttribute : Attribute
 	{
 		return TypeHelper.GetAttribute<TAttribute>(fieldInfo);
@@ -85,7 +85,7 @@ public static class TypeExtensions
 	/// <returns><c>true</c> if the method has the attribute; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when the methodInfo is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool HasAttribute<T>([DisallowNull] this MethodInfo methodInfo) where T : Attribute
 	{
 		return TypeHelper.HasAttribute<T>(methodInfo);
@@ -98,7 +98,7 @@ public static class TypeExtensions
 	/// <returns><c>true</c> if the <paramref name="property"/> is static; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="property"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET EF Core source.", author: "David McCarter", createdOn: "7/31/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information("From .NET EF Core source.", author: "David McCarter", createdOn: "7/31/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsStatic([DisallowNull] this PropertyInfo property)
 	{
 		return TypeHelper.IsStatic(property);
@@ -117,7 +117,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of abstract methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllAbstractMethods()
 		{
 			return TypeHelper.GetAllAbstractMethods(type);
@@ -129,7 +129,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of constructors.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<ConstructorInfo> GetAllConstructors()
 		{
 			return TypeHelper.GetAllConstructors(type);
@@ -141,7 +141,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of declared fields.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<FieldInfo> GetAllDeclaredFields()
 		{
 			return TypeHelper.GetAllDeclaredFields(type);
@@ -153,7 +153,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of declared methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllDeclaredMethods), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllDeclaredMethods), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<MethodInfo> GetAllDeclaredMethods()
 		{
 			return TypeHelper.GetAllDeclaredMethods(type);
@@ -165,7 +165,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of fields.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<FieldInfo> GetAllFields()
 		{
 			return TypeHelper.GetAllFields(type);
@@ -177,7 +177,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of generic methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllGenericMethods()
 		{
 			return TypeHelper.GetAllGenericMethods(type);
@@ -189,7 +189,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<MethodInfo> GetAllMethods()
 		{
 			return TypeHelper.GetAllMethods(type);
@@ -201,7 +201,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of properties.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllProperties), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllProperties), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<PropertyInfo> GetAllProperties()
 		{
 			return TypeHelper.GetAllProperties(type);
@@ -213,7 +213,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of public methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllPublicMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllPublicMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllPublicMethods()
 		{
 			return TypeHelper.GetAllPublicMethods(type);
@@ -225,7 +225,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of static methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAllStaticMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAllStaticMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllStaticMethods()
 		{
 			return TypeHelper.GetAllStaticMethods(type);
@@ -239,7 +239,7 @@ public static class TypeExtensions
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[return: MaybeNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public TAttribute GetAttribute<TAttribute>() where TAttribute : Attribute
 		{
 			return TypeHelper.GetAttribute<TAttribute>(type);
@@ -250,7 +250,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns>An array of <see cref="Type"/> objects representing the generic type arguments.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetGenericArguments), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Type[] GetGenericArguments()
 		{
 			return TypeHelper.GetGenericArguments(type);
@@ -262,7 +262,7 @@ public static class TypeExtensions
 		/// <typeparam name="TAttribute">The type of the attribute to search for.</typeparam>
 		/// <returns>A read-only collection of <see cref="MemberInfo"/> objects that have the specified attribute.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetTypeMembersWithAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetTypeMembersWithAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>()
 			where TAttribute : Attribute
 		{
@@ -276,7 +276,7 @@ public static class TypeExtensions
 		/// <returns><c>true</c> if the type has the specified base class; otherwise, <c>false</c>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type or baseClass is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasBaseClass), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(HasBaseClass), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasBaseClass([DisallowNull] Type baseClass)
 		{
 			return TypeHelper.HasBaseClass(type, baseClass);
@@ -289,7 +289,7 @@ public static class TypeExtensions
 		/// <param name="bindingFlags">The binding flags to use when searching for the method. Defaults to public instance methods.</param>
 		/// <returns><c>true</c> if the method exists; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasMethod([DisallowNull] string methodName, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
 		{
 			return TypeHelper.HasMethod(type, methodName, bindingFlags);
@@ -301,7 +301,7 @@ public static class TypeExtensions
 		/// <returns><c>true</c> if the type has a parameterless constructor; otherwise, <c>false</c>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasParameterlessConstructor), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(HasParameterlessConstructor), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasParameterlessConstructor()
 		{
 			return TypeHelper.HasParameterlessConstructor(type);
@@ -313,7 +313,7 @@ public static class TypeExtensions
 		/// <param name="propertyName">The name of the property to check for.</param>
 		/// <returns><c>true</c> if the property exists; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasProperty([DisallowNull] string propertyName)
 		{
 			return TypeHelper.HasProperty(type, propertyName);
@@ -325,7 +325,7 @@ public static class TypeExtensions
 		/// <param name="interfaceType">The interface type to check for.</param>
 		/// <returns><c>true</c> if the type implements the interface; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ImplementsInterface([DisallowNull] Type interfaceType)
 		{
 			return TypeHelper.ImplementsInterface(type, interfaceType);
@@ -337,7 +337,7 @@ public static class TypeExtensions
 		/// <param name="targetType">The target type to check assignment compatibility with.</param>
 		/// <returns><c>true</c> if the current type can be assigned to the target type; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsAssignableTo), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(IsAssignableTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsAssignableTo([DisallowNull] Type targetType)
 		{
 			return TypeHelper.IsAssignableTo(type, targetType);
@@ -348,7 +348,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns><c>true</c> if the type is a closed generic; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(IsClosedGeneric), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsClosedGeneric()
 		{
 			return TypeHelper.IsClosedGeneric(type);
@@ -360,7 +360,7 @@ public static class TypeExtensions
 		/// <returns><c>true</c> if the type implements <see cref="IEnumerable"/>; otherwise, <c>false</c>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsEnumerable()
 		{
 			return TypeHelper.IsEnumerable(type);
@@ -371,7 +371,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns><c>true</c> if the type is nullable; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNullable), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(IsNullable), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsNullable()
 		{
 			return TypeHelper.IsNullable(type);
@@ -382,7 +382,7 @@ public static class TypeExtensions
 		/// </summary>
 		/// <returns><c>true</c> if the type is an open generic; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsOpenGeneric), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(IsOpenGeneric), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsOpenGeneric()
 		{
 			return TypeHelper.IsOpenGeneric(type);

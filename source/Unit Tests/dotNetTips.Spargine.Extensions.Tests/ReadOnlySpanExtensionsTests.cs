@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-06-2026
 // ***********************************************************************
 // <copyright file="ReadOnlySpanExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,55 +26,108 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class ReadOnlySpanExtensionsTests
 {
-	[TestMethod]
-	public void BytesToStringTest()
-	{
-		var bytes = RandomData.GenerateByteArray(100);
 
-		var readOnlySpan = new ReadOnlySpan<byte>(bytes);
+	private const int Count = 256;
+
+	[TestMethod]
+	public void BytesToString_EmptySpan_ReturnsEmptyStringTest()
+	{
+		// Arrange
+		ReadOnlySpan<byte> emptySpan = ReadOnlySpan<byte>.Empty;
+
+		// Act
+		var result = emptySpan.BytesToString();
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void BytesToString_NonEmptySpan_ReturnsHexStringTest()
+	{
+		// Arrange
+		var bytes = RandomData.GenerateByteArray(Count);
+		ReadOnlySpan<byte> readOnlySpan = new ReadOnlySpan<byte>(bytes);
+
+		// Act
 		var result = readOnlySpan.BytesToString();
 
-		Assert.IsGreaterThan(100, result.Length);
-	}
-
-	public int[] CreateArray()
-	{
-		int[] array = new int[100];
-		for (int i = 0; i < array.Length; i++)
-		{
-			array[i] = i + 1;
-		}
-		return array;
+		// Assert
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.AreEqual(Count * 2, result.Length);
 	}
 
 	[TestMethod]
-	public void PickRandom_EmptySpan_ThrowsArgumentException()
+	public void BytesToString_SingleByte_ReturnsCorrectHexStringTest()
+	{
+		// Arrange
+		byte[] bytes = [0xAB];
+		ReadOnlySpan<byte> readOnlySpan = new ReadOnlySpan<byte>(bytes);
+
+		// Act
+		var result = readOnlySpan.BytesToString();
+
+		// Assert
+		Assert.AreEqual("AB", result);
+	}
+
+	[TestMethod]
+	public void PickRandom_EmptySpan_ThrowsArgumentNullExceptionTest()
 	{
 		// Arrange & Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
 		{
-			ReadOnlySpan<int> emptySpan = new ReadOnlySpan<int>();
+			ReadOnlySpan<int> emptySpan = ReadOnlySpan<int>.Empty;
 			emptySpan.PickRandom();
 		});
 	}
 
 	[TestMethod]
-	public void PickRandom_MultipleCalls_ReturnsDifferentElements()
+	public void PickRandom_MultipleCalls_ReturnsDifferentElementsTest()
 	{
-		ReadOnlySpan<int> span = new ReadOnlySpan<int>(this.CreateArray());
-		var result1 = span.PickRandom();
-		var result2 = span.PickRandom();
+		// Arrange
+		var array = Enumerable.Range(1, Count).ToArray();
+		ReadOnlySpan<int> span = new ReadOnlySpan<int>(array);
 
-		// Note: This test might occasionally fail due to the random nature of the method, but it's unlikely.
-		Assert.AreNotEqual(result1, result2);
+		// Act - pick multiple times to ensure randomness
+		var results = new int[10];
+
+		for (var i = 0; i < results.Length; i++)
+		{
+			results[i] = span.PickRandom();
+		}
+
+		// Assert - at least two distinct values should appear
+		Assert.IsTrue(results.Distinct().Count() > 1);
 	}
 
 	[TestMethod]
-	public void PickRandom_NonEmptySpan_ReturnsElementFromSpan()
+	public void PickRandom_NonEmptySpan_ReturnsElementFromSpanTest()
 	{
-		ReadOnlySpan<int> span = new ReadOnlySpan<int>(this.CreateArray());
+		// Arrange
+		var array = Enumerable.Range(1, Count).ToArray();
+		ReadOnlySpan<int> span = new ReadOnlySpan<int>(array);
+
+		// Act
 		var result = span.PickRandom();
+
+		// Assert
 		Assert.IsTrue(span.Contains(result));
+	}
+
+	[TestMethod]
+	public void PickRandom_SingleElementSpan_ReturnsThatElementTest()
+	{
+		// Arrange
+		var value = RandomData.GenerateInteger(1, 1000);
+		int[] array = [value];
+		ReadOnlySpan<int> span = new ReadOnlySpan<int>(array);
+
+		// Act
+		var result = span.PickRandom();
+
+		// Assert
+		Assert.AreEqual(value, result);
 	}
 
 }
