@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-23-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByIdThenLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
 /// // Id=002, LastName=Zane
 /// </code>
 /// </example>
-[Information(nameof(PersonComparerByIdThenLastName), "David McCarter", "1/23/2026", Status = Status.Available)]
+[Information(nameof(PersonComparerByIdThenLastName), "David McCarter", "1/23/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 public sealed class PersonComparerByIdThenLastName : IComparer<Person>
 {
 	/// <summary>
