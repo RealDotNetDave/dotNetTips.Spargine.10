@@ -4,7 +4,7 @@
 // Created          : 04-06-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="SocketExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,16 +30,6 @@ public class SocketExtensionsTests
 {
 
 	[TestMethod]
-	public void BindToAnonymousPort_NullSocket_ThrowsArgumentNullException()
-	{
-		// Arrange
-		Socket socket = null;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.BindToAnonymousPort(IPAddress.Loopback));
-	}
-
-	[TestMethod]
 	public void BindToAnonymousPort_NullAddress_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -47,6 +37,16 @@ public class SocketExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.BindToAnonymousPort(null));
+	}
+
+	[TestMethod]
+	public void BindToAnonymousPort_NullSocket_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Socket socket = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.BindToAnonymousPort(IPAddress.Loopback));
 	}
 
 	[TestMethod]
@@ -99,13 +99,16 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
-	public void ForceNonBlocking_NullSocket_ThrowsArgumentNullException()
+	public void ForceNonBlocking_ForceFalse_SetsBlockingToFalse()
 	{
 		// Arrange
-		Socket socket = null;
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.ForceNonBlocking(true));
+		// Act
+		socket.ForceNonBlocking(false);
+
+		// Assert
+		Assert.IsFalse(socket.Blocking);
 	}
 
 	[TestMethod]
@@ -122,39 +125,13 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
-	public void ForceNonBlocking_ForceFalse_SetsBlockingToFalse()
-	{
-		// Arrange
-		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-		// Act
-		socket.ForceNonBlocking(false);
-
-		// Assert
-		Assert.IsFalse(socket.Blocking);
-	}
-
-	[TestMethod]
-	public void TryConnect_NullSocket_ThrowsArgumentNullException()
+	public void ForceNonBlocking_NullSocket_ThrowsArgumentNullException()
 	{
 		// Arrange
 		Socket socket = null;
-		var endpoint = new IPEndPoint(IPAddress.Loopback, 80);
-		var timeout = RandomData.GenerateInteger(100, 5000);
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.TryConnect(endpoint, timeout));
-	}
-
-	[TestMethod]
-	public void TryConnect_NullEndpoint_ThrowsArgumentNullException()
-	{
-		// Arrange
-		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		var timeout = RandomData.GenerateInteger(100, 5000);
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.TryConnect(null, timeout));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.ForceNonBlocking(true));
 	}
 
 	[TestMethod]
@@ -176,7 +153,30 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
-	public void TryConnect_WindowsPlatform_TimeoutLessThanOne_ThrowsArgumentOutOfRangeException()
+	public void TryConnect_NullEndpoint_ThrowsArgumentNullException()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var timeout = RandomData.GenerateInteger(100, 5000);
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.TryConnect(null, timeout));
+	}
+
+	[TestMethod]
+	public void TryConnect_NullSocket_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Socket socket = null;
+		var endpoint = new IPEndPoint(IPAddress.Loopback, 80);
+		var timeout = RandomData.GenerateInteger(100, 5000);
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.TryConnect(endpoint, timeout));
+	}
+
+	[TestMethod]
+	public void TryConnect_WindowsPlatform_FailedConnection_ReturnsFalse()
 	{
 		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 		{
@@ -184,12 +184,16 @@ public class SocketExtensionsTests
 			return;
 		}
 
-		// Arrange
+		// Arrange - Use a reserved test-network address so the connection attempt fails
+		// deterministically without depending on a recently released local port.
 		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		var endpoint = new IPEndPoint(IPAddress.Loopback, 80);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65535);
 
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => socket.TryConnect(endpoint, 0));
+		// Act
+		var result = socket.TryConnect(endpoint, 100);
+
+		// Assert
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -245,7 +249,7 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
-	public void TryConnect_WindowsPlatform_FailedConnection_ReturnsFalse()
+	public void TryConnect_WindowsPlatform_TimeoutLessThanOne_ClampedToMinimum_ReturnsFalse()
 	{
 		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 		{
@@ -253,15 +257,14 @@ public class SocketExtensionsTests
 			return;
 		}
 
-		// Arrange - Use a reserved test-network address so the connection attempt fails
-		// deterministically without depending on a recently released local port.
+		// Arrange - EnsureMinimum(1) clamps 0 to 1ms, so TryConnect proceeds without throwing
 		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65535);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
 
 		// Act
-		var result = socket.TryConnect(endpoint, 100);
+		var result = socket.TryConnect(endpoint, 0);
 
-		// Assert
+		// Assert - connection to non-routable address with 1ms timeout should fail
 		Assert.IsFalse(result);
 	}
 

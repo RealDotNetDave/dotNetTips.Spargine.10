@@ -114,7 +114,7 @@ public class ProcessExtensionsTests
 	public void RunProcessAndIgnoreOutput_EmptyArguments_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndIgnoreOutput(string.Empty, TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "cmd.exe".RunProcessAndIgnoreOutput(string.Empty, TimeSpan.FromSeconds(5)));
 	}
 
 	[TestMethod]
@@ -131,7 +131,7 @@ public class ProcessExtensionsTests
 	public void RunProcessAndIgnoreOutput_NullArguments_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndIgnoreOutput(null, TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "cmd.exe".RunProcessAndIgnoreOutput(null, TimeSpan.FromSeconds(5)));
 	}
 
 	// ==================================
@@ -149,18 +149,20 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void RunProcessAndIgnoreOutput_TimedOutProcess_ThrowsInvalidOperationException()
+	public void RunProcessAndIgnoreOutput_TimedOutProcess_ReturnsNonZeroExitCode()
 	{
-		// Act & Assert - Kill() is called but ExitCode is accessed before the process fully exits
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
-			"/bin/sleep".RunProcessAndIgnoreOutput("60", TimeSpan.FromMilliseconds(1)));
+		// Arrange & Act - ping.exe will run for ~60 seconds, but timeout kills it
+		var exitCode = "ping.exe".RunProcessAndIgnoreOutput("-n 60 127.0.0.1", TimeSpan.FromMilliseconds(100));
+
+		// Assert - killed process should return non-zero exit code
+		Assert.AreNotEqual(0, exitCode, "Exit code should be non-zero for a killed process.");
 	}
 
 	[TestMethod]
 	public void RunProcessAndIgnoreOutput_ValidInput_ReturnsExitCode()
 	{
 		// Act
-		var exitCode = "/bin/echo".RunProcessAndIgnoreOutput("hello", TimeSpan.FromSeconds(10));
+		var exitCode = "cmd.exe".RunProcessAndIgnoreOutput("/C echo hello", TimeSpan.FromSeconds(10));
 
 		// Assert
 		Assert.AreEqual(0, exitCode, "Exit code should be 0 for a successful echo command.");
@@ -170,7 +172,7 @@ public class ProcessExtensionsTests
 	public void RunProcessAndReadOutput_EmptyArguments_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndReadOutput(string.Empty, TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "cmd.exe".RunProcessAndReadOutput(string.Empty, TimeSpan.FromSeconds(5)));
 	}
 
 	[TestMethod]
@@ -187,7 +189,7 @@ public class ProcessExtensionsTests
 	public void RunProcessAndReadOutput_NullArguments_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "/bin/echo".RunProcessAndReadOutput(null, TimeSpan.FromSeconds(5)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => "cmd.exe".RunProcessAndReadOutput(null, TimeSpan.FromSeconds(5)));
 	}
 
 	// ==================================
@@ -205,18 +207,21 @@ public class ProcessExtensionsTests
 	}
 
 	[TestMethod]
-	public void RunProcessAndReadOutput_TimedOutProcess_ThrowsInvalidOperationException()
+	public void RunProcessAndReadOutput_TimedOutProcess_ReturnsNonZeroExitCode()
 	{
-		// Act & Assert - Kill() is called but ExitCode is accessed before the process fully exits
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
-			"/bin/sleep".RunProcessAndReadOutput("60", TimeSpan.FromMilliseconds(1)));
+		// Arrange & Act - ping.exe will run for ~60 seconds, but timeout kills it
+		var (exitCode, output) = "ping.exe".RunProcessAndReadOutput("-n 60 127.0.0.1", TimeSpan.FromMilliseconds(100));
+
+		// Assert - killed process should return non-zero exit code and empty output
+		Assert.AreNotEqual(0, exitCode, "Exit code should be non-zero for a killed process.");
+		Assert.AreEqual(string.Empty, output, "Output should be empty for a killed process.");
 	}
 
 	[TestMethod]
 	public void RunProcessAndReadOutput_ValidInput_ReturnsExitCodeAndOutput()
 	{
 		// Act
-		var (exitCode, output) = "/bin/echo".RunProcessAndReadOutput("hello", TimeSpan.FromSeconds(10));
+		var (exitCode, output) = "cmd.exe".RunProcessAndReadOutput("/C echo hello", TimeSpan.FromSeconds(10));
 
 		// Assert
 		Assert.AreEqual(0, exitCode, "Exit code should be 0 for a successful echo command.");
@@ -297,8 +302,8 @@ public class ProcessExtensionsTests
 	{
 		var process = Process.Start(new ProcessStartInfo
 		{
-			FileName = "/bin/echo",
-			Arguments = "test",
+			FileName = "cmd.exe",
+			Arguments = "/C echo test",
 			RedirectStandardOutput = true,
 			UseShellExecute = false,
 			CreateNoWindow = true,
