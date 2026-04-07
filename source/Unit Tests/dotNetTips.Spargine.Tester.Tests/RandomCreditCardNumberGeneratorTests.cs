@@ -70,6 +70,7 @@ public class RandomCreditCardNumberGeneratorTests
 
 		// Assert
 		Assert.IsNotNull(creditCardNumber);
+		Assert.IsNotEmpty(creditCardNumber);
 		Assert.IsTrue(creditCardNumber.All(char.IsDigit));
 	}
 
