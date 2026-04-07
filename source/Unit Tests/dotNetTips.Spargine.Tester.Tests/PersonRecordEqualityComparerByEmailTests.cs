@@ -122,13 +122,14 @@ public class PersonRecordEqualityComparerByEmailTests
 	}
 
 	[TestMethod]
-	public void GetHashCode_DifferentEmail_ReturnsDifferentHash()
+	public void GetHashCode_DifferentEmail_ReturnsCaseInsensitiveEmailHash()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
 		var person1 = new PersonRecord("alice@example.com", "1234567890");
 		var person2 = new PersonRecord("bob@example.com", "0987654321");
 
-		Assert.AreNotEqual(comparer.GetHashCode(person1), comparer.GetHashCode(person2));
+		Assert.AreEqual(StringComparer.OrdinalIgnoreCase.GetHashCode("alice@example.com"), comparer.GetHashCode(person1));
+		Assert.AreEqual(StringComparer.OrdinalIgnoreCase.GetHashCode("bob@example.com"), comparer.GetHashCode(person2));
 	}
 
 	[TestMethod]
