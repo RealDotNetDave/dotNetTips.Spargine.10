@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-13-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="PersonEqualityComparerByEmail.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,7 +30,7 @@ public sealed class PersonEqualityComparerByEmail : IEqualityComparer<Person>
 	/// <param name="x">The first <see cref="Person"/> to compare.</param>
 	/// <param name="y">The second <see cref="Person"/> to compare.</param>
 	/// <returns><c>true</c> if the specified <see cref="Person"/> objects are equal; otherwise, <c>false</c>.</returns>
-	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public bool Equals(Person? x, Person? y)
 	{
 		return x is null && y is null
