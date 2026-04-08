@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.RefTypes;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -225,16 +225,6 @@ public class PersonRecordRefTests
 	}
 
 	[TestMethod]
-	public void Equals_Null_ReturnsFalse()
-	{
-		var record = RandomData.GeneratePerson<PersonRecord>();
-
-		var result = record.Equals(null);
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
 	public void Equals_In_SameId_ReturnsTrue()
 	{
 		var record1 = new PersonRecord("test@example.com", "1234567890");
@@ -243,6 +233,16 @@ public class PersonRecordRefTests
 		var result = record1.Equals(in record2);
 
 		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Equals_Null_ReturnsFalse()
+	{
+		var record = RandomData.GeneratePerson<PersonRecord>();
+
+		var result = record.Equals(null);
+
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -310,7 +310,7 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void ImplicitOperator_FromValueTypePerson_ConvertsProperly()
 	{
-		var valPerson = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
+		var valPerson = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 
 		PersonRecord record = valPerson;
 
@@ -367,26 +367,6 @@ public class PersonRecordRefTests
 	}
 
 	[TestMethod]
-	public void Operator_GreaterThanOrEqual_NullLeft_ReturnsFalse()
-	{
-		var record = RandomData.GeneratePerson<PersonRecord>();
-
-		var result = (PersonRecord)null >= record;
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void Operator_GreaterThanOrEqual_NullRight_ReturnsTrue()
-	{
-		var record = RandomData.GeneratePerson<PersonRecord>();
-
-		var result = record >= null;
-
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
 	public void Operator_GreaterThan_NullLeft_ReturnsFalse()
 	{
 		var record = RandomData.GeneratePerson<PersonRecord>();
@@ -407,23 +387,23 @@ public class PersonRecordRefTests
 	}
 
 	[TestMethod]
-	public void Operator_LessThanOrEqual_NullLeft_ReturnsTrue()
+	public void Operator_GreaterThanOrEqual_NullLeft_ReturnsFalse()
 	{
 		var record = RandomData.GeneratePerson<PersonRecord>();
 
-		var result = (PersonRecord)null <= record;
+		var result = (PersonRecord)null >= record;
 
-		Assert.IsTrue(result);
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void Operator_LessThanOrEqual_NullRight_ReturnsFalse()
+	public void Operator_GreaterThanOrEqual_NullRight_ReturnsTrue()
 	{
 		var record = RandomData.GeneratePerson<PersonRecord>();
 
-		var result = record <= null;
+		var result = record >= null;
 
-		Assert.IsFalse(result);
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -457,6 +437,26 @@ public class PersonRecordRefTests
 		var record = RandomData.GeneratePerson<PersonRecord>();
 
 		var result = record < null;
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_NullLeft_ReturnsTrue()
+	{
+		var record = RandomData.GeneratePerson<PersonRecord>();
+
+		var result = (PersonRecord)null <= record;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_NullRight_ReturnsFalse()
+	{
+		var record = RandomData.GeneratePerson<PersonRecord>();
+
+		var result = record <= null;
 
 		Assert.IsFalse(result);
 	}
@@ -634,16 +634,16 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void PersonRecord_ToPersonRecord_FromValueType_WithAddresses_ShouldReturnExpectedResults()
 	{
-		var valPerson = new DotNetTips.Spargine.Tester.Models.ValueTypes.Person("test@example.com", "1234567890")
+		var valPerson = new Tester.Models.ValueTypes.Person("test@example.com", "1234567890")
 		{
 			FirstName = "John",
 			LastName = "Doe",
 			BornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero),
 			CellPhone = "555-1234",
 			Phone = "555-5678",
-			Addresses = new Collection<DotNetTips.Spargine.Tester.Models.ValueTypes.Address>
+			Addresses = new Collection<Tester.Models.ValueTypes.Address>
 			{
-				new DotNetTips.Spargine.Tester.Models.ValueTypes.Address("1234567890")
+				new Tester.Models.ValueTypes.Address("1234567890")
 			}
 		};
 
@@ -734,7 +734,7 @@ public class PersonRecordRefTests
 	[TestMethod]
 	public void ToPersonRecord_FromValueType_Works()
 	{
-		var valueType = new DotNetTips.Spargine.Tester.Models.ValueTypes.Person("email@email.com", "1234567890");
+		var valueType = new Tester.Models.ValueTypes.Person("email@email.com", "1234567890");
 		var record = PersonRecord.ToPersonRecord(valueType);
 		Assert.AreEqual(valueType.Id, record.Id);
 		Assert.AreEqual(valueType.Email, record.Email);

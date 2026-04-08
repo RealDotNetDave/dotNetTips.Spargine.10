@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-28-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="AddressValTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.ValueTypes;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -138,7 +138,7 @@ public class AddressValTests
 	[TestMethod]
 	public void Address_ToAddress_FromAddressRecord_ShouldReturnExpectedResults()
 	{
-		var addressRecord = new Models.RefTypes.AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
+		var addressRecord = new DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 
 		var address = Address.ToAddress(addressRecord);
 
@@ -156,7 +156,7 @@ public class AddressValTests
 	[TestMethod]
 	public void Address_ToAddress_FromRefTypeAddress_ShouldReturnExpectedResults()
 	{
-		var refAddress = RandomData.GenerateAddress<Models.RefTypes.Address>();
+		var refAddress = RandomData.GenerateAddress<DotNetTips.Spargine.Tester.Models.RefTypes.Address>();
 
 		var address = Address.ToAddress(refAddress);
 
@@ -440,7 +440,7 @@ public class AddressValTests
 	[TestMethod]
 	public void Operator_Explicit_From_AddressRecord_Works()
 	{
-		var record = new Models.RefTypes.AddressRecord("1234567890");
+		var record = new DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord("1234567890");
 
 		var valueType = (Address)record;
 
@@ -450,7 +450,7 @@ public class AddressValTests
 	[TestMethod]
 	public void Operator_Explicit_From_RefTypeAddress_Works()
 	{
-		var refType = Models.RefTypes.Address.Create("1234567890", "A1", "City", "Country", "12345");
+		var refType = DotNetTips.Spargine.Tester.Models.RefTypes.Address.Create("1234567890", "A1", "City", "Country", "12345");
 
 		var valueType = (Address)refType;
 

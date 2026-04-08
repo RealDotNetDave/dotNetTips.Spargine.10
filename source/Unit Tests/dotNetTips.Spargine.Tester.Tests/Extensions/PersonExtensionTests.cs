@@ -3,10 +3,10 @@
 // Author           : David McCarter
 // Created          : 01-29-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-08-2026
 // ***********************************************************************
-// <copyright file="AddressRefTests.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="PersonExtensionTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -29,16 +29,6 @@ public class PersonExtensionTests : UnitTester
 {
 
 	[TestMethod]
-	public void RecordAgeTest()
-	{
-		var person = RandomData.GeneratePerson<PersonRecord>();
-
-		var age = person.Age;
-
-		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
-	}
-
-	[TestMethod]
 	public void RecordAgeNullBornOnTest()
 	{
 		var person = RandomData.GeneratePerson<PersonRecord>() with { BornOn = null };
@@ -46,6 +36,16 @@ public class PersonExtensionTests : UnitTester
 		var age = person.Age;
 
 		Assert.AreEqual(TimeSpan.Zero, age);
+	}
+
+	[TestMethod]
+	public void RecordAgeTest()
+	{
+		var person = RandomData.GeneratePerson<PersonRecord>();
+
+		var age = person.Age;
+
+		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
 	}
 
 	[TestMethod]
@@ -61,16 +61,6 @@ public class PersonExtensionTests : UnitTester
 	}
 
 	[TestMethod]
-	public void RefAgeTest()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-
-		var age = person.Age;
-
-		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
-	}
-
-	[TestMethod]
 	public void RefAgeNullBornOnTest()
 	{
 		var person = RandomData.GeneratePerson<Person>();
@@ -79,6 +69,16 @@ public class PersonExtensionTests : UnitTester
 		var age = person.Age;
 
 		Assert.AreEqual(TimeSpan.Zero, age);
+	}
+
+	[TestMethod]
+	public void RefAgeTest()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var age = person.Age;
+
+		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
 	}
 
 	[TestMethod]
@@ -94,19 +94,9 @@ public class PersonExtensionTests : UnitTester
 	}
 
 	[TestMethod]
-	public void ValAgeTest()
-	{
-		var person = RandomData.GeneratePerson<Models.ValueTypes.Person>();
-
-		var age = person.Age;
-
-		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
-	}
-
-	[TestMethod]
 	public void ValAgeNullBornOnTest()
 	{
-		var person = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 		person.BornOn = null;
 
 		var age = person.Age;
@@ -115,9 +105,19 @@ public class PersonExtensionTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ValAgeTest()
+	{
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
+
+		var age = person.Age;
+
+		Assert.IsGreaterThan(0, age.TotalDays, "Age should be a non-negative value.");
+	}
+
+	[TestMethod]
 	public void ValFullNameTest()
 	{
-		var person = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 
 		var name = person.FullName;
 

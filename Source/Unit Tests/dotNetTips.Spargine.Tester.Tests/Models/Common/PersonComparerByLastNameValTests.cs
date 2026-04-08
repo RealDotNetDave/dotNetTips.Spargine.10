@@ -18,7 +18,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.Common;
 
 [TestClass]
 public class PersonComparerByLastNameValTests
@@ -35,6 +35,16 @@ public class PersonComparerByLastNameValTests
 	}
 
 	[TestMethod]
+	public void Compare_ReturnsNegative_WhenXLastNameIsNull_AndYIsNot()
+	{
+		var comparer = new PersonComparerByLastName();
+		var p1 = new Person("test1@example.com", "1234567890");
+		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
+
+		Assert.IsLessThan(0, comparer.Compare(p1, p2));
+	}
+
+	[TestMethod]
 	public void Compare_ReturnsPositive_WhenXLastNameIsGreaterThanY()
 	{
 		var comparer = new PersonComparerByLastName();
@@ -45,13 +55,13 @@ public class PersonComparerByLastNameValTests
 	}
 
 	[TestMethod]
-	public void Compare_ReturnsZero_WhenLastNamesAreEqual()
+	public void Compare_ReturnsPositive_WhenYLastNameIsNull_AndXIsNot()
 	{
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
-		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
+		var p2 = new Person("test2@example.com", "ABCDEFGHIJ");
 
-		Assert.AreEqual(0, comparer.Compare(p1, p2));
+		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
 	}
 
 	[TestMethod]
@@ -65,22 +75,12 @@ public class PersonComparerByLastNameValTests
 	}
 
 	[TestMethod]
-	public void Compare_ReturnsNegative_WhenXLastNameIsNull_AndYIsNot()
-	{
-		var comparer = new PersonComparerByLastName();
-		var p1 = new Person("test1@example.com", "1234567890");
-		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
-
-		Assert.IsLessThan(0, comparer.Compare(p1, p2));
-	}
-
-	[TestMethod]
-	public void Compare_ReturnsPositive_WhenYLastNameIsNull_AndXIsNot()
+	public void Compare_ReturnsZero_WhenLastNamesAreEqual()
 	{
 		var comparer = new PersonComparerByLastName();
 		var p1 = new Person("test1@example.com", "1234567890") { LastName = "Smith" };
-		var p2 = new Person("test2@example.com", "ABCDEFGHIJ");
+		var p2 = new Person("test2@example.com", "ABCDEFGHIJ") { LastName = "Smith" };
 
-		Assert.IsGreaterThan(0, comparer.Compare(p1, p2));
+		Assert.AreEqual(0, comparer.Compare(p1, p2));
 	}
 }

@@ -6,26 +6,26 @@
 // Last Modified By : Copilot Agent
 // Last Modified On : 04-07-2026
 // ***********************************************************************
-// <copyright file="CoordinateRefTests.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="CoordinateValTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Diagnostics.CodeAnalysis;
-using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Core;
+using DotNetTips.Spargine.Extensions;
+using DotNetTips.Spargine.Tester.Models.ValueTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.ValueTypes;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class CoordinateRefTests
+public class CoordinateValTests
 {
-
 	[TestMethod]
 	public void Coordinate_CompareTo_DifferentValues_ReturnsNonZero()
 	{
@@ -59,37 +59,24 @@ public class CoordinateRefTests
 	}
 
 	[TestMethod]
-	public void Coordinate_CompareTo_InvalidObjectType_ShouldThrowInvalidCastException()
+	public void Coordinate_CompareTo_InvalidObjectType_ShouldThrowArgumentInvalidException()
 	{
 		// Arrange
 		var coord = RandomData.GenerateCoordinate<Coordinate>();
 		var invalidObject = new object();
 
 		// Act & Assert
-		Assert.ThrowsExactly<InvalidCastException>(() => coord.CompareTo(invalidObject));
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => coord.CompareTo(invalidObject));
 	}
 
 	[TestMethod]
-	public void Coordinate_CompareTo_NullCoordinate_ShouldThrowArgumentNullException()
+	public void Coordinate_CompareTo_NullObject_ShouldThrowArgumentInvalidException()
 	{
 		// Arrange
 		var coord = RandomData.GenerateCoordinate<Coordinate>();
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => coord.CompareTo(null));
-	}
-
-	[TestMethod]
-	public void Coordinate_CompareTo_NullObject_ReturnsOne()
-	{
-		// Arrange
-		var coord = RandomData.GenerateCoordinate<Coordinate>();
-
-		// Act
-		var result = coord.CompareTo((object)null);
-
-		// Assert
-		Assert.AreEqual(1, result);
+		Assert.ThrowsExactly<ArgumentInvalidException>(() => coord.CompareTo(null));
 	}
 
 	[TestMethod]
@@ -167,6 +154,18 @@ public class CoordinateRefTests
 	}
 
 	[TestMethod]
+	public void Coordinate_Constructor_DefaultStruct_ShouldHaveZeroValues()
+	{
+		// Arrange & Act
+		var coordinate = default(Coordinate);
+
+		// Assert
+		Assert.AreEqual(0, coordinate.X);
+		Assert.AreEqual(0, coordinate.Y);
+		Assert.AreEqual(0, coordinate.Z);
+	}
+
+	[TestMethod]
 	public void Coordinate_Constructor_DefaultZ_ShouldBeZero()
 	{
 		// Arrange & Act
@@ -175,19 +174,6 @@ public class CoordinateRefTests
 		// Assert
 		Assert.AreEqual(10, coordinate.X);
 		Assert.AreEqual(20, coordinate.Y);
-		Assert.AreEqual(0, coordinate.Z);
-	}
-
-	[TestMethod]
-	public void Coordinate_Constructor_Parameterless_ShouldCreateInstance()
-	{
-		// Arrange & Act
-		var coordinate = new Coordinate();
-
-		// Assert
-		Assert.IsNotNull(coordinate);
-		Assert.AreEqual(0, coordinate.X);
-		Assert.AreEqual(0, coordinate.Y);
 		Assert.AreEqual(0, coordinate.Z);
 	}
 
@@ -256,26 +242,13 @@ public class CoordinateRefTests
 	}
 
 	[TestMethod]
-	public void Coordinate_Equals_NullCoordinate_ReturnsFalse()
-	{
-		// Arrange
-		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
-
-		// Act
-		var result = coordinate.Equals(null as Coordinate);
-
-		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
 	public void Coordinate_Equals_NullObject_ReturnsFalse()
 	{
 		// Arrange
 		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
 
 		// Act
-		var result = coordinate.Equals(null as object);
+		var result = coordinate.Equals(null);
 
 		// Assert
 		Assert.IsFalse(result);
@@ -310,21 +283,6 @@ public class CoordinateRefTests
 	}
 
 	[TestMethod]
-	public void Coordinate_Equals_SameReference_ReturnsTrue()
-	{
-		// Arrange
-		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
-
-		// Act
-		var resultTyped = coordinate.Equals(coordinate);
-		var resultObject = coordinate.Equals((object)coordinate);
-
-		// Assert
-		Assert.IsTrue(resultTyped);
-		Assert.IsTrue(resultObject);
-	}
-
-	[TestMethod]
 	public void Coordinate_Equals_SameValues_ReturnsTrue()
 	{
 		// Arrange
@@ -336,6 +294,20 @@ public class CoordinateRefTests
 
 		// Assert
 		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Coordinate_Equals_ShouldReturnExpectedResults()
+	{
+		// Arrange
+		var coord1 = new Coordinate(1, 2, 3);
+		var coord2 = new Coordinate(1, 2, 3);
+		var coord3 = new Coordinate(4, 5, 6);
+
+		// Act & Assert
+		Assert.IsTrue(coord1.Equals(coord2));
+		Assert.IsFalse(coord1.Equals(coord3));
+		Assert.IsFalse(coord1.Equals(null));
 	}
 
 	[TestMethod]
@@ -382,6 +354,20 @@ public class CoordinateRefTests
 	}
 
 	[TestMethod]
+	public void Coordinate_OperatorEquals_SameValues_ReturnsTrue()
+	{
+		// Arrange
+		var coordinate1 = RandomData.GenerateCoordinate<Coordinate>();
+		var coordinate2 = new Coordinate(coordinate1.X, coordinate1.Y, coordinate1.Z);
+
+		// Act
+		var result = coordinate1 == coordinate2;
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
 	public void Coordinate_OperatorNotEquals_DifferentValues_ReturnsTrue()
 	{
 		// Arrange
@@ -413,7 +399,7 @@ public class CoordinateRefTests
 	public void Coordinate_Properties_SetAndGet()
 	{
 		// Arrange
-		var coordinate = new Coordinate();
+		var coordinate = new Coordinate(0, 0, 0);
 
 		// Act
 		coordinate.X = 42;
@@ -424,6 +410,20 @@ public class CoordinateRefTests
 		Assert.AreEqual(42, coordinate.X);
 		Assert.AreEqual(84, coordinate.Y);
 		Assert.AreEqual(126, coordinate.Z);
+	}
+
+	[TestMethod]
+	public void Coordinate_ToString_ReturnsCorrectString()
+	{
+		// Arrange
+		var coordinate = new Coordinate(1, 2, 3);
+		var expectedString = coordinate.PropertiesToString(includeMemberName: false);
+
+		// Act
+		var result = coordinate.ToString();
+
+		// Assert
+		Assert.AreEqual(expectedString, result);
 	}
 
 	[TestMethod]

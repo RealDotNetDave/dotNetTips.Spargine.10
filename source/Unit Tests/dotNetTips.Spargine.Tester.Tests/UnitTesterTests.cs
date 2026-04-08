@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 01-05-2021
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="UnitTesterTests.cs" company="dotNetTips.com - McCarter Consulting">
@@ -19,6 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Extensions;
+using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -231,7 +232,7 @@ public class UnitTesterTests : UnitTester
 	public void PrintToDebugCollection_NullCollection_ThrowsArgumentNullException()
 	{
 		// Arrange
-		IEnumerable<Models.RefTypes.Person> nullCollection = null!;
+		IEnumerable<Person> nullCollection = null!;
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -242,7 +243,7 @@ public class UnitTesterTests : UnitTester
 	public void PrintToDebugCollection_NullSelector_ThrowsArgumentNullException()
 	{
 		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -253,7 +254,7 @@ public class UnitTesterTests : UnitTester
 	public void PrintToDebugCollection_ValidInput_DoesNotThrow()
 	{
 		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(3);
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(3);
 
 		// Act
 		this.PrintToDebug(collection, p => true, "TestMethod");
@@ -267,7 +268,7 @@ public class UnitTesterTests : UnitTester
 	public void PrintToDebugObject_NullInput_ThrowsArgumentNullException()
 	{
 		// Arrange
-		Models.RefTypes.Person nullPerson = null!;
+		Person nullPerson = null!;
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -363,6 +364,20 @@ public class UnitTesterTests : UnitTester
 		Assert.AreEqual("Name:Sample", result);
 	}
 
+	[TestMethod]
+	public void SaveAsJsonToFile_EmptyMethodName_CreatesFileWithRandomName()
+	{
+		// Arrange
+		var sample = new Sample { Id = 99, Name = "EmptyMethod" };
+
+		// Act
+		var filePath = this.SaveAsJsonToFile(sample, string.Empty);
+
+		// Assert
+		Assert.IsTrue(File.Exists(filePath));
+		Assert.EndsWith(".json", filePath);
+	}
+
 	// ──────────────────────────────────────────────
 	// SaveAsJsonToFile
 	// ──────────────────────────────────────────────
@@ -390,20 +405,6 @@ public class UnitTesterTests : UnitTester
 		var content = File.ReadAllText(filePath);
 		Assert.Contains("42", content);
 		Assert.Contains("JsonTest", content);
-	}
-
-	[TestMethod]
-	public void SaveAsJsonToFile_EmptyMethodName_CreatesFileWithRandomName()
-	{
-		// Arrange
-		var sample = new Sample { Id = 99, Name = "EmptyMethod" };
-
-		// Act
-		var filePath = this.SaveAsJsonToFile(sample, string.Empty);
-
-		// Assert
-		Assert.IsTrue(File.Exists(filePath));
-		Assert.EndsWith(".json", filePath);
 	}
 
 	// ──────────────────────────────────────────────
@@ -445,69 +446,193 @@ public class UnitTesterTests : UnitTester
 	}
 
 	// ──────────────────────────────────────────────
-	// SaveToFile (string, DirectoryInfo, string)
+	// SaveToFileAsync (string, string)
 	// ──────────────────────────────────────────────
 
 	[TestMethod]
-	public void SaveToFileWithDirectory_EmptyInput_ReturnsEmptyString()
+	public async Task SaveToFileAsync_EmptyInput_ReturnsEmptyString()
 	{
-		// Arrange
-		var tempDir = new DirectoryInfo(this.OutputDirectory);
-
 		// Act
-		var result = this.SaveToFile(string.Empty, tempDir, "TestMethod");
+		var result = await this.SaveToFileAsync(string.Empty, "TestMethod");
 
 		// Assert
 		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
-	public void SaveToFileWithDirectory_NonExistentDirectory_ThrowsDirectoryNotFoundException()
+	public async Task SaveToFileAsync_NullInput_ReturnsEmptyString()
 	{
-		// Arrange
-		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
-		const string content = "Test content";
-
-		// Act & Assert
-		Assert.ThrowsExactly<DirectoryNotFoundException>(() =>
-			this.SaveToFile(content, nonExistentDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public void SaveToFileWithDirectory_NullDirectory_ThrowsArgumentNullException()
-	{
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			this.SaveToFile("content", (DirectoryInfo)null!, "TestMethod"));
-	}
-
-	[TestMethod]
-	public void SaveToFileWithDirectory_NullInput_ReturnsEmptyString()
-	{
-		// Arrange
-		var tempDir = new DirectoryInfo(this.OutputDirectory);
-
 		// Act
-		var result = this.SaveToFile(null!, tempDir, "TestMethod");
+		var result = await this.SaveToFileAsync(null!, "TestMethod");
 
 		// Assert
 		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
-	public void SaveToFileWithDirectory_ValidInput_CreatesFileInSpecifiedDirectory()
+	public async Task SaveToFileAsync_ValidInput_CreatesFile()
+	{
+		// Arrange
+		var content = RandomData.GenerateWord(50);
+
+		// Act
+		var filePath = await this.SaveToFileAsync(content, "TestMethod");
+
+		// Assert
+		Assert.IsTrue(File.Exists(filePath));
+		Assert.AreEqual(content, await File.ReadAllTextAsync(filePath));
+	}
+
+	// ──────────────────────────────────────────────
+	// SaveToFileAsync<T>(IEnumerable<T>, selector, string)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollection_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> nullCollection = null!;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(nullCollection, p => true, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollection_NullSelector_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(collection, null!, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollection_ValidInput_CreatesFile()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(3);
+
+		// Act
+		var filePath = await this.SaveToFileAsync(collection, p => true, "TestMethod");
+
+		// Assert
+		Assert.IsTrue(File.Exists(filePath));
+		var lines = await File.ReadAllLinesAsync(filePath);
+		Assert.HasCount(3, lines);
+	}
+
+	// ──────────────────────────────────────────────
+	// SaveToFileAsync<T>(IEnumerable<T>, selector, DirectoryInfo, string)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollectionWithDirectory_NullCollection_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var tempDir = new DirectoryInfo(this.OutputDirectory);
-		var content = RandomData.GenerateWord(30);
+		IEnumerable<Person> nullCollection = null!;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(nullCollection, p => true, tempDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollectionWithDirectory_NullDirectory_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
+		DirectoryInfo nullDir = null!;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(collection, p => true, nullDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollectionWithDirectory_NullSelector_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
+		var tempDir = new DirectoryInfo(this.OutputDirectory);
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(collection, null!, tempDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncCollectionWithDirectory_ValidInput_CreatesFile()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(3);
+		var tempDir = new DirectoryInfo(this.OutputDirectory);
 
 		// Act
-		var savedFilePath = this.SaveToFile(content, tempDir, "TestMethod");
+		var filePath = await this.SaveToFileAsync(collection, p => true, tempDir, "TestMethod");
 
 		// Assert
-		Assert.IsTrue(File.Exists(savedFilePath));
-		Assert.StartsWith(tempDir.FullName, savedFilePath);
-		Assert.AreEqual(content, File.ReadAllText(savedFilePath));
+		Assert.IsTrue(File.Exists(filePath));
+		Assert.StartsWith(tempDir.FullName, filePath);
+		var lines = await File.ReadAllLinesAsync(filePath);
+		Assert.HasCount(3, lines);
+	}
+
+	// ──────────────────────────────────────────────
+	// SaveToFileAsync<T>(T, selector, string)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public async Task SaveToFileAsyncObject_EmptyContent_ReturnsEmptyString()
+	{
+		// Arrange
+		var obj = new NoProperties();
+
+		// Act
+		var result = await this.SaveToFileAsync(obj, p => true, "TestMethod");
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncObject_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Sample nullSample = null!;
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(nullSample, p => true, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncObject_NullSelector_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var person = RandomData.GeneratePersonRefCollection(1).First();
+
+		// Act & Assert
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+			await this.SaveToFileAsync(person, (Func<PropertyInfo, bool>)null!, "TestMethod"));
+	}
+
+	[TestMethod]
+	public async Task SaveToFileAsyncObject_ValidInput_CreatesFile()
+	{
+		// Arrange
+		var person = RandomData.GeneratePersonRefCollection(1).First();
+
+		// Act
+		var filePath = await this.SaveToFileAsync(person, p => true, "TestMethod");
+
+		// Assert
+		Assert.IsTrue(File.Exists(filePath));
+		var content = await File.ReadAllTextAsync(filePath);
+		Assert.IsFalse(string.IsNullOrEmpty(content));
 	}
 
 	// ──────────────────────────────────────────────
@@ -518,7 +643,7 @@ public class UnitTesterTests : UnitTester
 	public void SaveToFileCollection_NullCollection_ThrowsArgumentNullException()
 	{
 		// Arrange
-		IEnumerable<Models.RefTypes.Person> nullCollection = null!;
+		IEnumerable<Person> nullCollection = null!;
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -529,7 +654,7 @@ public class UnitTesterTests : UnitTester
 	public void SaveToFileCollection_NullSelector_ThrowsArgumentNullException()
 	{
 		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -540,13 +665,70 @@ public class UnitTesterTests : UnitTester
 	public void SaveToFileCollection_ValidInput_CreatesFile()
 	{
 		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(3);
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(3);
 
 		// Act
 		var filePath = this.SaveToFile(collection, p => true, "TestMethod");
 
 		// Assert
 		Assert.IsTrue(File.Exists(filePath));
+		var lines = File.ReadAllLines(filePath);
+		Assert.HasCount(3, lines);
+	}
+
+	// ──────────────────────────────────────────────
+	// SaveToFile<T>(IEnumerable<T>, selector, DirectoryInfo, string)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public void SaveToFileCollectionWithDirectory_NullCollection_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var tempDir = new DirectoryInfo(this.OutputDirectory);
+		IEnumerable<Person> nullCollection = null!;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			this.SaveToFile(nullCollection, p => true, tempDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public void SaveToFileCollectionWithDirectory_NullDirectory_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
+		DirectoryInfo nullDir = null!;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			this.SaveToFile(collection, p => true, nullDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public void SaveToFileCollectionWithDirectory_NullSelector_ThrowsArgumentNullException()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(2);
+		var tempDir = new DirectoryInfo(this.OutputDirectory);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			this.SaveToFile(collection, null!, tempDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public void SaveToFileCollectionWithDirectory_ValidInput_CreatesFile()
+	{
+		// Arrange
+		IEnumerable<Person> collection = RandomData.GeneratePersonRefCollection(3);
+		var tempDir = new DirectoryInfo(this.OutputDirectory);
+
+		// Act
+		var filePath = this.SaveToFile(collection, p => true, tempDir, "TestMethod");
+
+		// Assert
+		Assert.IsTrue(File.Exists(filePath));
+		Assert.StartsWith(tempDir.FullName, filePath);
 		var lines = File.ReadAllLines(filePath);
 		Assert.HasCount(3, lines);
 	}
@@ -660,250 +842,69 @@ public class UnitTesterTests : UnitTester
 	}
 
 	// ──────────────────────────────────────────────
-	// SaveToFile<T>(IEnumerable<T>, selector, DirectoryInfo, string)
+	// SaveToFile (string, DirectoryInfo, string)
 	// ──────────────────────────────────────────────
 
 	[TestMethod]
-	public void SaveToFileCollectionWithDirectory_NullCollection_ThrowsArgumentNullException()
+	public void SaveToFileWithDirectory_EmptyInput_ReturnsEmptyString()
 	{
 		// Arrange
-		var tempDir = new DirectoryInfo(this.OutputDirectory);
-		IEnumerable<Models.RefTypes.Person> nullCollection = null!;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			this.SaveToFile(nullCollection, p => true, tempDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public void SaveToFileCollectionWithDirectory_NullDirectory_ThrowsArgumentNullException()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
-		DirectoryInfo nullDir = null!;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			this.SaveToFile(collection, p => true, nullDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public void SaveToFileCollectionWithDirectory_NullSelector_ThrowsArgumentNullException()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
-		var tempDir = new DirectoryInfo(this.OutputDirectory);
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			this.SaveToFile(collection, null!, tempDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public void SaveToFileCollectionWithDirectory_ValidInput_CreatesFile()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(3);
 		var tempDir = new DirectoryInfo(this.OutputDirectory);
 
 		// Act
-		var filePath = this.SaveToFile(collection, p => true, tempDir, "TestMethod");
-
-		// Assert
-		Assert.IsTrue(File.Exists(filePath));
-		Assert.StartsWith(tempDir.FullName, filePath);
-		var lines = File.ReadAllLines(filePath);
-		Assert.HasCount(3, lines);
-	}
-
-	// ──────────────────────────────────────────────
-	// SaveToFileAsync (string, string)
-	// ──────────────────────────────────────────────
-
-	[TestMethod]
-	public async Task SaveToFileAsync_EmptyInput_ReturnsEmptyString()
-	{
-		// Act
-		var result = await this.SaveToFileAsync(string.Empty, "TestMethod");
+		var result = this.SaveToFile(string.Empty, tempDir, "TestMethod");
 
 		// Assert
 		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
-	public async Task SaveToFileAsync_NullInput_ReturnsEmptyString()
+	public void SaveToFileWithDirectory_NonExistentDirectory_ThrowsDirectoryNotFoundException()
 	{
+		// Arrange
+		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
+		const string content = "Test content";
+
+		// Act & Assert
+		Assert.ThrowsExactly<DirectoryNotFoundException>(() =>
+			this.SaveToFile(content, nonExistentDir, "TestMethod"));
+	}
+
+	[TestMethod]
+	public void SaveToFileWithDirectory_NullDirectory_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			this.SaveToFile("content", (DirectoryInfo)null!, "TestMethod"));
+	}
+
+	[TestMethod]
+	public void SaveToFileWithDirectory_NullInput_ReturnsEmptyString()
+	{
+		// Arrange
+		var tempDir = new DirectoryInfo(this.OutputDirectory);
+
 		// Act
-		var result = await this.SaveToFileAsync(null!, "TestMethod");
+		var result = this.SaveToFile(null!, tempDir, "TestMethod");
 
 		// Assert
 		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
-	public async Task SaveToFileAsync_ValidInput_CreatesFile()
-	{
-		// Arrange
-		var content = RandomData.GenerateWord(50);
-
-		// Act
-		var filePath = await this.SaveToFileAsync(content, "TestMethod");
-
-		// Assert
-		Assert.IsTrue(File.Exists(filePath));
-		Assert.AreEqual(content, await File.ReadAllTextAsync(filePath));
-	}
-
-	// ──────────────────────────────────────────────
-	// SaveToFileAsync<T>(IEnumerable<T>, selector, string)
-	// ──────────────────────────────────────────────
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollection_NullCollection_ThrowsArgumentNullException()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> nullCollection = null!;
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(nullCollection, p => true, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollection_NullSelector_ThrowsArgumentNullException()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(collection, null!, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollection_ValidInput_CreatesFile()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(3);
-
-		// Act
-		var filePath = await this.SaveToFileAsync(collection, p => true, "TestMethod");
-
-		// Assert
-		Assert.IsTrue(File.Exists(filePath));
-		var lines = await File.ReadAllLinesAsync(filePath);
-		Assert.HasCount(3, lines);
-	}
-
-	// ──────────────────────────────────────────────
-	// SaveToFileAsync<T>(T, selector, string)
-	// ──────────────────────────────────────────────
-
-	[TestMethod]
-	public async Task SaveToFileAsyncObject_EmptyContent_ReturnsEmptyString()
-	{
-		// Arrange
-		var obj = new NoProperties();
-
-		// Act
-		var result = await this.SaveToFileAsync(obj, p => true, "TestMethod");
-
-		// Assert
-		Assert.AreEqual(string.Empty, result);
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncObject_NullInput_ThrowsArgumentNullException()
-	{
-		// Arrange
-		Sample nullSample = null!;
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(nullSample, p => true, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncObject_NullSelector_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var person = RandomData.GeneratePersonRefCollection(1).First();
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(person, (Func<PropertyInfo, bool>)null!, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncObject_ValidInput_CreatesFile()
-	{
-		// Arrange
-		var person = RandomData.GeneratePersonRefCollection(1).First();
-
-		// Act
-		var filePath = await this.SaveToFileAsync(person, p => true, "TestMethod");
-
-		// Assert
-		Assert.IsTrue(File.Exists(filePath));
-		var content = await File.ReadAllTextAsync(filePath);
-		Assert.IsFalse(string.IsNullOrEmpty(content));
-	}
-
-	// ──────────────────────────────────────────────
-	// SaveToFileAsync<T>(IEnumerable<T>, selector, DirectoryInfo, string)
-	// ──────────────────────────────────────────────
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollectionWithDirectory_NullCollection_ThrowsArgumentNullException()
+	public void SaveToFileWithDirectory_ValidInput_CreatesFileInSpecifiedDirectory()
 	{
 		// Arrange
 		var tempDir = new DirectoryInfo(this.OutputDirectory);
-		IEnumerable<Models.RefTypes.Person> nullCollection = null!;
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(nullCollection, p => true, tempDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollectionWithDirectory_NullDirectory_ThrowsArgumentNullException()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
-		DirectoryInfo nullDir = null!;
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(collection, p => true, nullDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollectionWithDirectory_NullSelector_ThrowsArgumentNullException()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(2);
-		var tempDir = new DirectoryInfo(this.OutputDirectory);
-
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-			await this.SaveToFileAsync(collection, null!, tempDir, "TestMethod"));
-	}
-
-	[TestMethod]
-	public async Task SaveToFileAsyncCollectionWithDirectory_ValidInput_CreatesFile()
-	{
-		// Arrange
-		IEnumerable<Models.RefTypes.Person> collection = RandomData.GeneratePersonRefCollection(3);
-		var tempDir = new DirectoryInfo(this.OutputDirectory);
+		var content = RandomData.GenerateWord(30);
 
 		// Act
-		var filePath = await this.SaveToFileAsync(collection, p => true, tempDir, "TestMethod");
+		var savedFilePath = this.SaveToFile(content, tempDir, "TestMethod");
 
 		// Assert
-		Assert.IsTrue(File.Exists(filePath));
-		Assert.StartsWith(tempDir.FullName, filePath);
-		var lines = await File.ReadAllLinesAsync(filePath);
-		Assert.HasCount(3, lines);
+		Assert.IsTrue(File.Exists(savedFilePath));
+		Assert.StartsWith(tempDir.FullName, savedFilePath);
+		Assert.AreEqual(content, File.ReadAllText(savedFilePath));
 	}
 
 	private static string CreateTempDirectory()

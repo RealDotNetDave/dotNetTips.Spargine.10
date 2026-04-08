@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 01-28-2025
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="PersonRefTests.cs" company="dotNetTips.com - McCarter Consulting">
@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.RefTypes;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -485,7 +485,7 @@ public class PersonRefTests
 	[TestMethod]
 	public void ImplicitOperator_FromValueTypePerson_ConvertsProperly()
 	{
-		var valPerson = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		var valPerson = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 
 		Person person = valPerson;
 
@@ -554,26 +554,6 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	public void Operator_GreaterThanOrEqual_NullLeft_ReturnsFalse()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-
-		var result = (Person)null >= person;
-
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void Operator_GreaterThanOrEqual_NullRight_ReturnsTrue()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-
-		var result = person >= null;
-
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
 	public void Operator_GreaterThan_NullLeft_ReturnsFalse()
 	{
 		var person = RandomData.GeneratePerson<Person>();
@@ -594,23 +574,23 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	public void Operator_LessThanOrEqual_NullLeft_ReturnsTrue()
+	public void Operator_GreaterThanOrEqual_NullLeft_ReturnsFalse()
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		var result = (Person)null <= person;
+		var result = (Person)null >= person;
 
-		Assert.IsTrue(result);
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void Operator_LessThanOrEqual_NullRight_ReturnsFalse()
+	public void Operator_GreaterThanOrEqual_NullRight_ReturnsTrue()
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		var result = person <= null;
+		var result = person >= null;
 
-		Assert.IsFalse(result);
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -644,6 +624,26 @@ public class PersonRefTests
 		var person = RandomData.GeneratePerson<Person>();
 
 		var result = person < null;
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_NullLeft_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = (Person)null <= person;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_NullRight_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person <= null;
 
 		Assert.IsFalse(result);
 	}
@@ -847,6 +847,18 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void Person_ToPerson_FromPersonRecord_NoAddresses_ShouldReturnExpectedResults()
+	{
+		var personRecord = RandomData.GeneratePerson<PersonRecord>();
+		personRecord = personRecord with { Addresses = new Collection<AddressRecord>() };
+
+		var person = Person.ToPerson(personRecord);
+
+		Assert.AreEqual(personRecord.Id, person.Id);
+		Assert.HasCount(0, person.Addresses);
+	}
+
+	[TestMethod]
 	public void Person_ToPerson_FromPersonRecord_ShouldReturnExpectedResults()
 	{
 		// Arrange
@@ -875,14 +887,14 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
-	public void Person_ToPerson_FromPersonRecord_NoAddresses_ShouldReturnExpectedResults()
+	public void Person_ToPerson_FromValueTypesPerson_NoAddresses_ShouldReturnExpectedResults()
 	{
-		var personRecord = RandomData.GeneratePerson<PersonRecord>();
-		personRecord = personRecord with { Addresses = new Collection<AddressRecord>() };
+		var valPerson = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
+		valPerson.Addresses = new Collection<DotNetTips.Spargine.Tester.Models.ValueTypes.Address>();
 
-		var person = Person.ToPerson(personRecord);
+		var person = Person.ToPerson(valPerson);
 
-		Assert.AreEqual(personRecord.Id, person.Id);
+		Assert.AreEqual(valPerson.Id, person.Id);
 		Assert.HasCount(0, person.Addresses);
 	}
 
@@ -890,14 +902,14 @@ public class PersonRefTests
 	public void Person_ToPerson_FromValueTypesPerson_ShouldReturnExpectedResults()
 	{
 		// Arrange
-		var valueTypesPerson = new Models.ValueTypes.Person("test@example.com", "149483736633")
+		var valueTypesPerson = new DotNetTips.Spargine.Tester.Models.ValueTypes.Person("test@example.com", "149483736633")
 		{
 			FirstName = "John",
 			LastName = "Doe",
 			BornOn = new DateTimeOffset(new DateTime(1990, 1, 1)),
 			CellPhone = "555-1234",
 			Phone = "555-5678",
-			Addresses = new Collection<Models.ValueTypes.Address> { new Models.ValueTypes.Address("149483736633") }
+			Addresses = new Collection<DotNetTips.Spargine.Tester.Models.ValueTypes.Address> { new DotNetTips.Spargine.Tester.Models.ValueTypes.Address("149483736633") }
 		};
 
 		// Act
@@ -912,18 +924,6 @@ public class PersonRefTests
 		Assert.AreEqual(valueTypesPerson.CellPhone, person.CellPhone);
 		Assert.AreEqual(valueTypesPerson.Phone, person.Phone);
 		Assert.HasCount(valueTypesPerson.Addresses.Count, person.Addresses);
-	}
-
-	[TestMethod]
-	public void Person_ToPerson_FromValueTypesPerson_NoAddresses_ShouldReturnExpectedResults()
-	{
-		var valPerson = RandomData.GeneratePerson<Models.ValueTypes.Person>();
-		valPerson.Addresses = new Collection<Models.ValueTypes.Address>();
-
-		var person = Person.ToPerson(valPerson);
-
-		Assert.AreEqual(valPerson.Id, person.Id);
-		Assert.HasCount(0, person.Addresses);
 	}
 
 	[TestMethod]

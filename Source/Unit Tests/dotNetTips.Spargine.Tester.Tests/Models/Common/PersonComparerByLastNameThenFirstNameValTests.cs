@@ -19,23 +19,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.Common;
 
 [TestClass]
 public class PersonComparerByLastNameThenFirstNameValTests
 {
-
-	[TestMethod]
-	public void Compare_DifferentLastNames_XLessThanY_ReturnsNegative()
-	{
-		var comparer = new PersonComparerByLastNameThenFirstName();
-		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Adams", FirstName = "John" };
-		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Smith", FirstName = "John" };
-
-		var result = comparer.Compare(person1, person2);
-
-		Assert.IsLessThan(0, result);
-	}
 
 	[TestMethod]
 	public void Compare_DifferentLastNames_XGreaterThanY_ReturnsPositive()
@@ -50,11 +38,11 @@ public class PersonComparerByLastNameThenFirstNameValTests
 	}
 
 	[TestMethod]
-	public void Compare_SameLastName_DifferentFirstName_XLessThanY_ReturnsNegative()
+	public void Compare_DifferentLastNames_XLessThanY_ReturnsNegative()
 	{
 		var comparer = new PersonComparerByLastNameThenFirstName();
-		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Smith", FirstName = "Alice" };
-		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Smith", FirstName = "Bob" };
+		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Adams", FirstName = "John" };
+		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Smith", FirstName = "John" };
 
 		var result = comparer.Compare(person1, person2);
 
@@ -71,6 +59,18 @@ public class PersonComparerByLastNameThenFirstNameValTests
 		var result = comparer.Compare(person1, person2);
 
 		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void Compare_SameLastName_DifferentFirstName_XLessThanY_ReturnsNegative()
+	{
+		var comparer = new PersonComparerByLastNameThenFirstName();
+		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Smith", FirstName = "Alice" };
+		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Smith", FirstName = "Bob" };
+
+		var result = comparer.Compare(person1, person2);
+
+		Assert.IsLessThan(0, result);
 	}
 
 	[TestMethod]

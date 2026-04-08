@@ -6,35 +6,33 @@
 // Last Modified By : Copilot Agent
 // Last Modified On : 04-07-2026
 // ***********************************************************************
-// <copyright file="PersonComparerByIdThenLastNameValTests.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="PersonComparerByIdThenLastNameRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
 using System.Collections.Generic;
-using DotNetTips.Spargine.Tester.Models.ValueTypes;
-using DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
+using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.Common;
 
 [TestClass]
-public class PersonComparerByIdThenLastNameValTests
+public class PersonComparerByIdThenLastNameRefTests
 {
 
 	[TestMethod]
-	public void Compare_DifferentIds_XLessThanY_ReturnsNegative()
+	public void Compare_BothNull_ReturnsZero()
 	{
 		var comparer = new PersonComparerByIdThenLastName();
-		var person1 = new Person("test1@example.com", "AAAAAAAAAA") { LastName = "Smith" };
-		var person2 = new Person("test2@example.com", "BBBBBBBBBB") { LastName = "Adams" };
 
-		var result = comparer.Compare(person1, person2);
+		var result = comparer.Compare(null, null);
 
-		Assert.IsLessThan(0, result);
+		Assert.AreEqual(0, result);
 	}
 
 	[TestMethod]
@@ -50,11 +48,11 @@ public class PersonComparerByIdThenLastNameValTests
 	}
 
 	[TestMethod]
-	public void Compare_SameId_DifferentLastName_XLessThanY_ReturnsNegative()
+	public void Compare_DifferentIds_XLessThanY_ReturnsNegative()
 	{
 		var comparer = new PersonComparerByIdThenLastName();
-		var person1 = new Person("test1@example.com", "1234567890") { LastName = "Adams" };
-		var person2 = new Person("test2@example.com", "1234567890") { LastName = "Smith" };
+		var person1 = new Person("test1@example.com", "AAAAAAAAAA") { LastName = "Smith" };
+		var person2 = new Person("test2@example.com", "BBBBBBBBBB") { LastName = "Adams" };
 
 		var result = comparer.Compare(person1, person2);
 
@@ -71,6 +69,18 @@ public class PersonComparerByIdThenLastNameValTests
 		var result = comparer.Compare(person1, person2);
 
 		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void Compare_SameId_DifferentLastName_XLessThanY_ReturnsNegative()
+	{
+		var comparer = new PersonComparerByIdThenLastName();
+		var person1 = new Person("test1@example.com", "1234567890") { LastName = "Adams" };
+		var person2 = new Person("test2@example.com", "1234567890") { LastName = "Smith" };
+
+		var result = comparer.Compare(person1, person2);
+
+		Assert.IsLessThan(0, result);
 	}
 
 	[TestMethod]
@@ -104,5 +114,27 @@ public class PersonComparerByIdThenLastNameValTests
 		Assert.AreEqual("0000000001", people[0].Id);
 		Assert.AreEqual("0000000001", people[1].Id);
 		Assert.AreEqual("0000000002", people[2].Id);
+	}
+
+	[TestMethod]
+	public void Compare_XIsNull_ReturnsNegative()
+	{
+		var comparer = new PersonComparerByIdThenLastName();
+		var person = new Person("test@example.com", "1234567890") { LastName = "Smith" };
+
+		var result = comparer.Compare(null, person);
+
+		Assert.IsLessThan(0, result);
+	}
+
+	[TestMethod]
+	public void Compare_YIsNull_ReturnsPositive()
+	{
+		var comparer = new PersonComparerByIdThenLastName();
+		var person = new Person("test@example.com", "1234567890") { LastName = "Smith" };
+
+		var result = comparer.Compare(person, null);
+
+		Assert.IsGreaterThan(0, result);
 	}
 }

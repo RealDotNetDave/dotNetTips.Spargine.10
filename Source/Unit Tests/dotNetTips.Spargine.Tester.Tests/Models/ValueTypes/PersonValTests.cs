@@ -15,14 +15,13 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.ValueTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.ValueTypes;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -391,7 +390,7 @@ public class PersonValTests
 	[TestMethod]
 	public void Operator_Explicit_From_PersonRecord_Works()
 	{
-		var record = new Models.RefTypes.PersonRecord("email@email.com", "1234567890");
+		var record = new DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord("email@email.com", "1234567890");
 		var valueType = (Person)record;
 		Assert.AreEqual(record.Id, valueType.Id);
 		Assert.AreEqual(record.Email, valueType.Email);
@@ -400,8 +399,8 @@ public class PersonValTests
 	[TestMethod]
 	public void Operator_Explicit_From_RefTypePerson_Works()
 	{
-		var refType = Models.RefTypes.Person.Create("1234567890", "email@email.com", "First", "Last", DateTimeOffset.UtcNow);
-		var valueType = (Person)refType;
+		var refType = Person.Create("1234567890", "email@email.com", "First", "Last", DateTimeOffset.UtcNow);
+		var valueType = refType;
 		Assert.AreEqual(refType.Id, valueType.Id);
 		Assert.AreEqual(refType.Email, valueType.Email);
 	}
@@ -568,18 +567,30 @@ public class PersonValTests
 	}
 
 	[TestMethod]
+	public void Person_ToPerson_FromPersonRecord_NoAddresses_ShouldReturnExpectedResults()
+	{
+		var record = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord>();
+		record = record with { Addresses = new Collection<DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord>() };
+
+		var person = Person.ToPerson(record);
+
+		Assert.AreEqual(record.Id, person.Id);
+		Assert.HasCount(0, person.Addresses);
+	}
+
+	[TestMethod]
 	public void Person_ToPerson_FromPersonRecord_ShouldReturnExpectedResults()
 	{
-		var record = new Models.RefTypes.PersonRecord("test@example.com", "1234567890")
+		var record = new DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord("test@example.com", "1234567890")
 		{
 			FirstName = "John",
 			LastName = "Doe",
 			BornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero),
 			CellPhone = "555-1234",
 			Phone = "555-5678",
-			Addresses = new Collection<Models.RefTypes.AddressRecord>
+			Addresses = new Collection<DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord>
 			{
-				new Models.RefTypes.AddressRecord("1234567890")
+				new DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord("1234567890")
 			}
 		};
 
@@ -596,30 +607,30 @@ public class PersonValTests
 	}
 
 	[TestMethod]
-	public void Person_ToPerson_FromPersonRecord_NoAddresses_ShouldReturnExpectedResults()
+	public void Person_ToPerson_FromRefTypePerson_NoAddresses_ShouldReturnExpectedResults()
 	{
-		var record = RandomData.GeneratePerson<Models.RefTypes.PersonRecord>();
-		record = record with { Addresses = new Collection<Models.RefTypes.AddressRecord>() };
+		var refPerson = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.RefTypes.Person>();
+		refPerson.Addresses = new Collection<DotNetTips.Spargine.Tester.Models.RefTypes.Address>();
 
-		var person = Person.ToPerson(record);
+		var person = Person.ToPerson(refPerson);
 
-		Assert.AreEqual(record.Id, person.Id);
+		Assert.AreEqual(refPerson.Id, person.Id);
 		Assert.HasCount(0, person.Addresses);
 	}
 
 	[TestMethod]
 	public void Person_ToPerson_FromRefTypePerson_ShouldReturnExpectedResults()
 	{
-		var refPerson = new Models.RefTypes.Person("test@example.com", "1234567890")
+		var refPerson = new DotNetTips.Spargine.Tester.Models.RefTypes.Person("test@example.com", "1234567890")
 		{
 			FirstName = "John",
 			LastName = "Doe",
 			BornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero),
 			CellPhone = "555-1234",
 			Phone = "555-5678",
-			Addresses = new Collection<Models.RefTypes.Address>
+			Addresses = new Collection<DotNetTips.Spargine.Tester.Models.RefTypes.Address>
 			{
-				new Models.RefTypes.Address("1234567890")
+				new Address("1234567890")
 			}
 		};
 
@@ -633,18 +644,6 @@ public class PersonValTests
 		Assert.AreEqual(refPerson.CellPhone, person.CellPhone);
 		Assert.AreEqual(refPerson.Phone, person.Phone);
 		Assert.HasCount(refPerson.Addresses.Count, person.Addresses);
-	}
-
-	[TestMethod]
-	public void Person_ToPerson_FromRefTypePerson_NoAddresses_ShouldReturnExpectedResults()
-	{
-		var refPerson = RandomData.GeneratePerson<Models.RefTypes.Person>();
-		refPerson.Addresses = new Collection<Models.RefTypes.Address>();
-
-		var person = Person.ToPerson(refPerson);
-
-		Assert.AreEqual(refPerson.Id, person.Id);
-		Assert.HasCount(0, person.Addresses);
 	}
 
 	[TestMethod]

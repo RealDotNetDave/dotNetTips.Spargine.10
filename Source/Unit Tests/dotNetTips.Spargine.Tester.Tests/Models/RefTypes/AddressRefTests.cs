@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-29-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="AddressRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.RefTypes;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -304,15 +304,6 @@ public class AddressRefTests
 	}
 
 	[TestMethod]
-	public void Create_Id_CreatesAddress()
-	{
-		var address = Address.Create("1234567890");
-
-		Assert.IsNotNull(address);
-		Assert.AreEqual("1234567890", address.Id);
-	}
-
-	[TestMethod]
 	public void Create_AllParams_CreatesAddress()
 	{
 		var address = Address.Create("1234567890", "123 Main St", "Anytown", "USA", "12345", "Apt 4B", "AnyCounty", "CA", "555-1234");
@@ -338,6 +329,15 @@ public class AddressRefTests
 		Assert.AreEqual(string.Empty, address.CountyProvince);
 		Assert.AreEqual(string.Empty, address.State);
 		Assert.AreEqual(string.Empty, address.Phone);
+	}
+
+	[TestMethod]
+	public void Create_Id_CreatesAddress()
+	{
+		var address = Address.Create("1234567890");
+
+		Assert.IsNotNull(address);
+		Assert.AreEqual("1234567890", address.Id);
 	}
 
 	[TestMethod]
@@ -443,7 +443,7 @@ public class AddressRefTests
 	[TestMethod]
 	public void ImplicitOperator_FromValueTypeAddress_ConvertsCorrectly()
 	{
-		var valAddress = Models.ValueTypes.Address.Create("1234567890", "A1", "City", "Country", "12345");
+		var valAddress = DotNetTips.Spargine.Tester.Models.ValueTypes.Address.Create("1234567890", "A1", "City", "Country", "12345");
 
 		Address address = valAddress;
 
@@ -472,6 +472,22 @@ public class AddressRefTests
 	}
 
 	[TestMethod]
+	public void Operator_GreaterThan_LeftNull_ReturnsFalse()
+	{
+		var address = Address.Create("1234567890");
+
+		Assert.IsFalse(null > address);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThan_RightNull_ReturnsTrue()
+	{
+		var address = Address.Create("1234567890");
+
+		Assert.IsTrue(address > null);
+	}
+
+	[TestMethod]
 	public void Operator_GreaterThanOrEqual_And_LessThanOrEqual()
 	{
 		var a1 = Address.Create("1234567890");
@@ -487,22 +503,6 @@ public class AddressRefTests
 		var address = Address.Create("1234567890");
 
 		Assert.IsTrue(address >= null);
-	}
-
-	[TestMethod]
-	public void Operator_GreaterThan_LeftNull_ReturnsFalse()
-	{
-		var address = Address.Create("1234567890");
-
-		Assert.IsFalse(null > address);
-	}
-
-	[TestMethod]
-	public void Operator_GreaterThan_RightNull_ReturnsTrue()
-	{
-		var address = Address.Create("1234567890");
-
-		Assert.IsTrue(address > null);
 	}
 
 	[TestMethod]
@@ -693,7 +693,7 @@ public class AddressRefTests
 	[TestMethod]
 	public void ToAddress_FromValueTypeAddress_ConvertsCorrectly()
 	{
-		var valAddress = RandomData.GenerateAddress<Models.ValueTypes.Address>();
+		var valAddress = RandomData.GenerateAddress<DotNetTips.Spargine.Tester.Models.ValueTypes.Address>();
 
 		var address = Address.ToAddress(valAddress);
 

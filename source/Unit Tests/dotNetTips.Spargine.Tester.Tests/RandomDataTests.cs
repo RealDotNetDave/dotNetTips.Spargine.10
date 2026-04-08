@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -98,7 +98,7 @@ public class RandomDataTests
 	[TestMethod]
 	public void ConvertPersonValToRefTest()
 	{
-		var personVal = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		var personVal = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 
 		var personRef = Person.ToPerson(personVal);
 
@@ -254,6 +254,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateAddressCollection_GenericOverload_DefaultParameters_ReturnsAddresses()
+	{
+		var addresses = RandomData.GenerateAddressCollection<Address>();
+
+		Assert.IsNotNull(addresses);
+		Assert.AreEqual(2, addresses.Count);
+	}
+
+	[TestMethod]
 	public void GenerateAddressCollection_InvalidCountry_ThrowsException()
 	{
 		// Act
@@ -292,6 +301,26 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateByteArray_InvalidCount_UsesDefaultValue()
+	{
+		var result = RandomData.GenerateByteArray(0);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(1, result.Length);
+	}
+
+	[TestMethod]
+	public void GenerateByteArray_LargeCount_ReturnsCorrectLength()
+	{
+		const int count = 4096;
+
+		var result = RandomData.GenerateByteArray(count);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(count, result.Length);
+	}
+
+	[TestMethod]
 	public void GenerateByteArrayTest()
 	{
 		var byteArray = RandomData.GenerateByteArray(1);
@@ -299,6 +328,22 @@ public class RandomDataTests
 		Assert.IsNotEmpty(byteArray);
 
 		Assert.IsGreaterThan(0, byteArray.First());
+	}
+
+	[TestMethod]
+	public void GenerateCharacter_CustomRange_ReturnsCharInRange()
+	{
+		var character = RandomData.GenerateCharacter('A', 'Z');
+
+		Assert.IsTrue(character >= 'A' && character <= 'Z');
+	}
+
+	[TestMethod]
+	public void GenerateCharacter_DefaultRange_ReturnsValidChar()
+	{
+		var character = RandomData.GenerateCharacter();
+
+		Assert.IsTrue(character >= RandomData.DefaultMinCharacter && character <= RandomData.DefaultMaxCharacter);
 	}
 
 	[TestMethod]
@@ -376,6 +421,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateCoordinateCollection_NegativeCount_UsesDefaultValue()
+	{
+		var result = RandomData.GenerateCoordinateCollection<Coordinate>(-1);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(2, result.Count);
+	}
+
+	[TestMethod]
 	public void GenerateCoordinateCollection_ReturnsReadOnlyCollection()
 	{
 		// Arrange & Act
@@ -411,6 +465,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateCreditCards_DefaultCount_ReturnsTwoCards()
+	{
+		var result = RandomData.GenerateCreditCards();
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(2, result.Count);
+	}
+
+	[TestMethod]
 	public void GenerateCreditCardsTest()
 	{
 		var result = RandomData.GenerateCreditCards(100);
@@ -428,12 +491,31 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateDecimal_ZeroDecimalPlaces_ReturnsWholeNumber()
+	{
+		var decimalValue = RandomData.GenerateDecimal(0, 100, 0);
+
+		Assert.IsGreaterThanOrEqualTo(0, decimalValue);
+		Assert.IsLessThanOrEqualTo(100, decimalValue);
+		Assert.AreEqual(Math.Floor(decimalValue), decimalValue);
+	}
+
+	[TestMethod]
 	public void GenerateDecimalTest()
 	{
 		var decimalValue = RandomData.GenerateDecimal(0, 100, 2);
 
 		Assert.IsGreaterThanOrEqualTo(0, decimalValue);
 		Assert.IsLessThanOrEqualTo(100, decimalValue);
+	}
+
+	[TestMethod]
+	public void GenerateDomainExtension_ReturnsNonEmptyString()
+	{
+		var extension = RandomData.GenerateDomainExtension();
+
+		Assert.IsNotNull(extension);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(extension));
 	}
 
 	[TestMethod]
@@ -445,11 +527,35 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateEmailAddress_ContainsAtSymbol()
+	{
+		var email = RandomData.GenerateEmailAddress();
+
+		Assert.IsNotNull(email);
+		Assert.IsTrue(email.Contains('@'));
+		Assert.IsTrue(email.Contains('.'));
+	}
+
+	[TestMethod]
 	public void GenerateEmailAddressTest()
 	{
 		var stringValue = RandomData.GenerateEmailAddress();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateFile_DefaultFileLength_CreatesFile()
+	{
+		var fileName = RandomData.GenerateFile(RandomData.GenerateRandomFileName());
+
+		Assert.IsNotNull(fileName);
+
+		var testFile = new FileInfo(fileName);
+
+		Assert.IsTrue(testFile.Exists);
+
+		testFile.Delete();
 	}
 
 	[TestMethod]
@@ -569,11 +675,28 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateFirstName_ReturnsNonNullNonEmptyName()
+	{
+		var firstName = RandomData.GenerateFirstName();
+
+		Assert.IsNotNull(firstName);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(firstName));
+	}
+
+	[TestMethod]
 	public void GenerateGenerateUrlHostNameTest()
 	{
 		var stringValue = RandomData.GenerateUrlHostName();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateInteger_DefaultParameters_ReturnsValue()
+	{
+		var intValue = RandomData.GenerateInteger();
+
+		Assert.IsNotNull(intValue);
 	}
 
 	[TestMethod]
@@ -586,11 +709,31 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateKey_ReturnsUniqueKeys()
+	{
+		var key1 = RandomData.GenerateKey();
+		var key2 = RandomData.GenerateKey();
+
+		Assert.IsNotNull(key1);
+		Assert.IsNotNull(key2);
+		Assert.AreNotEqual(key1, key2);
+	}
+
+	[TestMethod]
 	public void GenerateKeyTest()
 	{
 		var stringValue = RandomData.GenerateKey();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateLastName_ReturnsNonNullNonEmptyName()
+	{
+		var lastName = RandomData.GenerateLastName();
+
+		Assert.IsNotNull(lastName);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(lastName));
 	}
 
 	[TestMethod]
@@ -764,6 +907,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateNumber_DefaultLength_ReturnsSingleDigit()
+	{
+		var stringValue = RandomData.GenerateNumber();
+
+		Assert.IsNotNull(stringValue);
+		Assert.AreEqual(1, stringValue.Length);
+	}
+
+	[TestMethod]
 	public void GenerateNumberTest()
 	{
 		var stringValue = RandomData.GenerateNumber(15);
@@ -774,12 +926,27 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GeneratePerson_UnsupportedType_ThrowsException()
+	{
+		Assert.ThrowsExactly<NotSupportedException>(() => RandomData.GeneratePerson<string>());
+	}
+
+	[TestMethod]
 	public void GeneratePersonNames_DefaultParameters_ReturnsPersonNames()
 	{
 		// Act
 		var result = RandomData.GeneratePersonNames();
 
 		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(2, result.Count);
+	}
+
+	[TestMethod]
+	public void GeneratePersonNames_InvalidCount_UsesDefaultValue()
+	{
+		var result = RandomData.GeneratePersonNames(0);
+
 		Assert.IsNotNull(result);
 		Assert.AreEqual(2, result.Count);
 	}
@@ -806,6 +973,15 @@ public class RandomDataTests
 		Assert.IsNotNull(personNames);
 
 		Assert.AreEqual(Count, personNames.Count);
+	}
+
+	[TestMethod]
+	public void GeneratePersonRecordCollection_DefaultCount_ReturnsTwoRecords()
+	{
+		var people = RandomData.GeneratePersonRecordCollection();
+
+		Assert.IsNotNull(people);
+		Assert.AreEqual(2, people.Count);
 	}
 
 	[TestMethod]
@@ -846,6 +1022,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GeneratePersonRefCollection_DefaultCount_ReturnsTwoPeople()
+	{
+		var people = RandomData.GeneratePersonRefCollection();
+
+		Assert.IsNotNull(people);
+		Assert.AreEqual(2, people.Count);
+	}
+
+	[TestMethod]
 	public void GeneratePersonRefCollectionTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
@@ -878,6 +1063,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GeneratePersonValCollection_DefaultCount_ReturnsTwoPeople()
+	{
+		var people = RandomData.GeneratePersonValCollection();
+
+		Assert.IsNotNull(people);
+		Assert.AreEqual(2, people.Count);
+	}
+
+	[TestMethod]
 	public void GeneratePersonValCollectionTest()
 	{
 		var people = RandomData.GeneratePersonValCollection(Count);
@@ -892,7 +1086,7 @@ public class RandomDataTests
 	[TestMethod]
 	public void GeneratePersonValTest()
 	{
-		var person = RandomData.GeneratePerson<Models.ValueTypes.Person>(addressCount: AddressCount);
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>(addressCount: AddressCount);
 
 		Assert.IsNotNull(person);
 		Assert.IsNotNull(person.Addresses);
@@ -923,11 +1117,40 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GeneratePhoneNumber_Country_WithoutCountryCode()
+	{
+		var country = CountryRepository.GetCountries().Shuffle().FirstOrDefault();
+
+		var phoneNumber = RandomData.GeneratePhoneNumber(country!, false);
+
+		Assert.IsNotNull(phoneNumber);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(phoneNumber));
+	}
+
+	[TestMethod]
 	public void GeneratePhoneNumber_CountryName_Test_USA()
 	{
 		var stringValue = RandomData.GeneratePhoneNumber(CountryName.Taiwan, true);
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GeneratePhoneNumber_CountryName_WithoutCountryCode()
+	{
+		var phoneNumber = RandomData.GeneratePhoneNumber(CountryName.UnitedStates, false);
+
+		Assert.IsNotNull(phoneNumber);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(phoneNumber));
+	}
+
+	[TestMethod]
+	public void GenerateRandomFileName_DefaultParameters_ReturnsValidPath()
+	{
+		var fileName = RandomData.GenerateRandomFileName();
+
+		Assert.IsNotNull(fileName);
+		Assert.IsTrue(fileName.Contains(Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar)));
 	}
 
 	[TestMethod]
@@ -979,6 +1202,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateRandomLocationData_ReturnsValidCountry()
+	{
+		var result = RandomData.GenerateRandomLocationData();
+
+		Assert.IsNotNull(result.country);
+		Assert.IsFalse(string.IsNullOrEmpty(result.country.Name));
+	}
+
+	[TestMethod]
 	public void GenerateRandomLocationDataTest()
 	{
 		var result = RandomData.GenerateRandomLocationData();
@@ -986,6 +1218,21 @@ public class RandomDataTests
 		Assert.IsNotNull(result);
 
 		Assert.IsNotNull(result.country);
+	}
+
+	[TestMethod]
+	public void GenerateRandomPersonData_ReturnsValidFields()
+	{
+		var personData = RandomData.GenerateRandomPersonData();
+
+		Assert.IsNotNull(personData);
+		Assert.IsNotNull(personData.FirstName);
+		Assert.IsNotNull(personData.LastName);
+		Assert.IsNotNull(personData.Email);
+		Assert.IsNotNull(personData.Phone);
+		Assert.IsNotNull(personData.CellPhone);
+		Assert.IsNotNull(personData.Country);
+		Assert.IsTrue(personData.BornOn < DateTimeOffset.Now);
 	}
 
 	[TestMethod]
@@ -1009,11 +1256,35 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateRelativeUrl_StartsWithSlash()
+	{
+		var url = RandomData.GenerateRelativeUrl();
+
+		Assert.IsNotNull(url);
+		Assert.IsTrue(url.StartsWith('/'));
+		Assert.IsTrue(url.EndsWith('/'));
+	}
+
+	[TestMethod]
 	public void GenerateRelativeUrlTest()
 	{
 		var stringValue = RandomData.GenerateRelativeUrl();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateTempFile_DefaultLength_ReturnsFile()
+	{
+		var filePath = RandomData.GenerateTempFile();
+
+		Assert.IsNotNull(filePath);
+
+		var tempFile = new FileInfo(filePath);
+
+		Assert.IsTrue(tempFile.Exists);
+
+		tempFile.Delete();
 	}
 
 	[TestMethod]
@@ -1033,6 +1304,24 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateUrl_StartsWithHttps()
+	{
+		var url = RandomData.GenerateUrl();
+
+		Assert.IsNotNull(url);
+		Assert.IsTrue(url.StartsWith("https://"));
+	}
+
+	[TestMethod]
+	public void GenerateUrlFragment_StartsWithSlash()
+	{
+		var fragment = RandomData.GenerateUrlFragment();
+
+		Assert.IsNotNull(fragment);
+		Assert.IsTrue(fragment.StartsWith('/'));
+	}
+
+	[TestMethod]
 	public void GenerateUrlFragmentTest()
 	{
 		var stringValue = RandomData.GenerateUrlFragment();
@@ -1041,11 +1330,38 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateUrlHostName_StartsWithHttps()
+	{
+		var hostName = RandomData.GenerateUrlHostName();
+
+		Assert.IsNotNull(hostName);
+		Assert.IsTrue(hostName.StartsWith("https://"));
+	}
+
+	[TestMethod]
+	public void GenerateUrlHostNameNoProtocol_StartsWithWww()
+	{
+		var hostName = RandomData.GenerateUrlHostNameNoProtocol();
+
+		Assert.IsNotNull(hostName);
+		Assert.IsTrue(hostName.StartsWith("www."));
+	}
+
+	[TestMethod]
 	public void GenerateUrlHostNameNoProtocolTest()
 	{
 		var stringValue = RandomData.GenerateUrlHostNameNoProtocol();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateUrlHostNameNoSubDomain_ReturnsNonEmptyString()
+	{
+		var hostName = RandomData.GenerateUrlHostNameNoSubDomain();
+
+		Assert.IsNotNull(hostName);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(hostName));
 	}
 
 	[TestMethod]
@@ -1067,7 +1383,7 @@ public class RandomDataTests
 	[TestMethod]
 	public void GenerateValPersonTest()
 	{
-		var person = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 
 		Assert.IsNotNull(person);
 
@@ -1088,6 +1404,15 @@ public class RandomDataTests
 		Assert.IsNotNull(person.LastName);
 
 		Assert.IsNotNull(person.ToString());
+	}
+
+	[TestMethod]
+	public void GenerateWord_DefaultParameters_ReturnsWord()
+	{
+		var word = RandomData.GenerateWord(length: 1);
+
+		Assert.IsNotNull(word);
+		Assert.IsGreaterThanOrEqualTo(1, word.Length);
 	}
 
 	[TestMethod]
@@ -1125,6 +1450,15 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateWords_DefaultParameters_ReturnsWords()
+	{
+		var words = RandomData.GenerateWords();
+
+		Assert.IsNotNull(words);
+		Assert.AreEqual(1, words.Count);
+	}
+
+	[TestMethod]
 	public void GenerateWordsTest()
 	{
 		const int WordCount = 25;
@@ -1142,6 +1476,16 @@ public class RandomDataTests
 		Assert.IsNotNull(stringValue);
 
 		Assert.AreEqual(25, stringValue.Length);
+	}
+
+	[TestMethod]
+	public void LongTestString_IsNotNullOrEmpty()
+	{
+		var longTestString = RandomData.LongTestString;
+
+		Assert.IsNotNull(longTestString);
+		Assert.IsFalse(string.IsNullOrEmpty(longTestString));
+		Assert.IsGreaterThan(0, longTestString.Length);
 	}
 
 	[TestMethod]
@@ -1175,13 +1519,13 @@ public class RandomDataTests
 	[TestMethod]
 	public void PersonVal_Serialization_Test()
 	{
-		var person = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 
 		var result = JsonSerializer.Serialize(person);
 
 		Assert.AreEqual(false, string.IsNullOrEmpty(result));
 
-		person = JsonSerializer.Deserialize<Models.ValueTypes.Person>(result);
+		person = JsonSerializer.Deserialize<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>(result);
 
 		Assert.IsNotNull(person);
 	}
@@ -1261,350 +1605,6 @@ public class RandomDataTests
 		Debug.WriteLine(person2.ToString());
 
 		Debug.WriteLine(person2.PropertiesToString());
-	}
-
-	[TestMethod]
-	public void GenerateFirstName_ReturnsNonNullNonEmptyName()
-	{
-		var firstName = RandomData.GenerateFirstName();
-
-		Assert.IsNotNull(firstName);
-		Assert.IsFalse(string.IsNullOrWhiteSpace(firstName));
-	}
-
-	[TestMethod]
-	public void GenerateLastName_ReturnsNonNullNonEmptyName()
-	{
-		var lastName = RandomData.GenerateLastName();
-
-		Assert.IsNotNull(lastName);
-		Assert.IsFalse(string.IsNullOrWhiteSpace(lastName));
-	}
-
-	[TestMethod]
-	public void GeneratePerson_UnsupportedType_ThrowsException()
-	{
-		Assert.ThrowsExactly<NotSupportedException>(() => RandomData.GeneratePerson<string>());
-	}
-
-	[TestMethod]
-	public void GeneratePhoneNumber_Country_WithoutCountryCode()
-	{
-		var country = CountryRepository.GetCountries().Shuffle().FirstOrDefault();
-
-		var phoneNumber = RandomData.GeneratePhoneNumber(country!, false);
-
-		Assert.IsNotNull(phoneNumber);
-		Assert.IsFalse(string.IsNullOrWhiteSpace(phoneNumber));
-	}
-
-	[TestMethod]
-	public void GeneratePhoneNumber_CountryName_WithoutCountryCode()
-	{
-		var phoneNumber = RandomData.GeneratePhoneNumber(CountryName.UnitedStates, false);
-
-		Assert.IsNotNull(phoneNumber);
-		Assert.IsFalse(string.IsNullOrWhiteSpace(phoneNumber));
-	}
-
-	[TestMethod]
-	public void GenerateAddressCollection_GenericOverload_DefaultParameters_ReturnsAddresses()
-	{
-		var addresses = RandomData.GenerateAddressCollection<Address>();
-
-		Assert.IsNotNull(addresses);
-		Assert.AreEqual(2, addresses.Count);
-	}
-
-	[TestMethod]
-	public void LongTestString_IsNotNullOrEmpty()
-	{
-		var longTestString = RandomData.LongTestString;
-
-		Assert.IsNotNull(longTestString);
-		Assert.IsFalse(string.IsNullOrEmpty(longTestString));
-		Assert.IsGreaterThan(0, longTestString.Length);
-	}
-
-	[TestMethod]
-	public void GenerateByteArray_InvalidCount_UsesDefaultValue()
-	{
-		var result = RandomData.GenerateByteArray(0);
-
-		Assert.IsNotNull(result);
-		Assert.AreEqual(1, result.Length);
-	}
-
-	[TestMethod]
-	public void GenerateByteArray_LargeCount_ReturnsCorrectLength()
-	{
-		const int count = 4096;
-
-		var result = RandomData.GenerateByteArray(count);
-
-		Assert.IsNotNull(result);
-		Assert.AreEqual(count, result.Length);
-	}
-
-	[TestMethod]
-	public void GenerateDecimal_ZeroDecimalPlaces_ReturnsWholeNumber()
-	{
-		var decimalValue = RandomData.GenerateDecimal(0, 100, 0);
-
-		Assert.IsGreaterThanOrEqualTo(0, decimalValue);
-		Assert.IsLessThanOrEqualTo(100, decimalValue);
-		Assert.AreEqual(Math.Floor(decimalValue), decimalValue);
-	}
-
-	[TestMethod]
-	public void GenerateInteger_DefaultParameters_ReturnsValue()
-	{
-		var intValue = RandomData.GenerateInteger();
-
-		Assert.IsNotNull(intValue);
-	}
-
-	[TestMethod]
-	public void GenerateNumber_DefaultLength_ReturnsSingleDigit()
-	{
-		var stringValue = RandomData.GenerateNumber();
-
-		Assert.IsNotNull(stringValue);
-		Assert.AreEqual(1, stringValue.Length);
-	}
-
-	[TestMethod]
-	public void GenerateWord_DefaultParameters_ReturnsWord()
-	{
-		var word = RandomData.GenerateWord(length: 1);
-
-		Assert.IsNotNull(word);
-		Assert.IsGreaterThanOrEqualTo(1, word.Length);
-	}
-
-	[TestMethod]
-	public void GenerateWords_DefaultParameters_ReturnsWords()
-	{
-		var words = RandomData.GenerateWords();
-
-		Assert.IsNotNull(words);
-		Assert.AreEqual(1, words.Count);
-	}
-
-	[TestMethod]
-	public void GenerateRandomPersonData_ReturnsValidFields()
-	{
-		var personData = RandomData.GenerateRandomPersonData();
-
-		Assert.IsNotNull(personData);
-		Assert.IsNotNull(personData.FirstName);
-		Assert.IsNotNull(personData.LastName);
-		Assert.IsNotNull(personData.Email);
-		Assert.IsNotNull(personData.Phone);
-		Assert.IsNotNull(personData.CellPhone);
-		Assert.IsNotNull(personData.Country);
-		Assert.IsTrue(personData.BornOn < DateTimeOffset.Now);
-	}
-
-	[TestMethod]
-	public void GenerateRandomLocationData_ReturnsValidCountry()
-	{
-		var result = RandomData.GenerateRandomLocationData();
-
-		Assert.IsNotNull(result.country);
-		Assert.IsFalse(string.IsNullOrEmpty(result.country.Name));
-	}
-
-	[TestMethod]
-	public void GenerateCreditCards_DefaultCount_ReturnsTwoCards()
-	{
-		var result = RandomData.GenerateCreditCards();
-
-		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Count);
-	}
-
-	[TestMethod]
-	public void GenerateCoordinateCollection_NegativeCount_UsesDefaultValue()
-	{
-		var result = RandomData.GenerateCoordinateCollection<Coordinate>(-1);
-
-		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Count);
-	}
-
-	[TestMethod]
-	public void GenerateEmailAddress_ContainsAtSymbol()
-	{
-		var email = RandomData.GenerateEmailAddress();
-
-		Assert.IsNotNull(email);
-		Assert.IsTrue(email.Contains('@'));
-		Assert.IsTrue(email.Contains('.'));
-	}
-
-	[TestMethod]
-	public void GenerateKey_ReturnsUniqueKeys()
-	{
-		var key1 = RandomData.GenerateKey();
-		var key2 = RandomData.GenerateKey();
-
-		Assert.IsNotNull(key1);
-		Assert.IsNotNull(key2);
-		Assert.AreNotEqual(key1, key2);
-	}
-
-	[TestMethod]
-	public void GenerateCharacter_DefaultRange_ReturnsValidChar()
-	{
-		var character = RandomData.GenerateCharacter();
-
-		Assert.IsTrue(character >= RandomData.DefaultMinCharacter && character <= RandomData.DefaultMaxCharacter);
-	}
-
-	[TestMethod]
-	public void GenerateCharacter_CustomRange_ReturnsCharInRange()
-	{
-		var character = RandomData.GenerateCharacter('A', 'Z');
-
-		Assert.IsTrue(character >= 'A' && character <= 'Z');
-	}
-
-	[TestMethod]
-	public void GenerateRelativeUrl_StartsWithSlash()
-	{
-		var url = RandomData.GenerateRelativeUrl();
-
-		Assert.IsNotNull(url);
-		Assert.IsTrue(url.StartsWith('/'));
-		Assert.IsTrue(url.EndsWith('/'));
-	}
-
-	[TestMethod]
-	public void GenerateUrl_StartsWithHttps()
-	{
-		var url = RandomData.GenerateUrl();
-
-		Assert.IsNotNull(url);
-		Assert.IsTrue(url.StartsWith("https://"));
-	}
-
-	[TestMethod]
-	public void GenerateUrlHostName_StartsWithHttps()
-	{
-		var hostName = RandomData.GenerateUrlHostName();
-
-		Assert.IsNotNull(hostName);
-		Assert.IsTrue(hostName.StartsWith("https://"));
-	}
-
-	[TestMethod]
-	public void GenerateUrlHostNameNoProtocol_StartsWithWww()
-	{
-		var hostName = RandomData.GenerateUrlHostNameNoProtocol();
-
-		Assert.IsNotNull(hostName);
-		Assert.IsTrue(hostName.StartsWith("www."));
-	}
-
-	[TestMethod]
-	public void GenerateUrlFragment_StartsWithSlash()
-	{
-		var fragment = RandomData.GenerateUrlFragment();
-
-		Assert.IsNotNull(fragment);
-		Assert.IsTrue(fragment.StartsWith('/'));
-	}
-
-	[TestMethod]
-	public void GenerateTempFile_DefaultLength_ReturnsFile()
-	{
-		var filePath = RandomData.GenerateTempFile();
-
-		Assert.IsNotNull(filePath);
-
-		var tempFile = new FileInfo(filePath);
-
-		Assert.IsTrue(tempFile.Exists);
-
-		tempFile.Delete();
-	}
-
-	[TestMethod]
-	public void GeneratePersonRecordCollection_DefaultCount_ReturnsTwoRecords()
-	{
-		var people = RandomData.GeneratePersonRecordCollection();
-
-		Assert.IsNotNull(people);
-		Assert.AreEqual(2, people.Count);
-	}
-
-	[TestMethod]
-	public void GeneratePersonRefCollection_DefaultCount_ReturnsTwoPeople()
-	{
-		var people = RandomData.GeneratePersonRefCollection();
-
-		Assert.IsNotNull(people);
-		Assert.AreEqual(2, people.Count);
-	}
-
-	[TestMethod]
-	public void GeneratePersonValCollection_DefaultCount_ReturnsTwoPeople()
-	{
-		var people = RandomData.GeneratePersonValCollection();
-
-		Assert.IsNotNull(people);
-		Assert.AreEqual(2, people.Count);
-	}
-
-	[TestMethod]
-	public void GeneratePersonNames_InvalidCount_UsesDefaultValue()
-	{
-		var result = RandomData.GeneratePersonNames(0);
-
-		Assert.IsNotNull(result);
-		Assert.AreEqual(2, result.Count);
-	}
-
-	[TestMethod]
-	public void GenerateFile_DefaultFileLength_CreatesFile()
-	{
-		var fileName = RandomData.GenerateFile(RandomData.GenerateRandomFileName());
-
-		Assert.IsNotNull(fileName);
-
-		var testFile = new FileInfo(fileName);
-
-		Assert.IsTrue(testFile.Exists);
-
-		testFile.Delete();
-	}
-
-	[TestMethod]
-	public void GenerateRandomFileName_DefaultParameters_ReturnsValidPath()
-	{
-		var fileName = RandomData.GenerateRandomFileName();
-
-		Assert.IsNotNull(fileName);
-		Assert.IsTrue(fileName.Contains(Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar)));
-	}
-
-	[TestMethod]
-	public void GenerateDomainExtension_ReturnsNonEmptyString()
-	{
-		var extension = RandomData.GenerateDomainExtension();
-
-		Assert.IsNotNull(extension);
-		Assert.IsFalse(string.IsNullOrWhiteSpace(extension));
-	}
-
-	[TestMethod]
-	public void GenerateUrlHostNameNoSubDomain_ReturnsNonEmptyString()
-	{
-		var hostName = RandomData.GenerateUrlHostNameNoSubDomain();
-
-		Assert.IsNotNull(hostName);
-		Assert.IsFalse(string.IsNullOrWhiteSpace(hostName));
 	}
 
 	private void DeleteFiles(IEnumerable<string> files)

@@ -18,17 +18,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
-namespace DotNetTips.Spargine.Tester.Tests;
+namespace DotNetTips.Spargine.Tester.Tests.Models.Common;
 
 [TestClass]
 public class PersonEqualityComparerValTests
 {
 
 	[TestMethod]
-	public void Equals_SameId_ReturnsTrue()
+	public void Equals_DefaultPersons_ReturnsTrue()
 	{
-		var person1 = new Person("test1@example.com", "1234567890");
-		var person2 = new Person("test2@example.com", "1234567890");
+		var person1 = default(Person);
+		var person2 = default(Person);
 		var comparer = new PersonEqualityComparer();
 
 		Assert.IsTrue(comparer.Equals(person1, person2));
@@ -45,32 +45,22 @@ public class PersonEqualityComparerValTests
 	}
 
 	[TestMethod]
-	public void Equals_DefaultPersons_ReturnsTrue()
+	public void Equals_SameId_ReturnsTrue()
 	{
-		var person1 = default(Person);
-		var person2 = default(Person);
+		var person1 = new Person("test1@example.com", "1234567890");
+		var person2 = new Person("test2@example.com", "1234567890");
 		var comparer = new PersonEqualityComparer();
 
 		Assert.IsTrue(comparer.Equals(person1, person2));
 	}
 
 	[TestMethod]
-	public void GetHashCode_ValidPerson_ReturnsNonZero()
+	public void GetHashCode_DefaultPerson_ReturnsZero()
 	{
-		var person = RandomData.GeneratePerson<Person>();
+		var person = default(Person);
 		var comparer = new PersonEqualityComparer();
 
-		Assert.AreNotEqual(0, comparer.GetHashCode(person));
-	}
-
-	[TestMethod]
-	public void GetHashCode_SameId_ReturnsSameHash()
-	{
-		var person1 = new Person("test1@example.com", "1234567890");
-		var person2 = new Person("test2@example.com", "1234567890");
-		var comparer = new PersonEqualityComparer();
-
-		Assert.AreEqual(comparer.GetHashCode(person1), comparer.GetHashCode(person2));
+		Assert.AreEqual(0, comparer.GetHashCode(person));
 	}
 
 	[TestMethod]
@@ -84,11 +74,21 @@ public class PersonEqualityComparerValTests
 	}
 
 	[TestMethod]
-	public void GetHashCode_DefaultPerson_ReturnsZero()
+	public void GetHashCode_SameId_ReturnsSameHash()
 	{
-		var person = default(Person);
+		var person1 = new Person("test1@example.com", "1234567890");
+		var person2 = new Person("test2@example.com", "1234567890");
 		var comparer = new PersonEqualityComparer();
 
-		Assert.AreEqual(0, comparer.GetHashCode(person));
+		Assert.AreEqual(comparer.GetHashCode(person1), comparer.GetHashCode(person2));
+	}
+
+	[TestMethod]
+	public void GetHashCode_ValidPerson_ReturnsNonZero()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var comparer = new PersonEqualityComparer();
+
+		Assert.AreNotEqual(0, comparer.GetHashCode(person));
 	}
 }
