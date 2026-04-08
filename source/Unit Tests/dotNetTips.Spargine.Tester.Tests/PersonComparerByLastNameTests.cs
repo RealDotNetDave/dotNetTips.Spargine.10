@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 06-13-2025
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastNameTests.cs" company="dotNetTips.com - McCarter Consulting">

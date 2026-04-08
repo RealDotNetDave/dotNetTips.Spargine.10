@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-04-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -99,7 +99,7 @@ public sealed class Person : IPerson<Person, Address>
 	[DataMember(Name = "addresses", IsRequired = false)]
 	[JsonPropertyName("addresses")]
 	[XmlIgnore]
-	[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Collection<Address> Addresses
 	{
 		get

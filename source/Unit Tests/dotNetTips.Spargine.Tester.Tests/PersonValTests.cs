@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-28-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="PersonValTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
@@ -27,6 +28,52 @@ namespace DotNetTips.Spargine.Tester.Tests;
 [TestClass]
 public class PersonValTests
 {
+
+	[TestMethod]
+	public void Addresses_SetNewCollection_CopiesValues()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+
+		person.Addresses = addresses;
+
+		Assert.HasCount(1, person.Addresses);
+	}
+
+	[TestMethod]
+	public void Addresses_SetNull_ResetsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		person.Addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+
+		person.Addresses = null;
+
+		Assert.HasCount(0, person.Addresses);
+	}
+
+	[TestMethod]
+	public void Addresses_SetSameCollection_DoesNotChange()
+	{
+		var person = new Person("test@example.com", "1229282723");
+		var addresses = new Collection<Address> { new Address("1229282723") };
+		person.Addresses = addresses;
+
+		person.Addresses = addresses;
+
+		Assert.HasCount(1, person.Addresses);
+	}
+
+	[TestMethod]
+	public void AddressesSerialization_ReturnsCopy()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+		person.Addresses = addresses;
+
+		var serialization = person.AddressesSerialization;
+
+		Assert.HasCount(1, serialization);
+	}
 
 	[TestMethod]
 	public void BornOn_SetFutureDate_ThrowsArgumentOutOfRangeException()
@@ -54,6 +101,57 @@ public class PersonValTests
 	}
 
 	[TestMethod]
+	public void BornOn_SetSameValue_DoesNotChange()
+	{
+		var person = new Person("test@example.com", "1229282723");
+		var date = new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
+		person.BornOn = date;
+
+		person.BornOn = date;
+
+		Assert.AreEqual(date, person.BornOn);
+	}
+
+	[TestMethod]
+	public void CellPhone_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.CellPhone = null;
+
+		Assert.AreEqual(string.Empty, person.CellPhone);
+	}
+
+	[TestMethod]
+	public void CellPhone_SetSameValue_DoesNotThrow()
+	{
+		var person = new Person("test@example.com", "1229282723");
+		person.CellPhone = "555-1234";
+
+		person.CellPhone = "555-1234";
+
+		Assert.AreEqual("555-1234", person.CellPhone);
+	}
+
+	[TestMethod]
+	public void CellPhone_SetTooLong_Throws()
+	{
+		var person = new Person("test@example.com", "1229282723");
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.CellPhone = new string('1', 51));
+	}
+
+	[TestMethod]
+	public void CellPhone_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.CellPhone = "555-9876";
+
+		Assert.AreEqual("555-9876", person.CellPhone);
+	}
+
+	[TestMethod]
 	public void CompareTo_DifferentId_ReturnsNonZero()
 	{
 		// Arrange
@@ -65,6 +163,35 @@ public class PersonValTests
 
 		// Assert
 		Assert.AreNotEqual(0, result);
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_Null_ReturnsPositive()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = ((IComparable)person).CompareTo(null);
+
+		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_ThrowsOnInvalidType()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)person).CompareTo("not a person"));
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_ValidPerson_ReturnsZero()
+	{
+		var person1 = new Person("test@example.com", "1234567890");
+		var person2 = new Person("other@example.com", "1234567890");
+
+		var result = ((IComparable)person1).CompareTo(person2);
+
+		Assert.AreEqual(0, result);
 	}
 
 	[TestMethod]
@@ -109,10 +236,156 @@ public class PersonValTests
 	}
 
 	[TestMethod]
+	public void Create_ValidParameters_ReturnsPersonWithAllProperties()
+	{
+		var id = "1234567890";
+		var email = "test@example.com";
+		var firstName = "John";
+		var lastName = "Doe";
+		var bornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero);
+		var addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+		var cellPhone = "555-1234";
+		var phone = "555-5678";
+
+		var person = Person.Create(id, email, firstName, lastName, bornOn, addresses, cellPhone, phone);
+
+		Assert.AreEqual(id, person.Id);
+		Assert.AreEqual(email, person.Email);
+		Assert.AreEqual(firstName, person.FirstName);
+		Assert.AreEqual(lastName, person.LastName);
+		Assert.AreEqual(bornOn, person.BornOn);
+		Assert.HasCount(1, person.Addresses);
+		Assert.AreEqual(cellPhone, person.CellPhone);
+		Assert.AreEqual(phone, person.Phone);
+	}
+
+	[TestMethod]
+	public void Create_WithNullOptionalParams_UsesDefaults()
+	{
+		var person = Person.Create("1234567890", "test@example.com", "John", "Doe", null);
+
+		Assert.IsNull(person.BornOn);
+		Assert.HasCount(0, person.Addresses);
+		Assert.AreEqual(string.Empty, person.CellPhone);
+		Assert.AreEqual(string.Empty, person.Phone);
+	}
+
+	[TestMethod]
+	public void Email_InitOnly_ThrowsOnNullOrEmpty()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(null, "1229282723"));
+	}
+
+	[TestMethod]
+	public void Email_TooShort_ThrowsArgumentOutOfRangeException()
+	{
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("a@b.c", "1234567890"));
+	}
+
+	[TestMethod]
+	public void Equals_Object_DifferentType_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.Equals("not a person");
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Equals_Object_SamePerson_ReturnsTrue()
+	{
+		var person1 = new Person("test@example.com", "1234567890");
+		var person2 = new Person("other@example.com", "1234567890");
+
+		var result = person1.Equals((object)person2);
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FirstName_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.FirstName = null;
+
+		Assert.AreEqual(string.Empty, person.FirstName);
+	}
+
+	[TestMethod]
+	public void FirstName_SetSameValue_DoesNotThrow()
+	{
+		var person = new Person("test@example.com", "1229282723");
+		person.FirstName = "John";
+
+		person.FirstName = "John";
+
+		Assert.AreEqual("John", person.FirstName);
+	}
+
+	[TestMethod]
+	public void FirstName_SetTooLong_Throws()
+	{
+		var person = new Person("test@example.com", "1229282723");
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.FirstName = new string('a', 51));
+	}
+
+	[TestMethod]
+	public void FirstName_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.FirstName = "Jane";
+
+		Assert.AreEqual("Jane", person.FirstName);
+	}
+
+	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", "short"));
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", new string('a', 51)));
+	}
+
+	[TestMethod]
+	public void LastName_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.LastName = null;
+
+		Assert.AreEqual(string.Empty, person.LastName);
+	}
+
+	[TestMethod]
+	public void LastName_SetSameValue_DoesNotThrow()
+	{
+		var person = new Person("test@example.com", "1229282723");
+		person.LastName = "Doe";
+
+		person.LastName = "Doe";
+
+		Assert.AreEqual("Doe", person.LastName);
+	}
+
+	[TestMethod]
+	public void LastName_SetTooLong_Throws()
+	{
+		var person = new Person("test@example.com", "1229282723");
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.LastName = new string('a', 51));
+	}
+
+	[TestMethod]
+	public void LastName_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.LastName = "Smith";
+
+		Assert.AreEqual("Smith", person.LastName);
 	}
 
 	[TestMethod]
@@ -227,6 +500,17 @@ public class PersonValTests
 	}
 
 	[TestMethod]
+	public void Person_Equals_SameId_ReturnsTrue()
+	{
+		var person1 = new Person("test@example.com", "1234567890");
+		var person2 = new Person("other@example.com", "1234567890");
+
+		var result = person1.Equals(person2);
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
 	public void Person_GetHashCode_DifferentValues_ReturnsDifferentHashCode()
 	{
 		// Arrange
@@ -284,6 +568,86 @@ public class PersonValTests
 	}
 
 	[TestMethod]
+	public void Person_ToPerson_FromPersonRecord_ShouldReturnExpectedResults()
+	{
+		var record = new Models.RefTypes.PersonRecord("test@example.com", "1234567890")
+		{
+			FirstName = "John",
+			LastName = "Doe",
+			BornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero),
+			CellPhone = "555-1234",
+			Phone = "555-5678",
+			Addresses = new Collection<Models.RefTypes.AddressRecord>
+			{
+				new Models.RefTypes.AddressRecord("1234567890")
+			}
+		};
+
+		var person = Person.ToPerson(record);
+
+		Assert.AreEqual(record.Id, person.Id);
+		Assert.AreEqual(record.Email, person.Email);
+		Assert.AreEqual(record.FirstName, person.FirstName);
+		Assert.AreEqual(record.LastName, person.LastName);
+		Assert.AreEqual(record.BornOn, person.BornOn);
+		Assert.AreEqual(record.CellPhone, person.CellPhone);
+		Assert.AreEqual(record.Phone, person.Phone);
+		Assert.HasCount(record.Addresses.Count, person.Addresses);
+	}
+
+	[TestMethod]
+	public void Person_ToPerson_FromPersonRecord_NoAddresses_ShouldReturnExpectedResults()
+	{
+		var record = RandomData.GeneratePerson<Models.RefTypes.PersonRecord>();
+		record = record with { Addresses = new Collection<Models.RefTypes.AddressRecord>() };
+
+		var person = Person.ToPerson(record);
+
+		Assert.AreEqual(record.Id, person.Id);
+		Assert.HasCount(0, person.Addresses);
+	}
+
+	[TestMethod]
+	public void Person_ToPerson_FromRefTypePerson_ShouldReturnExpectedResults()
+	{
+		var refPerson = new Models.RefTypes.Person("test@example.com", "1234567890")
+		{
+			FirstName = "John",
+			LastName = "Doe",
+			BornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero),
+			CellPhone = "555-1234",
+			Phone = "555-5678",
+			Addresses = new Collection<Models.RefTypes.Address>
+			{
+				new Models.RefTypes.Address("1234567890")
+			}
+		};
+
+		var person = Person.ToPerson(refPerson);
+
+		Assert.AreEqual(refPerson.Id, person.Id);
+		Assert.AreEqual(refPerson.Email, person.Email);
+		Assert.AreEqual(refPerson.FirstName, person.FirstName);
+		Assert.AreEqual(refPerson.LastName, person.LastName);
+		Assert.AreEqual(refPerson.BornOn, person.BornOn);
+		Assert.AreEqual(refPerson.CellPhone, person.CellPhone);
+		Assert.AreEqual(refPerson.Phone, person.Phone);
+		Assert.HasCount(refPerson.Addresses.Count, person.Addresses);
+	}
+
+	[TestMethod]
+	public void Person_ToPerson_FromRefTypePerson_NoAddresses_ShouldReturnExpectedResults()
+	{
+		var refPerson = RandomData.GeneratePerson<Models.RefTypes.Person>();
+		refPerson.Addresses = new Collection<Models.RefTypes.Address>();
+
+		var person = Person.ToPerson(refPerson);
+
+		Assert.AreEqual(refPerson.Id, person.Id);
+		Assert.HasCount(0, person.Addresses);
+	}
+
+	[TestMethod]
 	public void Person_ToString_ReturnsCorrectString()
 	{
 		// Arrange
@@ -309,6 +673,45 @@ public class PersonValTests
 
 		// Assert
 		Assert.AreEqual(expectedString, result);
+	}
+
+	[TestMethod]
+	public void Phone_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.Phone = null;
+
+		Assert.AreEqual(string.Empty, person.Phone);
+	}
+
+	[TestMethod]
+	public void Phone_SetSameValue_DoesNotThrow()
+	{
+		var person = new Person("test@example.com", "1229282723");
+		person.Phone = "555-5678";
+
+		person.Phone = "555-5678";
+
+		Assert.AreEqual("555-5678", person.Phone);
+	}
+
+	[TestMethod]
+	public void Phone_SetTooLong_Throws()
+	{
+		var person = new Person("test@example.com", "1229282723");
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.Phone = new string('1', 51));
+	}
+
+	[TestMethod]
+	public void Phone_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.Phone = "555-4321";
+
+		Assert.AreEqual("555-4321", person.Phone);
 	}
 
 	[TestMethod]

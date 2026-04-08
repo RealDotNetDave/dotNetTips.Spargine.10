@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-07-2026
 // ***********************************************************************
 // <copyright file="AddressRecordRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,10 +28,25 @@ public class AddressRecordRefTests
 {
 
 	[TestMethod]
+	public void Address1_Init_NullConvertsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { Address1 = null };
+
+		Assert.AreEqual(string.Empty, record.Address1);
+	}
+
+	[TestMethod]
 	public void Address1_Init_ThrowsOnInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { Address1 = new string('a', 101) });
+	}
+
+	[TestMethod]
+	public void Address1_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { Address1 = null };
+		Assert.AreEqual(string.Empty, record.Address1);
 	}
 
 	[TestMethod]
@@ -42,9 +57,15 @@ public class AddressRecordRefTests
 	}
 
 	[TestMethod]
+	public void Address2_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { Address2 = null };
+		Assert.AreEqual(string.Empty, record.Address2);
+	}
+
+	[TestMethod]
 	public void AddressRecord_Constructor_NullId_ThrowsArgumentNullException()
 	{
-		// Arrange
 		var address1 = "123 Main St";
 		var address2 = "Apt 4B";
 		var city = "Anytown";
@@ -54,14 +75,12 @@ public class AddressRecordRefTests
 		var postalCode = "12345";
 		var phone = "555-1234";
 
-		// Act
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new AddressRecord(null, address1, address2, city, state, countyProvince, country, postalCode, phone));
 	}
 
 	[TestMethod]
 	public void AddressRecord_Constructor_ValidParameters_CreatesInstance()
 	{
-		// Arrange
 		var id = "1229282723";
 		var address1 = "123 Main St";
 		var address2 = "Apt 4B";
@@ -72,10 +91,8 @@ public class AddressRecordRefTests
 		var postalCode = "12345";
 		var phone = "555-1234";
 
-		// Act
 		var addressRecord = new AddressRecord(id, address1, address2, city, state, countyProvince, country, postalCode, phone);
 
-		// Assert
 		Assert.IsNotNull(addressRecord);
 		Assert.AreEqual(id, addressRecord.Id);
 		Assert.AreEqual(address1, addressRecord.Address1);
@@ -91,137 +108,159 @@ public class AddressRecordRefTests
 	[TestMethod]
 	public void AddressRecord_Equals_DifferentValues_ReturnsFalse()
 	{
-		// Arrange
 		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 		var addressRecord2 = new AddressRecord("12292827234", "124 Main St", "Apt 5B", "Othertown", "NY", "OtherCounty", "CAN", "54321", "555-4321");
 
-		// Act
 		var result = addressRecord1.Equals(addressRecord2);
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void AddressRecord_Equals_Null_ReturnsFalse()
+	{
+		// Arrange
+		var addressRecord = new AddressRecord("1229282723");
+
+		// Act
+		var result = addressRecord.Equals(null);
 
 		// Assert
 		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void AddressRecord_Equals_SameValues_ReturnsTrue()
+	public void AddressRecord_Equals_SameReference_ReturnsTrue()
 	{
 		// Arrange
+		var addressRecord = new AddressRecord("1229282723");
+
+		// Act
+		var result = addressRecord.Equals(addressRecord);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void AddressRecord_Equals_SameValues_ReturnsTrue()
+	{
 		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 		var addressRecord2 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 
-		// Act
 		var result = addressRecord1.Equals(addressRecord2);
 
-		// Assert
 		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
 	public void AddressRecord_GetHashCode_DifferentValues_ReturnsDifferentHashCode()
 	{
-		// Arrange
 		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 		var addressRecord2 = new AddressRecord("12292827234", "124 Main St", "Apt 5B", "Othertown", "NY", "OtherCounty", "CAN", "54321", "555-4321");
 
-		// Act
 		var hashCode1 = addressRecord1.GetHashCode();
 		var hashCode2 = addressRecord2.GetHashCode();
 
-		// Assert
 		Assert.AreNotEqual(hashCode1, hashCode2);
 	}
 
 	[TestMethod]
 	public void AddressRecord_GetHashCode_SameValues_ReturnsSameHashCode()
 	{
-		// Arrange
 		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 		var addressRecord2 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 
-		// Act
 		var hashCode1 = addressRecord1.GetHashCode();
 		var hashCode2 = addressRecord2.GetHashCode();
 
-		// Assert
 		Assert.AreEqual(hashCode1, hashCode2);
 	}
 
 	[TestMethod]
-	public void AddressRecord_OperatorEquals_SameValues_ReturnsTrue()
+	public void AddressRecord_OperatorEquals_DifferentValues_ReturnsFalse()
 	{
 		// Arrange
 		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
-		var addressRecord2 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
+		var addressRecord2 = new AddressRecord("12292827234", "124 Main St", "Apt 5B", "Othertown", "NY", "OtherCounty", "CAN", "54321", "555-4321");
 
 		// Act
 		var result = addressRecord1 == addressRecord2;
 
 		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void AddressRecord_OperatorEquals_SameValues_ReturnsTrue()
+	{
+		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
+		var addressRecord2 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
+
+		var result = addressRecord1 == addressRecord2;
+
 		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
 	public void AddressRecord_OperatorNotEquals_DifferentValues_ReturnsTrue()
 	{
-		// Arrange
 		var addressRecord1 = new AddressRecord("12279282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 		var addressRecord2 = new AddressRecord("1229282723", "124 Main St", "Apt 5B", "Othertown", "NY", "OtherCounty", "CAN", "54321", "555-4321");
+
+		var result = addressRecord1 != addressRecord2;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void AddressRecord_OperatorNotEquals_SameValues_ReturnsFalse()
+	{
+		// Arrange
+		var addressRecord1 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
+		var addressRecord2 = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 
 		// Act
 		var result = addressRecord1 != addressRecord2;
 
 		// Assert
-		Assert.IsTrue(result);
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
 	public void AddressRecord_Properties_SetAndGetValues()
 	{
-		// Arrange
 		var addressRecord = new AddressRecord("1229282723");
-		var address1 = "123 Main St";
-		var address2 = "Apt 4B";
-		var city = "Anytown";
-		var state = "CA";
-		var countyProvince = "AnyCounty";
-		var country = "USA";
-		var postalCode = "12345";
-		var phone = "555-1234";
 
-		// Act
 		addressRecord = addressRecord with
 		{
-			Address1 = address1,
-			Address2 = address2,
-			City = city,
-			State = state,
-			CountyProvince = countyProvince,
-			Country = country,
-			PostalCode = postalCode,
-			Phone = phone
+			Address1 = "123 Main St",
+			Address2 = "Apt 4B",
+			City = "Anytown",
+			State = "CA",
+			CountyProvince = "AnyCounty",
+			Country = "USA",
+			PostalCode = "12345",
+			Phone = "555-1234"
 		};
 
-		// Assert
-		Assert.AreEqual(address1, addressRecord.Address1);
-		Assert.AreEqual(address2, addressRecord.Address2);
-		Assert.AreEqual(city, addressRecord.City);
-		Assert.AreEqual(state, addressRecord.State);
-		Assert.AreEqual(countyProvince, addressRecord.CountyProvince);
-		Assert.AreEqual(country, addressRecord.Country);
-		Assert.AreEqual(postalCode, addressRecord.PostalCode);
-		Assert.AreEqual(phone, addressRecord.Phone);
+		Assert.AreEqual("123 Main St", addressRecord.Address1);
+		Assert.AreEqual("Apt 4B", addressRecord.Address2);
+		Assert.AreEqual("Anytown", addressRecord.City);
+		Assert.AreEqual("CA", addressRecord.State);
+		Assert.AreEqual("AnyCounty", addressRecord.CountyProvince);
+		Assert.AreEqual("USA", addressRecord.Country);
+		Assert.AreEqual("12345", addressRecord.PostalCode);
+		Assert.AreEqual("555-1234", addressRecord.Phone);
 	}
 
 	[TestMethod]
 	public void AddressRecord_ToAddress_ConvertsFromAddress()
 	{
-		// Arrange
 		var address = RandomData.GenerateAddress<Address>();
 
-		// Act
 		var addressRecord = AddressRecord.ToAddress(address);
 
-		// Assert
 		Assert.IsNotNull(addressRecord);
 		Assert.AreEqual(address.Id, addressRecord.Id);
 		Assert.AreEqual(address.Address1, addressRecord.Address1);
@@ -237,13 +276,10 @@ public class AddressRecordRefTests
 	[TestMethod]
 	public void AddressRecord_ToAddress_ConvertsFromValueTypesAddress()
 	{
-		// Arrange
 		var address = RandomData.GenerateAddress<Models.ValueTypes.Address>();
 
-		// Act
 		var addressRecord = AddressRecord.ToAddress(address);
 
-		// Assert
 		Assert.IsNotNull(addressRecord);
 		Assert.AreEqual(address.Id, addressRecord.Id);
 		Assert.AreEqual(address.Address1, addressRecord.Address1);
@@ -257,6 +293,14 @@ public class AddressRecordRefTests
 	}
 
 	[TestMethod]
+	public void City_Init_NullConvertsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { City = null };
+
+		Assert.AreEqual(string.Empty, record.City);
+	}
+
+	[TestMethod]
 	public void City_Init_ThrowsOnInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
@@ -264,23 +308,96 @@ public class AddressRecordRefTests
 	}
 
 	[TestMethod]
+	public void City_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { City = null };
+		Assert.AreEqual(string.Empty, record.City);
+	}
+
+	[TestMethod]
 	public void Clone()
 	{
-		// Arrange
 		var address = RandomData.GenerateAddress<AddressRecord>();
 
-		// Act
 		var clonedAddresses = address.FastClone<AddressRecord>();
 
-		// Assert
 		Assert.IsNotNull(clonedAddresses);
+	}
+
+	[TestMethod]
+	public void CompareTo_DifferentId_ReturnsNonZero()
+	{
+		// Arrange
+		var record1 = new AddressRecord("1234567890");
+		var record2 = new AddressRecord("ABCDEFGHIJ");
+
+		// Act
+		var result = record1.CompareTo(record2);
+
+		// Assert
+		Assert.AreNotEqual(0, result);
+	}
+
+	[TestMethod]
+	public void CompareTo_Null_ReturnsPositive()
+	{
+		// Arrange
+		var record = new AddressRecord("1234567890");
+
+		// Act
+		var result = record.CompareTo(null);
+
+		// Assert
+		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_Null_ReturnsPositive()
+	{
+		// Arrange
+		var record = AddressRecord.Create("1234567890");
+
+		// Act
+		var result = ((IComparable)record).CompareTo(null);
+
+		// Assert
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
 	public void CompareTo_Object_ThrowsOnInvalidType()
 	{
 		var record = AddressRecord.Create("1234567890");
+
 		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)record).CompareTo("not an address record"));
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_ValidAddressRecord_ReturnsExpected()
+	{
+		// Arrange
+		var record1 = AddressRecord.Create("1234567890");
+		var record2 = AddressRecord.Create("1234567890");
+
+		// Act
+		var result = ((IComparable)record1).CompareTo(record2);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void CompareTo_SameId_ReturnsZero()
+	{
+		// Arrange
+		var record1 = new AddressRecord("1234567890");
+		var record2 = new AddressRecord("1234567890");
+
+		// Act
+		var result = record1.CompareTo(record2);
+
+		// Assert
+		Assert.AreEqual(0, result);
 	}
 
 	[TestMethod]
@@ -291,10 +408,68 @@ public class AddressRecordRefTests
 	}
 
 	[TestMethod]
+	public void Country_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { Country = null };
+		Assert.AreEqual(string.Empty, record.Country);
+	}
+
+	[TestMethod]
 	public void CountyProvince_Init_ThrowsOnInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { CountyProvince = new string('a', 61) });
+	}
+
+	[TestMethod]
+	public void CountyProvince_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { CountyProvince = null };
+		Assert.AreEqual(string.Empty, record.CountyProvince);
+	}
+
+	[TestMethod]
+	public void Create_WithId_CreatesInstance()
+	{
+		// Arrange & Act
+		var record = AddressRecord.Create("1234567890");
+
+		// Assert
+		Assert.IsNotNull(record);
+		Assert.AreEqual("1234567890", record.Id);
+	}
+
+	[TestMethod]
+	public void Create_WithAllParameters_CreatesInstance()
+	{
+		// Arrange & Act
+		var record = AddressRecord.Create("1234567890", "123 Main St", "Anytown", "USA", "12345", "Apt 4B", "AnyCounty", "CA", "555-1234");
+
+		// Assert
+		Assert.IsNotNull(record);
+		Assert.AreEqual("1234567890", record.Id);
+		Assert.AreEqual("123 Main St", record.Address1);
+		Assert.AreEqual("Anytown", record.City);
+		Assert.AreEqual("USA", record.Country);
+		Assert.AreEqual("12345", record.PostalCode);
+		Assert.AreEqual("Apt 4B", record.Address2);
+		Assert.AreEqual("AnyCounty", record.CountyProvince);
+		Assert.AreEqual("CA", record.State);
+		Assert.AreEqual("555-1234", record.Phone);
+	}
+
+	[TestMethod]
+	public void Create_WithOptionalParametersOmitted_DefaultsToEmpty()
+	{
+		// Arrange & Act
+		var record = AddressRecord.Create("1234567890", "123 Main St", "Anytown", "USA", "12345");
+
+		// Assert
+		Assert.IsNotNull(record);
+		Assert.AreEqual(string.Empty, record.Address2);
+		Assert.AreEqual(string.Empty, record.CountyProvince);
+		Assert.AreEqual(string.Empty, record.State);
+		Assert.AreEqual(string.Empty, record.Phone);
 	}
 
 	[TestMethod]
@@ -308,9 +483,120 @@ public class AddressRecordRefTests
 	public void Operator_Explicit_From_Address_Works()
 	{
 		var address = Address.Create("1234567890", "A1", "City", "Country", "12345");
+
 		var record = (AddressRecord)address;
+
 		Assert.AreEqual(address.Id, record.Id);
 		Assert.AreEqual(address.Address1, record.Address1);
+	}
+
+	[TestMethod]
+	public void Operator_Explicit_From_ValueTypesAddress_Works()
+	{
+		// Arrange
+		var address = RandomData.GenerateAddress<Models.ValueTypes.Address>();
+
+		// Act
+		var record = (AddressRecord)address;
+
+		// Assert
+		Assert.AreEqual(address.Id, record.Id);
+		Assert.AreEqual(address.Address1, record.Address1);
+		Assert.AreEqual(address.City, record.City);
+		Assert.AreEqual(address.Country, record.Country);
+	}
+
+	[TestMethod]
+	public void Operator_LessThan_LessThanOrEqual_GreaterThan_GreaterThanOrEqual()
+	{
+		var a1 = new AddressRecord("1234567890");
+		var a2 = new AddressRecord("ABCDEFGHIJ");
+		Assert.IsTrue(a1 < a2 || a2 < a1 || a1 == a2);
+		Assert.IsTrue(a1 <= a2 || a2 <= a1);
+		Assert.IsTrue(a1 > a2 || a2 > a1 || a1 == a2);
+		Assert.IsTrue(a1 >= a2 || a2 >= a1);
+		Assert.IsFalse(a1 < null);
+		Assert.IsTrue(a1 > null);
+		Assert.IsTrue(null < a1);
+		Assert.IsFalse(null > a1);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThanOrEqual_RightNull_ReturnsTrue()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsTrue(record >= null);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThanOrEqual_LeftNull_ReturnsFalse()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsFalse(null >= record);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThanOrEqual_BothNonNull_SameId_ReturnsTrue()
+	{
+		var record1 = new AddressRecord("1234567890");
+		var record2 = new AddressRecord("1234567890");
+		Assert.IsTrue(record1 >= record2);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThan_LeftNull_ReturnsFalse()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsFalse(null > record);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThan_RightNull_ReturnsTrue()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsTrue(record > null);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_LeftNull_ReturnsTrue()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsTrue(null <= record);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_RightNull_ReturnsFalse()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsFalse(record <= null);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_BothNonNull_SameId_ReturnsTrue()
+	{
+		var record1 = new AddressRecord("1234567890");
+		var record2 = new AddressRecord("1234567890");
+		Assert.IsTrue(record1 <= record2);
+	}
+
+	[TestMethod]
+	public void Operator_LessThan_LeftNull_RightNotNull_ReturnsTrue()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsTrue(null < record);
+	}
+
+	[TestMethod]
+	public void Operator_LessThan_LeftNull_RightNull_ReturnsFalse()
+	{
+		Assert.IsFalse((AddressRecord)null < (AddressRecord)null);
+	}
+
+	[TestMethod]
+	public void Operator_LessThan_RightNull_ReturnsFalse()
+	{
+		var record = new AddressRecord("1234567890");
+		Assert.IsFalse(record < null);
 	}
 
 	[TestMethod]
@@ -321,10 +607,24 @@ public class AddressRecordRefTests
 	}
 
 	[TestMethod]
+	public void Phone_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { Phone = null };
+		Assert.AreEqual(string.Empty, record.Phone);
+	}
+
+	[TestMethod]
 	public void PostalCode_Init_ThrowsOnInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
 			new AddressRecord("1234567890") { PostalCode = new string('a', 26) });
+	}
+
+	[TestMethod]
+	public void PostalCode_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { PostalCode = null };
+		Assert.AreEqual(string.Empty, record.PostalCode);
 	}
 
 	[TestMethod]
@@ -335,23 +635,30 @@ public class AddressRecordRefTests
 	}
 
 	[TestMethod]
+	public void State_Init_NullDefaultsToEmpty()
+	{
+		var record = new AddressRecord("1234567890") { State = null };
+		Assert.AreEqual(string.Empty, record.State);
+	}
+
+	[TestMethod]
 	public void ToString_ReturnsDebugString()
 	{
 		var record = AddressRecord.Create("1234567890", "A1", "City", "Country", "12345");
+
 		var str = record.ToString();
+
 		Assert.IsFalse(string.IsNullOrWhiteSpace(str));
 		Assert.Contains("Address1", str);
 	}
+
 	[TestMethod]
 	public void ToString_Test()
 	{
-		// Arrange
 		var addressRecord = new AddressRecord("1229282723", "123 Main St", "Apt 4B", "Anytown", "CA", "AnyCounty", "USA", "12345", "555-1234");
 
-		// Act
 		var result = addressRecord.ToString();
 
-		// Assert
 		Assert.IsNotNull(result);
 	}
 
