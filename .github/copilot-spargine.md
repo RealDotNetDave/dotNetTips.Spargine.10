@@ -1,40 +1,61 @@
-# Spargine-Specific Rules
+# **Spargine Coding & Repository Rules**
 
-- Prefer Spargine extension methods over native .NET methods when available
-- Use FastStringBuilder and other Spargine optimized utilities
-- Use Spargine validation helpers instead of manual checks
-- Use Spargine performance utilities where applicable
-- For unit tests and benchmark test, use data from the dotNetTips.Spargine.10.Tester assembly whenever possible
-- Make sure to update the Last Modified On to "Copilot Agent" and update Last Modified By in the file header of all files that were changed.
+## **1. Spargine-Specific Rules**
 
-## Performance
+- Prefer **Spargine extension methods** over native .NET methods when available.  
+- Use **FastStringBuilder** and other Spargine‑optimized utilities.  
+- Use **Spargine validation helpers** instead of manual checks.  
+- Use **Spargine performance utilities** where applicable.  
+- For unit tests and benchmarks, use data from the **dotNetTips.Spargine.10.Tester** assembly whenever possible.  
+- Update file headers for all modified files:  
+  - **Last Modified On:** use the current date.  
+  - **Last Modified By:** `Copilot Agent`
 
-- Assume this is a high-performance library
-- Avoid allocations aggressively
-- Favor span-based APIs where possible
+---
 
-## Design
+## **2. Performance Rules**
 
-- Favor extension methods
-- Keep APIs lightweight and efficient
-- Avoid unnecessary abstractions
+- Treat this as a **high‑performance** library.  
+- Avoid allocations aggressively.  
+- Favor **Span<T>**, `ReadOnlySpan<T>`, and other span‑based APIs.  
+- Prefer stack allocation when appropriate.  
+- Avoid LINQ in hot paths unless allocation‑free and proven efficient.
 
-## Unit Testing
-- Use the dotNetTips.Spargine.10.Tester assembly for test data and utilities
-- Write unit tests for all public APIs
-- Ensure all code paths are covered.
-- Make sure all unit tests work on GitHub and a local Windows machine.
-- Have the unit test class inherit from UnitTester, but only if it would add value.
-- Test methods should not include XML documentation.
-- Change the UnitTestStatus for any method with full coverage to Completed.
-- Do not modify any csproj files unless its to add or update a package.
-- When creating new unit test classes, make sure to follow the existing folder structure as in the project the class being tested.
+---
 
+## **3. API & Design Rules**
 
-## Repository rules
-- Follow the repository `.editorconfig` exactly.
-- Prefer analyzer-compliant code.
-- Obey naming rules, formatting rules, and code-style severities defined in `.editorconfig`.
-- DO NOT use underscores in method names.
-- Don't create unnecessary casts.
-- When proposing edits, avoid introducing analyzer warnings or style violations.
+- Favor **extension methods**.  
+- Keep APIs **lightweight, minimal, and efficient**.  
+- Avoid unnecessary abstractions or over‑engineering.  
+- Follow .NET Framework Design Guidelines.  
+- Prefer returning **interfaces or base types** when appropriate.
+
+---
+
+## **4. Unit Testing Rules**
+
+### **General Requirements**
+- Use **dotNetTips.Spargine.10.Tester** for test data and utilities.  
+- Write unit tests for **all public APIs**.  
+- Ensure **full code‑path coverage**.  
+- Tests must run successfully on **GitHub** and **local Windows** environments.
+
+### **Structure & Conventions**
+- Test classes may inherit from **UnitTester** only when it adds value.  
+- Test methods **must not** include XML documentation.  
+- When a method reaches full coverage, set **UnitTestStatus → Completed**.  
+- Do not modify `.csproj` files except to **add or update packages**.  
+- Follow the **same folder structure** as the project being tested.
+
+---
+
+## **5. Repository & Style Rules**
+
+- Follow the repository’s **.editorconfig** exactly.  
+- Prefer **analyzer‑compliant** code.  
+- Obey naming rules, formatting rules, and severity levels defined in `.editorconfig`.  
+- **Do NOT** use underscores in method names.  
+- Avoid unnecessary casts.  
+- Do not introduce analyzer warnings or style violations.  
+- Maintain consistent formatting and whitespace.
