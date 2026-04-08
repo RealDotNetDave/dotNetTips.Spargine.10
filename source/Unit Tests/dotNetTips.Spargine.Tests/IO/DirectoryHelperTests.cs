@@ -595,7 +595,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void CheckPermission_NullDirectory_ThrowsArgumentNullException()
+	public void CheckPermissionNullDirectoryThrowsArgumentNullException()
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.CheckPermission(null));
@@ -603,7 +603,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void CopyDirectory_NullSource_ThrowsArgumentNullException()
+	public void CopyDirectoryNullSourceThrowsArgumentNullException()
 	{
 		// Arrange
 		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -614,7 +614,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void CopyDirectory_NullDestination_ThrowsArgumentNullException()
+	public void CopyDirectoryNullDestinationThrowsArgumentNullException()
 	{
 		// Arrange
 		var sourceDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -632,7 +632,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void CopyDirectory_WithSubdirectories_CopiesRecursively()
+	public void CopyDirectoryWithSubdirectoriesCopiesRecursively()
 	{
 		// Arrange
 		var sourceDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -666,7 +666,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void DeleteDirectory_NullPath_ThrowsArgumentNullException()
+	public void DeleteDirectoryNullPathThrowsArgumentNullException()
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.DeleteDirectory(null));
@@ -674,7 +674,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void DeleteDirectory_ReturnsSuccessResult()
+	public void DeleteDirectoryReturnsSuccessResult()
 	{
 		// Arrange
 		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -690,7 +690,7 @@ public class DirectoryHelperTests
 	}
 
 	[TestMethod]
-	public async Task LoadFilesAsync_NullDirectories_ThrowsArgumentNullException()
+	public async Task LoadFilesAsyncNullDirectoriesThrowsArgumentNullException()
 	{
 		// Act & Assert
 		await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
@@ -703,7 +703,7 @@ public class DirectoryHelperTests
 	}
 
 	[TestMethod]
-	public async Task LoadFilesAsync_NullSearchPattern_ThrowsArgumentNullException()
+	public async Task LoadFilesAsyncNullSearchPatternThrowsArgumentNullException()
 	{
 		// Arrange
 		var directories = new List<DirectoryInfo> { new DirectoryInfo(Path.GetTempPath()) };
@@ -719,7 +719,7 @@ public class DirectoryHelperTests
 	}
 
 	[TestMethod]
-	public async Task LoadFilesAsync_AllDirectories_ReturnsFilesFromSubdirectories()
+	public async Task LoadFilesAsyncAllDirectoriesReturnsFilesFromSubdirectories()
 	{
 		// Arrange
 		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -749,7 +749,7 @@ public class DirectoryHelperTests
 	}
 
 	[TestMethod]
-	public async Task LoadFilesAsync_MultipleDirectories_ReturnsFilesFromAll()
+	public async Task LoadFilesAsyncMultipleDirectoriesReturnsFilesFromAll()
 	{
 		// Arrange
 		var tempDir1 = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -780,7 +780,7 @@ public class DirectoryHelperTests
 	}
 
 	[TestMethod]
-	public async Task LoadFilesAsync_WithCancellation_ThrowsOperationCanceledException()
+	public async Task LoadFilesAsyncWithCancellationThrowsOperationCanceledException()
 	{
 		// Arrange
 		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -810,7 +810,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void MoveDirectory_NullSource_ThrowsArgumentNullException()
+	public void MoveDirectoryNullSourceThrowsArgumentNullException()
 	{
 		// Arrange
 		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -821,7 +821,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void MoveDirectory_NullDestination_ThrowsArgumentNullException()
+	public void MoveDirectoryNullDestinationThrowsArgumentNullException()
 	{
 		// Arrange
 		var sourceDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -842,7 +842,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeDirectorySearch_NullPath_ThrowsArgumentNullException()
+	public void SafeDirectorySearchNullPathThrowsArgumentNullException()
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.SafeDirectorySearch(null).ToList());
@@ -850,7 +850,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeDirectorySearch_TopDirectoryOnly_ReturnsOnlyTopLevel()
+	public void SafeDirectorySearchTopDirectoryOnlyReturnsOnlyTopLevel()
 	{
 		// Arrange
 		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -876,7 +876,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeFileSearch_NullPath_ThrowsArgumentNullException()
+	public void SafeFileSearchNullPathThrowsArgumentNullException()
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.SafeFileSearch((DirectoryInfo)null, "*.txt", SearchOption.TopDirectoryOnly));
@@ -884,7 +884,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeFileSearchIEnumerable_NullDirectories_ThrowsArgumentNullException()
+	public void SafeFileSearchIEnumerableNullDirectoriesThrowsArgumentNullException()
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.SafeFileSearch((IEnumerable<DirectoryInfo>)null, "*.txt", SearchOption.TopDirectoryOnly).ToList());
@@ -892,7 +892,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeFileSearchIEnumerable_NonExistentDirectory_ReturnsEmpty()
+	public void SafeFileSearchIEnumerableNonExistentDirectoryReturnsEmpty()
 	{
 		// Arrange
 		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -907,7 +907,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SetFileAttributesToNormal_NonExistentDirectory_DoesNotThrow()
+	public void SetFileAttributesToNormalNonExistentDirectoryDoesNotThrow()
 	{
 		// Arrange
 		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -918,7 +918,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SetFileAttributesToNormal_MultipleFilesWithReadOnly_SetsAllToNormal()
+	public void SetFileAttributesToNormalMultipleFilesWithReadOnlySetsAllToNormal()
 	{
 		// Arrange
 		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -949,7 +949,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SetFileAttributesToNormal_SubdirectoryFiles_SetsAllToNormal()
+	public void SetFileAttributesToNormalSubdirectoryFilesSetsAllToNormal()
 	{
 		// Arrange
 		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -977,7 +977,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void RemoveAttributes_NonExistentDirectory_ThrowsDirectoryNotFoundException()
+	public void RemoveAttributesNonExistentDirectoryThrowsDirectoryNotFoundException()
 	{
 		// Arrange
 		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -989,7 +989,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeFileSearch_TopDirectoryOnly_DoesNotReturnSubdirectoryFiles()
+	public void SafeFileSearchTopDirectoryOnlyDoesNotReturnSubdirectoryFiles()
 	{
 		// Arrange
 		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -1015,7 +1015,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void SafeFileSearch_AllDirectories_ReturnsSubdirectoryFiles()
+	public void SafeFileSearchAllDirectoriesReturnsSubdirectoryFiles()
 	{
 		// Arrange
 		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
@@ -1040,7 +1040,7 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void MoveDirectory_ValidSourceAndDestination_MovesAllContents()
+	public void MoveDirectoryValidSourceAndDestinationMovesAllContents()
 	{
 		// Arrange
 		var sourceDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
