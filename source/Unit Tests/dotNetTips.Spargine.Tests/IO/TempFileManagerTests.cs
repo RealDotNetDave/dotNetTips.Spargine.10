@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-04-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-23-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -229,6 +229,157 @@ public class TempFileManagerTests
 
 			// Assert
 			CollectionAssert.AreEquivalent(files.ToList(), managedFiles.ToList());
+		}
+	}
+
+	[TestMethod]
+	public void CreateFilesShouldUseNonParallelPathForSmallCount()
+	{
+		// Arrange & Act
+		using (var manager = new TempFileManager())
+		{
+			var filesOne = manager.CreateFiles(1);
+			var filesTwo = manager.CreateFiles(2);
+
+			// Assert
+			Assert.HasCount(1, filesOne);
+			Assert.HasCount(2, filesTwo);
+
+			foreach (var file in filesOne)
+			{
+				Assert.IsTrue(File.Exists(file));
+				Assert.Contains(file, manager.GetManagedFiles());
+			}
+
+			foreach (var file in filesTwo)
+			{
+				Assert.IsTrue(File.Exists(file));
+				Assert.Contains(file, manager.GetManagedFiles());
+			}
+		}
+	}
+
+	[TestMethod]
+	public void CreateFilesWithZeroCountShouldThrowArgumentOutOfRangeException()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			// Act & Assert
+			Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => manager.CreateFiles(0));
+		}
+	}
+
+	[TestMethod]
+	public void CreateFilesWithNegativeCountShouldThrowArgumentOutOfRangeException()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			// Act & Assert
+			Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => manager.CreateFiles(-1));
+		}
+	}
+
+	[TestMethod]
+	public void CreateFileShouldCreateFileWithDnttExtension()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			// Act
+			var filePath = manager.CreateFile();
+
+			// Assert
+			Assert.AreEqual(".dntt", Path.GetExtension(filePath));
+		}
+	}
+
+	[TestMethod]
+	public void CreateFileShouldCreateFileInTempDirectory()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			// Act
+			var filePath = manager.CreateFile();
+
+			// Assert
+			Assert.AreEqual(Path.GetTempPath(), Path.GetDirectoryName(filePath) + Path.DirectorySeparatorChar);
+		}
+	}
+
+	[TestMethod]
+	public void DeleteAllFilesShouldDeleteFilesFromDisk()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			var files = manager.CreateFiles(5);
+
+			// Act
+			manager.DeleteAllFiles();
+
+			// Assert
+			foreach (var file in files)
+			{
+				Assert.IsFalse(File.Exists(file), $"File {file} should have been deleted from disk.");
+			}
+		}
+	}
+
+	[TestMethod]
+	public void DeleteAllFilesWithNoFilesShouldNotThrow()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			// Act & Assert - should not throw
+			manager.DeleteAllFiles();
+			Assert.IsEmpty(manager.GetManagedFiles());
+		}
+	}
+
+	[TestMethod]
+	public void DisposeCalledMultipleTimesShouldNotThrow()
+	{
+		// Arrange
+		var manager = new TempFileManager();
+		manager.CreateFiles(5);
+
+		// Act & Assert - should not throw
+		manager.Dispose();
+		manager.Dispose();
+	}
+
+	[TestMethod]
+	public void DisposeShouldDeleteFilesFromDisk()
+	{
+		// Arrange
+		var manager = new TempFileManager();
+		var files = manager.CreateFiles(5);
+
+		// Act
+		manager.Dispose();
+
+		// Assert
+		foreach (var file in files)
+		{
+			Assert.IsFalse(File.Exists(file), $"File {file} should have been deleted from disk.");
+		}
+	}
+
+	[TestMethod]
+	public void GetManagedFilesWithNoFilesShouldReturnEmptyCollection()
+	{
+		// Arrange
+		using (var manager = new TempFileManager())
+		{
+			// Act
+			var managedFiles = manager.GetManagedFiles();
+
+			// Assert
+			Assert.IsEmpty(managedFiles);
 		}
 	}
 
