@@ -32,7 +32,4 @@
     <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
     <ProjectReference Include="..\..\dotNetTips.Spargine.10\DotNetTips.Spargine.10.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
 </Project>

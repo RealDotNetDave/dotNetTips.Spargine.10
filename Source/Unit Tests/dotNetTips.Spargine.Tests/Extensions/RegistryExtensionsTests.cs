@@ -20,29 +20,26 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
-namespace DotNetTips.Spargine.Tests;
+namespace DotNetTips.Spargine.Tests.Extensions;
 
 [ExcludeFromCodeCoverage]
 [SupportedOSPlatform("windows")]
 [TestClass]
 public class RegistryExtensionsTests
 {
+	private const string ProductNameValue = "ProductName";
 
 	// Well-known registry path available on all Windows installations.
 	private const string WindowsNTCurrentVersionPath = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
-	private const string ProductNameValue = "ProductName";
 
 	[TestMethod]
-	public void GetSubKey_ValidKeyAndName_ReturnsSubKey()
+	public void GetSubKey_EmptyName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		using var baseKey = Registry.LocalMachine;
 
-		// Act
-		using var result = baseKey.GetSubKey(WindowsNTCurrentVersionPath);
-
-		// Assert
-		Assert.IsNotNull(result);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => baseKey.GetSubKey(string.Empty));
 	}
 
 	[TestMethod]
@@ -79,44 +76,28 @@ public class RegistryExtensionsTests
 	}
 
 	[TestMethod]
-	public void GetSubKey_EmptyName_ThrowsArgumentNullException()
+	public void GetSubKey_ValidKeyAndName_ReturnsSubKey()
 	{
 		// Arrange
 		using var baseKey = Registry.LocalMachine;
 
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => baseKey.GetSubKey(string.Empty));
-	}
-
-	[TestMethod]
-	public void GetValue_ValidKeyAndName_ReturnsValue()
-	{
-		// Arrange
-		using var key = Registry.LocalMachine.OpenSubKey(WindowsNTCurrentVersionPath);
-
-		Assert.IsNotNull(key, "Could not open Windows NT CurrentVersion registry key.");
-
 		// Act
-		var result = key.GetValue<string>(ProductNameValue);
+		using var result = baseKey.GetSubKey(WindowsNTCurrentVersionPath);
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
 
 	[TestMethod]
-	public void GetValue_NonExistentValueName_ReturnsDefault()
+	public void GetValue_EmptyName_ThrowsArgumentNullException()
 	{
 		// Arrange
 		using var key = Registry.LocalMachine.OpenSubKey(WindowsNTCurrentVersionPath);
 
 		Assert.IsNotNull(key, "Could not open Windows NT CurrentVersion registry key.");
 
-		// Act
-		var result = key.GetValue<string>("NonExistentValueName12345");
-
-		// Assert
-		Assert.IsNull(result);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => key.GetValue<string>(string.Empty));
 	}
 
 	[TestMethod]
@@ -132,6 +113,21 @@ public class RegistryExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result > 0);
+	}
+
+	[TestMethod]
+	public void GetValue_NonExistentValueName_ReturnsDefault()
+	{
+		// Arrange
+		using var key = Registry.LocalMachine.OpenSubKey(WindowsNTCurrentVersionPath);
+
+		Assert.IsNotNull(key, "Could not open Windows NT CurrentVersion registry key.");
+
+		// Act
+		var result = key.GetValue<string>("NonExistentValueName12345");
+
+		// Assert
+		Assert.IsNull(result);
 	}
 
 	[TestMethod]
@@ -157,14 +153,18 @@ public class RegistryExtensionsTests
 	}
 
 	[TestMethod]
-	public void GetValue_EmptyName_ThrowsArgumentNullException()
+	public void GetValue_ValidKeyAndName_ReturnsValue()
 	{
 		// Arrange
 		using var key = Registry.LocalMachine.OpenSubKey(WindowsNTCurrentVersionPath);
 
 		Assert.IsNotNull(key, "Could not open Windows NT CurrentVersion registry key.");
 
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => key.GetValue<string>(string.Empty));
+		// Act
+		var result = key.GetValue<string>(ProductNameValue);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
 }
