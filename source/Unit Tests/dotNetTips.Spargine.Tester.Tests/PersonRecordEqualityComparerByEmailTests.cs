@@ -36,21 +36,13 @@ public class PersonRecordEqualityComparerByEmailTests
 	}
 
 	[TestMethod]
-	public void Equals_XNullYNotNull_ReturnsFalse()
+	public void Equals_DifferentEmail_ReturnsFalse()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
-		var person = RandomData.GeneratePerson<PersonRecord>();
+		var person1 = new PersonRecord("person1@example.com", "1234567890");
+		var person2 = new PersonRecord("person2@example.com", "0987654321");
 
-		Assert.IsFalse(comparer.Equals(null, person));
-	}
-
-	[TestMethod]
-	public void Equals_XNotNullYNull_ReturnsFalse()
-	{
-		var comparer = new PersonRecordEqualityComparerByEmail();
-		var person = RandomData.GeneratePerson<PersonRecord>();
-
-		Assert.IsFalse(comparer.Equals(person, null));
+		Assert.IsFalse(comparer.Equals(person1, person2));
 	}
 
 	[TestMethod]
@@ -74,16 +66,6 @@ public class PersonRecordEqualityComparerByEmailTests
 	}
 
 	[TestMethod]
-	public void Equals_DifferentEmail_ReturnsFalse()
-	{
-		var comparer = new PersonRecordEqualityComparerByEmail();
-		var person1 = new PersonRecord("person1@example.com", "1234567890");
-		var person2 = new PersonRecord("person2@example.com", "0987654321");
-
-		Assert.IsFalse(comparer.Equals(person1, person2));
-	}
-
-	[TestMethod]
 	public void Equals_SameReference_ReturnsTrue()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
@@ -93,12 +75,40 @@ public class PersonRecordEqualityComparerByEmailTests
 	}
 
 	[TestMethod]
-	public void GetHashCode_ValidPerson_ReturnsEmailHashCodeIgnoringCase()
+	public void Equals_XNotNullYNull_ReturnsFalse()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
 		var person = RandomData.GeneratePerson<PersonRecord>();
 
-		Assert.AreEqual(person.Email.GetHashCode(StringComparison.OrdinalIgnoreCase), comparer.GetHashCode(person));
+		Assert.IsFalse(comparer.Equals(person, null));
+	}
+
+	[TestMethod]
+	public void Equals_XNullYNotNull_ReturnsFalse()
+	{
+		var comparer = new PersonRecordEqualityComparerByEmail();
+		var person = RandomData.GeneratePerson<PersonRecord>();
+
+		Assert.IsFalse(comparer.Equals(null, person));
+	}
+
+	[TestMethod]
+	public void GetHashCode_DifferentEmail_ReturnsCaseInsensitiveEmailHash()
+	{
+		var comparer = new PersonRecordEqualityComparerByEmail();
+		var person1 = new PersonRecord("alice@example.com", "1234567890");
+		var person2 = new PersonRecord("bob@example.com", "0987654321");
+
+		Assert.AreEqual(StringComparer.OrdinalIgnoreCase.GetHashCode("alice@example.com"), comparer.GetHashCode(person1));
+		Assert.AreEqual(StringComparer.OrdinalIgnoreCase.GetHashCode("bob@example.com"), comparer.GetHashCode(person2));
+	}
+
+	[TestMethod]
+	public void GetHashCode_NullObj_ReturnsZero()
+	{
+		var comparer = new PersonRecordEqualityComparerByEmail();
+
+		Assert.AreEqual(0, comparer.GetHashCode(null));
 	}
 
 	[TestMethod]
@@ -122,21 +132,11 @@ public class PersonRecordEqualityComparerByEmailTests
 	}
 
 	[TestMethod]
-	public void GetHashCode_DifferentEmail_ReturnsCaseInsensitiveEmailHash()
+	public void GetHashCode_ValidPerson_ReturnsEmailHashCodeIgnoringCase()
 	{
 		var comparer = new PersonRecordEqualityComparerByEmail();
-		var person1 = new PersonRecord("alice@example.com", "1234567890");
-		var person2 = new PersonRecord("bob@example.com", "0987654321");
+		var person = RandomData.GeneratePerson<PersonRecord>();
 
-		Assert.AreEqual(StringComparer.OrdinalIgnoreCase.GetHashCode("alice@example.com"), comparer.GetHashCode(person1));
-		Assert.AreEqual(StringComparer.OrdinalIgnoreCase.GetHashCode("bob@example.com"), comparer.GetHashCode(person2));
-	}
-
-	[TestMethod]
-	public void GetHashCode_NullObj_ReturnsZero()
-	{
-		var comparer = new PersonRecordEqualityComparerByEmail();
-
-		Assert.AreEqual(0, comparer.GetHashCode(null!));
+		Assert.AreEqual(person.Email.GetHashCode(StringComparison.OrdinalIgnoreCase), comparer.GetHashCode(person));
 	}
 }

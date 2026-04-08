@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="CountryDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -52,7 +52,6 @@ public class CountryDataTests
 	{
 		var countries = CountryRepository.GetCountries();
 		var data = countries.Select(p => new { p.Id, p.Iso2, p.Iso3, p.Name, p.PhoneCode, p.PhoneNumberLength, p.PostalFormat, p.PostalRegex });
-		var result = data.ToList();
 
 		var file = new FileInfo(Path.Combine(App.ProcessPath, "CountryPhonePostalInfo.json"));
 
