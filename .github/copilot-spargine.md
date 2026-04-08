@@ -1,5 +1,19 @@
 # **Spargine Coding & Repository Rules**
 
+## DEFINITION OF DONE - MANDATORY
+
+Before writing any code, read this section. After writing code, execute every step below in order before responding.
+
+Before marking any task as complete, you MUST perform ALL of the following steps in order:
+
+1. Read the `./.editorconfig` file at the repo root and verify all code changes adhere to its rules and the existing coding style conventions.
+2. Run the build and verify it succeeds with no errors.
+3. Check the build output for warnings. Compare against pre-existing warnings and ensure your changes introduced zero new warnings. If new warnings are found, fix them before proceeding.
+4. If a unit test project exists, add new tests or update existing tests to cover your changes as appropriate.
+5. Run all unit tests and verify none are broken. If any tests fail due to your changes, fix them before proceeding.
+
+Do NOT consider the task done until all five steps pass. Keep iterating until they do.
+
 ## **1. Spargine-Specific Rules**
 
 - Prefer **Spargine extension methods** over native .NET methods when available.  
