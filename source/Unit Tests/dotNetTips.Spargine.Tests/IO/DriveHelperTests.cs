@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-11-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-08-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="DriveHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,6 +14,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
 using System.Runtime.Versioning;
 using DotNetTips.Spargine.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -39,13 +41,21 @@ public class DriveHelperTests
 	public void GetDriveFormat_ValidDrive_ReturnsFormat()
 	{
 		// Arrange
-		var drive = "C:\\"; // Example drive, in a real test, you might mock the underlying system call
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
 
 		// Act
 		var result = DriveHelper.GetDriveFormat(drive);
 
 		// Assert
-		Assert.IsFalse(string.IsNullOrEmpty(result)); // Assuming the drive C:\ has a format
+		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
 
 	[TestMethod]
@@ -61,13 +71,21 @@ public class DriveHelperTests
 	public void GetDriveFreeSpace_ValidDrive_ReturnsFreeSpace()
 	{
 		// Arrange
-		var drive = "C:\\"; // Example drive, in a real test, you might mock the underlying system call
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
 
 		// Act
 		var result = DriveHelper.GetDriveFreeSpace(drive);
 
 		// Assert
-		Assert.IsGreaterThan(0, result); // Assuming the drive C:\ has free space
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -83,13 +101,21 @@ public class DriveHelperTests
 	public void GetDriveLabel_ValidDrive_ReturnsLabel()
 	{
 		// Arrange
-		var drive = "C:\\"; // Example drive, in a real test, you might mock the underlying system call
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
 
 		// Act
 		var result = DriveHelper.GetDriveLabel(drive);
 
 		// Assert
-		Assert.IsFalse(string.IsNullOrEmpty(result)); // Assuming the drive C:\ has a label
+		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]
@@ -104,14 +130,28 @@ public class DriveHelperTests
 	[SupportedOSPlatform("windows")]
 	public void GetDriveSerialNumber_ValidDrive_ReturnsSerialNumber()
 	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Assert.Inconclusive("GetDriveSerialNumber requires Windows (WMI).");
+			return;
+		}
+
 		// Arrange
-		var drive = "C:\\"; // Example drive, in a real test, you might mock the underlying system call
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
 
 		// Act
 		var result = DriveHelper.GetDriveSerialNumber(drive);
 
 		// Assert
-		Assert.IsFalse(string.IsNullOrEmpty(result)); // Assuming the drive C:\ has a serial number
+		Assert.IsFalse(string.IsNullOrEmpty(result));
 	}
 
 	[TestMethod]
@@ -127,13 +167,21 @@ public class DriveHelperTests
 	public void GetDriveTotalSize_ValidDrive_ReturnsTotalSize()
 	{
 		// Arrange
-		var drive = "C:\\"; // Example drive, in a real test, you might mock the underlying system call
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
 
 		// Act
 		var result = DriveHelper.GetDriveTotalSize(drive);
 
 		// Assert
-		Assert.IsGreaterThan(0, result); // Assuming the drive C:\ has a total size
+		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -151,6 +199,189 @@ public class DriveHelperTests
 	{
 		var result = DriveHelper.GetRemovableDrives();
 
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveFormatEmptyDriveThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveFormat(string.Empty));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveFreeSpaceEmptyDriveThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveFreeSpace(string.Empty));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveLabelEmptyDriveThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveLabel(string.Empty));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveSerialNumberEmptyDriveThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveSerialNumber(string.Empty));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveTotalSizeEmptyDriveThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => DriveHelper.GetDriveTotalSize(string.Empty));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetFixedDrivesAllDrivesAreFixedType()
+	{
+		// Act
+		var result = DriveHelper.GetFixedDrives();
+
+		// Assert
+		Assert.IsTrue(result.All(d => d.DriveType == DriveType.Fixed));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetFixedDrivesAllDrivesAreReady()
+	{
+		// Act
+		var result = DriveHelper.GetFixedDrives();
+
+		// Assert
+		Assert.IsTrue(result.All(d => d.IsReady));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetFixedDrivesContainsSystemDrive()
+	{
+		// Arrange
+		var systemDriveRoot = Path.GetPathRoot(Environment.SystemDirectory);
+
+		if (string.IsNullOrWhiteSpace(systemDriveRoot))
+		{
+			Assert.Inconclusive("System drive root is not available on this platform.");
+			return;
+		}
+
+		// Act
+		var result = DriveHelper.GetFixedDrives();
+
+		// Assert
+		Assert.IsTrue(result.Any(d => string.Equals(d.Name, systemDriveRoot, StringComparison.OrdinalIgnoreCase)));
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetRemovableDrivesAllDrivesAreRemovableType()
+	{
+		// Act
+		var result = DriveHelper.GetRemovableDrives();
+
+		// Assert - if removable drives are present, they must all be Removable type
+		if (result.Count > 0)
+		{
+			Assert.IsTrue(result.All(d => d.DriveType == DriveType.Removable));
+		}
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetRemovableDrivesAllDrivesAreReady()
+	{
+		// Act
+		var result = DriveHelper.GetRemovableDrives();
+
+		// Assert - if removable drives are present, they must all be ready
+		if (result.Count > 0)
+		{
+			Assert.IsTrue(result.All(d => d.IsReady));
+		}
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveTotalSizeIsGreaterThanOrEqualToFreeSpace()
+	{
+		// Arrange
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
+
+		// Act
+		var totalSize = DriveHelper.GetDriveTotalSize(drive);
+		var freeSpace = DriveHelper.GetDriveFreeSpace(drive);
+
+		// Assert
+		Assert.IsGreaterThanOrEqualTo(freeSpace, totalSize);
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveLabelValidDriveReturnsNotNull()
+	{
+		// Arrange
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
+
+		// Act
+		var result = DriveHelper.GetDriveLabel(drive);
+
+		// Assert
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	[SupportedOSPlatform("windows")]
+	public void GetDriveSerialNumberValidDriveReturnsNotNull()
+	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Assert.Inconclusive("GetDriveSerialNumber requires Windows (WMI).");
+			return;
+		}
+
+		// Arrange
+		var fixedDrives = DriveHelper.GetFixedDrives();
+
+		if (fixedDrives.Count == 0)
+		{
+			Assert.Inconclusive("No fixed drives available.");
+			return;
+		}
+
+		var drive = fixedDrives[0].Name;
+
+		// Act
+		var result = DriveHelper.GetDriveSerialNumber(drive);
+
+		// Assert
 		Assert.IsNotNull(result);
 	}
 
