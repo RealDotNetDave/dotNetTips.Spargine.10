@@ -222,11 +222,15 @@ public class DriveHelperTests
 	[SupportedOSPlatform("windows")]
 	public void GetFixedDrivesContainsCDrive()
 	{
+		// Arrange
+		var systemDriveRoot = Path.GetPathRoot(Environment.SystemDirectory);
+
 		// Act
 		var result = DriveHelper.GetFixedDrives();
 
 		// Assert
-		Assert.IsTrue(result.Any(d => d.Name.StartsWith("C", StringComparison.OrdinalIgnoreCase)));
+		Assert.IsFalse(string.IsNullOrWhiteSpace(systemDriveRoot));
+		Assert.IsTrue(result.Any(d => string.Equals(d.Name, systemDriveRoot, StringComparison.OrdinalIgnoreCase)));
 	}
 
 	[TestMethod]
