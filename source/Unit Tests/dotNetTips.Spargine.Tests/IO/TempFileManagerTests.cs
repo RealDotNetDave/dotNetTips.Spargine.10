@@ -305,7 +305,10 @@ public class TempFileManagerTests
 			var filePath = manager.CreateFile();
 
 			// Assert
-			Assert.AreEqual(Path.GetTempPath(), Path.GetDirectoryName(filePath) + Path.DirectorySeparatorChar);
+			var expectedTempDirectory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(Path.GetTempPath()));
+			var actualDirectory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(Path.GetDirectoryName(filePath)!));
+
+			Assert.IsTrue(StringComparer.OrdinalIgnoreCase.Equals(expectedTempDirectory, actualDirectory));
 		}
 	}
 
