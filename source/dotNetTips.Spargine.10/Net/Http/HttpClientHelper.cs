@@ -35,6 +35,7 @@ namespace DotNetTips.Spargine.Net.Http;
 [Information(Status = Status.NeedsDocumentation)]
 public static class HttpClientHelper
 {
+	//TODO: MOVE TO CORE ASSEMBLY.
 
 	/// <summary>
 	/// The format string used to indicate that a resource was not found.
