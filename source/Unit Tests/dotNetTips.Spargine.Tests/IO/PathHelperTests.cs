@@ -335,7 +335,7 @@ public class PathHelperTests : IDisposable
 	}
 
 	[TestMethod]
-	public void HasInvalidFilterCharsQuestionMarkWildcardReturnsFalse()
+	public void HasInvalidFilterCharsWithQuestionMarkWildcardReturnsFalse()
 	{
 		var filter = "file?.txt";
 		var result = PathHelper.HasInvalidFilterChars(filter);
