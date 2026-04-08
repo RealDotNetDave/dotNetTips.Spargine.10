@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-28-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 11-13-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="FileHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading;
@@ -541,6 +542,412 @@ public class FileHelperTests
 		Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.ReadOnly));
 
 		file.Delete();
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CheckPermissionNullFileTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.CheckPermission(null));
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveArchiveAttributeNullFileTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.RemoveArchiveAttribute(null));
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveArchiveAttributeSuccessTest()
+	{
+		var filePath = RandomData.GenerateTempFile(FileLength);
+		var file = new FileInfo(filePath);
+
+		// Ensure the archive attribute is set
+		file.Attributes |= FileAttributes.Archive;
+
+		// Remove the archive attribute
+		FileHelper.RemoveArchiveAttribute(file);
+
+		// Refresh and assert that the archive attribute has been removed
+		file.Refresh();
+		Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.Archive));
+
+		file.Delete();
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveArchiveAttributeNonExistentFileTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+
+		// Should not throw for non-existent files
+		FileHelper.RemoveArchiveAttribute(file);
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncNullFileTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncNullFileTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnZipAsync(null, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncNullDestinationTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnZipAsync(sourceFile, null));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncFileNotFoundTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.zip"));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncFileNotFoundTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<FileNotFoundException>(() => FileHelper.UnZipAsync(file, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncSuccessTest()
+	{
+		// Create a temp zip file with content
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncSuccessTest));
+		var sourceDir = Path.Combine(tempDir, "source");
+		var destinationDir = Path.Combine(tempDir, "destination");
+		var zipFilePath = Path.Combine(tempDir, "test.zip");
+
+		try
+		{
+			Directory.CreateDirectory(sourceDir);
+			File.WriteAllText(Path.Combine(sourceDir, "testfile.txt"), "Hello, World!");
+			ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
+
+			var zipFile = new FileInfo(zipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnZipAsync(zipFile, destination);
+
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDir, "testfile.txt")));
+			Assert.AreEqual("Hello, World!", File.ReadAllText(Path.Combine(destinationDir, "testfile.txt")));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncWithDeleteSuccessTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncWithDeleteSuccessTest));
+		var sourceDir = Path.Combine(tempDir, "source");
+		var destinationDir = Path.Combine(tempDir, "destination");
+		var zipFilePath = Path.Combine(tempDir, "test.zip");
+
+		try
+		{
+			Directory.CreateDirectory(sourceDir);
+			File.WriteAllText(Path.Combine(sourceDir, "testfile.txt"), "Delete Test");
+			ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
+
+			var zipFile = new FileInfo(zipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnZipAsync(zipFile, destination, true);
+
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDir, "testfile.txt")));
+			Assert.IsFalse(File.Exists(zipFilePath));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncWithDeleteFalseKeepsFileTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncWithDeleteFalseKeepsFileTest));
+		var sourceDir = Path.Combine(tempDir, "source");
+		var destinationDir = Path.Combine(tempDir, "destination");
+		var zipFilePath = Path.Combine(tempDir, "test.zip");
+
+		try
+		{
+			Directory.CreateDirectory(sourceDir);
+			File.WriteAllText(Path.Combine(sourceDir, "testfile.txt"), "Keep Test");
+			ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
+
+			var zipFile = new FileInfo(zipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnZipAsync(zipFile, destination, false);
+
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDir, "testfile.txt")));
+			Assert.IsTrue(File.Exists(zipFilePath));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncCancellationTokenTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncCancellationTokenTest));
+		var sourceDir = Path.Combine(tempDir, "source");
+		var zipFilePath = Path.Combine(tempDir, "test.zip");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceDir);
+			File.WriteAllText(Path.Combine(sourceDir, "testfile.txt"), "Cancel Test");
+			ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
+
+			var zipFile = new FileInfo(zipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+			var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			await Assert.ThrowsExactlyAsync<OperationCanceledException>(
+				() => FileHelper.UnZipAsync(zipFile, destination, cts.Token));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncWithDeleteNullFileTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncWithDeleteNullFileTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnZipAsync(null, destination, true));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncWithDeleteNullDestinationTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnZipAsync(sourceFile, null, true));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncNullFileTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncNullFileTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnGZipAsync(null, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncNullDestinationTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnGZipAsync(sourceFile, null));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncFileNotFoundTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.gz"));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncFileNotFoundTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<FileNotFoundException>(() => FileHelper.UnGZipAsync(file, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncWithDeleteNullFileTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncWithDeleteNullFileTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnGZipAsync(null, destination, true));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncWithDeleteNullDestinationTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.UnGZipAsync(sourceFile, null, true));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task DownloadFileFromWebAsyncNullUriTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.DownloadFileFromWebAsyncNullUriTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAsync(null, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task DownloadFileFromWebAsyncNullDestinationTest()
+	{
+		var remoteUri = new Uri("https://example.com/test.zip");
+
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAsync(remoteUri, null));
+	}
+
+	[TestMethod]
+	public async Task DownloadFileFromWebAndUnzipAsyncNullUriTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.DownloadFileFromWebAndUnzipAsyncNullUriTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAndUnzipAsync(null, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task DownloadFileFromWebAndUnzipAsyncNullDestinationTest()
+	{
+		var remoteUri = new Uri("https://example.com/test.zip");
+
+		await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAndUnzipAsync(remoteUri, null));
+	}
+
+	[TestMethod]
+	public async Task CopyFileAsyncNullDestinationTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.CopyFileAsync(sourceFile, null));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
 	}
 
 	private static CopyProgressResult CopyProgressCallback(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint dwStreamNumber, CopyProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData)

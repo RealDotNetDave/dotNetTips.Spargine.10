@@ -403,7 +403,7 @@ public static class FileHelper
 	/// await FileHelper.DownloadFileFromWebAndUnzipAsync(remoteFileUrl, destinationDir);
 	/// </code>
 	/// </example>
-	[Information(nameof(DownloadFileFromWebAndUnzipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(DownloadFileFromWebAndUnzipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task DownloadFileFromWebAndUnzipAsync([DisallowNull] Uri remoteUri, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		_ = destination.ArgumentNotNull().CheckExists();
@@ -434,7 +434,7 @@ public static class FileHelper
 	/// await FileHelper.DownloadFileFromWebAsync(remoteFileUrl, destinationDir);
 	/// </code>
 	/// </example>
-	[Information(nameof(DownloadFileFromWebAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(DownloadFileFromWebAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<SimpleResult<int>> DownloadFileFromWebAsync([DisallowNull] Uri remoteUri, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		remoteUri = remoteUri.ArgumentNotNull();
@@ -560,7 +560,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(RemoveArchiveAttribute), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(RemoveArchiveAttribute), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void RemoveArchiveAttribute([DisallowNull] FileInfo file)
 	{
 		file = file.ArgumentNotNull();
@@ -624,7 +624,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task</remarks>
-	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task UnGZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -663,7 +663,7 @@ public static class FileHelper
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[OverloadResolutionPriority(1)]
-	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task UnGZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, bool deleteGZipFile, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -695,7 +695,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
-	[Information(nameof(UnZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(UnZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task UnZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -724,7 +724,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[OverloadResolutionPriority(1)]
-	[Information(nameof(UnZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(UnZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task UnZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, bool deleteZipFile, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
