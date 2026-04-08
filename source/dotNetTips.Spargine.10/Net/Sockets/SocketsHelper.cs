@@ -33,6 +33,7 @@ namespace DotNetTips.Spargine.Net.Sockets;
 [Information(Status = Status.NeedsDocumentation)]
 public static class SocketsHelper
 {
+	//TODO: MOVE TO CORE PROJECT
 
 	/// <summary>
 	/// Connect TCP as an asynchronous operation.
