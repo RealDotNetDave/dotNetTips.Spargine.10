@@ -28,6 +28,7 @@
 - Test methods should not include XML documentation.
 - Change the UnitTestStatus for any method with full coverage to Completed.
 - Do not modify any csproj files unless its to add or update a package.
+- When creating new unit test classes, make sure to follow the existing folder structure as in the project the class being tested.
 
 
 ## Repository rules
