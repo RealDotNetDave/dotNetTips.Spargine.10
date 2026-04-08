@@ -236,8 +236,11 @@ public class DriveHelperTests
 		// Act
 		var result = DriveHelper.GetRemovableDrives();
 
-		// Assert
-		Assert.IsTrue(result.All(d => d.DriveType == DriveType.Removable));
+		// Assert - if removable drives are present, they must all be Removable type
+		if (result.Count > 0)
+		{
+			Assert.IsTrue(result.All(d => d.DriveType == DriveType.Removable));
+		}
 	}
 
 	[TestMethod]
@@ -247,8 +250,11 @@ public class DriveHelperTests
 		// Act
 		var result = DriveHelper.GetRemovableDrives();
 
-		// Assert
-		Assert.IsTrue(result.All(d => d.IsReady));
+		// Assert - if removable drives are present, they must all be ready
+		if (result.Count > 0)
+		{
+			Assert.IsTrue(result.All(d => d.IsReady));
+		}
 	}
 
 	[TestMethod]
