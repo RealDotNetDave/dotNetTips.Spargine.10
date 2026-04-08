@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-25-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -88,7 +88,7 @@ public struct Person() : IPerson<Person, Address>
 	[DataMember(Name = "addresses", IsRequired = false)]
 	[JsonPropertyName("addresses")]
 	[XmlIgnore]
-	[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Collection<Address> Addresses
 	{
 		readonly get
@@ -244,7 +244,7 @@ public struct Person() : IPerson<Person, Address>
 	[Required(ErrorMessageResourceName = "ErrorFirstNameIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(50, ErrorMessageResourceName = "ErrorFirstNameLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("FirstName")]
-	[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string FirstName
 	{
 		readonly get { return this._firstName; }
@@ -488,7 +488,7 @@ public struct Person() : IPerson<Person, Address>
 	/// Thrown if <paramref name="person"/> is null.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Person ToPerson([NotNull] in PersonRecord person)
 	{
 		_ = person.ArgumentNotNull();
@@ -522,7 +522,7 @@ public struct Person() : IPerson<Person, Address>
 	/// Thrown if <paramref name="person"/> is null.
 	/// </exception>
 	[return: NotNull]
-	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ToPerson), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Person ToPerson([NotNull] in RefTypes.Person person)
 	{
 		_ = person.ArgumentNotNull();

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-28-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="PersonRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -43,6 +43,18 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void Addresses_SetNewCollection_CopiesValues()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+
+		person.Addresses = addresses;
+
+		Assert.HasCount(1, person.Addresses);
+		Assert.AreNotSame(addresses, person.Addresses);
+	}
+
+	[TestMethod]
 	public void Addresses_SetSameCollection_DoesNotChange()
 	{
 		// Arrange
@@ -55,6 +67,19 @@ public class PersonRefTests
 
 		// Assert
 		Assert.HasCount(1, person.Addresses);
+	}
+
+	[TestMethod]
+	public void AddressesSerialization_ReturnsCopy()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+		person.Addresses = addresses;
+
+		var serialization = person.AddressesSerialization;
+
+		Assert.HasCount(1, serialization);
+		Assert.AreNotSame(person.Addresses, serialization);
 	}
 
 	[TestMethod]
@@ -82,6 +107,27 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void BornOn_SetValidDate_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var pastDate = new DateTimeOffset(1985, 6, 15, 0, 0, 0, TimeSpan.Zero);
+
+		person.BornOn = pastDate;
+
+		Assert.AreEqual(pastDate, person.BornOn);
+	}
+
+	[TestMethod]
+	public void CellPhone_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.CellPhone = null;
+
+		Assert.AreEqual(string.Empty, person.CellPhone);
+	}
+
+	[TestMethod]
 	public void CellPhone_SetSameValue_DoesNotThrow()
 	{
 		// Arrange
@@ -103,6 +149,16 @@ public class PersonRefTests
 
 		// Act
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.CellPhone = phone);
+	}
+
+	[TestMethod]
+	public void CellPhone_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.CellPhone = "555-9876";
+
+		Assert.AreEqual("555-9876", person.CellPhone);
 	}
 
 	[TestMethod]
@@ -139,10 +195,49 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void CompareTo_Null_ReturnsPositive()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.CompareTo(null);
+
+		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_Null_ReturnsPositive()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = ((IComparable)person).CompareTo(null);
+
+		Assert.IsGreaterThan(0, result);
+	}
+
+	[TestMethod]
 	public void CompareTo_Object_ThrowsOnInvalidType()
 	{
 		var address = Address.Create("1234567890");
 		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)address).CompareTo("not an address"));
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_ThrowsOnInvalidType_Person()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentException>(() => ((IComparable)person).CompareTo("not a person"));
+	}
+
+	[TestMethod]
+	public void CompareTo_Object_ValidPerson_ReturnsZero()
+	{
+		var person1 = new Person("test@example.com", "1234567890");
+		var person2 = new Person("other@example.com", "1234567890");
+
+		var result = ((IComparable)person1).CompareTo(person2);
+
+		Assert.AreEqual(0, result);
 	}
 
 	[TestMethod]
@@ -201,11 +296,61 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void Create_ValidParameters_ReturnsPersonWithProperties()
+	{
+		var firstName = "John";
+		var lastName = "Doe";
+		var bornOn = new DateTimeOffset(1990, 1, 1, 0, 0, 0, TimeSpan.Zero);
+		var addresses = new Collection<Address> { RandomData.GenerateAddress<Address>() };
+		var cellPhone = "555-1234";
+		var phone = "555-5678";
+
+		var person = Person.Create("1234567890", "test@example.com", firstName, lastName, bornOn, addresses, cellPhone, phone);
+
+		Assert.IsNotNull(person);
+		Assert.AreEqual(firstName, person.FirstName);
+		Assert.AreEqual(lastName, person.LastName);
+		Assert.AreEqual(bornOn, person.BornOn);
+		Assert.HasCount(1, person.Addresses);
+		Assert.AreEqual(cellPhone, person.CellPhone);
+		Assert.AreEqual(phone, person.Phone);
+	}
+
+	[TestMethod]
+	public void Create_WithNullOptionalParams_UsesDefaults()
+	{
+		var person = Person.Create("1234567890", "test@example.com", null, null, null);
+
+		Assert.AreEqual(string.Empty, person.FirstName);
+		Assert.AreEqual(string.Empty, person.LastName);
+		Assert.IsNull(person.BornOn);
+		Assert.HasCount(0, person.Addresses);
+		Assert.AreEqual(string.Empty, person.CellPhone);
+		Assert.AreEqual(string.Empty, person.Phone);
+	}
+
+	[TestMethod]
 	public void Email_InitOnly_ThrowsOnNullOrEmptyOrInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(null!, "1234567890"));
 		Assert.ThrowsExactly<ArgumentNullException>(() => new Person(string.Empty, "1234567890"));
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person(new string('a', 76), "1234567890"));
+	}
+
+	[TestMethod]
+	public void Email_TooShort_ThrowsArgumentOutOfRangeException()
+	{
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("a@b.c", "1234567890"));
+	}
+
+	[TestMethod]
+	public void Equals_Null_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.Equals(null);
+
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -222,6 +367,15 @@ public class PersonRefTests
 		Assert.IsFalse(result);
 	}
 
+	[TestMethod]
+	public void Equals_Object_Null_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.Equals((object)null);
+
+		Assert.IsFalse(result);
+	}
 
 	[TestMethod]
 	public void Equals_Object_SameReference_ReturnsTrue()
@@ -234,6 +388,37 @@ public class PersonRefTests
 
 		// Assert
 		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Equals_SameId_ReturnsTrue()
+	{
+		var person1 = new Person("test@example.com", "1234567890");
+		var person2 = new Person("other@example.com", "1234567890");
+
+		var result = person1.Equals(person2);
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Equals_SameReference_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person.Equals(person);
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void FirstName_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.FirstName = null;
+
+		Assert.AreEqual(string.Empty, person.FirstName);
 	}
 
 	[TestMethod]
@@ -261,6 +446,16 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void FirstName_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.FirstName = "Jane";
+
+		Assert.AreEqual("Jane", person.FirstName);
+	}
+
+	[TestMethod]
 	public void Id_InitOnly_ThrowsOnInvalidLength()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Address("short"));
@@ -272,6 +467,42 @@ public class PersonRefTests
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", "short"));
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new Person("email@email.com", new string('a', 51)));
+	}
+
+	[TestMethod]
+	public void ImplicitOperator_FromPersonRecord_ConvertsProperly()
+	{
+		var record = RandomData.GeneratePerson<PersonRecord>();
+
+		Person person = record;
+
+		Assert.AreEqual(record.Id, person.Id);
+		Assert.AreEqual(record.Email, person.Email);
+		Assert.AreEqual(record.FirstName, person.FirstName);
+		Assert.AreEqual(record.LastName, person.LastName);
+	}
+
+	[TestMethod]
+	public void ImplicitOperator_FromValueTypePerson_ConvertsProperly()
+	{
+		var valPerson = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+
+		Person person = valPerson;
+
+		Assert.AreEqual(valPerson.Id, person.Id);
+		Assert.AreEqual(valPerson.Email, person.Email);
+		Assert.AreEqual(valPerson.FirstName, person.FirstName);
+		Assert.AreEqual(valPerson.LastName, person.LastName);
+	}
+
+	[TestMethod]
+	public void LastName_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.LastName = null;
+
+		Assert.AreEqual(string.Empty, person.LastName);
 	}
 
 	[TestMethod]
@@ -299,6 +530,16 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void LastName_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.LastName = "Smith";
+
+		Assert.AreEqual("Smith", person.LastName);
+	}
+
+	[TestMethod]
 	public void Operator_Equality_And_Inequality()
 	{
 		var a1 = Address.Create("1234567890");
@@ -310,6 +551,66 @@ public class PersonRefTests
 		Assert.IsTrue(a1 != a3);
 		Assert.IsTrue((Address)null == (Address)null);
 		Assert.IsFalse((Address)null != (Address)null);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThanOrEqual_NullLeft_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = (Person)null >= person;
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThanOrEqual_NullRight_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person >= null;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThan_NullLeft_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = (Person)null > person;
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void Operator_GreaterThan_NullRight_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person > null;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_NullLeft_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = (Person)null <= person;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThanOrEqual_NullRight_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person <= null;
+
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -328,6 +629,26 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void Operator_LessThan_NullLeft_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = (Person)null < person;
+
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void Operator_LessThan_NullRight_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		var result = person < null;
+
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void OperatorEquals_BothNull_ReturnsTrue()
 	{
 		Person person1 = null;
@@ -338,6 +659,15 @@ public class PersonRefTests
 
 		// Assert
 		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void OperatorEquals_OneNull_ReturnsFalse()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.IsFalse(person == null);
+		Assert.IsFalse(null == person);
 	}
 
 	[TestMethod]
@@ -355,6 +685,14 @@ public class PersonRefTests
 		Assert.IsTrue(result);
 	}
 
+	[TestMethod]
+	public void OperatorNotEquals_OneNull_ReturnsTrue()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.IsTrue(person != null);
+		Assert.IsTrue(null != person);
+	}
 
 	[TestMethod]
 	public void Person_CompareTo_ValidPerson_ShouldReturnExpectedResults()
@@ -537,6 +875,18 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void Person_ToPerson_FromPersonRecord_NoAddresses_ShouldReturnExpectedResults()
+	{
+		var personRecord = RandomData.GeneratePerson<PersonRecord>();
+		personRecord = personRecord with { Addresses = new Collection<AddressRecord>() };
+
+		var person = Person.ToPerson(personRecord);
+
+		Assert.AreEqual(personRecord.Id, person.Id);
+		Assert.HasCount(0, person.Addresses);
+	}
+
+	[TestMethod]
 	public void Person_ToPerson_FromValueTypesPerson_ShouldReturnExpectedResults()
 	{
 		// Arrange
@@ -564,6 +914,17 @@ public class PersonRefTests
 		Assert.HasCount(valueTypesPerson.Addresses.Count, person.Addresses);
 	}
 
+	[TestMethod]
+	public void Person_ToPerson_FromValueTypesPerson_NoAddresses_ShouldReturnExpectedResults()
+	{
+		var valPerson = RandomData.GeneratePerson<Models.ValueTypes.Person>();
+		valPerson.Addresses = new Collection<Models.ValueTypes.Address>();
+
+		var person = Person.ToPerson(valPerson);
+
+		Assert.AreEqual(valPerson.Id, person.Id);
+		Assert.HasCount(0, person.Addresses);
+	}
 
 	[TestMethod]
 	public void Person_ToString_ReturnsCorrectString()
@@ -600,6 +961,16 @@ public class PersonRefTests
 	}
 
 	[TestMethod]
+	public void Phone_SetNull_ConvertsToEmpty()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.Phone = null;
+
+		Assert.AreEqual(string.Empty, person.Phone);
+	}
+
+	[TestMethod]
 	public void Phone_SetSameValue_DoesNotThrow()
 	{
 		// Arrange
@@ -621,6 +992,16 @@ public class PersonRefTests
 
 		// Act
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => person.Phone = phone);
+	}
+
+	[TestMethod]
+	public void Phone_SetValid_SetsCorrectly()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		person.Phone = "555-4321";
+
+		Assert.AreEqual("555-4321", person.Phone);
 	}
 
 	[TestMethod]
