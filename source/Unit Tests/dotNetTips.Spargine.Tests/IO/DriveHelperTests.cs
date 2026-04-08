@@ -220,7 +220,7 @@ public class DriveHelperTests
 
 	[TestMethod]
 	[SupportedOSPlatform("windows")]
-	public void GetFixedDrivesContainsCDrive()
+	public void GetFixedDrivesContainsSystemDrive()
 	{
 		// Arrange
 		var systemDriveRoot = Path.GetPathRoot(Environment.SystemDirectory);
@@ -266,7 +266,7 @@ public class DriveHelperTests
 	public void GetDriveTotalSizeIsGreaterThanOrEqualToFreeSpace()
 	{
 		// Arrange
-		var drive = "C:\\";
+		var drive = Path.GetPathRoot(Environment.SystemDirectory);
 
 		// Act
 		var totalSize = DriveHelper.GetDriveTotalSize(drive);
@@ -281,7 +281,7 @@ public class DriveHelperTests
 	public void GetDriveLabelValidDriveReturnsNotNull()
 	{
 		// Arrange
-		var drive = "C:\\";
+		var drive = Path.GetPathRoot(Environment.SystemDirectory);
 
 		// Act
 		var result = DriveHelper.GetDriveLabel(drive);
@@ -295,7 +295,7 @@ public class DriveHelperTests
 	public void GetDriveSerialNumberValidDriveReturnsNotNull()
 	{
 		// Arrange
-		var drive = "C:\\";
+		var drive = Path.GetPathRoot(Environment.SystemDirectory);
 
 		// Act
 		var result = DriveHelper.GetDriveSerialNumber(drive);
