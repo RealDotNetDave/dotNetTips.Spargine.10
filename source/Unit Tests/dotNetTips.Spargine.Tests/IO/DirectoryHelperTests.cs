@@ -977,12 +977,12 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
-	public void RemoveAttributes_NonExistentDirectory_ReturnsWithoutError()
+	public void RemoveAttributes_NonExistentDirectory_ThrowsDirectoryNotFoundException()
 	{
 		// Arrange
 		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
 
-		// Act & Assert - ArgumentExists will throw since directory doesn't exist on disk
+		// Act & Assert - ArgumentExists validates directory exists on disk
 		Assert.ThrowsExactly<System.IO.DirectoryNotFoundException>(() =>
 			DirectoryHelper.RemoveAttributes(nonExistentDir, FileAttributes.ReadOnly));
 	}
