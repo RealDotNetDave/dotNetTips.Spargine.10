@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Tester.Models.ValueTypes;
 using DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,6 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetTips.Spargine.Tester.Tests.Models.Common;
 
+[ExcludeFromCodeCoverage]
 [TestClass]
 public class PersonEqualityComparerByEmailValTests
 {

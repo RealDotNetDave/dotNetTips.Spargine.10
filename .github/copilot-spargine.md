@@ -44,6 +44,7 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Avoid unnecessary abstractions or over‑engineering.  
 - Follow .NET Framework Design Guidelines.  
 - Prefer returning **interfaces or base types** when appropriate.
+- Mark all test classes with the [ExcludeFromCodeCoverage] attribute.
 
 ---
 

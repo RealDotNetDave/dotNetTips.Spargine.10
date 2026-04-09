@@ -25,9 +25,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Tests.IO;
 
-/// <summary>
-/// Defines test class FileProcessorTests.
-/// </summary>
 [ExcludeFromCodeCoverage]
 [TestClass]
 public class FileProcessorTests
@@ -201,6 +198,47 @@ public class FileProcessorTests
 		destination.Delete(true);
 	}
 
+	/// <summary>
+	/// Defines the test method CopyFilesNonExistentFilesThrowsFileNotFoundException.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesNonExistentFilesThrowsFileNotFoundException()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+
+		var files = new List<FileInfo>
+		{
+			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copy1.txt")),
+			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copy2.txt"))
+		};
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyNonExistent"));
+
+		// Act & Assert - CopyFiles accesses FileInfo.Length on non-existent files which throws
+		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFiles(files, destination));
+
+		// Cleanup
+		if (destination.Exists)
+		{
+			destination.Delete(true);
+		}
+	}
+
+	/// <summary>
+	/// Defines the test method CopyFilesNullDestinationThrowsArgumentNullException.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesNullDestinationThrowsArgumentNullException()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var files = new List<FileInfo> { new FileInfo("test.txt") };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => processor.CopyFiles(files, null));
+	}
+
 
 
 	/// <summary>
@@ -278,6 +316,82 @@ public class FileProcessorTests
 		{
 			destination.Delete(true);
 		}
+	}
+
+	/// <summary>
+	/// Defines the test method CopyFilesWithOriginalPathEmptyFilesReturnsZero.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesWithOriginalPathEmptyFilesReturnsZero()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var files = new List<FileInfo>();
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalEmpty"));
+
+		// Act
+		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
+
+		// Assert
+		Assert.AreEqual(0, copiedCount);
+	}
+
+	/// <summary>
+	/// Defines the test method CopyFilesWithOriginalPathNonExistentFilesThrowsFileNotFoundException.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesWithOriginalPathNonExistentFilesThrowsFileNotFoundException()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+
+		var files = new List<FileInfo>
+		{
+			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copyorig1.txt")),
+			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copyorig2.txt"))
+		};
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNonExistent"));
+
+		// Act & Assert - CopyFilesWithOriginalPath accesses FileInfo.Length on non-existent files which throws
+		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFilesWithOriginalPath(files, destination));
+
+		// Cleanup
+		if (destination.Exists)
+		{
+			destination.Delete(true);
+		}
+	}
+
+	/// <summary>
+	/// Defines the test method CopyFilesWithOriginalPathNullDestinationThrowsArgumentNullException.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesWithOriginalPathNullDestinationThrowsArgumentNullException()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var files = new List<FileInfo> { new FileInfo("test.txt") };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => processor.CopyFilesWithOriginalPath(files, null));
+	}
+
+	/// <summary>
+	/// Defines the test method CopyFilesWithOriginalPathNullFilesReturnsZero.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesWithOriginalPathNullFilesReturnsZero()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNull"));
+
+		// Act
+		var copiedCount = processor.CopyFilesWithOriginalPath(null, destination);
+
+		// Assert
+		Assert.AreEqual(0, copiedCount);
 	}
 
 	/// <summary>
@@ -567,6 +681,36 @@ public class FileProcessorTests
 	}
 
 	/// <summary>
+	/// Defines the test method DeleteFoldersNonRecursiveDeletesEmptyFolders.
+	/// </summary>
+	[TestMethod]
+	public void DeleteFoldersNonRecursiveDeletesEmptyFolders()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var folders = new List<DirectoryInfo>(5);
+
+		for (int index = 0; index < 5; index++)
+		{
+			var newPath = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), RandomData.GenerateWord(15)));
+			newPath.Create();
+			folders.Add(newPath);
+		}
+
+		// Act - delete empty folders non-recursively
+		var deletedCount = processor.DeleteFolders(folders, recursive: false);
+
+		// Assert
+		Assert.AreEqual(5, deletedCount);
+		foreach (var folder in folders)
+		{
+			Assert.IsFalse(folder.Exists, $"Folder {folder.FullName} should be deleted.");
+		}
+	}
+
+	/// <summary>
 	/// Defines the test method DeleteFoldersTest.
 	/// </summary>
 	[TestMethod]
@@ -789,6 +933,20 @@ public class FileProcessorTests
 	}
 
 	/// <summary>
+	/// Defines the test method MoveFilesNullDestinationThrowsArgumentNullException.
+	/// </summary>
+	[TestMethod]
+	public void MoveFilesNullDestinationThrowsArgumentNullException()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var files = new List<FileInfo> { new FileInfo("test.txt") };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => processor.MoveFiles(files, null));
+	}
+
+	/// <summary>
 	/// Defines the test method MoveFilesWithOriginalPath_BasicMove_MovesSuccessfully.
 	/// </summary>
 	[TestMethod]
@@ -877,204 +1035,6 @@ public class FileProcessorTests
 	}
 
 	/// <summary>
-	/// Defines the test method ProcessedEvent_FiresForEachFile.
-	/// </summary>
-	[TestMethod]
-	public void ProcessedEvent_FiresForEachFile()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var generateFiles = RandomData.GenerateFiles(10, fileExtension: "processor.test");
-		var files = new List<FileInfo>();
-
-		foreach (var file in generateFiles.Files)
-		{
-			files.Add(new FileInfo(file));
-		}
-
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventTest"));
-		int eventFireCount = 0;
-
-		processor.Processed += (sender, e) =>
-		{
-			eventFireCount++;
-			Assert.IsNotNull(e.Name);
-			Assert.IsTrue(e.Size >= 0);
-		};
-
-		// Act
-		processor.CopyFiles(files, destination);
-
-		// Assert
-		Assert.AreEqual(10, eventFireCount);
-
-		// Cleanup
-		destination.Delete(true);
-	}
-
-	/// <summary>
-	/// Defines the test method CopyFilesNullDestinationThrowsArgumentNullException.
-	/// </summary>
-	[TestMethod]
-	public void CopyFilesNullDestinationThrowsArgumentNullException()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var files = new List<FileInfo> { new FileInfo("test.txt") };
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => processor.CopyFiles(files, null));
-	}
-
-	/// <summary>
-	/// Defines the test method CopyFilesNonExistentFilesThrowsFileNotFoundException.
-	/// </summary>
-	[TestMethod]
-	public void CopyFilesNonExistentFilesThrowsFileNotFoundException()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-
-		var files = new List<FileInfo>
-		{
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copy1.txt")),
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copy2.txt"))
-		};
-
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyNonExistent"));
-
-		// Act & Assert - CopyFiles accesses FileInfo.Length on non-existent files which throws
-		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFiles(files, destination));
-
-		// Cleanup
-		if (destination.Exists)
-		{
-			destination.Delete(true);
-		}
-	}
-
-	/// <summary>
-	/// Defines the test method CopyFilesWithOriginalPathNullDestinationThrowsArgumentNullException.
-	/// </summary>
-	[TestMethod]
-	public void CopyFilesWithOriginalPathNullDestinationThrowsArgumentNullException()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var files = new List<FileInfo> { new FileInfo("test.txt") };
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => processor.CopyFilesWithOriginalPath(files, null));
-	}
-
-	/// <summary>
-	/// Defines the test method CopyFilesWithOriginalPathNullFilesReturnsZero.
-	/// </summary>
-	[TestMethod]
-	public void CopyFilesWithOriginalPathNullFilesReturnsZero()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNull"));
-
-		// Act
-		var copiedCount = processor.CopyFilesWithOriginalPath(null, destination);
-
-		// Assert
-		Assert.AreEqual(0, copiedCount);
-	}
-
-	/// <summary>
-	/// Defines the test method CopyFilesWithOriginalPathEmptyFilesReturnsZero.
-	/// </summary>
-	[TestMethod]
-	public void CopyFilesWithOriginalPathEmptyFilesReturnsZero()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var files = new List<FileInfo>();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalEmpty"));
-
-		// Act
-		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
-
-		// Assert
-		Assert.AreEqual(0, copiedCount);
-	}
-
-	/// <summary>
-	/// Defines the test method CopyFilesWithOriginalPathNonExistentFilesThrowsFileNotFoundException.
-	/// </summary>
-	[TestMethod]
-	public void CopyFilesWithOriginalPathNonExistentFilesThrowsFileNotFoundException()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-
-		var files = new List<FileInfo>
-		{
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copyorig1.txt")),
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copyorig2.txt"))
-		};
-
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNonExistent"));
-
-		// Act & Assert - CopyFilesWithOriginalPath accesses FileInfo.Length on non-existent files which throws
-		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFilesWithOriginalPath(files, destination));
-
-		// Cleanup
-		if (destination.Exists)
-		{
-			destination.Delete(true);
-		}
-	}
-
-	/// <summary>
-	/// Defines the test method MoveFilesNullDestinationThrowsArgumentNullException.
-	/// </summary>
-	[TestMethod]
-	public void MoveFilesNullDestinationThrowsArgumentNullException()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var files = new List<FileInfo> { new FileInfo("test.txt") };
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => processor.MoveFiles(files, null));
-	}
-
-	/// <summary>
-	/// Defines the test method MoveFilesWithOriginalPathNullDestinationThrowsArgumentNullException.
-	/// </summary>
-	[TestMethod]
-	public void MoveFilesWithOriginalPathNullDestinationThrowsArgumentNullException()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var files = new List<FileInfo> { new FileInfo("test.txt") };
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => processor.MoveFilesWithOriginalPath(files, null));
-	}
-
-	/// <summary>
-	/// Defines the test method MoveFilesWithOriginalPathNullFilesReturnsZero.
-	/// </summary>
-	[TestMethod]
-	public void MoveFilesWithOriginalPathNullFilesReturnsZero()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNull"));
-
-		// Act
-		var movedCount = processor.MoveFilesWithOriginalPath(null, destination);
-
-		// Assert
-		Assert.AreEqual(0, movedCount);
-	}
-
-	/// <summary>
 	/// Defines the test method MoveFilesWithOriginalPathEmptyFilesReturnsZero.
 	/// </summary>
 	[TestMethod]
@@ -1132,6 +1092,37 @@ public class FileProcessorTests
 	}
 
 	/// <summary>
+	/// Defines the test method MoveFilesWithOriginalPathNullDestinationThrowsArgumentNullException.
+	/// </summary>
+	[TestMethod]
+	public void MoveFilesWithOriginalPathNullDestinationThrowsArgumentNullException()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var files = new List<FileInfo> { new FileInfo("test.txt") };
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => processor.MoveFilesWithOriginalPath(files, null));
+	}
+
+	/// <summary>
+	/// Defines the test method MoveFilesWithOriginalPathNullFilesReturnsZero.
+	/// </summary>
+	[TestMethod]
+	public void MoveFilesWithOriginalPathNullFilesReturnsZero()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNull"));
+
+		// Act
+		var movedCount = processor.MoveFilesWithOriginalPath(null, destination);
+
+		// Assert
+		Assert.AreEqual(0, movedCount);
+	}
+
+	/// <summary>
 	/// Defines the test method MoveFilesWithOriginalPathOverwriteExistingMovesSuccessfully.
 	/// </summary>
 	[TestMethod]
@@ -1178,33 +1169,39 @@ public class FileProcessorTests
 	}
 
 	/// <summary>
-	/// Defines the test method DeleteFoldersNonRecursiveDeletesEmptyFolders.
+	/// Defines the test method ProcessedEvent_FiresForEachFile.
 	/// </summary>
 	[TestMethod]
-	public void DeleteFoldersNonRecursiveDeletesEmptyFolders()
+	public void ProcessedEvent_FiresForEachFile()
 	{
 		// Arrange
 		var processor = new FileProcessor();
-		processor.Processed += this.Processor_Processed;
+		var generateFiles = RandomData.GenerateFiles(10, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
 
-		var folders = new List<DirectoryInfo>(5);
-
-		for (int index = 0; index < 5; index++)
+		foreach (var file in generateFiles.Files)
 		{
-			var newPath = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), RandomData.GenerateWord(15)));
-			newPath.Create();
-			folders.Add(newPath);
+			files.Add(new FileInfo(file));
 		}
 
-		// Act - delete empty folders non-recursively
-		var deletedCount = processor.DeleteFolders(folders, recursive: false);
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventTest"));
+		int eventFireCount = 0;
+
+		processor.Processed += (sender, e) =>
+		{
+			eventFireCount++;
+			Assert.IsNotNull(e.Name);
+			Assert.IsTrue(e.Size >= 0);
+		};
+
+		// Act
+		processor.CopyFiles(files, destination);
 
 		// Assert
-		Assert.AreEqual(5, deletedCount);
-		foreach (var folder in folders)
-		{
-			Assert.IsFalse(folder.Exists, $"Folder {folder.FullName} should be deleted.");
-		}
+		Assert.AreEqual(10, eventFireCount);
+
+		// Cleanup
+		destination.Delete(true);
 	}
 
 	/// <summary>
@@ -1239,48 +1236,6 @@ public class FileProcessorTests
 		foreach (var args in eventArgsList)
 		{
 			Assert.AreEqual(FileProgressState.FileCopied, args.ProgressState);
-			Assert.IsFalse(string.IsNullOrEmpty(args.Name));
-			Assert.IsFalse(string.IsNullOrEmpty(args.Message));
-			Assert.IsTrue(args.Size > 0);
-			Assert.IsTrue(args.SpeedInMilliseconds >= 0);
-		}
-
-		// Cleanup
-		destination.Delete(true);
-	}
-
-	/// <summary>
-	/// Defines the test method ProcessedEventArgsMoveFilesValidatesProperties.
-	/// </summary>
-	[TestMethod]
-	public void ProcessedEventArgsMoveFilesValidatesProperties()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
-		var files = new List<FileInfo>();
-
-		foreach (var file in generateFiles.Files)
-		{
-			files.Add(new FileInfo(file));
-		}
-
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventArgsMoveTest"));
-		var eventArgsList = new List<ProgressEventArgs>();
-
-		processor.Processed += (sender, e) =>
-		{
-			eventArgsList.Add(e);
-		};
-
-		// Act
-		processor.MoveFiles(files, destination);
-
-		// Assert
-		Assert.AreEqual(3, eventArgsList.Count);
-		foreach (var args in eventArgsList)
-		{
-			Assert.AreEqual(FileProgressState.FileMoved, args.ProgressState);
 			Assert.IsFalse(string.IsNullOrEmpty(args.Name));
 			Assert.IsFalse(string.IsNullOrEmpty(args.Message));
 			Assert.IsTrue(args.Size > 0);
@@ -1364,6 +1319,48 @@ public class FileProcessorTests
 			Assert.IsFalse(string.IsNullOrEmpty(args.Name));
 			Assert.IsFalse(string.IsNullOrEmpty(args.Message));
 		}
+	}
+
+	/// <summary>
+	/// Defines the test method ProcessedEventArgsMoveFilesValidatesProperties.
+	/// </summary>
+	[TestMethod]
+	public void ProcessedEventArgsMoveFilesValidatesProperties()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventArgsMoveTest"));
+		var eventArgsList = new List<ProgressEventArgs>();
+
+		processor.Processed += (sender, e) =>
+		{
+			eventArgsList.Add(e);
+		};
+
+		// Act
+		processor.MoveFiles(files, destination);
+
+		// Assert
+		Assert.AreEqual(3, eventArgsList.Count);
+		foreach (var args in eventArgsList)
+		{
+			Assert.AreEqual(FileProgressState.FileMoved, args.ProgressState);
+			Assert.IsFalse(string.IsNullOrEmpty(args.Name));
+			Assert.IsFalse(string.IsNullOrEmpty(args.Message));
+			Assert.IsTrue(args.Size > 0);
+			Assert.IsTrue(args.SpeedInMilliseconds >= 0);
+		}
+
+		// Cleanup
+		destination.Delete(true);
 	}
 
 #nullable enable

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File name extension must be .runsettings -->
+<RunSettings>
+
+  <!-- Basic MSTest configuration -->
+  <RunConfiguration>
+    <ResultsDirectory>TestResults</ResultsDirectory>
+  </RunConfiguration>
+
+  <MSTest>
+    <MapInconclusiveToFailed>false</MapInconclusiveToFailed>
+    <CaptureTraceOutput>true</CaptureTraceOutput>
+  </MSTest>
+
+  <!-- Visual Studio Enterprise Code Coverage -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <!-- Exclude test assemblies from the code coverage report.
+               Microsoft.Testing.Platform defaults to false, but the VSTest Bridge
+               compatibility layer defaults to true; set explicitly to prevent
+               test project DLLs from appearing in coverage results. -->
+          <IncludeTestAssembly>False</IncludeTestAssembly>
+          <CodeCoverage>
+
+            <!-- Only instrument assemblies whose FILENAME starts with
+                 "dotNetTips.Spargine.10". The [^\\]* anchor ensures the regex
+                 cannot cross directory separators, which is critical because the
+                 workspace path itself contains "dotNetTips.Spargine.10" and a
+                 plain .* would match every DLL in the tree.
+                 The Exclude entry removes the Benchmarking assembly, which is
+                 NOT part of this solution but shares the same filename prefix. -->
+            <ModulePaths>
+              <Include>
+                <ModulePath>.*\\dotNetTips\.Spargine\.10[^\\]*\.dll$</ModulePath>
+              </Include>
+              <Exclude>
+                <ModulePath>.*\\dotNetTips\.Spargine\.10\.Benchmarking[^\\]*\.dll$</ModulePath>
+              </Exclude>
+            </ModulePaths>
+
+            <!-- Exclude code decorated with these attributes from coverage analysis.
+                 The [GeneratedRegex] source generator emits [GeneratedCode] on its
+                 generated nested classes, so excluding GeneratedCodeAttribute removes
+                 all source-generated regex implementation code from the report. -->
+            <Attributes>
+              <Exclude>
+                <Attribute>^System\.Diagnostics\.DebuggerHiddenAttribute$</Attribute>
+                <Attribute>^System\.Diagnostics\.DebuggerNonUserCodeAttribute$</Attribute>
+                <Attribute>^System\.CodeDom\.Compiler\.GeneratedCodeAttribute$</Attribute>
+                <Attribute>^System\.Diagnostics\.CodeAnalysis\.ExcludeFromCodeCoverageAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
+
+            <!-- Exclude source-generated files from coverage analysis. -->
+            <Sources>
+              <Exclude>
+                <Source>.*\.g\.cs$</Source>
+                <Source>.*\.g\.i\.cs$</Source>
+                <Source>.*\.generated\.cs$</Source>
+                <Source>.*\.designer\.cs$</Source>
+              </Exclude>
+            </Sources>
+
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+
+</RunSettings>

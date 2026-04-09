@@ -93,6 +93,7 @@ public class LoggingHelperTests
 
 		// Assert
 		Assert.IsTrue(logger.LoggedMessages.Count > 0, "Should log application information.");
+
 		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("AppInfo:")), "Messages should contain AppInfo prefix.");
 	}
 
@@ -136,6 +137,7 @@ public class LoggingHelperTests
 
 		// Assert
 		Assert.IsTrue(logger.LoggedMessages.Count > 0, "Should log computer information.");
+
 		Assert.IsTrue(logger.LoggedLevels.All(l => l == LogLevel.Information), "All messages should be logged at Information level.");
 	}
 

@@ -1411,6 +1411,7 @@ public class ExceptionExtensionsTests
 /// <summary>
 /// A simple mock logger that enables all log levels for testing purposes.
 /// </summary>
+[ExcludeFromCodeCoverage]
 internal class MockLogger : ILogger
 {
 	public List<LogLevel> LoggedLevels { get; } = [];

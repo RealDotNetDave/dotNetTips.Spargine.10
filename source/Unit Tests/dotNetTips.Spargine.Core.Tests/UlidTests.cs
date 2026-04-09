@@ -13,16 +13,20 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNetTips.Spargine.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Core.Tests;
 
+[ExcludeFromCodeCoverage]
 [TestClass]
 public class UlidTests
 {
@@ -158,7 +162,7 @@ public class UlidTests
 	{
 		// Arrange
 		const int count = 100;
-		var ulids = new System.Collections.Concurrent.ConcurrentBag<string>();
+		var ulids = new ConcurrentBag<string>();
 
 		// Act
 		Parallel.For(0, count, _ =>
@@ -283,16 +287,6 @@ public class UlidTests
 	}
 
 	[TestMethod]
-	public void Ulid_Constructor_WhitespaceValue_ThrowsArgumentException()
-	{
-		// Arrange
-		var whitespaceValue = new string(' ', 26);
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(whitespaceValue));
-	}
-
-	[TestMethod]
 	public void Ulid_Constructor_ValidUlid_CreatesInstance()
 	{
 		// Arrange
@@ -303,6 +297,16 @@ public class UlidTests
 
 		// Assert
 		Assert.AreEqual(validUlid, ulid.ToString());
+	}
+
+	[TestMethod]
+	public void Ulid_Constructor_WhitespaceValue_ThrowsArgumentException()
+	{
+		// Arrange
+		var whitespaceValue = new string(' ', 26);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentException>(() => new Ulid(whitespaceValue));
 	}
 
 	[TestMethod]

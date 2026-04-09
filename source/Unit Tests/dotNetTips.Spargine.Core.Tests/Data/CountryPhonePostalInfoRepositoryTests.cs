@@ -43,6 +43,7 @@ public class CountryPhonePostalInfoRepositoryTests
 		Assert.IsNotNull(result);
 		Assert.AreEqual("United States", result.Name);
 	}
+
 	[TestMethod]
 	public void GetCountryPhonePostalInfo_ByIso2_ReturnsInfo()
 	{

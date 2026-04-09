@@ -53,6 +53,7 @@ public class ChannelQueueTests
 		_ = queue.TryWriteOnce(1, key);
 
 		Assert.IsTrue(queue.Acknowledge(key), "Acknowledge should remove the key and return true.");
+
 		Assert.IsFalse(queue.Acknowledge(key), "Acknowledge should return false for a non-existent key.");
 	}
 
@@ -61,7 +62,10 @@ public class ChannelQueueTests
 	{
 		// Arrange
 		var queue = new ChannelQueue<string>();
-		_ = queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
+
+		_ = queue.TryWriteOnce("item1", "key1", TimeSpan.FromMilliseconds(1));
+
+		_ = queue.TryWriteOnce("item2", "key2", TimeSpan.FromMilliseconds(1));
 
 		queue.Clear();
 
@@ -74,7 +78,11 @@ public class ChannelQueueTests
 	{
 		// Arrange
 		var queue = new ChannelQueue<string>();
-		_ = queue.TryWriteOnce("item", "key", TimeSpan.FromMilliseconds(1));
+
+		_ = queue.TryWriteOnce("item1", "key1", TimeSpan.FromMilliseconds(1));
+
+		_ = queue.TryWriteOnce("item2", "key2", TimeSpan.FromMilliseconds(1));
+
 		Thread.Sleep(10);
 
 		// Act & Assert - Multiple calls should not throw
@@ -98,6 +106,7 @@ public class ChannelQueueTests
 
 		// Assert - Key should still exist, blocking new write with same key
 		var result = queue.TryWriteOnce("item2", idempotencyKey, TimeSpan.FromMinutes(5));
+
 		Assert.IsFalse(result, "Should not be able to write with the same key - it hasn't expired.");
 	}
 	[TestMethod]

@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,6 +22,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetTips.Spargine.Tester.Tests.Models.Common;
 
+[ExcludeFromCodeCoverage]
 [TestClass]
 public class PersonComparerByLastNameThenFirstNameRefTests
 {
@@ -36,23 +38,13 @@ public class PersonComparerByLastNameThenFirstNameRefTests
 	}
 
 	[TestMethod]
-	public void Compare_XIsNull_ReturnsNegative()
+	public void Compare_DifferentLastNames_XGreaterThanY_ReturnsPositive()
 	{
 		var comparer = new PersonComparerByLastNameThenFirstName();
-		var person = new Person("test@example.com", "1234567890") { LastName = "Smith", FirstName = "John" };
+		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Smith", FirstName = "John" };
+		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Adams", FirstName = "John" };
 
-		var result = comparer.Compare(null, person);
-
-		Assert.IsLessThan(0, result);
-	}
-
-	[TestMethod]
-	public void Compare_YIsNull_ReturnsPositive()
-	{
-		var comparer = new PersonComparerByLastNameThenFirstName();
-		var person = new Person("test@example.com", "1234567890") { LastName = "Smith", FirstName = "John" };
-
-		var result = comparer.Compare(person, null);
+		var result = comparer.Compare(person1, person2);
 
 		Assert.IsGreaterThan(0, result);
 	}
@@ -70,11 +62,11 @@ public class PersonComparerByLastNameThenFirstNameRefTests
 	}
 
 	[TestMethod]
-	public void Compare_DifferentLastNames_XGreaterThanY_ReturnsPositive()
+	public void Compare_SameLastName_DifferentFirstName_XGreaterThanY_ReturnsPositive()
 	{
 		var comparer = new PersonComparerByLastNameThenFirstName();
-		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Smith", FirstName = "John" };
-		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Adams", FirstName = "John" };
+		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Smith", FirstName = "Bob" };
+		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Smith", FirstName = "Alice" };
 
 		var result = comparer.Compare(person1, person2);
 
@@ -91,18 +83,6 @@ public class PersonComparerByLastNameThenFirstNameRefTests
 		var result = comparer.Compare(person1, person2);
 
 		Assert.IsLessThan(0, result);
-	}
-
-	[TestMethod]
-	public void Compare_SameLastName_DifferentFirstName_XGreaterThanY_ReturnsPositive()
-	{
-		var comparer = new PersonComparerByLastNameThenFirstName();
-		var person1 = new Person("test1@example.com", "0000000001") { LastName = "Smith", FirstName = "Bob" };
-		var person2 = new Person("test2@example.com", "0000000002") { LastName = "Smith", FirstName = "Alice" };
-
-		var result = comparer.Compare(person1, person2);
-
-		Assert.IsGreaterThan(0, result);
 	}
 
 	[TestMethod]
@@ -136,5 +116,27 @@ public class PersonComparerByLastNameThenFirstNameRefTests
 		Assert.AreEqual("Bob", people[1].FirstName);
 		Assert.AreEqual("Zane", people[2].LastName);
 		Assert.AreEqual("Alice", people[2].FirstName);
+	}
+
+	[TestMethod]
+	public void Compare_XIsNull_ReturnsNegative()
+	{
+		var comparer = new PersonComparerByLastNameThenFirstName();
+		var person = new Person("test@example.com", "1234567890") { LastName = "Smith", FirstName = "John" };
+
+		var result = comparer.Compare(null, person);
+
+		Assert.IsLessThan(0, result);
+	}
+
+	[TestMethod]
+	public void Compare_YIsNull_ReturnsPositive()
+	{
+		var comparer = new PersonComparerByLastNameThenFirstName();
+		var person = new Person("test@example.com", "1234567890") { LastName = "Smith", FirstName = "John" };
+
+		var result = comparer.Compare(person, null);
+
+		Assert.IsGreaterThan(0, result);
 	}
 }
