@@ -64,6 +64,7 @@ public static class RandomData
 	/// The default minimum character used when generating random file names.
 	/// </summary>
 	public const char DefaultMinCharacterRandomFile = 'A';
+
 	/// <summary>
 	/// Specifies the number of digits in an address number.
 	/// </summary>

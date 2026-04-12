@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 04-12-2026
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -32,6 +33,11 @@ public class RandomDataBenchmark : Benchmark
 			Environment.SpecialFolder.ApplicationData,
 			Environment.SpecialFolderOption.DoNotVerify),
 		"BenchmarkTests");
+
+	[ParamsSource(nameof(Counts))]
+	public int Count { get; set; }
+
+	public IEnumerable<int> Counts => new[] { 64, 128, 256, 512, 1024 };
 
 	public override void Cleanup()
 	{
@@ -57,7 +63,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateByteArray()
 	{
-		var result = RandomData.GenerateByteArray(100);
+		var result = RandomData.GenerateByteArray(this.Count);
 
 		this.Consume(result);
 	}
@@ -138,7 +144,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateNonZeroByteArray()
 	{
-		var result = RandomData.GenerateNonZeroByteArray(100);
+		var result = RandomData.GenerateNonZeroByteArray(this.Count);
 
 		this.Consume(result);
 	}
@@ -147,7 +153,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateNumber()
 	{
-		var result = RandomData.GenerateNumber(10);
+		var result = RandomData.GenerateNumber(this.Count);
 
 		this.Consume(result);
 	}
@@ -246,9 +252,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateTempFile()
 	{
-		//TODO: ADD DIFFERENT FILES SIZES
-
-		var fileName = RandomData.GenerateTempFile();
+		var fileName = RandomData.GenerateTempFile(this.Count);
 
 		this.Consume(fileName);
 	}
@@ -302,8 +306,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateWord()
 	{
-		var result = RandomData.GenerateWord(10);
-
+		var result = RandomData.GenerateWord(this.Count);
 		this.Consume(result);
 	}
 
@@ -311,9 +314,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxChar()
 	{
-		//TODO: ADD DIFFERENT LENGTHS FOR ALL GENERATEWORD METHOD VARIATIONS
-
-		var result = RandomData.GenerateWord(10, char.MinValue, char.MaxValue);
+		var result = RandomData.GenerateWord(this.Count, char.MinValue, char.MaxValue);
 
 		this.Consume(result);
 	}
@@ -322,7 +323,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxLength()
 	{
-		var result = RandomData.GenerateWord(10, 100);
+		var result = RandomData.GenerateWord(this.Count, 100);
 
 		this.Consume(result);
 	}
@@ -331,7 +332,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxLengthChar()
 	{
-		var result = RandomData.GenerateWord(10, 100, char.MinValue, char.MaxValue);
+		var result = RandomData.GenerateWord(this.Count, 100, char.MinValue, char.MaxValue);
 
 		this.Consume(result);
 	}
@@ -340,7 +341,7 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateWords()
 	{
-		var result = RandomData.GenerateWords(10, 5, 10);
+		var result = RandomData.GenerateWords(this.Count, 5, 10);
 
 		this.Consume(result);
 	}
