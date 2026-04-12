@@ -33,7 +33,7 @@ internal sealed class Program
 {
 	/// <summary>
 	/// Defines the entry point of the application.
-	/// </summary>
+	/// </summary>		
 	public static void Main()
 	{
 		var config = DefaultConfig.Instance

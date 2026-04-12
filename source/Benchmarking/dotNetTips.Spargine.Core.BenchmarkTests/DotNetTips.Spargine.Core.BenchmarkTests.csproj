@@ -35,7 +35,7 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
