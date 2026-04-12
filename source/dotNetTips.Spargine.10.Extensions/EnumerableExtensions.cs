@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-12-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -172,7 +172,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
+		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
 		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
@@ -180,23 +180,17 @@ public static class EnumerableExtensions
 
 			var currentPage = new List<T>(pageSize);
 
-			await foreach (var item in collection.ConfigureAwait(false))
+			await foreach (var item in collection.WithCancellation(cancellationToken).ConfigureAwait(false))
 			{
-				// Check cancellation before processing item
-				cancellationToken.ThrowIfCancellationRequested();
-
 				currentPage.Add(item);
 
 				if (currentPage.Count == pageSize)
 				{
 					yield return currentPage;
-
-					// Pre-allocate next page with same capacity
 					currentPage = new List<T>(pageSize);
 				}
 			}
 
-			// Yield the last partial page if it contains any items
 			if (currentPage.Count > 0)
 			{
 				yield return currentPage;

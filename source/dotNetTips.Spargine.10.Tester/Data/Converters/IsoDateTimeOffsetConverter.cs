@@ -86,7 +86,7 @@ internal sealed class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 	/// <param name="options">Serialization options to use.</param>
 	/// <returns>The converted <see cref="DateTimeOffset"/> value.</returns>
 	/// <exception cref="JsonException">Thrown when the JSON is invalid or cannot be converted to <see cref="DateTimeOffset"/>.</exception>
-	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var dateText = reader.GetString();
@@ -119,7 +119,7 @@ internal sealed class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 	/// <param name="value">The <see cref="DateTimeOffset"/> value to convert to JSON.</param>
 	/// <param name="options">An object that specifies serialization options to use.</param>
 	/// <exception cref="ArgumentNullException">Thrown if the writer is null.</exception>
-	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
 	{
 		writer = writer.ArgumentNotNull();

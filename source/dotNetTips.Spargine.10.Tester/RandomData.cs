@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-12-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -15,6 +15,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using DotNetTips.Spargine.Core;
@@ -341,7 +342,7 @@ public static class RandomData
 	/// <returns>A random character between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
 	/// <example>Output: 65 'A'</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static char GenerateCharacter(char minValue, char maxValue)
 	{
 		return (char)GenerateInteger(minValue, maxValue);
@@ -354,10 +355,13 @@ public static class RandomData
 	/// <returns>A new instance of <typeparamref name="T"/> with random values for X, Y, and Z.</returns>
 	/// <example>Output: X: 178765551 Y: -2145952440</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCoordinate), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCoordinate), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T GenerateCoordinate<T>() where T : ICoordinate, new()
 	{
-		return new() { X = GenerateInteger(), Y = GenerateInteger(), Z = GenerateInteger() };
+		Span<int> values = stackalloc int[3];
+		RandomNumberGenerator.Fill(MemoryMarshal.AsBytes(values));
+
+		return new() { X = values[0], Y = values[1], Z = values[2] };
 	}
 
 	/// <summary>
@@ -492,12 +496,33 @@ public static class RandomData
 	/// <seealso cref="GenerateEmailAddressWithName"/>
 	/// <seealso cref="GenerateDomainExtension"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateEmailAddress), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateEmailAddress), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateEmailAddress()
 	{
-		return string.Concat(GenerateWord(5, 25, 'a', 'z'), "@", GenerateWord(5, 15, 'a', 'z'), ".", GenerateDomainExtension());
-	}
+		var username = GenerateWord(5, 25, 'a', 'z');
+		var domain = GenerateWord(5, 15, 'a', 'z');
+		var extension = GenerateDomainExtension();
 
+		return string.Create(
+			username.Length + domain.Length + extension.Length + 2,
+			(username, domain, extension),
+			static (span, state) =>
+			{
+				var position = 0;
+
+				state.username.AsSpan().CopyTo(span);
+				position += state.username.Length;
+
+				span[position++] = '@';
+
+				state.domain.AsSpan().CopyTo(span[position..]);
+				position += state.domain.Length;
+
+				span[position++] = '.';
+
+				state.extension.AsSpan().CopyTo(span[position..]);
+			});
+	}
 
 	/// <summary>
 	/// Generates a file with random content.
@@ -1012,7 +1037,7 @@ public static class RandomData
 	/// <param name="fileLength">The length of the file in characters. Default is <see cref="DefaultFileLength"/>.</param>
 	/// <returns>The path to the generated temporary file.</returns>
 	/// <example>Output: C:\\Users\\user folder\\AppData\\Local\\Temp\\OFQCKBRAKQ.dotnettips.temp</example>
-	[Information(nameof(GenerateTempFile), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateTempFile), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GenerateTempFile(int fileLength = DefaultFileLength)
 	{
 		fileLength = fileLength.ArgumentInRange(min: 1, defaultValue: DefaultFileLength);
@@ -1033,10 +1058,10 @@ public static class RandomData
 	/// This method combines the output of <see cref="GenerateUrlHostName"/> and <see cref="GenerateRelativeUrl"/> to construct the full URL.
 	/// </remarks>
 	/// <example>Output: https://www.rp.red/wyfkxbfft/pqypmdstoydnootvdvnsqkn/</example>
-	[Information(nameof(GenerateUrl), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrl), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrl()
 	{
-		return $"{GenerateUrlHostName()}{GenerateRelativeUrl()}";
+		return string.Concat(GenerateUrlHostName(), GenerateRelativeUrl());
 	}
 
 	/// <summary>
@@ -1045,10 +1070,10 @@ public static class RandomData
 	/// <returns>A string representing a URL fragment.</returns>
 	/// <example>Output: /rregyyjxpjiats</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlFragment), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlFragment), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlFragment()
 	{
-		return $"/{GenerateWord(1, 25, 'a', 'z')}";
+		return string.Concat("/", GenerateWord(1, 25, 'a', 'z'));
 	}
 
 	/// <summary>
@@ -1060,10 +1085,10 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: https://www.ukrsusbrtjijfktfj.shouji</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlHostName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlHostName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlHostName()
 	{
-		return $"https://{GenerateUrlHostNameNoProtocol()}";
+		return string.Concat("https://", GenerateUrlHostNameNoProtocol());
 	}
 
 	/// <summary>
@@ -1083,10 +1108,10 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlHostNameNoProtocol), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlHostNameNoProtocol), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlHostNameNoProtocol()
 	{
-		return $"www.{GenerateWord(1, 25, 'a', 'z')}.{GenerateUrlHostNameNoSubDomain()}";
+		return string.Concat("www.", GenerateWord(1, 25, 'a', 'z'), ".", GenerateUrlHostNameNoSubDomain());
 	}
 
 	/// <summary>
@@ -1095,7 +1120,7 @@ public static class RandomData
 	/// <returns>A string representing a URL host name without the protocol. The domain extension is generated using <see cref="GenerateDomainExtension"/>.</returns>
 	/// <example>Output: dz</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlHostNameNoSubDomain), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlHostNameNoSubDomain), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlHostNameNoSubDomain()
 	{
 		return GenerateDomainExtension();
@@ -1111,11 +1136,9 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: mL_g[E_E_CsoJvjshI]CFjFKa</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GenerateWord(int length = 1)
 	{
-		length = length.ArgumentInRange(min: 1, defaultValue: 1);
-
 		return GenerateWord(length, DefaultMinCharacter, DefaultMaxCharacter);
 	}
 
@@ -1127,12 +1150,9 @@ public static class RandomData
 	/// <returns>A randomly generated word.</returns>
 	/// <example>Output: anvpwufadtxpfysguavguwm</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GenerateWord(int minLength = 1, int maxLength = 1)
 	{
-		minLength = minLength.ArgumentInRange(min: 1, defaultValue: 1);
-		maxLength = maxLength.ArgumentInRange(min: 1, defaultValue: 1);
-
 		return GenerateWord(minLength, maxLength, DefaultMinCharacter, DefaultMaxCharacter);
 	}
 

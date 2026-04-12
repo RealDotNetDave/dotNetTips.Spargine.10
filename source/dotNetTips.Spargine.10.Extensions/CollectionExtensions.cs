@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-27-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -150,7 +150,7 @@ public static class CollectionExtensions
 		/// names.AddIfNotExists("Alice", StringComparer.OrdinalIgnoreCase);
 		/// </code>
 		/// </example>
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 		public bool AddIfNotExists([AllowNull] in T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (item is null)
@@ -318,7 +318,7 @@ public static class CollectionExtensions
 		/// <param name="item">The item to upsert into the collection. If <c>null</c>, the method returns without modifying the collection.</param>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void Upsert([AllowNull] in T item)
 		{
 			if (item is null)

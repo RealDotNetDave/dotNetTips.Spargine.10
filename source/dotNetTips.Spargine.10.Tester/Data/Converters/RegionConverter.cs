@@ -72,7 +72,7 @@ internal sealed class RegionConverter : JsonConverter<Region>
 	/// <exception cref="Exception">Cannot marshal type Region</exception>
 	/// <remarks>A converter may throw any Exception, but should throw <see cref="JsonException"/> when the JSON
 	/// cannot be created.</remarks>
-	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, Region value, JsonSerializerOptions options)
 	{
 		switch (value)

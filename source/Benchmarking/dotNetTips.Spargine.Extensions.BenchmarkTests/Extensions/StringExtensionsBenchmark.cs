@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-24-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
@@ -221,24 +222,23 @@ public class StringExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	//TODO: FIX BENCHMARKS BELOW - THEY ARE NOT WORKING PROPERLY
-	//[Benchmark(Description = nameof(StringExtensions.FromDeflateStringAsync))]
-	//[BenchmarkCategory(Categories.Strings)]
-	//public async Task FromDeflateStringAsync()
-	//{
-	//	var result = await this._compressedString.FromDeflateStringAsync().ConfigureAwait(false);
+	[Benchmark(Description = nameof(StringExtensions.FromDeflateStringAsync))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public async Task FromDeflateStringAsync()
+	{
+		var result = await this._compressedString.FromDeflateStringAsync().ConfigureAwait(false);
 
-	//	await this.ConsumeAsync(result).ConfigureAwait(false);
-	//}
+		await this.ConsumeAsync(result).ConfigureAwait(false);
+	}
 
-	//[Benchmark(Description = nameof(StringExtensions.FromZLibStringAsync))]
-	//[BenchmarkCategory(Categories.Strings)]
-	//public async Task FromZLibStringAsync()
-	//{
-	//	var result = await this._zlibString.FromZLibStringAsync().ConfigureAwait(false);
+	[Benchmark(Description = nameof(StringExtensions.FromZLibStringAsync))]
+	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	public async Task FromZLibStringAsync()
+	{
+		var result = await this._zlibString.FromZLibStringAsync().ConfigureAwait(false);
 
-	//	await this.ConsumeAsync(result).ConfigureAwait(false);
-	//}
+		await this.ConsumeAsync(result).ConfigureAwait(false);
+	}
 
 	[Benchmark(Description = nameof(StringExtensions.HasValue))]
 	[BenchmarkCategory(Categories.Strings)]

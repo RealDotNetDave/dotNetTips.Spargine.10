@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1552,19 +1552,14 @@ public static class TypeHelper
 	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
-		if (type == null)
+		if (type is null)
 		{
 			return false;
 		}
 
-		// Ensure cache is initialized (only on first call)
-		if (_cachedBuiltInTypes is null)
-		{
-			_ = BuiltInTypeNames(); // Initialize cache
-		}
+		var cache = _cachedBuiltInTypes ?? BuiltInTypeNames();
 
-		// Direct dictionary lookup (no null check overhead on hot path)
-		return _cachedBuiltInTypes!.ContainsKey(type);
+		return cache.ContainsKey(type);
 	}
 
 	/// <summary>

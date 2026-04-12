@@ -26,6 +26,11 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
   - **Last Modified By:** `Copilot Agent`
 
 ---
+## **1.1. Spargine `[Information]` Attribute Rules**
+- After optimizing a method, update its `[Information]` attribute: set `OptimizationStatus` to `OptimizationStatus.Completed` and set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance` so benchmarks are re-validated against the new implementation.
+- After creating a benchmark test for a method, update its `[Information]` attribute: set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance`.
+
+---
 
 ## **2. Performance Rules**
 

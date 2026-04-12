@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-16-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="ExecutionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -58,7 +58,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static SimpleResult<int> ProgressiveRetry([DisallowNull] Action operation, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, int retryWaitMilliseconds = 100, ILogger? logger = null)
 	{
 		operation = operation.ArgumentNotNull();
@@ -120,7 +120,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetryAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetryAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<SimpleResult<int>> ProgressiveRetryAsync([DisallowNull] Func<Task> function, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, [ConstantExpected(Min = 1, Max = int.MaxValue)] int retryWaitMilliseconds = 100, ILogger? logger = null, CancellationToken cancellationToken = default)
 	{
 		function = function.ArgumentNotNull();

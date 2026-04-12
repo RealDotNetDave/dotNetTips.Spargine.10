@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="TimeOnlyConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -49,7 +49,7 @@ public class TimeOnlyConverter(string? serializationFormat) : JsonConverter<Time
 	/// This method attempts to parse a <see cref="TimeOnly"/> value from the JSON string. It uses the IsoDateTimeOffsetConverter.Singleton.Culture for parsing.
 	/// If the JSON string cannot be parsed, a <see cref="JsonException"/> is thrown.
 	/// </remarks>
-	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override TimeOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var value = reader.GetString() ?? throw new JsonException(Resources.ErrorJSONValueIsNullOrNotAValidTimeOnlyRepresentation);
@@ -77,7 +77,7 @@ public class TimeOnlyConverter(string? serializationFormat) : JsonConverter<Time
 	/// This method converts the <see cref="TimeOnly"/> value to its string representation using the specified serialization format
 	/// and writes it as a JSON string value. It uses IsoDateTimeOffsetConverter.Singleton.Culture for formatting.
 	/// </remarks>
-	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, TimeOnly value, JsonSerializerOptions options)
 	{
 		writer = writer.ArgumentNotNull();

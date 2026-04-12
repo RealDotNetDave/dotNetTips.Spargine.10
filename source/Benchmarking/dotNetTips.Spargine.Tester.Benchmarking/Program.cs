@@ -10,8 +10,8 @@
 //     David McCarter
 // </copyright>
 // <summary>
-// Benchmark Runtime: 
-// Benchmark count: 126 benchmarks.
+// Benchmark Runtime: 1 hour
+// Benchmark count: 130 benchmarks.
 // </summary>
 // ***********************************************************************
 

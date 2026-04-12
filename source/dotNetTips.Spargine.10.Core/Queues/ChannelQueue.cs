@@ -4,7 +4,7 @@
 // Created          : 11-12-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-30-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -324,7 +324,7 @@ public sealed class ChannelQueue<T>
 	/// </summary>
 	/// <param name="item">The item.</param>
 	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryPeek(out T item)
 	{
 		if (this._channel.Reader.TryRead(out item!))

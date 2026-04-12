@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -669,7 +669,7 @@ public static class StringExtensions
 	/// <remarks>
 	/// This method uses <see cref="DeflateStream"/> for decompression.
 	/// </remarks>
-	[Information(nameof(FromDeflateStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FromDeflateStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<string> FromDeflateStringAsync([DisallowNull] this string value, CancellationToken cancellationToken = default)
 	{
 		var bytes = value.ToByteArrayFromBase64();
@@ -744,7 +744,7 @@ public static class StringExtensions
 	/// <remarks>
 	/// This method uses <see cref="DeflateStream"/> for decompression, as ZLib compression is closely related to the Deflate compression algorithm.
 	/// </remarks>
-	[Information(nameof(FromZLibStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FromZLibStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<string> FromZLibStringAsync([DisallowNull] this string value, CancellationToken cancellationToken = default)
 	{
 		var bytes = value.ToByteArrayFromBase64();
@@ -897,23 +897,10 @@ public static class StringExtensions
 	/// <seealso cref="StringComparison.Ordinal"/>
 	/// <seealso cref="FastEquals(string, string, in StringComparison)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasValue(this string input, string value)
 	{
-		// Fast null/empty checks first
-		if (input is null || value is null || input.Length == 0)
-		{
-			return false;
-		}
-
-		// Quick length check avoids a more expensive comparison
-		if (input.Length != value.Length)
-		{
-			return false;
-		}
-
-		// Ordinal comparison is fastest and deterministic
-		return string.Equals(input, value, StringComparison.Ordinal);
+		return input is { Length: > 0 } && string.Equals(input, value, StringComparison.Ordinal);
 	}
 
 	/// <summary>

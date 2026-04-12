@@ -41,43 +41,6 @@ public static class DataReaderExtensions
 	new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
-	/// Adds the header row to the CSV output if specified.
-	/// </summary>
-	/// <param name="dataReader">The data reader.</param>
-	/// <param name="includeHeaderAsFirstRow">if set to <c>true</c> [include header as first row].</param>
-	/// <param name="delimiter">The delimiter.</param>
-	/// <param name="convertedRows">The list of converted rows.</param>
-	private static void AddHeaderRowToCsv(IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter, List<string> convertedRows)
-	{
-		if (includeHeaderAsFirstRow)
-		{
-			var sb = _stringBuilderPool.Get();
-
-			try
-			{
-				for (var fieldIndex = 0; fieldIndex < dataReader.FieldCount; fieldIndex++)
-				{
-					if (dataReader.GetName(fieldIndex) is not null)
-					{
-						_ = sb.Append(dataReader.GetName(fieldIndex));
-					}
-
-					if (fieldIndex < dataReader.FieldCount - 1)
-					{
-						_ = sb.Append(delimiter);
-					}
-				}
-
-				convertedRows.Add(sb.ToString());
-			}
-			finally
-			{
-				_stringBuilderPool.Return(sb.Clear());
-			}
-		}
-	}
-
-	/// <summary>
 	/// Converts <see cref="IDataReader" /> to CSV format using <see cref="ObjectPool&lt;StringBuilder&gt;" /> to improve performance.
 	/// Validates that <paramref name="dataReader" /> is not null
 	/// </summary>
@@ -87,7 +50,7 @@ public static class DataReaderExtensions
 	/// <returns>ReadOnlyCollection&lt;System.String&gt;.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ToCsv([DisallowNull] this IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter = ControlChars.Comma)
 	{
 		dataReader = dataReader.ArgumentNotNull();
@@ -140,5 +103,42 @@ public static class DataReaderExtensions
 		}
 
 		return convertedRows.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Adds the header row to the CSV output if specified.
+	/// </summary>
+	/// <param name="dataReader">The data reader.</param>
+	/// <param name="includeHeaderAsFirstRow">if set to <c>true</c> [include header as first row].</param>
+	/// <param name="delimiter">The delimiter.</param>
+	/// <param name="convertedRows">The list of converted rows.</param>
+	private static void AddHeaderRowToCsv(IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter, List<string> convertedRows)
+	{
+		if (includeHeaderAsFirstRow)
+		{
+			var sb = _stringBuilderPool.Get();
+
+			try
+			{
+				for (var fieldIndex = 0; fieldIndex < dataReader.FieldCount; fieldIndex++)
+				{
+					if (dataReader.GetName(fieldIndex) is not null)
+					{
+						_ = sb.Append(dataReader.GetName(fieldIndex));
+					}
+
+					if (fieldIndex < dataReader.FieldCount - 1)
+					{
+						_ = sb.Append(delimiter);
+					}
+				}
+
+				convertedRows.Add(sb.ToString());
+			}
+			finally
+			{
+				_stringBuilderPool.Return(sb.Clear());
+			}
+		}
 	}
 }

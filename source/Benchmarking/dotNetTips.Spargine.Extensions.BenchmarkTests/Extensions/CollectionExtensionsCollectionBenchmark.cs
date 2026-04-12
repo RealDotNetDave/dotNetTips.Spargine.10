@@ -32,8 +32,32 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
+	private Person _existingPerson;
 	private Collection<Person> _peopleRefCollection;
 	private List<Person> _peopleRefList;
+	private Person _personToInsert;
+
+	[Benchmark(Description = nameof(CollectionExtensions.AddIfNotExists) + ": Existing Item")]
+	[BenchmarkCategory(Categories.New)]
+	public void AddIfNotExistsExistingItem()
+	{
+		var person = this._existingPerson;
+
+		var result = this._peopleRefList.AddIfNotExists(person);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AddIfNotExists) + ": New Item")]
+	[BenchmarkCategory(Categories.New)]
+	public void AddIfNotExistsNewItem()
+	{
+		var person = this._personToInsert;
+
+		var result = this._peopleRefList.AddIfNotExists(person);
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddRange) + ": List")]
 	public void AddRangeList()
@@ -61,7 +85,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result.ToArray());
 	}
 
-	[IterationSetup(Targets = new[] { nameof(AddRangeList) })]
+	[IterationSetup(Targets = new[] { nameof(AddRangeList), nameof(AddIfNotExistsNewItem), nameof(AddIfNotExistsExistingItem), nameof(UpsertExistingItem), nameof(UpsertNewItem) })]
 	public void IterationSetupRef()
 	{
 		this._peopleRefList = this.GetPersonRefArray().ToList();
@@ -77,6 +101,8 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this.GetPersonRefArray();
 		this._peopleRefCollection = people.ToCollection();
 		this._peopleRefList = [.. people];
+		this._existingPerson = people[0];
+		this._personToInsert = this.GetPersonRefCollectionToInsert()[0];
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.ToFrozenSet))]
@@ -85,6 +111,28 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._peopleRefCollection.ToFrozenSet();
 
 		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item")]
+	[BenchmarkCategory(Categories.New)]
+	public void UpsertExistingItem()
+	{
+		var person = this._existingPerson;
+
+		this._peopleRefList.Upsert(person);
+
+		this.Consume(this._peopleRefList.Count);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": New Item")]
+	[BenchmarkCategory(Categories.New)]
+	public void UpsertNewItem()
+	{
+		var person = this._personToInsert;
+
+		this._peopleRefList.Upsert(person);
+
+		this.Consume(this._peopleRefList.Count);
 	}
 
 }

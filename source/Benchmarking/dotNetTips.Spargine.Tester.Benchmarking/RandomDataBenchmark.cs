@@ -246,6 +246,8 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateTempFile()
 	{
+		//TODO: ADD DIFFERENT FILES SIZES
+
 		var fileName = RandomData.GenerateTempFile();
 
 		this.Consume(fileName);
@@ -309,6 +311,8 @@ public class RandomDataBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxChar()
 	{
+		//TODO: ADD DIFFERENT LENGTHS FOR ALL GENERATEWORD METHOD VARIATIONS
+
 		var result = RandomData.GenerateWord(10, char.MinValue, char.MaxValue);
 
 		this.Consume(result);

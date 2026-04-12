@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-06-2026
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -18,7 +18,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.Core.Collections.Generic;
 using DotNetTips.Spargine.Core.Queues;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
@@ -46,6 +45,19 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this._personRefArray = this.GetPersonRefArray();
+	}
+
+	[Benchmark(Description = "TryPeek")]
+	[BenchmarkCategory(Categories.New)]
+	public void TryPeek()
+	{
+		var queue = new ChannelQueue<string>();
+		_ = queue.TryWrite("hello");
+
+		var found = queue.TryPeek(out var item);
+
+		this.Consume(found);
+		this.Consume(item);
 	}
 
 	[Benchmark(Description = "TryWriteOnce")]

@@ -46,7 +46,7 @@ public class DateOnlyConverter(string? serializationFormat) : JsonConverter<Date
 	/// <param name="options">An object that specifies serialization options to use.</param>
 	/// <returns>The converted value.</returns>
 	/// <exception cref="JsonException">Thrown when the JSON is invalid or cannot be converted to <see cref="DateOnly"/>.</exception>
-	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var value = reader.GetString();
@@ -70,7 +70,7 @@ public class DateOnlyConverter(string? serializationFormat) : JsonConverter<Date
 	/// <param name="value">The <see cref="DateOnly"/> value to convert to JSON.</param>
 	/// <param name="options">An object that specifies serialization options to use.</param>
 	/// <exception cref="ArgumentNullException">Thrown if the writer is null.</exception>
-	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
 	{
 		writer = writer.ArgumentNotNull();

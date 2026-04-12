@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-10-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -301,10 +301,10 @@ public static class ObjectExtensions
 		public void ToJsonFile([DisallowNull] FileInfo file)
 		{
 			file = file.ArgumentNotNull();
+			obj = obj.ArgumentNotNull();
 
-			var json = obj.ArgumentNotNull().ToJson();
-
-			File.WriteAllText(file.FullName, json, Encoding.UTF8);
+			using var stream = File.Create(file.FullName);
+			JsonSerializer.Serialize(stream, obj);
 		}
 
 		/// <summary>

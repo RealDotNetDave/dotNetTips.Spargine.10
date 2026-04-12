@@ -1,0 +1,92 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.Extensions.BenchmarkTests
+// Author           : Copilot Agent
+// Created          : 07-25-2025
+//
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-25-2025
+// ***********************************************************************
+// <copyright file="DataReaderExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+//     David McCarter
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using BenchmarkDotNet.Attributes;
+using DotNetTips.Spargine.Benchmarking;
+
+//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
+
+namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
+
+/// <summary>
+/// Benchmarks for <see cref="DataReaderExtensions"/>.
+/// </summary>
+[BenchmarkCategory(Categories.New)]
+[SuppressMessage("Reliability", "CA1001:Types that own disposable fields should be disposable", Justification = "Disposed in Cleanup() via BenchmarkDotNet lifecycle.")]
+public class DataReaderExtensionsBenchmark : Benchmark
+{
+
+	private const int RowCount = 100;
+
+	private DataTable _dataTable;
+
+	public override void Cleanup()
+	{
+		this._dataTable?.Dispose();
+
+		base.Cleanup();
+	}
+
+	/// <summary>
+	/// Setups the data table with mixed column types and rows.
+	/// </summary>
+	public override void Setup()
+	{
+		base.Setup();
+
+		this._dataTable = new DataTable();
+		_ = this._dataTable.Columns.Add("Id", typeof(int));
+		_ = this._dataTable.Columns.Add("Name", typeof(string));
+		_ = this._dataTable.Columns.Add("Email", typeof(string));
+		_ = this._dataTable.Columns.Add("Score", typeof(double));
+		_ = this._dataTable.Columns.Add("Created", typeof(DateTime));
+
+		for (var rowIndex = 0; rowIndex < RowCount; rowIndex++)
+		{
+			_ = this._dataTable.Rows.Add(
+				rowIndex,
+				$"Person{rowIndex}",
+				$"person{rowIndex}@example.com",
+				rowIndex * 1.5,
+				DateTime.UtcNow.AddDays(-rowIndex));
+		}
+
+		this._dataTable.AcceptChanges();
+	}
+
+	[Benchmark(Description = nameof(DataReaderExtensions.ToCsv) + ": With Header")]
+	[BenchmarkCategory(Categories.New)]
+	public void ToCsvWithHeader()
+	{
+		using var reader = this._dataTable.CreateDataReader();
+
+		var result = reader.ToCsv(includeHeaderAsFirstRow: true);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DataReaderExtensions.ToCsv) + ": Without Header")]
+	[BenchmarkCategory(Categories.New)]
+	public void ToCsvWithoutHeader()
+	{
+		using var reader = this._dataTable.CreateDataReader();
+
+		var result = reader.ToCsv(includeHeaderAsFirstRow: false);
+
+		this.Consume(result);
+	}
+}
