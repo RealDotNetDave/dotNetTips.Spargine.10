@@ -44,7 +44,7 @@ public static class DataContextExtensions
 	/// <exception cref="ArgumentNullException">context</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetTrackedObjects), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetTrackedObjects), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Tuple<T, T>> GetTrackedObjects<T>([DisallowNull] this DataContext context)
 	{
 		context = context.ArgumentNotNull();

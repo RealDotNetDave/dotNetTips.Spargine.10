@@ -21,7 +21,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
-using DotNetTips.Spargine.Core;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Core.Internal;
@@ -133,7 +132,7 @@ internal static class InternalMethods
 	/// Thrown if <paramref name="count"/> is negative.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AppendRepeatedCharsLine), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(AppendRepeatedCharsLine), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	internal static void AppendRepeatedCharsLine([DisallowNull] this StringBuilder sb, char character, int count)
 	{
 		sb = sb.ArgumentNotNull();

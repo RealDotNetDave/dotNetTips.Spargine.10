@@ -101,7 +101,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void KillProcess([DisallowNull] string processName, int waitForExitMilliseconds = 6000, ILogger? logger = null)
 	{
 		var app = Process.GetProcessesByName(processName.ArgumentNotNullOrEmpty()).FirstOrDefault();
@@ -269,7 +269,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.None, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static void StartServices([DisallowNull] in IEnumerable<string> requests, ILogger? logger = null)
 	{
 		requests.ToList().ForEach(request => StartService(request, logger: logger));
@@ -323,7 +323,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartStopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.None, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartStopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static void StartStopServices([DisallowNull] in IEnumerable<ServiceAction> requests, ILogger? logger = null)
 	{
 		requests.ToList().ForEach(request =>
@@ -442,7 +442,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.None, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static void StopServices([DisallowNull] IEnumerable<string> requests, ILogger? logger = null)
 	{
 		requests.ToList().ForEach(request => StopService(request, logger: logger));
