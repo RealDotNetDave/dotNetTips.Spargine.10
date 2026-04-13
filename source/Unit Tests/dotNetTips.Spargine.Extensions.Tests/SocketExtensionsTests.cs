@@ -589,6 +589,12 @@ public class SocketExtensionsTests
 
 		var keepAliveEnabled = (int)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive)!;
 		Assert.AreNotEqual(0, keepAliveEnabled);
+
+		var keepAliveTime = (int)socket.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime)!;
+		var keepAliveInterval = (int)socket.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval)!;
+
+		Assert.IsTrue(keepAliveTime >= 1, $"Expected {nameof(SocketOptionName.TcpKeepAliveTime)} to be clamped to at least 1, but was {keepAliveTime}.");
+		Assert.IsTrue(keepAliveInterval >= 1, $"Expected {nameof(SocketOptionName.TcpKeepAliveInterval)} to be clamped to at least 1, but was {keepAliveInterval}.");
 	}
 
 }
