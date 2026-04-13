@@ -30,11 +30,9 @@ namespace DotNetTips.Spargine.Net.Sockets;
 /// are accessible with minimal code. It is part of the DotNetTips.Spargine library, which aims to provide a comprehensive
 /// set of utilities for .NET developers.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Obsolete)]
 public static class SocketsHelper
 {
-	//TODO: MOVE TO CORE PROJECT
-
 	/// <summary>
 	/// Connect TCP as an asynchronous operation.
 	/// </summary>
@@ -51,6 +49,7 @@ public static class SocketsHelper
 	/// </code>
 	/// </example>
 	/// <remarks>Original code by: Máňa Píchová.</remarks>
+	[Obsolete("This method is obsolete. Use the new ConnectTcpAsync method in the SocketExtensions class.")]
 	public static async ValueTask<Stream> ConnectTcpAsync([DisallowNull] SocketsHttpConnectionContext context, CancellationToken cancellationToken = default)
 	{
 		context = context.ArgumentNotNull();

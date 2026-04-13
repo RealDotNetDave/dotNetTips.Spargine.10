@@ -4,7 +4,7 @@
 // Created          : 07-22-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-13-2026
 // ***********************************************************************
 // <copyright file="SocketExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,7 +30,6 @@ namespace DotNetTips.Spargine.Extensions;
 [Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", Status = Status.NeedsDocumentation)]
 public static class SocketExtensions
 {
-
 	/// <summary>
 	/// Binds to an IP address and OS-assigned port. Returns the chosen port.
 	/// Validates that <paramref name="socket" /> and <paramref name="address" /> is not null.
@@ -48,6 +47,41 @@ public static class SocketExtensions
 		socket.Bind(new IPEndPoint(address.ArgumentNotNull(), 0));
 
 		return ((IPEndPoint)socket.LocalEndPoint!).Port;
+	}
+	/// <summary>
+	/// Connect TCP as an asynchronous operation.
+	/// </summary>
+	/// <param name="context">The context.</param>
+	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+	/// <returns>A <see cref="ValueTask{Stream}"/> that represents the asynchronous operation, which upon completion returns a <see cref="Stream"/> connected to the TCP server.</returns>
+	/// <example>
+	/// Here is how you can use the ConnectTcpAsync method:
+	/// <code>
+	/// var context = new SocketsHttpConnectionContext(new DnsEndPoint("example.com", 80));
+	/// var cancellationToken = new CancellationToken();
+	/// var stream = await SocketsHelper.ConnectTcpAsync(context, cancellationToken);
+	/// // Use the stream for network operations
+	/// </code>
+	/// </example>
+	/// <remarks>Original code by: Máňa Píchová.</remarks>
+	[Information(nameof(ConnectTcpAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static async ValueTask<Stream> ConnectTcpAsync([DisallowNull] this SocketsHttpConnectionContext context, CancellationToken cancellationToken = default)
+	{
+		context = context.ArgumentNotNull();
+
+		// The following socket constructor will create a dual-mode socket on systems where IPV6 is available.
+		using var socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
+		{
+			/* Turn off Nagle's algorithm since it degrades performance in most HttpClient scenarios.*/
+			NoDelay = true,
+			DualMode = true,
+		};
+
+		await socket.ConnectAsync(context.DnsEndPoint, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+
+		// The stream should take the ownership of the underlying socket,
+		// closing it when it's disposed.
+		return new NetworkStream(socket, ownsSocket: true);
 	}
 
 	/// <summary>
