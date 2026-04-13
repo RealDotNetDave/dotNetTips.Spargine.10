@@ -514,6 +514,48 @@ public class SocketExtensionsTests
 			async () => _ = await context.ConnectTcpAsync(CancellationToken.None));
 	}
 
+	[TestMethod]
+	public async Task ConnectTcpAsyncWithValidContextReturnsUsableNetworkStream()
+	{
+		// Arrange
+		using var listener = new TcpListener(IPAddress.Loopback, 0);
+		listener.Start();
+
+		var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+		const string responseBody = "ok";
+		var responseBytes = System.Text.Encoding.ASCII.GetBytes(
+			$"HTTP/1.1 200 OK\r\nContent-Length: {responseBody.Length}\r\nConnection: close\r\n\r\n{responseBody}");
+
+		var serverTask = Task.Run(async () =>
+		{
+			using var serverSocket = await listener.AcceptSocketAsync();
+			using var serverStream = new NetworkStream(serverSocket, ownsSocket: true);
+
+			var requestBuffer = new byte[1024];
+			_ = await serverStream.ReadAsync(requestBuffer, 0, requestBuffer.Length);
+
+			await serverStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+			await serverStream.FlushAsync();
+		});
+
+		using var handler = new SocketsHttpHandler
+		{
+			ConnectCallback = (context, cancellationToken) => context.ConnectTcpAsync(cancellationToken)
+		};
+
+		using var client = new HttpClient(handler);
+
+		// Act
+		using var response = await client.GetAsync(new Uri($"http://127.0.0.1:{port}/"));
+		var content = await response.Content.ReadAsStringAsync();
+
+		// Assert
+		Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+		Assert.AreEqual(responseBody, content);
+
+		await serverTask;
+		listener.Stop();
+	}
 	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
 
 	[TestMethod]
