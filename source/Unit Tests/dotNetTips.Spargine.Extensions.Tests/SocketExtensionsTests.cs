@@ -15,6 +15,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -484,6 +485,117 @@ public class SocketExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public async Task TryConnectAsync_ZeroTimeout_ReturnsFalse()
+	{
+		// Arrange - use a non-routable TEST-NET address with a zero timeout
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
+
+		// Act
+		var result = await socket.TryConnectAsync(endpoint, 0);
+
+		// Assert - connection to non-routable address should fail
+		Assert.IsFalse(result);
+	}
+
+	// ─── ConnectTcpAsync Tests ────────────────────────────────────────
+
+	[TestMethod]
+	public async Task ConnectTcpAsyncNullContextThrowsArgumentNullException()
+	{
+		// Arrange
+		SocketsHttpConnectionContext context = null;
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(
+			async () => _ = await context.ConnectTcpAsync(CancellationToken.None));
+	}
+
+	[TestMethod]
+	public async Task ConnectTcpAsyncWithValidContextReturnsUsableNetworkStream()
+	{
+		// Arrange
+		using var listener = new TcpListener(IPAddress.Loopback, 0);
+		listener.Start();
+
+		var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+		const string responseBody = "ok";
+		var responseBytes = System.Text.Encoding.ASCII.GetBytes(
+			$"HTTP/1.1 200 OK\r\nContent-Length: {responseBody.Length}\r\nConnection: close\r\n\r\n{responseBody}");
+
+		var serverTask = Task.Run(async () =>
+		{
+			using var serverSocket = await listener.AcceptSocketAsync();
+			using var serverStream = new NetworkStream(serverSocket, ownsSocket: true);
+
+			var requestBuffer = new byte[1024];
+			_ = await serverStream.ReadAsync(requestBuffer, 0, requestBuffer.Length);
+
+			await serverStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+			await serverStream.FlushAsync();
+		});
+
+		using var handler = new SocketsHttpHandler
+		{
+			ConnectCallback = (context, cancellationToken) => context.ConnectTcpAsync(cancellationToken)
+		};
+
+		using var client = new HttpClient(handler);
+
+		// Act
+		using var response = await client.GetAsync(new Uri($"http://127.0.0.1:{port}/"));
+		var content = await response.Content.ReadAsStringAsync();
+
+		// Assert
+		Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+		Assert.AreEqual(responseBody, content);
+
+		await serverTask;
+		listener.Stop();
+	}
+
+	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
+
+	[TestMethod]
+	public void ConfigureBufferSizesNegativeValuesClampedToMinimum()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act - negative values should be clamped to 1 by EnsureMinimum
+		var result = socket.ConfigureBufferSizes(-100, -200);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.IsTrue(socket.SendBufferSize >= 1);
+		Assert.IsTrue(socket.ReceiveBufferSize >= 1);
+	}
+
+	// ─── Additional ConfigureKeepAlive Tests ──────────────────────────
+
+	[TestMethod]
+	public void ConfigureKeepAliveNegativeValuesClampedToMinimum()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act - negative values should be clamped to 1 by EnsureMinimum
+		var result = socket.ConfigureKeepAlive(-10, -5);
+
+		// Assert
+		Assert.AreSame(socket, result);
+
+		var keepAliveEnabled = (int)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive)!;
+		Assert.AreNotEqual(0, keepAliveEnabled);
+
+		var keepAliveTime = (int)socket.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime)!;
+		var keepAliveInterval = (int)socket.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval)!;
+
+		Assert.IsTrue(keepAliveTime >= 1, $"Expected {nameof(SocketOptionName.TcpKeepAliveTime)} to be clamped to at least 1, but was {keepAliveTime}.");
+		Assert.IsTrue(keepAliveInterval >= 1, $"Expected {nameof(SocketOptionName.TcpKeepAliveInterval)} to be clamped to at least 1, but was {keepAliveInterval}.");
 	}
 
 }
