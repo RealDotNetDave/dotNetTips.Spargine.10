@@ -508,11 +508,10 @@ public class SocketExtensionsTests
 	{
 		// Arrange
 		SocketsHttpConnectionContext context = null;
-		var cancellationToken = new CancellationToken(false);
 
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(
-			async () => _ = await context.ConnectTcpAsync(cancellationToken));
+			async () => _ = await context.ConnectTcpAsync(CancellationToken.None));
 	}
 
 	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
