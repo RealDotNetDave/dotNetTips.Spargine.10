@@ -37,7 +37,9 @@ public class SocketsHelperTests
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 		{
+#pragma warning disable CS0618 // Type or member is obsolete
 			_ = await SocketsHelper.ConnectTcpAsync(context, cancellationToken);
+#pragma warning restore CS0618 // Type or member is obsolete
 		});
 	}
 

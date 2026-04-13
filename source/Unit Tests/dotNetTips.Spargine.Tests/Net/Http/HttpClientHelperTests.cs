@@ -36,7 +36,9 @@ public class HttpClientHelperTests
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
 		{
+#pragma warning disable CS0618 // Type or member is obsolete
 			await HttpClientHelper.GetHttpResponseAsync(url);
+#pragma warning restore CS0618 // Type or member is obsolete
 		});
 	}
 
@@ -49,7 +51,9 @@ public class HttpClientHelperTests
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 		{
+#pragma warning disable CS0618 // Type or member is obsolete
 			await HttpClientHelper.GetHttpResponseAsync(url);
+#pragma warning restore CS0618 // Type or member is obsolete
 		});
 	}
 
@@ -61,7 +65,9 @@ public class HttpClientHelperTests
 		var url = new Uri("https://httpbin.org/get");
 
 		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
 		var response = await HttpClientHelper.GetHttpResponseAsync(url);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 		// Assert
 		Assert.IsNotNull(response);
@@ -78,7 +84,9 @@ public class HttpClientHelperTests
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 		{
+#pragma warning disable CS0618 // Type or member is obsolete
 			await HttpClientHelper.GetStreamAsync(url);
+#pragma warning restore CS0618 // Type or member is obsolete
 		});
 	}
 
@@ -89,7 +97,9 @@ public class HttpClientHelperTests
 		var url = new Uri("https://httpbin.org/stream/1");
 
 		// Act
+#pragma warning disable CS0618 // Type or member is obsolete
 		var stream = await HttpClientHelper.GetStreamAsync(url);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 		// Assert
 		Assert.IsNotNull(stream);
