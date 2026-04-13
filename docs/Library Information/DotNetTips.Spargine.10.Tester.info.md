@@ -5,8 +5,8 @@
 ### System.DateOnly Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** Read
@@ -15,8 +15,8 @@
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateOnly value, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** Write
@@ -28,9 +28,9 @@
 ### System.DateTimeOffset Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
 * **CreatedOn:** 
 * **Description:** Read
 * **Modified On:** 
@@ -38,9 +38,9 @@
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
 * **CreatedOn:** 
 * **Description:** Write
 * **Modified On:** 
@@ -52,8 +52,8 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
 * **CreatedOn:** 
 * **Description:** Write
 * **Modified On:** 
@@ -64,8 +64,8 @@
 ### System.TimeOnly Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** Read
@@ -74,8 +74,8 @@
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.TimeOnly value, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **CreatedOn:** 
 * **Description:** Write
@@ -1611,7 +1611,7 @@
 ### System.Char GenerateCharacter(System.Char minValue, System.Char maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1623,7 +1623,7 @@
 ### T GenerateCoordinate()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1695,7 +1695,7 @@
 ### System.String GenerateEmailAddress()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1999,8 +1999,8 @@
 ### System.String GenerateTempFile(System.Int32 fileLength)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
@@ -2011,7 +2011,7 @@
 ### System.String GenerateUrl()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2023,7 +2023,7 @@
 ### System.String GenerateUrlFragment()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2035,7 +2035,7 @@
 ### System.String GenerateUrlHostName()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2047,7 +2047,7 @@
 ### System.String GenerateUrlHostNameNoProtocol()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2059,7 +2059,7 @@
 ### System.String GenerateUrlHostNameNoSubDomain()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2071,8 +2071,8 @@
 ### System.String GenerateWord(System.Int32 length)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
@@ -2083,8 +2083,8 @@
 ### System.String GenerateWord(System.Int32 minLength, System.Int32 maxLength)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
@@ -2324,4 +2324,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/9/2026 3:31:56 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/13/2026 1:56:07 PM UTC**

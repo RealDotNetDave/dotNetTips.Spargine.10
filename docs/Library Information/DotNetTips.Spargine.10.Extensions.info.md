@@ -113,7 +113,7 @@
 ### System.Void FastProcessor(T array, T action)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -209,7 +209,7 @@
 ### System.Void PerformAction(T array, T action)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -368,7 +368,7 @@
 ### System.Void FastProcessor(T action)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -464,7 +464,7 @@
 ### System.Void PerformAction(T action)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -858,7 +858,7 @@
 ### System.Boolean AddIfNotExists(T collection, T item, T comparer)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -930,8 +930,8 @@
 ### System.Void Upsert(T collection, T item)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -957,7 +957,7 @@
 ### System.Boolean AddIfNotExists(T item, T comparer)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1017,8 +1017,8 @@
 ### System.Void Upsert(T item)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -1127,7 +1127,7 @@
 * **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/8/2020
 * **Description:** GetTrackedObjects
@@ -1140,8 +1140,8 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> ToCsv(System.Data.IDataReader dataReader, System.Boolean includeHeaderAsFirstRow, System.Char delimiter)
 
 * **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/8/2020
@@ -2180,7 +2180,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
@@ -2397,7 +2397,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
@@ -3331,6 +3331,56 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### T GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetAndDeserializeFromStreamAsync
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Net.Http.HttpClient client, System.Uri url, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** GetStreamAsync
+* **Modified On:** 
+
+### T PatchAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** PatchAndDeserializeAsync
+* **Modified On:** 
+
+### T PostAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** PostAndDeserializeAsync
+* **Modified On:** 
+
+### T PutAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** PutAndDeserializeAsync
+* **Modified On:** 
+
 *****
 ## DotNetTips.Spargine.Extensions.HttpContextExtensions
 
@@ -3556,8 +3606,8 @@
 ### T If(T input, System.Boolean should, T transformsFunction)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/18/2020
@@ -3869,7 +3919,7 @@
 ### T ToListAsync(T list, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -4254,7 +4304,7 @@
 ### T ToListAsync(System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6084,7 +6134,55 @@
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
-* **Description:** From .NET Core source.
+* **Description:** BindToAnonymousPort
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Net.Sockets.Socket ConfigureBufferSizes(System.Net.Sockets.Socket socket, System.Int32 sendBufferSize, System.Int32 receiveBufferSize)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** ConfigureBufferSizes
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Net.Sockets.Socket ConfigureKeepAlive(System.Net.Sockets.Socket socket, System.Int32 keepAliveTimeSeconds, System.Int32 keepAliveIntervalSeconds)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** ConfigureKeepAlive
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Net.Sockets.Socket ConfigureLinger(System.Net.Sockets.Socket socket, System.Boolean enable, System.Int32 lingerTimeSeconds)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** ConfigureLinger
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Threading.Tasks.ValueTask<System.IO.Stream> ConnectTcpAsync(System.Net.Http.SocketsHttpConnectionContext context, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 7/15/2020
+* **Description:** ConnectTcpAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -6109,6 +6207,18 @@
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Threading.Tasks.ValueTask<System.Boolean> TryConnectAsync(System.Net.Sockets.Socket socket, System.Net.EndPoint remoteEndpoint, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/15/2020
+* **Description:** TryConnectAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -6756,8 +6866,8 @@
 ### System.Threading.Tasks.Task<System.String> FromDeflateStringAsync(System.String value, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/12/2022
@@ -6780,8 +6890,8 @@
 ### System.Threading.Tasks.Task<System.String> FromZLibStringAsync(System.String value, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/12/2022
@@ -6824,8 +6934,8 @@
 ### System.Boolean HasValue(System.String input, System.String value)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** HasValue
@@ -7913,4 +8023,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/9/2026 3:31:56 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/13/2026 1:56:07 PM UTC**
