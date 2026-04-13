@@ -50,7 +50,6 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Follow .NET Framework Design Guidelines.  
 - Prefer returning **interfaces or base types** when appropriate.
 - Mark all test classes with the [ExcludeFromCodeCoverage] attribute.
-- Do not add code comments inbetween methods. 
 
 ---
 
@@ -62,6 +61,7 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - If new methods are added, ensure they are covered by unit tests.
 - Ensure **full code‑path coverage**.  
 - Tests must run successfully on **GitHub** and **local Windows** environments.
+- Do not add code comments inbetween methods, only in unit test methods. 
 
 ### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  
