@@ -340,6 +340,15 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resource {0} was not found. .
+        /// </summary>
+        internal static string ResourceWasNotFound {
+            get {
+                return ResourceManager.GetString("ResourceWasNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seven.
         /// </summary>
         internal static string Seven {
@@ -417,6 +426,24 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         internal static string TheInputStringIsNotAValidBase64String {
             get {
                 return ResourceManager.GetString("TheInputStringIsNotAValidBase64String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation has been canceled..
+        /// </summary>
+        internal static string TheOperationHasBeenCanceled {
+            get {
+                return ResourceManager.GetString("TheOperationHasBeenCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation has timed out..
+        /// </summary>
+        internal static string TheOperationHasTimedOut {
+            get {
+                return ResourceManager.GetString("TheOperationHasTimedOut", resourceCulture);
             }
         }
         

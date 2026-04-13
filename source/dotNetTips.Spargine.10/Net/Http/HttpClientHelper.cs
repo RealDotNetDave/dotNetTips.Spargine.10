@@ -4,7 +4,7 @@
 // Created          : 01-11-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified On : 04-13-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -35,7 +35,6 @@ namespace DotNetTips.Spargine.Net.Http;
 [Information(Status = Status.NeedsDocumentation)]
 public static class HttpClientHelper
 {
-	//TODO: MOVE TO EXTENSIONS PROJECT.
 
 	/// <summary>
 	/// The format string used to indicate that a resource was not found.
@@ -66,6 +65,7 @@ public static class HttpClientHelper
 	/// Console.WriteLine(response.StatusCode);
 	/// </code></example>
 	/// <remarks>Original code by: Máňa Píchová.</remarks>
+	[Obsolete("Use HttpClient.GetAsync()")]
 	[DefaultValue(null)]
 	[Information(nameof(GetHttpResponseAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static async Task<HttpResponseMessage> GetHttpResponseAsync([DisallowNull] Uri url, CancellationToken cancellationToken = default)
@@ -109,6 +109,7 @@ public static class HttpClientHelper
 	/// // Use the stream
 	/// </code>
 	/// </example>
+	[Obsolete("Use GetStreamAsync() in HttpClientExtensions.")]
 	[DefaultValue(null)]
 	[Information(nameof(GetHttpResponseAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static async Task<Stream> GetStreamAsync([DisallowNull] Uri url, CancellationToken cancellationToken = default)
