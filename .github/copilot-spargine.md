@@ -21,9 +21,10 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Use **Spargine validation helpers** instead of manual checks.  
 - Use **Spargine performance utilities** where applicable.  
 - For unit tests and benchmarks, use data from the **dotNetTips.Spargine.10.Tester** assembly whenever possible.  
-- Update file headers for all modified files:  
+- Update file headers for all modified classes:  
   - **Last Modified On:** use the current date.  
   - **Last Modified By:** `Copilot Agent`
+  - Use the correct **current date** for "Created" and "Last Modified On" fields. Do not use incorrect or fabricated dates.
 - When adding new metods to a class, update the <summary> XML tag in the file header.
 
 ---

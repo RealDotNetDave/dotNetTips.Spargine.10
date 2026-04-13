@@ -286,4 +286,7 @@
   <data name="DestinationStreamIsNotWritable" xml:space="preserve">
     <value>The destination stream is not writable.</value>
   </data>
+  <data name="EntityStateNotDefined" xml:space="preserve">
+    <value>The specified EntityState value is not defined.</value>
+  </data>
 </root>

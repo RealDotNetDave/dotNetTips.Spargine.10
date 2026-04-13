@@ -106,6 +106,15 @@ namespace DotNetTips.Spargine.Extensions.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The specified EntityState value is not defined..
+        /// </summary>
+        internal static string EntityStateNotDefined {
+            get {
+                return ResourceManager.GetString("EntityStateNotDefined", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to EB.
         /// </summary>
         internal static string EB {
@@ -113,7 +122,7 @@ namespace DotNetTips.Spargine.Extensions.Properties {
                 return ResourceManager.GetString("EB", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Eight.
         /// </summary>
@@ -122,7 +131,7 @@ namespace DotNetTips.Spargine.Extensions.Properties {
                 return ResourceManager.GetString("Eight", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Eighteen.
         /// </summary>
