@@ -39,6 +39,8 @@ public static class HttpClientExtensions
 {
 
 	private static readonly CompositeFormat _resourceWasNotFound = CompositeFormat.Parse(Resources.ResourceWasNotFound);
+	private static readonly CompositeFormat _theOperationHasBeenCanceled = CompositeFormat.Parse(Resources.TheOperationHasBeenCanceled);
+	private static readonly CompositeFormat _theOperationHasTimedOut = CompositeFormat.Parse(Resources.TheOperationHasTimedOut);
 
 	/// <summary>
 	/// Sends a GET request to the specified URL and deserializes the JSON response into an instance of the specified type.
@@ -114,12 +116,12 @@ public static class HttpClientExtensions
 		}
 		catch (TaskCanceledException ex) when (cancellationToken.IsCancellationRequested)
 		{
-			ExceptionThrower.ThrowInvalidOperationException(message: Resources.TheOperationHasBeenCanceled, ex);
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasBeenCanceled), ex);
 			return null;
 		}
 		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
 		{
-			ExceptionThrower.ThrowInvalidOperationException(message: Resources.TheOperationHasTimedOut, ex);
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasTimedOut), ex);
 			return null;
 		}
 		catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
