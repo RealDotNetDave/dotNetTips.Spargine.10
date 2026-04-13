@@ -141,18 +141,28 @@ public static class SocketExtensions
 		context = context.ArgumentNotNull();
 
 		// The following socket constructor will create a dual-mode socket on systems where IPV6 is available.
-		using var socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
+#pragma warning disable CA2000, IDISP001 // Ownership transfers to NetworkStream via ownsSocket: true.
+		var socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
 		{
 			/* Turn off Nagle's algorithm since it degrades performance in most HttpClient scenarios.*/
 			NoDelay = true,
 			DualMode = true,
 		};
+#pragma warning restore CA2000, IDISP001
 
-		await socket.ConnectAsync(context.DnsEndPoint, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+		try
+		{
+			await socket.ConnectAsync(context.DnsEndPoint, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
-		// The stream should take the ownership of the underlying socket,
-		// closing it when it's disposed.
-		return new NetworkStream(socket, ownsSocket: true);
+			// The stream takes ownership of the underlying socket,
+			// closing it when it's disposed.
+			return new NetworkStream(socket, ownsSocket: true);
+		}
+		catch
+		{
+			socket.Dispose();
+			throw;
+		}
 	}
 
 	/// <summary>

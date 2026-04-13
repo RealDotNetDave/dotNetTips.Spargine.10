@@ -283,4 +283,7 @@
   <data name="TheOperationHasTimedOut" xml:space="preserve">
     <value>The operation has timed out.</value>
   </data>
+  <data name="DestinationStreamIsNotWritable" xml:space="preserve">
+    <value>The destination stream is not writable.</value>
+  </data>
 </root>

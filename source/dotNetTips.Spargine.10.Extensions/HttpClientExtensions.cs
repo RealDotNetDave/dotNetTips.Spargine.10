@@ -39,9 +39,133 @@ namespace DotNetTips.Spargine.Extensions;
 public static class HttpClientExtensions
 {
 
+	private static readonly CompositeFormat _destinationStreamIsNotWritable = CompositeFormat.Parse(Resources.DestinationStreamIsNotWritable);
 	private static readonly CompositeFormat _resourceWasNotFound = CompositeFormat.Parse(Resources.ResourceWasNotFound);
 	private static readonly CompositeFormat _theOperationHasBeenCanceled = CompositeFormat.Parse(Resources.TheOperationHasBeenCanceled);
 	private static readonly CompositeFormat _theOperationHasTimedOut = CompositeFormat.Parse(Resources.TheOperationHasTimedOut);
+
+	/// <summary>
+	/// Sends a DELETE request to the specified URL and deserializes the JSON response into an instance of <typeparamref name="TResponse"/>.
+	/// Uses stream-based deserialization to minimize memory allocations.
+	/// </summary>
+	/// <typeparam name="TResponse">The type to deserialize the JSON response into.</typeparam>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to send the DELETE request to.</param>
+	/// <param name="options">The <see cref="JsonSerializerOptions"/> to use for deserialization.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="TResponse"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, or <paramref name="options"/> is null.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the operation is canceled, times out, or encounters an HTTP error.</exception>
+	/// <example>
+	/// Here is how you can use the DeleteAndDeserializeAsync method:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/api/items/1");
+	/// var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+	/// var deletedItem = await httpClient.DeleteAndDeserializeAsync&lt;MyItem&gt;(url, options);
+	/// </code>
+	/// </example>
+	[Information(nameof(DeleteAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static async Task<TResponse> DeleteAndDeserializeAsync<TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+		options = options.ArgumentNotNull();
+
+		try
+		{
+			using var requestMessage = new HttpRequestMessage(HttpMethod.Delete, url);
+			using var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+			_ = response.EnsureSuccessStatusCode();
+
+#pragma warning disable IDISP001
+			var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#pragma warning restore IDISP001
+			return (await JsonSerializer.DeserializeAsync<TResponse>(stream, options, cancellationToken).ConfigureAwait(false))!;
+		}
+		catch (TaskCanceledException ex) when (cancellationToken.IsCancellationRequested)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasBeenCanceled), ex);
+			return default!;
+		}
+		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasTimedOut), ex);
+			return default!;
+		}
+		catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+			return default!;
+		}
+		catch (HttpRequestException ex)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+			return default!;
+		}
+	}
+
+	/// <summary>
+	/// Sends a GET request to the specified URL and copies the response content directly to the provided destination <see cref="Stream"/>.
+	/// Uses <see cref="HttpCompletionOption.ResponseHeadersRead"/> and stream-based copying to minimize memory usage,
+	/// making this method suitable for downloading large files or binary payloads.
+	/// </summary>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to download content from.</param>
+	/// <param name="destination">The writable <see cref="Stream"/> to copy the response content into.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous download operation.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, or <paramref name="destination"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="destination"/> is not writable.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the operation is canceled, times out, or encounters an HTTP error.</exception>
+	/// <example>
+	/// Here is how you can use the DownloadToStreamAsync method:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/files/report.pdf");
+	/// using var fileStream = File.Create("report.pdf");
+	/// await httpClient.DownloadToStreamAsync(url, fileStream);
+	/// </code>
+	/// </example>
+	[Information(nameof(DownloadToStreamAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static async Task DownloadToStreamAsync([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] Stream destination, CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+		destination = destination.ArgumentNotNull();
+
+		if (!destination.CanWrite)
+		{
+			ExceptionThrower.ThrowArgumentException(string.Format(CultureInfo.CurrentCulture, _destinationStreamIsNotWritable), nameof(destination));
+		}
+
+		try
+		{
+			using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+			_ = response.EnsureSuccessStatusCode();
+
+#pragma warning disable IDISP001
+			var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#pragma warning restore IDISP001
+			await stream.CopyToAsync(destination, cancellationToken).ConfigureAwait(false);
+		}
+		catch (TaskCanceledException ex) when (cancellationToken.IsCancellationRequested)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasBeenCanceled), ex);
+		}
+		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasTimedOut), ex);
+		}
+		catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+		}
+		catch (HttpRequestException ex)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+		}
+	}
 
 	/// <summary>
 	/// Sends a GET request to the specified URL and deserializes the JSON response into an instance of the specified type.
@@ -62,7 +186,7 @@ public static class HttpClientExtensions
 		url = url.ArgumentNotNull();
 		options = options.ArgumentNotNull();
 
-		using (var response = await client.GetAsync(new Uri(url.PathAndQuery), cancellationToken).ConfigureAwait(false))
+		using (var response = await client.GetAsync(url, cancellationToken).ConfigureAwait(false))
 		{
 			_ = response.EnsureSuccessStatusCode();
 
@@ -199,6 +323,62 @@ public static class HttpClientExtensions
 	}
 
 	/// <summary>
+	/// Sends a HEAD request to the specified URL and returns the response headers.
+	/// HEAD requests are useful for checking resource existence, content length, ETag, cache headers,
+	/// and other metadata without downloading the response body.
+	/// </summary>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to send the HEAD request to.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="HttpResponseHeaders"/> from the response.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/> or <paramref name="url"/> is null.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the operation is canceled, times out, or encounters an HTTP error.</exception>
+	/// <example>
+	/// Here is how you can use the HeadersAsync method:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/api/items/1");
+	/// var headers = await httpClient.HeadersAsync(url);
+	/// var etag = headers.ETag;
+	/// </code>
+	/// </example>
+	[Information(nameof(HeadersAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static async Task<HttpResponseHeaders> HeadersAsync([DisallowNull] this HttpClient client, [DisallowNull] Uri url, CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+
+		try
+		{
+			using var requestMessage = new HttpRequestMessage(HttpMethod.Head, url);
+			using var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+			_ = response.EnsureSuccessStatusCode();
+
+			return response.Headers;
+		}
+		catch (TaskCanceledException ex) when (cancellationToken.IsCancellationRequested)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasBeenCanceled), ex);
+			return null;
+		}
+		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasTimedOut), ex);
+			return null;
+		}
+		catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+			return null;
+		}
+		catch (HttpRequestException ex)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+			return null;
+		}
+	}
+
+	/// <summary>
 	/// Sends a PATCH request with a JSON-serialized body to the specified URL and deserializes the JSON response into an instance of <typeparamref name="TResponse"/>.
 	/// Uses stream-based deserialization to minimize memory allocations.
 	/// </summary>
@@ -266,6 +446,76 @@ public static class HttpClientExtensions
 		options = options.ArgumentNotNull();
 
 		return await SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Post, url, request, options, cancellationToken).ConfigureAwait(false);
+	}
+
+	/// <summary>
+	/// Sends a POST request with a JSON-serialized body to the specified URL and ensures a successful response,
+	/// returning the <see cref="HttpStatusCode"/>. No response body deserialization is performed, making this
+	/// suitable for endpoints that return 201 Created or 204 No Content with no meaningful body.
+	/// </summary>
+	/// <typeparam name="TRequest">The type of the request body to serialize as JSON.</typeparam>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to send the POST request to.</param>
+	/// <param name="request">The request body to serialize as JSON.</param>
+	/// <param name="options">The <see cref="JsonSerializerOptions"/> to use for serialization.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="HttpStatusCode"/> from the response.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, <paramref name="request"/>, or <paramref name="options"/> is null.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the operation is canceled, times out, or encounters an HTTP error.</exception>
+	/// <example>
+	/// Here is how you can use the PostAndEnsureSuccessAsync method:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/api/items");
+	/// var newItem = new { Name = "Test", Value = 42 };
+	/// var options = new JsonSerializerOptions();
+	/// HttpStatusCode statusCode = await httpClient.PostAndEnsureSuccessAsync(url, newItem, options);
+	/// </code>
+	/// </example>
+	[Information(nameof(PostAndEnsureSuccessAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static async Task<HttpStatusCode> PostAndEnsureSuccessAsync<TRequest>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+		request = request.ArgumentNotNull();
+		options = options.ArgumentNotNull();
+
+		try
+		{
+			var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(request, options);
+			using var content = new ByteArrayContent(jsonBytes);
+			content.Headers.ContentType = new MediaTypeHeaderValue("application/json") { CharSet = "utf-8" };
+
+			using var requestMessage = new HttpRequestMessage(HttpMethod.Post, url)
+			{
+				Content = content,
+			};
+
+			using var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+			_ = response.EnsureSuccessStatusCode();
+
+			return response.StatusCode;
+		}
+		catch (TaskCanceledException ex) when (cancellationToken.IsCancellationRequested)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasBeenCanceled), ex);
+			return default;
+		}
+		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _theOperationHasTimedOut), ex);
+			return default;
+		}
+		catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+			return default;
+		}
+		catch (HttpRequestException ex)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
+			return default;
+		}
 	}
 
 	/// <summary>

@@ -13,8 +13,11 @@
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using DotNetTips.Spargine.Core;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -29,9 +32,60 @@ namespace DotNetTips.Spargine.Extensions;
 /// making it easier to retrieve information such as the client's IP address. This can be particularly useful in web applications
 /// for tracking user activity or implementing security measures based on IP addresses.
 /// </remarks>
-[Information(Status = Status.Available)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class HttpContextExtensions
 {
+
+	/// <summary>
+	/// Extracts the absolute URI of the current request, including scheme, host, path base, path, and query string.
+	/// Validates that <paramref name="context"/> is not null.
+	/// </summary>
+	/// <param name="context">The <see cref="HttpContext"/> from which to build the absolute URI.</param>
+	/// <returns>The fully qualified absolute <see cref="Uri"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetAbsoluteUri), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static Uri GetAbsoluteUri([DisallowNull] this HttpContext context)
+	{
+		var request = context.ArgumentNotNull().Request;
+
+		return new Uri(string.Concat(
+			request.Scheme,
+			"://",
+			request.Host.Value,
+			request.PathBase.Value,
+			request.Path.Value,
+			request.QueryString.Value));
+	}
+
+	/// <summary>
+	/// Extracts the Bearer token from the Authorization header of the current request.
+	/// Returns <see langword="null"/> if the Authorization header is missing or does not use the Bearer scheme.
+	/// Validates that <paramref name="context"/> is not null.
+	/// </summary>
+	/// <param name="context">The <see cref="HttpContext"/> from which to extract the Bearer token.</param>
+	/// <returns>The Bearer token as a <see cref="string"/>, or <see langword="null"/> if not present.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static string? GetBearerToken([DisallowNull] this HttpContext context)
+	{
+		var authorization = context.ArgumentNotNull().Request.Headers["Authorization"];
+
+		if (authorization == StringValues.Empty)
+		{
+			return null;
+		}
+
+		var headerValue = authorization.ToString();
+
+		return headerValue.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)
+			? headerValue.Substring("Bearer ".Length).Trim()
+			: null;
+	}
 
 	/// <summary>
 	/// Gets the remote IP address.
@@ -45,6 +99,63 @@ public static class HttpContextExtensions
 	public static string GetRemoteIPAddress([DisallowNull] this HttpContext context)
 	{
 		return context.ArgumentNotNull().Connection.RemoteIpAddress.ToString();
+	}
+
+	/// <summary>
+	/// Retrieves the value of a specific request header by name.
+	/// Returns <see langword="null"/> if the header is not present.
+	/// Validates that <paramref name="context"/> and <paramref name="headerName"/> are not null or empty.
+	/// </summary>
+	/// <param name="context">The <see cref="HttpContext"/> from which to read the header.</param>
+	/// <param name="headerName">The name of the header to retrieve.</param>
+	/// <returns>The header value as a <see cref="string"/>, or <see langword="null"/> if not found.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="headerName"/> is null or whitespace.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetRequestHeaderValue), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static string? GetRequestHeaderValue([DisallowNull] this HttpContext context, [DisallowNull] string headerName)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(headerName);
+
+		var values = context.ArgumentNotNull().Request.Headers[headerName];
+
+		return values != StringValues.Empty ? values.ToString() : null;
+	}
+
+	/// <summary>
+	/// Gets the value of a specific <see cref="Claim"/> from the authenticated user's claims.
+	/// Returns <see langword="null"/> if the claim type is not found.
+	/// Validates that <paramref name="context"/> and <paramref name="claimType"/> are not null or empty.
+	/// </summary>
+	/// <param name="context">The <see cref="HttpContext"/> from which to read user claims.</param>
+	/// <param name="claimType">The claim type to look up (e.g., <see cref="ClaimTypes.NameIdentifier"/>).</param>
+	/// <returns>The claim value as a <see cref="string"/>, or <see langword="null"/> if not found.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="claimType"/> is null or whitespace.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetUserClaim), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static string? GetUserClaim([DisallowNull] this HttpContext context, [DisallowNull] string claimType)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(claimType);
+
+		return context.ArgumentNotNull().User?.FindFirst(claimType)?.Value;
+	}
+
+	/// <summary>
+	/// Determines whether the current user is authenticated.
+	/// Validates that <paramref name="context"/> is not null.
+	/// </summary>
+	/// <param name="context">The <see cref="HttpContext"/> to check for authentication status.</param>
+	/// <returns><see langword="true"/> if the user's identity is authenticated; otherwise, <see langword="false"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsAuthenticated), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool IsAuthenticated([DisallowNull] this HttpContext context)
+	{
+		return context.ArgumentNotNull().User?.Identity?.IsAuthenticated ?? false;
 	}
 
 }

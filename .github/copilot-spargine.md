@@ -24,6 +24,7 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Update file headers for all modified files:  
   - **Last Modified On:** use the current date.  
   - **Last Modified By:** `Copilot Agent`
+- When adding new metods to a class, update the <summary> XML tag in the file header.
 
 ---
 ## **1.1. Spargine `[Information]` Attribute Rules**
@@ -50,7 +51,7 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Avoid unnecessary abstractions or over‑engineering.  
 - Follow .NET Framework Design Guidelines.  
 - Prefer returning **interfaces or base types** when appropriate.
-- Mark all test classes with the [ExcludeFromCodeCoverage] attribute.
+- **Allways use proper attributes** for any method that includes attributes for performance. Remove unnecessary attributes.
 
 ---
 
@@ -63,6 +64,7 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Ensure **full code‑path coverage**.  
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments inbetween methods, only in unit test methods. 
+- Mark all test classes with the [ExcludeFromCodeCoverage] attribute.
 
 ### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  
