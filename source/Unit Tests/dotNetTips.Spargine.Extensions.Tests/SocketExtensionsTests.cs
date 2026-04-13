@@ -556,6 +556,7 @@ public class SocketExtensionsTests
 		await serverTask;
 		listener.Stop();
 	}
+
 	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
 
 	[TestMethod]
