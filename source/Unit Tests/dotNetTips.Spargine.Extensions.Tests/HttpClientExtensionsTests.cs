@@ -44,7 +44,7 @@ public class HttpClientExtensionsTests
 		cts.Cancel();
 
 		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<UriFormatException>(async () =>
+		_ = await Assert.ThrowsExactlyAsync<TaskCanceledException>(async () =>
 		{
 			await client.GetAndDeserializeAsync<TestPayload>(url, options, cts.Token);
 		});
@@ -62,7 +62,7 @@ public class HttpClientExtensionsTests
 		var options = new JsonSerializerOptions();
 
 		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<UriFormatException>(async () =>
+		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
 		{
 			await client.GetAndDeserializeAsync<TestPayload>(url, options);
 		});
@@ -579,6 +579,159 @@ public class HttpClientExtensionsTests
 		Assert.IsNotNull(result);
 		Assert.AreEqual(expectedResponse.Name, result.Name);
 		Assert.AreEqual(expectedResponse.Value, result.Value);
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeAsync_ValidResponse_ReturnsDeserializedObject()
+	{
+		// Arrange
+		var expectedPayload = new TestPayload { Name = "Test", Value = 42 };
+		var json = JsonSerializer.Serialize(expectedPayload);
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, json))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+		// Act
+		var result = await client.GetAndDeserializeAsync<TestPayload>(url, options);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(expectedPayload.Name, result.Name);
+		Assert.AreEqual(expectedPayload.Value, result.Value);
+	}
+
+	[TestMethod]
+	public async Task GetStreamAsync_CancellationRequested_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "stream content"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/stream");
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await HttpClientExtensions.GetStreamAsync(client, url, cts.Token);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetStreamAsync_NotFound_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/stream");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await HttpClientExtensions.GetStreamAsync(client, url);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetStreamAsync_NullClient_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpClient client = null;
+		var url = new Uri("https://example.com/api/stream");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await HttpClientExtensions.GetStreamAsync(client, url);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetStreamAsync_NullUrl_ThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "stream content"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await HttpClientExtensions.GetStreamAsync(client, null);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetStreamAsync_ValidResponse_ReturnsStream()
+	{
+		// Arrange
+		var expectedContent = "stream content data";
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, expectedContent))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/stream");
+
+		// Act
+		using var stream = await HttpClientExtensions.GetStreamAsync(client, url);
+
+		// Assert
+		Assert.IsNotNull(stream);
+		Assert.IsTrue(stream.CanRead);
+
+		using var reader = new System.IO.StreamReader(stream);
+		var content = await reader.ReadToEndAsync();
+		Assert.AreEqual(expectedContent, content);
+	}
+
+	[TestMethod]
+	public async Task PatchAndDeserializeAsync_CancellationRequested_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test/1");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+		var options = new JsonSerializerOptions();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.PatchAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody, options, cts.Token);
+		});
+	}
+
+	[TestMethod]
+	public async Task PutAndDeserializeAsync_CancellationRequested_ThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test/1");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+		var options = new JsonSerializerOptions();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.PutAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody, options, cts.Token);
+		});
 	}
 
 	private sealed class MockHttpMessageHandler(HttpStatusCode statusCode, string content) : HttpMessageHandler
