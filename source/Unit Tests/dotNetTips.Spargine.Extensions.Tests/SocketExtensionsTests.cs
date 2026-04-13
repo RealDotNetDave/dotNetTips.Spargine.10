@@ -15,6 +15,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -484,6 +485,69 @@ public class SocketExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public async Task TryConnectAsyncZeroTimeoutClampedToMinimumReturnsFalse()
+	{
+		// Arrange - EnsureMinimum(1) clamps 0 to 1ms, so TryConnectAsync proceeds without throwing
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
+
+		// Act
+		var result = await socket.TryConnectAsync(endpoint, 0);
+
+		// Assert - connection to non-routable address with 1ms timeout should fail
+		Assert.IsFalse(result);
+	}
+
+	// ─── ConnectTcpAsync Tests ────────────────────────────────────────
+
+	[TestMethod]
+	public async Task ConnectTcpAsyncNullContextThrowsArgumentNullException()
+	{
+		// Arrange
+		SocketsHttpConnectionContext context = null;
+		var cancellationToken = new CancellationToken(false);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(
+			async () => _ = await context.ConnectTcpAsync(cancellationToken));
+	}
+
+	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
+
+	[TestMethod]
+	public void ConfigureBufferSizesNegativeValuesClampedToMinimum()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act - negative values should be clamped to 1 by EnsureMinimum
+		var result = socket.ConfigureBufferSizes(-100, -200);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.IsTrue(socket.SendBufferSize >= 1);
+		Assert.IsTrue(socket.ReceiveBufferSize >= 1);
+	}
+
+	// ─── Additional ConfigureKeepAlive Tests ──────────────────────────
+
+	[TestMethod]
+	public void ConfigureKeepAliveNegativeValuesClampedToMinimum()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act - negative values should be clamped to 1 by EnsureMinimum
+		var result = socket.ConfigureKeepAlive(-10, -5);
+
+		// Assert
+		Assert.AreSame(socket, result);
+
+		var keepAliveEnabled = (int)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive)!;
+		Assert.AreNotEqual(0, keepAliveEnabled);
 	}
 
 }
