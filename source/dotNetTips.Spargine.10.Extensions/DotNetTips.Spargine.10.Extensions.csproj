@@ -9,7 +9,6 @@
     <AssemblyTitle>DotNetTips.Spargine.10.Extensions</AssemblyTitle>
     <AssemblyVersion>2026.10.4.1</AssemblyVersion>
     <Authors>David McCarter</Authors>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -17,18 +16,13 @@
     <Company>dotNetTips.com - McCarter Consulting</Company>
     <Configurations>Debug;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
     <Description>Extensions methods for Spargine.</Description>
-    <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.4.1</FileVersion>
-    <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -50,8 +44,6 @@
     <RootNamespace>DotNetTips.Spargine.Extensions</RootNamespace>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    <SelfContained>true</SelfContained>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
     <SignAssembly>false</SignAssembly>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net10.0</TargetFramework>
@@ -84,6 +76,9 @@
     <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <Optimize>true</Optimize>
+    <NoWarn />
   </PropertyGroup>
   <ItemGroup>
     <Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
@@ -109,6 +104,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

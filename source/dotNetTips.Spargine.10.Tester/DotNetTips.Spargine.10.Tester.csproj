@@ -9,7 +9,6 @@
     <AssemblyTitle>DotNetTips.Spargine.10.Tester</AssemblyTitle>
     <AssemblyVersion>2026.10.4.1</AssemblyVersion>
     <Authors>David McCarter</Authors>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -17,18 +16,12 @@
     <Company>dotNetTips.com - McCarter Consulting</Company>
     <Configurations>Debug;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
     <Description>Common code to help with unit tests by generating random data.</Description>
-    <Deterministic>true</Deterministic>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.4.1</FileVersion>
-    <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -50,8 +43,6 @@
     <RootNamespace>DotNetTips.Spargine.Tester</RootNamespace>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    <SelfContained>true</SelfContained>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
     <SignAssembly>false</SignAssembly>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net10.0</TargetFramework>
@@ -77,7 +68,6 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DebugType>portable</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\AppBin\</OutputPath>
@@ -85,7 +75,6 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt">
@@ -128,7 +117,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />

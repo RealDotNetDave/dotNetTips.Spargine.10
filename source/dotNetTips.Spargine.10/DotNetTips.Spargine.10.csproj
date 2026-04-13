@@ -9,7 +9,6 @@
     <AssemblyTitle>DotNetTips.Spargine.10</AssemblyTitle>
     <AssemblyVersion>2026.10.4.1</AssemblyVersion>
     <Authors>David McCarter</Authors>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -17,17 +16,13 @@
     <Company>dotNetTips.com - McCarter Consulting</Company>
     <Configurations>Debug;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
     <Description>Main helper methods/ code for Spargine that target Windows.</Description>
-    <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.4.1</FileVersion>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -49,7 +44,6 @@
     <RootNamespace>DotNetTips.Spargine</RootNamespace>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10</Title>

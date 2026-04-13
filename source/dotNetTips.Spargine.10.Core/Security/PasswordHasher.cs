@@ -271,7 +271,7 @@ public static class PasswordHasher
 
 		try
 		{
-			_ = digest.DoFinal(result, 0, resultSize);
+			_ = digest.DoFinal(result, 0);
 			return Convert.ToBase64String(result, 0, resultSize);
 		}
 		finally

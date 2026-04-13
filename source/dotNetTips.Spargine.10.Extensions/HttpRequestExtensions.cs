@@ -99,7 +99,7 @@ public static class HttpRequestExtensions
 	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string? GetBearerToken([DisallowNull] this HttpRequest request)
 	{
-		var authorization = request.ArgumentNotNull().Headers["Authorization"];
+		var authorization = request.ArgumentNotNull().Headers.Authorization;
 
 		if (authorization == StringValues.Empty)
 		{

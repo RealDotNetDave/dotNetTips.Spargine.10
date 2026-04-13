@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -9,7 +9,6 @@
     <AssemblyTitle>DotNetTips.Spargine.10.Benchmarking</AssemblyTitle>
     <AssemblyVersion>2026.10.4.1</AssemblyVersion>
     <Authors>David McCarter</Authors>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -17,17 +16,14 @@
     <Company>dotNetTips.com - McCarter Consulting</Company>
     <Configurations>Debug;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>embedded</DebugType>
     <Description>Common classes from dotNetTips.com that can be used with BenchmarkDotNet.</Description>
-    <Deterministic>true</Deterministic>
     <DocumentationFile>..\..\..\AppBin\DotNetTips.Spargine.10.Benchmarking.xml</DocumentationFile>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.4.1</FileVersion>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -52,7 +48,6 @@
     <RootNamespace>DotNetTips.Spargine.Benchmarking</RootNamespace>
     <RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.Benchmarking</Title>
@@ -89,6 +84,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="All" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\..\AppBin\</OutputPath>

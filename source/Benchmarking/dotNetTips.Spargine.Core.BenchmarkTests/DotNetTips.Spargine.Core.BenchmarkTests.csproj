@@ -1,26 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <AssemblyVersion>2026.10.4.1</AssemblyVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
     <Company>dotNetTips.com - McCarter Consulting</Company>
     <Configurations>Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>none</DebugType>
     <Description>DotNetTips.Spargine.Core.BenchmarkTests</Description>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.4.1</FileVersion>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <IsPublishable>False</IsPublishable>
     <LangVersion>latest</LangVersion>
     <NeutralLanguage>en</NeutralLanguage>
-    <Nullable>annotations</Nullable>
-    <NullableContextOptions>enable</NullableContextOptions>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <Platforms>AnyCPU</Platforms>
     <PlatformTarget>AnyCPU</PlatformTarget>

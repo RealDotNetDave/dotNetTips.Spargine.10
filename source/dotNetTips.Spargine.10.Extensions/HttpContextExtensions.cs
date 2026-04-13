@@ -73,7 +73,7 @@ public static class HttpContextExtensions
 	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static string? GetBearerToken([DisallowNull] this HttpContext context)
 	{
-		var authorization = context.ArgumentNotNull().Request.Headers["Authorization"];
+		var authorization = context.ArgumentNotNull().Request.Headers.Authorization;
 
 		if (authorization == StringValues.Empty)
 		{
@@ -98,7 +98,7 @@ public static class HttpContextExtensions
 	[Information("Original code from: https://edi.wang/post/2017/10/16/get-client-ip-aspnet-20", "David McCarter", "9/04/2017", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetRemoteIPAddress([DisallowNull] this HttpContext context)
 	{
-		return context.ArgumentNotNull().Connection.RemoteIpAddress.ToString();
+		return context.ArgumentNotNull().Connection.RemoteIpAddress?.ToString() ?? string.Empty;
 	}
 
 	/// <summary>
