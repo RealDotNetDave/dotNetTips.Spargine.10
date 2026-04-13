@@ -14,11 +14,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions.Properties;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -35,6 +37,11 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.NeedsDocumentation)]
 public static class HttpRequestExtensions
 {
+	/// <summary>
+	/// The "Bearer " prefix used to identify Bearer tokens in the Authorization header.
+	/// </summary>
+	private const string BearerPrefix = "Bearer ";
+
 	/// <summary>
 	/// Adds a unique request identifier to the HTTP headers.
 	/// </summary>
@@ -53,6 +60,79 @@ public static class HttpRequestExtensions
 		headers.Add("X-Request-UUID", id);
 
 		return id;
+	}
+
+	/// <summary>
+	/// Builds the absolute <see cref="Uri"/> from the request's scheme, host, path base, path, and query string.
+	/// Validates that <paramref name="request"/> is not null.
+	/// </summary>
+	/// <param name="request">The <see cref="HttpRequest"/> from which to build the absolute URI.</param>
+	/// <returns>The fully qualified absolute <see cref="Uri"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetAbsoluteUri), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static Uri GetAbsoluteUri([DisallowNull] this HttpRequest request)
+	{
+		request = request.ArgumentNotNull();
+
+		return new Uri(string.Concat(
+			request.Scheme,
+			"://",
+			request.Host.Value,
+			request.PathBase.Value,
+			request.Path.Value,
+			request.QueryString.Value));
+	}
+
+	/// <summary>
+	/// Extracts the Bearer token from the Authorization header of the request.
+	/// Returns <see langword="null"/> if the Authorization header is missing or does not use the Bearer scheme.
+	/// Validates that <paramref name="request"/> is not null.
+	/// </summary>
+	/// <param name="request">The <see cref="HttpRequest"/> from which to extract the Bearer token.</param>
+	/// <returns>The Bearer token as a <see cref="string"/>, or <see langword="null"/> if not present.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static string? GetBearerToken([DisallowNull] this HttpRequest request)
+	{
+		var authorization = request.ArgumentNotNull().Headers["Authorization"];
+
+		if (authorization == StringValues.Empty)
+		{
+			return null;
+		}
+
+		var headerValue = authorization.ToString();
+
+		return headerValue.StartsWith(BearerPrefix, StringComparison.OrdinalIgnoreCase)
+			? headerValue[BearerPrefix.Length..].Trim()
+			: null;
+	}
+
+	/// <summary>
+	/// Retrieves the value of a specific request header by name.
+	/// Returns <see langword="null"/> if the header is not present.
+	/// Validates that <paramref name="request"/> and <paramref name="headerName"/> are not null or empty.
+	/// </summary>
+	/// <param name="request">The <see cref="HttpRequest"/> from which to read the header.</param>
+	/// <param name="headerName">The name of the header to retrieve.</param>
+	/// <returns>The header value as a <see cref="string"/>, or <see langword="null"/> if not found.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="headerName"/> is null or whitespace.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetHeaderValue), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static string? GetHeaderValue([DisallowNull] this HttpRequest request, [DisallowNull] string headerName)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(headerName);
+
+		var values = request.ArgumentNotNull().Headers[headerName];
+
+		return values != StringValues.Empty ? values.ToString() : null;
 	}
 
 	/// <summary>
@@ -99,6 +179,46 @@ public static class HttpRequestExtensions
 		{
 			return await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
 		}
+	}
+
+	/// <summary>
+	/// Determines whether the request has a JSON content type (application/json).
+	/// Validates that <paramref name="request"/> is not null.
+	/// </summary>
+	/// <param name="request">The <see cref="HttpRequest"/> to check.</param>
+	/// <returns><see langword="true"/> if the content type starts with "application/json"; otherwise, <see langword="false"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(HasJsonContentType), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool HasJsonContentType([DisallowNull] this HttpRequest request)
+	{
+		var contentType = request.ArgumentNotNull().ContentType;
+
+		return contentType is not null &&
+			contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase);
+	}
+
+	/// <summary>
+	/// Determines whether the request content type matches the specified value using an ordinal case-insensitive comparison.
+	/// Validates that <paramref name="request"/> and <paramref name="contentType"/> are not null or empty.
+	/// </summary>
+	/// <param name="request">The <see cref="HttpRequest"/> to check.</param>
+	/// <param name="contentType">The content type to compare against (e.g., "text/plain").</param>
+	/// <returns><see langword="true"/> if the request content type starts with <paramref name="contentType"/>; otherwise, <see langword="false"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="contentType"/> is null or whitespace.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsContentType), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static bool IsContentType([DisallowNull] this HttpRequest request, [DisallowNull] string contentType)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
+
+		var requestContentType = request.ArgumentNotNull().ContentType;
+
+		return requestContentType is not null &&
+			requestContentType.StartsWith(contentType, StringComparison.OrdinalIgnoreCase);
 	}
 
 	/// <summary>

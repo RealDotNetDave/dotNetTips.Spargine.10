@@ -76,6 +76,189 @@ public class HttpRequestExtensionsTests
 	}
 
 	[TestMethod]
+	public void GetAbsoluteUri_NoQueryString_ReturnsUriWithoutQuery()
+	{
+		// Arrange
+		var request = new StubHttpRequest
+		{
+			Scheme = "http",
+			Host = new HostString("localhost:5000"),
+			Path = new PathString("/health"),
+		};
+
+		// Act
+		var result = request.GetAbsoluteUri();
+
+		// Assert
+		Assert.AreEqual("http://localhost:5000/health", result.ToString());
+	}
+
+	// =====================================================
+	// GetAbsoluteUri tests
+	// =====================================================
+
+	[TestMethod]
+	public void GetAbsoluteUri_NullRequest_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpRequest request = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.GetAbsoluteUri());
+	}
+
+	[TestMethod]
+	public void GetAbsoluteUri_ValidRequest_ReturnsFullUri()
+	{
+		// Arrange
+		var request = new StubHttpRequest
+		{
+			Scheme = "https",
+			Host = new HostString("example.com"),
+			PathBase = new PathString("/api"),
+			Path = new PathString("/users"),
+			QueryString = new QueryString("?page=1"),
+		};
+
+		// Act
+		var result = request.GetAbsoluteUri();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual("https://example.com/api/users?page=1", result.ToString());
+	}
+
+	[TestMethod]
+	public void GetBearerToken_CaseInsensitiveBearer_ReturnsToken()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+		request.Headers["Authorization"] = "bearer my-token";
+
+		// Act
+		var result = request.GetBearerToken();
+
+		// Assert
+		Assert.AreEqual("my-token", result);
+	}
+
+	[TestMethod]
+	public void GetBearerToken_NoAuthorizationHeader_ReturnsNull()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+
+		// Act
+		var result = request.GetBearerToken();
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void GetBearerToken_NonBearerScheme_ReturnsNull()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+		request.Headers["Authorization"] = "Basic dXNlcjpwYXNz";
+
+		// Act
+		var result = request.GetBearerToken();
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	// =====================================================
+	// GetBearerToken tests
+	// =====================================================
+
+	[TestMethod]
+	public void GetBearerToken_NullRequest_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpRequest request = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.GetBearerToken());
+	}
+
+	[TestMethod]
+	public void GetBearerToken_ValidBearerToken_ReturnsToken()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+		request.Headers["Authorization"] = "Bearer my-test-token-123";
+
+		// Act
+		var result = request.GetBearerToken();
+
+		// Assert
+		Assert.AreEqual("my-test-token-123", result);
+	}
+
+	[TestMethod]
+	public void GetHeaderValue_EmptyHeaderName_ThrowsArgumentException()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => request.GetHeaderValue("   "));
+	}
+
+	[TestMethod]
+	public void GetHeaderValue_ExistingHeader_ReturnsValue()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+		request.Headers["X-Custom"] = "custom-value";
+
+		// Act
+		var result = request.GetHeaderValue("X-Custom");
+
+		// Assert
+		Assert.AreEqual("custom-value", result);
+	}
+
+	[TestMethod]
+	public void GetHeaderValue_MissingHeader_ReturnsNull()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+
+		// Act
+		var result = request.GetHeaderValue("X-Missing");
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void GetHeaderValue_NullHeaderName_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.GetHeaderValue(null));
+	}
+
+	// =====================================================
+	// GetHeaderValue tests
+	// =====================================================
+
+	[TestMethod]
+	public void GetHeaderValue_NullRequest_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpRequest request = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.GetHeaderValue("X-Test"));
+	}
+
+	[TestMethod]
 	public async Task GetRawBodyBytesAsync_EmptyBody_ReturnsEmptyArray()
 	{
 		// Arrange
@@ -171,6 +354,158 @@ public class HttpRequestExtensionsTests
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.AreEqual(expectedText, result);
+	}
+
+	[TestMethod]
+	public void HasJsonContentType_JsonContentType_ReturnsTrue()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = "application/json" };
+
+		// Act
+		var result = request.HasJsonContentType();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasJsonContentType_JsonWithCharset_ReturnsTrue()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = "application/json; charset=utf-8" };
+
+		// Act
+		var result = request.HasJsonContentType();
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasJsonContentType_NullContentType_ReturnsFalse()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = null };
+
+		// Act
+		var result = request.HasJsonContentType();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	// =====================================================
+	// HasJsonContentType tests
+	// =====================================================
+
+	[TestMethod]
+	public void HasJsonContentType_NullRequest_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpRequest request = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.HasJsonContentType());
+	}
+
+	[TestMethod]
+	public void HasJsonContentType_TextPlain_ReturnsFalse()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = "text/plain" };
+
+		// Act
+		var result = request.HasJsonContentType();
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsContentType_CaseInsensitiveMatch_ReturnsTrue()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = "Application/JSON" };
+
+		// Act
+		var result = request.IsContentType("application/json");
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsContentType_EmptyContentType_ThrowsArgumentException()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentException>(() => request.IsContentType("  "));
+	}
+
+	[TestMethod]
+	public void IsContentType_MatchingContentType_ReturnsTrue()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = "text/html; charset=utf-8" };
+
+		// Act
+		var result = request.IsContentType("text/html");
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void IsContentType_NonMatchingContentType_ReturnsFalse()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = "text/plain" };
+
+		// Act
+		var result = request.IsContentType("application/json");
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsContentType_NullContentType_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var request = new StubHttpRequest();
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.IsContentType(null));
+	}
+
+	// =====================================================
+	// IsContentType tests
+	// =====================================================
+
+	[TestMethod]
+	public void IsContentType_NullRequest_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpRequest request = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => request.IsContentType("text/plain"));
+	}
+
+	[TestMethod]
+	public void IsContentType_NullRequestContentType_ReturnsFalse()
+	{
+		// Arrange
+		var request = new StubHttpRequest { ContentType = null };
+
+		// Act
+		var result = request.IsContentType("text/plain");
+
+		// Assert
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -279,6 +614,8 @@ public class HttpRequestExtensionsTests
 	private sealed class StubHttpRequest : HttpRequest
 	{
 
+		private readonly HeaderDictionary _headers = new();
+
 		public override Stream Body { get; set; }
 
 		public override long? ContentLength { get; set; }
@@ -291,7 +628,7 @@ public class HttpRequestExtensionsTests
 
 		public override bool HasFormContentType => false;
 
-		public override IHeaderDictionary Headers => null;
+		public override IHeaderDictionary Headers => this._headers;
 
 		public override HostString Host { get; set; }
 
