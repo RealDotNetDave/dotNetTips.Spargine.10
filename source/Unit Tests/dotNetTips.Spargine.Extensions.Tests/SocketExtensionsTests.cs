@@ -17,6 +17,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using DotNetTips.Spargine.Tester;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -96,6 +98,150 @@ public class SocketExtensionsTests
 
 		// Assert
 		Assert.AreNotEqual(port1, port2);
+	}
+
+	// ─── ConfigureBufferSizes Tests ────────────────────────────────────
+
+	[TestMethod]
+	public void ConfigureBufferSizes_NullSocket_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Socket socket = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.ConfigureBufferSizes(8192, 8192));
+	}
+
+	[TestMethod]
+	public void ConfigureBufferSizes_ValidSizes_SetsBufferSizes()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		const int sendSize = 16384;
+		const int receiveSize = 32768;
+
+		// Act
+		var result = socket.ConfigureBufferSizes(sendSize, receiveSize);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.AreEqual(sendSize, socket.SendBufferSize);
+		Assert.AreEqual(receiveSize, socket.ReceiveBufferSize);
+	}
+
+	[TestMethod]
+	public void ConfigureBufferSizes_ZeroValues_ClampedToMinimum()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act
+		var result = socket.ConfigureBufferSizes(0, 0);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.IsTrue(socket.SendBufferSize >= 1);
+		Assert.IsTrue(socket.ReceiveBufferSize >= 1);
+	}
+
+	// ─── ConfigureKeepAlive Tests ──────────────────────────────────────
+
+	[TestMethod]
+	public void ConfigureKeepAlive_NullSocket_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Socket socket = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.ConfigureKeepAlive(60, 1));
+	}
+
+	[TestMethod]
+	public void ConfigureKeepAlive_ValidParameters_EnablesKeepAlive()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act
+		var result = socket.ConfigureKeepAlive(60, 5);
+
+		// Assert
+		Assert.AreSame(socket, result);
+
+		var keepAliveEnabled = (int)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive)!;
+		Assert.AreNotEqual(0, keepAliveEnabled);
+	}
+
+	[TestMethod]
+	public void ConfigureKeepAlive_ZeroValues_ClampedToMinimum()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act - should not throw; values are clamped to 1
+		var result = socket.ConfigureKeepAlive(0, 0);
+
+		// Assert
+		Assert.AreSame(socket, result);
+
+		var keepAliveEnabled = (int)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive)!;
+		Assert.AreNotEqual(0, keepAliveEnabled);
+	}
+
+	[TestMethod]
+	public void ConfigureLinger_Disabled_SetsLingerStateDisabled()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act
+		var result = socket.ConfigureLinger(false, 0);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.IsFalse(socket.LingerState.Enabled);
+	}
+
+	[TestMethod]
+	public void ConfigureLinger_EnabledWithTimeout_SetsLingerState()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act
+		var result = socket.ConfigureLinger(true, 10);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.IsTrue(socket.LingerState.Enabled);
+		Assert.AreEqual(10, socket.LingerState.LingerTime);
+	}
+
+	[TestMethod]
+	public void ConfigureLinger_NegativeTimeout_ClampedToZero()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act - should not throw; value is clamped to 0
+		var result = socket.ConfigureLinger(true, -5);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.IsTrue(socket.LingerState.Enabled);
+		Assert.AreEqual(0, socket.LingerState.LingerTime);
+	}
+
+	// ─── ConfigureLinger Tests ─────────────────────────────────────────
+
+	[TestMethod]
+	public void ConfigureLinger_NullSocket_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Socket socket = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => socket.ConfigureLinger(true, 10));
 	}
 
 	[TestMethod]
@@ -265,6 +411,78 @@ public class SocketExtensionsTests
 		var result = socket.TryConnect(endpoint, 0);
 
 		// Assert - connection to non-routable address with 1ms timeout should fail
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public async Task TryConnectAsync_CallerCancellation_ThrowsOperationCanceledException()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		// Act & Assert - caller-initiated cancellation should propagate (Socket.ConnectAsync throws TaskCanceledException)
+		_ = await Assert.ThrowsExactlyAsync<TaskCanceledException>(
+			async () => await socket.TryConnectAsync(endpoint, 30000, cts.Token));
+	}
+
+	[TestMethod]
+	public async Task TryConnectAsync_NullEndpoint_ThrowsArgumentNullException()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () => await socket.TryConnectAsync(null, 1000));
+	}
+
+	// ─── TryConnectAsync Tests ─────────────────────────────────────────
+
+	[TestMethod]
+	public async Task TryConnectAsync_NullSocket_ThrowsArgumentNullException()
+	{
+		// Arrange
+		Socket socket = null;
+		var endpoint = new IPEndPoint(IPAddress.Loopback, 80);
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () => await socket.TryConnectAsync(endpoint, 1000));
+	}
+
+	[TestMethod]
+	public async Task TryConnectAsync_SuccessfulConnection_ReturnsTrue()
+	{
+		// Arrange
+		using var listener = new TcpListener(IPAddress.Loopback, 0);
+		listener.Start();
+		var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Loopback, port);
+
+		// Act
+		var result = await socket.TryConnectAsync(endpoint, 5000);
+
+		// Assert
+		Assert.IsTrue(result);
+
+		listener.Stop();
+	}
+
+	[TestMethod]
+	public async Task TryConnectAsync_TimesOut_ReturnsFalse()
+	{
+		// Arrange - use a non-routable TEST-NET address to force timeout
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
+		const int timeout = 200;
+
+		// Act
+		var result = await socket.TryConnectAsync(endpoint, timeout);
+
+		// Assert
 		Assert.IsFalse(result);
 	}
 
