@@ -488,16 +488,16 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task TryConnectAsyncZeroTimeoutClampedToMinimumReturnsFalse()
+	public async Task TryConnectAsync_ZeroTimeout_ReturnsFalse()
 	{
-		// Arrange - EnsureMinimum(1) clamps 0 to 1ms, so TryConnectAsync proceeds without throwing
+		// Arrange - use a non-routable TEST-NET address with a zero timeout
 		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		var endpoint = new IPEndPoint(IPAddress.Parse("203.0.113.1"), 65000);
 
 		// Act
 		var result = await socket.TryConnectAsync(endpoint, 0);
 
-		// Assert - connection to non-routable address with 1ms timeout should fail
+		// Assert - connection to non-routable address should fail
 		Assert.IsFalse(result);
 	}
 
