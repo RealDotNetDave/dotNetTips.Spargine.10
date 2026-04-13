@@ -57,7 +57,8 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 
 ### **General Requirements**
 - Use **dotNetTips.Spargine.10.Tester** for test data and utilities.  
-- Write unit tests for **all public APIs**.  
+- Write unit tests for **all public APIs**.
+- If new methods are added, ensure they are covered by unit tests.
 - Ensure **full code‑path coverage**.  
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 
