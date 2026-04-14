@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -1079,7 +1080,7 @@ public class FileHelperTests
 	[TestMethod]
 	public void DeleteFilesEmptyCollectionTest()
 	{
-		var emptyFiles = new System.Collections.ObjectModel.ReadOnlyCollection<string>(Array.Empty<string>());
+		var emptyFiles = new ReadOnlyCollection<string>(Array.Empty<string>());
 
 		var result = FileHelper.DeleteFiles(emptyFiles);
 
@@ -1194,7 +1195,7 @@ public class FileHelperTests
 
 		Assert.IsNotNull(result);
 		Assert.IsTrue(result.Count > 0);
-		Assert.IsInstanceOfType<System.Collections.ObjectModel.ReadOnlyCollection<char>>(result);
+		Assert.IsInstanceOfType<ReadOnlyCollection<char>>(result);
 	}
 
 	[TestMethod]
@@ -1255,7 +1256,7 @@ public class FileHelperTests
 	[TestMethod]
 	public void DeleteFilesWithNonExistentFilesTest()
 	{
-		var files = new System.Collections.ObjectModel.ReadOnlyCollection<string>(new[]
+		var files = new ReadOnlyCollection<string>(new[]
 		{
 			Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"),
 			Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"),
@@ -1316,6 +1317,8 @@ public class FileHelperTests
 
 			// Remove them
 			FileHelper.RemoveAttributes(file, FileAttributes.ReadOnly | FileAttributes.Hidden);
+
+			file.Refresh();
 
 			Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.ReadOnly));
 			Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.Hidden));
