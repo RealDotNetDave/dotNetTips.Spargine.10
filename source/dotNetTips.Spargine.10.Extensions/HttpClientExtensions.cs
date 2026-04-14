@@ -278,7 +278,7 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[DefaultValue(null)]
-	[Information(nameof(GetStreamAsync), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetStreamAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<Stream> GetStreamAsync([DisallowNull] this HttpClient client, [DisallowNull] Uri url, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
