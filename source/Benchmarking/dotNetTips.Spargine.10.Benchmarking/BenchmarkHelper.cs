@@ -317,7 +317,6 @@ public static class BenchmarkHelper
 	/// <item><description>Validates that each benchmark type inherits from <see cref="Benchmark"/> and is defined in <paramref name="callingAssembly"/>.</description></item>
 	/// <item><description>Attaches <see cref="ConsoleLogger.Default"/> to the configuration for consistent console output.</description></item>
 	/// <item><description>Uses <see cref="PerformanceStopwatch"/> to record per-type timing and build an aggregated summary.</description></item>
-	/// <item><description>For each benchmark type, materializes benchmark cases via <see cref="BenchmarkConverter.TypeToBenchmarks(Type, IConfig)"/> and executes them using <see cref="BenchmarkRunner.Run(Type, IConfig)"/>.</description></item>
 	/// </list>
 	/// <para>
 	/// On successful completion of all benchmarks, a success beep is played via <see cref="PlaySuccessBeep"/>,

@@ -224,7 +224,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	{
 		base.Setup();
 
-		this._personRefObservableList = new ObservableList<Person>(this.GetPersonRefArray());
+		this._personRefObservableList = [.. this.GetPersonRefArray()];
 		this._personRefItemsToInsert = this.GetPersonRefCollectionToInsert();
 	}
 
