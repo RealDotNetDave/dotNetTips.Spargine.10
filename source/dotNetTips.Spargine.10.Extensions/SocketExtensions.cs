@@ -135,7 +135,7 @@ public static class SocketExtensions
 	/// </code>
 	/// </example>
 	/// <remarks>Original code by: Máňa Píchová.</remarks>
-	[Information(nameof(ConnectTcpAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(ConnectTcpAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async ValueTask<Stream> ConnectTcpAsync([DisallowNull] this SocketsHttpConnectionContext context, CancellationToken cancellationToken = default)
 	{
 		context = context.ArgumentNotNull();
