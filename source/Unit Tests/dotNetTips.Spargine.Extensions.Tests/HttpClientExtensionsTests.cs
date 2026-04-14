@@ -53,6 +53,24 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
+	public async Task DeleteAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test/1");
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.DeleteAndDeserializeAsync<TestPayload>(url, options);
+		});
+	}
+
+	[TestMethod]
 	public async Task DeleteAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
 	{
 		// Arrange
@@ -162,6 +180,24 @@ public class HttpClientExtensionsTests
 		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
 		{
 			await client.DownloadToStreamAsync(url, destination, cts.Token);
+		});
+	}
+
+	[TestMethod]
+	public async Task DownloadToStreamAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/file");
+		using var destination = new MemoryStream();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.DownloadToStreamAsync(url, destination);
 		});
 	}
 
@@ -664,6 +700,23 @@ public class HttpClientExtensionsTests
 		});
 	}
 
+	[TestMethod]
+	public async Task HeadersAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.HeadersAsync(url);
+		});
+	}
+
 	// ──────────────────────────────────────────────
 	// HeadersAsync
 	// ──────────────────────────────────────────────
@@ -745,6 +798,25 @@ public class HttpClientExtensionsTests
 	{
 		// Arrange
 		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test/1");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.PatchAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody, options);
+		});
+	}
+
+	[TestMethod]
+	public async Task PatchAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -896,6 +968,25 @@ public class HttpClientExtensionsTests
 		});
 	}
 
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.PostAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody, options);
+		});
+	}
+
 	// ──────────────────────────────────────────────
 	// PostAndDeserializeAsync
 	// ──────────────────────────────────────────────
@@ -1033,6 +1124,25 @@ public class HttpClientExtensionsTests
 		});
 	}
 
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.PostAndEnsureSuccessAsync(url, requestBody, options);
+		});
+	}
+
 	// ──────────────────────────────────────────────
 	// PostAndEnsureSuccessAsync
 	// ──────────────────────────────────────────────
@@ -1152,6 +1262,25 @@ public class HttpClientExtensionsTests
 	{
 		// Arrange
 		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test/1");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+		var options = new JsonSerializerOptions();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.PutAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody, options);
+		});
+	}
+
+	[TestMethod]
+	public async Task PutAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
