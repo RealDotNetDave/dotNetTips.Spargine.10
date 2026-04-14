@@ -261,7 +261,7 @@ public class AssemblyHelperTests : UnitTester, IDisposable
 			}
 		}
 
-		SaveToFile<Type>(foundTypes, prop => prop.Name == "FullName", $"IDisposable-{SDKVersion}");
+		this.SaveToFile<Type>(foundTypes, prop => prop.Name == "FullName", $"IDisposable-{SDKVersion}");
 
 		// Assert
 		Assert.IsGreaterThan(100, foundTypes.Count, "Expected to find types implementing IDisposable, but none were found.");

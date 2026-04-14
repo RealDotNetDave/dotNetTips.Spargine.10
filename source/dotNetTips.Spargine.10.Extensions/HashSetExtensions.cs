@@ -120,7 +120,7 @@ public static class HashSetExtensions
 		public ImmutableHashSet<T> ToImmutable([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			return comparer is null
-				? ImmutableHashSet.CreateRange(collection.ArgumentNotNull())
+				? [.. collection.ArgumentNotNull()]
 				: ImmutableHashSet.CreateRange(comparer, collection.ArgumentNotNull());
 		}
 

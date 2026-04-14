@@ -465,8 +465,6 @@ public class ConcurrentHashSetTests
 		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(null as IEqualityComparer<int>));
 	}
 
-	// ==================== Contains Edge Case Tests ====================
-
 	[TestMethod]
 	public void Contains_AfterRemoval_ReturnsFalse()
 	{
