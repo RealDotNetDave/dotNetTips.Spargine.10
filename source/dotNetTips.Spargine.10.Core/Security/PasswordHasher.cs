@@ -266,7 +266,7 @@ public static class PasswordHasher
 		var passwordBytes = Encoding.UTF8.GetBytes(password);
 		digest.BlockUpdate(passwordBytes, 0, passwordBytes.Length);
 
-		var resultSize = bitLength / 8;
+		var resultSize = digest.GetDigestSize();
 		var result = _byteArrayPool.Rent(resultSize);
 
 		try
