@@ -11,7 +11,6 @@
 // </copyright>
 // <summary>Unit tests for the IDataModel interface default implementations.</summary>
 // ***********************************************************************
-#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,9 +29,11 @@ public class IDataModelTests
 	/// </summary>
 	private sealed class TestModel : IDataModel<TestModel, string>
 	{
-		public string Id { get; init; } = string.Empty;
+		public string Id { get; init; } = null!;
 
+#pragma warning disable CS8632
 		int IComparable.CompareTo(object? obj)
+#pragma warning restore CS8632
 		{
 			return obj is TestModel other
 				? ((IComparable<TestModel>)this).CompareTo(other)
@@ -47,7 +48,9 @@ public class IDataModelTests
 	{
 		public int Id { get; init; }
 
+#pragma warning disable CS8632
 		int IComparable.CompareTo(object? obj)
+#pragma warning restore CS8632
 		{
 			return obj is IntKeyModel other
 				? ((IComparable<IntKeyModel>)this).CompareTo(other)
@@ -60,9 +63,17 @@ public class IDataModelTests
 	// ────────────────────────────────────────────
 
 	[TestMethod]
-	public void IsTransientReturnsFalseWhenStringIdIsEmptyString()
+	public void IsTransientReturnsTrueWhenStringIdIsDefault()
 	{
 		IDataModel<TestModel, string> model = new TestModel();
+
+		Assert.IsTrue(model.IsTransient);
+	}
+
+	[TestMethod]
+	public void IsTransientReturnsFalseWhenStringIdIsEmptyString()
+	{
+		IDataModel<TestModel, string> model = new TestModel { Id = string.Empty };
 
 		// default(string) is null, not string.Empty, so IsTransient is false
 		Assert.IsFalse(model.IsTransient);
