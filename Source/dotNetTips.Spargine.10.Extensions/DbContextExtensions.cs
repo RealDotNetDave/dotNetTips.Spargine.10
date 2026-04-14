@@ -48,7 +48,7 @@ public static class DbContextExtensions
 	/// <returns>The number of state entries written to the database.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
 	[Information(nameof(AddAndSaveAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<int> AddAndSaveAsync<T>([DisallowNull] this DbContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
+	public static async Task<int> AddAndSaveAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
@@ -70,7 +70,7 @@ public static class DbContextExtensions
 	/// <returns>The number of state entries written to the database.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
 	[Information(nameof(DeleteAndSaveAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<int> DeleteAndSaveAsync<T>([DisallowNull] this DbContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
+	public static async Task<int> DeleteAndSaveAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
@@ -160,7 +160,7 @@ public static class DbContextExtensions
 	/// <returns>The number of records in the table.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
 	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<int> GetRecordCountAsync<T>([DisallowNull] this DbContext context, CancellationToken cancellationToken = default)
+	public static async Task<int> GetRecordCountAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
@@ -179,7 +179,7 @@ public static class DbContextExtensions
 	/// <returns>The number of records matching the predicate.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
 	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<int> GetRecordCountAsync<T>([DisallowNull] this DbContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+	public static async Task<int> GetRecordCountAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
@@ -213,7 +213,7 @@ public static class DbContextExtensions
 	/// <returns><c>true</c> if the table contains any records; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
 	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<bool> HasRecordsAsync<T>([DisallowNull] this DbContext context, CancellationToken cancellationToken = default)
+	public static async Task<bool> HasRecordsAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
@@ -232,7 +232,7 @@ public static class DbContextExtensions
 	/// <returns><c>true</c> if any records match the predicate; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
 	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<bool> HasRecordsAsync<T>([DisallowNull] this DbContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+	public static async Task<bool> HasRecordsAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();

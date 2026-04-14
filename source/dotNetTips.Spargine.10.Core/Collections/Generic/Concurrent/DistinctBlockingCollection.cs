@@ -148,6 +148,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// to remove from memory.</remarks>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Clone uses JSON serialization with reflection; cannot annotate ICloneable<T>.Clone interface.")]
 	[Information("Clone", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public DistinctBlockingCollection<T> Clone() => JsonSerialization.Deserialize<DistinctBlockingCollection<T>>(JsonSerialization.Serialize(this));
 

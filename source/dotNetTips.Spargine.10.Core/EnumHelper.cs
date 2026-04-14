@@ -126,6 +126,7 @@ public static class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<EnumValue> GetItems<T>(bool fixNames = true)
 		where T : Enum
@@ -225,6 +226,7 @@ public static class EnumHelper
 	/// <param name="fixNames">If set to <c>true</c>, adjusts the names for readability by adding spaces in camel case names and replacing underscores with spaces.</param>
 	/// <returns>A list of enumeration names as strings.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private static List<string> GetNames([DisallowNull] Type type, bool fixNames = true)
 	{
 		// Set up result

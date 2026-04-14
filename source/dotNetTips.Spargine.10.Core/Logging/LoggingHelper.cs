@@ -22,7 +22,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Devices;
 using Microsoft.Extensions.Logging;
 
@@ -177,6 +176,7 @@ public static class LoggingHelper
 	/// AppInfo:FileVersion - 15.0.0
 	/// AppInfo:Title - dotNetTips.Spargine
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(LogApplicationInformation), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void LogApplicationInformation([DisallowNull] ILogger logger)
 	{
@@ -229,6 +229,7 @@ public static class LoggingHelper
 	/// AppInfo:SystemDirectory - C:\\WINDOWS\\system32
 	/// AppInfo:HasShutdownStarted - False
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void LogComputerInformation([DisallowNull] ILogger logger)
 	{

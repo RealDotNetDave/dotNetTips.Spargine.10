@@ -151,6 +151,7 @@ public static class DataContextExtensions
 	/// <exception cref="ArgumentNullException">context</exception>
 	[Pure]
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetTrackedObjects), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Tuple<T, T>> GetTrackedObjects<T>([DisallowNull] this DataContext context)
 	{
@@ -163,13 +164,17 @@ public static class DataContextExtensions
 		const BindingFlags Bindings = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField;
 
 		var services = dcType.GetField("services", Bindings)?.GetValue(context);
+#pragma warning disable IL2070 // GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 		var tracker = services!.GetType().GetField("tracker", Bindings)?.GetValue(services);
 		var trackerItems = (IDictionary)tracker?.GetType().GetField("items", Bindings)?.GetValue(tracker)!;
+#pragma warning restore IL2070
 
 		// iterate through each update in context, adding only those that are of type T to the method's result variable
 		foreach (DictionaryEntry entry in trackerItems)
 		{
+#pragma warning disable IL2070
 			var originalField = entry.Value?.GetType().GetField("original", Bindings);
+#pragma warning restore IL2070
 
 			if (originalField is null)
 			{

@@ -95,10 +95,13 @@ public static class EnumExtensions
 		/// </summary>
 		/// <typeparam name="TAttribute">The type of attribute to retrieve.</typeparam>
 		/// <returns>The custom attribute if found; otherwise, null.</returns>
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAttribute), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public TAttribute? GetAttribute<TAttribute>() where TAttribute : Attribute
 		{
+#pragma warning disable IL2070 // input.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 			var memberInfo = input.GetType().GetMember(input.ToString());
+#pragma warning restore IL2070
 
 			return memberInfo.Length > 0 ? memberInfo[0].GetCustomAttribute<TAttribute>() : null;
 		}
@@ -107,6 +110,7 @@ public static class EnumExtensions
 		/// Gets the display name from the <see cref="DisplayAttribute"/> if present; otherwise returns the enum's name.
 		/// </summary>
 		/// <returns>The display name or enum name.</returns>
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetDisplayName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string GetDisplayName()
 		{

@@ -78,28 +78,28 @@ internal sealed class RegionConverter : JsonConverter<Region>
 		switch (value)
 		{
 			case Region.Africa:
-				JsonSerializer.Serialize(writer, "Africa", options);
+				writer.WriteStringValue("Africa");
 				return;
 			case Region.Americas:
-				JsonSerializer.Serialize(writer, "Americas", options);
+				writer.WriteStringValue("Americas");
 				return;
 			case Region.Asia:
-				JsonSerializer.Serialize(writer, "Asia", options);
+				writer.WriteStringValue("Asia");
 				return;
 			case Region.Europe:
-				JsonSerializer.Serialize(writer, "Europe", options);
+				writer.WriteStringValue("Europe");
 				return;
 			case Region.Oceania:
-				JsonSerializer.Serialize(writer, "Oceania", options);
+				writer.WriteStringValue("Oceania");
 				return;
 			case Region.Polar:
-				JsonSerializer.Serialize(writer, "Polar", options);
+				writer.WriteStringValue("Polar");
 				return;
 			case Region.Empty:
-				JsonSerializer.Serialize(writer, string.Empty, options);
+				writer.WriteStringValue(string.Empty);
 				break;
 			default:
-				JsonSerializer.Serialize(writer, string.Empty, options);
+				writer.WriteStringValue(string.Empty);
 				break;
 		}
 	}

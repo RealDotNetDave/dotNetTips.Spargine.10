@@ -43,6 +43,7 @@ public static class AssemblyHelper
 	/// <param name="referencedAssemblyName">The name of the referenced assembly.</param>
 	/// <returns><c>true</c> if the assembly references the specified assembly; otherwise, <c>false</c>.</returns>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DoesAssemblyReference), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool DoesAssemblyReference([DisallowNull] FileInfo assemblyFile, [DisallowNull] string referencedAssemblyName)
 	{
@@ -76,6 +77,7 @@ public static class AssemblyHelper
 	/// <param name="typeName">The fully qualified name of the type to check.</param>
 	/// <returns><c>true</c> if the type exists; otherwise, <c>false</c>.</returns>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DoesTypeExistInAssembly), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool DoesTypeExistInAssembly([DisallowNull] FileInfo assemblyFile, [DisallowNull] string typeName)
 	{
@@ -147,6 +149,7 @@ public static class AssemblyHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="file"/> or <paramref name="types"/> is null.</exception>
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FindTypesImplementing), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindTypesImplementing([DisallowNull] this FileInfo file, [DisallowNull] params ReadOnlyCollection<Type> types)
 	{
@@ -172,6 +175,7 @@ public static class AssemblyHelper
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	/// <exception cref="FileLoadException">Thrown if an assembly cannot be loaded.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAssemblyCustomAttributes), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<Attribute> GetAssemblyCustomAttributes([DisallowNull] FileInfo assemblyFile)
 	{
@@ -204,6 +208,7 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>The entry point <see cref="MethodInfo"/>, or <c>null</c> if none exists.</returns>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAssemblyEntryPoint), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static MethodInfo? GetAssemblyEntryPoint([DisallowNull] FileInfo assemblyFile)
 	{
@@ -236,6 +241,7 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>A read-only collection containing metadata key-value pairs.</returns>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAssemblyMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetAssemblyMetadata([DisallowNull] FileInfo assemblyFile)
 	{
@@ -275,6 +281,7 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>A read-only collection of public <see cref="Type"/> objects.</returns>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAssemblyPublicTypes), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> GetAssemblyPublicTypes([DisallowNull] FileInfo assemblyFile)
 	{
@@ -319,6 +326,7 @@ public static class AssemblyHelper
 	/// <returns>A collection of <see cref="Type"/> objects representing all assemblyTypes in the assembly.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="assemblyFile"/> is null.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAssemblyTypes), "David McCarter", "4/9/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> GetAssemblyTypes([DisallowNull] FileInfo assemblyFile)
 	{
@@ -358,6 +366,7 @@ public static class AssemblyHelper
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	/// <exception cref="FileLoadException">Thrown if an assembly cannot be loaded.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetDependentAssemblies), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<AssemblyName> GetDependentAssemblies([DisallowNull] FileInfo assemblyFile)
 	{
@@ -396,6 +405,7 @@ public static class AssemblyHelper
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
 	/// <exception cref="TypeLoadException">Thrown if the specified type cannot be loaded from the assembly.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetMethodsInType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetMethodsInType([DisallowNull] FileInfo assemblyFile, [DisallowNull] string typeName)
 	{
@@ -518,6 +528,7 @@ public static class AssemblyHelper
 	/// Unloads the specified assembly.
 	/// </summary>
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(UnloadAssembly), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static void UnloadAssembly([DisallowNull] FileInfo assemblyFile)
 	{

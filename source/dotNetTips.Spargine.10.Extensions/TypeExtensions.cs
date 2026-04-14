@@ -117,6 +117,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of abstract methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllAbstractMethods()
 		{
@@ -129,6 +130,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of constructors.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<ConstructorInfo> GetAllConstructors()
 		{
@@ -141,6 +143,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of declared fields.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<FieldInfo> GetAllDeclaredFields()
 		{
@@ -153,6 +156,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of declared methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllDeclaredMethods), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<MethodInfo> GetAllDeclaredMethods()
 		{
@@ -165,6 +169,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of fields.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<FieldInfo> GetAllFields()
 		{
@@ -177,6 +182,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of generic methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllGenericMethods()
 		{
@@ -189,6 +195,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<MethodInfo> GetAllMethods()
 		{
@@ -201,6 +208,7 @@ public static class TypeExtensions
 		/// <returns>An enumerable collection of properties.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllProperties), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<PropertyInfo> GetAllProperties()
 		{
@@ -213,6 +221,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of public methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllPublicMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllPublicMethods()
 		{
@@ -225,6 +234,7 @@ public static class TypeExtensions
 		/// <returns>A read-only collection of static methods.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetAllStaticMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MethodInfo> GetAllStaticMethods()
 		{
@@ -262,6 +272,7 @@ public static class TypeExtensions
 		/// <typeparam name="TAttribute">The type of the attribute to search for.</typeparam>
 		/// <returns>A read-only collection of <see cref="MemberInfo"/> objects that have the specified attribute.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetTypeMembersWithAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>()
 			where TAttribute : Attribute
@@ -289,6 +300,7 @@ public static class TypeExtensions
 		/// <param name="bindingFlags">The binding flags to use when searching for the method. Defaults to public instance methods.</param>
 		/// <returns><c>true</c> if the method exists; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasMethod([DisallowNull] string methodName, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
 		{
@@ -301,6 +313,7 @@ public static class TypeExtensions
 		/// <returns><c>true</c> if the type has a parameterless constructor; otherwise, <c>false</c>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(HasParameterlessConstructor), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasParameterlessConstructor()
 		{
@@ -313,6 +326,7 @@ public static class TypeExtensions
 		/// <param name="propertyName">The name of the property to check for.</param>
 		/// <returns><c>true</c> if the property exists; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool HasProperty([DisallowNull] string propertyName)
 		{
@@ -325,6 +339,7 @@ public static class TypeExtensions
 		/// <param name="interfaceType">The interface type to check for.</param>
 		/// <returns><c>true</c> if the type implements the interface; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ImplementsInterface([DisallowNull] Type interfaceType)
 		{
@@ -360,6 +375,7 @@ public static class TypeExtensions
 		/// <returns><c>true</c> if the type implements <see cref="IEnumerable"/>; otherwise, <c>false</c>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsEnumerable()
 		{

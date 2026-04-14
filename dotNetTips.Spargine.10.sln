@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.1.11312.151
@@ -32,39 +32,56 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		DebugTrim|Any CPU = DebugTrim|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DCE808A7-016A-5764-5D22-B678B7CBFE3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DCE808A7-016A-5764-5D22-B678B7CBFE3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE808A7-016A-5764-5D22-B678B7CBFE3D}.DebugTrim|Any CPU.ActiveCfg = DebugTrim|Any CPU
+		{DCE808A7-016A-5764-5D22-B678B7CBFE3D}.DebugTrim|Any CPU.Build.0 = DebugTrim|Any CPU
 		{DCE808A7-016A-5764-5D22-B678B7CBFE3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCE808A7-016A-5764-5D22-B678B7CBFE3D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A243C95-7330-80FC-7CBA-5AD88363F632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A243C95-7330-80FC-7CBA-5AD88363F632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A243C95-7330-80FC-7CBA-5AD88363F632}.DebugTrim|Any CPU.ActiveCfg = DebugTrim|Any CPU
+		{9A243C95-7330-80FC-7CBA-5AD88363F632}.DebugTrim|Any CPU.Build.0 = DebugTrim|Any CPU
 		{9A243C95-7330-80FC-7CBA-5AD88363F632}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A243C95-7330-80FC-7CBA-5AD88363F632}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C91B283-645C-4F1B-B53A-5B21815133FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C91B283-645C-4F1B-B53A-5B21815133FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C91B283-645C-4F1B-B53A-5B21815133FC}.DebugTrim|Any CPU.ActiveCfg = DebugTrim|Any CPU
+		{4C91B283-645C-4F1B-B53A-5B21815133FC}.DebugTrim|Any CPU.Build.0 = DebugTrim|Any CPU
 		{4C91B283-645C-4F1B-B53A-5B21815133FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C91B283-645C-4F1B-B53A-5B21815133FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FAE025-F112-3FB1-A133-FBFBE700868D}.DebugTrim|Any CPU.ActiveCfg = DebugTrim|Any CPU
+		{87FAE025-F112-3FB1-A133-FBFBE700868D}.DebugTrim|Any CPU.Build.0 = DebugTrim|Any CPU
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19CD0829-836B-C7F6-7623-515BCC9C6F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19CD0829-836B-C7F6-7623-515BCC9C6F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CD0829-836B-C7F6-7623-515BCC9C6F24}.DebugTrim|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CD0829-836B-C7F6-7623-515BCC9C6F24}.DebugTrim|Any CPU.Build.0 = Debug|Any CPU
 		{19CD0829-836B-C7F6-7623-515BCC9C6F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CD0829-836B-C7F6-7623-515BCC9C6F24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8C07ED2-6FAF-B09D-1747-34023BCCFC05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8C07ED2-6FAF-B09D-1747-34023BCCFC05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8C07ED2-6FAF-B09D-1747-34023BCCFC05}.DebugTrim|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8C07ED2-6FAF-B09D-1747-34023BCCFC05}.DebugTrim|Any CPU.Build.0 = Debug|Any CPU
 		{F8C07ED2-6FAF-B09D-1747-34023BCCFC05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8C07ED2-6FAF-B09D-1747-34023BCCFC05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A17F11C0-4532-33EE-C79D-F304CCEEC34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A17F11C0-4532-33EE-C79D-F304CCEEC34D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A17F11C0-4532-33EE-C79D-F304CCEEC34D}.DebugTrim|Any CPU.ActiveCfg = Debug|Any CPU
+		{A17F11C0-4532-33EE-C79D-F304CCEEC34D}.DebugTrim|Any CPU.Build.0 = Debug|Any CPU
 		{A17F11C0-4532-33EE-C79D-F304CCEEC34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A17F11C0-4532-33EE-C79D-F304CCEEC34D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{336F4C37-FEE1-6562-51C6-9298657CD408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{336F4C37-FEE1-6562-51C6-9298657CD408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336F4C37-FEE1-6562-51C6-9298657CD408}.DebugTrim|Any CPU.ActiveCfg = Debug|Any CPU
+		{336F4C37-FEE1-6562-51C6-9298657CD408}.DebugTrim|Any CPU.Build.0 = Debug|Any CPU
 		{336F4C37-FEE1-6562-51C6-9298657CD408}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{336F4C37-FEE1-6562-51C6-9298657CD408}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

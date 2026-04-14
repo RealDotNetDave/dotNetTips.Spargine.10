@@ -215,6 +215,7 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 	/// - Each interface section is separated by a header line of '=' characters for readability.
 	/// </remarks>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetNetworkConnectionsReport(bool includeIPProperties = false)
 	{

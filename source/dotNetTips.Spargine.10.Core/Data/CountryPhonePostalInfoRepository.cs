@@ -80,6 +80,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="DeserializeCountryPhonePostalInfo"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.Synchronized)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<CountryPhonePostalInfo> GetCountryPhonePostalInfo()
 	{
@@ -111,6 +112,7 @@ public static class CountryPhonePostalInfoRepository
 	/// var usByIso3 = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("USA");
 	/// </example>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo([NotNull] string countryNameOrIso)
 	{
@@ -198,6 +200,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="GetCountryPhonePostalInfo(string)"/>
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ValidatePhoneNumber([NotNull] string countryNameOrIso, [NotNull] string phoneNumber, bool validateCountryCode = false)
 	{
@@ -314,6 +317,7 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="PostalCodeState"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static PostalCodeState ValidatePostalCode([NotNull] string countryNameOrIso, [NotNull] string postalCode)
 	{
@@ -359,6 +363,7 @@ public static class CountryPhonePostalInfoRepository
 	/// </summary>
 	/// <returns>A <see cref="ReadOnlyCollection{CountryPhonePostalInfo}"/> containing country data.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if deserialization fails.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.NoInlining)]
 	private static ReadOnlyCollection<CountryPhonePostalInfo> DeserializeCountryPhonePostalInfo()
 	{

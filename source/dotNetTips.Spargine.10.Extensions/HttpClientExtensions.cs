@@ -65,6 +65,7 @@ public static class HttpClientExtensions
 	/// var deletedItem = await httpClient.DeleteAndDeserializeAsync&lt;MyItem&gt;(url, options);
 	/// </code>
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DeleteAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<TResponse> DeleteAndDeserializeAsync<TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -179,6 +180,7 @@ public static class HttpClientExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, or <paramref name="options"/> is null.</exception>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information("Original code from: https://ardalis.com/keep-tests-short-and-dry-with-extensions", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<T> GetAndDeserializeAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -218,6 +220,7 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<T> GetAndDeserializeFromStreamAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -402,6 +405,7 @@ public static class HttpClientExtensions
 	/// var result = await httpClient.PatchAndDeserializeAsync&lt;object, MyItem&gt;(url, patchData, options);
 	/// </code>
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(PatchAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<TResponse> PatchAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -437,6 +441,7 @@ public static class HttpClientExtensions
 	/// var createdItem = await httpClient.PostAndDeserializeAsync&lt;object, MyItem&gt;(url, newItem, options);
 	/// </code>
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -472,6 +477,7 @@ public static class HttpClientExtensions
 	/// HttpStatusCode statusCode = await httpClient.PostAndEnsureSuccessAsync(url, newItem, options);
 	/// </code>
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(PostAndEnsureSuccessAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<HttpStatusCode> PostAndEnsureSuccessAsync<TRequest>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -542,6 +548,7 @@ public static class HttpClientExtensions
 	/// var result = await httpClient.PutAndDeserializeAsync&lt;object, MyItem&gt;(url, updatedItem, options);
 	/// </code>
 	/// </example>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(PutAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static async Task<TResponse> PutAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
@@ -567,6 +574,7 @@ public static class HttpClientExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="TResponse"/>.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if the operation is canceled, times out, or encounters an HTTP error.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private static async Task<TResponse> SendAndDeserializeAsync<TRequest, TResponse>(
 		HttpClient client,
 		HttpMethod method,

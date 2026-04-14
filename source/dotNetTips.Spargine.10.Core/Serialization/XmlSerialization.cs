@@ -41,6 +41,7 @@ public static class XmlSerialization
 	/// <returns>An instance of the specified type containing the deserialized data.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the xml parameter is null or empty.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 		where TResult : new()
@@ -68,6 +69,7 @@ public static class XmlSerialization
 	/// <returns>An instance of the specified type containing the deserialized data from the file.</returns>
 	/// <exception cref="FileNotFoundException">Thrown if the specified file does not exist.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DeserializeFromFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult DeserializeFromFile<TResult>([DisallowNull] FileInfo file) where TResult : new()
 	{
@@ -85,6 +87,7 @@ public static class XmlSerialization
 	/// <returns>A string containing the XML representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the obj parameter is null.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj)
 	{
@@ -109,6 +112,7 @@ public static class XmlSerialization
 	/// <param name="obj">The object to serialize.</param>
 	/// <param name="file">The file to write the XML to.</param>
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file)
 	{

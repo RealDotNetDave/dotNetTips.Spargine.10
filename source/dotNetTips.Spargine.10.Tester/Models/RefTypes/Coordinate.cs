@@ -17,6 +17,7 @@
 // ***********************************************************************
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
@@ -204,12 +205,16 @@ public class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparable, ICom
 	/// </summary>
 	/// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
 	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override int GetHashCode() => HashCode.Combine(this.X, this.Y, this.Z);
+	public override int GetHashCode()
+	{
+		return HashCode.Combine(this.X, this.Y, this.Z);
+	}
 
 	/// <summary>
 	/// Returns a string that represents the current <see cref="Coordinate"/>.
 	/// </summary>
 	/// <returns>A string representation of the current <see cref="Coordinate"/>, including its X, Y, and Z values.</returns>
+	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Object.ToString override.")]
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString() => this.PropertiesToString(includeMemberName: false);
 }

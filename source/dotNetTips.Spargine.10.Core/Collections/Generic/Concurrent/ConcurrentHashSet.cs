@@ -78,6 +78,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ConcurrentHashSet{T}"/> class.
 	/// </summary>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet()
 		: this(DefaultConcurrencyLevel, DefaultCapacity, true, EqualityComparer<T>.Default)
@@ -88,6 +89,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </summary>
 	/// <param name="collection">The collection whose elements are copied to the new <see cref="ConcurrentHashSet{T}"/>.</param>
 	/// <exception cref="ArgumentNullException">Thrown if the <paramref name="collection"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet(in IEnumerable<T> collection)
 		: this(collection, EqualityComparer<T>.Default)
@@ -98,6 +100,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </summary>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items in the set.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="comparer"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet(IEqualityComparer<T> comparer)
 		: this(concurrencyLevel: DefaultConcurrencyLevel, capacity: DefaultCapacity, growLockArray: true, comparer: comparer)
@@ -110,6 +113,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="concurrencyLevel">The estimated number of threads that will update the <see cref="ConcurrentHashSet{T}"/> concurrently.</param>
 	/// <param name="capacity">The initial number of elements that the <see cref="ConcurrentHashSet{T}"/> can contain.</param>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="concurrencyLevel"/> or <paramref name="capacity"/> is less than 1.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet(int concurrencyLevel, [ConstantExpected(Min = 0, Max = int.MaxValue)] int capacity)
 		: this(concurrencyLevel, capacity, false, EqualityComparer<T>.Default)
@@ -121,6 +125,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="collection">The collection whose elements are copied to the new <see cref="ConcurrentHashSet{T}"/>.</param>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items in the set.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet(in IEnumerable<T> collection, IEqualityComparer<T> comparer)
 		: this(comparer) => this.InitializeFromCollection(collection);
@@ -132,6 +137,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="collection">The collection whose elements are copied to the new <see cref="ConcurrentHashSet{T}"/>.</param>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items in the set.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet(in int concurrencyLevel, in IEnumerable<T> collection, IEqualityComparer<T> comparer)
 		: this(concurrencyLevel, DefaultCapacity, false, comparer) => this.InitializeFromCollection(collection);
@@ -143,6 +149,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="capacity">The initial number of elements that the <see cref="ConcurrentHashSet{T}"/> can contain.</param>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items in the set.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="comparer"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConcurrentHashSet<>), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ConcurrentHashSet(in int concurrencyLevel, int capacity, IEqualityComparer<T> comparer)
 		: this(concurrencyLevel, capacity, false, comparer)
@@ -158,6 +165,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing items for equality.</param>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="concurrencyLevel"/> or <paramref name="capacity"/> is less than 1.</exception>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="comparer"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private ConcurrentHashSet(int concurrencyLevel, int capacity, bool growLockArray, IEqualityComparer<T> comparer)
 	{
 		comparer = comparer.ArgumentNotNull();

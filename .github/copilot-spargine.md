@@ -21,14 +21,20 @@ Do NOT consider the task done until all five steps pass. Keep iterating until th
 - Use **Spargine validation helpers** instead of manual checks.  
 - Use **Spargine performance utilities** where applicable.  
 - For unit tests and benchmarks, use data from the **dotNetTips.Spargine.10.Tester** assembly whenever possible.  
-- Update file headers for all modified classes:  
+- Update file headers for **all** modified classes:  
   - **Last Modified On:** use the current date.  
   - **Last Modified By:** `Copilot Agent`
   - Use the correct **current date** for "Created" and "Last Modified On" fields. Do not use incorrect or fabricated dates.
-- When adding new metods to a class, update the <summary> XML tag in the file header.
+- When adding or removing methods and properties to a class, update the `<summary>` XML tag in the file header.
+- **Trimming attributes** — when code uses reflection or calls methods that do:
+  - Add `[RequiresUnreferencedCode("...")]` with a **descriptive, method-specific message** explaining *what* reflection the method performs (e.g., `"Enumerates assembly types via Assembly.GetTypes()."` or `"Uses XmlSerializer which requires unreferenced code for type metadata."`). **Never** use the generic default message `"This method uses reflection to discover types at runtime."`.
+  - Add `[UnconditionalSuppressMessage("Trimming", "IL20xx", Justification = "...")]` with a **meaningful justification** explaining why the suppression is safe. **Never** leave the justification as `"<Pending>"`.
+  - Add `[DynamicallyAccessedMembers(...)]` to generic type parameters when the method constrains which members are accessed via reflection.
+  - Fill in the `checkId` parameter (e.g., `"IL2026"`, `"IL2070"`) on all `[UnconditionalSuppressMessage]` attributes.
 
 ---
 ## **1.1. Spargine `[Information]` Attribute Rules**
+- The `[Information]` attribute must be the last one if there are mutiple attributes.
 - When creating new methods, add an `[Information]` attribute with `OptimizationStatus = OptimizationStatus.Optimize` and `BenchmarkStatus = BenchmarkStatus.Benchmark`.
 - After optimizing a method, update its `[Information]` attribute: set `OptimizationStatus` to `OptimizationStatus.Completed` and set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance` so benchmarks are re-validated against the new implementation.
 - After creating a benchmark test for a method, update its `[Information]` attribute: set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance`.

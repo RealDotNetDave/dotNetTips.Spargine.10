@@ -232,6 +232,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">request</exception>
 	/// <remarks>Original code by Jerry Nixon</remarks>
 	[Pure]
+	[RequiresUnreferencedCode("JSON serialization and deserialization might require types that cannot be statically analyzed.")]
 	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, out T? value)
 	{

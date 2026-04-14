@@ -15,6 +15,7 @@
 // It inherits from the interface ICoordinate.
 // </summary>
 // ***********************************************************************
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -216,6 +217,7 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 	/// Returns a string that represents the current <see cref="Coordinate"/>.
 	/// </summary>
 	/// <returns>A string representation of the current <see cref="Coordinate"/>, including its X, Y, and Z values.</returns>
+	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Object.ToString override.")]
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString() => this.PropertiesToString(includeMemberName: false);
 }

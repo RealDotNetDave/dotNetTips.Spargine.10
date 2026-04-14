@@ -80,26 +80,6 @@ public static class RandomData
 	/// </summary>
 	private const int DefaultFileLength = 1024;
 
-	/// <summary>
-	/// A lazy-loaded read-only collection of countries.
-	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<Country>> _countries = CountryRepository.GetCountries().ToReadOnlyCollection().ToLazy();
-
-	/// <summary>
-	/// A lazy-loaded array of domain extensions.
-	/// </summary>
-	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
-
-	/// <summary>
-	/// A lazy-loaded read-only collection of first names.
-	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<string>> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
-
-	/// <summary>
-	/// A lazy-loaded read-only collection of last names.
-	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<string>> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
-
 	// Replace the existing declaration of _lock with the following:
 	private static readonly Lock _lock = new();
 
@@ -1494,5 +1474,28 @@ public static class RandomData
 	/// Thrown when the <paramref name="words"/> collection is empty.
 	/// </exception>
 	private static string Of([NotNull] params ReadOnlyCollection<string> words) => words[GenerateInteger(0, words.Count - 1)];
+
+#pragma warning disable IL2026 // ToLazy uses reflection — suppressed for static field initializers with known concrete types
+	/// <summary>
+	/// A lazy-loaded read-only collection of countries.
+	/// </summary>
+	private static readonly Lazy<ReadOnlyCollection<Country>> _countries = CountryRepository.GetCountries().ToReadOnlyCollection().ToLazy();
+
+	/// <summary>
+	/// A lazy-loaded array of domain extensions.
+	/// </summary>
+	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
+
+	/// <summary>
+	/// A lazy-loaded read-only collection of first names.
+	/// </summary>
+	private static readonly Lazy<ReadOnlyCollection<string>> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
+
+	/// <summary>
+	/// A lazy-loaded read-only collection of last names.
+	/// </summary>
+	private static readonly Lazy<ReadOnlyCollection<string>> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
+#pragma warning restore IL2026
+
 
 }

@@ -907,7 +907,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -1006,7 +1006,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -1122,6 +1122,54 @@
 *****
 ## DotNetTips.Spargine.Extensions.DataContextExtensions
 
+### System.Threading.Tasks.Task<System.Int32> DeleteCollectionAsync(LinqToDB.DataContext context, T entities, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** DeleteCollectionAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task ExecuteInTransactionAsync(LinqToDB.DataContext context, System.Func<LinqToDB.DataContext, System.Threading.CancellationToken, System.Threading.Tasks.Task> action, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** ExecuteInTransactionAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(LinqToDB.DataContext context, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** GetRecordCountAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(LinqToDB.DataContext context, T predicate, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** GetRecordCountAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
 ### T GetTrackedObjects(LinqToDB.DataContext context)
 
 * **Status:** Available
@@ -1132,6 +1180,54 @@
 * **CreatedOn:** 10/8/2020
 * **Description:** GetTrackedObjects
 * **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(LinqToDB.DataContext context, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** HasRecordsAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(LinqToDB.DataContext context, T predicate, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** HasRecordsAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> InsertCollectionAsync(LinqToDB.DataContext context, T entities, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** InsertCollectionAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> UpsertCollectionAsync(LinqToDB.DataContext context, T entities, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** UpsertCollectionAsync
+* **Modified By:** Copilot Agent
 * **Modified On:** 
 
 *****
@@ -1535,6 +1631,117 @@
 * **CreatedOn:** 3/24/2017
 * **Description:** ToMilliEpochTime
 * **Modified By:** David McCarter
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Extensions.DbContextExtensions
+
+### System.Threading.Tasks.Task<System.Int32> AddAndSaveAsync(Microsoft.EntityFrameworkCore.DbContext context, T entities, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** AddAndSaveAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> DeleteAndSaveAsync(Microsoft.EntityFrameworkCore.DbContext context, T entities, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** DeleteAndSaveAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task ExecuteInTransactionAsync(Microsoft.EntityFrameworkCore.DbContext context, System.Func<Microsoft.EntityFrameworkCore.DbContext, System.Threading.CancellationToken, System.Threading.Tasks.Task> action, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** ExecuteInTransactionAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### T GetChangedEntities(Microsoft.EntityFrameworkCore.DbContext context, Microsoft.EntityFrameworkCore.EntityState state)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** GetChangedEntities
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(Microsoft.EntityFrameworkCore.DbContext context, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** GetRecordCountAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(Microsoft.EntityFrameworkCore.DbContext context, T predicate, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** GetRecordCountAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Boolean HasChanges(Microsoft.EntityFrameworkCore.DbContext context)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** HasChanges
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(Microsoft.EntityFrameworkCore.DbContext context, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** HasRecordsAsync
+* **Modified By:** Copilot Agent
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(Microsoft.EntityFrameworkCore.DbContext context, T predicate, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 4/13/2026
+* **Description:** HasRecordsAsync
+* **Modified By:** Copilot Agent
 * **Modified On:** 
 
 *****
@@ -3319,6 +3526,26 @@
 *****
 ## DotNetTips.Spargine.Extensions.HttpClientExtensions
 
+### T DeleteAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** DeleteAndDeserializeAsync
+* **Modified On:** 
+
+### System.Threading.Tasks.Task DownloadToStreamAsync(System.Net.Http.HttpClient client, System.Uri url, System.IO.Stream destination, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** DownloadToStreamAsync
+* **Modified On:** 
+
 ### T GetAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
@@ -3351,6 +3578,16 @@
 * **Description:** GetStreamAsync
 * **Modified On:** 
 
+### System.Threading.Tasks.Task<System.Net.Http.Headers.HttpResponseHeaders> HeadersAsync(System.Net.Http.HttpClient client, System.Uri url, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** HeadersAsync
+* **Modified On:** 
+
 ### T PatchAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** New
@@ -3371,6 +3608,16 @@
 * **Description:** PostAndDeserializeAsync
 * **Modified On:** 
 
+### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** PostAndEnsureSuccessAsync
+* **Modified On:** 
+
 ### T PutAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** New
@@ -3384,6 +3631,30 @@
 *****
 ## DotNetTips.Spargine.Extensions.HttpContextExtensions
 
+### System.Uri GetAbsoluteUri(Microsoft.AspNetCore.Http.HttpContext context)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetAbsoluteUri
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetBearerToken(Microsoft.AspNetCore.Http.HttpContext context)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetBearerToken
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.String GetRemoteIPAddress(Microsoft.AspNetCore.Http.HttpContext context)
 
 * **Status:** Available
@@ -3393,6 +3664,42 @@
 * **Author:** David McCarter
 * **CreatedOn:** 9/4/2017
 * **Description:** Original code from: https://edi.wang/post/2017/10/16/get-client-ip-aspnet-20
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetRequestHeaderValue(Microsoft.AspNetCore.Http.HttpContext context, System.String headerName)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetRequestHeaderValue
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetUserClaim(Microsoft.AspNetCore.Http.HttpContext context, System.String claimType)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetUserClaim
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsAuthenticated(Microsoft.AspNetCore.Http.HttpContext context)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** IsAuthenticated
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -3408,6 +3715,42 @@
 * **Author:** David McCarter
 * **CreatedOn:** 3/18/2024
 * **Description:** AddRequestId
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Uri GetAbsoluteUri(Microsoft.AspNetCore.Http.HttpRequest request)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetAbsoluteUri
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetBearerToken(Microsoft.AspNetCore.Http.HttpRequest request)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetBearerToken
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetHeaderValue(Microsoft.AspNetCore.Http.HttpRequest request, System.String headerName)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetHeaderValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -3432,6 +3775,30 @@
 * **Author:** David McCarter
 * **CreatedOn:** 11/7/2023
 * **Description:** GetRawBodyStringAsync
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean HasJsonContentType(Microsoft.AspNetCore.Http.HttpRequest request)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** HasJsonContentType
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean IsContentType(Microsoft.AspNetCore.Http.HttpRequest request, System.String contentType)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** IsContentType
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -3462,6 +3829,42 @@
 *****
 ## DotNetTips.Spargine.Extensions.HttpResponseHeaderExtensions
 
+### System.String AddRequestId(System.Net.Http.Headers.HttpResponseHeaders headers)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** AddRequestId
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetETagValue(System.Net.Http.Headers.HttpResponseHeaders headers)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetETagValue
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String GetHeaderValue(System.Net.Http.Headers.HttpResponseHeaders headers, System.String headerName)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** GetHeaderValue
+* **Modified By:** David McCarter
+* **Modified On:** 
+
 ### System.String GetName(System.Net.HttpResponseHeader header)
 
 * **Status:** Available
@@ -3483,6 +3886,30 @@
 * **Author:** David McCarter
 * **CreatedOn:** 3/18/2024
 * **Description:** GetRequestId
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean HasHeader(System.Net.Http.Headers.HttpResponseHeaders headers, System.String headerName)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** HasHeader
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean TryGetRetryAfterDelay(System.Net.Http.Headers.HttpResponseHeaders headers, System.TimeSpan& delay)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 4/13/2026
+* **Description:** TryGetRetryAfterDelay
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -8023,4 +8450,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/13/2026 1:56:07 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/14/2026 5:35:40 PM UTC**

@@ -49,14 +49,15 @@ public interface IEasyDisposable : IDisposable
 	/// Iterates through all instance fields of the object and disposes any field that implements <see cref="IDisposable"/>.
 	/// </remarks>  
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	private static void DisposeFields([NotNull] object obj)
 	{
 		if (obj is not null)
 		{
-
-
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 			foreach (var field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+#pragma warning restore IL2070
 			{
 				if (typeof(IDisposable).IsAssignableFrom(field.FieldType) && field.GetValue(obj) is IDisposable disposableField)
 				{

@@ -147,6 +147,7 @@ public class Enumeration : IComparable
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="displayName"/> is null or empty.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when no matching enumeration instance is found.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FromDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T FromDisplayName<T>([DisallowNull] string displayName) where T : Enumeration
 	{
@@ -163,6 +164,7 @@ public class Enumeration : IComparable
 	/// <returns>An instance of the enumeration type that matches the given integer value.</returns>
 	/// <exception cref="InvalidOperationException">Thrown when no matching enumeration instance is found.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FromValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T FromValue<T>(int value) where T : Enumeration
 	{
@@ -174,6 +176,7 @@ public class Enumeration : IComparable
 	/// </summary>
 	/// <typeparam name="T">The type of enumeration to retrieve instances for.</typeparam>
 	/// <returns>An <see cref="IEnumerable{T}"/> containing all instances of the specified enumeration type.</returns>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAll), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<T> GetAll<T>() where T : Enumeration
 	{
@@ -199,6 +202,7 @@ public class Enumeration : IComparable
 	/// <returns>
 	/// <c>true</c> if a matching enumeration instance is found; otherwise, <c>false</c>.
 	/// </returns>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(TryFromDisplayName), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryFromDisplayName<T>(string displayName, [NotNullWhen(true)] out T? result) where T : Enumeration
 	{
@@ -225,6 +229,7 @@ public class Enumeration : IComparable
 	/// <c>true</c> if a matching enumeration instance is found; otherwise, <c>false</c>.
 	/// </returns>
 	[Information(nameof(TryFromValue), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	public static bool TryFromValue<T>(int value, [NotNullWhen(true)] out T? result) where T : Enumeration
 	{
 		result = GetAll<T>().FirstOrDefault(item => item.Value == value);
@@ -298,6 +303,7 @@ public class Enumeration : IComparable
 	/// <returns>An instance of the enumeration that matches the predicate.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when the predicate is null.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when no matching item is found.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private static T Parse<T>(string description, [DisallowNull] Func<T, bool> predicate) where T : Enumeration
 	{
 		foreach (var item in GetAll<T>())

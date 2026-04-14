@@ -14,12 +14,14 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <Company>dotNetTips.com - McCarter Consulting</Company>
-    <Configurations>Debug;Release</Configurations>
+    <Configurations>Debug;DebugTrim;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
     <Description>Common code to help with unit tests by generating random data.</Description>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
+    <PublishTrimmed>true</PublishTrimmed>
+    <ILLinkTreatWarningsAsErrors>false</ILLinkTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.4.1</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -48,6 +50,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10.Tester</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);IL2026;IL2046;IL2057;IL2060;IL2070;IL2072;IL2075;IL2077;IL2080;IL2087;IL2090;IL2091;IL2095;IL2104;IL2125</WarningsNotAsErrors>
     <Version>2026.10.4.1</Version>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,7 +72,16 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugTrim|AnyCPU'">
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Tester.xml</DocumentationFile>
+    <OutputPath>..\..\AppBin\</OutputPath>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <OutputPath>..\..\AppBin\</OutputPath>
     <DocumentationFile>..\..\AppBin\DotNetTips.Spargine.Tester.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>

@@ -81,6 +81,7 @@ public static class TypeHelper
 	/// </summary>
 	public static ReadOnlyCollection<Type> BuiltInTypes
 	{
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[return: NotNull]
 		get
 		{
@@ -114,6 +115,7 @@ public static class TypeHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(BuiltInTypeNames), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static Dictionary<Type, string> BuiltInTypeNames()
 	{
@@ -192,6 +194,7 @@ public static class TypeHelper
 	/// Original code by: Jeremy Clark
 	/// </remarks>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T Create<T>()
 		where T : class => Activator.CreateInstance<T>();
@@ -204,6 +207,7 @@ public static class TypeHelper
 	/// <returns>An instance of type <typeparamref name="T"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="paramArray"/> is null.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T Create<T>([DisallowNull] params object[] paramArray)
 		where T : class
@@ -235,6 +239,7 @@ public static class TypeHelper
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] Type baseType, bool classOnly)
 	{
@@ -253,6 +258,7 @@ public static class TypeHelper
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] AppDomain currentDomain, [DisallowNull] Type baseType, bool classOnly)
 	{
@@ -299,6 +305,7 @@ public static class TypeHelper
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] DirectoryInfo path, SearchOption fileSearchType, [DisallowNull] Type baseType, bool classOnly)
 	{
@@ -363,6 +370,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json"/> is null or empty.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or the deserialization fails.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T FromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json) where T : class
 	{
@@ -378,6 +386,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="file"/> is null.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or the deserialization fails.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FromJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static T FromJsonFile<T>([DisallowNull] FileInfo file)
 		where T : class
@@ -406,6 +415,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllAbstractMethods([DisallowNull] Type type)
 	{
@@ -437,6 +447,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<ConstructorInfo> GetAllConstructors([DisallowNull] Type type)
 	{
@@ -483,6 +494,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllDeclaredFields([DisallowNull] Type type)
 	{
@@ -526,6 +538,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information("Original Code .NET Core source.", author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<MethodInfo> GetAllDeclaredMethods([DisallowNull] Type type)
 	{
@@ -570,6 +583,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllFields([DisallowNull] Type type)
 	{
@@ -616,6 +630,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllGenericMethods([DisallowNull] Type type)
 	{
@@ -647,6 +662,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<MethodInfo> GetAllMethods([DisallowNull] Type type)
 	{
@@ -693,6 +709,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllProperties), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<PropertyInfo> GetAllProperties([DisallowNull] Type type)
 	{
@@ -739,6 +756,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllPublicMethods([DisallowNull] Type type)
 	{
@@ -770,6 +788,7 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllStaticMethods([DisallowNull] Type type)
 	{
@@ -1016,12 +1035,15 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
 
+#pragma warning disable IL2070 // input.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 		return Array.AsReadOnly(input.GetType().GetInterfaces().Select(p => p.Name).ToArray());
+#pragma warning restore IL2070
 	}
 
 	/// <summary>
@@ -1035,13 +1057,16 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="input"/> or <paramref name="interfaceNames"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input, params IReadOnlyCollection<string> interfaceNames)
 	{
 		input = input.ArgumentNotNull();
 		interfaceNames = interfaceNames.ArgumentItemsExists();
 
+#pragma warning disable IL2070 // input.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 		var interfaces = input.GetType().GetInterfaces().Select(p => p.Name);
+#pragma warning restore IL2070
 
 		var foundInterfaces = new List<string>(interfaces.Intersect(interfaceNames));
 
@@ -1059,12 +1084,15 @@ public static class TypeHelper
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> GetImplementedInterfaceTypes([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
 
+#pragma warning disable IL2070 // input.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 		return Array.AsReadOnly(input.GetType().GetInterfaces());
+#pragma warning restore IL2070
 	}
 
 	/// <summary>
@@ -1073,6 +1101,7 @@ public static class TypeHelper
 	/// <param name="instance">The instance to compute the hash code for.</param>
 	/// <returns>The computed hash code.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="instance"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int GetInstanceHashCode([DisallowNull] object instance)
 	{
@@ -1112,6 +1141,7 @@ public static class TypeHelper
 	/// <returns>An enumerable collection of members that have the specified attribute.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Update, Status = Status.Available)]
 	public static IEnumerable<MemberInfo> GetMembersWithAttribute<TAttribute>([DisallowNull] Type type) where TAttribute : Attribute
 	{
@@ -1181,6 +1211,7 @@ public static class TypeHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetPropertyValues), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetPropertyValues<T>(in T input)
 	{
@@ -1346,6 +1377,7 @@ public static class TypeHelper
 	/// </example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetTypeMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>([DisallowNull] Type type)
 		where TAttribute : Attribute
@@ -1435,6 +1467,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(HasMethod), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasMethod([DisallowNull] Type type, string methodName, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
 	{
@@ -1453,6 +1486,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(HasParameterlessConstructor), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasParameterlessConstructor([DisallowNull] Type type)
 	{
@@ -1472,6 +1506,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasProperty([DisallowNull] Type type, [DisallowNull] string propertyName)
 	{
@@ -1491,6 +1526,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="interfaceType"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ImplementsInterface([DisallowNull] Type type, [DisallowNull] Type interfaceType)
 	{
@@ -1548,6 +1584,7 @@ public static class TypeHelper
 	/// This method uses a cached dictionary of built-in types for O(1) lookup performance.
 	/// The cache is lazily initialized on first access and reused for all subsequent calls.
 	/// </remarks>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)] // Inline for maximum performance
 	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
@@ -1591,6 +1628,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsEnumerable([DisallowNull] Type type)
 	{
@@ -1784,6 +1822,7 @@ public static class TypeHelper
 	/// Computes and initializes the list of built-in .NET types that are considered primitive for the purposes of this utility class.
 	/// This method populates the <see cref="_builtInTypes"/> collection with types that are commonly used and recognized as fundamental types within .NET applications.
 	/// </summary>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private static void ComputeBuiltInTypes()
 	{
 		// Use a HashSet to store the built-in types for faster lookups
@@ -1830,6 +1869,7 @@ public static class TypeHelper
 	/// <param name="baseType">The base type to find derived types of.</param>
 	/// <param name="classOnly">If true, only class types are considered; otherwise, interfaces are also considered.</param>
 	/// <returns>An enumerable collection of types that are derived from the specified base type.</returns>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	private static IEnumerable<Type> LoadDerivedTypes(IEnumerable<TypeInfo> types, Type baseType, bool classOnly)
 	{

@@ -272,6 +272,7 @@ internal static partial class Extensions
 	/// <param name="type">The <see cref="Type"/> to examine. This parameter cannot be null.</param>
 	/// <returns>An <see cref="IEnumerable{PropertyInfo}"/> representing all properties of the specified type.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is null.</exception>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	internal static IEnumerable<PropertyInfo> GetAllProperties([NotNull] this Type type)
 	{
 		var typeInfo = type.ArgumentNotNull().GetTypeInfo();

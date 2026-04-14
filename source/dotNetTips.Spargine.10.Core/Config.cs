@@ -85,6 +85,7 @@ public class Config<T> where T : class, new()
 	/// This method attempts to deserialize the configuration object from a file specified by <see cref="ConfigFileName"/>.
 	/// If the file does not exist, the method returns <c>false</c>.
 	/// </remarks>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Load), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual bool Load()
 	{
@@ -102,6 +103,7 @@ public class Config<T> where T : class, new()
 	/// Saves the current instance of the configuration to the disk.
 	/// </summary>
 	/// <returns><c>true</c> if the configuration was successfully saved; otherwise, <c>false</c>.</returns>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	public virtual bool Save()
 	{
 		if (File.Exists(this.ConfigFileName))

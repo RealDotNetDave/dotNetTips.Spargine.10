@@ -1380,6 +1380,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="Diagnostics"/>
 	/// <seealso cref="JsonSerializer"/>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ExportToJson), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string ExportToJson()

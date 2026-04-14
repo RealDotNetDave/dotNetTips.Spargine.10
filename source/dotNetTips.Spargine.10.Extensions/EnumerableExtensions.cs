@@ -198,7 +198,7 @@ public static class EnumerableExtensions
 		}
 	}
 
-	extension<T>([DisallowNull] IEnumerable<T> collection)
+	extension<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>([DisallowNull] IEnumerable<T> collection)
 	{
 		/// <summary>
 		/// Returns the first element in the collection that matches the specified condition, or null if no such element is found.

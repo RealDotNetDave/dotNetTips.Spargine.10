@@ -302,12 +302,12 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet()
 		{
 			collection = collection.ArgumentNotNull();
 
-			return collection.Count == 0 ? FrozenSet<T>.Empty : FrozenSet.ToFrozenSet(collection);
+			return collection.Count == 0 ? [] : FrozenSet.ToFrozenSet(collection);
 		}
 
 		/// <summary>

@@ -43,6 +43,7 @@ public static class WebClientExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="url"/> is null.</exception>
 	[Obsolete("The WebClient class is considered obsolete. Consider using HttpClient for modern applications. This type will be removed in a future version.", true)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ConvertFrom), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T? ConvertFrom<T>([DisallowNull] this WebClient client, [DisallowNull] Uri url)
 		where T : class

@@ -707,6 +707,7 @@ public static class App
 	/// }
 	/// </code></example>
 	[Pure]
+	[RequiresUnreferencedCode("Calls Assembly.GetEntryAssembly() and GetReferencedAssemblies() which may be trimmed.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ReferencedAssemblies()
 	{

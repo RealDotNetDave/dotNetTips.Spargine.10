@@ -73,11 +73,19 @@ public sealed class InvalidValueException<TValue> : Exception
 	public InvalidValueException([DisallowNull] string message, [AllowNull] TValue value, [AllowNull] Exception innerException) : base(message, innerException) => this.Value = value;
 
 	/// <summary>
+	/// Gets the invalid value that caused the exception.
+	/// </summary>
+	/// <value>The invalid value.</value>
+	[AllowNull]
+	public TValue Value { get; private set; }
+
+	/// <summary>
 	/// Converts to string.
 	/// Provides a string representation of the exception, including the message, inner exception, and the invalid value.
 	/// </summary>
 	/// <returns>A string that represents the current exception.</returns>
 	[return: NotNull]
+	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Exception.ToString override.")]
 	public override string ToString()
 	{
 		var valueProperties = string.Empty;
@@ -95,11 +103,4 @@ public sealed class InvalidValueException<TValue> : Exception
 
 		return $"{this.Message} InnerException: {innerException} Value: {valueProperties}.";
 	}
-
-	/// <summary>
-	/// Gets the invalid value that caused the exception.
-	/// </summary>
-	/// <value>The invalid value.</value>
-	[AllowNull]
-	public TValue Value { get; private set; }
 }

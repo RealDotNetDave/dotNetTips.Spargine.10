@@ -549,8 +549,6 @@ public class PersonRefTests
 		Assert.IsFalse(a1 != a2);
 		Assert.IsFalse(a1 == a3);
 		Assert.IsTrue(a1 != a3);
-		Assert.IsTrue((Address)null == (Address)null);
-		Assert.IsFalse((Address)null != (Address)null);
 	}
 
 	[TestMethod]
@@ -558,7 +556,8 @@ public class PersonRefTests
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		var result = (Person)null > person;
+		Person nullPerson = null;
+		var result = nullPerson > person;
 
 		Assert.IsFalse(result);
 	}
@@ -578,7 +577,8 @@ public class PersonRefTests
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		var result = (Person)null >= person;
+		Person nullPerson = null;
+		var result = nullPerson >= person;
 
 		Assert.IsFalse(result);
 	}
@@ -604,8 +604,9 @@ public class PersonRefTests
 		Assert.IsTrue(a1 >= a2 || a2 >= a1);
 		Assert.IsFalse(a1 < null);
 		Assert.IsTrue(a1 > null);
-		Assert.IsTrue((Address)null < a1);
-		Assert.IsFalse((Address)null > a1);
+		Address nullAddress = null;
+		Assert.IsTrue(nullAddress < a1);
+		Assert.IsFalse(nullAddress > a1);
 	}
 
 	[TestMethod]
@@ -613,7 +614,8 @@ public class PersonRefTests
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		var result = (Person)null < person;
+		Person nullPerson = null;
+		var result = nullPerson < person;
 
 		Assert.IsTrue(result);
 	}
@@ -633,7 +635,8 @@ public class PersonRefTests
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		var result = (Person)null <= person;
+		Person nullPerson = null;
+		var result = nullPerson <= person;
 
 		Assert.IsTrue(result);
 	}

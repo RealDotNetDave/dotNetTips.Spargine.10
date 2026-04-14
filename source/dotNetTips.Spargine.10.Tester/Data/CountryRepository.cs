@@ -15,6 +15,7 @@
 // </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -169,6 +170,7 @@ public static class CountryRepository
 	/// Thrown when deserialization fails due to invalid JSON format.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.NoInlining)]
+	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
 	private static ReadOnlyCollection<Country> DeserializeCountries()
 	{
 		try

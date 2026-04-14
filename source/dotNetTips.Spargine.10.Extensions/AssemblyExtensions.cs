@@ -52,6 +52,7 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
+		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() and Type.GetInterfaces() which require runtime type discovery.")]
 		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
@@ -82,6 +83,7 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
+		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() which requires runtime type discovery.")]
 		[Information(nameof(GetAllTypes), "David McCarter", "1/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllTypes()
 		{
@@ -115,6 +117,7 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
+		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() and Activator.CreateInstance() which require runtime type discovery.")]
 		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
@@ -145,6 +148,7 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> or <paramref name="type"/> is null.</exception>
 		[Pure]
 		[return: NotNull]
+		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() which requires runtime type discovery.")]
 		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetTypes([DisallowNull] Type type)
 		{

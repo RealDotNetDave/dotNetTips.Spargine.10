@@ -47,7 +47,9 @@ public static class ObjectExtensions
 {
 	private const string Item = "Item";
 #pragma warning disable IDE0052 // Remove unread private members - false positive: used in extension block (PropertiesToDictionary, FieldsToDictionary)
+#pragma warning disable IL2026 // BuiltInTypeNames uses reflection — suppressed for static field initializer
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
+#pragma warning restore IL2026
 #pragma warning restore IDE0052
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
@@ -71,6 +73,7 @@ public static class ObjectExtensions
 	/// </summary>
 	/// <param name="obj">The object containing IDisposable fields to be disposed.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void DisposeFields([AllowNull] this IDisposable obj)
 	{
@@ -80,7 +83,9 @@ public static class ObjectExtensions
 		}
 
 		// DON'T USE ASSPAN() HERE
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers, but method already marked RequiresUnreferencedCode
 		foreach (var field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+#pragma warning restore IL2070
 		{
 			if (field.FieldType.IsAssignableTo(typeof(IDisposable)) && field.GetValue(obj) is IDisposable disposableField)
 			{
@@ -107,6 +112,7 @@ public static class ObjectExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json" /> is null or empty.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FromJson), "David McCarter", "4/21/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult FromJson<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] this string json)
 	{
@@ -123,6 +129,7 @@ public static class ObjectExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json" /> is null or empty.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult FromJson<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] this string json, JsonSerializerOptions? options = null)
 	{
@@ -179,7 +186,7 @@ public static class ObjectExtensions
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Lazy<T> ToLazy<T>([DisallowNull] this T value)
+	public static Lazy<T> ToLazy<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>([DisallowNull] this T value)
 	{
 		value = value.ArgumentNotNull();
 
@@ -297,6 +304,7 @@ public static class ObjectExtensions
 		/// <exception cref="JsonException">Thrown if an error occurs during serialization.</exception>
 		/// <exception cref="IOException">Thrown if an error occurs while writing the file.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void ToJsonFile([DisallowNull] FileInfo file)
 		{
@@ -319,6 +327,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public string PropertiesToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
@@ -414,6 +423,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
 		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
@@ -434,7 +444,9 @@ public static class ObjectExtensions
 			}
 
 			// Get all properties
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers, but method already marked RequiresUnreferencedCode
 			var allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+#pragma warning restore IL2070
 
 			// Filter properties using the selector
 			var selectedProperties = allProperties.Where(propertySelector);
@@ -544,6 +556,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public ReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
@@ -715,6 +728,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public ReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
@@ -805,6 +819,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
 		public string FieldsToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 		{
@@ -895,12 +910,15 @@ public static class ObjectExtensions
 		/// Automatically sets all null instance fields of an object to their default values.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public void InitializeFields()
 		{
 			obj = obj.ArgumentNotNull();
 
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers, but method already marked RequiresUnreferencedCode
 			var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+#pragma warning restore IL2070
 
 			// DON'T USE ASSPAN() HERE
 			foreach (var field in fields)
@@ -920,12 +938,15 @@ public static class ObjectExtensions
 		/// <returns><c>true</c> if the property exists; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool HasProperty([DisallowNull] string propertyName)
 		{
 			propertyName = propertyName.ArgumentNotNullOrEmpty();
 
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
 			return obj?.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) != null;
+#pragma warning restore IL2070
 		}
 
 		/// <summary>
@@ -954,6 +975,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string ToJson([AllowNull] in JsonSerializerOptions options = null)
 		{
@@ -969,6 +991,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string ToJson()
 		{
@@ -1014,6 +1037,7 @@ public static class ObjectExtensions
 		/// <param name="options">The <see cref="JsonSerializerOptions"/> to use for serialization and deserialization.</param>
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastClone<T>(JsonSerializerOptions? options = null)
@@ -1032,6 +1056,7 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(FastClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastClone<T>()
 		{
@@ -1128,6 +1153,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ComputeSha256Hash), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string ComputeSha256Hash()
 		{
@@ -1172,6 +1198,7 @@ public static class ObjectExtensions
 		/// </summary>
 		/// <returns>A read-only collection of interface names.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public ReadOnlyCollection<string> GetImplementedInterfaces()
 		{
@@ -1183,6 +1210,7 @@ public static class ObjectExtensions
 		/// </summary>
 		/// <returns>A read-only collection of interface types.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetImplementedInterfaceTypes()
 		{
@@ -1195,6 +1223,7 @@ public static class ObjectExtensions
 		/// <param name="interfaceNames">A collection of interface names to filter by.</param>
 		/// <returns>A read-only collection of interface names.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 		public ReadOnlyCollection<string> GetImplementedInterfaces(params ReadOnlyCollection<string> interfaceNames)
 		{

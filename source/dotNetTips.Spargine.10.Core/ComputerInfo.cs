@@ -322,6 +322,7 @@ public sealed class ComputerInfo
 	/// </returns>
 	[Pure]
 	[return: NotNull]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string ToJson()
 	{
@@ -340,5 +341,6 @@ public sealed class ComputerInfo
 	/// </remarks>
 	[Pure]
 	[return: NotNull]
+	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Object.ToString override.")]
 	public override string ToString() => this.PropertiesToString();
 }

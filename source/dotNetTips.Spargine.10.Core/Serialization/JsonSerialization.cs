@@ -49,6 +49,7 @@ public static class JsonSerialization
 	/// It throws an <see cref="InvalidOperationException"/> if the deserialization process fails
 	/// or if the result is null, ensuring that a valid object is always returned.</remarks>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Deserialize), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json)
 	{
@@ -67,6 +68,7 @@ public static class JsonSerialization
 	/// <returns>An instance of <typeparamref name="TResult"/> deserialized from the JSON string.</returns>
 	/// <exception cref="InvalidOperationException">Failed to deserialize the JSON string to {typeof(TResult)}.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, JsonSerializerOptions? options = null)
 	{
@@ -104,6 +106,7 @@ public static class JsonSerialization
 	/// <returns>An instance of <typeparamref name="TResult"/> deserialized from the JSON content in the file.</returns>
 	/// <exception cref="FileNotFoundException">Thrown if the specified file does not exist.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DeserializeFromFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult DeserializeFromFile<TResult>([DisallowNull] FileInfo file) where TResult : class
 	{
@@ -146,6 +149,7 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the items in the json collection is less than count.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, int count)
 	{
@@ -187,6 +191,7 @@ public static class JsonSerialization
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the items in the json collection is less than count.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count)
 	{
@@ -265,6 +270,7 @@ public static class JsonSerialization
 	/// <remarks>This method uses the configured JsonSerializerOptions for serialization.
 	/// It ensures that the serialized string is in a format that can be easily deserialized back into an object.</remarks>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Serialize), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj)
 	{
@@ -281,6 +287,7 @@ public static class JsonSerialization
 	/// <returns>A JSON string representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the input object is null.</exception>
 	[Pure]
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj, JsonSerializerOptions? options = null)
 	{
@@ -318,6 +325,7 @@ public static class JsonSerialization
 	/// This method ensures that all directories and subdirectories in the specified path are created unless they already exist before writing the JSON content.
 	/// Utilizes the configured <see cref="JsonSerializerOptions"/> for serialization.
 	/// </remarks>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file, JsonSerializerOptions? options = null)
 	{

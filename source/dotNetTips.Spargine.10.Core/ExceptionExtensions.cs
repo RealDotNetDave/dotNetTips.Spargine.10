@@ -229,6 +229,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <returns>A JSON string representing the exception.</returns>
 		[return: NotNull]
+		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string ToJson()
 		{
