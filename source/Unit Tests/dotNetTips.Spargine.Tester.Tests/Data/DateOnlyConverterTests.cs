@@ -14,7 +14,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Text.Json;
 using DotNetTips.Spargine.Tester.Data.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
