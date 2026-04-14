@@ -4,7 +4,7 @@
 // Created          : 12-23-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensionsTest.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -122,6 +123,38 @@ public class SortedSetExtensionsTest
 	}
 
 	[TestMethod]
+	public void ToImmutable_WithComparer_EmptyCollection_ReturnsEmptySet()
+	{
+		// Arrange
+		var collection = new SortedSet<int>();
+		var reverseComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
+
+		// Act
+		var result = collection.ToImmutable(reverseComparer);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.HasCount(0, result);
+	}
+
+	[TestMethod]
+	public void ToImmutable_WithComparer_UsesReverseComparer()
+	{
+		// Arrange
+		var collection = new SortedSet<int>([3, 1, 2]);
+		var reverseComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
+
+		// Act
+		var result = collection.ToImmutable(reverseComparer);
+
+		// Assert — elements should be in reverse order
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+		Assert.AreEqual(3, result.First());
+		Assert.AreEqual(1, result.Last());
+	}
+
+	[TestMethod]
 	public void ToImmutable_WithEmptyCollection_ReturnsEmptyImmutableSortedSet()
 	{
 		var collection = new SortedSet<Person>();
@@ -138,6 +171,22 @@ public class SortedSetExtensionsTest
 		SortedSet<Person> collection = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => collection.ToImmutable());
+	}
+
+	[TestMethod]
+	public void ToImmutable_WithNullComparer_UsesDefaultComparer()
+	{
+		// Arrange
+		var collection = new SortedSet<int>([3, 1, 2]);
+
+		// Act
+		var result = collection.ToImmutable(null);
+
+		// Assert — default comparer sorts ascending
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+		Assert.AreEqual(1, result.First());
+		Assert.AreEqual(3, result.Last());
 	}
 
 	[TestMethod]

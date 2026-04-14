@@ -112,7 +112,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - The test framework is **MSTest** (`[TestClass]`, `[TestMethod]`). Do not use xUnit or NUnit.  
 - Use **dotNetTips.Spargine.10.Tester** for test data and utilities — specifically **`RandomData`** for generating random test data and **`PersonData`** for person-related data.  
 - Write unit tests for **all public APIs**.
-- If new methods are added, ensure they are covered by unit tests.
+- If methods are new or modified, ensure they are covered by unit tests.
 - Ensure **full code‑path coverage**.  
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments between methods, only in unit test methods. 

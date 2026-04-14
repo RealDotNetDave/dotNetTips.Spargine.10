@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -182,6 +182,11 @@ public static class CollectionExtensions
 		/// </summary>
 		/// <param name="items">The items to add to the collection.</param>
 		/// <param name="ensureUnique">if set to <c>true</c> [ensure unique].</param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when checking for duplicates.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// Only applies when <paramref name="ensureUnique"/> is <c>true</c>.
+		/// </param>
 		/// <returns><c>true</c> if any items were added to the collection, <c>false</c> otherwise.</returns>
 		/// <example>
 		/// This example shows how to use the <see cref="AddRange{T}"/> method to add multiple items to a collection, ensuring each item is unique.
@@ -194,7 +199,7 @@ public static class CollectionExtensions
 		/// </code>
 		/// </example>
 		[Information(nameof(AddRange), "David McCarter", "11/7/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true)
+		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
 			{
@@ -218,7 +223,7 @@ public static class CollectionExtensions
 			}
 
 			var addedAny = false;
-			var existingItems = new HashSet<T>(collection);
+			var existingItems = new HashSet<T>(collection, comparer ?? EqualityComparer<T>.Default);
 
 			foreach (var item in items)
 			{
@@ -294,6 +299,10 @@ public static class CollectionExtensions
 		/// Converts a <see cref="Collection{T}" /> to a <see cref="FrozenSet{T}" />.
 		/// This method provides an efficient way to create an immutable set from a mutable collection.
 		/// </summary>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>A <see cref="FrozenSet{T}" /> that contains elements from the input collection.</returns>
 		/// <remarks>
 		/// <see cref="FrozenSet{T}" /> is useful for scenarios where a set of items should not be modified after creation.
@@ -303,11 +312,11 @@ public static class CollectionExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public FrozenSet<T> ToFrozenSet()
+		public FrozenSet<T> ToFrozenSet([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
 
-			return collection.Count == 0 ? [] : FrozenSet.ToFrozenSet(collection);
+			return collection.Count == 0 ? [] : FrozenSet.ToFrozenSet(collection, comparer);
 		}
 
 		/// <summary>

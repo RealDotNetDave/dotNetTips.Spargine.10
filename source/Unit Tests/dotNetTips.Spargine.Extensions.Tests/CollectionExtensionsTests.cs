@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -32,6 +32,26 @@ public class CollectionExtensionsTests
 {
 
 	private const int Count = 100;
+
+	[TestMethod]
+	public void AddIf_Array_ThrowsArgumentReadOnlyException()
+	{
+		ICollection<Person> collection = RandomData.GeneratePersonRefCollection(Count).ToArray();
+		var person = RandomData.GeneratePerson<Person>();
+
+		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => collection.AddIf(person, true));
+	}
+
+	[TestMethod]
+	public void AddIf_ConditionFalse_ShouldNotAddItem()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var person = RandomData.GeneratePerson<Person>();
+
+		people.AddIf(person, false);
+
+		Assert.AreEqual(Count, people.Count);
+	}
 
 	[TestMethod]
 	public void AddIfNotExists_Array_ThrowsArgumentReadOnlyException()
@@ -73,26 +93,6 @@ public class CollectionExtensionsTests
 
 		// Add duplicate
 		Assert.IsFalse(people.AddIfNotExists(testPerson, comparer));
-	}
-
-	[TestMethod]
-	public void AddIf_Array_ThrowsArgumentReadOnlyException()
-	{
-		ICollection<Person> collection = RandomData.GeneratePersonRefCollection(Count).ToArray();
-		var person = RandomData.GeneratePerson<Person>();
-
-		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => collection.AddIf(person, true));
-	}
-
-	[TestMethod]
-	public void AddIf_ConditionFalse_ShouldNotAddItem()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		var person = RandomData.GeneratePerson<Person>();
-
-		people.AddIf(person, false);
-
-		Assert.AreEqual(Count, people.Count);
 	}
 
 	[TestMethod]
@@ -147,6 +147,50 @@ public class CollectionExtensionsTests
 
 		Assert.IsFalse(people.AddRange(nullItems, ensureUnique: true));
 		Assert.HasCount(Count, people);
+	}
+
+	[TestMethod]
+	public void AddRange_WithComparer_AllDuplicates_ReturnsFalse()
+	{
+		// Arrange
+		ICollection<string> collection = new List<string>(["hello", "world"]);
+
+		// Act — all items are duplicates with case-insensitive comparer
+		var result = collection.AddRange(["HELLO", "WORLD"], ensureUnique: true, comparer: StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.AreEqual(2, collection.Count);
+	}
+
+	[TestMethod]
+	public void AddRange_WithComparer_UsesCaseInsensitiveForUniqueness()
+	{
+		// Arrange
+		ICollection<string> collection = new List<string>(["hello", "world"]);
+
+		// Act — "HELLO" should be duplicate with case-insensitive comparer
+		var result = collection.AddRange(["HELLO", "NEW"], ensureUnique: true, comparer: StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(3, collection.Count);
+		Assert.IsTrue(collection.Contains("NEW"));
+	}
+
+	[TestMethod]
+	public void AddRange_WithNullComparer_UsesDefaultComparer()
+	{
+		// Arrange
+		ICollection<string> collection = new List<string>(["hello", "world"]);
+
+		// Act — default comparer is case-sensitive so "HELLO" is a new item
+		var result = collection.AddRange(["HELLO", "hello"], ensureUnique: true, comparer: null);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.AreEqual(3, collection.Count);
+		Assert.IsTrue(collection.Contains("HELLO"));
 	}
 
 	[TestMethod]
@@ -220,6 +264,49 @@ public class CollectionExtensionsTests
 	public void ToFrozenSet_NullCollection_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.ToFrozenSet<Person>(null));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_WithComparer_EmptyCollection_ReturnsEmptyFrozenSet()
+	{
+		// Arrange
+		var collection = new Collection<string>();
+
+		// Act
+		var frozenSet = collection.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsNotNull(frozenSet);
+		Assert.HasCount(0, frozenSet);
+	}
+
+
+	[TestMethod]
+	public void ToFrozenSet_WithComparer_UsesCaseInsensitiveComparer()
+	{
+		// Arrange
+		var collection = new Collection<string>(["hello", "HELLO", "World"]);
+
+		// Act
+		var frozenSet = collection.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.HasCount(2, frozenSet);
+		Assert.IsTrue(frozenSet.Contains("hello"));
+		Assert.IsTrue(frozenSet.Contains("World"));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_WithNullComparer_UsesDefaultComparer()
+	{
+		// Arrange
+		var collection = new Collection<string>(["hello", "HELLO", "World"]);
+
+		// Act
+		var frozenSet = collection.ToFrozenSet(null);
+
+		// Assert — default comparer treats "hello" and "HELLO" as distinct
+		Assert.HasCount(3, frozenSet);
 	}
 
 	[TestMethod]
@@ -613,6 +700,5 @@ public class CollectionExtensionsTests
 		models.Upsert(person);
 		Assert.HasCount(Count + 1, models);
 	}
-
 
 }

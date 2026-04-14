@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-24-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-25-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -62,11 +62,15 @@ public static class ConcurrentBagExtensions
 		/// Removes the specified items from the <see cref="ConcurrentBag{T}"/>.
 		/// </summary>
 		/// <param name="items">The items to remove from the bag. Must not be null.</param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>A new <see cref="ConcurrentBag{T}"/> with the specified items removed.</returns>
 		[Pure]
 		[return: NotNull]
 		[Information(nameof(RemoveRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public ConcurrentBag<T> RemoveRange([DisallowNull] IEnumerable<T> items)
+		public ConcurrentBag<T> RemoveRange([DisallowNull] IEnumerable<T> items, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
 			{
@@ -75,7 +79,7 @@ public static class ConcurrentBagExtensions
 
 			bag = bag.ArgumentNotNull();
 
-			var itemsToRemove = new HashSet<T>(items);
+			var itemsToRemove = new HashSet<T>(items, comparer ?? EqualityComparer<T>.Default);
 
 			if (itemsToRemove.Count == 0)
 			{

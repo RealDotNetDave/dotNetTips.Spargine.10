@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -100,12 +100,18 @@ public static class SortedDictionaryExtensions
 	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 	/// <param name="collection">The <see cref="SortedDictionary{TKey, TValue}"/> to convert.</param>
+	/// <param name="keyComparer">
+	/// The <see cref="IComparer{T}"/> implementation to use when comparing keys.
+	/// If <c>null</c>, <see cref="Comparer{T}.Default"/> is used.
+	/// </param>
 	/// <returns>An <see cref="ImmutableSortedDictionary{TKey, TValue}"/> that contains the elements from the specified dictionary.</returns>
 	[Pure]
 	[Information(nameof(ToImmutable), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ImmutableSortedDictionary<TKey, TValue> ToImmutable<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
+	public static ImmutableSortedDictionary<TKey, TValue> ToImmutable<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection, [AllowNull] IComparer<TKey>? keyComparer = null) where TKey : notnull
 	{
-		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
+		return keyComparer is null
+			? ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull())
+			: ImmutableSortedDictionary.CreateRange(keyComparer, EqualityComparer<TValue>.Default, collection.ArgumentNotNull());
 	}
 
 	/// <summary>

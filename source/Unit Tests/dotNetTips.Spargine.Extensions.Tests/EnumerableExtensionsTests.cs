@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -3115,6 +3115,77 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void HasDuplicates_WithCaseInsensitiveComparer_DuplicatesFound_ReturnsTrue()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "Apple", "banana" };
+
+		// Act
+		var result = collection.HasDuplicates(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_WithCaseInsensitiveComparer_NoDuplicates_ReturnsFalse()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "banana", "cherry" };
+
+		// Act
+		var result = collection.HasDuplicates(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_WithComparer_HashSetSource_StillChecksWithComparer()
+	{
+		// Arrange — HashSet uses default (case-sensitive) comparer, so "apple" and "Apple" are distinct.
+		// But passing a case-insensitive comparer should detect them as duplicates.
+		var collection = new HashSet<string> { "apple", "Apple", "banana" };
+
+		// Act
+		var result = collection.HasDuplicates(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_WithComparer_IEnumerableNonCollection_ReturnsTrue()
+	{
+		// Arrange — deferred IEnumerable that is not ICollection
+		static IEnumerable<string> Generate()
+		{
+			yield return "apple";
+			yield return "APPLE";
+			yield return "banana";
+		}
+
+		// Act
+		var result = Generate().HasDuplicates(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasDuplicates_WithNullComparer_BehavesSameAsDefault()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "Apple", "banana" };
+
+		// Act — null comparer should use default (case-sensitive), so no duplicates
+		var result = collection.HasDuplicates(null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
 	public void HasDuplicatesEmptyTest()
 	{
 		IEnumerable<string> strings = new List<string>();
@@ -5019,6 +5090,51 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFrozenSet_WithCaseInsensitiveComparer_CollapsesDuplicates()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "Apple", "APPLE", "banana" }.AsEnumerable();
+
+		// Act
+		var result = strings.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		// Assert — case-insensitive: "apple"/"Apple"/"APPLE" collapse into one
+		Assert.IsNotNull(result);
+		Assert.HasCount(2, result);
+		Assert.IsTrue(result.Contains("apple"));
+		Assert.IsTrue(result.Contains("banana"));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_WithComparer_LookupUsesSameComparer()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "banana" }.AsEnumerable();
+
+		// Act
+		var result = strings.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		// Assert — lookup should be case-insensitive
+		Assert.IsTrue(result.Contains("APPLE"));
+		Assert.IsTrue(result.Contains("Banana"));
+		Assert.IsFalse(result.Contains("cherry"));
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_WithNullComparer_BehavesSameAsDefault()
+	{
+		// Arrange
+		var strings = new List<string> { "apple", "Apple", "banana" }.AsEnumerable();
+
+		// Act
+		var result = strings.ToFrozenSet(null);
+
+		// Assert — null comparer uses default (case-sensitive), so all 3 are distinct
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+	}
+
+	[TestMethod]
 	public void ToFrozenTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
@@ -5058,6 +5174,62 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.IsTrue(people.ToReadOnlyCollection().IsNotEmpty());
+	}
+
+	[TestMethod]
+	public void ToUniqueCollection_CollectionWithDuplicates_ReturnsUniqueElements()
+	{
+		// Arrange
+		var collection = new List<int> { 1, 2, 2, 3, 3, 3 }.AsEnumerable();
+
+		// Act
+		var result = collection.ToUniqueCollection();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+	}
+
+	[TestMethod]
+	public void ToUniqueCollection_EmptyCollection_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var collection = new List<int>().AsEnumerable();
+
+		// Act
+		var result = collection.ToUniqueCollection();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.HasCount(0, result);
+	}
+
+	[TestMethod]
+	public void ToUniqueCollection_WithCaseInsensitiveComparer_CollapsesStrings()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "Apple", "APPLE", "banana" }.AsEnumerable();
+
+		// Act
+		var result = collection.ToUniqueCollection(StringComparer.OrdinalIgnoreCase);
+
+		// Assert — case-insensitive: "apple"/"Apple"/"APPLE" collapse into one
+		Assert.IsNotNull(result);
+		Assert.HasCount(2, result);
+	}
+
+	[TestMethod]
+	public void ToUniqueCollection_WithNullComparer_BehavesSameAsDefault()
+	{
+		// Arrange
+		var collection = new List<string> { "apple", "Apple", "banana" }.AsEnumerable();
+
+		// Act
+		var result = collection.ToUniqueCollection(null);
+
+		// Assert — null comparer uses default (case-sensitive), all 3 are distinct
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
 	}
 
 	[TestMethod]

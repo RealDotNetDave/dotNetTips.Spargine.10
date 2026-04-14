@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -556,28 +556,37 @@ public static class ArrayExtensions
 		/// <summary>
 		/// Returns the array without duplicates.
 		/// </summary>
+		/// <param name="comparer">
+		/// An optional <see cref="IEqualityComparer{T}"/> to use for element comparison.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>A new array containing only distinct elements.</returns>
-		/// <exception cref="ArgumentNullException">array cannot be null.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if the array is <c>null</c>.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public T[] ToDistinct()
+		public T[] ToDistinct(IEqualityComparer<T>? comparer = null)
 		{
-			return [.. array.ArgumentNotNull().Distinct()];
+			return [.. array.ArgumentNotNull().Distinct(comparer)];
 		}
 
 		/// <summary>
-		/// Converts an array to <see cref="FrozenSet{T}"/> that could improve performance.
+		/// Converts the array to a <see cref="FrozenSet{T}"/>, an immutable set optimized for fast read operations.
 		/// </summary>
-		/// <returns>A <see cref="FrozenSet{T}"/> containing the elements of the array.</returns>
+		/// <param name="comparer">
+		/// An optional <see cref="IEqualityComparer{T}"/> to use for element comparison.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
+		/// <returns>A <see cref="FrozenSet{T}"/> containing the distinct elements of the array.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the array is <c>null</c>.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public FrozenSet<T> ToFrozenSet()
+		public FrozenSet<T> ToFrozenSet(IEqualityComparer<T>? comparer = null)
 		{
-			return FrozenSet.ToFrozenSet(array.ArgumentNotNull());
+			return FrozenSet.ToFrozenSet(array.ArgumentNotNull(), comparer);
 		}
 
 		/// <summary>

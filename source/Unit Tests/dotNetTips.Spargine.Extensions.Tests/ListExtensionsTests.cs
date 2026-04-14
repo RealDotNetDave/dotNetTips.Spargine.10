@@ -4,16 +4,13 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
-
-//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 using System;
 using System.Collections.Generic;
@@ -30,6 +27,8 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
+
 namespace DotNetTips.Spargine.Extensions.Tests;
 
 [ExcludeFromCodeCoverage]
@@ -38,6 +37,16 @@ public class ListExtensionsTests
 {
 
 	private const int Count = 256;
+
+	[TestMethod]
+	public void AddFirst_NullItem_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var list = new List<Person>();
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.AddFirst(null));
+	}
 
 	[TestMethod]
 	public void AddFirstAndAddLastCombinedTest()
@@ -188,13 +197,13 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void AddFirst_NullItem_ThrowsArgumentNullException()
+	public void AddLast_NullItem_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var list = new List<Person>();
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.AddFirst(null));
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.AddLast(null));
 	}
 
 	[TestMethod]
@@ -317,16 +326,6 @@ public class ListExtensionsTests
 		// Assert
 		Assert.HasCount(4, list, "List should contain 4 decimal values.");
 		Assert.AreEqual(valueToAdd, list[3], "Last value should be the added decimal.");
-	}
-
-	[TestMethod]
-	public void AddLast_NullItem_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var list = new List<Person>();
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.AddLast(null));
 	}
 
 	[TestMethod]
@@ -642,6 +641,19 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void AsReadOnlySpan_EmptyList_ReturnsEmptySpan()
+	{
+		// Arrange
+		var list = new List<int>();
+
+		// Act
+		var span = list.AsReadOnlySpan();
+
+		// Assert
+		Assert.AreEqual(0, span.Length, "The span should be empty for an empty list.");
+	}
+
+	[TestMethod]
 	public void AsReadOnlySpanTest()
 	{
 		// Arrange
@@ -660,13 +672,13 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void AsReadOnlySpan_EmptyList_ReturnsEmptySpan()
+	public void AsSpan_EmptyList_ReturnsEmptySpan()
 	{
 		// Arrange
 		var list = new List<int>();
 
 		// Act
-		var span = list.AsReadOnlySpan();
+		var span = list.AsSpan();
 
 		// Assert
 		Assert.AreEqual(0, span.Length, "The span should be empty for an empty list.");
@@ -681,19 +693,6 @@ public class ListExtensionsTests
 		var result = people.AsSpan();
 
 		Assert.IsTrue(result.IsEmpty is false);
-	}
-
-	[TestMethod]
-	public void AsSpan_EmptyList_ReturnsEmptySpan()
-	{
-		// Arrange
-		var list = new List<int>();
-
-		// Act
-		var span = list.AsSpan();
-
-		// Assert
-		Assert.AreEqual(0, span.Length, "The span should be empty for an empty list.");
 	}
 
 	[TestMethod]
@@ -781,30 +780,39 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void FastShuffleTest()
+	public void FastCount_AfterModification_ReturnsUpdatedCount()
 	{
-		var list = new List<int> { 1, 2, 3, 4, 5 };
-		var originalList = new List<int>(list);
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
 
-		list = list.FastShuffle();
+		// Act & Assert
+		Assert.AreEqual(3, list.FastCount());
 
-		Assert.HasCount(5, list);
-		Assert.Contains(1, list);
-		Assert.Contains(2, list);
-		Assert.Contains(3, list);
-		Assert.Contains(4, list);
-		Assert.Contains(5, list);
-		CollectionAssert.AreNotEqual(originalList, list);
+		list.Add(4);
+		Assert.AreEqual(4, list.FastCount());
+
+		list.RemoveAt(0);
+		Assert.AreEqual(3, list.FastCount());
 	}
 
 	[TestMethod]
-	public void FastShuffle_NullList_ThrowsArgumentNullException()
+	public void FastCount_EmptyList_ReturnsZero()
 	{
 		// Arrange
-		List<int> list = null;
+		var list = new List<int>();
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.FastShuffle());
+		Assert.AreEqual(0, list.FastCount());
+	}
+
+	[TestMethod]
+	public void FastCount_NonEmptyList_ReturnsCorrectCount()
+	{
+		// Arrange
+		var list = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		// Act & Assert
+		Assert.AreEqual(Count, list.FastCount());
 	}
 
 	[TestMethod]
@@ -822,6 +830,16 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastShuffle_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> list = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.FastShuffle());
+	}
+
+	[TestMethod]
 	public void FastShuffle_SingleElement_ReturnsSingleElementList()
 	{
 		// Arrange
@@ -836,39 +854,69 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void FastCount_NonEmptyList_ReturnsCorrectCount()
+	public void FastShuffleTest()
 	{
-		// Arrange
-		var list = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var list = new List<int> { 1, 2, 3, 4, 5 };
+		var originalList = new List<int>(list);
 
-		// Act & Assert
-		Assert.AreEqual(Count, list.FastCount());
+		list = list.FastShuffle();
+
+		Assert.HasCount(5, list);
+		Assert.Contains(1, list);
+		Assert.Contains(2, list);
+		Assert.Contains(3, list);
+		Assert.Contains(4, list);
+		Assert.Contains(5, list);
+		CollectionAssert.AreNotEqual(originalList, list);
 	}
 
 	[TestMethod]
-	public void FastCount_EmptyList_ReturnsZero()
+	public void GenerateHashCode_WithCaseInsensitiveComparer_TreatsCasesEqual()
 	{
 		// Arrange
-		var list = new List<int>();
+		var list1 = new List<string> { "apple", "banana" };
+		var list2 = new List<string> { "APPLE", "BANANA" };
+		var comparer = StringComparer.OrdinalIgnoreCase;
 
-		// Act & Assert
-		Assert.AreEqual(0, list.FastCount());
+		// Act
+		var hash1 = list1.GenerateHashCode(comparer);
+		var hash2 = list2.GenerateHashCode(comparer);
+
+		// Assert
+		Assert.AreEqual(hash1, hash2,
+			"Case-insensitive comparer should produce equal hashes for case-variant lists.");
+	}
+
+	// ── GenerateHashCode with comparer ───────────────────────────────────
+
+	[TestMethod]
+	public void GenerateHashCode_WithCustomComparer_ProducesDifferentHash()
+	{
+		// Arrange
+		var list = new List<string> { "Apple", "Banana", "Cherry" };
+
+		// Act
+		var defaultHash = list.GenerateHashCode();
+		var caseInsensitiveHash = list.GenerateHashCode(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.AreNotEqual(defaultHash, caseInsensitiveHash,
+			"A case-insensitive comparer should produce a different hash than the default comparer.");
 	}
 
 	[TestMethod]
-	public void FastCount_AfterModification_ReturnsUpdatedCount()
+	public void GenerateHashCode_WithNullComparer_MatchesDefaultBehavior()
 	{
 		// Arrange
-		var list = new List<int> { 1, 2, 3 };
+		var list = new List<int> { 10, 20, 30 };
 
-		// Act & Assert
-		Assert.AreEqual(3, list.FastCount());
+		// Act
+		var hashWithNull = list.GenerateHashCode(comparer: null);
+		var hashDefault = list.GenerateHashCode();
 
-		list.Add(4);
-		Assert.AreEqual(4, list.FastCount());
-
-		list.RemoveAt(0);
-		Assert.AreEqual(3, list.FastCount());
+		// Assert
+		Assert.AreEqual(hashDefault, hashWithNull,
+			"Null comparer should produce the same hash as calling without a comparer.");
 	}
 
 	[TestMethod]
@@ -1532,6 +1580,50 @@ public class ListExtensionsTests
 		Assert.IsTrue(list1.IsEqualTo(list2));
 	}
 
+	// ── IsEqualTo with comparer ──────────────────────────────────────────
+
+	[TestMethod]
+	public void IsEqualTo_WithCaseInsensitiveComparer_ReturnsTrueForDifferentCase()
+	{
+		// Arrange
+		var list1 = new List<string> { "Apple", "Banana", "Cherry" };
+		var list2 = new List<string> { "apple", "banana", "cherry" };
+
+		// Act
+		var result = list1.IsEqualTo(list2, StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsTrue(result, "Case-insensitive comparer should treat differently-cased strings as equal.");
+	}
+
+	[TestMethod]
+	public void IsEqualTo_WithComparer_DifferentLists_ReturnsFalse()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3 };
+		var list2 = new List<int> { 1, 2, 4 };
+
+		// Act
+		var result = list1.IsEqualTo(list2, EqualityComparer<int>.Default);
+
+		// Assert
+		Assert.IsFalse(result, "Different lists with explicit default comparer should return false.");
+	}
+
+	[TestMethod]
+	public void IsEqualTo_WithComparer_EqualLists_ReturnsTrue()
+	{
+		// Arrange
+		var list1 = new List<int> { 1, 2, 3 };
+		var list2 = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = list1.IsEqualTo(list2, EqualityComparer<int>.Default);
+
+		// Assert
+		Assert.IsTrue(result, "Equal lists with explicit default comparer should return true.");
+	}
+
 	[TestMethod]
 	public void IsEqualTo_WithDuplicates_Equal_ReturnsTrue()
 	{
@@ -1541,6 +1633,20 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsTrue(list1.IsEqualTo(list2));
+	}
+
+	[TestMethod]
+	public void IsEqualTo_WithNullComparer_UsesDefaultEquality()
+	{
+		// Arrange
+		var list1 = new List<string> { "Apple", "Banana" };
+		var list2 = new List<string> { "apple", "banana" };
+
+		// Act
+		var result = list1.IsEqualTo(list2, comparer: null);
+
+		// Assert
+		Assert.IsFalse(result, "Null comparer should fall back to default (ordinal) equality, so different case should not match.");
 	}
 
 	[TestMethod]
@@ -1611,27 +1717,13 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsNotEmptyCountTest()
+	public void IsNotEmpty_EmptyList_ReturnsFalse()
 	{
-		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+		// Arrange
+		var list = new List<int>();
 
-		Assert.IsTrue(list.IsNotEmpty(1000));
-	}
-
-	[TestMethod]
-	public void IsNotEmptyPredicateTest()
-	{
-		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
-
-		Assert.IsTrue(list.IsNotEmpty(p => p.Addresses.Count > 1));
-	}
-
-	[TestMethod]
-	public void IsNotEmptyTest()
-	{
-		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
-
-		Assert.IsTrue(list.IsNotEmpty());
+		// Act & Assert
+		Assert.IsFalse(list.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -1645,33 +1737,13 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsNotEmpty_EmptyList_ReturnsFalse()
+	public void IsNotEmpty_WithCount_EmptyListAndZeroCount_ReturnsTrue()
 	{
 		// Arrange
 		var list = new List<int>();
 
 		// Act & Assert
-		Assert.IsFalse(list.IsNotEmpty());
-	}
-
-	[TestMethod]
-	public void IsNotEmpty_WithPredicate_EmptyList_ReturnsFalse()
-	{
-		// Arrange
-		var list = new List<int>();
-
-		// Act & Assert
-		Assert.IsFalse(list.IsNotEmpty(i => i > 0));
-	}
-
-	[TestMethod]
-	public void IsNotEmpty_WithPredicate_NoMatch_ReturnsFalse()
-	{
-		// Arrange
-		var list = new List<int> { 1, 2, 3 };
-
-		// Act & Assert
-		Assert.IsFalse(list.IsNotEmpty(i => i > 100));
+		Assert.IsTrue(list.IsNotEmpty(0));
 	}
 
 	[TestMethod]
@@ -1695,13 +1767,47 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsNotEmpty_WithCount_EmptyListAndZeroCount_ReturnsTrue()
+	public void IsNotEmpty_WithPredicate_EmptyList_ReturnsFalse()
 	{
 		// Arrange
 		var list = new List<int>();
 
 		// Act & Assert
-		Assert.IsTrue(list.IsNotEmpty(0));
+		Assert.IsFalse(list.IsNotEmpty(i => i > 0));
+	}
+
+	[TestMethod]
+	public void IsNotEmpty_WithPredicate_NoMatch_ReturnsFalse()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+
+		// Act & Assert
+		Assert.IsFalse(list.IsNotEmpty(i => i > 100));
+	}
+
+	[TestMethod]
+	public void IsNotEmptyCountTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+
+		Assert.IsTrue(list.IsNotEmpty(1000));
+	}
+
+	[TestMethod]
+	public void IsNotEmptyPredicateTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+
+		Assert.IsTrue(list.IsNotEmpty(p => p.Addresses.Count > 1));
+	}
+
+	[TestMethod]
+	public void IsNotEmptyTest()
+	{
+		var list = RandomData.GeneratePersonRefCollection(1000).ToList();
+
+		Assert.IsTrue(list.IsNotEmpty());
 	}
 
 
@@ -2015,6 +2121,26 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void RemoveFirst_ItemNotFound_ReturnsFalse()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+
+		// Act & Assert
+		Assert.IsFalse(list.RemoveFirst(99));
+	}
+
+	[TestMethod]
+	public void RemoveFirst_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> list = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.RemoveFirst(1));
+	}
+
+	[TestMethod]
 	public void RemoveFirstNullTest()
 	{
 		var list = RandomData.GeneratePersonRefCollection(10).ToList();
@@ -2038,38 +2164,13 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void RemoveLastTest()
-	{
-		var list = new List<int> { 1, 2, 3, 2, 4 };
-
-		var result = list.RemoveLast(2);
-
-		Assert.IsTrue(result);
-		Assert.HasCount(4, list);
-		Assert.AreEqual(1, list[0]);
-		Assert.AreEqual(2, list[1]);
-		Assert.AreEqual(3, list[2]);
-		Assert.AreEqual(4, list[3]);
-	}
-
-	[TestMethod]
-	public void RemoveFirst_NullList_ThrowsArgumentNullException()
-	{
-		// Arrange
-		List<int> list = null;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.RemoveFirst(1));
-	}
-
-	[TestMethod]
-	public void RemoveFirst_ItemNotFound_ReturnsFalse()
+	public void RemoveLast_ItemNotFound_ReturnsFalse()
 	{
 		// Arrange
 		var list = new List<int> { 1, 2, 3 };
 
 		// Act & Assert
-		Assert.IsFalse(list.RemoveFirst(99));
+		Assert.IsFalse(list.RemoveLast(99));
 	}
 
 	[TestMethod]
@@ -2083,13 +2184,18 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void RemoveLast_ItemNotFound_ReturnsFalse()
+	public void RemoveLastTest()
 	{
-		// Arrange
-		var list = new List<int> { 1, 2, 3 };
+		var list = new List<int> { 1, 2, 3, 2, 4 };
 
-		// Act & Assert
-		Assert.IsFalse(list.RemoveLast(99));
+		var result = list.RemoveLast(2);
+
+		Assert.IsTrue(result);
+		Assert.HasCount(4, list);
+		Assert.AreEqual(1, list[0]);
+		Assert.AreEqual(2, list[1]);
+		Assert.AreEqual(3, list[2]);
+		Assert.AreEqual(4, list[3]);
 	}
 
 	[TestMethod]
@@ -2106,18 +2212,6 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void SplitTest()
-	{
-		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-		var result = list.Split(3);
-
-		Assert.HasCount(3, result);
-		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, result[0]);
-		CollectionAssert.AreEqual(new List<int> { 4, 5, 6 }, result[1]);
-		CollectionAssert.AreEqual(new List<int> { 7, 8, 9 }, result[2]);
-	}
-
-	[TestMethod]
 	public void Split_NullList_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -2125,22 +2219,6 @@ public class ListExtensionsTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => list.Split(3));
-	}
-
-	[TestMethod]
-	public void Split_UnevenSplit_LastChunkIsSmaller()
-	{
-		// Arrange
-		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-
-		// Act
-		var result = list.Split(3);
-
-		// Assert
-		Assert.HasCount(3, result);
-		Assert.HasCount(3, result[0]);
-		Assert.HasCount(3, result[1]);
-		Assert.HasCount(1, result[2]);
 	}
 
 	[TestMethod]
@@ -2171,6 +2249,34 @@ public class ListExtensionsTests
 		Assert.HasCount(1, result[0]);
 		Assert.HasCount(1, result[1]);
 		Assert.HasCount(1, result[2]);
+	}
+
+	[TestMethod]
+	public void Split_UnevenSplit_LastChunkIsSmaller()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+
+		// Act
+		var result = list.Split(3);
+
+		// Assert
+		Assert.HasCount(3, result);
+		Assert.HasCount(3, result[0]);
+		Assert.HasCount(3, result[1]);
+		Assert.HasCount(1, result[2]);
+	}
+
+	[TestMethod]
+	public void SplitTest()
+	{
+		var list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		var result = list.Split(3);
+
+		Assert.HasCount(3, result);
+		CollectionAssert.AreEqual(new List<int> { 1, 2, 3 }, result[0]);
+		CollectionAssert.AreEqual(new List<int> { 4, 5, 6 }, result[1]);
+		CollectionAssert.AreEqual(new List<int> { 7, 8, 9 }, result[2]);
 	}
 
 	[TestMethod]
@@ -2231,6 +2337,44 @@ public class ListExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToCollection());
 	}
 
+	[TestMethod]
+	public void ToDistinctBlockingCollection_DefaultCompleteAdding_IsNotCompleted()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+
+		// Act
+		var result = list.ToDistinctBlockingCollection();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.IsAddingCompleted);
+	}
+
+	[TestMethod]
+	public void ToDistinctBlockingCollection_EmptyList_ReturnsEmptyCollection()
+	{
+		// Arrange
+		var list = new List<int>();
+
+		// Act
+		var result = list.ToDistinctBlockingCollection();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(0, result.Count);
+	}
+
+	[TestMethod]
+	public void ToDistinctBlockingCollection_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> list = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToDistinctBlockingCollection());
+	}
+
 
 	[TestMethod]
 	public void ToDistinctBlockingCollectionCompleteAddingTest()
@@ -2261,41 +2405,27 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToDistinctBlockingCollection_NullList_ThrowsArgumentNullException()
-	{
-		// Arrange
-		List<int> list = null;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToDistinctBlockingCollection());
-	}
-
-	[TestMethod]
-	public void ToDistinctBlockingCollection_DefaultCompleteAdding_IsNotCompleted()
-	{
-		// Arrange
-		var list = new List<int> { 1, 2, 3 };
-
-		// Act
-		var result = list.ToDistinctBlockingCollection();
-
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.IsFalse(result.IsAddingCompleted);
-	}
-
-	[TestMethod]
-	public void ToDistinctBlockingCollection_EmptyList_ReturnsEmptyCollection()
+	public void ToDistinctConcurrentBag_EmptyList_ReturnsEmptyBag()
 	{
 		// Arrange
 		var list = new List<int>();
 
 		// Act
-		var result = list.ToDistinctBlockingCollection();
+		var result = list.ToDistinctConcurrentBag();
 
 		// Assert
 		Assert.IsNotNull(result);
-		Assert.AreEqual(0, result.Count);
+		Assert.IsEmpty(result);
+	}
+
+	[TestMethod]
+	public void ToDistinctConcurrentBag_NullList_ThrowsArgumentNullException()
+	{
+		// Arrange
+		List<int> list = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToDistinctConcurrentBag());
 	}
 
 	[TestMethod]
@@ -2310,27 +2440,24 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToDistinctConcurrentBag_NullList_ThrowsArgumentNullException()
+	public void ToFastSortedList_NullList_ThrowsArgumentNullException()
 	{
 		// Arrange
 		List<int> list = null;
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToDistinctConcurrentBag());
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList());
 	}
 
 	[TestMethod]
-	public void ToDistinctConcurrentBag_EmptyList_ReturnsEmptyBag()
+	public void ToFastSortedList_WithComparer_NullList_ThrowsArgumentNullException()
 	{
 		// Arrange
-		var list = new List<int>();
+		List<int> list = null;
+		var comparer = Comparer<int>.Default;
 
-		// Act
-		var result = list.ToDistinctConcurrentBag();
-
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.IsEmpty(result);
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList(comparer));
 	}
 
 	[TestMethod]
@@ -2384,6 +2511,17 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToFastSortedList_WithNullComparer_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var list = new List<int> { 1, 2, 3 };
+		IComparer<int> comparer = null;
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList(comparer));
+	}
+
+	[TestMethod]
 	public void ToFastSortedList_WithValidList_ShouldReturnSortedList()
 	{
 		// Arrange
@@ -2408,36 +2546,48 @@ public class ListExtensionsTests
 		Assert.HasCount(Count, result);
 	}
 
+	// ── ToFrozenSet with comparer ────────────────────────────────────────
+
 	[TestMethod]
-	public void ToFastSortedList_NullList_ThrowsArgumentNullException()
+	public void ToFrozenSet_WithCaseInsensitiveComparer_CollapsesDuplicates()
 	{
 		// Arrange
-		List<int> list = null;
+		var list = new List<string> { "Apple", "apple", "APPLE", "Banana" };
 
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList());
+		// Act
+		var result = list.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.HasCount(2, result, "Case-insensitive comparer should collapse 'Apple' variants into one.");
+		Assert.IsTrue(result.Contains("apple"), "FrozenSet should contain 'apple' via case-insensitive lookup.");
+		Assert.IsTrue(result.Contains("banana"), "FrozenSet should contain 'banana' via case-insensitive lookup.");
 	}
 
 	[TestMethod]
-	public void ToFastSortedList_WithComparer_NullList_ThrowsArgumentNullException()
+	public void ToFrozenSet_WithComparer_CanLookUpByCaseInsensitiveKey()
 	{
 		// Arrange
-		List<int> list = null;
-		var comparer = Comparer<int>.Default;
+		var list = new List<string> { "Hello", "World" };
 
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList(comparer));
+		// Act
+		var result = list.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.IsTrue(result.Contains("hello"), "Should find 'hello' via case-insensitive comparer.");
+		Assert.IsTrue(result.Contains("WORLD"), "Should find 'WORLD' via case-insensitive comparer.");
 	}
 
 	[TestMethod]
-	public void ToFastSortedList_WithNullComparer_ThrowsArgumentNullException()
+	public void ToFrozenSet_WithNullComparer_UsesDefaultEquality()
 	{
 		// Arrange
-		var list = new List<int> { 1, 2, 3 };
-		IComparer<int> comparer = null;
+		var list = new List<int> { 1, 2, 3, 2, 1 };
 
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFastSortedList(comparer));
+		// Act
+		var result = list.ToFrozenSet(comparer: null);
+
+		// Assert
+		Assert.HasCount(3, result, "Null comparer should fall back to default equality, yielding 3 distinct elements.");
 	}
 
 
@@ -2504,19 +2654,6 @@ public class ListExtensionsTests
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToFrozenSet());
 	}
 
-
-	[TestMethod]
-	public void ToImmutableArrayTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		var result = people.ToImmutableArray();
-
-		Assert.IsNotNull(result);
-
-		Assert.HasCount(Count, result);
-	}
-
 	[TestMethod]
 	public void ToImmutableArray_EmptyList_ReturnsEmptyArray()
 	{
@@ -2528,6 +2665,19 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result.IsEmpty, "Resulting ImmutableArray should be empty.");
+	}
+
+
+	[TestMethod]
+	public void ToImmutableArrayTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		var result = people.ToImmutableArray();
+
+		Assert.IsNotNull(result);
+
+		Assert.HasCount(Count, result);
 	}
 
 	[TestMethod]
@@ -2712,17 +2862,6 @@ public class ListExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToObservableListTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		var result = people.ToObservable();
-
-		Assert.IsNotNull(result);
-		Assert.HasCount(Count, result);
-	}
-
-	[TestMethod]
 	public void ToObservable_EmptyList_ReturnsEmptyObservableList()
 	{
 		// Arrange
@@ -2734,21 +2873,6 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsEmpty(result);
-	}
-
-	[TestMethod]
-	public void ToObservableCollectionWithValidListTest()
-	{
-		// Arrange
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		// Act
-		var result = people.ToObservableCollection();
-
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.IsInstanceOfType(result, typeof(ObservableCollection<Person>));
-		Assert.HasCount(Count, result);
 	}
 
 	[TestMethod]
@@ -2773,6 +2897,32 @@ public class ListExtensionsTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToObservableCollection());
+	}
+
+	[TestMethod]
+	public void ToObservableCollectionWithValidListTest()
+	{
+		// Arrange
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		// Act
+		var result = people.ToObservableCollection();
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsInstanceOfType(result, typeof(ObservableCollection<Person>));
+		Assert.HasCount(Count, result);
+	}
+
+	[TestMethod]
+	public void ToObservableListTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		var result = people.ToObservable();
+
+		Assert.IsNotNull(result);
+		Assert.HasCount(Count, result);
 	}
 
 	[TestMethod]

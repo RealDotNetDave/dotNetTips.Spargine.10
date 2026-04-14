@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-12-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -220,20 +220,23 @@ public static class ListExtensions
 		/// <summary>
 		/// Generates a hash code for the entire <see cref="List{T}"/> based on the hash codes of its elements.
 		/// </summary>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> used to compute element hash codes.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>A hash code representing the contents of the list.</returns>
 		/// <exception cref="ArgumentNullException">Thrown if the list is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public int GenerateHashCode()
+		public int GenerateHashCode([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			list = list.ArgumentNotNull();
 
-			// CODE SUGGESTED BY COPILOT FAILS WITH PERSONRECORD
 			var hash = new HashCode();
 
 			foreach (var item in list.AsReadOnlySpan())
 			{
-				hash.Add(item);
+				hash.Add(item, comparer);
 			}
 
 			return hash.ToHashCode();
@@ -327,14 +330,19 @@ public static class ListExtensions
 		/// <param name="collectionToCheck">
 		/// The <see cref="List{T}"/> instance to compare with the current list.
 		/// </param>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> used to compare elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>
 		/// <c>true</c> if both lists contain the same number of elements and each corresponding element is equal;
 		/// otherwise, <c>false</c>.
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// The comparison is performed in order and is based on the default equality comparison for type
-		/// <typeparamref name="T"/> (that is, <see cref="EqualityComparer{T}.Default"/>).
+		/// The comparison is performed in order and is based on the specified comparer, or the default equality
+		/// comparison for type <typeparamref name="T"/> (that is, <see cref="EqualityComparer{T}.Default"/>) when
+		/// no comparer is provided.
 		/// </para>
 		/// <para>
 		/// If either the source list (<c>list</c>) or <paramref name="collectionToCheck"/> is <c>null</c>,
@@ -349,7 +357,7 @@ public static class ListExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck)
+		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (list is null || collectionToCheck is null)
 			{
@@ -369,7 +377,7 @@ public static class ListExtensions
 			var span1 = CollectionsMarshal.AsSpan(list);
 			var span2 = CollectionsMarshal.AsSpan(collectionToCheck);
 
-			return span1.SequenceEqual(span2);
+			return span1.SequenceEqual(span2, comparer);
 		}
 
 		/// <summary>
@@ -694,14 +702,18 @@ public static class ListExtensions
 		/// <summary>
 		/// Converts the list to a <see cref="FrozenSet{T}"/>.
 		/// </summary>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> used to determine element equality.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>A <see cref="FrozenSet{T}"/> containing the elements of the list.</returns>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public FrozenSet<T> ToFrozenSet()
+		public FrozenSet<T> ToFrozenSet([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			return FrozenSet.ToFrozenSet(list);
+			return FrozenSet.ToFrozenSet(list, comparer);
 		}
 
 		/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -106,6 +106,10 @@ public static class HashSetExtensions
 		/// <summary>
 		/// Converts a <see cref="HashSet{T}"/> to an <see cref="ImmutableHashSet{T}"/>.
 		/// </summary>
+		/// <param name="comparer">
+		/// The <see cref="IEqualityComparer{T}"/> implementation to use when comparing elements.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>
 		/// An <see cref="ImmutableHashSet{T}"/> containing all elements from the source hash set.
 		/// </returns>
@@ -113,9 +117,11 @@ public static class HashSetExtensions
 		[Pure]
 		[return: NotNull]
 		[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public ImmutableHashSet<T> ToImmutable()
+		public ImmutableHashSet<T> ToImmutable([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			return [.. collection.ArgumentNotNull()];
+			return comparer is null
+				? ImmutableHashSet.CreateRange(collection.ArgumentNotNull())
+				: ImmutableHashSet.CreateRange(comparer, collection.ArgumentNotNull());
 		}
 
 		/// <summary>

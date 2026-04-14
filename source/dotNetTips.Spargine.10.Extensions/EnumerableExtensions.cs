@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-12-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -851,15 +851,19 @@ public static class EnumerableExtensions
 		/// <item><description>One-time operations without heavy read usage</description></item>
 		/// </list>
 		/// </remarks>
+		/// <param name="comparer">
+		/// An optional <see cref="IEqualityComparer{T}"/> to use for element comparison.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public FrozenSet<T> ToFrozenSet()
+		public FrozenSet<T> ToFrozenSet([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
 
-			return FrozenSet.ToFrozenSet(collection);
+			return FrozenSet.ToFrozenSet(collection, comparer);
 		}
 
 		/// <summary>
@@ -1234,11 +1238,15 @@ public static class EnumerableExtensions
 		/// <summary>
 		/// Determines whether the specified collection contains any duplicate elements.
 		/// </summary>
+		/// <param name="comparer">
+		/// An optional <see cref="IEqualityComparer{T}"/> to determine element equality.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns><c>true</c> if the collection contains duplicates; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-		public bool HasDuplicates()
+		public bool HasDuplicates([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			// Fast-path: null or already-known empty
 			if (collection is null)
@@ -1247,7 +1255,8 @@ public static class EnumerableExtensions
 			}
 
 			// Fast-path: if the source is a HashSet<T>, it's already unique
-			if (collection is HashSet<T>)
+			// Only valid when using default comparer — a custom comparer may define different equality
+			if (collection is HashSet<T> && comparer is null)
 			{
 				return false;
 			}
@@ -1261,7 +1270,7 @@ public static class EnumerableExtensions
 				}
 
 				// Pre-size the HashSet to minimize rehashing/resizing
-				var seenItems = new HashSet<T>(c.Count);
+				var seenItems = new HashSet<T>(c.Count, comparer);
 				foreach (var item in c)
 				{
 					if (!seenItems.Add(item))
@@ -1274,7 +1283,7 @@ public static class EnumerableExtensions
 			}
 
 			// Fallback: unknown count, enumerate once
-			var fallbackSeen = new HashSet<T>();
+			var fallbackSeen = new HashSet<T>(comparer);
 
 			foreach (var item in collection)
 			{
@@ -1460,14 +1469,18 @@ public static class EnumerableExtensions
 		/// Creates a new <see cref="Collection{T}"/> that contains only the unique elements
 		/// from the source collection.
 		/// </summary>
+		/// <param name="comparer">
+		/// An optional <see cref="IEqualityComparer{T}"/> to determine element uniqueness.
+		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>
 		/// A new <see cref="Collection{T}"/> containing the distinct elements from the source collection.
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// Uniqueness is determined by <see cref="EqualityComparer{T}.Default"/> via an intermediate
-		/// <see cref="HashSet{T}"/>. The resulting <see cref="Collection{T}"/> is a new, mutable collection
-		/// and is independent of the source.
+		/// Uniqueness is determined by the specified <paramref name="comparer"/> (or <see cref="EqualityComparer{T}.Default"/>
+		/// when <c>null</c>) via an intermediate <see cref="HashSet{T}"/>. The resulting <see cref="Collection{T}"/> is a new,
+		/// mutable collection and is independent of the source.
 		/// </para>
 		/// <para>
 		/// The relative order of elements is not preserved because <see cref="HashSet{T}"/> does not guarantee ordering.
@@ -1482,9 +1495,9 @@ public static class EnumerableExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToUniqueCollection), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public Collection<T> ToUniqueCollection()
+		public Collection<T> ToUniqueCollection([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			return new Collection<T>(new HashSet<T>(collection).ToList());
+			return new Collection<T>(new HashSet<T>(collection, comparer).ToList());
 		}
 
 		/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -236,9 +236,14 @@ public static class DictionaryExtensions
 	/// <typeparam name="TKey">The type of keys in the dictionary. Must be non-nullable.</typeparam>
 	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
 	/// <param name="collection">The source dictionary to copy into a concurrent dictionary. Must not be <c>null</c>.</param>
+	/// <param name="comparer">
+	/// An optional <see cref="IEqualityComparer{T}"/> to use for key comparison.
+	/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+	/// </param>
 	/// <returns>
 	/// A new <see cref="ConcurrentDictionary{TKey, TValue}"/> containing all key/value pairs from <paramref name="collection"/>.
 	/// </returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is <c>null</c>.</exception>
 	/// <remarks>
 	/// This method creates a new concurrent dictionary and copies the contents of the source dictionary.
 	/// The resulting collection is safe for concurrent read/write operations, but the original
@@ -257,9 +262,9 @@ public static class DictionaryExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToConcurrentDictionary), "David McCarter", "7/23/2022", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
+	public static ConcurrentDictionary<TKey, TValue> ToConcurrentDictionary<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, IEqualityComparer<TKey>? comparer = null) where TKey : notnull
 	{
-		return new ConcurrentDictionary<TKey, TValue>(collection.ArgumentNotNull());
+		return new ConcurrentDictionary<TKey, TValue>(collection.ArgumentNotNull(), comparer ?? EqualityComparer<TKey>.Default);
 	}
 
 	/// <summary>
@@ -283,20 +288,25 @@ public static class DictionaryExtensions
 	}
 
 	/// <summary>
-	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to a <see cref="FrozenDictionary{TKey, TValue}"/>.
+	/// Converts an <see cref="IDictionary{TKey, TValue}"/> to a <see cref="FrozenDictionary{TKey, TValue}"/>,
+	/// an immutable dictionary optimized for fast read operations.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 	/// <param name="list">The source dictionary to convert.</param>
+	/// <param name="comparer">
+	/// An optional <see cref="IEqualityComparer{T}"/> to use for key comparison.
+	/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+	/// </param>
 	/// <returns>A frozen dictionary containing all key-value pairs from <paramref name="list"/>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="list"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="list"/> is <c>null</c>.</exception>
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToFrozen), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static FrozenDictionary<TKey, TValue> ToFrozen<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list) where TKey : notnull
+	public static FrozenDictionary<TKey, TValue> ToFrozen<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> list, IEqualityComparer<TKey>? comparer = null) where TKey : notnull
 	{
-		return FrozenDictionary.ToFrozenDictionary(list);
+		return FrozenDictionary.ToFrozenDictionary(list, comparer);
 	}
 
 	/// <summary>
@@ -322,15 +332,19 @@ public static class DictionaryExtensions
 	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 	/// <param name="collection">The source dictionary to convert.</param>
+	/// <param name="keyComparer">
+	/// An optional <see cref="IEqualityComparer{T}"/> to use for key comparison.
+	/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+	/// </param>
 	/// <returns>An immutable dictionary containing all key-value pairs from <paramref name="collection"/>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is <c>null</c>.</exception>
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ImmutableDictionary<TKey, TValue> ToImmutable<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
+	public static ImmutableDictionary<TKey, TValue> ToImmutable<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, IEqualityComparer<TKey>? keyComparer = null) where TKey : notnull
 	{
-		return ImmutableDictionary.CreateRange(collection.ArgumentNotNull());
+		return ImmutableDictionary.CreateRange(keyComparer, null, collection.ArgumentNotNull());
 	}
 
 	/// <summary>
@@ -357,15 +371,19 @@ public static class DictionaryExtensions
 	/// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 	/// <param name="collection">The source dictionary to convert.</param>
+	/// <param name="keyComparer">
+	/// An optional <see cref="IComparer{T}"/> to use for key ordering.
+	/// If <c>null</c>, <see cref="Comparer{T}.Default"/> is used.
+	/// </param>
 	/// <returns>An immutable sorted dictionary containing all key-value pairs from <paramref name="collection"/>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is <c>null</c>.</exception>
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToImmutableSorted), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection) where TKey : notnull
+	public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSorted<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, IComparer<TKey>? keyComparer = null) where TKey : notnull
 	{
-		return ImmutableSortedDictionary.CreateRange(collection.ArgumentNotNull());
+		return ImmutableSortedDictionary.CreateRange(keyComparer, null, collection.ArgumentNotNull());
 	}
 
 	/// <summary>

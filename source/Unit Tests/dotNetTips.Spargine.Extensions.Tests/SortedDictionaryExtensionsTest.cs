@@ -4,7 +4,7 @@
 // Created          : 12-23-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensionsTest.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -163,11 +163,69 @@ public class SortedDictionaryExtensionsTest
 	}
 
 	[TestMethod]
+	public void ToImmutable_WithKeyComparer_EmptyCollection_ReturnsEmptyDictionary()
+	{
+		// Arrange
+		var collection = new SortedDictionary<string, int>();
+		var reverseComparer = Comparer<string>.Create((x, y) => string.Compare(y, x, StringComparison.Ordinal));
+
+		// Act
+		var result = collection.ToImmutable(reverseComparer);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.HasCount(0, result);
+	}
+
+	[TestMethod]
+	public void ToImmutable_WithKeyComparer_UsesCustomKeyComparer()
+	{
+		// Arrange
+		var collection = new SortedDictionary<string, int>
+		{
+			["alpha"] = 1,
+			["bravo"] = 2,
+			["charlie"] = 3
+		};
+		var reverseComparer = Comparer<string>.Create((x, y) => string.Compare(y, x, StringComparison.Ordinal));
+
+		// Act
+		var result = collection.ToImmutable(reverseComparer);
+
+		// Assert — reverse order: charlie, bravo, alpha
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+		Assert.AreEqual("charlie", result.Keys.First());
+		Assert.AreEqual("alpha", result.Keys.Last());
+	}
+
+	[TestMethod]
 	public void ToImmutable_WithNullCollection_ThrowsArgumentNullException()
 	{
 		SortedDictionary<string, Person> collection = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => collection.ToImmutable());
+	}
+
+	[TestMethod]
+	public void ToImmutable_WithNullKeyComparer_UsesDefaultComparer()
+	{
+		// Arrange
+		var collection = new SortedDictionary<string, int>
+		{
+			["charlie"] = 3,
+			["alpha"] = 1,
+			["bravo"] = 2
+		};
+
+		// Act
+		var result = collection.ToImmutable(null);
+
+		// Assert — default ascending order
+		Assert.IsNotNull(result);
+		Assert.HasCount(3, result);
+		Assert.AreEqual("alpha", result.Keys.First());
+		Assert.AreEqual("charlie", result.Keys.Last());
 	}
 
 	[TestMethod]

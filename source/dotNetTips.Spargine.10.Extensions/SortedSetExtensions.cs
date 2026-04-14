@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -125,14 +125,20 @@ public static class SortedSetExtensions
 		/// <summary>
 		/// Converts a <see cref="SortedSet{T}"/> to an <see cref="ImmutableSortedSet{T}"/>.
 		/// </summary>
+		/// <param name="comparer">
+		/// The <see cref="IComparer{T}"/> implementation to use when comparing elements.
+		/// If <c>null</c>, <see cref="Comparer{T}.Default"/> is used.
+		/// </param>
 		/// <returns>An <see cref="ImmutableSortedSet{T}"/> containing all elements from the source set.</returns>
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(ToImmutable), "David McCarter", "1/28/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public ImmutableSortedSet<T> ToImmutable()
+		public ImmutableSortedSet<T> ToImmutable([AllowNull] IComparer<T>? comparer = null)
 		{
-			return ImmutableSortedSet.CreateRange(collection.ArgumentNotNull());
+			return comparer is null
+				? ImmutableSortedSet.CreateRange(collection.ArgumentNotNull())
+				: ImmutableSortedSet.CreateRange(comparer, collection.ArgumentNotNull());
 		}
 	}
 }

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-14-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -309,6 +309,49 @@ public class ConcurrentBagExtensionsTests
 		Assert.HasCount(3, result);
 		CollectionAssert.DoesNotContain(result, 2);
 		CollectionAssert.DoesNotContain(result, 4);
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithComparer_EmptyItemsToRemove_ReturnsCopy()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<string> { "hello", "World" };
+		var itemsToRemove = new List<string>();
+
+		// Act
+		var result = bag.RemoveRange(itemsToRemove, StringComparer.OrdinalIgnoreCase);
+
+		// Assert
+		Assert.HasCount(2, result);
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithComparer_UsesCaseInsensitiveComparer()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<string> { "hello", "World", "FOO" };
+		var itemsToRemove = new List<string> { "HELLO", "foo" };
+
+		// Act
+		var result = bag.RemoveRange(itemsToRemove, StringComparer.OrdinalIgnoreCase);
+
+		// Assert — case-insensitive removal should leave only "World"
+		Assert.HasCount(1, result);
+		CollectionAssert.Contains(result.ToList(), "World");
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithNullComparer_UsesDefaultComparer()
+	{
+		// Arrange
+		var bag = new ConcurrentBag<string> { "hello", "World", "FOO" };
+		var itemsToRemove = new List<string> { "HELLO", "foo" };
+
+		// Act — default comparer is case-sensitive, so no matches
+		var result = bag.RemoveRange(itemsToRemove, null);
+
+		// Assert — nothing removed
+		Assert.HasCount(3, result);
 	}
 
 	[TestMethod]
