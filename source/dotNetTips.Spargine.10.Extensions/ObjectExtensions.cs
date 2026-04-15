@@ -45,7 +45,9 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineObjectExtensions")]
 public static class ObjectExtensions
 {
+#pragma warning disable IDE0051
 	private const string Item = "Item";
+#pragma warning restore IDE0051
 #pragma warning disable IDE0052 // Remove unread private members - false positive: used in extension block (PropertiesToDictionary, FieldsToDictionary)
 #pragma warning disable IL2026 // BuiltInTypeNames uses reflection — suppressed for static field initializer
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
