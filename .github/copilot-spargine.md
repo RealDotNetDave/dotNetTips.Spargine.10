@@ -113,7 +113,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Use **dotNetTips.Spargine.10.Tester** for test data and utilities — specifically **`RandomData`** for generating random test data and **`PersonData`** for person-related data.  
 - Write unit tests for **all public APIs**.
 - If methods are new or modified, ensure they are covered by unit tests.
-- Ensure **full code‑path coverage**.  
+- Ensure **full code‑path coverage**. **THIS IS MANDATORY!**
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
