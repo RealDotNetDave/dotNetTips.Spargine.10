@@ -117,6 +117,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
+- Review all methods in a test class for issues.
 
 ### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  
