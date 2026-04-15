@@ -1401,12 +1401,22 @@ public class DirectoryHelperTests
 		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		var directory = Directory.CreateDirectory(tempDirectoryPath);
 
-		// Act
-		var result = DirectoryHelper.DeleteDirectory(directory, retries: 5, recursive: false);
+		try
+		{
+			// Act
+			var result = DirectoryHelper.DeleteDirectory(directory, retries: 5, recursive: false);
 
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The empty directory should have been deleted with recursive=false.");
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The empty directory should have been deleted with recursive=false.");
+		}
+		finally
+		{
+			if (Directory.Exists(tempDirectoryPath))
+			{
+				Directory.Delete(tempDirectoryPath, true);
+			}
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -1418,12 +1428,22 @@ public class DirectoryHelperTests
 		var directory = Directory.CreateDirectory(tempDirectoryPath);
 		File.WriteAllText(Path.Combine(tempDirectoryPath, "test.txt"), "content");
 
-		// Act
-		var result = DirectoryHelper.DeleteDirectory(directory, retries: 10);
+		try
+		{
+			// Act
+			var result = DirectoryHelper.DeleteDirectory(directory, retries: 10);
 
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The directory should have been deleted with custom retry count.");
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The directory should have been deleted with custom retry count.");
+		}
+		finally
+		{
+			if (Directory.Exists(tempDirectoryPath))
+			{
+				Directory.Delete(tempDirectoryPath, true);
+			}
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -1588,17 +1608,29 @@ public class DirectoryHelperTests
 		File.WriteAllText(Path.Combine(sourceDirectoryPath, "root.txt"), "root content");
 		File.WriteAllText(Path.Combine(subDir.FullName, "sub.txt"), "sub content");
 
-		// Act
-		var result = DirectoryHelper.MoveDirectory(sourceDirectory, destinationDirectory);
+		try
+		{
+			// Act
+			var result = DirectoryHelper.MoveDirectory(sourceDirectory, destinationDirectory);
 
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.IsFalse(Directory.Exists(sourceDirectoryPath), "Source directory should no longer exist after move.");
-		Assert.IsTrue(File.Exists(Path.Combine(destinationDirectoryPath, "root.txt")), "Root file should exist in destination.");
-		Assert.IsTrue(File.Exists(Path.Combine(destinationDirectoryPath, "SubFolder", "sub.txt")), "Subdirectory file should exist in destination.");
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsFalse(Directory.Exists(sourceDirectoryPath), "Source directory should no longer exist after move.");
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDirectoryPath, "root.txt")), "Root file should exist in destination.");
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDirectoryPath, "SubFolder", "sub.txt")), "Subdirectory file should exist in destination.");
+		}
+		finally
+		{
+			if (Directory.Exists(sourceDirectoryPath))
+			{
+				Directory.Delete(sourceDirectoryPath, true);
+			}
 
-		// Cleanup
-		DirectoryHelper.DeleteDirectory(destinationDirectory);
+			if (Directory.Exists(destinationDirectoryPath))
+			{
+				Directory.Delete(destinationDirectoryPath, true);
+			}
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
