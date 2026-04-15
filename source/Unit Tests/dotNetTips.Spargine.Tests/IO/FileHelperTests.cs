@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -947,6 +948,435 @@ public class FileHelperTests
 		finally
 		{
 			sourceFile.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task CopyFileAsyncFileNotFoundTest()
+	{
+		var sourceFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.CopyFileAsyncFileNotFoundTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<FileNotFoundException>(() => FileHelper.CopyFileAsync(sourceFile, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFileWithProgressNullFileTest()
+	{
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), nameof(this.CopyFileWithProgressNullFileTest)));
+		CopyProgressRoutine callback = new CopyProgressRoutine(CopyProgressCallback);
+
+		try
+		{
+			Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.CopyFile(null, destination, callback));
+		}
+		finally
+		{
+			if (destination.CheckExists())
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFileWithProgressNullDestinationTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		CopyProgressRoutine callback = new CopyProgressRoutine(CopyProgressCallback);
+
+		try
+		{
+			Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.CopyFile(sourceFile, null, callback));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFileWithProgressNullCallbackTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), nameof(this.CopyFileWithProgressNullCallbackTest)));
+
+		try
+		{
+			Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.CopyFile(sourceFile, destination, null));
+		}
+		finally
+		{
+			sourceFile.Delete();
+
+			if (destination.CheckExists())
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void AddAttributesNonExistentFileTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+
+		// Should not throw for non-existent files
+		FileHelper.AddAttributes(file, FileAttributes.ReadOnly);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void AddReadOnlyAttributeNonExistentFileTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+
+		// Should not throw for non-existent files
+		FileHelper.AddReadOnlyAttribute(file);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveAttributesNonExistentFileTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+
+		// Should not throw for non-existent files
+		FileHelper.RemoveAttributes(file, FileAttributes.ReadOnly);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveReadOnlyAttributeNonExistentFileTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+
+		// Should not throw for non-existent files
+		FileHelper.RemoveReadOnlyAttribute(file);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void DeleteFilesNullCollectionTest()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => FileHelper.DeleteFiles(null));
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void DeleteFilesEmptyCollectionTest()
+	{
+		var emptyFiles = new ReadOnlyCollection<string>(Array.Empty<string>());
+
+		var result = FileHelper.DeleteFiles(emptyFiles);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(ResultStatus.Succeeded, result.Status);
+		Assert.AreEqual(0, result.Value.Count);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void MoveFileFileNotFoundTest()
+	{
+		var sourceFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+		var destinationFile = new FileInfo(Path.Combine(Path.GetTempPath(), nameof(this.MoveFileFileNotFoundTest), "dest.txt"));
+
+		try
+		{
+			Assert.ThrowsExactly<FileNotFoundException>(() => FileHelper.MoveFile(sourceFile, destinationFile));
+		}
+		finally
+		{
+			if (destinationFile.Directory.Exists)
+			{
+				destinationFile.Directory.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CheckPermissionWritePermissionTest()
+	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Assert.Inconclusive("This test requires Windows for ACL support.");
+		}
+
+		var filePath = RandomData.GenerateTempFile(FileLength);
+		var file = new FileInfo(filePath);
+
+		try
+		{
+			var result = FileHelper.CheckPermission(file, System.Security.AccessControl.FileSystemRights.Write);
+
+			Assert.IsTrue(result);
+		}
+		finally
+		{
+			file.Delete();
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFileSameDirectoryThrowsTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var sameDir = sourceFile.Directory;
+
+		try
+		{
+			Assert.ThrowsExactly<InvalidOperationException>(() => FileHelper.CopyFile(sourceFile, sameDir));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task CopyFileAsyncSameDirectoryThrowsTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var sameDir = sourceFile.Directory;
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => FileHelper.CopyFileAsync(sourceFile, sameDir));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFileFileNotFoundWithProgressTest()
+	{
+		var sourceFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), nameof(this.CopyFileFileNotFoundWithProgressTest)));
+		CopyProgressRoutine callback = new CopyProgressRoutine(CopyProgressCallback);
+
+		try
+		{
+			Assert.ThrowsExactly<FileNotFoundException>(() => FileHelper.CopyFile(sourceFile, destination, callback));
+		}
+		finally
+		{
+			if (destination.CheckExists())
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void InvalidFileNameCharsIsReadOnlyTest()
+	{
+		var result = FileHelper.InvalidFileNameChars;
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Count > 0);
+		Assert.IsInstanceOfType<ReadOnlyCollection<char>>(result);
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncWithDeleteFileNotFoundTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.gz"));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncWithDeleteFileNotFoundTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<FileNotFoundException>(() => FileHelper.UnGZipAsync(file, destination, true));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void MoveFileReplaceExistingFalseTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var destinationFile = new FileInfo(Path.Combine(App.ExecutingFolder(), nameof(this.MoveFileReplaceExistingFalseTest), "dest.txt"));
+
+		try
+		{
+			// Move the file first
+			var result = FileHelper.MoveFile(sourceFile, destinationFile, true);
+
+			Assert.IsTrue(result);
+
+			// Create a new source file and try to move without replace
+			var sourceFile2 = new FileInfo(RandomData.GenerateTempFile(FileLength));
+
+			try
+			{
+				Assert.ThrowsExactly<IOException>(() => FileHelper.MoveFile(sourceFile2, destinationFile, false));
+			}
+			finally
+			{
+				sourceFile2.Delete();
+			}
+		}
+		finally
+		{
+			if (destinationFile.Directory.Exists)
+			{
+				destinationFile.Directory.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void DeleteFilesWithNonExistentFilesTest()
+	{
+		var files = new ReadOnlyCollection<string>(new[]
+		{
+			Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"),
+			Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"),
+		});
+
+		var result = FileHelper.DeleteFiles(files);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(ResultStatus.Succeeded, result.Status);
+		Assert.AreEqual(0, result.Value.Count);
+		Assert.IsEmpty(result.Errors);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void AddAttributesMultipleAttributesTest()
+	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Assert.Inconclusive("This test requires Windows for file attribute support.");
+		}
+
+		var filePath = RandomData.GenerateTempFile(FileLength);
+		var file = new FileInfo(filePath);
+
+		try
+		{
+			FileHelper.AddAttributes(file, FileAttributes.ReadOnly | FileAttributes.Archive);
+
+			file.Refresh();
+
+			Assert.IsTrue(file.Attributes.HasFlag(FileAttributes.ReadOnly));
+			Assert.IsTrue(file.Attributes.HasFlag(FileAttributes.Archive));
+		}
+		finally
+		{
+			file.Attributes = FileAttributes.Normal;
+			file.Delete();
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveAttributesMultipleAttributesTest()
+	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Assert.Inconclusive("This test requires Windows for file attribute support.");
+		}
+
+		var filePath = RandomData.GenerateTempFile(FileLength);
+		var file = new FileInfo(filePath);
+
+		try
+		{
+			// Add attributes first
+			file.Attributes |= FileAttributes.ReadOnly | FileAttributes.Hidden;
+
+			// Remove them
+			FileHelper.RemoveAttributes(file, FileAttributes.ReadOnly | FileAttributes.Hidden);
+
+			file.Refresh();
+
+			Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.ReadOnly));
+			Assert.IsFalse(file.Attributes.HasFlag(FileAttributes.Hidden));
+		}
+		finally
+		{
+			file.Attributes = FileAttributes.Normal;
+			file.Delete();
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncWithDeleteFileNotFoundTest()
+	{
+		var file = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.zip"));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncWithDeleteFileNotFoundTest)));
+
+		try
+		{
+			await Assert.ThrowsExactlyAsync<FileNotFoundException>(() => FileHelper.UnZipAsync(file, destination, true));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsyncWithDeleteCancellationTokenTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsyncWithDeleteCancellationTokenTest));
+		var sourceDir = Path.Combine(tempDir, "source");
+		var zipFilePath = Path.Combine(tempDir, "test.zip");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceDir);
+			File.WriteAllText(Path.Combine(sourceDir, "testfile.txt"), "Cancel Delete Test");
+			ZipFile.CreateFromDirectory(sourceDir, zipFilePath);
+
+			var zipFile = new FileInfo(zipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+			var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			await Assert.ThrowsExactlyAsync<OperationCanceledException>(
+				() => FileHelper.UnZipAsync(zipFile, destination, true, cts.Token));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
 		}
 	}
 
