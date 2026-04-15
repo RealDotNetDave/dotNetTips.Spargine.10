@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -7,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10</AssemblyTitle>
-    <AssemblyVersion>2026.10.4.1</AssemblyVersion>
+    <AssemblyVersion>2026.10.4.15</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
@@ -24,7 +23,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <ILLinkTreatWarningsAsErrors>false</ILLinkTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.4.1</FileVersion>
+    <FileVersion>2026.10.4.15</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -50,7 +49,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.4.1</Version>
+    <Version>2026.10.4.15</Version>
   </PropertyGroup>
   <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
