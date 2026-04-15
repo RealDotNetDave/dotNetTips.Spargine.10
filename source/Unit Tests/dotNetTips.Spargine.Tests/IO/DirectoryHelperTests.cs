@@ -1384,4 +1384,249 @@ public class DirectoryHelperTests
 		// Cleanup
 		directory.Delete(true);
 	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SetFileAttributesToNormal_NullPath_ThrowsArgumentNullException()
+	{
+		// Act & Assert - SetFileAttributesToNormal calls path.CheckExists() which calls ArgumentNotNull() on null
+		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.SetFileAttributesToNormal(null));
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void DeleteDirectory_RecursiveFalse_DeletesEmptyDirectory()
+	{
+		// Arrange
+		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempDirectoryPath);
+
+		// Act
+		var result = DirectoryHelper.DeleteDirectory(directory, retries: 5, recursive: false);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The empty directory should have been deleted with recursive=false.");
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void DeleteDirectory_CustomRetryCount_Succeeds()
+	{
+		// Arrange
+		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempDirectoryPath);
+		File.WriteAllText(Path.Combine(tempDirectoryPath, "test.txt"), "content");
+
+		// Act
+		var result = DirectoryHelper.DeleteDirectory(directory, retries: 10);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The directory should have been deleted with custom retry count.");
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyDirectory_OverwriteTrue_ReplacesExistingContent()
+	{
+		// Arrange
+		var sourceDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var destinationDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var sourceDirectory = Directory.CreateDirectory(sourceDirectoryPath);
+		var destinationDirectory = Directory.CreateDirectory(destinationDirectoryPath);
+
+		var sourceFile = Path.Combine(sourceDirectoryPath, "file.txt");
+		var destFile = Path.Combine(destinationDirectoryPath, "file.txt");
+
+		File.WriteAllText(sourceFile, "updated content");
+		File.WriteAllText(destFile, "original content");
+
+		try
+		{
+			// Act
+			DirectoryHelper.CopyDirectory(sourceDirectory, destinationDirectory, overwrite: true);
+
+			// Assert - content should be overwritten
+			Assert.AreEqual("updated content", File.ReadAllText(destFile), "The file content should have been overwritten.");
+		}
+		finally
+		{
+			sourceDirectory.Delete(true);
+			if (Directory.Exists(destinationDirectoryPath))
+			{
+				destinationDirectory.Delete(true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeDirectorySearch_NonExistentDirectory_ThrowsDirectoryNotFoundException()
+	{
+		// Arrange
+		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		// Act & Assert - ArgumentExists validates directory exists
+		Assert.ThrowsExactly<Core.DirectoryNotFoundException>(() =>
+			DirectoryHelper.SafeDirectorySearch(nonExistentDir, "*.txt", SearchOption.TopDirectoryOnly).ToList());
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeDirectorySearch_EmptySearchPattern_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Act & Assert - ArgumentNotNullOrEmpty throws on empty string
+			Assert.ThrowsExactly<ArgumentNullException>(() =>
+				DirectoryHelper.SafeDirectorySearch(tempDirectory, string.Empty).ToList());
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeFileSearch_IEnumerable_AllDirectories_ReturnsSubdirectoryFiles()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "top.txt"), "top content");
+			var subDir = Directory.CreateDirectory(Path.Combine(tempDirectory.FullName, "SubFolder"));
+			File.WriteAllText(Path.Combine(subDir.FullName, "sub.txt"), "sub content");
+
+			var directories = new List<DirectoryInfo> { tempDirectory };
+
+			// Act
+			var result = DirectoryHelper.SafeFileSearch(directories, "*.txt", SearchOption.AllDirectories).ToList();
+
+			// Assert
+			Assert.HasCount(2, result);
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeFileSearch_IEnumerable_EmptySearchPattern_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var directories = new List<DirectoryInfo> { new DirectoryInfo(Path.GetTempPath()) };
+
+		// Act & Assert - ArgumentNotNullOrEmpty throws on empty string
+		Assert.ThrowsExactly<ArgumentNullException>(() =>
+			DirectoryHelper.SafeFileSearch(directories, string.Empty, SearchOption.TopDirectoryOnly).ToList());
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void SafeHasFoldersOrFiles_NonExistentDirectory_ThrowsDirectoryNotFoundException()
+	{
+		// Arrange
+		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		var searchPatterns = new List<string> { "*.txt" }.AsReadOnly();
+
+		// Act & Assert - ArgumentExists validates directory exists
+		Assert.ThrowsExactly<Core.DirectoryNotFoundException>(() =>
+			DirectoryHelper.SafeHasFoldersOrFiles(nonExistentDir, SearchOption.TopDirectoryOnly, searchPatterns));
+	}
+
+	[TestMethod]
+	public async Task LoadFilesAsync_PatternDoesNotMatchFiles_ReturnsEmpty()
+	{
+		// Arrange
+		var tempDirectory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			// Create files that don't match the search pattern
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "file1.jpg"), "content1");
+			File.WriteAllText(Path.Combine(tempDirectory.FullName, "file2.png"), "content2");
+
+			var directories = new List<DirectoryInfo> { tempDirectory };
+
+			// Act
+			var files = new List<FileInfo>();
+			await foreach (var fileSet in DirectoryHelper.LoadFilesAsync(directories, "*.txt", SearchOption.TopDirectoryOnly))
+			{
+				files.AddRange(fileSet);
+			}
+
+			// Assert
+			Assert.IsEmpty(files);
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void MoveDirectory_WithSubdirectories_MovesAll()
+	{
+		// Arrange
+		var sourceDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var destinationDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var sourceDirectory = Directory.CreateDirectory(sourceDirectoryPath);
+		var destinationDirectory = new DirectoryInfo(destinationDirectoryPath);
+
+		// Create subdirectory with files
+		var subDir = Directory.CreateDirectory(Path.Combine(sourceDirectoryPath, "SubFolder"));
+		File.WriteAllText(Path.Combine(sourceDirectoryPath, "root.txt"), "root content");
+		File.WriteAllText(Path.Combine(subDir.FullName, "sub.txt"), "sub content");
+
+		// Act
+		var result = DirectoryHelper.MoveDirectory(sourceDirectory, destinationDirectory);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.IsFalse(Directory.Exists(sourceDirectoryPath), "Source directory should no longer exist after move.");
+		Assert.IsTrue(File.Exists(Path.Combine(destinationDirectoryPath, "root.txt")), "Root file should exist in destination.");
+		Assert.IsTrue(File.Exists(Path.Combine(destinationDirectoryPath, "SubFolder", "sub.txt")), "Subdirectory file should exist in destination.");
+
+		// Cleanup
+		DirectoryHelper.DeleteDirectory(destinationDirectory);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void RemoveAttributes_MultipleAttributes_RemovesOnlySpecified()
+	{
+		// Arrange
+		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempDirectoryPath);
+
+		// Set ReadOnly attribute on the directory
+		File.SetAttributes(tempDirectoryPath, directory.Attributes | FileAttributes.ReadOnly);
+
+		try
+		{
+			// Act - only remove ReadOnly, keeping Directory attribute
+			DirectoryHelper.RemoveAttributes(directory, FileAttributes.ReadOnly);
+
+			// Assert
+			directory.Refresh();
+			Assert.IsFalse(directory.Attributes.HasFlag(FileAttributes.ReadOnly), "ReadOnly should have been removed.");
+			Assert.IsTrue(directory.Attributes.HasFlag(FileAttributes.Directory), "Directory attribute should still be present.");
+		}
+		finally
+		{
+			// Ensure we can clean up
+			File.SetAttributes(tempDirectoryPath, FileAttributes.Normal | FileAttributes.Directory);
+			directory.Delete(true);
+		}
+	}
 }
