@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 06-28-2022
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 04-15-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
