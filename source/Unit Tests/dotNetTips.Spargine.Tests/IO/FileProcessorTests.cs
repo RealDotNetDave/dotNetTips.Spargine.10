@@ -5,6 +5,7 @@
 //
 // Last Modified By : Copilot Agent
 // Last Modified On : 04-15-2026
+
 // ***********************************************************************
 // <copyright file="FileProcessorTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -1647,6 +1648,340 @@ public class FileProcessorTests
 			Assert.IsTrue(args.Size > 0);
 			Assert.IsTrue(args.SpeedInMilliseconds >= 0);
 		}
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void CopyFiles_WithOverwriteTrue_OverwritesExisting()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var generateFiles = RandomData.GenerateFiles(5, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOverwriteTrue"));
+
+		// Copy once
+		processor.CopyFiles(files, destination, overwrite: true);
+
+		// Act - copy again with overwrite=true
+		var copiedCount = processor.CopyFiles(files, destination, overwrite: true);
+
+		// Assert
+		Assert.AreEqual(5, copiedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void CopyFilesWithOriginalPath_DuplicateFiles_CopiesDistinctOnly()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(5, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			var fi = new FileInfo(file);
+			files.Add(fi);
+			files.Add(fi); // Add duplicate
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalDuplicate"));
+
+		// Act
+		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
+
+		// Assert - should only copy distinct files
+		Assert.AreEqual(5, copiedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void CopyFilesWithOriginalPath_NullEntriesInList_NullsIgnored()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		files.Add(null);
+		files.Add(null);
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNullEntries"));
+
+		// Act
+		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
+
+		// Assert
+		Assert.AreEqual(3, copiedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void DeleteFiles_DuplicateFiles_DeletesDistinctOnly()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(5, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			var fi = new FileInfo(file);
+			files.Add(fi);
+			files.Add(fi); // Add duplicate
+		}
+
+		// Act
+		var deletedCount = processor.DeleteFiles(files);
+
+		// Assert - should only delete distinct files
+		Assert.AreEqual(5, deletedCount);
+	}
+
+	[TestMethod]
+	public void DeleteFolders_DuplicateFolders_DeletesDistinctOnly()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var folders = new List<DirectoryInfo>();
+
+		for (int index = 0; index < 3; index++)
+		{
+			var newPath = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), RandomData.GenerateWord(15)));
+			newPath.Create();
+			folders.Add(newPath);
+			folders.Add(newPath); // Add duplicate
+		}
+
+		// Act
+		var deletedCount = processor.DeleteFolders(folders, recursive: true);
+
+		// Assert - should only delete distinct folders
+		Assert.AreEqual(3, deletedCount);
+	}
+
+	[TestMethod]
+	public void DeleteFolders_NullEntriesInList_NullsIgnored()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var folders = new List<DirectoryInfo>();
+
+		for (int index = 0; index < 3; index++)
+		{
+			var newPath = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), RandomData.GenerateWord(15)));
+			newPath.Create();
+			folders.Add(newPath);
+		}
+
+		folders.Add(null);
+		folders.Add(null);
+
+		// Act
+		var deletedCount = processor.DeleteFolders(folders, recursive: true);
+
+		// Assert
+		Assert.AreEqual(3, deletedCount);
+	}
+
+	[TestMethod]
+	public void MoveFiles_NullEntriesInList_NullsIgnored()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		files.Add(null);
+		files.Add(null);
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveNullEntries"));
+
+		// Act
+		var movedCount = processor.MoveFiles(files, destination);
+
+		// Assert
+		Assert.AreEqual(3, movedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void MoveFiles_DuplicateFiles_MovesDistinctOnly()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(5, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			var fi = new FileInfo(file);
+			files.Add(fi);
+			files.Add(fi); // Add duplicate
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveDuplicate"));
+
+		// Act
+		var movedCount = processor.MoveFiles(files, destination);
+
+		// Assert - should only move distinct files
+		Assert.AreEqual(5, movedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void MoveFilesWithOriginalPath_NullEntriesInList_NullsIgnored()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		files.Add(null);
+		files.Add(null);
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNullEntries"));
+
+		// Act
+		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
+
+		// Assert
+		Assert.AreEqual(3, movedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void MoveFilesWithOriginalPath_DuplicateFiles_MovesDistinctOnly()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(5, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			var fi = new FileInfo(file);
+			files.Add(fi);
+			files.Add(fi); // Add duplicate
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalDuplicate"));
+
+		// Act
+		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
+
+		// Assert - should only move distinct files
+		Assert.AreEqual(5, movedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void ProcessedEvent_NoHandlerAttached_DoesNotThrow()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "NoHandlerTest"));
+
+		// Act & Assert - no handler attached, should not throw
+		var copiedCount = processor.CopyFiles(files, destination);
+		Assert.AreEqual(3, copiedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	[TestMethod]
+	public void ProcessedEvent_SenderIsProcessor()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "SenderTest"));
+		object capturedSender = null;
+
+		processor.Processed += (sender, e) =>
+		{
+			capturedSender = sender;
+		};
+
+		// Act
+		processor.CopyFiles(files, destination);
+
+		// Assert
+		Assert.IsNotNull(capturedSender);
+		Assert.AreSame(processor, capturedSender);
 
 		// Cleanup
 		destination.Delete(true);
