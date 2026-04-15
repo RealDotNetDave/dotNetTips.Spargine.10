@@ -1625,7 +1625,8 @@ public class DirectoryHelperTests
 		finally
 		{
 			// Ensure we can clean up
-			File.SetAttributes(tempDirectoryPath, FileAttributes.Normal | FileAttributes.Directory);
+			var attributes = File.GetAttributes(tempDirectoryPath);
+			File.SetAttributes(tempDirectoryPath, attributes & ~FileAttributes.ReadOnly);
 			directory.Delete(true);
 		}
 	}
