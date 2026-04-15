@@ -242,7 +242,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToDistinct(T array)
+### T ToDistinct(T array, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -254,7 +254,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozenSet(T array)
+### T ToFrozenSet(T array, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -497,7 +497,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToDistinct()
+### T ToDistinct(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -509,7 +509,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozenSet()
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -867,7 +867,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean AddRange(T collection, T items, System.Boolean ensureUnique)
+### System.Boolean AddRange(T collection, T items, System.Boolean ensureUnique, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -903,7 +903,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozenSet(T collection)
+### T ToFrozenSet(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -966,7 +966,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean AddRange(T items, System.Boolean ensureUnique)
+### System.Boolean AddRange(T items, System.Boolean ensureUnique, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1002,7 +1002,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozenSet()
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1056,7 +1056,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T RemoveRange(T bag, T items)
+### T RemoveRange(T bag, T items, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1095,7 +1095,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T RemoveRange(T items)
+### T RemoveRange(T items, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1807,7 +1807,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToConcurrentDictionary(T collection)
+### T ToConcurrentDictionary(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1831,7 +1831,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozen(T list)
+### T ToFrozen(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1855,7 +1855,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutable(T collection)
+### T ToImmutable(T collection, T keyComparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1879,7 +1879,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutableSorted(T collection)
+### T ToImmutableSorted(T collection, T keyComparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2265,7 +2265,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean HasDuplicates(T collection)
+### System.Boolean HasDuplicates(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2513,7 +2513,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozenSet(T collection)
+### T ToFrozenSet(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2573,7 +2573,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToUniqueCollection(T collection)
+### T ToUniqueCollection(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2834,7 +2834,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean HasDuplicates()
+### System.Boolean HasDuplicates(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3070,7 +3070,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToFrozenSet()
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3130,7 +3130,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToUniqueCollection()
+### T ToUniqueCollection(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3412,7 +3412,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutable(T collection)
+### T ToImmutable(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3487,7 +3487,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutable()
+### T ToImmutable(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3573,7 +3573,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetStreamAsync
 * **Modified On:** 
@@ -4141,7 +4141,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Int32 GenerateHashCode(T list)
+### System.Int32 GenerateHashCode(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4165,7 +4165,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsEqualTo(T list, T collectionToCheck)
+### System.Boolean IsEqualTo(T list, T collectionToCheck, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4319,7 +4319,7 @@
 * **Description:** ToFastSortedList
 * **Modified On:** 
 
-### T ToFrozenSet(T list)
+### T ToFrozenSet(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4526,7 +4526,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Int32 GenerateHashCode()
+### System.Int32 GenerateHashCode(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4550,7 +4550,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsEqualTo(T collectionToCheck)
+### System.Boolean IsEqualTo(T collectionToCheck, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4704,7 +4704,7 @@
 * **Description:** ToFastSortedList
 * **Modified On:** 
 
-### T ToFrozenSet()
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6606,7 +6606,7 @@
 * **Status:** New
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
-* **Unit Test Status:** None
+* **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
 * **Description:** ConnectTcpAsync
@@ -6700,7 +6700,7 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutable(T collection)
+### T ToImmutable(T collection, T keyComparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6751,11 +6751,11 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutable(T collection)
+### T ToImmutable(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/28/2022
@@ -6802,11 +6802,11 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### T ToImmutable()
+### T ToImmutable(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/28/2022
@@ -8450,4 +8450,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/14/2026 5:43:44 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/15/2026 1:12:03 PM UTC**
