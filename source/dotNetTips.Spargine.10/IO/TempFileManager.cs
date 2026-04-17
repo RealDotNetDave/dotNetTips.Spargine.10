@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-04-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-21-2026
+// Last Modified By : GitHub Copilot
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -150,10 +150,8 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void DeleteFile(string fileName)
 	{
-		if (fileName.IsNullOrEmpty())
-		{
-			return;
-		}
+		ArgumentException.ThrowIfNullOrEmpty(fileName);
+
 
 		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
 
@@ -213,11 +211,12 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <param name="files">A read-only collection of file paths to remove from the cache.</param>
 	private void DeleteFilesFromCache(ReadOnlyCollection<string> files)
 	{
+		var deletedSet = new HashSet<string>(files, StringComparer.OrdinalIgnoreCase);
 		var tempBag = new ConcurrentBag<string>();
 
 		_ = Parallel.ForEach(this._files, file =>
 		{
-			if (!files.Contains(file))
+			if (!deletedSet.Contains(file))
 			{
 				tempBag.Add(file);
 			}
