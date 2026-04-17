@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-07-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="XmlSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,6 +16,7 @@
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -41,7 +42,8 @@ public static class XmlSerialization
 	/// <returns>An instance of the specified type containing the deserialized data.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the xml parameter is null or empty.</exception>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
 	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 		where TResult : new()
@@ -69,7 +71,8 @@ public static class XmlSerialization
 	/// <returns>An instance of the specified type containing the deserialized data from the file.</returns>
 	/// <exception cref="FileNotFoundException">Thrown if the specified file does not exist.</exception>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("Uses XmlSerializer via Deserialize<TResult> which requires unreferenced code for type metadata.")]
 	[Information(nameof(DeserializeFromFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TResult DeserializeFromFile<TResult>([DisallowNull] FileInfo file) where TResult : new()
 	{
@@ -87,7 +90,8 @@ public static class XmlSerialization
 	/// <returns>A string containing the XML representation of the object.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the obj parameter is null.</exception>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
 	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj)
 	{
@@ -100,9 +104,9 @@ public static class XmlSerialization
 				var serializer = new XmlSerializer(obj.GetType());
 
 				serializer.Serialize(xmlWriter, obj);
-
-				return writer.ToString();
 			}
+
+			return writer.ToString();
 		}
 	}
 
@@ -112,7 +116,8 @@ public static class XmlSerialization
 	/// <param name="obj">The object to serialize.</param>
 	/// <param name="file">The file to write the XML to.</param>
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
 	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file)
 	{
@@ -147,8 +152,9 @@ public static class XmlSerialization
 	/// <returns>An XDocument instance representing the XML content of the input string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if the input parameter is null or empty.</exception>
 	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(StringToXDocument), "David McCarter", "9/9/2020", "9/9/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static XDocument StringToXDocument(string input)
+	public static XDocument StringToXDocument([DisallowNull] string input)
 	{
 		return StringToXDocument(input.ArgumentNotNullOrEmpty(), null);
 	}
@@ -161,8 +167,9 @@ public static class XmlSerialization
 	/// <returns>An XDocument instance representing the XML content of the input string.</returns>
 	/// <remarks>Uses DtdProcessing.Prohibit to enhance security.</remarks>
 	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(StringToXDocument), "David McCarter", "9/9/2020", "9/9/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static XDocument StringToXDocument(string input, [AllowNull] XmlResolver resolver)
+	public static XDocument StringToXDocument([DisallowNull] string input, [AllowNull] XmlResolver resolver)
 	{
 		using (var stringReader = new StringReader(input.ArgumentNotNullOrEmpty()))
 		{
