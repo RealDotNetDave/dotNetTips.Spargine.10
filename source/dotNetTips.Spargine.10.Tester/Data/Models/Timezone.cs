@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-10-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="Timezone.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Represents timezone information including abbreviation, GMT offset,
+// and display names for a country.
+// </summary>
 // ***********************************************************************
 
 using System.Runtime.Serialization;
@@ -27,13 +30,6 @@ namespace DotNetTips.Spargine.Tester.Data.Models;
 [Serializable]
 public sealed class Timezone
 {
-	/// <summary>
-	/// Gets or sets the abbreviation of the timezone.
-	/// </summary>
-	/// <value>The abbreviation of the timezone.</value>
-	[DataMember(Name = "abbreviation")]
-	[JsonPropertyName("abbreviation")]
-	public string? Abbreviation { get; set; }
 
 	/// <summary>
 	/// Gets the country associated with the timezone. This property is static and not serialized.
@@ -41,6 +37,14 @@ public sealed class Timezone
 	/// <value>The country associated with the timezone.</value>
 	[JsonIgnore]
 	public static Country Country => default!;
+
+	/// <summary>
+	/// Gets or sets the abbreviation of the timezone.
+	/// </summary>
+	/// <value>The abbreviation of the timezone.</value>
+	[DataMember(Name = "abbreviation")]
+	[JsonPropertyName("abbreviation")]
+	public string? Abbreviation { get; set; }
 
 	/// <summary>
 	/// Gets or sets the GMT offset of the timezone.

@@ -4,32 +4,21 @@
 // Created          : 01-23-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="PersonEqualityComparerByEmail.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-
-// ***********************************************************************
-// Assembly         : DotNetTips.Spargine.10.Tester
-// Author           : David McCarter
-// Created          : 01-23-2025
-//
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
-// ***********************************************************************
-// <copyright file="PersonEqualityComparerByEmail.cs" company="dotNetTips.com - McCarter Consulting">
-//     McCarter Consulting (David McCarter)
-// </copyright>
-// <summary></summary>
+// <summary>
+// Provides an IEqualityComparer&lt;Person&gt; implementation that
+// determines equality and hash codes for value-type Person instances by Email.
+// </summary>
 // ***********************************************************************
 
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
+
 
 namespace DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
 

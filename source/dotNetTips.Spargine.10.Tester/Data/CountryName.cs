@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-10-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="CountryName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Defines an enumeration of country names used for test data generation
+// and geographic lookups in the Spargine Tester library.
+// </summary>
 // ***********************************************************************
 
 using System.Runtime.Serialization;

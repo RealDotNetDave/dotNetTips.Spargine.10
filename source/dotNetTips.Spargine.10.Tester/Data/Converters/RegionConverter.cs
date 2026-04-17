@@ -3,13 +3,17 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="RegionConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides a custom System.Text.Json converter for serializing and
+// deserializing Region enumeration values to and from their string
+// representations.
+// </summary>
 // ***********************************************************************
 
 using System.Text.Json;

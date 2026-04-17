@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-10-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="Translations.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Represents translated country name strings for various languages,
+// used for localization in the country data model.
+// </summary>
 // ***********************************************************************
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -27,6 +30,13 @@ public sealed class Translations
 {
 
 	/// <summary>
+	/// The country associated with the translations. This property is static and not serialized.
+	/// </summary>
+	/// <value>The country associated with the translations.</value>
+	[JsonIgnore]
+	public static Country Country => default!;
+
+	/// <summary>
 	/// Gets or sets the translation for Chinese.
 	/// </summary>
 	/// <value>The Chinese translation.</value>
@@ -34,13 +44,6 @@ public sealed class Translations
 	[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 	[JsonPropertyName("cn")]
 	public string? Cn { get; set; }
-
-	/// <summary>
-	/// The country associated with the translations. This property is static and not serialized.
-	/// </summary>
-	/// <value>The country associated with the translations.</value>
-	[JsonIgnore]
-	public static Country Country => default!;
 
 	/// <summary>
 	/// Gets or sets the translation for German. Null values will not be written during serialization.

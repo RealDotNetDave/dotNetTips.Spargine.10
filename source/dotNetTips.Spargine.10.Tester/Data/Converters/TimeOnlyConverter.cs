@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="TimeOnlyConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides a custom System.Text.Json converter for serializing and
+// deserializing TimeOnly values with a configurable format string.
+// </summary>
 // ***********************************************************************
 
 using System.Text.Json;

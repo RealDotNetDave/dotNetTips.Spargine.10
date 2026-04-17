@@ -4,12 +4,15 @@
 // Created          : 06-13-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastNameThenFirstName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides an IComparer&lt;Person&gt; implementation that compares
+// Person instances first by LastName, then by FirstName.
+// </summary>
 // ***********************************************************************
 
 using DotNetTips.Spargine.Core;

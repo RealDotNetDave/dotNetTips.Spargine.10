@@ -4,12 +4,15 @@
 // Created          : 01-23-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides an IComparer&lt;Person&gt; implementation that compares
+// value-type Person instances by LastName using ordinal comparison.
+// </summary>
 // ***********************************************************************
 
 

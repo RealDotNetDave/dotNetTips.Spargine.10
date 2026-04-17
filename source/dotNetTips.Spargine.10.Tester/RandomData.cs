@@ -4,12 +4,15 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-12-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
 // </copyright>
-// <summary>ToUniqueCollection random data for unit and benchmark testing.</summary>
+// <summary>
+// Provides methods for generating random data (strings, numbers,
+// collections, Person instances, etc.) for unit and benchmark testing.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.ObjectModel;

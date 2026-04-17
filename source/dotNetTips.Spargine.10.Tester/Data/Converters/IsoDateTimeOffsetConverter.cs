@@ -3,13 +3,17 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="IsoDateTimeOffsetConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides a custom System.Text.Json converter for serializing and
+// deserializing DateTimeOffset values using ISO format with specific
+// cultural settings.
+// </summary>
 // ***********************************************************************
 
 using System.Globalization;

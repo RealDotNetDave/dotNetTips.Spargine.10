@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 01-14-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="PersonComparerByLastName.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides an IComparer&lt;Person&gt; implementation that compares
+// Person instances by LastName using ordinal comparison.
+// </summary>
 // ***********************************************************************
 using DotNetTips.Spargine.Core;
 

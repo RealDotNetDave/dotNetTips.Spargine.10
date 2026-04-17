@@ -4,12 +4,19 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Represents a person with identity, contact information, and addresses.
+// Implements IPerson&lt;Person, Address&gt; providing comparison, equality,
+// serialization support (JSON, XML, DataContract), and implicit
+// conversions from ValueTypes.Person and PersonRecord. Includes a
+// factory method (Create), property validation with length and format
+// constraints, and operator overloads for comparison and equality.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.ObjectModel;

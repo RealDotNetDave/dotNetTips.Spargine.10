@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 03-13-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="PrefixAndLength.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Class for representing a prefix and length.</summary>
+// <summary>
+// Represents a credit card prefix and its associated digit length,
+// used internally by RandomCreditCardNumberGenerator.
+// </summary>
 // ***********************************************************************
 
 using System.Diagnostics;
@@ -30,13 +33,18 @@ namespace DotNetTips.Spargine.Tester;
 [Serializable]
 internal struct PrefixAndLength(string prefix, int length) : IEquatable<PrefixAndLength>
 {
+
 	/// <summary>
-	/// Implements the != operator.
+	/// Gets or sets the length.
 	/// </summary>
-	/// <param name="left">The left.</param>
-	/// <param name="right">The right.</param>
-	/// <returns>The result of the operator.</returns>
-	public static bool operator !=(PrefixAndLength left, PrefixAndLength right) => !(left == right);
+	/// <value>The length.</value>
+	public int Length { get; set; } = length;
+
+	/// <summary>
+	/// Gets or sets the prefix.
+	/// </summary>
+	/// <value>The prefix.</value>
+	public string Prefix { get; set; } = prefix;
 
 	/// <summary>
 	/// Implements the == operator.
@@ -45,6 +53,13 @@ internal struct PrefixAndLength(string prefix, int length) : IEquatable<PrefixAn
 	/// <param name="right">The right.</param>
 	/// <returns>The result of the operator.</returns>
 	public static bool operator ==(PrefixAndLength left, PrefixAndLength right) => left.Equals(right);
+	/// <summary>
+	/// Implements the != operator.
+	/// </summary>
+	/// <param name="left">The left.</param>
+	/// <param name="right">The right.</param>
+	/// <returns>The result of the operator.</returns>
+	public static bool operator !=(PrefixAndLength left, PrefixAndLength right) => !(left == right);
 
 	/// <summary>
 	/// Determines whether the specified object is equal to the current object.
@@ -71,16 +86,4 @@ internal struct PrefixAndLength(string prefix, int length) : IEquatable<PrefixAn
 	/// </summary>
 	/// <returns>A string that represents this instance.</returns>
 	public override readonly string ToString() => $"{this.Prefix}, {this.Length}";
-
-	/// <summary>
-	/// Gets or sets the length.
-	/// </summary>
-	/// <value>The length.</value>
-	public int Length { get; set; } = length;
-
-	/// <summary>
-	/// Gets or sets the prefix.
-	/// </summary>
-	/// <value>The prefix.</value>
-	public string Prefix { get; set; } = prefix;
 }

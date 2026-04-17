@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 05-16-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="PersonExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides extension methods for IPerson implementations, including
+// a FullName property that concatenates first and last names.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;

@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-30-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="State.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Represents a state or province within a country, including its cities,
+// geographic coordinates, and identification details.
+// </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -31,6 +34,18 @@ public sealed class State
 	private Collection<City>? _cities;
 
 	/// <summary>
+	/// Gets or sets the country that all instances of the state belong to.
+	/// </summary>
+	/// <value>The country the state belongs to.</value>
+	/// <remarks>
+	/// This property is static, implying all instances of <see cref="State"/> are considered to belong to the same country.
+	/// If your application requires each state to belong to a different country, consider redesigning this property to be an instance property.
+	/// </remarks>
+	[DataMember(Name = "country")]
+	[JsonPropertyName("country")]
+	public static Country? Country { get; set; }
+
+	/// <summary>
 	/// Gets or sets the cities within the state.
 	/// </summary>
 	/// <value>The cities.</value>
@@ -42,18 +57,6 @@ public sealed class State
 		get => this._cities ??= [];
 		set => this._cities = value;
 	}
-
-	/// <summary>
-	/// Gets or sets the country that all instances of the state belong to.
-	/// </summary>
-	/// <value>The country the state belongs to.</value>
-	/// <remarks>
-	/// This property is static, implying all instances of <see cref="State"/> are considered to belong to the same country.
-	/// If your application requires each state to belong to a different country, consider redesigning this property to be an instance property.
-	/// </remarks>
-	[DataMember(Name = "country")]
-	[JsonPropertyName("country")]
-	public static Country? Country { get; set; }
 
 	/// <summary>
 	/// Gets or sets the identifier for the state.
