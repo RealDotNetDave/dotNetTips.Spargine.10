@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="JsonSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -76,7 +76,8 @@ public static class JsonSerialization
 
 		options ??= _options;
 
-		return JsonSerializer.Deserialize<TResult>(json, options)!;
+		return JsonSerializer.Deserialize<TResult>(json, options) ??
+				throw new InvalidOperationException($"Failed to deserialize the JSON string to {typeof(TResult)}.");
 	}
 
 	/// <summary>
@@ -95,7 +96,8 @@ public static class JsonSerialization
 		json = json.ArgumentNotNullOrEmpty();
 		typeInfo = typeInfo.ArgumentNotNull();
 
-		return JsonSerializer.Deserialize(json, typeInfo)!;
+		return JsonSerializer.Deserialize(json, typeInfo) ??
+				throw new InvalidOperationException($"Failed to deserialize the JSON string to {typeof(TResult)}.");
 	}
 
 	/// <summary>
@@ -118,16 +120,17 @@ public static class JsonSerialization
 	}
 
 	/// <summary>
-	/// Determines whether [is valid JSON] [the specified json].
+	/// Compares two JSON strings for structural and value equality.
 	/// </summary>
-	/// <param name="actual">The actual.</param>
-	/// <param name="expected">The expected.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+	/// <param name="actual">The actual JSON string to compare.</param>
+	/// <param name="expected">The expected JSON string to compare against.</param>
+	/// <returns><c>true</c> if both JSON strings are structurally and value-equal; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool JsonEqual([DisallowNull] string actual, string expected)
+	public static bool JsonEqual([DisallowNull] string actual, [DisallowNull] string expected)
 	{
 		actual = actual.ArgumentNotNullOrEmpty();
+		expected = expected.ArgumentNotNullOrEmpty();
 
 		using (var expectedDom = JsonDocument.Parse(expected))
 		{
@@ -389,9 +392,9 @@ public static class JsonSerialization
 
 				return true;
 			case JsonValueKind.Array:
-				using (var expectedEnumerator = actual.EnumerateArray())
+				using (var expectedEnumerator = expected.EnumerateArray())
 				{
-					using (var actualEnumerator = expected.EnumerateArray())
+					using (var actualEnumerator = actual.EnumerateArray())
 					{
 						while (expectedEnumerator.MoveNext())
 						{

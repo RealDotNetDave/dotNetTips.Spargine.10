@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 08-04-2024
 //
-// Last Modified By : GitHub Copilot
+// Last Modified By : Copilot Agent
 // Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
