@@ -44,13 +44,13 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	 typeof(ArrayExtensionsCollectionBenchmark),
-		//	 typeof(EnumerableExtensionsCollectionBenchmark), typeof(ListExtensionsCollectionBenchmark), typeof(ObjectExtensionsBenchmark), typeof(CollectionExtensionsCollectionBenchmark), typeof(DataReaderExtensionsBenchmark), typeof(LinqExtensionsBenchmark)
-		//	);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			 typeof(StringBuilderExtensionsCounterBenchmark),
+			 typeof(StringExtensionsBenchmark), typeof(StringBuilderExtensionsCounterBenchmark), typeof(TypeExtensionsBenchmark)
+			);
 
 	}
 }
