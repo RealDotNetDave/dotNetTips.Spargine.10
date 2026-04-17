@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-27-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -56,6 +56,11 @@ public static class FastStringBuilder
 		if (bytes is null)
 		{
 			ExceptionThrower.ThrowArgumentNullException(nameof(bytes));
+		}
+
+		if (bytes.Length == 0)
+		{
+			return ControlChars.EmptyString;
 		}
 
 		var sb = _stringBuilderPool.Get().ClearSetCapacity((bytes.Length * 2) + 3);
@@ -208,23 +213,20 @@ public static class FastStringBuilder
 
 		try
 		{
-			// Append first item directly without null coalescing to avoid allocation
+			// Append first item directly
 			if (args[0] is not null)
 			{
 				_ = sb.Append(args[0]);
 			}
 
-			// Use single Append call with interpolated handler for better performance
+			// Append remaining items with leading space
 			for (var index = 1; index < args.Length; index++)
 			{
+				_ = sb.Append(ControlChars.Space);
+
 				if (args[index] is not null)
 				{
-					_ = sb.Append(ControlChars.Space);
 					_ = sb.Append(args[index]);
-				}
-				else
-				{
-					_ = sb.Append(ControlChars.Space);
 				}
 			}
 
@@ -262,7 +264,7 @@ public static class FastStringBuilder
 
 		try
 		{
-			var itemCount = args.Count();
+			var itemCount = args.Length;
 
 			for (var index = 0; index < itemCount; index++)
 			{
@@ -356,7 +358,7 @@ public static class FastStringBuilder
 	[Information(nameof(Format), "David McCarter", "03/04/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string Format(string format, params string[] args)
 	{
-		if (args.CheckItemsExists() is false || format.CheckIsNotNull() is false)
+		if (format.CheckIsNotNull() is false || args.CheckItemsExists() is false)
 		{
 			return ControlChars.EmptyString;
 		}
@@ -365,7 +367,7 @@ public static class FastStringBuilder
 
 		try
 		{
-			return sb.AppendFormat(CultureInfo.CurrentCulture, format, args).ToString();
+			return sb.AppendFormat(CultureInfo.InvariantCulture, format, args).ToString();
 		}
 		finally
 		{
