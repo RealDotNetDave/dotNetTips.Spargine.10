@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub], [HardwareCounters],
 /// [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn], [MValueColumn], [NamespaceColumn],
 /// [NativeMemoryProfiler], [PlainExporter], [SkewnessColumn], [StackOverflow],
-/// [TailCallDiagnoser], [ThreadingDiagnoser]
+/// [TailCallDiagnoser], [MemoryDiagnoser(displayGenColumns: true)], [ThreadingDiagnoser]
 /// </summary>
 [AllStatisticsColumn]
 [BaselineColumn]
@@ -62,12 +62,10 @@ namespace DotNetTips.Spargine.Benchmarking;
 [InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 [IterationsColumn]
 [JsonExporter(indentJson: true)]
-//[MemoryDiagnoser(displayGenColumns: true)] //TODO: TEMPORARY DISABLED
 [Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
 [RankColumn]
 [StatisticalTestColumn]
 [StopOnFirstError(true)]
-//[ThreadingDiagnoser] //TODO: TEMPORARY DISABLED
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
 public abstract class Benchmark
 {
