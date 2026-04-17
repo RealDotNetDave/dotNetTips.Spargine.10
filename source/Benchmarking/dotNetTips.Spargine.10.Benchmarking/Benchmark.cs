@@ -66,7 +66,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [RankColumn]
 [StatisticalTestColumn]
 [StopOnFirstError(true)]
-[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.UpdateDocumentation)]
 public abstract class Benchmark
 {
 
@@ -350,6 +350,23 @@ public abstract class Benchmark
 		this.Consumer.Consume(obj);
 		return ValueTask.CompletedTask;
 	}
+	/// <summary>
+	/// Consumes each item in the specified <see cref="IReadOnlyList{T}"/> by index,
+	/// avoiding enumerator allocation.
+	/// </summary>
+	/// <typeparam name="T">The type of the elements.</typeparam>
+	/// <param name="collection">The list to consume. Must not be <c>null</c>.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ConsumeCollection), author: "David McCarter", createdOn: "4/17/2026", Status = Status.New)]
+	public void ConsumeCollection<T>([DisallowNull] IReadOnlyList<T> collection)
+	{
+		collection = collection.ArgumentNotNull();
+
+		for (var index = 0; index < collection.Count; index++)
+		{
+			this.Consume(collection[index]);
+		}
+	}
 
 	/// <summary>
 	/// Iterates over the specified <see cref="IDictionary{TKey, TValue}"/> and consumes each value using <see cref="Consume{T}(T)"/>.
@@ -368,7 +385,6 @@ public abstract class Benchmark
 	{
 		foreach (var kvp in collection)
 		{
-
 			this.Consume(kvp.Value);
 		}
 	}
@@ -382,16 +398,33 @@ public abstract class Benchmark
 	/// the JIT compiler from optimizing away the code being benchmarked.
 	/// </param>
 	/// <remarks>
-	/// This method uses a <c>foreach</c> loop to traverse the dictionary and calls <see cref="Consume{T}(T)"/> for each value.
-	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
+	/// This method uses a <c>foreach</c> loop to traverse the sequence and calls <see cref="Consume{T}(T)"/> for each element.
+	/// It is designed to introduce deterministic work when benchmarking enumerable data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConsumeEnumerable), author: "David McCarter", createdOn: "1/8/2026", Status = Status.Available)]
-	public void ConsumeEnumerable<T>(IEnumerable<T> collection)
+	public void ConsumeEnumerable<T>([DisallowNull] IEnumerable<T> collection)
 	{
-		foreach (var person in collection)
+		collection = collection.ArgumentNotNull();
+
+		foreach (var item in collection)
 		{
-			this.Consume(person);
+			this.Consume(item);
+		}
+	}
+
+	/// <summary>
+	/// Consumes each item in the specified <see cref="ReadOnlySpan{T}"/> using the <see cref="Consume{T}(T)"/> method.
+	/// </summary>
+	/// <typeparam name="T">The type of the elements contained in the <paramref name="span"/>.</typeparam>
+	/// <param name="span">The read-only span of items to consume.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ConsumeReadOnlySpan), author: "David McCarter", createdOn: "4/17/2026", Status = Status.New)]
+	public void ConsumeReadOnlySpan<T>(ReadOnlySpan<T> span)
+	{
+		foreach (var item in span)
+		{
+			this.Consume(item);
 		}
 	}
 
@@ -404,16 +437,16 @@ public abstract class Benchmark
 	/// the JIT compiler from optimizing away the code being benchmarked while avoiding additional allocations.
 	/// </param>
 	/// <remarks>
-	/// This method uses a <c>foreach</c> loop to traverse the dictionary and calls <see cref="Consume{T}(T)"/> for each value.
-	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
+	/// This method uses a <c>foreach</c> loop to traverse the span and calls <see cref="Consume{T}(T)"/> for each element.
+	/// It is designed to introduce deterministic work when benchmarking span-based data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConsumeSpan), author: "David McCarter", createdOn: "1/8/2026", Status = Status.Available)]
 	public void ConsumeSpan<T>(Span<T> span)
 	{
-		foreach (var person in span)
+		foreach (var item in span)
 		{
-			this.Consume(person);
+			this.Consume(item);
 		}
 	}
 
@@ -450,7 +483,7 @@ public abstract class Benchmark
 	public byte[] GetByteArray(int count = 1)
 	{
 		count = count.ArgumentInRange(1);
-		return [.. this._byteArrayCache.GetOrAdd(count, RandomData.GenerateByteArray)];
+		return this._byteArrayCache.GetOrAdd(count, RandomData.GenerateByteArray);
 	}
 
 	/// <summary>
@@ -469,7 +502,7 @@ public abstract class Benchmark
 
 		var key = $"{count}-{wordMinLength}-{wordMaxLength}";
 
-		return [.. this._stringArrayCache.GetOrAdd(key, _ => [.. RandomData.GenerateWords(count, wordMinLength, wordMaxLength)])];
+		return this._stringArrayCache.GetOrAdd(key, _ => [.. RandomData.GenerateWords(count, wordMinLength, wordMaxLength)]);
 	}
 
 	/// <summary>
@@ -508,7 +541,7 @@ public abstract class Benchmark
 	{
 		ConsoleLogger.Default.WriteLine(LogKind.Info, $"Setup(): {nameof(Benchmark)}.");
 
-		this.Base64String = this.LongTestString.Substring(0, 50).ToBase64();
+		this.Base64String = this.LongTestString[..50].ToBase64();
 		this.CoordinateVal01 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
 		this.CoordinateVal02 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
 		this.CoordinateRef01 = RandomData.GenerateCoordinate<Coordinate>();
@@ -564,7 +597,9 @@ public abstract class Benchmark
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public virtual Task SimulateWorkAsync([DisallowNull] object item, CancellationToken cancellationToken = default)
 	{
-		return Task.Run(() => SimulateWork(item), cancellationToken);
+		cancellationToken.ThrowIfCancellationRequested();
+		_ = SimulateWork(item);
+		return Task.CompletedTask;
 	}
 
 	/// <summary>
@@ -629,7 +664,6 @@ public abstract class Benchmark
 	{
 		person = person.ArgumentNotNull();
 
-		// ToUniqueCollection and return a new record instance with the updated CellPhone property
 		return person with { CellPhone = PhoneNumberUpdate };
 	}
 
@@ -697,6 +731,27 @@ public abstract class Benchmark
 	protected static void LogWarning(string message)
 	{
 		LogMessage(LogKind.Warning, message);
+	}
+
+	/// <summary>
+	/// Measures the elapsed time of the specified action and logs the result.
+	/// Useful for quick ad-hoc timing during setup/cleanup — not a substitute for BenchmarkDotNet.
+	/// </summary>
+	/// <param name="action">The action to time. Must not be <c>null</c>.</param>
+	/// <param name="description">A label for the log output.</param>
+	/// <returns>The elapsed <see cref="TimeSpan"/>.</returns>
+	[Information(nameof(MeasureAction), author: "David McCarter", createdOn: "4/17/2026", Status = Status.New)]
+	protected static TimeSpan MeasureAction([DisallowNull] Action action, string description = "Action")
+	{
+		action = action.ArgumentNotNull();
+
+		var startTimestamp = Stopwatch.GetTimestamp();
+		action();
+		var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
+
+		LogInfo($"{description} completed in {elapsed.TotalMilliseconds:F3}ms");
+
+		return elapsed;
 	}
 
 }
