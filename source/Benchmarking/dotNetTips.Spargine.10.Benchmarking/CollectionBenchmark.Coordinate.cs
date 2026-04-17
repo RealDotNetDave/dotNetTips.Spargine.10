@@ -10,8 +10,9 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Base class for tests that leverage collections, with added functionality
-// for preloading Coordinate collections to improve benchmark test speed.
+// Partial class of CollectionBenchmark that provides preloaded Coordinate
+// value-type collections in arrays, lists, ReadOnlyCollections, and
+// dictionaries for benchmark consumption.
 // </summary>
 // ***********************************************************************
 

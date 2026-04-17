@@ -10,8 +10,10 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Class for performing benchmark tests on large collections with count
-// values set to 64, 128, 256, 512, 1,024, 2,048, 4,096, and 8,192.
+// Benchmark base class for large collection sizes with parameterized
+// counts of 64, 128, 256, 512, 1,024, 2,048, 4,096, and 8,192
+// elements, inheriting preloaded collection support from
+// CollectionBenchmark.
 // </summary>
 // ***********************************************************************
 using BenchmarkDotNet.Attributes;
@@ -38,6 +40,14 @@ public class LargeCollectionBenchmark : CollectionBenchmark
 	public LargeCollectionBenchmark() : base(8192) => LogInfo($"Max Count={this.MaxCount}: {nameof(LargeCollectionBenchmark)}.");
 
 	/// <summary>
+	/// Gets or sets the collection count for the benchmark. This value determines the size of the collection to be used in the benchmark tests.
+	/// Valid values are 64, 128, 256, 512, 1,024, 2,048, 4,096, and 8,192, allowing for a range of large collection sizes to be tested.
+	/// </summary>
+	/// <value>The collection count.</value>
+	[Params(64, 128, 256, 512, 1024, 2048, 4096, 8192)]
+	public int Count { get; set; }
+
+	/// <summary>
 	/// Performs setup operations specific to LargeCollectionBenchmark. This includes logging the current count before and after the base setup is called,
 	/// and adjusting the MaxCount property to match the current Count. This method is called automatically by the BenchmarkDotNet framework before each benchmark run.
 	/// </summary>
@@ -48,13 +58,5 @@ public class LargeCollectionBenchmark : CollectionBenchmark
 		this.MaxCount = this.Count;
 		base.Setup();
 	}
-
-	/// <summary>
-	/// Gets or sets the collection count for the benchmark. This value determines the size of the collection to be used in the benchmark tests.
-	/// Valid values are 64, 128, 256, 512, 1,024, 2,048, 4,096, and 8,192, allowing for a range of large collection sizes to be tested.
-	/// </summary>
-	/// <value>The collection count.</value>
-	[Params(64, 128, 256, 512, 1024, 2048, 4096, 8192)]
-	public int Count { get; set; }
 
 }

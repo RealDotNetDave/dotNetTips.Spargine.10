@@ -10,9 +10,10 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Base class for tests utilizing collections, with additional
-// functionality to preload collections for enhanced benchmark test
-// speed.
+// Base class for collection-based benchmarks that preloads Person and
+// Coordinate collections in various data structures (arrays, lists,
+// dictionaries) during setup to eliminate allocation noise from
+// benchmark measurements.
 // </summary>
 // ***********************************************************************
 
@@ -22,6 +23,7 @@ using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
+using DotNetTips.Spargine.Tester.Models.ValueTypes.SerializerContexts;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -225,11 +227,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 	{
 		if (count <= MaxPeopleDataCount)
 		{
-			return [.. JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, count, Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.Person)];
+			return [.. JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, count, PersonValJsonSerializerContext.Default.Person)];
 		}
 		else
 		{
-			var people = JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, MaxPeopleDataCount, Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext.Default.Person);
+			var people = JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, MaxPeopleDataCount, PersonValJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonValCollection(count - MaxPeopleDataCount);
 
 			return [.. people, .. newPeople];

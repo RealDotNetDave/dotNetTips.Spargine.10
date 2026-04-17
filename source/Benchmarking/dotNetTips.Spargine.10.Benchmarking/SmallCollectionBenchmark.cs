@@ -10,8 +10,9 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Class for conducting benchmark tests on small collections with count
-// values set to 16, 32, 64, 128, 256, 512, 1,024, and 2,048.
+// Benchmark base class for small collection sizes with parameterized
+// counts of 16, 32, 64, 128, 256, 512, 1,024, and 2,048 elements,
+// inheriting preloaded collection support from CollectionBenchmark.
 // </summary>
 // ***********************************************************************
 
@@ -39,6 +40,14 @@ public class SmallCollectionBenchmark : CollectionBenchmark
 	public SmallCollectionBenchmark() : base(2048) => LogInfo($"Max Count={this.MaxCount}: {nameof(SmallCollectionBenchmark)}.");
 
 	/// <summary>
+	/// Gets or sets the collection count for the benchmark. This value determines the size of the collection to be used in the benchmark tests.
+	/// Valid values are 16, 32, 64, 128, 256, 512, 1024, and 2048, allowing for a range of small collection sizes to be tested.
+	/// </summary>
+	/// <value>The collection count.</value>
+	[Params(16, 32, 64, 128, 256, 512, 1024, 2048)]
+	public int Count { get; set; }
+
+	/// <summary>
 	/// Performs setup operations specific to SmallCollectionBenchmark. This includes logging the current count before and after the base setup is called,
 	/// and adjusting the MaxCount property to match the current Count. This method is called automatically by the BenchmarkDotNet framework before each benchmark run.
 	/// </summary>
@@ -50,13 +59,5 @@ public class SmallCollectionBenchmark : CollectionBenchmark
 
 		base.Setup();
 	}
-
-	/// <summary>
-	/// Gets or sets the collection count for the benchmark. This value determines the size of the collection to be used in the benchmark tests.
-	/// Valid values are 16, 32, 64, 128, 256, 512, 1024, and 2048, allowing for a range of small collection sizes to be tested.
-	/// </summary>
-	/// <value>The collection count.</value>
-	[Params(16, 32, 64, 128, 256, 512, 1024, 2048)]
-	public int Count { get; set; }
 
 }

@@ -9,7 +9,11 @@
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>BenchmarkHelper provides utility methods to run BenchmarkDotNet benchmarks with minimal boilerplate.</summary>
+// <summary>
+// Provides utility methods for running BenchmarkDotNet benchmarks with
+// minimal boilerplate, including assembly-wide benchmark discovery, selective
+// benchmark execution, report saving, and audio completion feedback.
+// </summary>
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;

@@ -10,8 +10,10 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Abstract base class featuring common benchmarking methods,
-// supplemented with default attributes.
+// Abstract base class for all BenchmarkDotNet benchmarks, providing
+// setup/cleanup lifecycle methods, consume helpers for preventing dead-code
+// elimination, random data generators, test entity update methods, and a
+// comprehensive set of default BenchmarkDotNet diagnostic attributes.
 // </summary>
 // ***********************************************************************
 

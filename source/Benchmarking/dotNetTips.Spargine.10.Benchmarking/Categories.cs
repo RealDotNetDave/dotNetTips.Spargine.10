@@ -9,7 +9,10 @@
 // <copyright file="Categories.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Common values to be used in the BenchmarkCategory attribute.</summary>
+// <summary>
+// Defines constant string values used with the BenchmarkCategory attribute
+// to classify and filter benchmarks by functionality or feature area.
+// </summary>
 // ***********************************************************************
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
