@@ -51,7 +51,6 @@ public class RandomDataBenchmark : Benchmark
 
 
 	[Benchmark(Description = nameof(RandomData.GenerateAddress) + ": Ref")]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateAddressRef()
 	{
 		var result = RandomData.GenerateAddress<Address>();
@@ -60,7 +59,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateByteArray))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateByteArray()
 	{
 		var result = RandomData.GenerateByteArray(this.Count);
@@ -69,7 +67,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateCharacter))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateCharacter()
 	{
 		var result = RandomData.GenerateCharacter();
@@ -78,7 +75,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateCharacter) + ": Min and Max Char")]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateCharacterMinMax()
 	{
 		var result = RandomData.GenerateCharacter(char.MinValue, char.MaxValue);
@@ -87,7 +83,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateCoordinate))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateCoordinate()
 	{
 		var result = RandomData.GenerateCoordinate<Coordinate>();
@@ -96,7 +91,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateDecimal))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateDecimal()
 	{
 		var result = RandomData.GenerateDecimal(0, maxValue: 1000, decimalPlaces: 2);
@@ -105,7 +99,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateDomainExtension))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateDomainExtension()
 	{
 		var result = RandomData.GenerateDomainExtension();
@@ -114,7 +107,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateEmailAddress))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateEmailAddress()
 	{
 		var result = RandomData.GenerateEmailAddress();
@@ -123,7 +115,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateInteger))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateInteger()
 	{
 		var result = RandomData.GenerateInteger();
@@ -132,7 +123,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateKey))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateKey()
 	{
 		var result = RandomData.GenerateKey();
@@ -141,7 +131,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateNonZeroByteArray))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateNonZeroByteArray()
 	{
 		var result = RandomData.GenerateNonZeroByteArray(this.Count);
@@ -150,7 +139,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateNumber))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateNumber()
 	{
 		var result = RandomData.GenerateNumber(this.Count);
@@ -159,7 +147,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePerson) + ": Record")]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonRecord()
 	{
 		var result = RandomData.GeneratePerson<PersonRecord>();
@@ -168,7 +155,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePerson) + ": Ref")]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonRef()
 	{
 		var result = RandomData.GeneratePerson<Person>();
@@ -177,7 +163,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePerson) + ": Val")]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonVal()
 	{
 		var result = RandomData.GeneratePerson<Models.ValueTypes.Person>();
@@ -186,7 +171,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePhoneNumber))]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePhoneNumber()
 	{
 		var result = RandomData.GeneratePhoneNumber(CountryName.UnitedStates);
@@ -195,7 +179,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateRandomFileName))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateRandomFileName()
 	{
 		var fileName = RandomData.GenerateRandomFileName();
@@ -204,7 +187,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateRandomFileName) + ": With Path")]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateRandomFileNameWithPath()
 	{
 		var fileName = RandomData.GenerateRandomFileName(this._filePath);
@@ -213,7 +195,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateRandomLocationData))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateRandomLocationData()
 	{
 		var result = RandomData.GenerateRandomLocationData();
@@ -222,7 +203,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateRandomPersonData))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateRandomPersonData()
 	{
 		var result = RandomData.GenerateRandomPersonData();
@@ -231,7 +211,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateRandomPersonName))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateRandomPersonName()
 	{
 		var result = RandomData.GenerateRandomPersonName();
@@ -240,7 +219,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateRelativeUrl))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateRelativeUrl()
 	{
 		var result = RandomData.GenerateRelativeUrl();
@@ -249,7 +227,7 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateTempFile))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void GenerateTempFile()
 	{
 		var fileName = RandomData.GenerateTempFile(this.Count);
@@ -258,7 +236,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateUrl))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateUrl()
 	{
 		var result = RandomData.GenerateUrl();
@@ -267,7 +244,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateUrlFragment))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateUrlFragment()
 	{
 		var fileName = RandomData.GenerateUrlFragment();
@@ -276,7 +252,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateUrlHostName))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateUrlHostName()
 	{
 		var fileName = RandomData.GenerateUrlHostName();
@@ -285,7 +260,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateUrlHostNameNoProtocol))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateUrlHostNameNoProtocol()
 	{
 		var fileName = RandomData.GenerateUrlHostNameNoProtocol();
@@ -294,7 +268,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateUrlHostNameNoSubDomain))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateUrlHostNameNoSubDomain()
 	{
 		var fileName = RandomData.GenerateUrlHostNameNoSubDomain();
@@ -303,7 +276,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateWord))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateWord()
 	{
 		var result = RandomData.GenerateWord(this.Count);
@@ -311,7 +283,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateWord) + ": MIN AND MAX CHAR")]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxChar()
 	{
 		var result = RandomData.GenerateWord(this.Count, char.MinValue, char.MaxValue);
@@ -320,7 +291,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateWord) + ": MIN AND MAX LENGTH")]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxLength()
 	{
 		var result = RandomData.GenerateWord(this.Count, 100);
@@ -329,7 +299,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateWord) + ": MIN AND MAX LENGTH + CHAR")]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateWordMinMaxLengthChar()
 	{
 		var result = RandomData.GenerateWord(this.Count, 100, char.MinValue, char.MaxValue);
@@ -338,7 +307,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateWords))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateWords()
 	{
 		var result = RandomData.GenerateWords(this.Count, 5, 10);
@@ -347,7 +315,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(PersonExtensions.get_Age))]
-	[BenchmarkCategory(Categories.New)]
 	public void PersonGetAge()
 	{
 		var result = this.PersonRef01.Age;
@@ -356,7 +323,6 @@ public class RandomDataBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(PersonExtensions.get_FullName))]
-	[BenchmarkCategory(Categories.New)]
 	public void PersonGetFullName()
 	{
 		var result = this.PersonRef01.FullName;

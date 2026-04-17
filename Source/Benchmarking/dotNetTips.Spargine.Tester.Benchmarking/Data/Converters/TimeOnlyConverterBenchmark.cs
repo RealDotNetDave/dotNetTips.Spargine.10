@@ -36,7 +36,7 @@ public class TimeOnlyConverterBenchmark : Benchmark
 	private ArrayBufferWriter<byte> _writeBuffer;
 
 	[Benchmark(Description = nameof(TimeOnlyConverter.Read))]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void Read()
 	{
 		var reader = new Utf8JsonReader(this._timeJsonBytes);
@@ -61,7 +61,7 @@ public class TimeOnlyConverterBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TimeOnlyConverter.Write))]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void Write()
 	{
 		this._writeBuffer.ResetWrittenCount();

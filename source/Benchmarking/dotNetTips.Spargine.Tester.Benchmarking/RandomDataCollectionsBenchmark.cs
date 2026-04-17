@@ -36,7 +36,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	private Collection<Person> _personRefCollection;
 
 	[Benchmark(Description = nameof(RandomData.GenerateAddressCollection))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateAddressCollectionRef()
 	{
 		var result = RandomData.GenerateAddressCollection<Address>(this.DefaultCountry);
@@ -45,7 +44,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateAddressCollection))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateAddressRecordCollection()
 	{
 		var result = RandomData.GenerateAddressCollection<AddressRecord>(this.DefaultCountry, this.Count);
@@ -54,7 +52,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateCoordinateCollection))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateCoordinateCollection()
 	{
 		var result = RandomData.GenerateCoordinateCollection<Coordinate>(this.Count);
@@ -63,7 +60,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateCreditCards))]
-	[BenchmarkCategory(Categories.New)]
 	public void GenerateCreditCards()
 	{
 		var result = RandomData.GenerateCreditCards(this.Count);
@@ -72,7 +68,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePersonNames))]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonNames()
 	{
 		var result = RandomData.GeneratePersonNames(this.Count);
@@ -81,7 +76,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePersonRecordCollection))]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonRecordCollection()
 	{
 		var result = RandomData.GeneratePersonRecordCollection(this.Count);
@@ -90,7 +84,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePersonRefCollection) + ": Person")]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonRefCollection()
 	{
 		var result = RandomData.GeneratePersonRefCollection(this.Count);
@@ -99,7 +92,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(RandomData.GeneratePersonValCollection))]
-	[BenchmarkCategory(Categories.New)]
 	public void GeneratePersonValCollection()
 	{
 		var result = RandomData.GeneratePersonValCollection(this.Count);
@@ -108,7 +100,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "OrderBy(): Ref")]
-	[BenchmarkCategory(Categories.New)]
 	public void PersonOrderByBenchmark()
 	{
 		var result = this._personRefCollection.OrderBy(p => p.LastName);
@@ -117,7 +108,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "OrderBy(): Record")]
-	[BenchmarkCategory(Categories.New, Categories.RecordType)]
+	[BenchmarkCategory(Categories.RecordType)]
 	public void PersonRecordOrderBy()
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
@@ -126,7 +117,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "OrderBy(): Val")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.ValueType)]
 	public void PersonValOrderBy()
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);

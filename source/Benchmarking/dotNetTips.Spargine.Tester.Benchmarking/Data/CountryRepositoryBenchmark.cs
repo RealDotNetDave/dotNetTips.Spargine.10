@@ -23,7 +23,6 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests.Data;
 public class CountryRepositoryBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(CountryRepository.GetCountries))]
-	[BenchmarkCategory(Categories.New)]
 	public void GetCountries()
 	{
 		var result = CountryRepository.GetCountries();
@@ -31,7 +30,6 @@ public class CountryRepositoryBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(CountryRepository.GetCountry) + ": By CountryCode")]
-	[BenchmarkCategory(Categories.New)]
 	public void GetCountry()
 	{
 		var result = CountryRepository.GetCountry("US");
@@ -40,7 +38,6 @@ public class CountryRepositoryBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(CountryRepository.GetCountry) + ": By CountryName")]
-	[BenchmarkCategory(Categories.New)]
 	public void GetCountryByCountryName()
 	{
 		var result = CountryRepository.GetCountry(CountryName.UnitedStates);

@@ -35,11 +35,11 @@ public class DateOnlyConverterBenchmark : Benchmark
 	private ArrayBufferWriter<byte> _writeBuffer;
 
 	[Benchmark(Description = nameof(DateOnlyConverter.Read))]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void Read()
 	{
 		var reader = new Utf8JsonReader(this._dateJsonBytes);
-		reader.Read();
+		_ = reader.Read();
 
 		var result = this._converter.Read(ref reader, typeof(DateOnly), JsonSerializerOptions.Default);
 
@@ -60,7 +60,7 @@ public class DateOnlyConverterBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(DateOnlyConverter.Write))]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void Write()
 	{
 		this._writeBuffer.ResetWrittenCount();
