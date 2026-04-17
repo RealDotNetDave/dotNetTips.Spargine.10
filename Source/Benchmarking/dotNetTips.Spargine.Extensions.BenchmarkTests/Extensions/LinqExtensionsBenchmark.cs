@@ -37,7 +37,7 @@ public class LinqExtensionsBenchmark : LargeCollectionBenchmark
 	private Person[] _people;
 
 	[Benchmark(Description = "If: should=false (passthrough)")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void IfShouldFalse()
 	{
 		var result = this._people.If(false, _filterTransform);
@@ -46,7 +46,7 @@ public class LinqExtensionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "If: should=true (transform applied)")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void IfShouldTrue()
 	{
 		var result = this._people.If(true, _filterTransform);
@@ -55,7 +55,7 @@ public class LinqExtensionsBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "If: should=true (multiple transforms)")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void IfShouldTrueMultipleTransforms()
 	{
 		var result = this._people.If(true, _filterTransform, _orderTransform);

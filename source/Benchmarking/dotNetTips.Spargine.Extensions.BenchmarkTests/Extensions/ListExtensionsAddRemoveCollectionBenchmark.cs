@@ -32,7 +32,7 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList;
 
 	[Benchmark(Description = nameof(ListExtensions.AddFirst))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddFirst()
 	{
 		var people = this._peopleRefList;
@@ -43,7 +43,7 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.AddLast))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddLast()
 	{
 		var people = this._peopleRefList;
@@ -54,7 +54,7 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.AddRangeIfNotExists))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddRangeIfNotExists()
 	{
 		var people = this._peopleRefList;
@@ -75,7 +75,7 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 
 
 	[Benchmark(Description = nameof(ListExtensions.RemoveFirst))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveFirst()
 	{
 		var result = this._peopleRefList.RemoveFirst(this._peopleRefList.First());
@@ -84,7 +84,7 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.RemoveLast))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveLast()
 	{
 		var result = this._peopleRefList.RemoveLast(this._peopleRefList.Last());

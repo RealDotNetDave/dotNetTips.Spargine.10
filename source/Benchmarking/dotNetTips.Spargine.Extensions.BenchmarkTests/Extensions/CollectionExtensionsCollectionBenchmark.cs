@@ -38,7 +38,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private Person _personToInsert;
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIfNotExists) + ": Existing Item")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddIfNotExistsExistingItem()
 	{
 		var person = this._existingPerson;
@@ -49,7 +49,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIfNotExists) + ": New Item")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddIfNotExistsNewItem()
 	{
 		var person = this._personToInsert;
@@ -114,7 +114,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void UpsertExistingItem()
 	{
 		var person = this._existingPerson;
@@ -125,7 +125,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": New Item")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void UpsertNewItem()
 	{
 		var person = this._personToInsert;

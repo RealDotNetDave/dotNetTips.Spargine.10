@@ -39,7 +39,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	private string[] _wordCollection;
 
 	[Benchmark(Description = nameof(StringExtensions.CalculateByteArraySize))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void CalculateByteArraySize()
 	{
 		var result = this.Base64String.CalculateByteArraySize();
@@ -48,7 +48,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.CalculateTotalLength))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void CalculateTotalLength()
 	{
 		var result = this._wordCollection.CalculateTotalLength();
@@ -79,7 +79,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 		this.Consume(result);
 	}
 	[Benchmark(Description = nameof(StringExtensions.DelimitedStringToArray))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void DelimitedStringToArray()
 	{
 		var result = this._crlfString.DelimitedStringToArray(ControlChars.Dot);
@@ -115,7 +115,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsEmpty))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsEmpty()
 	{
 		var result = this._crlfString.IsEmpty();
@@ -124,7 +124,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsNotEmpty))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsNotEmpty()
 	{
 		var result = this._crlfString.IsNotEmpty();
@@ -278,7 +278,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToBase64()
 	{
 		var result = this._crlfString.ToBase64();
@@ -286,7 +286,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64Bytes))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToBase64ByteSpan()
 	{
 		var result = this.Base64String.ToBase64Bytes();
@@ -294,7 +294,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBrotliStringAsync))]
-	[BenchmarkCategory(Categories.New, Categories.Strings)]
+	[BenchmarkCategory(Categories.Strings)]
 	public async Task ToBrotliAsync()
 	{
 		var result = await this._crlfString.ToBrotliStringAsync().ConfigureAwait(false);
@@ -303,7 +303,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToGZipStringAsync))]
-	[BenchmarkCategory(Categories.New, Categories.Strings)]
+	[BenchmarkCategory(Categories.Strings)]
 	public async Task ToGZipAsync()
 	{
 		var result = await this._crlfString.ToGZipStringAsync().ConfigureAwait(false);

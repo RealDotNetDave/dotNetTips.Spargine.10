@@ -20,6 +20,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
@@ -209,7 +210,7 @@ public class ObjectExtensionsBenchmark : Benchmark
 	{
 		var options = new JsonSerializerOptions
 		{
-			DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
 			WriteIndented = true,
 		};
 
@@ -243,14 +244,13 @@ public class ObjectExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(ObjectExtensions.FastHashCode))]
-	[BenchmarkCategory(Categories.New)]
 	public void HashCodeFastGetHashCode()
 	{
 		this.Consume(this.LongTestString.FastHashCode());
 	}
 
 	[Benchmark(Description = "string.GetHashCode()")]
-	[BenchmarkCategory(Categories.New, Categories.ForComparison)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void HashCodeGetHashCode()
 	{
 		this.Consume(this.LongTestString.GetHashCode());

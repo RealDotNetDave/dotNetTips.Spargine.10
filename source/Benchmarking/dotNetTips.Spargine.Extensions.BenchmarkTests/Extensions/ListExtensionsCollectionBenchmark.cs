@@ -21,6 +21,7 @@ using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -77,7 +78,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.FastCount))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Count_FastCount()
 	{
 		var result = this._peopleRefList.FastCount();
@@ -184,7 +185,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._peopleRefList = [.. this.GetPersonRefArray()];
 		this._peopleRefSubSet = [.. this.GetPersonRefArray().TakeLast(10)];
 		this._peopleValList = [.. this.GetPersonValArray()];
-		this._personComparer = new Spargine.Tester.Models.RefTypes.Comparers.PersonComparerByLastName();
+		this._personComparer = new PersonComparerByLastName();
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
@@ -204,7 +205,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.Split))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Split()
 	{
 		var result = this._peopleRefList.Split(this._peopleRefList.Count / 2);

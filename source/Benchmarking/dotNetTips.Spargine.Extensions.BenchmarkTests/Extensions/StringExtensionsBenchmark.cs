@@ -179,7 +179,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Extract))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void Extract()
 	{
 		var result = this.LongTestString.Extract("and", "are");
@@ -188,7 +188,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.FastIsNullOrEmpty))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void FastIsNullOrEmpty()
 	{
 		var result = this.StringToTrim.FastIsNullOrEmpty();
@@ -214,7 +214,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.FromBase64))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void FromBase64()
 	{
 		var result = this.Base64String.FromBase64();
@@ -223,7 +223,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.FromDeflateStringAsync))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public async Task FromDeflateStringAsync()
 	{
 		var result = await this._compressedString.FromDeflateStringAsync().ConfigureAwait(false);
@@ -232,7 +232,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.FromZLibStringAsync))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public async Task FromZLibStringAsync()
 	{
 		var result = await this._zlibString.FromZLibStringAsync().ConfigureAwait(false);
@@ -250,7 +250,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.HasValue) + ": Length")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void HasValueWithLength()
 	{
 		var result = this.LongTestString.HasValue(100);
@@ -259,7 +259,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.HasValue) + ": Min & Max Count")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void HasValueWithMinMaxCount()
 	{
 		var result = this.LongTestString.HasValue(5, 100);
@@ -268,7 +268,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.HasValue) + ": String")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void HasValueWithString()
 	{
 		var result = this.LongTestString.HasValue("A");
@@ -277,7 +277,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.HasWhitespace))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void HasWhitespace()
 	{
 		var result = this.LongTestString.HasWhitespace();
@@ -296,7 +296,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 
 	[Benchmark(Description = nameof(StringExtensions.IsCreditCardNumber))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsCreditCardNumber()
 	{
 		var result = this._creditCardNumber.IsCreditCardNumber();
@@ -305,7 +305,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsCurrencyCode))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsCurrencyCode()
 	{
 		var result = this._currencyCode.IsCurrencyCode();
@@ -314,7 +314,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsDomainAddress))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsDomainAddress()
 	{
 		var result = this._domainAddress.IsDomainAddress();
@@ -323,7 +323,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsEmailAddress))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsEmailAddress()
 	{
 		var result = this._emailAddress.IsEmailAddress();
@@ -332,7 +332,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsEmpty))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsEmpty()
 	{
 		var result = String15Characters01.IsEmpty();
@@ -341,7 +341,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsFirstLastName))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsFirstLastName()
 	{
 		var result = this._personName.IsFirstLastName();
@@ -360,7 +360,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsISBN))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsISBN()
 	{
 		var result = this._isbn.IsISBN();
@@ -378,7 +378,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsNotEmpty))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsNotEmpty()
 	{
 		var result = String15Characters01.IsNotEmpty();
@@ -387,7 +387,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsOneToSevenAlpha))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsOneToSevenAlpha()
 	{
 		var result = this._oneToSevenAlpha.IsOneToSevenAlpha();
@@ -396,7 +396,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsScientific))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsScientific()
 	{
 		var result = "6.5 ✕ 10^8".IsScientific();
@@ -405,7 +405,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsStringSHA1Hash))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsStringSHA1Hash()
 	{
 		var result = this._hashCode.IsStringSHA1Hash();
@@ -414,7 +414,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsUrl))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsUrl()
 	{
 		var result = this._domainAddress.IsUrl();
@@ -423,7 +423,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.IsValidString))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsValidString()
 	{
 		var result = this.LongTestString.IsValidString();
@@ -449,7 +449,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ReplaceEllipsisWithPeriod))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ReplaceEllipsisWithPeriod()
 	{
 		var result = this._stringWithEllipsis.ReplaceEllipsisWithPeriod();
@@ -466,7 +466,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void Split()
 	{
 		var result = this.LongTestString.Split(StringSplitOptions.TrimEntries);
@@ -475,7 +475,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.SplitRemoveEmpty))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void SplitRemoveEmpty()
 	{
 		var result = this.LongTestString.SplitRemoveEmpty();
@@ -484,7 +484,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": With Count")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithCount()
 	{
 		var result = this.LongTestString.Split(StringSplitOptions.TrimEntries, 2, ControlChars.Comma);
@@ -518,7 +518,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToBase64()
 	{
 		var result = this.LongTestString.ToBase64();
@@ -527,7 +527,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64Bytes))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToBase64ToBase64ByteSpan()
 	{
 		var result = this.Base64String.ToBase64Bytes();
@@ -536,7 +536,7 @@ public class StringExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToByteArrayFromBase64))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToByteArrayFromBase64()
 	{
 		var result = this.Base64String.ToByteArrayFromBase64();

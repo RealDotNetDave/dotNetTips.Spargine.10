@@ -33,7 +33,6 @@ public class ExceptionExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(ExceptionExtensions.GetAllMessages) + ": Separator")]
-	[BenchmarkCategory(Categories.New)]
 	public void GetAllMessagesSeparator()
 	{
 		this.Consume(this._testException.GetAllMessages(ControlChars.Colon));

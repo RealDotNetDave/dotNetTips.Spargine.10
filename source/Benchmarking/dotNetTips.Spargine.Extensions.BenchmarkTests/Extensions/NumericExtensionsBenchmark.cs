@@ -23,7 +23,6 @@ public class NumericExtensionsBenchmark : Benchmark
 	private readonly int _testValue = 54928;
 
 	[Benchmark(Description = nameof(NumericExtensions.ToWords))]
-	[BenchmarkCategory(Categories.New)]
 	public void ToWords()
 	{
 		var result = this._testValue.ToWords();

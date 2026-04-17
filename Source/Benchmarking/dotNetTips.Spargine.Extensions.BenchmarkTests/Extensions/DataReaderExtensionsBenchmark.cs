@@ -25,7 +25,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// <summary>
 /// Benchmarks for <see cref="DataReaderExtensions"/>.
 /// </summary>
-[BenchmarkCategory(Categories.New)]
 [SuppressMessage("Reliability", "CA1001:Types that own disposable fields should be disposable", Justification = "Disposed in Cleanup() via BenchmarkDotNet lifecycle.")]
 public class DataReaderExtensionsBenchmark : Benchmark
 {
@@ -69,7 +68,6 @@ public class DataReaderExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(DataReaderExtensions.ToCsv) + ": With Header")]
-	[BenchmarkCategory(Categories.New)]
 	public void ToCsvWithHeader()
 	{
 		using var reader = this._dataTable.CreateDataReader();
@@ -80,7 +78,6 @@ public class DataReaderExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(DataReaderExtensions.ToCsv) + ": Without Header")]
-	[BenchmarkCategory(Categories.New)]
 	public void ToCsvWithoutHeader()
 	{
 		using var reader = this._dataTable.CreateDataReader();

@@ -23,56 +23,56 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class CharacterExtensionsBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(CharacterExtensions.GetDigitValue))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void GetDigitValue()
 	{
 		this.Consume('a'.GetDigitValue());
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiControl))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsAsciiControl()
 	{
 		this.Consume('\t'.IsAsciiControl);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiPunctuation))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsAsciiPunctuation()
 	{
 		this.Consume('.'.IsAsciiPunctuation);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiUpper))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsAsciiUpper()
 	{
 		this.Consume('A'.IsAsciiUpper);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsAsciiWhitespace))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsAsciiWhitespace()
 	{
 		this.Consume(' '.IsAsciiWhitespace);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsHexDigit))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsHexDigit()
 	{
 		this.Consume('F'.IsHexDigit);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsNewLine))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsNewLine()
 	{
 		this.Consume('\n'.IsNewLine);
 	}
 
 	[Benchmark(Description = nameof(CharacterExtensions.get_IsUnicodeDigit))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsUnicodeDigit()
 	{
 		this.Consume('5'.IsUnicodeDigit);
@@ -85,7 +85,7 @@ public class CharacterExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = "To Lower: " + nameof(CharacterExtensions.ToAsciiLower))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToLowerToAsciiLower()
 	{
 		this.Consume('A'.ToAsciiLower());
@@ -99,7 +99,7 @@ public class CharacterExtensionsBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = "To Upper: " + nameof(CharacterExtensions.ToAsciiUpper))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToUpperToAsciiUpper()
 	{
 		this.Consume('a'.ToAsciiUpper());

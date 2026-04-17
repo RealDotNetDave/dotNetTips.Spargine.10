@@ -121,7 +121,7 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.ToLookupWithDefault))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void ToLookupWithDefault()
 	{
 		var people = this._personRefDictionary;
@@ -156,7 +156,7 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.TryGetValue))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void TryGetValue()
 	{
 		var people = this._personRefDictionary;

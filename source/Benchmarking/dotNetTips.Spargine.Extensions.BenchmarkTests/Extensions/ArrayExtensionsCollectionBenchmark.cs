@@ -385,7 +385,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems) + ": Half Count")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void SelectItemsFastSelectItems()
 	{
 		var result = this._personRefArray.FastSelectItems(0, this.HalfCount);

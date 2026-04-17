@@ -248,7 +248,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.IndexOf) + ": Predicate")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 
 	public void IndexOfPredicate()
 	{
@@ -363,7 +363,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "Chunk (compare to Partition) - Half Count")]
-	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void PartitionChunk()
 	{
 		foreach (var people in this._personRefEnumerable.Chunk(this.HalfCount))
@@ -381,7 +381,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.RemoveNulls))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveNulls()
 	{
 		var collection = this._personRefEnumerable;
@@ -399,7 +399,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ReplaceIf))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void ReplaceIf()
 	{
 		var people = this._personRefEnumerable;
