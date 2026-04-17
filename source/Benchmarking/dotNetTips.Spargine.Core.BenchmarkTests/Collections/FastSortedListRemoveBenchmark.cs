@@ -33,7 +33,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 	private SortedList<string, Person> _personRefSortedList;
 
 	[Benchmark(Description = "Remove: FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Remove_FastSortedList()
 	{
 		var people = new FastSortedList<Person>(this._personRefFastSortedList);
@@ -44,7 +44,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = "Remove: SortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Remove_SortedList()
 	{
 		var people = new SortedList<string, Person>(this._personRefSortedList);
@@ -55,7 +55,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = "RemoveAt: FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveAt_FastSortedList()
 	{
 		var people = new FastSortedList<Person>(this._personRefFastSortedList);
@@ -66,7 +66,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = "RemoveAt: Comparer(LastName) - FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveAt_FastSortedList_Comparer()
 	{
 		var people = new FastSortedList<Person>(this._personRefFastSortedList, new PersonComparerByLastName());

@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 public class PasswordGeneratorBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(PasswordGenerator.GeneratePassword))]
-	[BenchmarkCategory(Categories.Encryption, Categories.New)]
+	[BenchmarkCategory(Categories.Encryption)]
 	public void GeneratePassword()
 	{
 		var result = PasswordGenerator.GeneratePassword(12);

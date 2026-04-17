@@ -30,7 +30,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	private Dictionary<string, Person> _peopleRefDictionaryToInsert;
 
 	[Benchmark(Description = "Add: FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Add_FastSortedList()
 	{
 		var people = new FastSortedList<Person>(this.Count);
@@ -44,7 +44,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "Add: with Comparer(LastName)  - FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Add_FastSortedList_Comparer()
 	{
 		var people = new FastSortedList<Person>(this.Count, new PersonComparerByLastName());
@@ -72,7 +72,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "Add: with OrdinalStringComparer")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Add_SortedList_Comparer()
 	{
 		var people = new SortedList<string, Person>(this.Count, new OrdinalStringComparer());
@@ -100,7 +100,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "AddRange: FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddRange_FastSortedList()
 	{
 		var people = new FastSortedList<Person>(this.Count);
@@ -111,7 +111,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "AddRange: with Comparer(LastName) - FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddRange_FastSortedList_Comparer()
 	{
 		var people = new FastSortedList<Person>(this.Count, new PersonComparerByLastName());
@@ -122,7 +122,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "AddRange: SortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddRange_SortedList()
 	{
 		var people = new SortedList<string, Person>(this.Count);
@@ -133,7 +133,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "AddRange:  with OrdinalStringComparer - SortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void AddRange_SortedList_Comparer()
 	{
 		var people = new SortedList<string, Person>(this.Count, new OrdinalStringComparer());
@@ -144,7 +144,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "New: add collection in constructor - FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Create_FastSortedList()
 	{
 		var people = new FastSortedList<Person>(this._peopleRefArrayToInsert);
@@ -153,7 +153,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "New: add items in constructor + Comparer(LastName) - FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void Create_FastSortedList_Comparer()
 	{
 		var people = new FastSortedList<Person>(this._peopleRefArrayToInsert, new PersonComparerByLastName());

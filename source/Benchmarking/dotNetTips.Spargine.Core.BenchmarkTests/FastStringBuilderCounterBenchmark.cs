@@ -87,7 +87,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.CombineWithSpace))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void CombineWithSpace()
 	{
 		var result = FastStringBuilder.CombineWithSpace(this._words.AsReadOnlySpan());
@@ -110,7 +110,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Concat) + ": with Char delimiter")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ConcatChar()
 	{
 		var result = FastStringBuilder.Concat(delimiter: ControlChars.Comma, addLineFeed: true, args: this._words);
@@ -135,7 +135,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Concat) + ": with String delimiter")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ConcatString()
 	{
 		var result = FastStringBuilder.Concat(delimiter: ControlChars.CommaSpace, addLineFeed: true, args: this._words.AsReadOnly());
@@ -160,7 +160,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Join) + ": with Char delimiter")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void JoinChar()
 	{
 		var result = FastStringBuilder.Join(this._words, ControlChars.Comma);
@@ -180,7 +180,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Join) + ": with String delimiter")]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void JoinString()
 	{
 		var result = FastStringBuilder.Join(this._words, ControlChars.CommaSpace);
@@ -293,7 +293,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.ToDelimitedString))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void ToDelimitedString()
 	{
 		var result = FastStringBuilder.ToDelimitedString(this._wordDictionary, ControlChars.Colon);

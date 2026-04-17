@@ -36,7 +36,6 @@ public class ExecutionHelperBenchmark : Benchmark
 	private static readonly Func<Task> _failThenSucceedFunc = CreateFailThenSucceedFunc(2);
 
 	[Benchmark(Description = nameof(ExecutionHelper.ProgressiveRetryAsync) + ": Success")]
-	[BenchmarkCategory(Categories.New)]
 	public async Task ProgressiveRetryAsyncSuccess()
 	{
 		var result = await ExecutionHelper.ProgressiveRetryAsync(_successFunc, retryCount: 3, retryWaitMilliseconds: 1).ConfigureAwait(false);
@@ -45,7 +44,6 @@ public class ExecutionHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(ExecutionHelper.ProgressiveRetryAsync) + ": With Retries")]
-	[BenchmarkCategory(Categories.New)]
 	public async Task ProgressiveRetryAsyncWithRetries()
 	{
 		var result = await ExecutionHelper.ProgressiveRetryAsync(_failThenSucceedFunc, retryCount: 3, retryWaitMilliseconds: 1).ConfigureAwait(false);
@@ -54,7 +52,6 @@ public class ExecutionHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(ExecutionHelper.ProgressiveRetry) + ": Success")]
-	[BenchmarkCategory(Categories.New)]
 	public void ProgressiveRetrySuccess()
 	{
 		var result = ExecutionHelper.ProgressiveRetry(_successAction, retryCount: 3, retryWaitMilliseconds: 1);
@@ -63,7 +60,6 @@ public class ExecutionHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(ExecutionHelper.ProgressiveRetry) + ": With Retries")]
-	[BenchmarkCategory(Categories.New)]
 	public void ProgressiveRetryWithRetries()
 	{
 		var result = ExecutionHelper.ProgressiveRetry(_failThenSucceedAction, retryCount: 3, retryWaitMilliseconds: 1);

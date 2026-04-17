@@ -87,7 +87,7 @@ public class EncryptionHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(EncryptionHelper.GenerateRandomKey))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void GenerateRandomKey()
 	{
 		var result = EncryptionHelper.GenerateRandomKey();

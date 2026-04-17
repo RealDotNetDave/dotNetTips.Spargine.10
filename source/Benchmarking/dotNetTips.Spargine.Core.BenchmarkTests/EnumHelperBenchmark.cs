@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Tester.Data;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -26,6 +27,31 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
 public class EnumHelperBenchmark : Benchmark
 {
+
+	[Benchmark(Description = nameof(EnumHelper.GetDescription))]
+	public void GetDescription()
+	{
+		var result = EnumHelper.GetDescription(CountryName.Japan);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(GetDescriptionNoCache))]
+	[BenchmarkCategory(Categories.ForComparison)]
+	public void GetDescription_NoCache()
+	{
+		var result = GetDescriptionNoCache(CountryName.Japan);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumHelper.GetItems))]
+	public void GetValues()
+	{
+		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
+
+		this.Consume(result);
+	}
 
 	private static string GetDescriptionNoCache(Enum input)
 	{
@@ -70,32 +96,6 @@ public class EnumHelperBenchmark : Benchmark
 
 		// Fall back to the enum name
 		return name;
-	}
-
-	[Benchmark(Description = nameof(EnumHelper.GetDescription))]
-	[BenchmarkCategory(Categories.New)]
-	public void GetDescription()
-	{
-		var result = EnumHelper.GetDescription(Tester.Data.CountryName.Japan);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(GetDescriptionNoCache))]
-	[BenchmarkCategory(Categories.New, Categories.ForComparison)]
-	public void GetDescription_NoCache()
-	{
-		var result = GetDescriptionNoCache(Tester.Data.CountryName.Japan);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumHelper.GetItems))]
-	public void GetValues()
-	{
-		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
-
-		this.Consume(result);
 	}
 
 }

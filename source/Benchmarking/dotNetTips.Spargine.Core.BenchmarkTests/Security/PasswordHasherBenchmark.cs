@@ -24,56 +24,56 @@ public class PasswordHasherBenchmark : Benchmark
 	private const string Password = "l#VkasX2L![][lP![&J}ll]&R}v]BKvADGa(gDmq]f]636ocaos?,%.Kfnb60uKx";
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": Argon2")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordArgon2()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.Argon2);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": PBKDF2")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordPBKDF2()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.PBKDF2);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": SHA256")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordSHA256()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.SHA256);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": SHA3256")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordSHA3256()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.SHA3256);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": SHA3384")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordSHA3384()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.SHA3384);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": SHA3512")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordSHA3512()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.SHA3512);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": Shake128")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordShake128()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.Shake128);
 	}
 
 	[Benchmark(Description = nameof(PasswordHasher.HashPassword) + ": Shake256")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public string HashPasswordShake256()
 	{
 		return PasswordHasher.HashPassword(Password, HashAlgorithmType.Shake256);

@@ -29,7 +29,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	private Person[] _peopleRefToInsert;
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Add))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Add()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -41,7 +41,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.AddRange))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void AddRange()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -50,7 +50,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Clear))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Clear()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -61,21 +61,21 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Contains))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Contains()
 	{
 		this.Consume(this._peopleRefDistinctConcurrentBag.Contains(this.PersonRefLookupLast));
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.ContainsAny))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void ContainsAny()
 	{
 		this.Consume(this._peopleRefDistinctConcurrentBag.ContainsAny(this._peopleRefToInsert));
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.CopyTo))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void CopyTo()
 	{
 		var people = new Person[this._peopleRefDistinctConcurrentBag.Count];
@@ -86,7 +86,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Remove))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Remove()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -95,7 +95,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.RemoveRange))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void RemoveRange()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -113,28 +113,28 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.ToArray))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void ToArray()
 	{
 		this.Consume(this._peopleRefDistinctConcurrentBag.ToArray());
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.ToFrozenSet))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void ToFrozenSet()
 	{
 		this.Consume(this._peopleRefDistinctConcurrentBag.ToFrozenSet());
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.ToList))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void ToList()
 	{
 		this.Consume(this._peopleRefDistinctConcurrentBag.ToList());
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryAdd))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryAdd()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -145,7 +145,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryGetValue))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryGetValue()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -156,7 +156,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryPeek))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryPeek()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
@@ -168,7 +168,7 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryTake))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryTake()
 	{
 		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());

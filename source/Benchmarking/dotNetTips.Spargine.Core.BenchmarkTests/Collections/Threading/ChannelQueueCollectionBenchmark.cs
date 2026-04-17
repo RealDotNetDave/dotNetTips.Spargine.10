@@ -48,7 +48,7 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = "TryPeek")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void TryPeek()
 	{
 		var queue = new ChannelQueue<string>();

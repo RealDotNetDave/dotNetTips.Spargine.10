@@ -46,7 +46,7 @@ public class TypeHelperBenchmark : Benchmark
 	private List<Person> _people;
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": No Cache")]
-	[BenchmarkCategory(Categories.ForComparison, Categories.New)]
+	[BenchmarkCategory(Categories.ForComparison)]
 	public void BuiltInTypeNames_NoCache()
 	{
 		var result = BuiltInTypeNamesNoCache();
@@ -55,7 +55,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void BuiltInTypeNamesCached()
 	{
 		var result = TypeHelper.BuiltInTypeNames();
@@ -139,7 +139,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllAbstractMethodsCached()
 	{
 		var result = TypeHelper.GetAllAbstractMethods(typeof(Benchmark));
@@ -160,7 +160,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllConstructorsCached()
 	{
 		var result = TypeHelper.GetAllConstructors(typeof(Benchmark));
@@ -184,7 +184,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllDeclaredFieldsCached()
 	{
 		var result = TypeHelper.GetAllDeclaredFields(typeof(Benchmark));
@@ -206,7 +206,7 @@ public class TypeHelperBenchmark : Benchmark
 
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllDeclaredMethodsCached()
 	{
 		var result = TypeHelper.GetAllDeclaredMethods(typeof(Benchmark));
@@ -231,7 +231,7 @@ public class TypeHelperBenchmark : Benchmark
 
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllFields) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllFieldsCached()
 	{
 		var result = TypeHelper.GetAllFields(typeof(Benchmark));
@@ -243,7 +243,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllGenericMethods()
 	{
 		var result = TypeHelper.GetAllGenericMethods(typeof(StringBuilder));
@@ -264,7 +264,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllMethodsCached()
 	{
 		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
@@ -289,7 +289,7 @@ public class TypeHelperBenchmark : Benchmark
 
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllProperties) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllPropertiesCached()
 	{
 		var result = TypeHelper.GetAllProperties(typeof(Person));
@@ -301,7 +301,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllPublicMethods()
 	{
 		var result = TypeHelper.GetAllPublicMethods(typeof(Person));
@@ -310,7 +310,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllStaticMethods))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllStaticMethods()
 	{
 		var result = TypeHelper.GetAllPublicMethods(typeof(TypeHelper));
@@ -319,7 +319,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": FieldInfo")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAttributeFieldInfo()
 	{
 #pragma warning disable CS0612 // Type or member is obsolete
@@ -331,7 +331,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": MethodInfo")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAttributeMethodInfo()
 	{
 		var method = typeof(TypeHelper).GetMethod(nameof(TypeHelper.GetPropertyValues));
@@ -342,7 +342,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": PropertyInfo")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAttributePropertyInfo()
 	{
 		var property = typeof(TypeHelper).GetProperty(nameof(TypeHelper.BuiltInTypes), BindingFlags.Static | BindingFlags.Public);
@@ -352,7 +352,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": Type")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAttributeType()
 	{
 		var result = TypeHelper.GetAttribute<InformationAttribute>(typeof(TypeHelper));
@@ -361,7 +361,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetGenericArguments))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetGenericArguments()
 	{
 		var result = TypeHelper.GetGenericArguments(typeof(Dictionary<string, int>));
@@ -380,7 +380,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces) + ": Interface Names")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetImplementedInterfacesInterfaceNames()
 	{
 		var list = new List<int>();
@@ -390,7 +390,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaceTypes))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetImplementedInterfaceTypes()
 	{
 		var list = new List<int>();
@@ -450,7 +450,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetTypeDisplayNameCached()
 	{
 		var type = typeof(int[]);
@@ -463,7 +463,7 @@ public class TypeHelperBenchmark : Benchmark
 
 
 	[Benchmark(Description = nameof(TypeHelper.GetTypeMembersWithAttribute))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void GetTypeMembersWithAttribute()
 	{
 		var result = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(typeof(TypeHelper));
@@ -481,7 +481,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasBaseClass) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void HasBaseClassCached()
 	{
 		var result = TypeHelper.HasBaseClass(typeof(Exception), typeof(object));
@@ -490,7 +490,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasMethod))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void HasMethod()
 	{
 		var result = TypeHelper.HasMethod(typeof(Person), "ToString");
@@ -499,7 +499,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasParameterlessConstructor))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void HasParameterlessConstructor()
 	{
 		var result = TypeHelper.HasParameterlessConstructor(typeof(StringBuilder));
@@ -508,7 +508,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasProperty))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void HasProperty()
 	{
 		var result = TypeHelper.HasProperty(typeof(string), "Length");
@@ -526,7 +526,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface) + ": Cached")]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void ImplementsInterfaceCached()
 	{
 		var result = TypeHelper.ImplementsInterface(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
@@ -535,7 +535,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.IsAssignableTo))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void IsAssignableTo()
 	{
 		var result = TypeHelper.IsAssignableTo(typeof(string), typeof(object));
@@ -544,7 +544,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.IsClosedGeneric))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void IsClosedGeneric()
 	{
 		var result = TypeHelper.IsClosedGeneric(typeof(List<int>));
@@ -553,7 +553,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.IsEnumerable))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void IsEnumerable()
 	{
 		var result = TypeHelper.IsEnumerable(typeof(List<int>));
@@ -562,7 +562,7 @@ public class TypeHelperBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.ProcessGenericType))]
-	[BenchmarkCategory(Categories.Reflection, Categories.New)]
+	[BenchmarkCategory(Categories.Reflection)]
 	public void ProcessGenericType()
 	{
 		var builder = new StringBuilder();

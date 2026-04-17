@@ -27,7 +27,7 @@ public class FastStringBuilderBenchmark : Benchmark
 	private string[] _words;
 
 	[Benchmark(Description = nameof(FastStringBuilder.Format))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void Format()
 	{
 		var result = FastStringBuilder.Format("Word1 {0}, Word2 {1}, Word3 {1}", this._words);
@@ -47,7 +47,7 @@ public class FastStringBuilderBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Remove))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void Remove()
 	{
 		var result = FastStringBuilder.Remove(this.LongTestString, "and");

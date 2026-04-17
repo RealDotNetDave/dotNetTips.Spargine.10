@@ -85,7 +85,7 @@ public class ValidatorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(Validator.ArgumentDefined))]
-	[BenchmarkCategory(Categories.Validation, Categories.New)]
+	[BenchmarkCategory(Categories.Validation)]
 	public void ArgumentDefined()
 	{
 		var value = Status.Available;
@@ -96,42 +96,42 @@ public class ValidatorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = "Validating Empty/Null String: No Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.New, Categories.ForComparison)]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
 	public void ArgumentNotNullOrEmpty_NoValidation()
 	{
 		_ = this.ValidateIsNullOrEmpty_Test_NoValidation(TestString);
 	}
 
 	[Benchmark(Description = "Validating Empty/Null String: Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.New, Categories.ForComparison)]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
 	public void ArgumentNotNullOrEmpty_Validation()
 	{
 		_ = this.ValidateIsNullOrEmpty_Test_Validation(TestString);
 	}
 
 	[Benchmark(Description = "Validating Empty/Null String: Validation + Inlining")]
-	[BenchmarkCategory(Categories.Validation, Categories.New, Categories.ForComparison)]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
 	public void ArgumentNotNullOrEmpty_Validation_Inlining()
 	{
 		_ = this.ValidateIsNullOrEmpty_Test_Validation_Inlining(TestString);
 	}
 
 	[Benchmark(Description = "Validating Collection: No Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.New, Categories.ForComparison)]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
 	public void CheckItemsExists_NoValidation()
 	{
 		_ = this.ValidateItemsExist_NoValidation(this._people);
 	}
 
 	[Benchmark(Description = "Validating Collection: Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.New)]
+	[BenchmarkCategory(Categories.Validation)]
 	public void CheckItemsExists_Validation()
 	{
 		_ = this.ValidateItemsExist_Validation(this._people);
 	}
 
 	[Benchmark(Description = "Validating Collection: Validation + Inlining")]
-	[BenchmarkCategory(Categories.Validation, Categories.New)]
+	[BenchmarkCategory(Categories.Validation)]
 	public void CheckItemsExists_Validation_Inlining()
 	{
 		_ = this.ValidateItemsExist_Validation_Inlining(this._people);

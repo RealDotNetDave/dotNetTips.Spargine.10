@@ -27,7 +27,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	private ObservableList<Person> _personRefObservableList;
 
 	[Benchmark(Description = nameof(ObservableList<>.Add))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void Add()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -36,7 +36,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.AddRange))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void AddRange()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -47,7 +47,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.Clear))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void Clear()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -58,14 +58,14 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.Contains))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void Contains()
 	{
 		this.Consume(this._personRefObservableList.Contains(this.PersonRefLookupLast));
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.CopyTo))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void CopyTo()
 	{
 		var array = new Person[this._personRefObservableList.Count];
@@ -75,7 +75,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.CopyTo) + " with index")]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void CopyToWithIndex()
 	{
 		var array = new Person[this._personRefObservableList.Count];
@@ -85,7 +85,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.CopyTo) + " with index and count(half)")]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void CopyToWithIndexAndCount()
 	{
 		var array = new Person[this._personRefObservableList.Count];
@@ -95,7 +95,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.ExceptWith))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void ExceptWith()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -106,21 +106,21 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.FindAll))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void FindAll()
 	{
 		this.Consume(this._personRefObservableList.FindAll(p => p.Addresses.Count > 0));
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.FirstOrDefault))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void FirstOrDefault()
 	{
 		this.Consume(this._personRefObservableList.FirstOrDefault());
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.IntersectWith))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void IntersectWith()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -131,7 +131,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.IsProperSubsetOf))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void IsProperSubsetOf()
 	{
 		this.Consume(this._personRefObservableList.IsProperSubsetOf(this._personRefItemsToInsert));
@@ -139,42 +139,42 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 
 
 	[Benchmark(Description = nameof(ObservableList<>.IsProperSupersetOf))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void IsProperSupersetOf()
 	{
 		this.Consume(this._personRefObservableList.IsProperSupersetOf(this._personRefItemsToInsert));
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.IsSubsetOf))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void IsSubsetOf()
 	{
 		this.Consume(this._personRefObservableList.IsSubsetOf(this._personRefItemsToInsert));
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.IsSupersetOf))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void IsSupersetOf()
 	{
 		this.Consume(this._personRefObservableList.IsSupersetOf(this._personRefItemsToInsert));
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.LastOrDefault))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void LastOrDefault()
 	{
 		this.Consume(this._personRefObservableList.LastOrDefault());
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.Overlaps))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void Overlaps()
 	{
 		this.Consume(this._personRefObservableList.Overlaps(this._personRefItemsToInsert));
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.Remove))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void Remove()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -183,7 +183,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.RemoveRange))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void RemoveRange()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -192,7 +192,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.RemoveWhere))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void RemoveWhere()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -201,7 +201,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.Reset))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void Reset()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -212,7 +212,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.SetEquals))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void SetEquals()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -229,7 +229,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.SymmetricExceptWith))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void SymmetricExceptWith()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());
@@ -240,21 +240,21 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.ToArray))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void ToArray()
 	{
 		this.Consume(this._personRefObservableList.ToArray());
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.ToList))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void ToList()
 	{
 		this.Consume(this._personRefObservableList.ToList());
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.TryGetValue))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void TryGetValue()
 	{
 		this.Consume(this._personRefObservableList.TryGetValue(this.PersonRefLookupLast, out var person));
@@ -262,7 +262,7 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.UnionWith))]
-	[BenchmarkCategory(Categories.GenericCollections, Categories.New)]
+	[BenchmarkCategory(Categories.GenericCollections)]
 	public void UnionWith()
 	{
 		var people = new ObservableList<Person>(this.GetPersonRefArray());

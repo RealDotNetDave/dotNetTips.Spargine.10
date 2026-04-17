@@ -23,7 +23,6 @@ public class UlidBenchmark : Benchmark
 {
 
 	[Benchmark(Description = nameof(Ulid.GetTimeStamp))]
-	[BenchmarkCategory(Categories.New)]
 	public void GetTimeStamp()
 	{
 		// Arrange
@@ -36,7 +35,6 @@ public class UlidBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(Ulid.NewUlid))]
-	[BenchmarkCategory(Categories.New)]
 	public void NewUlid()
 	{
 		var result = Ulid.NewUlid;
@@ -50,7 +48,6 @@ public class UlidBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(Ulid.GetHashCode))]
-	[BenchmarkCategory(Categories.New)]
 	public void UlidGetHashCode()
 	{
 		var result = Ulid.NewUlid;

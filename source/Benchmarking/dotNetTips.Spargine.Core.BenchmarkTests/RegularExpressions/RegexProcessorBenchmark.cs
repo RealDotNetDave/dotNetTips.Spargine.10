@@ -123,7 +123,7 @@ public class RegexProcessorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RegexProcessor.IsOneToSevenAlpha))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsOneToSevenAlpha()
 	{
 		var result = RegexProcessor.GetNumbers("abcdefg");
@@ -132,7 +132,7 @@ public class RegexProcessorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RegexProcessor.IsScientific))]
-	[BenchmarkCategory(Categories.Strings, Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void IsScientific()
 	{
 		var result = RegexProcessor.IsScientific("1.23E+10");
@@ -177,7 +177,6 @@ public class RegexProcessorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RegexProcessor.RemoveHtml))]
-	[BenchmarkCategory(Categories.New)]
 	public void RemoveHtml()
 	{
 		var result = RegexProcessor.RemoveHtml("<p>dotnettips</p>");
@@ -187,7 +186,6 @@ public class RegexProcessorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(RegexProcessor.RemoveSpecialChar))]
-	[BenchmarkCategory(Categories.New)]
 	public void RemoveSpecialChar()
 	{
 		var result = RegexProcessor.RemoveSpecialChar("dot@net!tips#");

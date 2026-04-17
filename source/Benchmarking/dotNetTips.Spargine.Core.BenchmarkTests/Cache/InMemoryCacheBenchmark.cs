@@ -282,14 +282,14 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.GetCacheItem))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public void GetCacheItem()
 	{
 		this.Consume(this._cache.GetCacheItem<Person>(this._cacheId));
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.GetCacheItemAsync))]
-	[BenchmarkCategory(Categories.Collections, Categories.New)]
+	[BenchmarkCategory(Categories.Collections)]
 	public async Task GetCacheItemAsync()
 	{
 		this.Consume(await this._cache.GetCacheItemAsync<Person>(this._cacheId).ConfigureAwait(false));

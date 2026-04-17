@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 public class KeyGeneratorBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(KeyGenerator.GenerateKey))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void GenerateKey()
 	{
 		var result = KeyGenerator.GenerateKey();
@@ -30,7 +30,7 @@ public class KeyGeneratorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(KeyGenerator.GenerateKey) + ": With Prefix")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void GenerateKeyPrefix()
 	{
 		var result = KeyGenerator.GenerateKey("TEST");
@@ -39,7 +39,7 @@ public class KeyGeneratorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(KeyGenerator.GenerateSortableKey))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void GenerateSortableKey()
 	{
 		var result = KeyGenerator.GenerateSortableKey();
@@ -48,7 +48,7 @@ public class KeyGeneratorBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(KeyGenerator.GenerateSortableKey) + ": With Prefix")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.Strings)]
 	public void GenerateSortableKeyWithPrefix()
 	{
 		var result = KeyGenerator.GenerateSortableKey("TEST");

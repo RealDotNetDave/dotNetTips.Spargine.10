@@ -44,7 +44,7 @@ public class SerializationBenchmark : Benchmark
 	private string _xmlPersonRef;
 
 	[Benchmark(Description = "Deserialize JSON: JsonSerializer + Generator - Person")]
-	[BenchmarkCategory(Categories.JSON, Categories.New, "JsonSerializer")]
+	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]
 	public void Deserialize_Json_JsonSerializer_Generator_Person()
 	{
 		var result = JsonSerializer.Deserialize(this._jsonPersonRef, typeof(Person), PersonRefJsonSerializerContext.Default) as Person;
@@ -52,7 +52,7 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = "Deserialize JSON: JsonSerializer + Generator - List<Person>")]
-	[BenchmarkCategory(Categories.JSON, Categories.New, "JsonSerializer")]
+	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]
 	public void Deserialize_Json_JsonSerializer_Generator_Person_List()
 	{
 		var result = JsonSerializer.Deserialize(this._jsonPersonRefList, typeof(List<Person>), PersonRefJsonSerializerContext.Default) as List<Person>;
@@ -107,7 +107,7 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(JsonSerialization.JsonEqual))]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void JsonEqual()
 	{
 		var actual = "{\"Name\":\"Test\",\"Value\":1}";
@@ -120,7 +120,7 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(JsonSerialization.LoadCollectionFromJson) + ": JSON=People")]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void LoadCollectionFromJson_People()
 	{
 		var result = JsonSerialization.LoadCollectionFromJson<Person>(this._jsonPersonRefList, Count);
@@ -129,7 +129,7 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(JsonSerialization.LoadCollectionFromJson) + ": JSON=People, SerializerContext")]
-	[BenchmarkCategory(Categories.JSON, Categories.New)]
+	[BenchmarkCategory(Categories.JSON)]
 	public void LoadCollectionFromJson_People_SerializerContext()
 	{
 		var result = JsonSerialization.LoadCollectionFromJson<Person>(this._jsonPersonRefList, Count, PersonRefJsonSerializerContext.Default.Person);
@@ -138,7 +138,7 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = "Serialize JSON: JsonSerializer + Generator - Person")]
-	[BenchmarkCategory(Categories.JSON, Categories.New, "JsonSerializer")]
+	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]
 	public void Serialize_Json_JsonSerializer_Generator_Person()
 	{
 		var result = JsonSerializer.Serialize(this.PersonRef01, typeof(Person), PersonRefJsonSerializerContext.Default);
@@ -147,7 +147,7 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = "Serialize JSON: JsonSerializer + Generator - List<Person>")]
-	[BenchmarkCategory(Categories.JSON, Categories.New, "JsonSerializer")]
+	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]
 	public void Serialize_Json_JsonSerializer_Generator_Person_List()
 	{
 		var result = JsonSerializer.Serialize(this._personRefList, typeof(List<Person>), PersonRefJsonSerializerContext.Default);

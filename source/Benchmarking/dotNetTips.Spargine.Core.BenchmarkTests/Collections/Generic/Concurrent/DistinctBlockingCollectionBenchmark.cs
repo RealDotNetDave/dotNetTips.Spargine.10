@@ -30,7 +30,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	private Person[] _peopleRefToInsert;
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Add))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Add()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -42,7 +42,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.AddRange))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void AddRange()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -51,7 +51,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Clear))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Clear()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -62,7 +62,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Clone))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Clone()
 	{
 		using (var people = this._peopleRefDistinctBlockingCollection.Clone())
@@ -72,21 +72,21 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Contains))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Contains()
 	{
 		this.Consume(this._peopleRefDistinctBlockingCollection.Contains(this.PersonRefLookupLast));
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.ContainsAny))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void ContainsAny()
 	{
 		this.Consume(this._peopleRefDistinctBlockingCollection.ContainsAny(this._peopleRefToInsert));
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Remove))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void Remove()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -104,7 +104,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryAdd()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -116,7 +116,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAddRange))]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryAddRange()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -125,7 +125,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd) + ": with Timeout")]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryAddWithTimeout()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -137,7 +137,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd) + ": with Timeout & CancellationToken")]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryAddWithTimeoutAndCancellationToken()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
@@ -149,7 +149,7 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd) + ": with Timespan")]
-	[BenchmarkCategory(Categories.Async, Categories.New)]
+	[BenchmarkCategory(Categories.Async)]
 	public void TryAddWithTimespan()
 	{
 		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());

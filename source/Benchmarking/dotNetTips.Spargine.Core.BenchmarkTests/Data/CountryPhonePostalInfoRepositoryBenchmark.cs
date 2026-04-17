@@ -24,14 +24,12 @@ public class CountryPhonePostalInfoRepositoryBenchmark : Benchmark
 {
 
 	[Benchmark(Description = nameof(CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo))]
-	[BenchmarkCategory(Categories.New)]
 	public void GetCountryPhonePostalInfo()
 	{
 		var result = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo();
 		this.Consume(result);
 	}
 	[Benchmark(Description = nameof(CountryPhonePostalInfoRepository.ValidatePhoneNumber) + ": US")]
-	[BenchmarkCategory(Categories.New)]
 	public void ValidatePhoneNumber()
 	{
 		var result = CountryPhonePostalInfoRepository.ValidatePhoneNumber("United States", "1-555-666-7777", true);
@@ -39,7 +37,6 @@ public class CountryPhonePostalInfoRepositoryBenchmark : Benchmark
 	}
 
 	[Benchmark(Description = nameof(CountryPhonePostalInfoRepository.ValidatePostalCode) + ": US-Full")]
-	[BenchmarkCategory(Categories.New)]
 	public void ValidatePostalCode()
 	{
 		var result = CountryPhonePostalInfoRepository.ValidatePostalCode("United States", "92130-1234");
