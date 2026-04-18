@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -36,15 +36,15 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	private Person[] _personRefArray;
-	private ConcurrentStack<Person> _personRefConcurrentStack;
-	private IEnumerable<Person> _personRefEnumerable;
-	private List<Person> _personRefEnumerableEnd;
-	private List<Person> _personRefEnumerableStart;
-	private IEnumerable<Person> _personRefEnumerableToAdd;
-	private HashSet<Person> _personRefHashSet;
-	private ImmutableQueue<Person> _personRefImmutableQueue;
-	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
+	private Person[] _personRefArray = default!;
+	private ConcurrentStack<Person> _personRefConcurrentStack = default!;
+	private IEnumerable<Person> _personRefEnumerable = default!;
+	private List<Person> _personRefEnumerableEnd = default!;
+	private List<Person> _personRefEnumerableStart = default!;
+	private IEnumerable<Person> _personRefEnumerableToAdd = default!;
+	private HashSet<Person> _personRefHashSet = default!;
+	private ImmutableQueue<Person> _personRefImmutableQueue = default!;
+	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
 	public void AddDistinct()
@@ -388,8 +388,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		// Add a null to the collection
 		var people = collection.ToList();
-		people.Add(null);
-		people.Add(null);
+		people.Add(null!);
+		people.Add(null!);
 
 		collection = people.AsEnumerable();
 

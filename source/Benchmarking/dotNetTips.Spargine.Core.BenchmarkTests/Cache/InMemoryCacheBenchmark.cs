@@ -4,7 +4,7 @@
 // Created          : 10-03-2024
 //
 // Last Modified By : david
-// Last Modified On : 01-29-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -24,11 +24,11 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Cache;
 
 public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 {
-	private InMemoryCache _cache;
-	private string _cacheId;
+	private InMemoryCache _cache = default!;
+	private string _cacheId = default!;
 
-	private PersonRecord[] _personRecordArray;
-	private Person[] _personRefArray;
+	private PersonRecord[] _personRecordArray = default!;
+	private Person[] _personRefArray = default!;
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem))]
 	[BenchmarkCategory(Categories.Collections)]

@@ -1,16 +1,17 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Core.BenchmarkTests
-// Author           : david
-// Created          : 10-07-2024
+// Author           : David McCarter
+// Created          : 05-01-2025
 //
-// Last Modified By : david
-// Last Modified On : 02-15-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="EnumerationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
-//     David McCarter
+//     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
@@ -43,10 +44,7 @@ public class EnumerationBenchmark : Benchmark
 	{
 		var result = Enumeration.GetAll<NumericFormat>();
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(Enumeration.TryFromDisplayName))]

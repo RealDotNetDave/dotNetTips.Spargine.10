@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -27,6 +27,7 @@ using System.Reflection;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
@@ -43,7 +44,7 @@ public class TypeHelperBenchmark : Benchmark
 {
 
 	private readonly int _collectionCount = 50;
-	private List<Person> _people;
+	private List<Person> _people = default!;
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
@@ -153,10 +154,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllConstructorsNoCache(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": Cached")]
@@ -165,10 +163,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllConstructors(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": No Cache")]
@@ -177,10 +172,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllDeclaredFieldsNoCache(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": Cached")]
@@ -198,10 +190,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllDeclaredMethodsNoCache(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 
@@ -211,10 +200,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllDeclaredMethods(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllFields) + ": No Cache")]
@@ -223,10 +209,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllFieldsNoCache(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 
@@ -236,10 +219,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllFields(typeof(Benchmark));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
@@ -257,10 +237,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllMethodsNoCache(typeof(StringBuilder));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": Cached")]
@@ -269,10 +246,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllProperties) + ": No Cache")]
@@ -281,10 +255,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllPropertiesNoCache(typeof(Person));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 
@@ -294,10 +265,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllProperties(typeof(Person));
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
@@ -325,7 +293,7 @@ public class TypeHelperBenchmark : Benchmark
 #pragma warning disable CS0612 // Type or member is obsolete
 		var field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
 #pragma warning restore CS0612 // Type or member is obsolete
-		var result = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
+		var result = TypeHelper.GetAttribute<ObsoleteAttribute>(field!);
 
 		this.Consume(result);
 	}
@@ -336,7 +304,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var method = typeof(TypeHelper).GetMethod(nameof(TypeHelper.GetPropertyValues));
 
-		var result = TypeHelper.GetAttribute<InformationAttribute>(method);
+		var result = TypeHelper.GetAttribute<InformationAttribute>(method!);
 
 		this.Consume(result);
 	}
@@ -346,7 +314,7 @@ public class TypeHelperBenchmark : Benchmark
 	public void GetAttributePropertyInfo()
 	{
 		var property = typeof(TypeHelper).GetProperty(nameof(TypeHelper.BuiltInTypes), BindingFlags.Static | BindingFlags.Public);
-		var result = TypeHelper.GetAttribute<InformationAttribute>(property);
+		var result = TypeHelper.GetAttribute<InformationAttribute>(property!);
 
 		this.Consume(result);
 	}
@@ -418,10 +386,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = GetMembersWithAttributeNoCache<InformationAttribute>(type);
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute) + ": Cached")]
@@ -432,10 +397,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type);
 
-		foreach (var item in result)
-		{
-			this.Consume(item);
-		}
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetPropertyValues))]
@@ -849,7 +811,7 @@ public class TypeHelperBenchmark : Benchmark
 				break;
 			}
 
-			currentType = currentType.BaseType!;
+			currentType = currentType.BaseType;
 		}
 
 		return result;
@@ -896,7 +858,7 @@ public class TypeHelperBenchmark : Benchmark
 	private sealed class FieldWithAttributeTestClass
 	{
 		[Obsolete]
-		public int MarkedField;
+		public int MarkedField = 0;
 	}
 
 }

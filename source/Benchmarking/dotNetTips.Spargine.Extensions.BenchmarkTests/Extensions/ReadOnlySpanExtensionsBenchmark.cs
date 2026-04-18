@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ReadOnlySpanExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -24,10 +23,10 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ReadOnlySpanExtensionsBenchmark : LargeCollectionBenchmark
 {
-	private byte[] _bytes;
-	private PersonRecord[] _peopleRecordArray;
-	private Spargine.Tester.Models.ValueTypes.Person[] _peopleValArray;
-	private Person[] _personRefArray;
+	private byte[] _bytes = default!;
+	private PersonRecord[] _peopleRecordArray = default!;
+	private Spargine.Tester.Models.ValueTypes.Person[] _peopleValArray = default!;
+	private Person[] _personRefArray = default!;
 
 	[Benchmark(Description = nameof(ReadOnlySpanExtensions.BytesToString))]
 	public void BytesToString()

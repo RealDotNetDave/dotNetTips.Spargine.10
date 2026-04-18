@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -25,11 +25,10 @@ public class EncryptionHelperBenchmark : Benchmark
 {
 
 	private const string Key = "!&@^@%@$@#!!!";
-
-	private string _aesCypherText;
-	private string _aesGcmEncryptText;
-	private byte[] _aesIv;
-	private byte[] _aesKey;
+	private string _aesCypherText = default!;
+	private string _aesGcmEncryptText = default!;
+	private byte[] _aesIv = default!;
+	private byte[] _aesKey = default!;
 	private string _cypherText = string.Empty;
 
 	[Benchmark(Description = nameof(EncryptionHelper.AesDecrypt))]

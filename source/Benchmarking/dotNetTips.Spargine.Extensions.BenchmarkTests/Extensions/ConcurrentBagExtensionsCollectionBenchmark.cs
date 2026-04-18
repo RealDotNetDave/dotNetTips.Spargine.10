@@ -4,7 +4,7 @@
 // Created          : 03-15-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -26,8 +26,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ConcurrentBagExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	private ConcurrentBag<Person> _peopleRefConcurrentBag;
-	private IEnumerable<Person> _peopleRefEnumerable;
+	private ConcurrentBag<Person> _peopleRefConcurrentBag = default!;
+	private IEnumerable<Person> _peopleRefEnumerable = default!;
 
 	[Benchmark(Description = nameof(ConcurrentBagExtensions.AddRange))]
 	public void AddRange()

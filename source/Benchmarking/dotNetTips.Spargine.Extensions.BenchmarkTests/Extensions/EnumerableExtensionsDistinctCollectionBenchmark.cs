@@ -4,7 +4,7 @@
 // Created          : 01-23-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsDistinctCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,8 +27,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBenchmark
 {
-	private IEnumerable<Person> _personRefEnumerable;
-	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable;
+	private IEnumerable<Person> _personRefEnumerable = default!;
+	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Comparer - Ref")]
 	public void DistinctFastDistinctComparerRef()

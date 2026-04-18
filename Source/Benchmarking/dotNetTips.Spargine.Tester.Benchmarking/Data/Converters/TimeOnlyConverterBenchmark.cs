@@ -4,7 +4,7 @@
 // Created          : 07-17-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="TimeOnlyConverterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -40,7 +40,7 @@ public class TimeOnlyConverterBenchmark : Benchmark
 	public void Read()
 	{
 		var reader = new Utf8JsonReader(this._timeJsonBytes);
-		reader.Read();
+		_ = reader.Read();
 
 		var result = this._converter.Read(ref reader, typeof(TimeOnly), JsonSerializerOptions.Default);
 

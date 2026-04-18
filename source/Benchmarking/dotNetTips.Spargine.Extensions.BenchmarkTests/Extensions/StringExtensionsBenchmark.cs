@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -45,13 +45,13 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _formatString = "The time is {0:HH:mm:ss}";
 	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeHash();
 	private readonly string _isbn = "0525505997";
-	private readonly string _nullTestString = null;
+	private readonly string _nullTestString = null!;
 	private readonly string _oneToSevenAlpha = RandomData.GenerateWord(7);
 	private readonly string _personName = "David McCarter";
 	private readonly string _stringWithEllipsis = RandomData.GenerateWord(100) + "...";
 	private readonly string _url = "https://api.example.com:8443/v1/users/123?include=profile,settings&format=json#section1";
-	private string _compressedString;
-	private string _zlibString;
+	private string _compressedString = default!;
+	private string _zlibString = default!;
 
 	[Benchmark(Description = nameof(StringExtensions.CombineToString))]
 	[BenchmarkCategory(Categories.Strings)]

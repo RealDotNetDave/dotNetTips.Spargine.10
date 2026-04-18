@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-26-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ObservableListBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -23,8 +23,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
 public class ObservableListBenchmark : LargeCollectionBenchmark
 {
-	private Person[] _personRefItemsToInsert;
-	private ObservableList<Person> _personRefObservableList;
+	private Person[] _personRefItemsToInsert = default!;
+	private ObservableList<Person> _personRefObservableList = default!;
 
 	[Benchmark(Description = nameof(ObservableList<>.Add))]
 	[BenchmarkCategory(Categories.GenericCollections)]

@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-17-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -34,9 +34,9 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 {
 	private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
-	private byte[] _byteArray;
-	private Dictionary<string, string> _wordDictionary;
-	private string[] _words;
+	private byte[] _byteArray = default!;
+	private Dictionary<string, string> _wordDictionary = default!;
+	private string[] _words = default!;
 
 	[Benchmark(Description = nameof(FastStringBuilder.BytesToString) + ": Array")]
 	[BenchmarkCategory(Categories.Array, Categories.Strings)]

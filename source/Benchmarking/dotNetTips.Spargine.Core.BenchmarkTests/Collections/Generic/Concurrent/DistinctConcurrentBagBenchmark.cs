@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-01-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -25,8 +25,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [BenchmarkCategory(Categories.Async)]
 public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 {
-	private DistinctConcurrentBag<Person> _peopleRefDistinctConcurrentBag;
-	private Person[] _peopleRefToInsert;
+	private DistinctConcurrentBag<Person> _peopleRefDistinctConcurrentBag = default!;
+	private Person[] _peopleRefToInsert = default!;
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Add))]
 	[BenchmarkCategory(Categories.Async)]

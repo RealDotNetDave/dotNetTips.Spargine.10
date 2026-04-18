@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-14-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ReadOnlyCollectionExtensionsBenchmark : LargeCollectionBenchmark
 {
-	private ReadOnlyCollection<Person> _personRefReadOnlyCollection;
+	private ReadOnlyCollection<Person> _personRefReadOnlyCollection = default!;
 
 	[Benchmark(Description = nameof(ReadOnlyCollectionExtensions.GenerateHashCode))]
 	public void GenerateHashCode()

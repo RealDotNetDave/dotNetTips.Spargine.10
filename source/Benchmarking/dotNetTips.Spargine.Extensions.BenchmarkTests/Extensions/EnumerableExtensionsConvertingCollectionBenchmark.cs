@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-15-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsConvertingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollectionBenchmark
 {
-	private IEnumerable<Person> _personRefEnumerable;
+	private IEnumerable<Person> _personRefEnumerable = default!;
 
 	public override void Setup()
 	{

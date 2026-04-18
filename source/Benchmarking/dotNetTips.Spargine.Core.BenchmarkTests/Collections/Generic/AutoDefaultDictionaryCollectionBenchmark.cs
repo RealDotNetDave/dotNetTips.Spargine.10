@@ -4,7 +4,7 @@
 // Created          : 02-15-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,8 +28,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
 public class AutoDefaultDictionaryCollectionBenchmark : LargeCollectionBenchmark
 {
-	private ReadOnlyCollection<Person> _peopleUpsertNew;
-	private AutoDefaultDictionary<string, Person> _personRefAutoDefaultDictionary;
+	private ReadOnlyCollection<Person> _peopleUpsertNew = default!;
+	private AutoDefaultDictionary<string, Person> _personRefAutoDefaultDictionary = default!;
 
 	[Benchmark(Description = "AddOrUpdate")]
 	public void AddOrUpdate()

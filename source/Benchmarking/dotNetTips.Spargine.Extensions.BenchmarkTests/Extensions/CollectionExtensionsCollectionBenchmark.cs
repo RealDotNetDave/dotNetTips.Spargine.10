@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-16-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,10 +32,10 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
-	private Person _existingPerson;
-	private Collection<Person> _peopleRefCollection;
-	private List<Person> _peopleRefList;
-	private Person _personToInsert;
+	private Person _existingPerson = default!;
+	private Collection<Person> _peopleRefCollection = default!;
+	private List<Person> _peopleRefList = default!;
+	private Person _personToInsert = default!;
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIfNotExists) + ": Existing Item")]
 	[BenchmarkCategory(Categories.Collections)]

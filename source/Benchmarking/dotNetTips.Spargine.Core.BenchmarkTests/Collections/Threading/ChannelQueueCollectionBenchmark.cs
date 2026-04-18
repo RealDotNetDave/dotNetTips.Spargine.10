@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -35,7 +35,7 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 	/// <summary>
 	/// The person reference array
 	/// </summary>
-	private Person[] _personRefArray;
+	private Person[] _personRefArray = default!;
 
 	/// <summary>
 	/// Setups this instance.

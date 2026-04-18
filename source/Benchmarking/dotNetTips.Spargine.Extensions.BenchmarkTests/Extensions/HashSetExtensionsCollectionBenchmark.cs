@@ -4,7 +4,7 @@
 // Created          : 06-10-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-02-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -26,8 +26,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
-	private HashSet<Person> _peopleRefToAdd;
-	private HashSet<Person> _personRefHashSet;
+	private HashSet<Person> _peopleRefToAdd = default!;
+	private HashSet<Person> _personRefHashSet = default!;
 
 	[Benchmark(Description = nameof(HashSetExtensions.AddIf))]
 	public void AddIf()

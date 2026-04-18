@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-19-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -35,13 +35,13 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
 	private const int OperationsCount = 1024;
-	private byte[] _byteArray;
-	private PersonRecord[] _personRecordArray;
-	private Person[] _personRefArray;
-	private Person[] _personRefArrayHalf;
-	private Person[] _personRefArrayWithDups;
-	private Spargine.Tester.Models.ValueTypes.Person[] _personValArray;
-	private Spargine.Tester.Models.ValueTypes.Person[] _personValArrayHalf;
+	private byte[] _byteArray = default!;
+	private PersonRecord[] _personRecordArray = default!;
+	private Person[] _personRefArray = default!;
+	private Person[] _personRefArrayHalf = default!;
+	private Person[] _personRefArrayWithDups = default!;
+	private Spargine.Tester.Models.ValueTypes.Person[] _personValArray = default!;
+	private Spargine.Tester.Models.ValueTypes.Person[] _personValArrayHalf = default!;
 
 	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
@@ -99,7 +99,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefArray.AsReadOnlySpan();
 
-		this.Consume(result.ToArray());
+		this.ConsumeReadOnlySpan(result);
 	}
 
 	[Benchmark(Description = nameof(Array.Clone) + ": Array as Record")]

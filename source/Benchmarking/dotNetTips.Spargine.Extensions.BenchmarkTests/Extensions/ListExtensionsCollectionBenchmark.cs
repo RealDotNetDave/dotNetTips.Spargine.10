@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -30,12 +30,12 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	private List<PersonRecord> _peopleRecordList;
-	private List<Person> _peopleRefList;
-	private List<Person> _peopleRefSubSet;
-	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList;
+	private List<PersonRecord> _peopleRecordList = default!;
+	private List<Person> _peopleRefList = default!;
+	private List<Person> _peopleRefSubSet = default!;
+	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList = default!;
 
-	private IComparer<Person> _personComparer;
+	private IComparer<Person> _personComparer = default!;
 
 	[Benchmark(Description = nameof(ListExtensions.AsReadOnlySpan))]
 	public void AsReadOnlySpan()
@@ -61,7 +61,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void ClearNulls()
 	{
 		var people = this._peopleRefList;
-		people.Add(null);
+		people.Add(null!);
 
 		var result = people.ClearNulls();
 
@@ -162,7 +162,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._peopleRefList;
 
-		this.Consume(people.IsNotEmpty(p => p.BornOn.Value.Date.Month > 0));
+		this.Consume(people.IsNotEmpty(p => p.BornOn!.Value.Date.Month > 0));
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.PerformAction) + " :Ref")]

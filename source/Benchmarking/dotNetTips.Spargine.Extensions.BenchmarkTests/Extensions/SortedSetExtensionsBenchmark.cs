@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="SortedSetExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -28,7 +28,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class SortedSetExtensionsBenchmark : LargeCollectionBenchmark
 {
-	private SortedSet<Person> _personRefSortedSet;
+	private SortedSet<Person> _personRefSortedSet = default!;
 
 	[Benchmark(Description = nameof(SortedSetExtensions.IsNotEmpty))]
 	public void IsNotEmpty()

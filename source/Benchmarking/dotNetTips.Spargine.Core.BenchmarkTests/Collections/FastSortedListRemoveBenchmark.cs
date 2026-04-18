@@ -4,7 +4,7 @@
 // Created          : 01-13-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="FastSortedListRemoveBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -27,10 +27,10 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections;
 [BenchmarkCategory(Categories.Collections)]
 public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 {
-	private Person _lastPersonRefFastSortedList;
+	private Person _lastPersonRefFastSortedList = default!;
 	private KeyValuePair<string, Person> _lastPersonRefSortedList;
-	private FastSortedList<Person> _personRefFastSortedList;
-	private SortedList<string, Person> _personRefSortedList;
+	private FastSortedList<Person> _personRefFastSortedList = default!;
+	private SortedList<string, Person> _personRefSortedList = default!;
 
 	[Benchmark(Description = "Remove: FastSortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections)]

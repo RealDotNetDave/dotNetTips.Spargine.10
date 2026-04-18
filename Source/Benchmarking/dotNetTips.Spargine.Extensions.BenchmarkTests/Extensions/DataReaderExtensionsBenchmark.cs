@@ -4,7 +4,7 @@
 // Created          : 07-25-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-25-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -31,7 +31,7 @@ public class DataReaderExtensionsBenchmark : Benchmark
 
 	private const int RowCount = 100;
 
-	private DataTable _dataTable;
+	private DataTable _dataTable = default!;
 
 	public override void Cleanup()
 	{

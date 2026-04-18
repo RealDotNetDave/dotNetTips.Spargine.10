@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-24-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -78,9 +78,9 @@ public class DisposableFields : IDisposable
 public class ObjectExtensionsBenchmark : Benchmark
 {
 
-	private string _peopleJson;
-	private Collection<Person> _personCollection;
-	private FileInfo _tempJsonFile;
+	private string _peopleJson = default!;
+	private Collection<Person> _personCollection = default!;
+	private FileInfo _tempJsonFile = default!;
 
 	public override void Cleanup()
 	{

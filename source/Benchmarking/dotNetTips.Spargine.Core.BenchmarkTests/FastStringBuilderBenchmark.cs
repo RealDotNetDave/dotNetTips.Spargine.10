@@ -4,7 +4,7 @@
 // Created          : 03-06-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-20-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 public class FastStringBuilderBenchmark : Benchmark
 {
 
-	private string[] _words;
+	private string[] _words = default!;
 
 	[Benchmark(Description = nameof(FastStringBuilder.Format))]
 	[BenchmarkCategory(Categories.Strings)]

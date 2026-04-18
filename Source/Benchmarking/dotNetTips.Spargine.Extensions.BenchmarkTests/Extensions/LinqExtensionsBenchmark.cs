@@ -4,7 +4,7 @@
 // Created          : 07-21-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="LinqExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,7 +34,7 @@ public class LinqExtensionsBenchmark : LargeCollectionBenchmark
 	private static readonly Func<IEnumerable<Person>, IEnumerable<Person>> _orderTransform =
 		collection => collection.OrderBy(person => person.Email);
 
-	private Person[] _people;
+	private Person[] _people = default!;
 
 	[Benchmark(Description = "If: should=false (passthrough)")]
 	[BenchmarkCategory(Categories.Collections)]

@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-27-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,8 +26,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [BenchmarkCategory(Categories.Async)]
 public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 {
-	private DistinctBlockingCollection<Person> _peopleRefDistinctBlockingCollection;
-	private Person[] _peopleRefToInsert;
+	private DistinctBlockingCollection<Person> _peopleRefDistinctBlockingCollection = default!;
+	private Person[] _peopleRefToInsert = default!;
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Add))]
 	[BenchmarkCategory(Categories.Async)]

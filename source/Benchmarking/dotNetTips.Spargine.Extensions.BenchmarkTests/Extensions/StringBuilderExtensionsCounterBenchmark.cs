@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-08-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -30,9 +30,9 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class StringBuilderExtensionsCounterBenchmark : TinyCollectionBenchmark
 {
 
-	private byte[] _byteArray;
-	private string[] _stringArray;
-	private IEnumerable<string> _stringEnumerable;
+	private byte[] _byteArray = default!;
+	private string[] _stringArray = default!;
+	private IEnumerable<string> _stringEnumerable = default!;
 
 	[Benchmark(Description = nameof(StringBuilderExtensions.AppendBytes) + ": 01*")]
 	[BenchmarkCategory(Categories.Strings)]

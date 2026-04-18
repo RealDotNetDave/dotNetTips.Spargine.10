@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="LoggingHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -28,7 +28,7 @@ public class LoggingHelperBenchmark : Benchmark
 	private const string MessageTest1 = "TEST EX1.";
 	private const string MessageTest2 = "TEST EX2";
 
-	private ILogger<LoggingHelperBenchmark> _logger;
+	private ILogger<LoggingHelperBenchmark> _logger = default!;
 
 	[Benchmark(Description = nameof(LoggingHelper.LogApplicationInformation))]
 	[BenchmarkCategory(Categories.Logging)]

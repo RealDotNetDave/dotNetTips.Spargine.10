@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-10-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="SerializationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -36,12 +36,12 @@ public class SerializationBenchmark : Benchmark
 {
 	private const int Count = 100;
 
-	private string _jsonPersonRecord;
-	private string _jsonPersonRef;
-	private string _jsonPersonRefList;
-	private List<Person> _personRefList;
-	private string _xmlPersonRecord;
-	private string _xmlPersonRef;
+	private string _jsonPersonRecord = default!;
+	private string _jsonPersonRef = default!;
+	private string _jsonPersonRefList = default!;
+	private List<Person> _personRefList = default!;
+	private string _xmlPersonRecord = default!;
+	private string _xmlPersonRef = default!;
 
 	[Benchmark(Description = "Deserialize JSON: JsonSerializer + Generator - Person")]
 	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]

@@ -4,7 +4,7 @@
 // Created          : 03-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="FastSortedListCreateAddBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -26,8 +26,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections;
 [BenchmarkCategory(Categories.Collections)]
 public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 {
-	private Person[] _peopleRefArrayToInsert;
-	private Dictionary<string, Person> _peopleRefDictionaryToInsert;
+	private Person[] _peopleRefArrayToInsert = default!;
+	private Dictionary<string, Person> _peopleRefDictionaryToInsert = default!;
 
 	[Benchmark(Description = "Add: FastSortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections)]

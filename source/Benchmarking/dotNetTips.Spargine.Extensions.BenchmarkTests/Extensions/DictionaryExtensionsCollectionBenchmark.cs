@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,8 +32,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private KeyValuePair<string, Person> _personRef;
-	private Dictionary<string, Person> _personRefDictionary;
-	private Dictionary<string, Person> _personRefDictionaryToInsert;
+	private Dictionary<string, Person> _personRefDictionary = default!;
+	private Dictionary<string, Person> _personRefDictionaryToInsert = default!;
 
 	[Benchmark(Description = nameof(DictionaryExtensions.AddRange))]
 	public void AddRange()
@@ -58,7 +58,7 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefDictionary;
 
 		// Explicitly specify the extension method to resolve ambiguity
-		var result = DictionaryExtensions.IsNotEmpty(people, p => p.Value.BornOn.Value.Date.Month > 0);
+		var result = DictionaryExtensions.IsNotEmpty(people, p => p.Value.BornOn!.Value.Date.Month > 0);
 
 		this.Consume(result);
 	}

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [BenchmarkCategory(Categories.Async)]
 public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 {
-	private ConcurrentHashSet<Person> _personRefConcurrentHashSet;
+	private ConcurrentHashSet<Person> _personRefConcurrentHashSet = default!;
 
 	[Benchmark(Description = "Clear")]
 	[BenchmarkCategory(Categories.Async)]
@@ -66,9 +66,7 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefConcurrentHashSet;
 
-		var result = people.Count;
-
-		this.Consume(result);
+		this.Consume(people.Count);
 	}
 
 	[Benchmark(Description = "IsEmpty")]
@@ -88,9 +86,7 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefConcurrentHashSet;
 
-		var result = people.Remove(this.PersonRef01);
-
-		this.Consume(result);
+		this.Consume(people.Remove(this.PersonRef01));
 	}
 
 	public override void Setup()

@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-30-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,11 +32,11 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 {
 	private static readonly char[] _charList = ['a', 'z'];
-	private string _brotilString;
-	private string _crlfCompareString;
-	private string _crlfString;
-	private string _gzipString;
-	private string[] _wordCollection;
+	private string _brotilString = default!;
+	private string _crlfCompareString = default!;
+	private string _crlfString = default!;
+	private string _gzipString = default!;
+	private string[] _wordCollection = default!;
 
 	[Benchmark(Description = nameof(StringExtensions.CalculateByteArraySize))]
 	[BenchmarkCategory(Categories.Strings)]
@@ -191,30 +191,21 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitCharSeparator()
 	{
-		foreach (var line in this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, 2, ControlChars.Dot))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, 2, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": Char Separator ")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitCharSeparatorNoCount()
 	{
-		foreach (var line in this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = "Split")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitComparison()
 	{
-		foreach (var line in this._crlfString.Split(ControlChars.CRLF))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(ControlChars.CRLF));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.SplitLines) + ": LineSplitEntry")]
@@ -231,50 +222,35 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitRemoveEmpty()
 	{
-		foreach (var line in this._crlfString.SplitRemoveEmpty())
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.SplitRemoveEmpty());
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": String Separator + Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitStringSeparator()
 	{
-		foreach (var line in this._crlfString.Split(ControlChars.CRLF, 2, StringSplitOptions.RemoveEmptyEntries))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(ControlChars.CRLF, 2, StringSplitOptions.RemoveEmptyEntries));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": RemoveEmptyEntries")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithRemoveEmptyEntries()
 	{
-		foreach (var line in this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": TrimEntries")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithTrimEntries()
 	{
-		foreach (var line in this._crlfString.Split(StringSplitOptions.TrimEntries, ControlChars.Dot))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.TrimEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": TrimEntries + Count")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithTrimEntriesCount()
 	{
-		foreach (var line in this._crlfString.Split(StringSplitOptions.TrimEntries, 10, ControlChars.Dot))
-		{
-			this.Consume(line);
-		}
+		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.TrimEntries, 10, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64))]

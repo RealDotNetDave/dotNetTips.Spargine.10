@@ -4,7 +4,7 @@
 // Created          : 01-02-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsAddRemoveCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,10 +26,10 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchmark
 {
-	private List<PersonRecord> _peopleRecordList;
-	private List<Person> _peopleRefList;
-	private IEnumerable<Person> _peopleRefSubSet;
-	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList;
+	private List<PersonRecord> _peopleRecordList = default!;
+	private List<Person> _peopleRefList = default!;
+	private IEnumerable<Person> _peopleRefSubSet = default!;
+	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList = default!;
 
 	[Benchmark(Description = nameof(ListExtensions.AddFirst))]
 	[BenchmarkCategory(Categories.Collections)]

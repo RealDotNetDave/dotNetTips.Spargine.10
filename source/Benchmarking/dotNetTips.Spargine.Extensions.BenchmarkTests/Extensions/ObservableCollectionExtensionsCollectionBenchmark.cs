@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class ObservableCollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 
-	private ObservableCollection<Person> _personRefObservableCollection;
+	private ObservableCollection<Person> _personRefObservableCollection = default!;
 
 	[Benchmark(Description = nameof(ObservableCollectionExtensions.IsNotEmpty))]
 	[BenchmarkCategory(Categories.Collections)]

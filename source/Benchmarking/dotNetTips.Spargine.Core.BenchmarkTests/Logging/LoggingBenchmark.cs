@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="LoggingBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,9 +32,9 @@ public class LoggingBenchmark : Benchmark
 	private const string StoredProcedure = "Stored Procedure";
 	private const string TraceMessage = "TRACE ENTRY";
 	private const string WarningMessage = "WARNING ENTRY";
-
-	private ILogger<LoggingBenchmark> _logger;
 	private readonly ArgumentInvalidException _testException = new("TEST EX MESSAGE");
+
+	private ILogger<LoggingBenchmark> _logger = default!;
 
 	[Benchmark(Description = nameof(FastLoggerExtensions.LogCriticalMessage))]
 	[BenchmarkCategory(Categories.Logging)]

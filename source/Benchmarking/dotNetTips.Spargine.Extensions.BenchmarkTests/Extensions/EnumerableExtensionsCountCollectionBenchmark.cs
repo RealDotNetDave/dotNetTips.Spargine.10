@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCountCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -19,7 +19,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -29,7 +28,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBenchmark
 {
-	private IEnumerable<Person> _personRefEnumerable;
+	private IEnumerable<Person> _personRefEnumerable = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.CountAsync))]
 	public async Task CountCountAsync()

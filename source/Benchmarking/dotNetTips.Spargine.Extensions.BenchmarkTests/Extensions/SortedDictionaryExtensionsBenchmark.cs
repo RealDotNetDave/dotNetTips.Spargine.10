@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-17-2026
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -31,8 +31,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 {
-	private ReadOnlyCollection<Person> _peopleUpsertNew;
-	private SortedDictionary<string, Person> _personRefSortedDictionary;
+	private ReadOnlyCollection<Person> _peopleUpsertNew = default!;
+	private SortedDictionary<string, Person> _personRefSortedDictionary = default!;
 
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsEmpty))]
 	public void IsEmpty()
@@ -55,7 +55,7 @@ public class SortedDictionaryExtensionsBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(SortedDictionaryExtensions.IsNotEmpty) + ": With Predicate")]
 	public void IsNotEmptyWithPredicate()
 	{
-		this.Consume(this._personRefSortedDictionary.IsNotEmpty(p => p.Value.BornOn.Value.Date.Month > 0));
+		this.Consume(this._personRefSortedDictionary.IsNotEmpty(p => p.Value.BornOn!.Value.Date.Month > 0));
 	}
 
 	public override void Setup()
