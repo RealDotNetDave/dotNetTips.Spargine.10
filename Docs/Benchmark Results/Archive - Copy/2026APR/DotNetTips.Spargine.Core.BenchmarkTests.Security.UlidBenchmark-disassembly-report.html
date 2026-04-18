@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark-20260330-192404</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="2">DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark-20260330-192404</th></tr>
+<tr>
+<th>UlidGetHashCode .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3</th>
+<th>NewUlid .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark.UlidGetHashCode()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,2C28B8000F0
+mov       rcx,[rcx]
+test      rcx,rcx
+je        short 00007FF9978D7741
+cmp       [rcx],ecx
+call      qword ptr [7FF99785AAC0]
+mov       rcx,[rbx+60]
+mov       [rcx+38],eax
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Core.Ulid>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,rsi
+xor       edx,edx
+mov       r8,7FF997E7B138
+mov       r9,7FF99776D0B0
+call      qword ptr [7FF997826E98]
+mov       rcx,2C28B8000F0
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,rsi
+jmp       short 00007FF9978D772B
+
+System.MulticastDelegate.GetHashCode()
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rdx,[rbx+30]
+cmp       rdx,0FFFFFFFFFFFFFFFF
+je        short 00007FF9978D7832
+test      rdx,rdx
+jne       short 00007FF9978D7848
+mov       rdx,[rbx+28]
+mov       rcx,offset MT_System.Object[]
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfAny(Void*, System.Object)
+mov       rsi,rax
+test      rsi,rsi
+jne       near ptr 00007FF9978D78B0
+cmp       qword ptr [rbx+20],0
+je        short 00007FF9978D787B
+mov       rcx,rbx
+call      qword ptr [7FF99782C9A8]
+mov       rbx,rax
+mov       rcx,rbx
+call      00007FF9F73FE4B0
+test      eax,eax
+je        short 00007FF9978D7821
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+jmp       qword ptr [7FF99782E970]
+mov       rcx,[rbx+18]
+mov       rdx,[rbx+20]
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+jmp       qword ptr [7FF997EE69E8]
+mov       rdx,[rbx+28]
+mov       rcx,offset MT_System.Delegate
+call      qword ptr [7FF997826850]
+test      rax,rax
+je        near ptr 00007FF9978D77DA
+mov       rcx,rax
+mov       rax,[rax]
+mov       rax,[rax+40]
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+jmp       qword ptr [rax+18]
+cmp       qword ptr [rbx+8],0
+jne       short 00007FF9978D7886
+xor       esi,esi
+jmp       short 00007FF9978D7897
+mov       rcx,[rbx+8]
+call      qword ptr [7FF997C3CBB8]
+mov       esi,eax
+shl       esi,5
+add       esi,eax
+mov       rcx,rbx
+call      qword ptr [7FF99782C9A8]
+mov       rcx,rax
+call      qword ptr [7FF997C3CBB8]
+add       eax,esi
+jmp       near ptr 00007FF9978D7818
+xor       edi,edi
+xor       ebp,ebp
+jmp       short 00007FF9978D78D6
+cmp       ebp,[rsi+8]
+jae       short 00007FF9978D78E6
+mov       rcx,[rsi+rbp*8+10]
+mov       rax,[rcx]
+mov       rax,[rax+40]
+call      qword ptr [rax+18]
+mov       ecx,edi
+shl       ecx,5
+add       ecx,edi
+lea       edi,[rax+rcx]
+inc       ebp
+cmp       ebp,[rbx+30]
+jl        short 00007FF9978D78B6
+mov       eax,edi
+add       rsp,28
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+
+System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
+push      rdi
+push      rsi
+push      rbx
+mov       rbx,rcx
+mov       rsi,r8
+mov       rdi,r9
+lea       rcx,[rbx+8]
+mov       rdx,rbx
+call      qword ptr [7FF9EF977FD0]
+mov       [rbx+18],rdi
+mov       [rbx+20],rsi
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark.NewUlid()
+push      rsi
+push      rbx
+sub       rsp,28
+xor       eax,eax
+mov       [rsp+20],rax
+mov       rbx,rcx
+mov       rcx,2ABE90000F0
+mov       rax,[rcx]
+test      rax,rax
+je        short 00007FF997F22A66
+mov       [rsp+20],rax
+mov       rbx,[rbx+60]
+mov       rdx,[rsp+20]
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       eax,eax
+mov       [rbx+8],rax
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Core.Ulid>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,rsi
+xor       edx,edx
+mov       r8,7FF997E3B198
+mov       r9,7FF99772D0B0
+call      qword ptr [7FF9977E6E98]
+mov       rcx,2ABE90000F0
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rax,rsi
+jmp       short 00007FF997F22A42
+
+System.MulticastDelegate.CtorOpened(System.Object, IntPtr, IntPtr)
+push      rdi
+push      rsi
+push      rbx
+mov       rbx,rcx
+mov       rsi,r8
+mov       rdi,r9
+lea       rcx,[rbx+8]
+mov       rdx,rbx
+call      qword ptr [7FF9EF977FD0]
+mov       [rbx+18],rdi
+mov       [rbx+20],rsi
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
