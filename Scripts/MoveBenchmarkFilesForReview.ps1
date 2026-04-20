@@ -29,7 +29,7 @@ $ErrorActionPreference = 'Stop'
 $sourceRoot          = 'D:\src\GitHub\dotNetTips.Spargine.10\docs\Benchmark Results'
 $destCsv             = 'D:\src\GitHub\dotNetTips.Spargine.10\docs\Charts\Data'
 
-$archiveSource       = Join-Path $sourceRoot 'Archive\2026JAN'
+$archiveSource       = Join-Path $sourceRoot 'Archive\2026APR'
 $currentSource       = $sourceRoot
 $reviewDest          = 'D:\temp\sparginebenchmarkreview'
 
@@ -164,13 +164,13 @@ else {
 }
 
 # ----------------------------
-# Step 2a: OLD (Archive\2026JAN) JSON + CSV (renamed)
+# Step 2a: OLD (Archive\2026APR) JSON + CSV (renamed)
 # ----------------------------
 $step2OldJson = New-StepSummary
 $step2OldCsv  = New-StepSummary
 
 Write-Host ""
-Write-Host "=== Step 2a: Copy OLD reports from Archive\\2026JAN (JSON + CSV) - only if missing/older ==="
+Write-Host "=== Step 2a: Copy OLD reports from Archive\\2026APR (JSON + CSV) - only if missing/older ==="
 
 if (Test-Path -LiteralPath $archiveSource) {
 
