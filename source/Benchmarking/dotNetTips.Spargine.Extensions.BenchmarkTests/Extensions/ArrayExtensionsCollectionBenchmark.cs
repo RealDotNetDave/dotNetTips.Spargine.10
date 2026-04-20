@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -31,6 +32,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
+[TailCallDiagnoser]
 public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 

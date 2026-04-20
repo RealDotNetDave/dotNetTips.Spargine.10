@@ -22,6 +22,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Cache;
 
+[ThreadingDiagnoser]
 public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 {
 	private InMemoryCache _cache = default!;

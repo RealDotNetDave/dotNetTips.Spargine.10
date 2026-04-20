@@ -29,6 +29,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Threading;
 /// Collection type PerfTestRunner.
 /// </summary>
 [BenchmarkCategory(Categories.Async)]
+[ThreadingDiagnoser]
 public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 {
 

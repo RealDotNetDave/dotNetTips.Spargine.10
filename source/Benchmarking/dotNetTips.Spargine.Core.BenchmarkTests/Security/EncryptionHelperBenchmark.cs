@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Security;
 
@@ -21,6 +22,7 @@ using DotNetTips.Spargine.Core.Security;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
 [BenchmarkCategory(Categories.Encryption)]
+[NativeMemoryProfiler]
 public class EncryptionHelperBenchmark : Benchmark
 {
 

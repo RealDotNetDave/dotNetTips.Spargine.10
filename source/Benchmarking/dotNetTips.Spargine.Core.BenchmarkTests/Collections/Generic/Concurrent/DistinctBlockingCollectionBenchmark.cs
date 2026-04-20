@@ -24,6 +24,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent;
 
 [BenchmarkCategory(Categories.Async)]
+[ThreadingDiagnoser]
 public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 {
 	private DistinctBlockingCollection<Person> _peopleRefDistinctBlockingCollection = default!;

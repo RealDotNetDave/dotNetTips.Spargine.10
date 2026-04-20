@@ -26,6 +26,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[ThreadingDiagnoser]
 public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Person> _personRefEnumerable = default!;

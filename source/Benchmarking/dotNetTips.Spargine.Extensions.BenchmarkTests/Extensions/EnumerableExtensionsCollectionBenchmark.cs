@@ -19,6 +19,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -34,6 +35,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
+[TailCallDiagnoser]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _personRefArray = default!;

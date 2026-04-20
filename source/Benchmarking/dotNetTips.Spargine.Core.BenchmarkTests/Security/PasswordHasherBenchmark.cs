@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Security;
 
@@ -19,6 +20,7 @@ using DotNetTips.Spargine.Core.Security;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
+[NativeMemoryProfiler]
 public class PasswordHasherBenchmark : Benchmark
 {
 	private const string Password = "l#VkasX2L![][lP![&J}ll]&R}v]BKvADGa(gDmq]f]636ocaos?,%.Kfnb60uKx";

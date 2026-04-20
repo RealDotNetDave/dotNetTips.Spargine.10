@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
@@ -31,6 +32,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="Benchmark" />
 [BenchmarkCategory(Categories.Strings)]
+[TailCallDiagnoser]
 public class StringExtensionsBenchmark : Benchmark
 {
 

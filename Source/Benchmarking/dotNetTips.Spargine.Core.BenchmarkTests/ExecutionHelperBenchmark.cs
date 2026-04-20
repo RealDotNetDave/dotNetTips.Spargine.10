@@ -22,6 +22,7 @@ using DotNetTips.Spargine.Benchmarking;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
+[ThreadingDiagnoser]
 public class ExecutionHelperBenchmark : Benchmark
 {
 

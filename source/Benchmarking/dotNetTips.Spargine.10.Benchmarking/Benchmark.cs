@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-14-2026
+// Last Modified On : 04-18-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -43,11 +43,11 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// Provides an abstract base for benchmark tests, including setup and cleanup routines, 
 /// methods for consuming objects, generating random data, and updating test entities. 
 /// It also includes properties for accessing various test data and configurations.
-/// Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter], [Atlassian],
-/// [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub], [HardwareCounters],
-/// [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn], [MValueColumn], [NamespaceColumn],
-/// [NativeMemoryProfiler], [PlainExporter], [SkewnessColumn], [StackOverflow],
-/// [TailCallDiagnoser], [MemoryDiagnoser(displayGenColumns: true)], [ThreadingDiagnoser]
+/// Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter],
+/// [Atlassian], [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub],
+/// [HardwareCounters], [HtmlExporter], [MemoryDiagnoser], [NamespaceColumn],
+/// [NativeMemoryProfiler], [PlainExporter], [StackOverflow], [TailCallDiagnoser],
+/// [ThreadingDiagnoser]
 /// </summary>
 [AllStatisticsColumn]
 [BaselineColumn]
@@ -62,8 +62,12 @@ namespace DotNetTips.Spargine.Benchmarking;
 [InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 [IterationsColumn]
 [JsonExporter(indentJson: true)]
+[KurtosisColumn]
+[LogicalGroupColumn]
+[MValueColumn]
 [Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
 [RankColumn]
+[SkewnessColumn]
 [StatisticalTestColumn]
 [StopOnFirstError(true)]
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.UpdateDocumentation)]

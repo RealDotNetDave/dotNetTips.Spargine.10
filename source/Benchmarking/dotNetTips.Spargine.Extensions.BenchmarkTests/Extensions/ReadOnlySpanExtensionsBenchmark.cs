@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
@@ -21,6 +22,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[TailCallDiagnoser]
 public class ReadOnlySpanExtensionsBenchmark : LargeCollectionBenchmark
 {
 	private byte[] _bytes = default!;
