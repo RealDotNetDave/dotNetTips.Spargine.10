@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.EnumExtensionsBenchmark-20260417-015612</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.EnumExtensionsBenchmark-20260418-233153</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,9 +13,9 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7058/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.201
+.NET SDK 10.0.202
   [Host]     : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -24,10 +24,10 @@ Categories=Collections
 </code></pre>
 
 <table>
-<thead><tr><th>Method  </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th>
+<thead><tr><th>Method  </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th>
 </tr>
-</thead><tbody><tr><td>GetDescription</td><td>15.25 ns</td><td>0.098 ns</td><td>0.092 ns</td><td>0.024 ns</td><td>15.10 ns</td><td>15.21 ns</td><td>15.24 ns</td><td>15.32 ns</td><td>15.43 ns</td><td>65,562,804.8</td><td>7.488 ns</td><td>15.00</td><td>1</td><td>No</td><td>2,314 B</td><td>-</td>
-</tr><tr><td>GetItems</td><td>337.68 ns</td><td>1.666 ns</td><td>1.558 ns</td><td>0.402 ns</td><td>335.09 ns</td><td>336.53 ns</td><td>337.79 ns</td><td>338.42 ns</td><td>340.87 ns</td><td>2,961,352.5</td><td>7.299 ns</td><td>15.00</td><td>2</td><td>No</td><td>3,779 B</td><td>-</td>
+</thead><tbody><tr><td>GetDescription</td><td>17.31 ns</td><td>0.114 ns</td><td>0.107 ns</td><td>0.028 ns</td><td>17.15 ns</td><td>17.24 ns</td><td>17.32 ns</td><td>17.37 ns</td><td>17.54 ns</td><td>57,771,315.5</td><td>7.486 ns</td><td>15.00</td><td>2.455</td><td>2.000</td><td>0.2030</td><td>1</td><td>*</td><td>No</td><td>2,314 B</td><td>-</td>
+</tr><tr><td>GetItems</td><td>338.82 ns</td><td>3.003 ns</td><td>2.809 ns</td><td>0.725 ns</td><td>333.95 ns</td><td>337.29 ns</td><td>338.80 ns</td><td>340.27 ns</td><td>343.28 ns</td><td>2,951,463.0</td><td>7.137 ns</td><td>15.00</td><td>1.896</td><td>2.000</td><td>0.0659</td><td>2</td><td>*</td><td>No</td><td>3,779 B</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

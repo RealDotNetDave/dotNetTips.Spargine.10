@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.ExecutionHelperBenchmark-20260415-191613</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.ExecutionHelperBenchmark-20260419-161740</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,23 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7058/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.201
+.NET SDK 10.0.202
   [Host]     : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
-Categories=**NEW**  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                         </th><th>Mean     </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Min      </th><th>Q1       </th><th>Median   </th><th>Q3       </th><th>Max      </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Rank</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th>
+<thead><tr><th>Method                         </th><th>Mean     </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Min      </th><th>Q1       </th><th>Median   </th><th>Q3       </th><th>Max      </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th>
 </tr>
-</thead><tbody><tr><td>&#39;ProgressiveRetry: Success&#39;</td><td>798.4 ns</td><td>3.98 ns</td><td>3.73 ns</td><td>0.96 ns</td><td>791.0 ns</td><td>796.2 ns</td><td>797.9 ns</td><td>801.0 ns</td><td>805.7 ns</td><td>1,252,486.08</td><td>7.019 ns</td><td>15.00</td><td>1</td><td>No</td><td>-</td><td>5,177 B</td>
-</tr><tr><td>&#39;ProgressiveRetry: With Retries&#39;</td><td>30,882,174.4 ns</td><td>88,020.03 ns</td><td>82,333.99 ns</td><td>21,258.54 ns</td><td>30,689,940.6 ns</td><td>30,859,396.9 ns</td><td>30,893,806.2 ns</td><td>30,931,410.9 ns</td><td>31,023,453.1 ns</td><td>32.38</td><td>-10,621.772 ns</td><td>15.00</td><td>3</td><td>No</td><td>2.0000</td><td>5,256 B</td>
-</tr><tr><td>&#39;ProgressiveRetryAsync: Success&#39;</td><td>915.4 ns</td><td>3.57 ns</td><td>3.34 ns</td><td>0.86 ns</td><td>909.3 ns</td><td>912.7 ns</td><td>916.0 ns</td><td>917.6 ns</td><td>920.7 ns</td><td>1,092,467.39</td><td>7.069 ns</td><td>15.00</td><td>2</td><td>No</td><td>-</td><td>1,900 B</td>
-</tr><tr><td>&#39;ProgressiveRetryAsync: With Retries&#39;</td><td>30,833,385.8 ns</td><td>53,047.23 ns</td><td>44,296.84 ns</td><td>12,285.73 ns</td><td>30,729,053.1 ns</td><td>30,827,246.9 ns</td><td>30,844,712.5 ns</td><td>30,863,818.8 ns</td><td>30,892,106.2 ns</td><td>32.43</td><td>-6,136.366 ns</td><td>13.00</td><td>3</td><td>No</td><td>2.0000</td><td>2,243 B</td>
+</thead><tbody><tr><td>&#39;ProgressiveRetry: Success&#39;</td><td>890.9 ns</td><td>2.41 ns</td><td>2.26 ns</td><td>0.58 ns</td><td>888.0 ns</td><td>889.3 ns</td><td>890.5 ns</td><td>891.8 ns</td><td>895.4 ns</td><td>1,122,509.52</td><td>7.208 ns</td><td>15.00</td><td>2.271</td><td>2.000</td><td>0.6824</td><td>2</td><td>*</td><td>No</td><td>5,177 B</td><td>-</td><td>-</td><td>0.0000</td>
+</tr><tr><td>&#39;ProgressiveRetry: With Retries&#39;</td><td>31,024,748.6 ns</td><td>60,772.46 ns</td><td>50,747.76 ns</td><td>14,074.90 ns</td><td>30,907,162.5 ns</td><td>31,032,015.6 ns</td><td>31,044,778.1 ns</td><td>31,051,034.4 ns</td><td>31,073,131.2 ns</td><td>32.23</td><td>-7,030.948 ns</td><td>13.00</td><td>3.125</td><td>2.000</td><td>-1.2801</td><td>3</td><td>*</td><td>No</td><td>5,256 B</td><td>2.0000</td><td>2.0000</td><td>-</td>
+</tr><tr><td>&#39;ProgressiveRetryAsync: Success&#39;</td><td>832.3 ns</td><td>4.06 ns</td><td>3.60 ns</td><td>0.96 ns</td><td>827.3 ns</td><td>829.0 ns</td><td>832.1 ns</td><td>834.5 ns</td><td>839.5 ns</td><td>1,201,518.09</td><td>6.520 ns</td><td>14.00</td><td>1.980</td><td>2.000</td><td>0.3065</td><td>1</td><td>*</td><td>No</td><td>1,900 B</td><td>-</td><td>-</td><td>0.0000</td>
+</tr><tr><td>&#39;ProgressiveRetryAsync: With Retries&#39;</td><td>31,014,342.4 ns</td><td>66,129.36 ns</td><td>58,621.95 ns</td><td>15,667.38 ns</td><td>30,887,289.1 ns</td><td>30,985,578.9 ns</td><td>31,030,201.6 ns</td><td>31,048,039.1 ns</td><td>31,090,195.3 ns</td><td>32.24</td><td>-7,826.688 ns</td><td>14.00</td><td>2.484</td><td>2.000</td><td>-0.8021</td><td>3</td><td>*</td><td>No</td><td>2,243 B</td><td>2.0000</td><td>2.0000</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>
