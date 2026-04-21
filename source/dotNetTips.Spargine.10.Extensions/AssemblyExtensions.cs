@@ -4,7 +4,7 @@
 // Created          : 01-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-27-2026
+// Last Modified On : 04-21-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -53,7 +53,7 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() and Type.GetInterfaces() which require runtime type discovery.")]
-		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -84,7 +84,7 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() which requires runtime type discovery.")]
-		[Information(nameof(GetAllTypes), "David McCarter", "1/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllTypes), "David McCarter", "1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllTypes()
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -118,7 +118,7 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() and Activator.CreateInstance() which require runtime type discovery.")]
-		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
 			assembly = assembly.ArgumentNotNull();
@@ -149,7 +149,7 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() which requires runtime type discovery.")]
-		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetTypes([DisallowNull] Type type)
 		{
 			assembly = assembly.ArgumentNotNull();

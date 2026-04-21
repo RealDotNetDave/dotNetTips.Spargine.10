@@ -20,6 +20,7 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Core.BenchmarkTests.Collections.Threading;
 using Perfolizer.Horology;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -44,11 +45,11 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//typeof(TypeHelperBenchmark), typeof(ExecutionHelperBenchmark), typeof(ChannelQueueCollectionBenchmark), typeof(ExecutionHelperBenchmark));
+		BenchmarkHelper.RunBenchmarks(config, true,
+		 typeof(ExecutionHelperBenchmark), typeof(ChannelQueueCollectionBenchmark), typeof(TypeHelperBenchmark));
 
 	}
 }

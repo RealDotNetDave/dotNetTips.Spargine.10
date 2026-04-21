@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified On : 04-20-2026
 // ***********************************************************************
 // <copyright file="SortedDictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,10 +38,11 @@ public static class SortedDictionaryExtensions
 	/// <param name="collection">The <see cref="SortedDictionary{TKey, TValue}"/> to check.</param>
 	/// <returns><c>true</c> if the dictionary is null or empty; otherwise, <c>false</c>.</returns>
 	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsEmpty), author: "David McCarter", createdOn: "6/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsEmpty<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		return collection is null ? true : collection.Count <= 0;
+		return collection is null || collection.Count == 0;
 	}
 
 	/// <summary>
@@ -56,7 +57,7 @@ public static class SortedDictionaryExtensions
 	[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsNotEmpty<TKey, TValue>([DisallowNull] this SortedDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		return collection is null ? false : collection.Count > 0;
+		return collection is not null && collection.Count > 0;
 	}
 
 	/// <summary>

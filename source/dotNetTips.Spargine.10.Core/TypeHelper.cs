@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified By : GitHub Copilot
+// Last Modified On : 04-20-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -495,7 +495,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllDeclaredFields([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -1585,8 +1585,8 @@ public static class TypeHelper
 	/// The cache is lazily initialized on first access and reused for all subsequent calls.
 	/// </remarks>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] // Inline for maximum performance
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type is null)
@@ -1594,9 +1594,12 @@ public static class TypeHelper
 			return false;
 		}
 
-		var cache = _cachedBuiltInTypes ?? BuiltInTypeNames();
+		if (_cachedBuiltInTypes is null)
+		{
+			_ = BuiltInTypeNames();
+		}
 
-		return cache.ContainsKey(type);
+		return _cachedBuiltInTypes!.ContainsKey(type);
 	}
 
 	/// <summary>

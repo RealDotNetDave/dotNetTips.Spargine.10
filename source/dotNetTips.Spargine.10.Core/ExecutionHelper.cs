@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified By : GitHub Copilot
+// Last Modified On : 04-20-2026
 // ***********************************************************************
 // <copyright file="ExecutionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -17,7 +17,9 @@
 // </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Text;
 using DotNetTips.Spargine.Core.Logging;
 using Microsoft.Extensions.Logging;
 
@@ -37,6 +39,7 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineExecutionHelper")]
 public static class ExecutionHelper
 {
+	private static readonly CompositeFormat _attemptFailedFormat = CompositeFormat.Parse("Attempt {0} failed.");
 
 	/// <summary>
 	/// Provides utility methods for executing operations with retry logic, allowing for progressive delays between retries.
@@ -58,7 +61,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetry), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static SimpleResult<int> ProgressiveRetry([DisallowNull] Action operation, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, int retryWaitMilliseconds = 100, ILogger? logger = null)
 	{
 		operation = operation.ArgumentNotNull();
@@ -67,6 +70,7 @@ public static class ExecutionHelper
 
 		var attempts = 0;
 		var result = new SimpleResult<int>();
+		var shouldLog = logger != null && logger.IsEnabled(LogLevel.Error);
 
 		while (true)
 		{
@@ -74,27 +78,28 @@ public static class ExecutionHelper
 			try
 			{
 				attempts++;
-				result.SetValue(attempts);
 
 				operation();
 
+				result.SetValue(attempts);
 				return result;
 			}
 			catch (Exception ex) // Catching Exception since the type of Exception is unknown.
 			{
 				result.AddException(ex);
 
-				if (logger != null && logger.IsEnabled(LogLevel.Error))
+				if (shouldLog)
 				{
-					logger.LogExceptionMessage($"Attempt {attempts} failed.", ex);
+					logger!.LogExceptionMessage(string.Format(CultureInfo.InvariantCulture, _attemptFailedFormat, attempts), ex);
 				}
 
 				if (attempts == retryCount)
 				{
+					result.SetValue(attempts);
 					return result;
 				}
 
-				Task.Delay(CalculateDelay(retryWaitMilliseconds, attempts)).Wait();
+				Thread.Sleep(CalculateDelay(retryWaitMilliseconds, attempts));
 			}
 #pragma warning restore CA1031 // Do not catch general exception types
 		}
@@ -120,7 +125,7 @@ public static class ExecutionHelper
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProgressiveRetryAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ProgressiveRetryAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<SimpleResult<int>> ProgressiveRetryAsync([DisallowNull] Func<Task> function, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retryCount = 3, [ConstantExpected(Min = 1, Max = int.MaxValue)] int retryWaitMilliseconds = 100, ILogger? logger = null, CancellationToken cancellationToken = default)
 	{
 		function = function.ArgumentNotNull();
@@ -129,6 +134,7 @@ public static class ExecutionHelper
 
 		var attempts = 0;
 		var result = new SimpleResult<int>();
+		var shouldLog = logger != null && logger.IsEnabled(LogLevel.Error);
 
 		while (true)
 		{
@@ -137,23 +143,24 @@ public static class ExecutionHelper
 				cancellationToken.ThrowIfCancellationRequested();
 
 				attempts++;
-				result.SetValue(attempts);
 
 				await function.Invoke().ConfigureAwait(false);
 
+				result.SetValue(attempts);
 				return result;
 			}
 			catch (Exception ex) // Catching Exception since the type of Exception is unknown.
 			{
 				result.AddException(ex);
 
-				if (logger != null && logger.IsEnabled(LogLevel.Error))
+				if (shouldLog)
 				{
-					logger.LogExceptionMessage($"Attempt {attempts} failed.", ex);
+					logger!.LogExceptionMessage(string.Format(CultureInfo.InvariantCulture, _attemptFailedFormat, attempts), ex);
 				}
 
 				if (attempts == retryCount || cancellationToken.IsCancellationRequested)
 				{
+					result.SetValue(attempts);
 					return result;
 				}
 

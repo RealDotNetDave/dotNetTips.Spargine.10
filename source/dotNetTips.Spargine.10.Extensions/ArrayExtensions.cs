@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified By : GitHub Copilot
+// Last Modified On : 04-21-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -106,8 +106,10 @@ public static class ArrayExtensions
 		/// The zero-based index of the first occurrence of <paramref name="item"/> within the entire array, if found; otherwise, -1.
 		/// </returns>
 		/// <remarks>
-		/// This method wraps the <see cref="Array.IndexOf{T}(T[], T)"/> method to provide a convenient extension method syntax.
-		/// The method performs an equality comparison by calling the <c>T.Equals</c> method on every element. 
+		/// This method uses <see cref="MemoryExtensions.IndexOf{T}(Span{T}, T)"/> for optimal performance,
+		/// which leverages vectorization when possible and provides better performance than <see cref="Array.IndexOf{T}(T[], T)"/>,
+		/// especially for larger arrays.
+		/// The method performs an equality comparison using <see cref="EqualityComparer{T}.Default"/>.
 		/// If type <typeparamref name="T"/> overrides the <see cref="object.Equals(object)"/> method, that override is used for the comparison.
 		/// This is an O(n) operation, where n is the length of the array.
 		/// </remarks>
@@ -128,9 +130,10 @@ public static class ArrayExtensions
 		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] T item)
 		{
+			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
-			return Array.IndexOf(array, item);
+			return array.AsSpan().IndexOf(item);
 		}
 
 		/// <summary>
@@ -141,9 +144,11 @@ public static class ArrayExtensions
 		/// The zero-based index of the last occurrence of <paramref name="item"/> within the entire array, if found; otherwise, -1.
 		/// </returns>
 		/// <remarks>
-		/// This method wraps the <see cref="Array.LastIndexOf{T}(T[], T)"/> method to provide a convenient extension method syntax.
+		/// This method uses <see cref="MemoryExtensions.LastIndexOf{T}(Span{T}, T)"/> for optimal performance,
+		/// which leverages vectorization when possible and provides better performance than <see cref="Array.LastIndexOf{T}(T[], T)"/>,
+		/// especially for larger arrays.
 		/// The array is searched backward starting at the last element and ending at the first element.
-		/// The method performs an equality comparison by calling the <c>T.Equals</c> method on every element.
+		/// The method performs an equality comparison using <see cref="EqualityComparer{T}.Default"/>.
 		/// If type <typeparamref name="T"/> overrides the <see cref="object.Equals(object)"/> method, that override is used for the comparison.
 		/// This is an O(n) operation, where n is the length of the array.
 		/// </remarks>
@@ -164,6 +169,7 @@ public static class ArrayExtensions
 		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int LastIndexOf([DisallowNull] T item)
 		{
+			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
 			return Array.LastIndexOf(array, item);
@@ -265,17 +271,31 @@ public static class ArrayExtensions
 		}
 
 		/// <summary>
-		/// Converts an array to <see cref="ReadOnlySpan{T}"/>.
+		/// Converts an array to <see cref="ReadOnlySpan{T}"/> for high-performance read-only access.
 		/// </summary>
 		/// <returns>A <see cref="ReadOnlySpan{T}"/> over the array.</returns>
+		/// <remarks>
+		/// This method provides a zero-allocation, high-performance view of the array for read-only operations.
+		/// The returned <see cref="ReadOnlySpan{T}"/> is a stack-only type that enables efficient iteration
+		/// and slicing without heap allocations.
+		/// Use this when you need to pass array data to methods that accept <see cref="ReadOnlySpan{T}"/>
+		/// or when you want to ensure the array cannot be modified.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+		/// <example>
+		/// This example shows how to convert an array to ReadOnlySpan for read-only processing.
+		/// <code>
+		/// int[] numbers = { 1, 2, 3, 4, 5 };
+		/// ReadOnlySpan&lt;int&gt; span = numbers.AsReadOnlySpan();
+		/// // Process span without risk of modification
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
-			array = array.ArgumentNotNull();
-
-			return array;
+			return array.ArgumentNotNull();
 		}
 
 		/// <summary>
@@ -381,7 +401,7 @@ public static class ArrayExtensions
 		/// <remarks>
 		/// This method provides a safe way to check if an array has elements without throwing exceptions.
 		/// It returns <c>false</c> if the array reference is null, making it suitable for defensive programming patterns.
-		/// The method uses <see cref="Array.Length"/> to check the element count.
+		/// The method uses <see cref="Array.Length"/> to check the element count with optimal performance.
 		/// This is the inverse operation of IsEmpty.
 		/// </remarks>
 		/// <example>
@@ -402,10 +422,10 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty()
 		{
-			return array is null ? false : array.Length > 0;
+			return array is not null && array.Length > 0;
 		}
 
 		/// <summary>
@@ -474,10 +494,10 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public bool IsNotEmpty(in int count)
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool IsNotEmpty(int count)
 		{
-			return array is null ? false : array.Length == count;
+			return array is not null && array.Length == count;
 		}
 
 		/// <summary>

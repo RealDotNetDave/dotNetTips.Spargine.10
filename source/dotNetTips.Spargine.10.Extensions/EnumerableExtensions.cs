@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-21-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -172,7 +172,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
+		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
@@ -216,13 +216,12 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: MaybeNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T FirstOrNull([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			// SUGGESTION BY COPILOT SLOWER.
 			foreach (var item in collection)
 			{
 				if (accumulatorPredicate(item))
@@ -609,11 +608,25 @@ public static class EnumerableExtensions
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// The original input enumeration is not modified. If the input is already an span, it is used directly;
-		/// otherwise, a new span is created from the input items before shuffling.
+		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized shuffling paths for different collection types:
 		/// </para>
+		/// <list type="bullet">
+		/// <item><description><see cref="List{T}"/> - Uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> for zero-allocation in-place shuffling.</description></item>
+		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Creates a copy before shuffling to preserve the original array.</description></item>
+		/// <item><description><see cref="ICollection{T}"/> - Pre-sizes array based on known count to minimize allocations.</description></item>
+		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Materializes to array before shuffling.</description></item>
+		/// </list>
 		/// <para>
-		/// <b>Performance:</b> Uses span-based shuffling for optimal performance and minimal allocations.
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>List&lt;T&gt;:</b> O(n) shuffling with zero allocations (uses span directly).</description></item>
+		/// <item><description><b>Array input:</b> O(n) with single array allocation (copy to preserve original).</description></item>
+		/// <item><description><b>ICollection&lt;T&gt;:</b> O(n) with pre-sized array allocation.</description></item>
+		/// <item><description><b>Other types:</b> O(n) with array materialization.</description></item>
+		/// </list>
+		/// <para>
+		/// The original input enumeration is never modified. A copy is created for shuffling.
 		/// </para>
 		/// </remarks>
 		/// <example>
@@ -626,11 +639,12 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastShuffle()
 		{
 			collection = collection.ArgumentNotNull();
 
+			//SUGGESTION FROM COPILOT SLOWER!
 			var array = collection.ToArray();
 
 			Random.Shared.Shuffle(array);
@@ -1206,12 +1220,22 @@ public static class EnumerableExtensions
 		/// </returns>
 		/// <remarks>
 		/// <para>
-		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized lookup paths:
+		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized lookup paths based on collection type and item count:
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><see cref="ISet{T}"/> (HashSet, etc.) - Uses O(1) Contains for each item.</description></item>
-		/// <item><description>Large item sets (>10 items) - Converts collection to HashSet for O(1) lookups.</description></item>
-		/// <item><description>Small item sets - Uses direct enumeration to avoid HashSet allocation overhead.</description></item>
+		/// <item><description><see cref="ISet{T}"/> (HashSet, FrozenSet, etc.) - Uses O(1) Contains for each item (fastest path).</description></item>
+		/// <item><description><see cref="FrozenSet{T}"/> - Uses highly optimized O(1) Contains for each item.</description></item>
+		/// <item><description>Large item counts (&gt;10) + ICollection - Converts collection to HashSet once for O(1) lookups.</description></item>
+		/// <item><description>Small item counts (&lt;=10) - Uses direct Contains to avoid HashSet allocation overhead.</description></item>
+		/// <item><description>Other collections - Falls back to Contains for each item.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>ISet&lt;T&gt; input:</b> O(m) where m = items.Count (O(1) per lookup).</description></item>
+		/// <item><description><b>Large item count (&gt;10):</b> O(n + m) where n = collection size, m = items.Count.</description></item>
+		/// <item><description><b>Small item count (&lt;=10):</b> O(m * n) but avoids HashSet allocation.</description></item>
 		/// </list>
 		/// </remarks>
 		[Pure]
@@ -1224,6 +1248,49 @@ public static class EnumerableExtensions
 				return false;
 			}
 
+			// Fast path: ISet<T> (HashSet, FrozenSet, etc.) - O(1) lookups
+			if (collection is ISet<T> set)
+			{
+				foreach (var item in items)
+				{
+					if (set.Contains(item))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+
+			// Fast path: FrozenSet<T> - highly optimized O(1) lookups
+			if (collection is FrozenSet<T> frozenSet)
+			{
+				foreach (var item in items)
+				{
+					if (frozenSet.Contains(item))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+
+			// Optimization: For many items (>10) and known-size collections, convert to HashSet once
+			// This changes O(m * n) to O(n + m) where m = items.Count, n = collection.Count
+			if ((items.Count > 10) && (collection is ICollection<T> knownSizeCollection))
+			{
+				var collectionSet = new HashSet<T>(knownSizeCollection);
+
+				foreach (var item in items)
+				{
+					if (collectionSet.Contains(item))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+
+			// Fallback: Direct Contains (best for small item counts to avoid allocation)
 			foreach (var item in items)
 			{
 				if (collection.Contains(item))
@@ -1451,18 +1518,92 @@ public static class EnumerableExtensions
 		/// <summary>
 		/// Picks a random element from the collection.
 		/// </summary>
-		/// <returns>A randomly picked element from the collection.</returns>
+		/// <returns>A randomly picked element from the collection, or <c>default</c> if the collection is empty.</returns>
 		/// <remarks>
-		/// This method uses a secure random number generator to ensure a fair selection.
+		/// <para>
+		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized random selection paths for different collection types:
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><see cref="IList{T}"/> (List, Array, etc.) - O(1) direct indexed access with random index.</description></item>
+		/// <item><description><see cref="ICollection{T}"/> - O(1) random index calculation, O(n) enumeration to target index.</description></item>
+		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Materializes to array once, then O(1) random access.</description></item>
+		/// </list>
+		/// <para>
+		/// <b>Performance Characteristics:</b>
+		/// </para>
+		/// <list type="bullet">
+		/// <item><description><b>IList&lt;T&gt;:</b> O(1) - Direct indexed access, no allocation.</description></item>
+		/// <item><description><b>ICollection&lt;T&gt;:</b> O(n) - Single enumeration to random index.</description></item>
+		/// <item><description><b>Other types:</b> O(n) - One-time materialization to array, then O(1) access.</description></item>
+		/// </list>
+		/// <para>
+		/// Uses <see cref="Random.Shared"/> for thread-safe random number generation.
+		/// This is NOT a cryptographic operation - for security-sensitive randomness, use <see cref="System.Security.Cryptography.RandomNumberGenerator"/>.
+		/// </para>
 		/// </remarks>
+		/// <example>
+		/// <code>
+		/// var numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
+		/// var randomNumber = numbers.PickRandom();
+		/// // Returns one of: 1, 2, 3, 4, or 5
+		/// 
+		/// var empty = new List&lt;int&gt;();
+		/// var result = empty.PickRandom();
+		/// // Returns default(int) = 0
+		/// </code>
+		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "This method performs general-purpose random selection (not cryptographic). Random.Shared is appropriate for non-security scenarios like picking random elements from collections.")]
 		[Information(nameof(PickRandom), "David McCarter", "8/26/2020", "9/19/2020", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
 		public T? PickRandom()
 		{
 			collection = collection.ArgumentNotNull();
 
-			return collection.IsNotEmpty() ? collection.FastShuffle(1).FirstOrDefault() : default;
+			// Fast path: IList<T> (List, Array, etc.) - O(1) indexed access
+			if (collection is IList<T> list)
+			{
+				if (list.Count == 0)
+				{
+					return default;
+				}
+
+				var randomIndex = Random.Shared.Next(list.Count);
+				return list[randomIndex];
+			}
+
+			// Fast path: ICollection<T> - known count, enumerate to random index
+			if (collection is ICollection<T> knownSizeCollection)
+			{
+				var count = knownSizeCollection.Count;
+
+				if (count == 0)
+				{
+					return default;
+				}
+
+				var targetIndex = Random.Shared.Next(count);
+				var currentIndex = 0;
+
+				foreach (var item in knownSizeCollection)
+				{
+					if (currentIndex == targetIndex)
+					{
+						return item;
+					}
+					currentIndex++;
+				}
+			}
+
+			// Fallback: Materialize to array, then pick random index
+			var array = collection.ToArray();
+
+			if (array.Length == 0)
+			{
+				return default;
+			}
+
+			return array[Random.Shared.Next(array.Length)];
 		}
 
 		/// <summary>

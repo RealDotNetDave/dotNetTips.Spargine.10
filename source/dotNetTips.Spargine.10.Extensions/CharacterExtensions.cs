@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified On : 04-21-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -58,7 +58,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is an ASCII uppercase letter; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("IsAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiUpper
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]

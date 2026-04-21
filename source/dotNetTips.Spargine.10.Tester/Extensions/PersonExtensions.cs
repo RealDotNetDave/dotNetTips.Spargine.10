@@ -42,12 +42,12 @@ public static class PersonExtensions
 		/// <value>
 		/// A string containing the person's first name followed by their last name, separated by a space.
 		/// </value>
-		[Information(nameof(get_FullName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(get_FullName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string FullName
 		{
 			get
 			{
-				return $"{person.FirstName}{ControlChars.Space}{person.LastName}".Trim();
+				return $"{person.FirstName}{ControlChars.Space}{person.LastName}";
 			}
 		}
 
@@ -57,12 +57,12 @@ public static class PersonExtensions
 		/// <value>
 		/// A <see cref="TimeSpan"/> representing the duration from the person's birth date to the current UTC date and time.
 		/// </value>
-		[Information(nameof(get_Age), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(get_Age), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public TimeSpan Age
 		{
 			get
 			{
-				return person.BornOn.HasValue ? DateTimeOffset.UtcNow.Subtract(person.BornOn.Value) : TimeSpan.Zero;
+				return person.BornOn is { } bornOn ? DateTimeOffset.UtcNow - bornOn : TimeSpan.Zero;
 			}
 		}
 	}

@@ -15,23 +15,23 @@
        xor       eax,eax
        mov       [rbp-40],rax
        mov       [rbp+10],rcx
-       call      qword ptr [7FFEBABC4990]; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
+       call      qword ptr [7FFE363A5890]; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
        mov       rbx,rax
        mov       rcx,[rbx+8]
        mov       r11,offset MT_DotNetTips.Spargine.Tester.Data.Models.Country[]
        cmp       [rcx],r11
-       jne       near ptr M00_L34
+       jne       near ptr M00_L36
        mov       esi,[rcx+8]
        test      esi,esi
-       je        near ptr M00_L37
+       je        near ptr M00_L39
 M00_L00:
        mov       rbx,[rbx+8]
        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Data.Models.Country[]
        cmp       [rbx],rcx
-       jne       near ptr M00_L36
+       jne       near ptr M00_L38
        mov       esi,[rbx+8]
        test      esi,esi
-       je        near ptr M00_L32
+       je        near ptr M00_L34
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
@@ -54,31 +54,31 @@ M00_L02:
        xor       eax,eax
 M00_L03:
        test      eax,eax
-       jne       near ptr M00_L30
+       jne       near ptr M00_L32
 M00_L04:
        mov       eax,[rdi+8]
        inc       eax
        cmp       eax,[rdi+0C]
-       jae       near ptr M00_L29
+       jae       near ptr M00_L20
        mov       [rdi+8],eax
        mov       r10d,[rdi+8]
        cmp       r10d,[rdi+0C]
-       jae       near ptr M00_L27
+       jae       near ptr M00_L30
        mov       rsi,[rdi+10]
        cmp       r10d,[rsi+8]
-       jae       near ptr M00_L28
+       jae       near ptr M00_L31
        mov       ecx,r10d
        mov       r14,[rsi+rcx*8+10]
        mov       rcx,[r14+48]
-       mov       r8,1A0B8B106C0
+       mov       r8,1FD56F10670
        cmp       rcx,r8
-       je        near ptr M00_L30
+       je        near ptr M00_L32
        test      rcx,rcx
        je        short M00_L04
        cmp       dword ptr [rcx+8],2
        jne       short M00_L04
        add       rcx,0C
-       mov       r8,1A0B8B106CC
+       mov       r8,1FD56F1067C
        mov       edx,2
        xor       r15d,r15d
        cmp       edx,4
@@ -112,43 +112,43 @@ M00_L08:
        xor       eax,eax
 M00_L09:
        test      eax,eax
-       jne       near ptr M00_L30
+       jne       near ptr M00_L32
 M00_L10:
        mov       rdi,[rbp-48]
        mov       rbx,[rdi]
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
        cmp       rbx,rcx
-       jne       near ptr M00_L20
+       jne       near ptr M00_L21
        mov       eax,[rdi+8]
        inc       eax
        cmp       eax,[rdi+0C]
-       jae       near ptr M00_L29
+       jae       near ptr M00_L22
        mov       [rdi+8],eax
        mov       ecx,[rdi+8]
        cmp       ecx,[rdi+0C]
-       jae       near ptr M00_L27
+       jae       near ptr M00_L30
        mov       rsi,[rdi+10]
        mov       r10d,[rdi+8]
        cmp       r10d,[rsi+8]
-       jae       near ptr M00_L28
+       jae       near ptr M00_L31
        mov       ecx,r10d
        mov       r14,[rsi+rcx*8+10]
 M00_L11:
        mov       rcx,[r14+48]
-       mov       r8,1A0B8B106C0
+       mov       r8,1FD56F10670
        cmp       rcx,r8
-       je        near ptr M00_L30
+       je        near ptr M00_L32
        test      rcx,rcx
        je        short M00_L10
        cmp       dword ptr [rcx+8],2
        jne       short M00_L10
        add       rcx,0C
-       mov       r8,1A0B8B106CC
+       mov       r8,1FD56F1067C
        mov       edx,2
        xor       r15d,r15d
 M00_L12:
        cmp       edx,4
-       jae       near ptr M00_L21
+       jae       near ptr M00_L24
        cmp       edx,2
        jb        short M00_L13
        mov       r12d,[rcx+r15]
@@ -156,7 +156,7 @@ M00_L12:
        mov       eax,r12d
        or        eax,r9d
        test      eax,0FF80FF80
-       jne       near ptr M00_L24
+       jne       near ptr M00_L27
        xor       r9d,r12d
        shl       r9d,2
        lea       eax,[r12+50005]
@@ -169,7 +169,7 @@ M00_L12:
        add       edx,0FFFFFFFE
 M00_L13:
        test      edx,edx
-       jne       near ptr M00_L23
+       jne       near ptr M00_L26
 M00_L14:
        mov       eax,1
        jmp       near ptr M00_L09
@@ -235,23 +235,33 @@ M00_L19:
        add       rcx,r15
        add       r8,r15
        mov       r9d,edx
-       call      qword ptr [7FFEBAE7D530]
+       call      qword ptr [7FFE3665CB28]
        test      eax,eax
        sete      al
        movzx     eax,al
        jmp       near ptr M00_L03
 M00_L20:
+       mov       ecx,[rdi+0C]
+       mov       [rdi+8],ecx
+       jmp       near ptr M00_L40
+M00_L21:
        mov       rcx,rdi
-       mov       r11,7FFEBA700B10
+       mov       r11,7FFE35ED0B30
        call      qword ptr [r11]
        test      eax,eax
-       je        near ptr M00_L38
+       jne       short M00_L23
+       jmp       near ptr M00_L40
+M00_L22:
+       mov       ecx,[rdi+0C]
+       mov       [rdi+8],ecx
+       jmp       near ptr M00_L40
+M00_L23:
        mov       rcx,rdi
-       mov       r11,7FFEBA700B18
+       mov       r11,7FFE35ED0B38
        call      qword ptr [r11]
        mov       r14,rax
        jmp       near ptr M00_L11
-M00_L21:
+M00_L24:
        mov       r13,[rcx+r15]
        mov       r12,[r8+r15]
        mov       r9,r13
@@ -260,15 +270,15 @@ M00_L21:
        shr       rax,20
        or        eax,r9d
        test      eax,0FF80FF80
-       je        short M00_L22
+       je        short M00_L25
        mov       r9,0FF80FF80FF80FF80
        test      r9,r13
        je        near ptr M00_L08
        mov       r9,0FF80FF80FF80FF80
        test      r9,r12
        je        near ptr M00_L08
-       jmp       near ptr M00_L25
-M00_L22:
+       jmp       near ptr M00_L28
+M00_L25:
        mov       r9,r13
        xor       r9,r12
        shl       r9,2
@@ -285,28 +295,28 @@ M00_L22:
        add       r15,8
        add       edx,0FFFFFFFC
        jmp       near ptr M00_L12
-M00_L23:
+M00_L26:
        movzx     r12d,word ptr [rcx+r15]
        movzx     r9d,word ptr [r8+r15]
        mov       eax,r12d
        or        eax,r9d
        cmp       eax,7F
-       jbe       short M00_L26
-M00_L24:
+       jbe       short M00_L29
+M00_L27:
        test      r12d,0FF80FF80
        je        near ptr M00_L08
        test      r9d,0FF80FF80
        je        near ptr M00_L08
-M00_L25:
+M00_L28:
        add       rcx,r15
        add       r8,r15
        mov       r9d,edx
-       call      qword ptr [7FFEBAE7D530]
+       call      qword ptr [7FFE3665CB28]
        test      eax,eax
        sete      al
        movzx     eax,al
        jmp       near ptr M00_L09
-M00_L26:
+M00_L29:
        cmp       r12d,r9d
        je        near ptr M00_L14
        or        r12d,20
@@ -318,24 +328,20 @@ M00_L26:
        sete      al
        movzx     eax,al
        jmp       near ptr M00_L09
-M00_L27:
+M00_L30:
        mov       ecx,[rdi+8]
-       call      qword ptr [7FFEBAE75CC8]
+       call      qword ptr [7FFE366542E8]
        int       3
-M00_L28:
+M00_L31:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
-M00_L29:
-       mov       ecx,[rdi+0C]
-       mov       [rdi+8],ecx
-       jmp       near ptr M00_L38
-M00_L30:
+M00_L32:
        mov       rdi,[rbp-48]
        mov       rbx,[rdi]
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
        cmp       rbx,rcx
-       jne       near ptr M00_L39
-M00_L31:
+       jne       near ptr M00_L41
+M00_L33:
        mov       [rbp-40],r14
        mov       rcx,[rbp+10]
        mov       rdi,[rcx+60]
@@ -354,64 +360,64 @@ M00_L31:
        pop       r15
        pop       rbp
        ret
-M00_L32:
+M00_L34:
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       test      byte ptr [7FFEBAE5F1D0],1
-       je        short M00_L35
-M00_L33:
-       mov       rcx,16023C021E0
+       test      byte ptr [7FFE3662B978],1
+       je        short M00_L37
+M00_L35:
+       mov       rcx,1BCC20021E8
        mov       rdi,[rcx]
        jmp       near ptr M00_L01
-M00_L34:
-       mov       r11,7FFEBA700B28
+M00_L36:
+       mov       r11,7FFE35ED0B48
        call      qword ptr [r11]
        mov       esi,eax
        test      esi,esi
-       je        short M00_L37
+       je        short M00_L39
        jmp       near ptr M00_L00
-M00_L35:
+M00_L37:
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       jmp       short M00_L33
-M00_L36:
+       jmp       short M00_L35
+M00_L38:
        mov       rcx,rbx
-       mov       r11,7FFEBA700B30
+       mov       r11,7FFE35ED0B50
        call      qword ptr [r11]
        mov       rdi,rax
        jmp       near ptr M00_L01
-M00_L37:
+M00_L39:
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,16023C021E0
+       mov       rcx,1BCC20021E8
        mov       rdi,[rcx]
        jmp       near ptr M00_L01
-M00_L38:
-       call      M00_L41
-       jmp       short M00_L40
-M00_L39:
-       mov       rcx,rdi
-       mov       r11,7FFEBA700B20
-       call      qword ptr [r11]
-       jmp       near ptr M00_L31
 M00_L40:
-       xor       r14d,r14d
-       jmp       near ptr M00_L31
+       call      M00_L43
+       jmp       short M00_L42
 M00_L41:
+       mov       rcx,rdi
+       mov       r11,7FFE35ED0B40
+       call      qword ptr [r11]
+       jmp       near ptr M00_L33
+M00_L42:
+       xor       r14d,r14d
+       jmp       near ptr M00_L33
+M00_L43:
        sub       rsp,28
        cmp       qword ptr [rbp-48],0
-       je        short M00_L42
+       je        short M00_L44
        mov       rdi,[rbp-48]
        mov       rbx,[rdi]
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
        cmp       rbx,rcx
-       je        short M00_L42
+       je        short M00_L44
        mov       rcx,rdi
-       mov       r11,7FFEBA700B20
+       mov       r11,7FFE35ED0B40
        call      qword ptr [r11]
-M00_L42:
+M00_L44:
        nop
        add       rsp,28
        ret
-; Total bytes of code 1589
+; Total bytes of code 1601
 ```
 ```assembly
 ; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
@@ -427,10 +433,10 @@ M00_L42:
        xor       edx,edx
        mov       [rbp-18],rdx
        lea       rdx,[rbp-18]
-       mov       rbx,1A0B8B0B718
+       mov       rbx,1FD56F0B6D8
        mov       rcx,rbx
-       call      System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
-       mov       rsi,16023C01328
+       call      qword ptr [7FFE35F85998]; System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
+       mov       rsi,1BCC2001340
        cmp       qword ptr [rsi],0
        je        short M01_L01
 M01_L00:
@@ -440,7 +446,7 @@ M01_L00:
        call      System.Threading.Monitor.ExitIfLockTaken(System.Object, Boolean ByRef)
        jmp       short M01_L02
 M01_L01:
-       call      qword ptr [7FFEBABC4CD8]; DotNetTips.Spargine.Tester.Data.CountryRepository.DeserializeCountries()
+       call      qword ptr [7FFE363A5BD8]; DotNetTips.Spargine.Tester.Data.CountryRepository.DeserializeCountries()
        mov       rdx,rax
        mov       rcx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -454,13 +460,13 @@ M01_L02:
        ret
        sub       rsp,28
        lea       rdx,[rbp-18]
-       mov       rbx,1A0B8B0B718
+       mov       rbx,1FD56F0B6D8
        mov       rcx,rbx
        call      System.Threading.Monitor.ExitIfLockTaken(System.Object, Boolean ByRef)
        nop
        add       rsp,28
        ret
-; Total bytes of code 135
+; Total bytes of code 136
 ```
 ```assembly
 ; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
@@ -471,7 +477,7 @@ M01_L02:
        jne       short M02_L00
        ret
 M02_L00:
-       jmp       qword ptr [7FFEBA7B5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FFE35F85C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
@@ -500,27 +506,27 @@ M02_L00:
        call      CORINFO_HELP_NEWSFAST
        mov       dword ptr [rax+8],0EB
        mov       rdx,rax
-       mov       rcx,24D854B06F0
-       call      qword ptr [7FFEBA6FA5D0]; System.RuntimeType.IsEnumDefined(System.Object)
+       mov       rcx,15965B006A0
+       call      qword ptr [7FFE35EAA5D0]; System.RuntimeType.IsEnumDefined(System.Object)
        test      eax,eax
-       je        near ptr M00_L38
+       je        near ptr M00_L40
        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Data.CountryName
        call      CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       dword ptr [rsi+8],0EB
-       mov       rcx,20CF0402110
+       mov       rcx,118D0C02128
        mov       rdi,[rcx]
-       mov       rcx,20CF04020F0
+       mov       rcx,118D0C02108
        mov       r14,[rcx]
        test      rdi,rdi
-       je        near ptr M00_L40
+       je        near ptr M00_L42
 M00_L00:
        mov       r15,[r14+8]
        mov       rcx,[r15+8]
        cmp       byte ptr [r14+19],0
        jne       near ptr M00_L10
        mov       rdx,rsi
-       mov       r11,7FFEBA700AB0
+       mov       r11,7FFE35EB0AD0
        call      qword ptr [r11]
        mov       r13d,eax
 M00_L01:
@@ -534,11 +540,11 @@ M00_L01:
        imul      rdx,rax
        shr       rdx,20
        cmp       edx,[rcx+8]
-       jae       near ptr M00_L59
+       jae       near ptr M00_L61
        mov       edx,edx
        mov       rax,[rcx+rdx*8+10]
        test      rax,rax
-       je        near ptr M00_L49
+       je        near ptr M00_L51
        test      r12,r12
        je        near ptr M00_L11
        mov       rcx,offset MT_System.Collections.Generic.ObjectEqualityComparer<System.Enum>
@@ -546,20 +552,20 @@ M00_L01:
        jne       near ptr M00_L11
 M00_L02:
        cmp       r13d,[rax+20]
-       jne       near ptr M00_L41
+       jne       near ptr M00_L43
        mov       [rbp-50],rax
        mov       r10,[rax+8]
        test      r10,r10
-       je        near ptr M00_L43
+       je        near ptr M00_L45
        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Data.CountryName
        cmp       [r10],rcx
-       jne       near ptr M00_L42
+       jne       near ptr M00_L44
        mov       rcx,r10
        mov       rdx,rsi
-       call      qword ptr [7FFEBA6F60A0]; System.Enum.Equals(System.Object)
+       call      qword ptr [7FFE35EA60A0]; System.Enum.Equals(System.Object)
 M00_L03:
        test      eax,eax
-       je        near ptr M00_L43
+       je        near ptr M00_L45
 M00_L04:
        mov       rax,[rbp-50]
        mov       rdx,[rax+10]
@@ -570,40 +576,40 @@ M00_L05:
        mov       [rbp-40],rcx
        lea       rcx,[rbx+8]
        call      CORINFO_HELP_ASSIGN_REF
-       call      qword ptr [7FFEBABC4990]; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
+       call      qword ptr [7FFE36374AB0]; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
        mov       rsi,rax
        test      rsi,rsi
-       je        near ptr M00_L50
+       je        near ptr M00_L52
        mov       rax,offset MT_DotNetTips.Spargine.Tester.Data.Models.Country[]
        cmp       [rsi],rax
-       je        near ptr M00_L34
+       je        near ptr M00_L36
        mov       rax,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Data.Models.Country>
        cmp       [rsi],rax
        jne       near ptr M00_L13
        mov       edi,[rsi+10]
        mov       r14,[rsi+8]
        cmp       [r14+8],edi
-       jb        near ptr M00_L51
+       jb        near ptr M00_L53
        add       r14,10
 M00_L06:
-       xor       r13d,r13d
-       cmp       r13d,edi
+       xor       r15d,r15d
+       cmp       r15d,edi
        jge       short M00_L08
 M00_L07:
-       mov       rsi,[r14+r13*8]
+       mov       rsi,[r14+r15*8]
        mov       rcx,rbx
        mov       rdx,rsi
        mov       rax,offset DotNetTips.Spargine.Tester.Data.CountryRepository+<>c__DisplayClass3_0.<GetCountry>b__0(DotNetTips.Spargine.Tester.Data.Models.Country)
        call      rax
        test      eax,eax
-       jne       near ptr M00_L35
-       inc       r13d
-       cmp       r13d,edi
+       jne       near ptr M00_L37
+       inc       r15d
+       cmp       r15d,edi
        jl        short M00_L07
 M00_L08:
-       xor       r13d,r13d
+       xor       r15d,r15d
 M00_L09:
-       mov       [rbp-48],r13
+       mov       [rbp-48],r15
        mov       rcx,[rbp+10]
        mov       rbx,[rcx+60]
        mov       rdx,[rbp-48]
@@ -623,51 +629,50 @@ M00_L09:
        ret
 M00_L10:
        mov       rcx,rsi
-       mov       rax,[7FFEBAE68880]
+       mov       rax,[7FFE36610F10]
        call      qword ptr [rax+18]
        mov       r13d,eax
        jmp       near ptr M00_L01
 M00_L11:
        cmp       r13d,[rax+20]
-       jne       near ptr M00_L46
+       jne       near ptr M00_L48
        mov       [rbp-50],rax
        mov       r10,[rax+8]
        mov       rcx,offset MT_System.Collections.Generic.ObjectEqualityComparer<System.Enum>
        cmp       [r12],rcx
-       jne       near ptr M00_L44
+       jne       near ptr M00_L46
        test      r10,r10
-       je        near ptr M00_L45
+       je        near ptr M00_L47
        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Data.CountryName
        cmp       [r10],rcx
-       jne       near ptr M00_L47
+       jne       near ptr M00_L49
        mov       rcx,r10
        mov       rdx,rsi
-       call      qword ptr [7FFEBA6F60A0]; System.Enum.Equals(System.Object)
+       call      qword ptr [7FFE35EA60A0]; System.Enum.Equals(System.Object)
 M00_L12:
        test      eax,eax
-       je        near ptr M00_L48
+       je        near ptr M00_L50
        jmp       near ptr M00_L04
 M00_L13:
        mov       rcx,offset MT_System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.Data.Models.Country>
        cmp       [rsi],rcx
-       jne       near ptr M00_L56
+       jne       near ptr M00_L58
        mov       rcx,[rsi+8]
        mov       r11,offset MT_DotNetTips.Spargine.Tester.Data.Models.Country[]
        cmp       [rcx],r11
-       jne       near ptr M00_L52
+       jne       near ptr M00_L54
        mov       r14d,[rcx+8]
        test      r14d,r14d
-       je        near ptr M00_L55
+       je        near ptr M00_L57
 M00_L14:
        mov       rsi,[rsi+8]
        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Data.Models.Country[]
        cmp       [rsi],rcx
-       jne       near ptr M00_L54
+       jne       near ptr M00_L56
        mov       edi,[rsi+8]
        test      edi,edi
-       je        near ptr M00_L36
-       mov       r14,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       mov       rcx,r14
+       je        near ptr M00_L38
+       mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
        call      CORINFO_HELP_NEWSFAST
        mov       r14,rax
        mov       dword ptr [r14+8],0FFFFFFFF
@@ -682,47 +687,46 @@ M00_L15:
        mov       r14,[rbp-58]
        mov       rsi,[r14]
        mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       mov       rdi,rcx
-       cmp       rsi,rdi
+       cmp       rsi,rcx
        jne       near ptr M00_L23
        jmp       short M00_L18
 M00_L16:
        xor       eax,eax
 M00_L17:
        test      eax,eax
-       jne       near ptr M00_L32
+       jne       near ptr M00_L34
 M00_L18:
        mov       eax,[r14+8]
        inc       eax
        cmp       eax,[r14+0C]
-       jae       near ptr M00_L31
+       jae       near ptr M00_L27
        mov       [r14+8],eax
        mov       r10d,[r14+8]
        cmp       r10d,[r14+0C]
-       jae       near ptr M00_L29
-       mov       r15,[r14+10]
-       cmp       r10d,[r15+8]
-       jae       near ptr M00_L30
+       jae       near ptr M00_L32
+       mov       rdi,[r14+10]
+       cmp       r10d,[rdi+8]
+       jae       near ptr M00_L33
        mov       ecx,r10d
-       mov       r13,[r15+rcx*8+10]
-       mov       r12,[r13+68]
+       mov       r15,[rdi+rcx*8+10]
+       mov       r13,[r15+68]
        mov       rdx,[rbx+8]
-       cmp       r12,rdx
+       cmp       r13,rdx
        je        near ptr M00_L26
-       test      r12,r12
+       test      r13,r13
        je        short M00_L16
        test      rdx,rdx
        je        short M00_L16
-       mov       ecx,[r12+8]
+       mov       ecx,[r13+8]
        cmp       ecx,[rdx+8]
        jne       short M00_L16
-       lea       rcx,[r12+0C]
+       lea       rcx,[r13+0C]
        add       rdx,0C
-       mov       r8d,[r12+8]
+       mov       r8d,[r13+8]
        add       r8d,r8d
        cmp       r8,0A
        je        short M00_L19
-       call      qword ptr [7FFEBA7BFBB8]; System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFE35F6C330]; System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       short M00_L20
 M00_L19:
        mov       rax,[rcx]
@@ -739,45 +743,45 @@ M00_L21:
        xor       eax,eax
 M00_L22:
        test      eax,eax
-       jne       near ptr M00_L32
+       jne       near ptr M00_L34
 M00_L23:
        mov       r14,[rbp-58]
        mov       rsi,[r14]
-       mov       rdi,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       cmp       rsi,rdi
-       jne       near ptr M00_L27
+       mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
+       cmp       rsi,rcx
+       jne       near ptr M00_L28
        mov       eax,[r14+8]
        inc       eax
        cmp       eax,[r14+0C]
-       jae       near ptr M00_L31
+       jae       near ptr M00_L29
        mov       [r14+8],eax
        mov       ecx,[r14+8]
        cmp       ecx,[r14+0C]
-       jae       near ptr M00_L29
-       mov       r15,[r14+10]
+       jae       near ptr M00_L32
+       mov       rdi,[r14+10]
        mov       r10d,[r14+8]
-       cmp       r10d,[r15+8]
-       jae       near ptr M00_L30
+       cmp       r10d,[rdi+8]
+       jae       near ptr M00_L33
        mov       ecx,r10d
-       mov       r13,[r15+rcx*8+10]
-       mov       r12,[r13+68]
+       mov       r15,[rdi+rcx*8+10]
+       mov       r13,[r15+68]
        mov       rdx,[rbx+8]
-       cmp       r12,rdx
-       je        near ptr M00_L28
-       test      r12,r12
+       cmp       r13,rdx
+       je        near ptr M00_L31
+       test      r13,r13
        je        short M00_L21
        test      rdx,rdx
        je        short M00_L21
-       mov       ecx,[r12+8]
+       mov       ecx,[r13+8]
        cmp       ecx,[rdx+8]
        jne       near ptr M00_L21
-       lea       rcx,[r12+0C]
+       lea       rcx,[r13+0C]
        add       rdx,0C
-       mov       r8d,[r12+8]
+       mov       r8d,[r13+8]
        add       r8d,r8d
        cmp       r8,0A
        je        short M00_L24
-       call      qword ptr [7FFEBA7BFBB8]; System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFE35F6C330]; System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       short M00_L25
 M00_L24:
        mov       rax,rcx
@@ -796,127 +800,134 @@ M00_L26:
        mov       eax,1
        jmp       near ptr M00_L17
 M00_L27:
+       mov       ecx,[r14+0C]
+       mov       [r14+8],ecx
+       jmp       near ptr M00_L59
+M00_L28:
        mov       rcx,r14
-       mov       r11,7FFEBA700AC8
+       mov       r11,7FFE35EB0AE8
        call      qword ptr [r11]
        test      eax,eax
-       je        near ptr M00_L57
+       jne       short M00_L30
+       jmp       near ptr M00_L59
+M00_L29:
+       mov       ecx,[r14+0C]
+       mov       [r14+8],ecx
+       jmp       near ptr M00_L59
+M00_L30:
        mov       rcx,r14
-       mov       r11,7FFEBA700AD0
+       mov       r11,7FFE35EB0AF0
        call      qword ptr [r11]
-       mov       r13,rax
+       mov       r15,rax
        mov       rcx,rbx
-       mov       rdx,r13
+       mov       rdx,r15
        mov       rax,offset DotNetTips.Spargine.Tester.Data.CountryRepository+<>c__DisplayClass3_0.<GetCountry>b__0(DotNetTips.Spargine.Tester.Data.Models.Country)
        call      rax
        jmp       near ptr M00_L22
-M00_L28:
+M00_L31:
        mov       eax,1
        jmp       near ptr M00_L22
-M00_L29:
+M00_L32:
        mov       ecx,[r14+8]
-       call      qword ptr [7FFEBAEAD290]
+       call      qword ptr [7FFE3664C810]
        int       3
-M00_L30:
+M00_L33:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
-M00_L31:
-       mov       ecx,[r14+0C]
-       mov       [r14+8],ecx
-       jmp       near ptr M00_L57
-M00_L32:
-       cmp       rsi,rdi
-       jne       near ptr M00_L58
-M00_L33:
-       jmp       near ptr M00_L09
 M00_L34:
+       mov       rsi,[r14]
+       mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
+       cmp       rsi,rcx
+       jne       near ptr M00_L60
+M00_L35:
+       jmp       near ptr M00_L09
+M00_L36:
        lea       r14,[rsi+10]
        mov       edi,[rsi+8]
        jmp       near ptr M00_L06
-M00_L35:
-       mov       r13,rsi
-       jmp       near ptr M00_L09
-M00_L36:
-       mov       r14,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       mov       rcx,r14
-       test      byte ptr [7FFEBAEBA230],1
-       je        near ptr M00_L53
 M00_L37:
-       mov       rcx,20CF04024C8
+       mov       r15,rsi
+       jmp       near ptr M00_L09
+M00_L38:
+       mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
+       test      byte ptr [7FFE36652450],1
+       je        near ptr M00_L55
+M00_L39:
+       mov       rcx,118D0C024D8
        mov       r14,[rcx]
        jmp       near ptr M00_L15
-M00_L38:
-       call      qword ptr [7FFEBAE0EFE8]
+M00_L40:
+       call      qword ptr [7FFE365BE790]
        mov       rbx,rax
        test      rbx,rbx
-       jne       short M00_L39
-       call      qword ptr [7FFEBAEAEFB8]
+       jne       short M00_L41
+       call      qword ptr [7FFE3664E4A8]
        mov       rbx,rax
-M00_L39:
+M00_L41:
        mov       rcx,offset MT_System.ArgumentOutOfRangeException
        call      CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       rcx,rsi
        mov       r8,rbx
-       mov       rdx,24D854B06C0
-       call      qword ptr [7FFEBA9DD8F0]
+       mov       rdx,15965B00670
+       call      qword ptr [7FFE361FD8F0]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
-M00_L40:
+M00_L42:
        mov       rcx,offset MT_System.Func<System.Enum, System.String>
        call      CORINFO_HELP_NEWSFAST
        mov       rdi,rax
-       mov       rdx,20CF0402108
+       mov       rdx,118D0C02120
        mov       rdx,[rdx]
        mov       rcx,rdi
        mov       r8,offset DotNetTips.Spargine.Core.EnumHelper+<>c.<GetDescription>b__3_0(System.Enum)
-       call      qword ptr [7FFEBA7B6BB0]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
-       mov       rcx,20CF0402110
+       call      qword ptr [7FFE35F66BB0]; System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+       mov       rcx,118D0C02128
        mov       rdx,rdi
        call      CORINFO_HELP_ASSIGN_REF
        jmp       near ptr M00_L00
-M00_L41:
+M00_L43:
        mov       [rbp-50],rax
-       jmp       short M00_L43
-M00_L42:
+       jmp       short M00_L45
+M00_L44:
        mov       rcx,r10
        mov       rdx,rsi
        mov       r8,[r10]
        mov       r8,[r8+40]
        call      qword ptr [r8+10]
        jmp       near ptr M00_L03
-M00_L43:
+M00_L45:
        mov       rax,[rbp-50]
        mov       rax,[rax+18]
        test      rax,rax
        jne       near ptr M00_L02
-       jmp       short M00_L49
-M00_L44:
+       jmp       short M00_L51
+M00_L46:
        mov       rcx,r12
        mov       r8,rsi
        mov       rdx,r10
-       mov       r11,7FFEBA700AB8
+       mov       r11,7FFE35EB0AD8
        call      qword ptr [r11]
        jmp       near ptr M00_L12
-M00_L45:
+M00_L47:
        mov       rax,[rbp-50]
-M00_L46:
+M00_L48:
        mov       rax,[rax+18]
        test      rax,rax
        jne       near ptr M00_L11
-       jmp       short M00_L49
-M00_L47:
+       jmp       short M00_L51
+M00_L49:
        mov       rcx,r10
        mov       rdx,rsi
        mov       r8,[r10]
        mov       r8,[r8+40]
        call      qword ptr [r8+10]
        jmp       near ptr M00_L12
-M00_L48:
+M00_L50:
        mov       rax,[rbp-50]
-       jmp       short M00_L46
-M00_L49:
+       jmp       short M00_L48
+M00_L51:
        xor       edx,edx
        mov       [rbp-40],rdx
        mov       rdx,rsi
@@ -934,72 +945,71 @@ M00_L49:
        mov       rdx,r15
        mov       r8,rsi
        mov       rcx,r14
-       call      qword ptr [7FFEBAB3C528]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]].TryAddInternal(Tables<System.__Canon,System.__Canon>, System.__Canon, System.Nullable`1<Int32>, System.__Canon, Boolean, Boolean, System.__Canon ByRef)
+       call      qword ptr [7FFE362EC528]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]].TryAddInternal(Tables<System.__Canon,System.__Canon>, System.__Canon, System.Nullable`1<Int32>, System.__Canon, Boolean, Boolean, System.__Canon ByRef)
        jmp       near ptr M00_L05
-M00_L50:
-       mov       ecx,11
-       call      qword ptr [7FFEBA9D7E70]
-       int       3
-M00_L51:
-       call      qword ptr [7FFEBA9D7A20]
-       int       3
 M00_L52:
-       mov       r11,7FFEBA700AE0
+       mov       ecx,11
+       call      qword ptr [7FFE35F6F948]
+       int       3
+M00_L53:
+       call      qword ptr [7FFE35F6F498]
+       int       3
+M00_L54:
+       mov       r11,7FFE35EB0B00
        call      qword ptr [r11]
        mov       r14d,eax
        test      r14d,r14d
-       je        short M00_L55
+       je        short M00_L57
        jmp       near ptr M00_L14
-M00_L53:
-       call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       jmp       near ptr M00_L37
-M00_L54:
-       mov       rcx,rsi
-       mov       r11,7FFEBA700AE8
-       call      qword ptr [r11]
-       mov       r14,rax
-       jmp       near ptr M00_L15
 M00_L55:
-       mov       r14,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       mov       rcx,r14
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,20CF04024C8
-       mov       r14,[rcx]
-       jmp       near ptr M00_L15
+       jmp       near ptr M00_L39
 M00_L56:
        mov       rcx,rsi
-       mov       r11,7FFEBA700AC0
+       mov       r11,7FFE35EB0B08
        call      qword ptr [r11]
        mov       r14,rax
        jmp       near ptr M00_L15
 M00_L57:
-       call      M00_L60
-       jmp       near ptr M00_L08
+       mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
+       call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,118D0C024D8
+       mov       r14,[rcx]
+       jmp       near ptr M00_L15
 M00_L58:
-       mov       rcx,r14
-       mov       r11,7FFEBA700AD8
+       mov       rcx,rsi
+       mov       r11,7FFE35EB0AE0
        call      qword ptr [r11]
-       jmp       near ptr M00_L33
+       mov       r14,rax
+       jmp       near ptr M00_L15
 M00_L59:
+       call      M00_L62
+       jmp       near ptr M00_L08
+M00_L60:
+       mov       rcx,r14
+       mov       r11,7FFE35EB0AF8
+       call      qword ptr [r11]
+       jmp       near ptr M00_L35
+M00_L61:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
-M00_L60:
+M00_L62:
        sub       rsp,48
        cmp       qword ptr [rbp-58],0
-       je        short M00_L61
+       je        short M00_L63
        mov       r14,[rbp-58]
        mov       rsi,[r14]
-       mov       rdi,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
-       cmp       rsi,rdi
-       je        short M00_L61
+       mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Data.Models.Country>
+       cmp       rsi,rcx
+       je        short M00_L63
        mov       rcx,r14
-       mov       r11,7FFEBA700AD8
+       mov       r11,7FFE35EB0AF8
        call      qword ptr [r11]
-M00_L61:
+M00_L63:
        nop
        add       rsp,48
        ret
-; Total bytes of code 1992
+; Total bytes of code 2001
 ```
 ```assembly
 ; System.RuntimeType.IsEnumDefined(System.Object)
@@ -1026,7 +1036,7 @@ M01_L01:
        test      ecx,ecx
        je        near ptr M01_L25
        mov       rcx,rsi
-       call      qword ptr [7FFEBA7BC9A8]; System.Object.GetType()
+       call      qword ptr [7FFE361361D8]; System.Object.GetType()
        mov       rdi,rax
        mov       rcx,[rdi+18]
        test      cl,2
@@ -1054,8 +1064,8 @@ M01_L03:
 M01_L04:
        test      eax,eax
        je        near ptr M01_L25
-       call      00007FFF1A3EF240
-       mov       rcx,20CF04009D8
+       call      00007FFE95BBF240
+       mov       rcx,118D0C00B10
        mov       rbp,[rcx]
        cmp       eax,1A
        jae       near ptr M01_L61
@@ -1063,16 +1073,16 @@ M01_L04:
        mov       rcx,[rbp+rcx*8+10]
        mov       rdi,rcx
 M01_L05:
-       mov       rcx,24D854A0020
+       mov       rcx,15965AF0020
        cmp       rdi,rcx
        je        near ptr M01_L26
-       mov       rcx,24D854A3120
+       mov       rcx,15965AF3E20
        cmp       rdi,rcx
        jne       near ptr M01_L27
 M01_L06:
        mov       rcx,[rbx+18]
-       call      00007FFF1A3EF240
-       mov       rcx,20CF04009D8
+       call      00007FFE95BBF240
+       mov       rcx,118D0C00B10
        mov       rbp,[rcx]
        cmp       eax,1A
        jae       near ptr M01_L61
@@ -1099,7 +1109,7 @@ M01_L09:
        jmp       near ptr M01_L04
 M01_L10:
        mov       rcx,rdi
-       call      qword ptr [7FFEBA7B7C30]; System.RuntimeType.InitializeCache()
+       call      qword ptr [7FFE361356E0]; System.RuntimeType.InitializeCache()
 M01_L11:
        mov       ebp,[rax+98]
        test      ebp,ebp
@@ -1124,7 +1134,7 @@ M01_L13:
        jne       short M01_L19
 M01_L14:
        mov       rcx,rbx
-       call      qword ptr [7FFEBA7B7C30]; System.RuntimeType.InitializeCache()
+       call      qword ptr [7FFE361356E0]; System.RuntimeType.InitializeCache()
 M01_L15:
        mov       rcx,[rax+80]
        test      rcx,rcx
@@ -1168,49 +1178,49 @@ M01_L21:
 M01_L22:
        mov       rcx,rbx
        xor       edx,edx
-       call      qword ptr [7FFEBA9DDD28]; System.Enum.<GetEnumInfo>g__InitializeEnumInfo|5_0[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, Boolean)
+       call      qword ptr [7FFE361FDD28]; System.Enum.<GetEnumInfo>g__InitializeEnumInfo|5_0[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, Boolean)
        jmp       short M01_L17
 M01_L23:
        mov       ecx,3AD
-       mov       rdx,7FFEBA6F4000
-       call      qword ptr [7FFEBA9D77B0]
+       mov       rdx,7FFE35EA4000
+       call      qword ptr [7FFE35F6F228]
        mov       rcx,rax
-       call      qword ptr [7FFEBAEAC4C8]
+       call      qword ptr [7FFE36647BE8]
        int       3
 M01_L24:
        mov       rcx,rdi
        mov       rdx,rbx
-       call      qword ptr [7FFEBAEAD470]
+       call      qword ptr [7FFE3664CA80]
        test      eax,eax
        jne       near ptr M01_L03
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbp,rax
-       call      qword ptr [7FFEBAEADCE0]
+       call      qword ptr [7FFE3664D308]
        mov       rcx,rax
        mov       rdx,rdi
        mov       r8,rbx
-       call      qword ptr [7FFEBAEAD3B0]
+       call      qword ptr [7FFE3664C8B8]
        mov       rdx,rax
        mov       rcx,rbp
-       call      qword ptr [7FFEBAB34198]
+       call      qword ptr [7FFE362E4198]
        mov       rcx,rbp
        call      CORINFO_HELP_THROW
        int       3
 M01_L25:
-       call      qword ptr [7FFEBAEADCC8]
+       call      qword ptr [7FFE3664D2F0]
        int       3
 M01_L26:
        mov       rcx,rbx
-       call      qword ptr [7FFEBAE0D140]; System.Enum.GetNamesNoCopy(System.RuntimeType)
+       call      qword ptr [7FFE365BC8B8]; System.Enum.GetNamesNoCopy(System.RuntimeType)
        mov       rbx,rax
        mov       rdx,rsi
        mov       rcx,offset MT_System.String
        call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
        mov       r8,rax
        mov       rdx,rbx
-       mov       rcx,7FFEBAE69088
-       call      qword ptr [7FFEBAE0F000]
+       mov       rcx,7FFE36611718
+       call      qword ptr [7FFE365BE7A8]
        not       eax
        shr       eax,1F
        add       rsp,20
@@ -1221,37 +1231,37 @@ M01_L26:
        pop       r14
        ret
 M01_L27:
-       mov       rcx,24D854A53E0
+       mov       rcx,15965AF60C0
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A3070
+       mov       rcx,15965AF3D70
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A2ED0
+       mov       rcx,15965AF3BD0
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A53B8
+       mov       rcx,15965AF6098
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A2E58
+       mov       rcx,15965AF3B58
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A5408
+       mov       rcx,15965AF60E8
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A2C50
+       mov       rcx,15965AF3950
        cmp       rdi,rcx
        je        near ptr M01_L06
-       mov       rcx,24D854A5390
+       mov       rcx,15965AF6070
        cmp       rdi,rcx
        je        near ptr M01_L06
        mov       rcx,offset MT_System.InvalidOperationException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FFEBAEADCF8]
+       call      qword ptr [7FFE3664D320]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FFEBAB35FE0]
+       call      qword ptr [7FFE362E5FE0]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
@@ -1259,135 +1269,130 @@ M01_L28:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       rbx,rax
-       call      qword ptr [7FFEBAEADD10]
+       call      qword ptr [7FFE3664D338]
        mov       rcx,rax
        mov       rdx,rdi
        mov       r8,rbp
-       call      qword ptr [7FFEBAEAD3B0]
+       call      qword ptr [7FFE3664C8B8]
        mov       rdx,rax
        mov       rcx,rbx
-       call      qword ptr [7FFEBAB34198]
+       call      qword ptr [7FFE362E4198]
        mov       rcx,rbx
        call      CORINFO_HELP_THROW
        int       3
 M01_L29:
        mov       rbp,rdi
        mov       rcx,rbp
-       call      qword ptr [7FFEBA92F2E8]; System.RuntimeType.get_IsActualEnum()
+       call      qword ptr [7FFE361F72E8]; System.RuntimeType.get_IsActualEnum()
        test      eax,eax
        je        short M01_L30
        mov       rcx,rdi
-       call      qword ptr [7FFEBA6FA588]; Precode of System.RuntimeType.GetEnumUnderlyingType()
-       mov       rbp,rax
-       test      rbp,rbp
-       je        short M01_L30
-       mov       rcx,offset MT_System.RuntimeType
-       cmp       [rbp],rcx
-       je        short M01_L30
+       call      qword ptr [7FFE35EAA588]; Precode of System.RuntimeType.GetEnumUnderlyingType()
        mov       rdx,rax
+       mov       rcx,offset MT_System.RuntimeType
        call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
-       int       3
+       mov       rbp,rax
 M01_L30:
-       mov       rcx,24D854A53B8
+       mov       rcx,15965AF6098
        cmp       rbp,rcx
        jne       short M01_L31
        mov       ebp,5
        jmp       near ptr M01_L46
 M01_L31:
-       mov       rcx,24D854A2ED0
+       mov       rcx,15965AF3BD0
        cmp       rbp,rcx
        jne       short M01_L32
        mov       ebp,6
        jmp       near ptr M01_L46
 M01_L32:
-       mov       rcx,24D854A53E0
+       mov       rcx,15965AF60C0
        cmp       rbp,rcx
        jne       short M01_L33
        mov       ebp,7
        jmp       near ptr M01_L46
 M01_L33:
-       mov       rcx,24D854A3070
+       mov       rcx,15965AF3D70
        cmp       rbp,rcx
        jne       short M01_L34
        mov       ebp,8
        jmp       near ptr M01_L46
 M01_L34:
-       mov       rcx,24D854A3120
+       mov       rcx,15965AF3E20
        cmp       rbp,rcx
        jne       short M01_L35
        mov       ebp,9
        jmp       near ptr M01_L46
 M01_L35:
-       mov       rcx,24D854A2E58
+       mov       rcx,15965AF3B58
        cmp       rbp,rcx
        jne       short M01_L36
        mov       ebp,0A
        jmp       near ptr M01_L46
 M01_L36:
-       mov       rcx,24D854A5408
+       mov       rcx,15965AF60E8
        cmp       rbp,rcx
        jne       short M01_L37
        mov       ebp,0B
        jmp       near ptr M01_L46
 M01_L37:
-       mov       rcx,24D854A2C50
+       mov       rcx,15965AF3950
        cmp       rbp,rcx
        jne       short M01_L38
        mov       ebp,0C
        jmp       near ptr M01_L46
 M01_L38:
-       mov       rcx,24D854A5368
+       mov       rcx,15965AF6048
        cmp       rbp,rcx
        jne       short M01_L39
        mov       ebp,3
        jmp       near ptr M01_L46
 M01_L39:
-       mov       rcx,24D854A5390
+       mov       rcx,15965AF6070
        cmp       rbp,rcx
        jne       short M01_L40
        mov       ebp,4
        jmp       near ptr M01_L46
 M01_L40:
-       mov       rcx,24D854A5430
+       mov       rcx,15965AF6110
        cmp       rbp,rcx
        jne       short M01_L41
        mov       ebp,0D
        jmp       short M01_L46
 M01_L41:
-       mov       rcx,24D854A5458
+       mov       rcx,15965AF6138
        cmp       rbp,rcx
        jne       short M01_L42
        mov       ebp,0E
        jmp       short M01_L46
 M01_L42:
-       mov       rcx,24D854A62E0
+       mov       rcx,15965AF6DB8
        cmp       rbp,rcx
        jne       short M01_L43
        mov       ebp,0F
        jmp       short M01_L46
 M01_L43:
-       mov       rcx,24D854A2AC8
+       mov       rcx,15965AF37C8
        cmp       rbp,rcx
        jne       short M01_L44
        mov       ebp,10
        jmp       short M01_L46
 M01_L44:
-       mov       rcx,24D854A0020
+       mov       rcx,15965AF0020
        cmp       rbp,rcx
        jne       short M01_L45
        mov       ebp,12
        jmp       short M01_L46
 M01_L45:
-       mov       rcx,24D854B1970
+       mov       rcx,15965B01920
        mov       eax,1
        mov       edx,2
        cmp       rbp,rcx
        cmove     eax,edx
        mov       ebp,eax
 M01_L46:
-       mov       rcx,[rdi+10]
-       test      rcx,rcx
+       cmp       qword ptr [rdi+10],0
        je        short M01_L47
+       mov       rcx,[rdi+10]
        mov       r14,[rcx]
        test      r14,r14
        je        short M01_L47
@@ -1395,7 +1400,7 @@ M01_L46:
        jmp       short M01_L48
 M01_L47:
        mov       rcx,rdi
-       call      qword ptr [7FFEBA7B7C30]; System.RuntimeType.InitializeCache()
+       call      qword ptr [7FFE361356E0]; System.RuntimeType.InitializeCache()
 M01_L48:
        mov       [rax+98],ebp
        jmp       near ptr M01_L12
@@ -1403,13 +1408,13 @@ M01_L49:
        cmp       ebp,0A
        ja        short M01_L50
        mov       edx,ebp
-       lea       rcx,[7FFEBAF265A8]
+       lea       rcx,[7FFE366C5718]
        mov       ecx,[rcx+rdx*4]
        lea       rax,[M01_L00]
        add       rcx,rax
        jmp       rcx
 M01_L50:
-       mov       rdx,24D854A3048
+       mov       rdx,15965AF3D48
        cmp       rdi,rdx
        je        near ptr M01_L59
        jmp       near ptr M01_L57
@@ -1418,28 +1423,28 @@ M01_L50:
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        movzx     edx,byte ptr [rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD920]
+       call      qword ptr [7FFE3664CF48]
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.Byte
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        movzx     edx,byte ptr [rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD920]
+       call      qword ptr [7FFE3664CF48]
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.Int16
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        movzx     edx,word ptr [rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD908]
+       call      qword ptr [7FFE3664CF30]
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.UInt16
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        movzx     edx,word ptr [rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD908]
+       call      qword ptr [7FFE3664CF30]
        jmp       near ptr M01_L18
 M01_L51:
        test      rcx,rcx
@@ -1456,12 +1461,12 @@ M01_L53:
        mov       rcx,rax
        mov       edx,r8d
        mov       r8d,esi
-       call      qword ptr [7FFEBAEADF68]
+       call      qword ptr [7FFE3664D590]
        jmp       short M01_L55
 M01_L54:
        mov       rcx,rax
        mov       edx,esi
-       call      qword ptr [7FFEBAEAE178]; System.SpanHelpers.NonPackedIndexOfValueType[[System.Int32, System.Private.CoreLib],[System.SpanHelpers+DontNegate`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]](Int32 ByRef, Int32, Int32)
+       call      qword ptr [7FFE3664D7A0]; System.SpanHelpers.NonPackedIndexOfValueType[[System.Int32, System.Private.CoreLib],[System.SpanHelpers+DontNegate`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib]](Int32 ByRef, Int32, Int32)
 M01_L55:
        not       eax
        shr       eax,1F
@@ -1471,35 +1476,35 @@ M01_L55:
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        mov       edx,[rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAE0F060]; System.Enum.IsDefinedPrimitive[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, UInt32)
+       call      qword ptr [7FFE365BE808]; System.Enum.IsDefinedPrimitive[[System.UInt32, System.Private.CoreLib]](System.RuntimeType, UInt32)
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.Int64
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        mov       rdx,[rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD8F0]
+       call      qword ptr [7FFE3664CF18]
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.UInt64
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        mov       rdx,[rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD8F0]
+       call      qword ptr [7FFE3664CF18]
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.Single
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        vmovss    xmm1,dword ptr [rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD8D8]
+       call      qword ptr [7FFE3664CF00]
        jmp       near ptr M01_L18
        mov       rdx,rsi
        mov       rcx,offset MT_System.Double
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        vmovsd    xmm1,qword ptr [rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD8C0]
+       call      qword ptr [7FFE3664CEE8]
        jmp       near ptr M01_L18
        mov       rcx,offset MT_System.Char
        cmp       [rsi],rcx
@@ -1509,19 +1514,19 @@ M01_L55:
 M01_L56:
        movzx     edx,word ptr [rsi+8]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD938]
+       call      qword ptr [7FFE3664CF60]
        jmp       near ptr M01_L18
 M01_L57:
-       mov       rdx,24D854A5480
+       mov       rdx,15965AF6160
        cmp       rdi,rdx
        je        short M01_L58
        mov       rcx,offset MT_System.InvalidOperationException
        call      CORINFO_HELP_NEWSFAST
        mov       rsi,rax
-       call      qword ptr [7FFEBAEADCF8]
+       call      qword ptr [7FFE3664D320]
        mov       rdx,rax
        mov       rcx,rsi
-       call      qword ptr [7FFEBAB35FE0]
+       call      qword ptr [7FFE362E5FE0]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
@@ -1531,7 +1536,7 @@ M01_L58:
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        mov       rdx,[rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD8A8]
+       call      qword ptr [7FFE3664CED0]
        jmp       short M01_L60
 M01_L59:
        mov       rdx,rsi
@@ -1539,13 +1544,13 @@ M01_L59:
        call      System.Runtime.CompilerServices.CastHelpers.Unbox(System.Runtime.CompilerServices.MethodTable*, System.Object)
        mov       rdx,[rax]
        mov       rcx,rbx
-       call      qword ptr [7FFEBAEAD8A8]
+       call      qword ptr [7FFE3664CED0]
 M01_L60:
        jmp       near ptr M01_L18
 M01_L61:
        call      CORINFO_HELP_RNGCHKFAIL
        int       3
-; Total bytes of code 2097
+; Total bytes of code 2087
 ```
 ```assembly
 ; System.Enum.Equals(System.Object)
@@ -1564,11 +1569,11 @@ M02_L00:
        jne       short M02_L03
        lea       rsi,[rbx+8]
        lea       rdi,[rdx+8]
-       call      00007FFF1A3EF240
+       call      00007FFE95BBF240
        add       eax,0FFFFFFFE
        cmp       eax,17
        ja        short M02_L03
-       lea       rcx,[7FFEBAF26E90]
+       lea       rcx,[7FFE366C6010]
        mov       ecx,[rcx+rax*4]
        lea       rdx,[M02_L00]
        add       rcx,rdx
@@ -1629,10 +1634,10 @@ M02_L03:
        xor       edx,edx
        mov       [rbp-18],rdx
        lea       rdx,[rbp-18]
-       mov       rbx,24D854AB718
+       mov       rbx,15965AFB6D8
        mov       rcx,rbx
        call      System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
-       mov       rsi,20CF0401328
+       mov       rsi,118D0C01340
        cmp       qword ptr [rsi],0
        je        short M03_L01
 M03_L00:
@@ -1642,7 +1647,7 @@ M03_L00:
        call      System.Threading.Monitor.ExitIfLockTaken(System.Object, Boolean ByRef)
        jmp       short M03_L02
 M03_L01:
-       call      qword ptr [7FFEBABC4CD8]; DotNetTips.Spargine.Tester.Data.CountryRepository.DeserializeCountries()
+       call      qword ptr [7FFE36374DF8]; DotNetTips.Spargine.Tester.Data.CountryRepository.DeserializeCountries()
        mov       rdx,rax
        mov       rcx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -1656,7 +1661,7 @@ M03_L02:
        ret
        sub       rsp,28
        lea       rdx,[rbp-18]
-       mov       rbx,24D854AB718
+       mov       rbx,15965AFB6D8
        mov       rcx,rbx
        call      System.Threading.Monitor.ExitIfLockTaken(System.Object, Boolean ByRef)
        nop
@@ -1698,7 +1703,7 @@ M04_L02:
        je        short M04_L03
        mov       rcx,rax
        mov       rdx,rbx
-       call      qword ptr [7FFEBA7BFBB8]; System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
+       call      qword ptr [7FFE35F6C330]; System.SpanHelpers.SequenceEqual(Byte ByRef, Byte ByRef, UIntPtr)
        jmp       short M04_L04
 M04_L03:
        mov       rcx,[rax]
@@ -1841,7 +1846,7 @@ M05_L13:
 ; 			^^^^^^^^^^^^^^^^^^^^^^^^^
        mov       rcx,[rbp+18]
        cmp       [rcx],ecx
-       call      qword ptr [7FFEBA7BC9A8]; System.Object.GetType()
+       call      qword ptr [7FFE361361D8]; System.Object.GetType()
        mov       [rbp-8],rax
 ; 			if (!type.IsEnum)
 ; 			^^^^^^^^^^^^^^^^^
@@ -1857,18 +1862,18 @@ M05_L13:
        mov       rcx,offset MT_System.ArgumentException
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-30],rax
-       mov       ecx,538B
-       mov       rdx,7FFEBAA85508
-       call      qword ptr [7FFEBA9D77B0]
+       mov       ecx,538F
+       mov       rdx,7FFE36234F98
+       call      qword ptr [7FFE35F6F228]
        mov       [rbp-40],rax
        mov       ecx,1C97
-       mov       rdx,7FFEBAA85508
-       call      qword ptr [7FFEBA9D77B0]
+       mov       rdx,7FFE36234F98
+       call      qword ptr [7FFE35F6F228]
        mov       [rbp-48],rax
        mov       rdx,[rbp-40]
        mov       r8,[rbp-48]
        mov       rcx,[rbp-30]
-       call      qword ptr [7FFEBAB36088]
+       call      qword ptr [7FFE362E6088]
        mov       rcx,[rbp-30]
        call      CORINFO_HELP_THROW
        int       3
@@ -1877,7 +1882,7 @@ M05_L13:
 M06_L00:
        mov       rcx,[rbp-8]
        mov       rdx,[rbp+18]
-       call      qword ptr [7FFEBAEA5638]; System.Enum.GetName(System.Type, System.Object)
+       call      qword ptr [7FFE36644DE0]; System.Enum.GetName(System.Type, System.Object)
        mov       [rbp-10],rax
 ; 			if (name == null)
 ; 			^^^^^^^^^^^^^^^^^
@@ -1898,13 +1903,13 @@ M06_L01:
        mov       rcx,[rbp-8]
        mov       rdx,[rbp-10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFEBAEA5650]; System.Type.GetField(System.String)
+       call      qword ptr [7FFE36644DF8]; System.Type.GetField(System.String)
        mov       [rbp-18],rax
 ; 			if (field == null)
 ; 			^^^^^^^^^^^^^^^^^^
        mov       rcx,[rbp-18]
        xor       edx,edx
-       call      qword ptr [7FFEBAEA5668]; System.Reflection.FieldInfo.op_Equality(System.Reflection.FieldInfo, System.Reflection.FieldInfo)
+       call      qword ptr [7FFE36644E10]; System.Reflection.FieldInfo.op_Equality(System.Reflection.FieldInfo, System.Reflection.FieldInfo)
        test      eax,eax
        je        short M06_L02
 ; 				return name;
@@ -1916,9 +1921,9 @@ M06_L01:
 ; 			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 M06_L02:
        mov       rdx,[rbp-18]
-       mov       rcx,7FFEBAEB9B90
+       mov       rcx,7FFE36651DB0
        xor       r8d,r8d
-       call      qword ptr [7FFEBACB5EC0]; System.Reflection.CustomAttributeExtensions.GetCustomAttribute[[System.__Canon, System.Private.CoreLib]](System.Reflection.MemberInfo, Boolean)
+       call      qword ptr [7FFE36465FB0]; System.Reflection.CustomAttributeExtensions.GetCustomAttribute[[System.__Canon, System.Private.CoreLib]](System.Reflection.MemberInfo, Boolean)
        mov       [rbp-20],rax
 ; 			if (descriptionAttr != null && !string.IsNullOrEmpty(descriptionAttr.Description))
 ; 			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1930,7 +1935,7 @@ M06_L02:
        mov       rax,[rax+40]
        call      qword ptr [rax+38]
        mov       rcx,rax
-       call      qword ptr [7FFEBA9DE2C8]; System.String.IsNullOrEmpty(System.String)
+       call      qword ptr [7FFE361FE2C8]; System.String.IsNullOrEmpty(System.String)
        test      eax,eax
        jne       short M06_L03
 ; 				return descriptionAttr.Description;
@@ -1946,9 +1951,9 @@ M06_L02:
 ; 			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 M06_L03:
        mov       rdx,[rbp-18]
-       mov       rcx,7FFEBAEB9C18
+       mov       rcx,7FFE36651E38
        xor       r8d,r8d
-       call      qword ptr [7FFEBACB5EC0]; System.Reflection.CustomAttributeExtensions.GetCustomAttribute[[System.__Canon, System.Private.CoreLib]](System.Reflection.MemberInfo, Boolean)
+       call      qword ptr [7FFE36465FB0]; System.Reflection.CustomAttributeExtensions.GetCustomAttribute[[System.__Canon, System.Private.CoreLib]](System.Reflection.MemberInfo, Boolean)
        mov       [rbp-28],rax
 ; 			if (enumMemberAttr != null && !string.IsNullOrEmpty(enumMemberAttr.Value))
 ; 			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1956,16 +1961,16 @@ M06_L03:
        je        short M06_L04
        mov       rcx,[rbp-28]
        cmp       [rcx],ecx
-       call      qword ptr [7FFEBAEA5698]; System.Runtime.Serialization.EnumMemberAttribute.get_Value()
+       call      qword ptr [7FFE36644E40]; System.Runtime.Serialization.EnumMemberAttribute.get_Value()
        mov       rcx,rax
-       call      qword ptr [7FFEBA9DE2C8]; System.String.IsNullOrEmpty(System.String)
+       call      qword ptr [7FFE361FE2C8]; System.String.IsNullOrEmpty(System.String)
        test      eax,eax
        jne       short M06_L04
 ; 				return enumMemberAttr.Value;
 ; 				^^^^^^^^^^^^^^^^^^^^^^^^^^^^
        mov       rcx,[rbp-28]
        cmp       [rcx],ecx
-       call      qword ptr [7FFEBAEA5698]; System.Runtime.Serialization.EnumMemberAttribute.get_Value()
+       call      qword ptr [7FFE36644E40]; System.Runtime.Serialization.EnumMemberAttribute.get_Value()
        mov       [rbp-38],rax
        jmp       short M06_L05
 ; 			return name;
@@ -1997,7 +2002,7 @@ M06_L05:
        pop       rsi
        ret
 M07_L00:
-       call      qword ptr [7FFEBAEACE70]
+       call      qword ptr [7FFE3664C390]
        int       3
 ; Total bytes of code 44
 ```
@@ -2042,7 +2047,7 @@ M08_L00:
 M08_L01:
        mov       rcx,[rbp+10]
        mov       rcx,[rcx]
-       call      qword ptr [7FFF49B2A738]
+       call      qword ptr [7FFED0F0A738]
        mov       rcx,[rbp-60]
        mov       r11,rax
        mov       rdx,[rbp+20]
@@ -2110,7 +2115,7 @@ M08_L06:
        mov       edx,[rbp-48]
        mov       rcx,[rcx+rdx*8+10]
        lea       rdx,[rbp-50]
-       call      qword ptr [7FFF49B2AB78]; Precode of System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
+       call      qword ptr [7FFED0F0AB78]; Precode of System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
 M08_L07:
        mov       rcx,[rbp+18]
        cmp       rcx,[rbx+8]
@@ -2124,9 +2129,9 @@ M08_L08:
        cmp       ecx,[r13+20]
        jne       short M08_L09
        mov       rcx,[rbx]
-       call      qword ptr [7FFF49B2A3D8]
+       call      qword ptr [7FFED0F0A3D8]
        mov       rcx,rax
-       call      qword ptr [7FFF49B2A910]
+       call      qword ptr [7FFED0F0A910]
        mov       rdx,[r13+8]
        mov       rcx,[rbp-60]
        mov       r11,rax
@@ -2141,25 +2146,25 @@ M08_L09:
        jne       short M08_L08
 M08_L10:
        mov       rcx,[rbx]
-       call      qword ptr [7FFF49B2A430]
+       call      qword ptr [7FFED0F0A430]
        mov       rcx,rax
-       call      qword ptr [7FFF49B2A280]; CORINFO_HELP_NEWFAST
+       call      qword ptr [7FFED0F0A280]; CORINFO_HELP_NEWFAST
        mov       r13,rax
        mov       r12,[rsi]
        lea       rcx,[r13+8]
        mov       rdx,[rbp+20]
-       call      qword ptr [7FFF49B2A258]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFED0F0A258]; CORINFO_HELP_ASSIGN_REF
        lea       rcx,[r13+10]
        mov       rdx,[rbp+30]
-       call      qword ptr [7FFF49B2A258]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFED0F0A258]; CORINFO_HELP_ASSIGN_REF
        lea       rcx,[r13+18]
        mov       rdx,r12
-       call      qword ptr [7FFF49B2A258]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFED0F0A258]; CORINFO_HELP_ASSIGN_REF
        mov       ecx,[rbp-44]
        mov       [r13+20],ecx
        mov       rcx,rsi
        mov       rdx,r13
-       call      qword ptr [7FFF49B2A258]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFED0F0A258]; CORINFO_HELP_ASSIGN_REF
        mov       rcx,[rbp+18]
        mov       rcx,[rcx+20]
        mov       eax,[rcx+8]
@@ -2178,7 +2183,7 @@ M08_L11:
        cmp       r15d,64
        jbe       near ptr M08_L20
        mov       rcx,[rbp-60]
-       call      qword ptr [7FFF49B2AA38]
+       call      qword ptr [7FFED0F0AA38]
        test      rax,rax
        je        near ptr M08_L20
        mov       r14d,1
@@ -2188,15 +2193,15 @@ M08_L12:
        jne       short M08_L13
        mov       rdx,[r13+10]
        mov       rcx,[rbp+48]
-       call      qword ptr [7FFF49B2A260]; CORINFO_HELP_CHECKED_ASSIGN_REF
+       call      qword ptr [7FFED0F0A260]; CORINFO_HELP_CHECKED_ASSIGN_REF
        jmp       short M08_L14
 M08_L13:
        lea       rcx,[r13+10]
        mov       rdx,[rbp+30]
-       call      qword ptr [7FFF49B2A258]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFED0F0A258]; CORINFO_HELP_ASSIGN_REF
        mov       rcx,[rbp+48]
        mov       rdx,[rbp+30]
-       call      qword ptr [7FFF49B2A260]; CORINFO_HELP_CHECKED_ASSIGN_REF
+       call      qword ptr [7FFED0F0A260]; CORINFO_HELP_CHECKED_ASSIGN_REF
 M08_L14:
        xor       ecx,ecx
        mov       [rbp-54],ecx
@@ -2218,7 +2223,7 @@ M08_L15:
        jmp       short M08_L17
 M08_L16:
        mov       rcx,[rbx]
-       call      qword ptr [7FFF49B2A738]
+       call      qword ptr [7FFED0F0A738]
        mov       rcx,[rbp-60]
        mov       r11,rax
        mov       rdx,[rbp+20]
@@ -2227,10 +2232,10 @@ M08_L17:
        mov       [rbp-44],eax
        jmp       near ptr M08_L05
 M08_L18:
-       call      qword ptr [7FFF49B2A250]
+       call      qword ptr [7FFED0F0A250]
        int       3
 M08_L19:
-       call      qword ptr [7FFF49B2A248]
+       call      qword ptr [7FFED0F0A248]
        int       3
 M08_L20:
        cmp       byte ptr [rbp-50],0
@@ -2242,7 +2247,7 @@ M08_L20:
        mov       rcx,[rbp-68]
        mov       eax,[rbp-48]
        mov       rcx,[rcx+rax*8+10]
-       call      qword ptr [7FFF49B2AB80]; Precode of System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFED0F0AB80]; Precode of System.Threading.Monitor.Exit(System.Object)
 M08_L21:
        mov       ecx,edi
        or        ecx,r14d
@@ -2251,11 +2256,11 @@ M08_L21:
        mov       rdx,[rbp+18]
        mov       r8d,edi
        mov       r9d,r14d
-       call      qword ptr [7FFF49B2B168]
+       call      qword ptr [7FFED0F0B168]
 M08_L22:
        mov       rcx,[rbp+48]
        mov       rdx,[rbp+30]
-       call      qword ptr [7FFF49B2A260]; CORINFO_HELP_CHECKED_ASSIGN_REF
+       call      qword ptr [7FFED0F0A260]; CORINFO_HELP_CHECKED_ASSIGN_REF
        mov       eax,1
        add       rsp,58
        pop       rbx
@@ -2268,7 +2273,7 @@ M08_L22:
        pop       rbp
        ret
 M08_L23:
-       call      qword ptr [7FFF49B2A250]
+       call      qword ptr [7FFED0F0A250]
        int       3
 M08_L24:
        sub       rsp,28
@@ -2281,13 +2286,13 @@ M08_L24:
        mov       rcx,[rbp-68]
        mov       eax,[rbp-48]
        mov       rcx,[rcx+rax*8+10]
-       call      qword ptr [7FFF49B2AB80]; Precode of System.Threading.Monitor.Exit(System.Object)
+       call      qword ptr [7FFED0F0AB80]; Precode of System.Threading.Monitor.Exit(System.Object)
 M08_L25:
        nop
        add       rsp,28
        ret
 M08_L26:
-       call      qword ptr [7FFF49B2A250]
+       call      qword ptr [7FFED0F0A250]
        int       3
 ; Total bytes of code 908
 ```
@@ -2300,7 +2305,7 @@ M08_L26:
        jne       short M09_L00
        ret
 M09_L00:
-       jmp       qword ptr [7FFEBA7B5C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
+       jmp       qword ptr [7FFE35F65C38]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBaseSlow(System.Runtime.CompilerServices.MethodTable*)
 ; Total bytes of code 23
 ```
 
@@ -2313,7 +2318,7 @@ M09_L00:
        xor       eax,eax
        mov       [rsp+28],rax
        mov       rbx,rcx
-       call      qword ptr [7FFEBABA4990]; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
+       call      qword ptr [7FFE36384AB0]; DotNetTips.Spargine.Tester.Data.CountryRepository.GetCountries()
        mov       [rsp+28],rax
        mov       rbx,[rbx+60]
        mov       rdx,[rsp+28]
@@ -2340,10 +2345,10 @@ M09_L00:
        xor       edx,edx
        mov       [rbp-18],rdx
        lea       rdx,[rbp-18]
-       mov       rbx,1FF3BFFB718
+       mov       rbx,25003AEB6D8
        mov       rcx,rbx
-       call      qword ptr [7FFEBA795998]; System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
-       mov       rsi,1BEA7001328
+       call      qword ptr [7FFE35F75998]; System.Threading.Monitor.Enter(System.Object, Boolean ByRef)
+       mov       rsi,20F6EC01340
        cmp       qword ptr [rsi],0
        je        short M01_L01
 M01_L00:
@@ -2353,7 +2358,7 @@ M01_L00:
        call      System.Threading.Monitor.ExitIfLockTaken(System.Object, Boolean ByRef)
        jmp       short M01_L02
 M01_L01:
-       call      qword ptr [7FFEBABA4CD8]; DotNetTips.Spargine.Tester.Data.CountryRepository.DeserializeCountries()
+       call      qword ptr [7FFE36384DF8]; DotNetTips.Spargine.Tester.Data.CountryRepository.DeserializeCountries()
        mov       rdx,rax
        mov       rcx,rsi
        call      CORINFO_HELP_ASSIGN_REF
@@ -2367,7 +2372,7 @@ M01_L02:
        ret
        sub       rsp,28
        lea       rdx,[rbp-18]
-       mov       rbx,1FF3BFFB718
+       mov       rbx,25003AEB6D8
        mov       rcx,rbx
        call      System.Threading.Monitor.ExitIfLockTaken(System.Object, Boolean ByRef)
        nop

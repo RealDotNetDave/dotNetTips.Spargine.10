@@ -61,16 +61,60 @@ public static class LinqExtensions
 	/// <param name="transformsFunction">A params array of functions that represent the transformations to apply to the input sequence.</param>
 	/// <returns>An <see cref="IEnumerable{T}"/> that has been conditionally transformed based on the provided functions.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> or <paramref name="transformsFunction"/> is null.</exception>
+	/// <remarks>
+	/// <para>
+	/// <b>Performance Optimization (.NET 10):</b> This method uses optimized paths for different transformation counts:
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description><b>Condition false:</b> Returns input immediately (zero overhead).</description></item>
+	/// <item><description><b>Zero transforms:</b> Returns input immediately.</description></item>
+	/// <item><description><b>One transform:</b> Direct invocation without loop overhead.</description></item>
+	/// <item><description><b>Multiple transforms:</b> Uses simple for loop instead of Aggregate for better performance.</description></item>
+	/// </list>
+	/// <para>
+	/// <b>Performance Characteristics:</b>
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description><b>Condition false:</b> O(1) - Returns original input.</description></item>
+	/// <item><description><b>Condition true:</b> O(n) where n = number of transforms, with optimized fast paths.</description></item>
+	/// </list>
+	/// </remarks>
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original code from https://github.com/exceptionnotfound/ConditionalLinqQueryEngine", "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("Original code from https://github.com/exceptionnotfound/ConditionalLinqQueryEngine", "David McCarter", "8/18/20", ModifiedBy = "David McCarter", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<T> If<T>([DisallowNull] this IEnumerable<T> input, bool should, [DisallowNull] params Func<IEnumerable<T>, IEnumerable<T>>[] transformsFunction)
 	{
 		input = input.ArgumentNotNull();
 		transformsFunction = transformsFunction.ArgumentItemsExists();
 
-		return should ? transformsFunction.Aggregate(input, (current, transform) => transform(current)) : input;
+		// Fast path: condition false - return immediately
+		if (!should)
+		{
+			return input;
+		}
+
+		// Fast path: no transforms
+		if (transformsFunction.Length == 0)
+		{
+			return input;
+		}
+
+		// Fast path: single transform
+		if (transformsFunction.Length == 1)
+		{
+			return transformsFunction[0](input);
+		}
+
+		// Multiple transforms: use simple for loop (faster than Aggregate)
+		var result = input;
+
+		for (var transformIndex = 0; transformIndex < transformsFunction.Length; transformIndex++)
+		{
+			result = transformsFunction[transformIndex](result);
+		}
+
+		return result;
 	}
 
 }

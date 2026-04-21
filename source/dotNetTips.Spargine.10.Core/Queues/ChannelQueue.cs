@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-12-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified By : GitHub Copilot
+// Last Modified On : 04-20-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -320,22 +320,22 @@ public sealed class ChannelQueue<T>
 	}
 
 	/// <summary>
-	/// Tries the peek.
+	/// Attempts to peek at an item from the channel without removing it.
 	/// </summary>
-	/// <param name="item">The item.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	/// <param name="item">
+	/// When this method returns, contains the item peeked from the channel if the operation was successful; otherwise, the default value for the type of the <typeparamref name="T"/> parameter.
+	/// </param>
+	/// <returns>
+	/// <c>true</c> if an item was peeked from the channel; otherwise, <c>false</c>.
+	/// </returns>
+	/// <remarks>
+	/// This method does not remove the item from the channel. If the channel is empty, it returns immediately with <c>false</c>.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryPeek), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryPeek(out T item)
 	{
-		if (this._channel.Reader.TryRead(out item!))
-		{
-			_ = this._channel.Writer.TryWrite(item);
-			return true;
-		}
-
-		item = default!;
-
-		return false;
+		return this._channel.Reader.TryPeek(out item!);
 	}
 
 	/// <summary>

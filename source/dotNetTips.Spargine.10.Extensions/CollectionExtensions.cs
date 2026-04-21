@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-21-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -150,8 +150,8 @@ public static class CollectionExtensions
 		/// names.AddIfNotExists("Alice", StringComparer.OrdinalIgnoreCase);
 		/// </code>
 		/// </example>
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-		public bool AddIfNotExists([AllowNull] in T item, [AllowNull] IEqualityComparer<T>? comparer = null)
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		public bool AddIfNotExists([AllowNull] T item, IEqualityComparer<T>? comparer = null)
 		{
 			if (item is null)
 			{
@@ -163,6 +163,11 @@ public static class CollectionExtensions
 			if (collection is T[])
 			{
 				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
+			}
+
+			if (collection is HashSet<T> hashSet)
+			{
+				return hashSet.Add(item);
 			}
 
 			var eq = comparer ?? EqualityComparer<T>.Default;
@@ -311,7 +316,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();
@@ -327,8 +332,8 @@ public static class CollectionExtensions
 		/// <param name="item">The item to upsert into the collection. If <c>null</c>, the method returns without modifying the collection.</param>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-		public void Upsert([AllowNull] in T item)
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		public void Upsert([AllowNull] T item)
 		{
 			if (item is null)
 			{
@@ -342,17 +347,12 @@ public static class CollectionExtensions
 				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
 			}
 
-			// Short-circuit when the collection is empty — avoids
-			// a fruitless O(n) scan inside Remove.
 			if (collection.Count == 0)
 			{
 				collection.Add(item);
 				return;
 			}
 
-			// Fast path for List<T>: find the index and replace in-place.
-			// Avoids the O(n) element shift that List<T>.Remove causes
-			// when it compacts the internal array after removal.
 			if (collection is List<T> list)
 			{
 				var index = list.IndexOf(item);
@@ -369,8 +369,14 @@ public static class CollectionExtensions
 				return;
 			}
 
-			_ = collection.Remove(item);
+			if (collection is HashSet<T> hashSet)
+			{
+				_ = hashSet.Remove(item);
+				_ = hashSet.Add(item);
+				return;
+			}
 
+			_ = collection.Remove(item);
 			collection.Add(item);
 		}
 	}

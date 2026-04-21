@@ -144,7 +144,7 @@ public static class TypeExtensions
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<FieldInfo> GetAllDeclaredFields()
 		{
 			return TypeHelper.GetAllDeclaredFields(type);

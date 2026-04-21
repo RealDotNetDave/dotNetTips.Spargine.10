@@ -67,6 +67,15 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - After optimizing a method, update its `[Information]` attribute: set `OptimizationStatus` to `OptimizationStatus.Completed` and set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance` so benchmarks are re-validated against the new implementation.
 - After creating a benchmark test for a method, update its `[Information]` attribute: set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance`.
 - Every class-level `[Information]` attribute must include `Status = Status.Available` (or the appropriate `Status` value).
+- All of the status properties in '[Information]' must be **ordered** as follows: `UnitTestStatus`, `OptimizationStatus`, `BenchmarkStatus`, `Status`. For example:
+  ```csharp
+  [Information(
+	  UnitTestStatus = UnitTestStatus.Completed,
+	  OptimizationStatus = OptimizationStatus.Completed,
+	  BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+	  Status = Status.Available)]
+  public sealed class MyClass { ... }
+  ```'
 
 ---
 
