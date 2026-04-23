@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : GitHub Copilot
-// Last Modified On : 04-20-2026
+// Last Modified On : 04-23-2026
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -55,7 +55,7 @@ public static class ObservableCollectionExtensions
 		/// </summary>
 		/// <param name="actionPredicate">A function to test each element for a condition.</param>
 		/// <returns>
-		/// <c>true</c> if the collection is not <c>null</c> and any items match the predicate; otherwise, <c>false</c>.
+		/// <c>true</c> if the collection is not <c>null</c>, the predicate is not <c>null</c>, and any items match the predicate; otherwise, <c>false</c>.
 		/// </returns>
 		/// <remarks>
 		/// Performance: Uses Any() for early-exit behavior (O(1) to O(n)) instead of Count() which enumerates the entire collection (O(n)).
@@ -64,10 +64,12 @@ public static class ObservableCollectionExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
-		public bool IsNotEmpty([DisallowNull] Func<T, bool> actionPredicate)
+		public bool IsNotEmpty(Func<T, bool> actionPredicate)
 		{
-			collection = collection.ArgumentNotNull();
-			actionPredicate = actionPredicate.ArgumentNotNull();
+			if (collection is null || actionPredicate is null)
+			{
+				return false;
+			}
 
 			return collection.Any(actionPredicate);
 		}

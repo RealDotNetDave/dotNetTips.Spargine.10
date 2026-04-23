@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Tester - 2026.10.4.17
+# DotNetTips.Spargine.10.Tester - 2026.10.4.23
 
 ## DotNetTips.Spargine.Tester.Data.Converters.DateOnlyConverter
 
@@ -130,8 +130,8 @@
 ### System.TimeSpan Age { get; set; }
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** get_Age
@@ -140,8 +140,8 @@
 ### System.String FullName { get; set; }
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** get_FullName
@@ -1551,7 +1551,7 @@
 ### T GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1587,7 +1587,7 @@
 ### System.Byte[] GenerateByteArray(System.Int32 count)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1599,7 +1599,7 @@
 ### System.Char GenerateCharacter()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1611,7 +1611,7 @@
 ### System.Char GenerateCharacter(System.Char minValue, System.Char maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1635,7 +1635,7 @@
 ### T GenerateCoordinateCollection(System.Int32 count)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1671,7 +1671,7 @@
 ### System.Decimal GenerateDecimal(System.Decimal& minValue, System.Decimal& maxValue, System.Int32 decimalPlaces)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1695,7 +1695,7 @@
 ### System.String GenerateEmailAddress()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1755,7 +1755,7 @@
 ### System.Int32 GenerateInteger(System.Int32& min, System.Int32 max)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1767,7 +1767,7 @@
 ### System.String GenerateKey()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** None
 * **Author:** David McCarter
@@ -1791,7 +1791,7 @@
 ### System.Byte[] GenerateNonZeroByteArray(System.Int32 count)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1815,7 +1815,7 @@
 ### T GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1885,7 +1885,7 @@
 ### DotNetTips.Spargine.Tester.Models.ValueTypes.Person GeneratePersonVal(System.Int32 addressCount, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1909,7 +1909,7 @@
 ### System.String GeneratePhoneNumber(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Boolean includeCountryCode)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1921,7 +1921,7 @@
 ### System.String GeneratePhoneNumber(DotNetTips.Spargine.Tester.Data.CountryName countryName, System.Boolean includeCountryCode)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1933,7 +1933,7 @@
 ### System.String GenerateRandomFileName(System.Int32 fileNameLength, System.String extension)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1945,7 +1945,7 @@
 ### System.String GenerateRandomFileName(System.String path, System.Int32 fileNameLength, System.String extension)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1957,7 +1957,7 @@
 ### System.ValueTuple<DotNetTips.Spargine.Tester.Data.Models.Country, DotNetTips.Spargine.Tester.Data.Models.State, DotNetTips.Spargine.Tester.Data.Models.City> GenerateRandomLocationData()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -1967,7 +1967,7 @@
 ### DotNetTips.Spargine.Tester.PersonData GenerateRandomPersonData()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -1977,7 +1977,7 @@
 ### System.ValueTuple<System.String, System.String> GenerateRandomPersonName()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -1987,7 +1987,7 @@
 ### System.String GenerateRelativeUrl()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1999,8 +1999,8 @@
 ### System.String GenerateTempFile(System.Int32 fileLength)
 
 * **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
@@ -2011,7 +2011,7 @@
 ### System.String GenerateUrl()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2023,7 +2023,7 @@
 ### System.String GenerateUrlFragment()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2035,7 +2035,7 @@
 ### System.String GenerateUrlHostName()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2047,7 +2047,7 @@
 ### System.String GenerateUrlHostNameNoProtocol()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2059,7 +2059,7 @@
 ### System.String GenerateUrlHostNameNoSubDomain()
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2071,8 +2071,8 @@
 ### System.String GenerateWord(System.Int32 length)
 
 * **Status:** Available
-* **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
@@ -2084,7 +2084,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/19/2019
@@ -2095,7 +2095,7 @@
 ### System.String GenerateWord(System.Int32 length, System.Char minCharacter, System.Char maxCharacter)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2119,7 +2119,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GenerateWords(System.Int32 count, System.Int32 minLength, System.Int32 maxLength)
 
 * **Status:** Available
-* **Optimization Status:** Completed
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2324,4 +2324,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/17/2026 7:30:31 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/23/2026 7:51:02 PM UTC**

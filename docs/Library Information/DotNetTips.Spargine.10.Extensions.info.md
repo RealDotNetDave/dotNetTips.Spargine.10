@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.4.17
+# DotNetTips.Spargine.10.Extensions - 2026.10.4.23
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -53,7 +53,7 @@
 ### T AsReadOnlySpan(T array)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -161,7 +161,7 @@
 ### System.Boolean IsNotEmpty(T array)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -182,10 +182,10 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsNotEmpty(T array, System.Int32& count)
+### System.Boolean IsNotEmpty(T array, System.Int32 count)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -332,7 +332,7 @@
 ### T AsReadOnlySpan()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -416,7 +416,7 @@
 ### System.Boolean IsNotEmpty()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -437,10 +437,10 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
-### System.Boolean IsNotEmpty(System.Int32& count)
+### System.Boolean IsNotEmpty(System.Int32 count)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -566,7 +566,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetAllInterfaces(System.Reflection.Assembly assembly)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -617,7 +617,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetAllInterfaces()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -759,7 +759,7 @@
 ### System.Boolean IsAsciiUpper { get; set; }
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -858,8 +858,8 @@
 ### System.Boolean AddIfNotExists(T collection, T item, T comparer)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -907,7 +907,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -930,7 +930,7 @@
 ### System.Void Upsert(T collection, T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -957,8 +957,8 @@
 ### System.Boolean AddIfNotExists(T item, T comparer)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -1006,7 +1006,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -1017,7 +1017,7 @@
 ### System.Void Upsert(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -2221,7 +2221,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/26/2020
@@ -2386,8 +2386,8 @@
 ### T PageAsync(T collection, System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
@@ -2603,8 +2603,8 @@
 ### T PageAsync(System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
@@ -2790,7 +2790,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/26/2020
@@ -3379,7 +3379,7 @@
 ### System.Void AddIf(T collection, T item, System.Boolean condition)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3454,7 +3454,7 @@
 ### System.Void AddIf(T item, System.Boolean condition)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -4033,7 +4033,7 @@
 ### T If(T input, System.Boolean should, T transformsFunction)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -5942,7 +5942,7 @@
 ### System.Void ToJsonFile(System.Object obj, System.IO.FileInfo file)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -6267,7 +6267,7 @@
 ### System.Void ToJsonFile(System.IO.FileInfo file)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
@@ -6293,7 +6293,7 @@
 ### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6335,7 +6335,7 @@
 ### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -6755,7 +6755,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/28/2022
@@ -6806,7 +6806,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 1/28/2022
@@ -7293,7 +7293,7 @@
 ### System.Threading.Tasks.Task<System.String> FromDeflateStringAsync(System.String value, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -7317,8 +7317,8 @@
 ### System.Threading.Tasks.Task<System.String> FromZLibStringAsync(System.String value, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/12/2022
@@ -7362,7 +7362,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** HasValue
@@ -7680,7 +7680,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/8/2020
@@ -7896,8 +7896,8 @@
 ### System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo> GetAllDeclaredFields(System.Type type)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
@@ -8209,8 +8209,8 @@
 ### System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo> GetAllDeclaredFields()
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
@@ -8450,4 +8450,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/17/2026 7:30:31 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/23/2026 7:51:02 PM UTC**

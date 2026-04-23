@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 04-23-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -144,14 +144,14 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// This method deletes the specified file and removes it from the cache of managed files.
 	/// If the file name is null or empty, the method returns without performing any action.
 	/// </remarks>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="fileName"/> is null.</exception>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="fileName"/> is empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void DeleteFile(string fileName)
 	{
-		ArgumentException.ThrowIfNullOrEmpty(fileName);
-
+		if (string.IsNullOrEmpty(fileName))
+		{
+			return;
+		}
 
 		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
 
