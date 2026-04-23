@@ -86,6 +86,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Favor **Span<T>**, `ReadOnlySpan<T>`, and other span‑based APIs.  
 - Prefer stack allocation when appropriate.  
 - Avoid LINQ in hot paths unless allocation‑free and proven efficient.
+- **DO NOT** suggest performance optimizations unless the code is benchmarked before and after the change.
 
 ---
 
