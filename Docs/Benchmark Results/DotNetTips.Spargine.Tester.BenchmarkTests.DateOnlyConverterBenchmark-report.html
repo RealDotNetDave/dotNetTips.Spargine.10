@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Tester.BenchmarkTests.DateOnlyConverterBenchmark-20260420-200244</title>
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.DateOnlyConverterBenchmark-20260426-150520</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,9 +15,9 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.202
-  [Host]     : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.203
+  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=JSON  
@@ -26,8 +26,8 @@ Categories=JSON
 <table>
 <thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th>
 </tr>
-</thead><tbody><tr><td>Read</td><td>166.6 ns</td><td>0.99 ns</td><td>0.93 ns</td><td>0.24 ns</td><td>165.2 ns</td><td>165.8 ns</td><td>166.5 ns</td><td>167.4 ns</td><td>168.1 ns</td><td>6,003,584.1</td><td>7.380 ns</td><td>15.00</td><td>1.492</td><td>2.000</td><td>0.1208</td><td>2</td><td>*</td><td>No</td><td>2,415 B</td><td>-</td>
-</tr><tr><td>Write</td><td>123.2 ns</td><td>1.29 ns</td><td>1.14 ns</td><td>0.31 ns</td><td>121.1 ns</td><td>122.5 ns</td><td>123.4 ns</td><td>123.9 ns</td><td>125.1 ns</td><td>8,114,586.0</td><td>6.847 ns</td><td>14.00</td><td>2.005</td><td>2.000</td><td>0.0037</td><td>1</td><td>*</td><td>No</td><td>4,911 B</td><td>-</td>
+</thead><tbody><tr><td>Read</td><td>169.3 ns</td><td>0.62 ns</td><td>0.58 ns</td><td>0.15 ns</td><td>168.3 ns</td><td>168.9 ns</td><td>169.3 ns</td><td>169.7 ns</td><td>170.6 ns</td><td>5,905,814.6</td><td>7.425 ns</td><td>15.00</td><td>2.665</td><td>2.000</td><td>0.4543</td><td>2</td><td>*</td><td>No</td><td>2,517 B</td><td>-</td>
+</tr><tr><td>Write</td><td>123.5 ns</td><td>1.38 ns</td><td>1.29 ns</td><td>0.33 ns</td><td>121.7 ns</td><td>122.5 ns</td><td>123.2 ns</td><td>124.5 ns</td><td>126.0 ns</td><td>8,100,001.4</td><td>7.334 ns</td><td>15.00</td><td>1.771</td><td>2.000</td><td>0.2203</td><td>1</td><td>*</td><td>No</td><td>4,899 B</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

@@ -1,1 +1,1 @@
-## DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark-20260418-164237
+## DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark-20260426-204211

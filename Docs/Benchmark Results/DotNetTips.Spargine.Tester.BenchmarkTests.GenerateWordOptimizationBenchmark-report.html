@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.GenerateWordOptimizationBenchmark-20260426-150817</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.203
+  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Job-EWDLIM : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                               </th><th>Job </th><th>IterationCount</th><th>LaunchCount</th><th>WarmupCount</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Ratio</th><th>MannWhitney(10%)</th><th>Rank</th><th>LogicalGroup                                                                                         </th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-PSYKRA</td><td>Default</td><td>Default</td><td>Default</td><td>10</td><td>124.5 ns</td><td>0.44 ns</td><td>0.39 ns</td><td>0.10 ns</td><td>123.9 ns</td><td>124.3 ns</td><td>124.5 ns</td><td>124.8 ns</td><td>125.3 ns</td><td>8,029,115.9</td><td>6.948 ns</td><td>14.000</td><td>2.0576</td><td>2.000</td><td>0.2301</td><td>1.00</td><td>Baseline</td><td>1</td><td>[Length=10]-Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</td><td>Yes</td><td>-</td><td>517 B</td><td>0.0014</td><td>48 B</td><td>1.00</td>
+</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-EWDLIM</td><td>5</td><td>1</td><td>1</td><td>10</td><td>119.2 ns</td><td>2.55 ns</td><td>0.66 ns</td><td>0.30 ns</td><td>118.6 ns</td><td>118.7 ns</td><td>118.9 ns</td><td>119.8 ns</td><td>120.1 ns</td><td>8,389,176.8</td><td>2.352 ns</td><td>5.000</td><td>0.8751</td><td>2.000</td><td>0.2978</td><td>1.00</td><td>Baseline</td><td>1</td><td>[Length=10]-Job-EWDLIM(EvaluateOverhead=True, Server=True, IterationCount=5, LaunchCount=1, WarmupCount=1)</td><td>Yes</td><td>-</td><td>517 B</td><td>0.0014</td><td>48 B</td><td>1.00</td>
+</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-PSYKRA</td><td>Default</td><td>Default</td><td>Default</td><td>100</td><td>488.3 ns</td><td>3.10 ns</td><td>2.59 ns</td><td>0.72 ns</td><td>484.6 ns</td><td>486.9 ns</td><td>487.2 ns</td><td>489.9 ns</td><td>493.7 ns</td><td>2,047,991.6</td><td>6.141 ns</td><td>13.000</td><td>2.1790</td><td>2.000</td><td>0.5058</td><td>1.00</td><td>Baseline</td><td>1</td><td>[Length=100]-Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</td><td>Yes</td><td>-</td><td>517 B</td><td>0.0105</td><td>224 B</td><td>1.00</td>
+</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-EWDLIM</td><td>5</td><td>1</td><td>1</td><td>100</td><td>487.5 ns</td><td>21.63 ns</td><td>5.62 ns</td><td>2.51 ns</td><td>479.0 ns</td><td>486.3 ns</td><td>487.9 ns</td><td>489.8 ns</td><td>494.4 ns</td><td>2,051,269.0</td><td>1.244 ns</td><td>5.000</td><td>1.4915</td><td>2.000</td><td>-0.2964</td><td>1.00</td><td>Baseline</td><td>1</td><td>[Length=100]-Job-EWDLIM(EvaluateOverhead=True, Server=True, IterationCount=5, LaunchCount=1, WarmupCount=1)</td><td>Yes</td><td>-</td><td>517 B</td><td>0.0105</td><td>224 B</td><td>1.00</td>
+</tr></tbody></table>
+</body>
+</html>
