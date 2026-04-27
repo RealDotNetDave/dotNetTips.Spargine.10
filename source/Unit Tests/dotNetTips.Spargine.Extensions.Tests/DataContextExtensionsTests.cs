@@ -491,10 +491,27 @@ public class DataContextExtensionsTests
 	private static DataContext CreateContextWithTable<T>() where T : class
 	{
 		// Use a unique file-based SQLite DB so all DataContext connections share the same schema.
+		// TempFileDataContext deletes the file on dispose to avoid accumulation in the temp directory.
 		var dbPath = Path.Combine(Path.GetTempPath(), $"spargine_{Guid.NewGuid():N}.db");
-		var ctx = new DataContext(new DataOptions().UseSQLite($"Data Source={dbPath}", SQLiteProvider.Microsoft));
+		var ctx = new TempFileDataContext(new DataOptions().UseSQLite($"Data Source={dbPath}", SQLiteProvider.Microsoft), dbPath);
 		ctx.CreateTable<T>();
 		return ctx;
+	}
+
+	private sealed class TempFileDataContext : DataContext
+	{
+		private readonly string _dbPath;
+
+		public TempFileDataContext(DataOptions options, string dbPath) : base(options) => _dbPath = dbPath;
+
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+			if (disposing && File.Exists(_dbPath))
+			{
+				try { File.Delete(_dbPath); } catch { /* ignore cleanup errors */ }
+			}
+		}
 	}
 
 	[Table("TestEntities")]
