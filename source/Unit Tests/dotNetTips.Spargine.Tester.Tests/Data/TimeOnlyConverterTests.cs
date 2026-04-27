@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-14-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-14-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="TimeOnlyConverterTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -31,32 +31,36 @@ public class TimeOnlyConverterTests
 	public void DefaultConstructorUsesDefaultFormat()
 	{
 		// Arrange
+		var format = "HH:mm:ss.fff";
 		var converter = new TimeOnlyConverter();
 		var time = new TimeOnly(14, 30, 45, 123);
 		var options = new JsonSerializerOptions();
 		options.Converters.Add(converter);
+		var expectedJson = $"\"{time.ToString(format, IsoDateTimeOffsetConverter.Singleton.Culture)}\"";
 
 		// Act
 		var json = JsonSerializer.Serialize(time, options);
 
 		// Assert
-		Assert.AreEqual("\"14:30:45.123\"", json);
+		Assert.AreEqual(expectedJson, json);
 	}
 
 	[TestMethod]
 	public void CustomFormatConstructorUsesSpecifiedFormat()
 	{
 		// Arrange
-		var converter = new TimeOnlyConverter("HH:mm:ss");
+		var format = "HH:mm:ss";
+		var converter = new TimeOnlyConverter(format);
 		var time = new TimeOnly(14, 30, 45);
 		var options = new JsonSerializerOptions();
 		options.Converters.Add(converter);
+		var expectedJson = $"\"{time.ToString(format, IsoDateTimeOffsetConverter.Singleton.Culture)}\"";
 
 		// Act
 		var json = JsonSerializer.Serialize(time, options);
 
 		// Assert
-		Assert.AreEqual("\"14:30:45\"", json);
+		Assert.AreEqual(expectedJson, json);
 	}
 
 	[TestMethod]
@@ -102,16 +106,18 @@ public class TimeOnlyConverterTests
 	public void WriteValidTimeOnlyProducesExpectedJson()
 	{
 		// Arrange
+		var format = "HH:mm:ss.fff";
 		var converter = new TimeOnlyConverter();
 		var time = new TimeOnly(9, 5, 0, 0);
 		var options = new JsonSerializerOptions();
 		options.Converters.Add(converter);
+		var expectedJson = $"\"{time.ToString(format, IsoDateTimeOffsetConverter.Singleton.Culture)}\"";
 
 		// Act
 		var json = JsonSerializer.Serialize(time, options);
 
 		// Assert
-		Assert.AreEqual("\"09:05:00.000\"", json);
+		Assert.AreEqual(expectedJson, json);
 	}
 
 	[TestMethod]
@@ -201,5 +207,93 @@ public class TimeOnlyConverterTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<TimeOnly>("\"\"", options));
+	}
+
+	[TestMethod]
+	public void ReadWhitespaceStringThrowsJsonException()
+	{
+		// Arrange
+		var converter = new TimeOnlyConverter();
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+
+		// Act & Assert
+		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<TimeOnly>("\"   \"", options));
+	}
+
+	[TestMethod]
+	public void NullFormatConstructorUsesDefaultFormat()
+	{
+		// Arrange
+		var converterDefault = new TimeOnlyConverter();
+		var converterNull = new TimeOnlyConverter(null);
+		var time = new TimeOnly(14, 30, 45, 123);
+		var optionsDefault = new JsonSerializerOptions();
+		optionsDefault.Converters.Add(converterDefault);
+		var optionsNull = new JsonSerializerOptions();
+		optionsNull.Converters.Add(converterNull);
+
+		// Act
+		var jsonDefault = JsonSerializer.Serialize(time, optionsDefault);
+		var jsonNull = JsonSerializer.Serialize(time, optionsNull);
+
+		// Assert
+		Assert.AreEqual(jsonDefault, jsonNull);
+	}
+
+	[TestMethod]
+	public void RoundTripWithCustomFormat()
+	{
+		// Arrange
+		var format = "HH:mm:ss";
+		var converter = new TimeOnlyConverter(format);
+		var original = new TimeOnly(8, 15, 0);
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+		var expectedJson = $"\"{original.ToString(format, IsoDateTimeOffsetConverter.Singleton.Culture)}\"";
+
+		// Act
+		var json = JsonSerializer.Serialize(original, options);
+		var deserialized = JsonSerializer.Deserialize<TimeOnly>(json, options);
+
+		// Assert
+		Assert.AreEqual(expectedJson, json);
+		Assert.AreEqual(original, deserialized);
+	}
+
+	[TestMethod]
+	public void WriteMaxValueProducesExpectedJson()
+	{
+		// Arrange
+		var format = "HH:mm:ss.fff";
+		var converter = new TimeOnlyConverter();
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+		// TimeOnly.MaxValue is 23:59:59.9999999; serialized with "HH:mm:ss.fff" it truncates to milliseconds.
+		var expectedJson = $"\"{TimeOnly.MaxValue.ToString(format, IsoDateTimeOffsetConverter.Singleton.Culture)}\"";
+
+		// Act
+		var json = JsonSerializer.Serialize(TimeOnly.MaxValue, options);
+
+		// Assert
+		Assert.AreEqual(expectedJson, json);
+	}
+
+	[TestMethod]
+	public void RoundTripSerializationMaxValue()
+	{
+		// Arrange
+		var converter = new TimeOnlyConverter();
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+
+		// Act
+		// TimeOnly.MaxValue (23:59:59.9999999) is serialized with millisecond precision ("HH:mm:ss.fff"),
+		// so the deserialized value equals 23:59:59.999 (sub-millisecond ticks are truncated).
+		var json = JsonSerializer.Serialize(TimeOnly.MaxValue, options);
+		var deserialized = JsonSerializer.Deserialize<TimeOnly>(json, options);
+
+		// Assert
+		Assert.AreEqual(new TimeOnly(23, 59, 59, 999), deserialized);
 	}
 }
