@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : GitHub Copilot
-// Last Modified On : 04-20-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-26-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -59,6 +59,14 @@ public static class TypeHelper
 	/// Shared in-memory cache instance used for caching reflection results such as declared methods and abstract methods.
 	/// </summary>
 	private static readonly InMemoryCache _commonCache = InMemoryCache.Instance;
+
+	/// <summary>
+	/// Fast cache for <see cref="ImplementsInterface"/> results, keyed by (type, interfaceType) pair.
+	/// Uses <see cref="ConcurrentDictionary{TKey,TValue}"/> rather than <see cref="InMemoryCache"/> because
+	/// the underlying computation is a single <c>GetInterfaces()</c> array scan, and <c>MemoryCache</c> overhead
+	/// (string key allocation — ~250 chars for generic types — locking, expiry tracking, boxing) far exceeds it.
+	/// </summary>
+	private static readonly ConcurrentDictionary<(Type, Type), bool> _implementsInterfaceCache = new();
 
 	/// <summary>
 	/// Provides a pool of reusable <see cref="StringBuilder"/> instances to reduce allocations and improve performance.
@@ -494,21 +502,18 @@ public static class TypeHelper
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("Enumerates declared fields of a type via reflection (BindingFlags.DeclaredOnly).")]
+	[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllDeclaredFields([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAllDeclaredFields)}";
+		var cacheKey = string.Create(null, stackalloc char[128], $"{type.FullName}.{nameof(GetAllDeclaredFields)}");
 
 		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
 		{
-			foreach (var field in cachedFields!)
-			{
-				yield return field;
-			}
-			yield break;
+			return cachedFields!;
 		}
 
 		var fields = type.GetFields(
@@ -520,10 +525,7 @@ public static class TypeHelper
 
 		_commonCache.AddCacheItem(cacheKey, fields, TimeSpan.FromMinutes(TimeOutMinutes));
 
-		foreach (var field in fields)
-		{
-			yield return field;
-		}
+		return fields;
 	}
 
 	/// <summary>
@@ -1415,23 +1417,15 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> or <paramref name="baseClass"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(HasBaseClass), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasBaseClass), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasBaseClass(Type type, Type baseClass)
 	{
-		if (baseClass == null)
-		{
-			return false;
-		}
-
 		type = type.ArgumentNotNull();
 
-		// Create a cache key based on the type and baseClass
-		var cacheKey = $"{type.FullName}.{nameof(HasBaseClass)}.{baseClass.FullName}";
-
-		// Check if the result is already in the cache
-		if (_commonCache.TryGetValue<bool>(cacheKey, out var cachedResult))
+		// SUGGESTION FROM COPILOT MADE THIS METHOD SLOWER. REVERTING TO ORIGINAL IMPLEMENTATION.
+		if (baseClass is null)
 		{
-			return cachedResult;
+			return false;
 		}
 
 		// Calculate the result if not cached
@@ -1448,9 +1442,6 @@ public static class TypeHelper
 
 			currentType = currentType.BaseType;
 		}
-
-		// Cache the result for future use
-		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		return result;
 	}
@@ -1527,7 +1518,7 @@ public static class TypeHelper
 	/// Thrown if <paramref name="type"/> or <paramref name="interfaceType"/> is <c>null</c>.
 	/// </exception>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ImplementsInterface), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ImplementsInterface([DisallowNull] Type type, [DisallowNull] Type interfaceType)
 	{
 		if (interfaceType == null || interfaceType.IsInterface == false)
@@ -1537,22 +1528,12 @@ public static class TypeHelper
 
 		type = type.ArgumentNotNull();
 
-		// Create a cache key based on the type and interfaceType
-		var cacheKey = $"{type.FullName}.{nameof(ImplementsInterface)}.{interfaceType.FullName}";
-
-		// Check if the result is already in the cache
-		if (_commonCache.TryGetValue<bool>(cacheKey, out var cachedResult))
+		return _implementsInterfaceCache.GetOrAdd((type, interfaceType), static key =>
 		{
-			return cachedResult;
-		}
+			var (t, iface) = key;
 
-		// Calculate the result if not cached
-		var result = type.GetInterfaces().Any(i => i == interfaceType);
-
-		// Cache the result for future use
-		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
-
-		return result;
+			return t.GetInterfaces().Any(i => i == iface);
+		});
 	}
 
 	/// <summary>
@@ -1586,7 +1567,7 @@ public static class TypeHelper
 	/// </remarks>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type is null)

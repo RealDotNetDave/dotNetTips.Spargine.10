@@ -1,5 +1,6 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
+using DotNetTips.Spargine.Benchmarking;
 using Microsoft.VSDiagnostics;
 
 namespace DotNetTips.Spargine.Tester.BenchmarkTests;
@@ -7,7 +8,7 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 [CPUUsageDiagnoser]
 [MemoryDiagnoser]
 [SimpleJob(launchCount: 1, warmupCount: 1, iterationCount: 5)]
-public class GenerateWordOptimizationBenchmark
+public class GenerateWordOptimizationBenchmark : Benchmark
 {
 	private readonly Consumer _consumer = new();
 

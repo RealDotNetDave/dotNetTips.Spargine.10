@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-24-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -15,6 +15,7 @@
 // </summary>
 // ***********************************************************************
 
+using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -83,18 +84,10 @@ public static class RandomData
 	/// </summary>
 	private const int DefaultFileLength = 1024;
 
-	// Replace the existing declaration of _lock with the following:
-	private static readonly Lock _lock = new();
-
 	/// <summary>
 	/// A cache for postal formats, keyed by country.
 	/// </summary>
 	private static readonly Dictionary<Country, string[]> _postalFormatsCache = [];
-
-	/// <summary>
-	/// Provides a thread-static instance of RandomNumberGenerator for generating cryptographically secure random numbers.
-	/// </summary>
-	private static readonly RandomNumberGenerator _randomNumberGenerator;
 
 	/// <summary>
 	/// An object pool for reusing instances of StringBuilder, reducing allocations.
@@ -102,12 +95,54 @@ public static class RandomData
 	private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
-	/// Initializes static members of the <see cref="RandomData" /> class.
+	/// Cached system temp path — never changes at runtime, avoids repeated OS calls.
 	/// </summary>
-	static RandomData()
+	private static readonly string _tempPath = Path.GetTempPath();
+
+	/// <summary>
+	/// Pre-built flat arrays for O(1) direct-indexed random selection of country/state/city.
+	/// Avoids per-call <see cref="Collection{T}"/> virtual dispatch, null checks, and
+	/// <c>IsNotEmpty()</c> extension overhead inside <see cref="GenerateRandomLocationData"/>.
+	/// </summary>
+	private static readonly Lazy<(Country[] Countries, State[][] States, City[][][] Cities)> _locationData = new(() =>
 	{
-		_randomNumberGenerator = RandomNumberGenerator.Create();
-	}
+		var countries = _countries!.Value;
+		var countryArr = new Country[countries.Count];
+		var stateArr = new State[countries.Count][];
+		var cityArr = new City[countries.Count][][];
+
+		for (var countryIndex = 0; countryIndex < countries.Count; countryIndex++)
+		{
+			var country = countries[countryIndex];
+			countryArr[countryIndex] = country;
+
+			var states = country.States!;
+			stateArr[countryIndex] = new State[states.Count];
+			cityArr[countryIndex] = new City[states.Count][];
+
+			for (var stateIndex = 0; stateIndex < states.Count; stateIndex++)
+			{
+				var state = states[stateIndex];
+				stateArr[countryIndex][stateIndex] = state;
+
+				var cities = state.Cities!;
+				cityArr[countryIndex][stateIndex] = new City[cities.Count];
+
+				for (var cityIndex = 0; cityIndex < cities.Count; cityIndex++)
+				{
+					cityArr[countryIndex][stateIndex][cityIndex] = cities[cityIndex];
+				}
+			}
+		}
+
+		return (countryArr, stateArr, cityArr);
+	});
+
+	/// <summary>
+	/// A thread-local RandomNumberGenerator instance for non-zero byte generation, avoiding lock contention.
+	/// </summary>
+	[ThreadStatic]
+	private static RandomNumberGenerator? _threadLocalRng;
 
 	/// <summary>
 	/// Provides an extensive string for testing purposes, with a length of 969 characters, including spaces.
@@ -152,7 +187,8 @@ public static class RandomData
 	/// - Phone number length is based on the selected country's specification.
 	/// - Postal code formatting is based on country-specific formats via <see cref="GeneratePostalCode(Country, City)"/>.
 	/// </remarks>
-	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TAddress GenerateAddress<TAddress>(Country? country = null, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		country ??= _countries.Value.PickRandom();
@@ -165,15 +201,16 @@ public static class RandomData
 		var id = GenerateKey();
 		var address1 = GenerateAddressLineOne(addressLength);
 		var address2 = GenerateAddressLineTwo(addressLength);
-		var cityName = city?.Name ?? string.Empty;
-		var countryName = country?.Name ?? string.Empty;
+		var cityName = city?.Name ?? Core.ControlChars.EmptyString;
+		var countryName = country?.Name ?? Core.ControlChars.EmptyString;
 		var countyProvince = GenerateWord(countyProvinceLength);
 		var phone = GenerateNumber(country!.PhoneNumberLength);
 		var postalCode = GeneratePostalCode(country, city);
-		var stateName = state?.Name ?? string.Empty;
+		var stateName = state?.Name ?? Core.ControlChars.EmptyString;
 
-		return typeof(TAddress) == typeof(Address)
-			? (TAddress)(object)new Address
+		if (typeof(TAddress) == typeof(Address))
+		{
+			return (TAddress)(object)new Address
 			{
 				Id = id,
 				Address1 = address1,
@@ -184,23 +221,31 @@ public static class RandomData
 				Phone = phone,
 				PostalCode = postalCode,
 				State = stateName
-			}
-			: typeof(TAddress) == typeof(Models.ValueTypes.Address)
-				? (TAddress)(object)new Models.ValueTypes.Address
-				{
-					Id = id,
-					Address1 = address1,
-					Address2 = address2,
-					City = cityName,
-					Country = countryName,
-					CountyProvince = countyProvince,
-					Phone = phone,
-					PostalCode = postalCode,
-					State = stateName
-				}
-				: typeof(TAddress) == typeof(AddressRecord)
-							? (TAddress)(object)new AddressRecord(id, address1, address2, cityName, stateName, countyProvince, countryName, postalCode, phone)
-							: throw new NotSupportedException($"Type {typeof(TAddress).FullName} is not supported by GenerateAddress.");
+			};
+		}
+
+		if (typeof(TAddress) == typeof(Models.ValueTypes.Address))
+		{
+			return (TAddress)(object)new Models.ValueTypes.Address
+			{
+				Id = id,
+				Address1 = address1,
+				Address2 = address2,
+				City = cityName,
+				Country = countryName,
+				CountyProvince = countyProvince,
+				Phone = phone,
+				PostalCode = postalCode,
+				State = stateName
+			};
+		}
+
+		if (typeof(TAddress) == typeof(AddressRecord))
+		{
+			return (TAddress)(object)new AddressRecord(id, address1, address2, cityName, stateName, countyProvince, countryName, postalCode, phone);
+		}
+
+		throw new NotSupportedException($"Type {typeof(TAddress).FullName} is not supported by GenerateAddress.");
 	}
 
 	/// <summary>
@@ -292,17 +337,14 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateByteArray), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateByteArray), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] GenerateByteArray(int count)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);
 
 		var bytes = GC.AllocateUninitializedArray<byte>(count);
 
-		lock (_lock)
-		{
-			_randomNumberGenerator.GetBytes(bytes);
-		}
+		RandomNumberGenerator.Fill(bytes);
 
 		return bytes;
 	}
@@ -312,7 +354,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A random character between <see cref="DefaultMinCharacter"/> and <see cref="DefaultMaxCharacter"/>.</returns>
 	/// <example>Output: 82 'R'</example>
-	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static char GenerateCharacter()
 	{
 		return GenerateCharacter(DefaultMinCharacter, DefaultMaxCharacter);
@@ -326,7 +368,7 @@ public static class RandomData
 	/// <returns>A random character between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
 	/// <example>Output: 65 'A'</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCharacter), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static char GenerateCharacter(char minValue, char maxValue)
 	{
 		return (char)GenerateInteger(minValue, maxValue);
@@ -356,19 +398,34 @@ public static class RandomData
 	/// <returns>A read-only collection of <typeparamref name="T"/> with random values for X, Y, and Z.</returns>
 	/// <example>Output: [0]: {2089369587--284215139} [1]: {244137335-1577361939}</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCoordinateCollection), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCoordinateCollection), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<T> GenerateCoordinateCollection<T>(int count = 2) where T : ICoordinate, new()
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 2);
 
-		var coordinates = new List<T>(count);
+		// Fill all coordinates in a single RNG call instead of one per element.
+		// Each coordinate needs 3 ints (X, Y, Z) = 12 bytes.
+		var intBuffer = ArrayPool<int>.Shared.Rent(count * 3);
 
-		for (var coordinateIndex = 0; coordinateIndex < count; coordinateIndex++)
+		try
 		{
-			coordinates.Add(GenerateCoordinate<T>());
-		}
+			RandomNumberGenerator.Fill(MemoryMarshal.AsBytes(intBuffer.AsSpan(0, count * 3)));
 
-		return coordinates.ToReadOnlyCollection();
+			var coordinates = new List<T>(count);
+
+			for (var coordinateIndex = 0; coordinateIndex < count; coordinateIndex++)
+			{
+				var offset = coordinateIndex * 3;
+
+				coordinates.Add(new T { X = intBuffer[offset], Y = intBuffer[offset + 1], Z = intBuffer[offset + 2] });
+			}
+
+			return coordinates.ToReadOnlyCollection();
+		}
+		finally
+		{
+			ArrayPool<int>.Shared.Return(intBuffer);
+		}
 	}
 
 	/// <summary>
@@ -411,7 +468,7 @@ public static class RandomData
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minValue"/> is greater than <paramref name="maxValue"/>, or <paramref name="decimalPlaces"/> is negative.</exception>
 	/// <example>Output: 95.15</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDecimal), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateDecimal), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static decimal GenerateDecimal(in decimal minValue, in decimal maxValue, int decimalPlaces)
 	{
 		decimalPlaces = decimalPlaces.ArgumentInRange(min: 0, defaultValue: 0);
@@ -438,10 +495,13 @@ public static class RandomData
 	/// Console.WriteLine(domainExtension); // Output: e.g., ".com", ".org", ".net"
 	/// </code>
 	/// </example>
-	[Information(nameof(GenerateDomainExtension), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateDomainExtension), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateDomainExtension()
 	{
-		return Of(_domainExtensions.Value.ToReadOnlyCollection());
+		var extensions = _domainExtensions.Value;
+
+		return extensions[GenerateInteger(0, extensions.Length - 1)];
 	}
 
 	/// <summary>
@@ -480,7 +540,7 @@ public static class RandomData
 	/// <seealso cref="GenerateEmailAddressWithName"/>
 	/// <seealso cref="GenerateDomainExtension"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateEmailAddress), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateEmailAddress), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateEmailAddress()
 	{
 		var username = GenerateWord(5, 25, 'a', 'z');
@@ -593,10 +653,13 @@ public static class RandomData
 	/// <remarks>
 	/// This method selects a random first name from a predefined list using the PickRandom{T}(IEnumerable{T}) extension method on <see cref="_firstNames"/>.
 	/// </remarks>
-	[Information(nameof(GenerateFirstName), "David McCarter", "3/11/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateFirstName), "David McCarter", "3/11/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static string? GenerateFirstName()
 	{
-		return _firstNames.Value.PickRandom();
+		var names = _firstNames.Value;
+
+		return names[GenerateInteger(0, names.Length - 1)];
 	}
 
 	/// <summary>
@@ -621,7 +684,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A unique key as a string.</returns>
 	/// <example>Output: f7f0af78003d4ab194b5a4024d02112a</example>
-	[Information(nameof(GenerateKey), "David McCarter", "1/19/2019", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GenerateKey), "David McCarter", "1/19/2019", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateKey()
 	{
 		return KeyGenerator.GenerateKey();
@@ -634,10 +697,13 @@ public static class RandomData
 	/// <remarks>
 	/// This method selects a random last name from a predefined list using the PickRandom{T}System.Collections.Generic.IEnumerable{T} extension method on <see cref="_lastNames"/>.
 	/// </remarks>
-	[Information(nameof(GenerateLastName), "David McCarter", "3/11/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateLastName), "David McCarter", "3/11/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static string? GenerateLastName()
 	{
-		return _lastNames.Value.PickRandom();
+		var names = _lastNames.Value;
+
+		return names[GenerateInteger(0, names.Length - 1)];
 	}
 
 	/// <summary>
@@ -675,17 +741,14 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateNonZeroByteArray), "David McCarter", "10/21/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] GenerateNonZeroByteArray(int count)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);
 
 		var bytes = GC.AllocateUninitializedArray<byte>(count);
 
-		lock (_lock)
-		{
-			_randomNumberGenerator.GetNonZeroBytes(bytes);
-		}
+		(_threadLocalRng ??= RandomNumberGenerator.Create()).GetNonZeroBytes(bytes);
 
 		return bytes;
 	}
@@ -732,7 +795,8 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
 	/// <returns>An instance of the specified person type populated with random data.</returns>
 	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
-	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
 		return typeof(TPerson) == typeof(Person)
@@ -850,7 +914,7 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output for Taiwan: 886-352346002</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePhoneNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePhoneNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GeneratePhoneNumber(Country country, bool includeCountryCode = false)
 	{
 		country = country.ArgumentNotNull();
@@ -870,7 +934,7 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output for Taiwan: 886-352346002</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePhoneNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePhoneNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GeneratePhoneNumber(CountryName countryName, bool includeCountryCode = false)
 	{
 		countryName = countryName.ArgumentDefined();
@@ -891,15 +955,15 @@ public static class RandomData
 	/// <returns>A random file name with the specified length and extension.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateRandomFileName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateRandomFileName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateRandomFileName(int fileNameLength = 10, [NotNull] string extension = DefaultFileExtension)
 	{
 		fileNameLength = fileNameLength.ArgumentInRange(min: 1, max: 256);
 		extension = extension.ArgumentNotNullOrEmpty(defaultValue: DefaultFileExtension);
 
-		var fileName = $"{GenerateWord(fileNameLength, DefaultMinCharacterRandomFile, DefaultMaxCharacterRandomFile)}{Core.ControlChars.Dot}{extension}";
+		var fileName = string.Concat(GenerateFileNameWord(fileNameLength), Core.ControlChars.Dot.ToString(), extension);
 
-		return Path.Combine(Path.GetTempPath(), fileName);
+		return Path.Combine(_tempPath, fileName);
 	}
 
 	/// <summary>
@@ -912,13 +976,13 @@ public static class RandomData
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> or <paramref name="extension"/> is null.</exception>
 	/// <example>Output: c:\\temp\\FFDHRBMDXP.dotnettips</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateRandomFileName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateRandomFileName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateRandomFileName([NotNull] string path, int fileNameLength = 10, [NotNull] string extension = DefaultFileExtension)
 	{
 		fileNameLength = fileNameLength.ArgumentInRange(min: 1, max: 256);
 		extension = extension.ArgumentNotNullOrEmpty(defaultValue: DefaultFileExtension);
 
-		var fileName = $"{GenerateWord(fileNameLength, DefaultMinCharacterRandomFile, DefaultMaxCharacterRandomFile)}{Core.ControlChars.Dot}{extension}";
+		var fileName = string.Concat(GenerateFileNameWord(fileNameLength), Core.ControlChars.Dot.ToString(), extension);
 
 		return Path.Combine(path, fileName);
 	}
@@ -928,20 +992,30 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A tuple containing a <see cref="Country"/>, <see cref="State"/>, and <see cref="City"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateRandomLocationData), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Random.Shared is appropriate here — location selection is non-security random sampling, not cryptographic.")]
+	[Information(nameof(GenerateRandomLocationData), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static (Country country, State state, City city) GenerateRandomLocationData()
 	{
-		var country = _countries.Value.PickRandom();
+		var (countries, states, cities) = _locationData.Value;
+
+		var countryIndex = Random.Shared.Next(countries.Length);
+		var country = countries[countryIndex];
+
 		State? state = null;
 		City? city = null;
 
-		if (country!.States != null && country.States.IsNotEmpty())
-		{
-			state = country.States.PickRandom();
+		var countryStates = states[countryIndex];
 
-			if (state?.Cities != null && state.Cities.IsNotEmpty())
+		if (countryStates.Length > 0)
+		{
+			var stateIndex = Random.Shared.Next(countryStates.Length);
+			state = countryStates[stateIndex];
+
+			var stateCities = cities[countryIndex][stateIndex];
+
+			if (stateCities.Length > 0)
 			{
-				city = state.Cities.PickRandom();
+				city = stateCities[Random.Shared.Next(stateCities.Length)];
 			}
 		}
 
@@ -953,7 +1027,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A <see cref="PersonData"/> object populated with random values.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateRandomPersonData), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateRandomPersonData), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static PersonData GenerateRandomPersonData()
 	{
 		var (country, _, _) = GenerateRandomLocationData();
@@ -978,7 +1052,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A tuple containing the first name and last name of a person. The first name is generated using <see cref="GenerateFirstName"/> and the last name is generated using <see cref="GenerateLastName"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateRandomLocationData), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateRandomLocationData), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static (string? firstName, string? lastName) GenerateRandomPersonName()
 	{
 		return (GenerateFirstName(), GenerateLastName());
@@ -992,17 +1066,26 @@ public static class RandomData
 	/// This method can be used to generate relative URLs for web applications. It's a part of the <see cref="RandomData"/> class which provides various methods for generating random data.
 	/// </remarks>
 	/// <example>Output:"/ljsylu/rsglcurkiylqld/wejdbuainlgjofnv/uwbrjftyt/"</example>
-	[Information(nameof(GenerateRelativeUrl), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Random.Shared is appropriate here — URL path generation is non-security random sampling, not cryptographic.")]
+	[Information(nameof(GenerateRelativeUrl), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateRelativeUrl()
 	{
 		var sb = _stringBuilderPool.Get();
 
 		try
 		{
-			var length = GenerateInteger(1, 10);
-			for (var lengthIndex = 0; lengthIndex < length; lengthIndex++)
+			var segmentCount = Random.Shared.Next(1, 10);
+
+			for (var segmentIndex = 0; segmentIndex < segmentCount; segmentIndex++)
 			{
-				_ = sb.Append(GenerateUrlFragment());
+				var segmentLength = Random.Shared.Next(1, 26);
+
+				_ = sb.Append('/');
+
+				for (var charIndex = 0; charIndex < segmentLength; charIndex++)
+				{
+					_ = sb.Append((char)('a' + Random.Shared.Next(26)));
+				}
 			}
 
 			_ = sb.Append('/');
@@ -1021,15 +1104,35 @@ public static class RandomData
 	/// <param name="fileLength">The length of the file in characters. Default is <see cref="DefaultFileLength"/>.</param>
 	/// <returns>The path to the generated temporary file.</returns>
 	/// <example>Output: C:\\Users\\user folder\\AppData\\Local\\Temp\\OFQCKBRAKQ.dotnettips.temp</example>
-	[Information(nameof(GenerateTempFile), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Random.Shared is appropriate here — file content generation is non-security random sampling, not cryptographic.")]
+	[Information(nameof(GenerateTempFile), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateTempFile(int fileLength = DefaultFileLength)
 	{
 		fileLength = fileLength.ArgumentInRange(min: 1, defaultValue: DefaultFileLength);
 
 		var fileName = GenerateRandomFileName();
-		var fakeText = GenerateWord(fileLength);
+		var buffer = ArrayPool<byte>.Shared.Rent(fileLength);
 
-		File.WriteAllText(fileName, fakeText);
+		try
+		{
+			var content = buffer.AsSpan(0, fileLength);
+
+			Random.Shared.NextBytes(content);
+
+			// Map each byte to a printable lowercase ASCII character ('a'–'z').
+			for (var byteIndex = 0; byteIndex < fileLength; byteIndex++)
+			{
+				content[byteIndex] = (byte)('a' + (content[byteIndex] % 26));
+			}
+
+			using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+
+			stream.Write(content);
+		}
+		finally
+		{
+			ArrayPool<byte>.Shared.Return(buffer);
+		}
 
 		return fileName;
 	}
@@ -1042,7 +1145,7 @@ public static class RandomData
 	/// This method combines the output of <see cref="GenerateUrlHostName"/> and <see cref="GenerateRelativeUrl"/> to construct the full URL.
 	/// </remarks>
 	/// <example>Output: https://www.rp.red/wyfkxbfft/pqypmdstoydnootvdvnsqkn/</example>
-	[Information(nameof(GenerateUrl), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrl), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrl()
 	{
 		return string.Concat(GenerateUrlHostName(), GenerateRelativeUrl());
@@ -1054,7 +1157,7 @@ public static class RandomData
 	/// <returns>A string representing a URL fragment.</returns>
 	/// <example>Output: /rregyyjxpjiats</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlFragment), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlFragment), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlFragment()
 	{
 		return string.Concat("/", GenerateWord(1, 25, 'a', 'z'));
@@ -1069,7 +1172,7 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: https://www.ukrsusbrtjijfktfj.shouji</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlHostName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlHostName), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlHostName()
 	{
 		return string.Concat("https://", GenerateUrlHostNameNoProtocol());
@@ -1092,7 +1195,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlHostNameNoProtocol), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlHostNameNoProtocol), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlHostNameNoProtocol()
 	{
 		return string.Concat("www.", GenerateWord(1, 25, 'a', 'z'), ".", GenerateUrlHostNameNoSubDomain());
@@ -1104,7 +1207,7 @@ public static class RandomData
 	/// <returns>A string representing a URL host name without the protocol. The domain extension is generated using <see cref="GenerateDomainExtension"/>.</returns>
 	/// <example>Output: dz</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateUrlHostNameNoSubDomain), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateUrlHostNameNoSubDomain), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateUrlHostNameNoSubDomain()
 	{
 		return GenerateDomainExtension();
@@ -1120,7 +1223,7 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: mL_g[E_E_CsoJvjshI]CFjFKa</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateWord(int length = 1)
 	{
 		return GenerateWord(length, DefaultMinCharacter, DefaultMaxCharacter);
@@ -1152,26 +1255,32 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: LBEEUMHHHK</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateWord(int length = 1, char minCharacter = 'a', char maxCharacter = 'Z')
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
 
-		var sb = _stringBuilderPool.Get().SetCapacity(length);
+		var range = maxCharacter - minCharacter + 1;
 
-		try
-		{
-			for (var wordIndex = 0; wordIndex < length; wordIndex++)
-			{
-				_ = sb.Append(GenerateCharacter(minCharacter, maxCharacter));
-			}
+		// Use stackalloc for small words to avoid heap allocation; fall back to ArrayPool for large words
+		const int stackAllocThreshold = 256;
 
-			return sb.ToString().Trim();
-		}
-		finally
+		var chars = length <= stackAllocThreshold
+			? stackalloc char[length]
+			: (Span<char>)new char[length];
+
+		var randomBytes = length <= stackAllocThreshold
+			? stackalloc byte[length]
+			: (Span<byte>)new byte[length];
+
+		RandomNumberGenerator.Fill(randomBytes);
+
+		for (var wordIndex = 0; wordIndex < length; wordIndex++)
 		{
-			_stringBuilderPool.Return(sb.Clear());
+			chars[wordIndex] = (char)(minCharacter + (randomBytes[wordIndex] % range));
 		}
+
+		return new string(chars).Trim();
 	}
 
 	/// <summary>
@@ -1213,21 +1322,65 @@ public static class RandomData
 	/// [2]: "Ad\\kCOMkmdK"
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWords), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWords), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GenerateWords(int count = 1, int minLength = 1, int maxLength = 1)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);
 		minLength = minLength.ArgumentInRange(min: 1, defaultValue: 1);
 		maxLength = maxLength.ArgumentInRange(min: 1, defaultValue: 1);
 
-		var strings = new List<string>(count);
+		const char minChar = DefaultMinCharacter;
+		const char maxChar = DefaultMaxCharacter;
+		const int range = maxChar - minChar + 1;
 
-		for (var wordCount = 0; wordCount < count; wordCount++)
+		// Pre-generate all lengths to compute total bytes needed for a single RNG call.
+		var lengths = new int[count];
+		var totalBytes = 0;
+
+		for (var wordIndex = 0; wordIndex < count; wordIndex++)
 		{
-			strings.Add(GenerateWord(minLength, maxLength));
+			var len = minLength == maxLength
+				? minLength
+				: RandomNumberGenerator.GetInt32(minLength, maxLength + 1);
+
+			lengths[wordIndex] = len;
+			totalBytes += len;
 		}
 
-		return strings.ToReadOnlyCollection();
+		// Rent a single buffer for all random bytes and fill in one RNG call.
+		var rentedBuffer = ArrayPool<byte>.Shared.Rent(totalBytes);
+
+		try
+		{
+			RandomNumberGenerator.Fill(rentedBuffer.AsSpan(0, totalBytes));
+
+			var strings = new string[count];
+			var byteOffset = 0;
+
+			for (var wordIndex = 0; wordIndex < count; wordIndex++)
+			{
+				var length = lengths[wordIndex];
+				var wordBytes = rentedBuffer.AsSpan(byteOffset, length);
+
+				strings[wordIndex] = string.Create(length, (minChar, range, wordBytes.ToArray()), static (span, state) =>
+				{
+					var (min, r, bytes) = state;
+
+					for (var charIndex = 0; charIndex < span.Length; charIndex++)
+					{
+						span[charIndex] = (char)(min + (bytes[charIndex] % r));
+					}
+				});
+
+				byteOffset += length;
+			}
+
+			return new ReadOnlyCollection<string>(strings);
+		}
+		finally
+		{
+			ArrayPool<byte>.Shared.Return(rentedBuffer);
+		}
 	}
 
 	/// <summary>
@@ -1307,6 +1460,33 @@ public static class RandomData
 	}
 
 	/// <summary>
+	/// Generates a random uppercase-letter word of the specified length for use in file names.
+	/// Uses <c>string.Create</c> to avoid the intermediate char array and skips <c>Trim()</c>
+	/// since <see cref="DefaultMinCharacterRandomFile"/>–<see cref="DefaultMaxCharacterRandomFile"/>
+	/// ('A'–'Z') contains no whitespace.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static string GenerateFileNameWord(int length)
+	{
+		const int stackAllocThreshold = 256;
+		const int range = DefaultMaxCharacterRandomFile - DefaultMinCharacterRandomFile + 1;
+
+		var randomBytes = length <= stackAllocThreshold
+			? stackalloc byte[length]
+			: (Span<byte>)new byte[length];
+
+		RandomNumberGenerator.Fill(randomBytes);
+
+		return string.Create(length, randomBytes.ToArray(), static (chars, bytes) =>
+		{
+			for (var wordIndex = 0; wordIndex < chars.Length; wordIndex++)
+			{
+				chars[wordIndex] = (char)(DefaultMinCharacterRandomFile + (bytes[wordIndex] % range));
+			}
+		});
+	}
+
+	/// <summary>
 	/// Generates a <see cref="PersonRecord"/> with random data.
 	/// </summary>
 	/// <param name="addressCount">The number of addresses to generate for the person. Default is 2.</param>
@@ -1379,7 +1559,7 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
 	/// <returns>A <see cref="Models.ValueTypes.Person"/> object.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonVal), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePersonVal), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	private static Models.ValueTypes.Person GeneratePersonVal(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		addressCount = addressCount.ArgumentInRange(min: 0, defaultValue: 2);
@@ -1490,14 +1670,14 @@ public static class RandomData
 	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
 
 	/// <summary>
-	/// A lazy-loaded read-only collection of first names.
+	/// A lazy-loaded array of first names.
 	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<string>> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
+	private static readonly Lazy<string[]> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
 
 	/// <summary>
-	/// A lazy-loaded read-only collection of last names.
+	/// A lazy-loaded array of last names.
 	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<string>> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToReadOnlyCollection().ToLazy();
+	private static readonly Lazy<string[]> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
 #pragma warning restore IL2026
 
 

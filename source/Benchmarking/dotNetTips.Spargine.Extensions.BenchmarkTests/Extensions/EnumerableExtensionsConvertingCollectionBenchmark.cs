@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-14-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-25-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsConvertingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,6 +13,8 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -25,13 +27,25 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollectionBenchmark
 {
+	private IAsyncEnumerable<Person> _personRefAsyncEnumerable = default!;
 	private IEnumerable<Person> _personRefEnumerable = default!;
+
+
+	[Benchmark(Description = nameof(EnumerableExtensions.PageAsync))]
+	public async Task PageAsync()
+	{
+		await foreach (var page in this._personRefAsyncEnumerable.PageAsync(this.HalfCount).ConfigureAwait(false))
+		{
+			await this.ConsumeAsync(page).ConfigureAwait(false);
+		}
+	}
 
 	public override void Setup()
 	{
 		base.Setup();
 
 		this._personRefEnumerable = this.GetPersonRefArray().Select(x => x);
+		this._personRefAsyncEnumerable = ToAsyncEnumerable(this.GetPersonRefArray());
 	}
 
 
@@ -94,13 +108,23 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		await this.ConsumeAsync(result).ConfigureAwait(false);
 	}
 
-
 	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
 	public void ToReadOnlyCollection()
 	{
 		var result = this._personRefEnumerable.ToReadOnlyCollection();
 
 		this.Consume(result);
+	}
+
+	private static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(
+		IEnumerable<T> source,
+		[EnumeratorCancellation] CancellationToken cancellationToken = default)
+	{
+		foreach (var item in source)
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+			yield return item;
+		}
 	}
 
 }

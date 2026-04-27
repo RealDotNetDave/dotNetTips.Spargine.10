@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified On : 04-24-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -370,7 +370,8 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </code>
 	/// </example>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public string SaveToFile([NotNull] string input, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		if (input.IsNullOrEmpty())
@@ -574,7 +575,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public async Task<string> SaveToFileAsync([NotNull] string input, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	public async Task<string> SaveToFileAsync([NotNull] string input, [CallerMemberName][NotNull] string methodName = ControlChars.EmptyString)
 	{
 		if (input.IsNullOrEmpty())
 		{
@@ -606,8 +607,9 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </exception>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
@@ -615,9 +617,29 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
-		var content = collection
-			.Select(item => item!.PropertiesToString(propertySelector))
-			.ToArray();
+		string[] content;
+
+		if (collection is ICollection<T> sized)
+		{
+			content = new string[sized.Count];
+			var index = 0;
+
+			foreach (var item in sized)
+			{
+				content[index++] = item!.PropertiesToString(propertySelector);
+			}
+		}
+		else
+		{
+			var list = new List<string>();
+
+			foreach (var item in collection)
+			{
+				list.Add(item!.PropertiesToString(propertySelector));
+			}
+
+			content = [.. list];
+		}
 
 		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
 
@@ -639,7 +661,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[DebuggerStepThrough]
 	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public async Task<string> SaveToFileAsync<T>([NotNull] T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
+	public async Task<string> SaveToFileAsync<T>([NotNull] T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName][NotNull] string methodName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();
 		propertySelector = propertySelector.ArgumentNotNull();
@@ -702,8 +724,9 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </example>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
@@ -712,9 +735,29 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
-		var content = collection
-			.Select(item => item!.PropertiesToString(propertySelector))
-			.ToArray();
+		string[] content;
+
+		if (collection is ICollection<T> sized)
+		{
+			content = new string[sized.Count];
+			var index = 0;
+
+			foreach (var item in sized)
+			{
+				content[index++] = item!.PropertiesToString(propertySelector);
+			}
+		}
+		else
+		{
+			var list = new List<string>();
+
+			foreach (var item in collection)
+			{
+				list.Add(item!.PropertiesToString(propertySelector));
+			}
+
+			content = [.. list];
+		}
 
 		await File.WriteAllLinesAsync(filePath, content, CancellationToken.None).ConfigureAwait(false);
 
@@ -763,12 +806,29 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <seealso cref="SaveToFile(string, string)"/>
 	private static string GenerateFileName([NotNull] string methodName)
 	{
-		var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmssfff", CultureInfo.InvariantCulture);
+		const int timestampLength = 18; // "yyyyMMdd_HHmmssfff"
+		const int extensionLength = 4;  // ".txt"
 
-		var fileName = methodName.FastIsNullOrEmpty()
-			? $"{RandomData.GenerateKey}_{timestamp}.txt"
-			: $"{methodName}_{timestamp}.txt";
+		var now = DateTime.Now;
+		var baseName = methodName.FastIsNullOrEmpty() ? RandomData.GenerateKey() : methodName;
 
-		return fileName;
+		return string.Create(
+			baseName.Length + 1 + timestampLength + extensionLength,
+			(baseName, now),
+			static (span, state) =>
+			{
+				var (name, dt) = state;
+				var pos = 0;
+
+				name.AsSpan().CopyTo(span);
+				pos += name.Length;
+
+				span[pos++] = '_';
+
+				_ = dt.TryFormat(span[pos..], out _, "yyyyMMdd_HHmmssfff", CultureInfo.InvariantCulture);
+				pos += 18;
+
+				".txt".AsSpan().CopyTo(span[pos..]);
+			});
 	}
 }

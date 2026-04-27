@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-26-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -172,7 +172,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
@@ -639,12 +639,11 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastShuffle()
 		{
 			collection = collection.ArgumentNotNull();
 
-			//SUGGESTION FROM COPILOT SLOWER!
 			var array = collection.ToArray();
 
 			Random.Shared.Shuffle(array);
@@ -1240,7 +1239,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NeedsUpdate, Status = Status.Available)]
 		public bool ContainsAny([AllowNull] params ReadOnlyCollection<T> items)
 		{
 			if ((collection is null) || (items is null) || (items.Count == 0))
@@ -1258,6 +1257,7 @@ public static class EnumerableExtensions
 						return true;
 					}
 				}
+
 				return false;
 			}
 
@@ -1382,7 +1382,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Update, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsEmpty()
 		{
 			if (collection is null)
@@ -1569,6 +1569,7 @@ public static class EnumerableExtensions
 				}
 
 				var randomIndex = Random.Shared.Next(list.Count);
+
 				return list[randomIndex];
 			}
 
@@ -1591,6 +1592,7 @@ public static class EnumerableExtensions
 					{
 						return item;
 					}
+
 					currentIndex++;
 				}
 			}

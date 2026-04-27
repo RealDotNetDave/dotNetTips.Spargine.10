@@ -428,11 +428,6 @@ public static class BenchmarkHelper
 
 			PlayErrorBeep();
 		}
-		finally
-		{
-			// Leave this at the end of the method to ensure the console stays open after benchmarks complete or if an error occurs
-			_ = Console.ReadLine();
-		}
 	}
 
 	/// <summary>

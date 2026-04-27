@@ -76,6 +76,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 	  Status = Status.Available)]
   public sealed class MyClass { ... }
   ```'
+  - ALWAYS line up parameters for this attribute.
 
 ---
 

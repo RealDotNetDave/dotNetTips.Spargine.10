@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-24-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -14,8 +14,10 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -39,13 +41,22 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _personRefArray = default!;
+	private ConcurrentBag<Person> _personRefConcurrentBag = default!;
+	private ConcurrentQueue<Person> _personRefConcurrentQueue = default!;
 	private ConcurrentStack<Person> _personRefConcurrentStack = default!;
 	private IEnumerable<Person> _personRefEnumerable = default!;
 	private List<Person> _personRefEnumerableEnd = default!;
 	private List<Person> _personRefEnumerableStart = default!;
 	private IEnumerable<Person> _personRefEnumerableToAdd = default!;
+	private FrozenSet<Person> _personRefFrozenSet = default!;
 	private HashSet<Person> _personRefHashSet = default!;
+	private ImmutableHashSet<Person> _personRefImmutableHashSet = default!;
+	private ImmutableList<Person> _personRefImmutableList = default!;
 	private ImmutableQueue<Person> _personRefImmutableQueue = default!;
+	private ImmutableSortedSet<Person> _personRefImmutableSortedSet = default!;
+	private ImmutableStack<Person> _personRefImmutableStack = default!;
+	private List<Person> _personRefList = default!;
+	private ReadOnlyCollection<Person> _personRefReadOnlyCollection = default!;
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
@@ -107,10 +118,56 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(EnumerableExtensions.ContainsAny) + ": FrozenSet<ref>")]
+	public void ContainsAnyFrozenSet()
+	{
+		var people = this._personRefFrozenSet.AsEnumerable();
+
+		var result = people.ContainsAny(this._personRefEnumerableEnd.AsReadOnly());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ContainsAny) + ": HashSet<ref>")]
+	public void ContainsAnyHashSet()
+	{
+		var people = this._personRefHashSet.AsEnumerable();
+
+		var result = people.ContainsAny(this._personRefEnumerableEnd.AsReadOnly());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ContainsAny) + ": List<ref>")]
+	public void ContainsAnyList()
+	{
+		var people = this._personRefList.AsEnumerable();
+
+		var result = people.ContainsAny(this._personRefEnumerableEnd.AsReadOnly());
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": Array<ref>")]
 	public void DoesNotHaveItemsIsEmptyArrayRef()
 	{
 		var result = this._personRefArray.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ConcurrentBag<ref>")]
+	public void DoesNotHaveItemsIsEmptyConcurrentBagRef()
+	{
+		var result = this._personRefConcurrentBag.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ConcurrentQueue<ref>")]
+	public void DoesNotHaveItemsIsEmptyConcurrentQueueRef()
+	{
+		var result = this._personRefConcurrentQueue.IsEmpty();
 
 		this.Consume(result);
 	}
@@ -123,18 +180,66 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": EnumerableQueue<ref>")]
-	public void DoesNotHaveItemsIsEmptyEnumerableQueueRef()
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": Enumerable<ref>")]
+	public void DoesNotHaveItemsIsEmptyEnumerableRef()
+	{
+		var result = this._personRefEnumerable.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ImmutableHashSet<ref>")]
+	public void DoesNotHaveItemsIsEmptyImmutableHashSetRef()
+	{
+		var result = this._personRefImmutableHashSet.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ImmutableList<ref>")]
+	public void DoesNotHaveItemsIsEmptyImmutableListRef()
+	{
+		var result = this._personRefImmutableList.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ImmutableQueue<ref>")]
+	public void DoesNotHaveItemsIsEmptyImmutableQueueRef()
 	{
 		var result = this._personRefImmutableQueue.IsEmpty();
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": Enumerable<ref>")]
-	public void DoesNotHaveItemsIsEmptyEnumerableRef()
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ImmutableSortedSet<ref>")]
+	public void DoesNotHaveItemsIsEmptyImmutableSortedSetRef()
 	{
-		var result = this._personRefEnumerable.IsEmpty();
+		var result = this._personRefImmutableSortedSet.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ImmutableStack<ref>")]
+	public void DoesNotHaveItemsIsEmptyImmutableStackRef()
+	{
+		var result = this._personRefImmutableStack.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": List<ref>")]
+	public void DoesNotHaveItemsIsEmptyListRef()
+	{
+		var result = this._personRefList.IsEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.IsEmpty) + ": ReadOnlyCollection<ref>")]
+	public void DoesNotHaveItemsIsEmptyReadOnlyCollectionRef()
+	{
+		var result = this._personRefReadOnlyCollection.IsEmpty();
 
 		this.Consume(result);
 	}
@@ -167,6 +272,46 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = people.FastContains(this.PersonRefLookupLast);
 
 		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Array<ref>")]
+	public void FastDistinctArrayRef()
+	{
+		var result = this._personRefArray.FastDistinct();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Enumerable<ref>")]
+	public void FastDistinctEnumerableRef()
+	{
+		var result = this._personRefEnumerable.FastDistinct();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Enumerable<val>")]
+	public void FastDistinctEnumerableVal()
+	{
+		var result = this._personValEnumerable.FastDistinct();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": HashSet<ref>")]
+	public void FastDistinctHashSetRef()
+	{
+		var result = this._personRefHashSet.FastDistinct();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<ref>")]
+	public void FastDistinctListRef()
+	{
+		var result = this._personRefList.FastDistinct();
+
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FirstOrDefault) + ": With Alternate")]
@@ -213,6 +358,36 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void FirstOrNullHashSetRef()
 	{
 		var result = this._personRefHashSet.FirstOrNull(p => p.Email == this.PersonRef01.Email);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.HasDuplicates) + ": Array<ref>")]
+	public void HasDuplicatesArray()
+	{
+		var people = this._personRefArray.AsEnumerable().AddLast(this.PersonRef01);
+
+		var result = people.HasDuplicates();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.HasDuplicates) + ": HashSet<ref>")]
+	public void HasDuplicatesHashSet()
+	{
+		var people = this._personRefHashSet.AsEnumerable().AddLast(this.PersonRef01);
+
+		var result = people.HasDuplicates();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.HasDuplicates) + ": List<ref>")]
+	public void HasDuplicatesList()
+	{
+		var people = this._personRefList.AsEnumerable().AddLast(this.PersonRef01);
+
+		var result = people.HasDuplicates();
 
 		this.Consume(result);
 	}
@@ -304,11 +479,33 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor))]
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Array")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessor()
+	public void ModifyCollectionFastProcessorArray()
+	{
+		var people = this._personRefArray;
+
+		people.FastProcessor(person => person.Phone = "5555555555");
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": IEnumerable")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void ModifyCollectionFastProcessorEnumerable()
 	{
 		var people = this._personRefEnumerable;
+
+		people.FastProcessor(person => person.Phone = "5555555555");
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": List")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void ModifyCollectionFastProcessorList()
+	{
+		var people = this._personRefList;
 
 		people.FastProcessor(person => person.Phone = "5555555555");
 
@@ -374,10 +571,38 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		}
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.PickRandom))]
-	public void PickRandom()
+	[Benchmark(Description = nameof(EnumerableExtensions.PickRandom) + ": Array")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void PickRandomArray()
+	{
+		var result = this._personRefArray.PickRandom();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.PickRandom) + ": Enumerable")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void PickRandomEnumerable()
 	{
 		var result = this._personRefEnumerable.PickRandom();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.PickRandom) + ": HashSet")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void PickRandomHashSet()
+	{
+		var result = this._personRefHashSet.PickRandom();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.PickRandom) + ": List")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void PickRandomList()
+	{
+		var result = this._personRefList.PickRandom();
 
 		this.Consume(result);
 	}
@@ -439,10 +664,19 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._personRefArray = this.GetPersonRefArray();
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
+		this._personRefFrozenSet = this.GetPersonRefArray().ToFrozenSet();
 		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
+		this._personRefList = this.GetPersonRefArray().ToList();
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 		this._personRefImmutableQueue = ImmutableQueue.Create(this.GetPersonRefArray());
 		this._personRefConcurrentStack = new ConcurrentStack<Person>(this.GetPersonRefArray());
+		this._personRefConcurrentBag = new ConcurrentBag<Person>(this.GetPersonRefArray());
+		this._personRefConcurrentQueue = new ConcurrentQueue<Person>(this.GetPersonRefArray());
+		this._personRefImmutableList = ImmutableList.Create(this.GetPersonRefArray());
+		this._personRefImmutableHashSet = ImmutableHashSet.Create(this.GetPersonRefArray());
+		this._personRefImmutableStack = ImmutableStack.Create(this.GetPersonRefArray());
+		this._personRefImmutableSortedSet = ImmutableSortedSet.Create(this.GetPersonRefArray());
+		this._personRefReadOnlyCollection = this.GetPersonRefArray().ToList().AsReadOnly();
 
 
 		var peopleToAdd = this._personRefEnumerable.ToList();
@@ -502,6 +736,45 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		people = people.ToUniqueCollection();
 
 		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - Array")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void TransformCollectionFastProcessorArray()
+	{
+		var result = this._personRefArray.FastProcessor(person =>
+		{
+			person.Phone = "5555555555";
+			return person;
+		});
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - IEnumerable")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void TransformCollectionFastProcessorEnumerable()
+	{
+		var result = this._personRefEnumerable.FastProcessor(person =>
+		{
+			person.Phone = "5555555555";
+			return person;
+		});
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - List")]
+	[BenchmarkCategory(Categories.ReferenceType)]
+	public void TransformCollectionFastProcessorList()
+	{
+		var result = this._personRefList.FastProcessor(person =>
+		{
+			person.Phone = "5555555555";
+			return person;
+		});
 
 		this.Consume(result);
 	}

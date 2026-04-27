@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified On : 04-24-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -44,12 +44,13 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		//BenchmarkHelper.RunAllBenchmarks(config);
+		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-		 typeof(ArrayExtensionsCollectionBenchmark), typeof(AssemblyExtensionsBenchmark), typeof(CharacterExtensionsBenchmark), typeof(CollectionExtensionsCollectionBenchmark), typeof(EnumerableExtensionsCollectionBenchmark), typeof(SortedSetExtensionsBenchmark), typeof(StringExtensionsBenchmark), typeof(StringExtensionsCounterBenchmark), typeof(TypeExtensionsBenchmark)
-			);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		// typeof(EnumerableExtensionsCollectionBenchmark),
+		// typeof(StringExtensionsBenchmark), typeof(StringBuilderExtensionsCounterBenchmark), typeof(CollectionExtensionsCollectionBenchmark)
+		//);
 
 	}
 }

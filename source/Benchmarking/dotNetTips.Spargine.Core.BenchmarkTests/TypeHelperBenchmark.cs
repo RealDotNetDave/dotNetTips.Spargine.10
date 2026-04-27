@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-25-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -119,6 +119,14 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypes()
 	{
 		var result = FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": Base Directory")]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void FindDerivedTypesBaseDirectory()
+	{
+		var result = TypeHelper.FindDerivedTypes(typeof(Exception), true);
 		this.Consume(result);
 	}
 
@@ -281,7 +289,7 @@ public class TypeHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.Reflection)]
 	public void GetAllStaticMethods()
 	{
-		var result = TypeHelper.GetAllPublicMethods(typeof(TypeHelper));
+		var result = TypeHelper.GetAllStaticMethods(typeof(TypeHelper));
 
 		this.Consume(result);
 	}
@@ -411,7 +419,7 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": Cached")]
+	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": DisplayNameOptions")]
 	[BenchmarkCategory(Categories.Reflection)]
 	public void GetTypeDisplayNameCached()
 	{
@@ -419,6 +427,15 @@ public class TypeHelperBenchmark : Benchmark
 		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
 
 		var result = TypeHelper.GetTypeDisplayName(type, options);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": Full Parameters")]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void GetTypeDisplayNameFullParameters()
+	{
+		var result = TypeHelper.GetTypeDisplayName(typeof(Dictionary<string, List<int>>), fullName: true, includeGenericParameterNames: true, includeGenericParameters: true);
 
 		this.Consume(result);
 	}
@@ -505,6 +522,33 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(TypeHelper.IsBuiltinType) + ": Built-in Type")]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void IsBuiltinTypeBuiltIn()
+	{
+		var result = TypeHelper.IsBuiltinType(typeof(int));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.IsBuiltinType) + ": Custom Type")]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void IsBuiltinTypeCustom()
+	{
+		var result = TypeHelper.IsBuiltinType(typeof(Person));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.IsBuiltinType) + ": Generic Type")]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void IsBuiltinTypeGeneric()
+	{
+		var result = TypeHelper.IsBuiltinType(typeof(List<int>));
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(TypeHelper.IsClosedGeneric))]
 	[BenchmarkCategory(Categories.Reflection)]
 	public void IsClosedGeneric()
@@ -512,29 +556,6 @@ public class TypeHelperBenchmark : Benchmark
 		var result = TypeHelper.IsClosedGeneric(typeof(List<int>));
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.IsEnumerable))]
-	[BenchmarkCategory(Categories.Reflection)]
-	public void IsEnumerable()
-	{
-		var result = TypeHelper.IsEnumerable(typeof(List<int>));
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(TypeHelper.ProcessGenericType))]
-	[BenchmarkCategory(Categories.Reflection)]
-	public void ProcessGenericType()
-	{
-		var builder = new StringBuilder();
-		var type = typeof(List<>);
-		var genericArguments = Array.Empty<Type>();
-		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true, nestedTypeDelimiter: '.');
-
-		TypeHelper.ProcessGenericType(builder, type, genericArguments, genericArguments.Length, options);
-
-		this.Consume(builder.ToString());
 	}
 
 	public override void Setup()
