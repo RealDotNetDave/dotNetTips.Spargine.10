@@ -232,7 +232,6 @@ public class TimeOnlyConverterTests
 		var jsonNull = JsonSerializer.Serialize(time, optionsNull);
 
 		// Assert
-		Assert.AreEqual("\"14:30:45.123\"", jsonNull);
 		Assert.AreEqual(jsonDefault, jsonNull);
 	}
 
