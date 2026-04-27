@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -427,6 +427,42 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void ContainsAny_FrozenSetCollection_MatchExists_ReturnsTrue()
+	{
+		var collection = new HashSet<string> { "apple", "banana", "cherry" }.ToFrozenSet();
+		var items = new ReadOnlyCollection<string>(["mango", "cherry"]);
+
+		Assert.IsTrue(collection.ContainsAny(items));
+	}
+
+	[TestMethod]
+	public void ContainsAny_FrozenSetCollection_NoMatch_ReturnsFalse()
+	{
+		var collection = new HashSet<string> { "apple", "banana", "cherry" }.ToFrozenSet();
+		var items = new ReadOnlyCollection<string>(["grape", "orange"]);
+
+		Assert.IsFalse(collection.ContainsAny(items));
+	}
+
+	[TestMethod]
+	public void ContainsAny_HashSetCollection_MatchExists_ReturnsTrue()
+	{
+		var collection = new HashSet<string> { "apple", "banana", "cherry" };
+		var items = new ReadOnlyCollection<string>(["grape", "banana"]);
+
+		Assert.IsTrue(collection.ContainsAny(items));
+	}
+
+	[TestMethod]
+	public void ContainsAny_HashSetCollection_NoMatch_ReturnsFalse()
+	{
+		var collection = new HashSet<string> { "apple", "banana", "cherry" };
+		var items = new ReadOnlyCollection<string>(["grape", "orange"]);
+
+		Assert.IsFalse(collection.ContainsAny(items));
+	}
+
+	[TestMethod]
 	public void ContainsAny_LargeCollection_ContainsItem_ReturnsTrue()
 	{
 		// Arrange
@@ -445,6 +481,26 @@ public class EnumerableExtensionsTests
 		var items = new ReadOnlyCollection<int>([20000, 30000, 40000]);
 
 		// Assert
+		Assert.IsFalse(collection.ContainsAny(items));
+	}
+
+	[TestMethod]
+	public void ContainsAny_LargeItemsListCollection_MatchExists_ReturnsTrue()
+	{
+		var collection = new List<int>(Enumerable.Range(1, 100)).AsEnumerable();
+		var itemList = new List<int>(Enumerable.Range(91, 10)) { 50 };
+		var items = new ReadOnlyCollection<int>(itemList);
+
+		Assert.IsTrue(collection.ContainsAny(items));
+	}
+
+	[TestMethod]
+	public void ContainsAny_LargeItemsListCollection_NoMatch_ReturnsFalse()
+	{
+		var collection = new List<int>(Enumerable.Range(1, 50)).AsEnumerable();
+		var itemList = new List<int>(Enumerable.Range(101, 11));
+		var items = new ReadOnlyCollection<int>(itemList);
+
 		Assert.IsFalse(collection.ContainsAny(items));
 	}
 
@@ -4082,6 +4138,73 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void OrderBy_NullSortExpression_ReturnsOriginalCollection()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.OrderBy(null);
+
+		Assert.IsTrue(result.IsNotEmpty());
+		Assert.IsTrue(result.SequenceEqual(people));
+	}
+
+	[TestMethod]
+	public void OrderBy_SamePropertyCalledTwice_UsesCacheAndReturnsSortedResults()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result1 = people.OrderBy("Email").ToList();
+		var result2 = people.OrderBy("Email").ToList();
+
+		CollectionAssert.AreEqual(result1, result2);
+	}
+
+	[TestMethod]
+	public void OrderBy_SingleElementCollection_ReturnsSingleElement()
+	{
+		var person = RandomData.GeneratePersonRefCollection(1).First();
+		var people = new[] { person }.AsEnumerable();
+
+		var result = people.OrderBy("Email").ToList();
+
+		Assert.AreEqual(1, result.Count);
+		Assert.AreSame(person, result[0]);
+	}
+
+	[TestMethod]
+	public void OrderBy_ValidPropertyAscending_ReturnsSortedAscending()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.OrderBy("Email").ToList();
+
+		var expected = people.OrderBy(p => p.Email, StringComparer.Ordinal).ToList();
+		CollectionAssert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	public void OrderBy_ValidPropertyDescendingWithDesc_ReturnsSortedDescending()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.OrderBy("Email desc").ToList();
+
+		var expected = people.OrderByDescending(p => p.Email, StringComparer.Ordinal).ToList();
+		CollectionAssert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	public void OrderBy_ValidPropertyDescendingWithDescending_ReturnsSortedDescending()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.OrderBy("Email descending").ToList();
+
+		var expected = people.OrderByDescending(p => p.Email, StringComparer.Ordinal).ToList();
+		CollectionAssert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
 	public void OrderBy_WhitespaceOnlySortExpression_ReturnsOriginal()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
@@ -4432,6 +4555,66 @@ public class EnumerableExtensionsTests
 
 		Assert.IsNotNull(splitEmptyPeople);
 
+	}
+
+	[TestMethod]
+	public void PickRandom_EmptyArray_ReturnsDefault()
+	{
+		IEnumerable<Person> emptyArray = Array.Empty<Person>();
+
+		var result = emptyArray.PickRandom();
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void PickRandom_EmptyEnumerable_ReturnsDefault()
+	{
+		var emptyEnumerable = Enumerable.Empty<Person>();
+
+		var result = emptyEnumerable.PickRandom();
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void PickRandom_EmptyList_ReturnsDefault()
+	{
+		var emptyList = new List<Person>();
+
+		var result = emptyList.PickRandom();
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void PickRandom_NonEmptyArray_ReturnsElementFromCollection()
+	{
+		IEnumerable<Person> people = RandomData.GeneratePersonRefCollection(Count).ToArray();
+
+		var result = people.PickRandom();
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(people.Contains(result));
+	}
+
+	[TestMethod]
+	public void PickRandom_NonEmptyList_ReturnsElementFromCollection()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count);
+
+		var result = people.PickRandom();
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(people.Contains(result));
+	}
+
+	[TestMethod]
+	public void PickRandom_NullCollection_ThrowsArgumentNullException()
+	{
+		IEnumerable<Person> collection = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => collection.PickRandom());
 	}
 
 	[TestMethod]

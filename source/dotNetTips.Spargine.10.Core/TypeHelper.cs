@@ -87,6 +87,7 @@ public static class TypeHelper
 	/// <summary>
 	/// Gets a read-only collection of built-in .NET types.
 	/// </summary>
+	[Information(nameof(BuiltInTypes), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> BuiltInTypes
 	{
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]

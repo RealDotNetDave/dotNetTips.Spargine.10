@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-03-2026
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -54,14 +54,106 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void BuiltinTypesTest()
+	public void BuiltInTypes_CalledTwice_ReturnsSameCount()
+	{
+		var result1 = TypeHelper.BuiltInTypes;
+		var result2 = TypeHelper.BuiltInTypes;
+
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count);
+	}
+
+	[TestMethod]
+	public void BuiltInTypes_ContainsCommonSystemTypes()
+	{
+		var result = TypeHelper.BuiltInTypes;
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains(typeof(DateTime)));
+		Assert.IsTrue(result.Contains(typeof(Guid)));
+		Assert.IsTrue(result.Contains(typeof(Uri)));
+	}
+
+	[TestMethod]
+	public void BuiltInTypes_ContainsPrimitiveTypes()
+	{
+		var result = TypeHelper.BuiltInTypes;
+
+		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains(typeof(int)));
+		Assert.IsTrue(result.Contains(typeof(bool)));
+		Assert.IsTrue(result.Contains(typeof(string)));
+		Assert.IsTrue(result.Contains(typeof(double)));
+	}
+
+	[TestMethod]
+	public void BuiltInTypes_CountIsGreaterThanOrEqualToSixteen()
 	{
 		var result = TypeHelper.BuiltInTypes;
 		result = TypeHelper.BuiltInTypes;
 
 		Assert.IsNotNull(result);
-
 		Assert.IsGreaterThanOrEqualTo(16, result.Count);
+	}
+
+	[TestMethod]
+	public void BuiltInTypes_DoesNotContainCustomType()
+	{
+		var result = TypeHelper.BuiltInTypes;
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Contains(typeof(Person)));
+	}
+
+	[TestMethod]
+	public void BuiltInTypes_ReturnsReadOnlyCollection()
+	{
+		var result = TypeHelper.BuiltInTypes;
+
+		Assert.IsNotNull(result);
+		Assert.IsInstanceOfType<ReadOnlyCollection<Type>>(result);
+	}
+
+	[TestMethod]
+	public void Create_WithEmptyParamArray_AndParameterlessConstructor_ReturnsInstance()
+	{
+		var result = TypeHelper.Create<StringBuilder>(new object[0]);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void Create_WithMismatchedParams_ThrowsMissingMethodException()
+	{
+		_ = Assert.ThrowsExactly<MissingMethodException>(() => TypeHelper.Create<Person>(12345, true));
+	}
+
+	[TestMethod]
+	public void Create_WithNullParamArray_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.Create<Person>(null));
+	}
+
+	[TestMethod]
+	public void Create_WithValidParams_ReturnsDifferentInstancesOnEachCall()
+	{
+		var result1 = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTIDTESTTEST");
+		var result2 = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTIDTESTTEST");
+
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreNotSame(result1, result2);
+	}
+
+	[TestMethod]
+	public void Create_WithValidParams_SetsConstructorProperties()
+	{
+		var result = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTIDTESTTEST");
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual("DOTNETDAVE@LIVE.COM", result.Email);
+		Assert.AreEqual("TESTIDTESTTEST", result.Id);
 	}
 
 	[TestMethod]
@@ -78,12 +170,6 @@ public class TypeHelperTests : UnitTester
 		var result = TypeHelper.Create<Person>("DOTNETDAVE@LIVE.COM", "TESTIDTESTTEST");
 
 		Assert.IsNotNull(result);
-	}
-
-	[TestMethod]
-	public void Create_WithNullParamArray_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.Create<Person>(null));
 	}
 
 	[TestMethod]
@@ -831,6 +917,22 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void GetAllProperties_CachingWorks_ReturnsSameResults()
+	{
+		// Arrange
+		var type = typeof(Person);
+
+		// Act - Call twice
+		var result1 = TypeHelper.GetAllProperties(type).ToList();
+		var result2 = TypeHelper.GetAllProperties(type).ToList();
+
+		// Assert
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count);
+	}
+
+	[TestMethod]
 	public void GetAllProperties_NullType_ThrowsArgumentNullException()
 	{
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAllProperties(null).ToList());
@@ -863,22 +965,6 @@ public class TypeHelperTests : UnitTester
 		// Assert
 		Assert.IsNotNull(properties);
 		Assert.IsFalse(properties.Any());
-	}
-
-	[TestMethod]
-	public void GetAllProperties_CachingWorks_ReturnsSameResults()
-	{
-		// Arrange
-		var type = typeof(Person);
-
-		// Act - Call twice
-		var result1 = TypeHelper.GetAllProperties(type).ToList();
-		var result2 = TypeHelper.GetAllProperties(type).ToList();
-
-		// Assert
-		Assert.IsNotNull(result1);
-		Assert.IsNotNull(result2);
-		Assert.AreEqual(result1.Count, result2.Count);
 	}
 
 	[TestMethod]
@@ -957,24 +1043,17 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetAttribute_FieldInfo_WithAttribute_ReturnsAttribute()
+	public void GetAttribute_FieldInfo_CachingWorks_ReturnsSameResult()
 	{
-		// Define a test class with a field and an attribute
 #pragma warning disable CS0612 // Type or member is obsolete
 		var field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
-
-		// Run again to hit cache
-		field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
-
 #pragma warning restore CS0612 // Type or member is obsolete
-		var attr = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
-		Assert.IsNotNull(attr);
-	}
 
-	[TestMethod]
-	public void GetAttribute_FieldInfo_Null_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((FieldInfo)null));
+		var attr1 = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
+		var attr2 = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
+
+		Assert.IsNotNull(attr1);
+		Assert.IsNotNull(attr2);
 	}
 
 	[TestMethod]
@@ -991,14 +1070,33 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetAttribute_FieldInfo_CachingWorks_ReturnsSameResult()
+	public void GetAttribute_FieldInfo_Null_ThrowsArgumentNullException()
 	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((FieldInfo)null));
+	}
+
+	[TestMethod]
+	public void GetAttribute_FieldInfo_WithAttribute_ReturnsAttribute()
+	{
+		// Define a test class with a field and an attribute
 #pragma warning disable CS0612 // Type or member is obsolete
 		var field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
-#pragma warning restore CS0612 // Type or member is obsolete
 
-		var attr1 = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
-		var attr2 = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
+		// Run again to hit cache
+		field = typeof(FieldWithAttributeTestClass).GetField(nameof(FieldWithAttributeTestClass.MarkedField));
+
+#pragma warning restore CS0612 // Type or member is obsolete
+		var attr = TypeHelper.GetAttribute<ObsoleteAttribute>(field);
+		Assert.IsNotNull(attr);
+	}
+
+	[TestMethod]
+	public void GetAttribute_MethodInfo_CachingWorks_ReturnsSameResult()
+	{
+		var method = typeof(TypeHelperTests).GetMethod(nameof(this.MethodWithObsoleteAttribute), BindingFlags.NonPublic | BindingFlags.Instance);
+
+		var attr1 = TypeHelper.GetAttribute<ObsoleteAttribute>(method);
+		var attr2 = TypeHelper.GetAttribute<ObsoleteAttribute>(method);
 
 		Assert.IsNotNull(attr1);
 		Assert.IsNotNull(attr2);
@@ -1026,12 +1124,14 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetAttribute_MethodInfo_CachingWorks_ReturnsSameResult()
+	public void GetAttribute_PropertyInfo_CachingWorks_ReturnsSameResult()
 	{
-		var method = typeof(TypeHelperTests).GetMethod(nameof(this.MethodWithObsoleteAttribute), BindingFlags.NonPublic | BindingFlags.Instance);
+#pragma warning disable CS0612 // Type or member is obsolete
+		var prop = typeof(PropertyWithAttributeTestClass).GetProperty(nameof(PropertyWithAttributeTestClass.MarkedProperty));
+#pragma warning restore CS0612 // Type or member is obsolete
 
-		var attr1 = TypeHelper.GetAttribute<ObsoleteAttribute>(method);
-		var attr2 = TypeHelper.GetAttribute<ObsoleteAttribute>(method);
+		var attr1 = TypeHelper.GetAttribute<ObsoleteAttribute>(prop);
+		var attr2 = TypeHelper.GetAttribute<ObsoleteAttribute>(prop);
 
 		Assert.IsNotNull(attr1);
 		Assert.IsNotNull(attr2);
@@ -1061,24 +1161,16 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetAttribute_PropertyInfo_CachingWorks_ReturnsSameResult()
-	{
-#pragma warning disable CS0612 // Type or member is obsolete
-		var prop = typeof(PropertyWithAttributeTestClass).GetProperty(nameof(PropertyWithAttributeTestClass.MarkedProperty));
-#pragma warning restore CS0612 // Type or member is obsolete
-
-		var attr1 = TypeHelper.GetAttribute<ObsoleteAttribute>(prop);
-		var attr2 = TypeHelper.GetAttribute<ObsoleteAttribute>(prop);
-
-		Assert.IsNotNull(attr1);
-		Assert.IsNotNull(attr2);
-	}
-
-	[TestMethod]
 	public void GetAttribute_Type_NoAttribute_ReturnsNull()
 	{
 		var attr = TypeHelper.GetAttribute<ObsoleteAttribute>(typeof(StringBuilder));
 		Assert.IsNull(attr);
+	}
+
+	[TestMethod]
+	public void GetAttribute_Type_Null_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((Type)null));
 	}
 
 	[TestMethod]
@@ -1090,12 +1182,6 @@ public class TypeHelperTests : UnitTester
 		attr = TypeHelper.GetAttribute<InformationAttribute>(typeof(TypeHelper));
 
 		Assert.IsNotNull(attr);
-	}
-
-	[TestMethod]
-	public void GetAttribute_Type_Null_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetAttribute<ObsoleteAttribute>((Type)null));
 	}
 
 	[TestMethod]
@@ -1250,6 +1336,20 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void GetInstanceHashCode_CachingWorks_ReturnsSameHashCode()
+	{
+		// Arrange
+		var obj = new { Name = "Test", Value = 42 };
+
+		// Act - Call twice to hit property cache
+		var hashCode1 = TypeHelper.GetInstanceHashCode(obj);
+		var hashCode2 = TypeHelper.GetInstanceHashCode(obj);
+
+		// Assert
+		Assert.AreEqual(hashCode1, hashCode2);
+	}
+
+	[TestMethod]
 	public void GetInstanceHashCode_EmptyObject_ReturnsHashCode()
 	{
 		// Arrange
@@ -1283,17 +1383,25 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetInstanceHashCode_CachingWorks_ReturnsSameHashCode()
+	public void GetMembersWithAttribute_CachingWorks_ReturnsSameResults()
 	{
 		// Arrange
-		var obj = new { Name = "Test", Value = 42 };
+		var type = typeof(TypeHelper);
 
-		// Act - Call twice to hit property cache
-		var hashCode1 = TypeHelper.GetInstanceHashCode(obj);
-		var hashCode2 = TypeHelper.GetInstanceHashCode(obj);
+		// Act - Call twice
+		var result1 = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type).ToList();
+		var result2 = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type).ToList();
 
 		// Assert
-		Assert.AreEqual(hashCode1, hashCode2);
+		Assert.IsNotNull(result1);
+		Assert.IsNotNull(result2);
+		Assert.AreEqual(result1.Count, result2.Count);
+	}
+
+	[TestMethod]
+	public void GetMembersWithAttribute_NullType_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetMembersWithAttribute<InformationAttribute>(null).ToList());
 	}
 
 	[TestMethod]
@@ -1322,28 +1430,6 @@ public class TypeHelperTests : UnitTester
 		// Assert
 		Assert.IsNotNull(members);
 		Assert.IsTrue(members.Any());
-	}
-
-	[TestMethod]
-	public void GetMembersWithAttribute_NullType_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetMembersWithAttribute<InformationAttribute>(null).ToList());
-	}
-
-	[TestMethod]
-	public void GetMembersWithAttribute_CachingWorks_ReturnsSameResults()
-	{
-		// Arrange
-		var type = typeof(TypeHelper);
-
-		// Act - Call twice
-		var result1 = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type).ToList();
-		var result2 = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type).ToList();
-
-		// Assert
-		Assert.IsNotNull(result1);
-		Assert.IsNotNull(result2);
-		Assert.AreEqual(result1.Count, result2.Count);
 	}
 
 	[TestMethod]
@@ -1586,16 +1672,6 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetTypeDisplayName_NullType_ThrowsArgumentNullException()
-	{
-		// Arrange
-		Type type = null;
-
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetTypeDisplayName(type));
-	}
-
-	[TestMethod]
 	public void GetTypeDisplayName_NullObject_ReturnsNull()
 	{
 		// Act
@@ -1616,13 +1692,13 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void GetTypeDisplayName_WithOptions_NullType_ThrowsArgumentNullException()
+	public void GetTypeDisplayName_NullType_ThrowsArgumentNullException()
 	{
 		// Arrange
-		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
+		Type type = null;
 
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetTypeDisplayName(null, options));
+		Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetTypeDisplayName(type));
 	}
 
 	[TestMethod]
@@ -1784,6 +1860,16 @@ public class TypeHelperTests : UnitTester
 
 		// Assert
 		Assert.AreEqual("System.Collections.Generic.Dictionary<System.Int32, System.Collections.Generic.List<System.String>>", result);
+	}
+
+	[TestMethod]
+	public void GetTypeDisplayName_WithOptions_NullType_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var options = new DisplayNameOptions(fullName: true, includeGenericParameterNames: false, includeGenericParameters: true);
+
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.GetTypeDisplayName(null, options));
 	}
 
 	[TestMethod]
@@ -2209,16 +2295,16 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void HasProperty_NullType_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.HasProperty(null, "Length"));
+	}
+
+	[TestMethod]
 	public void HasProperty_ReturnsTrueAndFalse()
 	{
 		Assert.IsTrue(TypeHelper.HasProperty(typeof(string), "Length"));
 		Assert.IsFalse(TypeHelper.HasProperty(typeof(string), "NonExistentProperty"));
-	}
-
-	[TestMethod]
-	public void HasProperty_NullType_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.HasProperty(null, "Length"));
 	}
 
 	[TestMethod]
@@ -2536,10 +2622,9 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void IsAssignableTo_ReturnsTrueAndFalse()
+	public void IsAssignableTo_NullTargetType_ThrowsArgumentNullException()
 	{
-		Assert.IsTrue(TypeHelper.IsAssignableTo(typeof(string), typeof(object)));
-		Assert.IsFalse(TypeHelper.IsAssignableTo(typeof(int), typeof(IDisposable)));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsAssignableTo(typeof(string), null));
 	}
 
 	[TestMethod]
@@ -2549,9 +2634,40 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void IsAssignableTo_NullTargetType_ThrowsArgumentNullException()
+	public void IsAssignableTo_ReturnsTrueAndFalse()
 	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsAssignableTo(typeof(string), null));
+		Assert.IsTrue(TypeHelper.IsAssignableTo(typeof(string), typeof(object)));
+		Assert.IsFalse(TypeHelper.IsAssignableTo(typeof(int), typeof(IDisposable)));
+	}
+
+	[TestMethod]
+	public void IsBuiltinType_AbstractClassFromSystemNamespace_ReturnsTrue()
+	{
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Array)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Enum)));
+	}
+
+	[TestMethod]
+	public void IsBuiltinType_EnumFromSystemNamespace_ReturnsTrue()
+	{
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(DayOfWeek)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(StringSplitOptions)));
+	}
+
+	[TestMethod]
+	public void IsBuiltinType_InterfaceFromSystemNamespace_ReturnsTrue()
+	{
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(IDisposable)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(IComparable)));
+		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(IFormattable)));
+	}
+
+	[TestMethod]
+	public void IsBuiltinType_InterfaceNotInSystemNamespace_ReturnsFalse()
+	{
+		// IEnumerable is in System.Collections, not System — not in the built-in types cache
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(IEnumerable)));
+		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(IList)));
 	}
 
 	[TestMethod]
@@ -2768,6 +2884,7 @@ public class TypeHelperTests : UnitTester
 		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Tuple)));
 		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(KeyValuePair<,>)));
 	}
+
 	[TestMethod]
 	public void IsClosedGeneric_ClosedGenericType_ReturnsTrue()
 	{
@@ -2822,19 +2939,6 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void IsEnumerable_ReturnsTrueAndFalse()
-	{
-		Assert.IsTrue(TypeHelper.IsEnumerable(typeof(List<int>)));
-		Assert.IsFalse(TypeHelper.IsEnumerable(typeof(int)));
-	}
-
-	[TestMethod]
-	public void IsEnumerable_NullType_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsEnumerable(null));
-	}
-
-	[TestMethod]
 	public void IsEnumerable_ArrayType_ReturnsTrue()
 	{
 		Assert.IsTrue(TypeHelper.IsEnumerable(typeof(int[])));
@@ -2848,11 +2952,30 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
+	public void IsEnumerable_NullType_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsEnumerable(null));
+	}
+
+	[TestMethod]
+	public void IsEnumerable_ReturnsTrueAndFalse()
+	{
+		Assert.IsTrue(TypeHelper.IsEnumerable(typeof(List<int>)));
+		Assert.IsFalse(TypeHelper.IsEnumerable(typeof(int)));
+	}
+
+	[TestMethod]
 	public void IsNullable_ReturnsTrueAndFalse()
 	{
 		Assert.IsTrue(TypeHelper.IsNullable(typeof(int?)));
 		Assert.IsFalse(TypeHelper.IsNullable(typeof(int)));
 		Assert.IsFalse(TypeHelper.IsNullable(null));
+	}
+
+	[TestMethod]
+	public void IsOpenGeneric_NullType_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsOpenGeneric(null));
 	}
 
 	[TestMethod]
@@ -2863,9 +2986,9 @@ public class TypeHelperTests : UnitTester
 	}
 
 	[TestMethod]
-	public void IsOpenGeneric_NullType_ThrowsArgumentNullException()
+	public void IsStatic_NullProperty_ThrowsArgumentNullException()
 	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsOpenGeneric(null));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsStatic(null));
 	}
 
 	[TestMethod]
@@ -2875,12 +2998,6 @@ public class TypeHelperTests : UnitTester
 		var instanceProp = typeof(StringBuilder).GetProperty("Length");
 		Assert.IsTrue(TypeHelper.IsStatic(staticProp));
 		Assert.IsFalse(TypeHelper.IsStatic(instanceProp));
-	}
-
-	[TestMethod]
-	public void IsStatic_NullProperty_ThrowsArgumentNullException()
-	{
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.IsStatic(null));
 	}
 
 	[TestMethod]

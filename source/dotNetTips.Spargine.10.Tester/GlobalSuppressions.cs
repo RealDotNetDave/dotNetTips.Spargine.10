@@ -1,5 +1,8 @@
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("DotNetTips.Spargine.Tester.Tests")]
 
 [assembly: SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.Tester.RandomData.GenerateUrlHostName~System.String")]
 [assembly: SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.Tester.RandomData.GenerateUrl~System.String")]
