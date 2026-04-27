@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-28-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -630,12 +630,13 @@ public static class FileHelper
 		ValidateFileCreateDestinationDirectory(file, destination);
 
 		var destinationPath = destination.FullName;
+		var outputFilePath = Path.Combine(destinationPath, Path.GetFileNameWithoutExtension(file.Name));
 
 		using (var gzipStream = file.OpenRead())
 		{
 			using (var expandedStream = new GZipStream(gzipStream, CompressionMode.Decompress))
 			{
-				using (var targetFileStream = File.OpenWrite(destinationPath))
+				using (var targetFileStream = File.OpenWrite(outputFilePath))
 				{
 					await expandedStream.CopyToAsync(targetFileStream, cancellationToken).ConfigureAwait(false);
 				}

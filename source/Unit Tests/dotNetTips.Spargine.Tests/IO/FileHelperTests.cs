@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="FileHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -1390,6 +1390,283 @@ public class FileHelperTests
 		Trace.WriteLine($"CopyProgressCallbackReason:{dwCallbackReason}");
 
 		return CopyProgressResult.Continue;
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFileWithProgressSameDirectoryThrowsTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var sameDir = sourceFile.Directory;
+		CopyProgressRoutine callback = new CopyProgressRoutine(CopyProgressCallback);
+
+		try
+		{
+			Assert.ThrowsExactly<InvalidOperationException>(() => FileHelper.CopyFile(sourceFile, sameDir, callback));
+		}
+		finally
+		{
+			sourceFile.Delete();
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void MoveFileSameDirectoryThrowsTest()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var destinationFile = new FileInfo(Path.Combine(sourceFile.DirectoryName!, "MoveFileSameDirectoryThrowsTest_dest.txt"));
+
+		try
+		{
+			Assert.ThrowsExactly<InvalidOperationException>(() => FileHelper.MoveFile(sourceFile, destinationFile));
+		}
+		finally
+		{
+			sourceFile.Delete();
+
+			if (destinationFile.Exists)
+			{
+				destinationFile.Delete();
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncSuccessTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncSuccessTest));
+		var sourceContentDir = Path.Combine(tempDir, "source");
+		var gzipFilePath = Path.Combine(tempDir, "test.txt.gz");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceContentDir);
+
+			var originalContent = "Hello, GZip!";
+			var originalFilePath = Path.Combine(sourceContentDir, "test.txt");
+			File.WriteAllText(originalFilePath, originalContent);
+
+			using (var sourceStream = File.OpenRead(originalFilePath))
+			using (var gzipFileStream = File.OpenWrite(gzipFilePath))
+			using (var gzipStream = new System.IO.Compression.GZipStream(gzipFileStream, System.IO.Compression.CompressionMode.Compress))
+			{
+				sourceStream.CopyTo(gzipStream);
+			}
+
+			var gzipFile = new FileInfo(gzipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnGZipAsync(gzipFile, destination);
+
+			var outputFile = Path.Combine(destinationDir, "test.txt");
+			Assert.IsTrue(File.Exists(outputFile));
+			Assert.AreEqual(originalContent, File.ReadAllText(outputFile));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncCancellationTokenTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncCancellationTokenTest));
+		var sourceContentDir = Path.Combine(tempDir, "source");
+		var gzipFilePath = Path.Combine(tempDir, "test.txt.gz");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceContentDir);
+
+			var originalFilePath = Path.Combine(sourceContentDir, "test.txt");
+			File.WriteAllText(originalFilePath, "Cancel GZip Test");
+
+			using (var sourceStream = File.OpenRead(originalFilePath))
+			using (var gzipFileStream = File.OpenWrite(gzipFilePath))
+			using (var gzipStream = new System.IO.Compression.GZipStream(gzipFileStream, System.IO.Compression.CompressionMode.Compress))
+			{
+				sourceStream.CopyTo(gzipStream);
+			}
+
+			var gzipFile = new FileInfo(gzipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+			var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			await Assert.ThrowsExactlyAsync<TaskCanceledException>(
+				() => FileHelper.UnGZipAsync(gzipFile, destination, cts.Token));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncSameDirectoryThrowsTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncSameDirectoryThrowsTest));
+
+		try
+		{
+			Directory.CreateDirectory(tempDir);
+
+			var originalFilePath = Path.Combine(tempDir, "test.txt");
+			File.WriteAllText(originalFilePath, "Same dir test");
+
+			var gzipFilePath = Path.Combine(tempDir, "test.txt.gz");
+
+			using (var sourceStream = File.OpenRead(originalFilePath))
+			using (var gzipFileStream = File.OpenWrite(gzipFilePath))
+			using (var gzipStream = new System.IO.Compression.GZipStream(gzipFileStream, System.IO.Compression.CompressionMode.Compress))
+			{
+				sourceStream.CopyTo(gzipStream);
+			}
+
+			var gzipFile = new FileInfo(gzipFilePath);
+			var sameDir = new DirectoryInfo(tempDir);
+
+			await Assert.ThrowsExactlyAsync<InvalidOperationException>(
+				() => FileHelper.UnGZipAsync(gzipFile, sameDir));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncWithDeleteTrueSuccessTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncWithDeleteTrueSuccessTest));
+		var sourceContentDir = Path.Combine(tempDir, "source");
+		var gzipFilePath = Path.Combine(tempDir, "test.txt.gz");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceContentDir);
+
+			var originalContent = "Delete GZip Test";
+			var originalFilePath = Path.Combine(sourceContentDir, "test.txt");
+			File.WriteAllText(originalFilePath, originalContent);
+
+			using (var sourceStream = File.OpenRead(originalFilePath))
+			using (var gzipFileStream = File.OpenWrite(gzipFilePath))
+			using (var gzipStream = new System.IO.Compression.GZipStream(gzipFileStream, System.IO.Compression.CompressionMode.Compress))
+			{
+				sourceStream.CopyTo(gzipStream);
+			}
+
+			var gzipFile = new FileInfo(gzipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnGZipAsync(gzipFile, destination, true);
+
+			var outputFile = Path.Combine(destinationDir, "test.txt");
+			Assert.IsTrue(File.Exists(outputFile));
+			Assert.IsFalse(File.Exists(gzipFilePath));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncWithDeleteFalseKeepsFileTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncWithDeleteFalseKeepsFileTest));
+		var sourceContentDir = Path.Combine(tempDir, "source");
+		var gzipFilePath = Path.Combine(tempDir, "test.txt.gz");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceContentDir);
+
+			var originalContent = "Keep GZip Test";
+			var originalFilePath = Path.Combine(sourceContentDir, "test.txt");
+			File.WriteAllText(originalFilePath, originalContent);
+
+			using (var sourceStream = File.OpenRead(originalFilePath))
+			using (var gzipFileStream = File.OpenWrite(gzipFilePath))
+			using (var gzipStream = new System.IO.Compression.GZipStream(gzipFileStream, System.IO.Compression.CompressionMode.Compress))
+			{
+				sourceStream.CopyTo(gzipStream);
+			}
+
+			var gzipFile = new FileInfo(gzipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnGZipAsync(gzipFile, destination, false);
+
+			var outputFile = Path.Combine(destinationDir, "test.txt");
+			Assert.IsTrue(File.Exists(outputFile));
+			Assert.IsTrue(File.Exists(gzipFilePath));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnGZipAsyncWithDeleteCancellationTokenTest()
+	{
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsyncWithDeleteCancellationTokenTest));
+		var sourceContentDir = Path.Combine(tempDir, "source");
+		var gzipFilePath = Path.Combine(tempDir, "test.txt.gz");
+		var destinationDir = Path.Combine(tempDir, "destination");
+
+		try
+		{
+			Directory.CreateDirectory(sourceContentDir);
+
+			var originalFilePath = Path.Combine(sourceContentDir, "test.txt");
+			File.WriteAllText(originalFilePath, "Cancel Delete GZip Test");
+
+			using (var sourceStream = File.OpenRead(originalFilePath))
+			using (var gzipFileStream = File.OpenWrite(gzipFilePath))
+			using (var gzipStream = new System.IO.Compression.GZipStream(gzipFileStream, System.IO.Compression.CompressionMode.Compress))
+			{
+				sourceStream.CopyTo(gzipStream);
+			}
+
+			var gzipFile = new FileInfo(gzipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+			var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			await Assert.ThrowsExactlyAsync<TaskCanceledException>(
+				() => FileHelper.UnGZipAsync(gzipFile, destination, true, cts.Token));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
 	}
 
 }
