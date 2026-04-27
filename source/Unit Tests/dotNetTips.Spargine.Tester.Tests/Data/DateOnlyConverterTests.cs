@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-14-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-14-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="DateOnlyConverterTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -190,4 +190,50 @@ public class DateOnlyConverterTests
 		// Act & Assert
 		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<DateOnly>("\"\"", options));
 	}
+
+	[TestMethod]
+	public void Constructor_ExplicitNullFormat_UsesDefaultFormat()
+	{
+		// Arrange
+		var converter = new DateOnlyConverter(null);
+		var date = new DateOnly(2025, 3, 7);
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+
+		// Act
+		var json = JsonSerializer.Serialize(date, options);
+
+		// Assert
+		Assert.AreEqual("\"2025-03-07\"", json);
+	}
+
+	[TestMethod]
+	public void Read_NullJsonValue_ThrowsJsonException()
+	{
+		// Arrange
+		var converter = new DateOnlyConverter();
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+
+		// Act & Assert
+		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<DateOnly>("null", options));
+	}
+
+	[TestMethod]
+	public void RoundTrip_WithCustomFormat_RoundTripsCorrectly()
+	{
+		// Arrange
+		var converter = new DateOnlyConverter("MM/dd/yyyy");
+		var original = new DateOnly(2025, 7, 4);
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(converter);
+
+		// Act
+		var json = JsonSerializer.Serialize(original, options);
+		var deserialized = JsonSerializer.Deserialize<DateOnly>(json, options);
+
+		// Assert
+		Assert.AreEqual(original, deserialized);
+	}
+
 }

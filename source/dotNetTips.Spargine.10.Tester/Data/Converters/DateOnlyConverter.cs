@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="DateOnlyConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -49,14 +49,14 @@ public class DateOnlyConverter(string? serializationFormat) : JsonConverter<Date
 	/// <param name="options">An object that specifies serialization options to use.</param>
 	/// <returns>The converted value.</returns>
 	/// <exception cref="JsonException">Thrown when the JSON is invalid or cannot be converted to <see cref="DateOnly"/>.</exception>
-	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
-		var value = reader.GetString();
+		var value = reader.GetString() ?? throw new JsonException(Resources.ErrorDateTextIsNullOrEmpty);
 
 		try
 		{
-			return DateOnly.Parse(value!, IsoDateTimeOffsetConverter.Singleton.Culture);
+			return DateOnly.Parse(value, IsoDateTimeOffsetConverter.Singleton.Culture);
 		}
 		catch (FormatException e)
 		{
@@ -73,7 +73,7 @@ public class DateOnlyConverter(string? serializationFormat) : JsonConverter<Date
 	/// <param name="value">The <see cref="DateOnly"/> value to convert to JSON.</param>
 	/// <param name="options">An object that specifies serialization options to use.</param>
 	/// <exception cref="ArgumentNullException">Thrown if the writer is null.</exception>
-	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
 	{
 		writer = writer.ArgumentNotNull();
