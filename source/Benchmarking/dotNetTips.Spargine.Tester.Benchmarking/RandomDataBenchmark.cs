@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-25-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-27-2026
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -101,6 +101,14 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(RandomData.GenerateFirstName))]
+	public void GenerateFirstName()
+	{
+		var result = RandomData.GenerateFirstName();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(RandomData.GenerateInteger))]
 	public void GenerateInteger()
 	{
@@ -113,6 +121,14 @@ public class RandomDataBenchmark : Benchmark
 	public void GenerateKey()
 	{
 		var result = RandomData.GenerateKey();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateLastName))]
+	public void GenerateLastName()
+	{
+		var result = RandomData.GenerateLastName();
 
 		this.Consume(result);
 	}
