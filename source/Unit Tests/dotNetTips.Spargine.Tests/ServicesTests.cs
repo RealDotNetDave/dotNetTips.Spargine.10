@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.ServiceProcess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -127,7 +128,15 @@ public class ServicesTests
 	[TestMethod]
 	public void ServiceStatusExistingRunningServiceReturnsRunning()
 	{
-		var status = ServiceHelper.ServiceStatus(ExistingServiceName);
+		var runningSvc = ServiceController.GetServices()
+			.FirstOrDefault(s => s.Status == ServiceControllerStatus.Running);
+
+		if (runningSvc is null)
+		{
+			Assert.Inconclusive("No running services found on this machine.");
+		}
+
+		var status = ServiceHelper.ServiceStatus(runningSvc.ServiceName);
 		Assert.AreEqual(ServiceControllerStatus.Running, status);
 	}
 
@@ -161,7 +170,15 @@ public class ServicesTests
 	[TestMethod]
 	public void StartServiceExistingRunningServiceReturnsError()
 	{
-		var result = ServiceHelper.StartService(ExistingServiceName);
+		var runningSvc = ServiceController.GetServices()
+			.FirstOrDefault(s => s.Status == ServiceControllerStatus.Running);
+
+		if (runningSvc is null)
+		{
+			Assert.Inconclusive("No running services found on this machine.");
+		}
+
+		var result = ServiceHelper.StartService(runningSvc.ServiceName);
 		Assert.AreEqual(ServiceActionResult.Error, result);
 	}
 
