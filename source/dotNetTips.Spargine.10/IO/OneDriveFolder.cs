@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-14-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="OneDriveFolder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,7 +20,7 @@ namespace DotNetTips.Spargine.IO;
 /// <summary>
 /// Represents a OneDrive folder, providing details such as account name, account type, directory information, and user email.
 /// </summary>
-public class OneDriveFolder
+public sealed class OneDriveFolder
 {
 
 	/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -256,9 +256,12 @@ public static class FastStringBuilder
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(Concat), "David McCarter", "2/19/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string Concat([ConstantExpected] char delimiter = ControlChars.Comma, in bool addLineFeed = false, [DisallowNull] params string[] args)
+	public static string Concat([ConstantExpected] char delimiter = ControlChars.Comma, in bool addLineFeed = false, [DisallowNull] params ReadOnlySpan<string> args)
 	{
-		args = args.ArgumentNotNull();
+		if (args.IsEmpty)
+		{
+			return ControlChars.EmptyString;
+		}
 
 		var sb = _stringBuilderPool.Get();
 

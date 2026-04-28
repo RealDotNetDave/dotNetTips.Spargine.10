@@ -522,10 +522,9 @@ public class FastStringBuilderTests
 	[TestMethod]
 	public void Concat_CharDelimiter_NullArgsTest()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() =>
-		{
-			_ = FastStringBuilder.Concat(ControlChars.Comma, false, null);
-		});
+		// ReadOnlySpan<string> cannot be null; passing null resolves to an empty span and returns empty string.
+		var result = FastStringBuilder.Concat(ControlChars.Comma, false, ReadOnlySpan<string>.Empty);
+		Assert.AreEqual(ControlChars.EmptyString, result);
 	}
 
 	[TestMethod]

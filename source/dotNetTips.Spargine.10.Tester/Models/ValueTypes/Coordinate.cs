@@ -4,7 +4,7 @@
 // Created          : 06-04-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-07-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 using DotNetTips.Spargine.Core;
@@ -46,6 +47,7 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes;
 [Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coordinate>, IComparable, IComparable<Coordinate>
 {
+	private static readonly CompositeFormat _objectIsNotType = CompositeFormat.Parse(Resources.ObjectIsNotType);
 
 	/// <summary>
 	/// Gets or sets the x coordinate.
@@ -145,7 +147,7 @@ public struct Coordinate(int x, int y, int z = 0) : ICoordinate, IEquatable<Coor
 		if (obj is not Coordinate)
 		{
 			ExceptionThrower.ThrowArgumentInvalidException(
-				string.Format(CultureInfo.CurrentCulture, Resources.ObjectIsNotType, nameof(obj), nameof(Coordinate)),
+				string.Format(CultureInfo.CurrentCulture, _objectIsNotType, nameof(obj), nameof(Coordinate)),
 				nameof(obj));
 		}
 

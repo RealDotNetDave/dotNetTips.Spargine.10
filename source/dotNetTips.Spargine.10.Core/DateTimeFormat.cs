@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="DateTimeFormat.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Core;
 /// This class extends <see cref="Enumeration"/> to offer reusable, self-documenting date and time format patterns.
 /// </remarks>
 [Information(nameof(DateTimeFormat), Status = Status.Available, Documentation = "https://bit.ly/SpargineDateTimeFormat")]
-public class DateTimeFormat : Enumeration
+public sealed class DateTimeFormat : Enumeration
 {
 	/// <summary>
 	/// Full date/time pattern (long time). Example: Monday, December 21, 2025 3:16:12 PM

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -503,7 +503,7 @@ public static class App
 	[Information(nameof(GetCultureNames), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetCultureNames(CultureTypes cultureType = CultureTypes.AllCultures)
 	{
-		return _cultureNames ??= CultureInfo.GetCultures(cultureType).OrderBy(p => p.Name).Select(c => c.Name).ToList().AsReadOnly();
+		return _cultureNames ??= new ReadOnlyCollection<string>([.. CultureInfo.GetCultures(cultureType).OrderBy(p => p.Name).Select(c => c.Name)]);
 	}
 
 	/// <summary>
@@ -617,7 +617,7 @@ public static class App
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsRunning()
 	{
-		return Process.GetProcessesByName(ProcessName).Count() > 0;
+		return Process.GetProcessesByName(ProcessName).Length > 0;
 	}
 
 	/// <summary>

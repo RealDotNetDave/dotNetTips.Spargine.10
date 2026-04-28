@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="AppInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,6 +14,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Text;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -30,17 +31,7 @@ public record AppInfo
 	/// <summary>
 	/// The application name version format
 	/// </summary>
-	private const string AppNameVersionFormat = "{0} v{1}";
-
-	/// <summary>
-	/// Names the application name and version.
-	/// </summary>
-	/// <returns>System.String.</returns>
-	[Pure]
-	public string NameAndVersion()
-	{
-		return string.Format(CultureInfo.CurrentCulture, AppNameVersionFormat, this.Product, this.Version);
-	}
+	private static readonly CompositeFormat _appNameVersionFormat = CompositeFormat.Parse("{0} v{1}");
 
 	/// <summary>
 	/// Gets the company.
@@ -142,6 +133,16 @@ public record AppInfo
 	public string? Version
 	{
 		get; init;
+	}
+
+	/// <summary>
+	/// Names the application name and version.
+	/// </summary>
+	/// <returns>System.String.</returns>
+	[Pure]
+	public string NameAndVersion()
+	{
+		return string.Format(CultureInfo.CurrentCulture, _appNameVersionFormat, this.Product, this.Version);
 	}
 
 }

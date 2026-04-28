@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-14-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-17-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="OrdinalStringComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 /// Provides a comparison for <see cref="string"/> objects using ordinal comparison.
 /// </summary>
 [Information(Status = Status.Available)]
-public class OrdinalStringComparer : IComparer<string>
+public sealed class OrdinalStringComparer : IComparer<string>
 {
 	/// <summary>
 	/// Compares two <see cref="string"/> objects using ordinal comparison.

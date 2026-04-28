@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-10-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="InternalMethods.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,6 +33,7 @@ internal static class InternalMethods
 {
 
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
+	private static readonly CompositeFormat _propertiesAggregateFormat = CompositeFormat.Parse("{0}{1}{2}{3}{4}");
 
 	[Pure]
 	[return: NotNull]
@@ -206,7 +207,7 @@ internal static class InternalMethods
 
 		var properties = PropertiesToDictionary(obj, memberName: typeName, ignoreNulls: ignoreNulls);
 
-		var result = properties.Aggregate(header, (acc, pair) => string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}{4}", acc, sequenceSeparator, pair.Key, keyValueSeparator, pair.Value));
+		var result = properties.Aggregate(header, (acc, pair) => string.Format(CultureInfo.CurrentCulture, _propertiesAggregateFormat, acc, sequenceSeparator, pair.Key, keyValueSeparator, pair.Value));
 
 		return result.StartsWith(sequenceSeparator, StringComparison.CurrentCulture) ? result[sequenceSeparator.Length..] : result;
 	}

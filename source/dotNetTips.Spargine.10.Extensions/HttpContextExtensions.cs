@@ -4,7 +4,7 @@
 // Created          : 09-04-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="HttpContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -83,7 +83,7 @@ public static class HttpContextExtensions
 		var headerValue = authorization.ToString();
 
 		return headerValue.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)
-			? headerValue.Substring("Bearer ".Length).Trim()
+			? headerValue["Bearer ".Length..].Trim()
 			: null;
 	}
 

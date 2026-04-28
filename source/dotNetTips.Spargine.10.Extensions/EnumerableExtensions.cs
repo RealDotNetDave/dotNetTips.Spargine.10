@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-26-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1452,8 +1452,8 @@ public static class EnumerableExtensions
 				return readOnlyCollection.Count == 0;
 			}
 
-			// Fallback: Enumerate to count (least efficient)
-			return collection.Count() == 0;
+			// Fallback: Enumerate to check empty (least efficient)
+			return !collection.Any();
 		}
 
 		/// <summary>
@@ -1492,13 +1492,14 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastDistinct([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			// Value types: use size-based optimization; honor comparer
 			if (typeof(T).IsValueType)
 			{
-				return (collection.Count() > 256)
+				var hasCount = collection.TryGetNonEnumeratedCount(out var valueTypeCount);
+				return (hasCount && valueTypeCount > 256)
 					? collection.Distinct(comparer)
 					: new HashSet<T>(collection, comparer);
 			}
@@ -1832,7 +1833,7 @@ public static class EnumerableExtensions
 		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddDistinct([AllowNull] params IEnumerable<T> items)
 		{
-			if ((collection == null) || (items == null) || (items.Count() == 0))
+			if ((collection == null) || (items == null) || (!items.Any()))
 			{
 				return collection ?? [];
 			}
@@ -1851,10 +1852,17 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public bool IsNotEmpty(in int count)
 		{
-			return (collection is null) ? false : (collection.Count() == count);
+			if (collection is null)
+			{
+				return false;
+			}
+
+			return collection.TryGetNonEnumeratedCount(out var collectionCount)
+				? collectionCount == count
+				: collection.LongCount() == count;
 		}
 
 		/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 01-29-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-03-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="SimpleResult.Generic.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [Information(nameof(SimpleResult), author: "David McCarter", createdOn: "6/20/2023", Status = Core.Status.Available, Documentation = "https://bit.ly/SpargineSimpleResult")]
-public class SimpleResult<T>
+public sealed class SimpleResult<T>
 {
 	private readonly DistinctConcurrentBag<Exception> _exceptions = [];
 	private readonly ILogger? _logger;
@@ -96,7 +96,7 @@ public class SimpleResult<T>
 	{
 		get
 		{
-			return this._exceptions.ToList().AsReadOnly();
+			return new ReadOnlyCollection<Exception>([.. this._exceptions]);
 		}
 	}
 
@@ -149,7 +149,7 @@ public class SimpleResult<T>
 	{
 		get
 		{
-			return this._messages.ToList().AsReadOnly();
+			return new ReadOnlyCollection<string>([.. this._messages]);
 		}
 	}
 

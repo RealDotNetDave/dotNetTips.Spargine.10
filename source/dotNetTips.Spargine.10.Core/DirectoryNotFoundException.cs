@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-28-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="DirectoryNotFoundException.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Core;
 /// </summary>
 /// <seealso cref="ISerializable" />
 [Serializable]
-public class DirectoryNotFoundException : Exception, ISerializable
+public sealed class DirectoryNotFoundException : Exception, ISerializable
 {
 
 	/// <summary>

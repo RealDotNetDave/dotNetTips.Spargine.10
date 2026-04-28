@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-26-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -237,7 +237,7 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 		// Collect items to add WITHOUT mutating yet
 		var itemsToAdd = items is ICollection<T> collection
 			? new List<T>(collection.Count)
-			: new List<T>();
+			: [];
 
 		foreach (var item in items)
 		{

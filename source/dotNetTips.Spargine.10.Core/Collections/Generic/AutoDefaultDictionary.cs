@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-03-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionary.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
 [Serializable]
 [Information("Original Code by: Simon Painter. Improvement suggested by: James Curran.", Status = Status.Available, Documentation = "https://bit.ly/SpargineAutoDefaultDictionary")]
-public class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializable, IReadOnlyDictionary<TKey, TValue>
+public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializable, IReadOnlyDictionary<TKey, TValue>
 	where TKey : notnull
 	where TValue : notnull
 {

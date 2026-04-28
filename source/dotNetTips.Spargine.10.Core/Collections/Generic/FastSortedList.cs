@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-12-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="FastSortedList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic;
 /// <typeparam name="T">The type of elements in the list.</typeparam>
 /// <seealso cref="List{T}" />
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFastSortedList")]
-public class FastSortedList<T> : List<T>
+public sealed class FastSortedList<T> : List<T>
 {
 	/// <summary>
 	/// The comparer used for sorting the list.

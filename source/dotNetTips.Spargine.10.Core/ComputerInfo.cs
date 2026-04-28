@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,6 +19,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json;
 using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Internal;
@@ -37,6 +38,8 @@ namespace DotNetTips.Spargine.Core;
 [Serializable]
 public sealed class ComputerInfo
 {
+
+	private static readonly CompositeFormat _diskUsageFormat = CompositeFormat.Parse("{0:N0} bytes free of {1:N0} bytes");
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ComputerInfo"/> class.
@@ -122,11 +125,7 @@ public sealed class ComputerInfo
 			var totalFreeSpace = drives.Sum(d => d.TotalFreeSpace);
 			var totalSize = drives.Sum(d => d.TotalSize);
 
-			return string.Format(
-				CultureInfo.CurrentCulture,
-				"{0:N0} bytes free of {1:N0} bytes",
-				totalFreeSpace,
-				totalSize);
+			return string.Format(CultureInfo.CurrentCulture, _diskUsageFormat, totalFreeSpace, totalSize);
 		}
 	}
 

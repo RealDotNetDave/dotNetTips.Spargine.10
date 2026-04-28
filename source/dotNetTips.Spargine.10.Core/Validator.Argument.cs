@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-16-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using DotNetTips.Spargine.Core.Properties;
 
@@ -36,7 +37,7 @@ public static partial class Validator
 	/// <summary>
 	/// The invalid string length format
 	/// </summary>
-	private const string InvalidStringLengthFormat = "Invalid string length. Acceptable range is between {0} and {1}.";
+	private static readonly CompositeFormat _invalidStringLengthFormat = CompositeFormat.Parse("Invalid string length. Acceptable range is between {0} and {1}.");
 
 	/// <summary>
 	/// Validates that the <see cref="IEnumerable{T}" /> has a count within the specified minimum and maximum range.
@@ -56,7 +57,12 @@ public static partial class Validator
 	{
 		input = input.ArgumentNotNull();
 
-		var count = input.Count();
+		_ = input.TryGetNonEnumeratedCount(out var count);
+
+		if (count == 0)
+		{
+			count = input.Count();
+		}
 
 		if (count < min || count > max)
 		{
@@ -473,7 +479,7 @@ public static partial class Validator
 		}
 		else if (isValid is false)
 		{
-			ExceptionThrower.ThrowArgumentOutOfRangeException(CreateExceptionMessage(errorMessage, string.Format(CultureInfo.CurrentCulture, InvalidStringLengthFormat, min, max)), paramName);
+			ExceptionThrower.ThrowArgumentOutOfRangeException(CreateExceptionMessage(errorMessage, string.Format(CultureInfo.CurrentCulture, _invalidStringLengthFormat, min, max)), paramName);
 		}
 
 		return trim ? input.Trim() : input;

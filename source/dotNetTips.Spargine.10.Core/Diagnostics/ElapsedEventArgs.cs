@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-09-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-17-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="ElapsedEventArgs.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -76,7 +76,7 @@ namespace DotNetTips.Spargine.Core.Diagnostics;
 /// <seealso cref="TimeSpan"/>
 /// <seealso cref="EventHandler{TEventArgs}"/>
 [Information(nameof(ElapsedEventArgs), "David McCarter", "05/08/2025", Status = Status.Available)]
-public class ElapsedEventArgs(TimeSpan elapsed) : EventArgs
+public sealed class ElapsedEventArgs(TimeSpan elapsed) : EventArgs
 {
 	/// <summary>
 	/// Gets the elapsed time reported by this event.

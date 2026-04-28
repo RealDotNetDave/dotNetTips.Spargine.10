@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -297,10 +297,10 @@ public static class StringExtensions
 	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input,
 		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
-		params string[] characters)
+		params ReadOnlySpan<string> characters)
 	{
 		// Suggestion from Copilot turned out to be slower
-		if (characters is null || characters.Length == 0)
+		if (characters.IsEmpty)
 		{
 			return false;
 		}

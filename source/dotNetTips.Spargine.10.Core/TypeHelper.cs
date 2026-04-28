@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -87,7 +87,7 @@ public static class TypeHelper
 	/// <summary>
 	/// Gets a read-only collection of built-in .NET types.
 	/// </summary>
-	[Information(nameof(BuiltInTypes), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BuiltInTypes), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> BuiltInTypes
 	{
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
@@ -100,8 +100,8 @@ public static class TypeHelper
 			}
 
 			return _builtInTypes == null
-				? new List<Type>().AsReadOnly()
-				: _builtInTypes.ToList().AsReadOnly();
+				? ReadOnlyCollection<Type>.Empty
+					: new ReadOnlyCollection<Type>([.. _builtInTypes]);
 		}
 	}
 
@@ -125,7 +125,7 @@ public static class TypeHelper
 	/// </example>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(BuiltInTypeNames), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BuiltInTypeNames), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static Dictionary<Type, string> BuiltInTypeNames()
 	{
 		// Check if the cache is already populated
@@ -315,7 +315,7 @@ public static class TypeHelper
 	/// <returns>A read-only collection of types that are derived from the specified base type.</returns>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<Type> FindDerivedTypes([DisallowNull] DirectoryInfo path, SearchOption fileSearchType, [DisallowNull] Type baseType, bool classOnly)
 	{
 		fileSearchType = fileSearchType.ArgumentDefined();
@@ -338,7 +338,7 @@ public static class TypeHelper
 					var assembly = Assembly.LoadFrom(fileName);
 					var exportedTypes = assembly.ExportedTypes.Where(p => p.BaseType is not null).ToImmutableArray();
 
-					if (exportedTypes.Count() > 0)
+					if (!exportedTypes.IsEmpty)
 					{
 						var containsBaseType = exportedTypes.Any(p => string.Equals(p.BaseType?.FullName, baseType.FullName, StringComparison.Ordinal));
 
@@ -1271,7 +1271,7 @@ public static class TypeHelper
 	/// <param name="item">The object to get the type display name for.</param>
 	/// <param name="fullName">If true, the full name of the type is returned; otherwise, the short name is returned.</param>
 	/// <returns>The display name of the type of the specified object.</returns>
-	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string? GetTypeDisplayName(in object item, bool fullName = true)
 	{
 		return item is null ? null : GetTypeDisplayName(item.GetType(), fullName);

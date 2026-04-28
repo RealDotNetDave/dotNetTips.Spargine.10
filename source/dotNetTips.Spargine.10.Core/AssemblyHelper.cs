@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-09-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="AssemblyHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -337,7 +337,7 @@ public static class AssemblyHelper
 			try
 			{
 				var assembly = Assembly.LoadFrom(assemblyFile.FullName);
-				var types = assembly.GetTypes().ToList().AsReadOnly();
+				var types = new ReadOnlyCollection<Type>(assembly.GetTypes());
 
 				// Add to cache with a sliding expiration of 30 minutes
 				_ = _assemblyTypeCache.Set(assemblyFile.FullName, types, new MemoryCacheEntryOptions

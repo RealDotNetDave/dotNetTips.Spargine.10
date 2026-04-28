@@ -4,7 +4,7 @@
 // Created          : 01-23-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="PersonEqualityComparer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers;
 /// <summary>
 /// Class PersonEqualityComparer.
 /// </summary>
-public class PersonEqualityComparer : IEqualityComparer<Person>
+public sealed class PersonEqualityComparer : IEqualityComparer<Person>
 {
 	/// <summary>
 	/// Determines whether the specified objects are equal.

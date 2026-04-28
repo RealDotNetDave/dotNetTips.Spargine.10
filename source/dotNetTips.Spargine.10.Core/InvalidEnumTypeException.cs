@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-27-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="InvalidEnumTypeException.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Core;
 /// </summary>
 [Serializable]
 [Information(nameof(InvalidEnumTypeException), OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-public class InvalidEnumTypeException : Exception
+public sealed class InvalidEnumTypeException : Exception
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="InvalidEnumTypeException"/> class.

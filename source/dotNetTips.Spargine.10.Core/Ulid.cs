@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-03-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,6 +16,7 @@
 // </summary>
 // ***********************************************************************
 
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -38,9 +39,10 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <summary>
 	/// A dictionary mapping Base32 characters to their integer values for decoding.
 	/// </summary>
-	private static readonly Dictionary<char, int> Base32CharToValue = Base32Chars
+	private static readonly FrozenDictionary<char, int> Base32CharToValue = Base32Chars
 	.Select((c, i) => new { c, i })
-	.ToDictionary(x => x.c, x => x.i);
+	.ToDictionary(x => x.c, x => x.i)
+	.ToFrozenDictionary();
 
 	/// <summary>
 	/// The string representation of the ULID.

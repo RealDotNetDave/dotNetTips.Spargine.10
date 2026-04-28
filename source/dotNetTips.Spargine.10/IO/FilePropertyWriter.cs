@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-25-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-15-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="FilePropertyWriter.cs" company="David McCarter - dotNetTips.com">
 //     McCarter Consulting (David McCarter)
@@ -178,12 +178,12 @@ public static class FilePropertyWriter
 	/// </para>
 	/// </remarks>
 	/// <seealso cref="SetComments(string, string)"/>
-	/// <seealso cref="SetTags(string, string[])"/>
+	/// <seealso cref="SetTags(string, ReadOnlySpan{string})"/>
 	/// <seealso cref="SetTitle(string, string)"/>
-	[Information(nameof(SetAuthors), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
-	public static void SetAuthors(string filePath, params string[] authors)
+	[Information(nameof(SetAuthors)
+	public static void SetAuthors(string filePath, params ReadOnlySpan<string> authors)
 	{
-		SetString(filePath, "System.Author", string.Join("; ", authors ?? []));
+		SetString(filePath, "System.Author", string.Join("; ", authors));
 	}
 
 	/// <summary>
@@ -276,13 +276,13 @@ public static class FilePropertyWriter
 	/// </code>
 	/// </para>
 	/// </remarks>
-	/// <seealso cref="SetAuthors(string, string[])"/>
+	/// <seealso cref="SetAuthors(string, ReadOnlySpan{string})"/>
 	/// <seealso cref="SetComments(string, string)"/>
 	/// <seealso cref="SetTitle(string, string)"/>
-	[Information(nameof(SetTags), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
-	public static void SetTags(string filePath, params string[] tags)
+	[Information(nameof(SetTags)
+	public static void SetTags(string filePath, params ReadOnlySpan<string> tags)
 	{
-		SetString(filePath, "System.Keywords", string.Join("; ", tags ?? []));
+		SetString(filePath, "System.Keywords", string.Join("; ", tags));
 	}
 
 	/// <summary>

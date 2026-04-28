@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="TimeOnlyConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Tester.Data.Converters;
 /// <summary>
 /// Provides a JSON converter for the <see cref="TimeOnly"/> type, allowing for custom serialization and deserialization.
 /// </summary>
-public class TimeOnlyConverter(string? serializationFormat) : JsonConverter<TimeOnly>
+public sealed class TimeOnlyConverter(string? serializationFormat) : JsonConverter<TimeOnly>
 {
 
 	/// <summary>

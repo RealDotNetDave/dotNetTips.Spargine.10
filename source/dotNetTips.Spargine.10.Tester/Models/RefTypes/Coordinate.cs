@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-04-2019
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Tester.Models.RefTypes;
 [Serializable]
 [XmlRoot(ElementName = "Coordinate", Namespace = "http://DotNetTips.Spargine.Tester.Models.Ref")]
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
-public class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparable, IComparable<Coordinate>
+public sealed class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparable, IComparable<Coordinate>
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Coordinate"/> class.

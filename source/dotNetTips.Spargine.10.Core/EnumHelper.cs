@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Core;
 /// adjusting naming conventions, and extracting metadata. This class cannot be inherited.
 /// </summary>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
-public static class EnumHelper
+public static partial class EnumHelper
 {
 
 	/// <summary>
@@ -45,12 +45,6 @@ public static class EnumHelper
 	/// Cache for enum items to avoid repeated reflection and processing
 	/// </summary>
 	private static readonly ConcurrentDictionary<(Type, bool), ReadOnlyCollection<EnumValue>> _itemsCache = new();
-
-	/// <summary>
-	/// Regular expression used to identify camel case words within a string.
-	/// This is used to adjust enum names to a more readable format by inserting spaces between camel case words.
-	/// </summary>
-	private static readonly Regex _titleCaseRegex = new(@"(\B[A-Z])", RegexOptions.Multiline | RegexOptions.Compiled);
 
 	/// <summary>
 	/// Gets the description of the enum value by checking multiple attributes in this order:
@@ -206,7 +200,7 @@ public static class EnumHelper
 	/// </summary>
 	/// <param name="name">The string to adjust.</param>
 	/// <returns>A string with spaces inserted before capital letters that are not at the beginning.</returns>
-	private static string AdjustCamelCase(string name) => _titleCaseRegex.Replace(name, replacement: " $1");
+	private static string AdjustCamelCase(string name) => TitleCaseRegex().Replace(name, replacement: " $1");
 
 	/// <summary>
 	/// Adjusts the name of the enumeration value by replacing underscores with spaces and applying camel case adjustment.
@@ -264,5 +258,12 @@ public static class EnumHelper
 
 		return result;
 	}
+
+	/// <summary>
+	/// Generated regular expression used to identify camel case words within a string.
+	/// </summary>
+	/// <returns>A <see cref="Regex"/> instance for camel case detection.</returns>
+	[GeneratedRegex(@"(\B[A-Z])", RegexOptions.Multiline | RegexOptions.CultureInvariant)]
+	private static partial Regex TitleCaseRegex();
 
 }

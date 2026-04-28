@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-12-2020
 //
-// Last Modified By : GitHub Copilot
-// Last Modified On : 04-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="ChannelQueue.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -233,7 +233,7 @@ public sealed class ChannelQueue<T>
 				throw new InvalidOperationException(Resources.AnErrorOccurredWhileReadingFromTheChannel, ex);
 			}
 
-			await foreach (var item in items.WithCancellation(linkedCts.Token))
+			await foreach (var item in items.WithCancellation(linkedCts.Token).ConfigureAwait(false))
 			{
 				yield return item;
 			}

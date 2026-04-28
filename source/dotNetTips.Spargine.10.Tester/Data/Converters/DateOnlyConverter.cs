@@ -4,7 +4,7 @@
 // Created          : 01-10-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="DateOnlyConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -28,7 +28,7 @@ namespace DotNetTips.Spargine.Tester.Data.Converters;
 /// Initializes a new instance of the <see cref="DateOnlyConverter"/> class with an optional serialization format.
 /// </summary>
 /// <param name="serializationFormat">The serialization format to use for <see cref="DateOnly"/> values. If null, defaults to "yyyy-MM-dd".</param>
-public class DateOnlyConverter(string? serializationFormat) : JsonConverter<DateOnly>
+public sealed class DateOnlyConverter(string? serializationFormat) : JsonConverter<DateOnly>
 {
 
 	/// <summary>

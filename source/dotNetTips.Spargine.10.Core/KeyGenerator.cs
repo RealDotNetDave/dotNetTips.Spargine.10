@@ -199,7 +199,7 @@ public static class KeyGenerator
 	/// <item><description>Validate and materialize <paramref name="items"/> into a list.</description></item>
 	/// <item><description>Optionally append a timestamp converted to a hex string via <see cref="FastStringBuilder.BytesToString(in ReadOnlySpan{byte})"/>.</description></item>
 	/// <item><description>Append a GUID-based key from <see cref="GenerateKey()"/>.</description></item>
-	/// <item><description>Concatenate all parts using <see cref="FastStringBuilder.Concat(char, in bool, string[])"/>.</description></item>
+	/// <item><description>Concatenate all parts using <see cref="FastStringBuilder.Concat(char, in bool, ReadOnlySpan{string})"/>.</description></item>
 	/// </list>
 	/// This produces human-readable, structured, and globally unique keys that are suitable for
 	/// cache keys, routing keys, partition keys, and correlation identifiers.
@@ -221,7 +221,7 @@ public static class KeyGenerator
 	/// </example>
 	/// <seealso cref="GenerateKey()"/>
 	/// <seealso cref="GenerateKey(string)"/>
-	/// <seealso cref="FastStringBuilder.Concat(char, in bool, string[])"/>
+	/// <seealso cref="FastStringBuilder.Concat(char, in bool, ReadOnlySpan{string})"/>
 	[return: NotNull]
 	[Information(nameof(GenerateCustomKey), "David McCarter", "8/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GenerateCustomKey([ConstantExpected] char separator = ControlChars.Dash, bool addTimeStamp = true, params string[] items)

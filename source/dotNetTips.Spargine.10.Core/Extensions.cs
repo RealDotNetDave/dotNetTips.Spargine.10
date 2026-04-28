@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-10-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-23-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="Extensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -310,7 +310,10 @@ internal static partial class Extensions
 	/// Then, it compares the input string with the specified value using <see cref="string.Equals(string, string, StringComparison)"/>
 	/// with <see cref="StringComparison.Ordinal"/>.
 	/// </remarks>
-	internal static bool HasValue([NotNull] this string input, [NotNull] string value) => input.HasValue() && string.Equals(input, value, StringComparison.Ordinal);
+	internal static bool HasValue([NotNull] this string input, [NotNull] string value)
+	{
+		return input.HasValue() && string.Equals(input, value, StringComparison.Ordinal);
+	}
 
 	/// <summary>
 	/// Checks if the input string matches the specified regular expression pattern.
@@ -323,7 +326,10 @@ internal static partial class Extensions
 	/// This method first checks if the input string has any value using <see cref="HasValue(string)"/> method.
 	/// Then, it creates a new <see cref="Regex"/> instance with the specified pattern and options to perform the match.
 	/// </remarks>
-	internal static bool HasValue([NotNull] this string input, [NotNull][StringSyntax(StringSyntaxAttribute.Regex)] string expression, [NotNull] RegexOptions options) => input.HasValue() && expression.HasValue() && new Regex(expression, options.ArgumentDefined()).IsMatch(input);
+	internal static bool HasValue([NotNull] this string input, [NotNull][StringSyntax(StringSyntaxAttribute.Regex)] string expression, [NotNull] RegexOptions options)
+	{
+		return input.HasValue() && expression.HasValue() && Regex.IsMatch(input, expression, options.ArgumentDefined());
+	}
 
 	/// <summary>
 	/// Checks if the input string has a value within the specified length range.
