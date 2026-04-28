@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="ServicesTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.ServiceProcess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -125,6 +126,21 @@ public class ServicesTests
 	}
 
 	[TestMethod]
+	public void ServiceStatusExistingRunningServiceReturnsRunning()
+	{
+		var runningSvc = ServiceController.GetServices()
+			.FirstOrDefault(s => s.Status == ServiceControllerStatus.Running);
+
+		if (runningSvc is null)
+		{
+			Assert.Inconclusive("No running services found on this machine.");
+		}
+
+		var status = ServiceHelper.ServiceStatus(runningSvc.ServiceName);
+		Assert.AreEqual(ServiceControllerStatus.Running, status);
+	}
+
+	[TestMethod]
 	public void ServiceStatusNonExistingServiceThrowsInvalidOperationException()
 	{
 		Assert.ThrowsExactly<InvalidOperationException>(() => ServiceHelper.ServiceStatus(NonExistingServiceName));
@@ -149,6 +165,21 @@ public class ServicesTests
 	{
 		var result = ServiceHelper.StartService(NonExistingServiceName);
 		Assert.AreEqual(ServiceActionResult.NotFound, result);
+	}
+
+	[TestMethod]
+	public void StartServiceExistingRunningServiceReturnsError()
+	{
+		var runningSvc = ServiceController.GetServices()
+			.FirstOrDefault(s => s.Status == ServiceControllerStatus.Running);
+
+		if (runningSvc is null)
+		{
+			Assert.Inconclusive("No running services found on this machine.");
+		}
+
+		var result = ServiceHelper.StartService(runningSvc.ServiceName);
+		Assert.AreEqual(ServiceActionResult.Error, result);
 	}
 
 	[TestMethod]
@@ -179,6 +210,12 @@ public class ServicesTests
 		ServiceHelper.StartServices(new List<string>());
 	}
 
+	[TestMethod]
+	public void StartServicesNullCollectionThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartServices(null!));
+	}
+
 	// ── StartStopServices ─────────────────────────────────────────────
 
 	[TestMethod]
@@ -196,6 +233,12 @@ public class ServicesTests
 		ServiceHelper.StartStopServices(requests);
 
 		Assert.AreEqual(default(ServiceActionResult), requests[0].ServiceActionResult);
+	}
+
+	[TestMethod]
+	public void StartStopServicesNullCollectionThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartStopServices(null!));
 	}
 
 	// ── StopService ───────────────────────────────────────────────────
@@ -233,5 +276,11 @@ public class ServicesTests
 	public void StopServicesEmptyCollectionDoesNotThrow()
 	{
 		ServiceHelper.StopServices(new List<string>());
+	}
+
+	[TestMethod]
+	public void StopServicesNullCollectionThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StopServices(null!));
 	}
 }
