@@ -392,7 +392,7 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 	/// </summary>
 	/// <returns>Information about the primary active network interface, or null if none found.</returns>
 	[Pure]
-	[Information(nameof(GetPrimaryNetworkInterface), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(GetPrimaryNetworkInterface), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static NetworkInterface? GetPrimaryNetworkInterface()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -425,7 +425,7 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 	/// </summary>
 	/// <returns><c>true</c> if the computer is connected to a Bluetooth network; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Update, Status = Status.Available)]
+	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsConnectedToBluetooth()
 	{
 		var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
