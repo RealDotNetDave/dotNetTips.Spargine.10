@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="LoggingHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DotNetTips.Spargine.Core.Logging;
@@ -41,6 +42,14 @@ public class LoggingHelperTests
 	}
 
 	[TestMethod]
+	public void LogAppDomainEvents_WithValidLogger_DoesNotThrow()
+	{
+		var logger = new MockLogger();
+
+		LoggingHelper.LogAppDomainEvents(logger);
+	}
+
+	[TestMethod]
 	public void LogAppDomainFirstChanceException_NullLogger_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -51,6 +60,14 @@ public class LoggingHelperTests
 	}
 
 	[TestMethod]
+	public void LogAppDomainFirstChanceException_WithValidLogger_DoesNotThrow()
+	{
+		var logger = new MockLogger();
+
+		LoggingHelper.LogAppDomainFirstChanceException(logger);
+	}
+
+	[TestMethod]
 	public void LogAppDomainUnhandledException_NullLogger_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -58,6 +75,14 @@ public class LoggingHelperTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.LogAppDomainUnhandledException(logger));
+	}
+
+	[TestMethod]
+	public void LogAppDomainUnhandledException_WithValidLogger_DoesNotThrow()
+	{
+		var logger = new MockLogger();
+
+		LoggingHelper.LogAppDomainUnhandledException(logger);
 	}
 
 	[TestMethod]
@@ -142,9 +167,34 @@ public class LoggingHelperTests
 	}
 
 	[TestMethod]
+	public void LogComputerInformation_WithEnabledLogger_LogsComputerInfoPrefix()
+	{
+		var logger = new MockLogger();
+
+		LoggingHelper.LogComputerInformation(logger);
+
+		Assert.IsTrue(logger.LoggedMessages.Any(m => m.Contains("ComputerInfo:")), "Messages should contain ComputerInfo prefix.");
+	}
+
+	[TestMethod]
 	public void LogComputerInformationTest()
 	{
 		LoggingHelper.LogComputerInformation(this._logger);
+	}
+
+	[TestMethod]
+	public void RetrieveAllExceptionMessages_DeeplyNestedExceptions_ReturnsAllMessages()
+	{
+		var innermost = new DivideByZeroException("Innermost error");
+		var inner = new ArithmeticException("Inner error", innermost);
+		var outer = new InvalidOperationException("Outer error", inner);
+
+		var result = LoggingHelper.RetrieveAllExceptionMessages(outer);
+
+		Assert.AreEqual(3, result.Count);
+		Assert.AreEqual("Outer error", result[0]);
+		Assert.AreEqual("Inner error", result[1]);
+		Assert.AreEqual("Innermost error", result[2]);
 	}
 
 	[TestMethod]
@@ -155,6 +205,16 @@ public class LoggingHelperTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.RetrieveAllExceptionMessages(exception));
+	}
+
+	[TestMethod]
+	public void RetrieveAllExceptionMessages_ReturnsReadOnlyCollection()
+	{
+		var exception = new InvalidOperationException("Test error");
+
+		var result = LoggingHelper.RetrieveAllExceptionMessages(exception);
+
+		Assert.IsInstanceOfType<ReadOnlyCollection<string>>(result);
 	}
 
 	[TestMethod]
@@ -182,6 +242,21 @@ public class LoggingHelperTests
 	}
 
 	[TestMethod]
+	public void RetrieveAllExceptions_DeeplyNestedExceptions_ReturnsAllExceptions()
+	{
+		var innermost = new DivideByZeroException("Innermost error");
+		var inner = new ArithmeticException("Inner error", innermost);
+		var outer = new InvalidOperationException("Outer error", inner);
+
+		var result = LoggingHelper.RetrieveAllExceptions(outer);
+
+		Assert.AreEqual(3, result.Count);
+		Assert.IsInstanceOfType<InvalidOperationException>(result[0]);
+		Assert.IsInstanceOfType<ArithmeticException>(result[1]);
+		Assert.IsInstanceOfType<DivideByZeroException>(result[2]);
+	}
+
+	[TestMethod]
 	public void RetrieveAllExceptions_NullException_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -189,6 +264,16 @@ public class LoggingHelperTests
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => LoggingHelper.RetrieveAllExceptions(exception));
+	}
+
+	[TestMethod]
+	public void RetrieveAllExceptions_ReturnsReadOnlyCollection()
+	{
+		var exception = new InvalidOperationException("Test error");
+
+		var result = LoggingHelper.RetrieveAllExceptions(exception);
+
+		Assert.IsInstanceOfType<ReadOnlyCollection<Exception>>(result);
 	}
 
 	[TestMethod]
