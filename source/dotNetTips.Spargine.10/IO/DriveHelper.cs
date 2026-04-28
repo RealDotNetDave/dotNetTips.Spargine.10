@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-22-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="DriveHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -99,25 +99,18 @@ public static class DriveHelper
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
 
-		// No matter what is sent in, get just the drive letter
-		var driveFixed = Path.GetPathRoot(drive)?.Replace(@"\", string.Empty, StringComparison.Ordinal);
+		// No matter what is sent in, get just the drive letter — avoid a string allocation from Replace()
+		var driveFixed = Path.GetPathRoot(drive.AsSpan()).TrimEnd('\\').ToString();
 
-		// Perform Query
-		using (var querySearch = new ManagementObjectSearcher(
-			$"SELECT VolumeSerialNumber FROM Win32_LogicalDisk Where Name = '{driveFixed}'"))
-		{
-			using (var queryCollection = querySearch.Get())
-			{
-				foreach (var driveInfo in queryCollection)
-				{
-					return Convert.ToString(
-						driveInfo.GetPropertyValue(propertyName: "VolumeSerialNumber"),
-						CultureInfo.CurrentCulture);
-				}
-			}
-		}
+		// Perform Query — LINQ eliminates the foreach branch, keeping CC = 1
+		using var querySearch = new ManagementObjectSearcher(
+			$"SELECT VolumeSerialNumber FROM Win32_LogicalDisk Where Name = '{driveFixed}'");
+		using var queryCollection = querySearch.Get();
 
-		return string.Empty;
+		return queryCollection
+			.Cast<ManagementBaseObject>()
+			.Select(obj => Convert.ToString(obj.GetPropertyValue(propertyName: "VolumeSerialNumber"), CultureInfo.CurrentCulture))
+			.FirstOrDefault() ?? string.Empty;
 	}
 
 	/// <summary>
@@ -148,7 +141,7 @@ public static class DriveHelper
 	[Information(nameof(GetFixedDrives), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetFixedDrives()
 	{
-		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).FastDistinct().ToReadOnlyCollection();
+		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).ToReadOnlyCollection();
 	}
 
 	/// <summary>
@@ -163,7 +156,7 @@ public static class DriveHelper
 	[Information(nameof(GetRemovableDrives), author: "David McCarter", createdOn: "9/6/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetRemovableDrives()
 	{
-		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Removable && p.IsReady).FastDistinct().ToReadOnlyCollection();
+		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Removable && p.IsReady).ToReadOnlyCollection();
 	}
 
 }

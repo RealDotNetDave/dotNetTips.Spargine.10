@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -102,9 +102,10 @@ public class FileProcessor
 			return 0;
 		}
 
-		files = files.RemoveNulls().FastDistinct();
+		// Materialize once to avoid double-enumeration (IsEmpty + foreach).
+		var list = files.RemoveNulls().FastDistinct().ToList();
 
-		if (files.IsEmpty())
+		if (list.Count == 0)
 		{
 			return 0;
 		}
@@ -114,56 +115,14 @@ public class FileProcessor
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
 
 		var successCount = 0;
-		var psw = new PerformanceStopwatch(nameof(this.CopyFiles));
 
-		foreach (var tempFile in files)
+		// Only allocate the stopwatch when someone is actually listening.
+		var psw = this.Processed is not null ? new PerformanceStopwatch(nameof(this.CopyFiles)) : null;
+
+		foreach (var tempFile in list)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			if (tempFile.Exists)
-			{
-				try
-				{
-					var newFileName = Path.Combine(destinationPath, tempFile.Name);
-
-					psw.Start();
-
-					_ = tempFile.CopyTo(newFileName, overwrite);
-
-					var perf = psw.StopReset();
-
-					successCount++;
-
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = Resources.FileHasBeenCopied,
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.FileCopied,
-						Size = tempFile.Length,
-						SpeedInMilliseconds = perf.TotalMilliseconds,
-					});
-				}
-				catch (Exception ex) // Report all errors
-				{
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = ex.GetAllMessages(),
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.Error,
-						Size = tempFile.Length,
-					});
-				}
-			}
-			else
-			{
-				this.OnProcessed(new ProgressEventArgs
-				{
-					Message = Resources.FileNotFound,
-					Name = tempFile.FullName,
-					ProgressState = FileProgressState.Error,
-					Size = tempFile.Length,
-				});
-			}
+			successCount += this.CopyFileItem(tempFile, destinationPath, overwrite, psw);
 		}
 
 		return successCount;
@@ -206,9 +165,10 @@ public class FileProcessor
 			return 0;
 		}
 
-		var list = files.RemoveNulls().FastDistinct();
+		// Materialize once to avoid double-enumeration (IsEmpty + foreach).
+		var list = files.RemoveNulls().FastDistinct().ToList();
 
-		if (list.IsEmpty())
+		if (list.Count == 0)
 		{
 			return 0;
 		}
@@ -219,63 +179,16 @@ public class FileProcessor
 
 		var successCount = 0;
 
-		var psw = new PerformanceStopwatch(nameof(this.CopyFilesWithOriginalPath));
+		// Only allocate the stopwatch when someone is actually listening.
+		var psw = this.Processed is not null ? new PerformanceStopwatch(nameof(this.CopyFilesWithOriginalPath)) : null;
+
+		// Track directories already created to avoid redundant filesystem stat calls.
+		var createdDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 		foreach (var tempFile in list)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			if (tempFile.Exists)
-			{
-				try
-				{
-					var newFileName = tempFile.Directory?.Root is not null
-						? new FileInfo(fileName: tempFile.FullName.Replace(tempFile.Directory.Root.FullName, destinationPath, StringComparison.InvariantCulture))
-						: throw new InvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
-
-					if (newFileName.Directory?.CheckExists() is false)
-					{
-						newFileName.Directory.Create();
-					}
-
-					psw.Start();
-
-					_ = tempFile.CopyTo(newFileName.FullName, overwrite: true);
-
-					var perf = psw.StopReset();
-
-					successCount++;
-
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = Resources.FileHasBeenCopied,
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.FileCopied,
-						Size = tempFile.Length,
-						SpeedInMilliseconds = perf.TotalMilliseconds,
-					});
-				}
-				catch (Exception ex) // Report all errors
-				{
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = ex.GetAllMessages(),
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.Error,
-						Size = tempFile.Length,
-					});
-				}
-			}
-			else
-			{
-				this.OnProcessed(new ProgressEventArgs
-				{
-					Message = Resources.FileNotFound,
-					Name = tempFile.FullName,
-					ProgressState = FileProgressState.Error,
-					Size = tempFile.Length,
-				});
-			}
+			successCount += this.CopyFileItemWithOriginalPath(tempFile, destinationPath, createdDirs, psw);
 		}
 
 		return successCount;
@@ -310,72 +223,28 @@ public class FileProcessor
 	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public int DeleteFiles(IEnumerable<FileInfo> files, CancellationToken cancellationToken = default)
 	{
-
 		if (files is null)
 		{
 			return 0;
 		}
 
-		files = files.RemoveNulls().FastDistinct();
+		// Materialize once to avoid double-enumeration (IsEmpty + foreach).
+		var list = files.RemoveNulls().FastDistinct().ToList();
 
-		if (files.IsEmpty())
+		if (list.Count == 0)
 		{
 			return 0;
 		}
 
 		var successCount = 0;
-		var psw = new PerformanceStopwatch(nameof(this.DeleteFiles));
 
-		foreach (var listItem in files)
+		// Only allocate the stopwatch when someone is actually listening.
+		var psw = this.Processed is not null ? new PerformanceStopwatch(nameof(this.DeleteFiles)) : null;
+
+		foreach (var listItem in list)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			if (listItem.Exists)
-			{
-				long fileLength = 0;
-
-				try
-				{
-					fileLength = listItem.Length;
-					FileHelper.RemoveReadOnlyAttribute(listItem);
-
-					psw.Start();
-
-					listItem.Delete();
-
-					var perf = psw.StopReset();
-
-					successCount++;
-
-					this.OnProcessed(e: new ProgressEventArgs
-					{
-						Message = Resources.FileHasBeenDeleted,
-						Name = listItem.FullName,
-						ProgressState = FileProgressState.FileDeleted,
-						Size = fileLength,
-						SpeedInMilliseconds = perf.TotalMilliseconds,
-					});
-				}
-				catch (Exception ex)  // Report all errors
-				{
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = ex.GetAllMessages(),
-						Name = listItem.FullName,
-						ProgressState = FileProgressState.Error,
-						Size = fileLength,
-					});
-				}
-			}
-			else
-			{
-				this.OnProcessed(new ProgressEventArgs
-				{
-					Message = Resources.FileNotFound,
-					Name = listItem.FullName,
-					ProgressState = FileProgressState.Error,
-				});
-			}
+			successCount += this.DeleteFileItem(listItem, psw);
 		}
 
 		return successCount;
@@ -415,70 +284,20 @@ public class FileProcessor
 			return 0;
 		}
 
-		folders = folders.RemoveNulls().FastDistinct();
+		// Materialize once to avoid double-enumeration (IsEmpty + foreach).
+		var list = folders.RemoveNulls().FastDistinct().ToList();
 
-		if (folders.IsEmpty())
+		if (list.Count == 0)
 		{
 			return 0;
 		}
 
 		var successCount = 0;
-		SimpleResult<int>? result = null;
 
-		foreach (var folder in folders)
+		foreach (var folder in list)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			if (folder.CheckExists())
-			{
-				try
-				{
-					var folderSize = folder.GetSize(searchOption: SearchOption.AllDirectories);
-
-					result = DirectoryHelper.DeleteDirectory(folder, retries: 5, recursive);
-
-					if (result.IsSuccess)
-					{
-						successCount++;
-
-						this.OnProcessed(new ProgressEventArgs
-						{
-							Message = Resources.DeletedFolder,
-							Name = folder.FullName,
-							ProgressState = FileProgressState.DirectoryDeleted,
-							Size = folderSize,
-						});
-					}
-					else
-					{
-						this.OnProcessed(new ProgressEventArgs
-						{
-							Message = result.GetErrorMessages(),
-							Name = folder.FullName,
-							ProgressState = FileProgressState.Error,
-							Size = folderSize
-						});
-					}
-				}
-				catch (Exception ex) // Report all errors including from the result.
-				{
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = $"{ex.GetAllMessages()}: {result?.GetErrorMessages()}",
-						Name = folder.FullName,
-						ProgressState = FileProgressState.Error
-					});
-				}
-			}
-			else
-			{
-				this.OnProcessed(new ProgressEventArgs
-				{
-					Message = Resources.FolderNotFound,
-					Name = folder.FullName,
-					ProgressState = FileProgressState.Error,
-				});
-			}
+			successCount += this.DeleteFolderItem(folder, recursive);
 		}
 
 		return successCount;
@@ -522,9 +341,10 @@ public class FileProcessor
 			return 0;
 		}
 
-		files = files.RemoveNulls().FastDistinct();
+		// Materialize once to avoid double-enumeration (IsEmpty + foreach).
+		var list = files.RemoveNulls().FastDistinct().ToList();
 
-		if (files.IsEmpty())
+		if (list.Count == 0)
 		{
 			return 0;
 		}
@@ -534,60 +354,14 @@ public class FileProcessor
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
 
 		var successCount = 0;
-		var psw = new PerformanceStopwatch(nameof(this.MoveFiles));
 
-		foreach (var tempFile in files)
+		// Only allocate the stopwatch when someone is actually listening.
+		var psw = this.Processed is not null ? new PerformanceStopwatch(nameof(this.MoveFiles)) : null;
+
+		foreach (var tempFile in list)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			if (tempFile.Exists)
-			{
-				long fileLength = 0;
-
-				try
-				{
-					fileLength = tempFile.Length;
-					var newFileName = Path.Combine(destinationPath, tempFile.Name);
-
-					FileHelper.RemoveReadOnlyAttribute(tempFile);
-
-					psw.Start();
-
-					tempFile.MoveTo(newFileName, overwrite);
-
-					var perf = psw.StopReset();
-
-					successCount++;
-
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = Resources.FileHasBeenMoved,
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.FileMoved,
-						Size = fileLength,
-						SpeedInMilliseconds = perf.TotalMilliseconds,
-					});
-				}
-				catch (Exception ex) // Report all errors
-				{
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = ex.GetAllMessages(),
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.Error,
-						Size = fileLength,
-					});
-				}
-			}
-			else
-			{
-				this.OnProcessed(new ProgressEventArgs
-				{
-					Message = Resources.FileNotFound,
-					Name = tempFile.FullName,
-					ProgressState = FileProgressState.Error,
-				});
-			}
+			successCount += this.MoveFileItem(tempFile, destinationPath, overwrite, psw);
 		}
 
 		return successCount;
@@ -631,9 +405,10 @@ public class FileProcessor
 			return 0;
 		}
 
-		var list = files.RemoveNulls().FastDistinct();
+		// Materialize once to avoid double-enumeration (IsEmpty + foreach).
+		var list = files.RemoveNulls().FastDistinct().ToList();
 
-		if (list.IsEmpty())
+		if (list.Count == 0)
 		{
 			return 0;
 		}
@@ -644,69 +419,16 @@ public class FileProcessor
 
 		var successCount = 0;
 
-		var psw = new PerformanceStopwatch(nameof(this.MoveFilesWithOriginalPath));
+		// Only allocate the stopwatch when someone is actually listening.
+		var psw = this.Processed is not null ? new PerformanceStopwatch(nameof(this.MoveFilesWithOriginalPath)) : null;
+
+		// Track directories already created to avoid redundant filesystem stat calls.
+		var createdDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 		foreach (var tempFile in list)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			if (tempFile.Exists)
-			{
-				long fileLength = 0;
-
-				try
-				{
-					fileLength = tempFile.Length;
-
-					var newFileName = tempFile.Directory?.Root is not null
-						? new FileInfo(fileName: tempFile.FullName.Replace(tempFile.Directory.Root.FullName, destinationPath, StringComparison.InvariantCulture))
-						: throw new InvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
-
-					if (newFileName.Directory?.CheckExists() is false)
-					{
-						newFileName.Directory.Create();
-					}
-
-					FileHelper.RemoveReadOnlyAttribute(tempFile);
-
-					psw.Start();
-
-					tempFile.MoveTo(newFileName.FullName, overwrite);
-
-					var perf = psw.StopReset();
-
-					successCount++;
-
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = Resources.FileHasBeenMoved,
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.FileMoved,
-						Size = fileLength,
-						SpeedInMilliseconds = perf.TotalMilliseconds,
-					});
-				}
-				catch (Exception ex) // Report all errors
-				{
-					// Send error.
-					this.OnProcessed(new ProgressEventArgs
-					{
-						Message = ex.GetAllMessages(),
-						Name = tempFile.FullName,
-						ProgressState = FileProgressState.Error,
-						Size = fileLength,
-					});
-				}
-			}
-			else
-			{
-				this.OnProcessed(new ProgressEventArgs
-				{
-					Message = Resources.FileNotFound,
-					Name = tempFile.FullName,
-					ProgressState = FileProgressState.Error,
-				});
-			}
+			successCount += this.MoveFileItemWithOriginalPath(tempFile, destinationPath, overwrite, createdDirs, psw);
 		}
 
 		return successCount;
@@ -717,5 +439,294 @@ public class FileProcessor
 	/// </summary>
 	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
 	protected virtual void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
+
+	/// <summary>
+	/// Copies a single <paramref name="file"/> to <paramref name="destinationPath"/>
+	/// </summary>
+	/// <param name="file">The source file to copy.</param>
+	/// <param name="destinationPath">The destination directory path (with trailing slash).</param>
+	/// <param name="overwrite">Whether to overwrite an existing destination file.</param>
+	/// <param name="psw">Optional stopwatch for timing; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>1 if the file was copied successfully; otherwise 0.</returns>
+	private int CopyFileItem(FileInfo file, string destinationPath, bool overwrite, PerformanceStopwatch? psw)
+	{
+		if (!file.Exists)
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			return 0;
+		}
+
+		try
+		{
+			var newFilePath = Path.Combine(destinationPath, file.Name);
+
+			if (!overwrite && File.Exists(newFilePath))
+			{
+				this.OnProcessed(new ProgressEventArgs { Message = Resources.FileAlreadyExists, Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+				return 0;
+			}
+
+			psw?.Start();
+
+			// Use an explicit large buffer + SequentialScan for throughput (FileInfo.CopyTo uses 4096 bytes).
+			using (var src = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan))
+			{
+				using (var dst = new FileStream(newFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan))
+				{
+					src.CopyTo(dst);
+				}
+			}
+
+			var perf = psw?.StopReset() ?? TimeSpan.Zero;
+
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenCopied, Name = file.FullName, ProgressState = FileProgressState.FileCopied, Size = file.Length, SpeedInMilliseconds = perf.TotalMilliseconds });
+			return 1;
+		}
+#pragma warning disable CA1031
+		catch (Exception ex) // Report all errors
+#pragma warning restore CA1031
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			return 0;
+		}
+	}
+
+	/// <summary>
+	/// Copies a single <paramref name="file"/> to a destination path that preserves the original relative directory structure,
+	/// raising the <see cref="Processed"/> event on success or failure.
+	/// </summary>
+	/// <param name="file">The source file to copy.</param>
+	/// <param name="destinationPath">The root destination path (with trailing slash).</param>
+	/// <param name="createdDirs">Set of already-created destination directories to avoid redundant kernel calls.</param>
+	/// <param name="psw">Optional stopwatch for timing; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>1 if the file was copied successfully; otherwise 0.</returns>
+	private int CopyFileItemWithOriginalPath(FileInfo file, string destinationPath, HashSet<string> createdDirs, PerformanceStopwatch? psw)
+	{
+		if (!file.Exists)
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			return 0;
+		}
+
+		try
+		{
+			if (file.Directory?.Root is null)
+			{
+				ExceptionThrower.ThrowInvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
+			}
+
+			// Use OrdinalIgnoreCase for Windows path replacement — InvariantCulture applies
+			// unnecessary Unicode normalization and is semantically incorrect for file paths.
+			var newFilePath = file.FullName.Replace(file.Directory!.Root.FullName, destinationPath, StringComparison.OrdinalIgnoreCase);
+			var dirPath = Path.GetDirectoryName(newFilePath)!;
+
+			if (createdDirs.Add(dirPath))
+			{
+				_ = Directory.CreateDirectory(dirPath);
+			}
+
+			psw?.Start();
+
+			// Use an explicit large buffer + SequentialScan for throughput (FileInfo.CopyTo uses 4096 bytes).
+			using (var src = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan))
+			{
+				using (var dst = new FileStream(newFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan))
+				{
+					src.CopyTo(dst);
+				}
+			}
+
+			var perf = psw?.StopReset() ?? TimeSpan.Zero;
+
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenCopied, Name = file.FullName, ProgressState = FileProgressState.FileCopied, Size = file.Length, SpeedInMilliseconds = perf.TotalMilliseconds });
+			return 1;
+		}
+#pragma warning disable CA1031
+		catch (Exception ex) // Report all errors
+#pragma warning restore CA1031
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			return 0;
+		}
+	}
+
+	/// <summary>
+	/// Deletes a single <paramref name="file"/>
+	/// </summary>
+	/// <param name="file">The file to delete.</param>
+	/// <param name="psw">Optional stopwatch for timing; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>1 if the file was deleted successfully; otherwise 0.</returns>
+	private int DeleteFileItem(FileInfo file, PerformanceStopwatch? psw)
+	{
+		if (!file.Exists)
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error });
+			return 0;
+		}
+
+		long fileLength = 0;
+
+		try
+		{
+			fileLength = file.Length;
+			FileHelper.RemoveReadOnlyAttribute(file);
+
+			psw?.Start();
+
+			file.Delete();
+
+			var perf = psw?.StopReset() ?? TimeSpan.Zero;
+
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenDeleted, Name = file.FullName, ProgressState = FileProgressState.FileDeleted, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
+			return 1;
+		}
+#pragma warning disable CA1031
+		catch (Exception ex) // Report all errors
+#pragma warning restore CA1031
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = fileLength });
+			return 0;
+		}
+	}
+
+	/// <summary>
+	/// Deletes a single <paramref name="folder"/>
+	/// </summary>
+	/// <param name="folder">The directory to delete.</param>
+	/// <param name="recursive">Whether to delete subdirectories and files recursively.</param>
+	/// <returns>1 if the folder was deleted successfully; otherwise 0.</returns>
+	private int DeleteFolderItem(DirectoryInfo folder, bool recursive)
+	{
+		if (!folder.CheckExists())
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FolderNotFound, Name = folder.FullName, ProgressState = FileProgressState.Error });
+			return 0;
+		}
+
+		SimpleResult<int>? result = null;
+
+		try
+		{
+			result = DirectoryHelper.DeleteDirectory(folder, retries: 5, recursive);
+
+			if (result.IsSuccess)
+			{
+				this.OnProcessed(new ProgressEventArgs { Message = Resources.DeletedFolder, Name = folder.FullName, ProgressState = FileProgressState.DirectoryDeleted });
+				return 1;
+			}
+
+			this.OnProcessed(new ProgressEventArgs { Message = result.GetErrorMessages(), Name = folder.FullName, ProgressState = FileProgressState.Error });
+			return 0;
+		}
+#pragma warning disable CA1031
+		catch (Exception ex) // Report all errors
+#pragma warning restore CA1031
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = $"{ex.GetAllMessages()}: {result?.GetErrorMessages()}", Name = folder.FullName, ProgressState = FileProgressState.Error });
+			return 0;
+		}
+	}
+
+	/// <summary>
+	/// Moves a single <paramref name="file"/>
+	/// </summary>
+	/// <param name="file">The source file to move.</param>
+	/// <param name="destinationPath">The destination directory path (with trailing slash).</param>
+	/// <param name="overwrite">Whether to overwrite an existing destination file.</param>
+	/// <param name="psw">Optional stopwatch for timing; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>1 if the file was moved successfully; otherwise 0.</returns>
+	private int MoveFileItem(FileInfo file, string destinationPath, bool overwrite, PerformanceStopwatch? psw)
+	{
+		if (!file.Exists)
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error });
+			return 0;
+		}
+
+		long fileLength = 0;
+
+		try
+		{
+			fileLength = file.Length;
+			var newFileName = Path.Combine(destinationPath, file.Name);
+
+			FileHelper.RemoveReadOnlyAttribute(file);
+
+			psw?.Start();
+
+			file.MoveTo(newFileName, overwrite);
+
+			var perf = psw?.StopReset() ?? TimeSpan.Zero;
+
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = file.FullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
+			return 1;
+		}
+#pragma warning disable CA1031
+		catch (Exception ex) // Report all errors
+#pragma warning restore CA1031
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = fileLength });
+			return 0;
+		}
+	}
+
+	/// <summary>
+	/// Moves a single <paramref name="file"/> to a destination path that preserves the original relative directory structure,
+	/// raising the <see cref="Processed"/> event on success or failure.
+	/// </summary>
+	/// <param name="file">The source file to move.</param>
+	/// <param name="destinationPath">The root destination path (with trailing slash).</param>
+	/// <param name="overwrite">Whether to overwrite an existing destination file.</param>
+	/// <param name="createdDirs">Set of already-created destination directories to avoid redundant kernel calls.</param>
+	/// <param name="psw">Optional stopwatch for timing; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>1 if the file was moved successfully; otherwise 0.</returns>
+	private int MoveFileItemWithOriginalPath(FileInfo file, string destinationPath, bool overwrite, HashSet<string> createdDirs, PerformanceStopwatch? psw)
+	{
+		if (!file.Exists)
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error });
+			return 0;
+		}
+
+		long fileLength = 0;
+
+		try
+		{
+			fileLength = file.Length;
+
+			if (file.Directory?.Root is null)
+			{
+				ExceptionThrower.ThrowInvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
+			}
+
+			// Use OrdinalIgnoreCase for Windows path replacement — InvariantCulture applies
+			// unnecessary Unicode normalization and is semantically incorrect for file paths.
+			var newFilePath = file.FullName.Replace(file.Directory!.Root.FullName, destinationPath, StringComparison.OrdinalIgnoreCase);
+			var dirPath = Path.GetDirectoryName(newFilePath)!;
+
+			if (createdDirs.Add(dirPath))
+			{
+				_ = Directory.CreateDirectory(dirPath);
+			}
+
+			FileHelper.RemoveReadOnlyAttribute(file);
+
+			psw?.Start();
+
+			file.MoveTo(newFilePath, overwrite);
+
+			var perf = psw?.StopReset() ?? TimeSpan.Zero;
+
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = file.FullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
+			return 1;
+		}
+#pragma warning disable CA1031
+		catch (Exception ex) // Report all errors
+#pragma warning restore CA1031
+		{
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = fileLength });
+			return 0;
+		}
+	}
 
 }

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-14-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -139,8 +139,8 @@ public static class DirectoryHelper
 			ExceptionThrower.ThrowDirectoryNotFoundException(Resources.CouldNotCreateDirectory, destination);
 		}
 
-		var files = source.GetFiles();
-		var subdirs = source.GetDirectories();
+		var files = source.EnumerateFiles();
+		var subdirs = source.EnumerateDirectories();
 
 		_ = Parallel.ForEach(files, file =>
 		{
@@ -250,60 +250,19 @@ public static class DirectoryHelper
 	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
 	{
-		const string DisplayNameKey = "DisplayName";
-		const string UserFolderKey = "UserFolder";
 		const string AccountsKey = "Accounts";
-		const string EmailKey = "UserEmail";
 
 		var folders = new List<OneDriveFolder>();
 
-		using (var oneDriveKey = RegistryHelper.GetRegistryKey(RegistryHelper.KeyCurrentUserOneDrive, RegistryHive.CurrentUser))
+		using var oneDriveKey = RegistryHelper.GetRegistryKey(RegistryHelper.KeyCurrentUserOneDrive, RegistryHive.CurrentUser);
+
+		if (oneDriveKey!.IsNotNull())
 		{
-			if (oneDriveKey!.IsNotNull())
+			using var accountKey = oneDriveKey?.GetSubKey(AccountsKey);
+
+			if (accountKey!.IsNotNull() && accountKey?.SubKeyCount > 0)
 			{
-				// Get Accounts
-				using (var accountKey = oneDriveKey?.GetSubKey(AccountsKey))
-				{
-					if (accountKey!.IsNotNull() && accountKey?.SubKeyCount > 0)
-					{
-						var subkeyCount = accountKey.GetSubKeyNames().LongLength;
-
-						for (var subKeyIndex = 0; subKeyIndex < subkeyCount; subKeyIndex++)
-						{
-							using var key = accountKey.OpenSubKey(accountKey.GetSubKeyNames()[subKeyIndex]);
-
-							var folder = new OneDriveFolder();
-							var directoryValue = key?.GetValue<string>(UserFolderKey);
-
-							if (!string.IsNullOrEmpty(directoryValue) && directoryValue.HasValue())
-							{
-								folder.DirectoryInfo = new DirectoryInfo(directoryValue);
-
-								var emailValue = key?.GetValue<string>(EmailKey);
-
-								if (emailValue!.IsNotNull())
-								{
-									folder.UserEmail = emailValue!;
-								}
-
-								// Figure out account type
-								var name = key?.GetValue<string>(DisplayNameKey);
-
-								if (!string.IsNullOrEmpty(name) && name.HasValue())
-								{
-									folder.AccountType = OneDriveAccountType.Business;
-									folder.AccountName = name;
-								}
-								else
-								{
-									folder.AccountName = OneDriveAccountType.Personal.ToString();
-								}
-
-								folders.Add(folder);
-							}
-						}
-					}
-				}
+				LoadOneDriveAccounts(accountKey!, folders);
 			}
 		}
 
@@ -361,11 +320,6 @@ public static class DirectoryHelper
 	{
 		path = path.ArgumentExists();
 
-		if (path.CheckExists() == false)
-		{
-			return;
-		}
-
 		path.Attributes &= ~attributesToRemove;
 	}
 
@@ -398,20 +352,11 @@ public static class DirectoryHelper
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
-		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = false, AttributesToSkip = FileAttributes.Hidden };
+		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = searchOption == SearchOption.AllDirectories, AttributesToSkip = FileAttributes.Hidden };
 
-		if (searchOption == SearchOption.AllDirectories)
+		foreach (var directory in path.EnumerateFiles(searchPattern, options).Select(file => file.Directory).FastDistinct())
 		{
-			options.RecurseSubdirectories = true;
-		}
-
-		var directories = path.GetFiles(searchPattern, searchOption).Select(file => file.Directory).FastDistinct().ToArray();
-
-		var itemCount = directories.LongLength;
-
-		for (var index = 0; index < itemCount; index++)
-		{
-			yield return directories[index]!;
+			yield return directory!;
 		}
 	}
 
@@ -459,32 +404,22 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="searchOption"/> is not a valid <see cref="SearchOption"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FileInfo> SafeFileSearch([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, [DisallowNull] SearchOption searchOption = SearchOption.TopDirectoryOnly)
 	{
 		directories = directories.ArgumentNotNull();
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
-		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = false, AttributesToSkip = FileAttributes.Hidden };
-
-		if (searchOption == SearchOption.AllDirectories)
-		{
-			options.RecurseSubdirectories = true;
-		}
+		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = searchOption == SearchOption.AllDirectories, AttributesToSkip = FileAttributes.Hidden };
 
 		foreach (var directory in directories)
 		{
 			if (directory.CheckExists())
 			{
-				var directoryFiles = directory.GetFiles(searchPattern, options);
-
-				if (directoryFiles.IsNotEmpty())
+				foreach (var directoryFile in directory.GetFiles(searchPattern, options))
 				{
-					foreach (var directoryFile in directoryFiles)
-					{
-						yield return directoryFile;
-					}
+					yield return directoryFile;
 				}
 			}
 		}
@@ -530,18 +465,9 @@ public static class DirectoryHelper
 		searchOption = searchOption.ArgumentDefined();
 		searchPatterns = searchPatterns.ArgumentNotNull();
 
-		//Search for directories
-		var directoryFound = searchPatterns.Any(pattern => SafeDirectorySearch(path, pattern, searchOption).IsNotEmpty());
-
-		if (directoryFound)
-		{
-			return true;
-		}
-		else
-		{
-			//Search for files
-			return searchPatterns.Any(pattern => SafeFileSearch(path, pattern, searchOption).IsNotEmpty());
-		}
+		// Search for directories first, then files
+		return searchPatterns.Any(pattern => SafeDirectorySearch(path, pattern, searchOption).IsNotEmpty())
+			|| searchPatterns.Any(pattern => SafeFileSearch(path, pattern, searchOption).IsNotEmpty());
 	}
 
 	/// <summary>
@@ -572,22 +498,88 @@ public static class DirectoryHelper
 		// Set the directory attributes to normal
 		RemoveAttributes(path, FileAttributes.ReadOnly);
 
-		var dirs = SafeDirectorySearch(path, ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
+		var enumOptions = new EnumerationOptions { IgnoreInaccessible = true, RecurseSubdirectories = true };
 
-		foreach (var dir in dirs)
+		// Single pass: handle both sub-directories and files
+		foreach (var item in path.EnumerateFileSystemInfos(ControlChars.WildcardAllFiles, enumOptions))
 		{
-			RemoveAttributes(dir, FileAttributes.ReadOnly);
+			item.Attributes = FileAttributes.Normal;
 		}
+	}
 
-		var files = SafeFileSearch(path, ControlChars.WildcardAllFiles, SearchOption.AllDirectories);
+	/// <summary>
+	/// Iterates each account sub-key under the OneDrive Accounts registry key and populates
+	/// <paramref name="folders"/> with any valid <see cref="OneDriveFolder"/> entries found.
+	/// </summary>
+	/// <param name="accountKey">The open registry key for the OneDrive Accounts node.</param>
+	/// <param name="folders">The list to which discovered folders are appended.</param>
+	[SupportedOSPlatform("windows")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(LoadOneDriveAccounts), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void LoadOneDriveAccounts(RegistryKey accountKey, List<OneDriveFolder> folders)
+	{
+		var subKeyNames = accountKey.GetSubKeyNames();
+		var subKeyCount = subKeyNames.LongLength;
 
-		// Set the path attributes to normal
-		foreach (var file in files)
+		for (var subKeyIndex = 0; subKeyIndex < subKeyCount; subKeyIndex++)
 		{
-			if (file.Exists)
+			using var key = accountKey.OpenSubKey(subKeyNames[subKeyIndex]);
+
+			var folder = ParseOneDriveFolder(key);
+
+			if (folder!.IsNotNull())
 			{
-				file.Attributes = FileAttributes.Normal;
+				folders.Add(folder!);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Reads a single OneDrive account registry key and returns a populated <see cref="OneDriveFolder"/>,
+	/// or <see langword="null"/> when the key does not contain a valid user folder path.
+	/// </summary>
+	/// <param name="key">The open registry sub-key for a single OneDrive account. May be <see langword="null"/>.</param>
+	/// <returns>A populated <see cref="OneDriveFolder"/>, or <see langword="null"/> if the key is invalid or has no user folder.</returns>
+	[SupportedOSPlatform("windows")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ParseOneDriveFolder), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static OneDriveFolder? ParseOneDriveFolder(RegistryKey? key)
+	{
+		const string DisplayNameKey = "DisplayName";
+		const string UserFolderKey = "UserFolder";
+		const string EmailKey = "UserEmail";
+
+		var directoryValue = key?.GetValue<string>(UserFolderKey);
+
+		if (string.IsNullOrEmpty(directoryValue))
+		{
+			return null;
+		}
+
+		var folder = new OneDriveFolder
+		{
+			DirectoryInfo = new DirectoryInfo(directoryValue)
+		};
+
+		var emailValue = key?.GetValue<string>(EmailKey);
+
+		if (emailValue!.IsNotNull())
+		{
+			folder.UserEmail = emailValue!;
+		}
+
+		var name = key?.GetValue<string>(DisplayNameKey);
+
+		if (!string.IsNullOrEmpty(name))
+		{
+			folder.AccountType = OneDriveAccountType.Business;
+			folder.AccountName = name;
+		}
+		else
+		{
+			folder.AccountName = OneDriveAccountType.Personal.ToString();
+		}
+
+		return folder;
 	}
 }

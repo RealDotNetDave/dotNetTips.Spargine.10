@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-23-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -57,11 +57,13 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// Asynchronously performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 	/// </summary>
 	/// <returns>A task that represents the asynchronous dispose operation.</returns>
-	[Information(nameof(IAsyncDisposable.DisposeAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	async ValueTask IAsyncDisposable.DisposeAsync()
+	[Information(nameof(IAsyncDisposable.DisposeAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	ValueTask IAsyncDisposable.DisposeAsync()
 	{
-		await Task.Run(() => this.Dispose(true)).ConfigureAwait(false);
+		// File.Delete has no native async API; synchronous disposal avoids occupying a thread-pool thread via Task.Run.
+		this.Dispose(true);
 		GC.SuppressFinalize(this);
+		return ValueTask.CompletedTask;
 	}
 
 	/// <summary>
@@ -90,32 +92,9 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 		_ = count.ArgumentInRange(min: 1);
 
 		// Avoid parallel overhead for very small counts.
-		if (count <= 2)
-		{
-			var small = new string[count];
-
-			for (var index = 0; index < count; index++)
-			{
-				var file = GenerateRandomFile();
-				small[index] = file;
-				this._files.Add(file);
-			}
-
-			return new ReadOnlyCollection<string>(small);
-		}
-
-		// Preallocate result buffer and fill by index to avoid ConcurrentBag contention.
-		var result = new string[count];
-
-		_ = Parallel.For(0, count, index =>
-		{
-			var file = GenerateRandomFile();
-			result[index] = file;
-			this._files.Add(file);
-		});
-
-		// Wrap in ReadOnlyCollection directly to avoid extra allocations/extensions.
-		return result.AsReadOnly();
+		return count <= 2
+			? this.CreateFilesSequential(count)
+			: this.CreateFilesParallel(count);
 	}
 
 	/// <summary>
@@ -125,9 +104,11 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void DeleteAllFiles()
 	{
-		var filesDeletedResult = FileHelper.DeleteFiles(this._files.ToReadOnlyCollection());
+		// Pass _files directly to avoid the ToReadOnlyCollection() intermediate allocation.
+		var snapshot = this._files.Count;
+		var filesDeletedResult = FileHelper.DeleteFiles(this._files.AsEnumerable().ToReadOnlyCollection());
 
-		if (filesDeletedResult.Value.Count == this._files.Count)
+		if (filesDeletedResult.Value.Count == snapshot)
 		{
 			this._files.Clear();
 			return;
@@ -186,23 +167,65 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <returns>The path of the created temporary file.</returns>
 	private static string GenerateRandomFile()
 	{
-		var tempFilePath = Path.Combine(Path.GetTempPath(), $"{Ulid.NewUlid()}.dntt");
+		var tempFilePath = Path.Combine(Path.GetTempPath(), string.Concat(Ulid.NewUlid().ToString(), ".dntt"));
 
 		try
 		{
-			// ToUniqueCollection the file to ensure it exists
-			File.Create(tempFilePath).Dispose();
+			// Create file and immediately release the handle.
+			using (File.Create(tempFilePath))
+			{ }
 
-			// Set to temporary file
-			FileHelper.AddAttributes(new FileInfo(tempFilePath), FileAttributes.Temporary);
+			// Set attributes directly — avoids allocating a FileInfo object.
+			File.SetAttributes(tempFilePath, File.GetAttributes(tempFilePath) | FileAttributes.Temporary);
 		}
-		catch (Exception ex)
+#pragma warning disable CA1031
+		catch (Exception ex) // Rethrow as IOException with context
+#pragma warning restore CA1031
 		{
-			// Log or handle the exception as needed
 			ExceptionThrower.ThrowIOException(Resources.FailedToCreateTemporaryFile, ex);
 		}
 
 		return tempFilePath;
+	}
+
+	/// <summary>
+	/// Creates multiple temporary files in parallel (for counts &gt; 2).
+	/// </summary>
+	/// <param name="count">The number of files to create.</param>
+	/// <returns>A read-only collection of created file paths.</returns>
+	private ReadOnlyCollection<string> CreateFilesParallel(int count)
+	{
+		// Preallocate result buffer; populate in parallel then add to _files sequentially
+		// to eliminate ConcurrentBag cross-thread contention inside the hot loop.
+		var result = new string[count];
+
+		_ = Parallel.For(0, count, index => result[index] = GenerateRandomFile());
+
+		foreach (var file in result)
+		{
+			this._files.Add(file);
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Creates multiple temporary files sequentially (for small counts ≤ 2).
+	/// </summary>
+	/// <param name="count">The number of files to create.</param>
+	/// <returns>A read-only collection of created file paths.</returns>
+	private ReadOnlyCollection<string> CreateFilesSequential(int count)
+	{
+		var small = new string[count];
+
+		for (var index = 0; index < count; index++)
+		{
+			var file = GenerateRandomFile();
+			small[index] = file;
+			this._files.Add(file);
+		}
+
+		return new ReadOnlyCollection<string>(small);
 	}
 
 	/// <summary>
@@ -214,13 +237,15 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 		var deletedSet = new HashSet<string>(files, StringComparer.OrdinalIgnoreCase);
 		var tempBag = new ConcurrentBag<string>();
 
-		_ = Parallel.ForEach(this._files, file =>
+		// Parallel overhead is not worthwhile for small file counts.
+		if (this._files.Count <= 50)
 		{
-			if (!deletedSet.Contains(file))
-			{
-				tempBag.Add(file);
-			}
-		});
+			this.FilterFilesSequential(deletedSet, tempBag);
+		}
+		else
+		{
+			this.FilterFilesParallel(deletedSet, tempBag);
+		}
 
 		this._files = tempBag;
 	}
@@ -242,5 +267,35 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 		}
 
 		this._disposed = true;
+	}
+
+	/// <summary>
+	/// Filters files in parallel, retaining those not in the deleted set.
+	/// </summary>
+	/// <param name="deletedSet">The set of deleted file paths.</param>
+	/// <param name="tempBag">The bag to add retained files to.</param>
+	private void FilterFilesParallel(HashSet<string> deletedSet, ConcurrentBag<string> tempBag) =>
+		_ = Parallel.ForEach(this._files, file =>
+		{
+			if (!deletedSet.Contains(file))
+			{
+				tempBag.Add(file);
+			}
+		});
+
+	/// <summary>
+	/// Filters files sequentially, retaining those not in the deleted set.
+	/// </summary>
+	/// <param name="deletedSet">The set of deleted file paths.</param>
+	/// <param name="tempBag">The bag to add retained files to.</param>
+	private void FilterFilesSequential(HashSet<string> deletedSet, ConcurrentBag<string> tempBag)
+	{
+		foreach (var file in this._files)
+		{
+			if (!deletedSet.Contains(file))
+			{
+				tempBag.Add(file);
+			}
+		}
 	}
 }

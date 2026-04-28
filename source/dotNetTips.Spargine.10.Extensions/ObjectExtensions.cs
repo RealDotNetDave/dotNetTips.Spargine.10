@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : GitHub Copilot
-// Last Modified On : 04-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -1230,7 +1230,7 @@ public static class ObjectExtensions
 		/// <returns>A read-only collection of interface names.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<string> GetImplementedInterfaces()
 		{
 			return TypeHelper.GetImplementedInterfaces(obj);
@@ -1242,7 +1242,7 @@ public static class ObjectExtensions
 		/// <returns>A read-only collection of interface types.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetImplementedInterfaceTypes), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetImplementedInterfaceTypes()
 		{
 			return TypeHelper.GetImplementedInterfaceTypes(obj);
@@ -1255,7 +1255,7 @@ public static class ObjectExtensions
 		/// <returns>A read-only collection of interface names.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<string> GetImplementedInterfaces(params ReadOnlyCollection<string> interfaceNames)
 		{
 			return TypeHelper.GetImplementedInterfaces(obj, interfaceNames);

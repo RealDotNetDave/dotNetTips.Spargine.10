@@ -129,6 +129,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
 - Review all methods in a test class for issues.
+- Ensure CRAP score for public and protected methods is 5 or under.
 
 ### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  

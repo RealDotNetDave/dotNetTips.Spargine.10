@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -37,7 +37,7 @@ public static class EnumExtensions
 	/// <param name="name">The string representation of the enum value to parse.</param>
 	/// <returns>An enum of type <typeparamref name="T" /> corresponding to the parsed string.</returns>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="name" /> is null or an empty string, or if it does not correspond to any value of <typeparamref name="T" />.</exception>
-	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Parse), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T Parse<T>(this string name)
 		where T : struct, Enum
 	{
@@ -62,7 +62,7 @@ public static class EnumExtensions
 		/// <remarks>
 		/// This method delegates to <see cref="EnumHelper.GetDescription(Enum)"/> and preserves any custom enum member descriptions.
 		/// </remarks>
-		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
 		public string? GetDescription()
 		{
 			return EnumHelper.GetDescription(input);

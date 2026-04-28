@@ -4,14 +4,13 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Common methods for working with files.</summary>
 // ***********************************************************************
-using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
@@ -48,11 +47,6 @@ public static class FileHelper
 	/// Represents a constant value indicating no result.
 	/// </summary>
 	private const int NoResult = -1;
-
-	/// <summary>
-	/// The number of retry attempts for file operations.
-	/// </summary>
-	private const int Retries = 10;
 
 	/// <summary>
 	/// The HTTP client used for web operations.
@@ -164,30 +158,7 @@ public static class FileHelper
 			return false;
 		}
 
-		var allow = false;
-		var deny = false;
-
-		foreach (FileSystemAccessRule rule in rules)
-		{
-			if ((rule.FileSystemRights & permission) != permission)
-			{
-				continue;
-			}
-
-			switch (rule.AccessControlType)
-			{
-				case AccessControlType.Allow:
-					allow = true;
-					break;
-				case AccessControlType.Deny:
-					deny = true;
-					break;
-				default:
-					break;
-			}
-		}
-
-		return allow && !deny;
+		return EvaluateAccessRules(rules, permission);
 	}
 
 	/// <summary>
@@ -216,23 +187,18 @@ public static class FileHelper
 
 		if (destination.CheckExists())
 		{
-			var destinationName = destination.FullName;
+			var newFileName = Path.Combine(destination.FullName, file.Name);
 
-			var newFileName = Path.Combine(destinationName, file.Name);
+			using var sourceStream = file.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
 
-			using (var sourceStream = file.Open(FileMode.Open))
+			if (File.Exists(newFileName))
 			{
-				if (File.Exists(newFileName))
-				{
-					File.Delete(newFileName);
-				}
-
-				using var destinationStream = File.Create(newFileName);
-
-				sourceStream.CopyTo(destinationStream);
-
-				destinationStream.Flush();
+				File.Delete(newFileName);
 			}
+
+			using var destinationStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan);
+
+			sourceStream.CopyTo(destinationStream);
 
 			return file.Length;
 		}
@@ -309,25 +275,17 @@ public static class FileHelper
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
 
-		var fileName = file.FullName;
+		var newFileName = Path.Combine(destination.FullName, file.Name);
 
-		var destinationName = destination.FullName;
-
-		var newFileName = Path.Combine(destinationName, file.Name);
-
-		using (var sourceStream = File.Open(fileName, FileMode.Open))
+		if (File.Exists(newFileName))
 		{
-			if (File.Exists(newFileName))
-			{
-				File.Delete(newFileName);
-			}
-
-			using (var destinationStream = File.Create(newFileName))
-			{
-				await sourceStream.CopyToAsync(destinationStream, cancellationToken).ConfigureAwait(false);
-				await destinationStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-			}
+			File.Delete(newFileName);
 		}
+
+		using var sourceStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+		using var destinationStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+		await sourceStream.CopyToAsync(destinationStream, cancellationToken).ConfigureAwait(false);
 
 		return file.Length;
 	}
@@ -350,28 +308,19 @@ public static class FileHelper
 		files = files.ArgumentNotNull();
 
 		var result = new SimpleResult<ReadOnlyCollection<string>>();
-		var filesDeleted = new ConcurrentBag<string>();
+		var filesDeleted = new List<string>(files.Count);
 
 		foreach (var fileName in files)
 		{
-			try
-			{
-				if (File.Exists(fileName))
-				{
-					File.Delete(fileName);
+			var deleted = TryDeleteFile(fileName, out var exception);
 
-					filesDeleted.Add(fileName);
-				}
-			}
-			catch (Exception ex) when (ex is ArgumentException or
-			  ArgumentNullException or
-			  System.IO.DirectoryNotFoundException or
-			  IOException or
-			  NotSupportedException or
-			  PathTooLongException or
-			  UnauthorizedAccessException)
+			if (deleted)
 			{
-				result.AddException(ex);
+				filesDeleted.Add(fileName);
+			}
+			else if (exception is not null)
+			{
+				result.AddException(exception);
 
 				if (stopOnFirstError)
 				{
@@ -380,7 +329,7 @@ public static class FileHelper
 			}
 		}
 
-		result.SetValue(new ReadOnlyCollection<string>(filesDeleted.ToList()));
+		result.SetValue(new ReadOnlyCollection<string>(filesDeleted));
 
 		return result;
 	}
@@ -451,18 +400,13 @@ public static class FileHelper
 
 		return await ExecutionHelper.ProgressiveRetryAsync(async () =>
 		{
-			using (var client = GetHttpClient())
-			{
-				using (var localStream = File.Create(pathName))
-				{
-					using (var stream = await client.GetStreamAsync(remoteUri, cancellationToken).ConfigureAwait(false))
-					{
-						await stream.CopyToAsync(localStream, cancellationToken).ConfigureAwait(false);
-					}
+			using var client = GetHttpClient();
+			// ResponseHeadersRead starts streaming immediately instead of buffering the entire response body
+			using var response = await client.GetAsync(remoteUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+			using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+			using var localStream = new FileStream(pathName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
 
-					await localStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-				}
-			}
+			await stream.CopyToAsync(localStream, cancellationToken).ConfigureAwait(false);
 		}, retryCount: 5, retryWaitMilliseconds: 50, cancellationToken: cancellationToken).ConfigureAwait(false);
 	}
 
@@ -480,7 +424,7 @@ public static class FileHelper
 	{
 		file = file.ArgumentNotNull();
 
-		return file.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != -1;
+		return file.Name.IndexOfAny([.. InvalidFileNameChars]) != -1;
 	}
 
 	/// <summary>
@@ -513,24 +457,12 @@ public static class FileHelper
 
 		ValidateFileCreateDestinationDirectory(file, destinationFile.Directory!);
 
-		for (var retryIndex = 0; retryIndex < Retries; retryIndex++)
+		for (var retryIndex = 0; retryIndex < retryCount; retryIndex++)
 		{
-			try
+			if (TryMoveFileOnce(file.FullName, destinationFile.FullName, replaceExisting))
 			{
-				File.Move(file.FullName, destinationFile.FullName, replaceExisting);
-
-				if (destinationFile.Exists)
-				{
-					return true;
-				}
-			}
-			catch (IOException) when (retryIndex < retryCount - 1)
-			{
-				//RETRY
-			}
-			catch (UnauthorizedAccessException) when (retryIndex < retryCount - 1)
-			{
-				//RETRY
+				destinationFile.Refresh();
+				return destinationFile.Exists;
 			}
 
 			// If something has a transient lock on the file waiting may resolve the issue
@@ -629,19 +561,13 @@ public static class FileHelper
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
 
-		var destinationPath = destination.FullName;
-		var outputFilePath = Path.Combine(destinationPath, Path.GetFileNameWithoutExtension(file.Name));
+		var outputFilePath = Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file.Name));
 
-		using (var gzipStream = file.OpenRead())
-		{
-			using (var expandedStream = new GZipStream(gzipStream, CompressionMode.Decompress))
-			{
-				using (var targetFileStream = File.OpenWrite(outputFilePath))
-				{
-					await expandedStream.CopyToAsync(targetFileStream, cancellationToken).ConfigureAwait(false);
-				}
-			}
-		}
+		using var gzipStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+		using var expandedStream = new GZipStream(gzipStream, CompressionMode.Decompress);
+		using var targetFileStream = new FileStream(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+		await expandedStream.CopyToAsync(targetFileStream, cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>
@@ -739,6 +665,37 @@ public static class FileHelper
 	}
 
 	/// <summary>
+	/// Evaluates the access rules for the specified permission, returning <c>true</c> if access is allowed and not denied.
+	/// </summary>
+	/// <param name="rules">The collection of <see cref="AuthorizationRuleCollection"/> access rules to evaluate.</param>
+	/// <param name="permission">The <see cref="FileSystemRights"/> permission to check.</param>
+	/// <returns><c>true</c> if the permission is explicitly allowed and not denied; otherwise, <c>false</c>.</returns>
+	private static bool EvaluateAccessRules(AuthorizationRuleCollection rules, FileSystemRights permission)
+	{
+		var allow = false;
+		var deny = false;
+
+		foreach (FileSystemAccessRule rule in rules)
+		{
+			if ((rule.FileSystemRights & permission) != permission)
+			{
+				continue;
+			}
+
+			if (rule.AccessControlType == AccessControlType.Allow)
+			{
+				allow = true;
+			}
+			else if (rule.AccessControlType == AccessControlType.Deny)
+			{
+				deny = true;
+			}
+		}
+
+		return allow && !deny;
+	}
+
+	/// <summary>
 	/// Retrieves a singleton instance of <see cref="HttpClient"/> for use in file operations.
 	/// </summary>
 	/// <returns>A singleton instance of <see cref="HttpClient"/>.</returns>
@@ -747,6 +704,59 @@ public static class FileHelper
 	/// which is a recommended practice for efficient network resource utilization.
 	/// </remarks>
 	private static HttpClient GetHttpClient() => _httpClient ??= new HttpClient();
+
+	/// <summary>
+	/// Attempts to delete a single file, returning <c>true</c> on success.
+	/// On a recognized file-system exception, the exception is returned via <paramref name="exception"/> and the method returns <c>false</c>.
+	/// </summary>
+	/// <param name="fileName">The full path of the file to delete.</param>
+	/// <param name="exception">When this method returns <c>false</c> due to an exception, contains the caught exception; otherwise <c>null</c>.</param>
+	/// <returns><c>true</c> if the file was deleted; <c>false</c> if the file did not exist or an exception occurred.</returns>
+	private static bool TryDeleteFile(string fileName, out Exception? exception)
+	{
+		exception = null;
+
+		try
+		{
+			if (!File.Exists(fileName))
+			{
+				return false;
+			}
+
+			File.Delete(fileName);
+			return true;
+		}
+		catch (Exception ex) when (ex is ArgumentException or
+			ArgumentNullException or
+			System.IO.DirectoryNotFoundException or
+			IOException or
+			NotSupportedException or
+			PathTooLongException or
+			UnauthorizedAccessException)
+		{
+			exception = ex;
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Attempts to move a file from <paramref name="sourcePath"/> to <paramref name="destinationPath"/> once,
+	/// returning <c>true</c> on success and <c>false</c> on a transient I/O or access failure.
+	/// </summary>
+	/// <param name="sourcePath">The full path of the source file.</param>
+	/// <param name="destinationPath">The full path of the destination file.</param>
+	/// <param name="replaceExisting">Whether to replace an existing destination file.</param>
+	/// <returns><c>true</c> if the move succeeded; <c>false</c> if a transient exception was caught.</returns>
+	private static bool TryMoveFileOnce(string sourcePath, string destinationPath, bool replaceExisting)
+	{
+		if (!replaceExisting && File.Exists(destinationPath))
+		{
+			throw new IOException($"Cannot move '{sourcePath}' to '{destinationPath}': destination already exists and overwrite is disabled.");
+		}
+
+		File.Move(sourcePath, destinationPath, replaceExisting);
+		return true;
+	}
 
 	/// <summary>
 	/// Asynchronously extracts the contents of a Windows compressed (zipped) folder to the specified directory.
@@ -764,10 +774,12 @@ public static class FileHelper
 	[Information(nameof(UnWinZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	private static async Task UnWinZipAsync([NotNull] string zipPath, [NotNull] string expandedDirectoryPath, CancellationToken cancellationToken = default)
 	{
-		using var zipFileStream = File.OpenRead(zipPath);
+		using var zipFileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
 		using var zipArchiveStream = new ZipArchive(zipFileStream);
 
 		var itemCount = zipArchiveStream.Entries.Count;
+		// Compute the full expanded path once — avoids a Path.GetFullPath allocation per loop iteration
+		var fullExpandedPath = Path.GetFullPath(expandedDirectoryPath);
 
 		for (var zipArchiveCount = 0; zipArchiveCount < itemCount; zipArchiveCount++)
 		{
@@ -781,20 +793,17 @@ public static class FileHelper
 			var extractedFilePath = Path.Combine(expandedDirectoryPath, zipArchiveEntry.FullName);
 
 			// Sanitize the extracted file path to prevent directory traversal attacks
-			if (!extractedFilePath.StartsWith(Path.GetFullPath(expandedDirectoryPath), StringComparison.OrdinalIgnoreCase))
+			if (!extractedFilePath.StartsWith(fullExpandedPath, StringComparison.OrdinalIgnoreCase))
 			{
 				ExceptionThrower.ThrowInvalidOperationException(Resources.ErrorInvalidFilePathZipArchive);
 			}
 
 			_ = Directory.CreateDirectory(Path.GetDirectoryName(extractedFilePath)!);
 
-			using (var zipStream = await zipArchiveEntry.OpenAsync(cancellationToken).ConfigureAwait(false))
-			{
-				using (var extractedFileStream = File.OpenWrite(extractedFilePath))
-				{
-					await zipStream.CopyToAsync(extractedFileStream, cancellationToken).ConfigureAwait(false);
-				}
-			}
+			using var zipStream = await zipArchiveEntry.OpenAsync(cancellationToken).ConfigureAwait(false);
+			using var extractedFileStream = new FileStream(extractedFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+			await zipStream.CopyToAsync(extractedFileStream, cancellationToken).ConfigureAwait(false);
 		}
 	}
 

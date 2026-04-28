@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -150,7 +150,7 @@ public static class RandomData
 	/// <value>
 	/// The long test string loaded from <see cref="Resources.LongTestString"/>.
 	/// </value>
-	[Information(nameof(GenerateWords), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(LongTestString), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string LongTestString => Resources.LongTestString;
 
 	/// <summary>
