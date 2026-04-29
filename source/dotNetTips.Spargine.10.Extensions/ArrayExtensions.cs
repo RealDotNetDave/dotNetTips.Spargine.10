@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : GitHub Copilot
-// Last Modified On : 04-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -262,12 +262,15 @@ public static class ArrayExtensions
 		/// <param name="arrayToCheck">The array to check.</param>
 		/// <returns><c>true</c> if the arrays are equal; otherwise, <c>false</c>.</returns>
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
-			return array is null || arrayToCheck is null
-				? false
-				: array.LongLength != arrayToCheck.LongLength ? false : array.AsSpan().SequenceEqual(arrayToCheck);
+			if (array is null || arrayToCheck is null)
+			{
+				return false;
+			}
+
+			return array.AsSpan().SequenceEqual(arrayToCheck);
 		}
 
 		/// <summary>
