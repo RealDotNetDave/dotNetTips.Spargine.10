@@ -170,7 +170,7 @@ public static class CountryRepository
 	/// Thrown when deserialization fails due to invalid JSON format.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.NoInlining)]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
+	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "JsonSerializer.Deserialize<Country[]> is called with a statically known type. The Country type and all its members are preserved by the application's own reference, so trimming will not remove required metadata.")]
 	private static ReadOnlyCollection<Country> DeserializeCountries()
 	{
 		try

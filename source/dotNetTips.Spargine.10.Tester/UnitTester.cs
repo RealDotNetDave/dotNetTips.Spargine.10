@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-24-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -659,7 +659,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.</exception>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
+	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "PropertiesToString uses reflection over a generic type T; T is constrained to caller-supplied types that are present at runtime, so required members are preserved.")]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName][NotNull] string methodName = ControlChars.EmptyString)
 	{

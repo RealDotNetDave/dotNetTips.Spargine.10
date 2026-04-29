@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -322,49 +322,11 @@ public static class TypeHelper
 		baseType = baseType.ArgumentNotNull();
 
 		var files = path.ArgumentExists().EnumerateFiles("*.dll", fileSearchType).ToImmutableArray();
-
-		var list = files;
 		var foundTypes = new List<Type>();
-		var itemCount = list.Length;
 
-		for (var fileIndex = 0; fileIndex < itemCount; fileIndex++)
+		for (var fileIndex = 0; fileIndex < files.Length; fileIndex++)
 		{
-			try
-			{
-				var fileName = list[fileIndex].FullName;
-
-				if (AssemblyHelper.IsDotNetAssembly(new FileInfo(fileName)))
-				{
-					var assembly = Assembly.LoadFrom(fileName);
-					var exportedTypes = assembly.ExportedTypes.Where(p => p.BaseType is not null).ToImmutableArray();
-
-					if (!exportedTypes.IsEmpty)
-					{
-						var containsBaseType = exportedTypes.Any(p => string.Equals(p.BaseType?.FullName, baseType.FullName, StringComparison.Ordinal));
-
-						if (containsBaseType)
-						{
-							foundTypes.AddRange(LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
-						}
-					}
-				}
-			}
-			catch (BadImageFormatException ex)
-			{
-				Trace.WriteLine(ex.GetAllMessages());
-			}
-			catch (FileLoadException fileLoadEx)
-			{
-				Trace.WriteLine(fileLoadEx.GetAllMessages());
-			}
-			catch (FileNotFoundException fileNotFoundEx)
-			{
-				Trace.WriteLine(fileNotFoundEx.GetAllMessages());
-			}
-			catch (TypeLoadException typeLoadEx)
-			{
-				Trace.WriteLine(typeLoadEx.GetAllMessages());
-			}
+			TryAddDerivedTypesFromFile(files[fileIndex].FullName, baseType, classOnly, foundTypes);
 		}
 
 		return foundTypes.AsReadOnly();
@@ -1162,27 +1124,9 @@ public static class TypeHelper
 			yield break;
 		}
 
-		var membersWithAttribute = new List<MemberInfo>();
+		var membersWithAttribute = CollectMembersWithAttribute<TAttribute>(type);
 
-		// Check for attributes on the type itself
-		if (Attribute.IsDefined(type, typeof(TAttribute), true))
-		{
-			membersWithAttribute.Add(type);
-		}
-
-		// Define binding flags once to avoid repetition
-		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-
-		// Check for attributes on the properties, methods, fields, and events of the type
-		foreach (var member in type.GetMembers(bindingFlags))
-		{
-			if (Attribute.IsDefined(member, typeof(TAttribute), true))
-			{
-				membersWithAttribute.Add(member);
-			}
-		}
-
-		_commonCache.AddCacheItem(cacheKey, membersWithAttribute.ToArray(), TimeSpan.FromMinutes(TimeOutMinutes));
+		_commonCache.AddCacheItem(cacheKey, membersWithAttribute, TimeSpan.FromMinutes(TimeOutMinutes));
 
 		foreach (var member in membersWithAttribute)
 		{
@@ -1222,44 +1166,19 @@ public static class TypeHelper
 
 		var type = input!.GetType();
 
-		// Get properties directly without caching
 		var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
 			.Where(p => p.CanRead)
 			.OrderBy(p => p.Name)
 			.ToArray();
 
-		// Pre-allocate dictionary with exact capacity
 		var returnValue = new Dictionary<string, string>(properties.Length);
 
-		// Process each property
 		foreach (var propertyInfo in properties.AsSpan())
 		{
-			var propertyValue = propertyInfo.GetValue(input);
-
-			if (propertyValue is null)
+			if (TryFormatPropertyValue(propertyInfo.GetValue(input), out var formatted))
 			{
-				continue;
+				returnValue[propertyInfo.Name] = formatted!;
 			}
-
-			// Handle dictionary properties
-			if (propertyValue is IDictionary dictionary)
-			{
-				if (dictionary.Count > 0)
-				{
-					returnValue[propertyInfo.Name] = dictionary.ToDelimitedString();
-				}
-				continue;
-			}
-
-			// Handle string properties (avoid ToString() allocation)
-			if (propertyValue is string stringValue)
-			{
-				returnValue[propertyInfo.Name] = stringValue;
-				continue;
-			}
-
-			// For all other types, ToString() is necessary but unavoidable
-			returnValue[propertyInfo.Name] = propertyValue.ToString()!;
 		}
 
 		return returnValue.ToReadOnlyCollection();
@@ -1744,26 +1663,9 @@ public static class TypeHelper
 		type = type.ArgumentNotNull();
 		genericArguments = genericArguments.ArgumentNotNull();
 
-		var offset = 0;
+		var offset = type.IsNested ? type.DeclaringType!.GetGenericArguments().Length : 0;
 
-		if (type.IsNested)
-		{
-			offset = type.DeclaringType!.GetGenericArguments().Length;
-		}
-
-		if (options.FullName)
-		{
-			if (type.IsNested)
-			{
-				ProcessGenericType(builder, type.DeclaringType!, genericArguments, offset, options);
-				_ = builder.Append(options.NestedTypeDelimiter);
-			}
-			else if (!string.IsNullOrEmpty(type.Namespace))
-			{
-				_ = builder.Append(type.Namespace);
-				_ = builder.Append(ControlChars.Dot);
-			}
-		}
+		AppendFullNamePrefix(builder, type, genericArguments, offset, options);
 
 		var genericPartIndex = type.Name.IndexOf('`', StringComparison.Ordinal);
 
@@ -1773,34 +1675,101 @@ public static class TypeHelper
 			return;
 		}
 
-		// Use ReadOnlySpan for substring to avoid allocations
 		_ = builder.Append(type.Name.AsSpan(0, genericPartIndex));
 
 		if (options.IncludeGenericParameters)
 		{
-			_ = builder.Append(ControlChars.StartAngleBracket);
+			AppendGenericArguments(builder, genericArguments, offset, length, options);
+		}
+	}
 
-			// Pre-calculate to avoid repeated checks in the loop
-			var lastIndex = length - 1;
+	/// <summary>
+	/// Appends the full-name prefix (namespace or parent type) for a generic type to the builder.
+	/// </summary>
+	private static void AppendFullNamePrefix(StringBuilder builder, Type type, Type[] genericArguments, int offset, DisplayNameOptions options)
+	{
+		if (!options.FullName)
+		{
+			return;
+		}
 
-			for (var typeCount = offset; typeCount < length; typeCount++)
+		if (type.IsNested)
+		{
+			ProcessGenericType(builder, type.DeclaringType!, genericArguments, offset, options);
+			_ = builder.Append(options.NestedTypeDelimiter);
+		}
+		else if (!string.IsNullOrEmpty(type.Namespace))
+		{
+			_ = builder.Append(type.Namespace);
+			_ = builder.Append(ControlChars.Dot);
+		}
+	}
+
+	/// <summary>
+	/// Appends the generic argument list (angle brackets and type names) to the builder.
+	/// </summary>
+	private static void AppendGenericArguments(StringBuilder builder, Type[] genericArguments, int offset, int length, DisplayNameOptions options)
+	{
+		_ = builder.Append(ControlChars.StartAngleBracket);
+
+		var lastIndex = length - 1;
+
+		for (var typeCount = offset; typeCount < length; typeCount++)
+		{
+			ProcessType(builder, genericArguments[typeCount], options);
+
+			if (typeCount != lastIndex)
 			{
-				ProcessType(builder, genericArguments[typeCount], options);
+				_ = builder.Append(ControlChars.Comma);
 
-				if (typeCount != lastIndex)
+				if (options.IncludeGenericParameterNames || !genericArguments[typeCount + 1].IsGenericParameter)
 				{
-					_ = builder.Append(ControlChars.Comma);
-
-					// Optimize condition by checking once instead of twice
-					if (options.IncludeGenericParameterNames || !genericArguments[typeCount + 1].IsGenericParameter)
-					{
-						_ = builder.Append(ControlChars.Space);
-					}
+					_ = builder.Append(ControlChars.Space);
 				}
 			}
-
-			_ = builder.Append(ControlChars.EndAngleBracket);
 		}
+
+		_ = builder.Append(ControlChars.EndAngleBracket);
+	}
+
+	/// <summary>
+	/// Appends the simple (non-generic, non-array) type name to the builder, applying nested-type delimiter substitution when needed.
+	/// </summary>
+	private static void AppendSimpleTypeName(StringBuilder builder, Type type, DisplayNameOptions options)
+	{
+		var name = options.FullName && type.FullName is not null ? type.FullName : type.Name;
+		_ = builder.Append(name);
+
+		if (options.NestedTypeDelimiter != ControlChars.Plus)
+		{
+			_ = builder.Replace(ControlChars.Plus, options.NestedTypeDelimiter, builder.Length - name.Length, name.Length);
+		}
+	}
+
+	/// <summary>
+	/// Collects all members of the specified type decorated with <typeparamref name="TAttribute"/>.
+	/// </summary>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	private static MemberInfo[] CollectMembersWithAttribute<TAttribute>(Type type) where TAttribute : Attribute
+	{
+		var result = new List<MemberInfo>();
+
+		if (Attribute.IsDefined(type, typeof(TAttribute), true))
+		{
+			result.Add(type);
+		}
+
+		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+		foreach (var member in type.GetMembers(bindingFlags))
+		{
+			if (Attribute.IsDefined(member, typeof(TAttribute), true))
+			{
+				result.Add(member);
+			}
+		}
+
+		return [.. result];
 	}
 
 	/// <summary>
@@ -1846,6 +1815,15 @@ public static class TypeHelper
 		_builtInTypes = builtInTypes;
 	}
 
+	/// <summary>
+	/// Determines whether the specified <see cref="TypeInfo"/> is derived from or implements <paramref name="baseType"/>.
+	/// </summary>
+	private static bool IsDerivedType([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TypeInfo type, Type baseType)
+	{
+		return baseType.IsInterface
+			? type.ImplementedInterfaces.Contains(baseType)
+			: type.IsSubclassOf(baseType);
+	}
 
 	/// <summary>
 	/// Loads types derived from a specified base type from a collection of TypeInfo objects.
@@ -1865,14 +1843,7 @@ public static class TypeHelper
 				continue;
 			}
 
-			if (baseType.IsInterface)
-			{
-				if (type.ImplementedInterfaces.Contains(baseType))
-				{
-					yield return type.AsType();
-				}
-			}
-			else if (type.IsSubclassOf(baseType))
+			if (IsDerivedType(type, baseType))
 			{
 				yield return type.AsType();
 			}
@@ -1907,13 +1878,64 @@ public static class TypeHelper
 		}
 		else
 		{
-			var name = options.FullName && type.FullName is not null ? type.FullName : type.Name;
-			_ = builder.Append(name);
+			AppendSimpleTypeName(builder, type, options);
+		}
+	}
 
-			if (options.NestedTypeDelimiter != ControlChars.Plus)
+	/// <summary>
+	/// Attempts to load a .NET assembly from the specified file and add any derived types to the list.
+	/// Silently traces and skips on format, load, or type errors.
+	/// </summary>
+	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	private static void TryAddDerivedTypesFromFile(string fileName, Type baseType, bool classOnly, List<Type> foundTypes)
+	{
+		try
+		{
+			if (!AssemblyHelper.IsDotNetAssembly(new FileInfo(fileName)))
 			{
-				_ = builder.Replace(ControlChars.Plus, options.NestedTypeDelimiter, builder.Length - name.Length, name.Length);
+				return;
+			}
+
+			var assembly = Assembly.LoadFrom(fileName);
+			var exportedTypes = assembly.ExportedTypes.Where(p => p.BaseType is not null).ToImmutableArray();
+
+			if (!exportedTypes.IsEmpty && exportedTypes.Any(p => string.Equals(p.BaseType?.FullName, baseType.FullName, StringComparison.Ordinal)))
+			{
+				foundTypes.AddRange(LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
 			}
 		}
+		catch (Exception ex) when (ex is BadImageFormatException or FileLoadException or FileNotFoundException or TypeLoadException)
+		{
+			Trace.WriteLine(ex.GetAllMessages());
+		}
+	}
+
+
+	/// <summary>
+	/// Attempts to format a property value as a string.
+	/// Returns <c>false</c> (and <paramref name="formatted"/> = <c>null</c>) when the value is null or an empty dictionary.
+	/// </summary>
+	private static bool TryFormatPropertyValue(object? value, out string? formatted)
+	{
+		if (value is null)
+		{
+			formatted = null;
+			return false;
+		}
+
+		if (value is IDictionary dictionary)
+		{
+			if (dictionary.Count == 0)
+			{
+				formatted = null;
+				return false;
+			}
+
+			formatted = dictionary.ToDelimitedString();
+			return true;
+		}
+
+		formatted = value is string s ? s : value.ToString();
+		return true;
 	}
 }
