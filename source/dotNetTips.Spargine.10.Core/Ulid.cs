@@ -355,7 +355,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	{
 		if (!Base32CharToValue.TryGetValue(c, out var value))
 		{
-			ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(Ulid));
+			ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(c));
 		}
 
 		bitBuffer = (bitBuffer << 5) | (uint)value;
