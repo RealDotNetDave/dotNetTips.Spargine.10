@@ -1286,6 +1286,19 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastDistinct_ReferenceType_NonCollectionEnumerable_UsesHashSet()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		// Use LINQ Where to produce IEnumerable<T> that is NOT ICollection<T>
+		IEnumerable<Person> nonCollectionEnumerable = people.Where(p => p is not null);
+
+		var result = nonCollectionEnumerable.FastDistinct().ToList();
+
+		Assert.HasCount(Count, result);
+	}
+
+	[TestMethod]
 	public void FastLongCount_WithPredicate_AllMatch_ReturnsFullCount()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();

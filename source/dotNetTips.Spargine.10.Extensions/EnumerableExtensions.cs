@@ -1201,8 +1201,7 @@ public static class EnumerableExtensions
 		/// <b>Performance Optimization (.NET 10):</b> This method provides optimized lookup paths based on collection type and item count:
 		/// </para>
 		/// <list type="bullet">
-		/// <item><description><see cref="ISet{T}"/> (HashSet, FrozenSet, etc.) - Uses O(1) Contains for each item (fastest path).</description></item>
-		/// <item><description><see cref="FrozenSet{T}"/> - Uses highly optimized O(1) Contains for each item.</description></item>
+		/// <item><description><see cref="ISet{T}"/> (HashSet, FrozenSet, etc.) - Uses O(1) Contains for each item (fastest path). <see cref="FrozenSet{T}"/> also matches this path because it implements <see cref="ISet{T}"/> in .NET 10.</description></item>
 		/// <item><description>Large item counts (&gt;10) + ICollection - Converts collection to HashSet once for O(1) lookups.</description></item>
 		/// <item><description>Small item counts (&lt;=10) - Uses direct Contains to avoid HashSet allocation overhead.</description></item>
 		/// <item><description>Other collections - Falls back to Contains for each item.</description></item>
@@ -1229,11 +1228,6 @@ public static class EnumerableExtensions
 			if (collection is ISet<T> set)
 			{
 				return ContainsAnyInSet(set, items);
-			}
-
-			if (collection is FrozenSet<T> frozenSet)
-			{
-				return ContainsAnyInFrozenSet(frozenSet, items);
 			}
 
 			if ((items.Count > 10) && (collection is ICollection<T> knownSizeCollection))
@@ -1909,28 +1903,6 @@ public static class EnumerableExtensions
 	}
 
 	/// <summary>
-	/// Checks whether any item in <paramref name="items"/> is contained in <paramref name="frozenSet"/>.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="frozenSet">The <see cref="FrozenSet{T}"/> to search.</param>
-	/// <param name="items">The items to look for.</param>
-	/// <returns><c>true</c> if any item is found; otherwise, <c>false</c>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool ContainsAnyInFrozenSet<T>([DisallowNull] FrozenSet<T> frozenSet, [DisallowNull] ReadOnlyCollection<T> items)
-	{
-		foreach (var item in items)
-		{
-			if (frozenSet.Contains(item))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/// <summary>
 	/// Checks whether any item in <paramref name="items"/> is contained in <paramref name="collection"/>
 	/// by first materializing the collection into a <see cref="HashSet{T}"/> for O(n+m) performance.
 	/// </summary>
@@ -2054,31 +2026,14 @@ public static class EnumerableExtensions
 	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
 	private static bool? TryIsEmptyImmutable<T>([DisallowNull] IEnumerable<T> collection)
 	{
-		if (collection is ImmutableList<T> immutableList)
+		return collection switch
 		{
-			return immutableList.IsEmpty;
-		}
-
-		if (collection is ImmutableHashSet<T> immutableHashSet)
-		{
-			return immutableHashSet.IsEmpty;
-		}
-
-		if (collection is ImmutableQueue<T> immutableQueue)
-		{
-			return immutableQueue.IsEmpty;
-		}
-
-		if (collection is ImmutableStack<T> immutableStack)
-		{
-			return immutableStack.IsEmpty;
-		}
-
-		if (collection is ImmutableSortedSet<T> immutableSortedSet)
-		{
-			return immutableSortedSet.IsEmpty;
-		}
-
-		return null;
+			ImmutableList<T> l => l.IsEmpty,
+			ImmutableHashSet<T> h => h.IsEmpty,
+			ImmutableQueue<T> q => q.IsEmpty,
+			ImmutableStack<T> s => s.IsEmpty,
+			ImmutableSortedSet<T> ss => ss.IsEmpty,
+			_ => null,
+		};
 	}
 }
