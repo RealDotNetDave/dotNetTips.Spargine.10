@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-01-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="BarCodeGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using DotNetTips.Spargine.Core.Properties;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -89,116 +90,59 @@ public static class BarcodeGenerator
 	[Information(nameof(ValidateHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static bool ValidateHmacBarcode(string barcode, IReadOnlyDictionary<string, byte[]> keysByKid, out Dictionary<string, string> fields, int macLenBytes = DefaultMacLenBytes, TimeSpan? maxSkew = null, TimeSpan? pastExpiryGrace = null)
 	{
+		barcode = barcode.ArgumentNotNullOrEmpty();
+
+		if (keysByKid is null || keysByKid.Count == 0)
+		{
+			throw new ArgumentException(Resources.AtLeastOneKeyMustBeProvided, nameof(keysByKid));
+		}
+
 		fields = new(StringComparer.OrdinalIgnoreCase);
 
-		if (barcode.CheckIsNotNullOrEmpty() != true)
+		if (!ValidateBarcodeInputs(barcode, keysByKid, macLenBytes))
 		{
 			return false;
 		}
 
-		if (keysByKid.CheckIsNotNull() != true)
+		if (!TrySplitBarcode(barcode, out var payload, out var sigPart))
 		{
 			return false;
 		}
 
-#pragma warning disable CA1062 // Validate arguments of public methods - validated by CheckIsNotNull above
-		if (keysByKid.Count == 0)
-#pragma warning restore CA1062 // Validate arguments of public methods
+		ParseFields(payload, fields);
+
+		if (!ValidateBarcodeFields(fields))
 		{
 			return false;
 		}
 
-
-		if (macLenBytes.CheckIsInRange(1, 32) == false)
+		if (!TryDecodeSignature(sigPart, out var providedSig))
 		{
 			return false;
 		}
 
-		// Split at last "|sig="
-		var sigIdx = barcode.LastIndexOf("|" + SIG + "=", StringComparison.Ordinal);
-
-		if (sigIdx < 0)
+		if (!CheckExpiry(fields, maxSkew, pastExpiryGrace))
 		{
 			return false;
 		}
 
-		var payload = barcode[..sigIdx];
-		var sigPart = barcode[(sigIdx + SIG.Length + 2)..]; // skip "|sig="
+		return VerifySignature(payload, providedSig, fields, keysByKid, macLenBytes);
+	}
 
-		// Parse k=v pairs
-		foreach (var part in payload.Split('|'))
+	/// <summary>
+	/// Checks whether the barcode has not expired given the optional skew and grace parameters.
+	/// Returns <see langword="true"/> if no expiry field is present or if the barcode is still valid.
+	/// </summary>
+	private static bool CheckExpiry(Dictionary<string, string> fields, TimeSpan? maxSkew, TimeSpan? pastExpiryGrace)
+	{
+		if (!fields.TryGetValue(EXP, out var eStr) || !long.TryParse(eStr, out var epoch))
 		{
-			var kv = part.Split('=', 2);
-			if (kv.Length == 2)
-			{
-				fields[kv[0]] = kv[1];
-			}
-		}
-
-		// Basic fields
-		if (!fields.TryGetValue(V, out var v) || v != "1")
-		{
-			return false;
+			return true;
 		}
 
-		if (!fields.TryGetValue(ALG, out var alg) || !alg.Equals(ALG_H256, StringComparison.OrdinalIgnoreCase))
-		{
-			return false;
-		}
-
-		// Decode signature
-		byte[] providedSig;
-		try
-		{
-			providedSig = Crockford32.Decode(sigPart);
-		}
-		catch (FormatException)
-		{
-			return false;
-		}
-
-		if (providedSig.Length is 0 or > 32)
-		{
-			return false;
-		}
-
-		// Optional expiry check
-		if (fields.TryGetValue(EXP, out var eStr) && long.TryParse(eStr, out var epoch))
-		{
-			var now = DateTimeOffset.UtcNow + (maxSkew ?? TimeSpan.Zero);
-			var expires = DateTimeOffset.FromUnixTimeSeconds(epoch);
-			if (expires + (pastExpiryGrace ?? TimeSpan.Zero) < now)
-			{
-				return false;
-			}
-		}
-
-		// Key selection (by kid if present, else try all)
-		IEnumerable<byte[]> candidates;
-		if (fields.TryGetValue(KID, out var kid) && keysByKid.TryGetValue(kid, out var key))
-		{
-			candidates = new[] { key };
-		}
-		else
-		{
-			candidates = keysByKid.Values;
-		}
-
-		foreach (var k in candidates)
-		{
-			var expected = ComputeHmacTruncated(payload, k, macLenBytes);
-			var n = Math.Min(expected.Length, providedSig.Length);
-			if (n == 0)
-			{
-				continue;
-			}
-
-			if (CryptographicOperations.FixedTimeEquals(expected.AsSpan(0, n), providedSig.AsSpan(0, n)))
-			{
-				return true;
-			}
-		}
-		return false;
+		var now = DateTimeOffset.UtcNow + (maxSkew ?? TimeSpan.Zero);
+		var expires = DateTimeOffset.FromUnixTimeSeconds(epoch);
+		return expires + (pastExpiryGrace ?? TimeSpan.Zero) >= now;
 	}
 
 	private static byte[] ComputeHmacTruncated(string payload, byte[] key, int macLenBytes)
@@ -216,6 +160,119 @@ public static class BarcodeGenerator
 
 		return sig;
 	}
+
+	/// <summary>
+	/// Parses pipe-delimited <c>key=value</c> pairs from the payload into <paramref name="fields"/>.
+	/// </summary>
+	private static void ParseFields(string payload, Dictionary<string, string> fields)
+	{
+		foreach (var part in payload.Split('|'))
+		{
+			var kv = part.Split('=', 2);
+			if (kv.Length == 2)
+			{
+				fields[kv[0]] = kv[1];
+			}
+		}
+	}
+
+	/// <summary>
+	/// Attempts to Crockford-decode <paramref name="sigPart"/> into a byte array.
+	/// Returns <see langword="false"/> if decoding fails or the length is invalid.
+	/// </summary>
+	private static bool TryDecodeSignature(string sigPart, out byte[] providedSig)
+	{
+		try
+		{
+			providedSig = Crockford32.Decode(sigPart);
+		}
+		catch (FormatException)
+		{
+			providedSig = [];
+			return false;
+		}
+
+		return providedSig.Length is not 0 and <= 32;
+	}
+
+	/// <summary>
+	/// Splits the barcode at the last <c>|sig=</c> separator into payload and signature parts.
+	/// </summary>
+	private static bool TrySplitBarcode(string barcode, out string payload, out string sigPart)
+	{
+		var sigIdx = barcode.LastIndexOf("|" + SIG + "=", StringComparison.Ordinal);
+
+		if (sigIdx < 0)
+		{
+			payload = string.Empty;
+			sigPart = string.Empty;
+			return false;
+		}
+
+		payload = barcode[..sigIdx];
+		sigPart = barcode[(sigIdx + SIG.Length + 2)..]; // skip "|sig="
+		return true;
+	}
+
+	/// <summary>
+	/// Validates that the required <c>v</c> and <c>alg</c> fields are present and correct.
+	/// </summary>
+	private static bool ValidateBarcodeFields(Dictionary<string, string> fields)
+	{
+		if (!fields.TryGetValue(V, out var v) || v != "1")
+		{
+			return false;
+		}
+
+		return fields.TryGetValue(ALG, out var alg) && alg.Equals(ALG_H256, StringComparison.OrdinalIgnoreCase);
+	}
+
+	/// <summary>
+	/// Validates the top-level inputs to <see cref="ValidateHmacBarcode"/>.
+	/// </summary>
+	private static bool ValidateBarcodeInputs(string? barcode, IReadOnlyDictionary<string, byte[]>? keysByKid, int macLenBytes)
+	{
+		if (string.IsNullOrEmpty(barcode))
+		{
+			return false;
+		}
+
+		if (keysByKid is null || keysByKid.Count == 0)
+		{
+			return false;
+		}
+
+		return macLenBytes.CheckIsInRange(1, 32);
+	}
+
+	/// <summary>
+	/// Verifies the HMAC signature by trying matching keys from the key ring.
+	/// </summary>
+	private static bool VerifySignature(string payload, byte[] providedSig, Dictionary<string, string> fields, IReadOnlyDictionary<string, byte[]> keysByKid, int macLenBytes)
+	{
+		IEnumerable<byte[]> candidates;
+
+		if (fields.TryGetValue(KID, out var kid) && keysByKid.TryGetValue(kid, out var key))
+		{
+			candidates = [key];
+		}
+		else
+		{
+			candidates = keysByKid.Values;
+		}
+
+		foreach (var k in candidates)
+		{
+			var expected = ComputeHmacTruncated(payload, k, macLenBytes);
+			var n = Math.Min(expected.Length, providedSig.Length);
+			if (n > 0 && CryptographicOperations.FixedTimeEquals(expected.AsSpan(0, n), providedSig.AsSpan(0, n)))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
 
 internal static class Crockford32
@@ -232,31 +289,12 @@ internal static class Crockford32
 			return [];
 		}
 
-		// Normalize: uppercase, strip hyphens/spaces, map I/L->1 and O->0
 		Span<char> norm = stackalloc char[text.Length];
-		var n = 0;
-		foreach (var ch in text)
-		{
-			if (ch is '-' or ' ')
-			{
-				continue;
-			}
-
-			var c = char.ToUpperInvariant(ch);
-			if (c is 'I' or 'L')
-			{
-				c = '1';
-			}
-			else if (c == 'O')
-			{
-				c = '0';
-			}
-
-			norm[n++] = c;
-		}
+		var n = NormalizeChars(text, norm);
 
 		int buffer = 0, bitsLeft = 0;
 		var bytes = new List<byte>((int)Math.Floor(n * 5 / 8.0));
+
 		for (var i = 0; i < n; i++)
 		{
 			var c = norm[i];
@@ -268,12 +306,14 @@ internal static class Crockford32
 
 			buffer = (buffer << 5) | v;
 			bitsLeft += 5;
+
 			if (bitsLeft >= 8)
 			{
 				bytes.Add((byte)((buffer >> (bitsLeft - 8)) & 0xFF));
 				bitsLeft -= 8;
 			}
 		}
+
 		return [.. bytes];
 	}
 
@@ -325,6 +365,34 @@ internal static class Crockford32
 			}
 		}
 		return map;
+	}
+
+	private static int NormalizeChars(string text, Span<char> norm)
+	{
+		var n = 0;
+
+		foreach (var ch in text)
+		{
+			if (ch is '-' or ' ')
+			{
+				continue;
+			}
+
+			var c = char.ToUpperInvariant(ch);
+
+			if (c is 'I' or 'L')
+			{
+				c = '1';
+			}
+			else if (c == 'O')
+			{
+				c = '0';
+			}
+
+			norm[n++] = c;
+		}
+
+		return n;
 	}
 }
 

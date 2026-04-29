@@ -68,6 +68,24 @@ namespace DotNetTips.Spargine.Core.Properties {
                 return ResourceManager.GetString("AESDecryptionFailed", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Base64 payload..
+        /// </summary>
+        internal static string AesGcmInvalidBase64Payload {
+            get {
+                return ResourceManager.GetString("AesGcmInvalidBase64Payload", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid payload length..
+        /// </summary>
+        internal static string AesGcmInvalidPayloadLength {
+            get {
+                return ResourceManager.GetString("AesGcmInvalidPayloadLength", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to AES Encryption failed..
@@ -102,6 +120,15 @@ namespace DotNetTips.Spargine.Core.Properties {
         internal static string AnErrorOccurredWhileWritingToTheChannel {
             get {
                 return ResourceManager.GetString("AnErrorOccurredWhileWritingToTheChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least one key must be provided..
+        /// </summary>
+        internal static string AtLeastOneKeyMustBeProvided {
+            get {
+                return ResourceManager.GetString("AtLeastOneKeyMustBeProvided", resourceCulture);
             }
         }
         

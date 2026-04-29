@@ -4,7 +4,7 @@
 // Created          : 09-28-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="LoggingHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -385,17 +385,16 @@ public static class LoggingHelper
 	/// </remarks>
 	private static void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)
 	{
-		if (_appDomainExceptionLogger is not null)
+		if (_appDomainExceptionLogger is null || !_appDomainExceptionLogger.IsEnabled(LogLevel.Error))
 		{
-			if (_appDomainExceptionLogger.IsEnabled(LogLevel.Error))
-			{
-				_appDomainExceptionLogger.LogExceptionMessage($"FirstChanceException in {AppDomain.CurrentDomain.FriendlyName}:  {e.Exception.Message}", e.Exception);
+			return;
+		}
 
-				if (e.Exception.IsLogged() is false)
-				{
-					e.Exception.SetIsLogged();
-				}
-			}
+		_appDomainExceptionLogger.LogExceptionMessage($"FirstChanceException in {AppDomain.CurrentDomain.FriendlyName}:  {e.Exception.Message}", e.Exception);
+
+		if (!e.Exception.IsLogged())
+		{
+			e.Exception.SetIsLogged();
 		}
 	}
 
@@ -486,20 +485,21 @@ public static class LoggingHelper
 	/// </remarks>
 	private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 	{
-		if (_appDomainUnhandledExceptionLogger is not null)
+		if (_appDomainUnhandledExceptionLogger is null || !_appDomainUnhandledExceptionLogger.IsEnabled(LogLevel.Critical))
 		{
-			if (_appDomainUnhandledExceptionLogger.IsEnabled(LogLevel.Critical))
-			{
-				if (e.ExceptionObject is Exception ex)
-				{
-					_appDomainUnhandledExceptionLogger.LogCriticalMessage($"UnhandledException in {AppDomain.CurrentDomain.FriendlyName}:  {ex.Message}", ex);
+			return;
+		}
 
-					if (!ex.IsLogged())
-					{
-						ex.SetIsLogged();
-					}
-				}
-			}
+		if (e.ExceptionObject is not Exception ex)
+		{
+			return;
+		}
+
+		_appDomainUnhandledExceptionLogger.LogCriticalMessage($"UnhandledException in {AppDomain.CurrentDomain.FriendlyName}:  {ex.Message}", ex);
+
+		if (!ex.IsLogged())
+		{
+			ex.SetIsLogged();
 		}
 	}
 

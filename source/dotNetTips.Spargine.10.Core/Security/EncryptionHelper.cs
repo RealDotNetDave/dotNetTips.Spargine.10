@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,7 +22,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Text;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Properties;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -181,7 +180,7 @@ public static class EncryptionHelper
 	/// Thrown if the payload is invalid, the version is unsupported, or decryption fails.
 	/// </exception>
 	[Pure]
-	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(AesGcmDecrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AesGcmDecrypt([DisallowNull] string base64Payload, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		base64Payload = base64Payload.ArgumentNotNullOrEmpty();
@@ -192,7 +191,6 @@ public static class EncryptionHelper
 			ExceptionThrower.ThrowArgumentException("AES-GCM requires a 256-bit (32 byte) key.", nameof(key));
 		}
 
-		// Rent buffer for Base64 decode instead of allocating
 		var maxInputLength = (base64Payload.Length * 3 / 4) + 4;
 		var inputBuffer = _byteArrayPool.Rent(maxInputLength);
 		byte[]? plaintextBuffer = null;
@@ -200,31 +198,14 @@ public static class EncryptionHelper
 
 		try
 		{
-			// Decode Base64 directly into rented buffer
-			if (!Convert.TryFromBase64String(base64Payload, inputBuffer, out bytesWritten))
-			{
-				throw new CryptographicException("Invalid Base64 payload.");
-			}
+			bytesWritten = DecodeAndValidateGcmPayload(base64Payload, inputBuffer);
 
-			if (bytesWritten < 1 + NonceSize + TagSize)
-			{
-				throw new CryptographicException("Invalid payload length.");
-			}
-
-			var version = inputBuffer[0];
-
-			if (version != 1)
-			{
-				throw new CryptographicException($"Unsupported payload version: {version}");
-			}
+			var cipherLen = bytesWritten - 1 - NonceSize - TagSize;
+			plaintextBuffer = _byteArrayPool.Rent(Math.Max(cipherLen, 1));
 
 			ReadOnlySpan<byte> nonce = inputBuffer.AsSpan(1, NonceSize);
-			var cipherLen = bytesWritten - 1 - NonceSize - TagSize;
 			ReadOnlySpan<byte> ciphertext = inputBuffer.AsSpan(1 + NonceSize, cipherLen);
 			ReadOnlySpan<byte> tag = inputBuffer.AsSpan(1 + NonceSize + cipherLen, TagSize);
-
-			// Rent buffer for plaintext
-			plaintextBuffer = _byteArrayPool.Rent(cipherLen == 0 ? 1 : cipherLen);
 
 			using (var aes = new AesGcm(key, TagSize))
 			{
@@ -232,28 +213,14 @@ public static class EncryptionHelper
 			}
 
 			var result = Encoding.UTF8.GetString(plaintextBuffer, 0, cipherLen);
-
-			// Zero sensitive data
-			if (cipherLen > 0)
-			{
-				CryptographicOperations.ZeroMemory(plaintextBuffer.AsSpan(0, cipherLen));
-			}
-
+			CryptographicOperations.ZeroMemory(plaintextBuffer.AsSpan(0, cipherLen));
 			return result;
 		}
 		finally
 		{
-			// Zero and return all rented buffers
-			if (bytesWritten > 0)
-			{
-				CryptographicOperations.ZeroMemory(inputBuffer.AsSpan(0, bytesWritten));
-			}
+			CryptographicOperations.ZeroMemory(inputBuffer.AsSpan(0, bytesWritten));
 			_byteArrayPool.Return(inputBuffer, clearArray: true);
-
-			if (plaintextBuffer != null)
-			{
-				_byteArrayPool.Return(plaintextBuffer, clearArray: true);
-			}
+			_byteArrayPool.Return(plaintextBuffer ?? [], clearArray: true);
 		}
 	}
 
@@ -268,7 +235,7 @@ public static class EncryptionHelper
 	/// <returns>Base64 payload string.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(AesGcmEncrypt), "David McCarter", "8/14/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AesGcmEncrypt([DisallowNull] string plainText, [DisallowNull] byte[] key, ReadOnlySpan<byte> aad = default)
 	{
 		plainText = plainText.ArgumentNotNullOrEmpty();
@@ -279,25 +246,19 @@ public static class EncryptionHelper
 			ExceptionThrower.ThrowArgumentException("AES-GCM requires a 256-bit (32 byte) key.", nameof(key));
 		}
 
-		// Fast path: determine size up front so we rent exact buffers (no over-rent).
 		var plainByteCount = Encoding.UTF8.GetByteCount(plainText);
+		var rentSize = Math.Max(plainByteCount, 1);
 
-		// Rent variable-sized buffers. (nonce & tag are small; still using pool for consistency.)
 		var nonce = _byteArrayPool.Rent(NonceSize);
-		var plaintextBuffer = _byteArrayPool.Rent(plainByteCount == 0 ? 1 : plainByteCount); // rent at least 1 to avoid 0-length rent edge case.
-		var cipherBuffer = _byteArrayPool.Rent(plainByteCount == 0 ? 1 : plainByteCount);
+		var plaintextBuffer = _byteArrayPool.Rent(rentSize);
+		var cipherBuffer = _byteArrayPool.Rent(rentSize);
 		var tag = _byteArrayPool.Rent(TagSize);
 		var bytesWritten = 0;
 
 		try
 		{
-			// Fill nonce (only the first NonceSize bytes are used).
 			RandomNumberGenerator.Fill(nonce.AsSpan(0, NonceSize));
-
-			if (plainByteCount > 0)
-			{
-				bytesWritten = Encoding.UTF8.GetBytes(plainText, plaintextBuffer);
-			}
+			bytesWritten = Encoding.UTF8.GetBytes(plainText, plaintextBuffer);
 
 			using (var aes = new AesGcm(key, TagSize))
 			{
@@ -309,40 +270,15 @@ public static class EncryptionHelper
 					aad);
 			}
 
-			// Payload layout.
-			var payloadLength = 1 + NonceSize + bytesWritten + TagSize;
-			var payload = _byteArrayPool.Rent(payloadLength);
-
-			try
-			{
-				var span = payload.AsSpan(0, payloadLength);
-				span[0] = FormatVersion;
-
-				nonce.AsSpan(0, NonceSize).CopyTo(span.Slice(1, NonceSize));
-				cipherBuffer.AsSpan(0, bytesWritten).CopyTo(span.Slice(1 + NonceSize, bytesWritten));
-				tag.AsSpan(0, TagSize).CopyTo(span.Slice(1 + NonceSize + bytesWritten, TagSize));
-
-				return Convert.ToBase64String(payload, 0, payloadLength);
-			}
-			finally
-			{
-				// Zero & return payload buffer.
-				CryptographicOperations.ZeroMemory(payload.AsSpan(0, payloadLength));
-				_byteArrayPool.Return(payload, clearArray: true);
-			}
+			return AssembleGcmPayload(nonce, cipherBuffer, tag, bytesWritten);
 		}
 		finally
 		{
-			// Zero sensitive data (always zero the full used spans).
-			if (bytesWritten > 0)
-			{
-				CryptographicOperations.ZeroMemory(plaintextBuffer.AsSpan(0, bytesWritten));
-				CryptographicOperations.ZeroMemory(cipherBuffer.AsSpan(0, bytesWritten));
-			}
+			CryptographicOperations.ZeroMemory(plaintextBuffer.AsSpan(0, bytesWritten));
+			CryptographicOperations.ZeroMemory(cipherBuffer.AsSpan(0, bytesWritten));
 			CryptographicOperations.ZeroMemory(tag.AsSpan(0, TagSize));
 			CryptographicOperations.ZeroMemory(nonce.AsSpan(0, NonceSize));
 
-			// Return all rented buffers.
 			_byteArrayPool.Return(plaintextBuffer, clearArray: true);
 			_byteArrayPool.Return(cipherBuffer, clearArray: true);
 			_byteArrayPool.Return(tag, clearArray: true);
@@ -485,10 +421,60 @@ public static class EncryptionHelper
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(VerifySHA256HashedPassword), "David McCarter", "10/13/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Completed)]
+	[Information(nameof(VerifySHA256HashedPassword), "David McCarter", "10/13/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available, BenchmarkStatus = BenchmarkStatus.CheckPerformance)]
 	public static PasswordVerificationResult VerifySHA256HashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password)
 	{
 		return PasswordHasher.VerifyHashedPassword(hashedPassword.ArgumentNotNullOrEmpty(), password.ArgumentNotNullOrEmpty(), HashAlgorithmType.SHA256);
+	}
+
+	/// <summary>
+	/// Assembles the [version][nonce][ciphertext][tag] payload and returns it as a Base64 string.
+	/// </summary>
+	private static string AssembleGcmPayload(byte[] nonce, byte[] cipherBuffer, byte[] tag, int cipherLen)
+	{
+		var payloadLength = 1 + NonceSize + cipherLen + TagSize;
+		var payload = _byteArrayPool.Rent(payloadLength);
+
+		try
+		{
+			var span = payload.AsSpan(0, payloadLength);
+			span[0] = FormatVersion;
+			nonce.AsSpan(0, NonceSize).CopyTo(span.Slice(1, NonceSize));
+			cipherBuffer.AsSpan(0, cipherLen).CopyTo(span.Slice(1 + NonceSize, cipherLen));
+			tag.AsSpan(0, TagSize).CopyTo(span.Slice(1 + NonceSize + cipherLen, TagSize));
+
+			return Convert.ToBase64String(payload, 0, payloadLength);
+		}
+		finally
+		{
+			CryptographicOperations.ZeroMemory(payload.AsSpan(0, payloadLength));
+			_byteArrayPool.Return(payload, clearArray: true);
+		}
+	}
+
+	/// <summary>
+	/// Decodes the Base64 payload into <paramref name="buffer"/> and validates the version byte and minimum length.
+	/// </summary>
+	/// <returns>Number of bytes written into <paramref name="buffer"/>.</returns>
+	/// <exception cref="CryptographicException">Thrown when the Base64 is invalid, the payload is too short, or the version is unsupported.</exception>
+	private static int DecodeAndValidateGcmPayload(string base64Payload, byte[] buffer)
+	{
+		if (!Convert.TryFromBase64String(base64Payload, buffer, out var bytesWritten))
+		{
+			throw new CryptographicException(Resources.AesGcmInvalidBase64Payload);
+		}
+
+		if (bytesWritten < 1 + NonceSize + TagSize)
+		{
+			throw new CryptographicException(Resources.AesGcmInvalidPayloadLength);
+		}
+
+		if (buffer[0] != FormatVersion)
+		{
+			throw new CryptographicException($"Unsupported payload version: {buffer[0]}");
+		}
+
+		return bytesWritten;
 	}
 
 	/// <summary>
