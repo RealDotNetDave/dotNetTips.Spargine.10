@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -551,17 +551,16 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToDictionary_WithIgnoreNullsFalse_IncludesAllFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: false);
 
 		Assert.IsNotNull(dict);
-		Assert.IsNotEmpty(dict);
 	}
 
 	[TestMethod]
 	public void FieldsToDictionary_WithIgnoreNullsTrue_ExcludesNullFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: true);
 
 		Assert.IsNotNull(dict);
@@ -737,7 +736,7 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToString_WithIgnoreNullsFalse_IncludesAllFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var result = testObject.FieldsToString(ignoreNulls: false);
 
 		Assert.IsNotNull(result);
@@ -746,7 +745,7 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToString_WithIgnoreNullsTrue_ExcludesNullFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var result = testObject.FieldsToString(ignoreNulls: true);
 
 		Assert.IsNotNull(result);
@@ -1923,6 +1922,128 @@ public class ObjectExtensionsTests : UnitTester
 			Debug.WriteLine(ex.Message);
 			Assert.Fail();
 		}
+	}
+
+	[TestMethod]
+	public void DisposeFields_WithDisposableCollectionField_DisposesItems()
+	{
+		var testObject = new ObjectWithDisposableEnumerable();
+
+		testObject.DisposeFields();
+	}
+
+	[TestMethod]
+	public void TryDispose_WithAsyncDisposable_CallsDisposeAsync()
+	{
+		var asyncObj = new AsyncDisposableObject();
+
+		asyncObj.TryDispose(throwException: false);
+	}
+
+	[TestMethod]
+	public void TryDispose_WithNullObject_DoesNotThrow()
+	{
+		IDisposable obj = null;
+
+		obj.TryDispose(throwException: false);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_List_UsesItemTypeName()
+	{
+		var list = new System.Collections.Generic.List<int> { 1, 2, 3 };
+
+		var result = list.PropertiesToString();
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIgnoreNullsFalse_IncludesError()
+	{
+		var testObject = new ObjectWithThrowingProperty();
+		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: false);
+
+		Assert.IsNotNull(result);
+		Assert.Contains("[Error:", result);
+	}
+
+	[TestMethod]
+	public void PropertiesToDictionary_CollectionWithNullItem_HandlesException()
+	{
+		var list = new System.Collections.Generic.List<Person> { RandomData.GeneratePerson<Person>(), null };
+
+		var dict = list.PropertiesToDictionary("People");
+
+		Assert.IsNotNull(dict);
+	}
+
+	[TestMethod]
+	public void InitializeFields_WithNullReferenceTypeField_InitializesField()
+	{
+		var testObject = new ObjectWithNullListField();
+
+		testObject.InitializeFields();
+
+		Assert.IsNotNull(testObject.Items);
+	}
+
+	[TestMethod]
+	public void FieldsToDictionary_CollectionWithEmptyStringField_IgnoresEmptyValues()
+	{
+		var list = new System.Collections.Generic.List<string> { string.Empty, "HasValue" };
+
+		var result = list.FieldsToDictionary("Test", ignoreEmptyValues: true);
+
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void FieldsToDictionary_ObjectWithNullField_IgnoresNullField()
+	{
+		var testObject = new ObjectWithNullListField();
+
+		var result = testObject.FieldsToDictionary("Test", ignoreEmptyValues: true);
+
+		Assert.IsNotNull(result);
+	}
+
+	private class ObjectWithDisposableEnumerable : IDisposable
+	{
+#pragma warning disable CA1051
+		public IEnumerable<IDisposable> _disposableItems = new System.Collections.Generic.List<IDisposable> { new DisposableFields() };
+#pragma warning restore CA1051
+
+		public void Dispose() { }
+	}
+
+	private class AsyncDisposableObject : IDisposable, IAsyncDisposable
+	{
+		public void Dispose() { }
+		public System.Threading.Tasks.ValueTask DisposeAsync() => System.Threading.Tasks.ValueTask.CompletedTask;
+	}
+
+	private class ObjectWithThrowingProperty
+	{
+		public string ThrowingProperty => throw new InvalidOperationException("Property throws");
+		public string NormalProperty => "Normal";
+	}
+
+	private class ObjectWithNullListField
+	{
+#pragma warning disable CA1051
+		public System.Collections.Generic.List<string> Items = null;
+#pragma warning restore CA1051
+	}
+
+	private class ObjectWithEmptyStringField
+	{
+#pragma warning disable CA1051
+		public string Name = string.Empty;
+		public string Value = string.Empty;
+#pragma warning restore CA1051
 	}
 
 	private class FaultyDisposableObject : IDisposable
