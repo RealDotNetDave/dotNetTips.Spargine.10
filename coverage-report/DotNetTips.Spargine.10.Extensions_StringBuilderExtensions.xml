@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Extensions.StringBuilderExtensions">
+  <Summary>
+    <Class>DotNetTips.Spargine.Extensions.StringBuilderExtensions</Class>
+    <Assembly>DotNetTips.Spargine.10.Extensions</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/StringBuilderExtensions.cs</File>
+    </Files>
+    <Coveredlines>4</Coveredlines>
+    <Uncoveredlines>133</Uncoveredlines>
+    <Coverablelines>137</Coverablelines>
+    <Totallines>452</Totallines>
+    <Linecoverage>2.9</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>42</Totalbranches>
+    <Branchcoverage>0</Branchcoverage>
+    <Coveredmethods>1</Coveredmethods>
+    <Fullcoveredmethods>1</Fullcoveredmethods>
+    <Totalmethods>11</Totalmethods>
+    <Methodcoverage>9</Methodcoverage>
+    <Fullmethodcoverage>9</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="cctor">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="SetSeparator">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendBytes">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendKeyValue">
+      <CrapScore>72</CrapScore>
+      <Cyclomaticcomplexity>8</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendValues">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendValues">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendValues">
+      <CrapScore>72</CrapScore>
+      <Cyclomaticcomplexity>8</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendValues">
+      <CrapScore>72</CrapScore>
+      <Cyclomaticcomplexity>8</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="AppendValues">
+      <CrapScore>72</CrapScore>
+      <Cyclomaticcomplexity>8</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="ClearSetCapacity">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="SetCapacity">
+      <CrapScore>1</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>100</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/StringBuilderExtensions.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Assembly         : DotNetTips.Spargine.10.Extensions" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Author           : David McCarter" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Created          : 05-11-2020" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified By : David McCarter" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified On : 01-31-2026" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;copyright file=&quot;StringBuilderExtensions.cs&quot; company=&quot;dotNetTips.com - McCarter Consulting&quot;&gt;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     McCarter Consulting (David McCarter)" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/copyright&gt;" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;summary&gt;StringBuilder Extensions.&lt;/summary&gt;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Buffers;" />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Collections.ObjectModel;" />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.CodeAnalysis;" />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Globalization;" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Runtime.CompilerServices;" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Text;" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core;" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Extensions;" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;summary&gt;" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Provides extension methods for &lt;see cref=&quot;StringBuilder&quot;/&gt; to enhance and simplify its functionality." />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/summary&gt;" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;remarks&gt;" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// This class includes methods for appending key-value pairs, bytes, and collections with various formatting options." />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/remarks&gt;" />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Information(nameof(StringBuilderExtensions), &quot;David McCarter&quot;, &quot;5/26/2020&quot;, Status = Status.Available, Documentation = &quot;https://bit.ly/SpargineStringBuilderExtensions&quot;)]" />
+      <LineAnalysis line="33" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="public static class StringBuilderExtensions" />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// The special characters" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="39" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;private static readonly SearchValues&lt;char&gt; _specialCharacters = SearchValues.Create(['&quot;', '\\']);" />
+      <LineAnalysis line="40" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="41" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="42" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Sets the separator." />
+      <LineAnalysis line="43" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="44" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;separator&quot;&gt;The separator.&lt;/param&gt;" />
+      <LineAnalysis line="45" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;System.String.&lt;/returns&gt;" />
+      <LineAnalysis line="46" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;private static string SetSeparator(string separator)" />
+      <LineAnalysis line="47" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="48" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;if (separator.HasValue() is false)" />
+      <LineAnalysis line="49" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="50" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;separator = ControlChars.DefaultSeparator;" />
+      <LineAnalysis line="51" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="52" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="53" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return separator;" />
+      <LineAnalysis line="54" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="55" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="56" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="57" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Provides extension methods for &lt;see cref=&quot;StringBuilder&quot;/&gt; instances." />
+      <LineAnalysis line="58" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="59" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;sb&quot;&gt;The &lt;see cref=&quot;StringBuilder&quot;/&gt; instance to extend.&lt;/param&gt;" />
+      <LineAnalysis line="60" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;extension([DisallowNull] StringBuilder sb)" />
+      <LineAnalysis line="61" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="62" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="63" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends the bytes to the &lt;see cref=&quot;StringBuilder&quot;/&gt; in hexadecimal format, prefixed with '0x' and enclosed in single quotes." />
+      <LineAnalysis line="64" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="65" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;bytes&quot;&gt;The byte array to append. If &lt;c&gt;null&lt;/c&gt;, the method returns without modifying the &lt;see cref=&quot;StringBuilder&quot;/&gt;.&lt;/param&gt;" />
+      <LineAnalysis line="66" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;remarks&gt;" />
+      <LineAnalysis line="67" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Each byte is formatted as a two-digit uppercase hexadecimal value. The resulting string is wrapped in single quotes and prefixed with '0x'." />
+      <LineAnalysis line="68" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/remarks&gt;" />
+      <LineAnalysis line="69" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="70" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder();" />
+      <LineAnalysis line="72" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var byteArray = RandomData.GenerateByteArray(5);" />
+      <LineAnalysis line="73" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.AppendBytes(byteArray);" />
+      <LineAnalysis line="74" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// // Output: '0xA1B2C3D4E5'" />
+      <LineAnalysis line="75" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="76" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="77" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="78" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendBytes), author: &quot;David McCarter&quot;, createdOn: &quot;5/26/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendBytes(byte[] bytes)" />
+      <LineAnalysis line="80" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="81" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (bytes is null)" />
+      <LineAnalysis line="82" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="83" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;return;" />
+      <LineAnalysis line="84" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="85" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="86" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull().Append(&quot;'0x&quot;);" />
+      <LineAnalysis line="87" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="88" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;//FrozenSet and Span is slower." />
+      <LineAnalysis line="89" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;foreach (var byteItem in bytes)" />
+      <LineAnalysis line="90" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="91" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(byteItem.ToString(&quot;X2&quot;, CultureInfo.InvariantCulture));" />
+      <LineAnalysis line="92" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="93" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="94" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;_ = sb.Append('\'');" />
+      <LineAnalysis line="95" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="96" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="97" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="98" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends a key-value pair to the &lt;see cref=&quot;StringBuilder&quot;/&gt; in a formatted string representation." />
+      <LineAnalysis line="99" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="100" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;key&quot;&gt;The key name to append. Must not be &lt;c&gt;null&lt;/c&gt; or empty.&lt;/param&gt;" />
+      <LineAnalysis line="101" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;value&quot;&gt;The value to append. If &lt;c&gt;null&lt;/c&gt;, the method returns without modifying the &lt;see cref=&quot;StringBuilder&quot;/&gt;.&lt;/param&gt;" />
+      <LineAnalysis line="102" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;includeQuotes&quot;&gt;" />
+      <LineAnalysis line="103" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// If set to &lt;c&gt;true&lt;/c&gt;, wraps the value in double quotation marks and escapes any special characters (double quotes and backslashes) within the value." />
+      <LineAnalysis line="104" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Default is &lt;c&gt;true&lt;/c&gt;." />
+      <LineAnalysis line="105" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/param&gt;" />
+      <LineAnalysis line="106" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;includeComma&quot;&gt;" />
+      <LineAnalysis line="107" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// If set to &lt;c&gt;true&lt;/c&gt;, appends a comma separator after the key-value pair for chaining multiple pairs." />
+      <LineAnalysis line="108" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Default is &lt;c&gt;true&lt;/c&gt;." />
+      <LineAnalysis line="109" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/param&gt;" />
+      <LineAnalysis line="110" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if the &lt;see cref=&quot;StringBuilder&quot;/&gt; instance or &lt;paramref name=&quot;key&quot;/&gt; is &lt;c&gt;null&lt;/c&gt;.&lt;/exception&gt;" />
+      <LineAnalysis line="111" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentException&quot;&gt;Thrown if &lt;paramref name=&quot;key&quot;/&gt; is empty.&lt;/exception&gt;" />
+      <LineAnalysis line="112" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;remarks&gt;" />
+      <LineAnalysis line="113" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// This method formats the output as &lt;c&gt;key=value&lt;/c&gt; or &lt;c&gt;key=&quot;value&quot;&lt;/c&gt; depending on the &lt;paramref name=&quot;includeQuotes&quot;/&gt; parameter." />
+      <LineAnalysis line="114" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// When &lt;paramref name=&quot;includeQuotes&quot;/&gt; is &lt;c&gt;true&lt;/c&gt;, special characters within the value (specifically double quotes and backslashes) are automatically" />
+      <LineAnalysis line="115" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// escaped with a backslash prefix to ensure proper string formatting. The method efficiently handles special character escaping using" />
+      <LineAnalysis line="116" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;see cref=&quot;SearchValues{T}&quot;/&gt; for optimal performance." />
+      <LineAnalysis line="117" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// If &lt;paramref name=&quot;includeComma&quot;/&gt; is &lt;c&gt;true&lt;/c&gt;, a comma is appended after the key-value pair, making it suitable for constructing" />
+      <LineAnalysis line="118" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// comma-separated lists of key-value pairs." />
+      <LineAnalysis line="119" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/remarks&gt;" />
+      <LineAnalysis line="120" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="121" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="122" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder();" />
+      <LineAnalysis line="123" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.AppendKeyValue(&quot;Name&quot;, &quot;John&quot;, true, true);" />
+      <LineAnalysis line="124" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb.ToString()); // Output: Name=&quot;John&quot;," />
+      <LineAnalysis line="125" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;///" />
+      <LineAnalysis line="126" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb2 = new StringBuilder();" />
+      <LineAnalysis line="127" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb2.AppendKeyValue(&quot;Path&quot;, @&quot;C:\Files\Data&quot;, true, false);" />
+      <LineAnalysis line="128" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb2.ToString()); // Output: Path=&quot;C:\\Files\\Data&quot;" />
+      <LineAnalysis line="129" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;///" />
+      <LineAnalysis line="130" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb3 = new StringBuilder();" />
+      <LineAnalysis line="131" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb3.AppendKeyValue(&quot;Count&quot;, &quot;42&quot;, false, false);" />
+      <LineAnalysis line="132" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb3.ToString()); // Output: Count=42" />
+      <LineAnalysis line="133" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="134" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="135" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="136" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendValues), author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="137" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendKeyValue([DisallowNull] string key, string value, bool includeQuotes = true, bool includeComma = true)" />
+      <LineAnalysis line="138" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="139" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="140" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;key = key.ArgumentNotNullOrEmpty();" />
+      <LineAnalysis line="141" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="142" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (value is null)" />
+      <LineAnalysis line="143" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="144" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;return;" />
+      <LineAnalysis line="145" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="146" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="147" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;_ = sb.Append(key).Append(ControlChars.Equal);" />
+      <LineAnalysis line="148" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="149" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (includeQuotes)" />
+      <LineAnalysis line="150" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="151" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(ControlChars.Quote);" />
+      <LineAnalysis line="152" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;var lastSpecialIndex = 0;" />
+      <LineAnalysis line="153" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;int specialIndex;" />
+      <LineAnalysis line="154" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="155" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;while (true)" />
+      <LineAnalysis line="156" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="157" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;specialIndex = value.AsSpan(lastSpecialIndex).IndexOfAny(_specialCharacters);" />
+      <LineAnalysis line="158" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="159" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;&#x9;&#x9;if (specialIndex &gt;= 0)" />
+      <LineAnalysis line="160" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="161" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;_ = sb.Append(value, lastSpecialIndex, specialIndex - lastSpecialIndex).Append(ControlChars.Backslash).Append(value[specialIndex]);" />
+      <LineAnalysis line="162" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;lastSpecialIndex = specialIndex + 1;" />
+      <LineAnalysis line="163" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="164" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;else" />
+      <LineAnalysis line="165" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="166" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;_ = sb.Append(value, lastSpecialIndex, value.Length - lastSpecialIndex);" />
+      <LineAnalysis line="167" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;break;" />
+      <LineAnalysis line="168" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="169" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="170" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(ControlChars.Quote);" />
+      <LineAnalysis line="171" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="172" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;else" />
+      <LineAnalysis line="173" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="174" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(value);" />
+      <LineAnalysis line="175" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="176" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="177" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (includeComma)" />
+      <LineAnalysis line="178" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="179" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(ControlChars.DefaultSeparator);" />
+      <LineAnalysis line="180" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="181" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="182" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="183" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="184" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends a collection of values to the &lt;see cref=&quot;StringBuilder&quot;/&gt;, separated by the specified separator, using a custom join action." />
+      <LineAnalysis line="185" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="186" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;separator&quot;&gt;The separator to use between values.&lt;/param&gt;" />
+      <LineAnalysis line="187" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;values&quot;&gt;The collection of values to append.&lt;/param&gt;" />
+      <LineAnalysis line="188" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;remarks&gt;" />
+      <LineAnalysis line="189" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// If &lt;paramref name=&quot;values&quot;/&gt; is null, the method returns without modifying the &lt;see cref=&quot;StringBuilder&quot;/&gt;." />
+      <LineAnalysis line="190" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// The separator is appended after each value, and removed after the last value." />
+      <LineAnalysis line="191" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/remarks&gt;" />
+      <LineAnalysis line="192" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="193" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendValues), author: &quot;David McCarter&quot;, createdOn: &quot;7/1/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="194" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendValues([DisallowNull] string separator, [DisallowNull] IEnumerable&lt;string&gt; values)" />
+      <LineAnalysis line="195" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="196" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="197" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;values = values.ArgumentNotNull();" />
+      <LineAnalysis line="198" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;separator ??= string.Empty;" />
+      <LineAnalysis line="199" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="200" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;separator = SetSeparator(separator);" />
+      <LineAnalysis line="201" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="202" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb.AppendValues(separator, values, (value) =&gt; sb.Append(value));" />
+      <LineAnalysis line="203" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="204" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="205" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="206" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends a collection of string values to the &lt;see cref=&quot;StringBuilder&quot;/&gt;, separated by the specified &lt;paramref name=&quot;separator&quot;/&gt;." />
+      <LineAnalysis line="207" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="208" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;separator&quot;&gt;" />
+      <LineAnalysis line="209" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// The separator to use between values. If &lt;c&gt;null&lt;/c&gt; or empty, the method will use the default separator returned by &lt;see cref=&quot;SetSeparator(string)&quot;/&gt;." />
+      <LineAnalysis line="210" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/param&gt;" />
+      <LineAnalysis line="211" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;values&quot;&gt;A &lt;see cref=&quot;ReadOnlyCollection{T}&quot;/&gt; of string values to append. The collection must not be &lt;c&gt;null&lt;/c&gt;.&lt;/param&gt;" />
+      <LineAnalysis line="212" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;" />
+      <LineAnalysis line="213" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Thrown when the current &lt;see cref=&quot;StringBuilder&quot;/&gt; instance or the &lt;paramref name=&quot;values&quot;/&gt; parameter is &lt;c&gt;null&lt;/c&gt;." />
+      <LineAnalysis line="214" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Parameter validation is performed via extension preconditions." />
+      <LineAnalysis line="215" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="216" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;remarks&gt;" />
+      <LineAnalysis line="217" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// This overload adapts the provided &lt;paramref name=&quot;values&quot;/&gt; collection and forwards each value to the generic" />
+      <LineAnalysis line="218" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// AppendValues overload using an action that appends the value to the builder." />
+      <LineAnalysis line="219" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// The &lt;paramref name=&quot;separator&quot;/&gt; is normalized by &lt;see cref=&quot;SetSeparator(string)&quot;/&gt; before joining." />
+      <LineAnalysis line="220" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/remarks&gt;" />
+      <LineAnalysis line="221" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="222" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="223" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder();" />
+      <LineAnalysis line="224" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var values = new System.Collections.ObjectModel.ReadOnlyCollection&amp;lt;string&amp;gt;(new[] { &quot;a&quot;, &quot;b&quot;, &quot;c&quot; });" />
+      <LineAnalysis line="225" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.AppendValues(&quot;,&quot;, values);" />
+      <LineAnalysis line="226" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// // Resulting content: &quot;a,b,c&quot;" />
+      <LineAnalysis line="227" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="228" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="229" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="230" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendValues), &quot;David McCarter&quot;, &quot;5/26/2020&quot;, &quot;7/29/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="231" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendValues([DisallowNull] string separator, [DisallowNull] params ReadOnlyCollection&lt;string&gt; values)" />
+      <LineAnalysis line="232" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="233" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="234" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;values = values.ArgumentNotNull();" />
+      <LineAnalysis line="235" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;separator ??= string.Empty;" />
+      <LineAnalysis line="236" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="237" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;separator = SetSeparator(separator);" />
+      <LineAnalysis line="238" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="239" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb.AppendValues(separator, values, (value) =&gt; sb.Append(value));" />
+      <LineAnalysis line="240" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="241" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="242" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="243" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends a collection of values to the &lt;see cref=&quot;StringBuilder&quot;/&gt;, separated by the specified separator, using a custom join action." />
+      <LineAnalysis line="244" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="245" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The type of the elements in &lt;paramref name=&quot;values&quot;/&gt;.&lt;/typeparam&gt;" />
+      <LineAnalysis line="246" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;separator&quot;&gt;The separator to use between values.&lt;/param&gt;" />
+      <LineAnalysis line="247" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;values&quot;&gt;The collection of values to append.&lt;/param&gt;" />
+      <LineAnalysis line="248" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;joinAction&quot;&gt;The action to perform for each value.&lt;/param&gt;" />
+      <LineAnalysis line="249" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;sb&quot;/&gt; or &lt;paramref name=&quot;joinAction&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="250" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="251" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="252" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder();" />
+      <LineAnalysis line="253" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var values = new[] { &quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot; };" />
+      <LineAnalysis line="254" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.AppendValues(&quot;,&quot;, values, value =&gt; sb.Append(value));" />
+      <LineAnalysis line="255" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb.ToString()); // Output: value1,value2,value3" />
+      <LineAnalysis line="256" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="257" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="258" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="259" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendValues), &quot;David McCarter&quot;, &quot;5/26/2020&quot;, &quot;7/29/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="260" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendValues&lt;T&gt;([DisallowNull] string separator, IEnumerable&lt;T&gt; values, [DisallowNull] Action&lt;T&gt; joinAction)" />
+      <LineAnalysis line="261" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="262" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="263" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;joinAction = joinAction.ArgumentNotNull();" />
+      <LineAnalysis line="264" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;separator ??= string.Empty;" />
+      <LineAnalysis line="265" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="266" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (values is null)" />
+      <LineAnalysis line="267" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="268" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;return;" />
+      <LineAnalysis line="269" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="270" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="271" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;separator = SetSeparator(separator);" />
+      <LineAnalysis line="272" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="273" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;var appended = false;" />
+      <LineAnalysis line="274" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="275" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;//FrozenSet is slower." />
+      <LineAnalysis line="276" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;foreach (var value in values)" />
+      <LineAnalysis line="277" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="278" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;joinAction(value);" />
+      <LineAnalysis line="279" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(separator);" />
+      <LineAnalysis line="280" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;appended = true;" />
+      <LineAnalysis line="281" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="282" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="283" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (appended)" />
+      <LineAnalysis line="284" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="285" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;sb.Length -= separator.Length;" />
+      <LineAnalysis line="286" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="287" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="288" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="289" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="290" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends a collection of values to the &lt;see cref=&quot;StringBuilder&quot;/&gt;, separated by the specified separator, using a custom join action that takes an additional parameter." />
+      <LineAnalysis line="291" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="292" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The type of the elements in &lt;paramref name=&quot;values&quot;/&gt;.&lt;/typeparam&gt;" />
+      <LineAnalysis line="293" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;typeparam name=&quot;TParam&quot;&gt;The type of the additional parameter.&lt;/typeparam&gt;" />
+      <LineAnalysis line="294" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;separator&quot;&gt;The separator to use between values.&lt;/param&gt;" />
+      <LineAnalysis line="295" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;values&quot;&gt;The collection of values to append.&lt;/param&gt;" />
+      <LineAnalysis line="296" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;param&quot;&gt;The additional parameter to pass to the join action.&lt;/param&gt;" />
+      <LineAnalysis line="297" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;joinAction&quot;&gt;The action to perform for each value and the additional parameter.&lt;/param&gt;" />
+      <LineAnalysis line="298" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;sb&quot;/&gt;, &lt;paramref name=&quot;param&quot;/&gt;, or &lt;paramref name=&quot;joinAction&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="299" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="300" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendValues), &quot;David McCarter&quot;, &quot;5/26/2020&quot;, &quot;7/29/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="301" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendValues&lt;T, TParam&gt;([DisallowNull] string separator, IEnumerable&lt;T&gt; values, [DisallowNull] TParam param, [DisallowNull] Action&lt;T, TParam&gt; joinAction)" />
+      <LineAnalysis line="302" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="303" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="304" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;joinAction = joinAction.ArgumentNotNull();" />
+      <LineAnalysis line="305" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;param = param.ArgumentNotNull();" />
+      <LineAnalysis line="306" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;separator ??= string.Empty;" />
+      <LineAnalysis line="307" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="308" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (values is null)" />
+      <LineAnalysis line="309" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="310" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;return;" />
+      <LineAnalysis line="311" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="312" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="313" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;separator = SetSeparator(separator);" />
+      <LineAnalysis line="314" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="315" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;var appended = false;" />
+      <LineAnalysis line="316" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="317" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;//Frozenset is slower." />
+      <LineAnalysis line="318" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;foreach (var value in values)" />
+      <LineAnalysis line="319" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="320" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;joinAction(value, param);" />
+      <LineAnalysis line="321" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(separator);" />
+      <LineAnalysis line="322" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;appended = true;" />
+      <LineAnalysis line="323" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="324" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="325" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (appended)" />
+      <LineAnalysis line="326" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="327" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;sb.Length -= separator.Length;" />
+      <LineAnalysis line="328" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="329" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="330" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="331" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="332" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Appends a collection of values to the &lt;see cref=&quot;StringBuilder&quot;/&gt;, separated by the specified separator, using a custom join action that takes two additional parameters." />
+      <LineAnalysis line="333" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="334" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The type of the elements in &lt;paramref name=&quot;values&quot;/&gt;.&lt;/typeparam&gt;" />
+      <LineAnalysis line="335" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;typeparam name=&quot;TParam1&quot;&gt;The type of the first additional parameter.&lt;/typeparam&gt;" />
+      <LineAnalysis line="336" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;typeparam name=&quot;TParam2&quot;&gt;The type of the second additional parameter.&lt;/typeparam&gt;" />
+      <LineAnalysis line="337" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;separator&quot;&gt;The separator to use between values.&lt;/param&gt;" />
+      <LineAnalysis line="338" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;values&quot;&gt;The collection of values to append.&lt;/param&gt;" />
+      <LineAnalysis line="339" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;param1&quot;&gt;The first additional parameter to pass to the join action.&lt;/param&gt;" />
+      <LineAnalysis line="340" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;param2&quot;&gt;The second additional parameter to pass to the join action.&lt;/param&gt;" />
+      <LineAnalysis line="341" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;joinAction&quot;&gt;The action to perform for each value and the additional parameters.&lt;/param&gt;" />
+      <LineAnalysis line="342" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;sb&quot;/&gt;, &lt;paramref name=&quot;param1&quot;/&gt;, &lt;paramref name=&quot;param2&quot;/&gt;, or &lt;paramref name=&quot;joinAction&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="343" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="344" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="345" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder();" />
+      <LineAnalysis line="346" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var values = new[] { &quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot; };" />
+      <LineAnalysis line="347" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.AppendValues(&quot;,&quot;, values, &quot;param1&quot;, &quot;param2&quot;, (sb, value, param1, param2) =&gt; sb.Append(value).Append(param1).Append(param2));" />
+      <LineAnalysis line="348" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb.ToString()); // Output: value1param1param2,value2param1param2,value3param1param2" />
+      <LineAnalysis line="349" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="350" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="351" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="352" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(AppendValues), &quot;David McCarter&quot;, &quot;5/26/2020&quot;, &quot;7/29/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="353" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public void AppendValues&lt;T, TParam1, TParam2&gt;([DisallowNull] string separator, IEnumerable&lt;T&gt; values, [DisallowNull] TParam1 param1, [DisallowNull] TParam2 param2, [DisallowNull] Action&lt;StringBuilder, T, TParam1, TParam2&gt; joinAction)" />
+      <LineAnalysis line="354" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="355" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="356" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;param1 = param1.ArgumentNotNull();" />
+      <LineAnalysis line="357" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;param2 = param2.ArgumentNotNull();" />
+      <LineAnalysis line="358" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;joinAction = joinAction.ArgumentNotNull();" />
+      <LineAnalysis line="359" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;separator ??= string.Empty;" />
+      <LineAnalysis line="360" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="361" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (values is null)" />
+      <LineAnalysis line="362" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="363" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;return;" />
+      <LineAnalysis line="364" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="365" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="366" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;separator = SetSeparator(separator);" />
+      <LineAnalysis line="367" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="368" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;var appended = false;" />
+      <LineAnalysis line="369" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="370" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;//FrozenSet is slower." />
+      <LineAnalysis line="371" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;foreach (var value in values)" />
+      <LineAnalysis line="372" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="373" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;joinAction(sb, value, param1, param2);" />
+      <LineAnalysis line="374" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;_ = sb.Append(separator);" />
+      <LineAnalysis line="375" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;appended = true;" />
+      <LineAnalysis line="376" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="377" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="378" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (appended)" />
+      <LineAnalysis line="379" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="380" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;sb.Length -= separator.Length;" />
+      <LineAnalysis line="381" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="382" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="383" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="384" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="385" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Clears the &lt;see cref=&quot;StringBuilder&quot;/&gt; and sets its capacity to the specified value." />
+      <LineAnalysis line="386" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="387" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;capacity&quot;&gt;The new capacity to set for the &lt;see cref=&quot;StringBuilder&quot;/&gt;. Must be greater than or equal to zero.&lt;/param&gt;" />
+      <LineAnalysis line="388" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;returns&gt;The same &lt;see cref=&quot;StringBuilder&quot;/&gt; instance after clearing its content and setting the new capacity, allowing for method chaining.&lt;/returns&gt;" />
+      <LineAnalysis line="389" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if the &lt;see cref=&quot;StringBuilder&quot;/&gt; instance is &lt;c&gt;null&lt;/c&gt;.&lt;/exception&gt;" />
+      <LineAnalysis line="390" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;Thrown if &lt;paramref name=&quot;capacity&quot;/&gt; is less than zero or less than the current length after clearing.&lt;/exception&gt;" />
+      <LineAnalysis line="391" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;remarks&gt;" />
+      <LineAnalysis line="392" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// This method first clears all content from the &lt;see cref=&quot;StringBuilder&quot;/&gt;, then sets its capacity to the specified value." />
+      <LineAnalysis line="393" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Setting the capacity can help optimize memory usage when you know the approximate size of the content you'll be building." />
+      <LineAnalysis line="394" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// The method returns the same &lt;see cref=&quot;StringBuilder&quot;/&gt; instance, enabling fluent-style method chaining." />
+      <LineAnalysis line="395" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/remarks&gt;" />
+      <LineAnalysis line="396" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="397" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="398" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder(&quot;Initial content&quot;);" />
+      <LineAnalysis line="399" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.ClearSetCapacity(100);" />
+      <LineAnalysis line="400" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// // StringBuilder is now empty with capacity set to 100" />
+      <LineAnalysis line="401" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.Append(&quot;New content&quot;);" />
+      <LineAnalysis line="402" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb.ToString()); // Output: &quot;New content&quot;" />
+      <LineAnalysis line="403" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="404" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="405" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="406" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(ClearSetCapacity), author: &quot;David McCarter&quot;, createdOn: &quot;11/13/2024&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]" />
+      <LineAnalysis line="407" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public StringBuilder ClearSetCapacity(in int capacity)" />
+      <LineAnalysis line="408" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="409" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="410" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="411" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;_ = sb.Clear().EnsureCapacity(capacity);" />
+      <LineAnalysis line="412" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="413" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return sb;" />
+      <LineAnalysis line="414" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="415" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="416" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="417" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Sets the capacity of the &lt;see cref=&quot;StringBuilder&quot;/&gt; to the specified value." />
+      <LineAnalysis line="418" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="419" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;param name=&quot;capacity&quot;&gt;The new capacity to set for the &lt;see cref=&quot;StringBuilder&quot;/&gt;. Must be greater than or equal to the current &lt;see cref=&quot;StringBuilder.Length&quot;/&gt; and less than or equal to &lt;see cref=&quot;StringBuilder.MaxCapacity&quot;/&gt;.&lt;/param&gt;" />
+      <LineAnalysis line="420" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;returns&gt;The same &lt;see cref=&quot;StringBuilder&quot;/&gt; instance after setting the new capacity, allowing for method chaining.&lt;/returns&gt;" />
+      <LineAnalysis line="421" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if the &lt;see cref=&quot;StringBuilder&quot;/&gt; instance is &lt;c&gt;null&lt;/c&gt;.&lt;/exception&gt;" />
+      <LineAnalysis line="422" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;Thrown if &lt;paramref name=&quot;capacity&quot;/&gt; is less than the current length or greater than the maximum capacity.&lt;/exception&gt;" />
+      <LineAnalysis line="423" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;remarks&gt;" />
+      <LineAnalysis line="424" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// This method sets the &lt;see cref=&quot;StringBuilder.Capacity&quot;/&gt; property directly without clearing the existing content." />
+      <LineAnalysis line="425" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Unlike &lt;see cref=&quot;ClearSetCapacity&quot;/&gt;, this method preserves the current string content in the &lt;see cref=&quot;StringBuilder&quot;/&gt;." />
+      <LineAnalysis line="426" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Setting the capacity can help optimize memory usage when you know the approximate size of additional content to be appended." />
+      <LineAnalysis line="427" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// The method returns the same &lt;see cref=&quot;StringBuilder&quot;/&gt; instance, enabling fluent-style method chaining." />
+      <LineAnalysis line="428" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// For best performance, set the capacity before performing multiple append operations to minimize memory reallocations." />
+      <LineAnalysis line="429" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/remarks&gt;" />
+      <LineAnalysis line="430" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="431" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="432" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// var sb = new StringBuilder(&quot;Hello&quot;);" />
+      <LineAnalysis line="433" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// sb.SetCapacity(100).Append(&quot; World&quot;);" />
+      <LineAnalysis line="434" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// // StringBuilder now has &quot;Hello World&quot; with capacity set to 100" />
+      <LineAnalysis line="435" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb.ToString()); // Output: &quot;Hello World&quot;" />
+      <LineAnalysis line="436" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// Console.WriteLine(sb.Capacity);   // Output: 100" />
+      <LineAnalysis line="437" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="438" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="439" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="440" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="441" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;[Information(nameof(SetCapacity), author: &quot;David McCarter&quot;, createdOn: &quot;11/26/2025&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]" />
+      <LineAnalysis line="442" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;public StringBuilder SetCapacity(in int capacity)" />
+      <LineAnalysis line="443" visits="1431148" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="444" visits="1431148" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;sb = sb.ArgumentNotNull();" />
+      <LineAnalysis line="445" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="446" visits="1431148" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;_ = sb.EnsureCapacity(capacity);" />
+      <LineAnalysis line="447" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="448" visits="1431148" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return sb;" />
+      <LineAnalysis line="449" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="450" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="451" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="452" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

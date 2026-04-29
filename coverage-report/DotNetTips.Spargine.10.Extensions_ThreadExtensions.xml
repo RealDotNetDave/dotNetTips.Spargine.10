@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Extensions.ThreadExtensions">
+  <Summary>
+    <Class>DotNetTips.Spargine.Extensions.ThreadExtensions</Class>
+    <Assembly>DotNetTips.Spargine.10.Extensions</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/ThreadExtensions.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>16</Uncoveredlines>
+    <Coverablelines>16</Coverablelines>
+    <Totallines>86</Totallines>
+    <Linecoverage>0</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>4</Totalbranches>
+    <Branchcoverage>0</Branchcoverage>
+    <Coveredmethods>0</Coveredmethods>
+    <Fullcoveredmethods>0</Fullcoveredmethods>
+    <Totalmethods>3</Totalmethods>
+    <Methodcoverage>0</Methodcoverage>
+    <Fullmethodcoverage>0</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="TrySetPriority">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="WaitUntil">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="WaitUntil">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/ThreadExtensions.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Assembly         : DotNetTips.Spargine.10.Extensions" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Author           : David McCarter" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Created          : 09-15-2017" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified By : David McCarter" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified On : 06-20-2025" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;copyright file=&quot;ThreadExtensions.cs&quot; company=&quot;dotNetTips.com - McCarter Consulting&quot;&gt;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     David McCarter - dotNetTips.com" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/copyright&gt;" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;summary&gt;Extension methods designed for Thread.&lt;/summary&gt;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.CodeAnalysis;" />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Runtime.CompilerServices;" />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core;" />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core.Devices;" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Extensions;" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;summary&gt;" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Provides extension methods for &lt;see cref=&quot;Thread&quot;/&gt; to enhance thread operations." />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// These methods include setting thread priority and implementing wait mechanisms without the need for timers." />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/summary&gt;" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Information(Status = Status.NeedsDocumentation)]" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="public static class ThreadExtensions" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Tries to set the priority of the specified thread. Validates that &lt;paramref name=&quot;thread&quot; /&gt; is not null." />
+      <LineAnalysis line="33" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;thread&quot;&gt;The thread whose priority is to be set. This parameter cannot be null.&lt;/param&gt;" />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;priority&quot;&gt;The desired &lt;see cref=&quot;ThreadPriority&quot;/&gt; for the thread.&lt;/param&gt;" />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if the priority was successfully set; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;thread&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;Thrown if &lt;paramref name=&quot;priority&quot;/&gt; is not a defined &lt;see cref=&quot;ThreadPriority&quot;/&gt; value.&lt;/exception&gt;" />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="40" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(&quot;Original Code from: https://github.com/dotnet/BenchmarkDotNet.&quot;, author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="41" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool TrySetPriority([DisallowNull] this Thread thread, ThreadPriority priority = ThreadPriority.Normal)" />
+      <LineAnalysis line="42" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="43" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;thread.ArgumentNotNull().Priority = priority.ArgumentDefined();" />
+      <LineAnalysis line="44" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="45" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return true;" />
+      <LineAnalysis line="46" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="47" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="48" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="49" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Waits for a certain amount of time. Does not use a timer, thus no need to call Dispose." />
+      <LineAnalysis line="50" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;thread&quot; /&gt; is not null." />
+      <LineAnalysis line="51" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="52" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;thread&quot;&gt;The &lt;see cref=&quot;Thread&quot;/&gt; to wait on. This parameter cannot be null.&lt;/param&gt;" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;interval&quot;&gt;The wait interval.&lt;/param&gt;" />
+      <LineAnalysis line="54" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;thread&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="55" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="56" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(WaitUntil), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="57" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static void WaitUntil([DisallowNull] this Thread thread, TimeSpan interval)" />
+      <LineAnalysis line="58" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="59" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;WaitUntil(thread.ArgumentNotNull(), interval, 0);" />
+      <LineAnalysis line="60" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="61" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="62" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="63" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Waits until the specified time interval has passed or the specified number of wait iterations has been completed, whichever comes first." />
+      <LineAnalysis line="64" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// This method performs a spin-wait for a specified number of iterations and checks the thread's alive status." />
+      <LineAnalysis line="65" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="66" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;thread&quot;&gt;The &lt;see cref=&quot;Thread&quot;/&gt; to monitor. This parameter cannot be null.&lt;/param&gt;" />
+      <LineAnalysis line="67" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;interval&quot;&gt;The maximum time to wait.&lt;/param&gt;" />
+      <LineAnalysis line="68" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;waitIterations&quot;&gt;The number of iterations to perform a spin-wait. Must be zero or greater.&lt;/param&gt;" />
+      <LineAnalysis line="69" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;thread&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="70" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;Thrown if &lt;paramref name=&quot;waitIterations&quot;/&gt; is less than zero.&lt;/exception&gt;" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="72" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(WaitUntil), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="73" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static void WaitUntil([DisallowNull] this Thread thread, TimeSpan interval, int waitIterations)" />
+      <LineAnalysis line="74" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="75" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;thread = thread.ArgumentNotNull();" />
+      <LineAnalysis line="76" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;waitIterations = waitIterations.ArgumentInRange(min: 0);" />
+      <LineAnalysis line="77" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="78" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var stopAt = Clock.LocalTime.Add(interval);" />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="80" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;while (thread.IsAlive &amp;&amp; Clock.LocalTime &lt; stopAt)" />
+      <LineAnalysis line="81" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="82" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Thread.SpinWait(waitIterations);" />
+      <LineAnalysis line="83" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="84" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="85" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="86" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

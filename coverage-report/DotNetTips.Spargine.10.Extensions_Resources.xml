@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Extensions.Properties.Resources">
+  <Summary>
+    <Class>DotNetTips.Spargine.Extensions.Properties.Resources</Class>
+    <Assembly>DotNetTips.Spargine.10.Extensions</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/Properties/Resources.Designer.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>183</Uncoveredlines>
+    <Coverablelines>183</Coverablelines>
+    <Totallines>567</Totallines>
+    <Linecoverage>0</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>2</Totalbranches>
+    <Branchcoverage>0</Branchcoverage>
+    <Coveredmethods>0</Coveredmethods>
+    <Fullcoveredmethods>0</Fullcoveredmethods>
+    <Totalmethods>60</Totalmethods>
+    <Methodcoverage>0</Methodcoverage>
+    <Fullmethodcoverage>0</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="ctor">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_ResourceManager">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="get_Culture">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_Culture">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_AndLowerCase">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_ArraysAreFixedSize">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Bytes">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_CollectionIsEmpty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_DestinationStreamIsNotWritable">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_EntityStateNotDefined">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_EB">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Eight">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Eighteen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Eighty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Eleven">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_FailedToSetUpHighPriority">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_FailedToSetUpLowPriority">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_FalseLowerCase">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Fifteen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Fifty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Five">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Forty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Four">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Fourteen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_GB">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_HttpRequestHasNoBody">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Hundred">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_InvalidNumberFormat">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_KB">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_MB">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Million">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Minus">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Nine">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Nineteen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Ninety">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_One">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_PB">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_ResourceWasNotFound">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Seven">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Seventeen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Seventy">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Six">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Sixteen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Sixty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_TB">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Ten">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_TheInputStringIsNotAValidBase64String">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_TheOperationHasBeenCanceled">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_TheOperationHasTimedOut">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Thirteen">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Thirty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Thousand">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Three">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_TrueLowerCase">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Twelve">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Twenty">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Two">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_ValueMustBeInTheRange13999">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Yesterday">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Zero">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/Properties/Resources.Designer.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//------------------------------------------------------------------------------" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;auto-generated&gt;" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     This code was generated by a tool." />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     Runtime Version:4.0.30319.42000" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     Changes to this file may cause incorrect behavior and will be lost if" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     the code is regenerated." />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/auto-generated&gt;" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//------------------------------------------------------------------------------" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Extensions.Properties {" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    using System;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    /// &lt;summary&gt;" />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    ///   A strongly-typed resource class, for looking up localized strings, etc." />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    /// &lt;/summary&gt;" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    // This class was auto-generated by the StronglyTypedResourceBuilder" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    // class via a tool like ResGen or Visual Studio." />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    // To add or remove a member, edit your .ResX file then rerun ResGen" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    // with the /str option, or rebuild your VS project." />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(&quot;System.Resources.Tools.StronglyTypedResourceBuilder&quot;, &quot;18.0.0.0&quot;)]" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    internal class Resources {" />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        private static global::System.Resources.ResourceManager resourceMan;" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        private static global::System.Globalization.CultureInfo resourceCulture;" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute(&quot;Microsoft.Performance&quot;, &quot;CA1811:AvoidUncalledPrivateCode&quot;)]" />
+      <LineAnalysis line="32" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        internal Resources() {" />
+      <LineAnalysis line="33" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Returns the cached ResourceManager instance used by this class." />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]" />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static global::System.Resources.ResourceManager ResourceManager {" />
+      <LineAnalysis line="40" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="41" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="                if (object.ReferenceEquals(resourceMan, null)) {" />
+      <LineAnalysis line="42" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager(&quot;DotNetTips.Spargine.Extensions.Properties.Resources&quot;, typeof(Resources).Assembly);" />
+      <LineAnalysis line="43" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                    resourceMan = temp;" />
+      <LineAnalysis line="44" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                }" />
+      <LineAnalysis line="45" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return resourceMan;" />
+      <LineAnalysis line="46" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="47" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="48" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="49" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="50" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Overrides the current thread's CurrentUICulture property for all" />
+      <LineAnalysis line="51" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   resource lookups using this strongly typed resource class." />
+      <LineAnalysis line="52" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]" />
+      <LineAnalysis line="54" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static global::System.Globalization.CultureInfo Culture {" />
+      <LineAnalysis line="55" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="56" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return resourceCulture;" />
+      <LineAnalysis line="57" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="58" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            set {" />
+      <LineAnalysis line="59" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                resourceCulture = value;" />
+      <LineAnalysis line="60" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="61" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="62" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="63" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="64" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to and." />
+      <LineAnalysis line="65" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="66" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string AndLowerCase {" />
+      <LineAnalysis line="67" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="68" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;AndLowerCase&quot;, resourceCulture);" />
+      <LineAnalysis line="69" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="70" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="72" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="73" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Arrays are fixed-size and do not support adding items.." />
+      <LineAnalysis line="74" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="75" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string ArraysAreFixedSize {" />
+      <LineAnalysis line="76" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="77" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;ArraysAreFixedSize&quot;, resourceCulture);" />
+      <LineAnalysis line="78" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="80" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="81" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="82" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Bytes." />
+      <LineAnalysis line="83" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="84" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Bytes {" />
+      <LineAnalysis line="85" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="86" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Bytes&quot;, resourceCulture);" />
+      <LineAnalysis line="87" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="88" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="89" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="90" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="91" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Collection is empty.." />
+      <LineAnalysis line="92" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="93" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string CollectionIsEmpty {" />
+      <LineAnalysis line="94" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="95" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;CollectionIsEmpty&quot;, resourceCulture);" />
+      <LineAnalysis line="96" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="97" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="98" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="99" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="100" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to The destination stream is not writable.." />
+      <LineAnalysis line="101" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="102" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string DestinationStreamIsNotWritable {" />
+      <LineAnalysis line="103" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="104" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;DestinationStreamIsNotWritable&quot;, resourceCulture);" />
+      <LineAnalysis line="105" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="106" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="107" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="108" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="109" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to The specified EntityState value is not defined.." />
+      <LineAnalysis line="110" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="111" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string EntityStateNotDefined {" />
+      <LineAnalysis line="112" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="113" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;EntityStateNotDefined&quot;, resourceCulture);" />
+      <LineAnalysis line="114" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="115" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="116" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="117" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="118" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to EB." />
+      <LineAnalysis line="119" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="120" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string EB {" />
+      <LineAnalysis line="121" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="122" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;EB&quot;, resourceCulture);" />
+      <LineAnalysis line="123" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="124" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="125" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="126" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="127" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Eight." />
+      <LineAnalysis line="128" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="129" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Eight {" />
+      <LineAnalysis line="130" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="131" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Eight&quot;, resourceCulture);" />
+      <LineAnalysis line="132" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="133" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="134" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="135" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="136" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Eighteen." />
+      <LineAnalysis line="137" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="138" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Eighteen {" />
+      <LineAnalysis line="139" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="140" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Eighteen&quot;, resourceCulture);" />
+      <LineAnalysis line="141" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="142" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="143" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="144" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="145" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Eighty." />
+      <LineAnalysis line="146" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="147" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Eighty {" />
+      <LineAnalysis line="148" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="149" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Eighty&quot;, resourceCulture);" />
+      <LineAnalysis line="150" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="151" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="152" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="153" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="154" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Eleven." />
+      <LineAnalysis line="155" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="156" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Eleven {" />
+      <LineAnalysis line="157" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="158" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Eleven&quot;, resourceCulture);" />
+      <LineAnalysis line="159" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="160" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="161" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="162" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="163" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Failed to set up high priority. Make sure you have the right permissions.." />
+      <LineAnalysis line="164" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="165" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string FailedToSetUpHighPriority {" />
+      <LineAnalysis line="166" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="167" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;FailedToSetUpHighPriority&quot;, resourceCulture);" />
+      <LineAnalysis line="168" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="169" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="170" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="171" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="172" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Failed to set up low priority. Make sure you have the right permissions.." />
+      <LineAnalysis line="173" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="174" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string FailedToSetUpLowPriority {" />
+      <LineAnalysis line="175" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="176" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;FailedToSetUpLowPriority&quot;, resourceCulture);" />
+      <LineAnalysis line="177" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="178" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="179" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="180" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="181" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to false." />
+      <LineAnalysis line="182" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="183" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string FalseLowerCase {" />
+      <LineAnalysis line="184" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="185" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;FalseLowerCase&quot;, resourceCulture);" />
+      <LineAnalysis line="186" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="187" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="188" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="189" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="190" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Fifteen." />
+      <LineAnalysis line="191" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="192" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Fifteen {" />
+      <LineAnalysis line="193" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="194" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Fifteen&quot;, resourceCulture);" />
+      <LineAnalysis line="195" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="196" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="197" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="198" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="199" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Fifty." />
+      <LineAnalysis line="200" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="201" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Fifty {" />
+      <LineAnalysis line="202" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="203" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Fifty&quot;, resourceCulture);" />
+      <LineAnalysis line="204" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="205" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="206" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="207" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="208" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Five." />
+      <LineAnalysis line="209" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="210" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Five {" />
+      <LineAnalysis line="211" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="212" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Five&quot;, resourceCulture);" />
+      <LineAnalysis line="213" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="214" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="215" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="216" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="217" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Forty." />
+      <LineAnalysis line="218" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="219" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Forty {" />
+      <LineAnalysis line="220" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="221" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Forty&quot;, resourceCulture);" />
+      <LineAnalysis line="222" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="223" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="224" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="225" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="226" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Four." />
+      <LineAnalysis line="227" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="228" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Four {" />
+      <LineAnalysis line="229" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="230" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Four&quot;, resourceCulture);" />
+      <LineAnalysis line="231" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="232" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="233" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="234" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="235" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Fourteen." />
+      <LineAnalysis line="236" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="237" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Fourteen {" />
+      <LineAnalysis line="238" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="239" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Fourteen&quot;, resourceCulture);" />
+      <LineAnalysis line="240" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="241" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="242" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="243" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="244" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to GB." />
+      <LineAnalysis line="245" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="246" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string GB {" />
+      <LineAnalysis line="247" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="248" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;GB&quot;, resourceCulture);" />
+      <LineAnalysis line="249" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="250" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="251" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="252" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="253" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to HttpRequest has no body.." />
+      <LineAnalysis line="254" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="255" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string HttpRequestHasNoBody {" />
+      <LineAnalysis line="256" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="257" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;HttpRequestHasNoBody&quot;, resourceCulture);" />
+      <LineAnalysis line="258" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="259" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="260" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="261" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="262" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Hundred." />
+      <LineAnalysis line="263" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="264" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Hundred {" />
+      <LineAnalysis line="265" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="266" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Hundred&quot;, resourceCulture);" />
+      <LineAnalysis line="267" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="268" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="269" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="270" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="271" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Invalid number format.." />
+      <LineAnalysis line="272" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="273" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string InvalidNumberFormat {" />
+      <LineAnalysis line="274" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="275" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;InvalidNumberFormat&quot;, resourceCulture);" />
+      <LineAnalysis line="276" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="277" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="278" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="279" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="280" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to KB." />
+      <LineAnalysis line="281" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="282" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string KB {" />
+      <LineAnalysis line="283" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="284" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;KB&quot;, resourceCulture);" />
+      <LineAnalysis line="285" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="286" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="287" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="288" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="289" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to MB." />
+      <LineAnalysis line="290" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="291" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string MB {" />
+      <LineAnalysis line="292" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="293" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;MB&quot;, resourceCulture);" />
+      <LineAnalysis line="294" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="295" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="296" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="297" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="298" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Million." />
+      <LineAnalysis line="299" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="300" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Million {" />
+      <LineAnalysis line="301" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="302" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Million&quot;, resourceCulture);" />
+      <LineAnalysis line="303" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="304" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="305" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="306" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="307" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Minus." />
+      <LineAnalysis line="308" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="309" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Minus {" />
+      <LineAnalysis line="310" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="311" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Minus&quot;, resourceCulture);" />
+      <LineAnalysis line="312" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="313" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="314" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="315" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="316" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Nine." />
+      <LineAnalysis line="317" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="318" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Nine {" />
+      <LineAnalysis line="319" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="320" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Nine&quot;, resourceCulture);" />
+      <LineAnalysis line="321" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="322" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="323" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="324" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="325" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Nineteen." />
+      <LineAnalysis line="326" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="327" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Nineteen {" />
+      <LineAnalysis line="328" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="329" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Nineteen&quot;, resourceCulture);" />
+      <LineAnalysis line="330" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="331" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="332" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="333" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="334" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Ninety." />
+      <LineAnalysis line="335" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="336" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Ninety {" />
+      <LineAnalysis line="337" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="338" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Ninety&quot;, resourceCulture);" />
+      <LineAnalysis line="339" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="340" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="341" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="342" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="343" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to One." />
+      <LineAnalysis line="344" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="345" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string One {" />
+      <LineAnalysis line="346" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="347" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;One&quot;, resourceCulture);" />
+      <LineAnalysis line="348" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="349" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="350" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="351" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="352" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to PB." />
+      <LineAnalysis line="353" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="354" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string PB {" />
+      <LineAnalysis line="355" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="356" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;PB&quot;, resourceCulture);" />
+      <LineAnalysis line="357" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="358" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="359" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="360" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="361" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Resource {0} was not found. ." />
+      <LineAnalysis line="362" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="363" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string ResourceWasNotFound {" />
+      <LineAnalysis line="364" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="365" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;ResourceWasNotFound&quot;, resourceCulture);" />
+      <LineAnalysis line="366" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="367" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="368" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="369" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="370" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Seven." />
+      <LineAnalysis line="371" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="372" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Seven {" />
+      <LineAnalysis line="373" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="374" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Seven&quot;, resourceCulture);" />
+      <LineAnalysis line="375" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="376" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="377" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="378" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="379" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Seventeen." />
+      <LineAnalysis line="380" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="381" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Seventeen {" />
+      <LineAnalysis line="382" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="383" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Seventeen&quot;, resourceCulture);" />
+      <LineAnalysis line="384" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="385" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="386" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="387" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="388" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Seventy." />
+      <LineAnalysis line="389" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="390" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Seventy {" />
+      <LineAnalysis line="391" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="392" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Seventy&quot;, resourceCulture);" />
+      <LineAnalysis line="393" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="394" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="395" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="396" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="397" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Six." />
+      <LineAnalysis line="398" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="399" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Six {" />
+      <LineAnalysis line="400" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="401" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Six&quot;, resourceCulture);" />
+      <LineAnalysis line="402" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="403" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="404" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="405" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="406" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Sixteen." />
+      <LineAnalysis line="407" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="408" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Sixteen {" />
+      <LineAnalysis line="409" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="410" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Sixteen&quot;, resourceCulture);" />
+      <LineAnalysis line="411" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="412" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="413" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="414" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="415" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Sixty." />
+      <LineAnalysis line="416" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="417" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Sixty {" />
+      <LineAnalysis line="418" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="419" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Sixty&quot;, resourceCulture);" />
+      <LineAnalysis line="420" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="421" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="422" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="423" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="424" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to TB." />
+      <LineAnalysis line="425" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="426" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string TB {" />
+      <LineAnalysis line="427" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="428" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;TB&quot;, resourceCulture);" />
+      <LineAnalysis line="429" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="430" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="431" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="432" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="433" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Ten." />
+      <LineAnalysis line="434" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="435" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Ten {" />
+      <LineAnalysis line="436" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="437" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Ten&quot;, resourceCulture);" />
+      <LineAnalysis line="438" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="439" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="440" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="441" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="442" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to The input string is not a valid Base64 String.." />
+      <LineAnalysis line="443" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="444" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string TheInputStringIsNotAValidBase64String {" />
+      <LineAnalysis line="445" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="446" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;TheInputStringIsNotAValidBase64String&quot;, resourceCulture);" />
+      <LineAnalysis line="447" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="448" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="449" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="450" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="451" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to The operation has been canceled.." />
+      <LineAnalysis line="452" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="453" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string TheOperationHasBeenCanceled {" />
+      <LineAnalysis line="454" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="455" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;TheOperationHasBeenCanceled&quot;, resourceCulture);" />
+      <LineAnalysis line="456" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="457" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="458" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="459" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="460" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to The operation has timed out.." />
+      <LineAnalysis line="461" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="462" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string TheOperationHasTimedOut {" />
+      <LineAnalysis line="463" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="464" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;TheOperationHasTimedOut&quot;, resourceCulture);" />
+      <LineAnalysis line="465" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="466" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="467" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="468" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="469" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Thirteen." />
+      <LineAnalysis line="470" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="471" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Thirteen {" />
+      <LineAnalysis line="472" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="473" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Thirteen&quot;, resourceCulture);" />
+      <LineAnalysis line="474" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="475" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="476" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="477" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="478" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Thirty." />
+      <LineAnalysis line="479" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="480" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Thirty {" />
+      <LineAnalysis line="481" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="482" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Thirty&quot;, resourceCulture);" />
+      <LineAnalysis line="483" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="484" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="485" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="486" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="487" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Thousand." />
+      <LineAnalysis line="488" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="489" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Thousand {" />
+      <LineAnalysis line="490" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="491" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Thousand&quot;, resourceCulture);" />
+      <LineAnalysis line="492" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="493" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="494" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="495" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="496" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Three." />
+      <LineAnalysis line="497" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="498" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Three {" />
+      <LineAnalysis line="499" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="500" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Three&quot;, resourceCulture);" />
+      <LineAnalysis line="501" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="502" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="503" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="504" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="505" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to true." />
+      <LineAnalysis line="506" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="507" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string TrueLowerCase {" />
+      <LineAnalysis line="508" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="509" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;TrueLowerCase&quot;, resourceCulture);" />
+      <LineAnalysis line="510" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="511" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="512" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="513" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="514" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Twelve." />
+      <LineAnalysis line="515" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="516" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Twelve {" />
+      <LineAnalysis line="517" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="518" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Twelve&quot;, resourceCulture);" />
+      <LineAnalysis line="519" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="520" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="521" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="522" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="523" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Twenty." />
+      <LineAnalysis line="524" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="525" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Twenty {" />
+      <LineAnalysis line="526" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="527" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Twenty&quot;, resourceCulture);" />
+      <LineAnalysis line="528" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="529" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="530" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="531" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="532" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Two." />
+      <LineAnalysis line="533" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="534" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Two {" />
+      <LineAnalysis line="535" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="536" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Two&quot;, resourceCulture);" />
+      <LineAnalysis line="537" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="538" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="539" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="540" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="541" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Value must be in the range 1 - 3999.." />
+      <LineAnalysis line="542" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="543" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string ValueMustBeInTheRange13999 {" />
+      <LineAnalysis line="544" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="545" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;ValueMustBeInTheRange13999&quot;, resourceCulture);" />
+      <LineAnalysis line="546" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="547" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="548" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="549" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="550" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Yesterday." />
+      <LineAnalysis line="551" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="552" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Yesterday {" />
+      <LineAnalysis line="553" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="554" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Yesterday&quot;, resourceCulture);" />
+      <LineAnalysis line="555" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="556" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="557" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="558" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;summary&gt;" />
+      <LineAnalysis line="559" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        ///   Looks up a localized string similar to Zero." />
+      <LineAnalysis line="560" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        /// &lt;/summary&gt;" />
+      <LineAnalysis line="561" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        internal static string Zero {" />
+      <LineAnalysis line="562" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            get {" />
+      <LineAnalysis line="563" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                return ResourceManager.GetString(&quot;Zero&quot;, resourceCulture);" />
+      <LineAnalysis line="564" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="565" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="566" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    }" />
+      <LineAnalysis line="567" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

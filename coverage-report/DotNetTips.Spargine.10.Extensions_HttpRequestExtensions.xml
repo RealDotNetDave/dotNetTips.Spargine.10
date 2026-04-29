@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Extensions.HttpRequestExtensions">
+  <Summary>
+    <Class>DotNetTips.Spargine.Extensions.HttpRequestExtensions</Class>
+    <Assembly>DotNetTips.Spargine.10.Extensions</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/HttpRequestExtensions.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>87</Uncoveredlines>
+    <Coverablelines>87</Coverablelines>
+    <Totallines>299</Totallines>
+    <Linecoverage>0</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>16</Totalbranches>
+    <Branchcoverage>0</Branchcoverage>
+    <Coveredmethods>0</Coveredmethods>
+    <Fullcoveredmethods>0</Fullcoveredmethods>
+    <Totalmethods>11</Totalmethods>
+    <Methodcoverage>0</Methodcoverage>
+    <Fullmethodcoverage>0</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="AddRequestId">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="GetAbsoluteUri">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="GetBearerToken">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="GetHeaderValue">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="GetRawBodyBytesAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="GetRawBodyStringAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="HasJsonContentType">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="IsContentType">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="TryGetBody">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="TryGetBody">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="GetBytes">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/HttpRequestExtensions.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Assembly         : DotNetTips.Spargine.10.Extensions" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Author           : David McCarter" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Created          : 06-01-2018" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified By : Copilot Agent" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified On : 04-06-2026" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;copyright file=&quot;HttpRequestExtensions.cs&quot; company=&quot;dotNetTips.com - McCarter Consulting&quot;&gt;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     David McCarter - dotNetTips.com" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/copyright&gt;" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;summary&gt;Extension methods designed for HttpRequest.&lt;/summary&gt;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.CodeAnalysis;" />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.Contracts;" />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Net.Http.Headers;" />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Runtime.CompilerServices;" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Text;" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Text.Json;" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core;" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Extensions.Properties;" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using Microsoft.AspNetCore.Http;" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using Microsoft.Extensions.Primitives;" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)" />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Extensions;" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;summary&gt;" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Provides extension methods for &lt;see cref=&quot;HttpRequest&quot;/&gt; to enhance its functionality." />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// These methods include retrieving the raw body as a byte array or string, and trying to get the body directly into a specified type." />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/summary&gt;" />
+      <LineAnalysis line="33" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;remarks&gt;" />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// The extension methods in this class aim to simplify the process of working with the request body of &lt;see cref=&quot;HttpRequest&quot;/&gt;." />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// They provide convenient ways to access the raw body for various purposes such as logging, validation, or further processing." />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/remarks&gt;" />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Information(Status = Status.NeedsDocumentation)]" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="public static class HttpRequestExtensions" />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="40" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="41" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// The &quot;Bearer &quot; prefix used to identify Bearer tokens in the Authorization header." />
+      <LineAnalysis line="42" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="43" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;private const string BearerPrefix = &quot;Bearer &quot;;" />
+      <LineAnalysis line="44" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="45" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="46" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Adds a unique request identifier to the HTTP headers." />
+      <LineAnalysis line="47" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="48" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;headers&quot;&gt;The HTTP headers to which the request identifier will be added.&lt;/param&gt;" />
+      <LineAnalysis line="49" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The generated unique request identifier.&lt;/returns&gt;" />
+      <LineAnalysis line="50" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;headers&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="51" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="52" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(AddRequestId), author: &quot;David McCarter&quot;, createdOn: &quot;3/18/2024&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="54" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static string AddRequestId([DisallowNull] this HttpRequestHeaders headers)" />
+      <LineAnalysis line="55" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="56" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;headers = headers.ArgumentNotNull();" />
+      <LineAnalysis line="57" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="58" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var id = Ulid.NewUlid().ToString();" />
+      <LineAnalysis line="59" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="60" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;headers.Add(&quot;X-Request-UUID&quot;, id);" />
+      <LineAnalysis line="61" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="62" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return id;" />
+      <LineAnalysis line="63" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="64" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="65" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="66" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Builds the absolute &lt;see cref=&quot;Uri&quot;/&gt; from the request's scheme, host, path base, path, and query string." />
+      <LineAnalysis line="67" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot;/&gt; is not null." />
+      <LineAnalysis line="68" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="69" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The &lt;see cref=&quot;HttpRequest&quot;/&gt; from which to build the absolute URI.&lt;/param&gt;" />
+      <LineAnalysis line="70" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The fully qualified absolute &lt;see cref=&quot;Uri&quot;/&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="72" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="73" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="74" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="75" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetAbsoluteUri), &quot;David McCarter&quot;, &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="76" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static Uri GetAbsoluteUri([DisallowNull] this HttpRequest request)" />
+      <LineAnalysis line="77" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="78" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;request = request.ArgumentNotNull();" />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="80" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return new Uri(string.Concat(" />
+      <LineAnalysis line="81" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;request.Scheme," />
+      <LineAnalysis line="82" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&quot;://&quot;," />
+      <LineAnalysis line="83" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;request.Host.Value," />
+      <LineAnalysis line="84" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;request.PathBase.Value," />
+      <LineAnalysis line="85" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;request.Path.Value," />
+      <LineAnalysis line="86" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;request.QueryString.Value));" />
+      <LineAnalysis line="87" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="88" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="89" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="90" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Extracts the Bearer token from the Authorization header of the request." />
+      <LineAnalysis line="91" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Returns &lt;see langword=&quot;null&quot;/&gt; if the Authorization header is missing or does not use the Bearer scheme." />
+      <LineAnalysis line="92" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot;/&gt; is not null." />
+      <LineAnalysis line="93" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="94" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The &lt;see cref=&quot;HttpRequest&quot;/&gt; from which to extract the Bearer token.&lt;/param&gt;" />
+      <LineAnalysis line="95" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The Bearer token as a &lt;see cref=&quot;string&quot;/&gt;, or &lt;see langword=&quot;null&quot;/&gt; if not present.&lt;/returns&gt;" />
+      <LineAnalysis line="96" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="97" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="98" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="99" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetBearerToken), &quot;David McCarter&quot;, &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="100" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static string? GetBearerToken([DisallowNull] this HttpRequest request)" />
+      <LineAnalysis line="101" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="102" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var authorization = request.ArgumentNotNull().Headers.Authorization;" />
+      <LineAnalysis line="103" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="104" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;if (authorization == StringValues.Empty)" />
+      <LineAnalysis line="105" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="106" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return null;" />
+      <LineAnalysis line="107" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="108" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="109" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var headerValue = authorization.ToString();" />
+      <LineAnalysis line="110" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="111" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;return headerValue.StartsWith(BearerPrefix, StringComparison.OrdinalIgnoreCase)" />
+      <LineAnalysis line="112" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;? headerValue[BearerPrefix.Length..].Trim()" />
+      <LineAnalysis line="113" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;: null;" />
+      <LineAnalysis line="114" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="115" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="116" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="117" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Retrieves the value of a specific request header by name." />
+      <LineAnalysis line="118" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Returns &lt;see langword=&quot;null&quot;/&gt; if the header is not present." />
+      <LineAnalysis line="119" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot;/&gt; and &lt;paramref name=&quot;headerName&quot;/&gt; are not null or empty." />
+      <LineAnalysis line="120" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="121" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The &lt;see cref=&quot;HttpRequest&quot;/&gt; from which to read the header.&lt;/param&gt;" />
+      <LineAnalysis line="122" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;headerName&quot;&gt;The name of the header to retrieve.&lt;/param&gt;" />
+      <LineAnalysis line="123" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The header value as a &lt;see cref=&quot;string&quot;/&gt;, or &lt;see langword=&quot;null&quot;/&gt; if not found.&lt;/returns&gt;" />
+      <LineAnalysis line="124" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="125" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentException&quot;&gt;Thrown if &lt;paramref name=&quot;headerName&quot;/&gt; is null or whitespace.&lt;/exception&gt;" />
+      <LineAnalysis line="126" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="127" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="128" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetHeaderValue), &quot;David McCarter&quot;, &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="129" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static string? GetHeaderValue([DisallowNull] this HttpRequest request, [DisallowNull] string headerName)" />
+      <LineAnalysis line="130" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="131" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;ArgumentException.ThrowIfNullOrWhiteSpace(headerName);" />
+      <LineAnalysis line="132" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="133" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var values = request.ArgumentNotNull().Headers[headerName];" />
+      <LineAnalysis line="134" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="135" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;return values != StringValues.Empty ? values.ToString() : null;" />
+      <LineAnalysis line="136" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="137" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="138" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="139" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Retrieves the raw body as a byte array from the &lt;see cref=&quot;HttpRequest&quot; /&gt; body stream." />
+      <LineAnalysis line="140" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot; /&gt; is not null." />
+      <LineAnalysis line="141" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="142" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The request.&lt;/param&gt;" />
+      <LineAnalysis line="143" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="144" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;Task&amp;lt;System.Byte[]&amp;gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="145" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="146" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;remarks&gt;Make sure to call .Dispose on Task,&lt;/remarks&gt;" />
+      <LineAnalysis line="147" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="148" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetRawBodyBytesAsync), &quot;David McCarter&quot;, &quot;11/07/2023&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="149" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;byte[]&gt; GetRawBodyBytesAsync([DisallowNull] this HttpRequest request, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="150" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="151" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;request = request.ArgumentNotNull();" />
+      <LineAnalysis line="152" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="153" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;using (var ms = new MemoryStream(2048))" />
+      <LineAnalysis line="154" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="155" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await request.Body.CopyToAsync(ms, cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="156" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="157" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return ms.ToArray();" />
+      <LineAnalysis line="158" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="159" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="160" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="161" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="162" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Retrieve the raw body as a string from the &lt;see cref=&quot;HttpRequest&quot; /&gt; body stream." />
+      <LineAnalysis line="163" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot; /&gt; and &lt;paramref name=&quot;encoding&quot; /&gt; is not null." />
+      <LineAnalysis line="164" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="165" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;Request instance to apply to.&lt;/param&gt;" />
+      <LineAnalysis line="166" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;encoding&quot;&gt;Optional - Encoding, defaults to UTF8.&lt;/param&gt;" />
+      <LineAnalysis line="167" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="168" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;Task&amp;lt;System.String&amp;gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="169" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; or &lt;paramref name=&quot;encoding&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="170" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;remarks&gt;Make sure to call .Dispose on Task,&lt;/remarks&gt;" />
+      <LineAnalysis line="171" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="172" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetRawBodyStringAsync), &quot;David McCarter&quot;, &quot;11/07/2023&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="173" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;string&gt; GetRawBodyStringAsync([DisallowNull] this HttpRequest request, [DisallowNull] Encoding encoding, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="174" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="175" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;request = request.ArgumentNotNull();" />
+      <LineAnalysis line="176" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;encoding = encoding.ArgumentNotNull();" />
+      <LineAnalysis line="177" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="178" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;using (var reader = new StreamReader(request.Body, encoding))" />
+      <LineAnalysis line="179" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="180" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="181" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="182" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="183" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="184" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="185" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Determines whether the request has a JSON content type (application/json)." />
+      <LineAnalysis line="186" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot;/&gt; is not null." />
+      <LineAnalysis line="187" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="188" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The &lt;see cref=&quot;HttpRequest&quot;/&gt; to check.&lt;/param&gt;" />
+      <LineAnalysis line="189" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;see langword=&quot;true&quot;/&gt; if the content type starts with &quot;application/json&quot;; otherwise, &lt;see langword=&quot;false&quot;/&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="190" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="191" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="192" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="193" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(HasJsonContentType), &quot;David McCarter&quot;, &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="194" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool HasJsonContentType([DisallowNull] this HttpRequest request)" />
+      <LineAnalysis line="195" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="196" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var contentType = request.ArgumentNotNull().ContentType;" />
+      <LineAnalysis line="197" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="198" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;return contentType is not null &amp;&amp;" />
+      <LineAnalysis line="199" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;contentType.StartsWith(&quot;application/json&quot;, StringComparison.OrdinalIgnoreCase);" />
+      <LineAnalysis line="200" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="201" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="202" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="203" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Determines whether the request content type matches the specified value using an ordinal case-insensitive comparison." />
+      <LineAnalysis line="204" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot;/&gt; and &lt;paramref name=&quot;contentType&quot;/&gt; are not null or empty." />
+      <LineAnalysis line="205" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="206" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The &lt;see cref=&quot;HttpRequest&quot;/&gt; to check.&lt;/param&gt;" />
+      <LineAnalysis line="207" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;contentType&quot;&gt;The content type to compare against (e.g., &quot;text/plain&quot;).&lt;/param&gt;" />
+      <LineAnalysis line="208" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;see langword=&quot;true&quot;/&gt; if the request content type starts with &lt;paramref name=&quot;contentType&quot;/&gt;; otherwise, &lt;see langword=&quot;false&quot;/&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="209" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if &lt;paramref name=&quot;request&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="210" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentException&quot;&gt;Thrown if &lt;paramref name=&quot;contentType&quot;/&gt; is null or whitespace.&lt;/exception&gt;" />
+      <LineAnalysis line="211" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="212" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="213" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(IsContentType), &quot;David McCarter&quot;, &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="214" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool IsContentType([DisallowNull] this HttpRequest request, [DisallowNull] string contentType)" />
+      <LineAnalysis line="215" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="216" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;ArgumentException.ThrowIfNullOrWhiteSpace(contentType);" />
+      <LineAnalysis line="217" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="218" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var requestContentType = request.ArgumentNotNull().ContentType;" />
+      <LineAnalysis line="219" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="220" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;return requestContentType is not null &amp;&amp;" />
+      <LineAnalysis line="221" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;requestContentType.StartsWith(contentType, StringComparison.OrdinalIgnoreCase);" />
+      <LineAnalysis line="222" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="223" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="224" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="225" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Tries the get &lt;see cref=&quot;HttpRequest&quot; /&gt; body." />
+      <LineAnalysis line="226" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot; /&gt; is not null." />
+      <LineAnalysis line="227" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="228" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;Generic type parameter.&lt;/typeparam&gt;" />
+      <LineAnalysis line="229" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The HTTPRequest object.&lt;/param&gt;" />
+      <LineAnalysis line="230" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;value&quot;&gt;The return value.&lt;/param&gt;" />
+      <LineAnalysis line="231" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if XXXX, &lt;c&gt;false&lt;/c&gt; otherwise.&lt;/returns&gt;" />
+      <LineAnalysis line="232" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;request&lt;/exception&gt;" />
+      <LineAnalysis line="233" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;remarks&gt;Original code by Jerry Nixon&lt;/remarks&gt;" />
+      <LineAnalysis line="234" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="235" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[RequiresUnreferencedCode(&quot;JSON serialization and deserialization might require types that cannot be statically analyzed.&quot;)]" />
+      <LineAnalysis line="236" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(TryGetBody), &quot;David McCarter&quot;, &quot;11/07/2023&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="237" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool TryGetBody&lt;T&gt;([DisallowNull] this HttpRequest request, out T? value)" />
+      <LineAnalysis line="238" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="239" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;request = request.ArgumentNotNull();" />
+      <LineAnalysis line="240" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="241" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;if (!request.TryGetBody(out var bytes))" />
+      <LineAnalysis line="242" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="243" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;value = default;" />
+      <LineAnalysis line="244" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return false;" />
+      <LineAnalysis line="245" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="246" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="247" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;try" />
+      <LineAnalysis line="248" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="249" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;value = JsonSerializer.Deserialize&lt;T&gt;(BitConverter.ToString(bytes));" />
+      <LineAnalysis line="250" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="251" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return true;" />
+      <LineAnalysis line="252" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="253" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;catch (ArgumentNullException)" />
+      <LineAnalysis line="254" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="255" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;value = default;" />
+      <LineAnalysis line="256" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return false;" />
+      <LineAnalysis line="257" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="258" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="259" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="260" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="261" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Tries the get &lt;see cref=&quot;HttpRequest&quot; /&gt; body." />
+      <LineAnalysis line="262" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;request&quot; /&gt; is not null." />
+      <LineAnalysis line="263" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="264" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;request&quot;&gt;The HTTPRequest object.&lt;/param&gt;" />
+      <LineAnalysis line="265" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;value&quot;&gt;The return value.&lt;/param&gt;" />
+      <LineAnalysis line="266" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if XXXX, &lt;c&gt;false&lt;/c&gt; otherwise.&lt;/returns&gt;" />
+      <LineAnalysis line="267" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;request&lt;/exception&gt;" />
+      <LineAnalysis line="268" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentException&quot;&gt;HttpRequest has no body.&lt;/exception&gt;" />
+      <LineAnalysis line="269" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;remarks&gt;Original code by Jerry Nixon&lt;/remarks&gt;" />
+      <LineAnalysis line="270" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="271" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(TryGetBody), &quot;David McCarter&quot;, &quot;11/07/2023&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="272" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool TryGetBody([DisallowNull] this HttpRequest request, out byte[] value)" />
+      <LineAnalysis line="273" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="274" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;request = request.ArgumentNotNull();" />
+      <LineAnalysis line="275" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="276" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;if ((request.Body?.Length ?? 0) == 0)" />
+      <LineAnalysis line="277" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="278" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentException(Resources.HttpRequestHasNoBody, nameof(request.Body));" />
+      <LineAnalysis line="279" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="280" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="281" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;value = GetBytes(request);" />
+      <LineAnalysis line="282" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="283" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return value.IsNotEmpty();" />
+      <LineAnalysis line="284" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="285" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;static byte[] GetBytes(HttpRequest request)" />
+      <LineAnalysis line="286" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="287" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;byte[] bytes;" />
+      <LineAnalysis line="288" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="289" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;using (var ms = new MemoryStream())" />
+      <LineAnalysis line="290" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="291" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;request.Body.CopyTo(ms);" />
+      <LineAnalysis line="292" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;bytes = ms.ToArray();" />
+      <LineAnalysis line="293" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="294" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="295" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return bytes;" />
+      <LineAnalysis line="296" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="297" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="298" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="299" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

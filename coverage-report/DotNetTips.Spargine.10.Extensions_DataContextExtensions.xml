@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Extensions.DataContextExtensions">
+  <Summary>
+    <Class>DotNetTips.Spargine.Extensions.DataContextExtensions</Class>
+    <Assembly>DotNetTips.Spargine.10.Extensions</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/DataContextExtensions.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>89</Uncoveredlines>
+    <Coverablelines>89</Coverablelines>
+    <Totallines>291</Totallines>
+    <Linecoverage>0</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>28</Totalbranches>
+    <Branchcoverage>0</Branchcoverage>
+    <Coveredmethods>0</Coveredmethods>
+    <Fullcoveredmethods>0</Fullcoveredmethods>
+    <Totalmethods>9</Totalmethods>
+    <Methodcoverage>0</Methodcoverage>
+    <Fullmethodcoverage>0</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="DeleteCollectionAsync">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="ExecuteInTransactionAsync">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="GetRecordCountAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="GetRecordCountAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="GetTrackedObjects">
+      <CrapScore>420</CrapScore>
+      <Cyclomaticcomplexity>20</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="HasRecordsAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="HasRecordsAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="InsertCollectionAsync">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="UpsertCollectionAsync">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/DataContextExtensions.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Assembly         : DotNetTips.Spargine.10.Extensions" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Author           : David McCarter" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Created          : 10-08-2020" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified By : Copilot Agent" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified On : 04-13-2026" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;copyright file=&quot;DataContextExtensions.cs&quot; company=&quot;dotNetTips.com - McCarter Consulting&quot;&gt;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     McCarter Consulting (David McCarter)" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/copyright&gt;" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;summary&gt;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Extension methods for the DataContext type, including HasRecordsAsync," />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// GetRecordCountAsync, InsertCollectionAsync, UpsertCollectionAsync," />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// DeleteCollectionAsync, ExecuteInTransactionAsync, and GetTrackedObjects." />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/summary&gt;" />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Collections;" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Collections.ObjectModel;" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.CodeAnalysis;" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.Contracts;" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Linq.Expressions;" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Reflection;" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core;" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using LinqToDB;" />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using LinqToDB.Async;" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Extensions;" />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;summary&gt;" />
+      <LineAnalysis line="33" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Extension methods for the &lt;see cref=&quot;DataContext&quot;/&gt; type, enhancing its functionality with additional utility methods." />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/summary&gt;" />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;remarks&gt;" />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// This class provides methods to interact with a &lt;see cref=&quot;DataContext&quot;/&gt; in ways that are not supported by default." />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Methods include batch insert, upsert, and delete operations for collections; record existence and count queries;" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// transaction-scoped execution; and retrieving tracked objects within a DataContext for debugging or auditing changes." />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Note: The use of reflection to access internal properties of DataContext may be subject to change in future versions of the framework." />
+      <LineAnalysis line="40" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/remarks&gt;" />
+      <LineAnalysis line="41" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Information(Status = Status.Available)]" />
+      <LineAnalysis line="42" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="public static class DataContextExtensions" />
+      <LineAnalysis line="43" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="44" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="45" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Deletes a collection of entities from the database." />
+      <LineAnalysis line="46" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; and &lt;paramref name=&quot;entities&quot;/&gt; are not null." />
+      <LineAnalysis line="47" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="48" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type to delete.&lt;/typeparam&gt;" />
+      <LineAnalysis line="49" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="50" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;entities&quot;&gt;The collection of entities to delete.&lt;/param&gt;" />
+      <LineAnalysis line="51" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="52" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The total number of entities successfully deleted.&lt;/returns&gt;" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; or &lt;paramref name=&quot;entities&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="54" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(DeleteCollectionAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="55" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;int&gt; DeleteCollectionAsync&lt;T&gt;([DisallowNull] this DataContext context, [DisallowNull] IEnumerable&lt;T&gt; entities, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="56" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="57" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="58" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="59" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;entities = entities.ArgumentNotNull();" />
+      <LineAnalysis line="60" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="61" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var deletedCount = 0;" />
+      <LineAnalysis line="62" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="63" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;foreach (var entity in entities)" />
+      <LineAnalysis line="64" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="65" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;cancellationToken.ThrowIfCancellationRequested();" />
+      <LineAnalysis line="66" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;deletedCount += await context.DeleteAsync(entity, token: cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="67" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="68" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="69" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return deletedCount;" />
+      <LineAnalysis line="70" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="72" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="73" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Executes the specified asynchronous delegate within a &lt;see cref=&quot;DataContext&quot;/&gt; transaction." />
+      <LineAnalysis line="74" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// The transaction is committed on success and rolled back on failure." />
+      <LineAnalysis line="75" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; and &lt;paramref name=&quot;action&quot;/&gt; are not null." />
+      <LineAnalysis line="76" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="77" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="78" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;action&quot;&gt;The asynchronous delegate to execute within the transaction.&lt;/param&gt;" />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="80" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A &lt;see cref=&quot;Task&quot;/&gt; representing the asynchronous operation.&lt;/returns&gt;" />
+      <LineAnalysis line="81" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; or &lt;paramref name=&quot;action&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="82" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ExecuteInTransactionAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="83" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task ExecuteInTransactionAsync([DisallowNull] this DataContext context, [DisallowNull] Func&lt;DataContext, CancellationToken, Task&gt; action, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="84" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="85" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="86" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;ArgumentNullException.ThrowIfNull(action);" />
+      <LineAnalysis line="87" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="88" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;var transaction = await context.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="89" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="90" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;try" />
+      <LineAnalysis line="91" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="92" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await action(context, cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="93" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await transaction.CommitTransactionAsync(cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="94" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="95" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;catch" />
+      <LineAnalysis line="96" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="97" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await transaction.RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="98" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;throw;" />
+      <LineAnalysis line="99" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="100" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;finally" />
+      <LineAnalysis line="101" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="102" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await ((IAsyncDisposable)transaction).DisposeAsync().ConfigureAwait(false);" />
+      <LineAnalysis line="103" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="104" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="105" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="106" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="107" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets the count of records in the table for the specified entity type." />
+      <LineAnalysis line="108" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; is not null." />
+      <LineAnalysis line="109" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="110" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type mapped to a table.&lt;/typeparam&gt;" />
+      <LineAnalysis line="111" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="112" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="113" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The number of records in the table.&lt;/returns&gt;" />
+      <LineAnalysis line="114" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="115" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetRecordCountAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="116" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;int&gt; GetRecordCountAsync&lt;T&gt;([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="117" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="118" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="119" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="120" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="121" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return await context.GetTable&lt;T&gt;().CountAsync(cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="122" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="123" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="124" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="125" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets the count of records matching the specified predicate in the table for the given entity type." />
+      <LineAnalysis line="126" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; and &lt;paramref name=&quot;predicate&quot;/&gt; are not null." />
+      <LineAnalysis line="127" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="128" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type mapped to a table.&lt;/typeparam&gt;" />
+      <LineAnalysis line="129" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="130" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;predicate&quot;&gt;An expression to filter the records to count.&lt;/param&gt;" />
+      <LineAnalysis line="131" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="132" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The number of records matching the predicate.&lt;/returns&gt;" />
+      <LineAnalysis line="133" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; or &lt;paramref name=&quot;predicate&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="134" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetRecordCountAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="135" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;int&gt; GetRecordCountAsync&lt;T&gt;([DisallowNull] this DataContext context, [DisallowNull] Expression&lt;Func&lt;T, bool&gt;&gt; predicate, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="136" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="137" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="138" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="139" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;ArgumentNullException.ThrowIfNull(predicate);" />
+      <LineAnalysis line="140" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="141" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return await context.GetTable&lt;T&gt;().CountAsync(predicate, cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="142" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="143" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="144" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="145" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets the tracked objects from a &lt;see cref=&quot;DataContext&quot; /&gt;." />
+      <LineAnalysis line="146" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot; /&gt; is not null" />
+      <LineAnalysis line="147" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="148" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;Generic type parameter.&lt;/typeparam&gt;" />
+      <LineAnalysis line="149" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The context.&lt;/param&gt;" />
+      <LineAnalysis line="150" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;ReadOnlyCollection&amp;lt;Tuple&amp;lt;T, T&amp;gt;&amp;gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="151" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;context&lt;/exception&gt;" />
+      <LineAnalysis line="152" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Pure]" />
+      <LineAnalysis line="153" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="154" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[RequiresUnreferencedCode(&quot;This method uses reflection to discover types at runtime.&quot;)]" />
+      <LineAnalysis line="155" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(GetTrackedObjects), author: &quot;David McCarter&quot;, createdOn: &quot;10/8/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="156" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static ReadOnlyCollection&lt;Tuple&lt;T, T&gt;&gt; GetTrackedObjects&lt;T&gt;([DisallowNull] this DataContext context)" />
+      <LineAnalysis line="157" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="158" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="159" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="160" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var result = new List&lt;Tuple&lt;T, T&gt;&gt;();" />
+      <LineAnalysis line="161" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var dcType = typeof(DataContext);" />
+      <LineAnalysis line="162" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="163" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;// Use reflection to get to the underlying items being tracked in the DataContext" />
+      <LineAnalysis line="164" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;const BindingFlags Bindings = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField;" />
+      <LineAnalysis line="165" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="166" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;var services = dcType.GetField(&quot;services&quot;, Bindings)?.GetValue(context);" />
+      <LineAnalysis line="167" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning disable IL2070 // GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode" />
+      <LineAnalysis line="168" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;var tracker = services!.GetType().GetField(&quot;tracker&quot;, Bindings)?.GetValue(services);" />
+      <LineAnalysis line="169" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;var trackerItems = (IDictionary)tracker?.GetType().GetField(&quot;items&quot;, Bindings)?.GetValue(tracker)!;" />
+      <LineAnalysis line="170" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning restore IL2070" />
+      <LineAnalysis line="171" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="172" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;// iterate through each update in context, adding only those that are of type T to the method's result variable" />
+      <LineAnalysis line="173" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;foreach (DictionaryEntry entry in trackerItems)" />
+      <LineAnalysis line="174" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="175" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning disable IL2070" />
+      <LineAnalysis line="176" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;var originalField = entry.Value?.GetType().GetField(&quot;original&quot;, Bindings);" />
+      <LineAnalysis line="177" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning restore IL2070" />
+      <LineAnalysis line="178" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="179" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;if (originalField is null)" />
+      <LineAnalysis line="180" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="181" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;continue;" />
+      <LineAnalysis line="182" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="183" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="184" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;dynamic original = originalField.GetValue(entry.Value)!;" />
+      <LineAnalysis line="185" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="186" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;&#x9;if (entry.Key is T t &amp;&amp; original is T)" />
+      <LineAnalysis line="187" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="188" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;&#x9;result.Add(new Tuple&lt;T, T&gt;(original, t));" />
+      <LineAnalysis line="189" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="190" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="191" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="192" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return result.AsReadOnly();" />
+      <LineAnalysis line="193" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="194" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="195" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="196" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Determines whether the table for the specified entity type contains any records." />
+      <LineAnalysis line="197" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; is not null." />
+      <LineAnalysis line="198" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="199" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type mapped to a table.&lt;/typeparam&gt;" />
+      <LineAnalysis line="200" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="201" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="202" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if the table contains any records; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="203" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="204" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(HasRecordsAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="205" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;bool&gt; HasRecordsAsync&lt;T&gt;([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="206" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="207" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="208" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="209" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="210" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return await context.GetTable&lt;T&gt;().AnyAsync(cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="211" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="212" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="213" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="214" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Determines whether the table for the specified entity type contains any records matching the predicate." />
+      <LineAnalysis line="215" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; and &lt;paramref name=&quot;predicate&quot;/&gt; are not null." />
+      <LineAnalysis line="216" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="217" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type mapped to a table.&lt;/typeparam&gt;" />
+      <LineAnalysis line="218" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="219" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;predicate&quot;&gt;An expression to filter the records to check.&lt;/param&gt;" />
+      <LineAnalysis line="220" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="221" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if any records match the predicate; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="222" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; or &lt;paramref name=&quot;predicate&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="223" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(HasRecordsAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="224" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;bool&gt; HasRecordsAsync&lt;T&gt;([DisallowNull] this DataContext context, [DisallowNull] Expression&lt;Func&lt;T, bool&gt;&gt; predicate, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="225" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="226" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="227" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="228" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;ArgumentNullException.ThrowIfNull(predicate);" />
+      <LineAnalysis line="229" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="230" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return await context.GetTable&lt;T&gt;().AnyAsync(predicate, cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="231" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="232" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="233" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="234" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Inserts a collection of entities into the database." />
+      <LineAnalysis line="235" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; and &lt;paramref name=&quot;entities&quot;/&gt; are not null." />
+      <LineAnalysis line="236" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="237" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type to insert.&lt;/typeparam&gt;" />
+      <LineAnalysis line="238" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="239" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;entities&quot;&gt;The collection of entities to insert.&lt;/param&gt;" />
+      <LineAnalysis line="240" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="241" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The total number of entities successfully inserted.&lt;/returns&gt;" />
+      <LineAnalysis line="242" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; or &lt;paramref name=&quot;entities&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="243" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(InsertCollectionAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="244" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;int&gt; InsertCollectionAsync&lt;T&gt;([DisallowNull] this DataContext context, [DisallowNull] IEnumerable&lt;T&gt; entities, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="245" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="246" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="247" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="248" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;entities = entities.ArgumentNotNull();" />
+      <LineAnalysis line="249" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="250" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var insertedCount = 0;" />
+      <LineAnalysis line="251" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="252" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;foreach (var entity in entities)" />
+      <LineAnalysis line="253" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="254" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;cancellationToken.ThrowIfCancellationRequested();" />
+      <LineAnalysis line="255" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;_ = await context.InsertAsync(entity, token: cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="256" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;insertedCount++;" />
+      <LineAnalysis line="257" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="258" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="259" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return insertedCount;" />
+      <LineAnalysis line="260" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="261" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="262" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="263" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Inserts or replaces a collection of entities in the database (upsert)." />
+      <LineAnalysis line="264" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;context&quot;/&gt; and &lt;paramref name=&quot;entities&quot;/&gt; are not null." />
+      <LineAnalysis line="265" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="266" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;typeparam name=&quot;T&quot;&gt;The entity type to upsert.&lt;/typeparam&gt;" />
+      <LineAnalysis line="267" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The &lt;see cref=&quot;DataContext&quot;/&gt; to use.&lt;/param&gt;" />
+      <LineAnalysis line="268" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;entities&quot;&gt;The collection of entities to insert or replace.&lt;/param&gt;" />
+      <LineAnalysis line="269" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;A &lt;see cref=&quot;CancellationToken&quot;/&gt; to observe while waiting for the task to complete.&lt;/param&gt;" />
+      <LineAnalysis line="270" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The total number of entities successfully upserted.&lt;/returns&gt;" />
+      <LineAnalysis line="271" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;context&quot;/&gt; or &lt;paramref name=&quot;entities&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="272" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(UpsertCollectionAsync), author: &quot;Copilot Agent&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]" />
+      <LineAnalysis line="273" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async Task&lt;int&gt; UpsertCollectionAsync&lt;T&gt;([DisallowNull] this DataContext context, [DisallowNull] IEnumerable&lt;T&gt; entities, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="274" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;where T : class" />
+      <LineAnalysis line="275" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="276" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="277" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;entities = entities.ArgumentNotNull();" />
+      <LineAnalysis line="278" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="279" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var upsertedCount = 0;" />
+      <LineAnalysis line="280" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="281" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;foreach (var entity in entities)" />
+      <LineAnalysis line="282" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="283" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;cancellationToken.ThrowIfCancellationRequested();" />
+      <LineAnalysis line="284" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;_ = await context.InsertOrReplaceAsync(entity, token: cancellationToken).ConfigureAwait(false);" />
+      <LineAnalysis line="285" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;upsertedCount++;" />
+      <LineAnalysis line="286" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="287" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="288" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return upsertedCount;" />
+      <LineAnalysis line="289" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="290" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="291" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Extensions.SocketExtensions">
+  <Summary>
+    <Class>DotNetTips.Spargine.Extensions.SocketExtensions</Class>
+    <Assembly>DotNetTips.Spargine.10.Extensions</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/SocketExtensions.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>82</Uncoveredlines>
+    <Coverablelines>82</Coverablelines>
+    <Totallines>264</Totallines>
+    <Linecoverage>0</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>6</Totalbranches>
+    <Branchcoverage>0</Branchcoverage>
+    <Coveredmethods>0</Coveredmethods>
+    <Fullcoveredmethods>0</Fullcoveredmethods>
+    <Totalmethods>8</Totalmethods>
+    <Methodcoverage>0</Methodcoverage>
+    <Fullmethodcoverage>0</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="BindToAnonymousPort">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="ConfigureBufferSizes">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="ConfigureKeepAlive">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="ConfigureLinger">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="ConnectTcpAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="ForceNonBlocking">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="TryConnect">
+      <CrapScore>42</CrapScore>
+      <Cyclomaticcomplexity>6</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="TryConnectAsync">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Extensions/SocketExtensions.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Assembly         : DotNetTips.Spargine.10.Extensions" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Author           : David McCarter" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Created          : 07-22-2020" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified By : Copilot Agent" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified On : 04-13-2026" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;copyright file=&quot;SocketExtensions.cs&quot; company=&quot;dotNetTips.com - McCarter Consulting&quot;&gt;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     McCarter Consulting (David McCarter)" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/copyright&gt;" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;summary&gt;Extension methods designed for Socket.&lt;/summary&gt;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.CodeAnalysis;" />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Net;" />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Net.Sockets;" />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Runtime.CompilerServices;" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Runtime.InteropServices;" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core;" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Extensions;" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;summary&gt;" />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Provides extension methods for the &lt;see cref=&quot;Socket&quot;/&gt; class, enhancing its functionality" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// with additional utility methods. These methods include binding to an anonymous port, forcing" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// non-blocking mode, and attempting connections with a timeout." />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/summary&gt;" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Information(nameof(SocketExtensions), author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, Status = Status.NeedsDocumentation)]" />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="public static class SocketExtensions" />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="33" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Binds to an IP address and OS-assigned port. Returns the chosen port." />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;socket&quot; /&gt; and &lt;paramref name=&quot;address&quot; /&gt; is not null." />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The socket.&lt;/param&gt;" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;address&quot;&gt;The address.&lt;/param&gt;" />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;System.Int32.&lt;/returns&gt;" />
+      <LineAnalysis line="40" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="41" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(BindToAnonymousPort), author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="42" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static int BindToAnonymousPort([DisallowNull] this Socket socket, [DisallowNull] IPAddress address)" />
+      <LineAnalysis line="43" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="44" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="45" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;address = address.ArgumentNotNull();" />
+      <LineAnalysis line="46" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="47" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.Bind(new IPEndPoint(address.ArgumentNotNull(), 0));" />
+      <LineAnalysis line="48" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="49" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return ((IPEndPoint)socket.LocalEndPoint!).Port;" />
+      <LineAnalysis line="50" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="51" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="52" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Configures the send and receive buffer sizes for the specified &lt;see cref=&quot;Socket&quot;/&gt;." />
+      <LineAnalysis line="54" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;socket&quot;/&gt; is not null and that both buffer sizes are at least 1." />
+      <LineAnalysis line="55" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="56" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The &lt;see cref=&quot;Socket&quot;/&gt; to configure.&lt;/param&gt;" />
+      <LineAnalysis line="57" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;sendBufferSize&quot;&gt;The size, in bytes, of the send buffer. Must be at least 1.&lt;/param&gt;" />
+      <LineAnalysis line="58" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;receiveBufferSize&quot;&gt;The size, in bytes, of the receive buffer. Must be at least 1.&lt;/param&gt;" />
+      <LineAnalysis line="59" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The configured &lt;see cref=&quot;Socket&quot;/&gt; for fluent chaining.&lt;/returns&gt;" />
+      <LineAnalysis line="60" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;socket&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="61" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="62" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ConfigureBufferSizes), author: &quot;David McCarter&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="63" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static Socket ConfigureBufferSizes([DisallowNull] this Socket socket, int sendBufferSize, int receiveBufferSize)" />
+      <LineAnalysis line="64" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="65" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="66" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;sendBufferSize = sendBufferSize.EnsureMinimum(1);" />
+      <LineAnalysis line="67" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;receiveBufferSize = receiveBufferSize.EnsureMinimum(1);" />
+      <LineAnalysis line="68" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="69" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.SendBufferSize = sendBufferSize;" />
+      <LineAnalysis line="70" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.ReceiveBufferSize = receiveBufferSize;" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="72" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return socket;" />
+      <LineAnalysis line="73" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="74" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="75" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="76" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Configures TCP keep-alive on the specified &lt;see cref=&quot;Socket&quot;/&gt;. Enables keep-alive and sets" />
+      <LineAnalysis line="77" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;see cref=&quot;SocketOptionName.TcpKeepAliveTime&quot;/&gt; and &lt;see cref=&quot;SocketOptionName.TcpKeepAliveInterval&quot;/&gt;." />
+      <LineAnalysis line="78" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;socket&quot;/&gt; is not null and that time/interval values are at least 1." />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="80" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The &lt;see cref=&quot;Socket&quot;/&gt; to configure.&lt;/param&gt;" />
+      <LineAnalysis line="81" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;keepAliveTimeSeconds&quot;&gt;The idle time, in seconds, before the first keep-alive probe is sent. Must be at least 1.&lt;/param&gt;" />
+      <LineAnalysis line="82" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;keepAliveIntervalSeconds&quot;&gt;The interval, in seconds, between keep-alive probes. Must be at least 1.&lt;/param&gt;" />
+      <LineAnalysis line="83" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The configured &lt;see cref=&quot;Socket&quot;/&gt; for fluent chaining.&lt;/returns&gt;" />
+      <LineAnalysis line="84" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;socket&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="85" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="86" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ConfigureKeepAlive), author: &quot;David McCarter&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="87" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static Socket ConfigureKeepAlive([DisallowNull] this Socket socket, int keepAliveTimeSeconds, int keepAliveIntervalSeconds)" />
+      <LineAnalysis line="88" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="89" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="90" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;keepAliveTimeSeconds = keepAliveTimeSeconds.EnsureMinimum(1);" />
+      <LineAnalysis line="91" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;keepAliveIntervalSeconds = keepAliveIntervalSeconds.EnsureMinimum(1);" />
+      <LineAnalysis line="92" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="93" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);" />
+      <LineAnalysis line="94" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime, keepAliveTimeSeconds);" />
+      <LineAnalysis line="95" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, keepAliveIntervalSeconds);" />
+      <LineAnalysis line="96" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="97" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return socket;" />
+      <LineAnalysis line="98" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="99" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="100" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="101" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Configures the linger state for the specified &lt;see cref=&quot;Socket&quot;/&gt;, controlling how the socket" />
+      <LineAnalysis line="102" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// behaves when data remains to be sent after &lt;see cref=&quot;Socket.Close()&quot;/&gt; is called." />
+      <LineAnalysis line="103" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;socket&quot;/&gt; is not null and that &lt;paramref name=&quot;lingerTimeSeconds&quot;/&gt; is at least 0." />
+      <LineAnalysis line="104" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="105" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The &lt;see cref=&quot;Socket&quot;/&gt; to configure.&lt;/param&gt;" />
+      <LineAnalysis line="106" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;enable&quot;&gt;If &lt;c&gt;true&lt;/c&gt;, the socket will linger after close; if &lt;c&gt;false&lt;/c&gt;, it will close immediately.&lt;/param&gt;" />
+      <LineAnalysis line="107" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;lingerTimeSeconds&quot;&gt;The time, in seconds, to remain open after close when &lt;paramref name=&quot;enable&quot;/&gt; is &lt;c&gt;true&lt;/c&gt;. Must be at least 0.&lt;/param&gt;" />
+      <LineAnalysis line="108" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The configured &lt;see cref=&quot;Socket&quot;/&gt; for fluent chaining.&lt;/returns&gt;" />
+      <LineAnalysis line="109" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;socket&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="110" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="111" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ConfigureLinger), author: &quot;David McCarter&quot;, createdOn: &quot;4/13/2026&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="112" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static Socket ConfigureLinger([DisallowNull] this Socket socket, bool enable, int lingerTimeSeconds)" />
+      <LineAnalysis line="113" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="114" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="115" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;lingerTimeSeconds = lingerTimeSeconds.EnsureMinimum(0);" />
+      <LineAnalysis line="116" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="117" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.LingerState = new LingerOption(enable, lingerTimeSeconds);" />
+      <LineAnalysis line="118" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="119" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return socket;" />
+      <LineAnalysis line="120" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="121" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="122" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="123" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Connect TCP as an asynchronous operation." />
+      <LineAnalysis line="124" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="125" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;context&quot;&gt;The context.&lt;/param&gt;" />
+      <LineAnalysis line="126" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;" />
+      <LineAnalysis line="127" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A &lt;see cref=&quot;ValueTask{Stream}&quot;/&gt; that represents the asynchronous operation, which upon completion returns a &lt;see cref=&quot;Stream&quot;/&gt; connected to the TCP server.&lt;/returns&gt;" />
+      <LineAnalysis line="128" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;example&gt;" />
+      <LineAnalysis line="129" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Here is how you can use the ConnectTcpAsync method:" />
+      <LineAnalysis line="130" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;code&gt;" />
+      <LineAnalysis line="131" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// var context = new SocketsHttpConnectionContext(new DnsEndPoint(&quot;example.com&quot;, 80));" />
+      <LineAnalysis line="132" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// var cancellationToken = new CancellationToken();" />
+      <LineAnalysis line="133" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// var stream = await SocketsHelper.ConnectTcpAsync(context, cancellationToken);" />
+      <LineAnalysis line="134" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// // Use the stream for network operations" />
+      <LineAnalysis line="135" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/code&gt;" />
+      <LineAnalysis line="136" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/example&gt;" />
+      <LineAnalysis line="137" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;remarks&gt;Original code by: Máňa Píchová.&lt;/remarks&gt;" />
+      <LineAnalysis line="138" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ConnectTcpAsync), author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="139" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async ValueTask&lt;Stream&gt; ConnectTcpAsync([DisallowNull] this SocketsHttpConnectionContext context, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="140" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="141" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;context = context.ArgumentNotNull();" />
+      <LineAnalysis line="142" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="143" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;// The following socket constructor will create a dual-mode socket on systems where IPV6 is available." />
+      <LineAnalysis line="144" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning disable CA2000, IDISP001 // Ownership transfers to NetworkStream via ownsSocket: true." />
+      <LineAnalysis line="145" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;var socket = new Socket(SocketType.Stream, ProtocolType.Tcp)" />
+      <LineAnalysis line="146" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="147" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;/* Turn off Nagle's algorithm since it degrades performance in most HttpClient scenarios.*/" />
+      <LineAnalysis line="148" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;NoDelay = true," />
+      <LineAnalysis line="149" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;DualMode = true," />
+      <LineAnalysis line="150" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;};" />
+      <LineAnalysis line="151" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning restore CA2000, IDISP001" />
+      <LineAnalysis line="152" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="153" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;try" />
+      <LineAnalysis line="154" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="155" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await socket.ConnectAsync(context.DnsEndPoint, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);" />
+      <LineAnalysis line="156" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="157" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;// The stream takes ownership of the underlying socket," />
+      <LineAnalysis line="158" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;// closing it when it's disposed." />
+      <LineAnalysis line="159" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return new NetworkStream(socket, ownsSocket: true);" />
+      <LineAnalysis line="160" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="161" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;catch" />
+      <LineAnalysis line="162" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="163" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;socket.Dispose();" />
+      <LineAnalysis line="164" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;throw;" />
+      <LineAnalysis line="165" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="166" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="167" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="168" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="169" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// On non-Windows platforms, once non-blocking is turned on (either explicitly or by performing an async" />
+      <LineAnalysis line="170" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// operation), always stay in non-blocking mode." />
+      <LineAnalysis line="171" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;socket&quot; /&gt; is not null." />
+      <LineAnalysis line="172" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="173" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The &lt;see cref=&quot;Socket&quot;/&gt; to modify.&lt;/param&gt;" />
+      <LineAnalysis line="174" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;force&quot;&gt;if set to &lt;c&gt;true&lt;/c&gt;, the &lt;paramref name=&quot;socket&quot;/&gt; is forced into non-blocking mode.&lt;/param&gt;" />
+      <LineAnalysis line="175" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MethodImpl(MethodImplOptions.AggressiveInlining)]" />
+      <LineAnalysis line="176" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(&quot;From .NET Core source.&quot;, author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="177" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static void ForceNonBlocking([DisallowNull] this Socket socket, bool force)" />
+      <LineAnalysis line="178" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="179" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="180" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="181" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket.Blocking = force;" />
+      <LineAnalysis line="182" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="183" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="184" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="185" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Tries to connect within the provided timeout interval. Useful to speed up &quot;cannot connect&quot; assertions on" />
+      <LineAnalysis line="186" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Windows. Validates that &lt;paramref name=&quot;socket&quot; /&gt; and &lt;paramref name=&quot;remoteEndpoint&quot; /&gt; are not null." />
+      <LineAnalysis line="187" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="188" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The &lt;see cref=&quot;Socket&quot;/&gt; to use for the connection attempt.&lt;/param&gt;" />
+      <LineAnalysis line="189" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;remoteEndpoint&quot;&gt;The &lt;see cref=&quot;EndPoint&quot;/&gt; to which you want to connect.&lt;/param&gt;" />
+      <LineAnalysis line="190" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;millisecondsTimeout&quot;&gt;The timeout in milliseconds for the connection attempt.&lt;/param&gt;" />
+      <LineAnalysis line="191" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if the connection is successful within the timeout period; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="192" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;socket&quot;/&gt; or &lt;paramref name=&quot;remoteEndpoint&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="193" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;Thrown when &lt;paramref name=&quot;millisecondsTimeout&quot;/&gt; is less than 1.&lt;/exception&gt;" />
+      <LineAnalysis line="194" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;PlatformNotSupportedException&quot;&gt;Thrown when the operation is not supported on the current platform, specifically non-Windows platforms.&lt;/exception&gt;" />
+      <LineAnalysis line="195" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(&quot;From .NET Core source.&quot;, author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="196" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool TryConnect([DisallowNull] this Socket socket, [DisallowNull] EndPoint remoteEndpoint, int millisecondsTimeout)" />
+      <LineAnalysis line="197" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="198" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="199" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;remoteEndpoint = remoteEndpoint.ArgumentNotNull();" />
+      <LineAnalysis line="200" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;millisecondsTimeout = millisecondsTimeout.EnsureMinimum(1);" />
+      <LineAnalysis line="201" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="202" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))" />
+      <LineAnalysis line="203" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="204" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;using (var mre = new ManualResetEventSlim(false))" />
+      <LineAnalysis line="205" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="206" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;using (var sea = new SocketAsyncEventArgs() { RemoteEndPoint = remoteEndpoint, UserToken = mre })" />
+      <LineAnalysis line="207" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="208" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;sea.Completed += (s, e) =&gt; ((ManualResetEventSlim)e.UserToken!).Set();" />
+      <LineAnalysis line="209" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="210" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;var pending = socket.ConnectAsync(sea);" />
+      <LineAnalysis line="211" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="212" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;&#x9;&#x9;&#x9;if (!pending || mre.Wait(millisecondsTimeout))" />
+      <LineAnalysis line="213" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="214" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;return sea.SocketError == SocketError.Success;" />
+      <LineAnalysis line="215" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="216" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="217" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;Socket.CancelConnectAsync(sea); // this will close the socket!" />
+      <LineAnalysis line="218" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="219" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;// In case of time-out, ManualResetEventSlim is left un-disposed to avoid race conditions," />
+      <LineAnalysis line="220" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;// letting SafeHandle's finalizer to do the cleanup." />
+      <LineAnalysis line="221" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;return false;" />
+      <LineAnalysis line="222" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="223" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="224" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="225" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;else" />
+      <LineAnalysis line="226" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="227" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;throw new PlatformNotSupportedException();" />
+      <LineAnalysis line="228" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="229" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="230" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="231" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="232" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Asynchronously attempts to connect within the provided timeout interval. Unlike &lt;see cref=&quot;TryConnect&quot;/&gt;," />
+      <LineAnalysis line="233" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// this method works cross-platform and uses modern async APIs with &lt;see cref=&quot;CancellationToken&quot;/&gt;-based timeouts." />
+      <LineAnalysis line="234" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Validates that &lt;paramref name=&quot;socket&quot;/&gt; and &lt;paramref name=&quot;remoteEndpoint&quot;/&gt; are not null." />
+      <LineAnalysis line="235" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="236" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;socket&quot;&gt;The &lt;see cref=&quot;Socket&quot;/&gt; to use for the connection attempt.&lt;/param&gt;" />
+      <LineAnalysis line="237" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;remoteEndpoint&quot;&gt;The &lt;see cref=&quot;EndPoint&quot;/&gt; to which you want to connect.&lt;/param&gt;" />
+      <LineAnalysis line="238" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;millisecondsTimeout&quot;&gt;The timeout in milliseconds for the connection attempt. Must be at least 1.&lt;/param&gt;" />
+      <LineAnalysis line="239" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;" />
+      <LineAnalysis line="240" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;&lt;c&gt;true&lt;/c&gt; if the connection is successful within the timeout period; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/returns&gt;" />
+      <LineAnalysis line="241" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown when &lt;paramref name=&quot;socket&quot;/&gt; or &lt;paramref name=&quot;remoteEndpoint&quot;/&gt; is null.&lt;/exception&gt;" />
+      <LineAnalysis line="242" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(TryConnectAsync), author: &quot;David McCarter&quot;, createdOn: &quot;7/15/2020&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]" />
+      <LineAnalysis line="243" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static async ValueTask&lt;bool&gt; TryConnectAsync([DisallowNull] this Socket socket, [DisallowNull] EndPoint remoteEndpoint, int millisecondsTimeout, CancellationToken cancellationToken = default)" />
+      <LineAnalysis line="244" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="245" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;socket = socket.ArgumentNotNull();" />
+      <LineAnalysis line="246" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;remoteEndpoint = remoteEndpoint.ArgumentNotNull();" />
+      <LineAnalysis line="247" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;millisecondsTimeout = millisecondsTimeout.EnsureMinimum(1);" />
+      <LineAnalysis line="248" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="249" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);" />
+      <LineAnalysis line="250" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;timeoutCts.CancelAfter(millisecondsTimeout);" />
+      <LineAnalysis line="251" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="252" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;try" />
+      <LineAnalysis line="253" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="254" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;await socket.ConnectAsync(remoteEndpoint, timeoutCts.Token).ConfigureAwait(false);" />
+      <LineAnalysis line="255" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return true;" />
+      <LineAnalysis line="256" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="257" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)" />
+      <LineAnalysis line="258" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="259" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;// Timeout expired, not caller cancellation." />
+      <LineAnalysis line="260" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return false;" />
+      <LineAnalysis line="261" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="262" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="263" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="264" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

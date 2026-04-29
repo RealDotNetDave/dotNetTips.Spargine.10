@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord">
+  <Summary>
+    <Class>DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord</Class>
+    <Assembly>DotNetTips.Spargine.10.Tester</Assembly>
+    <Files>
+      <File>/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Tester/Models/RefTypes/PersonRecord.cs</File>
+    </Files>
+    <Coveredlines>52</Coveredlines>
+    <Uncoveredlines>140</Uncoveredlines>
+    <Coverablelines>192</Coverablelines>
+    <Totallines>613</Totallines>
+    <Linecoverage>27</Linecoverage>
+    <Coveredbranches>16</Coveredbranches>
+    <Totalbranches>72</Totalbranches>
+    <Branchcoverage>22.2</Branchcoverage>
+    <Coveredmethods>11</Coveredmethods>
+    <Fullcoveredmethods>4</Fullcoveredmethods>
+    <Totalmethods>33</Totalmethods>
+    <Methodcoverage>33.3</Methodcoverage>
+    <Fullmethodcoverage>12.1</Fullmethodcoverage>
+  </Summary>
+  <Metrics>
+    <Element name="ctor">
+      <CrapScore>1</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>100</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="ctor">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_Addresses">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_Addresses">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>100</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="get_AddressesSerialization">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="get_BornOn">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_BornOn">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>50.0</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="get_CellPhone">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_CellPhone">
+      <CrapScore>5</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>55.55</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="get_Email">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_Email">
+      <CrapScore>7</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>45.45</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="get_FirstName">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_FirstName">
+      <CrapScore>5</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>62.50</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="get_Id">
+      <CrapScore>1</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>100</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_Id">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>57.14</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="get_LastName">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_LastName">
+      <CrapScore>5</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>62.50</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="get_Phone">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="set_Phone">
+      <CrapScore>5</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>62.50</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="op_Implicit">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="op_Implicit">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+    <Element name="op_GreaterThanOrEqual">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="op_GreaterThan">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="op_LessThanOrEqual">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="op_LessThan">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="Create">
+      <CrapScore>42</CrapScore>
+      <Cyclomaticcomplexity>6</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="ToPersonRecord">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="ToPersonRecord">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="SystemIComparableCompareTo">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="CompareTo">
+      <CrapScore>6</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="Equals">
+      <CrapScore>20</CrapScore>
+      <Cyclomaticcomplexity>4</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Element>
+    <Element name="GetHashCode">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>2</Cyclomaticcomplexity>
+      <Linecoverage>100</Linecoverage>
+      <Branchcoverage>50.0</Branchcoverage>
+    </Element>
+    <Element name="ToString">
+      <CrapScore>2</CrapScore>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Linecoverage>0</Linecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Element>
+  </Metrics>
+  <Files>
+    <File name="/home/runner/work/dotNetTips.Spargine.10/dotNetTips.Spargine.10/source/dotNetTips.Spargine.10.Tester/Models/RefTypes/PersonRecord.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Assembly         : DotNetTips.Spargine.10.Tester" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Author           : David McCarter" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Created          : 01-03-2021" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified By : Copilot Agent" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Last Modified On : 04-29-2026" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;copyright file=&quot;PersonRecord.cs&quot; company=&quot;dotNetTips.com - McCarter Consulting&quot;&gt;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//     McCarter Consulting (David McCarter)" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/copyright&gt;" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;summary&gt;" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// A real-world type for testing and benchmarking named &quot;PersonRecord&quot;" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// with the following properties: Addresses, Age, BornOn, CellPhone," />
+      <LineAnalysis line="15" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// Email, FirstName, FullName, LastName, and Phone. Additionally," />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// this type includes methods to convert from both Person reference" />
+      <LineAnalysis line="17" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// and value types to PersonRecord." />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// &lt;/summary&gt;" />
+      <LineAnalysis line="19" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="// ***********************************************************************" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Collections.ObjectModel;" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.ComponentModel;" />
+      <LineAnalysis line="23" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.ComponentModel.DataAnnotations;" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics;" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Diagnostics.CodeAnalysis;" />
+      <LineAnalysis line="26" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Runtime.Serialization;" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Text.Json.Serialization;" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Xml.Serialization;" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Core;" />
+      <LineAnalysis line="30" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Extensions;" />
+      <LineAnalysis line="31" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Tester.Models.Common;" />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using DotNetTips.Spargine.Tester.Properties;" />
+      <LineAnalysis line="33" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="34" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)" />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace DotNetTips.Spargine.Tester.Models.RefTypes;" />
+      <LineAnalysis line="37" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="38" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;summary&gt;" />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Represents a person record with identity, contact information, and" />
+      <LineAnalysis line="40" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// a collection of addresses." />
+      <LineAnalysis line="41" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Implements &lt;see cref=&quot;IPerson{TSelf, TAddress}&quot;/&gt; as" />
+      <LineAnalysis line="42" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;c&gt;IPerson&amp;lt;PersonRecord, AddressRecord&amp;gt;&lt;/c&gt;." />
+      <LineAnalysis line="43" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// Comparison and equality are by &lt;see cref=&quot;Id&quot;/&gt;." />
+      <LineAnalysis line="44" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="/// &lt;/summary&gt;" />
+      <LineAnalysis line="45" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[DataContract(Name = &quot;personRecord&quot;, Namespace = &quot;http://DotNetTips.Spargine.Tester.Models.Ref&quot;)]" />
+      <LineAnalysis line="46" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[DebuggerDisplay(&quot;{Email}&quot;)]" />
+      <LineAnalysis line="47" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Serializable]" />
+      <LineAnalysis line="48" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[XmlRoot(ElementName = &quot;PersonRecord&quot;, Namespace = &quot;http://DotNetTips.Spargine.Tester.Models.Ref&quot;)]" />
+      <LineAnalysis line="49" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="[Information(Status = Status.Available, Documentation = &quot;https://bit.ly/SpargineTester&quot;)]" />
+      <LineAnalysis line="50" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="public sealed record PersonRecord : IPerson&lt;PersonRecord, AddressRecord&gt;" />
+      <LineAnalysis line="51" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="52" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private Collection&lt;AddressRecord&gt; _addresses = [];" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private DateTimeOffset? _bornOn;" />
+      <LineAnalysis line="54" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private string _cellPhone = string.Empty;" />
+      <LineAnalysis line="55" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private string _email = string.Empty;" />
+      <LineAnalysis line="56" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private string _firstName = string.Empty;" />
+      <LineAnalysis line="57" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private string _id = string.Empty;" />
+      <LineAnalysis line="58" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private string _lastName = string.Empty;" />
+      <LineAnalysis line="59" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore, NonSerialized] private string _phone = string.Empty;" />
+      <LineAnalysis line="60" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="61" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="62" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// For serializers." />
+      <LineAnalysis line="63" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="64" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[EditorBrowsable(EditorBrowsableState.Never)]" />
+      <LineAnalysis line="65" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;public PersonRecord()" />
+      <LineAnalysis line="66" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="67" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="68" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="69" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="70" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Creates a new instance with the specified &lt;paramref name=&quot;email&quot;/&gt;" />
+      <LineAnalysis line="71" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// and &lt;paramref name=&quot;id&quot;/&gt;." />
+      <LineAnalysis line="72" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="73" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;email&quot;&gt;" />
+      <LineAnalysis line="74" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// The email address of the person. Must be a valid email format" />
+      <LineAnalysis line="75" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// and not exceed 75 characters." />
+      <LineAnalysis line="76" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/param&gt;" />
+      <LineAnalysis line="77" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;id&quot;&gt;" />
+      <LineAnalysis line="78" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// The unique identifier for the person. Must not exceed 50" />
+      <LineAnalysis line="79" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// characters." />
+      <LineAnalysis line="80" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/param&gt;" />
+      <LineAnalysis line="81" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="82" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if &lt;paramref name=&quot;email&quot;/&gt; or &lt;paramref name=&quot;id&quot;/&gt;" />
+      <LineAnalysis line="83" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// do not meet length requirements." />
+      <LineAnalysis line="84" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="85" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonConstructor]" />
+      <LineAnalysis line="86" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(PersonRecord), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="87" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;public PersonRecord([NotNull] string email, [NotNull] string id)" />
+      <LineAnalysis line="88" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="89" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;this.Email = email;" />
+      <LineAnalysis line="90" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;this.Id = id;" />
+      <LineAnalysis line="91" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="92" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="93" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="94" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets the collection of addresses (init performs a defensive" />
+      <LineAnalysis line="95" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// copy)." />
+      <LineAnalysis line="96" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="97" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;addresses&quot;, IsRequired = false)]" />
+      <LineAnalysis line="98" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;addresses&quot;)]" />
+      <LineAnalysis line="99" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlIgnore]" />
+      <LineAnalysis line="100" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(Addresses), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="101" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public Collection&lt;AddressRecord&gt; Addresses" />
+      <LineAnalysis line="102" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="103" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="104" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="105" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._addresses;" />
+      <LineAnalysis line="106" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="107" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="108" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="109" visits="1024" coverage="Covered" coveredbranches="2" totalbranches="2" content="&#x9;&#x9;&#x9;this._addresses = [.. value];" />
+      <LineAnalysis line="110" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="111" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="112" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="113" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="114" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// XML serialization shim for &lt;see cref=&quot;Addresses&quot;/&gt;." />
+      <LineAnalysis line="115" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="116" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[EditorBrowsable(EditorBrowsableState.Never)]" />
+      <LineAnalysis line="117" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonIgnore]" />
+      <LineAnalysis line="118" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlArray(&quot;Addresses&quot;)]" />
+      <LineAnalysis line="119" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Preserve(PreserveReason.Other, &quot;Preserve for XML serialization.&quot;, &quot;4/24/2005&quot;, &quot;David McCarter&quot;)]" />
+      <LineAnalysis line="120" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(AddressesSerialization), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="121" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public Collection&lt;AddressRecord&gt; AddressesSerialization" />
+      <LineAnalysis line="122" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="123" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;get { return new Collection&lt;AddressRecord&gt;([.. this._addresses]); }" />
+      <LineAnalysis line="124" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="125" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="126" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="127" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets or sets the birth date; must not be in the future." />
+      <LineAnalysis line="128" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="129" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="130" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is in the future." />
+      <LineAnalysis line="131" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="132" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;bornOn&quot;, IsRequired = false)]" />
+      <LineAnalysis line="133" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataType(DataType.Date, ErrorMessageResourceName = &quot;ErrorMessageBornOnMustBeDate&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="134" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;bornOn&quot;)]" />
+      <LineAnalysis line="135" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;BornOn&quot;)]" />
+      <LineAnalysis line="136" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(BornOn), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="137" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public DateTimeOffset? BornOn" />
+      <LineAnalysis line="138" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="139" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="140" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="141" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._bornOn;" />
+      <LineAnalysis line="142" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="143" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="144" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="145" visits="1024" coverage="PartiallyCovered" coveredbranches="2" totalbranches="4" content="&#x9;&#x9;&#x9;if (value &gt; DateTimeOffset.UtcNow)" />
+      <LineAnalysis line="146" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="147" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(" />
+      <LineAnalysis line="148" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;Resources.ErrorMessageBornOnCannotBeInTheFuture, nameof(this.BornOn));" />
+      <LineAnalysis line="149" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="150" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="151" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._bornOn = value;" />
+      <LineAnalysis line="152" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="153" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="154" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="155" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="156" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets or sets the optional cell phone (0–50 chars)." />
+      <LineAnalysis line="157" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="158" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="159" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is not between 0 and 50 chars." />
+      <LineAnalysis line="160" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="161" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;cellPhone&quot;, IsRequired = false)]" />
+      <LineAnalysis line="162" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;cellPhone&quot;)]" />
+      <LineAnalysis line="163" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MaxLength(50, ErrorMessageResourceName = &quot;ErrorMessagePhoneNumberIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="164" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Phone(ErrorMessageResourceName = &quot;ErrorMessagePhoneNumberIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="165" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;CellPhone&quot;)]" />
+      <LineAnalysis line="166" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code&quot;, Justification = &quot;The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.&quot;)]" />
+      <LineAnalysis line="167" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(CellPhone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="168" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public string CellPhone" />
+      <LineAnalysis line="169" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="170" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="171" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="172" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._cellPhone;" />
+      <LineAnalysis line="173" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="174" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="175" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="176" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;var safeValue = value ?? string.Empty;" />
+      <LineAnalysis line="177" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="178" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (safeValue.HasValue(0, 50) is false)" />
+      <LineAnalysis line="179" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="180" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(" />
+      <LineAnalysis line="181" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;&#x9;Resources.ErrorMessagePhoneNumberIsLimitedToCharacters, nameof(this.CellPhone));" />
+      <LineAnalysis line="182" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="183" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="184" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._cellPhone = safeValue;" />
+      <LineAnalysis line="185" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="186" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="187" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="188" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="189" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets the email (init-only; ≤ 75; valid email format)." />
+      <LineAnalysis line="190" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="191" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;" />
+      <LineAnalysis line="192" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is null or empty." />
+      <LineAnalysis line="193" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="194" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="195" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is not between 10 and 75 chars." />
+      <LineAnalysis line="196" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="197" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;email&quot;, IsRequired = true)]" />
+      <LineAnalysis line="198" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[EmailAddress(ErrorMessageResourceName = &quot;ErrorMessageEmailLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="199" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;email&quot;)]" />
+      <LineAnalysis line="200" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MaxLength(75, ErrorMessageResourceName = &quot;ErrorMessageEmailLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="201" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Required(ErrorMessageResourceName = &quot;ErrorMessageEmailIsRequired&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="202" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;Email&quot;, IsNullable = false)]" />
+      <LineAnalysis line="203" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code&quot;, Justification = &quot;The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.&quot;)]" />
+      <LineAnalysis line="204" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(Email), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="205" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public string Email" />
+      <LineAnalysis line="206" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="207" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="208" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="209" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._email;" />
+      <LineAnalysis line="210" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="211" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="212" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="213" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="214" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (string.IsNullOrWhiteSpace(value))" />
+      <LineAnalysis line="215" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="216" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentNullException(nameof(this.Email));" />
+      <LineAnalysis line="217" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="218" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="219" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (value.HasValue(10, 75) is false)" />
+      <LineAnalysis line="220" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="221" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ErrorMessageEmailLengthIsLimitedToCharacters, nameof(this.Email));" />
+      <LineAnalysis line="222" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="223" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="224" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._email = value;" />
+      <LineAnalysis line="225" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="226" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="227" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="228" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="229" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets or sets the first name (0–50 chars)." />
+      <LineAnalysis line="230" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="231" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="232" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is not between 0 and 50 chars." />
+      <LineAnalysis line="233" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="234" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;firstName&quot;, IsRequired = true)]" />
+      <LineAnalysis line="235" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;firstName&quot;)]" />
+      <LineAnalysis line="236" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MaxLength(50, ErrorMessageResourceName = &quot;ErrorFirstNameLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="237" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Required(ErrorMessageResourceName = &quot;ErrorFirstNameIsRequired&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="238" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[StringLength(50, ErrorMessageResourceName = &quot;ErrorFirstNameLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="239" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;FirstName&quot;)]" />
+      <LineAnalysis line="240" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code&quot;, Justification = &quot;The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.&quot;)]" />
+      <LineAnalysis line="241" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="242" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public string FirstName" />
+      <LineAnalysis line="243" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="244" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="245" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="246" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._firstName;" />
+      <LineAnalysis line="247" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="248" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="249" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="250" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;var safeValue = value ?? string.Empty;" />
+      <LineAnalysis line="251" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="252" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (safeValue.HasValue(0, 50) is false)" />
+      <LineAnalysis line="253" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="254" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ErrorFirstNameLengthIsLimitedToCharacters, nameof(this.FirstName));" />
+      <LineAnalysis line="255" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="256" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="257" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._firstName = safeValue;" />
+      <LineAnalysis line="258" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="259" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="260" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="261" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="262" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets the unique identifier (init-only; 10–50 chars)." />
+      <LineAnalysis line="263" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="264" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="265" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is not between 10 and 50 characters." />
+      <LineAnalysis line="266" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="267" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;id&quot;, IsRequired = true)]" />
+      <LineAnalysis line="268" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DisallowNull]" />
+      <LineAnalysis line="269" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;id&quot;)]" />
+      <LineAnalysis line="270" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MaxLength(50, ErrorMessageResourceName = &quot;ErrorIdLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="271" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MinLength(10, ErrorMessageResourceName = &quot;ErrorIdLengthIsMinimumCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="272" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[ReadOnly(true)]" />
+      <LineAnalysis line="273" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Required(AllowEmptyStrings = false, ErrorMessageResourceName = &quot;ErrorIdIsRequired&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="274" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;Id&quot;, IsNullable = false)]" />
+      <LineAnalysis line="275" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code&quot;, Justification = &quot;The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.&quot;)]" />
+      <LineAnalysis line="276" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(Id), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="277" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public string Id" />
+      <LineAnalysis line="278" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="279" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="280" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="281" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._id;" />
+      <LineAnalysis line="282" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="283" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="284" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="285" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="286" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (value.HasValue(10, 50) is false)" />
+      <LineAnalysis line="287" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="288" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ErrorIdLengthIsLimitedToCharacters, nameof(this.Id));" />
+      <LineAnalysis line="289" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="290" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="291" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._id = value;" />
+      <LineAnalysis line="292" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="293" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="294" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="295" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="296" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets or sets the last name (0–50 chars)." />
+      <LineAnalysis line="297" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="298" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="299" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is not between 0 and 50 chars." />
+      <LineAnalysis line="300" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="301" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;lastName&quot;, IsRequired = true)]" />
+      <LineAnalysis line="302" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;lastName&quot;)]" />
+      <LineAnalysis line="303" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MaxLength(50, ErrorMessageResourceName = &quot;ErrorLastNameLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="304" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Required(ErrorMessageResourceName = &quot;ErrorLastNameIsRequired&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="305" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[StringLength(50, ErrorMessageResourceName = &quot;ErrorLastNameLengthIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="306" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;LastName&quot;)]" />
+      <LineAnalysis line="307" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code&quot;, Justification = &quot;The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.&quot;)]" />
+      <LineAnalysis line="308" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(LastName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="309" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public string LastName" />
+      <LineAnalysis line="310" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="311" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="312" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="313" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._lastName;" />
+      <LineAnalysis line="314" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="315" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="316" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="317" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;var safeValue = value ?? string.Empty;" />
+      <LineAnalysis line="318" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="319" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (safeValue.HasValue(0, 50) is false)" />
+      <LineAnalysis line="320" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="321" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ErrorLastNameLengthIsLimitedToCharacters, nameof(this.LastName));" />
+      <LineAnalysis line="322" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="323" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="324" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._lastName = safeValue;" />
+      <LineAnalysis line="325" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="326" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="327" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="328" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="329" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Gets or sets the optional home phone (0–50 chars)." />
+      <LineAnalysis line="330" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="331" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="332" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if the value is not between 0 and 50 chars." />
+      <LineAnalysis line="333" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="334" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DataMember(Name = &quot;homePhone&quot;, IsRequired = false)]" />
+      <LineAnalysis line="335" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[JsonPropertyName(&quot;homePhone&quot;)]" />
+      <LineAnalysis line="336" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[MaxLength(50, ErrorMessageResourceName = &quot;ErrorMessagePhoneNumberIsLimitedToCharacters&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="337" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Phone(ErrorMessageResourceName = &quot;ErrorPhoneNumberInvalid&quot;, ErrorMessageResourceType = typeof(Resources))]" />
+      <LineAnalysis line="338" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[XmlElement(&quot;Phone&quot;)]" />
+      <LineAnalysis line="339" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code&quot;, Justification = &quot;The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.&quot;)]" />
+      <LineAnalysis line="340" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(Phone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="341" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public string Phone" />
+      <LineAnalysis line="342" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="343" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;get" />
+      <LineAnalysis line="344" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="345" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;return this._phone;" />
+      <LineAnalysis line="346" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="347" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;&#x9;init" />
+      <LineAnalysis line="348" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="349" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;var safeValue = value ?? string.Empty;" />
+      <LineAnalysis line="350" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="351" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;&#x9;if (safeValue.HasValue(0, 50) is false)" />
+      <LineAnalysis line="352" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="353" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;ExceptionThrower.ThrowArgumentOutOfRangeException(Resources.ErrorMessagePhoneNumberIsLimitedToCharacters, nameof(this.Phone));" />
+      <LineAnalysis line="354" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="355" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="356" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;this._phone = safeValue;" />
+      <LineAnalysis line="357" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="358" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="359" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="360" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="361" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Implicitly converts a &lt;see cref=&quot;Person&quot;/&gt; to a &lt;see cref=&quot;PersonRecord&quot;/&gt;." />
+      <LineAnalysis line="362" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="363" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;person&quot;&gt;The person to convert.&lt;/param&gt;" />
+      <LineAnalysis line="364" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A new &lt;see cref=&quot;PersonRecord&quot;/&gt; instance.&lt;/returns&gt;" />
+      <LineAnalysis line="365" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;" />
+      <LineAnalysis line="366" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if &lt;paramref name=&quot;person&quot;/&gt; is null." />
+      <LineAnalysis line="367" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="368" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="369" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(&quot;op_Implicit&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="370" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static implicit operator PersonRecord(in Person person)" />
+      <LineAnalysis line="371" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="372" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return ToPersonRecord(person);" />
+      <LineAnalysis line="373" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="374" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="375" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="376" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Implicitly converts a &lt;see cref=&quot;ValueTypes.Person&quot;/&gt; to a &lt;see cref=&quot;PersonRecord&quot;/&gt;." />
+      <LineAnalysis line="377" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="378" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;person&quot;&gt;The value type person to convert.&lt;/param&gt;" />
+      <LineAnalysis line="379" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A new &lt;see cref=&quot;PersonRecord&quot;/&gt; instance.&lt;/returns&gt;" />
+      <LineAnalysis line="380" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;" />
+      <LineAnalysis line="381" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if &lt;paramref name=&quot;person&quot;/&gt; is null." />
+      <LineAnalysis line="382" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="383" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="384" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(&quot;op_Implicit&quot;, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="385" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static implicit operator PersonRecord(in ValueTypes.Person person)" />
+      <LineAnalysis line="386" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="387" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return ToPersonRecord(person);" />
+      <LineAnalysis line="388" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="389" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="390" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="391" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Implements the &amp;gt;= operator." />
+      <LineAnalysis line="392" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="393" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;left&quot;&gt;The left.&lt;/param&gt;" />
+      <LineAnalysis line="394" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;right&quot;&gt;The right.&lt;/param&gt;" />
+      <LineAnalysis line="395" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The result of the operator.&lt;/returns&gt;" />
+      <LineAnalysis line="396" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DebuggerStepThrough]" />
+      <LineAnalysis line="397" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="398" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool operator &gt;=(in PersonRecord? left, in PersonRecord? right)" />
+      <LineAnalysis line="399" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="400" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;return right is null ? true : left is null ? false : left.CompareTo(right) &gt;= 0;" />
+      <LineAnalysis line="401" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="402" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="403" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="404" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Implements the &amp;gt; operator." />
+      <LineAnalysis line="405" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="406" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;left&quot;&gt;The left.&lt;/param&gt;" />
+      <LineAnalysis line="407" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;right&quot;&gt;The right.&lt;/param&gt;" />
+      <LineAnalysis line="408" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The result of the operator.&lt;/returns&gt;" />
+      <LineAnalysis line="409" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DebuggerStepThrough]" />
+      <LineAnalysis line="410" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="411" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool operator &gt;(in PersonRecord? left, in PersonRecord? right)" />
+      <LineAnalysis line="412" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="413" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;return left is null ? false : right is null ? true : left.CompareTo(right) &gt; 0;" />
+      <LineAnalysis line="414" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="415" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="416" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="417" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Implements the &amp;lt;= operator." />
+      <LineAnalysis line="418" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="419" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;left&quot;&gt;The left.&lt;/param&gt;" />
+      <LineAnalysis line="420" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;right&quot;&gt;The right.&lt;/param&gt;" />
+      <LineAnalysis line="421" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The result of the operator.&lt;/returns&gt;" />
+      <LineAnalysis line="422" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DebuggerStepThrough]" />
+      <LineAnalysis line="423" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="424" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool operator &lt;=(in PersonRecord? left, in PersonRecord? right)" />
+      <LineAnalysis line="425" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="426" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;return left is null ? true : right is null ? false : left.CompareTo(right) &lt;= 0;" />
+      <LineAnalysis line="427" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="428" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="429" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="430" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Implements the &amp;lt; operator." />
+      <LineAnalysis line="431" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="432" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;left&quot;&gt;The left.&lt;/param&gt;" />
+      <LineAnalysis line="433" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;right&quot;&gt;The right.&lt;/param&gt;" />
+      <LineAnalysis line="434" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;The result of the operator.&lt;/returns&gt;" />
+      <LineAnalysis line="435" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[DebuggerStepThrough]" />
+      <LineAnalysis line="436" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="437" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static bool operator &lt;(in PersonRecord? left, in PersonRecord? right)" />
+      <LineAnalysis line="438" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="439" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;return left is null ? right is not null : right is null ? false : left.CompareTo(right) &lt; 0;" />
+      <LineAnalysis line="440" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="441" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="442" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="443" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Creates a new &lt;see cref=&quot;PersonRecord&quot;/&gt; with the specified" />
+      <LineAnalysis line="444" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// values (required by &lt;see cref=&quot;IPerson{TSelf, TAddress}&quot;/&gt;)." />
+      <LineAnalysis line="445" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="446" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;id&quot;&gt;The unique identifier for the person.&lt;/param&gt;" />
+      <LineAnalysis line="447" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;email&quot;&gt;The email address of the person.&lt;/param&gt;" />
+      <LineAnalysis line="448" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;firstName&quot;&gt;The first name of the person.&lt;/param&gt;" />
+      <LineAnalysis line="449" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;lastName&quot;&gt;The last name of the person.&lt;/param&gt;" />
+      <LineAnalysis line="450" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;bornOn&quot;&gt;The birth date of the person.&lt;/param&gt;" />
+      <LineAnalysis line="451" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;addresses&quot;&gt;The collection of addresses.&lt;/param&gt;" />
+      <LineAnalysis line="452" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;cellPhone&quot;&gt;The cell phone number.&lt;/param&gt;" />
+      <LineAnalysis line="453" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;phone&quot;&gt;The home phone number.&lt;/param&gt;" />
+      <LineAnalysis line="454" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A new &lt;see cref=&quot;PersonRecord&quot;/&gt; instance.&lt;/returns&gt;" />
+      <LineAnalysis line="455" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;" />
+      <LineAnalysis line="456" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if any property value does not meet its length" />
+      <LineAnalysis line="457" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// requirements." />
+      <LineAnalysis line="458" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="459" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(Create), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]" />
+      <LineAnalysis line="460" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static PersonRecord Create(string id, string email, string firstName, string lastName, DateTimeOffset? bornOn, Collection&lt;AddressRecord&gt;? addresses = null, string? cellPhone = null, string? phone = null)" />
+      <LineAnalysis line="461" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="462" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="6" content="&#x9;&#x9;return new PersonRecord(email, id)" />
+      <LineAnalysis line="463" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="464" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;FirstName = firstName," />
+      <LineAnalysis line="465" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;LastName = lastName," />
+      <LineAnalysis line="466" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;BornOn = bornOn," />
+      <LineAnalysis line="467" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Addresses = addresses ?? []," />
+      <LineAnalysis line="468" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;CellPhone = cellPhone ?? string.Empty," />
+      <LineAnalysis line="469" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Phone = phone ?? string.Empty" />
+      <LineAnalysis line="470" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;};" />
+      <LineAnalysis line="471" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="472" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="473" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="474" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Converts a reference &lt;see cref=&quot;Person&quot;/&gt; to a" />
+      <LineAnalysis line="475" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;see cref=&quot;PersonRecord&quot;/&gt;." />
+      <LineAnalysis line="476" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="477" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;person&quot;&gt;The &lt;see cref=&quot;Person&quot;/&gt; to convert.&lt;/param&gt;" />
+      <LineAnalysis line="478" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A &lt;see cref=&quot;PersonRecord&quot;/&gt; instance.&lt;/returns&gt;" />
+      <LineAnalysis line="479" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;" />
+      <LineAnalysis line="480" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if &lt;paramref name=&quot;person&quot;/&gt; is null." />
+      <LineAnalysis line="481" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="482" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="483" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="484" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static PersonRecord ToPersonRecord([NotNull] in Person person)" />
+      <LineAnalysis line="485" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="486" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;_ = person.ArgumentNotNull();" />
+      <LineAnalysis line="487" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="488" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;PersonRecord newPerson = new()" />
+      <LineAnalysis line="489" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="490" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Id = person.Id," />
+      <LineAnalysis line="491" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Email = person.Email," />
+      <LineAnalysis line="492" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;FirstName = person.FirstName," />
+      <LineAnalysis line="493" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;LastName = person.LastName," />
+      <LineAnalysis line="494" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;BornOn = person.BornOn," />
+      <LineAnalysis line="495" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;CellPhone = person.CellPhone," />
+      <LineAnalysis line="496" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Phone = person.Phone," />
+      <LineAnalysis line="497" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;};" />
+      <LineAnalysis line="498" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="499" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;if (person.Addresses.IsNotEmpty())" />
+      <LineAnalysis line="500" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="501" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;foreach (var address in person.Addresses)" />
+      <LineAnalysis line="502" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="503" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;newPerson.Addresses.Add(AddressRecord.ToAddress(address));" />
+      <LineAnalysis line="504" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="505" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="506" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="507" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return newPerson;" />
+      <LineAnalysis line="508" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="509" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="510" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="511" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Converts a value &lt;see cref=&quot;ValueTypes.Person&quot;/&gt; to a" />
+      <LineAnalysis line="512" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;see cref=&quot;PersonRecord&quot;/&gt;." />
+      <LineAnalysis line="513" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="514" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;person&quot;&gt;The &lt;see cref=&quot;ValueTypes.Person&quot;/&gt; to" />
+      <LineAnalysis line="515" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// convert.&lt;/param&gt;" />
+      <LineAnalysis line="516" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;A &lt;see cref=&quot;PersonRecord&quot;/&gt; instance.&lt;/returns&gt;" />
+      <LineAnalysis line="517" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;" />
+      <LineAnalysis line="518" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown if &lt;paramref name=&quot;person&quot;/&gt; is null." />
+      <LineAnalysis line="519" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="520" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[return: NotNull]" />
+      <LineAnalysis line="521" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ToPersonRecord), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="522" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public static PersonRecord ToPersonRecord([NotNull] in ValueTypes.Person person)" />
+      <LineAnalysis line="523" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="524" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;_ = person.ArgumentNotNull();" />
+      <LineAnalysis line="525" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="526" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;PersonRecord newPerson = new()" />
+      <LineAnalysis line="527" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="528" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Id = person.Id," />
+      <LineAnalysis line="529" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Email = person.Email," />
+      <LineAnalysis line="530" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;FirstName = person.FirstName," />
+      <LineAnalysis line="531" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;LastName = person.LastName," />
+      <LineAnalysis line="532" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;BornOn = person.BornOn," />
+      <LineAnalysis line="533" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;CellPhone = person.CellPhone," />
+      <LineAnalysis line="534" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;Phone = person.Phone," />
+      <LineAnalysis line="535" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;};" />
+      <LineAnalysis line="536" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="537" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;if (person.Addresses.IsNotEmpty())" />
+      <LineAnalysis line="538" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;{" />
+      <LineAnalysis line="539" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;&#x9;foreach (var address in person.Addresses)" />
+      <LineAnalysis line="540" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;{" />
+      <LineAnalysis line="541" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;&#x9;newPerson.Addresses.Add(AddressRecord.ToAddress(address));" />
+      <LineAnalysis line="542" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;}" />
+      <LineAnalysis line="543" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;}" />
+      <LineAnalysis line="544" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="545" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return newPerson;" />
+      <LineAnalysis line="546" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="547" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="548" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="549" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Non-generic comparison required by &lt;see cref=&quot;IComparable&quot;/&gt;." />
+      <LineAnalysis line="550" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="551" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;obj&quot;&gt;Object to compare.&lt;/param&gt;" />
+      <LineAnalysis line="552" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;" />
+      <LineAnalysis line="553" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Value indicating the relative order of the objects." />
+      <LineAnalysis line="554" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/returns&gt;" />
+      <LineAnalysis line="555" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;exception cref=&quot;ArgumentException&quot;&gt;" />
+      <LineAnalysis line="556" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Thrown when &lt;paramref name=&quot;obj&quot;/&gt; is not a" />
+      <LineAnalysis line="557" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;see cref=&quot;PersonRecord&quot;/&gt;." />
+      <LineAnalysis line="558" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/exception&gt;" />
+      <LineAnalysis line="559" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="560" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;int IComparable.CompareTo(object? obj)" />
+      <LineAnalysis line="561" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="562" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;return obj is null" />
+      <LineAnalysis line="563" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;? 1" />
+      <LineAnalysis line="564" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;: obj is PersonRecord other" />
+      <LineAnalysis line="565" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;? this.CompareTo(other)" />
+      <LineAnalysis line="566" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;&#x9;: throw new ArgumentException($&quot;Object must be of type {nameof(PersonRecord)}&quot;, nameof(obj));" />
+      <LineAnalysis line="567" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="568" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="569" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="570" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Compares this instance with another &lt;see cref=&quot;PersonRecord&quot;/&gt;" />
+      <LineAnalysis line="571" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// using ordinal &lt;see cref=&quot;Id&quot;/&gt;." />
+      <LineAnalysis line="572" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="573" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;other&quot;&gt;Other &lt;see cref=&quot;PersonRecord&quot;/&gt;.&lt;/param&gt;" />
+      <LineAnalysis line="574" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;" />
+      <LineAnalysis line="575" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Value indicating the relative order of the objects." />
+      <LineAnalysis line="576" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/returns&gt;" />
+      <LineAnalysis line="577" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public int CompareTo(in PersonRecord? other)" />
+      <LineAnalysis line="578" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="579" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="&#x9;&#x9;return other is null ? 1 : string.Compare(this.Id, other.Id, StringComparison.Ordinal);" />
+      <LineAnalysis line="580" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="581" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="582" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="583" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Determines equality with another &lt;see cref=&quot;PersonRecord&quot;/&gt;" />
+      <LineAnalysis line="584" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// using ordinal &lt;see cref=&quot;Id&quot;/&gt;." />
+      <LineAnalysis line="585" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="586" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;param name=&quot;other&quot;&gt;Other &lt;see cref=&quot;PersonRecord&quot;/&gt;.&lt;/param&gt;" />
+      <LineAnalysis line="587" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;True if equal, otherwise false.&lt;/returns&gt;" />
+      <LineAnalysis line="588" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public bool Equals(in PersonRecord? other)" />
+      <LineAnalysis line="589" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="590" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="4" content="&#x9;&#x9;return ReferenceEquals(this, other) ? true : other is not null &amp;&amp; string.Equals(this.Id, other.Id, StringComparison.Ordinal);" />
+      <LineAnalysis line="591" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="592" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="593" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;inheritdoc /&gt;" />
+      <LineAnalysis line="594" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public override int GetHashCode()" />
+      <LineAnalysis line="595" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="596" visits="1024" coverage="PartiallyCovered" coveredbranches="1" totalbranches="2" content="&#x9;&#x9;return this.Id?.GetHashCode(StringComparison.Ordinal) ?? 0;" />
+      <LineAnalysis line="597" visits="1024" coverage="Covered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="598" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="599" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;summary&gt;" />
+      <LineAnalysis line="600" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// Debug-friendly string via project helper." />
+      <LineAnalysis line="601" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/summary&gt;" />
+      <LineAnalysis line="602" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;returns&gt;" />
+      <LineAnalysis line="603" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// A string representation of the person record." />
+      <LineAnalysis line="604" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;/// &lt;/returns&gt;" />
+      <LineAnalysis line="605" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]" />
+      <LineAnalysis line="606" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="&#x9;public override string ToString()" />
+      <LineAnalysis line="607" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;{" />
+      <LineAnalysis line="608" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning disable IL2026 // PropertiesToString uses reflection — suppressed because ToString must match base signature" />
+      <LineAnalysis line="609" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;&#x9;return this.PropertiesToString();" />
+      <LineAnalysis line="610" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="#pragma warning restore IL2026" />
+      <LineAnalysis line="611" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="&#x9;}" />
+      <LineAnalysis line="612" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+      <LineAnalysis line="613" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+    </File>
+  </Files>
+</CoverageReport>
