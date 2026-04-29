@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -195,7 +195,7 @@ public static class FastStringBuilder
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="args"/> is null.</exception>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CombineWithSpace), "David McCarter", "3/6/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string CombineWithSpace([DisallowNull] params ReadOnlySpan<string> args)
 	{
 		if (args.Length == 0)
@@ -203,31 +203,15 @@ public static class FastStringBuilder
 			return ControlChars.EmptyString;
 		}
 
-		// Single string - no spaces needed
-		if (args.Length == 1)
-		{
-			return args[0] ?? ControlChars.EmptyString;
-		}
-
 		var sb = _stringBuilderPool.Get().SetCapacity(EstimateParamsStringLength(args));
 
 		try
 		{
-			// Append first item directly
-			if (args[0] is not null)
-			{
-				_ = sb.Append(args[0]);
-			}
+			_ = sb.Append(args[0]);
 
-			// Append remaining items with leading space
 			for (var index = 1; index < args.Length; index++)
 			{
-				_ = sb.Append(ControlChars.Space);
-
-				if (args[index] is not null)
-				{
-					_ = sb.Append(args[index]);
-				}
+				_ = sb.Append(ControlChars.Space).Append(args[index]);
 			}
 
 			return sb.ToString();
