@@ -18,7 +18,6 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using DotNetTips.Spargine.Core.Properties;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -90,13 +89,6 @@ public static class BarcodeGenerator
 	[Information(nameof(ValidateHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static bool ValidateHmacBarcode(string barcode, IReadOnlyDictionary<string, byte[]> keysByKid, out Dictionary<string, string> fields, int macLenBytes = DefaultMacLenBytes, TimeSpan? maxSkew = null, TimeSpan? pastExpiryGrace = null)
 	{
-		barcode = barcode.ArgumentNotNullOrEmpty();
-
-		if (keysByKid is null || keysByKid.Count == 0)
-		{
-			throw new ArgumentException(Resources.AtLeastOneKeyMustBeProvided, nameof(keysByKid));
-		}
-
 		fields = new(StringComparer.OrdinalIgnoreCase);
 
 		if (!ValidateBarcodeInputs(barcode, keysByKid, macLenBytes))
@@ -122,6 +114,11 @@ public static class BarcodeGenerator
 		}
 
 		if (!CheckExpiry(fields, maxSkew, pastExpiryGrace))
+		{
+			return false;
+		}
+
+		if (keysByKid is null)
 		{
 			return false;
 		}

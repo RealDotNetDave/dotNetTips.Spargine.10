@@ -26,12 +26,12 @@ namespace DotNetTips.Spargine.Core.Tests.Security;
 [TestClass]
 public class BarcodeGeneratorTests
 {
-	private const string Kid = "2025-08a";
+	private const string KID = "2025-08a";
 	private static readonly byte[] TestKey = Convert.FromBase64String("3LHykMQCAZPQTWGNVqwm+9UZQLk32hmnR0gVLC9Nhfw=");
 
 	private static readonly IReadOnlyDictionary<string, byte[]> KeyRing = new Dictionary<string, byte[]>
 	{
-		[Kid] = TestKey,
+		[KID] = TestKey,
 	};
 
 	private static string BuildValidBarcode(DateTimeOffset? expiresUtc = null, int macLenBytes = 10)
@@ -42,7 +42,7 @@ public class BarcodeGeneratorTests
 			expiresUtc: expiresUtc ?? DateTimeOffset.UtcNow.AddHours(8),
 			issuer: "CTIX",
 			key: TestKey,
-			kid: Kid,
+			kid: KID,
 			macLenBytes: macLenBytes);
 	}
 
@@ -64,7 +64,7 @@ public class BarcodeGeneratorTests
 		Assert.IsTrue(barcode.Contains("pid=PID001", StringComparison.Ordinal));
 		Assert.IsTrue(barcode.Contains("iss=CTIX", StringComparison.Ordinal));
 		Assert.IsTrue(barcode.Contains("alg=H256", StringComparison.Ordinal));
-		Assert.IsTrue(barcode.Contains($"kid={Kid}", StringComparison.Ordinal));
+		Assert.IsTrue(barcode.Contains($"kid={KID}", StringComparison.Ordinal));
 	}
 
 	[TestMethod]
@@ -105,8 +105,8 @@ public class BarcodeGeneratorTests
 	[TestMethod]
 	public void BuildHmacBarcode_DifferentInputs_ProduceDifferentBarcodes()
 	{
-		var barcode1 = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(8), "CTIX", TestKey, Kid);
-		var barcode2 = BarcodeGenerator.BuildHmacBarcode("TID002", "PID001", DateTimeOffset.UtcNow.AddHours(8), "CTIX", TestKey, Kid);
+		var barcode1 = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(8), "CTIX", TestKey, KID);
+		var barcode2 = BarcodeGenerator.BuildHmacBarcode("TID002", "PID001", DateTimeOffset.UtcNow.AddHours(8), "CTIX", TestKey, KID);
 
 		Assert.AreNotEqual(barcode1, barcode2);
 	}
@@ -119,42 +119,42 @@ public class BarcodeGeneratorTests
 	public void BuildHmacBarcode_NullTicketId_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			BarcodeGenerator.BuildHmacBarcode(null!, "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode(null!, "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, KID));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_EmptyTicketId_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			BarcodeGenerator.BuildHmacBarcode(string.Empty, "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode(string.Empty, "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, KID));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_NullPerformanceId_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", null!, DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode("TID001", null!, DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, KID));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_EmptyPerformanceId_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", string.Empty, DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode("TID001", string.Empty, DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, KID));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_NullIssuer_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), null!, TestKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), null!, TestKey, KID));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_EmptyIssuer_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), string.Empty, TestKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), string.Empty, TestKey, KID));
 	}
 
 	[TestMethod]
@@ -178,7 +178,7 @@ public class BarcodeGeneratorTests
 		RandomNumberGenerator.Fill(shortKey);
 
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", shortKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", shortKey, KID));
 	}
 
 	[TestMethod]
@@ -188,21 +188,21 @@ public class BarcodeGeneratorTests
 		RandomNumberGenerator.Fill(longKey);
 
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", longKey, Kid));
+			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", longKey, KID));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_MacLenBytesZero_ThrowsArgumentOutOfRangeException()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, Kid, macLenBytes: 0));
+			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, KID, macLenBytes: 0));
 	}
 
 	[TestMethod]
 	public void BuildHmacBarcode_MacLenBytesTooLarge_ThrowsArgumentOutOfRangeException()
 	{
 		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
-			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, Kid, macLenBytes: 33));
+			BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", TestKey, KID, macLenBytes: 33));
 	}
 
 	[TestMethod]
@@ -211,7 +211,7 @@ public class BarcodeGeneratorTests
 		var key = new byte[16];
 		RandomNumberGenerator.Fill(key);
 
-		var barcode = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", key, Kid);
+		var barcode = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", key, KID);
 
 		Assert.IsNotNull(barcode);
 	}
@@ -222,7 +222,7 @@ public class BarcodeGeneratorTests
 		var key = new byte[64];
 		RandomNumberGenerator.Fill(key);
 
-		var barcode = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", key, Kid);
+		var barcode = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", DateTimeOffset.UtcNow.AddHours(1), "CTIX", key, KID);
 
 		Assert.IsNotNull(barcode);
 	}
@@ -472,7 +472,7 @@ public class BarcodeGeneratorTests
 		RandomNumberGenerator.Fill(differentKey);
 		var wrongKeyRing = new Dictionary<string, byte[]>
 		{
-			[Kid] = differentKey,
+			[KID] = differentKey,
 		};
 
 		var result = BarcodeGenerator.ValidateHmacBarcode(barcode, wrongKeyRing, out _);
@@ -506,7 +506,7 @@ public class BarcodeGeneratorTests
 	public void ValidateHmacBarcode_ParsesAllFields()
 	{
 		var expires = DateTimeOffset.UtcNow.AddHours(8);
-		var barcode = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", expires, "CTIX", TestKey, Kid);
+		var barcode = BarcodeGenerator.BuildHmacBarcode("TID001", "PID001", expires, "CTIX", TestKey, KID);
 
 		var result = BarcodeGenerator.ValidateHmacBarcode(barcode, KeyRing, out var fields);
 
@@ -517,7 +517,7 @@ public class BarcodeGeneratorTests
 		Assert.AreEqual(expires.ToUnixTimeSeconds().ToString(), fields["e"]);
 		Assert.AreEqual("CTIX", fields["iss"]);
 		Assert.AreEqual("H256", fields["alg"]);
-		Assert.AreEqual(Kid, fields["kid"]);
+		Assert.AreEqual(KID, fields["kid"]);
 	}
 
 	[TestMethod]
