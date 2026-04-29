@@ -1,0 +1,12 @@
+{
+  "excludePatterns": [
+    "*Tests",
+    "*BenchmarkTests"
+  ],
+  "incrementOnBuild": true,
+  "incrementStrategy": "revision",
+  "masterProjectRelativePath": "source\\dotNetTips.Spargine.10.Core\\DotNetTips.Spargine.10.Core.csproj",
+  "releaseBuildsOnly": false,
+  "syncMode": "masterProject",
+  "version": "2026.10.4.23"
+}

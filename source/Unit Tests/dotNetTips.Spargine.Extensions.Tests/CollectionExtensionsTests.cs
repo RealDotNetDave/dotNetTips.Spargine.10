@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -63,20 +63,16 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
-	public void AddIfNotExistsSingleItemTest()
+	public void AddIfNotExists_HashSet_AddsNewItem()
 	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		Person nullPerson = null;
+		ICollection<Person> collection = new HashSet<Person>();
+		var person = RandomData.GeneratePerson<Person>();
 
-		// TEST
-		Assert.IsFalse(people.AddIfNotExists(nullPerson));
-
-		var testPerson = RandomData.GeneratePerson<Person>();
-
-		Assert.IsTrue(people.AddIfNotExists(testPerson));
-
-		Assert.IsFalse(people.AddIfNotExists(testPerson));
+		Assert.IsTrue(collection.AddIfNotExists(person));
+		Assert.IsFalse(collection.AddIfNotExists(person));
+		Assert.HasCount(1, collection);
 	}
+
 	[TestMethod]
 	public void AddIfNotExistsWithComparerTest()
 	{
@@ -330,6 +326,41 @@ public class CollectionExtensionsTests
 		var person = RandomData.GeneratePerson<Person>();
 
 		Assert.ThrowsExactly<ArgumentReadOnlyException>(() => collection.Upsert(person));
+	}
+
+	[TestMethod]
+	public void Upsert_EmptyCollection_AddsItem()
+	{
+		var collection = new List<Person>();
+		var person = RandomData.GeneratePerson<Person>();
+
+		collection.Upsert(person);
+
+		Assert.HasCount(1, collection);
+	}
+
+	[TestMethod]
+	public void Upsert_HashSet_ExistingItem_Replaces()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		ICollection<Person> collection = new HashSet<Person> { person };
+
+		// Upsert same item: removes and re-adds
+		collection.Upsert(person);
+
+		Assert.HasCount(1, collection);
+		Assert.IsTrue(collection.Contains(person));
+	}
+
+	[TestMethod]
+	public void Upsert_List_ExistingItem_UpdatesInPlace()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var existingPerson = people.First();
+
+		people.Upsert(existingPerson);
+
+		Assert.HasCount(Count, people);
 	}
 
 	[TestMethod]

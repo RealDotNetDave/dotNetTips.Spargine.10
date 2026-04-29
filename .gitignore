@@ -398,11 +398,3 @@ FodyWeavers.xsd
 *.sln.iml
 /.cr
 /AppBin
-/README.md.saved.bak
-/source/Benchmarking/README.md.saved.bak
-/.versionsync.json
-/coverage-report
-/coverage-report-crap
-/coverage-report2
-/coverage-report3
-/coverage-report4
