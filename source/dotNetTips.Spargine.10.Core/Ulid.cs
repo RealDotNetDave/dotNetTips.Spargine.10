@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -251,41 +251,24 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// Extracts the timestamp from the Ulid.
 	/// </summary>
 	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
-	[Information(nameof(GetTimeStamp), BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetTimeStamp), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public DateTimeOffset GetTimeStamp()
 	{
 		var timestampChars = this._ulid.AsSpan(0, TimestampLength);
-
-		// Decode Base32 timestamp directly into int64 using bit manipulation
 		var bitBuffer = 0UL;
 		var bitsInBuffer = 0;
-
-		// Accumulate decoded bytes directly into the timestamp value (big-endian)
 		long timestampMilliseconds = 0;
-		var bytesDecoded = 0;
 
 		foreach (var c in timestampChars)
 		{
-			if (!Base32CharToValue.TryGetValue(c, out var value))
-			{
-				ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(Ulid));
-			}
+			AccumulateBits(c, ref bitBuffer, ref bitsInBuffer);
 
-			// Add 5 bits from this character to the buffer
-			bitBuffer = (bitBuffer << 5) | (uint)value;
-			bitsInBuffer += 5;
-
-			// Extract complete bytes when we have at least 8 bits
-			while (bitsInBuffer >= 8 && bytesDecoded < 6)
+			while (bitsInBuffer >= 8)
 			{
 				bitsInBuffer -= 8;
 				var byteValue = (byte)(bitBuffer >> bitsInBuffer);
-
-				// Shift existing value left by 8 bits and add new byte (big-endian reconstruction)
 				timestampMilliseconds = (timestampMilliseconds << 8) | byteValue;
-				bytesDecoded++;
-
-				bitBuffer &= (1UL << bitsInBuffer) - 1; // Clear extracted bits
+				bitBuffer &= (1UL << bitsInBuffer) - 1;
 			}
 		}
 
@@ -316,36 +299,14 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	private static void EncodeBase32(ReadOnlySpan<byte> bytes, Span<char> chars, int charIndex, int length)
 	{
-		const int Mask = 0x1F;
 		var byteIndex = 0;
 		var bitIndex = 0;
 
 		for (var index = 0; index < length; index++)
 		{
-			int value;
-
-			if (bitIndex > 3)
-			{
-				// Need to read from two bytes
-				var currentByte = bytes[byteIndex];
-				var nextByte = byteIndex + 1 < bytes.Length ? bytes[byteIndex + 1] : 0;
-				var dualByte = (currentByte << 8) | nextByte;
-				value = (dualByte >> (16 - bitIndex - 5)) & Mask;
-				byteIndex++;
-				bitIndex = (bitIndex + 5) & 7; // Equivalent to (bitIndex + 5) % 8
-			}
-			else
-			{
-				// Can read from single byte
-				value = (bytes[byteIndex] >> (3 - bitIndex)) & Mask;
-				bitIndex += 5;
-
-				if (bitIndex >= 8)
-				{
-					bitIndex -= 8;
-					byteIndex++;
-				}
-			}
+			var value = bitIndex > 3
+				? ReadDualByte(bytes, ref byteIndex, ref bitIndex)
+				: ReadSingleByte(bytes, ref byteIndex, ref bitIndex);
 
 			chars[charIndex + index] = Base32Chars[value];
 		}
@@ -380,4 +341,68 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	[ExcludeFromCodeCoverage]
 	[Information(nameof(GenerateTimeStamp), Status = Status.Available)]
 	private static byte[] GenerateTimeStamp() => BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+
+	/// <summary>
+	/// Decodes a Base32 character and accumulates its 5-bit value into the bit buffer.
+	/// </summary>
+	/// <param name="c">The Base32 character to decode.</param>
+	/// <param name="bitBuffer">The bit buffer to accumulate into; updated after the operation.</param>
+	/// <param name="bitsInBuffer">The number of bits currently in the buffer; updated after the operation.</param>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="c"/> is not a valid Base32 character.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AccumulateBits), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AccumulateBits(char c, ref ulong bitBuffer, ref int bitsInBuffer)
+	{
+		if (!Base32CharToValue.TryGetValue(c, out var value))
+		{
+			ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(Ulid));
+		}
+
+		bitBuffer = (bitBuffer << 5) | (uint)value;
+		bitsInBuffer += 5;
+	}
+
+	/// <summary>
+	/// Reads the next 5-bit value from two overlapping bytes in the byte span.
+	/// </summary>
+	/// <param name="bytes">The byte span to read from.</param>
+	/// <param name="byteIndex">The current byte index; advanced after the read.</param>
+	/// <param name="bitIndex">The current bit offset within the byte; updated after the read.</param>
+	/// <returns>A 5-bit integer value extracted from two overlapping bytes.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ReadDualByte), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int ReadDualByte(ReadOnlySpan<byte> bytes, ref int byteIndex, ref int bitIndex)
+	{
+		const int Mask = 0x1F;
+		var nextByte = byteIndex + 1 < bytes.Length ? bytes[byteIndex + 1] : 0;
+		var dualByte = (bytes[byteIndex] << 8) | nextByte;
+		var value = (dualByte >> (16 - bitIndex - 5)) & Mask;
+		byteIndex++;
+		bitIndex = (bitIndex + 5) & 7;
+		return value;
+	}
+
+	/// <summary>
+	/// Reads the next 5-bit value from a single byte in the byte span.
+	/// </summary>
+	/// <param name="bytes">The byte span to read from.</param>
+	/// <param name="byteIndex">The current byte index; advanced if a byte boundary is crossed.</param>
+	/// <param name="bitIndex">The current bit offset within the byte; updated after the read.</param>
+	/// <returns>A 5-bit integer value extracted from a single byte.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ReadSingleByte), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int ReadSingleByte(ReadOnlySpan<byte> bytes, ref int byteIndex, ref int bitIndex)
+	{
+		const int Mask = 0x1F;
+		var value = (bytes[byteIndex] >> (3 - bitIndex)) & Mask;
+		bitIndex += 5;
+
+		if (bitIndex >= 8)
+		{
+			bitIndex -= 8;
+			byteIndex++;
+		}
+
+		return value;
+	}
 }
