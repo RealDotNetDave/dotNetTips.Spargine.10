@@ -350,7 +350,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="bitsInBuffer">The number of bits currently in the buffer; updated after the operation.</param>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="c"/> is not a valid Base32 character.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AccumulateBits), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(AccumulateBits), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void AccumulateBits(char c, ref ulong bitBuffer, ref int bitsInBuffer)
 	{
 		if (!Base32CharToValue.TryGetValue(c, out var value))
@@ -370,7 +370,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="bitIndex">The current bit offset within the byte; updated after the read.</param>
 	/// <returns>A 5-bit integer value extracted from two overlapping bytes.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ReadDualByte), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ReadDualByte), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static int ReadDualByte(ReadOnlySpan<byte> bytes, ref int byteIndex, ref int bitIndex)
 	{
 		const int Mask = 0x1F;
@@ -390,7 +390,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="bitIndex">The current bit offset within the byte; updated after the read.</param>
 	/// <returns>A 5-bit integer value extracted from a single byte.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ReadSingleByte), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ReadSingleByte), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static int ReadSingleByte(ReadOnlySpan<byte> bytes, ref int byteIndex, ref int bitIndex)
 	{
 		const int Mask = 0x1F;
