@@ -1677,7 +1677,7 @@ public static class RandomData
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GeneratePersonNameInternal), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	private static PersonName GeneratePersonNameInternal() =>
-		new(_firstNames.Value.PickRandom() ?? string.Empty, _lastNames.Value.PickRandom() ?? string.Empty);
+		new(_firstNames.Value.PickRandom() ?? Core.ControlChars.EmptyString, _lastNames.Value.PickRandom() ?? Core.ControlChars.EmptyString);
 
 	/// <summary>
 	/// Generates a postal code for the specified country and city.
