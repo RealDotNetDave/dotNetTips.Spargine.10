@@ -72,7 +72,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2024
+* **CreatedOn:** 01/20/2024
 * **Description:** CurrentThreadId
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -94,7 +94,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ExecutingFolder
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -176,7 +176,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/20/2023
+* **CreatedOn:** 03/20/2023
 * **Description:** GetProcessorInformation
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -288,7 +288,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2024
+* **CreatedOn:** 07/26/2024
 * **Description:** ProcessName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -300,7 +300,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2024
+* **CreatedOn:** 01/20/2024
 * **Description:** GetProcessorInformation
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -474,7 +474,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/9/2025
+* **CreatedOn:** 04/09/2025
 * **Description:** GetAssemblyTypes
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -506,7 +506,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/9/2025
+* **CreatedOn:** 04/09/2025
 * **Description:** GetNetSdkDllFiles
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -518,7 +518,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/20/2024
+* **CreatedOn:** 05/20/2024
 * **Description:** Original code by GÉRALD BARRÉ
 * **Documentation:** https://bit.ly/SpargineAug2024
 * **Modified By:** David McCarter
@@ -531,7 +531,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 5/20/2024
+* **CreatedOn:** 05/20/2024
 * **Description:** IsDotNetAssembly
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -562,7 +562,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/16/2021
+* **CreatedOn:** 01/16/2021
 * **Description:** AddCacheItem
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -574,7 +574,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/12/2024
+* **CreatedOn:** 06/12/2024
 * **Description:** AddCacheItem
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -586,7 +586,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/12/2024
+* **CreatedOn:** 06/12/2024
 * **Description:** AddCacheItem
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -598,7 +598,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -610,7 +610,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -622,7 +622,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -730,7 +730,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/16/2021
+* **CreatedOn:** 01/16/2021
 * **Description:** Cache
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -742,7 +742,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/12/2024
+* **CreatedOn:** 06/12/2024
 * **Description:** Clear
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -750,8 +750,8 @@
 ### System.Void Compact(System.Double percentage)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
@@ -766,7 +766,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** ContainsKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -778,7 +778,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/16/2021
+* **CreatedOn:** 01/16/2021
 * **Description:** Count
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -810,11 +810,11 @@
 ### System.Collections.Generic.IEnumerable<System.String> GetAllKeys()
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** GetAllKeys
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -826,7 +826,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/16/2021
+* **CreatedOn:** 01/16/2021
 * **Description:** GetCacheItem
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -838,7 +838,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** GetCacheItemAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -846,8 +846,8 @@
 ### T GetCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
@@ -870,8 +870,8 @@
 ### T GetOrCreateAsync(System.String key, T factory, System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetOrCreateAsync
@@ -884,7 +884,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/10/2025
+* **CreatedOn:** 08/10/2025
 * **Description:** GetOrCreateAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -896,7 +896,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/16/2021
+* **CreatedOn:** 01/16/2021
 * **Description:** Instance
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -916,8 +916,8 @@
 ### System.Boolean PeekCacheItem(System.String key, T value)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** None
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/30/2025
@@ -944,7 +944,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/20/2025
+* **CreatedOn:** 01/20/2025
 * **Description:** RemoveCacheItem
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -976,8 +976,8 @@
 ### System.Boolean TryGetValue(System.String key, T value)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryGetValue
@@ -1005,7 +1005,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/25/2025
+* **CreatedOn:** 06/25/2025
 * **Description:** CurrentIndex
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1029,7 +1029,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/21/2021
+* **CreatedOn:** 04/21/2021
 * **Description:** GetNext
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1041,7 +1041,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/21/2021
+* **CreatedOn:** 04/21/2021
 * **Description:** HasRemainingItems
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1053,7 +1053,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/25/2025
+* **CreatedOn:** 06/25/2025
 * **Description:** PeekNext
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1077,7 +1077,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/25/2025
+* **CreatedOn:** 06/25/2025
 * **Description:** Reset
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1369,7 +1369,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1381,7 +1381,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1393,7 +1393,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1405,7 +1405,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1417,7 +1417,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1429,7 +1429,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1441,7 +1441,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1453,7 +1453,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** Add
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1477,7 +1477,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** Clear
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1489,7 +1489,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** Contains
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1501,7 +1501,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** CopyTo
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1513,7 +1513,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** Count
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1525,7 +1525,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** GetEnumerator
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1537,7 +1537,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** IsEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1549,7 +1549,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** Remove
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1561,7 +1561,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** Add
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1609,7 +1609,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/28/2021
+* **CreatedOn:** 07/28/2021
 * **Description:** TryRemove
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2928,7 +2928,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/1/2025
+* **CreatedOn:** 09/01/2025
 * **Description:** GetCountryPhonePostalInfo
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2940,7 +2940,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/1/2025
+* **CreatedOn:** 09/01/2025
 * **Description:** GetCountryPhonePostalInfo
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3008,7 +3008,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** CurrentDayOfWeek
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3020,7 +3020,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** CurrentDayOfYear
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3032,7 +3032,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** CurrentQuarter
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3044,7 +3044,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** CurrentUtcDayOfWeek
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3056,7 +3056,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** CurrentUtcQuarter
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3092,7 +3092,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** DaysInMonth
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3104,7 +3104,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** DaysRemainingInMonth
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3116,7 +3116,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** DaysRemainingInYear
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3128,7 +3128,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** FirstDayOfCurrentMonth
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3140,7 +3140,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** IsCurrentUtcYearLeapYear
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3152,7 +3152,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** IsCurrentYearLeapYear
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3176,7 +3176,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** IsWeekday
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3188,7 +3188,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** IsWeekend
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3200,7 +3200,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** LastDayOfCurrentMonth
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3224,7 +3224,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** LocalUtcOffset
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3236,7 +3236,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** StartOfToday
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3272,7 +3272,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** UnixTimestamp
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3284,7 +3284,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 2/13/2026
+* **CreatedOn:** 02/13/2026
 * **Description:** UnixTimestampMilliseconds
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3384,7 +3384,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** Elapsed
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3423,7 +3423,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/9/2025
+* **CreatedOn:** 05/09/2025
 * **Description:** AddDiagnosticEntry
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3447,7 +3447,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** ClearDiagnostics
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3459,7 +3459,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** ClearLaps
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3471,7 +3471,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/18/2023
+* **CreatedOn:** 01/18/2023
 * **Description:** Diagnostics
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3483,7 +3483,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** ExportToJson
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3495,7 +3495,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** GetDiagnosticMessages
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3507,7 +3507,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/17/2026
+* **CreatedOn:** 02/17/2026
 * **Description:** GetElapsedTime
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3519,7 +3519,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/17/2026
+* **CreatedOn:** 02/17/2026
 * **Description:** GetElapsedTime
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3531,7 +3531,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** GetLaps
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3543,7 +3543,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** GetSummaryReport
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3555,7 +3555,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/17/2026
+* **CreatedOn:** 02/17/2026
 * **Description:** GetTimestamp
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3567,7 +3567,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** GetTotalTimeString
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3579,7 +3579,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** IsThresholdExceeded
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3591,7 +3591,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** LogMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3603,7 +3603,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** RecordLap
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3639,7 +3639,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** StartNewWithAlertThreshold
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3651,7 +3651,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** StartNewWithTelemetry
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3675,7 +3675,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** StopIfThresholdExceeded
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3759,7 +3759,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/18/2023
+* **CreatedOn:** 01/18/2023
 * **Description:** ToString
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3771,7 +3771,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** TrackTelemetry
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3783,7 +3783,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/8/2025
+* **CreatedOn:** 05/08/2025
 * **Description:** WithTelemetry
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -3954,7 +3954,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/1/2020
+* **CreatedOn:** 01/01/2020
 * **Description:** GetItems
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4119,7 +4119,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4131,7 +4131,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4153,7 +4153,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4302,7 +4302,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4314,7 +4314,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4326,7 +4326,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4810,7 +4810,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/7/2025
+* **CreatedOn:** 03/07/2025
 * **Description:** BytesToString
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4822,7 +4822,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/18/2021
+* **CreatedOn:** 02/18/2021
 * **Description:** BytesToString
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4846,7 +4846,7 @@
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/6/2025
+* **CreatedOn:** 03/06/2025
 * **Description:** CombineWithSpace
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4858,7 +4858,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/19/2021
+* **CreatedOn:** 02/19/2021
 * **Description:** Concat
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4870,7 +4870,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/19/2021
+* **CreatedOn:** 02/19/2021
 * **Description:** Concat
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4882,7 +4882,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/4/2025
+* **CreatedOn:** 03/04/2025
 * **Description:** Format
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4894,7 +4894,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/4/2025
+* **CreatedOn:** 03/04/2025
 * **Description:** Join
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4906,7 +4906,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/4/2025
+* **CreatedOn:** 03/04/2025
 * **Description:** Join
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4942,7 +4942,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/5/2025
+* **CreatedOn:** 03/05/2025
 * **Description:** Remove
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -4954,7 +4954,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/1/2021
+* **CreatedOn:** 01/01/2021
 * **Description:** ToDelimitedString
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5078,7 +5078,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/18/2025
+* **CreatedOn:** 08/18/2025
 * **Description:** GenerateCustomKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5090,7 +5090,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/30/2021
+* **CreatedOn:** 05/30/2021
 * **Description:** GenerateKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5102,7 +5102,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/30/2021
+* **CreatedOn:** 05/30/2021
 * **Description:** GenerateKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5114,7 +5114,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/7/2025
+* **CreatedOn:** 05/07/2025
 * **Description:** GenerateSortableKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5126,7 +5126,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/7/2025
+* **CreatedOn:** 05/07/2025
 * **Description:** GenerateSortableKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5217,7 +5217,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogCriticalMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5229,7 +5229,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogDebugMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5241,7 +5241,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogErrorMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5253,7 +5253,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogExceptionMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5265,7 +5265,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogInformationMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5277,7 +5277,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogStoredProcedureError
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5289,7 +5289,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogStoredProcedureNoRecordsFound
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5301,7 +5301,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogTraceMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5313,7 +5313,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/27/2023
+* **CreatedOn:** 02/27/2023
 * **Description:** LogWarningMessage
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5328,7 +5328,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Author:** David McCarter
-* **CreatedOn:** 7/13/2024
+* **CreatedOn:** 07/13/2024
 * **Description:** LogAppDomainEvents
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5352,7 +5352,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Author:** David McCarter
-* **CreatedOn:** 7/13/2024
+* **CreatedOn:** 07/13/2024
 * **Description:** LogAppDomainUnhandledException
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5364,7 +5364,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/3/2020
+* **CreatedOn:** 11/03/2020
 * **Description:** LogApplicationInformation
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5376,7 +5376,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/4/2020
+* **CreatedOn:** 11/04/2020
 * **Description:** LogComputerInformation
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5641,7 +5641,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5653,7 +5653,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5665,7 +5665,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5677,7 +5677,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5689,7 +5689,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5701,7 +5701,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/10/2025
+* **CreatedOn:** 08/10/2025
 * **Description:** Acknowledge
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5743,7 +5743,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** Count
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5765,7 +5765,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ListenAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5777,7 +5777,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** Lock
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5789,7 +5789,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** ReadAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5801,7 +5801,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/10/2025
+* **CreatedOn:** 08/10/2025
 * **Description:** ReadAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5843,7 +5843,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/10/2025
+* **CreatedOn:** 08/10/2025
 * **Description:** TryWriteOnce
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5855,7 +5855,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** WriteAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5867,7 +5867,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/26/2021
+* **CreatedOn:** 07/26/2021
 * **Description:** WriteAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5879,7 +5879,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/10/2025
+* **CreatedOn:** 08/10/2025
 * **Description:** WriteOnceAsync
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5894,7 +5894,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** ContainsFirstLastName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5906,7 +5906,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** ContainsWord
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5918,7 +5918,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/9/2025
+* **CreatedOn:** 04/09/2025
 * **Description:** ExtractVersion
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5940,7 +5940,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** IsCreditCardNumber
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5952,7 +5952,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** IsCurrencyCode
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5964,7 +5964,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** IsEmailAddress
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5976,7 +5976,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** IsGuid
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6012,7 +6012,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** IsISBN
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6024,7 +6024,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/28/2023
+* **CreatedOn:** 09/28/2023
 * **Description:** IsMACAddress
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6056,7 +6056,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/28/2023
+* **CreatedOn:** 09/28/2023
 * **Description:** IsSHA1Hash
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6068,7 +6068,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** IsUrl
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6080,7 +6080,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/28/2023
+* **CreatedOn:** 09/28/2023
 * **Description:** IsUrlDomainAddress
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6092,7 +6092,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/28/2023
+* **CreatedOn:** 09/28/2023
 * **Description:** IsValidString
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6104,7 +6104,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/1/2024
+* **CreatedOn:** 08/01/2024
 * **Description:** RemoveHtml
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6116,7 +6116,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/1/2024
+* **CreatedOn:** 08/01/2024
 * **Description:** RemoveSpecialChar
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6128,7 +6128,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/28/2023
+* **CreatedOn:** 09/28/2023
 * **Description:** ReplaceCrLf
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6140,7 +6140,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 3/16/2023
+* **CreatedOn:** 03/16/2023
 * **Description:** ReplaceSpaces
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6155,7 +6155,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/1/2026
+* **CreatedOn:** 04/01/2026
 * **Description:** BuildHmacBarcode
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6167,7 +6167,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/1/2026
+* **CreatedOn:** 04/01/2026
 * **Description:** ValidateHmacBarcode
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6182,7 +6182,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/19/2021
+* **CreatedOn:** 07/19/2021
 * **Description:** AesDecrypt
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6194,7 +6194,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/19/2021
+* **CreatedOn:** 07/19/2021
 * **Description:** AesEncrypt
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6206,7 +6206,7 @@
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/14/2025
+* **CreatedOn:** 08/14/2025
 * **Description:** AesGcmDecrypt
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6218,7 +6218,7 @@
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/14/2025
+* **CreatedOn:** 08/14/2025
 * **Description:** AesGcmEncrypt
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6230,7 +6230,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/14/2025
+* **CreatedOn:** 08/14/2025
 * **Description:** GenerateAesGcmKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6242,7 +6242,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/19/2021
+* **CreatedOn:** 07/19/2021
 * **Description:** GenerateAesIV
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6254,7 +6254,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/19/2021
+* **CreatedOn:** 07/19/2021
 * **Description:** GenerateAesKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6266,7 +6266,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/30/2021
+* **CreatedOn:** 05/30/2021
 * **Description:** GenerateRandomKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6278,7 +6278,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/19/2021
+* **CreatedOn:** 07/19/2021
 * **Description:** SimpleSHA256Decrypt
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6290,7 +6290,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/19/2021
+* **CreatedOn:** 07/19/2021
 * **Description:** SimpleSHA256Encrypt
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6332,7 +6332,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/14/2025
+* **CreatedOn:** 05/14/2025
 * **Description:** HashPassword
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6345,7 +6345,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/14/2025
+* **CreatedOn:** 05/14/2025
 * **Description:** VerifyHashedPassword
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6360,7 +6360,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** Deserialize
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6402,7 +6402,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6444,7 +6444,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** Serialize
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6529,7 +6529,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/9/2020
+* **CreatedOn:** 09/09/2020
 * **Description:** StringToXDocument
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6541,7 +6541,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/9/2020
+* **CreatedOn:** 09/09/2020
 * **Description:** StringToXDocument
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6798,7 +6798,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/13/2021
+* **CreatedOn:** 07/13/2021
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
@@ -6811,7 +6811,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/13/2021
+* **CreatedOn:** 07/13/2021
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
@@ -6824,7 +6824,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/13/2021
+* **CreatedOn:** 07/13/2021
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
@@ -6837,7 +6837,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/13/2021
+* **CreatedOn:** 07/13/2021
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
@@ -6853,7 +6853,7 @@
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/6/2023
+* **CreatedOn:** 11/06/2023
 * **Description:** BuiltInTypeNames
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6865,7 +6865,7 @@
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/6/2023
+* **CreatedOn:** 11/06/2023
 * **Description:** BuiltInTypes
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6977,7 +6977,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/30/2020
+* **CreatedOn:** 07/30/2020
 * **Description:** GetAllDeclaredFields
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -6989,7 +6989,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/30/2020
+* **CreatedOn:** 07/30/2020
 * **Description:** Original Code .NET Core source.
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7011,7 +7011,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** GetAllGenericMethods
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7023,7 +7023,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 7/15/2020
+* **CreatedOn:** 07/15/2020
 * **Description:** GetAllMethods
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7175,7 +7175,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/3/2020
+* **CreatedOn:** 11/03/2020
 * **Description:** GetPropertyValues
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7297,7 +7297,7 @@
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 11/6/2023
+* **CreatedOn:** 11/06/2023
 * **Description:** IsBuiltinType
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7641,7 +7641,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/25/2025
+* **CreatedOn:** 05/25/2025
 * **Description:** ArgumentCountInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7653,7 +7653,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/25/2025
+* **CreatedOn:** 05/25/2025
 * **Description:** ArgumentCustom
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7665,7 +7665,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentDefined
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7677,7 +7677,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7689,7 +7689,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7701,7 +7701,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/29/2022
+* **CreatedOn:** 01/29/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7713,7 +7713,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/21/2022
+* **CreatedOn:** 01/21/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7725,7 +7725,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/21/2022
+* **CreatedOn:** 01/21/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7737,7 +7737,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7749,7 +7749,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7761,7 +7761,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7773,7 +7773,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7785,7 +7785,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/15/2022
+* **CreatedOn:** 02/15/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7797,7 +7797,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/15/2022
+* **CreatedOn:** 02/15/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7809,7 +7809,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7821,7 +7821,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7833,7 +7833,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/25/2022
+* **CreatedOn:** 05/25/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7845,7 +7845,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 5/27/2022
+* **CreatedOn:** 05/27/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7857,7 +7857,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/17/2022
+* **CreatedOn:** 02/17/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7869,7 +7869,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/4/2022
+* **CreatedOn:** 02/04/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7881,7 +7881,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/4/2022
+* **CreatedOn:** 04/04/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7893,7 +7893,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentMatched
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7905,7 +7905,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/4/2022
+* **CreatedOn:** 04/04/2022
 * **Description:** ArgumentMeetsCondition
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7917,7 +7917,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/4/2022
+* **CreatedOn:** 04/04/2022
 * **Description:** ArgumentMeetsCondition
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7929,7 +7929,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentNotEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7941,7 +7941,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentNotEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7965,7 +7965,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/10/2021
+* **CreatedOn:** 02/10/2021
 * **Description:** ArgumentNotNull
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7977,7 +7977,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentNotNull
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -7989,7 +7989,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentNotNullOrEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8001,7 +8001,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentNotNullOrEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8013,7 +8013,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/29/2022
+* **CreatedOn:** 01/29/2022
 * **Description:** ArgumentNotReadOnly
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8025,7 +8025,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/28/2022
+* **CreatedOn:** 01/28/2022
 * **Description:** ArgumentNotReadOnly
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8037,7 +8037,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** ArgumentTypeEquals
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8049,7 +8049,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/31/2022
+* **CreatedOn:** 01/31/2022
 * **Description:** CheckExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8061,7 +8061,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/31/2022
+* **CreatedOn:** 01/31/2022
 * **Description:** CheckExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8073,7 +8073,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/10/2021
+* **CreatedOn:** 02/10/2021
 * **Description:** CheckIsCondition
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8085,7 +8085,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/31/2022
+* **CreatedOn:** 01/31/2022
 * **Description:** CheckIsDefined
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8097,7 +8097,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/31/2022
+* **CreatedOn:** 01/31/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8109,7 +8109,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/14/2022
+* **CreatedOn:** 02/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8121,7 +8121,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/14/2022
+* **CreatedOn:** 02/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8133,7 +8133,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/3/2022
+* **CreatedOn:** 02/03/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8145,7 +8145,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/14/2022
+* **CreatedOn:** 02/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8157,7 +8157,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/14/2022
+* **CreatedOn:** 02/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8169,7 +8169,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/14/2022
+* **CreatedOn:** 02/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8181,7 +8181,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/31/2022
+* **CreatedOn:** 01/31/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8193,7 +8193,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 6/26/2017
+* **CreatedOn:** 06/26/2017
 * **Description:** CheckIsNotEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8205,7 +8205,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/2/2022
+* **CreatedOn:** 02/02/2022
 * **Description:** CheckIsNotEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8217,7 +8217,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 2/10/2021
+* **CreatedOn:** 02/10/2021
 * **Description:** CheckIsNotNull
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8229,7 +8229,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 8/28/2025
+* **CreatedOn:** 08/28/2025
 * **Description:** CheckIsNotNullOrEmpty
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8241,7 +8241,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 4/14/2022
+* **CreatedOn:** 04/14/2022
 * **Description:** CheckItemsExists
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8253,7 +8253,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 1/31/2022
+* **CreatedOn:** 01/31/2022
 * **Description:** CheckTypeEquals
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8278,7 +8278,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/2/2020
+* **CreatedOn:** 09/02/2020
 * **Description:** HttpHeaderNames
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -8290,10 +8290,10 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 9/12/2020
+* **CreatedOn:** 09/12/2020
 * **Description:** IsLocalUri
 * **Modified By:** David McCarter
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/30/2026 2:10:47 PM UTC**
+**Generated by Spargine - dotNetTips.com on 04/30/2026 20:47:53 UTC**
