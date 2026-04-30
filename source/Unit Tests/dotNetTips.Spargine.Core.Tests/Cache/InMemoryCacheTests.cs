@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-03-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -1881,6 +1881,31 @@ public class InMemoryCacheTests
 		// Assert
 		Assert.IsFalse(result, "TryGetValue should return false for a type mismatch.");
 		Assert.AreEqual(default(int), value, "TryGetValue should output default value for type mismatch.");
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public async Task GetOrCreateAsync_FastPath_TypeMismatch_InvokesFactory()
+	{
+		// Arrange – put a string in the cache under a key, then request an int for the same key.
+		// The fast-path check (TryGetValueCore) returns false because the cached object is not an int,
+		// so the factory must be invoked and the new value cached.
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		cache.AddCacheItem(key, "existing string value");
+		var factoryCalled = false;
+
+		// Act
+		var result = await cache.GetOrCreateAsync<int>(key, _ =>
+		{
+			factoryCalled = true;
+			return Task.FromResult(42);
+		});
+
+		// Assert
+		Assert.IsTrue(factoryCalled, "Factory should have been called because the cached type did not match.");
+		Assert.AreEqual(42, result);
 		cache.Clear();
 	}
 
