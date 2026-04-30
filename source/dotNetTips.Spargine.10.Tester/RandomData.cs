@@ -794,7 +794,7 @@ public static class RandomData
 	{
 		if (!_personFactories.TryGetValue(typeof(TPerson), out var factory))
 		{
-			throw new NotSupportedException($"Type {typeof(TPerson).FullName} is not supported by GeneratePerson.");
+			throw new NotSupportedException(string.Format(global::System.Globalization.CultureInfo.CurrentCulture, Resources.ErrorGeneratePersonTypeNotSupported, typeof(TPerson).FullName));
 		}
 
 		return (TPerson)factory(addressCount, addressLength, countyProvinceLength);
