@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -555,6 +555,7 @@ public class ObjectExtensionsTests : UnitTester
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: false);
 
 		Assert.IsNotNull(dict);
+		Assert.IsTrue(dict.Count > 0);
 	}
 
 	[TestMethod]
@@ -1927,9 +1928,13 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void DisposeFields_WithDisposableCollectionField_DisposesItems()
 	{
-		var testObject = new ObjectWithDisposableEnumerable();
+		var testObject = new ObjectWithTrackedDisposableEnumerable();
+
+		Assert.IsTrue(testObject.Items.Count > 0);
 
 		testObject.DisposeFields();
+
+		Assert.IsTrue(testObject.Items.All(item => item.IsDisposed));
 	}
 
 	[TestMethod]
@@ -1938,6 +1943,8 @@ public class ObjectExtensionsTests : UnitTester
 		var asyncObj = new AsyncDisposableObject();
 
 		asyncObj.TryDispose(throwException: false);
+
+		Assert.IsTrue(asyncObj.DisposeAsyncWasCalled);
 	}
 
 	[TestMethod]
@@ -2015,43 +2022,52 @@ public class ObjectExtensionsTests : UnitTester
 		Assert.IsNotNull(result);
 	}
 
-	private class ObjectWithDisposableEnumerable : IDisposable
+	private sealed class DisposeTrackingDisposable : IDisposable
 	{
-#pragma warning disable CA1051
-		public IEnumerable<IDisposable> _disposableItems = new System.Collections.Generic.List<IDisposable> { new DisposableFields() };
-#pragma warning restore CA1051
+		public bool IsDisposed { get; private set; }
+
+		public void Dispose() => this.IsDisposed = true;
+	}
+
+	private sealed class ObjectWithTrackedDisposableEnumerable : IDisposable
+	{
+		private readonly DisposeTrackingDisposable _item1 = new DisposeTrackingDisposable();
+		private readonly DisposeTrackingDisposable _item2 = new DisposeTrackingDisposable();
+		private readonly DisposeTrackingDisposable _item3 = new DisposeTrackingDisposable();
+
+		public IReadOnlyList<DisposeTrackingDisposable> Items =>
+			new[] { this._item1, this._item2, this._item3 };
 
 		public void Dispose() { }
 	}
 
-	private class AsyncDisposableObject : IDisposable, IAsyncDisposable
+	private sealed class AsyncDisposableObject : IDisposable, IAsyncDisposable
 	{
+		public bool DisposeAsyncWasCalled { get; private set; }
+
 		public void Dispose() { }
-		public System.Threading.Tasks.ValueTask DisposeAsync() => System.Threading.Tasks.ValueTask.CompletedTask;
+
+		public System.Threading.Tasks.ValueTask DisposeAsync()
+		{
+			this.DisposeAsyncWasCalled = true;
+			return System.Threading.Tasks.ValueTask.CompletedTask;
+		}
 	}
 
-	private class ObjectWithThrowingProperty
+	private sealed class ObjectWithThrowingProperty
 	{
 		public string ThrowingProperty => throw new InvalidOperationException("Property throws");
 		public string NormalProperty => "Normal";
 	}
 
-	private class ObjectWithNullListField
+	private sealed class ObjectWithNullListField
 	{
-#pragma warning disable CA1051
-		public System.Collections.Generic.List<string> Items = null;
-#pragma warning restore CA1051
+		private System.Collections.Generic.List<string> _items = null;
+
+		public System.Collections.Generic.List<string> Items => this._items;
 	}
 
-	private class ObjectWithEmptyStringField
-	{
-#pragma warning disable CA1051
-		public string Name = string.Empty;
-		public string Value = string.Empty;
-#pragma warning restore CA1051
-	}
-
-	private class FaultyDisposableObject : IDisposable
+	private sealed class FaultyDisposableObject : IDisposable
 	{
 		public void Dispose()
 		{
