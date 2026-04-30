@@ -50,7 +50,9 @@ public static class ObjectExtensions
 #pragma warning restore IDE0051
 #pragma warning disable IDE0052 // Remove unread private members - false positive: used in extension block (PropertiesToDictionary, FieldsToDictionary)
 #pragma warning disable IL2026 // BuiltInTypeNames uses reflection — suppressed for static field initializer
+#pragma warning disable CA1859 // ResolvePropertiesDictionary accesses this field from a static context; IReadOnlyDictionary is intentional for immutability
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
+#pragma warning restore CA1859
 #pragma warning restore IL2026
 #pragma warning restore IDE0052
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
@@ -252,25 +254,20 @@ public static class ObjectExtensions
 	// the public methods above and inside the extension block below.
 	// -------------------------------------------------------------------------
 
-	/// <summary>Disposes a single field of an object when the field's declared type implements <see cref="IDisposable"/> or is an <see cref="IEnumerable{T}"/> of <see cref="IDisposable"/> items.</summary>
+	/// <summary>Disposes a single field of an object when its runtime value implements <see cref="IEnumerable{T}"/> of <see cref="IDisposable"/> or <see cref="IDisposable"/> directly.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DisposeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void DisposeField(FieldInfo field, IDisposable obj)
 	{
 		var fieldValue = field.GetValue(obj);
 
-		if (fieldValue is null)
-		{
-			return;
-		}
-
-		if (field.FieldType.IsAssignableTo(typeof(IDisposable)) && fieldValue is IDisposable disposableField)
-		{
-			disposableField.TryDispose();
-		}
-		else if (field.FieldType.IsAssignableTo(typeof(IEnumerable<IDisposable>)) && fieldValue is IEnumerable<IDisposable> collection)
+		if (fieldValue is IEnumerable<IDisposable> collection)
 		{
 			collection.DisposeCollection();
+		}
+		else if (fieldValue is IDisposable disposableField)
+		{
+			disposableField.TryDispose();
 		}
 	}
 
@@ -500,20 +497,9 @@ public static class ObjectExtensions
 		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
 
 #pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
-		var propertyCollection = obj.GetType().GetProperties().AsSpan();
+		foreach (var property in obj.GetType().GetProperties().Where(static p => p.GetAttribute<JsonIgnoreAttribute>() == null))
 #pragma warning restore IL2070
-
-		var propertyCount = propertyCollection.Length;
-
-		for (var propertyIndex = 0; propertyIndex < propertyCount; propertyIndex++)
 		{
-			var property = propertyCollection[propertyIndex];
-
-			if (property.GetAttribute<JsonIgnoreAttribute>() != null)
-			{
-				continue;
-			}
-
 			TryMergePropertyToResult(result, property, obj, newMemberName, ignoreNulls);
 		}
 
@@ -616,17 +602,12 @@ public static class ObjectExtensions
 	private static ReadOnlyDictionary<string, string> BuildComplexTypeFieldsDictionary(string memberName, object obj, Type objectType, bool ignoreEmptyValues)
 	{
 		var result = new Dictionary<string, string>();
-		var fieldCollection = objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
 
 		// DON'T USE SPAN HERE
-		foreach (var field in fieldCollection)
+		foreach (var field in objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+			.Where(static f => !f.IsDefined(typeof(CompilerGeneratedAttribute), false)))
 		{
-			if (field.IsDefined(typeof(CompilerGeneratedAttribute), false))
-			{
-				continue;
-			}
-
 			TryMergeFieldToResult(result, field, obj, newMemberName, ignoreEmptyValues);
 		}
 
@@ -648,6 +629,24 @@ public static class ObjectExtensions
 
 		var innerMember = $"{memberPrefix}{field.Name}";
 		MergeFieldsDictionaryToResult(result, innerObject.FieldsToDictionary(innerMember, ignoreEmptyValues), ignoreEmptyValues);
+	}
+
+	/// <summary>
+	/// Resolves the correct <see cref="ReadOnlyDictionary{TKey,TValue}"/> representation of <paramref name="obj"/>
+	/// based on whether it is a built-in type, an enumerable, or a complex object.
+	/// This helper keeps <see cref="PropertiesToDictionary"/> below the CRAP-score threshold of 5
+	/// by isolating the type-dispatch logic.
+	/// </summary>
+	[RequiresUnreferencedCode("Calls BuildComplexTypePropertiesDictionary which uses reflection.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ResolvePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static ReadOnlyDictionary<string, string> ResolvePropertiesDictionary(string memberName, object obj, bool ignoreNulls, Type objectType)
+	{
+		return _builtInTypeNames.ContainsKey(objectType)
+			? new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, obj.ToString()! } })
+			: objectType.IsEnumerable()
+				? BuildEnumerablePropertiesDictionary(memberName, (IEnumerable)obj)
+				: BuildComplexTypePropertiesDictionary(memberName, obj, ignoreNulls);
 	}
 
 	/// <summary>
@@ -911,19 +910,8 @@ public static class ObjectExtensions
 				return new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, string.Empty } });
 			}
 
-			var objectType = obj.ArgumentNotNull().GetType();
-
-			if (_builtInTypeNames.ContainsKey(objectType))
-			{
-				return new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, obj!.ToString()! } });
-			}
-
-			if (objectType.IsEnumerable())
-			{
-				return BuildEnumerablePropertiesDictionary(memberName, (IEnumerable)obj!);
-			}
-
-			return BuildComplexTypePropertiesDictionary(memberName, obj!, ignoreNulls);
+			var typedObj = obj.ArgumentNotNull();
+			return ResolvePropertiesDictionary(memberName, typedObj, ignoreNulls, typedObj.GetType());
 		}
 
 		/// <summary>

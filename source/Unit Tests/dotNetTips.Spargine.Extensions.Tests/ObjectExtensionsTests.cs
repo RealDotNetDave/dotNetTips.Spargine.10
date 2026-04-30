@@ -174,6 +174,23 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void DisposeFields_WithEnumerableDisposableField_DisposesCollection()
+	{
+		var obj = new DisposableFieldsWithCollection();
+
+		try
+		{
+			obj.DisposeFields();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail("Should not throw when disposing an IEnumerable<IDisposable> field.");
+		}
+	}
+
+
+	[TestMethod]
 	public void FastBinaryClone_Array_ReturnsClonedArray()
 	{
 		var numbers = new[] { 1, 2, 3, 4, 5 };
