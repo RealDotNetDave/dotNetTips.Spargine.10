@@ -204,7 +204,7 @@ public static partial class RandomCreditCardNumberGenerator
 	/// <remarks>
 	/// Implements the Luhn algorithm (modulus 10). Even-positioned digits (from the right) are doubled
 	/// using the branchless identity <c>d = d % 10 + d / 10</c>, which is equivalent to <c>d -= 9</c> when <c>d &gt; 9</c>.
-	/// See http://en.wikipedia.org/wiki/Luhn_algorithm for details.
+	/// See https://en.wikipedia.org/wiki/Luhn_algorithm for details.
 	/// </remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="digits"/> is null.</exception>
 	private static int ComputeLuhnCheckDigit([NotNull] string digits)
