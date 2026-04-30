@@ -1555,13 +1555,19 @@ public static class RandomData
 	private static string GetStateName(State? state) =>
 		state?.Name ?? Core.ControlChars.EmptyString;
 
+	/// <summary>Picks a random city from the state's cities, or <see langword="null"/> if the state is null.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetCityFromState), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static City? GetCityFromState(State? state) =>
+		state?.Cities?.PickRandom();
+
 	/// <summary>Picks a random state and city from the country.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(PickStateAndCity), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	private static (State? state, City? city) PickStateAndCity(Country country)
 	{
 		var state = country.States?.PickRandom();
-		return (state, state?.Cities?.PickRandom());
+		return (state, GetCityFromState(state));
 	}
 
 	/// <summary>Builds address field values from the given country and lengths.</summary>
@@ -1582,11 +1588,17 @@ public static class RandomData
 			StateName: GetStateName(state));
 	}
 
+	/// <summary>Returns the raw phone code string for the given country (comma-separated list), or empty string if not available.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static string GetPhoneCodeString(Country? country) =>
+		country?.PhoneCode ?? string.Empty;
+
 	/// <summary>Returns the phone code string for the given country, or empty string.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	private static string GetPhoneCode(Country? country) =>
-		(country?.PhoneCode ?? string.Empty).Split(Core.ControlChars.Comma).PickRandom() ?? string.Empty;
+		GetPhoneCodeString(country).Split(Core.ControlChars.Comma).PickRandom() ?? string.Empty;
 
 	/// <summary>Returns the phone number length for the given country, or the default of 10.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
