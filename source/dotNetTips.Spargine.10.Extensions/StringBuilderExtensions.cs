@@ -39,37 +39,6 @@ public static class StringBuilderExtensions
 	private static readonly SearchValues<char> _specialCharacters = SearchValues.Create(['"', '\\']);
 
 	/// <summary>
-	/// Appends a value to the <see cref="StringBuilder"/> with optional quotes, comma,
-	/// and special-character escaping, delegating the quote/escape logic to
-	/// <see cref="AppendEscapedValue"/> when required.
-	/// </summary>
-	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
-	/// <param name="value">The string value to append.</param>
-	/// <param name="includeQuotes">When <c>true</c>, wraps the value in double quotes and escapes special characters.</param>
-	/// <param name="includeComma">When <c>true</c>, appends the default separator after the value.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
-	private static void AppendFormattedValue(StringBuilder sb, string value, bool includeQuotes, bool includeComma)
-#pragma warning restore IDE0051
-	{
-		if (includeQuotes)
-		{
-			_ = sb.Append(ControlChars.Quote);
-			AppendEscapedValue(sb, value);
-			_ = sb.Append(ControlChars.Quote);
-		}
-		else
-		{
-			_ = sb.Append(value);
-		}
-
-		if (includeComma)
-		{
-			_ = sb.Append(ControlChars.DefaultSeparator);
-		}
-	}
-
-	/// <summary>
 	/// Scans <paramref name="value"/> for special characters (double-quotes and backslashes)
 	/// and appends the content to <paramref name="sb"/>, inserting a backslash escape before
 	/// each occurrence.
@@ -97,6 +66,37 @@ public static class StringBuilderExtensions
 				_ = sb.Append(value, lastSpecialIndex, value.Length - lastSpecialIndex);
 				break;
 			}
+		}
+	}
+
+	/// <summary>
+	/// Appends a value to the <see cref="StringBuilder"/> with optional quotes, comma,
+	/// and special-character escaping, delegating the quote/escape logic to
+	/// <see cref="AppendEscapedValue"/> when required.
+	/// </summary>
+	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="value">The string value to append.</param>
+	/// <param name="includeQuotes">When <c>true</c>, wraps the value in double quotes and escapes special characters.</param>
+	/// <param name="includeComma">When <c>true</c>, appends the default separator after the value.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
+	private static void AppendFormattedValue(StringBuilder sb, string value, bool includeQuotes, bool includeComma)
+#pragma warning restore IDE0051
+	{
+		if (includeQuotes)
+		{
+			_ = sb.Append(ControlChars.Quote);
+			AppendEscapedValue(sb, value);
+			_ = sb.Append(ControlChars.Quote);
+		}
+		else
+		{
+			_ = sb.Append(value);
+		}
+
+		if (includeComma)
+		{
+			_ = sb.Append(ControlChars.DefaultSeparator);
 		}
 	}
 

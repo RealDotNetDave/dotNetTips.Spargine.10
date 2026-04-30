@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -250,20 +250,13 @@ public static class DirectoryHelper
 	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
 	{
-		const string AccountsKey = "Accounts";
-
 		var folders = new List<OneDriveFolder>();
 
 		using var oneDriveKey = RegistryHelper.GetRegistryKey(RegistryHelper.KeyCurrentUserOneDrive, RegistryHive.CurrentUser);
 
-		if (oneDriveKey!.IsNotNull())
+		if (oneDriveKey is not null)
 		{
-			using var accountKey = oneDriveKey?.GetSubKey(AccountsKey);
-
-			if (accountKey!.IsNotNull() && accountKey?.SubKeyCount > 0)
-			{
-				LoadOneDriveAccounts(accountKey!, folders);
-			}
+			LoadOneDriveFoldersFromKey(oneDriveKey, folders);
 		}
 
 		return folders.AsReadOnly();
@@ -527,10 +520,35 @@ public static class DirectoryHelper
 
 			var folder = ParseOneDriveFolder(key);
 
-			if (folder!.IsNotNull())
+			if (folder is not null)
 			{
-				folders.Add(folder!);
+				folders.Add(folder);
 			}
+		}
+	}
+
+	/// <summary>
+	/// Loads OneDrive folders from the given registry key into the supplied list.
+	/// </summary>
+	/// <param name="oneDriveKey">The open OneDrive registry key.</param>
+	/// <param name="folders">The list to populate.</param>
+	[SupportedOSPlatform("windows")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(LoadOneDriveFoldersFromKey), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void LoadOneDriveFoldersFromKey(RegistryKey oneDriveKey, List<OneDriveFolder> folders)
+	{
+		const string AccountsKey = "Accounts";
+
+		using var accountKey = oneDriveKey.GetSubKey(AccountsKey);
+
+		if (accountKey is null)
+		{
+			return;
+		}
+
+		if (accountKey.SubKeyCount > 0)
+		{
+			LoadOneDriveAccounts(accountKey, folders);
 		}
 	}
 
@@ -545,11 +563,16 @@ public static class DirectoryHelper
 	[Information(nameof(ParseOneDriveFolder), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static OneDriveFolder? ParseOneDriveFolder(RegistryKey? key)
 	{
+		if (key is null)
+		{
+			return null;
+		}
+
 		const string DisplayNameKey = "DisplayName";
 		const string UserFolderKey = "UserFolder";
 		const string EmailKey = "UserEmail";
 
-		var directoryValue = key?.GetValue<string>(UserFolderKey);
+		var directoryValue = key.GetValue<string>(UserFolderKey);
 
 		if (string.IsNullOrEmpty(directoryValue))
 		{
@@ -561,25 +584,47 @@ public static class DirectoryHelper
 			DirectoryInfo = new DirectoryInfo(directoryValue)
 		};
 
-		var emailValue = key?.GetValue<string>(EmailKey);
+		SetOneDriveFolderEmail(key, folder, EmailKey);
+		SetOneDriveFolderAccount(key, folder, DisplayNameKey);
 
-		if (emailValue!.IsNotNull())
+		return folder;
+	}
+
+	/// <summary>
+	/// Sets <see cref="OneDriveFolder.AccountName"/> and <see cref="OneDriveFolder.AccountType"/> based on
+	/// whether a display name exists in the registry key.
+	/// </summary>
+	[SupportedOSPlatform("windows")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SetOneDriveFolderAccount), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void SetOneDriveFolderAccount(RegistryKey key, OneDriveFolder folder, string displayNameKey)
+	{
+		var name = key.GetValue<string>(displayNameKey);
+
+		if (string.IsNullOrEmpty(name))
 		{
-			folder.UserEmail = emailValue!;
+			folder.AccountName = OneDriveAccountType.Personal.ToString();
 		}
-
-		var name = key?.GetValue<string>(DisplayNameKey);
-
-		if (!string.IsNullOrEmpty(name))
+		else
 		{
 			folder.AccountType = OneDriveAccountType.Business;
 			folder.AccountName = name;
 		}
-		else
-		{
-			folder.AccountName = OneDriveAccountType.Personal.ToString();
-		}
+	}
 
-		return folder;
+	/// <summary>
+	/// Sets the <see cref="OneDriveFolder.UserEmail"/> if a non-null value exists in the registry key.
+	/// </summary>
+	[SupportedOSPlatform("windows")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SetOneDriveFolderEmail), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void SetOneDriveFolderEmail(RegistryKey key, OneDriveFolder folder, string emailKey)
+	{
+		var emailValue = key.GetValue<string>(emailKey);
+
+		if (emailValue is not null)
+		{
+			folder.UserEmail = emailValue;
+		}
 	}
 }
