@@ -91,7 +91,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 03/24/2023
+* **CreatedOn:** 3/24/2023
 * **Description:** GetCountries
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -115,7 +115,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 09/01/2025
+* **CreatedOn:** 9/1/2025
 * **Description:** GetCountry
 * **Documentation:** https://bit.ly/SpargineTester
 * **Modified By:** David McCarter
@@ -1548,74 +1548,14 @@
 *****
 ## DotNetTips.Spargine.Tester.RandomData
 
-### System.Void AppendPostalCodeFormatChar(System.Text.StringBuilder sb, System.Char character)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** AppendPostalCodeFormatChar
-* **Modified On:** 
-
-### System.Void ApplyCityReplacement(System.Text.StringBuilder sb, System.String format, DotNetTips.Spargine.Tester.Data.Models.City city)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** ApplyCityReplacement
-* **Modified On:** 
-
-### DotNetTips.Spargine.Tester.RandomData.AddressComponents BuildAddressComponents(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** BuildAddressComponents
-* **Modified On:** 
-
-### System.ValueTuple<System.Int32[], System.Int32> ComputeWordLengths(System.Int32 count, System.Int32 minLength, System.Int32 maxLength)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** ComputeWordLengths
-* **Modified On:** 
-
-### System.Void FillPostalCodeFromFormat(System.Text.StringBuilder sb, System.String format)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** FillPostalCodeFromFormat
-* **Modified On:** 
-
-### System.Void FillWordChars(System.Span<System.Char> chars, System.ReadOnlySpan<System.Byte> randomBytes, System.Char minCharacter, System.Int32 range)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** FillWordChars
-* **Modified On:** 
-
 ### T GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 06/04/2025
+* **CreatedOn:** 6/4/2025
 * **Description:** GenerateAddress
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1627,7 +1567,7 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 06/01/2025
+* **CreatedOn:** 6/1/2025
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1639,7 +1579,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 12/04/2023
+* **CreatedOn:** 12/4/2023
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1651,7 +1591,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateByteArray
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1663,7 +1603,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateCharacter
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1675,7 +1615,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateCharacter
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1687,7 +1627,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateCoordinate
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1699,7 +1639,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateCoordinateCollection
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1711,7 +1651,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 03/13/2023
+* **CreatedOn:** 3/13/2023
 * **Description:** GenerateCreditCard
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1723,7 +1663,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 03/13/2023
+* **CreatedOn:** 3/13/2023
 * **Description:** GenerateCreditCard
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1735,7 +1675,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateDecimal
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1747,7 +1687,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateDomainExtension
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1759,7 +1699,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateEmailAddress
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1771,7 +1711,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateFile
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1783,7 +1723,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateFiles
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1795,7 +1735,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateFiles
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1807,7 +1747,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 03/11/2023
+* **CreatedOn:** 3/11/2023
 * **Description:** GenerateFirstName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1819,7 +1759,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateInteger
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1831,7 +1771,7 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** None
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateKey
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1843,7 +1783,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 03/11/2023
+* **CreatedOn:** 3/11/2023
 * **Description:** GenerateLastName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1867,7 +1807,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateNumber
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1876,29 +1816,19 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 06/04/2025
+* **CreatedOn:** 6/4/2025
 * **Description:** GeneratePerson
 * **Modified By:** David McCarter
-* **Modified On:** 
-
-### DotNetTips.Spargine.Tester.PersonName GeneratePersonNameInternal()
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GeneratePersonNameInternal
 * **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.PersonName> GeneratePersonNames(System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/15/2023
@@ -1923,7 +1853,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonRecordCollection
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1935,7 +1865,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonRef
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1947,7 +1877,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonRefCollection
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1959,7 +1889,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonVal
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1971,7 +1901,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonValCollection
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1983,7 +1913,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePhoneNumber
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -1992,10 +1922,10 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GeneratePhoneNumber
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2007,7 +1937,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateRandomFileName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2019,7 +1949,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateRandomFileName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2061,7 +1991,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateRelativeUrl
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2073,7 +2003,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateTempFile
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2085,7 +2015,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrl
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2097,7 +2027,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlFragment
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2109,7 +2039,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlHostName
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2121,7 +2051,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlHostNameNoProtocol
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2133,7 +2063,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlHostNameNoSubDomain
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2145,7 +2075,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2157,7 +2087,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2166,10 +2096,10 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2181,7 +2111,7 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -2190,72 +2120,12 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** GenerateWords
 * **Modified By:** David McCarter
-* **Modified On:** 
-
-### DotNetTips.Spargine.Tester.Data.Models.City GetCityFromState(DotNetTips.Spargine.Tester.Data.Models.State state)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GetCityFromState
-* **Modified On:** 
-
-### System.String GetCityName(DotNetTips.Spargine.Tester.Data.Models.City city)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GetCityName
-* **Modified On:** 
-
-### System.Int32 GetCountryPhoneLength(DotNetTips.Spargine.Tester.Data.Models.Country country)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GetCountryPhoneLength
-* **Modified On:** 
-
-### System.String GetPhoneCode(DotNetTips.Spargine.Tester.Data.Models.Country country)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GetPhoneCode
-* **Modified On:** 
-
-### System.String GetPhoneCodeString(DotNetTips.Spargine.Tester.Data.Models.Country country)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GetPhoneCodeString
-* **Modified On:** 
-
-### System.String GetStateName(DotNetTips.Spargine.Tester.Data.Models.State state)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** GetStateName
 * **Modified On:** 
 
 ### System.String LongTestString { get; set; }
@@ -2265,19 +2135,9 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
-* **CreatedOn:** 01/19/2019
+* **CreatedOn:** 1/19/2019
 * **Description:** LongTestString
 * **Modified By:** David McCarter
-* **Modified On:** 
-
-### System.ValueTuple<DotNetTips.Spargine.Tester.Data.Models.State, DotNetTips.Spargine.Tester.Data.Models.City> PickStateAndCity(DotNetTips.Spargine.Tester.Data.Models.Country country)
-
-* **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
-* **CreatedOn:** 
-* **Description:** PickStateAndCity
 * **Modified On:** 
 
 *****
@@ -2464,4 +2324,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 04/30/2026 20:47:53 UTC**
+**Generated by Spargine - dotNetTips.com on 4/30/2026 2:10:47 PM UTC**
