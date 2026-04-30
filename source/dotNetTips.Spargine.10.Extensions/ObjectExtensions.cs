@@ -638,8 +638,6 @@ public static class ObjectExtensions
 	/// <summary>
 	/// Resolves the correct <see cref="ReadOnlyDictionary{TKey,TValue}"/> representation of <paramref name="obj"/>
 	/// based on whether it is a built-in type, an enumerable, or a complex object.
-	/// This helper keeps <see cref="PropertiesToDictionary"/> below the CRAP-score threshold of 5
-	/// by isolating the type-dispatch logic.
 	/// </summary>
 	[RequiresUnreferencedCode("Calls BuildComplexTypePropertiesDictionary which uses reflection.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
