@@ -215,6 +215,15 @@ namespace DotNetTips.Spargine.Tester.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type {0} is not supported by {1}..
+        /// </summary>
+        internal static string ErrorTypeNotSupportedByMethod {
+            get {
+                return ResourceManager.GetString("ErrorTypeNotSupportedByMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to deserialize countries data..
         /// </summary>
         internal static string FailedToDeserializeCountriesData {

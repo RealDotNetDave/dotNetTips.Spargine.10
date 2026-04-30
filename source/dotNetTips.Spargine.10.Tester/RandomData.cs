@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -18,6 +18,7 @@
 using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -88,6 +89,49 @@ public static class RandomData
 	/// A cache for postal formats, keyed by country.
 	/// </summary>
 	private static readonly Dictionary<Country, string[]> _postalFormatsCache = [];
+
+	/// <summary>
+	/// Cached composite format for the "type not supported by method" error message.
+	/// </summary>
+	private static readonly CompositeFormat _errorTypeNotSupportedByMethod = CompositeFormat.Parse(Resources.ErrorTypeNotSupportedByMethod);
+
+	/// <summary>Factory functions for address creation by type.</summary>
+	private static readonly Dictionary<Type, Func<AddressComponents, object>> _addressFactories = new()
+	{
+		[typeof(Address)] = c => new Address
+		{
+			Id = c.Id,
+			Address1 = c.Address1,
+			Address2 = c.Address2,
+			City = c.CityName,
+			Country = c.CountryName,
+			CountyProvince = c.CountyProvince,
+			Phone = c.Phone,
+			PostalCode = c.PostalCode,
+			State = c.StateName
+		},
+		[typeof(Models.ValueTypes.Address)] = c => new Models.ValueTypes.Address
+		{
+			Id = c.Id,
+			Address1 = c.Address1,
+			Address2 = c.Address2,
+			City = c.CityName,
+			Country = c.CountryName,
+			CountyProvince = c.CountyProvince,
+			Phone = c.Phone,
+			PostalCode = c.PostalCode,
+			State = c.StateName
+		},
+		[typeof(AddressRecord)] = c => new AddressRecord(c.Id, c.Address1, c.Address2, c.CityName, c.StateName, c.CountyProvince, c.CountryName, c.PostalCode, c.Phone),
+	};
+
+	/// <summary>Factory functions for person creation by type.</summary>
+	private static readonly Dictionary<Type, Func<int, int, int, object>> _personFactories = new()
+	{
+		[typeof(Person)] = (ac, al, cpl) => GeneratePersonRef(ac, al, cpl),
+		[typeof(Models.ValueTypes.Person)] = (ac, al, cpl) => GeneratePersonVal(ac, al, cpl),
+		[typeof(PersonRecord)] = (ac, al, cpl) => GeneratePersonRecord(ac, al, cpl),
+	};
 
 	/// <summary>
 	/// An object pool for reusing instances of StringBuilder, reducing allocations.
@@ -188,64 +232,19 @@ public static class RandomData
 	/// - Postal code formatting is based on country-specific formats via <see cref="GeneratePostalCode(Country, City)"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateAddress), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TAddress GenerateAddress<TAddress>(Country? country = null, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		country ??= _countries.Value.PickRandom();
 		addressLength = addressLength.ArgumentInRange(min: 5, max: 100);
 		countyProvinceLength = countyProvinceLength.ArgumentInRange(min: 5, max: 50);
 
-		var state = country?.States?.PickRandom();
-		var city = state?.Cities?.PickRandom();
-
-		var id = GenerateKey();
-		var address1 = GenerateAddressLineOne(addressLength);
-		var address2 = GenerateAddressLineTwo(addressLength);
-		var cityName = city?.Name ?? Core.ControlChars.EmptyString;
-		var countryName = country?.Name ?? Core.ControlChars.EmptyString;
-		var countyProvince = GenerateWord(countyProvinceLength);
-		var phone = GenerateNumber(country!.PhoneNumberLength);
-		var postalCode = GeneratePostalCode(country, city);
-		var stateName = state?.Name ?? Core.ControlChars.EmptyString;
-
-		if (typeof(TAddress) == typeof(Address))
+		if (!_addressFactories.TryGetValue(typeof(TAddress), out var factory))
 		{
-			return (TAddress)(object)new Address
-			{
-				Id = id,
-				Address1 = address1,
-				Address2 = address2,
-				City = cityName,
-				Country = countryName,
-				CountyProvince = countyProvince,
-				Phone = phone,
-				PostalCode = postalCode,
-				State = stateName
-			};
+			throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TAddress).FullName, nameof(GenerateAddress)));
 		}
 
-		if (typeof(TAddress) == typeof(Models.ValueTypes.Address))
-		{
-			return (TAddress)(object)new Models.ValueTypes.Address
-			{
-				Id = id,
-				Address1 = address1,
-				Address2 = address2,
-				City = cityName,
-				Country = countryName,
-				CountyProvince = countyProvince,
-				Phone = phone,
-				PostalCode = postalCode,
-				State = stateName
-			};
-		}
-
-		if (typeof(TAddress) == typeof(AddressRecord))
-		{
-			return (TAddress)(object)new AddressRecord(id, address1, address2, cityName, stateName, countyProvince, countryName, postalCode, phone);
-		}
-
-		throw new NotSupportedException($"Type {typeof(TAddress).FullName} is not supported by GenerateAddress.");
+		return (TAddress)factory(BuildAddressComponents(country!, addressLength, countyProvinceLength));
 	}
 
 	/// <summary>
@@ -796,16 +795,15 @@ public static class RandomData
 	/// <returns>An instance of the specified person type populated with random data.</returns>
 	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
-		return typeof(TPerson) == typeof(Person)
-			? (TPerson)(object)GeneratePersonRef(addressCount, addressLength, countyProvinceLength)
-			: typeof(TPerson) == typeof(Models.ValueTypes.Person)
-				? (TPerson)(object)GeneratePersonVal(addressCount, addressLength, countyProvinceLength)
-				: typeof(TPerson) == typeof(PersonRecord)
-							? (TPerson)(object)GeneratePersonRecord(addressCount, addressLength, countyProvinceLength)
-							: throw new NotSupportedException($"Type {typeof(TPerson).FullName} is not supported by GeneratePerson.");
+		if (!_personFactories.TryGetValue(typeof(TPerson), out var factory))
+		{
+			throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TPerson).FullName, nameof(GeneratePerson)));
+		}
+
+		return (TPerson)factory(addressCount, addressLength, countyProvinceLength);
 	}
 
 	/// <summary>
@@ -817,7 +815,7 @@ public static class RandomData
 	/// This method leverages <see cref="GenerateFirstName"/> and <see cref="GenerateLastName"/> to create each <see cref="PersonName"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonNames), "David McCarter", "12/15/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePersonNames), "David McCarter", "12/15/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<PersonName> GeneratePersonNames(int count = 2)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 2);
@@ -826,11 +824,7 @@ public static class RandomData
 
 		for (var nameIndex = 0; nameIndex < count; nameIndex++)
 		{
-			var firstName = _firstNames.Value.PickRandom() ?? string.Empty;
-			var lastName = _lastNames.Value.PickRandom() ?? string.Empty;
-			var personName = new PersonName(firstName, lastName);
-
-			if (names.AddIfNotExists(personName) is false)
+			if (names.AddIfNotExists(GeneratePersonNameInternal()) is false)
 			{
 				nameIndex--;
 			}
@@ -934,17 +928,16 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output for Taiwan: 886-352346002</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePhoneNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePhoneNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GeneratePhoneNumber(CountryName countryName, bool includeCountryCode = false)
 	{
 		countryName = countryName.ArgumentDefined();
 
-		//Lookup Country
 		var country = CountryRepository.GetCountry(countryName);
 
 		return includeCountryCode
-			? $"{(country?.PhoneCode ?? string.Empty).Split(Core.ControlChars.Comma).PickRandom()}-{GenerateNumber(country?.PhoneNumberLength ?? 10)}"
-			: GenerateNumber(country?.PhoneNumberLength ?? 10);
+			? $"{GetPhoneCode(country)}-{GenerateNumber(GetCountryPhoneLength(country))}"
+			: GenerateNumber(GetCountryPhoneLength(country));
 	}
 
 	/// <summary>
@@ -1255,7 +1248,7 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: LBEEUMHHHK</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWord), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GenerateWord(int length = 1, char minCharacter = 'a', char maxCharacter = 'Z')
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
@@ -1274,11 +1267,7 @@ public static class RandomData
 			: (Span<byte>)new byte[length];
 
 		RandomNumberGenerator.Fill(randomBytes);
-
-		for (var wordIndex = 0; wordIndex < length; wordIndex++)
-		{
-			chars[wordIndex] = (char)(minCharacter + (randomBytes[wordIndex] % range));
-		}
+		FillWordChars(chars, randomBytes, minCharacter, range);
 
 		return new string(chars).Trim();
 	}
@@ -1322,7 +1311,7 @@ public static class RandomData
 	/// [2]: "Ad\\kCOMkmdK"
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateWords), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateWords), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GenerateWords(int count = 1, int minLength = 1, int maxLength = 1)
 	{
 		count = count.ArgumentInRange(min: 1, defaultValue: 1);
@@ -1333,21 +1322,8 @@ public static class RandomData
 		const char maxChar = DefaultMaxCharacter;
 		const int range = maxChar - minChar + 1;
 
-		// Pre-generate all lengths to compute total bytes needed for a single RNG call.
-		var lengths = new int[count];
-		var totalBytes = 0;
+		var (lengths, totalBytes) = ComputeWordLengths(count, minLength, maxLength);
 
-		for (var wordIndex = 0; wordIndex < count; wordIndex++)
-		{
-			var len = minLength == maxLength
-				? minLength
-				: RandomNumberGenerator.GetInt32(minLength, maxLength + 1);
-
-			lengths[wordIndex] = len;
-			totalBytes += len;
-		}
-
-		// Rent a single buffer for all random bytes and fill in one RNG call.
 		var rentedBuffer = ArrayPool<byte>.Shared.Rent(totalBytes);
 
 		try
@@ -1360,18 +1336,9 @@ public static class RandomData
 			for (var wordIndex = 0; wordIndex < count; wordIndex++)
 			{
 				var length = lengths[wordIndex];
-				var wordBytes = rentedBuffer.AsSpan(byteOffset, length);
-
-				strings[wordIndex] = string.Create(length, (minChar, range, wordBytes.ToArray()), static (span, state) =>
-				{
-					var (min, r, bytes) = state;
-
-					for (var charIndex = 0; charIndex < span.Length; charIndex++)
-					{
-						span[charIndex] = (char)(min + (bytes[charIndex] % r));
-					}
-				});
-
+				var wordChars = new char[length];
+				FillWordChars(wordChars, rentedBuffer.AsSpan(byteOffset, length), minChar, range);
+				strings[wordIndex] = new string(wordChars);
 				byteOffset += length;
 			}
 
@@ -1585,6 +1552,142 @@ public static class RandomData
 		return person;
 	}
 
+	/// <summary>Returns the city name or empty string.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetCityName), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static string GetCityName(City? city) =>
+		city?.Name ?? Core.ControlChars.EmptyString;
+
+	/// <summary>Returns the state name or empty string.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetStateName), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static string GetStateName(State? state) =>
+		state?.Name ?? Core.ControlChars.EmptyString;
+
+	/// <summary>Picks a random city from the state's cities, or <see langword="null"/> if the state is null.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetCityFromState), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static City? GetCityFromState(State? state) =>
+		state?.Cities?.PickRandom();
+
+	/// <summary>Picks a random state and city from the country.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(PickStateAndCity), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static (State? state, City? city) PickStateAndCity(Country country)
+	{
+		var state = country.States?.PickRandom();
+		return (state, GetCityFromState(state));
+	}
+
+	/// <summary>Builds address field values from the given country and lengths.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildAddressComponents), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static AddressComponents BuildAddressComponents(Country country, int addressLength, int countyProvinceLength)
+	{
+		var (state, city) = PickStateAndCity(country);
+		return new AddressComponents(
+			Id: GenerateKey(),
+			Address1: GenerateAddressLineOne(addressLength),
+			Address2: GenerateAddressLineTwo(addressLength),
+			CityName: GetCityName(city),
+			CountryName: country.Name ?? Core.ControlChars.EmptyString,
+			CountyProvince: GenerateWord(countyProvinceLength),
+			Phone: GenerateNumber(country.PhoneNumberLength),
+			PostalCode: GeneratePostalCode(country, city),
+			StateName: GetStateName(state));
+	}
+
+	/// <summary>Returns the raw phone code string for the given country (comma-separated list), or empty string if not available.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static string GetPhoneCodeString(Country? country) =>
+		country?.PhoneCode ?? Core.ControlChars.EmptyString;
+
+	/// <summary>Returns the phone code string for the given country, or empty string.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static string GetPhoneCode(Country? country) =>
+		GetPhoneCodeString(country).Split(Core.ControlChars.Comma).PickRandom() ?? Core.ControlChars.EmptyString;
+
+	/// <summary>Returns the phone number length for the given country, or the default of 10.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetCountryPhoneLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static int GetCountryPhoneLength(Country? country) =>
+		country?.PhoneNumberLength ?? 10;
+
+	/// <summary>Appends the appropriate character for a postal-code format specifier to the StringBuilder.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AppendPostalCodeFormatChar), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static void AppendPostalCodeFormatChar(StringBuilder sb, char character)
+	{
+		_ = character switch
+		{
+			'N' => sb.Append(GenerateNumber(1)),
+			'A' => sb.Append(GenerateCharacter('A', 'Z')),
+			_ => sb.Append(character),
+		};
+	}
+
+	/// <summary>Iterates the format string and fills the StringBuilder with generated postal-code characters.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FillPostalCodeFromFormat), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static void FillPostalCodeFromFormat(StringBuilder sb, string format)
+	{
+		foreach (var character in format.AsSpan())
+		{
+			AppendPostalCodeFormatChar(sb, character);
+		}
+	}
+
+	/// <summary>Replaces the CITY placeholder in the StringBuilder if city data is available.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ApplyCityReplacement), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static void ApplyCityReplacement(StringBuilder sb, string format, City? city)
+	{
+		if (city is not null && format.Contains("CITY", StringComparison.Ordinal))
+		{
+			_ = sb.Replace("CITY", city.Name);
+		}
+	}
+
+	/// <summary>Fills <paramref name="chars"/> from <paramref name="randomBytes"/> using the given character range.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FillWordChars), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static void FillWordChars(Span<char> chars, ReadOnlySpan<byte> randomBytes, char minCharacter, int range)
+	{
+		for (var i = 0; i < chars.Length; i++)
+		{
+			chars[i] = (char)(minCharacter + (randomBytes[i] % range));
+		}
+	}
+
+	/// <summary>Pre-computes per-word lengths and the total byte count needed for <see cref="GenerateWords"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ComputeWordLengths), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static (int[] Lengths, int TotalBytes) ComputeWordLengths(int count, int minLength, int maxLength)
+	{
+		var lengths = new int[count];
+		var totalBytes = 0;
+
+		for (var i = 0; i < count; i++)
+		{
+			var len = minLength == maxLength
+				? minLength
+				: RandomNumberGenerator.GetInt32(minLength, maxLength + 1);
+
+			lengths[i] = len;
+			totalBytes += len;
+		}
+
+		return (lengths, totalBytes);
+	}
+
+	/// <summary>Generates a single <see cref="PersonName"/> from the internal name pools.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GeneratePersonNameInternal), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private static PersonName GeneratePersonNameInternal() =>
+		new(_firstNames.Value.PickRandom() ?? Core.ControlChars.EmptyString, _lastNames.Value.PickRandom() ?? Core.ControlChars.EmptyString);
+
 	/// <summary>
 	/// Generates a postal code for the specified country and city.
 	/// </summary>
@@ -1616,23 +1719,9 @@ public static class RandomData
 
 		try
 		{
-			foreach (var character in format.AsSpan())
-			{
-				_ = character switch
-				{
-					'N' => sb.Append(GenerateNumber(1)),
-					'A' => sb.Append(GenerateCharacter('A', 'Z')),
-					_ => sb.Append(character),
-				};
-			}
-
+			FillPostalCodeFromFormat(sb, format);
 			_ = sb.Replace("CC", country.Iso2);
-
-			if (city is not null && format.Contains("CITY", StringComparison.Ordinal))
-			{
-				_ = sb.Replace("CITY", city.Name);
-			}
-
+			ApplyCityReplacement(sb, format, city);
 			return sb.ToString();
 		}
 		finally
@@ -1641,9 +1730,7 @@ public static class RandomData
 		}
 	}
 
-	/// <summary>
-	/// Selects a random word from the provided collection of words.
-	/// </summary>
+	/// <summary>Selects a random word from the provided collection of words.</summary>
 	/// <param name="words">
 	/// A read-only collection of words to select from. Must not be null or empty.
 	/// </param>
@@ -1657,6 +1744,18 @@ public static class RandomData
 	/// Thrown when the <paramref name="words"/> collection is empty.
 	/// </exception>
 	private static string Of([NotNull] params ReadOnlyCollection<string> words) => words[GenerateInteger(0, words.Count - 1)];
+
+	/// <summary>Data container for address field values.</summary>
+	private readonly record struct AddressComponents(
+		string Id,
+		string Address1,
+		string Address2,
+		string CityName,
+		string CountryName,
+		string CountyProvince,
+		string Phone,
+		string PostalCode,
+		string StateName);
 
 #pragma warning disable IL2026 // ToLazy uses reflection — suppressed for static field initializers with known concrete types
 	/// <summary>
