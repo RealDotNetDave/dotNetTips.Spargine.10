@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 04-29-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -257,6 +257,24 @@ public class DictionaryExtensionsTests
 
 		// Act & Assert - should not throw
 		list.DisposeCollection<object, IDisposable>();
+	}
+
+	[TestMethod]
+	public void DisposeCollection_WithNullValueItem_SkipsNullItem()
+	{
+		// Arrange - collection with a null IDisposable value (covers false branch of `if (item is IDisposable)`)
+		var d1 = new MockDisposable();
+		var list = new List<KeyValuePair<object, IDisposable>>
+		{
+			new KeyValuePair<object, IDisposable>("a", d1),
+			new KeyValuePair<object, IDisposable>("b", null)
+		};
+
+		// Act - should not throw; null item is skipped
+		list.DisposeCollection<object, IDisposable>();
+
+		// Assert
+		Assert.IsTrue(d1.IsDisposed);
 	}
 
 	[TestMethod]
