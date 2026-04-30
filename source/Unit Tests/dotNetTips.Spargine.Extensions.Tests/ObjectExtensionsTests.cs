@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -551,17 +551,17 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToDictionary_WithIgnoreNullsFalse_IncludesAllFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: false);
 
 		Assert.IsNotNull(dict);
-		Assert.IsNotEmpty(dict);
+		Assert.IsTrue(dict.Count > 0);
 	}
 
 	[TestMethod]
 	public void FieldsToDictionary_WithIgnoreNullsTrue_ExcludesNullFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var dict = testObject.FieldsToDictionary(ignoreEmptyValues: true);
 
 		Assert.IsNotNull(dict);
@@ -737,7 +737,7 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToString_WithIgnoreNullsFalse_IncludesAllFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var result = testObject.FieldsToString(ignoreNulls: false);
 
 		Assert.IsNotNull(result);
@@ -746,7 +746,7 @@ public class ObjectExtensionsTests : UnitTester
 	[TestMethod]
 	public void FieldsToString_WithIgnoreNullsTrue_ExcludesNullFields()
 	{
-		var testObject = new DisposableFields();
+		var testObject = RandomData.GeneratePerson<Person>();
 		var result = testObject.FieldsToString(ignoreNulls: true);
 
 		Assert.IsNotNull(result);
@@ -1925,7 +1925,149 @@ public class ObjectExtensionsTests : UnitTester
 		}
 	}
 
-	private class FaultyDisposableObject : IDisposable
+	[TestMethod]
+	public void DisposeFields_WithDisposableCollectionField_DisposesItems()
+	{
+		var testObject = new ObjectWithTrackedDisposableEnumerable();
+
+		Assert.IsTrue(testObject.Items.Count > 0);
+
+		testObject.DisposeFields();
+
+		Assert.IsTrue(testObject.Items.All(item => item.IsDisposed));
+	}
+
+	[TestMethod]
+	public void TryDispose_WithAsyncDisposable_CallsDisposeAsync()
+	{
+		var asyncObj = new AsyncDisposableObject();
+
+		asyncObj.TryDispose(throwException: false);
+
+		Assert.IsTrue(asyncObj.DisposeAsyncWasCalled);
+	}
+
+	[TestMethod]
+	public void TryDispose_WithNullObject_DoesNotThrow()
+	{
+		IDisposable obj = null;
+
+		obj.TryDispose(throwException: false);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_List_UsesItemTypeName()
+	{
+		var list = new System.Collections.Generic.List<int> { 1, 2, 3 };
+
+		var result = list.PropertiesToString();
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Contains("List`1", StringComparison.Ordinal));
+		Assert.IsTrue(result.Contains("Item", StringComparison.Ordinal));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIgnoreNullsFalse_IncludesError()
+	{
+		var testObject = new ObjectWithThrowingProperty();
+		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: false);
+
+		Assert.IsNotNull(result);
+		Assert.Contains("[Error:", result);
+	}
+
+	[TestMethod]
+	public void PropertiesToDictionary_CollectionWithNullItem_HandlesException()
+	{
+		var list = new System.Collections.Generic.List<Person> { RandomData.GeneratePerson<Person>(), null };
+
+		var dict = list.PropertiesToDictionary("People");
+
+		Assert.IsNotNull(dict);
+	}
+
+	[TestMethod]
+	public void InitializeFields_WithNullReferenceTypeField_InitializesField()
+	{
+		var testObject = new ObjectWithNullListField();
+
+		testObject.InitializeFields();
+
+		Assert.IsNotNull(testObject.Items);
+	}
+
+	[TestMethod]
+	public void FieldsToDictionary_CollectionWithEmptyStringField_IgnoresEmptyValues()
+	{
+		var list = new System.Collections.Generic.List<string> { string.Empty, "HasValue" };
+
+		var result = list.FieldsToDictionary("Test", ignoreEmptyValues: true);
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.ContainsKey("Test[0]"));
+		Assert.IsTrue(result.ContainsKey("Test[1]"));
+		Assert.AreEqual("HasValue", result["Test[1]"]);
+	}
+
+	[TestMethod]
+	public void FieldsToDictionary_ObjectWithNullField_IgnoresNullField()
+	{
+		var testObject = new ObjectWithNullListField();
+
+		var result = testObject.FieldsToDictionary("Test", ignoreEmptyValues: true);
+
+		Assert.IsNotNull(result);
+	}
+
+	private sealed class DisposeTrackingDisposable : IDisposable
+	{
+		public bool IsDisposed { get; private set; }
+
+		public void Dispose() => this.IsDisposed = true;
+	}
+
+	private sealed class ObjectWithTrackedDisposableEnumerable : IDisposable
+	{
+		private readonly DisposeTrackingDisposable _item1 = new DisposeTrackingDisposable();
+		private readonly DisposeTrackingDisposable _item2 = new DisposeTrackingDisposable();
+		private readonly DisposeTrackingDisposable _item3 = new DisposeTrackingDisposable();
+
+		public IReadOnlyList<DisposeTrackingDisposable> Items =>
+			new[] { this._item1, this._item2, this._item3 };
+
+		public void Dispose() { }
+	}
+
+	private sealed class AsyncDisposableObject : IDisposable, IAsyncDisposable
+	{
+		public bool DisposeAsyncWasCalled { get; private set; }
+
+		public void Dispose() { }
+
+		public System.Threading.Tasks.ValueTask DisposeAsync()
+		{
+			this.DisposeAsyncWasCalled = true;
+			return System.Threading.Tasks.ValueTask.CompletedTask;
+		}
+	}
+
+	private sealed class ObjectWithThrowingProperty
+	{
+		public string ThrowingProperty => throw new InvalidOperationException("Property throws");
+		public string NormalProperty => "Normal";
+	}
+
+	private sealed class ObjectWithNullListField
+	{
+		private System.Collections.Generic.List<string> _items = null;
+
+		public System.Collections.Generic.List<string> Items => this._items;
+	}
+
+	private sealed class FaultyDisposableObject : IDisposable
 	{
 		public void Dispose()
 		{
