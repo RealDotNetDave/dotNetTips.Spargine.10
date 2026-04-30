@@ -1777,7 +1777,7 @@ public static class StringExtensions
 
 		try
 		{
-			for (var charIndex = 1; charIndex <= length; charIndex++)
+			for (var indentCount = 1; indentCount <= length; indentCount++)
 			{
 				_ = sb.Append(indentationCharacter);
 			}
@@ -1874,9 +1874,9 @@ public static class StringExtensions
 		// Iterate directly over the array to avoid span indexing overhead
 		var totalLength = 0;
 
-		for (int charIndex = 0, n = args.Length; charIndex < n; charIndex++)
+		for (int index = 0, n = args.Length; index < n; index++)
 		{
-			var s = args[charIndex];
+			var s = args[index];
 
 			if (s != null)
 			{
