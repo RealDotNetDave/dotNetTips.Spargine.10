@@ -1956,6 +1956,8 @@ public class ObjectExtensionsTests : UnitTester
 		var result = list.PropertiesToString();
 
 		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Contains("List`1", StringComparison.Ordinal));
+		Assert.IsTrue(result.Contains("Item", StringComparison.Ordinal));
 	}
 
 	[TestMethod]
