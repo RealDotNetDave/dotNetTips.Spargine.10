@@ -50,7 +50,7 @@ public static class ObjectExtensions
 #pragma warning restore IDE0051
 #pragma warning disable IDE0052 // Remove unread private members - false positive: used in extension block (PropertiesToDictionary, FieldsToDictionary)
 #pragma warning disable IL2026 // BuiltInTypeNames uses reflection — suppressed for static field initializer
-#pragma warning disable CA1859 // ResolvePropertiesDictionary accesses this field from a static context; IReadOnlyDictionary is intentional for immutability
+#pragma warning disable CA1859 // IReadOnlyDictionary is intentional here to preserve read-only API intent and avoid coupling this field to a specific dictionary implementation
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
 #pragma warning restore CA1859
 #pragma warning restore IL2026
