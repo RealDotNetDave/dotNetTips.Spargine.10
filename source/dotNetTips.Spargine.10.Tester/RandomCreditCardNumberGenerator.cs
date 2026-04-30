@@ -206,8 +206,10 @@ public static partial class RandomCreditCardNumberGenerator
 	/// using the branchless identity <c>d = d % 10 + d / 10</c>, which is equivalent to <c>d -= 9</c> when <c>d &gt; 9</c>.
 	/// See http://en.wikipedia.org/wiki/Luhn_algorithm for details.
 	/// </remarks>
-	private static int ComputeLuhnCheckDigit(string digits)
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="digits"/> is null.</exception>
+	private static int ComputeLuhnCheckDigit([NotNull] string digits)
 	{
+		digits = digits.ArgumentNotNull();
 		var length = digits.Length;
 		var sum = 0;
 		var pos = 0;
