@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-13-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="RandomCreditCardNumberGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,7 +14,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using DotNetTips.Spargine.Core;
@@ -198,6 +197,40 @@ public static partial class RandomCreditCardNumberGenerator
 	];
 
 	/// <summary>
+	/// Computes the Luhn check digit for the given sequence of digits.
+	/// </summary>
+	/// <param name="digits">The digit string (without the check digit) for which to compute the check digit.</param>
+	/// <returns>The computed Luhn check digit (0–9).</returns>
+	/// <remarks>
+	/// Implements the Luhn algorithm (modulus 10). Even-positioned digits (from the right) are doubled
+	/// using the branchless identity <c>d = d % 10 + d / 10</c>, which is equivalent to <c>d -= 9</c> when <c>d &gt; 9</c>.
+	/// See http://en.wikipedia.org/wiki/Luhn_algorithm for details.
+	/// </remarks>
+	private static int ComputeLuhnCheckDigit(string digits)
+	{
+		var length = digits.Length;
+		var sum = 0;
+		var pos = 0;
+
+		// Process full pairs of digits (even-positioned doubled, odd-positioned straight).
+		while (pos < length - 1)
+		{
+			var odd = (digits[length - 1 - pos] - '0') * 2;
+			sum += (odd % 10) + (odd / 10) + (digits[length - 2 - pos] - '0');
+			pos += 2;
+		}
+
+		// If length is odd, one digit remains at position 0 (even position from right).
+		if (pos < length)
+		{
+			var odd = (digits[0] - '0') * 2;
+			sum += (odd % 10) + (odd / 10);
+		}
+
+		return (10 - (sum % 10)) % 10;
+	}
+
+	/// <summary>
 	/// Creates a fake credit card number using a specified prefix and length.
 	/// </summary>
 	/// <param name="prefix">The prefix to use for the credit card number.</param>
@@ -222,39 +255,7 @@ public static partial class RandomCreditCardNumberGenerator
 				_ = sb.Append(RandomNumberGenerator.GetInt32(0, 10));
 			}
 
-			// reverse number and convert to int
-			var reversedCCnumberstring = sb.ToString().ToCharArray().Reverse();
-
-			var reversedCCnumberList = reversedCCnumberstring.Select(c => Convert.ToInt32(c.ToString(), CultureInfo.InvariantCulture));
-
-			// calculate sum //Luhn Algorithm http://en.wikipedia.org/wiki/Luhn_algorithm
-			var sum = 0;
-			var pos = 0;
-			var reversedCCnumber = reversedCCnumberList.ToArray();
-
-			while (pos < length - 1)
-			{
-				var odd = reversedCCnumber[pos] * 2;
-
-				if (odd > 9)
-				{
-					odd -= 9;
-				}
-
-				sum += odd;
-
-				if (pos != length - 2)
-				{
-					sum += reversedCCnumber[pos + 1];
-				}
-
-				pos += 2;
-			}
-
-			// calculate check digit
-			var checkdigit = Convert.ToInt32(((Math.Floor((decimal)sum / 10) + 1) * 10) - sum) % 10;
-
-			_ = sb.Append(checkdigit);
+			_ = sb.Append(ComputeLuhnCheckDigit(sb.ToString()));
 
 			return sb.ToString();
 		}
