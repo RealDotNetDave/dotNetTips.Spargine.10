@@ -174,6 +174,78 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void DisposeFields_WithEnumerableDisposableField_DisposesCollection()
+	{
+		static bool IsEnumerableDisposableField(FieldInfo field) =>
+			typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType)
+			&& field.FieldType != typeof(string)
+			&& (field.FieldType.IsArray
+				? typeof(IDisposable).IsAssignableFrom(field.FieldType.GetElementType())
+				: field.FieldType.IsGenericType
+					&& field.FieldType.GetGenericArguments().Length == 1
+					&& typeof(IDisposable).IsAssignableFrom(field.FieldType.GetGenericArguments()[0]));
+
+		static object CreateCollectionValue(Type fieldType, IList<IDisposable> items)
+		{
+			if (fieldType.IsArray)
+			{
+				var elementType = fieldType.GetElementType();
+				var array = Array.CreateInstance(elementType, items.Count);
+
+				for (var index = 0; index < items.Count; index++)
+				{
+					array.SetValue(items[index], index);
+				}
+
+				return array;
+			}
+
+			if (fieldType.IsInterface)
+			{
+				return new List<IDisposable>(items);
+			}
+
+			return Activator.CreateInstance(fieldType, items);
+		}
+
+		var obj = new DisposableFieldsWithCollection();
+		var disposableItems = new List<IDisposable>
+		{
+			new MemoryStream(new byte[] { 1 }),
+			new MemoryStream(new byte[] { 2 }),
+			new MemoryStream(new byte[] { 3 }),
+		};
+
+		var collectionField = obj.GetType()
+			.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+			.FirstOrDefault(IsEnumerableDisposableField);
+
+		Assert.IsNotNull(collectionField, "Expected an enumerable IDisposable field on DisposableFieldsWithCollection.");
+
+		var originalValue = collectionField.GetValue(obj);
+
+		try
+		{
+			collectionField.SetValue(obj, CreateCollectionValue(collectionField.FieldType, disposableItems));
+			obj.DisposeFields();
+
+			foreach (var disposableItem in disposableItems.OfType<MemoryStream>())
+			{
+				Assert.ThrowsExactly<ObjectDisposedException>(() => _ = disposableItem.Length);
+			}
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail("Should dispose each item in an IEnumerable<IDisposable> field.");
+		}
+		finally
+		{
+			collectionField.SetValue(obj, originalValue);
+		}
+	}
+
+	[TestMethod]
 	public void FastBinaryClone_Array_ReturnsClonedArray()
 	{
 		var numbers = new[] { 1, 2, 3, 4, 5 };
