@@ -18,6 +18,7 @@
 using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -88,6 +89,11 @@ public static class RandomData
 	/// A cache for postal formats, keyed by country.
 	/// </summary>
 	private static readonly Dictionary<Country, string[]> _postalFormatsCache = [];
+
+	/// <summary>
+	/// Cached composite format for the "type not supported by method" error message.
+	/// </summary>
+	private static readonly CompositeFormat _errorTypeNotSupportedByMethod = CompositeFormat.Parse(Resources.ErrorTypeNotSupportedByMethod);
 
 	/// <summary>Factory functions for address creation by type.</summary>
 	private static readonly Dictionary<Type, Func<AddressComponents, object>> _addressFactories = new()
@@ -235,7 +241,7 @@ public static class RandomData
 
 		if (!_addressFactories.TryGetValue(typeof(TAddress), out var factory))
 		{
-			throw new NotSupportedException(string.Format(Resources.ErrorTypeNotSupportedByMethod, typeof(TAddress).FullName, nameof(GenerateAddress)));
+			throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TAddress).FullName, nameof(GenerateAddress)));
 		}
 
 		return (TAddress)factory(BuildAddressComponents(country!, addressLength, countyProvinceLength));
@@ -790,11 +796,11 @@ public static class RandomData
 	/// <exception cref="NotSupportedException">Thrown if the type is not supported.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	public static TPerson GeneratePerson<TPerson>(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
+	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
 		if (!_personFactories.TryGetValue(typeof(TPerson), out var factory))
 		{
-			throw new NotSupportedException(string.Format(global::System.Globalization.CultureInfo.CurrentCulture, Resources.ErrorGeneratePersonTypeNotSupported, typeof(TPerson).FullName));
+			throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TPerson).FullName, nameof(GeneratePerson)));
 		}
 
 		return (TPerson)factory(addressCount, addressLength, countyProvinceLength);
@@ -818,7 +824,10 @@ public static class RandomData
 
 		for (var nameIndex = 0; nameIndex < count; nameIndex++)
 		{
-			names.Add(GeneratePersonNameInternal());
+			if (names.AddIfNotExists(GeneratePersonNameInternal()) is false)
+			{
+				nameIndex--;
+			}
 		}
 
 		return names.ToReadOnlyCollection();

@@ -169,6 +169,9 @@
   <data name="ErrorStateLengthIsLimitedToCharacters" xml:space="preserve">
     <value>State length is limited to 60 characters.</value>
   </data>
+  <data name="ErrorTypeNotSupportedByMethod" xml:space="preserve">
+    <value>Type {0} is not supported by {1}.</value>
+  </data>
   <data name="ObjectIsNotACoordinate" xml:space="preserve">
     <value>Object is not a Coordinate.</value>
   </data>
