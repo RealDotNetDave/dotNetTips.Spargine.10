@@ -1592,13 +1592,13 @@ public static class RandomData
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	private static string GetPhoneCodeString(Country? country) =>
-		country?.PhoneCode ?? string.Empty;
+		country?.PhoneCode ?? Core.ControlChars.EmptyString;
 
 	/// <summary>Returns the phone code string for the given country, or empty string.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	private static string GetPhoneCode(Country? country) =>
-		GetPhoneCodeString(country).Split(Core.ControlChars.Comma).PickRandom() ?? string.Empty;
+		GetPhoneCodeString(country).Split(Core.ControlChars.Comma).PickRandom() ?? Core.ControlChars.EmptyString;
 
 	/// <summary>Returns the phone number length for the given country, or the default of 10.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
