@@ -380,7 +380,8 @@ public class AutoDefaultDictionaryTests
 	public void ConstructorWithKeyValuePairsAndDefaultValue_NullKeyValuePairs_ShouldThrowArgumentNullException()
 	{
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((IEnumerable<KeyValuePair<int, string>>)null!, "default"));
+		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((IEnumerable<KeyValuePair<int, string>>)null!, "default"));
+		StringAssert.StartsWith(ex.ParamName, "keyValuePairs");
 	}
 
 	[TestMethod]
@@ -390,7 +391,8 @@ public class AutoDefaultDictionaryTests
 		Func<int, string> onMissingKey = key => $"Missing: {key}";
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((IEnumerable<KeyValuePair<int, string>>)null!, onMissingKey));
+		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((IEnumerable<KeyValuePair<int, string>>)null!, onMissingKey));
+		StringAssert.StartsWith(ex.ParamName, "keyValuePairs");
 	}
 
 	[TestMethod]
