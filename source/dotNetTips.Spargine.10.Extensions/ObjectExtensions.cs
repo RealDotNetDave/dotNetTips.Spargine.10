@@ -256,7 +256,11 @@ public static class ObjectExtensions
 
 	/// <summary>Disposes a single field of an object when its runtime value implements <see cref="IEnumerable{T}"/> of <see cref="IDisposable"/> or <see cref="IDisposable"/> directly.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DisposeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(DisposeField),
+		UnitTestStatus      = UnitTestStatus.NotRequired,
+		OptimizationStatus  = OptimizationStatus.NotRequired,
+		BenchmarkStatus     = BenchmarkStatus.NotRequired,
+		Status              = Status.Available)]
 	private static void DisposeField(FieldInfo field, IDisposable obj)
 	{
 		var fieldValue = field.GetValue(obj);
@@ -639,7 +643,11 @@ public static class ObjectExtensions
 	/// </summary>
 	[RequiresUnreferencedCode("Calls BuildComplexTypePropertiesDictionary which uses reflection.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ResolvePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ResolvePropertiesDictionary),
+		UnitTestStatus      = UnitTestStatus.NotRequired,
+		OptimizationStatus  = OptimizationStatus.NotRequired,
+		BenchmarkStatus     = BenchmarkStatus.NotRequired,
+		Status              = Status.Available)]
 	private static ReadOnlyDictionary<string, string> ResolvePropertiesDictionary(string memberName, object obj, bool ignoreNulls, Type objectType)
 	{
 		return _builtInTypeNames.ContainsKey(objectType)

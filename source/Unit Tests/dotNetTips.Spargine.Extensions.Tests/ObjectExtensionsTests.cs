@@ -189,7 +189,6 @@ public class ObjectExtensionsTests : UnitTester
 		}
 	}
 
-
 	[TestMethod]
 	public void FastBinaryClone_Array_ReturnsClonedArray()
 	{
