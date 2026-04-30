@@ -47,6 +47,7 @@ public static class StringBuilderExtensions
 	/// <param name="value">The string value to append.</param>
 	/// <param name="includeQuotes">When <c>true</c>, wraps the value in double quotes and escapes special characters.</param>
 	/// <param name="includeComma">When <c>true</c>, appends the default separator after the value.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 #pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
 	private static void AppendFormattedValue(StringBuilder sb, string value, bool includeQuotes, bool includeComma)
 #pragma warning restore IDE0051
@@ -75,6 +76,7 @@ public static class StringBuilderExtensions
 	/// </summary>
 	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
 	/// <param name="value">The string to scan and append.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AppendEscapedValue(StringBuilder sb, string value)
 	{
 		var lastSpecialIndex = 0;
@@ -107,6 +109,7 @@ public static class StringBuilderExtensions
 	/// <param name="values">The sequence of values to append.</param>
 	/// <param name="separator">The separator to append between values.</param>
 	/// <param name="action">The action to invoke for each value.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 #pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
 	private static void AppendSeparatedValues<T>(StringBuilder sb, IEnumerable<T> values, string separator, Action<T> action)
 #pragma warning restore IDE0051
@@ -138,6 +141,7 @@ public static class StringBuilderExtensions
 	/// <param name="separator">The separator to append between values.</param>
 	/// <param name="param">The additional parameter passed to <paramref name="action"/>.</param>
 	/// <param name="action">The action to invoke for each value and the additional parameter.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 #pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
 	private static void AppendSeparatedValues<T, TParam>(StringBuilder sb, IEnumerable<T> values, string separator, TParam param, Action<T, TParam> action)
 #pragma warning restore IDE0051
@@ -171,6 +175,7 @@ public static class StringBuilderExtensions
 	/// <param name="param1">The first additional parameter passed to <paramref name="action"/>.</param>
 	/// <param name="param2">The second additional parameter passed to <paramref name="action"/>.</param>
 	/// <param name="action">The action to invoke for each value and the additional parameters.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 #pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
 	private static void AppendSeparatedValues<T, TParam1, TParam2>(StringBuilder sb, IEnumerable<T> values, string separator, TParam1 param1, TParam2 param2, Action<StringBuilder, T, TParam1, TParam2> action)
 #pragma warning restore IDE0051
