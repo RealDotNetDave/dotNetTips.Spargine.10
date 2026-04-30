@@ -2000,6 +2000,9 @@ public class ObjectExtensionsTests : UnitTester
 		var result = list.FieldsToDictionary("Test", ignoreEmptyValues: true);
 
 		Assert.IsNotNull(result);
+		Assert.IsFalse(result.ContainsKey("Test[0]"));
+		Assert.IsTrue(result.ContainsKey("Test[1]"));
+		Assert.AreEqual("HasValue", result["Test[1]"]);
 	}
 
 	[TestMethod]
