@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-16-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-29-2023
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="DisposableFields.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;
@@ -63,6 +64,43 @@ public class DisposableFields : IDisposable
 			}
 
 			this._disposedValue = true;
+		}
+	}
+}
+
+/// <summary>
+/// Test helper that exposes a field whose runtime type implements <see cref="IEnumerable{T}"/> of
+/// <see cref="IDisposable"/>, used to exercise the corresponding branch in <c>DisposeField</c>.
+/// </summary>
+[ExcludeFromCodeCoverage]
+public class DisposableFieldsWithCollection : IDisposable
+{
+	// Declared as List<IDisposable> so the runtime value IS an IEnumerable<IDisposable>.
+	private readonly List<IDisposable> _disposableItems = new() { new DataSet("A"), new DataSet("B") };
+
+	private bool _disposedValue;
+
+	/// <inheritdoc/>
+	public void Dispose()
+	{
+		this.Dispose(disposing: true);
+		GC.SuppressFinalize(this);
+	}
+
+	/// <summary>Disposes the specified disposing.</summary>
+	protected virtual void Dispose(bool disposing)
+	{
+		if (!_disposedValue)
+		{
+			if (disposing)
+			{
+				foreach (var item in _disposableItems)
+				{
+					item.Dispose();
+				}
+			}
+
+			_disposedValue = true;
 		}
 	}
 }
