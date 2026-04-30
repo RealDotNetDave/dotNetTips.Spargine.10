@@ -253,18 +253,23 @@ public static class ObjectExtensions
 	// the public methods above and inside the extension block below.
 	// -------------------------------------------------------------------------
 
-	/// <summary>Disposes a single field of an object if it implements <see cref="IDisposable"/> or contains <see cref="IDisposable"/> items.</summary>
+	/// <summary>Disposes a single field of an object when the field's declared type implements <see cref="IDisposable"/> or is an <see cref="IEnumerable{T}"/> of <see cref="IDisposable"/> items.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DisposeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void DisposeField(FieldInfo field, IDisposable obj)
 	{
 		var fieldValue = field.GetValue(obj);
 
-		if (fieldValue is IDisposable disposableField)
+		if (fieldValue is null)
+		{
+			return;
+		}
+
+		if (field.FieldType.IsAssignableTo(typeof(IDisposable)) && fieldValue is IDisposable disposableField)
 		{
 			disposableField.TryDispose();
 		}
-		else if (fieldValue is IEnumerable<IDisposable> collection)
+		else if (field.FieldType.IsAssignableTo(typeof(IEnumerable<IDisposable>)) && fieldValue is IEnumerable<IDisposable> collection)
 		{
 			collection.DisposeCollection();
 		}
