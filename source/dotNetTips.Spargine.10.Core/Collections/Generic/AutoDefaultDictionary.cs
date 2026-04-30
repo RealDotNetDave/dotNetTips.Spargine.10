@@ -206,7 +206,13 @@ public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValu
 	/// <param name="keyValuePairs">The key-value pairs to convert. Must not be null.</param>
 	/// <returns>A <see cref="Dictionary{TKey, TValue}"/> containing all supplied key-value pairs.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> is null.</exception>
+	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.Benchmark,
+		Status = Status.Available)]
 	private static Dictionary<TKey, TValue> AsDictionary(IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs) =>
 		keyValuePairs.ArgumentNotNull().ToDictionary(static kvp => kvp.Key, static kvp => kvp.Value);
 
