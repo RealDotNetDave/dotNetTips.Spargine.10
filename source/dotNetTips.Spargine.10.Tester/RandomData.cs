@@ -235,7 +235,7 @@ public static class RandomData
 
 		if (!_addressFactories.TryGetValue(typeof(TAddress), out var factory))
 		{
-			throw new NotSupportedException($"Type {typeof(TAddress).FullName} is not supported by GenerateAddress.");
+			throw new NotSupportedException(string.Format(Resources.ErrorTypeNotSupportedByMethod, typeof(TAddress).FullName, nameof(GenerateAddress)));
 		}
 
 		return (TAddress)factory(BuildAddressComponents(country!, addressLength, countyProvinceLength));
