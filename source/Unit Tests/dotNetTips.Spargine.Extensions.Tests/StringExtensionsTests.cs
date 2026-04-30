@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1324,6 +1324,32 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result, "Whitespace-only string has trimmed length of 0.");
+	}
+
+	[TestMethod]
+	public void HasValue_WithLength_TrailingWhitespace_ReturnsTrue()
+	{
+		// Arrange - "hello" followed by trailing spaces; trimmed length should be 5
+		var input = "hello   ";
+
+		// Act
+		var result = input.HasValue(5);
+
+		// Assert
+		Assert.IsTrue(result, "Trimmed length of 'hello   ' should equal 5.");
+	}
+
+	[TestMethod]
+	public void HasValue_WithLength_TrailingWhitespace_ReturnsFalseForWrongLength()
+	{
+		// Arrange
+		var input = "hello   ";
+
+		// Act
+		var result = input.HasValue(8);
+
+		// Assert
+		Assert.IsFalse(result, "Trimmed length of 'hello   ' is 5, not 8.");
 	}
 
 	[TestMethod]

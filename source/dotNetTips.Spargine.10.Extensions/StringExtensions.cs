@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -45,6 +45,12 @@ public static class StringExtensions
 	/// The URL separator
 	/// </summary>
 	private const string UrlSeparator = "://";
+
+	/// <summary>
+	/// A <see cref="ReadOnlySpan{T}"/> view of <see cref="UrlSeparator"/> for span-based search operations,
+	/// avoiding CA1303 by not calling <see cref="System.MemoryExtensions.AsSpan(string?)"/> on a literal.
+	/// </summary>
+	private static ReadOnlySpan<char> UrlSeparatorSpan => [':', '/', '/'];
 
 	/// <summary>
 	/// Provides a static instance of the <see cref="ASCIIEncoding"/> class for use throughout the StringExtensions class.
@@ -119,7 +125,7 @@ public static class StringExtensions
 	/// var total = new[] { "a", null, "bc" }.CalculateTotalLength(); // Returns: 3
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static int CalculateTotalLength(this string[] args)
 	{
 		if (args is null || args.Length == 0)
@@ -127,20 +133,7 @@ public static class StringExtensions
 			return 0;
 		}
 
-		// Iterate directly over the array to avoid span indexing overhead
-		var totalLength = 0;
-
-		for (int charIndex = 0, n = args.Length; charIndex < n; charIndex++)
-		{
-			var s = args[charIndex];
-
-			if (s != null)
-			{
-				totalLength += s.Length;
-			}
-		}
-
-		return totalLength;
+		return SumStringLengths(args);
 	}
 
 	/// <summary>
@@ -215,7 +208,7 @@ public static class StringExtensions
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -227,48 +220,7 @@ public static class StringExtensions
 			return input;
 		}
 
-		// Calculate exact capacity: input + all args + delimiters
-		// Add 1 for input string
-		var tempArray = new string[args.Count + 1];
-		tempArray[0] = input;
-		args.CopyTo(tempArray, 1);
-
-		var totalStringLength = tempArray.CalculateTotalLength();
-
-		// Add space for delimiters or line feeds
-		var delimiterLength = addLineFeed ? Environment.NewLine.Length : delimiter.Length;
-		var estimatedCapacity = totalStringLength + (args.Count * delimiterLength);
-
-		var pooledSb = _stringBuilderPool.Value.Get().Clear();
-
-		try
-		{
-			// Set capacity once to avoid reallocations
-			_ = pooledSb.EnsureCapacity(estimatedCapacity);
-
-			// Append initial input
-			_ = pooledSb.Append(input);
-
-			// Append all args with delimiter or line feed
-			foreach (var arg in args)
-			{
-				if (addLineFeed)
-				{
-					_ = pooledSb.AppendLine(arg);
-				}
-				else
-				{
-					_ = pooledSb.Append(delimiter);
-					_ = pooledSb.Append(arg);
-				}
-			}
-
-			return pooledSb.ToString();
-		}
-		finally
-		{
-			_stringBuilderPool.Value.Return(pooledSb);
-		}
+		return BuildConcatenatedString(input, args, delimiter, addLineFeed);
 	}
 
 	/// <summary>
@@ -294,7 +246,7 @@ public static class StringExtensions
 	/// var none = "Hello".ContainsAny(StringComparison.Ordinal, "WORLD"); // false
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input,
 		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
 		params ReadOnlySpan<string> characters)
@@ -308,15 +260,7 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		stringComparison = stringComparison.ArgumentDefined();
 
-		foreach (var character in characters)
-		{
-			if (input.Contains(character, stringComparison))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return ContainsAnyCharacter(input, characters, stringComparison);
 	}
 
 	/// <summary>
@@ -546,7 +490,7 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static (string Scheme, string Host, string Port, string Path) FastParseUrl([NotNull] this string url)
 	{
 		url = url.ArgumentNotNullOrEmpty();
@@ -556,24 +500,7 @@ public static class StringExtensions
 			ExceptionThrower.ThrowArgumentException($"Sting is a incorrect format. Missing {UrlSeparator}.", nameof(url));
 		}
 
-		var span = url.AsSpan();
-
-		// Extract scheme
-		var schemeIndex = span.IndexOf(UrlSeparator.AsSpan());
-		var scheme = span[..schemeIndex].ToString();
-		span = span[(schemeIndex + 3)..];
-
-		// Find first slash for path
-		var pathIndex = span.IndexOf('/');
-		var hostAndPort = pathIndex >= 0 ? span[..pathIndex] : span;
-		var path = pathIndex >= 0 ? span[pathIndex..].ToString() : "/";
-
-		// Extract host and port
-		var portIndex = hostAndPort.IndexOf(':');
-		var host = (portIndex >= 0 ? hostAndPort[..portIndex] : hostAndPort).ToString();
-		var port = portIndex >= 0 ? hostAndPort[(portIndex + 1)..].ToString() : "443";
-
-		return (scheme, host, port, path);
+		return ParseUrlComponents(url.AsSpan());
 	}
 
 	/// <summary>
@@ -839,36 +766,12 @@ public static class StringExtensions
 	/// It is an extension method and cannot be called on a null instance.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasValue(this string input, int length)
 	{
 		length = length.ArgumentInRange(min: 1, max: length);
 
-		if (input is null)
-		{
-			return false;
-		}
-
-		// Compute trimmed length without allocating a new string
-		var span = input.AsSpan();
-		var start = 0;
-		var end = span.Length - 1;
-
-		// Trim leading whitespace
-		while (start <= end && char.IsWhiteSpace(span[start]))
-		{
-			start++;
-		}
-
-		// Trim trailing whitespace
-		while (end >= start && char.IsWhiteSpace(span[end]))
-		{
-			end--;
-		}
-
-		var trimmedLength = end - start + 1; // -1 if all whitespace -> becomes 0 via comparison below
-
-		return trimmedLength == length;
+		return input is not null && ComputeTrimmedLength(input.AsSpan()) == length;
 	}
 
 	/// <summary>
@@ -957,24 +860,10 @@ public static class StringExtensions
 	/// This method uses <see cref="char.IsWhiteSpace(char)"/> to check each character in the string for whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasWhitespace([DisallowNull] this string input)
 	{
-		if (input is null)
-		{
-			return false;
-		}
-
-		// SUGGESTION FROM COPILOT SLOWER
-		foreach (var inputItem in input)
-		{
-			if (!inputItem.IsAsciiWhitespace)
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return input is not null && IsAllAsciiWhitespace(input);
 	}
 
 	/// <summary>
@@ -1000,7 +889,7 @@ public static class StringExtensions
 	/// // "    Console.WriteLine(\"test\");"
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string Indent([DisallowNull] this string input, in int length, [ConstantExpected] char indentationCharacter)
 	{
 		if (input.CheckIsNotNull() is false || length <= 0)
@@ -1008,31 +897,7 @@ public static class StringExtensions
 			return string.Empty;
 		}
 
-		var sb = _stringBuilderPool.Value.Get();
-
-		try
-		{
-			if (length == 0)
-			{
-				_ = sb.Append(input.ArgumentNotNull());
-			}
-
-			for (var charIndex = 1; charIndex <= Math.Abs(length); charIndex++)
-			{
-				_ = sb.Append(indentationCharacter);
-			}
-
-			if (length > 0)
-			{
-				_ = sb.Append(input);
-			}
-
-			return sb.ToString();
-		}
-		finally
-		{
-			_stringBuilderPool.Value.Return(sb.Clear());
-		}
+		return BuildIndentedString(input, length, indentationCharacter);
 	}
 
 	/// <summary>
@@ -1513,7 +1378,7 @@ public static class StringExtensions
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[return: NotNull]
-	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string SubstringTrim(this string input, int startIndex, int length)
 	{
 		if (input.IsNullOrEmpty())
@@ -1521,10 +1386,7 @@ public static class StringExtensions
 			return ControlChars.EmptyString;
 		}
 
-		if (startIndex < 0 || length < 0 || startIndex + length > input.Length)
-		{
-			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(length));
-		}
+		ValidateSubstringRange(startIndex, length, input.Length);
 
 		// SUGGESTION FROM COPILOT SLOWER.
 		return input.AsSpan(startIndex, length).ToString().Trim();
@@ -1824,15 +1686,15 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the hashType of the given base64Input string using the specified hashType algorithm.
+	/// Computes the hash of the given <paramref name="input"/> string using the specified <paramref name="hashType"/> algorithm.
 	/// </summary>
-	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
-	/// <param name="hashType">The hashType algorithm type to use for computing the hashType.</param>
-	/// <returns>A byte array containing the computed hashType of the base64Input string.</returns>
+	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
+	/// <param name="hashType">The hash algorithm type to use for computing the hash.</param>
+	/// <returns>A byte array containing the computed hash of the input string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
-	/// <exception cref="InvalidOperationException">Thrown if the specified hashType algorithm is not supported.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the specified hash algorithm is not supported.</exception>
 	/// <remarks>
-	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hashType.
+	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hash.
 	/// </remarks>
 	private static byte[] GetHash(string input, HashType hashType)
 	{
@@ -1845,6 +1707,194 @@ public static class StringExtensions
 			HashType.SHA512 => SHA512.HashData(inputBytes),
 			_ => [],
 		};
+	}
+
+	/// <summary>
+	/// Appends all <paramref name="args"/> to <paramref name="sb"/>, separated by <paramref name="delimiter"/>
+	/// or followed by a line feed when <paramref name="addLineFeed"/> is <c>true</c>.
+	/// </summary>
+	private static void AppendArgsToBuilder(StringBuilder sb, ReadOnlyCollection<string> args, string delimiter, bool addLineFeed)
+	{
+		foreach (var arg in args)
+		{
+			if (addLineFeed)
+			{
+				_ = sb.AppendLine(arg);
+			}
+			else
+			{
+				_ = sb.Append(delimiter);
+				_ = sb.Append(arg);
+			}
+		}
+	}
+
+	/// <summary>
+	/// Builds the concatenated string from <paramref name="input"/> and <paramref name="args"/> using a pooled
+	/// <see cref="StringBuilder"/>, pre-sized to avoid reallocations.
+	/// </summary>
+	private static string BuildConcatenatedString(string input, ReadOnlyCollection<string> args, string delimiter, bool addLineFeed)
+	{
+		// Calculate exact capacity: input + all args + delimiters
+		var tempArray = new string[args.Count + 1];
+		tempArray[0] = input;
+		args.CopyTo(tempArray, 1);
+
+		var totalStringLength = tempArray.CalculateTotalLength();
+
+		// Add space for delimiters or line feeds
+		var delimiterLength = addLineFeed ? Environment.NewLine.Length : delimiter.Length;
+		var estimatedCapacity = totalStringLength + (args.Count * delimiterLength);
+
+		var pooledSb = _stringBuilderPool.Value.Get().Clear();
+
+		try
+		{
+			// Set capacity once to avoid reallocations
+			_ = pooledSb.EnsureCapacity(estimatedCapacity);
+
+			// Append initial input
+			_ = pooledSb.Append(input);
+
+			AppendArgsToBuilder(pooledSb, args, delimiter, addLineFeed);
+
+			return pooledSb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(pooledSb);
+		}
+	}
+
+	/// <summary>
+	/// Builds an indented string by prepending <paramref name="length"/> copies of
+	/// <paramref name="indentationCharacter"/> to <paramref name="input"/> using a pooled
+	/// <see cref="StringBuilder"/>.
+	/// </summary>
+	private static string BuildIndentedString(string input, int length, char indentationCharacter)
+	{
+		var sb = _stringBuilderPool.Value.Get();
+
+		try
+		{
+			for (var charIndex = 1; charIndex <= length; charIndex++)
+			{
+				_ = sb.Append(indentationCharacter);
+			}
+
+			_ = sb.Append(input);
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb.Clear());
+		}
+	}
+
+	/// <summary>
+	/// Returns <c>true</c> if <paramref name="input"/> contains any of the <paramref name="characters"/>
+	/// using the specified <paramref name="comparison"/>.
+	/// </summary>
+	private static bool ContainsAnyCharacter(string input, ReadOnlySpan<string> characters, StringComparison comparison)
+	{
+		foreach (var character in characters)
+		{
+			if (input.Contains(character, comparison))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Computes the trimmed length of <paramref name="span"/> by removing leading and trailing whitespace.
+	/// Returns 0 if the span is entirely whitespace.
+	/// </summary>
+	private static int ComputeTrimmedLength(ReadOnlySpan<char> span) => span.Trim().Length;
+
+	/// <summary>
+	/// Extracts the host and port from a <paramref name="hostAndPort"/> span.
+	/// Defaults the port to <c>"443"</c> when no port separator (<c>:</c>) is found.
+	/// </summary>
+	private static (string Host, string Port) ExtractHostAndPort(ReadOnlySpan<char> hostAndPort)
+	{
+		var portIndex = hostAndPort.IndexOf(':');
+		var host = (portIndex >= 0 ? hostAndPort[..portIndex] : hostAndPort).ToString();
+		var port = portIndex >= 0 ? hostAndPort[(portIndex + 1)..].ToString() : "443";
+
+		return (host, port);
+	}
+
+	/// <summary>
+	/// Returns <c>true</c> if every character in <paramref name="input"/> is ASCII whitespace;
+	/// otherwise <c>false</c>.
+	/// </summary>
+	private static bool IsAllAsciiWhitespace(string input)
+	{
+		// SUGGESTION FROM COPILOT SLOWER
+		foreach (var c in input)
+		{
+			if (!c.IsAsciiWhitespace)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Parses the URL components from the given <paramref name="span"/> after the scheme separator has been validated.
+	/// </summary>
+	private static (string Scheme, string Host, string Port, string Path) ParseUrlComponents(ReadOnlySpan<char> span)
+	{
+		// Extract scheme
+		var schemeIndex = span.IndexOf(UrlSeparatorSpan);
+		var scheme = span[..schemeIndex].ToString();
+		span = span[(schemeIndex + 3)..];
+
+		// Find first slash for path
+		var pathIndex = span.IndexOf('/');
+		var hostAndPort = pathIndex >= 0 ? span[..pathIndex] : span;
+		var path = pathIndex >= 0 ? span[pathIndex..].ToString() : "/";
+
+		var (host, port) = ExtractHostAndPort(hostAndPort);
+
+		return (scheme, host, port, path);
+	}
+
+	/// <summary>
+	/// Sums the <see cref="string.Length"/> of all non-null elements in <paramref name="args"/>.
+	/// </summary>
+	private static int SumStringLengths(string[] args)
+	{
+		// Iterate directly over the array to avoid span indexing overhead
+		var totalLength = 0;
+
+		for (int charIndex = 0, n = args.Length; charIndex < n; charIndex++)
+		{
+			var s = args[charIndex];
+
+			if (s != null)
+			{
+				totalLength += s.Length;
+			}
+		}
+
+		return totalLength;
+	}
+
+	/// <summary>
+	/// Throws <see cref="ArgumentOutOfRangeException"/> when <paramref name="startIndex"/> or
+	/// <paramref name="length"/> are out of range for the given <paramref name="inputLength"/>.
+	/// </summary>
+	private static void ValidateSubstringRange(int startIndex, int length, int inputLength)
+	{
+		_ = startIndex.ArgumentInRange(min: 0, max: inputLength, paramName: nameof(startIndex));
+		_ = length.ArgumentInRange(min: 0, max: inputLength - startIndex, paramName: nameof(length));
 	}
 
 }
