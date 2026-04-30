@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-11-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-31-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,6 +37,158 @@ public static class StringBuilderExtensions
 	/// The special characters
 	/// </summary>
 	private static readonly SearchValues<char> _specialCharacters = SearchValues.Create(['"', '\\']);
+
+	/// <summary>
+	/// Appends a value to the <see cref="StringBuilder"/> with optional quotes, comma,
+	/// and special-character escaping, delegating the quote/escape logic to
+	/// <see cref="AppendEscapedValue"/> when required.
+	/// </summary>
+	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="value">The string value to append.</param>
+	/// <param name="includeQuotes">When <c>true</c>, wraps the value in double quotes and escapes special characters.</param>
+	/// <param name="includeComma">When <c>true</c>, appends the default separator after the value.</param>
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
+	private static void AppendFormattedValue(StringBuilder sb, string value, bool includeQuotes, bool includeComma)
+#pragma warning restore IDE0051
+	{
+		if (includeQuotes)
+		{
+			_ = sb.Append(ControlChars.Quote);
+			AppendEscapedValue(sb, value);
+			_ = sb.Append(ControlChars.Quote);
+		}
+		else
+		{
+			_ = sb.Append(value);
+		}
+
+		if (includeComma)
+		{
+			_ = sb.Append(ControlChars.DefaultSeparator);
+		}
+	}
+
+	/// <summary>
+	/// Scans <paramref name="value"/> for special characters (double-quotes and backslashes)
+	/// and appends the content to <paramref name="sb"/>, inserting a backslash escape before
+	/// each occurrence.
+	/// </summary>
+	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="value">The string to scan and append.</param>
+	private static void AppendEscapedValue(StringBuilder sb, string value)
+	{
+		var lastSpecialIndex = 0;
+
+		while (true)
+		{
+			var specialIndex = value.AsSpan(lastSpecialIndex).IndexOfAny(_specialCharacters);
+
+			if (specialIndex >= 0)
+			{
+				_ = sb.Append(value, lastSpecialIndex, specialIndex)
+					  .Append(ControlChars.Backslash)
+					  .Append(value[lastSpecialIndex + specialIndex]);
+				lastSpecialIndex += specialIndex + 1;
+			}
+			else
+			{
+				_ = sb.Append(value, lastSpecialIndex, value.Length - lastSpecialIndex);
+				break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Core loop that iterates <paramref name="values"/>, invokes <paramref name="action"/> for
+	/// each element, appends <paramref name="separator"/> after each, then trims the trailing separator.
+	/// </summary>
+	/// <typeparam name="T">Element type.</typeparam>
+	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="values">The sequence of values to append.</param>
+	/// <param name="separator">The separator to append between values.</param>
+	/// <param name="action">The action to invoke for each value.</param>
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
+	private static void AppendSeparatedValues<T>(StringBuilder sb, IEnumerable<T> values, string separator, Action<T> action)
+#pragma warning restore IDE0051
+	{
+		var appended = false;
+
+		foreach (var value in values)
+		{
+			action(value);
+			_ = sb.Append(separator);
+			appended = true;
+		}
+
+		if (appended)
+		{
+			sb.Length -= separator.Length;
+		}
+	}
+
+	/// <summary>
+	/// Core loop that iterates <paramref name="values"/>, invokes <paramref name="action"/> for
+	/// each element together with <paramref name="param"/>, appends <paramref name="separator"/>
+	/// after each, then trims the trailing separator.
+	/// </summary>
+	/// <typeparam name="T">Element type.</typeparam>
+	/// <typeparam name="TParam">Type of the additional parameter.</typeparam>
+	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="values">The sequence of values to append.</param>
+	/// <param name="separator">The separator to append between values.</param>
+	/// <param name="param">The additional parameter passed to <paramref name="action"/>.</param>
+	/// <param name="action">The action to invoke for each value and the additional parameter.</param>
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
+	private static void AppendSeparatedValues<T, TParam>(StringBuilder sb, IEnumerable<T> values, string separator, TParam param, Action<T, TParam> action)
+#pragma warning restore IDE0051
+	{
+		var appended = false;
+
+		foreach (var value in values)
+		{
+			action(value, param);
+			_ = sb.Append(separator);
+			appended = true;
+		}
+
+		if (appended)
+		{
+			sb.Length -= separator.Length;
+		}
+	}
+
+	/// <summary>
+	/// Core loop that iterates <paramref name="values"/>, invokes <paramref name="action"/> for
+	/// each element together with <paramref name="param1"/> and <paramref name="param2"/>, appends
+	/// <paramref name="separator"/> after each, then trims the trailing separator.
+	/// </summary>
+	/// <typeparam name="T">Element type.</typeparam>
+	/// <typeparam name="TParam1">Type of the first additional parameter.</typeparam>
+	/// <typeparam name="TParam2">Type of the second additional parameter.</typeparam>
+	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="values">The sequence of values to append.</param>
+	/// <param name="separator">The separator to append between values.</param>
+	/// <param name="param1">The first additional parameter passed to <paramref name="action"/>.</param>
+	/// <param name="param2">The second additional parameter passed to <paramref name="action"/>.</param>
+	/// <param name="action">The action to invoke for each value and the additional parameters.</param>
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
+	private static void AppendSeparatedValues<T, TParam1, TParam2>(StringBuilder sb, IEnumerable<T> values, string separator, TParam1 param1, TParam2 param2, Action<StringBuilder, T, TParam1, TParam2> action)
+#pragma warning restore IDE0051
+	{
+		var appended = false;
+
+		foreach (var value in values)
+		{
+			action(sb, value, param1, param2);
+			_ = sb.Append(separator);
+			appended = true;
+		}
+
+		if (appended)
+		{
+			sb.Length -= separator.Length;
+		}
+	}
 
 	/// <summary>
 	/// Sets the separator.
@@ -133,7 +285,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendKeyValue([DisallowNull] string key, string value, bool includeQuotes = true, bool includeComma = true)
 		{
 			sb = sb.ArgumentNotNull();
@@ -146,38 +298,7 @@ public static class StringBuilderExtensions
 
 			_ = sb.Append(key).Append(ControlChars.Equal);
 
-			if (includeQuotes)
-			{
-				_ = sb.Append(ControlChars.Quote);
-				var lastSpecialIndex = 0;
-				int specialIndex;
-
-				while (true)
-				{
-					specialIndex = value.AsSpan(lastSpecialIndex).IndexOfAny(_specialCharacters);
-
-					if (specialIndex >= 0)
-					{
-						_ = sb.Append(value, lastSpecialIndex, specialIndex - lastSpecialIndex).Append(ControlChars.Backslash).Append(value[specialIndex]);
-						lastSpecialIndex = specialIndex + 1;
-					}
-					else
-					{
-						_ = sb.Append(value, lastSpecialIndex, value.Length - lastSpecialIndex);
-						break;
-					}
-				}
-				_ = sb.Append(ControlChars.Quote);
-			}
-			else
-			{
-				_ = sb.Append(value);
-			}
-
-			if (includeComma)
-			{
-				_ = sb.Append(ControlChars.DefaultSeparator);
-			}
+			AppendFormattedValue(sb, value, includeQuotes, includeComma);
 		}
 
 		/// <summary>
@@ -256,7 +377,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendValues<T>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] Action<T> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -270,20 +391,7 @@ public static class StringBuilderExtensions
 
 			separator = SetSeparator(separator);
 
-			var appended = false;
-
-			//FrozenSet is slower.
-			foreach (var value in values)
-			{
-				joinAction(value);
-				_ = sb.Append(separator);
-				appended = true;
-			}
-
-			if (appended)
-			{
-				sb.Length -= separator.Length;
-			}
+			AppendSeparatedValues(sb, values, separator, joinAction);
 		}
 
 		/// <summary>
@@ -297,7 +405,7 @@ public static class StringBuilderExtensions
 		/// <param name="joinAction">The action to perform for each value and the additional parameter.</param>
 		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param"/>, or <paramref name="joinAction"/> is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendValues<T, TParam>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam param, [DisallowNull] Action<T, TParam> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -312,20 +420,7 @@ public static class StringBuilderExtensions
 
 			separator = SetSeparator(separator);
 
-			var appended = false;
-
-			//Frozenset is slower.
-			foreach (var value in values)
-			{
-				joinAction(value, param);
-				_ = sb.Append(separator);
-				appended = true;
-			}
-
-			if (appended)
-			{
-				sb.Length -= separator.Length;
-			}
+			AppendSeparatedValues(sb, values, separator, param, joinAction);
 		}
 
 		/// <summary>
@@ -349,7 +444,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendValues<T, TParam1, TParam2>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam1 param1, [DisallowNull] TParam2 param2, [DisallowNull] Action<StringBuilder, T, TParam1, TParam2> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -365,20 +460,7 @@ public static class StringBuilderExtensions
 
 			separator = SetSeparator(separator);
 
-			var appended = false;
-
-			//FrozenSet is slower.
-			foreach (var value in values)
-			{
-				joinAction(sb, value, param1, param2);
-				_ = sb.Append(separator);
-				appended = true;
-			}
-
-			if (appended)
-			{
-				sb.Length -= separator.Length;
-			}
+			AppendSeparatedValues(sb, values, separator, param1, param2, joinAction);
 		}
 
 		/// <summary>
