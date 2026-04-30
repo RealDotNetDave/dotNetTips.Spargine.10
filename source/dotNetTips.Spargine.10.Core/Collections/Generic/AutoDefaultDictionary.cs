@@ -208,11 +208,7 @@ public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValu
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(
-		UnitTestStatus = UnitTestStatus.Completed,
-		OptimizationStatus = OptimizationStatus.Completed,
-		BenchmarkStatus = BenchmarkStatus.Benchmark,
-		Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	private static Dictionary<TKey, TValue> AsDictionary(IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs) =>
 		keyValuePairs.ArgumentNotNull().ToDictionary(static kvp => kvp.Key, static kvp => kvp.Value);
 
