@@ -126,13 +126,13 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Write unit tests for **all public APIs**.
 - If methods are new or modified, ensure they are covered by unit tests.
 - Ensure **full code‑path coverage**. **THIS IS MANDATORY!**
+    - CRAP score for public and protected methods must be 5 or under.
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
 - Review all methods in a test class for issues.
-- Ensure CRAP score for public and protected methods is 5 or under.
 
-### **Structure & Conventions**
+#### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  
 - Test methods **must not** include XML documentation.  
 - Name test methods using **`Method_Condition_ExpectedBehavior`** (e.g., `ArgumentCountInRange_CountAboveMax_ThrowsArgumentOutOfRangeException`).  

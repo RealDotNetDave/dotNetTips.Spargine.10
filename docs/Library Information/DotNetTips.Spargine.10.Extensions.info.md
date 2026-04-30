@@ -2269,7 +2269,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
@@ -2303,7 +2303,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2363,7 +2363,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2838,7 +2838,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/3/2023
@@ -2872,7 +2872,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -2932,7 +2932,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -5597,6 +5597,26 @@
 *****
 ## DotNetTips.Spargine.Extensions.ObjectExtensions
 
+### System.Void AddPropertyError(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.Reflection.PropertyInfo property, System.String typeName, System.Boolean ignoreNulls, System.String errorTypeName)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** AddPropertyError
+* **Modified On:** 
+
+### System.Void AddSelectedPropertyValueCore(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.Reflection.PropertyInfo property, System.Object obj, System.String typeName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** AddSelectedPropertyValueCore
+* **Modified On:** 
+
 ### T As(System.Object obj)
 
 * **Status:** Available
@@ -5605,6 +5625,76 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** As
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildComplexTypeFieldsDictionary(System.String memberName, System.Object obj, System.Type objectType, System.Boolean ignoreEmptyValues)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildComplexTypeFieldsDictionary
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildComplexTypePropertiesDictionary(System.String memberName, System.Object obj, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildComplexTypePropertiesDictionary
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildEnumerableFieldsDictionary(System.String memberName, System.Collections.IEnumerable items, System.Boolean ignoreEmptyValues)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildEnumerableFieldsDictionary
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildEnumerablePropertiesDictionary(System.String memberName, System.Collections.IEnumerable items)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildEnumerablePropertiesDictionary
+* **Modified On:** 
+
+### System.String BuildKeyValueString(System.Collections.Generic.IReadOnlyDictionary<System.String, System.String> properties, System.String header, System.String sequenceSeparator, System.Char keyValueSeparator)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildKeyValueString
+* **Modified On:** 
+
+### System.String BuildPropertyName(System.String name, System.String typeName)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildPropertyName
+* **Modified On:** 
+
+### System.Collections.Generic.Dictionary<System.String, System.String> BuildSelectedPropertiesDictionary(System.Object obj, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String typeName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** BuildSelectedPropertiesDictionary
 * **Modified On:** 
 
 ### System.String ComputeSha256Hash(System.Object obj)
@@ -5627,14 +5717,34 @@
 * **Description:** DisposeCollection
 * **Modified On:** 
 
+### System.Void DisposeField(System.Reflection.FieldInfo field, System.IDisposable obj)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** DisposeField
+* **Modified On:** 
+
 ### System.Void DisposeFields(System.IDisposable obj)
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** DisposeFields
+* **Modified On:** 
+
+### System.Void DisposeObjectInternal(System.IDisposable obj)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** DisposeObjectInternal
 * **Modified On:** 
 
 ### T FastBinaryClone(System.Object obj)
@@ -5701,7 +5811,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
@@ -5719,6 +5829,26 @@
 * **CreatedOn:** 8/22/2025
 * **Description:** FieldsToString
 * **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> FilterEmptyProperties(System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> properties)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** FilterEmptyProperties
+* **Modified On:** 
+
+### System.Collections.Generic.Dictionary<System.String, System.String> FilterEmptyPropertiesDict(System.Collections.Generic.Dictionary<System.String, System.String> properties)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** FilterEmptyPropertiesDict
 * **Modified On:** 
 
 ### T FromJson(System.String json)
@@ -5797,7 +5927,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** InitializeFields
@@ -5843,6 +5973,26 @@
 * **Description:** Max
 * **Modified On:** 
 
+### System.Void MergeFieldsDictionaryToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> source, System.Boolean ignoreEmptyValues)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** MergeFieldsDictionaryToResult
+* **Modified On:** 
+
+### System.Void MergePropertyValueToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Reflection.PropertyInfo property, System.Object obj, System.String memberPrefix, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** MergePropertyValueToResult
+* **Modified On:** 
+
 ### T Min(System.Object obj, T obj2)
 
 * **Status:** Available
@@ -5867,7 +6017,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -5879,7 +6029,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -5897,6 +6047,66 @@
 * **CreatedOn:** 12/18/2025
 * **Description:** PropertiesToString
 * **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.String ResolveStringTypeName(System.String typeName, System.Boolean includeMemberName)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** ResolveStringTypeName
+* **Modified On:** 
+
+### System.Void SetNullPropertyValue(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.String propertyName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** SetNullPropertyValue
+* **Modified On:** 
+
+### System.Void SetPropertyValue(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.String propertyName, System.Object value, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** SetPropertyValue
+* **Modified On:** 
+
+### System.Boolean ShouldReturnNullPlaceholder(System.String memberName, System.Object obj, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** ShouldReturnNullPlaceholder
+* **Modified On:** 
+
+### System.Boolean ShouldSkipEmptyEntry(System.String value, System.Boolean ignoreEmptyValues)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** ShouldSkipEmptyEntry
+* **Modified On:** 
+
+### System.Boolean ShouldSkipNullValue(System.Object value, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** ShouldSkipNullValue
 * **Modified On:** 
 
 ### System.String StripNull(System.Object obj)
@@ -5961,6 +6171,16 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### System.Void TryAddSelectedPropertyValue(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.Reflection.PropertyInfo property, System.Object obj, System.String typeName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** TryAddSelectedPropertyValue
+* **Modified On:** 
+
 ### System.Void TryDispose(System.IDisposable obj)
 
 * **Status:** Available
@@ -5975,10 +6195,50 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** TryDispose
+* **Modified On:** 
+
+### System.Void TryInitializeField(System.Reflection.FieldInfo field, System.Object obj)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** TryInitializeField
+* **Modified On:** 
+
+### System.Void TryMergeFieldToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Reflection.FieldInfo field, System.Object obj, System.String memberPrefix, System.Boolean ignoreEmptyValues)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** TryMergeFieldToResult
+* **Modified On:** 
+
+### System.Void TryMergeItemProperties(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Object item, System.String itemMemberName)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** TryMergeItemProperties
+* **Modified On:** 
+
+### System.Void TryMergePropertyToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Reflection.PropertyInfo property, System.Object obj, System.String memberPrefix, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **CreatedOn:** 
+* **Description:** TryMergePropertyToResult
 * **Modified On:** 
 
 *****
@@ -6068,7 +6328,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 8/22/2025
@@ -6132,7 +6392,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** InitializeFields
@@ -6192,7 +6452,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -6204,7 +6464,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -6860,11 +7120,11 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
-* **Description:** AppendValues
+* **Description:** AppendKeyValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -6896,7 +7156,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6908,7 +7168,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6920,7 +7180,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6971,11 +7231,11 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
-* **Description:** AppendValues
+* **Description:** AppendKeyValue
 * **Modified By:** David McCarter
 * **Modified On:** 
 
@@ -7007,7 +7267,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -7019,7 +7279,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -7031,7 +7291,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -7082,7 +7342,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/29/2025
@@ -7118,7 +7378,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -7130,7 +7390,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -7248,7 +7508,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/1/2025
@@ -7352,7 +7612,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** HasValue
@@ -7382,7 +7642,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -7394,7 +7654,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** Indent
@@ -7668,7 +7928,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -8450,4 +8710,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 4/29/2026 9:03:28 PM UTC**
+**Generated by Spargine - dotNetTips.com on 4/30/2026 1:18:01 PM UTC**
