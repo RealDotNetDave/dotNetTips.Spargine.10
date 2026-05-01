@@ -34,6 +34,7 @@ namespace DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 public sealed class DistinctConcurrentBag<T> : ICollection<T>
 {
 	private readonly ConcurrentBag<T> _bag = [];
+	private readonly IEqualityComparer<T> _comparer = EqualityComparer<T>.Default;
 	private readonly ConcurrentHashSet<T> _uniqueItems = [];
 
 	/// <summary>
@@ -65,7 +66,8 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public DistinctConcurrentBag([NotNull] IEqualityComparer<T> comparer)
 	{
-		this._uniqueItems = new ConcurrentHashSet<T>(comparer.ArgumentNotNull());
+		this._comparer = comparer.ArgumentNotNull();
+		this._uniqueItems = new ConcurrentHashSet<T>(this._comparer);
 	}
 
 	/// <summary>
@@ -247,7 +249,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 
 		while (this._bag.TryTake(out var current))
 		{
-			if (!removed && EqualityComparer<T>.Default.Equals(current, item))
+			if (!removed && this._comparer.Equals(current, item))
 			{
 				removed = true;
 				continue;

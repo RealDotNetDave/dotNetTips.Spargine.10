@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-24-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -874,6 +874,29 @@ public class DistinctConcurrentBagTests
 		var bag = new DistinctConcurrentBag<string> { "apple" };
 
 		Assert.ThrowsExactly<ArgumentNullException>(() => bag.Remove(null));
+	}
+
+	[TestMethod]
+	public void Remove_WithCustomComparer_RemovesItemUsingComparer()
+	{
+		// Arrange - bag uses case-insensitive comparer; "Hello" is stored
+		var comparer = StringComparer.OrdinalIgnoreCase;
+		var bag = new DistinctConcurrentBag<string>(comparer);
+		bag.Add("Hello");
+		bag.Add("World");
+
+		// Act - remove using a different casing; comparer must match the stored "Hello"
+		var result = bag.Remove("HELLO");
+
+		// Assert - item removed, bag and uniqueItems are consistent
+		Assert.IsTrue(result);
+		Assert.AreEqual(1, bag.Count);
+		Assert.IsFalse(bag.Contains("hello"));
+		Assert.IsTrue(bag.Contains("World"));
+
+		// Verify the underlying bag is consistent (can still add/remove the remaining item)
+		Assert.IsTrue(bag.Remove("WORLD"));
+		Assert.AreEqual(0, bag.Count);
 	}
 
 	[TestMethod]
