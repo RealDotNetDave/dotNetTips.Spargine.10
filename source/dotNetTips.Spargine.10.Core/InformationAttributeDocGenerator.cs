@@ -4,7 +4,7 @@
 // Created          : 11-16-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="InformationAttributeDocGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -83,7 +83,16 @@ public static class InformationAttributeDocGenerator
 	[Information(nameof(GenerateMarkdownDocumentForAssembly), "David McCarter", "11/18/2024", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Version = "2", Status = Status.Available)]
 	public static string GenerateMarkdownDocumentForAssembly(Assembly assembly, string path)
 	{
+		assembly = assembly.ArgumentNotNull();
+		path = path.ArgumentNotNull();
+
+		if (Directory.Exists(path) == false)
+		{
+			_ = Directory.CreateDirectory(path);
+		}
+
 		var result = GenerateMarkdownDocumentForAssembly(assembly);
+
 
 		// Use or create filename
 		var fileName = Path.Combine(path, $"{assembly.GetName().Name}.info.md");
