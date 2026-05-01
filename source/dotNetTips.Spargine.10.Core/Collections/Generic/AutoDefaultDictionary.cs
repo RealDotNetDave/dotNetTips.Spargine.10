@@ -4,7 +4,7 @@
 // Created          : 01-03-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionary.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -124,20 +124,25 @@ public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValu
 	/// </summary>
 	/// <param name="keyValuePairs">The key-value pairs to initialize with.</param>
 	/// <param name="defaultValue">The default value to return when a key is not found in the dictionary.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> or <paramref name="defaultValue"/> is null.</exception>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public AutoDefaultDictionary(in IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs, in TValue defaultValue) : base(keyValuePairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)) => this._defaultValue = defaultValue ?? throw new ArgumentNullException(nameof(defaultValue));
+	public AutoDefaultDictionary(in IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs, in TValue defaultValue)
+		: base(AsDictionary(keyValuePairs))
+	{
+		this._defaultValue = defaultValue.ArgumentNotNull();
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AutoDefaultDictionary{TKey, TValue}"/> class with the specified key-value pairs and a function to handle missing keys.
 	/// </summary>
 	/// <param name="keyValuePairs">The key-value pairs to initialize the dictionary with.</param>
 	/// <param name="onMissingKey">The function to call when a key is not found in the dictionary.</param>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="onMissingKey"/> is null.</exception>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> or <paramref name="onMissingKey"/> is null.</exception>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public AutoDefaultDictionary(in IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs, in Func<TKey, TValue> onMissingKey)
-		: base(keyValuePairs.ToDictionary(kvp => kvp.Key, kvp => kvp.Value))
+		: base(AsDictionary(keyValuePairs))
 	{
-		this._onMissingKey = onMissingKey ?? throw new ArgumentNullException(nameof(onMissingKey));
+		this._onMissingKey = onMissingKey.ArgumentNotNull();
 		this._defaultValue = default!;
 	}
 
@@ -193,6 +198,19 @@ public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValu
 		this._onMissingKey = onMissingKey ?? throw new ArgumentNullException(nameof(onMissingKey));
 		this._defaultValue = default!;
 	}
+
+	/// <summary>
+	/// Converts an <see cref="IEnumerable{T}"/> of <see cref="KeyValuePair{TKey, TValue}"/> into a <see cref="Dictionary{TKey, TValue}"/>,
+	/// validating that the source is not null.
+	/// </summary>
+	/// <param name="keyValuePairs">The key-value pairs to convert. Must not be null.</param>
+	/// <returns>A <see cref="Dictionary{TKey, TValue}"/> containing all supplied key-value pairs.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	private static Dictionary<TKey, TValue> AsDictionary(IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs) =>
+		keyValuePairs.ArgumentNotNull().ToDictionary(static kvp => kvp.Key, static kvp => kvp.Value);
 
 	/// <summary>
 	/// Gets the default value returned when a key is not found in the dictionary.
