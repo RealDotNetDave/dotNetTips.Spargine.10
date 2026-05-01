@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-24-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="ObservableListTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -215,6 +215,22 @@ public class ObservableListTests
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.AddRange(null), "AddRange should throw ArgumentNullException for null collection.");
+	}
+
+	[TestMethod]
+	public void AddRange_WithPureEnumerable_ShouldAddItems()
+	{
+		// Arrange - use a pure IEnumerable<T> (not ICollection) to exercise the capacity=0 path
+		var items = Enumerable.Range(1, 3);
+
+		// Act
+		this._observableList.AddRange(items);
+
+		// Assert
+		Assert.AreEqual(3, this._observableList.Count, "All items from a pure IEnumerable should be added.");
+		Assert.IsTrue(this._observableList.Contains(1), "List should contain 1.");
+		Assert.IsTrue(this._observableList.Contains(2), "List should contain 2.");
+		Assert.IsTrue(this._observableList.Contains(3), "List should contain 3.");
 	}
 
 	[TestMethod]
@@ -1425,6 +1441,24 @@ public class ObservableListTests
 	{
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() => this._observableList.RemoveRange(null), "RemoveRange should throw ArgumentNullException for null collection.");
+	}
+
+	[TestMethod]
+	public void RemoveRange_WithPureEnumerable_ShouldRemoveItems()
+	{
+		// Arrange - use a pure IEnumerable<T> (not ICollection) to exercise the capacity=0 path
+		this._observableList.Add(1);
+		this._observableList.Add(2);
+		this._observableList.Add(3);
+		var itemsToRemove = Enumerable.Range(1, 2); // pure IEnumerable
+
+		// Act
+		var removedCount = this._observableList.RemoveRange(itemsToRemove);
+
+		// Assert
+		Assert.AreEqual(2, removedCount, "Two items should have been removed.");
+		Assert.AreEqual(1, this._observableList.Count, "One item should remain.");
+		Assert.IsTrue(this._observableList.Contains(3), "Item 3 should remain.");
 	}
 
 	[TestMethod]
