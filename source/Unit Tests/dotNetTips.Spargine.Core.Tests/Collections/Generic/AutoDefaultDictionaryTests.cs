@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 04-30-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -374,6 +374,25 @@ public class AutoDefaultDictionaryTests
 		Assert.AreEqual("one", value1);
 		Assert.AreEqual("two", value2);
 		Assert.AreEqual(defaultValue, value3);
+	}
+
+	[TestMethod]
+	public void ConstructorWithKeyValuePairsAndDefaultValue_NullKeyValuePairs_ShouldThrowArgumentNullException()
+	{
+		// Act & Assert
+		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((IEnumerable<KeyValuePair<int, string>>)null!, "default"));
+		StringAssert.StartsWith(ex.ParamName, "keyValuePairs");
+	}
+
+	[TestMethod]
+	public void ConstructorWithKeyValuePairsAndOnMissingKey_NullKeyValuePairs_ShouldThrowArgumentNullException()
+	{
+		// Arrange
+		Func<int, string> onMissingKey = key => $"Missing: {key}";
+
+		// Act & Assert
+		var ex = Assert.ThrowsExactly<ArgumentNullException>(() => new AutoDefaultDictionary<int, string>((IEnumerable<KeyValuePair<int, string>>)null!, onMissingKey));
+		StringAssert.StartsWith(ex.ParamName, "keyValuePairs");
 	}
 
 	[TestMethod]
