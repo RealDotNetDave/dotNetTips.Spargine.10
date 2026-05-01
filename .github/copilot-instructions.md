@@ -6,7 +6,7 @@ Before writing any code, read this section. After writing code, execute every st
 
 Before marking any task as complete, you MUST perform ALL of the following steps in order:
 
-1. Update file headers in **every** modified `.cs` file: set **Last Modified On** to the current date (format `MM-DD-YYYY`) and **Last Modified By** to `Copilot Agent`.
+1. Update file headers in **every** modified `.cs` file: set **Last Modified On** to the current date (format `MM-DD-YYYY`) and **Last Modified By** to `Copilot Agent`. **Always obtain the real current date by running `Get-Date -Format 'MM-dd-yyyy'` in the terminal. Never hard-code or fabricate a date.**
 2. Read the `./.editorconfig` file at the repo root and verify all code changes adhere to its rules and the existing coding style conventions.
 3. Run the build and verify it succeeds with no errors.
 4. Check the build output for warnings. Compare against pre-existing warnings and ensure your changes introduced zero new warnings. If new warnings are found, fix them before proceeding.
@@ -51,14 +51,16 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
   ```
 - **Trimming attributes** — when code uses reflection or calls methods that do:
   - Add `[RequiresUnreferencedCode("...")]` with a **descriptive, method-specific message** explaining *what* reflection the method performs (e.g., `"Enumerates assembly types via Assembly.GetTypes()."` or `"Uses XmlSerializer which requires unreferenced code for type metadata."`). **Never** use the generic default message `"This method uses reflection to discover types at runtime."`.
-  - Add `[UnconditionalSuppressMessage("Trimming", "IL20xx", Justification = "...")]` with a **meaningful justification** explaining why the suppression is safe. **Never** leave the justification as `"<Pending>"`.
+  - Add `[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "...")]` with a **meaningful justification** explaining why the suppression is safe. **Never** leave the justification as `"<Pending>"`. Replace `"IL2026"` with the actual diagnostic ID that applies (e.g., `"IL2026"`, `"IL2070"`, `"IL2067"`).
   - Add `[DynamicallyAccessedMembers(...)]` to generic type parameters when the method constrains which members are accessed via reflection.
   - Fill in the `checkId` parameter (e.g., `"IL2026"`, `"IL2070"`) on all `[UnconditionalSuppressMessage]` attributes.
 
 ---
 ## **1.1. Spargine `[Information]` Attribute Rules**
 - The `[Information]` attribute must be the last one if there are multiple attributes.
+- The **first parameter** of `[Information]` must always be the description string. Use `nameof()` to reference the method name whenever possible (e.g., `[Information(nameof(MyMethod), ...)]`). For class-level attributes where `nameof()` is not applicable, provide a meaningful description string.
 - When creating new methods, add an `[Information]` attribute with:
+  - Description as the first positional argument using `nameof()` (e.g., `nameof(MyMethod)`)
   - `UnitTestStatus = UnitTestStatus.None`
   - `OptimizationStatus = OptimizationStatus.Optimize`
   - `BenchmarkStatus = BenchmarkStatus.Benchmark`
@@ -67,11 +69,19 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - After optimizing a method, update its `[Information]` attribute: set `OptimizationStatus` to `OptimizationStatus.Completed` and set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance` so benchmarks are re-validated against the new implementation.
 - After creating a benchmark test for a method, update its `[Information]` attribute: set `BenchmarkStatus` to `BenchmarkStatus.CheckPerformance`.
 - Every class-level `[Information]` attribute must include `Status = Status.Available` (or the appropriate `Status` value).
-  - ALWAYS line up parameters for this attribute.
+  - ALWAYS align all named property assignments vertically (tab-indent each named property on its own line so the `=` signs line up), as shown in the example below.
 - If code in a method is modified and the `[Information]` attribute `BenchmarkStatus` is set to `BenchmarkStatus.Completed`, update it to `BenchmarkStatus.CheckPerformance` to indicate that benchmarks must be re-validated.
 - All of the status properties in '[Information]' must be **ordered** as follows: `UnitTestStatus`, `OptimizationStatus`, `BenchmarkStatus`, `Status`. For example:
   ```csharp
-  [Information(
+  [Information(nameof(MyMethod),
+	  UnitTestStatus = UnitTestStatus.Completed,
+	  OptimizationStatus = OptimizationStatus.Completed,
+	  BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+	  Status = Status.Available)]
+  public void MyMethod() { ... }
+
+  // For class-level attributes (nameof() not applicable), use a descriptive string:
+  [Information("MyClass description.",
 	  UnitTestStatus = UnitTestStatus.Completed,
 	  OptimizationStatus = OptimizationStatus.Completed,
 	  BenchmarkStatus = BenchmarkStatus.CheckPerformance,
@@ -111,7 +121,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Avoid unnecessary abstractions or over‑engineering.  
 - Follow .NET Framework Design Guidelines.  
 - Prefer returning **interfaces or base types** when appropriate.
-- **Always use proper attributes** for any method that includes attributes for performance. Remove unnecessary attributes.
+- **Always use proper attributes** for any method that includes attributes for performance. Remove unnecessary attributes that do not apply (e.g., do not add `[Pure]` to a method with side effects, do not add `[MethodImpl(AggressiveInlining)]` to async methods).
 - Mark **side‑effect‑free** methods with `[Pure]` (from `System.Diagnostics.Contracts`).  
 - Use **nullability attributes** on parameters and return types: `[DisallowNull]` for non‑nullable inputs, `[AllowNull]` for nullable inputs, `[NotNull]` / `[return: NotNull]` for guaranteed non‑null returns.  
 - **All members** (classes, methods, properties) must have full **XML documentation** (`<summary>`, `<param>`, `<returns>`, `<exception>`, and `<remarks>` where appropriate). Test methods are exempt.
@@ -130,7 +140,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
-- Review all methods in a test class for issues.
+- Review all methods in a test class for: missing test coverage, incorrect assertions, hard-coded values that should use `RandomData`, missing `[ExpectedException]` or `Assert.ThrowsException` for error paths, and any violations of the naming convention.
 
 #### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  
