@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-01-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -170,11 +170,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	{
 		comparer = comparer.ArgumentNotNull();
 
-		if (concurrencyLevel < 1)
-		{
-			concurrencyLevel = 1;
-		}
-
 		concurrencyLevel = concurrencyLevel.EnsureMinimum(1);
 		capacity = capacity.EnsureMinimum(0);
 
@@ -185,14 +180,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			capacity = concurrencyLevel;
 		}
 
-		var locks = new object[concurrencyLevel];
-		var locksLength = locks.LongLength;
-
-		for (var lockCount = 0; lockCount < locksLength; lockCount++)
-		{
-			locks[lockCount] = new object();
-		}
-
+		var locks = CreateLockObjects(concurrencyLevel);
 		var countPerLock = new int[locks.LongLength];
 		var buckets = new Node[capacity];
 
@@ -351,7 +339,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 
 		foreach (var item in items)
 		{
-			if (item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true))
+			if (this.TryAddNonNull(item))
 			{
 				addedCount++;
 			}
@@ -404,7 +392,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <returns><c>true</c> if <paramref name="item"/> is found in the <see cref="ConcurrentHashSet{T}"/>; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
 	[DefaultValue(false)]
-	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool Contains(T item)
 	{
 		if (item is null)
@@ -412,28 +400,15 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+		var hashCode = this._comparer.GetHashCode(item);
 
 		// We must capture the _buckets field in a local variable. It is set to a new table on each table resize.
 		var tables = this._tables;
-
 		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
 
 		// We can get away w/out a lock here.
 		// The Volatile.Read ensures that the load of the fields of 'n' doesn't move before the load from buckets[i].
-		var current = Volatile.Read(ref tables._buckets[bucketNo]);
-
-		while (current is not null)
-		{
-			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
-			{
-				return true;
-			}
-
-			current = current._next;
-		}
-
-		return false;
+		return this.TryFindInBucket(Volatile.Read(ref tables._buckets[bucketNo]), item, hashCode, out _);
 	}
 
 	/// <summary>
@@ -445,7 +420,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="arrayIndex"/> is less than 0.</exception>
 	/// <exception cref="ArgumentException">Thrown if the number of elements in the source <see cref="ConcurrentHashSet{T}"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public void CopyTo([DisallowNull] T[] array, int arrayIndex)
 	{
 		array = array.ArgumentItemsExists(nameof(array));
@@ -456,12 +431,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		{
 			this.AcquireAllLocks(ref locksAcquired);
 
-			var count = 0;
-
-			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
-			{
-				count += this._tables._countPerLock[lockCount];
-			}
+			var count = this.ComputeCountUnderLock();
 
 			// "count" itself or "count + arrayIndex" can overflow
 			if (array.Length - count < arrayIndex || count < 0)
@@ -516,7 +486,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </summary>
 	/// <returns>An array containing a snapshot of elements copied from the <see cref="ConcurrentHashSet{T}"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public T[] ToArray()
 	{
 		var locksAcquired = 0;
@@ -525,12 +495,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		{
 			this.AcquireAllLocks(ref locksAcquired);
 
-			var count = 0;
-
-			for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
-			{
-				count += this._tables._countPerLock[lockCount];
-			}
+			var count = this.ComputeCountUnderLock();
 
 			if (count == 0)
 			{
@@ -572,7 +537,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <returns><c>true</c> if an equal value was found in the set; otherwise, <c>false</c>.</returns>
 	[DefaultValue(false)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool TryPeek(T equalValue, [MaybeNullWhen(false)] out T actualValue)
 	{
 		if (equalValue is null)
@@ -581,24 +546,11 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		var hashCode = this._comparer?.GetHashCode(equalValue) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+		var hashCode = this._comparer.GetHashCode(equalValue);
 		var tables = this._tables;
 		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
-		var current = Volatile.Read(ref tables._buckets[bucketNo]);
 
-		while (current is not null)
-		{
-			if (hashCode == current._hashCode && this._comparer.Equals(current._item, equalValue))
-			{
-				actualValue = current._item;
-				return true;
-			}
-
-			current = current._next;
-		}
-
-		actualValue = default;
-		return false;
+		return this.TryFindInBucket(Volatile.Read(ref tables._buckets[bucketNo]), equalValue, hashCode, out actualValue);
 	}
 
 	/// <summary>
@@ -612,7 +564,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </remarks>
 	[DefaultValue(false)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool TryRemove(T item)
 	{
 		if (item is null)
@@ -620,7 +572,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+		var hashCode = this._comparer.GetHashCode(item);
 
 		while (true)
 		{
@@ -637,32 +589,8 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 					continue;
 				}
 
-				Node? previous = null;
-
-				for (var current = tables._buckets[bucketNo]; current is not null; current = current._next)
-				{
-					Debug.Assert((previous is null && current == tables._buckets[bucketNo]) || previous?._next == current);
-
-					if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
-					{
-						if (previous is null)
-						{
-							Volatile.Write(ref tables._buckets[bucketNo], current._next);
-						}
-						else
-						{
-							previous._next = current._next;
-						}
-
-						tables._countPerLock[lockNo]--;
-						return true;
-					}
-
-					previous = current;
-				}
+				return this.RemoveNodeFromBucket(tables, item, hashCode, bucketNo, lockNo);
 			}
-
-			return false;
 		}
 	}
 
@@ -755,7 +683,15 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	private bool AddInternal(T item, int hashCode, bool acquireLock)
 	{
 		item = item.ArgumentNotNull();
+		return acquireLock ? this.AddInternalLocked(item, hashCode) : this.AddInternalUnlocked(item, hashCode);
+	}
 
+	/// <summary>
+	/// Inserts <paramref name="item"/> under the appropriate lock, retrying when the table is concurrently resized.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool AddInternalLocked(T item, int hashCode)
+	{
 		while (true)
 		{
 			var tables = this._tables;
@@ -763,65 +699,29 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
 
 			var resizeDesired = false;
-			var lockTaken = false;
 
-			try
+			lock (tables._locks[lockNo])
 			{
-				if (acquireLock)
-				{
-					Monitor.Enter(tables._locks[lockNo], ref lockTaken);
-				}
-
-				// If the table just got resized, we may not be holding the right lock, and must retry.
-				// This should be a rare occurrence.
 				if (tables != this._tables)
 				{
 					continue;
 				}
 
-				// Try to find this item in the bucket
-				Node? previous = null;
-
-				for (var current = tables._buckets[bucketNo]; current is not null; current = current._next)
+				if (this.TryFindInBucket(tables._buckets[bucketNo], item, hashCode, out _))
 				{
-					Debug.Assert((previous is null && current == tables._buckets[bucketNo]) || previous?._next == current);
-					if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
-					{
-						return false;
-					}
-
-					previous = current;
+					return false;
 				}
 
-				// The item was not found in the bucket. Insert the new item.
 				Volatile.Write(ref tables._buckets[bucketNo], new Node(item, hashCode, tables._buckets[bucketNo]));
 				checked
 				{
 					tables._countPerLock[lockNo]++;
 				}
 
-				// If the number of elements guarded by this lock has exceeded the budget, resize the bucket table.
-				// It is also possible that GrowTable will increase the budget but won't resize the bucket table.
-				// That happens if the bucket table is found to be poorly utilized due to a bad hash function.
-				if (tables._countPerLock[lockNo] > this._budget)
-				{
-					resizeDesired = true;
-				}
-			}
-			finally
-			{
-				if (lockTaken)
-				{
-					Monitor.Exit(tables._locks[lockNo]);
-				}
+				resizeDesired = tables._countPerLock[lockNo] > this._budget;
 			}
 
-			// The fact that we got here means that we just performed an insertion. If necessary, we will grow the table.
-			//
-			// Concurrency notes:
-			// - Notice that we are not holding any locks at when calling GrowTable. This is necessary to prevent deadlocks.
-			// - As a result, it is possible that GrowTable will be called unnecessarily. But, GrowTable will obtain lock 0
-			//   and then verify that the table we passed to it as the argument is still the current table.
+			// Grow outside the lock to prevent deadlocks.
 			if (resizeDesired)
 			{
 				this.GrowTable(tables);
@@ -829,6 +729,30 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 
 			return true;
 		}
+	}
+
+	/// <summary>
+	/// Inserts <paramref name="item"/> without acquiring a lock (single-threaded initialization path only).
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool AddInternalUnlocked(T item, int hashCode)
+	{
+		var tables = this._tables;
+
+		GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
+
+		if (this.TryFindInBucket(tables._buckets[bucketNo], item, hashCode, out _))
+		{
+			return false;
+		}
+
+		Volatile.Write(ref tables._buckets[bucketNo], new Node(item, hashCode, tables._buckets[bucketNo]));
+		checked
+		{
+			tables._countPerLock[lockNo]++;
+		}
+
+		return true;
 	}
 
 	/// <summary>
@@ -865,7 +789,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void GrowTable(Tables tables)
 	{
-		const int MaxArrayLength = 0X7FEFFFFF;
 		var locksAcquired = 0;
 
 		try
@@ -882,113 +805,26 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 				return;
 			}
 
-			// Compute the (approx.) total size. Use an Int64 accumulation variable to avoid an overflow.
-			long approxCount = 0;
-
-			for (var tableCount = 0; tableCount < tables._countPerLock.LongLength; tableCount++)
-			{
-				approxCount += tables._countPerLock[tableCount];
-			}
-
 			// If the bucket array is too empty, double the budget instead of resizing the table
-			if (approxCount < tables._buckets.LongLength / 4)
+			if (this.ShouldIncreaseBudgetOnly(tables))
 			{
-				this._budget = 2 * this._budget;
-
-				if (this._budget < 0)
-				{
-					this._budget = int.MaxValue;
-				}
-
 				return;
 			}
 
-			// Compute the new table size. We find the smallest integer larger than twice the previous table size, and not divisible by
-			// 2,3,5 or 7. We can consider a different table-sizing policy in the future.
-			var newLength = 0;
-			var maximizeTableSize = false;
-			try
-			{
-				checked
-				{
-					// Double the size of the buckets table and add one, so that we have an odd integer.
-					newLength = (tables._buckets.Length * 2) + 1;
-
-					// Now, we only need to check odd integers, and find the first that is not divisible
-					// by 3, 5 or 7.
-					while (newLength % 3 == 0 || newLength % 5 == 0 || newLength % 7 == 0)
-					{
-						newLength += 2;
-					}
-
-					Debug.Assert(newLength % 2 != 0);
-
-					if (newLength > MaxArrayLength)
-					{
-						maximizeTableSize = true;
-					}
-				}
-			}
-			catch (OverflowException)
-			{
-				maximizeTableSize = true;
-			}
-
-			if (maximizeTableSize)
-			{
-				newLength = MaxArrayLength;
-
-				// We want to make sure that GrowTable will not be called again, since table is at the maximum size.
-				// To achieve that, we set the budget to int.MaxValue.
-				//
-				// (There is one special case that would allow GrowTable() to be called in the future:
-				// calling Clear() on the ConcurrentHashSet will shrink the table and lower the budget.)
-				this._budget = int.MaxValue;
-			}
+			// Compute the new table size and acquire remaining locks
+			var (newLength, maximizeTableSize) = ComputeNewLength(tables);
 
 			// Now acquire all other locks for the table
 			this.AcquireLocks(1, tables._locks.Length, ref locksAcquired);
 
-			var newLocks = tables._locks;
-
-			// Add more locks
-			if (this._growLockArray && tables._locks.LongLength < MaxLockNumber)
-			{
-				newLocks = new object[tables._locks.LongLength * 2];
-				Array.Copy(tables._locks, 0, newLocks, 0, tables._locks.Length);
-
-				for (var tableCount = tables._locks.LongLength; tableCount < newLocks.Length; tableCount++)
-				{
-					newLocks[tableCount] = new object();
-				}
-			}
-
+			var newLocks = this.CreateExpandedLocks(tables);
 			var newBuckets = new Node[newLength];
 			var newCountPerLock = new int[newLocks.Length];
 
-			// Copy all data into a new table, creating new nodes for all elements
-			for (var bucketCount = 0; bucketCount < tables._buckets.LongLength; bucketCount++)
-			{
-				var current = tables._buckets[bucketCount];
+			RehashBuckets(tables, newBuckets, newCountPerLock, newLocks);
 
-				while (current is not null)
-				{
-					var next = current._next;
-					GetBucketAndLockNo(current._hashCode, out var newBucketNo, out var newLockNo, newBuckets.Length, newLocks.Length);
-
-					newBuckets[newBucketNo] = new Node(current._item, current._hashCode, newBuckets[newBucketNo]);
-
-					checked
-					{
-						newCountPerLock[newLockNo]++;
-					}
-
-					current = next;
-				}
-			}
-
-			// Adjust the budget
-			this._budget = Math.Max(1, newBuckets.Length / newLocks.Length);
+			// Adjust the budget; if the table was maximized, prevent future resize calls
+			this._budget = ComputeBudget(maximizeTableSize, newBuckets.Length, newLocks.Length);
 
 			// Replace tables with the new versions
 			this._tables = new Tables(newBuckets, newLocks, newCountPerLock);
@@ -1031,6 +867,307 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
+	/// Computes the approximate total element count using per-lock counts. Caller must hold all locks.
+	/// </summary>
+	/// <returns>The computed element count. May be negative if overflow occurred.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeCountUnderLock), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private int ComputeCountUnderLock()
+	{
+		var count = 0;
+
+		for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
+		{
+			count += this._tables._countPerLock[lockCount];
+		}
+
+		return count;
+	}
+
+	/// <summary>
+	/// Computes the approximate total size of the table and doubles the budget if the table is underutilized.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot.</param>
+	/// <returns><c>true</c> if the budget was increased instead of resizing; <c>false</c> if a resize is needed.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ShouldIncreaseBudgetOnly), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool ShouldIncreaseBudgetOnly(Tables tables)
+	{
+		if (ComputeApproxCount(tables) < tables._buckets.LongLength / 4)
+		{
+			// Double budget using long arithmetic to avoid overflow; cap at int.MaxValue
+			this._budget = (int)Math.Min((long)this._budget * 2, int.MaxValue);
+			return true;
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Computes the new bucket-array length for a grow operation.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot.</param>
+	/// <returns>A tuple of (newLength, maximizeTableSize).</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeNewLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static (int newLength, bool maximizeTableSize) ComputeNewLength(Tables tables)
+	{
+		const int MaxArrayLength = 0X7FEFFFFF;
+
+		if (!TryComputeDoublePlusOne(tables._buckets.Length, MaxArrayLength, out var newLength))
+		{
+			return (MaxArrayLength, true);
+		}
+
+		return (newLength, false);
+	}
+
+	/// <summary>
+	/// Attempts to compute (currentLength * 2 + 1) rounded up to the next length not divisible by 3, 5, or 7.
+	/// Returns <c>false</c> if the result would exceed <paramref name="maxLength"/> or overflow.
+	/// </summary>
+	/// <param name="currentLength">The current bucket-array length.</param>
+	/// <param name="maxLength">The maximum allowed length.</param>
+	/// <param name="newLength">The computed new length on success; <paramref name="maxLength"/> on overflow.</param>
+	/// <returns><c>true</c> if a valid new length was computed; <c>false</c> if the table should be maximized.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(TryComputeDoublePlusOne), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static bool TryComputeDoublePlusOne(int currentLength, int maxLength, out int newLength)
+	{
+		try
+		{
+			checked
+			{
+				newLength = FindNextValidLength((currentLength * 2) + 1);
+				return newLength <= maxLength;
+			}
+		}
+		catch (OverflowException)
+		{
+			newLength = maxLength;
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Starting from <paramref name="candidate"/>, finds the first odd integer not divisible by 3, 5, or 7.
+	/// </summary>
+	/// <param name="candidate">The starting odd integer.</param>
+	/// <returns>The first valid candidate &gt;= <paramref name="candidate"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(FindNextValidLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int FindNextValidLength(int candidate)
+	{
+		while (candidate % 3 == 0 || candidate % 5 == 0 || candidate % 7 == 0)
+		{
+			candidate += 2;
+		}
+
+		Debug.Assert(candidate % 2 != 0);
+		return candidate;
+	}
+
+	/// <summary>
+	/// Creates an expanded lock array for the grow operation, doubling locks when permitted.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot.</param>
+	/// <returns>The new lock array (may be the same reference if no expansion occurred).</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateExpandedLocks), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private object[] CreateExpandedLocks(Tables tables)
+	{
+		if (!this._growLockArray || tables._locks.LongLength >= MaxLockNumber)
+		{
+			return tables._locks;
+		}
+
+		var newLocks = new object[tables._locks.LongLength * 2];
+		Array.Copy(tables._locks, 0, newLocks, 0, tables._locks.Length);
+		AddNewLocks(newLocks, tables._locks.LongLength);
+
+		return newLocks;
+	}
+
+	/// <summary>
+	/// Initializes newly added slots in a lock array (from <paramref name="startIndex"/> to end) with fresh lock objects.
+	/// </summary>
+	/// <param name="locks">The lock array to populate.</param>
+	/// <param name="startIndex">The first index that needs initialization.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddNewLocks), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AddNewLocks(object[] locks, long startIndex)
+	{
+		for (var i = startIndex; i < locks.Length; i++)
+		{
+			locks[i] = new object();
+		}
+	}
+
+	/// <summary>
+	/// Computes the new resize budget. Returns <see cref="int.MaxValue"/> when the table has been maximized
+	/// to prevent further resize calls; otherwise returns <c>max(1, bucketCount / lockCount)</c>.
+	/// </summary>
+	/// <param name="maximizeTableSize"><c>true</c> if the table was grown to its maximum size.</param>
+	/// <param name="bucketCount">The number of buckets in the new table.</param>
+	/// <param name="lockCount">The number of locks in the new table.</param>
+	/// <returns>The new budget value.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeBudget), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int ComputeBudget(bool maximizeTableSize, int bucketCount, int lockCount) =>
+		maximizeTableSize ? int.MaxValue : Math.Max(1, bucketCount / lockCount);
+
+	/// <summary>
+	/// Computes the approximate total element count by summing the per-lock counters.
+	/// </summary>
+	/// <param name="tables">The tables snapshot to count.</param>
+	/// <returns>The approximate total element count.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeApproxCount), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static long ComputeApproxCount(Tables tables)
+	{
+		long approxCount = 0;
+
+		for (var tableCount = 0; tableCount < tables._countPerLock.LongLength; tableCount++)
+		{
+			approxCount += tables._countPerLock[tableCount];
+		}
+
+		return approxCount;
+	}
+
+	/// <summary>
+	/// Rehashes all elements from the current tables into the new buckets and count arrays.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot to rehash from.</param>
+	/// <param name="newBuckets">The new bucket array.</param>
+	/// <param name="newCountPerLock">The new per-lock count array.</param>
+	/// <param name="newLocks">The new lock array used to determine lock assignment.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RehashBuckets), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void RehashBuckets(Tables tables, Node[] newBuckets, int[] newCountPerLock, object[] newLocks)
+	{
+		for (var bucketCount = 0; bucketCount < tables._buckets.LongLength; bucketCount++)
+		{
+			var current = tables._buckets[bucketCount];
+
+			while (current is not null)
+			{
+				var next = current._next;
+				GetBucketAndLockNo(current._hashCode, out var newBucketNo, out var newLockNo, newBuckets.Length, newLocks.Length);
+
+				newBuckets[newBucketNo] = new Node(current._item, current._hashCode, newBuckets[newBucketNo]);
+
+				checked
+				{
+					newCountPerLock[newLockNo]++;
+				}
+
+				current = next;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Creates an initialized lock-objects array of the specified length.
+	/// </summary>
+	/// <param name="count">The number of locks to create.</param>
+	/// <returns>An array of <paramref name="count"/> freshly created lock objects.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(CreateLockObjects), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static object[] CreateLockObjects(int count)
+	{
+		var locks = new object[count];
+
+		for (var lockCount = 0; lockCount < count; lockCount++)
+		{
+			locks[lockCount] = new object();
+		}
+
+		return locks;
+	}
+
+	/// <summary>
+	/// Searches a bucket linked-list for an item matching the given hash code and equality.
+	/// </summary>
+	/// <param name="start">The first node in the bucket chain, or <c>null</c> if the bucket is empty.</param>
+	/// <param name="item">The item to search for.</param>
+	/// <param name="hashCode">The pre-computed hash code of <paramref name="item"/>.</param>
+	/// <param name="foundItem">When this method returns <c>true</c>, contains the matching item stored in the set.</param>
+	/// <returns><c>true</c> if a matching node was found; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(TryFindInBucket), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool TryFindInBucket(Node? start, T item, int hashCode, [MaybeNullWhen(false)] out T foundItem)
+	{
+		var current = start;
+
+		while (current is not null)
+		{
+			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+			{
+				foundItem = current._item;
+				return true;
+			}
+
+			current = current._next;
+		}
+
+		foundItem = default;
+		return false;
+	}
+
+	/// <summary>
+	/// Adds <paramref name="item"/> to the set only when it is non-null. Used by <see cref="AddRange"/>.
+	/// </summary>
+	/// <param name="item">The candidate item.</param>
+	/// <returns><c>true</c> if the item was added; <c>false</c> if it was null or already present.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryAddNonNull), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool TryAddNonNull(T item) =>
+		item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true);
+
+	/// <summary>
+	/// Searches the linked list at the given bucket position and removes the node that matches <paramref name="item"/>.
+	/// Uses a ref-slot pointer to eliminate the need for a separate "previous node" variable and the
+	/// branch that distinguishes head removal from mid-chain removal.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot (caller must hold <c>tables._locks[lockNo]</c>).</param>
+	/// <param name="item">The item to remove.</param>
+	/// <param name="hashCode">The pre-computed hash code of <paramref name="item"/>.</param>
+	/// <param name="bucketNo">The index of the target bucket.</param>
+	/// <param name="lockNo">The index of the lock guarding the bucket.</param>
+	/// <returns><c>true</c> if the node was found and removed; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RemoveNodeFromBucket), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool RemoveNodeFromBucket(Tables tables, T item, int hashCode, int bucketNo, int lockNo)
+	{
+		ref var slot = ref tables._buckets[bucketNo];
+		var current = slot;
+
+		while (current is not null)
+		{
+			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+			{
+				Volatile.Write(ref slot, current._next);
+				tables._countPerLock[lockNo]--;
+				return true;
+			}
+
+			slot = ref current._next;
+			current = current._next;
+		}
+
+		return false;
+	}
+
+	/// <summary>
 	/// Represents a node in the concurrent hash set.
 	/// </summary>
 	private sealed class Node
@@ -1049,7 +1186,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		/// <summary>
 		/// The next...
 		/// </summary>
-		internal volatile Node _next;
+		internal volatile Node? _next;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Node"/> class.
@@ -1059,7 +1196,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		/// <param name="next">The next node in the chain. Can be null if the node is the last in the chain.</param>
 		[DebuggerStepThrough]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal Node(T item, int hashCode, Node next)
+		internal Node(T item, int hashCode, Node? next)
 		{
 			this._item = item;
 			this._hashCode = hashCode;

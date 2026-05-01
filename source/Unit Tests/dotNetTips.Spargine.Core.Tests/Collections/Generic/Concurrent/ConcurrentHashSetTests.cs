@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-06-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -313,6 +313,20 @@ public class ConcurrentHashSetTests
 
 		hashSet.Add("test");
 		Assert.IsTrue(hashSet.Contains("TEST"), "The hash set should use the provided comparer for case-insensitive comparison.");
+	}
+
+	[TestMethod]
+	public void Constructor_WithConcurrencyLevelGreaterThanCapacity_ClampsCapacityToConcurrencyLevel()
+	{
+		// Arrange & Act – capacity (2) < concurrencyLevel (4), so the private ctor clamps capacity up.
+		var hashSet = new ConcurrentHashSet<int>(concurrencyLevel: 4, capacity: 2);
+
+		// Assert – set is empty but fully functional
+		Assert.AreEqual(0, hashSet.Count, "Set should be empty after construction.");
+		Assert.IsTrue(hashSet.IsEmpty, "IsEmpty should be true.");
+
+		hashSet.Add(1);
+		Assert.IsTrue(hashSet.Contains(1), "Should contain added item after clamped-capacity construction.");
 	}
 
 	[TestMethod]
