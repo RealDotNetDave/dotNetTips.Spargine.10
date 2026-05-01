@@ -62,7 +62,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// comparing values in the set, or null to use the default <see cref="EqualityComparer{T}"/>
 	/// implementation for the set type.</param>
 	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public ObservableList(IEqualityComparer<T> comparer) => this._set = new HashSet<T>(comparer);
+	public ObservableList(IEqualityComparer<T> comparer)
+	{
+		this._set = new HashSet<T>(comparer);
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ObservableList{T}"/> class
@@ -163,7 +166,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// </summary>
 	/// <param name="item">The object to add to the collection.</param>
 	[Information(UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	void ICollection<T>.Add(T item) => this.Add(item);
+	void ICollection<T>.Add(T item)
+	{
+		_ = this.Add(item);
+	}
 
 	/// <summary>
 	/// Returns an enumerator that iterates through the collection.
@@ -172,7 +178,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <remarks>
 	/// This method is a type-safe wrapper for the <see cref="IEnumerable.GetEnumerator"/> method.
 	/// </remarks>
-	IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return this.GetEnumerator();
+	}
 
 	/// <summary>
 	/// Returns an enumerator that iterates through the collection.
@@ -181,7 +190,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <remarks>
 	/// This method is a type-safe wrapper for the <see cref="IEnumerable{T}.GetEnumerator"/> method.
 	/// </remarks>
-	IEnumerator<T> IEnumerable<T>.GetEnumerator() => this.GetEnumerator();
+	IEnumerator<T> IEnumerable<T>.GetEnumerator()
+	{
+		return this.GetEnumerator();
+	}
 
 	/// <summary>
 	/// Adds the specified element to the <see cref="ObservableList{T}"/> if the element already does not exist.
@@ -868,8 +880,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="items">The candidate items to filter.</param>
 	/// <returns>A <see cref="List{T}"/> of items eligible to be added.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private List<T> CollectItemsToAdd(IEnumerable<T> items) =>
-		items.Where(item => item is not null && !this._set.Contains(item)).ToList();
+	private List<T> CollectItemsToAdd(IEnumerable<T> items)
+	{
+		return items.Where(item => item is not null && !this._set.Contains(item)).ToList();
+	}
 
 	/// <summary>
 	/// Collects items from <paramref name="items"/> that are not <see langword="null"/> and are currently present in the set.
@@ -877,8 +891,10 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	/// <param name="items">The candidate items to filter.</param>
 	/// <returns>A <see cref="List{T}"/> of items eligible to be removed.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private List<T> CollectItemsToRemove(IEnumerable<T> items) =>
-		items.Where(item => item is not null && this._set.Contains(item)).ToList();
+	private List<T> CollectItemsToRemove(IEnumerable<T> items)
+	{
+		return items.Where(item => item is not null && this._set.Contains(item)).ToList();
+	}
 
 	/// <summary>
 	/// Called when the "Count" property value has changed.
