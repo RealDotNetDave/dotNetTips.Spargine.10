@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-03-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionary.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -198,19 +198,6 @@ public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValu
 		this._onMissingKey = onMissingKey ?? throw new ArgumentNullException(nameof(onMissingKey));
 		this._defaultValue = default!;
 	}
-
-	/// <summary>
-	/// Converts an <see cref="IEnumerable{T}"/> of <see cref="KeyValuePair{TKey, TValue}"/> into a <see cref="Dictionary{TKey, TValue}"/>,
-	/// validating that the source is not null.
-	/// </summary>
-	/// <param name="keyValuePairs">The key-value pairs to convert. Must not be null.</param>
-	/// <returns>A <see cref="Dictionary{TKey, TValue}"/> containing all supplied key-value pairs.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> is null.</exception>
-	[Pure]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	private static Dictionary<TKey, TValue> AsDictionary(IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs) =>
-		keyValuePairs.ArgumentNotNull().ToDictionary(static kvp => kvp.Key, static kvp => kvp.Value);
 
 	/// <summary>
 	/// Gets the default value returned when a key is not found in the dictionary.
@@ -458,5 +445,20 @@ public sealed class AutoDefaultDictionary<TKey, TValue> : Dictionary<TKey, TValu
 		}
 
 		return false;
+	}
+
+	/// <summary>
+	/// Converts an <see cref="IEnumerable{T}"/> of <see cref="KeyValuePair{TKey, TValue}"/> into a <see cref="Dictionary{TKey, TValue}"/>,
+	/// validating that the source is not null.
+	/// </summary>
+	/// <param name="keyValuePairs">The key-value pairs to convert. Must not be null.</param>
+	/// <returns>A <see cref="Dictionary{TKey, TValue}"/> containing all supplied key-value pairs.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="keyValuePairs"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	private static Dictionary<TKey, TValue> AsDictionary(IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs)
+	{
+		return keyValuePairs.ArgumentNotNull().ToDictionary(static kvp => kvp.Key, static kvp => kvp.Value);
 	}
 }
