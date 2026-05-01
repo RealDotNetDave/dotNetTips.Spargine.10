@@ -3,15 +3,16 @@
 // Author           : David McCarter
 // Created          : 11-06-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-31-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-01-2026
 // ***********************************************************************
 // <copyright file="CollectionRandomizer.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
 // Designed to shuffle a collection either once or endlessly. Enables
-// users to retrieve items using the GetNext() method.
+// users to retrieve items using the GetNext() method. Private helpers:
+// EnsureNextAvailable, IsExhaustedNonRepeating, Init.
 // </summary>
 // ***********************************************************************
 
@@ -192,8 +193,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 		{
 			lock (this._threadLock)
 			{
-				// Check if we should stop (exhausted and not repeating)
-				if (this._initialized && this._currentIndex >= this._collection.Length - 1 && !repeat)
+				if (this.IsExhaustedNonRepeating())
 				{
 					yield break;
 				}
@@ -218,11 +218,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	{
 		lock (this._threadLock)
 		{
-			if (!this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat))
-			{
-				this.Init();
-			}
-			else if (this._currentIndex >= this._collection.Length - 1)
+			if (!this.EnsureNextAvailable())
 			{
 				ExceptionThrower.ThrowInvalidOperationException(Resources.NoMoreItemsToRetrieveAndTheCollectionIsNot);
 			}
@@ -248,11 +244,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	{
 		lock (this._threadLock)
 		{
-			if (!this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat))
-			{
-				this.Init();
-			}
-			else if (this._currentIndex >= this._collection.Length - 1)
+			if (!this.EnsureNextAvailable())
 			{
 				ExceptionThrower.ThrowInvalidOperationException(Resources.NoMoreItemsToRetrieveAndTheCollectionIsNot);
 			}
@@ -289,11 +281,7 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	{
 		lock (this._threadLock)
 		{
-			if (!this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat))
-			{
-				this.Init();
-			}
-			else if (this._currentIndex >= this._collection.Length - 1)
+			if (!this.EnsureNextAvailable())
 			{
 				return false;
 			}
@@ -324,22 +312,35 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 	}
 
 	/// <summary>
+	/// Ensures that the next item is available for retrieval, initializing or reshuffling the collection as needed.
+	/// Must be called from within <see cref="_threadLock"/>.
+	/// </summary>
+	/// <returns>
+	/// <c>true</c> if the next item is available; <c>false</c> if the collection is exhausted and not set to repeat.
+	/// </returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool EnsureNextAvailable()
+	{
+		if (this.NeedsReshuffleOrInit())
+		{
+			this.Init();
+			return true;
+		}
+
+		return this._currentIndex < this._collection.Length - 1;
+	}
+
+	/// <summary>
 	/// Initializes this instance of <see cref="CollectionRandomizer{T}"/>.
 	/// </summary>
 	/// <remarks>
 	/// This method prepares the collection for item retrieval by shuffling it. If the <see cref="CollectionRandomizer{T}"/> is set to repeat,
 	/// the collection will be reshuffled each time it is exhausted. This method is called automatically before the first item retrieval.
+	/// Must be called from within <see cref="_threadLock"/>.
 	/// </remarks>
 	/// <exception cref="InvalidValueException{ImmutableArray}">Thrown if the underlying collection is null or empty.</exception>
 	private void Init()
 	{
-		//Ignore if initialized unless repeat is true.
-		if (!((!this._initialized || !this.HasRemainingItems) &&
-			(!this._initialized || !this.HasRemainingItems || repeat)))
-		{
-			return;
-		}
-
 		//Validate Collection
 		if (this._collection.Length is 0)
 		{
@@ -354,4 +355,30 @@ public sealed class CollectionRandomizer<T>([DisallowNull] in IEnumerable<T> col
 		this.HasRemainingItems = this._collection.Length > 0;
 		this._initialized = true;
 	}
+
+	/// <summary>
+	/// Determines whether the collection is exhausted and not configured to repeat.
+	/// Must be called from within <see cref="_threadLock"/>.
+	/// </summary>
+	/// <returns>
+	/// <c>true</c> if the collection is initialized, the last item has been retrieved, and <c>repeat</c> is <c>false</c>;
+	/// otherwise, <c>false</c>.
+	/// </returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool IsExhaustedNonRepeating()
+		=> this._initialized && this._currentIndex >= this._collection.Length - 1 && !repeat;
+
+	/// <summary>
+	/// Determines whether the collection needs to be shuffled or initialized before the next item can be retrieved.
+	/// Must be called from within <see cref="_threadLock"/>.
+	/// </summary>
+	/// <returns>
+	/// <c>true</c> if the collection has not been initialized, or if the collection is exhausted and <c>repeat</c> is <c>true</c>;
+	/// otherwise, <c>false</c>.
+	/// </returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool NeedsReshuffleOrInit()
+		=> !this._initialized || (this._currentIndex >= this._collection.Length - 1 && repeat);
 }
