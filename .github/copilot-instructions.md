@@ -114,7 +114,7 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
 - **Always use proper attributes** for any method that includes attributes for performance. Remove unnecessary attributes.
 - Mark **side‑effect‑free** methods with `[Pure]` (from `System.Diagnostics.Contracts`).  
 - Use **nullability attributes** on parameters and return types: `[DisallowNull]` for non‑nullable inputs, `[AllowNull]` for nullable inputs, `[NotNull]` / `[return: NotNull]` for guaranteed non‑null returns.  
-- **All public source members** (classes, methods, properties) must have full **XML documentation** (`<summary>`, `<param>`, `<returns>`, `<exception>`, and `<remarks>` where appropriate). Test methods are exempt.
+- **All members** (classes, methods, properties) must have full **XML documentation** (`<summary>`, `<param>`, `<returns>`, `<exception>`, and `<remarks>` where appropriate). Test methods are exempt.
 
 ---
 
