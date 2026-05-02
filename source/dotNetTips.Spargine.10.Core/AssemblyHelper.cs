@@ -4,7 +4,7 @@
 // Created          : 04-09-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="AssemblyHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -129,9 +129,9 @@ public static class AssemblyHelper
 			var assemblyFiles = directory.GetFiles("*.dll")
 				.Concat(directory.GetFiles("*.exe"))
 				.Where(IsDotNetAssembly) // Ensure the file is a valid .NET assembly
-				.ToList(); // Materialize the result to avoid deferred execution issues
+				.ToArray(); // Materialize the result to avoid deferred execution issues
 
-			return assemblyFiles.AsReadOnly();
+			return Array.AsReadOnly(assemblyFiles);
 		}
 		catch (Exception ex) //Write out all exceptions
 		{
@@ -161,9 +161,9 @@ public static class AssemblyHelper
 
 		var matchingTypes = assemblyTypes
 			  .Where(type => types.Any(targetType => targetType.IsAssignableFrom(type) && type != targetType))
-			  .ToList();
+			  .ToArray();
 
-		return matchingTypes.AsReadOnly();
+		return Array.AsReadOnly(matchingTypes);
 	}
 
 	/// <summary>
@@ -191,9 +191,9 @@ public static class AssemblyHelper
 		try
 		{
 			var assembly = Assembly.LoadFrom(assemblyFile.FullName);
-			var attributes = assembly.GetCustomAttributes().ToList();
+			var attributes = assembly.GetCustomAttributes().ToArray();
 
-			return attributes.AsReadOnly();
+			return Array.AsReadOnly(attributes);
 		}
 		catch (Exception ex) //Write out all exceptions
 		{
@@ -297,9 +297,9 @@ public static class AssemblyHelper
 		try
 		{
 			var assembly = Assembly.LoadFrom(assemblyFile.FullName);
-			var publicTypes = assembly.GetTypes().Where(type => type.IsPublic).ToList();
+			var publicTypes = assembly.GetTypes().Where(type => type.IsPublic).ToArray();
 
-			return publicTypes.AsReadOnly();
+			return Array.AsReadOnly(publicTypes);
 		}
 		catch (ReflectionTypeLoadException ex)
 		{
@@ -308,9 +308,9 @@ public static class AssemblyHelper
 			var publicTypes = ex.Types
 				.Where(type => type != null && type.IsPublic)
 				.Select(type => type!)
-				.ToList();
+				.ToArray();
 
-			return publicTypes.AsReadOnly();
+			return Array.AsReadOnly(publicTypes);
 		}
 		catch (Exception ex)
 		{
@@ -383,9 +383,8 @@ public static class AssemblyHelper
 		try
 		{
 			var assembly = Assembly.LoadFrom(assemblyFile.FullName);
-			var dependentAssemblies = assembly.GetReferencedAssemblies().ToList();
 
-			return dependentAssemblies.AsReadOnly();
+			return Array.AsReadOnly(assembly.GetReferencedAssemblies());
 		}
 		catch (Exception ex) //Write out all exceptions
 		{
@@ -430,9 +429,7 @@ public static class AssemblyHelper
 				return new ReadOnlyCollection<MethodInfo>(Array.Empty<MethodInfo>());
 			}
 
-			var methods = type.GetMethods().ToList();
-
-			return methods.AsReadOnly();
+			return Array.AsReadOnly(type.GetMethods());
 		}
 		catch (Exception ex) //Write out all exceptions
 		{
@@ -477,8 +474,7 @@ public static class AssemblyHelper
 				var versionDirs = packDir.GetDirectories()
 					.Select(dir => dir.Name)
 					.Where(name => !string.IsNullOrWhiteSpace(name))
-					.OrderByDescending(VersionParseSafe)
-					.ToList();
+					.OrderByDescending(VersionParseSafe);
 
 				var versionToUse = string.IsNullOrWhiteSpace(version) ? versionDirs.FirstOrDefault() : version;
 
@@ -499,9 +495,9 @@ public static class AssemblyHelper
 
 				return [];
 			})
-			.ToList();
+			.ToArray();
 
-		return dllFiles.AsReadOnly();
+		return Array.AsReadOnly(dllFiles);
 	}
 
 	/// <summary>

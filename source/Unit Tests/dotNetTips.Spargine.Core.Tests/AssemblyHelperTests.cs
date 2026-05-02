@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="AssemblyHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,7 +35,7 @@ namespace DotNetTips.Spargine.Core.Tests;
 public class AssemblyHelperTests : UnitTester, IDisposable
 {
 
-	private const string SDKVersion = "10.0.5";
+	private static readonly string SDKVersion = ResolveInstalledSdkVersion();
 	private string _testOutputDirectory;
 	private TestUnitTester _unitTester;
 
@@ -1383,6 +1383,48 @@ stopwatch.ElapsedMilliseconds, $"Method took too long to complete: {stopwatch.El
 		file = new FileInfo(tempFile);
 
 		return new TempFileDeleter(tempFile);
+	}
+
+	/// <summary>
+	/// Resolves the highest installed .NET 10 ref pack version available on this machine.
+	/// Falls back to "10.0.5" if discovery fails so tests degrade gracefully.
+	/// </summary>
+	private static string ResolveInstalledSdkVersion()
+	{
+		try
+		{
+			var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT");
+
+			if (string.IsNullOrEmpty(dotnetRoot))
+			{
+				dotnetRoot = Environment.OSVersion.Platform == PlatformID.Win32NT
+					? @"C:\Program Files\dotnet"
+					: "/usr/local/share/dotnet";
+			}
+
+			var refPackDir = new DirectoryInfo(Path.Combine(dotnetRoot, "packs", "Microsoft.NETCore.App.Ref"));
+
+			if (!refPackDir.Exists)
+			{
+				return "10.0.5";
+			}
+
+			var version = refPackDir.GetDirectories()
+				.Select(d => d.Name)
+				.Where(name => name.StartsWith("10.", StringComparison.Ordinal))
+				.OrderByDescending(name =>
+				{
+					_ = Version.TryParse(name, out var v);
+					return v;
+				})
+				.FirstOrDefault();
+
+			return version ?? "10.0.5";
+		}
+		catch
+		{
+			return "10.0.5";
+		}
 	}
 
 	private sealed class TempFileDeleter : IDisposable
