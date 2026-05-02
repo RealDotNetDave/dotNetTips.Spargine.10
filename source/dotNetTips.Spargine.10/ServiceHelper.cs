@@ -56,7 +56,19 @@ public static class ServiceHelper
 	[Information(nameof(AllServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static ReadOnlyCollection<string> AllServices()
 	{
-		return ServiceController.GetServices().Select(p => p.ServiceName).ToReadOnlyCollection();
+		var services = ServiceController.GetServices();
+
+		try
+		{
+			return services.Select(p => p.ServiceName).ToReadOnlyCollection();
+		}
+		finally
+		{
+			foreach (var s in services)
+			{
+				s.Dispose();
+			}
+		}
 	}
 
 	/// <summary>
@@ -133,7 +145,7 @@ public static class ServiceHelper
 	[Information(nameof(ServiceExists), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static bool ServiceExists([DisallowNull] string serviceName)
 	{
-		var service = LoadService(serviceName.ArgumentNotNullOrEmpty());
+		using var service = LoadService(serviceName.ArgumentNotNullOrEmpty());
 
 		return service is not null;
 	}
@@ -156,7 +168,7 @@ public static class ServiceHelper
 	[Information(nameof(ServiceStatus), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static ServiceControllerStatus ServiceStatus([DisallowNull] string serviceName)
 	{
-		var service = LoadService(serviceName.ArgumentNotNullOrEmpty());
+		using var service = LoadService(serviceName.ArgumentNotNullOrEmpty());
 
 		return service is not null ? service.Status : throw new InvalidOperationException(Resources.ServiceNotFound);
 	}
@@ -196,7 +208,11 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016",
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+		Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static ServiceActionResult StartService([DisallowNull] string serviceName, bool startServicesDependedOn = false, bool startDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
@@ -205,7 +221,8 @@ public static class ServiceHelper
 
 		// Call LoadService once; null means the service does not exist, avoiding a
 		// second ServiceController.GetServices() allocation from ServiceExists().
-		var service = LoadService(serviceName);
+		// using ensures the ServiceController handle is released when done.
+		using var service = LoadService(serviceName);
 
 		if (service is null)
 		{
@@ -382,7 +399,11 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016",
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+		Status = Status.Available)]
 	public static ServiceActionResult StopService([DisallowNull] string serviceName, bool stopServicesDependedOn = false, bool stopDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
@@ -391,7 +412,8 @@ public static class ServiceHelper
 
 		// Call LoadService once; null means the service does not exist, avoiding a
 		// second ServiceController.GetServices() allocation from ServiceExists().
-		var service = LoadService(serviceName);
+		// using ensures the ServiceController handle is released when done.
+		using var service = LoadService(serviceName);
 
 		if (service is null)
 		{
@@ -479,10 +501,29 @@ public static class ServiceHelper
 	/// }
 	/// </code>
 	/// </example>
-	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016",
+		UnitTestStatus = UnitTestStatus.NotRequired,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+		Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	private static ServiceController? LoadService([DisallowNull] string serviceName)
 	{
-		return Array.Find(ServiceController.GetServices(), p => string.Equals(p.ServiceName, serviceName, StringComparison.Ordinal));
+		var services = ServiceController.GetServices();
+		ServiceController? match = null;
+
+		foreach (var s in services)
+		{
+			if (match is null && string.Equals(s.ServiceName, serviceName, StringComparison.Ordinal))
+			{
+				match = s;
+			}
+			else
+			{
+				s.Dispose();
+			}
+		}
+
+		return match;
 	}
 
 	/// <summary>

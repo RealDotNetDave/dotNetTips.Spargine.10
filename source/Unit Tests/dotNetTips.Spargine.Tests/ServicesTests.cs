@@ -29,6 +29,22 @@ public class ServicesTests
 	private const string NonExistingServiceName = "FakeService123";
 	private const string RunningProcessName = "explorer"; // Common Windows process
 
+	// ── Dispose regression (suggestion 7 fix) ────────────────────────
+	// These tests exercise the public APIs in a tight loop to verify that
+	// ServiceController handles are properly disposed after each call.
+	// If disposal were missing the OS handle table would exhaust, causing
+	// an exception before the loop completes.
+
+	[TestMethod]
+	public void AllServices_RepeatedCalls_DoNotLeakHandles()
+	{
+		for (var iteration = 0; iteration < 10; iteration++)
+		{
+			var services = ServiceHelper.AllServices();
+			Assert.IsTrue(services.Count > 0);
+		}
+	}
+
 	[TestMethod]
 	public void AllServicesReturnsNonEmptyCollection()
 	{
@@ -89,6 +105,24 @@ public class ServicesTests
 	}
 
 	[TestMethod]
+	public void ServiceExists_RepeatedCallsExistingService_DoNotLeakHandles()
+	{
+		for (var iteration = 0; iteration < 10; iteration++)
+		{
+			Assert.IsTrue(ServiceHelper.ServiceExists(ExistingServiceName));
+		}
+	}
+
+	[TestMethod]
+	public void ServiceExists_RepeatedCallsNonExistingService_DoNotLeakHandles()
+	{
+		for (var iteration = 0; iteration < 10; iteration++)
+		{
+			Assert.IsFalse(ServiceHelper.ServiceExists(NonExistingServiceName));
+		}
+	}
+
+	[TestMethod]
 	public void ServiceExistsEmptyServiceNameThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceExists(string.Empty));
@@ -114,6 +148,16 @@ public class ServicesTests
 	public void ServiceExistsNullServiceNameThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceExists(null!));
+	}
+
+	[TestMethod]
+	public void ServiceStatus_RepeatedCallsExistingService_DoNotLeakHandles()
+	{
+		for (var iteration = 0; iteration < 10; iteration++)
+		{
+			var status = ServiceHelper.ServiceStatus(ExistingServiceName);
+			Assert.IsTrue(Enum.IsDefined(status));
+		}
 	}
 
 	[TestMethod]
@@ -156,6 +200,16 @@ public class ServicesTests
 	public void ServiceStatusNullServiceNameThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceStatus(null!));
+	}
+
+	[TestMethod]
+	public void StartService_RepeatedCallsNonExistingService_DoNotLeakHandles()
+	{
+		for (var iteration = 0; iteration < 10; iteration++)
+		{
+			var result = ServiceHelper.StartService(NonExistingServiceName);
+			Assert.AreEqual(ServiceActionResult.NotFound, result);
+		}
 	}
 
 	// ── Double-call regression (suggestion 6 fix) ─────────────────────
@@ -255,6 +309,16 @@ public class ServicesTests
 	public void StartStopServicesNullCollectionThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartStopServices(null!));
+	}
+
+	[TestMethod]
+	public void StopService_RepeatedCallsNonExistingService_DoNotLeakHandles()
+	{
+		for (var iteration = 0; iteration < 10; iteration++)
+		{
+			var result = ServiceHelper.StopService(NonExistingServiceName);
+			Assert.AreEqual(ServiceActionResult.NotFound, result);
+		}
 	}
 
 	[TestMethod]
