@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="ServicesTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -39,6 +39,12 @@ public class ServicesTests
 		Assert.Contains(ExistingServiceName, services);
 	}
 
+	[TestMethod]
+	public void IsProcessRunningEmptyProcessNameThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.IsProcessRunning(string.Empty));
+	}
+
 	// ── IsProcessRunning ──────────────────────────────────────────────
 
 	[TestMethod]
@@ -63,9 +69,15 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	public void IsProcessRunningEmptyProcessNameThrowsArgumentNullException()
+	public void KillProcessEmptyProcessNameThrowsArgumentNullException()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.IsProcessRunning(string.Empty));
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.KillProcess(string.Empty));
+	}
+
+	[TestMethod]
+	public void KillProcessNonExistingProcessDoesNotThrow()
+	{
+		ServiceHelper.KillProcess("FakeProcess123");
 	}
 
 	// ── KillProcess ───────────────────────────────────────────────────
@@ -77,15 +89,9 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	public void KillProcessEmptyProcessNameThrowsArgumentNullException()
+	public void ServiceExistsEmptyServiceNameThrowsArgumentNullException()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.KillProcess(string.Empty));
-	}
-
-	[TestMethod]
-	public void KillProcessNonExistingProcessDoesNotThrow()
-	{
-		ServiceHelper.KillProcess("FakeProcess123");
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceExists(string.Empty));
 	}
 
 	// ── ServiceExists ─────────────────────────────────────────────────
@@ -111,18 +117,9 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	public void ServiceExistsEmptyServiceNameThrowsArgumentNullException()
+	public void ServiceStatusEmptyServiceNameThrowsArgumentNullException()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceExists(string.Empty));
-	}
-
-	// ── ServiceStatus ─────────────────────────────────────────────────
-
-	[TestMethod]
-	public void ServiceStatusExistingServiceReturnsValidStatus()
-	{
-		var status = ServiceHelper.ServiceStatus(ExistingServiceName);
-		Assert.IsTrue(Enum.IsDefined(typeof(ServiceControllerStatus), status));
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceStatus(string.Empty));
 	}
 
 	[TestMethod]
@@ -140,6 +137,15 @@ public class ServicesTests
 		Assert.AreEqual(ServiceControllerStatus.Running, status);
 	}
 
+	// ── ServiceStatus ─────────────────────────────────────────────────
+
+	[TestMethod]
+	public void ServiceStatusExistingServiceReturnsValidStatus()
+	{
+		var status = ServiceHelper.ServiceStatus(ExistingServiceName);
+		Assert.IsTrue(Enum.IsDefined(typeof(ServiceControllerStatus), status));
+	}
+
 	[TestMethod]
 	public void ServiceStatusNonExistingServiceThrowsInvalidOperationException()
 	{
@@ -152,19 +158,26 @@ public class ServicesTests
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceStatus(null!));
 	}
 
+	// ── Double-call regression (suggestion 6 fix) ─────────────────────
+	// These tests verify that calling StartService/StopService twice in a row
+	// with a non-existent service name returns NotFound both times, proving that
+	// a single LoadService() call (rather than ServiceExists() + LoadService())
+	// does not corrupt any state between calls.
+
 	[TestMethod]
-	public void ServiceStatusEmptyServiceNameThrowsArgumentNullException()
+	public void StartService_RepeatedCallsNonExistingService_ReturnNotFoundBothTimes()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.ServiceStatus(string.Empty));
+		var resultFirst = ServiceHelper.StartService(NonExistingServiceName);
+		var resultSecond = ServiceHelper.StartService(NonExistingServiceName);
+
+		Assert.AreEqual(ServiceActionResult.NotFound, resultFirst, "First call must return NotFound.");
+		Assert.AreEqual(ServiceActionResult.NotFound, resultSecond, "Second call must return NotFound — no state corruption between calls.");
 	}
 
-	// ── StartService ──────────────────────────────────────────────────
-
 	[TestMethod]
-	public void StartServiceNonExistingServiceReturnsNotFound()
+	public void StartServiceEmptyServiceNameThrowsArgumentNullException()
 	{
-		var result = ServiceHelper.StartService(NonExistingServiceName);
-		Assert.AreEqual(ServiceActionResult.NotFound, result);
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartService(string.Empty));
 	}
 
 	[TestMethod]
@@ -182,6 +195,15 @@ public class ServicesTests
 		Assert.AreEqual(ServiceActionResult.Error, result);
 	}
 
+	// ── StartService ──────────────────────────────────────────────────
+
+	[TestMethod]
+	public void StartServiceNonExistingServiceReturnsNotFound()
+	{
+		var result = ServiceHelper.StartService(NonExistingServiceName);
+		Assert.AreEqual(ServiceActionResult.NotFound, result);
+	}
+
 	[TestMethod]
 	public void StartServiceNullServiceNameThrowsArgumentNullException()
 	{
@@ -189,9 +211,9 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	public void StartServiceEmptyServiceNameThrowsArgumentNullException()
+	public void StartServicesEmptyCollectionDoesNotThrow()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartService(string.Empty));
+		ServiceHelper.StartServices(new List<string>());
 	}
 
 	// ── StartServices ─────────────────────────────────────────────────
@@ -205,23 +227,9 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	public void StartServicesEmptyCollectionDoesNotThrow()
-	{
-		ServiceHelper.StartServices(new List<string>());
-	}
-
-	[TestMethod]
 	public void StartServicesNullCollectionThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartServices(null!));
-	}
-
-	// ── StartStopServices ─────────────────────────────────────────────
-
-	[TestMethod]
-	public void StartStopServicesEmptyCollectionDoesNotThrow()
-	{
-		ServiceHelper.StartStopServices(new List<ServiceAction>());
 	}
 
 	[TestMethod]
@@ -235,10 +243,34 @@ public class ServicesTests
 		Assert.AreEqual(default(ServiceActionResult), requests[0].ServiceActionResult);
 	}
 
+	// ── StartStopServices ─────────────────────────────────────────────
+
+	[TestMethod]
+	public void StartStopServicesEmptyCollectionDoesNotThrow()
+	{
+		ServiceHelper.StartStopServices(new List<ServiceAction>());
+	}
+
 	[TestMethod]
 	public void StartStopServicesNullCollectionThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StartStopServices(null!));
+	}
+
+	[TestMethod]
+	public void StopService_RepeatedCallsNonExistingService_ReturnNotFoundBothTimes()
+	{
+		var resultFirst = ServiceHelper.StopService(NonExistingServiceName);
+		var resultSecond = ServiceHelper.StopService(NonExistingServiceName);
+
+		Assert.AreEqual(ServiceActionResult.NotFound, resultFirst, "First call must return NotFound.");
+		Assert.AreEqual(ServiceActionResult.NotFound, resultSecond, "Second call must return NotFound — no state corruption between calls.");
+	}
+
+	[TestMethod]
+	public void StopServiceEmptyServiceNameThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StopService(string.Empty));
 	}
 
 	// ── StopService ───────────────────────────────────────────────────
@@ -257,9 +289,9 @@ public class ServicesTests
 	}
 
 	[TestMethod]
-	public void StopServiceEmptyServiceNameThrowsArgumentNullException()
+	public void StopServicesEmptyCollectionDoesNotThrow()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => ServiceHelper.StopService(string.Empty));
+		ServiceHelper.StopServices(new List<string>());
 	}
 
 	// ── StopServices ──────────────────────────────────────────────────
@@ -270,12 +302,6 @@ public class ServicesTests
 		var services = new List<string> { NonExistingServiceName, "AnotherFakeService456" };
 
 		ServiceHelper.StopServices(services);
-	}
-
-	[TestMethod]
-	public void StopServicesEmptyCollectionDoesNotThrow()
-	{
-		ServiceHelper.StopServices(new List<string>());
 	}
 
 	[TestMethod]

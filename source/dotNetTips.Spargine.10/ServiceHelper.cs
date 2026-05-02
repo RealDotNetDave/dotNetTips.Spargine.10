@@ -196,21 +196,23 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NeedsUpdate, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static ServiceActionResult StartService([DisallowNull] string serviceName, bool startServicesDependedOn = false, bool startDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
 
 		var statusResult = ServiceActionResult.Error;
 
-		if (ServiceExists(serviceName) is false)
+		// Call LoadService once; null means the service does not exist, avoiding a
+		// second ServiceController.GetServices() allocation from ServiceExists().
+		var service = LoadService(serviceName);
+
+		if (service is null)
 		{
 			return ServiceActionResult.NotFound;
 		}
 
-		var service = LoadService(serviceName);
-
-		if (service is not null && service.Status == ServiceControllerStatus.Stopped)
+		if (service.Status == ServiceControllerStatus.Stopped)
 		{
 			// First start any services that this service depends on.
 			if (startServicesDependedOn)
@@ -380,21 +382,23 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NeedsUpdate, Status = Status.Available)]
+	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ServiceActionResult StopService([DisallowNull] string serviceName, bool stopServicesDependedOn = false, bool stopDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
 
 		var statusResult = ServiceActionResult.NotFound;
 
-		if (ServiceExists(serviceName) is false)
+		// Call LoadService once; null means the service does not exist, avoiding a
+		// second ServiceController.GetServices() allocation from ServiceExists().
+		var service = LoadService(serviceName);
+
+		if (service is null)
 		{
 			return statusResult;
 		}
 
-		var service = LoadService(serviceName);
-
-		if (service is not null && service.Status == ServiceControllerStatus.Running)
+		if (service.Status == ServiceControllerStatus.Running)
 		{
 			// First stop any services that this service depends on.
 			if (stopServicesDependedOn)
