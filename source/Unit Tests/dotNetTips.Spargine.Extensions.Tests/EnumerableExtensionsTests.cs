@@ -1127,6 +1127,19 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastDistinct_ReferenceType_NonCollectionEnumerable_UsesHashSet()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+
+		// Use LINQ Where to produce IEnumerable<T> that is NOT ICollection<T>
+		IEnumerable<Person> nonCollectionEnumerable = people.Where(p => p is not null);
+
+		var result = nonCollectionEnumerable.FastDistinct().ToList();
+
+		Assert.HasCount(Count, result);
+	}
+
+	[TestMethod]
 	public void FastDistinct_ReferenceTypes_LargeCollection_WithComparer_RemovesDuplicates()
 	{
 		// Large collection (> 4096) uses Distinct path
@@ -1198,6 +1211,33 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastDistinct_ValueType_LargeCount_UsesDistinct()
+	{
+		// Arrange - value type collection with count > 256; TryGetNonEnumeratedCount returns true for arrays
+		var numbers = Enumerable.Range(1, 300).ToArray();
+		IEnumerable<int> collection = numbers;
+
+		// Act
+		var result = collection.FastDistinct().ToList();
+
+		// Assert - all unique, so count equals 300
+		Assert.HasCount(300, result);
+	}
+
+	[TestMethod]
+	public void FastDistinct_ValueType_NoKnownCount_UsesHashSet()
+	{
+		// Arrange - use a Where query so TryGetNonEnumeratedCount returns false (unknown count)
+		var numbers = Enumerable.Range(1, 10).Where(_ => true);
+
+		// Act
+		var result = numbers.FastDistinct().ToList();
+
+		// Assert - all unique, 10 elements
+		Assert.HasCount(10, result);
+	}
+
+	[TestMethod]
 	public void FastDistinct_ValueTypes_WithCustomComparer_FiltersCorrectly()
 	{
 		// Custom comparer that considers numbers equal if they have the same remainder when divided by 3
@@ -1254,46 +1294,6 @@ public class EnumerableExtensionsTests
 		people.Add(people.First());
 
 		var result = people.FastDistinct();
-
-		Assert.HasCount(Count, result);
-	}
-
-	[TestMethod]
-	public void FastDistinct_ValueType_LargeCount_UsesDistinct()
-	{
-		// Arrange - value type collection with count > 256; TryGetNonEnumeratedCount returns true for arrays
-		var numbers = Enumerable.Range(1, 300).ToArray();
-		IEnumerable<int> collection = numbers;
-
-		// Act
-		var result = collection.FastDistinct().ToList();
-
-		// Assert - all unique, so count equals 300
-		Assert.HasCount(300, result);
-	}
-
-	[TestMethod]
-	public void FastDistinct_ValueType_NoKnownCount_UsesHashSet()
-	{
-		// Arrange - use a Where query so TryGetNonEnumeratedCount returns false (unknown count)
-		var numbers = Enumerable.Range(1, 10).Where(_ => true);
-
-		// Act
-		var result = numbers.FastDistinct().ToList();
-
-		// Assert - all unique, 10 elements
-		Assert.HasCount(10, result);
-	}
-
-	[TestMethod]
-	public void FastDistinct_ReferenceType_NonCollectionEnumerable_UsesHashSet()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-
-		// Use LINQ Where to produce IEnumerable<T> that is NOT ICollection<T>
-		IEnumerable<Person> nonCollectionEnumerable = people.Where(p => p is not null);
-
-		var result = nonCollectionEnumerable.FastDistinct().ToList();
 
 		Assert.HasCount(Count, result);
 	}
@@ -1505,20 +1505,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void FastProcessor_Action_WithEmptyList_DoesNothing()
-	{
-		// Arrange
-		var collection = new List<int>();
-		var processedCount = 0;
-
-		// Act
-		collection.FastProcessor(_ => processedCount++);
-
-		// Assert
-		Assert.AreEqual(0, processedCount);
-	}
-
-	[TestMethod]
 	public void FastProcessor_Action_WithEmptyArray_DoesNothing()
 	{
 		// Arrange - hits the T[] branch with zero-length array
@@ -1527,6 +1513,20 @@ public class EnumerableExtensionsTests
 
 		// Act
 		emptyArray.FastProcessor((Action<int>)(_ => processedCount++));
+
+		// Assert
+		Assert.AreEqual(0, processedCount);
+	}
+
+	[TestMethod]
+	public void FastProcessor_Action_WithEmptyList_DoesNothing()
+	{
+		// Arrange
+		var collection = new List<int>();
+		var processedCount = 0;
+
+		// Act
+		collection.FastProcessor(_ => processedCount++);
 
 		// Assert
 		Assert.AreEqual(0, processedCount);
@@ -4632,12 +4632,38 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void PickRandom_EmptyHashSet_ReturnsDefault()
+	{
+		// Arrange
+		IEnumerable<Person> emptySet = new HashSet<Person>();
+
+		// Act
+		var result = emptySet.PickRandom();
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
 	public void PickRandom_EmptyList_ReturnsDefault()
 	{
 		var emptyList = new List<Person>();
 
 		var result = emptyList.PickRandom();
 
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void PickRandom_EmptyQueue_ReturnsDefault()
+	{
+		// Arrange
+		IEnumerable<Person> emptyQueue = new Queue<Person>();
+
+		// Act
+		var result = emptyQueue.PickRandom();
+
+		// Assert
 		Assert.IsNull(result);
 	}
 
@@ -4650,35 +4676,6 @@ public class EnumerableExtensionsTests
 
 		Assert.IsNotNull(result);
 		Assert.IsTrue(people.Contains(result));
-	}
-
-	[TestMethod]
-	public void PickRandom_NonEmptyList_ReturnsElementFromCollection()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count);
-
-		var result = people.PickRandom();
-
-		Assert.IsNotNull(result);
-		Assert.IsTrue(people.Contains(result));
-	}
-
-	[TestMethod]
-	public void PickRandom_NullCollection_ThrowsArgumentNullException()
-	{
-		IEnumerable<Person> collection = null;
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => collection.PickRandom());
-	}
-
-	[TestMethod]
-	public void PickRandomTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
-
-		var result = people.PickRandom();
-
-		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]
@@ -4696,16 +4693,14 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void PickRandom_EmptyHashSet_ReturnsDefault()
+	public void PickRandom_NonEmptyList_ReturnsElementFromCollection()
 	{
-		// Arrange
-		IEnumerable<Person> emptySet = new HashSet<Person>();
+		var people = RandomData.GeneratePersonRefCollection(Count);
 
-		// Act
-		var result = emptySet.PickRandom();
+		var result = people.PickRandom();
 
-		// Assert
-		Assert.IsNull(result);
+		Assert.IsNotNull(result);
+		Assert.IsTrue(people.Contains(result));
 	}
 
 	[TestMethod]
@@ -4725,16 +4720,21 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void PickRandom_EmptyQueue_ReturnsDefault()
+	public void PickRandom_NullCollection_ThrowsArgumentNullException()
 	{
-		// Arrange
-		IEnumerable<Person> emptyQueue = new Queue<Person>();
+		IEnumerable<Person> collection = null;
 
-		// Act
-		var result = emptyQueue.PickRandom();
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => collection.PickRandom());
+	}
 
-		// Assert
-		Assert.IsNull(result);
+	[TestMethod]
+	public void PickRandomTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+
+		var result = people.PickRandom();
+
+		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]
@@ -5449,6 +5449,39 @@ public class EnumerableExtensionsTests
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.IsTrue(people.ToLinkedList().IsNotEmpty());
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithCancelledToken_ThrowsTaskCanceledException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		await Assert.ThrowsExactlyAsync<TaskCanceledException>(
+			() => people.ToListAsync(cts.Token)).ConfigureAwait(false);
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithICollection_ReturnsCorrectCount()
+	{
+		ICollection<string> col = new HashSet<string>(RandomData.GenerateWords(Count, 5, 10));
+
+		var result = await col.ToListAsync().ConfigureAwait(false);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(col.Count, result.Count);
+	}
+
+	[TestMethod]
+	public async Task ToListAsync_WithList_ReturnsSameList()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count);
+
+		var result = await people.ToListAsync().ConfigureAwait(false);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(people.Count, result.Count);
 	}
 
 	[TestMethod]

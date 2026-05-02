@@ -1053,9 +1053,26 @@ public static class EnumerableExtensions
 		/// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="List{T}"/> that contains elements from the input collection.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
+			if (cancellationToken.IsCancellationRequested)
+			{
+				return Task.FromCanceled<List<T>>(cancellationToken);
+			}
+
+			if (collection is List<T> list)
+			{
+				return Task.FromResult(list);
+			}
+
+			if (collection is ICollection<T> col)
+			{
+				var result = new List<T>(col.Count);
+				result.AddRange(col);
+				return Task.FromResult(result);
+			}
+
 			return Task.Run(() => collection.ToList(), cancellationToken);
 		}
 
