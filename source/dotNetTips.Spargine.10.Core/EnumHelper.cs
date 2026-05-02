@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -223,11 +223,11 @@ public static partial class EnumHelper
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private static List<string> GetNames([DisallowNull] Type type, bool fixNames = true)
 	{
-		// Set up result
-		var result = new List<string>();
-
 		// Load fields
 		var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+		// Pre-size to exact field count to avoid resizing
+		var result = new List<string>(fields.Length);
 
 		// Enum names (text) are defined as fields for the type
 		foreach (var enumValue in fields.AsSpan())

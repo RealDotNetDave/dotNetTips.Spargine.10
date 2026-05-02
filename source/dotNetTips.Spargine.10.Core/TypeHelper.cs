@@ -427,7 +427,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllConstructors), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static IEnumerable<ConstructorInfo> GetAllConstructors([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -445,7 +445,16 @@ public static class TypeHelper
 		}
 
 		var typeInfo = type.GetTypeInfo();
-		var constructors = new List<ConstructorInfo>();
+		var capacity = 0;
+		var countInfo = typeInfo;
+
+		while (countInfo is not null)
+		{
+			capacity += countInfo.DeclaredConstructors.Count();
+			countInfo = countInfo.BaseType?.GetTypeInfo();
+		}
+
+		var constructors = new List<ConstructorInfo>(capacity);
 
 		while (typeInfo is not null)
 		{
@@ -512,7 +521,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information("Original Code .NET Core source.", author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("Original Code .NET Core source.", author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static IEnumerable<MethodInfo> GetAllDeclaredMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -557,7 +566,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static IEnumerable<FieldInfo> GetAllFields([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -574,8 +583,17 @@ public static class TypeHelper
 			yield break;
 		}
 
-		var fields = new List<FieldInfo>();
 		var typeInfo = type.GetTypeInfo();
+		var capacity = 0;
+		var countInfo = typeInfo;
+
+		while (countInfo is not null)
+		{
+			capacity += countInfo.DeclaredFields.Count();
+			countInfo = countInfo.BaseType?.GetTypeInfo();
+		}
+
+		var fields = new List<FieldInfo>(capacity);
 
 		while (typeInfo is not null)
 		{
@@ -653,8 +671,17 @@ public static class TypeHelper
 			yield break;
 		}
 
-		var methods = new List<MethodInfo>();
 		var typeInfo = type.GetTypeInfo();
+		var capacity = 0;
+		var countInfo = typeInfo;
+
+		while (countInfo is not null)
+		{
+			capacity += countInfo.DeclaredMethods.Count();
+			countInfo = countInfo.BaseType?.GetTypeInfo();
+		}
+
+		var methods = new List<MethodInfo>(capacity);
 
 		while (typeInfo is not null)
 		{
@@ -683,7 +710,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllProperties), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllProperties), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static IEnumerable<PropertyInfo> GetAllProperties([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
@@ -700,8 +727,17 @@ public static class TypeHelper
 			yield break;
 		}
 
-		var properties = new List<PropertyInfo>();
 		var typeInfo = type.GetTypeInfo();
+		var capacity = 0;
+		var countInfo = typeInfo;
+
+		while (countInfo is not null)
+		{
+			capacity += countInfo.DeclaredProperties.Count();
+			countInfo = countInfo.BaseType?.GetTypeInfo();
+		}
+
+		var properties = new List<PropertyInfo>(capacity);
 
 		while (typeInfo is not null)
 		{
@@ -1760,16 +1796,16 @@ public static class TypeHelper
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	private static MemberInfo[] CollectMembersWithAttribute<TAttribute>(Type type) where TAttribute : Attribute
 	{
-		var result = new List<MemberInfo>();
+		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+		var allMembers = type.GetMembers(bindingFlags);
+		var result = new List<MemberInfo>(allMembers.Length + 1);
 
 		if (Attribute.IsDefined(type, typeof(TAttribute), true))
 		{
 			result.Add(type);
 		}
 
-		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-
-		foreach (var member in type.GetMembers(bindingFlags))
+		foreach (var member in allMembers.AsSpan())
 		{
 			if (Attribute.IsDefined(member, typeof(TAttribute), true))
 			{
@@ -1777,7 +1813,7 @@ public static class TypeHelper
 			}
 		}
 
-		return [.. result];
+		return result.ToArray();
 	}
 
 	/// <summary>
