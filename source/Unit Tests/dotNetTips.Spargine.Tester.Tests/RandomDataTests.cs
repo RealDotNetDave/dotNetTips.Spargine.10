@@ -1139,6 +1139,39 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GeneratePhoneNumber_ConcurrentAccess_PhoneCodeCache_IsThreadSafe()
+	{
+		// Validate that the cached phone-code Split path (_phoneCodeCache) is thread-safe
+		// and produces valid results under concurrent load.
+		var exceptions = new ConcurrentBag<Exception>();
+		var countries = CountryRepository.GetCountries().ToList();
+
+		var tasks = Enumerable.Range(0, 64).Select(_ => Task.Run(() =>
+		{
+			try
+			{
+				for (var iteration = 0; iteration < 10; iteration++)
+				{
+					var country = countries[RandomData.GenerateInteger(0, countries.Count - 1)];
+					var withCode = RandomData.GeneratePhoneNumber(country, includeCountryCode: true);
+					var withoutCode = RandomData.GeneratePhoneNumber(country, includeCountryCode: false);
+
+					Assert.IsFalse(string.IsNullOrWhiteSpace(withCode));
+					Assert.IsFalse(string.IsNullOrWhiteSpace(withoutCode));
+				}
+			}
+			catch (Exception ex)
+			{
+				exceptions.Add(ex);
+			}
+		})).ToArray();
+
+		Task.WaitAll(tasks);
+
+		Assert.AreEqual(0, exceptions.Count, $"{exceptions.Count} exception(s) thrown: {string.Join("; ", exceptions.Select(e => e.Message))}");
+	}
+
+	[TestMethod]
 	public void GeneratePhoneNumber_Country_Test_Random()
 	{
 		// Explicitly specify the namespace for the FastShuffle method to resolve ambiguity

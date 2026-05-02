@@ -169,6 +169,12 @@ public static class RandomData
 	};
 
 	/// <summary>
+	/// A thread-safe cache for phone code splits, keyed by country.
+	/// Avoids repeated <c>string.Split</c> calls on the comma-separated <see cref="Country.PhoneCode"/> string.
+	/// </summary>
+	private static readonly ConcurrentDictionary<Country, string[]> _phoneCodeCache = new();
+
+	/// <summary>
 	/// A thread-safe cache for postal formats, keyed by country.
 	/// </summary>
 	private static readonly ConcurrentDictionary<Country, string[]> _postalFormatsCache = new();
@@ -914,7 +920,9 @@ public static class RandomData
 	{
 		country = country.ArgumentNotNull();
 
-		return includeCountryCode ? $"{country.PhoneCode?.Split(Core.ControlChars.Comma).PickRandom()}-{GenerateNumber(country.PhoneNumberLength)}" : GenerateNumber(country.PhoneNumberLength);
+		return includeCountryCode
+			? $"{GetPhoneCode(country)}-{GenerateNumber(country.PhoneNumberLength)}"
+			: GenerateNumber(country.PhoneNumberLength);
 	}
 
 	/// <summary>
@@ -1704,11 +1712,29 @@ public static class RandomData
 	private static int GetCountryPhoneLength(Country? country) =>
 		country?.PhoneNumberLength ?? 10;
 
-	/// <summary>Returns the phone code string for the given country, or empty string.</summary>
+	/// <summary>Returns a randomly selected phone code segment for the given country, or empty string.
+	/// The comma-separated <see cref="Country.PhoneCode"/> string is split once and cached in <see cref="_phoneCodeCache"/>.
+	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	private static string GetPhoneCode(Country? country) =>
-		GetPhoneCodeString(country).Split(Core.ControlChars.Comma).PickRandom() ?? Core.ControlChars.EmptyString;
+	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	private static string GetPhoneCode(Country? country)
+	{
+		if (country is null)
+		{
+			return Core.ControlChars.EmptyString;
+		}
+
+		var phoneCodeString = GetPhoneCodeString(country);
+
+		if (string.IsNullOrEmpty(phoneCodeString))
+		{
+			return Core.ControlChars.EmptyString;
+		}
+
+		var parts = _phoneCodeCache.GetOrAdd(country, static c => c.PhoneCode!.Split(Core.ControlChars.Comma));
+
+		return parts.PickRandom() ?? Core.ControlChars.EmptyString;
+	}
 
 	/// <summary>Returns the raw phone code string for the given country (comma-separated list), or empty string if not available.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
