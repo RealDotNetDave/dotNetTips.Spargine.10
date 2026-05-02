@@ -4,7 +4,7 @@
 // Created          : 02-16-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -57,9 +57,7 @@ public static partial class Validator
 	{
 		input = input.ArgumentNotNull();
 
-		_ = input.TryGetNonEnumeratedCount(out var count);
-
-		if (count == 0)
+		if (!input.TryGetNonEnumeratedCount(out var count))
 		{
 			count = input.Count();
 		}
