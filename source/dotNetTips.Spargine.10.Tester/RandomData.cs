@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
@@ -1358,32 +1358,36 @@ public static class RandomData
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="fileName"/> is null.</exception>
 	/// <exception cref="ArgumentException">Thrown when <paramref name="fileName"/> is empty.</exception>
 	/// <remarks>
-	/// This method uses <see cref="RandomNumberGenerator"/> for generating random data to fill the file.
+	/// This method uses <see cref="RandomNumberGenerator.Fill(Span{byte})"/> for generating random data to fill the file.
+	/// A single pooled buffer is rented from <see cref="ArrayPool{T}.Shared"/> and reused for all writes,
+	/// including the final partial block via a <see cref="Span{T}"/> slice — eliminating per-call allocations.
 	/// </remarks>
 	internal static void CreateFile([NotNull] string fileName, int fileLength = DefaultFileLength)
 	{
 		const int bufferSize = 4096; // Use a buffer size of 4KB.
-		var buffer = new byte[bufferSize];
 		var iterations = fileLength / bufferSize;
 		var remainingBytes = fileLength % bufferSize;
+		var buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
 
-		using (var rng = RandomNumberGenerator.Create())
+		try
 		{
-			using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize))
-			{
-				for (var index = 0; index < iterations; index++)
-				{
-					rng.GetBytes(buffer);
-					fileStream.Write(buffer, 0, buffer.Length);
-				}
+			using var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize);
 
-				if (remainingBytes > 0)
-				{
-					buffer = new byte[remainingBytes];
-					rng.GetBytes(buffer);
-					fileStream.Write(buffer, 0, buffer.Length);
-				}
+			for (var index = 0; index < iterations; index++)
+			{
+				RandomNumberGenerator.Fill(buffer.AsSpan(0, bufferSize));
+				fileStream.Write(buffer, 0, bufferSize);
 			}
+
+			if (remainingBytes > 0)
+			{
+				RandomNumberGenerator.Fill(buffer.AsSpan(0, remainingBytes));
+				fileStream.Write(buffer, 0, remainingBytes);
+			}
+		}
+		finally
+		{
+			ArrayPool<byte>.Shared.Return(buffer);
 		}
 	}
 
