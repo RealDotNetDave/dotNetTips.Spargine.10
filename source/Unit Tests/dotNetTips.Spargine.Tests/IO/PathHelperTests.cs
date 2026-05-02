@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="PathHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -87,6 +87,12 @@ public class PathHelperTests : IDisposable
 	}
 
 	[TestMethod]
+	public void CombinePathsFourStringsEmptyPath1ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.CombinePaths(true, string.Empty, "b", "c", "d"));
+	}
+
+	[TestMethod]
 	public void CombinePathsFourStringsNullPath1ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.CombinePaths(true, null, "b", "c", "d"));
@@ -108,12 +114,6 @@ public class PathHelperTests : IDisposable
 	public void CombinePathsFourStringsNullPath4ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.CombinePaths(true, "a", "b", "c", null));
-	}
-
-	[TestMethod]
-	public void CombinePathsFourStringsEmptyPath1ThrowsArgumentNullException()
-	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.CombinePaths(true, string.Empty, "b", "c", "d"));
 	}
 
 	[TestMethod]
@@ -233,14 +233,6 @@ public class PathHelperTests : IDisposable
 	}
 
 	[TestMethod]
-	public void EnsureTrailingSlashAlreadyHasDirectorySeparatorReturnsSamePath()
-	{
-		var path = $"C:{Path.DirectorySeparatorChar}TestPath{Path.DirectorySeparatorChar}";
-		var result = PathHelper.EnsureTrailingSlash(path);
-		Assert.AreEqual(path, result);
-	}
-
-	[TestMethod]
 	public void EnsureTrailingSlash_EmptyString_ThrowsArgumentException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.EnsureTrailingSlash(string.Empty));
@@ -289,6 +281,14 @@ public class PathHelperTests : IDisposable
 		var pathWithSlash = "C:\\TestPath\\";
 		var result = PathHelper.EnsureTrailingSlash(pathWithSlash);
 		Assert.AreEqual(pathWithSlash, result);
+	}
+
+	[TestMethod]
+	public void EnsureTrailingSlashAlreadyHasDirectorySeparatorReturnsSamePath()
+	{
+		var path = $"C:{Path.DirectorySeparatorChar}TestPath{Path.DirectorySeparatorChar}";
+		var result = PathHelper.EnsureTrailingSlash(path);
+		Assert.AreEqual(path, result);
 	}
 
 	[TestMethod]
@@ -508,6 +508,14 @@ public class PathHelperTests : IDisposable
 		{
 			Assert.Contains(separator, separators, $"The expected separator '{separator}' was not found in the PathSeparators collection.");
 		}
+	}
+
+	[TestMethod]
+	public void PathSeparators_ReturnsSameInstance_OnMultipleCalls()
+	{
+		var first = PathHelper.PathSeparators;
+		var second = PathHelper.PathSeparators;
+		Assert.AreSame(first, second, "PathSeparators should return the same cached instance on every access.");
 	}
 
 	[TestMethod]

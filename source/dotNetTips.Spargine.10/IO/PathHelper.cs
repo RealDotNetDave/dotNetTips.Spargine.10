@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -61,14 +61,8 @@ public static class PathHelper
 	/// <see cref="Path.DirectorySeparatorChar"/> and <see cref="Path.AltDirectorySeparatorChar"/>.
 	/// </value>
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<char> PathSeparators
-	{
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		get
-		{
-			return new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.AsReadOnly();
-		}
-	}
+	public static ReadOnlyCollection<char> PathSeparators { get; } =
+		new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.AsReadOnly();
 
 	/// <summary>
 	/// Combines the paths into a single path. If <paramref name="createIfNotExists"/> is true, the combined path will be created if it does not exist.
