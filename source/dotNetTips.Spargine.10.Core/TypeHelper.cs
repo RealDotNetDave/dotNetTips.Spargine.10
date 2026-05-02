@@ -61,12 +61,42 @@ public static class TypeHelper
 	private static readonly InMemoryCache _commonCache = InMemoryCache.Instance;
 
 	/// <summary>
+	/// Static common built-in types used for the <see cref="BuiltInTypeNames"/> cache initialization.
+	/// </summary>
+	private static readonly Type[] _commonTypes =
+	[
+		typeof(string), typeof(object), typeof(DateTime), typeof(DateTimeOffset),
+		typeof(TimeSpan), typeof(Guid), typeof(Uri), typeof(BigInteger), typeof(Half),
+		typeof(IntPtr), typeof(UIntPtr), typeof(DateTimeKind), typeof(Nullable<>),
+		typeof(ValueTuple), typeof(Tuple), typeof(Span<>), typeof(ReadOnlySpan<>),
+		typeof(Memory<>), typeof(ReadOnlyMemory<>), typeof(ArraySegment<>),
+		typeof(KeyValuePair<,>), typeof(List<>), typeof(Dictionary<,>), typeof(HashSet<>),
+		typeof(Queue<>), typeof(Stack<>), typeof(LinkedList<>), typeof(SortedList<,>),
+		typeof(SortedDictionary<,>), typeof(SortedSet<>), typeof(ConcurrentDictionary<,>),
+		typeof(ConcurrentQueue<>), typeof(ConcurrentStack<>), typeof(BlockingCollection<>),
+		typeof(ObservableCollection<>), typeof(ReadOnlyCollection<>), typeof(ReadOnlyDictionary<,>),
+		typeof(ReadOnlyObservableCollection<>), typeof(ImmutableArray<>), typeof(ImmutableList<>),
+		typeof(ImmutableDictionary<,>), typeof(ImmutableHashSet<>), typeof(ImmutableQueue<>),
+		typeof(ImmutableStack<>), typeof(ImmutableSortedDictionary<,>), typeof(ImmutableSortedSet<>)
+	];
+
+	/// <summary>
 	/// Fast cache for <see cref="ImplementsInterface"/> results, keyed by (type, interfaceType) pair.
 	/// Uses <see cref="ConcurrentDictionary{TKey,TValue}"/> rather than <see cref="InMemoryCache"/> because
 	/// the underlying computation is a single <c>GetInterfaces()</c> array scan, and <c>MemoryCache</c> overhead
 	/// (string key allocation — ~250 chars for generic types — locking, expiry tracking, boxing) far exceeds it.
 	/// </summary>
 	private static readonly ConcurrentDictionary<(Type, Type), bool> _implementsInterfaceCache = new();
+
+	/// <summary>
+	/// Static primitive types used for the <see cref="BuiltInTypeNames"/> cache initialization.
+	/// </summary>
+	private static readonly Type[] _primitiveTypes =
+	[
+		typeof(bool), typeof(byte), typeof(char), typeof(decimal), typeof(double),
+		typeof(float), typeof(int), typeof(long), typeof(sbyte), typeof(short),
+		typeof(uint), typeof(ulong), typeof(ushort)
+	];
 
 	/// <summary>
 	/// Provides a pool of reusable <see cref="StringBuilder"/> instances to reduce allocations and improve performance.
@@ -143,42 +173,18 @@ public static class TypeHelper
 			return _cachedBuiltInTypes;
 		}
 
-		var builtInTypes = new Dictionary<Type, string>();
-
-		// Add primitive types
-		var primitiveTypes = new[]
-		{
-				typeof(bool), typeof(byte), typeof(char), typeof(decimal), typeof(double),
-				typeof(float), typeof(int), typeof(long), typeof(sbyte), typeof(short),
-				typeof(uint), typeof(ulong), typeof(ushort)
-			};
+		var builtInTypes = new Dictionary<Type, string>(512);
 
 		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: true, includeGenericParameters: true);
 
-		foreach (var type in primitiveTypes)
+		// Add primitive types
+		foreach (var type in _primitiveTypes.AsSpan())
 		{
 			builtInTypes[type] = GetTypeDisplayName(type, options);
 		}
 
 		// Add other common built-in types
-		var commonTypes = new[]
-		{
-				typeof(string), typeof(object), typeof(DateTime), typeof(DateTimeOffset),
-				typeof(TimeSpan), typeof(Guid), typeof(Uri), typeof(BigInteger), typeof(Half),
-				typeof(IntPtr), typeof(UIntPtr), typeof(DateTimeKind), typeof(Nullable<>),
-				typeof(ValueTuple), typeof(Tuple), typeof(Span<>), typeof(ReadOnlySpan<>),
-				typeof(Memory<>), typeof(ReadOnlyMemory<>), typeof(ArraySegment<>),
-				typeof(KeyValuePair<,>), typeof(List<>), typeof(Dictionary<,>), typeof(HashSet<>),
-				typeof(Queue<>), typeof(Stack<>), typeof(LinkedList<>), typeof(SortedList<,>),
-				typeof(SortedDictionary<,>), typeof(SortedSet<>), typeof(ConcurrentDictionary<,>),
-				typeof(ConcurrentQueue<>), typeof(ConcurrentStack<>), typeof(BlockingCollection<>),
-				typeof(ObservableCollection<>), typeof(ReadOnlyCollection<>), typeof(ReadOnlyDictionary<,>),
-				typeof(ReadOnlyObservableCollection<>), typeof(ImmutableArray<>), typeof(ImmutableList<>),
-				typeof(ImmutableDictionary<,>), typeof(ImmutableHashSet<>), typeof(ImmutableQueue<>),
-				typeof(ImmutableStack<>), typeof(ImmutableSortedDictionary<,>), typeof(ImmutableSortedSet<>)
-			};
-
-		foreach (var type in commonTypes)
+		foreach (var type in _commonTypes.AsSpan())
 		{
 			builtInTypes[type] = GetTypeDisplayName(type, includeGenericParameterNames: true, includeGenericParameters: true);
 		}
@@ -330,7 +336,7 @@ public static class TypeHelper
 		baseType = baseType.ArgumentNotNull();
 
 		var files = path.ArgumentExists().EnumerateFiles("*.dll", fileSearchType).ToImmutableArray();
-		var foundTypes = new List<Type>();
+		var foundTypes = new List<Type>(files.Length);
 
 		for (var fileIndex = 0; fileIndex < files.Length; fileIndex++)
 		{
@@ -1045,14 +1051,27 @@ public static class TypeHelper
 	/// Thrown if <paramref name="input"/> is <c>null</c>.
 	/// </exception>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetImplementedInterfaces),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+		Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input)
 	{
 		input = input.ArgumentNotNull();
 
 #pragma warning disable IL2070 // input.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
-		return Array.AsReadOnly(input.GetType().GetInterfaces().Select(p => p.Name).ToArray());
+		var interfaces = input.GetType().GetInterfaces();
 #pragma warning restore IL2070
+
+		var names = new string[interfaces.Length];
+
+		for (var interfaceIndex = 0; interfaceIndex < interfaces.Length; interfaceIndex++)
+		{
+			names[interfaceIndex] = interfaces[interfaceIndex].Name;
+		}
+
+		return Array.AsReadOnly(names);
 	}
 
 	/// <summary>
@@ -1344,13 +1363,17 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetTypeMembersWithAttribute), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetTypeMembersWithAttribute),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+		Status = Status.Available)]
 	public static ReadOnlyCollection<MemberInfo> GetTypeMembersWithAttribute<TAttribute>([DisallowNull] Type type)
 		where TAttribute : Attribute
 	{
 		type = type.ArgumentNotNull();
 
-		return GetMembersWithAttribute<TAttribute>(type).ToArray().AsReadOnly();
+		return Array.AsReadOnly(CollectMembersWithAttribute<TAttribute>(type));
 	}
 
 	/// <summary>

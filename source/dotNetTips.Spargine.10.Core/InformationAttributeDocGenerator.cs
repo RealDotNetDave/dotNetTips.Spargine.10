@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-16-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="InformationAttributeDocGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,6 +15,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.ObjectPool;
@@ -115,23 +116,29 @@ public static class InformationAttributeDocGenerator
 		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"## {GetTypeName(type)}");
 		_ = sb.AppendLine();
 
-		var members = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type).ToList();
+		var members = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(type);
 
-		//Add document for class
-		var classInfo = members.FirstOrDefault(p => p.MemberType == MemberTypes.TypeInfo);
+		// Add document for class-level member first
+		MemberInfo? classInfo = null;
+
+		for (var memberIndex = 0; memberIndex < members.Count; memberIndex++)
+		{
+			if (members[memberIndex].MemberType == MemberTypes.TypeInfo)
+			{
+				classInfo = members[memberIndex];
+				break;
+			}
+		}
 
 		if (classInfo is not null)
 		{
 			GenerateMemberInfo(sb, classInfo);
-
-			_ = members.Remove(classInfo);
 		}
 
-		foreach (var member in members.OrderBy(p => p.Name))
+		foreach (var member in members.Where(p => p != classInfo).OrderBy(p => p.Name))
 		{
 			GenerateMemberInfo(sb, member);
 		}
-
 	}
 
 	/// <summary>
