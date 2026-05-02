@@ -16,6 +16,7 @@
 // ***********************************************************************
 
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -168,9 +169,9 @@ public static class RandomData
 	};
 
 	/// <summary>
-	/// A cache for postal formats, keyed by country.
+	/// A thread-safe cache for postal formats, keyed by country.
 	/// </summary>
-	private static readonly Dictionary<Country, string[]> _postalFormatsCache = [];
+	private static readonly ConcurrentDictionary<Country, string[]> _postalFormatsCache = new();
 
 	/// <summary>
 	/// An object pool for reusing instances of StringBuilder, reducing allocations.
@@ -1662,16 +1663,12 @@ public static class RandomData
 	{
 		country = country.ArgumentNotNull();
 
-		if (!_postalFormatsCache.TryGetValue(country, out var postalFormats))
+		if (string.IsNullOrEmpty(country.PostalFormat))
 		{
-			if (string.IsNullOrEmpty(country.PostalFormat))
-			{
-				return string.Empty;
-			}
-
-			postalFormats = country.PostalFormat.Split(Core.ControlChars.Comma);
-			_postalFormatsCache[country] = postalFormats;
+			return string.Empty;
 		}
+
+		var postalFormats = _postalFormatsCache.GetOrAdd(country, static c => c.PostalFormat!.Split(Core.ControlChars.Comma));
 
 		var format = postalFormats.PickRandom();
 		var sb = _stringBuilderPool.Get().SetCapacity(format.Length);

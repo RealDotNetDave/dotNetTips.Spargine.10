@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-08-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -150,6 +150,39 @@ public class RandomDataTests
 
 		Assert.IsNotNull(result);
 		Assert.AreEqual(Count, result.Count);
+	}
+
+	[TestMethod]
+	public void GenerateAddress_ConcurrentAccess_PostalFormatsCache_IsThreadSafe()
+	{
+		// Arrange — spin up many tasks that all hit GeneratePostalCode via GenerateAddress concurrently,
+		// covering multiple countries to populate and re-read the _postalFormatsCache under contention.
+		const int taskCount = 64;
+		const int addressesPerTask = 10;
+
+		var exceptions = new ConcurrentBag<Exception>();
+
+		// Act
+		var tasks = Enumerable.Range(0, taskCount).Select(_ => Task.Run(() =>
+		{
+			try
+			{
+				for (var addressIndex = 0; addressIndex < addressesPerTask; addressIndex++)
+				{
+					var address = RandomData.GenerateAddress<Address>();
+					Assert.IsNotNull(address);
+				}
+			}
+			catch (Exception ex)
+			{
+				exceptions.Add(ex);
+			}
+		})).ToArray();
+
+		Task.WaitAll(tasks);
+
+		// Assert
+		Assert.AreEqual(0, exceptions.Count, $"Thread-safety failures: {string.Join("; ", exceptions.Select(e => e.Message))}");
 	}
 
 	// Tests for RandomData.GenerateAddress<TAddress>
