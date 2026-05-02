@@ -1002,9 +1002,47 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GeneratePerson_Ref_AddressCollection_IsDirectlyAssigned_WithCorrectCount()
+	{
+		// Regression test for Issue 6: verifies the address Collection<Address> is populated
+		// directly (no intermediate identity-Select / Where LINQ chain) and contains all
+		// requested addresses with valid fields.
+		const int ExpectedAddresses = 5;
+
+		var person = RandomData.GeneratePerson<Person>(addressCount: ExpectedAddresses);
+
+		Assert.IsNotNull(person.Addresses, "Addresses collection must not be null.");
+		Assert.AreEqual(ExpectedAddresses, person.Addresses.Count, $"Expected {ExpectedAddresses} addresses.");
+
+		foreach (var address in person.Addresses)
+		{
+			Assert.IsNotNull(address, "Individual address must not be null.");
+			Assert.IsFalse(string.IsNullOrWhiteSpace(address.Id), "Address.Id must not be empty.");
+		}
+	}
+
+	[TestMethod]
 	public void GeneratePerson_UnsupportedType_ThrowsException()
 	{
 		Assert.ThrowsExactly<NotSupportedException>(() => RandomData.GeneratePerson<string>());
+	}
+
+	[TestMethod]
+	public void GeneratePerson_Val_AddressCollection_IsDirectlyAssigned_WithCorrectCount()
+	{
+		// Regression test for Issue 6: verifies the address Collection<ValueTypes.Address>
+		// is populated directly (no intermediate identity-Select LINQ chain).
+		const int ExpectedAddresses = 5;
+
+		var person = RandomData.GeneratePerson<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>(addressCount: ExpectedAddresses);
+
+		Assert.IsNotNull(person.Addresses, "Addresses collection must not be null.");
+		Assert.AreEqual(ExpectedAddresses, person.Addresses.Count, $"Expected {ExpectedAddresses} addresses.");
+
+		foreach (var address in person.Addresses)
+		{
+			Assert.IsFalse(string.IsNullOrWhiteSpace(address.Id), "Address.Id must not be empty.");
+		}
 	}
 
 	[TestMethod]

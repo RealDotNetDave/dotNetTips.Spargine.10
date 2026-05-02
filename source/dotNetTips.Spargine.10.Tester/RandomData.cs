@@ -1624,7 +1624,7 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
 	/// <returns>A <see cref="Person"/> object populated with random address data.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonRef), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePersonRef), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	private static Person GeneratePersonRef(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		addressCount = addressCount.ArgumentInRange(min: 0, defaultValue: 2);
@@ -1635,10 +1635,7 @@ public static class RandomData
 
 		var person = new Person()
 		{
-			Addresses = GenerateAddressCollection<Address>(personData.Country, addressCount, addressLength, countyProvinceLength)
-				.Select(address => address)
-				.Where(address => address is not null)
-				.ToCollection(),
+			Addresses = GenerateAddressCollection<Address>(personData.Country, addressCount, addressLength, countyProvinceLength),
 			BornOn = personData.BornOn,
 			CellPhone = personData.CellPhone,
 			Email = personData.Email,
@@ -1659,7 +1656,7 @@ public static class RandomData
 	/// <param name="countyProvinceLength">The length of the county or province name. Default is 20.</param>
 	/// <returns>A <see cref="Models.ValueTypes.Person"/> object.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonVal), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GeneratePersonVal), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	private static Models.ValueTypes.Person GeneratePersonVal(int addressCount = 2, int addressLength = 25, int countyProvinceLength = 20)
 	{
 		addressCount = addressCount.ArgumentInRange(min: 0, defaultValue: 2);
@@ -1670,9 +1667,7 @@ public static class RandomData
 
 		var person = new Models.ValueTypes.Person()
 		{
-			Addresses = GenerateAddressCollection<Models.ValueTypes.Address>(personData.Country, addressCount, addressLength, countyProvinceLength)
-				.Select(address => address)
-				.ToCollection(),
+			Addresses = GenerateAddressCollection<Models.ValueTypes.Address>(personData.Country, addressCount, addressLength, countyProvinceLength),
 			BornOn = personData.BornOn,
 			CellPhone = personData.CellPhone,
 			Email = personData.Email,
