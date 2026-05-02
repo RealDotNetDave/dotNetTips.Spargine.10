@@ -4,7 +4,7 @@
 // Created          : 11-10-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="Extensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -60,26 +60,45 @@ internal static partial class Extensions
 		if (milliseconds < 1000)
 		{
 			var ms = (int)Math.Round(milliseconds);
-			return $"{ms} millisecond{(ms == 1 ? string.Empty : "s")}";
+			return ms == 1 ? "1 millisecond" : $"{ms} milliseconds";
 		}
 
 		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+		var sb = _stringBuilderPool.Get();
 
-		var parts = new List<string>(3);
-		if (timeSpan.Hours > 0)
+		try
 		{
-			parts.Add($"{timeSpan.Hours} hour{(timeSpan.Hours == 1 ? string.Empty : "s")}");
-		}
-		if (timeSpan.Minutes > 0)
-		{
-			parts.Add($"{timeSpan.Minutes} minute{(timeSpan.Minutes == 1 ? string.Empty : "s")}");
-		}
-		if (timeSpan.Seconds > 0 || parts.Count == 0)
-		{
-			parts.Add($"{timeSpan.Seconds} second{(timeSpan.Seconds == 1 ? string.Empty : "s")}");
-		}
+			if (timeSpan.Hours > 0)
+			{
+				_ = sb.Append(timeSpan.Hours).Append(timeSpan.Hours == 1 ? " hour" : " hours");
+			}
 
-		return string.Join(" ", parts);
+			if (timeSpan.Minutes > 0)
+			{
+				if (sb.Length > 0)
+				{
+					_ = sb.Append(ControlChars.Space);
+				}
+
+				_ = sb.Append(timeSpan.Minutes).Append(timeSpan.Minutes == 1 ? " minute" : " minutes");
+			}
+
+			if (timeSpan.Seconds > 0 || sb.Length == 0)
+			{
+				if (sb.Length > 0)
+				{
+					_ = sb.Append(ControlChars.Space);
+				}
+
+				_ = sb.Append(timeSpan.Seconds).Append(timeSpan.Seconds == 1 ? " second" : " seconds");
+			}
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
 	}
 
 	/// <summary>

@@ -1031,7 +1031,7 @@ public static class TypeHelper
 	/// Thrown if <paramref name="input"/> or <paramref name="interfaceNames"/> is <c>null</c>.
 	/// </exception>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetImplementedInterfaces), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetImplementedInterfaces([DisallowNull] object input, params IReadOnlyCollection<string> interfaceNames)
 	{
 		input = input.ArgumentNotNull();
@@ -1041,9 +1041,9 @@ public static class TypeHelper
 		var interfaces = input.GetType().GetInterfaces().Select(p => p.Name);
 #pragma warning restore IL2070
 
-		var foundInterfaces = new List<string>(interfaces.Intersect(interfaceNames));
+		var foundInterfaces = interfaces.Intersect(interfaceNames).ToArray();
 
-		return Array.AsReadOnly(foundInterfaces.ToArray());
+		return Array.AsReadOnly(foundInterfaces);
 	}
 
 	/// <summary>
