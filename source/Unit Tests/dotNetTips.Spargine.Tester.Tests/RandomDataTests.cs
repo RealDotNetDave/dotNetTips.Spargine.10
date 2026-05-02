@@ -1616,12 +1616,65 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateWord_ConcurrentCalls_ArrayPoolPath_IsThreadSafe()
+	{
+		// Validate the ArrayPool large-word path (Issue 8) is not subject to buffer sharing
+		// across concurrent callers.
+		var exceptions = new ConcurrentBag<Exception>();
+
+		const int WordLength = 300;
+
+		var tasks = Enumerable.Range(0, 64).Select(_ => Task.Run(() =>
+		{
+			try
+			{
+				for (var iteration = 0; iteration < 20; iteration++)
+				{
+					var word = RandomData.GenerateWord(length: WordLength, minCharacter: 'A', maxCharacter: 'Z');
+
+					Assert.AreEqual(WordLength, word.Length, "Word length must match requested length.");
+
+					foreach (var character in word)
+					{
+						Assert.IsTrue(character is >= 'A' and <= 'Z', $"Character '{character}' is outside the expected range.");
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				exceptions.Add(ex);
+			}
+		})).ToArray();
+
+		Task.WaitAll(tasks);
+
+		Assert.AreEqual(0, exceptions.Count, $"{exceptions.Count} exception(s) thrown: {string.Join("; ", exceptions.Select(e => e.Message))}");
+	}
+
+	[TestMethod]
 	public void GenerateWord_DefaultParameters_ReturnsWord()
 	{
 		var word = RandomData.GenerateWord(length: 1);
 
 		Assert.IsNotNull(word);
 		Assert.IsGreaterThanOrEqualTo(1, word.Length);
+	}
+
+	[TestMethod]
+	public void GenerateWord_LargeLength_UsesArrayPool_ReturnsCorrectResult()
+	{
+		// Exercises the ArrayPool path introduced in Issue 8 (length > 256).
+		const int LargeLength = 512;
+
+		var word = RandomData.GenerateWord(length: LargeLength, minCharacter: 'a', maxCharacter: 'z');
+
+		Assert.IsNotNull(word);
+		Assert.AreEqual(LargeLength, word.Length);
+
+		foreach (var character in word)
+		{
+			Assert.IsTrue(character is >= 'a' and <= 'z', $"Character '{character}' is outside the expected range.");
+		}
 	}
 
 	[TestMethod]

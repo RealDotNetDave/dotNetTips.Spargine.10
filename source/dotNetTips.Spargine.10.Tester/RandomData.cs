@@ -1288,21 +1288,35 @@ public static class RandomData
 
 		var range = maxCharacter - minCharacter + 1;
 
-		// Use stackalloc for small words to avoid heap allocation; fall back to ArrayPool for large words
+		// stackalloc for small words (no heap); ArrayPool for large words to avoid untracked allocations.
 		const int stackAllocThreshold = 256;
 
-		var chars = length <= stackAllocThreshold
-			? stackalloc char[length]
-			: (Span<char>)new char[length];
+		if (length <= stackAllocThreshold)
+		{
+			Span<byte> randomBytes = stackalloc byte[length];
+			Span<char> chars = stackalloc char[length];
 
-		var randomBytes = length <= stackAllocThreshold
-			? stackalloc byte[length]
-			: (Span<byte>)new byte[length];
+			RandomNumberGenerator.Fill(randomBytes);
+			FillWordChars(chars, randomBytes, minCharacter, range);
 
-		RandomNumberGenerator.Fill(randomBytes);
-		FillWordChars(chars, randomBytes, minCharacter, range);
+			return new string(chars);
+		}
 
-		return new string(chars).Trim();
+		var rentedBytes = ArrayPool<byte>.Shared.Rent(length);
+		var rentedChars = ArrayPool<char>.Shared.Rent(length);
+
+		try
+		{
+			RandomNumberGenerator.Fill(rentedBytes.AsSpan(0, length));
+			FillWordChars(rentedChars.AsSpan(0, length), rentedBytes.AsSpan(0, length), minCharacter, range);
+
+			return new string(rentedChars, 0, length);
+		}
+		finally
+		{
+			ArrayPool<byte>.Shared.Return(rentedBytes);
+			ArrayPool<char>.Shared.Return(rentedChars);
+		}
 	}
 
 	/// <summary>
