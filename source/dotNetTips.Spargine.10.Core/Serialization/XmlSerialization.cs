@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="XmlSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,6 +14,7 @@
 // and from the XML format.
 // </summary>
 // ***********************************************************************
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
@@ -35,6 +36,11 @@ namespace DotNetTips.Spargine.Core.Serialization;
 public static class XmlSerialization
 {
 	/// <summary>
+	/// Cache of <see cref="XmlSerializer"/> instances keyed by type to avoid costly per-call re-creation.
+	/// </summary>
+	private static readonly ConcurrentDictionary<Type, XmlSerializer> _serializerCache = new();
+
+	/// <summary>
 	/// Deserializes the specified XML string into an object of the specified type.
 	/// </summary>
 	/// <typeparam name="TResult">The type of the object to deserialize to.</typeparam>
@@ -44,7 +50,7 @@ public static class XmlSerialization
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(Deserialize), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Deserialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 		where TResult : new()
 	{
@@ -54,7 +60,7 @@ public static class XmlSerialization
 		{
 			using (var xmlReader = XmlReader.Create(sr))
 			{
-				var deserializedObject = new XmlSerializer(typeof(TResult)).Deserialize(xmlReader);
+				var deserializedObject = GetSerializer(typeof(TResult)).Deserialize(xmlReader);
 
 				return deserializedObject is null
 					? throw new InvalidOperationException(Resources.DeserializationResultedInANullObject)
@@ -92,7 +98,7 @@ public static class XmlSerialization
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(Serialize), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Serialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj)
 	{
 		obj = obj.ArgumentNotNull();
@@ -101,9 +107,7 @@ public static class XmlSerialization
 		{
 			using (var xmlWriter = XmlWriter.Create(writer))
 			{
-				var serializer = new XmlSerializer(obj.GetType());
-
-				serializer.Serialize(xmlWriter, obj);
+				GetSerializer(obj.GetType()).Serialize(xmlWriter, obj);
 			}
 
 			return writer.ToString();
@@ -118,7 +122,7 @@ public static class XmlSerialization
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SerializeToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file)
 	{
 		obj = obj.ArgumentNotNull();
@@ -140,7 +144,7 @@ public static class XmlSerialization
 		{
 			using (var xmlWriter = XmlWriter.Create(writer))
 			{
-				new XmlSerializer(obj.GetType()).Serialize(xmlWriter, obj);
+				GetSerializer(obj.GetType()).Serialize(xmlWriter, obj);
 			}
 		}
 	}
@@ -181,4 +185,13 @@ public static class XmlSerialization
 			}
 		}
 	}
+
+	/// <summary>
+	/// Returns a cached <see cref="XmlSerializer"/> for the specified type.
+	/// </summary>
+	/// <param name="type">The type to obtain a serializer for.</param>
+	/// <returns>A cached <see cref="XmlSerializer"/> instance.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static XmlSerializer GetSerializer([DisallowNull] Type type) =>
+		_serializerCache.GetOrAdd(type, static t => new XmlSerializer(t));
 }

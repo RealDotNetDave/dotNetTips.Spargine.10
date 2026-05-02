@@ -4,7 +4,7 @@
 // Created          : 03-15-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="ServiceHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -272,7 +272,10 @@ public static class ServiceHelper
 	[Information(nameof(StartServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static void StartServices([DisallowNull] in IEnumerable<string> requests, ILogger? logger = null)
 	{
-		requests.ToList().ForEach(request => StartService(request, logger: logger));
+		foreach (var request in requests.ArgumentNotNull())
+		{
+			_ = StartService(request, logger: logger);
+		}
 	}
 
 	/// <summary>
@@ -326,17 +329,17 @@ public static class ServiceHelper
 	[Information(nameof(StartStopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static void StartStopServices([DisallowNull] in IEnumerable<ServiceAction> requests, ILogger? logger = null)
 	{
-		requests.ToList().ForEach(request =>
-				{
-					if (request.ServiceActionRequest == ServiceActionRequest.Start)
-					{
-						request.ServiceActionResult = StartService(request.ServiceName!, logger: logger);
-					}
-					else if (request.ServiceActionRequest == ServiceActionRequest.Stop)
-					{
-						request.ServiceActionResult = StopService(request.ServiceName!, logger: logger);
-					}
-				});
+		foreach (var request in requests.ArgumentNotNull())
+		{
+			if (request.ServiceActionRequest == ServiceActionRequest.Start)
+			{
+				request.ServiceActionResult = StartService(request.ServiceName!, logger: logger);
+			}
+			else if (request.ServiceActionRequest == ServiceActionRequest.Stop)
+			{
+				request.ServiceActionResult = StopService(request.ServiceName!, logger: logger);
+			}
+		}
 	}
 
 	/// <summary>
@@ -445,7 +448,10 @@ public static class ServiceHelper
 	[Information(nameof(StopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static void StopServices([DisallowNull] IEnumerable<string> requests, ILogger? logger = null)
 	{
-		requests.ToList().ForEach(request => StopService(request, logger: logger));
+		foreach (var request in requests.ArgumentNotNull())
+		{
+			_ = StopService(request, logger: logger);
+		}
 	}
 
 
