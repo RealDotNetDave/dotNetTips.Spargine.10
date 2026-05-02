@@ -49,14 +49,15 @@ public static class FileHelper
 	private const int NoResult = -1;
 
 	/// <summary>
+	/// The singleton <see cref="HttpClient"/> used for all web download operations.
+	/// Initialized once at class load; never disposed so it remains valid for the lifetime of the process.
+	/// </summary>
+	private static readonly HttpClient _httpClient = new();
+
+	/// <summary>
 	/// The cached invalid file name characters used to avoid per-call array allocation in <see cref="FileHasInvalidChars"/>.
 	/// </summary>
 	private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars();
-
-	/// <summary>
-	/// The HTTP client used for web operations.
-	/// </summary>
-	private static HttpClient? _httpClient;
 
 	/// <summary>
 	/// Represents the method that will be called by a file copy operation to provide progress updates.
@@ -383,7 +384,7 @@ public static class FileHelper
 	/// await FileHelper.DownloadFileFromWebAsync(remoteFileUrl, destinationDir);
 	/// </code>
 	/// </example>
-	[Information(nameof(DownloadFileFromWebAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DownloadFileFromWebAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<SimpleResult<int>> DownloadFileFromWebAsync([DisallowNull] Uri remoteUri, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		remoteUri = remoteUri.ArgumentNotNull();
@@ -400,9 +401,8 @@ public static class FileHelper
 
 		return await ExecutionHelper.ProgressiveRetryAsync(async () =>
 		{
-			using var client = GetHttpClient();
 			// ResponseHeadersRead starts streaming immediately instead of buffering the entire response body
-			using var response = await client.GetAsync(remoteUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+			using var response = await _httpClient.GetAsync(remoteUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
 			using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
 			using var localStream = new FileStream(pathName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
 
@@ -695,15 +695,6 @@ public static class FileHelper
 		return allow && !deny;
 	}
 
-	/// <summary>
-	/// Retrieves a singleton instance of <see cref="HttpClient"/> for use in file operations.
-	/// </summary>
-	/// <returns>A singleton instance of <see cref="HttpClient"/>.</returns>
-	/// <remarks>
-	/// This method ensures that a single instance of <see cref="HttpClient"/> is reused across the application,
-	/// which is a recommended practice for efficient network resource utilization.
-	/// </remarks>
-	private static HttpClient GetHttpClient() => _httpClient ??= new HttpClient();
 
 	/// <summary>
 	/// Attempts to delete a single file, returning <c>true</c> on success.

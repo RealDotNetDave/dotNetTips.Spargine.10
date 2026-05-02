@@ -653,6 +653,31 @@ public class FileHelperTests
 	}
 
 	[TestMethod]
+	public async Task DownloadFileFromWebAsync_RepeatNullArgCalls_DoNotThrowObjectDisposedException()
+	{
+		// Validates that the shared HttpClient singleton is never disposed between calls.
+		// With the old `using var client = GetHttpClient()` pattern the second call would throw
+		// ObjectDisposedException because the singleton was disposed after the first call.
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.DownloadFileFromWebAsync_RepeatNullArgCalls_DoNotThrowObjectDisposedException)));
+
+		try
+		{
+			// First call — hits the argument guard, exits before any HTTP work.
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAsync(null, destination));
+
+			// Second call — must also throw ArgumentNullException, NOT ObjectDisposedException.
+			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAsync(null, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
 	public async Task DownloadFileFromWebAsyncNullDestinationTest()
 	{
 		var remoteUri = new Uri("https://example.com/test.zip");
