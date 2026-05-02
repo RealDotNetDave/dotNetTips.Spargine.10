@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -153,12 +153,7 @@ public static class FileHelper
 
 		var rules = access.GetAccessRules(true, true, typeof(SecurityIdentifier));
 
-		if (rules is null)
-		{
-			return false;
-		}
-
-		return EvaluateAccessRules(rules, permission);
+		return rules is null ? false : EvaluateAccessRules(rules, permission);
 	}
 
 	/// <summary>

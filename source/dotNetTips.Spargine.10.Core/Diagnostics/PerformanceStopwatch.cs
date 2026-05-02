@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatch.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1597,7 +1597,7 @@ public sealed class PerformanceStopwatch : Stopwatch
 	[Information(nameof(GetDiagnosticMessages), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlyCollection<string> GetDiagnosticMessages()
 	{
-		return new ReadOnlyCollection<string>(this.Diagnostics.Select(d => d.ToString()).ToList());
+		return new ReadOnlyCollection<string>([.. this.Diagnostics.Select(d => d.ToString())]);
 	}
 
 	/// <summary>

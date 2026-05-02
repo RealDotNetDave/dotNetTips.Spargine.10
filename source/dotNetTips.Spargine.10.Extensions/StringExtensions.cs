@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -47,12 +47,6 @@ public static class StringExtensions
 	private const string UrlSeparator = "://";
 
 	/// <summary>
-	/// A <see cref="ReadOnlySpan{T}"/> view of <see cref="UrlSeparator"/> for span-based search operations,
-	/// avoiding CA1303 by not calling <see cref="System.MemoryExtensions.AsSpan(string?)"/> on a literal.
-	/// </summary>
-	private static ReadOnlySpan<char> UrlSeparatorSpan => [':', '/', '/'];
-
-	/// <summary>
 	/// Provides a static instance of the <see cref="ASCIIEncoding"/> class for use throughout the StringExtensions class.
 	/// This encoding is used for operations that require ASCII character encoding.
 	/// </summary>
@@ -63,6 +57,12 @@ public static class StringExtensions
 	/// </summary>
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
+
+	/// <summary>
+	/// A <see cref="ReadOnlySpan{T}"/> view of <see cref="UrlSeparator"/> for span-based search operations,
+	/// avoiding CA1303 by not calling <see cref="MemoryExtensions.AsSpan(string?)"/> on a literal.
+	/// </summary>
+	private static ReadOnlySpan<char> UrlSeparatorSpan => [':', '/', '/'];
 
 	/// <summary>
 	/// Calculates the exact number of bytes required to encode the specified <paramref name="input"/> string
@@ -1686,30 +1686,6 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the hash of the given <paramref name="input"/> string using the specified <paramref name="hashType"/> algorithm.
-	/// </summary>
-	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
-	/// <param name="hashType">The hash algorithm type to use for computing the hash.</param>
-	/// <returns>A byte array containing the computed hash of the input string.</returns>
-	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
-	/// <exception cref="InvalidOperationException">Thrown if the specified hash algorithm is not supported.</exception>
-	/// <remarks>
-	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hash.
-	/// </remarks>
-	private static byte[] GetHash(string input, HashType hashType)
-	{
-		var inputBytes = Encoding.ASCII.GetBytes(input);
-
-		return hashType switch
-		{
-			HashType.SHA256 => SHA256.HashData(inputBytes),
-			HashType.SHA384 => SHA384.HashData(inputBytes),
-			HashType.SHA512 => SHA512.HashData(inputBytes),
-			_ => [],
-		};
-	}
-
-	/// <summary>
 	/// Appends all <paramref name="args"/> to <paramref name="sb"/>, separated by <paramref name="delimiter"/>
 	/// or followed by a line feed when <paramref name="addLineFeed"/> is <c>true</c>.
 	/// </summary>
@@ -1793,6 +1769,12 @@ public static class StringExtensions
 	}
 
 	/// <summary>
+	/// Computes the trimmed length of <paramref name="span"/> by removing leading and trailing whitespace.
+	/// Returns 0 if the span is entirely whitespace.
+	/// </summary>
+	private static int ComputeTrimmedLength(ReadOnlySpan<char> span) => span.Trim().Length;
+
+	/// <summary>
 	/// Returns <c>true</c> if <paramref name="input"/> contains any of the <paramref name="characters"/>
 	/// using the specified <paramref name="comparison"/>.
 	/// </summary>
@@ -1810,12 +1792,6 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the trimmed length of <paramref name="span"/> by removing leading and trailing whitespace.
-	/// Returns 0 if the span is entirely whitespace.
-	/// </summary>
-	private static int ComputeTrimmedLength(ReadOnlySpan<char> span) => span.Trim().Length;
-
-	/// <summary>
 	/// Extracts the host and port from a <paramref name="hostAndPort"/> span.
 	/// Defaults the port to <c>"443"</c> when no port separator (<c>:</c>) is found.
 	/// </summary>
@@ -1826,6 +1802,30 @@ public static class StringExtensions
 		var port = portIndex >= 0 ? hostAndPort[(portIndex + 1)..].ToString() : "443";
 
 		return (host, port);
+	}
+
+	/// <summary>
+	/// Computes the hash of the given <paramref name="input"/> string using the specified <paramref name="hashType"/> algorithm.
+	/// </summary>
+	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
+	/// <param name="hashType">The hash algorithm type to use for computing the hash.</param>
+	/// <returns>A byte array containing the computed hash of the input string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="input"/> is null.</exception>
+	/// <exception cref="InvalidOperationException">Thrown if the specified hash algorithm is not supported.</exception>
+	/// <remarks>
+	/// This method utilizes the <see cref="HashAlgorithm"/> class to compute the hash.
+	/// </remarks>
+	private static byte[] GetHash(string input, HashType hashType)
+	{
+		var inputBytes = Encoding.ASCII.GetBytes(input);
+
+		return hashType switch
+		{
+			HashType.SHA256 => SHA256.HashData(inputBytes),
+			HashType.SHA384 => SHA384.HashData(inputBytes),
+			HashType.SHA512 => SHA512.HashData(inputBytes),
+			_ => [],
+		};
 	}
 
 	/// <summary>

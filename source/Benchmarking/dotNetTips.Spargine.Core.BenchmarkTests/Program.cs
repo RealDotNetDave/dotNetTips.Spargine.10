@@ -4,14 +4,14 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-25-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary>
-// Benchmark Runtime: 11:00
-// Benchmark count: 1,275 benchmarks.
+// Benchmark Runtime: 11:15
+// Benchmark count: 1,278 benchmarks.
 // </summary>
 // ***********************************************************************
 
@@ -44,11 +44,11 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		//BenchmarkHelper.RunAllBenchmarks(config);
+		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-		  typeof(TypeHelperBenchmark));
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//  typeof(TypeHelperBenchmark));
 
 	}
 }

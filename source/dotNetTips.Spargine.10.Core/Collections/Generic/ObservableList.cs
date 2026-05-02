@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-12-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-01-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="ObservableList.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -848,6 +848,28 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	}
 
 	/// <summary>
+	/// Collects items from <paramref name="items"/> that are not <see langword="null"/> and not already present in the set.
+	/// </summary>
+	/// <param name="items">The candidate items to filter.</param>
+	/// <returns>A <see cref="List{T}"/> of items eligible to be added.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private List<T> CollectItemsToAdd(IEnumerable<T> items)
+	{
+		return [.. items.Where(item => item is not null && !this._set.Contains(item))];
+	}
+
+	/// <summary>
+	/// Collects items from <paramref name="items"/> that are not <see langword="null"/> and are currently present in the set.
+	/// </summary>
+	/// <param name="items">The candidate items to filter.</param>
+	/// <returns>A <see cref="List{T}"/> of items eligible to be removed.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private List<T> CollectItemsToRemove(IEnumerable<T> items)
+	{
+		return [.. items.Where(item => item is not null && this._set.Contains(item))];
+	}
+
+	/// <summary>
 	/// Called when the collection changes.
 	/// </summary>
 	/// <param name="action">The action that caused the collection change.</param>
@@ -872,28 +894,6 @@ public class ObservableList<T> : ISet<T>, IReadOnlyCollection<T>, INotifyCollect
 	private void OnCollectionChanged(IList newItems, IList oldItems)
 	{
 		this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newItems, oldItems));
-	}
-
-	/// <summary>
-	/// Collects items from <paramref name="items"/> that are not <see langword="null"/> and not already present in the set.
-	/// </summary>
-	/// <param name="items">The candidate items to filter.</param>
-	/// <returns>A <see cref="List{T}"/> of items eligible to be added.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private List<T> CollectItemsToAdd(IEnumerable<T> items)
-	{
-		return items.Where(item => item is not null && !this._set.Contains(item)).ToList();
-	}
-
-	/// <summary>
-	/// Collects items from <paramref name="items"/> that are not <see langword="null"/> and are currently present in the set.
-	/// </summary>
-	/// <param name="items">The candidate items to filter.</param>
-	/// <returns>A <see cref="List{T}"/> of items eligible to be removed.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private List<T> CollectItemsToRemove(IEnumerable<T> items)
-	{
-		return items.Where(item => item is not null && this._set.Contains(item)).ToList();
 	}
 
 	/// <summary>

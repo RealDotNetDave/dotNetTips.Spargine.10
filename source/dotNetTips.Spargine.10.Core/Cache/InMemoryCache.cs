@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-13-2024
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -742,7 +742,7 @@ public sealed class InMemoryCache
 	{
 		key = key.ArgumentNotNullOrEmpty();
 
-		return this.TryGetValueCore<T>(key, out value);
+		return this.TryGetValueCore(key, out value);
 	}
 
 	/// <summary>
@@ -847,7 +847,7 @@ public sealed class InMemoryCache
 	{
 		key = key.ArgumentNotNullOrEmpty();
 
-		return this.TryGetValueCore<T>(key, out value);
+		return this.TryGetValueCore(key, out value);
 	}
 
 	/// <summary>
@@ -913,6 +913,8 @@ public sealed class InMemoryCache
 	/// <param name="key">The cache key to look up.</param>
 	/// <param name="value">The cached value of type <typeparamref name="T"/>, or <c>default</c> when not found.</param>
 	/// <returns><c>true</c> if an item of type <typeparamref name="T"/> was found; otherwise <c>false</c>.</returns>
-	private bool TryGetValueCore<T>(string key, out T? value) =>
-		this.Cache.TryGetValue<T>(key, out value);
+	private bool TryGetValueCore<T>(string key, out T? value)
+	{
+		return this.Cache.TryGetValue(key, out value);
+	}
 }

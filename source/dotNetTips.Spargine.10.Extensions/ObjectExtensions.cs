@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -228,39 +228,143 @@ public static class ObjectExtensions
 		}
 	}
 
-
-	/// <summary>
-	/// Processes the <see cref="IEnumerable" /> to dispose items if they implement <see cref="IDisposable" />.
-	/// </summary>
-	/// <typeparam name="T">The type of the items in the collection, constrained to <see cref="IDisposable" />.</typeparam>
-	/// <param name="items">The collection of items to dispose. If null, the method returns without doing anything.</param>
+	/// <summary>Adds an error placeholder entry when <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ProcessCollectionToDispose), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void ProcessCollectionToDispose<T>([AllowNull] IEnumerable<T> items) where T : IDisposable
+	[Information(nameof(AddPropertyError), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AddPropertyError(Dictionary<string, string> properties, PropertyInfo property, string typeName, bool ignoreNulls, string errorTypeName)
 	{
-		if (items is null)
+		if (!ignoreNulls)
 		{
-			return;
-		}
-
-		foreach (var item in items.OfType<IDisposable>())
-		{
-			item.Dispose();
+			var propertyName = string.IsNullOrEmpty(typeName) ? property.Name : $"{typeName}.{property.Name}";
+			properties[propertyName] = $"[Error: {errorTypeName}]";
 		}
 	}
 
-	// -------------------------------------------------------------------------
-	// Private static helpers – extracted to reduce cyclomatic complexity of
-	// the public methods above and inside the extension block below.
-	// -------------------------------------------------------------------------
+	/// <summary>Adds a single property value (or empty string for null) to <paramref name="properties"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddSelectedPropertyValueCore), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AddSelectedPropertyValueCore(Dictionary<string, string> properties, PropertyInfo property, object obj, string typeName, bool ignoreNulls)
+	{
+		var value = property.GetValue(obj);
+		var propertyName = BuildPropertyName(property.Name, typeName);
+		SetPropertyValue(properties, propertyName, value, ignoreNulls);
+	}
+
+	/// <summary>Builds a fields dictionary for a complex (non-enumerable, non-built-in) object.</summary>
+	[RequiresUnreferencedCode("Uses reflection to enumerate and read type fields.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildComplexTypeFieldsDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static ReadOnlyDictionary<string, string> BuildComplexTypeFieldsDictionary(string memberName, object obj, Type objectType, bool ignoreEmptyValues)
+	{
+		var result = new Dictionary<string, string>();
+		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
+
+		// DON'T USE SPAN HERE
+		foreach (var field in objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+			.Where(static f => !f.IsDefined(typeof(CompilerGeneratedAttribute), false)))
+		{
+			TryMergeFieldToResult(result, field, obj, newMemberName, ignoreEmptyValues);
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>Builds a properties dictionary for a complex (non-enumerable, non-built-in) object.</summary>
+	[RequiresUnreferencedCode("Uses reflection to enumerate and read type properties.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildComplexTypePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static ReadOnlyDictionary<string, string> BuildComplexTypePropertiesDictionary(string memberName, object obj, bool ignoreNulls)
+	{
+		var result = new Dictionary<string, string>();
+		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
+
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
+		foreach (var property in obj.GetType().GetProperties().Where(static p => p.GetAttribute<JsonIgnoreAttribute>() == null))
+#pragma warning restore IL2070
+		{
+			TryMergePropertyToResult(result, property, obj, newMemberName, ignoreNulls);
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>Builds a fields dictionary for an <see cref="IEnumerable"/> object using indexed keys.</summary>
+	[RequiresUnreferencedCode("Recursively calls FieldsToDictionary which uses reflection.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildEnumerableFieldsDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static ReadOnlyDictionary<string, string> BuildEnumerableFieldsDictionary(string memberName, IEnumerable items, bool ignoreEmptyValues)
+	{
+		var result = new Dictionary<string, string>();
+		var itemCount = 0;
+
+		foreach (var item in items)
+		{
+			var itemInnerMember = $"{memberName}[{itemCount++.ToString(CultureInfo.CurrentCulture)}]";
+			MergeFieldsDictionaryToResult(result, item.FieldsToDictionary(itemInnerMember, ignoreEmptyValues), ignoreEmptyValues);
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>Builds a properties dictionary for an <see cref="IEnumerable"/> object using indexed keys.</summary>
+	[RequiresUnreferencedCode("Recursively calls PropertiesToDictionary which uses reflection.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildEnumerablePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static ReadOnlyDictionary<string, string> BuildEnumerablePropertiesDictionary(string memberName, IEnumerable items)
+	{
+		var result = new Dictionary<string, string>();
+		var itemCount = 0;
+
+		foreach (var item in items)
+		{
+			var itemInnerMember = FastStringBuilder.Format($"{{0}}[{{1}}]", memberName, itemCount++.ToString(CultureInfo.CurrentCulture));
+			TryMergeItemProperties(result, item, itemInnerMember);
+		}
+
+		return result.AsReadOnly();
+	}
+
+	/// <summary>Builds a key=value formatted string from a properties dictionary.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildKeyValueString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static string BuildKeyValueString(IReadOnlyDictionary<string, string> properties, string? header, string sequenceSeparator, char keyValueSeparator)
+	{
+		var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
+
+		return result!.StartsWith(sequenceSeparator, StringComparison.CurrentCulture) ? result[sequenceSeparator.Length..] : result;
+	}
+
+	/// <summary>Builds a dot-qualified property name from its simple name and an optional type prefix.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildPropertyName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static string BuildPropertyName(string name, string typeName)
+	{
+		return string.IsNullOrEmpty(typeName) ? name : $"{typeName}.{name}";
+	}
+
+	/// <summary>Builds a dictionary from the properties selected by <paramref name="propertySelector"/>.</summary>
+	[RequiresUnreferencedCode("Uses reflection to enumerate type properties.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static Dictionary<string, string> BuildSelectedPropertiesDictionary(object obj, Func<PropertyInfo, bool> propertySelector, string typeName, bool ignoreNulls)
+	{
+		var properties = new Dictionary<string, string>();
+
+#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
+		var allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+#pragma warning restore IL2070
+
+		foreach (var property in allProperties.Where(propertySelector))
+		{
+			TryAddSelectedPropertyValue(properties, property, obj, typeName, ignoreNulls);
+		}
+
+		return properties;
+	}
 
 	/// <summary>Disposes a single field of an object when its runtime value implements <see cref="IEnumerable{T}"/> of <see cref="IDisposable"/> or <see cref="IDisposable"/> directly.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DisposeField),
-		UnitTestStatus      = UnitTestStatus.NotRequired,
-		OptimizationStatus  = OptimizationStatus.NotRequired,
-		BenchmarkStatus     = BenchmarkStatus.NotRequired,
-		Status              = Status.Available)]
+	[Information(nameof(DisposeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void DisposeField(FieldInfo field, IDisposable obj)
 	{
 		var fieldValue = field.GetValue(obj);
@@ -296,32 +400,6 @@ public static class ObjectExtensions
 		}
 	}
 
-	/// <summary>Initializes a single field to its default value when it is null and not a value type.</summary>
-	[RequiresUnreferencedCode("Uses Activator.CreateInstance to construct field default values.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryInitializeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void TryInitializeField(FieldInfo field, object obj)
-	{
-		if (field.GetValue(obj) == null && !field.FieldType.IsValueType)
-		{
-			var defaultValue = Activator.CreateInstance(field.FieldType, true);
-			field.SetValue(obj, defaultValue);
-		}
-	}
-
-	/// <summary>Resolves the type-name prefix used by <c>PropertiesToString</c> and <c>FieldsToString</c>.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ResolveStringTypeName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static string ResolveStringTypeName(string typeName, bool includeMemberName)
-	{
-		if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
-		{
-			return Item;
-		}
-
-		return includeMemberName ? typeName : string.Empty;
-	}
-
 	/// <summary>Returns a new <see cref="ReadOnlyDictionary{TKey,TValue}"/> with empty-value entries removed.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(FilterEmptyProperties), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
@@ -341,190 +419,19 @@ public static class ObjectExtensions
 			.ToDictionary(static pair => pair.Key, static pair => pair.Value);
 	}
 
-	/// <summary>Builds a key=value formatted string from a properties dictionary.</summary>
+	/// <summary>Merges source fields-dictionary entries into <paramref name="result"/>, filtering empty values when requested.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildKeyValueString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static string BuildKeyValueString(IReadOnlyDictionary<string, string> properties, string? header, string sequenceSeparator, char keyValueSeparator)
+	[Information(nameof(MergeFieldsDictionaryToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void MergeFieldsDictionaryToResult(Dictionary<string, string> result, ReadOnlyDictionary<string, string> source, bool ignoreEmptyValues)
 	{
-		var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
-
-		return result!.StartsWith(sequenceSeparator, StringComparison.CurrentCulture) ? result[sequenceSeparator.Length..] : result;
-	}
-
-	/// <summary>Builds a dictionary from the properties selected by <paramref name="propertySelector"/>.</summary>
-	[RequiresUnreferencedCode("Uses reflection to enumerate type properties.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static Dictionary<string, string> BuildSelectedPropertiesDictionary(object obj, Func<PropertyInfo, bool> propertySelector, string typeName, bool ignoreNulls)
-	{
-		var properties = new Dictionary<string, string>();
-
-#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
-		var allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-#pragma warning restore IL2070
-
-		foreach (var property in allProperties.Where(propertySelector))
+		foreach (var kvp in source)
 		{
-			TryAddSelectedPropertyValue(properties, property, obj, typeName, ignoreNulls);
-		}
-
-		return properties;
-	}
-
-	/// <summary>Tries to add a selected property's value to <paramref name="properties"/>, swallowing retrieval exceptions.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAddSelectedPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void TryAddSelectedPropertyValue(Dictionary<string, string> properties, PropertyInfo property, object obj, string typeName, bool ignoreNulls)
-	{
-		try
-		{
-			AddSelectedPropertyValueCore(properties, property, obj, typeName, ignoreNulls);
-		}
-#pragma warning disable CA1031 // Intentionally broad: property reflection may throw unpredictably; value is best-effort
-		catch (Exception ex)
-#pragma warning restore CA1031
-		{
-			AddPropertyError(properties, property, typeName, ignoreNulls, ex.GetType().Name);
-		}
-	}
-
-	/// <summary>Adds a single property value (or empty string for null) to <paramref name="properties"/>.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddSelectedPropertyValueCore), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void AddSelectedPropertyValueCore(Dictionary<string, string> properties, PropertyInfo property, object obj, string typeName, bool ignoreNulls)
-	{
-		var value = property.GetValue(obj);
-		var propertyName = BuildPropertyName(property.Name, typeName);
-		SetPropertyValue(properties, propertyName, value, ignoreNulls);
-	}
-
-	/// <summary>Builds a dot-qualified property name from its simple name and an optional type prefix.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildPropertyName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static string BuildPropertyName(string name, string typeName)
-	{
-		return string.IsNullOrEmpty(typeName) ? name : $"{typeName}.{name}";
-	}
-
-	/// <summary>Writes the string representation of <paramref name="value"/> into <paramref name="properties"/>, or an empty string when null and <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SetPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void SetPropertyValue(Dictionary<string, string> properties, string propertyName, object? value, bool ignoreNulls)
-	{
-		if (value is null)
-		{
-			SetNullPropertyValue(properties, propertyName, ignoreNulls);
-		}
-		else
-		{
-			properties[propertyName] = value.ToString()!;
-		}
-	}
-
-	/// <summary>Writes an empty string for a null property when <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SetNullPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void SetNullPropertyValue(Dictionary<string, string> properties, string propertyName, bool ignoreNulls)
-	{
-		if (!ignoreNulls)
-		{
-			properties[propertyName] = string.Empty;
-		}
-	}
-
-	/// <summary>Adds an error placeholder entry when <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddPropertyError), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void AddPropertyError(Dictionary<string, string> properties, PropertyInfo property, string typeName, bool ignoreNulls, string errorTypeName)
-	{
-		if (!ignoreNulls)
-		{
-			var propertyName = string.IsNullOrEmpty(typeName) ? property.Name : $"{typeName}.{property.Name}";
-			properties[propertyName] = $"[Error: {errorTypeName}]";
-		}
-	}
-
-	/// <summary>Returns <c>true</c> when <c>PropertiesToDictionary</c> should return a null-placeholder entry.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ShouldReturnNullPlaceholder), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static bool ShouldReturnNullPlaceholder(string memberName, object? obj, bool ignoreNulls)
-	{
-		return memberName.HasValue() && obj is null && ignoreNulls is false;
-	}
-
-	/// <summary>Builds a properties dictionary for an <see cref="IEnumerable"/> object using indexed keys.</summary>
-	[RequiresUnreferencedCode("Recursively calls PropertiesToDictionary which uses reflection.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildEnumerablePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static ReadOnlyDictionary<string, string> BuildEnumerablePropertiesDictionary(string memberName, IEnumerable items)
-	{
-		var result = new Dictionary<string, string>();
-		var itemCount = 0;
-
-		foreach (var item in items)
-		{
-			var itemInnerMember = FastStringBuilder.Format($"{{0}}[{{1}}]", memberName, itemCount++.ToString(CultureInfo.CurrentCulture));
-			TryMergeItemProperties(result, item, itemInnerMember);
-		}
-
-		return result.AsReadOnly();
-	}
-
-	/// <summary>Tries to merge the properties of one enumerable item into <paramref name="result"/>, swallowing exceptions.</summary>
-	[RequiresUnreferencedCode("Calls PropertiesToDictionary which uses reflection.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryMergeItemProperties), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void TryMergeItemProperties(Dictionary<string, string> result, object item, string itemMemberName)
-	{
-		try
-		{
-			foreach (var kvp in item.PropertiesToDictionary(itemMemberName))
+			if (ShouldSkipEmptyEntry(kvp.Value, ignoreEmptyValues))
 			{
-				result[kvp.Key] = kvp.Value;
+				continue;
 			}
-		}
-#pragma warning disable CA1031 // Intentionally broad: item reflection may throw unpredictably; value is best-effort
-		catch (Exception ex)
-#pragma warning restore CA1031
-		{
-			Trace.WriteLine(ex.Message);
-		}
-	}
 
-	/// <summary>Builds a properties dictionary for a complex (non-enumerable, non-built-in) object.</summary>
-	[RequiresUnreferencedCode("Uses reflection to enumerate and read type properties.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildComplexTypePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static ReadOnlyDictionary<string, string> BuildComplexTypePropertiesDictionary(string memberName, object obj, bool ignoreNulls)
-	{
-		var result = new Dictionary<string, string>();
-		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
-
-#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
-		foreach (var property in obj.GetType().GetProperties().Where(static p => p.GetAttribute<JsonIgnoreAttribute>() == null))
-#pragma warning restore IL2070
-		{
-			TryMergePropertyToResult(result, property, obj, newMemberName, ignoreNulls);
-		}
-
-		return result.AsReadOnly();
-	}
-
-	/// <summary>Tries to merge one property's nested dictionary into <paramref name="result"/>, swallowing exceptions.</summary>
-	[RequiresUnreferencedCode("Calls PropertiesToDictionary which uses reflection.")]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryMergePropertyToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void TryMergePropertyToResult(Dictionary<string, string> result, PropertyInfo property, object obj, string memberPrefix, bool ignoreNulls)
-	{
-		try
-		{
-			MergePropertyValueToResult(result, property, obj, memberPrefix, ignoreNulls);
-		}
-#pragma warning disable CA1031 // Intentionally broad: property reflection may throw unpredictably; value is best-effort
-		catch (Exception ex)
-#pragma warning restore CA1031
-		{
-			Trace.WriteLine(ex.Message);
+			result[kvp.Key] = kvp.Value;
 		}
 	}
 
@@ -549,46 +456,92 @@ public static class ObjectExtensions
 		}
 	}
 
-	/// <summary>Returns <c>true</c> when a null value should be skipped because <paramref name="ignoreNulls"/> is <c>true</c>.</summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ShouldSkipNullValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static bool ShouldSkipNullValue(object? value, bool ignoreNulls)
-	{
-		return ignoreNulls && value is null;
-	}
 
-	/// <summary>Builds a fields dictionary for an <see cref="IEnumerable"/> object using indexed keys.</summary>
-	[RequiresUnreferencedCode("Recursively calls FieldsToDictionary which uses reflection.")]
+	/// <summary>
+	/// Processes the <see cref="IEnumerable" /> to dispose items if they implement <see cref="IDisposable" />.
+	/// </summary>
+	/// <typeparam name="T">The type of the items in the collection, constrained to <see cref="IDisposable" />.</typeparam>
+	/// <param name="items">The collection of items to dispose. If null, the method returns without doing anything.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildEnumerableFieldsDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static ReadOnlyDictionary<string, string> BuildEnumerableFieldsDictionary(string memberName, IEnumerable items, bool ignoreEmptyValues)
+	[Information(nameof(ProcessCollectionToDispose), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void ProcessCollectionToDispose<T>([AllowNull] IEnumerable<T> items) where T : IDisposable
 	{
-		var result = new Dictionary<string, string>();
-		var itemCount = 0;
-
-		foreach (var item in items)
+		if (items is null)
 		{
-			var itemInnerMember = $"{memberName}[{itemCount++.ToString(CultureInfo.CurrentCulture)}]";
-			MergeFieldsDictionaryToResult(result, item.FieldsToDictionary(itemInnerMember, ignoreEmptyValues), ignoreEmptyValues);
+			return;
 		}
 
-		return result.AsReadOnly();
+		foreach (var item in items.OfType<IDisposable>())
+		{
+			item.Dispose();
+		}
 	}
 
-	/// <summary>Merges source fields-dictionary entries into <paramref name="result"/>, filtering empty values when requested.</summary>
+	/// <summary>
+	/// Resolves the correct <see cref="ReadOnlyDictionary{TKey,TValue}"/> representation of <paramref name="obj"/>
+	/// based on whether it is a built-in type, an enumerable, or a complex object.
+	/// </summary>
+	[RequiresUnreferencedCode("Calls BuildComplexTypePropertiesDictionary which uses reflection.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(MergeFieldsDictionaryToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void MergeFieldsDictionaryToResult(Dictionary<string, string> result, ReadOnlyDictionary<string, string> source, bool ignoreEmptyValues)
+	[Information(nameof(ResolvePropertiesDictionary),
+		UnitTestStatus = UnitTestStatus.NotRequired,
+		OptimizationStatus = OptimizationStatus.NotRequired,
+		BenchmarkStatus = BenchmarkStatus.NotRequired,
+		Status = Status.Available)]
+	private static ReadOnlyDictionary<string, string> ResolvePropertiesDictionary(string memberName, object obj, bool ignoreNulls, Type objectType)
 	{
-		foreach (var kvp in source)
-		{
-			if (ShouldSkipEmptyEntry(kvp.Value, ignoreEmptyValues))
-			{
-				continue;
-			}
+		return _builtInTypeNames.ContainsKey(objectType)
+			? new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, obj.ToString()! } })
+			: objectType.IsEnumerable()
+				? BuildEnumerablePropertiesDictionary(memberName, (IEnumerable)obj)
+				: BuildComplexTypePropertiesDictionary(memberName, obj, ignoreNulls);
+	}
 
-			result[kvp.Key] = kvp.Value;
+	/// <summary>Resolves the type-name prefix used by <c>PropertiesToString</c> and <c>FieldsToString</c>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ResolveStringTypeName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static string ResolveStringTypeName(string typeName, bool includeMemberName)
+	{
+		if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
+		{
+			return Item;
 		}
+
+		return includeMemberName ? typeName : string.Empty;
+	}
+
+	/// <summary>Writes an empty string for a null property when <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SetNullPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void SetNullPropertyValue(Dictionary<string, string> properties, string propertyName, bool ignoreNulls)
+	{
+		if (!ignoreNulls)
+		{
+			properties[propertyName] = string.Empty;
+		}
+	}
+
+	/// <summary>Writes the string representation of <paramref name="value"/> into <paramref name="properties"/>, or an empty string when null and <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SetPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void SetPropertyValue(Dictionary<string, string> properties, string propertyName, object? value, bool ignoreNulls)
+	{
+		if (value is null)
+		{
+			SetNullPropertyValue(properties, propertyName, ignoreNulls);
+		}
+		else
+		{
+			properties[propertyName] = value.ToString()!;
+		}
+	}
+
+	/// <summary>Returns <c>true</c> when <c>PropertiesToDictionary</c> should return a null-placeholder entry.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ShouldReturnNullPlaceholder), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static bool ShouldReturnNullPlaceholder(string memberName, object? obj, bool ignoreNulls)
+	{
+		return memberName.HasValue() && obj is null && ignoreNulls is false;
 	}
 
 	/// <summary>Returns <c>true</c> when an empty-value entry should be skipped.</summary>
@@ -599,23 +552,42 @@ public static class ObjectExtensions
 		return ignoreEmptyValues && string.IsNullOrEmpty(value);
 	}
 
-	/// <summary>Builds a fields dictionary for a complex (non-enumerable, non-built-in) object.</summary>
-	[RequiresUnreferencedCode("Uses reflection to enumerate and read type fields.")]
+	/// <summary>Returns <c>true</c> when a null value should be skipped because <paramref name="ignoreNulls"/> is <c>true</c>.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildComplexTypeFieldsDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static ReadOnlyDictionary<string, string> BuildComplexTypeFieldsDictionary(string memberName, object obj, Type objectType, bool ignoreEmptyValues)
+	[Information(nameof(ShouldSkipNullValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static bool ShouldSkipNullValue(object? value, bool ignoreNulls)
 	{
-		var result = new Dictionary<string, string>();
-		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
+		return ignoreNulls && value is null;
+	}
 
-		// DON'T USE SPAN HERE
-		foreach (var field in objectType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-			.Where(static f => !f.IsDefined(typeof(CompilerGeneratedAttribute), false)))
+	/// <summary>Tries to add a selected property's value to <paramref name="properties"/>, swallowing retrieval exceptions.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryAddSelectedPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void TryAddSelectedPropertyValue(Dictionary<string, string> properties, PropertyInfo property, object obj, string typeName, bool ignoreNulls)
+	{
+		try
 		{
-			TryMergeFieldToResult(result, field, obj, newMemberName, ignoreEmptyValues);
+			AddSelectedPropertyValueCore(properties, property, obj, typeName, ignoreNulls);
 		}
+#pragma warning disable CA1031 // Intentionally broad: property reflection may throw unpredictably; value is best-effort
+		catch (Exception ex)
+#pragma warning restore CA1031
+		{
+			AddPropertyError(properties, property, typeName, ignoreNulls, ex.GetType().Name);
+		}
+	}
 
-		return result.AsReadOnly();
+	/// <summary>Initializes a single field to its default value when it is null and not a value type.</summary>
+	[RequiresUnreferencedCode("Uses Activator.CreateInstance to construct field default values.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryInitializeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void TryInitializeField(FieldInfo field, object obj)
+	{
+		if (field.GetValue(obj) == null && !field.FieldType.IsValueType)
+		{
+			var defaultValue = Activator.CreateInstance(field.FieldType, true);
+			field.SetValue(obj, defaultValue);
+		}
 	}
 
 	/// <summary>Reads a field value and merges its nested entries into <paramref name="result"/>.</summary>
@@ -635,24 +607,43 @@ public static class ObjectExtensions
 		MergeFieldsDictionaryToResult(result, innerObject.FieldsToDictionary(innerMember, ignoreEmptyValues), ignoreEmptyValues);
 	}
 
-	/// <summary>
-	/// Resolves the correct <see cref="ReadOnlyDictionary{TKey,TValue}"/> representation of <paramref name="obj"/>
-	/// based on whether it is a built-in type, an enumerable, or a complex object.
-	/// </summary>
-	[RequiresUnreferencedCode("Calls BuildComplexTypePropertiesDictionary which uses reflection.")]
+	/// <summary>Tries to merge the properties of one enumerable item into <paramref name="result"/>, swallowing exceptions.</summary>
+	[RequiresUnreferencedCode("Calls PropertiesToDictionary which uses reflection.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ResolvePropertiesDictionary),
-		UnitTestStatus      = UnitTestStatus.NotRequired,
-		OptimizationStatus  = OptimizationStatus.NotRequired,
-		BenchmarkStatus     = BenchmarkStatus.NotRequired,
-		Status              = Status.Available)]
-	private static ReadOnlyDictionary<string, string> ResolvePropertiesDictionary(string memberName, object obj, bool ignoreNulls, Type objectType)
+	[Information(nameof(TryMergeItemProperties), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void TryMergeItemProperties(Dictionary<string, string> result, object item, string itemMemberName)
 	{
-		return _builtInTypeNames.ContainsKey(objectType)
-			? new ReadOnlyDictionary<string, string>(new Dictionary<string, string> { { memberName, obj.ToString()! } })
-			: objectType.IsEnumerable()
-				? BuildEnumerablePropertiesDictionary(memberName, (IEnumerable)obj)
-				: BuildComplexTypePropertiesDictionary(memberName, obj, ignoreNulls);
+		try
+		{
+			foreach (var kvp in item.PropertiesToDictionary(itemMemberName))
+			{
+				result[kvp.Key] = kvp.Value;
+			}
+		}
+#pragma warning disable CA1031 // Intentionally broad: item reflection may throw unpredictably; value is best-effort
+		catch (Exception ex)
+#pragma warning restore CA1031
+		{
+			Trace.WriteLine(ex.Message);
+		}
+	}
+
+	/// <summary>Tries to merge one property's nested dictionary into <paramref name="result"/>, swallowing exceptions.</summary>
+	[RequiresUnreferencedCode("Calls PropertiesToDictionary which uses reflection.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryMergePropertyToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void TryMergePropertyToResult(Dictionary<string, string> result, PropertyInfo property, object obj, string memberPrefix, bool ignoreNulls)
+	{
+		try
+		{
+			MergePropertyValueToResult(result, property, obj, memberPrefix, ignoreNulls);
+		}
+#pragma warning disable CA1031 // Intentionally broad: property reflection may throw unpredictably; value is best-effort
+		catch (Exception ex)
+#pragma warning restore CA1031
+		{
+			Trace.WriteLine(ex.Message);
+		}
 	}
 
 	/// <summary>

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-05-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="PasswordHasher.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -281,8 +281,9 @@ public static class PasswordHasher
 	/// <param name="password">The password to hash.</param>
 	/// <param name="algorithmType">The SHA or SHAKE algorithm variant to use.</param>
 	/// <returns>A base64-encoded string representing the hashed password.</returns>
-	private static string HashPasswordSHAOrShake(string password, HashAlgorithmType algorithmType) =>
-		algorithmType switch
+	private static string HashPasswordSHAOrShake(string password, HashAlgorithmType algorithmType)
+	{
+		return algorithmType switch
 		{
 			HashAlgorithmType.SHA256 => HashPasswordSHA256(password),
 			HashAlgorithmType.SHA3256 => HashPasswordSHA3(password, 256),
@@ -290,8 +291,11 @@ public static class PasswordHasher
 			HashAlgorithmType.SHA3512 => HashPasswordSHA3(password, 512),
 			HashAlgorithmType.Shake128 => HashPasswordShake(password, 128),
 			HashAlgorithmType.Shake256 => HashPasswordShake(password, 256),
+			HashAlgorithmType.PBKDF2 => throw new NotImplementedException(),
+			HashAlgorithmType.Argon2 => throw new NotImplementedException(),
 			_ => throw new NotSupportedException($"The algorithm {algorithmType} is not supported.")
 		};
+	}
 
 	/// <summary>
 	/// Verifies a hashed password using Argon2.
