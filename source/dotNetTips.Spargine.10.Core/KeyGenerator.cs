@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-30-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="KeyGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -228,7 +228,10 @@ public static class KeyGenerator
 	{
 		items = items.ArgumentItemsExists();
 
-		var keyItems = items.ToList();
+		// Pre-size: items + optional timestamp + generated key = items.Length + 1 or 2
+		var capacity = items.Length + (addTimeStamp ? 2 : 1);
+		var keyItems = new List<string>(capacity);
+		keyItems.AddRange(items);
 
 		if (addTimeStamp)
 		{

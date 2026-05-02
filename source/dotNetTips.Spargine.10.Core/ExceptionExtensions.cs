@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-04-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -146,7 +146,7 @@ public static partial class ExceptionExtensions
 		{
 			exception = exception.ArgumentNotNull();
 
-			return exception.FromHierarchy(ex => ex.InnerException!).Skip(1).ToList();
+			return exception.FromHierarchy(ex => ex.InnerException!).Skip(1).ToArray();
 		}
 
 		/// <summary>

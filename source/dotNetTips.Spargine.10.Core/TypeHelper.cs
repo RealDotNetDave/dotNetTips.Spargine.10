@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -80,6 +80,12 @@ public static class TypeHelper
 	private static HashSet<Type>? _builtInTypes;
 
 	/// <summary>
+	/// Cached <see cref="ReadOnlyCollection{Type}"/> wrapper around <see cref="_builtInTypes"/> to avoid
+	/// re-allocating a new collection on every access to <see cref="BuiltInTypes"/>.
+	/// </summary>
+	private static ReadOnlyCollection<Type>? _cachedBuiltInTypeCollection;
+
+	/// <summary>
 	/// A static field to cache the built-in .NET types.
 	/// </summary>
 	private static Dictionary<Type, string>? _cachedBuiltInTypes;
@@ -99,9 +105,12 @@ public static class TypeHelper
 				ComputeBuiltInTypes();
 			}
 
-			return _builtInTypes == null
-				? ReadOnlyCollection<Type>.Empty
-					: new ReadOnlyCollection<Type>([.. _builtInTypes]);
+			if (_builtInTypes == null)
+			{
+				return ReadOnlyCollection<Type>.Empty;
+			}
+
+			return _cachedBuiltInTypeCollection ??= new ReadOnlyCollection<Type>([.. _builtInTypes]);
 		}
 	}
 
@@ -176,8 +185,7 @@ public static class TypeHelper
 
 		// Add types from the System namespace
 		var systemTypes = Assembly.GetAssembly(typeof(int))?.GetTypes()
-			.Where(t => string.Equals(t.Namespace, "System", StringComparison.Ordinal) && t.IsPublic && !t.IsGenericType)
-			.ToList();
+			.Where(t => string.Equals(t.Namespace, "System", StringComparison.Ordinal) && t.IsPublic && !t.IsGenericType);
 
 		foreach (var type in systemTypes!)
 		{

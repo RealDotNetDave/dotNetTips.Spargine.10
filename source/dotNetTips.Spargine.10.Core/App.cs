@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -69,9 +69,11 @@ public static class App
 	private static readonly Lazy<ComputerInfo> _computerInfo = new(() => new ComputerInfo());
 
 	/// <summary>
-	/// The culture names
+	/// Per-culture-type cache of culture name collections, keyed by <see cref="CultureTypes"/>.
+	/// Using <see cref="ConcurrentDictionary{TKey,TValue}"/> ensures thread safety without locking
+	/// and correctly handles the different sets returned for each <see cref="CultureTypes"/> value.
 	/// </summary>
-	private static ReadOnlyCollection<string>? _cultureNames;
+	private static readonly ConcurrentDictionary<CultureTypes, ReadOnlyCollection<string>> _cultureNamesByType = new();
 
 	/// <summary>
 	/// Gets the application information.
@@ -503,7 +505,8 @@ public static class App
 	[Information(nameof(GetCultureNames), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetCultureNames(CultureTypes cultureType = CultureTypes.AllCultures)
 	{
-		return _cultureNames ??= new ReadOnlyCollection<string>([.. CultureInfo.GetCultures(cultureType).OrderBy(p => p.Name).Select(c => c.Name)]);
+		return _cultureNamesByType.GetOrAdd(cultureType,
+			ct => new ReadOnlyCollection<string>([.. CultureInfo.GetCultures(ct).OrderBy(p => p.Name).Select(c => c.Name)]));
 	}
 
 	/// <summary>
@@ -711,13 +714,14 @@ public static class App
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ReferencedAssemblies()
 	{
-		var entryAssembly = Assembly.GetEntryAssembly();
-		return entryAssembly == null
-			? throw new InvalidOperationException(Resources.EntryAssemblyIsNullUnableToRetrieveReferen)
-			: entryAssembly.GetReferencedAssemblies()
-							.Select(a => a.ToString())
-							.ToList()
-							.AsReadOnly();
+		var entryAssembly = Assembly.GetEntryAssembly()
+			?? throw new InvalidOperationException(Resources.EntryAssemblyIsNullUnableToRetrieveReferen);
+
+		var names = entryAssembly.GetReferencedAssemblies()
+			.Select(a => a.ToString())
+			.ToArray();
+
+		return Array.AsReadOnly(names);
 	}
 
 	/// <summary>
