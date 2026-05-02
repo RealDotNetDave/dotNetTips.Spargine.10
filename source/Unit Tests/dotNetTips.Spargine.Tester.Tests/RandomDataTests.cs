@@ -1516,6 +1516,43 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateWords_ConcurrentAccess_PooledCharBuffer_IsThreadSafe()
+	{
+		// Validate that the pooled char buffer introduced in Issue 4 is not shared
+		// across concurrent calls and produces correct word lengths under parallel load.
+		var exceptions = new ConcurrentBag<Exception>();
+
+		var tasks = Enumerable.Range(0, 64).Select(_ => Task.Run(() =>
+		{
+			try
+			{
+				const int WordCount = 20;
+				const int MinLength = 5;
+				const int MaxLength = 30;
+
+				var words = RandomData.GenerateWords(WordCount, MinLength, MaxLength);
+
+				Assert.AreEqual(WordCount, words.Count);
+
+				foreach (var word in words)
+				{
+					Assert.IsFalse(string.IsNullOrEmpty(word), "Generated word must not be null or empty.");
+					Assert.IsTrue(word.Length >= MinLength && word.Length <= MaxLength,
+						$"Word length {word.Length} is outside [{MinLength}, {MaxLength}].");
+				}
+			}
+			catch (Exception ex)
+			{
+				exceptions.Add(ex);
+			}
+		})).ToArray();
+
+		Task.WaitAll(tasks);
+
+		Assert.AreEqual(0, exceptions.Count, $"{exceptions.Count} exception(s) thrown: {string.Join("; ", exceptions.Select(e => e.Message))}");
+	}
+
+	[TestMethod]
 	public void GenerateWords_DefaultParameters_ReturnsWords()
 	{
 		var words = RandomData.GenerateWords();

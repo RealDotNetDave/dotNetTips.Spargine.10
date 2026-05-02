@@ -1333,11 +1333,15 @@ public static class RandomData
 
 		var (lengths, totalBytes) = ComputeWordLengths(count, minLength, maxLength);
 
-		var rentedBuffer = ArrayPool<byte>.Shared.Rent(totalBytes);
+		var rentedByteBuffer = ArrayPool<byte>.Shared.Rent(totalBytes);
+
+		// Rent a single char buffer sized to the largest word; reuse it for every word to
+		// avoid allocating a new char[] on each loop iteration (Issue 4).
+		var rentedCharBuffer = ArrayPool<char>.Shared.Rent(maxLength);
 
 		try
 		{
-			RandomNumberGenerator.Fill(rentedBuffer.AsSpan(0, totalBytes));
+			RandomNumberGenerator.Fill(rentedByteBuffer.AsSpan(0, totalBytes));
 
 			var strings = new string[count];
 			var byteOffset = 0;
@@ -1345,9 +1349,9 @@ public static class RandomData
 			for (var wordIndex = 0; wordIndex < count; wordIndex++)
 			{
 				var length = lengths[wordIndex];
-				var wordChars = new char[length];
-				FillWordChars(wordChars, rentedBuffer.AsSpan(byteOffset, length), minChar, range);
-				strings[wordIndex] = new string(wordChars);
+				var charSpan = rentedCharBuffer.AsSpan(0, length);
+				FillWordChars(charSpan, rentedByteBuffer.AsSpan(byteOffset, length), minChar, range);
+				strings[wordIndex] = new string(charSpan);
 				byteOffset += length;
 			}
 
@@ -1355,7 +1359,8 @@ public static class RandomData
 		}
 		finally
 		{
-			ArrayPool<byte>.Shared.Return(rentedBuffer);
+			ArrayPool<byte>.Shared.Return(rentedByteBuffer);
+			ArrayPool<char>.Shared.Return(rentedCharBuffer);
 		}
 	}
 
