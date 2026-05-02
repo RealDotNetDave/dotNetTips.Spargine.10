@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -52,6 +52,166 @@ public static class EnumerableExtensions
 	/// </summary>
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
+
+	/// <summary>
+	/// Builds and compiles a property accessor delegate for <typeparamref name="T"/> by name.
+	/// Returns a null-returning delegate if the property does not exist.
+	/// </summary>
+	/// <typeparam name="T">The element type whose property is accessed.</typeparam>
+	/// <param name="property">The name of the property to access.</param>
+	/// <returns>A compiled <see cref="Delegate"/> that retrieves the named property value.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static Delegate BuildPropertyAccessor<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(string property)
+	{
+		var prop = typeof(T).GetRuntimeProperty(property);
+
+		if (prop is null)
+		{
+			return new Func<T, object?>(_ => null);
+		}
+
+		var parameter = Expression.Parameter(typeof(T), "x");
+		var propertyAccess = Expression.Property(parameter, prop);
+		var conversion = Expression.Convert(propertyAccess, typeof(object));
+		var lambda = Expression.Lambda<Func<T, object?>>(conversion, parameter);
+		return lambda.Compile();
+	}
+
+	/// <summary>
+	/// Checks whether any item in <paramref name="items"/> is contained in <paramref name="collection"/>
+	/// by first materializing the collection into a <see cref="HashSet{T}"/> for O(n+m) performance.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The source collection to search.</param>
+	/// <param name="items">The items to look for.</param>
+	/// <returns><c>true</c> if any item is found; otherwise, <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static bool ContainsAnyInLargeCollection<T>([DisallowNull] ICollection<T> collection, [DisallowNull] ReadOnlyCollection<T> items)
+	{
+		var collectionSet = new HashSet<T>(collection);
+
+		foreach (var item in items)
+		{
+			if (collectionSet.Contains(item))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Checks whether any item in <paramref name="items"/> is contained in <paramref name="set"/>
+	/// using the set's O(1) <c>Contains</c> lookup.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="set">The <see cref="ISet{T}"/> to search.</param>
+	/// <param name="items">The items to look for.</param>
+	/// <returns><c>true</c> if any item is found; otherwise, <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static bool ContainsAnyInSet<T>([DisallowNull] ISet<T> set, [DisallowNull] ReadOnlyCollection<T> items)
+	{
+		foreach (var item in items)
+		{
+			if (set.Contains(item))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Determines whether an <see cref="ICollection{T}"/> contains duplicate elements.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="c">The collection to inspect.</param>
+	/// <param name="comparer">Optional equality comparer; <c>null</c> uses the default.</param>
+	/// <returns><c>true</c> if any duplicate element is found; otherwise, <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static bool HasDuplicatesInCollection<T>([DisallowNull] ICollection<T> c, [AllowNull] IEqualityComparer<T>? comparer)
+	{
+		if (c.Count <= 1)
+		{
+			return false;
+		}
+
+		var seenItems = new HashSet<T>(c.Count, comparer);
+
+		foreach (var item in c)
+		{
+			if (!seenItems.Add(item))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Checks whether <paramref name="collection"/> is an empty concurrent collection
+	/// (<see cref="ConcurrentBag{T}"/>, <see cref="ConcurrentQueue{T}"/>, or <see cref="ConcurrentStack{T}"/>).
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The collection to inspect.</param>
+	/// <returns>
+	/// <c>true</c> if the concurrent collection is empty, <c>false</c> if it is not empty,
+	/// or <c>null</c> if the collection is not a recognized concurrent type.
+	/// </returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static bool? TryIsEmptyConcurrent<T>([DisallowNull] IEnumerable<T> collection)
+	{
+		if (collection is ConcurrentBag<T> concurrentBag)
+		{
+			return concurrentBag.IsEmpty;
+		}
+
+		if (collection is ConcurrentQueue<T> concurrentQueue)
+		{
+			return concurrentQueue.IsEmpty;
+		}
+
+		if (collection is ConcurrentStack<T> concurrentStack)
+		{
+			return concurrentStack.IsEmpty;
+		}
+
+		return null;
+	}
+
+	/// <summary>
+	/// Checks whether <paramref name="collection"/> is an empty immutable collection
+	/// (<see cref="ImmutableList{T}"/>, <see cref="ImmutableHashSet{T}"/>, <see cref="ImmutableQueue{T}"/>,
+	/// <see cref="ImmutableStack{T}"/>, or <see cref="ImmutableSortedSet{T}"/>).
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The collection to inspect.</param>
+	/// <returns>
+	/// <c>true</c> if the immutable collection is empty, <c>false</c> if it is not empty,
+	/// or <c>null</c> if the collection is not a recognized immutable type.
+	/// </returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static bool? TryIsEmptyImmutable<T>([DisallowNull] IEnumerable<T> collection)
+	{
+		return collection switch
+		{
+			ImmutableList<T> l => l.IsEmpty,
+			ImmutableHashSet<T> h => h.IsEmpty,
+			ImmutableQueue<T> q => q.IsEmpty,
+			ImmutableStack<T> s => s.IsEmpty,
+			ImmutableSortedSet<T> ss => ss.IsEmpty,
+			_ => null,
+		};
+	}
 
 	/// <summary>
 	/// Provides optimized containment helpers for comparable sequences by supplying fast-path logic that
@@ -1077,7 +1237,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlyCollection<T> FastProcessor([DisallowNull] Func<T, T> action)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1098,7 +1258,7 @@ public static class EnumerableExtensions
 			}
 			else
 			{
-				var span = collection.ToList().AsReadOnlySpan();
+				ReadOnlySpan<T> span = collection.ToArray();
 				var itemCount = span.Length;
 				var resultArray = new T[itemCount];
 
@@ -1875,165 +2035,5 @@ public static class EnumerableExtensions
 				yield return item;
 			}
 		}
-	}
-
-	/// <summary>
-	/// Builds and compiles a property accessor delegate for <typeparamref name="T"/> by name.
-	/// Returns a null-returning delegate if the property does not exist.
-	/// </summary>
-	/// <typeparam name="T">The element type whose property is accessed.</typeparam>
-	/// <param name="property">The name of the property to access.</param>
-	/// <returns>A compiled <see cref="Delegate"/> that retrieves the named property value.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static Delegate BuildPropertyAccessor<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(string property)
-	{
-		var prop = typeof(T).GetRuntimeProperty(property);
-
-		if (prop is null)
-		{
-			return new Func<T, object?>(_ => null);
-		}
-
-		var parameter = Expression.Parameter(typeof(T), "x");
-		var propertyAccess = Expression.Property(parameter, prop);
-		var conversion = Expression.Convert(propertyAccess, typeof(object));
-		var lambda = Expression.Lambda<Func<T, object?>>(conversion, parameter);
-		return lambda.Compile();
-	}
-
-	/// <summary>
-	/// Checks whether any item in <paramref name="items"/> is contained in <paramref name="collection"/>
-	/// by first materializing the collection into a <see cref="HashSet{T}"/> for O(n+m) performance.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="collection">The source collection to search.</param>
-	/// <param name="items">The items to look for.</param>
-	/// <returns><c>true</c> if any item is found; otherwise, <c>false</c>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool ContainsAnyInLargeCollection<T>([DisallowNull] ICollection<T> collection, [DisallowNull] ReadOnlyCollection<T> items)
-	{
-		var collectionSet = new HashSet<T>(collection);
-
-		foreach (var item in items)
-		{
-			if (collectionSet.Contains(item))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/// <summary>
-	/// Checks whether any item in <paramref name="items"/> is contained in <paramref name="set"/>
-	/// using the set's O(1) <c>Contains</c> lookup.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="set">The <see cref="ISet{T}"/> to search.</param>
-	/// <param name="items">The items to look for.</param>
-	/// <returns><c>true</c> if any item is found; otherwise, <c>false</c>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool ContainsAnyInSet<T>([DisallowNull] ISet<T> set, [DisallowNull] ReadOnlyCollection<T> items)
-	{
-		foreach (var item in items)
-		{
-			if (set.Contains(item))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/// <summary>
-	/// Determines whether an <see cref="ICollection{T}"/> contains duplicate elements.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="c">The collection to inspect.</param>
-	/// <param name="comparer">Optional equality comparer; <c>null</c> uses the default.</param>
-	/// <returns><c>true</c> if any duplicate element is found; otherwise, <c>false</c>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool HasDuplicatesInCollection<T>([DisallowNull] ICollection<T> c, [AllowNull] IEqualityComparer<T>? comparer)
-	{
-		if (c.Count <= 1)
-		{
-			return false;
-		}
-
-		var seenItems = new HashSet<T>(c.Count, comparer);
-
-		foreach (var item in c)
-		{
-			if (!seenItems.Add(item))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/// <summary>
-	/// Checks whether <paramref name="collection"/> is an empty concurrent collection
-	/// (<see cref="ConcurrentBag{T}"/>, <see cref="ConcurrentQueue{T}"/>, or <see cref="ConcurrentStack{T}"/>).
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="collection">The collection to inspect.</param>
-	/// <returns>
-	/// <c>true</c> if the concurrent collection is empty, <c>false</c> if it is not empty,
-	/// or <c>null</c> if the collection is not a recognized concurrent type.
-	/// </returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool? TryIsEmptyConcurrent<T>([DisallowNull] IEnumerable<T> collection)
-	{
-		if (collection is ConcurrentBag<T> concurrentBag)
-		{
-			return concurrentBag.IsEmpty;
-		}
-
-		if (collection is ConcurrentQueue<T> concurrentQueue)
-		{
-			return concurrentQueue.IsEmpty;
-		}
-
-		if (collection is ConcurrentStack<T> concurrentStack)
-		{
-			return concurrentStack.IsEmpty;
-		}
-
-		return null;
-	}
-
-	/// <summary>
-	/// Checks whether <paramref name="collection"/> is an empty immutable collection
-	/// (<see cref="ImmutableList{T}"/>, <see cref="ImmutableHashSet{T}"/>, <see cref="ImmutableQueue{T}"/>,
-	/// <see cref="ImmutableStack{T}"/>, or <see cref="ImmutableSortedSet{T}"/>).
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="collection">The collection to inspect.</param>
-	/// <returns>
-	/// <c>true</c> if the immutable collection is empty, <c>false</c> if it is not empty,
-	/// or <c>null</c> if the collection is not a recognized immutable type.
-	/// </returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool? TryIsEmptyImmutable<T>([DisallowNull] IEnumerable<T> collection)
-	{
-		return collection switch
-		{
-			ImmutableList<T> l => l.IsEmpty,
-			ImmutableHashSet<T> h => h.IsEmpty,
-			ImmutableQueue<T> q => q.IsEmpty,
-			ImmutableStack<T> s => s.IsEmpty,
-			ImmutableSortedSet<T> ss => ss.IsEmpty,
-			_ => null,
-		};
 	}
 }
