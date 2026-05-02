@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
@@ -49,6 +49,11 @@ public static class FileHelper
 	private const int NoResult = -1;
 
 	/// <summary>
+	/// The cached invalid file name characters used to avoid per-call array allocation in <see cref="FileHasInvalidChars"/>.
+	/// </summary>
+	private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars();
+
+	/// <summary>
 	/// The HTTP client used for web operations.
 	/// </summary>
 	private static HttpClient? _httpClient;
@@ -80,7 +85,7 @@ public static class FileHelper
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get;
-	} = Path.GetInvalidFileNameChars().AsReadOnly();
+	} = _invalidFileNameChars.AsReadOnly();
 
 	/// <summary>
 	/// Adds the specified <see cref="FileAttributes"/> to a file.
@@ -414,12 +419,12 @@ public static class FileHelper
 	/// This method utilizes FileInfo.Name to retrieve the file's name and checks it against a list of invalid characters obtained from FileHelper.InvalidFileNameChars.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FileHasInvalidChars), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(FileHasInvalidChars), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool FileHasInvalidChars([DisallowNull] FileInfo file)
 	{
 		file = file.ArgumentNotNull();
 
-		return file.Name.IndexOfAny([.. InvalidFileNameChars]) != -1;
+		return file.Name.IndexOfAny(_invalidFileNameChars) != -1;
 	}
 
 	/// <summary>
