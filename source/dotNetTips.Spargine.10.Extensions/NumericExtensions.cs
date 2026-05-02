@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-19-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -52,6 +52,28 @@ public static class NumericExtensions
 	/// </summary>
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
+
+	/// <summary>
+	/// Word names for tens values (0, 10, 20, … 90), used by <see cref="ToWords"/>.
+	/// Declared as a static field to avoid re-allocation on every (recursive) call.
+	/// </summary>
+	private static readonly string[] _toWordsTens =
+	[
+		Resources.Zero, Resources.Ten, Resources.Twenty, Resources.Thirty, Resources.Forty,
+		Resources.Fifty, Resources.Sixty, Resources.Seventy, Resources.Eighty, Resources.Ninety
+	];
+
+	/// <summary>
+	/// Word names for values 0–19, used by <see cref="ToWords"/>.
+	/// Declared as a static field to avoid re-allocation on every (recursive) call.
+	/// </summary>
+	private static readonly string[] _toWordsUnits =
+	[
+		Resources.Zero, Resources.One, Resources.Two, Resources.Three, Resources.Four,
+		Resources.Five, Resources.Six, Resources.Seven, Resources.Eight, Resources.Nine,
+		Resources.Ten, Resources.Eleven, Resources.Twelve, Resources.Thirteen, Resources.Fourteen,
+		Resources.Fifteen, Resources.Sixteen, Resources.Seventeen, Resources.Eighteen, Resources.Nineteen
+	];
 
 	/// <summary>
 	/// Calculates the average of two double values.
@@ -197,7 +219,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string FormatTime(this double milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -207,22 +229,35 @@ public static class NumericExtensions
 		}
 
 		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+		var sb = _stringBuilderPool.Value.Get();
 
-		var parts = new List<string>(3);
-		if (timeSpan.Hours > 0)
+		try
 		{
-			parts.Add($"{timeSpan.Hours} hour{(timeSpan.Hours == 1 ? string.Empty : "s")}");
-		}
-		if (timeSpan.Minutes > 0)
-		{
-			parts.Add($"{timeSpan.Minutes} minute{(timeSpan.Minutes == 1 ? string.Empty : "s")}");
-		}
-		if (timeSpan.Seconds > 0 || parts.Count == 0)
-		{
-			parts.Add($"{timeSpan.Seconds} second{(timeSpan.Seconds == 1 ? string.Empty : "s")}");
-		}
+			if (timeSpan.Hours > 0)
+			{
+				_ = sb.Append(timeSpan.Hours).Append(timeSpan.Hours == 1 ? " hour" : " hours");
+			}
 
-		return string.Join(" ", parts);
+			if (timeSpan.Minutes > 0)
+			{
+				if (sb.Length > 0)
+				{ _ = sb.Append(ControlChars.Space); }
+				_ = sb.Append(timeSpan.Minutes).Append(timeSpan.Minutes == 1 ? " minute" : " minutes");
+			}
+
+			if (timeSpan.Seconds > 0 || sb.Length == 0)
+			{
+				if (sb.Length > 0)
+				{ _ = sb.Append(ControlChars.Space); }
+				_ = sb.Append(timeSpan.Seconds).Append(timeSpan.Seconds == 1 ? " second" : " seconds");
+			}
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb.Clear());
+		}
 	}
 
 	/// <summary>
@@ -232,7 +267,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string FormatTime(this long milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -241,25 +276,35 @@ public static class NumericExtensions
 		}
 
 		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+		var sb = _stringBuilderPool.Value.Get();
 
-		var parts = new List<string>(3);
-
-		if (timeSpan.Hours > 0)
+		try
 		{
-			parts.Add($"{timeSpan.Hours} hour{(timeSpan.Hours == 1 ? string.Empty : "s")}");
-		}
+			if (timeSpan.Hours > 0)
+			{
+				_ = sb.Append(timeSpan.Hours).Append(timeSpan.Hours == 1 ? " hour" : " hours");
+			}
 
-		if (timeSpan.Minutes > 0)
+			if (timeSpan.Minutes > 0)
+			{
+				if (sb.Length > 0)
+				{ _ = sb.Append(ControlChars.Space); }
+				_ = sb.Append(timeSpan.Minutes).Append(timeSpan.Minutes == 1 ? " minute" : " minutes");
+			}
+
+			if (timeSpan.Seconds > 0 || sb.Length == 0)
+			{
+				if (sb.Length > 0)
+				{ _ = sb.Append(ControlChars.Space); }
+				_ = sb.Append(timeSpan.Seconds).Append(timeSpan.Seconds == 1 ? " second" : " seconds");
+			}
+
+			return sb.ToString();
+		}
+		finally
 		{
-			parts.Add($"{timeSpan.Minutes} minute{(timeSpan.Minutes == 1 ? string.Empty : "s")}");
+			_stringBuilderPool.Value.Return(sb.Clear());
 		}
-
-		if (timeSpan.Seconds > 0 || parts.Count == 0)
-		{
-			parts.Add($"{timeSpan.Seconds} second{(timeSpan.Seconds == 1 ? string.Empty : "s")}");
-		}
-
-		return string.Join(" ", parts);
 	}
 
 	/// <summary>
@@ -955,7 +1000,7 @@ public static class NumericExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToWords), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToWords), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string ToWords(this int value)
 	{
 		if (value == 0)
@@ -965,29 +1010,28 @@ public static class NumericExtensions
 
 		if (value < 0)
 		{
-			return $"{Resources.Minus}{ControlChars.Space}{ToWords(Math.Abs(value))}";
+			return string.Concat(Resources.Minus, ControlChars.Space.ToString(), ToWords(Math.Abs(value)));
 		}
 
 		var sb = _stringBuilderPool.Value.Get();
 
 		try
 		{
-
 			if ((value / 1000000) > 0)
 			{
-				_ = sb.Append($"{ToWords(value / 1000000)}{ControlChars.Space}{Resources.Million}{ControlChars.Space}");
+				_ = sb.Append(ToWords(value / 1000000)).Append(ControlChars.Space).Append(Resources.Million).Append(ControlChars.Space);
 				value %= 1000000;
 			}
 
 			if ((value / 1000) > 0)
 			{
-				_ = sb.Append($"{ToWords(value / 1000)}{ControlChars.Space}{Resources.Thousand}{ControlChars.Space}");
+				_ = sb.Append(ToWords(value / 1000)).Append(ControlChars.Space).Append(Resources.Thousand).Append(ControlChars.Space);
 				value %= 1000;
 			}
 
 			if ((value / 100) > 0)
 			{
-				_ = sb.Append($"{ToWords(value / 100)}{ControlChars.Space}{Resources.Hundred}{ControlChars.Space}");
+				_ = sb.Append(ToWords(value / 100)).Append(ControlChars.Space).Append(Resources.Hundred).Append(ControlChars.Space);
 				value %= 100;
 			}
 
@@ -995,58 +1039,20 @@ public static class NumericExtensions
 			{
 				if (sb.Length > 0)
 				{
-					_ = sb.Append($"{Resources.AndLowerCase}{ControlChars.Space}");
+					_ = sb.Append(Resources.AndLowerCase).Append(ControlChars.Space);
 				}
-
-				var units = new[]
-				{
-				Resources.Zero,
-				Resources.One,
-				Resources.Two,
-				Resources.Three,
-				Resources.Four,
-				Resources.Five,
-				Resources.Six,
-				Resources.Seven,
-				Resources.Eight,
-				Resources.Nine,
-				Resources.Ten,
-				Resources.Eleven,
-				Resources.Twelve,
-				Resources.Thirteen,
-				Resources.Fourteen,
-				Resources.Fifteen,
-				Resources.Sixteen,
-				Resources.Seventeen,
-				Resources.Eighteen,
-				Resources.Nineteen
-			};
-
-				var tens = new[]
-				{
-				Resources.Zero,
-				Resources.Ten,
-				Resources.Twenty,
-				Resources.Thirty,
-				Resources.Forty,
-				Resources.Fifty,
-				Resources.Sixty,
-				Resources.Seventy,
-				Resources.Eighty,
-				Resources.Ninety
-			};
 
 				if (value < 20)
 				{
-					_ = sb.Append(units[value]);
+					_ = sb.Append(_toWordsUnits[value]);
 				}
 				else
 				{
-					_ = sb.Append(tens[value / 10]);
+					_ = sb.Append(_toWordsTens[value / 10]);
 
 					if ((value % 10) > 0)
 					{
-						_ = sb.Append($"{ControlChars.Dash}{units[value % 10]}");
+						_ = sb.Append(ControlChars.Dash).Append(_toWordsUnits[value % 10]);
 					}
 				}
 			}
