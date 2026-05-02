@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -473,6 +473,39 @@ public class DirectoryHelperTests
 		finally
 		{
 			tempDirectory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public async Task LoadFilesAsync_RepeatedCalls_ReturnConsistentResults()
+	{
+		// Validates that caching EnumerationOptions does not corrupt state between calls.
+		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempPath);
+		File.WriteAllText(Path.Combine(tempPath, "file1.txt"), "content");
+		File.WriteAllText(Path.Combine(tempPath, "file2.txt"), "content");
+
+		try
+		{
+			var directories = new List<DirectoryInfo> { directory };
+
+			var resultFirst = new List<FileInfo>();
+			await foreach (var batch in DirectoryHelper.LoadFilesAsync(directories, "*.txt", SearchOption.TopDirectoryOnly))
+			{
+				resultFirst.AddRange(batch);
+			}
+
+			var resultSecond = new List<FileInfo>();
+			await foreach (var batch in DirectoryHelper.LoadFilesAsync(directories, "*.txt", SearchOption.TopDirectoryOnly))
+			{
+				resultSecond.AddRange(batch);
+			}
+
+			Assert.AreEqual(resultFirst.Count, resultSecond.Count, "Repeated calls must return the same count.");
+		}
+		finally
+		{
+			directory.Delete(true);
 		}
 	}
 
@@ -1102,6 +1135,27 @@ public class DirectoryHelperTests
 			DirectoryHelper.SafeDirectorySearch(nonExistentDir, "*.txt", SearchOption.TopDirectoryOnly).ToList());
 	}
 
+	[TestMethod]
+	public void SafeDirectorySearch_RepeatedCalls_ReturnConsistentResults()
+	{
+		// Validates that caching EnumerationOptions does not corrupt state between calls.
+		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempPath);
+		File.WriteAllText(Path.Combine(tempPath, "file1.txt"), "content");
+
+		try
+		{
+			var resultFirst = DirectoryHelper.SafeDirectorySearch(directory, "*.txt", SearchOption.TopDirectoryOnly).ToList();
+			var resultSecond = DirectoryHelper.SafeDirectorySearch(directory, "*.txt", SearchOption.TopDirectoryOnly).ToList();
+
+			Assert.AreEqual(resultFirst.Count, resultSecond.Count, "Repeated calls must return the same count.");
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
+	}
+
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
 	public void SafeDirectorySearchAllDirectoriesReturnsSubdirectories()
@@ -1249,6 +1303,31 @@ public class DirectoryHelperTests
 		// Act & Assert - ArgumentNotNullOrEmpty throws on empty string
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
 			DirectoryHelper.SafeFileSearch(directories, string.Empty, SearchOption.TopDirectoryOnly).ToList());
+	}
+
+	[TestMethod]
+	public void SafeFileSearch_IEnumerable_RepeatedCalls_ReturnConsistentResults()
+	{
+		// Validates that caching EnumerationOptions does not corrupt state between calls.
+		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempPath);
+		File.WriteAllText(Path.Combine(tempPath, "file1.txt"), "content");
+		File.WriteAllText(Path.Combine(tempPath, "file2.txt"), "content");
+
+		try
+		{
+			var directories = new List<DirectoryInfo> { directory };
+
+			var resultFirst = DirectoryHelper.SafeFileSearch(directories, "*.txt", SearchOption.TopDirectoryOnly).ToList();
+			var resultSecond = DirectoryHelper.SafeFileSearch(directories, "*.txt", SearchOption.TopDirectoryOnly).ToList();
+
+			Assert.AreEqual(resultFirst.Count, resultSecond.Count, "Repeated calls must return the same count.");
+			Assert.AreEqual(2, resultFirst.Count, "Both txt files must be found.");
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -1726,6 +1805,25 @@ public class DirectoryHelperTests
 	{
 		// Act & Assert - SetFileAttributesToNormal calls path.CheckExists() which calls ArgumentNotNull() on null
 		Assert.ThrowsExactly<ArgumentNullException>(() => DirectoryHelper.SetFileAttributesToNormal(null));
+	}
+
+	[TestMethod]
+	public void SetFileAttributesToNormal_RepeatedCalls_DoNotThrow()
+	{
+		// Validates that caching EnumerationOptions does not corrupt state between repeated calls.
+		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		var directory = Directory.CreateDirectory(tempPath);
+		File.WriteAllText(Path.Combine(tempPath, "file.txt"), "content");
+
+		try
+		{
+			DirectoryHelper.SetFileAttributesToNormal(directory);
+			DirectoryHelper.SetFileAttributesToNormal(directory);
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
 	}
 
 	[SupportedOSPlatform("windows")]

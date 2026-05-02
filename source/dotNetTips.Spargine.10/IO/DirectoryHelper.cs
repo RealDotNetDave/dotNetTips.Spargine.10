@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -40,6 +40,60 @@ namespace DotNetTips.Spargine.IO;
 public static class DirectoryHelper
 {
 	private const string LocalAppData = "LOCALAPPDATA";
+
+	/// <summary>
+	/// Cached <see cref="EnumerationOptions"/> for recursive file/directory enumeration.
+	/// Shared across all search methods to avoid per-call allocation.
+	/// </summary>
+	private static readonly EnumerationOptions _enumerationOptionsRecursive = new()
+	{
+		IgnoreInaccessible = true,
+		ReturnSpecialDirectories = true,
+		RecurseSubdirectories = true,
+		AttributesToSkip = FileAttributes.Hidden,
+	};
+
+	/// <summary>
+	/// Cached <see cref="EnumerationOptions"/> for top-directory-only file/directory enumeration.
+	/// Shared across all search methods to avoid per-call allocation.
+	/// </summary>
+	private static readonly EnumerationOptions _enumerationOptionsTopOnly = new()
+	{
+		IgnoreInaccessible = true,
+		ReturnSpecialDirectories = true,
+		RecurseSubdirectories = false,
+		AttributesToSkip = FileAttributes.Hidden,
+	};
+
+	/// <summary>
+	/// Cached <see cref="EnumerationOptions"/> for recursive file loading (used by <see cref="LoadFilesAsync"/>).
+	/// Does not return special directories, matching the original behavior of that method.
+	/// </summary>
+	private static readonly EnumerationOptions _loadFilesOptionsRecursive = new()
+	{
+		IgnoreInaccessible = true,
+		RecurseSubdirectories = true,
+	};
+
+	/// <summary>
+	/// Cached <see cref="EnumerationOptions"/> for top-directory-only file loading (used by <see cref="LoadFilesAsync"/>).
+	/// Does not return special directories, matching the original behavior of that method.
+	/// </summary>
+	private static readonly EnumerationOptions _loadFilesOptionsTopOnly = new()
+	{
+		IgnoreInaccessible = true,
+		RecurseSubdirectories = false,
+	};
+
+	/// <summary>
+	/// Cached <see cref="EnumerationOptions"/> for <see cref="SetFileAttributesToNormal"/>.
+	/// Enumerates all file system entries recursively, ignoring inaccessible items.
+	/// </summary>
+	private static readonly EnumerationOptions _setAttributesOptions = new()
+	{
+		IgnoreInaccessible = true,
+		RecurseSubdirectories = true,
+	};
 
 	/// <summary>
 	/// Gets the application data folder path for the current user.
@@ -202,7 +256,7 @@ public static class DirectoryHelper
 	/// <remarks>This method utilizes deferred execution to improve performance. Files are not loaded into memory until the asynchronous stream is iterated.</remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsync([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
@@ -213,7 +267,7 @@ public static class DirectoryHelper
 			searchOption = SearchOption.TopDirectoryOnly;
 		}
 
-		var options = new EnumerationOptions() { IgnoreInaccessible = true, RecurseSubdirectories = searchOption == SearchOption.AllDirectories };
+		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
 
 		var tasks = directories.Where(directory => directory.CheckExists())
 			.Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))
@@ -337,7 +391,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<DirectoryInfo> SafeDirectorySearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
 	{
 		//OPTIMIZATION FROM COPILOT BREAKS CODE
@@ -345,7 +399,7 @@ public static class DirectoryHelper
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
-		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = searchOption == SearchOption.AllDirectories, AttributesToSkip = FileAttributes.Hidden };
+		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
 
 		foreach (var directory in path.EnumerateFiles(searchPattern, options).Select(file => file.Directory).FastDistinct())
 		{
@@ -404,7 +458,7 @@ public static class DirectoryHelper
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
-		var options = new EnumerationOptions { IgnoreInaccessible = true, ReturnSpecialDirectories = true, RecurseSubdirectories = searchOption == SearchOption.AllDirectories, AttributesToSkip = FileAttributes.Hidden };
+		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
 
 		foreach (var directory in directories)
 		{
@@ -480,7 +534,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void SetFileAttributesToNormal([DisallowNull] DirectoryInfo path)
 	{
 		if (path.CheckExists() == false)
@@ -491,10 +545,8 @@ public static class DirectoryHelper
 		// Set the directory attributes to normal
 		RemoveAttributes(path, FileAttributes.ReadOnly);
 
-		var enumOptions = new EnumerationOptions { IgnoreInaccessible = true, RecurseSubdirectories = true };
-
 		// Single pass: handle both sub-directories and files
-		foreach (var item in path.EnumerateFileSystemInfos(ControlChars.WildcardAllFiles, enumOptions))
+		foreach (var item in path.EnumerateFileSystemInfos(ControlChars.WildcardAllFiles, _setAttributesOptions))
 		{
 			item.Attributes = FileAttributes.Normal;
 		}
