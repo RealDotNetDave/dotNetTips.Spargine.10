@@ -1705,10 +1705,15 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToUniqueCollection), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToUniqueCollection), "David McCarter", "11/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public Collection<T> ToUniqueCollection([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			return new Collection<T>(new HashSet<T>(collection, comparer).ToList());
+			var hashSet = new HashSet<T>(collection, comparer);
+			var list = new List<T>(hashSet.Count);
+
+			list.AddRange(hashSet);
+
+			return new Collection<T>(list);
 		}
 
 		/// <summary>
