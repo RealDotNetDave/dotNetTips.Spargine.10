@@ -395,12 +395,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllAbstractMethods), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllAbstractMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAllAbstractMethods)}";
+		var cacheKey = string.Create(null, stackalloc char[256], $"{type.FullName}.{nameof(GetAllAbstractMethods)}");
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -622,12 +622,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllGenericMethods), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllGenericMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAllGenericMethods)}";
+		var cacheKey = string.Create(null, stackalloc char[256], $"{type.FullName}.{nameof(GetAllGenericMethods)}");
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -766,12 +766,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllPublicMethods), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllPublicMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAllPublicMethods)}";
+		var cacheKey = string.Create(null, stackalloc char[256], $"{type.FullName}.{nameof(GetAllPublicMethods)}");
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -798,12 +798,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is <c>null</c>.</exception>
 	[return: NotNull]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetAllStaticMethods), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<MethodInfo> GetAllStaticMethods([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAllStaticMethods)}";
+		var cacheKey = string.Create(null, stackalloc char[256], $"{type.FullName}.{nameof(GetAllStaticMethods)}");
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
 		{
@@ -835,7 +835,7 @@ public static class TypeHelper
 	{
 		fieldInfo = fieldInfo.ArgumentNotNull();
 
-		var cacheKey = $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.FieldInfo.{typeof(TAttribute).FullName}";
+		var cacheKey = string.Create(null, stackalloc char[512], $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.FieldInfo.{typeof(TAttribute).FullName}");
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -876,7 +876,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = $"{type.FullName}.{nameof(GetAttribute)}.Type.{typeof(TAttribute).FullName}";
+		var cacheKey = string.Create(null, stackalloc char[512], $"{type.FullName}.{nameof(GetAttribute)}.Type.{typeof(TAttribute).FullName}");
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -917,7 +917,7 @@ public static class TypeHelper
 	{
 		methodInfo = methodInfo.ArgumentNotNull();
 
-		var cacheKey = $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.MethodInfo.{typeof(TAttribute).FullName}";
+		var cacheKey = string.Create(null, stackalloc char[512], $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.MethodInfo.{typeof(TAttribute).FullName}");
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -982,7 +982,7 @@ public static class TypeHelper
 	{
 		propertyInfo = propertyInfo.ArgumentNotNull();
 
-		var cacheKey = $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.PropertyInfo.{typeof(TAttribute).FullName}";
+		var cacheKey = string.Create(null, stackalloc char[512], $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.PropertyInfo.{typeof(TAttribute).FullName}");
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
@@ -1117,7 +1117,7 @@ public static class TypeHelper
 		instance = instance.ArgumentNotNull();
 
 		var type = instance.GetType();
-		var cacheKey = $"{type.FullName}.{nameof(GetInstanceHashCode)}";
+		var cacheKey = string.Create(null, stackalloc char[256], $"{type.FullName}.{nameof(GetInstanceHashCode)}");
 
 		// Cache the PropertyInfo array to avoid repeated reflection
 		if (!_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var properties))
@@ -1276,13 +1276,13 @@ public static class TypeHelper
 	/// <param name="nestedTypeDelimiter">The delimiter to use for nested types.</param>
 	/// <returns>The display name of the type.</returns>
 	[return: NotNull]
-	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GetTypeDisplayName(Type type, bool fullName = true, bool includeGenericParameterNames = false, bool includeGenericParameters = true, char nestedTypeDelimiter = ControlChars.Dot)
 	{
 		type = type.ArgumentNotNull();
 
 		// Create a cache key that uniquely identifies the combination of type and display options
-		var cacheKey = $"{type.AssemblyQualifiedName}.{nameof(GetTypeDisplayName)}.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}";
+		var cacheKey = string.Create(null, stackalloc char[512], $"{type.AssemblyQualifiedName}.{nameof(GetTypeDisplayName)}.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}");
 
 		if (_commonCache.TryGetValue<string>(cacheKey, out var cachedDisplayName))
 		{
