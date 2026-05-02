@@ -940,6 +940,49 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateNumber_AllCharsAreDigits()
+	{
+		// Verify that every character returned is a decimal digit ('0'–'9') for various lengths.
+		foreach (var length in new[] { 1, 5, 10, 15, 100, 256, 300 })
+		{
+			var result = RandomData.GenerateNumber(length);
+
+			Assert.AreEqual(length, result.Length, $"Expected length {length}.");
+			Assert.IsTrue(result.All(char.IsAsciiDigit), $"Non-digit character found in result of length {length}: \"{result}\".");
+		}
+	}
+
+	[TestMethod]
+	public void GenerateNumber_ConcurrentAccess_IsThreadSafe()
+	{
+		// Validate the pooled-buffer / stackalloc path is safe under concurrent load.
+		var exceptions = new ConcurrentBag<Exception>();
+
+		var tasks = Enumerable.Range(0, 64).Select(_ => Task.Run(() =>
+		{
+			try
+			{
+				for (var iteration = 0; iteration < 20; iteration++)
+				{
+					var length = RandomData.GenerateInteger(1, 300);
+					var result = RandomData.GenerateNumber(length);
+
+					Assert.AreEqual(length, result.Length);
+					Assert.IsTrue(result.All(char.IsAsciiDigit), $"Non-digit found in \"{result}\".");
+				}
+			}
+			catch (Exception ex)
+			{
+				exceptions.Add(ex);
+			}
+		})).ToArray();
+
+		Task.WaitAll(tasks);
+
+		Assert.AreEqual(0, exceptions.Count, $"{exceptions.Count} exception(s): {string.Join("; ", exceptions.Select(e => e.Message))}");
+	}
+
+	[TestMethod]
 	public void GenerateNumber_DefaultLength_ReturnsSingleDigit()
 	{
 		var stringValue = RandomData.GenerateNumber();

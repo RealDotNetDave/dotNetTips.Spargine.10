@@ -770,25 +770,49 @@ public static class RandomData
 	/// </remarks>
 	/// <example>Output: "446085072052112"</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateNumber), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string GenerateNumber(int length = 1)
 	{
 		length = length.ArgumentInRange(min: 1, defaultValue: 1);
 
-		var sb = _stringBuilderPool.Get().SetCapacity(length);
+		// Fill all bytes in a single RNG call, map each to an ASCII digit '0'–'9' via modulo,
+		// then build the string from a span — avoids N individual GetInt32 calls,
+		// the StringBuilder pool round-trip, and the redundant Trim() allocation.
+		const int stackAllocThreshold = 256;
+
+		byte[]? rentedBytes = null;
+		char[]? rentedChars = null;
+
+		var bytes = length <= stackAllocThreshold
+			? stackalloc byte[length]
+			: (rentedBytes = ArrayPool<byte>.Shared.Rent(length)).AsSpan(0, length);
+
+		var chars = length <= stackAllocThreshold
+			? stackalloc char[length]
+			: (rentedChars = ArrayPool<char>.Shared.Rent(length)).AsSpan(0, length);
 
 		try
 		{
-			for (var numberIndex = 0; numberIndex < length; numberIndex++)
+			RandomNumberGenerator.Fill(bytes);
+
+			for (var digitIndex = 0; digitIndex < length; digitIndex++)
 			{
-				_ = sb.Append(RandomNumberGenerator.GetInt32(0, 10));
+				chars[digitIndex] = (char)('0' + (bytes[digitIndex] % 10));
 			}
 
-			return sb.ToString().Trim();
+			return new string(chars);
 		}
 		finally
 		{
-			_stringBuilderPool.Return(sb.Clear());
+			if (rentedBytes is not null)
+			{
+				ArrayPool<byte>.Shared.Return(rentedBytes);
+			}
+
+			if (rentedChars is not null)
+			{
+				ArrayPool<char>.Shared.Return(rentedChars);
+			}
 		}
 	}
 
