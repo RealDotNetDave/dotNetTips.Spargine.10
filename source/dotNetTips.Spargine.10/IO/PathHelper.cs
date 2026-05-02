@@ -224,12 +224,12 @@ public static class PathHelper
 	/// </example>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasInvalidFilterChars([DisallowNull] string filter)
 	{
 		filter = filter.ArgumentNotNullOrEmpty();
 
-		return filter.IndexOfAny([.. InvalidFilterChars()]) != -1;
+		return filter.IndexOfAny(InvalidFileNameChars) != -1;
 	}
 
 	/// <summary>
@@ -304,11 +304,11 @@ public static class PathHelper
 	/// The invalid characters are obtained from <see cref="InvalidPathNameChars"/>, which excludes directory separator characters.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool PathHasInvalidChars([DisallowNull] string path)
 	{
 		path = path.ArgumentNotNullOrEmpty();
 
-		return path.IndexOfAny([.. InvalidPathNameChars()]) != -1;
+		return path.IndexOfAny(InvalidPathChars) != -1;
 	}
 }

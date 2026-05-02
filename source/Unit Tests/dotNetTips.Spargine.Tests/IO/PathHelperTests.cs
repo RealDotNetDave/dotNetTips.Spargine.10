@@ -296,6 +296,32 @@ public class PathHelperTests : IDisposable
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.HasInvalidFilterChars(null));
 	}
+
+	[TestMethod]
+	public void HasInvalidFilterChars_ReturnsSameResult_OnMultipleCalls()
+	{
+		// Validates that HasInvalidFilterChars uses a stable backing array and produces
+		// consistent results on repeated calls (no per-call allocation side effects).
+		var filter = "filename<>.txt";
+
+		var first = PathHelper.HasInvalidFilterChars(filter);
+		var second = PathHelper.HasInvalidFilterChars(filter);
+
+		Assert.AreEqual(first, second, "HasInvalidFilterChars should return a consistent result on repeated calls.");
+		Assert.IsTrue(first, "Expected invalid chars to be detected in the filter.");
+	}
+
+	[TestMethod]
+	public void HasInvalidFilterChars_ValidFilter_ReturnsSameResult_OnMultipleCalls()
+	{
+		var filter = "filename.txt";
+
+		var first = PathHelper.HasInvalidFilterChars(filter);
+		var second = PathHelper.HasInvalidFilterChars(filter);
+
+		Assert.AreEqual(first, second, "HasInvalidFilterChars should return a consistent result on repeated calls.");
+		Assert.IsFalse(first, "Expected no invalid chars in a valid filter.");
+	}
 	[TestMethod]
 	public void HasInvalidFilterChars_WithInvalidChars_ReturnsTrue()
 	{
@@ -451,6 +477,33 @@ public class PathHelperTests : IDisposable
 	public void PathHasInvalidChars_NullPath_ThrowsArgumentNullException()
 	{
 		Assert.ThrowsExactly<ArgumentNullException>(() => PathHelper.PathHasInvalidChars(null));
+	}
+
+	[TestMethod]
+	public void PathHasInvalidChars_ReturnsSameResult_OnMultipleCalls()
+	{
+		// Validates that PathHasInvalidChars uses a stable backing array and produces
+		// consistent results on repeated calls (no per-call allocation side effects).
+		var invalidChars = PathHelper.InvalidPathNameChars();
+		var path = $"C:\\TestPath\\Invalid{invalidChars[0]}Name.txt";
+
+		var first = PathHelper.PathHasInvalidChars(path);
+		var second = PathHelper.PathHasInvalidChars(path);
+
+		Assert.AreEqual(first, second, "PathHasInvalidChars should return a consistent result on repeated calls.");
+		Assert.IsTrue(first, "Expected invalid chars to be detected in the path.");
+	}
+
+	[TestMethod]
+	public void PathHasInvalidChars_ValidPath_ReturnsSameResult_OnMultipleCalls()
+	{
+		var path = "C:\\TestPath\\ValidName.txt";
+
+		var first = PathHelper.PathHasInvalidChars(path);
+		var second = PathHelper.PathHasInvalidChars(path);
+
+		Assert.AreEqual(first, second, "PathHasInvalidChars should return a consistent result on repeated calls.");
+		Assert.IsFalse(first, "Expected no invalid chars in a valid path.");
 	}
 
 	[TestMethod]
