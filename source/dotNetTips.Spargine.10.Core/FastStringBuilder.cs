@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-02-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,13 +44,12 @@ public static class FastStringBuilder
 
 	/// <summary>
 	/// Converts an array of bytes into a hexadecimal string representation, making it easy to inspect raw byte data in string form.
-	/// This method uses an object pool for <see cref="StringBuilder"/> to improve performance and reduce memory allocations.
 	/// </summary>
 	/// <param name="bytes">The byte array to convert.</param>
-	/// <returns>A hexadecimal string representation of the byte array, prefixed with '0x'.</returns>
+	/// <returns>An uppercase hexadecimal string representation of the byte array.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "3/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "3/7/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string BytesToString([DisallowNull] ref readonly byte[] bytes)
 	{
 		if (bytes is null)
@@ -58,63 +57,20 @@ public static class FastStringBuilder
 			ExceptionThrower.ThrowArgumentNullException(nameof(bytes));
 		}
 
-		if (bytes.Length == 0)
-		{
-			return ControlChars.EmptyString;
-		}
-
-		var sb = _stringBuilderPool.Get().ClearSetCapacity((bytes.Length * 2) + 3);
-
-		try
-		{
-			//FrozenSet, ImmutableArray and Span is slower.
-			foreach (var @byte in bytes)
-			{
-				_ = sb.Append(@byte.ToString("X2", CultureInfo.InvariantCulture));
-			}
-
-			return sb.ToString();
-		}
-		finally
-		{
-			_stringBuilderPool.Return(sb.Clear());
-		}
+		return bytes.Length == 0 ? ControlChars.EmptyString : Convert.ToHexString(bytes);
 	}
 
 	/// <summary>
-	/// Converts a ReadOnlySpan of bytes into a hexadecimal string representation, making it easy to inspect raw byte data in string form.
-	/// This method uses an object pool for <see cref="StringBuilder"/> to improve performance and reduce memory allocations.
+	/// Converts a <see cref="ReadOnlySpan{T}"/> of bytes into a hexadecimal string representation, making it easy to inspect raw byte data in string form.
 	/// </summary>
-	/// <param name="bytes">The ReadOnlySpan of bytes to convert.</param>
-	/// <returns>A hexadecimal string representation of the byte array, prefixed with '0x'.</returns>
+	/// <param name="bytes">The <see cref="ReadOnlySpan{T}"/> of bytes to convert.</param>
+	/// <returns>An uppercase hexadecimal string representation of the bytes.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "2/18/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BytesToString), author: "David McCarter", createdOn: "2/18/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string BytesToString([AllowNull] in ReadOnlySpan<byte> bytes)
 	{
-		if (bytes.IsEmpty)
-		{
-			return ControlChars.EmptyString;
-		}
-
-		var sb = _stringBuilderPool.Get();
-
-		// Set capacity to increase performance
-		_ = sb.EnsureCapacity((bytes.Length * 2) + 2);
-
-		try
-		{
-			foreach (var @byte in bytes)
-			{
-				_ = sb.Append(@byte.ToString("X2", CultureInfo.InvariantCulture));
-			}
-
-			return sb.ToString();
-		}
-		finally
-		{
-			_stringBuilderPool.Return(sb.Clear());
-		}
+		return bytes.IsEmpty ? ControlChars.EmptyString : Convert.ToHexString(bytes);
 	}
 
 	/// <summary>
