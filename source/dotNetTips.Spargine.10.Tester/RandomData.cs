@@ -1555,29 +1555,32 @@ public static class RandomData
 
 	/// <summary>
 	/// Generates a random uppercase-letter word of the specified length for use in file names.
-	/// Uses <c>string.Create</c> to avoid the intermediate char array and skips <c>Trim()</c>
-	/// since <see cref="DefaultMinCharacterRandomFile"/>–<see cref="DefaultMaxCharacterRandomFile"/>
-	/// ('A'–'Z') contains no whitespace.
+	/// Uses a stackalloc byte buffer for the RNG source and a pooled <see cref="char"/> array
+	/// to map bytes to characters, avoiding all intermediate heap allocations.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string GenerateFileNameWord(int length)
 	{
-		const int stackAllocThreshold = 256;
 		const int range = DefaultMaxCharacterRandomFile - DefaultMinCharacterRandomFile + 1;
 
-		var randomBytes = length <= stackAllocThreshold
-			? stackalloc byte[length]
-			: (Span<byte>)new byte[length];
-
+		Span<byte> randomBytes = stackalloc byte[length];
 		RandomNumberGenerator.Fill(randomBytes);
 
-		return string.Create(length, randomBytes.ToArray(), static (chars, bytes) =>
+		var charBuffer = ArrayPool<char>.Shared.Rent(length);
+
+		try
 		{
-			for (var wordIndex = 0; wordIndex < chars.Length; wordIndex++)
+			for (var wordIndex = 0; wordIndex < length; wordIndex++)
 			{
-				chars[wordIndex] = (char)(DefaultMinCharacterRandomFile + (bytes[wordIndex] % range));
+				charBuffer[wordIndex] = (char)(DefaultMinCharacterRandomFile + (randomBytes[wordIndex] % range));
 			}
-		});
+
+			return new string(charBuffer, 0, length);
+		}
+		finally
+		{
+			ArrayPool<char>.Shared.Return(charBuffer);
+		}
 	}
 
 	/// <summary>Generates a single <see cref="PersonName"/> from the internal name pools.</summary>

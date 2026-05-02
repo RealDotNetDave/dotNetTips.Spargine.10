@@ -1292,12 +1292,74 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateRandomFileName_ConcurrentCalls_ProduceUniqueResults()
+	{
+		// Validate that the pooled char buffer in GenerateFileNameWord (Issue 7 fix)
+		// is not shared across concurrent calls, producing correct and unique file names.
+		var exceptions = new ConcurrentBag<Exception>();
+
+		var tasks = Enumerable.Range(0, 64).Select(_ => Task.Run(() =>
+		{
+			try
+			{
+				for (var iteration = 0; iteration < 20; iteration++)
+				{
+					var filePath = RandomData.GenerateRandomFileName(fileNameLength: 10);
+
+					Assert.IsNotNull(filePath);
+
+					// The default extension 'dotnettips.temp' contains a dot; split on first dot.
+					var fileName = Path.GetFileName(filePath);
+					var wordPart = fileName[..fileName.IndexOf('.')];
+
+					Assert.AreEqual(10, wordPart.Length);
+
+					foreach (var character in wordPart)
+					{
+						Assert.IsTrue(character is >= 'A' and <= 'Z', $"Character '{character}' is not an uppercase letter.");
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				exceptions.Add(ex);
+			}
+		})).ToArray();
+
+		Task.WaitAll(tasks);
+
+		Assert.AreEqual(0, exceptions.Count, $"{exceptions.Count} exception(s) thrown: {string.Join("; ", exceptions.Select(e => e.Message))}");
+	}
+
+	[TestMethod]
 	public void GenerateRandomFileName_DefaultParameters_ReturnsValidPath()
 	{
 		var fileName = RandomData.GenerateRandomFileName();
 
 		Assert.IsNotNull(fileName);
 		Assert.IsTrue(fileName.Contains(Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar)));
+	}
+
+	[TestMethod]
+	public void GenerateRandomFileName_FileName_IsUppercaseLettersAndCorrectLength()
+	{
+		const int FileNameLength = 15;
+
+		var filePath = RandomData.GenerateRandomFileName(fileNameLength: FileNameLength);
+
+		Assert.IsNotNull(filePath);
+
+		// The default extension 'dotnettips.temp' contains a dot, so GetFileNameWithoutExtension
+		// only strips '.temp'. Extract the word part by splitting on the first dot.
+		var fileName = Path.GetFileName(filePath);
+		var wordPart = fileName[..fileName.IndexOf('.')];
+
+		Assert.AreEqual(FileNameLength, wordPart.Length);
+
+		foreach (var character in wordPart)
+		{
+			Assert.IsTrue(character is >= 'A' and <= 'Z', $"Character '{character}' is not an uppercase letter.");
+		}
 	}
 
 	[TestMethod]
