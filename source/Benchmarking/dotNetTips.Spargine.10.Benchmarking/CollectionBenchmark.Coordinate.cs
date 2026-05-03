@@ -4,7 +4,7 @@
 // Created          : 04-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-16-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -51,7 +51,7 @@ public partial class CollectionBenchmark
 	/// <returns>A clone of the Coordinate list as a Collection.</returns>
 	public Collection<Tester.Models.RefTypes.Coordinate> GetCoordinateRefCollection()
 	{
-		return this._coordinateRefArray.AsSpan().ToArray().ToCollection();
+		return this._coordinateRefArray.ToCollection();
 	}
 
 	/// <summary>
@@ -71,7 +71,7 @@ public partial class CollectionBenchmark
 	/// <returns>A clone of the Coordinate list as a Collection.</returns>
 	public Collection<Coordinate> GetCoordinateValCollection()
 	{
-		return this._coordinateValArray.AsSpan().ToArray().ToCollection();
+		return this._coordinateValArray.ToCollection();
 	}
 
 	/// <summary>

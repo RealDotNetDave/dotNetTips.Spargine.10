@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-16-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -17,6 +17,7 @@
 // </summary>
 // ***********************************************************************
 
+using System.Globalization;
 using DotNetTips.Spargine.Benchmarking.Properties;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
@@ -149,8 +150,9 @@ public abstract partial class CollectionBenchmark : Benchmark
 
 		this.HalfCount = this.MaxCount / 2;
 
+		// ***DO NOT ADD ANY COLLECTION GENERATION ABOVE THIS LINE***
+
 		// Load collections.
-		// DO NOT ADD ANY COLLECTION GENERATION ABOVE THIS LINE
 		this.LoadCoordinateCollections();
 		this.LoadPersonCollections();
 
@@ -189,8 +191,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 		{
 			var people = JsonSerialization.LoadCollectionFromJson<PersonRecord>(Resources.PeopleJson, MaxPeopleDataCount, PersonRecordJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonRecordCollection(count - MaxPeopleDataCount);
+			var result = new List<PersonRecord>(count);
+			result.AddRange(people);
+			result.AddRange(newPeople);
 
-			return [.. people, .. newPeople];
+			return result;
 		}
 	}
 
@@ -211,8 +216,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 		{
 			var people = JsonSerialization.LoadCollectionFromJson<Person>(Resources.PeopleJson, MaxPeopleDataCount, PersonRefJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonRefCollection(count - MaxPeopleDataCount);
+			var result = new List<Person>(count);
+			result.AddRange(people);
+			result.AddRange(newPeople);
 
-			return [.. people, .. newPeople];
+			return result;
 		}
 	}
 
@@ -233,8 +241,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 		{
 			var people = JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, MaxPeopleDataCount, PersonValJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonValCollection(count - MaxPeopleDataCount);
+			var result = new List<Tester.Models.ValueTypes.Person>(count);
+			result.AddRange(people);
+			result.AddRange(newPeople);
 
-			return [.. people, .. newPeople];
+			return result;
 		}
 	}
 
@@ -272,7 +283,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// </summary>
 	private void LoadInsertCollections()
 	{
-		LogInfo($"Loading Insert Collections. Count={this.HalfCount}: {nameof(CollectionBenchmark)}.");
+		LogInfo(string.Create(CultureInfo.InvariantCulture, $"Loading Insert Collections. Count={this.HalfCount}: {nameof(CollectionBenchmark)}."));
 
 		// Load people objects
 		this._peopleRefToInsert = [.. RandomData.GeneratePersonRefCollection(this.HalfCount)];

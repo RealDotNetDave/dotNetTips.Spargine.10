@@ -4,7 +4,7 @@
 // Created          : 04-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-16-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -59,8 +59,8 @@ public partial class CollectionBenchmark
 	/// <returns>A clone of the PersonRecord array.</returns>
 	public PersonRecord[] GetPersonRecordArray()
 	{
-		return CollectionsMarshal.AsSpan(
-			this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList)).ToArray();
+		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
+		return CollectionsMarshal.AsSpan(cloned).ToArray();
 	}
 
 	/// <summary>
@@ -86,8 +86,8 @@ public partial class CollectionBenchmark
 	/// <returns>An array of Person reference types.</returns>
 	public Person[] GetPersonRefArray()
 	{
-		return CollectionsMarshal.AsSpan(
-			this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList)).ToArray();
+		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
+		return CollectionsMarshal.AsSpan(cloned).ToArray();
 	}
 
 	/// <summary>
@@ -113,8 +113,8 @@ public partial class CollectionBenchmark
 	/// <returns>An array of Person value types.</returns>
 	public Tester.Models.ValueTypes.Person[] GetPersonValArray()
 	{
-		return CollectionsMarshal.AsSpan(
-			this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList)).ToArray();
+		var cloned = this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList);
+		return CollectionsMarshal.AsSpan(cloned).ToArray();
 	}
 
 	/// <summary>
