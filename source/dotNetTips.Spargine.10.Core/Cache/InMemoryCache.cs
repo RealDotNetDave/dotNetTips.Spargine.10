@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -466,7 +466,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="percentage"/> is not between 0.0 and 1.0.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Compact), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Compact), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public void Compact(double percentage)
 	{
 		percentage = percentage.ArgumentInRange(0.0, 1.0);
@@ -521,7 +521,7 @@ public sealed class InMemoryCache
 	/// only the string keys without a null-conditional branch.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetAllKeys), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetAllKeys), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public IEnumerable<string> GetAllKeys()
 	{
 		return this.Cache.Keys.OfType<string>();
@@ -582,7 +582,7 @@ public sealed class InMemoryCache
 	/// Only items that exist in the cache are included in the returned dictionary.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetCacheItemBatch), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public IDictionary<string, T> GetCacheItemBatch<T>([DisallowNull] IEnumerable<string> keys)
 	{
 		keys = keys.ArgumentNotNull();
@@ -634,7 +634,7 @@ public sealed class InMemoryCache
 	/// <remarks>
 	/// If multiple callers attempt to create the same cache entry concurrently, only one factory delegate will execute and the result will be shared.
 	/// </remarks>
-	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetOrCreateAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public async Task<T> GetOrCreateAsync<T>([DisallowNull] string key, [DisallowNull] Func<CancellationToken, Task<T>> factory, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -737,7 +737,7 @@ public sealed class InMemoryCache
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(PeekCacheItem), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool PeekCacheItem<T>([DisallowNull] string key, out T? value)
 	{
 		key = key.ArgumentNotNullOrEmpty();
@@ -842,7 +842,7 @@ public sealed class InMemoryCache
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="key"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Pure]
-	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(TryGetValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool TryGetValue<T>([DisallowNull] string key, out T? value)
 	{
 		key = key.ArgumentNotNullOrEmpty();

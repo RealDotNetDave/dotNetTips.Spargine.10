@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-12-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-01-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBag.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -221,7 +221,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// <param name="item">The object to remove from the <see cref="DistinctConcurrentBag{T}"/>.</param>
 	/// <returns><see langword="true" /> if <paramref name="item" /> was successfully removed from the <see cref="DistinctConcurrentBag{T}"/>; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if <paramref name="item" /> is not found in the original collection.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool Remove([NotNull] T item)
 	{
 		item = item.ArgumentNotNull();
@@ -229,39 +229,11 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 		if (this._uniqueItems.Remove(item))
 		{
 			this.ReconstructBagWithout(item);
+
 			return true;
 		}
 
 		return false;
-	}
-
-	/// <summary>
-	/// Rebuilds <see cref="_bag"/> by draining all items and re-adding everything except the first
-	/// occurrence of <paramref name="item"/>. Called only after <paramref name="item"/> has already
-	/// been removed from <see cref="_uniqueItems"/>.
-	/// </summary>
-	/// <param name="item">The item that was removed and must be excluded from the reconstructed bag.</param>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	private void ReconstructBagWithout(T item)
-	{
-		var newItems = new List<T>(this._uniqueItems.Count);
-		var removed = false;
-
-		while (this._bag.TryTake(out var current))
-		{
-			if (!removed && this._comparer.Equals(current, item))
-			{
-				removed = true;
-				continue;
-			}
-
-			newItems.Add(current);
-		}
-
-		foreach (var newItem in newItems)
-		{
-			this._bag.Add(newItem);
-		}
 	}
 
 	/// <summary>
@@ -395,6 +367,35 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 		result = default!;
 
 		return false;
+	}
+
+	/// <summary>
+	/// Rebuilds <see cref="_bag"/> by draining all items and re-adding everything except the first
+	/// occurrence of <paramref name="item"/>. Called only after <paramref name="item"/> has already
+	/// been removed from <see cref="_uniqueItems"/>.
+	/// </summary>
+	/// <param name="item">The item that was removed and must be excluded from the reconstructed bag.</param>
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	private void ReconstructBagWithout(T item)
+	{
+		var newItems = new List<T>(this._uniqueItems.Count);
+		var removed = false;
+
+		while (this._bag.TryTake(out var current))
+		{
+			if (!removed && this._comparer.Equals(current, item))
+			{
+				removed = true;
+				continue;
+			}
+
+			newItems.Add(current);
+		}
+
+		foreach (var newItem in newItems)
+		{
+			this._bag.Add(newItem);
+		}
 	}
 
 }

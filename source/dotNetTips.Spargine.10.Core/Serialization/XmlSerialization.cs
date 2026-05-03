@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-07-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="XmlSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -50,7 +50,7 @@ public static class XmlSerialization
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(Deserialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Deserialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 		where TResult : new()
 	{
@@ -98,7 +98,7 @@ public static class XmlSerialization
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(Serialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Serialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj)
 	{
 		obj = obj.ArgumentNotNull();
@@ -122,7 +122,7 @@ public static class XmlSerialization
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(SerializeToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(SerializeToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file)
 	{
 		obj = obj.ArgumentNotNull();

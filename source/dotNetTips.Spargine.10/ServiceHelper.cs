@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-15-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ServiceHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -208,11 +208,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016",
-		UnitTestStatus = UnitTestStatus.Completed,
-		OptimizationStatus = OptimizationStatus.Completed,
-		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
-		Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	public static ServiceActionResult StartService([DisallowNull] string serviceName, bool startServicesDependedOn = false, bool startDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
@@ -399,11 +395,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016",
-		UnitTestStatus = UnitTestStatus.Completed,
-		OptimizationStatus = OptimizationStatus.Completed,
-		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
-		Status = Status.Available)]
+	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static ServiceActionResult StopService([DisallowNull] string serviceName, bool stopServicesDependedOn = false, bool stopDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
@@ -501,11 +493,7 @@ public static class ServiceHelper
 	/// }
 	/// </code>
 	/// </example>
-	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016",
-		UnitTestStatus = UnitTestStatus.NotRequired,
-		OptimizationStatus = OptimizationStatus.Completed,
-		BenchmarkStatus = BenchmarkStatus.CheckPerformance,
-		Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
 	private static ServiceController? LoadService([DisallowNull] string serviceName)
 	{
 		var services = ServiceController.GetServices();

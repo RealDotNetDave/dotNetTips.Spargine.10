@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-28-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="LoggingHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -278,9 +278,12 @@ public static class LoggingHelper
 	{
 		exception = exception.ArgumentNotNull();
 
+		// SUGGESION FROM COPILOT SLIGHT SLOWER.
 		var exceptions = RetrieveAllExceptions(exception);
 
-		return new ReadOnlyCollection<string>([.. exceptions.Select(ex => ex.Message)]);
+		var messages = exceptions.Select(static ex => ex.Message).ToList();
+
+		return messages.AsReadOnly();
 	}
 
 	/// <summary>

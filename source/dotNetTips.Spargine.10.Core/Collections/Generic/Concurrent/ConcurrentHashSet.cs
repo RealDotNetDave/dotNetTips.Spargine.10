@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-01-2023
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-01-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -392,7 +392,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <returns><c>true</c> if <paramref name="item"/> is found in the <see cref="ConcurrentHashSet{T}"/>; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
 	[DefaultValue(false)]
-	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool Contains(T item)
 	{
 		if (item is null)
@@ -400,15 +400,29 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		var hashCode = this._comparer.GetHashCode(item);
+		// SUGGESTION FROM COPILOT IS SLOWER.
+		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
 
 		// We must capture the _buckets field in a local variable. It is set to a new table on each table resize.
 		var tables = this._tables;
+
 		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
 
 		// We can get away w/out a lock here.
 		// The Volatile.Read ensures that the load of the fields of 'n' doesn't move before the load from buckets[i].
-		return this.TryFindInBucket(Volatile.Read(ref tables._buckets[bucketNo]), item, hashCode, out _);
+		var current = Volatile.Read(ref tables._buckets[bucketNo]);
+
+		while (current is not null)
+		{
+			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+			{
+				return true;
+			}
+
+			current = current._next;
+		}
+
+		return false;
 	}
 
 	/// <summary>
@@ -420,7 +434,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="arrayIndex"/> is less than 0.</exception>
 	/// <exception cref="ArgumentException">Thrown if the number of elements in the source <see cref="ConcurrentHashSet{T}"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(CopyTo), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void CopyTo([DisallowNull] T[] array, int arrayIndex)
 	{
 		array = array.ArgumentItemsExists(nameof(array));
@@ -486,7 +500,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </summary>
 	/// <returns>An array containing a snapshot of elements copied from the <see cref="ConcurrentHashSet{T}"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public T[] ToArray()
 	{
 		var locksAcquired = 0;
@@ -537,7 +551,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <returns><c>true</c> if an equal value was found in the set; otherwise, <c>false</c>.</returns>
 	[DefaultValue(false)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public bool TryPeek(T equalValue, [MaybeNullWhen(false)] out T actualValue)
 	{
 		if (equalValue is null)
@@ -564,7 +578,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </remarks>
 	[DefaultValue(false)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool TryRemove(T item)
 	{
 		if (item is null)
@@ -572,7 +586,8 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		var hashCode = this._comparer.GetHashCode(item);
+		// SUGGESTION FROM COPILOT IS SLOWER.
+		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
 
 		while (true)
 		{
@@ -589,9 +604,141 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 					continue;
 				}
 
-				return this.RemoveNodeFromBucket(tables, item, hashCode, bucketNo, lockNo);
+				Node? previous = null;
+
+				for (var current = tables._buckets[bucketNo]; current is not null; current = current._next)
+				{
+					Debug.Assert((previous is null && current == tables._buckets[bucketNo]) || previous?._next == current);
+
+					if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+					{
+						if (previous is null)
+						{
+							Volatile.Write(ref tables._buckets[bucketNo], current._next);
+						}
+						else
+						{
+							previous._next = current._next;
+						}
+
+						tables._countPerLock[lockNo]--;
+						return true;
+					}
+
+					previous = current;
+				}
 			}
+
+			return false;
 		}
+	}
+
+	/// <summary>
+	/// Initializes newly added slots in a lock array (from <paramref name="startIndex"/> to end) with fresh lock objects.
+	/// </summary>
+	/// <param name="locks">The lock array to populate.</param>
+	/// <param name="startIndex">The first index that needs initialization.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AddNewLocks), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AddNewLocks(object[] locks, long startIndex)
+	{
+		for (var i = startIndex; i < locks.Length; i++)
+		{
+			locks[i] = new object();
+		}
+	}
+
+	/// <summary>
+	/// Computes the approximate total element count by summing the per-lock counters.
+	/// </summary>
+	/// <param name="tables">The tables snapshot to count.</param>
+	/// <returns>The approximate total element count.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeApproxCount), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static long ComputeApproxCount(Tables tables)
+	{
+		long approxCount = 0;
+
+		for (var tableCount = 0; tableCount < tables._countPerLock.LongLength; tableCount++)
+		{
+			approxCount += tables._countPerLock[tableCount];
+		}
+
+		return approxCount;
+	}
+
+	/// <summary>
+	/// Computes the new resize budget. Returns <see cref="int.MaxValue"/> when the table has been maximized
+	/// to prevent further resize calls; otherwise returns <c>max(1, bucketCount / lockCount)</c>.
+	/// </summary>
+	/// <param name="maximizeTableSize"><c>true</c> if the table was grown to its maximum size.</param>
+	/// <param name="bucketCount">The number of buckets in the new table.</param>
+	/// <param name="lockCount">The number of locks in the new table.</param>
+	/// <returns>The new budget value.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeBudget), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int ComputeBudget(bool maximizeTableSize, int bucketCount, int lockCount) =>
+		maximizeTableSize ? int.MaxValue : Math.Max(1, bucketCount / lockCount);
+
+	/// <summary>
+	/// Computes the new bucket-array length for a grow operation.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot.</param>
+	/// <returns>A tuple of (newLength, maximizeTableSize).</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(ComputeNewLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static (int newLength, bool maximizeTableSize) ComputeNewLength(Tables tables)
+	{
+		const int MaxArrayLength = 0X7FEFFFFF;
+
+		if (!TryComputeDoublePlusOne(tables._buckets.Length, MaxArrayLength, out var newLength))
+		{
+			return (MaxArrayLength, true);
+		}
+
+		return (newLength, false);
+	}
+
+	/// <summary>
+	/// Creates an initialized lock-objects array of the specified length.
+	/// </summary>
+	/// <param name="count">The number of locks to create.</param>
+	/// <returns>An array of <paramref name="count"/> freshly created lock objects.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(CreateLockObjects), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static object[] CreateLockObjects(int count)
+	{
+		var locks = new object[count];
+
+		for (var lockCount = 0; lockCount < count; lockCount++)
+		{
+			locks[lockCount] = new object();
+		}
+
+		return locks;
+	}
+
+	/// <summary>
+	/// Starting from <paramref name="candidate"/>, finds the first odd integer not divisible by 3, 5, or 7.
+	/// </summary>
+	/// <param name="candidate">The starting odd integer.</param>
+	/// <returns>The first valid candidate &gt;= <paramref name="candidate"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(FindNextValidLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int FindNextValidLength(int candidate)
+	{
+		while (IsDivisibleBy3Or5Or7(candidate))
+		{
+			candidate += 2;
+		}
+
+		Debug.Assert(candidate % 2 != 0);
+		return candidate;
 	}
 
 	/// <summary>
@@ -622,6 +769,75 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	{
 		bucketNo = (hashCode & 0x7fffffff) % bucketCount;
 		lockNo = bucketNo % lockCount;
+	}
+
+	/// <summary>
+	/// Returns <c>true</c> when <paramref name="n"/> is divisible by 3, 5, or 7.
+	/// </summary>
+	/// <param name="n">The value to test.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(IsDivisibleBy3Or5Or7), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static bool IsDivisibleBy3Or5Or7(int n) => n % 3 == 0 || n % 5 == 0 || n % 7 == 0;
+
+	/// <summary>
+	/// Rehashes all elements from the current tables into the new buckets and count arrays.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot to rehash from.</param>
+	/// <param name="newBuckets">The new bucket array.</param>
+	/// <param name="newCountPerLock">The new per-lock count array.</param>
+	/// <param name="newLocks">The new lock array used to determine lock assignment.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RehashBuckets), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void RehashBuckets(Tables tables, Node[] newBuckets, int[] newCountPerLock, object[] newLocks)
+	{
+		for (var bucketCount = 0; bucketCount < tables._buckets.LongLength; bucketCount++)
+		{
+			var current = tables._buckets[bucketCount];
+
+			while (current is not null)
+			{
+				var next = current._next;
+				GetBucketAndLockNo(current._hashCode, out var newBucketNo, out var newLockNo, newBuckets.Length, newLocks.Length);
+
+				newBuckets[newBucketNo] = new Node(current._item, current._hashCode, newBuckets[newBucketNo]);
+
+				checked
+				{
+					newCountPerLock[newLockNo]++;
+				}
+
+				current = next;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Attempts to compute (currentLength * 2 + 1) rounded up to the next length not divisible by 3, 5, or 7.
+	/// Returns <c>false</c> if the result would exceed <paramref name="maxLength"/> or overflow.
+	/// </summary>
+	/// <param name="currentLength">The current bucket-array length.</param>
+	/// <param name="maxLength">The maximum allowed length.</param>
+	/// <param name="newLength">The computed new length on success; <paramref name="maxLength"/> on overflow.</param>
+	/// <returns><c>true</c> if a valid new length was computed; <c>false</c> if the table should be maximized.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(TryComputeDoublePlusOne), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static bool TryComputeDoublePlusOne(int currentLength, int maxLength, out int newLength)
+	{
+		try
+		{
+			checked
+			{
+				newLength = FindNextValidLength((currentLength * 2) + 1);
+				return newLength <= maxLength;
+			}
+		}
+		catch (OverflowException)
+		{
+			newLength = maxLength;
+			return false;
+		}
 	}
 
 	/// <summary>
@@ -722,6 +938,30 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
+	/// Inserts <paramref name="item"/> without acquiring a lock (single-threaded initialization path only).
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool AddInternalUnlocked(T item, int hashCode)
+	{
+		var tables = this._tables;
+
+		GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
+
+		if (this.TryFindInBucket(tables._buckets[bucketNo], item, hashCode, out _))
+		{
+			return false;
+		}
+
+		Volatile.Write(ref tables._buckets[bucketNo], new Node(item, hashCode, tables._buckets[bucketNo]));
+		checked
+		{
+			tables._countPerLock[lockNo]++;
+		}
+
+		return true;
+	}
+
+	/// <summary>
 	/// Performs the actual insertion into a bucket that is already protected by the caller's lock.
 	/// </summary>
 	/// <param name="tables">The current tables snapshot.</param>
@@ -751,27 +991,22 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
-	/// Inserts <paramref name="item"/> without acquiring a lock (single-threaded initialization path only).
+	/// Computes the approximate total element count using per-lock counts. Caller must hold all locks.
 	/// </summary>
+	/// <returns>The computed element count. May be negative if overflow occurred.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private bool AddInternalUnlocked(T item, int hashCode)
+	[Pure]
+	[Information(nameof(ComputeCountUnderLock), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private int ComputeCountUnderLock()
 	{
-		var tables = this._tables;
+		var count = 0;
 
-		GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
-
-		if (this.TryFindInBucket(tables._buckets[bucketNo], item, hashCode, out _))
+		for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
 		{
-			return false;
+			count += this._tables._countPerLock[lockCount];
 		}
 
-		Volatile.Write(ref tables._buckets[bucketNo], new Node(item, hashCode, tables._buckets[bucketNo]));
-		checked
-		{
-			tables._countPerLock[lockNo]++;
-		}
-
-		return true;
+		return count;
 	}
 
 	/// <summary>
@@ -798,6 +1033,27 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 				index++; // this should never flow, CopyToItems is only called when there's no overflow risk
 			}
 		}
+	}
+
+	/// <summary>
+	/// Creates an expanded lock array for the grow operation, doubling locks when permitted.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot.</param>
+	/// <returns>The new lock array (may be the same reference if no expansion occurred).</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateExpandedLocks), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private object[] CreateExpandedLocks(Tables tables)
+	{
+		if (!this._growLockArray || tables._locks.LongLength >= MaxLockNumber)
+		{
+			return tables._locks;
+		}
+
+		var newLocks = new object[tables._locks.LongLength * 2];
+		Array.Copy(tables._locks, 0, newLocks, 0, tables._locks.Length);
+		AddNewLocks(newLocks, tables._locks.LongLength);
+
+		return newLocks;
 	}
 
 	/// <summary>
@@ -875,282 +1131,6 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	}
 
 	/// <summary>
-	/// Releases the locks for a range of buckets.
-	/// </summary>
-	/// <param name="fromInclusive">The inclusive start index of the bucket range for which locks are to be released.</param>
-	/// <param name="toExclusive">The exclusive end index of the bucket range for which locks are to be released.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void ReleaseLocks(in int fromInclusive, in int toExclusive)
-	{
-		for (var inclusiveCount = fromInclusive; inclusiveCount < toExclusive; inclusiveCount++)
-		{
-			Monitor.Exit(this._tables._locks[inclusiveCount]);
-		}
-	}
-
-	/// <summary>
-	/// Computes the approximate total element count using per-lock counts. Caller must hold all locks.
-	/// </summary>
-	/// <returns>The computed element count. May be negative if overflow occurred.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(ComputeCountUnderLock), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private int ComputeCountUnderLock()
-	{
-		var count = 0;
-
-		for (var lockCount = 0; lockCount < this._tables._locks.LongLength && count >= 0; lockCount++)
-		{
-			count += this._tables._countPerLock[lockCount];
-		}
-
-		return count;
-	}
-
-	/// <summary>
-	/// Computes the approximate total size of the table and doubles the budget if the table is underutilized.
-	/// </summary>
-	/// <param name="tables">The current tables snapshot.</param>
-	/// <returns><c>true</c> if the budget was increased instead of resizing; <c>false</c> if a resize is needed.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ShouldIncreaseBudgetOnly), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private bool ShouldIncreaseBudgetOnly(Tables tables)
-	{
-		if (ComputeApproxCount(tables) < tables._buckets.LongLength / 4)
-		{
-			// Double budget using long arithmetic to avoid overflow; cap at int.MaxValue
-			this._budget = (int)Math.Min((long)this._budget * 2, int.MaxValue);
-			return true;
-		}
-
-		return false;
-	}
-
-	/// <summary>
-	/// Computes the new bucket-array length for a grow operation.
-	/// </summary>
-	/// <param name="tables">The current tables snapshot.</param>
-	/// <returns>A tuple of (newLength, maximizeTableSize).</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(ComputeNewLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static (int newLength, bool maximizeTableSize) ComputeNewLength(Tables tables)
-	{
-		const int MaxArrayLength = 0X7FEFFFFF;
-
-		if (!TryComputeDoublePlusOne(tables._buckets.Length, MaxArrayLength, out var newLength))
-		{
-			return (MaxArrayLength, true);
-		}
-
-		return (newLength, false);
-	}
-
-	/// <summary>
-	/// Attempts to compute (currentLength * 2 + 1) rounded up to the next length not divisible by 3, 5, or 7.
-	/// Returns <c>false</c> if the result would exceed <paramref name="maxLength"/> or overflow.
-	/// </summary>
-	/// <param name="currentLength">The current bucket-array length.</param>
-	/// <param name="maxLength">The maximum allowed length.</param>
-	/// <param name="newLength">The computed new length on success; <paramref name="maxLength"/> on overflow.</param>
-	/// <returns><c>true</c> if a valid new length was computed; <c>false</c> if the table should be maximized.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(TryComputeDoublePlusOne), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static bool TryComputeDoublePlusOne(int currentLength, int maxLength, out int newLength)
-	{
-		try
-		{
-			checked
-			{
-				newLength = FindNextValidLength((currentLength * 2) + 1);
-				return newLength <= maxLength;
-			}
-		}
-		catch (OverflowException)
-		{
-			newLength = maxLength;
-			return false;
-		}
-	}
-
-	/// <summary>
-	/// Starting from <paramref name="candidate"/>, finds the first odd integer not divisible by 3, 5, or 7.
-	/// </summary>
-	/// <param name="candidate">The starting odd integer.</param>
-	/// <returns>The first valid candidate &gt;= <paramref name="candidate"/>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(FindNextValidLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static int FindNextValidLength(int candidate)
-	{
-		while (IsDivisibleBy3Or5Or7(candidate))
-		{
-			candidate += 2;
-		}
-
-		Debug.Assert(candidate % 2 != 0);
-		return candidate;
-	}
-
-	/// <summary>
-	/// Returns <c>true</c> when <paramref name="n"/> is divisible by 3, 5, or 7.
-	/// </summary>
-	/// <param name="n">The value to test.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(IsDivisibleBy3Or5Or7), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static bool IsDivisibleBy3Or5Or7(int n) => n % 3 == 0 || n % 5 == 0 || n % 7 == 0;
-
-	/// <summary>
-	/// Creates an expanded lock array for the grow operation, doubling locks when permitted.
-	/// </summary>
-	/// <param name="tables">The current tables snapshot.</param>
-	/// <returns>The new lock array (may be the same reference if no expansion occurred).</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateExpandedLocks), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private object[] CreateExpandedLocks(Tables tables)
-	{
-		if (!this._growLockArray || tables._locks.LongLength >= MaxLockNumber)
-		{
-			return tables._locks;
-		}
-
-		var newLocks = new object[tables._locks.LongLength * 2];
-		Array.Copy(tables._locks, 0, newLocks, 0, tables._locks.Length);
-		AddNewLocks(newLocks, tables._locks.LongLength);
-
-		return newLocks;
-	}
-
-	/// <summary>
-	/// Initializes newly added slots in a lock array (from <paramref name="startIndex"/> to end) with fresh lock objects.
-	/// </summary>
-	/// <param name="locks">The lock array to populate.</param>
-	/// <param name="startIndex">The first index that needs initialization.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AddNewLocks), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void AddNewLocks(object[] locks, long startIndex)
-	{
-		for (var i = startIndex; i < locks.Length; i++)
-		{
-			locks[i] = new object();
-		}
-	}
-
-	/// <summary>
-	/// Computes the new resize budget. Returns <see cref="int.MaxValue"/> when the table has been maximized
-	/// to prevent further resize calls; otherwise returns <c>max(1, bucketCount / lockCount)</c>.
-	/// </summary>
-	/// <param name="maximizeTableSize"><c>true</c> if the table was grown to its maximum size.</param>
-	/// <param name="bucketCount">The number of buckets in the new table.</param>
-	/// <param name="lockCount">The number of locks in the new table.</param>
-	/// <returns>The new budget value.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(ComputeBudget), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static int ComputeBudget(bool maximizeTableSize, int bucketCount, int lockCount) =>
-		maximizeTableSize ? int.MaxValue : Math.Max(1, bucketCount / lockCount);
-
-	/// <summary>
-	/// Computes the approximate total element count by summing the per-lock counters.
-	/// </summary>
-	/// <param name="tables">The tables snapshot to count.</param>
-	/// <returns>The approximate total element count.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(ComputeApproxCount), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static long ComputeApproxCount(Tables tables)
-	{
-		long approxCount = 0;
-
-		for (var tableCount = 0; tableCount < tables._countPerLock.LongLength; tableCount++)
-		{
-			approxCount += tables._countPerLock[tableCount];
-		}
-
-		return approxCount;
-	}
-
-	/// <summary>
-	/// Rehashes all elements from the current tables into the new buckets and count arrays.
-	/// </summary>
-	/// <param name="tables">The current tables snapshot to rehash from.</param>
-	/// <param name="newBuckets">The new bucket array.</param>
-	/// <param name="newCountPerLock">The new per-lock count array.</param>
-	/// <param name="newLocks">The new lock array used to determine lock assignment.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(RehashBuckets), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void RehashBuckets(Tables tables, Node[] newBuckets, int[] newCountPerLock, object[] newLocks)
-	{
-		for (var bucketCount = 0; bucketCount < tables._buckets.LongLength; bucketCount++)
-		{
-			var current = tables._buckets[bucketCount];
-
-			while (current is not null)
-			{
-				var next = current._next;
-				GetBucketAndLockNo(current._hashCode, out var newBucketNo, out var newLockNo, newBuckets.Length, newLocks.Length);
-
-				newBuckets[newBucketNo] = new Node(current._item, current._hashCode, newBuckets[newBucketNo]);
-
-				checked
-				{
-					newCountPerLock[newLockNo]++;
-				}
-
-				current = next;
-			}
-		}
-	}
-
-	/// <summary>
-	/// Creates an initialized lock-objects array of the specified length.
-	/// </summary>
-	/// <param name="count">The number of locks to create.</param>
-	/// <returns>An array of <paramref name="count"/> freshly created lock objects.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(CreateLockObjects), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static object[] CreateLockObjects(int count)
-	{
-		var locks = new object[count];
-
-		for (var lockCount = 0; lockCount < count; lockCount++)
-		{
-			locks[lockCount] = new object();
-		}
-
-		return locks;
-	}
-
-	/// <summary>
-	/// Searches a bucket linked-list for an item matching the given hash code and equality.
-	/// </summary>
-	/// <param name="start">The first node in the bucket chain, or <c>null</c> if the bucket is empty.</param>
-	/// <param name="item">The item to search for.</param>
-	/// <param name="hashCode">The pre-computed hash code of <paramref name="item"/>.</param>
-	/// <param name="foundItem">When this method returns <c>true</c>, contains the matching item stored in the set.</param>
-	/// <returns><c>true</c> if a matching node was found; otherwise <c>false</c>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Pure]
-	[Information(nameof(TryFindInBucket), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private bool TryFindInBucket(Node? start, T item, int hashCode, [MaybeNullWhen(false)] out T foundItem)
-	{
-		for (var current = start; current is not null; current = current._next)
-		{
-			if (this.NodeMatches(current, item, hashCode))
-			{
-				foundItem = current._item;
-				return true;
-			}
-		}
-
-		foundItem = default;
-		return false;
-	}
-
-	/// <summary>
 	/// Returns <c>true</c> when <paramref name="node"/>'s hash code and item match the given search key.
 	/// </summary>
 	/// <param name="node">The node to test.</param>
@@ -1163,14 +1143,18 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		hashCode == node._hashCode && this._comparer.Equals(node._item, item);
 
 	/// <summary>
-	/// Adds <paramref name="item"/> to the set only when it is non-null. Used by <see cref="AddRange"/>.
+	/// Releases the locks for a range of buckets.
 	/// </summary>
-	/// <param name="item">The candidate item.</param>
-	/// <returns><c>true</c> if the item was added; <c>false</c> if it was null or already present.</returns>
+	/// <param name="fromInclusive">The inclusive start index of the bucket range for which locks are to be released.</param>
+	/// <param name="toExclusive">The exclusive end index of the bucket range for which locks are to be released.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryAddNonNull), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private bool TryAddNonNull(T item) =>
-		item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true);
+	private void ReleaseLocks(in int fromInclusive, in int toExclusive)
+	{
+		for (var inclusiveCount = fromInclusive; inclusiveCount < toExclusive; inclusiveCount++)
+		{
+			Monitor.Exit(this._tables._locks[inclusiveCount]);
+		}
+	}
 
 	/// <summary>
 	/// Searches the linked list at the given bucket position and removes the node that matches <paramref name="item"/>.
@@ -1203,6 +1187,61 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			current = current._next;
 		}
 
+		return false;
+	}
+
+	/// <summary>
+	/// Computes the approximate total size of the table and doubles the budget if the table is underutilized.
+	/// </summary>
+	/// <param name="tables">The current tables snapshot.</param>
+	/// <returns><c>true</c> if the budget was increased instead of resizing; <c>false</c> if a resize is needed.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ShouldIncreaseBudgetOnly), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool ShouldIncreaseBudgetOnly(Tables tables)
+	{
+		if (ComputeApproxCount(tables) < tables._buckets.LongLength / 4)
+		{
+			// Double budget using long arithmetic to avoid overflow; cap at int.MaxValue
+			this._budget = (int)Math.Min((long)this._budget * 2, int.MaxValue);
+			return true;
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Adds <paramref name="item"/> to the set only when it is non-null. Used by <see cref="AddRange"/>.
+	/// </summary>
+	/// <param name="item">The candidate item.</param>
+	/// <returns><c>true</c> if the item was added; <c>false</c> if it was null or already present.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryAddNonNull), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool TryAddNonNull(T item) =>
+		item is not null && this.AddInternal(item, this._comparer.GetHashCode(item), acquireLock: true);
+
+	/// <summary>
+	/// Searches a bucket linked-list for an item matching the given hash code and equality.
+	/// </summary>
+	/// <param name="start">The first node in the bucket chain, or <c>null</c> if the bucket is empty.</param>
+	/// <param name="item">The item to search for.</param>
+	/// <param name="hashCode">The pre-computed hash code of <paramref name="item"/>.</param>
+	/// <param name="foundItem">When this method returns <c>true</c>, contains the matching item stored in the set.</param>
+	/// <returns><c>true</c> if a matching node was found; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
+	[Information(nameof(TryFindInBucket), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private bool TryFindInBucket(Node? start, T item, int hashCode, [MaybeNullWhen(false)] out T foundItem)
+	{
+		for (var current = start; current is not null; current = current._next)
+		{
+			if (this.NodeMatches(current, item, hashCode))
+			{
+				foundItem = current._item;
+				return true;
+			}
+		}
+
+		foundItem = default;
 		return false;
 	}
 
