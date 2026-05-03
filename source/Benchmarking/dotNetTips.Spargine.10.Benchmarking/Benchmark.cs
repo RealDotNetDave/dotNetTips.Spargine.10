@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-18-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,6 +20,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
@@ -130,9 +131,24 @@ public abstract class Benchmark
 	protected const string SuccessText = "success";
 
 	/// <summary>
+	/// Log message emitted by <see cref="Cleanup"/>.
+	/// </summary>
+	private const string CleanupLogMessage = $"Cleanup(): {nameof(Benchmark)}.";
+
+	/// <summary>
+	/// Log message emitted by <see cref="GlobalSetup"/> when launching the debugger.
+	/// </summary>
+	private const string LaunchingDebuggerLogMessage = $"Launching debugger: {nameof(Benchmark)}.";
+
+	/// <summary>
 	/// Fake phone number.
 	/// </summary>
 	private const string PhoneNumberUpdate = "555-867-5309";
+
+	/// <summary>
+	/// Log message emitted by <see cref="Setup"/>.
+	/// </summary>
+	private const string SetupLogMessage = $"Setup(): {nameof(Benchmark)}.";
 
 	/// <summary>
 	/// Caches byte arrays of various sizes to avoid regenerating them for each benchmark iteration.
@@ -141,8 +157,9 @@ public abstract class Benchmark
 
 	/// <summary>
 	/// Caches string arrays of various configurations to avoid regenerating them for each benchmark iteration.
+	/// The key is a value tuple (count, minLength, maxLength) to avoid heap-allocating a string key on every call.
 	/// </summary>
-	private readonly ConcurrentDictionary<string, string[]> _stringArrayCache = new();
+	private readonly ConcurrentDictionary<(int Count, int MinLength, int MaxLength), string[]> _stringArrayCache = new();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Benchmark"/> class.
@@ -313,7 +330,7 @@ public abstract class Benchmark
 	/// </summary>
 	public virtual void Cleanup()
 	{
-		ConsoleLogger.Default.WriteLine(LogKind.Info, $"Cleanup(): {nameof(Benchmark)}.");
+		ConsoleLogger.Default.WriteLine(LogKind.Info, CleanupLogMessage);
 	}
 
 	/// <summary>
@@ -385,11 +402,24 @@ public abstract class Benchmark
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConsumeDictionary), "David McCarter", "1/7/2026", Status = Status.Available)]
-	public void ConsumeDictionary<TKey, TValue>([DisallowNull] IDictionary<TKey, TValue> collection)
+	public void ConsumeDictionary<TKey, TValue>([DisallowNull] IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
-		foreach (var kvp in collection)
+		// Cast to the concrete Dictionary type first so the compiler can use its
+		// struct enumerator directly, avoiding the IEnumerator<T> boxing that
+		// occurs when iterating through the IDictionary<TKey,TValue> interface.
+		if (collection is Dictionary<TKey, TValue> dict)
 		{
-			this.Consume(kvp.Value);
+			foreach (var kvp in dict)
+			{
+				this.Consume(kvp.Value);
+			}
+		}
+		else
+		{
+			foreach (var kvp in collection)
+			{
+				this.Consume(kvp.Value);
+			}
 		}
 	}
 
@@ -411,9 +441,22 @@ public abstract class Benchmark
 	{
 		collection = collection.ArgumentNotNull();
 
-		foreach (var item in collection)
+		// IReadOnlyList<T> covers T[], List<T>, ReadOnlyCollection<T>, ImmutableArray<T>, etc.
+		// An index-based loop on a concrete list type avoids the heap-allocated
+		// IEnumerator<T> that a foreach on IEnumerable<T> always produces.
+		if (collection is IReadOnlyList<T> list)
 		{
-			this.Consume(item);
+			for (var index = 0; index < list.Count; index++)
+			{
+				this.Consume(list[index]);
+			}
+		}
+		else
+		{
+			foreach (var item in collection)
+			{
+				this.Consume(item);
+			}
 		}
 	}
 
@@ -504,9 +547,9 @@ public abstract class Benchmark
 		wordMinLength = wordMinLength.EnsureMinimum(1);
 		wordMaxLength = wordMaxLength.EnsureMinimum(wordMinLength + 1);
 
-		var key = $"{count}-{wordMinLength}-{wordMaxLength}";
+		var key = (count, wordMinLength, wordMaxLength);
 
-		return this._stringArrayCache.GetOrAdd(key, _ => [.. RandomData.GenerateWords(count, wordMinLength, wordMaxLength)]);
+		return this._stringArrayCache.GetOrAdd(key, static k => [.. RandomData.GenerateWords(k.Count, k.MinLength, k.MaxLength)]);
 	}
 
 	/// <summary>
@@ -529,7 +572,7 @@ public abstract class Benchmark
 	{
 		if (this.LaunchDebugger)
 		{
-			ConsoleLogger.Default.WriteLine(LogKind.Info, $"Launching debugger: {nameof(Benchmark)}.");
+			ConsoleLogger.Default.WriteLine(LogKind.Info, LaunchingDebuggerLogMessage);
 			_ = Debugger.Launch();
 		}
 
@@ -543,7 +586,7 @@ public abstract class Benchmark
 	/// </summary>
 	public virtual void Setup()
 	{
-		ConsoleLogger.Default.WriteLine(LogKind.Info, $"Setup(): {nameof(Benchmark)}.");
+		ConsoleLogger.Default.WriteLine(LogKind.Info, SetupLogMessage);
 
 		this.Base64String = this.LongTestString[..50].ToBase64();
 		this.CoordinateVal01 = RandomData.GenerateCoordinate<Tester.Models.ValueTypes.Coordinate>();
@@ -753,7 +796,7 @@ public abstract class Benchmark
 		action();
 		var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
 
-		LogInfo($"{description} completed in {elapsed.TotalMilliseconds:F3}ms");
+		LogInfo(string.Create(CultureInfo.InvariantCulture, $"{description} completed in {elapsed.TotalMilliseconds:F3}ms"));
 
 		return elapsed;
 	}
