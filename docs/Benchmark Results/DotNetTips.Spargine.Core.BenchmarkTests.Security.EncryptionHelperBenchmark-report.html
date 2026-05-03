@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark-20260419-183456</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.EncryptionHelperBenchmark-20260502-184208</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,9 +15,9 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.202
-  [Host]     : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.6 (10.0.6, 10.0.626.17701), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.203
+  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 </code></pre>
@@ -25,15 +25,15 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 <table>
 <thead><tr><th>Method       </th><th>Categories  </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Allocated native memory</th><th>Native memory leak</th><th>Code Size</th>
 </tr>
-</thead><tbody><tr><td>AesDecrypt</td><td>Encryption</td><td>4,386.8 ns</td><td>21.94 ns</td><td>20.52 ns</td><td>5.30 ns</td><td>4,361.0 ns</td><td>4,372.2 ns</td><td>4,380.3 ns</td><td>4,399.5 ns</td><td>4,431.1 ns</td><td>227,958.3</td><td>4.850 ns</td><td>15.00</td><td>2.258</td><td>2.000</td><td>0.6724</td><td>6</td><td>*</td><td>No</td><td>-</td><td>654 B</td><td>20 B</td><td>NA</td>
-</tr><tr><td>AesEncrypt</td><td>Encryption</td><td>3,501.5 ns</td><td>11.07 ns</td><td>9.81 ns</td><td>2.62 ns</td><td>3,488.5 ns</td><td>3,493.5 ns</td><td>3,502.4 ns</td><td>3,504.0 ns</td><td>3,520.0 ns</td><td>285,588.2</td><td>5.689 ns</td><td>14.00</td><td>2.048</td><td>2.000</td><td>0.3907</td><td>5</td><td>*</td><td>No</td><td>-</td><td>654 B</td><td>33 B</td><td>NA</td>
-</tr><tr><td>AesGcmDecrypt</td><td>Encryption</td><td>2,448.0 ns</td><td>10.79 ns</td><td>10.09 ns</td><td>2.61 ns</td><td>2,429.0 ns</td><td>2,441.8 ns</td><td>2,447.0 ns</td><td>2,454.7 ns</td><td>2,465.2 ns</td><td>408,499.9</td><td>6.197 ns</td><td>15.00</td><td>2.035</td><td>2.000</td><td>0.0344</td><td>4</td><td>*</td><td>No</td><td>-</td><td>3,262 B</td><td>-</td><td>NA</td>
-</tr><tr><td>AesGcmEncrypt</td><td>Encryption</td><td>2,426.4 ns</td><td>22.16 ns</td><td>19.64 ns</td><td>5.25 ns</td><td>2,403.6 ns</td><td>2,410.2 ns</td><td>2,422.5 ns</td><td>2,438.3 ns</td><td>2,469.3 ns</td><td>412,136.3</td><td>4.375 ns</td><td>14.00</td><td>2.350</td><td>2.000</td><td>0.7594</td><td>4</td><td>*</td><td>No</td><td>-</td><td>3,262 B</td><td>-</td><td>11,387 B</td>
-</tr><tr><td>GenerateAesIV</td><td>Encryption</td><td>288.6 ns</td><td>3.30 ns</td><td>3.09 ns</td><td>0.80 ns</td><td>282.4 ns</td><td>286.9 ns</td><td>289.2 ns</td><td>290.1 ns</td><td>294.1 ns</td><td>3,465,501.2</td><td>7.101 ns</td><td>15.00</td><td>2.311</td><td>2.000</td><td>-0.4054</td><td>2</td><td>*</td><td>No</td><td>-</td><td>-</td><td>-</td><td>NA</td>
-</tr><tr><td>GenerateAesKey</td><td>Encryption</td><td>386.1 ns</td><td>3.45 ns</td><td>3.22 ns</td><td>0.83 ns</td><td>382.4 ns</td><td>383.6 ns</td><td>384.9 ns</td><td>387.9 ns</td><td>391.8 ns</td><td>2,590,296.9</td><td>7.084 ns</td><td>15.00</td><td>1.806</td><td>2.000</td><td>0.6244</td><td>3</td><td>*</td><td>No</td><td>-</td><td>32 B</td><td>-</td><td>NA</td>
-</tr><tr><td>GenerateRandomKey</td><td>Strings,Encryption</td><td>175.4 ns</td><td>0.64 ns</td><td>0.60 ns</td><td>0.16 ns</td><td>174.4 ns</td><td>175.0 ns</td><td>175.5 ns</td><td>175.9 ns</td><td>176.2 ns</td><td>5,700,547.0</td><td>7.422 ns</td><td>15.00</td><td>1.669</td><td>2.000</td><td>-0.2266</td><td>1</td><td>*</td><td>No</td><td>-</td><td>-</td><td>-</td><td>854 B</td>
-</tr><tr><td>SimpleSHA256Decrypt</td><td>Encryption</td><td>5,089.6 ns</td><td>36.55 ns</td><td>32.40 ns</td><td>8.66 ns</td><td>5,040.8 ns</td><td>5,062.2 ns</td><td>5,090.7 ns</td><td>5,113.5 ns</td><td>5,141.2 ns</td><td>196,479.7</td><td>2.670 ns</td><td>14.00</td><td>1.627</td><td>2.000</td><td>0.0944</td><td>7</td><td>*</td><td>No</td><td>-</td><td>980 B</td><td>-</td><td>NA</td>
-</tr><tr><td>SimpleSHA256Encrypt</td><td>Encryption</td><td>4,427.9 ns</td><td>37.01 ns</td><td>34.61 ns</td><td>8.94 ns</td><td>4,384.8 ns</td><td>4,404.1 ns</td><td>4,412.1 ns</td><td>4,449.0 ns</td><td>4,508.8 ns</td><td>225,842.9</td><td>3.031 ns</td><td>15.00</td><td>2.571</td><td>2.000</td><td>0.7545</td><td>6</td><td>*</td><td>No</td><td>-</td><td>980 B</td><td>12 B</td><td>NA</td>
+</thead><tbody><tr><td>AesDecrypt</td><td>Encryption</td><td>4,421.8 ns</td><td>16.45 ns</td><td>15.38 ns</td><td>3.97 ns</td><td>4,401.9 ns</td><td>4,411.4 ns</td><td>4,418.9 ns</td><td>4,428.8 ns</td><td>4,453.4 ns</td><td>226,154.1</td><td>5.514 ns</td><td>15.00</td><td>2.282</td><td>2.000</td><td>0.6201</td><td>7</td><td>*</td><td>No</td><td>-</td><td>654 B</td><td>20 B</td><td>NA</td>
+</tr><tr><td>AesEncrypt</td><td>Encryption</td><td>3,572.5 ns</td><td>14.87 ns</td><td>13.91 ns</td><td>3.59 ns</td><td>3,551.8 ns</td><td>3,562.7 ns</td><td>3,571.9 ns</td><td>3,579.7 ns</td><td>3,595.9 ns</td><td>279,915.8</td><td>5.704 ns</td><td>15.00</td><td>1.796</td><td>2.000</td><td>0.2303</td><td>6</td><td>*</td><td>No</td><td>-</td><td>654 B</td><td>37 B</td><td>NA</td>
+</tr><tr><td>AesGcmDecrypt</td><td>Encryption</td><td>2,604.3 ns</td><td>29.43 ns</td><td>26.09 ns</td><td>6.97 ns</td><td>2,579.0 ns</td><td>2,587.2 ns</td><td>2,593.2 ns</td><td>2,615.6 ns</td><td>2,657.3 ns</td><td>383,981.3</td><td>3.514 ns</td><td>14.00</td><td>2.612</td><td>2.000</td><td>1.0216</td><td>5</td><td>*</td><td>No</td><td>-</td><td>3,262 B</td><td>-</td><td>7,582 B</td>
+</tr><tr><td>AesGcmEncrypt</td><td>Encryption</td><td>2,351.2 ns</td><td>18.53 ns</td><td>17.33 ns</td><td>4.48 ns</td><td>2,321.8 ns</td><td>2,335.9 ns</td><td>2,355.6 ns</td><td>2,366.4 ns</td><td>2,374.7 ns</td><td>425,323.6</td><td>5.262 ns</td><td>15.00</td><td>1.527</td><td>2.000</td><td>-0.3056</td><td>4</td><td>*</td><td>No</td><td>-</td><td>3,262 B</td><td>-</td><td>13,629 B</td>
+</tr><tr><td>GenerateAesIV</td><td>Encryption</td><td>283.0 ns</td><td>1.60 ns</td><td>1.50 ns</td><td>0.39 ns</td><td>280.3 ns</td><td>282.0 ns</td><td>283.1 ns</td><td>283.6 ns</td><td>286.1 ns</td><td>3,533,692.6</td><td>7.307 ns</td><td>15.00</td><td>2.442</td><td>2.000</td><td>0.1961</td><td>2</td><td>*</td><td>No</td><td>-</td><td>-</td><td>-</td><td>NA</td>
+</tr><tr><td>GenerateAesKey</td><td>Encryption</td><td>385.4 ns</td><td>1.35 ns</td><td>1.13 ns</td><td>0.31 ns</td><td>384.0 ns</td><td>384.5 ns</td><td>385.3 ns</td><td>386.0 ns</td><td>388.2 ns</td><td>2,594,776.5</td><td>6.344 ns</td><td>13.00</td><td>3.355</td><td>2.000</td><td>0.9193</td><td>3</td><td>*</td><td>No</td><td>-</td><td>32 B</td><td>-</td><td>NA</td>
+</tr><tr><td>GenerateRandomKey</td><td>Strings,Encryption</td><td>183.1 ns</td><td>0.53 ns</td><td>0.44 ns</td><td>0.12 ns</td><td>182.2 ns</td><td>182.9 ns</td><td>183.2 ns</td><td>183.4 ns</td><td>183.6 ns</td><td>5,461,582.1</td><td>6.438 ns</td><td>13.00</td><td>2.177</td><td>2.000</td><td>-0.6476</td><td>1</td><td>*</td><td>No</td><td>-</td><td>-</td><td>-</td><td>855 B</td>
+</tr><tr><td>SimpleSHA256Decrypt</td><td>Encryption</td><td>4,960.1 ns</td><td>18.15 ns</td><td>16.09 ns</td><td>4.30 ns</td><td>4,932.3 ns</td><td>4,948.4 ns</td><td>4,962.6 ns</td><td>4,972.0 ns</td><td>4,982.0 ns</td><td>201,608.8</td><td>4.850 ns</td><td>14.00</td><td>1.594</td><td>2.000</td><td>-0.2505</td><td>8</td><td>*</td><td>No</td><td>-</td><td>980 B</td><td>-</td><td>NA</td>
+</tr><tr><td>SimpleSHA256Encrypt</td><td>Encryption</td><td>4,504.3 ns</td><td>32.28 ns</td><td>26.95 ns</td><td>7.48 ns</td><td>4,455.2 ns</td><td>4,496.8 ns</td><td>4,506.2 ns</td><td>4,516.0 ns</td><td>4,556.0 ns</td><td>222,012.1</td><td>2.762 ns</td><td>13.00</td><td>2.640</td><td>2.000</td><td>-0.2693</td><td>7</td><td>*</td><td>No</td><td>-</td><td>980 B</td><td>12 B</td><td>NA</td>
 </tr></tbody></table>
 </body>
 </html>
