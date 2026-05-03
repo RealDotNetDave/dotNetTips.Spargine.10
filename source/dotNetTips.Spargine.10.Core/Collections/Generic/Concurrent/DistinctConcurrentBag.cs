@@ -375,7 +375,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// been removed from <see cref="_uniqueItems"/>.
 	/// </summary>
 	/// <param name="item">The item that was removed and must be excluded from the reconstructed bag.</param>
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private void ReconstructBagWithout(T item)
 	{
 		var newItems = new List<T>(this._uniqueItems.Count);

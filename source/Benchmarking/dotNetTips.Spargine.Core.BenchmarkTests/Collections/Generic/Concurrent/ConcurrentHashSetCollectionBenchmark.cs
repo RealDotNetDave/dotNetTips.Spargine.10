@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -97,6 +97,24 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 		// ToUniqueCollection Hash Set
 		this._personRefConcurrentHashSet = [.. this.GetPersonRefArray()];
 
+	}
+
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.ToArray))]
+	[BenchmarkCategory(Categories.Async)]
+	public void ToArray()
+	{
+		var people = this._personRefConcurrentHashSet;
+
+		this.Consume(people.ToArray());
+	}
+
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.TryPeek))]
+	[BenchmarkCategory(Categories.Async)]
+	public void TryPeek()
+	{
+		var people = this._personRefConcurrentHashSet;
+
+		this.Consume(people.TryPeek(this.PersonRef01, out _));
 	}
 
 	[Benchmark(Description = "TryRemove")]

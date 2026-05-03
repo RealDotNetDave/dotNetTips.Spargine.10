@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 07-19-2021
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelper.cs" company="dotNetTips.com - McCarter Consulting">
@@ -454,7 +454,7 @@ public static class EncryptionHelper
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(VerifySHA256HashedPassword), "David McCarter", "10/13/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Benchmark)]
+	[Information(nameof(VerifySHA256HashedPassword), "David McCarter", "10/13/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available, BenchmarkStatus = BenchmarkStatus.Completed)]
 	public static PasswordVerificationResult VerifySHA256HashedPassword([DisallowNull] string hashedPassword, [DisallowNull] string password)
 	{
 		return PasswordHasher.VerifyHashedPassword(hashedPassword.ArgumentNotNullOrEmpty(), password.ArgumentNotNullOrEmpty(), HashAlgorithmType.SHA256);

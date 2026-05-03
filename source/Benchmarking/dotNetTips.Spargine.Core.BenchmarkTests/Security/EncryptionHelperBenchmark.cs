@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -27,11 +27,13 @@ public class EncryptionHelperBenchmark : Benchmark
 {
 
 	private const string Key = "!&@^@%@$@#!!!";
+	private const string PlainPassword = "P@ssw0rd!Spargine";
 	private string _aesCypherText = default!;
 	private string _aesGcmEncryptText = default!;
 	private byte[] _aesIv = default!;
 	private byte[] _aesKey = default!;
 	private string _cypherText = string.Empty;
+	private string _sha256HashedPassword = default!;
 
 	[Benchmark(Description = nameof(EncryptionHelper.AesDecrypt))]
 	[BenchmarkCategory(Categories.Encryption)]
@@ -105,6 +107,7 @@ public class EncryptionHelperBenchmark : Benchmark
 		this._aesIv = EncryptionHelper.GenerateAesIV();
 		this._aesCypherText = EncryptionHelper.AesEncrypt(this.LongTestString, this._aesKey, this._aesIv);
 		this._aesGcmEncryptText = EncryptionHelper.AesGcmEncrypt(this.LongTestString, this._aesKey, this._aesIv);
+		this._sha256HashedPassword = PasswordHasher.HashPassword(PlainPassword, HashAlgorithmType.SHA256);
 	}
 
 	[Benchmark(Description = nameof(EncryptionHelper.SimpleSHA256Decrypt))]
@@ -121,6 +124,15 @@ public class EncryptionHelperBenchmark : Benchmark
 	public void SimpleSHA256Encrypt()
 	{
 		var result = EncryptionHelper.SimpleSHA256Encrypt(this.LongTestString, Key);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EncryptionHelper.VerifySHA256HashedPassword))]
+	[BenchmarkCategory(Categories.Encryption)]
+	public void VerifySHA256HashedPassword()
+	{
+		var result = EncryptionHelper.VerifySHA256HashedPassword(this._sha256HashedPassword, PlainPassword);
 
 		this.Consume(result);
 	}

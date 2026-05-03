@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 02-07-2021
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="XmlSerialization.cs" company="dotNetTips.com - McCarter Consulting">
@@ -122,7 +122,7 @@ public static class XmlSerialization
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(SerializeToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(SerializeToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file)
 	{
 		obj = obj.ArgumentNotNull();

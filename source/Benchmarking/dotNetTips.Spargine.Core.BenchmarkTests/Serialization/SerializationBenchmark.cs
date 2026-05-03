@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="SerializationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,7 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -42,6 +44,7 @@ public class SerializationBenchmark : Benchmark
 	private List<Person> _personRefList = default!;
 	private string _xmlPersonRecord = default!;
 	private string _xmlPersonRef = default!;
+	private FileInfo _xmlSerializeToFile = default!;
 
 	[Benchmark(Description = "Deserialize JSON: JsonSerializer + Generator - Person")]
 	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]
@@ -203,6 +206,18 @@ public class SerializationBenchmark : Benchmark
 	}
 
 	/// <summary>
+	/// Serializes the XML reference to a file.
+	/// </summary>
+	[Benchmark(Description = nameof(XmlSerialization.SerializeToFile) + ": XML=Person")]
+	[BenchmarkCategory(Categories.XML)]
+	public void SerializeToFile_Xml_Ref_Person()
+	{
+		XmlSerialization.SerializeToFile(this.PersonRef01, this._xmlSerializeToFile);
+
+		this.Consume(this._xmlSerializeToFile.Exists);
+	}
+
+	/// <summary>
 	/// Setups this instance.
 	/// </summary>
 	public override void Setup()
@@ -215,6 +230,7 @@ public class SerializationBenchmark : Benchmark
 		this._xmlPersonRecord = XmlSerialization.Serialize(this.PersonRecord01);
 		this._jsonPersonRefList = RandomData.GeneratePersonRefCollection(Count).ToJson();
 		this._personRefList = [.. RandomData.GeneratePersonRefCollection(100)];
+		this._xmlSerializeToFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.xml"));
 	}
 
 }

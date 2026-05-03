@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 01-01-2023
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
@@ -500,7 +500,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </summary>
 	/// <returns>An array containing a snapshot of elements copied from the <see cref="ConcurrentHashSet{T}"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ToArray), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public T[] ToArray()
 	{
 		var locksAcquired = 0;
@@ -551,7 +551,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <returns><c>true</c> if an equal value was found in the set; otherwise, <c>false</c>.</returns>
 	[DefaultValue(false)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryPeek), author: "David McCarter", createdOn: "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryPeek(T equalValue, [MaybeNullWhen(false)] out T actualValue)
 	{
 		if (equalValue is null)

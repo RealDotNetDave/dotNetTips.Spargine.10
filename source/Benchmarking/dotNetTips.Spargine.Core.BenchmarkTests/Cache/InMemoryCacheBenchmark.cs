@@ -3,8 +3,8 @@
 // Author           : david
 // Created          : 10-03-2024
 //
-// Last Modified By : david
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -282,6 +282,30 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this.Consume(cache.Cache.Count);
 	}
 
+	[Benchmark(Description = nameof(InMemoryCache.Compact))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void Compact()
+	{
+		var cache = InMemoryCache.Instance;
+		var futureDate = DateTimeOffset.Now.AddMinutes(30);
+
+		foreach (var item in this._personRefArray)
+		{
+			cache.AddCacheItem(item.Email, item, futureDate);
+		}
+
+		cache.Compact(0.5);
+
+		this.Consume(cache.Cache.Count);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.GetAllKeys))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void GetAllKeys()
+	{
+		this.Consume(this._cache.GetAllKeys());
+	}
+
 	[Benchmark(Description = nameof(InMemoryCache.GetCacheItem))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void GetCacheItem()
@@ -296,6 +320,41 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this.Consume(await this._cache.GetCacheItemAsync<Person>(this._cacheId).ConfigureAwait(false));
 	}
 
+	[Benchmark(Description = nameof(InMemoryCache.GetCacheItemBatch))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void GetCacheItemBatch()
+	{
+		var keys = new string[this._personRefArray.Length];
+
+		for (var index = 0; index < this._personRefArray.Length; index++)
+		{
+			keys[index] = this._personRefArray[index].Email;
+		}
+
+		this.Consume(this._cache.GetCacheItemBatch<Person>(keys));
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.GetOrCreateAsync))]
+	[BenchmarkCategory(Categories.Collections)]
+	public async Task GetOrCreateAsync()
+	{
+		var key = this._cacheId + "_factory";
+
+		this._cache.RemoveCacheItem(key);
+
+		this.Consume(await this._cache.GetOrCreateAsync<Person>(
+			key,
+			_ => Task.FromResult(this.PersonRef01),
+			TimeSpan.FromMinutes(20)).ConfigureAwait(false));
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.PeekCacheItem))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void PeekCacheItem()
+	{
+		this.Consume(this._cache.PeekCacheItem<Person>(this._cacheId, out _));
+	}
+
 	public override void Setup()
 	{
 		base.Setup();
@@ -304,5 +363,17 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this._cache = InMemoryCache.Instance;
 		this._cache.AddCacheItem(this.PersonRef01.Id, this.PersonRef01);
 		this._cacheId = this.PersonRef01.Id;
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItem(item.Email, item);
+		}
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.TryGetValue))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void TryGetValue()
+	{
+		this.Consume(this._cache.TryGetValue<Person>(this._cacheId, out _));
 	}
 }

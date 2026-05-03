@@ -1445,7 +1445,7 @@ public static class RandomData
 
 	/// <summary>Appends the appropriate character for a postal-code format specifier to the StringBuilder.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AppendPostalCodeFormatChar), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(AppendPostalCodeFormatChar), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void AppendPostalCodeFormatChar(StringBuilder sb, char character)
 	{
 		_ = character switch
@@ -1458,7 +1458,7 @@ public static class RandomData
 
 	/// <summary>Replaces the CITY placeholder in the StringBuilder if city data is available.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ApplyCityReplacement), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ApplyCityReplacement), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void ApplyCityReplacement(StringBuilder sb, string format, City? city)
 	{
 		if (city is not null && format.Contains("CITY", StringComparison.Ordinal))
@@ -1469,7 +1469,7 @@ public static class RandomData
 
 	/// <summary>Builds address field values from the given country and lengths.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildAddressComponents), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(BuildAddressComponents), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static AddressComponents BuildAddressComponents(Country country, int addressLength, int countyProvinceLength)
 	{
 		var (state, city) = PickStateAndCity(country);
@@ -1487,7 +1487,7 @@ public static class RandomData
 
 	/// <summary>Pre-computes per-word lengths and the total byte count needed for <see cref="GenerateWords"/>.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeWordLengths), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ComputeWordLengths), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static (int[] Lengths, int TotalBytes) ComputeWordLengths(int count, int minLength, int maxLength)
 	{
 		var lengths = new int[count];
@@ -1508,7 +1508,7 @@ public static class RandomData
 
 	/// <summary>Iterates the format string and fills the StringBuilder with generated postal-code characters.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FillPostalCodeFromFormat), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FillPostalCodeFromFormat), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void FillPostalCodeFromFormat(StringBuilder sb, string format)
 	{
 		foreach (var character in format.AsSpan())
@@ -1519,7 +1519,7 @@ public static class RandomData
 
 	/// <summary>Fills <paramref name="chars"/> from <paramref name="randomBytes"/> using the given character range.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FillWordChars), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FillWordChars), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void FillWordChars(Span<char> chars, ReadOnlySpan<byte> randomBytes, char minCharacter, int range)
 	{
 		for (var i = 0; i < chars.Length; i++)
@@ -1599,7 +1599,7 @@ public static class RandomData
 
 	/// <summary>Generates a single <see cref="PersonName"/> from the internal name pools.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonNameInternal), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GeneratePersonNameInternal), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static PersonName GeneratePersonNameInternal() =>
 		new(_firstNames.Value.PickRandom() ?? Core.ControlChars.EmptyString, _lastNames.Value.PickRandom() ?? Core.ControlChars.EmptyString);
 
@@ -1737,19 +1737,19 @@ public static class RandomData
 
 	/// <summary>Picks a random city from the state's cities, or <see langword="null"/> if the state is null.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCityFromState), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetCityFromState), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static City? GetCityFromState(State? state) =>
 		state?.Cities?.PickRandom();
 
 	/// <summary>Returns the city name or empty string.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCityName), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetCityName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetCityName(City? city) =>
 		city?.Name ?? Core.ControlChars.EmptyString;
 
 	/// <summary>Returns the phone number length for the given country, or the default of 10.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountryPhoneLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetCountryPhoneLength), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static int GetCountryPhoneLength(Country? country) =>
 		country?.PhoneNumberLength ?? 10;
 
@@ -1779,13 +1779,13 @@ public static class RandomData
 
 	/// <summary>Returns the raw phone code string for the given country (comma-separated list), or empty string if not available.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetPhoneCodeString(Country? country) =>
 		country?.PhoneCode ?? Core.ControlChars.EmptyString;
 
 	/// <summary>Returns the state name or empty string.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetStateName), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetStateName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetStateName(State? state) =>
 		state?.Name ?? Core.ControlChars.EmptyString;
 
@@ -1806,7 +1806,7 @@ public static class RandomData
 
 	/// <summary>Picks a random state and city from the country.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(PickStateAndCity), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(PickStateAndCity), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static (State? state, City? city) PickStateAndCity(Country country)
 	{
 		var state = country.States?.PickRandom();
