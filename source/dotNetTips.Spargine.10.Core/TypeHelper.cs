@@ -1395,7 +1395,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		// SUGGESTION FROM COPILOT MADE THIS METHOD SLOWER. REVERTING TO ORIGINAL IMPLEMENTATION.
+		// SUGGESTION FROM COPILOT SLOWER
 		if (baseClass is null)
 		{
 			return false;

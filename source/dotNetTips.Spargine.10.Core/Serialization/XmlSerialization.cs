@@ -191,7 +191,10 @@ public static class XmlSerialization
 	/// </summary>
 	/// <param name="type">The type to obtain a serializer for.</param>
 	/// <returns>A cached <see cref="XmlSerializer"/> instance.</returns>
+	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static XmlSerializer GetSerializer([DisallowNull] Type type) =>
-		_serializerCache.GetOrAdd(type, static t => new XmlSerializer(t));
+	private static XmlSerializer GetSerializer([DisallowNull] Type type)
+	{
+		return _serializerCache.GetOrAdd(type, static t => new XmlSerializer(t));
+	}
 }

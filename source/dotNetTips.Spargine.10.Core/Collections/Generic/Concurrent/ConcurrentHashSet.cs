@@ -400,7 +400,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		// SUGGESTION FROM COPILOT IS SLOWER.
+		// SUGGESTION FROM COPILOT SLOWER
 		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
 
 		// We must capture the _buckets field in a local variable. It is set to a new table on each table resize.
@@ -586,7 +586,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		// SUGGESTION FROM COPILOT IS SLOWER.
+		// SUGGESTION FROM COPILOT SLOWER
 		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
 
 		while (true)
@@ -614,7 +614,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 					{
 						if (previous is null)
 						{
-							Volatile.Write(ref tables._buckets[bucketNo], current._next);
+							Volatile.Write(ref tables._buckets[bucketNo]!, current._next);
 						}
 						else
 						{

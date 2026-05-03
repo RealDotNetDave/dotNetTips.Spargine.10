@@ -486,31 +486,6 @@ public static class EncryptionHelper
 	}
 
 	/// <summary>
-	/// Decodes the Base64 payload into <paramref name="buffer"/> and validates the version byte and minimum length.
-	/// </summary>
-	/// <returns>Number of bytes written into <paramref name="buffer"/>.</returns>
-	/// <exception cref="CryptographicException">Thrown when the Base64 is invalid, the payload is too short, or the version is unsupported.</exception>
-	private static int DecodeAndValidateGcmPayload(string base64Payload, byte[] buffer)
-	{
-		if (!Convert.TryFromBase64String(base64Payload, buffer, out var bytesWritten))
-		{
-			throw new CryptographicException(Resources.AesGcmInvalidBase64Payload);
-		}
-
-		if (bytesWritten < 1 + NonceSize + TagSize)
-		{
-			throw new CryptographicException(Resources.AesGcmInvalidPayloadLength);
-		}
-
-		if (buffer[0] != FormatVersion)
-		{
-			throw new CryptographicException($"Unsupported payload version: {buffer[0]}");
-		}
-
-		return bytesWritten;
-	}
-
-	/// <summary>
 	/// Generates AES key and initialization vector (IV) based on a SHA256 hash of the provided key.
 	/// </summary>
 	/// <param name="key">The input key from which to generate the AES key and IV.</param>
