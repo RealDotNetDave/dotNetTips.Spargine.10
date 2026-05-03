@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -43,7 +43,7 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _delimitedString = RandomData.GenerateWords(100).ToDelimitedString();
 	private readonly string _domainAddress = "www.dotnettips.com";
 	private readonly string _emailAddress = RandomData.GenerateEmailAddress();
-	private readonly DateTime _formatDateTime = new DateTime(2026, 2, 15, 14, 30, 45);
+	private readonly DateTime _formatDateTime = new(2026, 2, 15, 14, 30, 45);
 	private readonly string _formatString = "The time is {0:HH:mm:ss}";
 	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeHash();
 	private readonly string _isbn = "0525505997";

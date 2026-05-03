@@ -3,7 +3,7 @@
 // Author           : david
 // Created          : 10-03-2024
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -340,9 +340,9 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 	{
 		var key = this._cacheId + "_factory";
 
-		this._cache.RemoveCacheItem(key);
+		_ = this._cache.RemoveCacheItem(key);
 
-		this.Consume(await this._cache.GetOrCreateAsync<Person>(
+		this.Consume(await this._cache.GetOrCreateAsync(
 			key,
 			_ => Task.FromResult(this.PersonRef01),
 			TimeSpan.FromMinutes(20)).ConfigureAwait(false));

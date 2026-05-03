@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -401,16 +401,16 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._personRecordArray = this.GetPersonRecordArray();
 		this._personRefArray = this.GetPersonRefArray();
-		this._personRefArrayHalf = this.GetPersonRefArray().Take(this.HalfCount).ToArray();
+		this._personRefArrayHalf = [.. this.GetPersonRefArray().Take(this.HalfCount)];
 		this._personValArray = this.GetPersonValArray();
-		this._personValArrayHalf = this.GetPersonValArray().Take(this.HalfCount).ToArray();
+		this._personValArrayHalf = [.. this.GetPersonValArray().Take(this.HalfCount)];
 		this._byteArray = this.GetByteArray(this.Count);
 
 		this._personRefArrayWithDups = this.GetPersonRefArray();
 
 		var personDups = this.GetPersonRefArray().ToList();
 		_ = personDups.AddRange(this.GetPersonRefArray().Take(this.HalfCount), false);
-		_ = this._personRefArrayWithDups = personDups.ToArray();
+		_ = this._personRefArrayWithDups = [.. personDups];
 
 		LogInfo($"PersonRecordArray: {this._personRecordArray.Length}");
 		LogInfo($"PersonRefArray: {this._personRefArray.Length}");

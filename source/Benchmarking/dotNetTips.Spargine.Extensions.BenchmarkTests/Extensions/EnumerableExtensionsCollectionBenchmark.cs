@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-24-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -665,8 +665,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personRefArray = this.GetPersonRefArray();
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
 		this._personRefFrozenSet = this.GetPersonRefArray().ToFrozenSet();
-		this._personRefHashSet = this.GetPersonRefArray().ToHashSet();
-		this._personRefList = this.GetPersonRefArray().ToList();
+		this._personRefHashSet = [.. this.GetPersonRefArray()];
+		this._personRefList = [.. this.GetPersonRefArray()];
 		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 		this._personRefImmutableQueue = ImmutableQueue.Create(this.GetPersonRefArray());
 		this._personRefConcurrentStack = new ConcurrentStack<Person>(this.GetPersonRefArray());
@@ -683,8 +683,8 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.HalfCount));
 		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
 
-		this._personRefEnumerableStart = this._personRefEnumerable.Take(this.HalfCount).ToList();
-		this._personRefEnumerableEnd = this._personRefEnumerable.Skip(this.Count - this.HalfCount).Take(this.HalfCount).ToList();
+		this._personRefEnumerableStart = [.. this._personRefEnumerable.Take(this.HalfCount)];
+		this._personRefEnumerableEnd = [.. this._personRefEnumerable.Skip(this.Count - this.HalfCount).Take(this.HalfCount)];
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle))]

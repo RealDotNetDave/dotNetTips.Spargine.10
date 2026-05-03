@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,10 +33,11 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Async)]
 	public void Add()
 	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		people.Add(this.PersonRef01);
-		people.Add(this.PersonRef02);
+		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray())
+		{
+			this.PersonRef01,
+			this.PersonRef02
+		};
 
 		this.Consume(people);
 	}

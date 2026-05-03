@@ -4,7 +4,7 @@
 // Created          : 01-02-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsAddRemoveCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -48,7 +48,7 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	{
 		var people = this._peopleRefList;
 
-		people.AddLast(base.PersonRef01);
+		people.AddLast(this.PersonRef01);
 
 		this.Consume(people);
 	}
@@ -68,9 +68,9 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	[IterationSetup]
 	public void IterationSetup()
 	{
-		this._peopleRecordList = this.GetPersonRecordArray().ToList();
-		this._peopleRefList = this.GetPersonRefArray().ToList();
-		this._peopleValList = this.GetPersonValArray().ToList();
+		this._peopleRecordList = [.. this.GetPersonRecordArray()];
+		this._peopleRefList = [.. this.GetPersonRefArray()];
+		this._peopleValList = [.. this.GetPersonValArray()];
 	}
 
 
@@ -101,9 +101,9 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 
 	private void LoadCollections()
 	{
-		this._peopleRecordList = this.GetPersonRecordArray().ToList();
-		this._peopleRefList = this.GetPersonRefArray().ToList();
+		this._peopleRecordList = [.. this.GetPersonRecordArray()];
+		this._peopleRefList = [.. this.GetPersonRefArray()];
 		this._peopleRefSubSet = this.GetPersonRefArray().TakeLast(this.Count / 10).ToList();
-		this._peopleValList = this.GetPersonValArray().ToList();
+		this._peopleValList = [.. this.GetPersonValArray()];
 	}
 }

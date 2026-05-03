@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -99,7 +99,7 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.ToArray))]
+	[Benchmark(Description = nameof(ConcurrentHashSet<>.ToArray))]
 	[BenchmarkCategory(Categories.Async)]
 	public void ToArray()
 	{
@@ -108,7 +108,7 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.ToArray());
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.TryPeek))]
+	[Benchmark(Description = nameof(ConcurrentHashSet<>.TryPeek))]
 	[BenchmarkCategory(Categories.Async)]
 	public void TryPeek()
 	{

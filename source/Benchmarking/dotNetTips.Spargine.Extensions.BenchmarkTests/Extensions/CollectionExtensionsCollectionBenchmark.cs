@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-25-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-03-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -192,7 +192,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void IterationSetupRef()
 	{
 		var people = this.GetPersonRefArray();
-		this._peopleRefList = people.ToList();
+		this._peopleRefList = [.. people];
 		this._peopleRefCollection = people.ToCollection();
 		this._peopleRefHashSet = [.. people];
 	}
