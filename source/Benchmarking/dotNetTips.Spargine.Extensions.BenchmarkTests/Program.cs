@@ -10,8 +10,8 @@
 //     David McCarter
 // </copyright>
 // <summary>
-// Benchmark Runtime: 18.5 hours
-// Benchmark count: 1,975
+// Benchmark Runtime: Almost 24 hours
+// Benchmark count: 2,379
 // </summary>
 // ***********************************************************************
 using BenchmarkDotNet.Configs;
