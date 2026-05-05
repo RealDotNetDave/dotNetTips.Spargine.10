@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-01-2018
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-05-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -72,7 +72,7 @@ public static class HttpRequestExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetAbsoluteUri), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetAbsoluteUri), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Uri GetAbsoluteUri([DisallowNull] this HttpRequest request)
 	{
 		request = request.ArgumentNotNull();
@@ -96,7 +96,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetBearerToken([DisallowNull] this HttpRequest request)
 	{
 		var authorization = request.ArgumentNotNull().Headers.Authorization;
@@ -125,7 +125,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="headerName"/> is null or whitespace.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetHeaderValue), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetHeaderValue), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetHeaderValue([DisallowNull] this HttpRequest request, [DisallowNull] string headerName)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(headerName);
@@ -190,7 +190,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasJsonContentType), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(HasJsonContentType), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool HasJsonContentType([DisallowNull] this HttpRequest request)
 	{
 		var contentType = request.ArgumentNotNull().ContentType;
@@ -210,7 +210,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="contentType"/> is null or whitespace.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsContentType), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsContentType), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsContentType([DisallowNull] this HttpRequest request, [DisallowNull] string contentType)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(contentType);

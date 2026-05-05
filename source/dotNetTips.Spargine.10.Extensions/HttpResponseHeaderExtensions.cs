@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-13-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-05-2026
 // ***********************************************************************
 // <copyright file="HttpResponseHeaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -78,7 +78,7 @@ public static class HttpResponseHeaderExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="headers"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(AddRequestId), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(AddRequestId), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string AddRequestId([DisallowNull] this HttpResponseHeaders headers)
 	{
 		headers = headers.ArgumentNotNull();
@@ -100,7 +100,7 @@ public static class HttpResponseHeaderExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="headers"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetETagValue), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetETagValue), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetETagValue([DisallowNull] this HttpResponseHeaders headers)
 	{
 		return headers.ArgumentNotNull().ETag?.Tag;
@@ -118,7 +118,7 @@ public static class HttpResponseHeaderExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="headerName"/> is null or whitespace.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetHeaderValue), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetHeaderValue), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetHeaderValue([DisallowNull] this HttpResponseHeaders headers, [DisallowNull] string headerName)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(headerName);
@@ -170,7 +170,7 @@ public static class HttpResponseHeaderExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="headerName"/> is null or whitespace.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(HasHeader), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(HasHeader), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool HasHeader([DisallowNull] this HttpResponseHeaders headers, [DisallowNull] string headerName)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(headerName);
@@ -189,7 +189,7 @@ public static class HttpResponseHeaderExtensions
 	/// <returns><see langword="true"/> if the Retry-After header was found and parsed; otherwise, <see langword="false"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="headers"/> is null.</exception>
 	[Pure]
-	[Information(nameof(TryGetRetryAfterDelay), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryGetRetryAfterDelay), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetRetryAfterDelay([DisallowNull] this HttpResponseHeaders headers, out TimeSpan delay)
 	{
 		var retryAfter = headers.ArgumentNotNull().RetryAfter;

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-04-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-05-2026
 // ***********************************************************************
 // <copyright file="HttpContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -70,7 +70,7 @@ public static class HttpContextExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetBearerToken), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetBearerToken([DisallowNull] this HttpContext context)
 	{
 		var authorization = context.ArgumentNotNull().Request.Headers.Authorization;
@@ -113,7 +113,7 @@ public static class HttpContextExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="headerName"/> is null or whitespace.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetRequestHeaderValue), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetRequestHeaderValue), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetRequestHeaderValue([DisallowNull] this HttpContext context, [DisallowNull] string headerName)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(headerName);
@@ -135,7 +135,7 @@ public static class HttpContextExtensions
 	/// <exception cref="ArgumentException">Thrown if <paramref name="claimType"/> is null or whitespace.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetUserClaim), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetUserClaim), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string? GetUserClaim([DisallowNull] this HttpContext context, [DisallowNull] string claimType)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(claimType);
@@ -152,7 +152,7 @@ public static class HttpContextExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsAuthenticated), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(IsAuthenticated), "David McCarter", "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool IsAuthenticated([DisallowNull] this HttpContext context)
 	{
 		return context.ArgumentNotNull().User?.Identity?.IsAuthenticated ?? false;

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-22-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-13-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-05-2026
 // ***********************************************************************
 // <copyright file="SocketExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -59,7 +59,7 @@ public static class SocketExtensions
 	/// <returns>The configured <see cref="Socket"/> for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConfigureBufferSizes), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ConfigureBufferSizes), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureBufferSizes([DisallowNull] this Socket socket, int sendBufferSize, int receiveBufferSize)
 	{
 		socket = socket.ArgumentNotNull();
@@ -83,7 +83,7 @@ public static class SocketExtensions
 	/// <returns>The configured <see cref="Socket"/> for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConfigureKeepAlive), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ConfigureKeepAlive), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureKeepAlive([DisallowNull] this Socket socket, int keepAliveTimeSeconds, int keepAliveIntervalSeconds)
 	{
 		socket = socket.ArgumentNotNull();
@@ -108,7 +108,7 @@ public static class SocketExtensions
 	/// <returns>The configured <see cref="Socket"/> for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConfigureLinger), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ConfigureLinger), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureLinger([DisallowNull] this Socket socket, bool enable, int lingerTimeSeconds)
 	{
 		socket = socket.ArgumentNotNull();
@@ -135,7 +135,7 @@ public static class SocketExtensions
 	/// </code>
 	/// </example>
 	/// <remarks>Original code by: Máňa Píchová.</remarks>
-	[Information(nameof(ConnectTcpAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(ConnectTcpAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async ValueTask<Stream> ConnectTcpAsync([DisallowNull] this SocketsHttpConnectionContext context, CancellationToken cancellationToken = default)
 	{
 		context = context.ArgumentNotNull();
@@ -239,7 +239,7 @@ public static class SocketExtensions
 	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
 	/// <returns><c>true</c> if the connection is successful within the timeout period; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> or <paramref name="remoteEndpoint"/> is null.</exception>
-	[Information(nameof(TryConnectAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryConnectAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async ValueTask<bool> TryConnectAsync([DisallowNull] this Socket socket, [DisallowNull] EndPoint remoteEndpoint, int millisecondsTimeout, CancellationToken cancellationToken = default)
 	{
 		socket = socket.ArgumentNotNull();
