@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-04-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -219,7 +219,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static string FormatTime(this double milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -267,7 +267,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static string FormatTime(this long milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -1000,7 +1000,7 @@ public static class NumericExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToWords), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ToWords), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ToWords(this int value)
 	{
 		if (value == 0)

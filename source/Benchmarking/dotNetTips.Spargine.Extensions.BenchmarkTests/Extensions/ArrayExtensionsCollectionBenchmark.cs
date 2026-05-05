@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-04-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -63,18 +63,36 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": as Reference")]
+	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": Different collections as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void AreEqual_Ref()
+	public void AreEqualRef()
 	{
 		var result = this._personRefArray.AreEqual(this._personRefArrayHalf);
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": as Value")]
+	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": Same collection as Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void AreEqualSameRef()
+	{
+		var result = this._personRefArray.AreEqual(this._personRefArray);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": Same collection as Value")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void AreEqual_Val()
+	public void AreEqualSameVal()
+	{
+		var result = this._personValArray.AreEqual(this._personValArray);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": Different collections as Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void AreEqualVal()
 	{
 		var result = this._personValArray.AreEqual(this._personValArrayHalf);
 

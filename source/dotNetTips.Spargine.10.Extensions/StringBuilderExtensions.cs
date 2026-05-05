@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-11-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-04-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -290,7 +290,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendKeyValue), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AppendKeyValue), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendKeyValue([DisallowNull] string key, string value, bool includeQuotes = true, bool includeComma = true)
 		{
 			sb = sb.ArgumentNotNull();
@@ -301,9 +301,41 @@ public static class StringBuilderExtensions
 				return;
 			}
 
+			// SUGGESTIONS FROM COPILOT SLOWER
 			_ = sb.Append(key).Append(ControlChars.Equal);
 
-			AppendFormattedValue(sb, value, includeQuotes, includeComma);
+			if (includeQuotes)
+			{
+				_ = sb.Append(ControlChars.Quote);
+				var lastSpecialIndex = 0;
+				int specialIndex;
+
+				while (true)
+				{
+					specialIndex = value.AsSpan(lastSpecialIndex).IndexOfAny(_specialCharacters);
+
+					if (specialIndex >= 0)
+					{
+						_ = sb.Append(value, lastSpecialIndex, specialIndex - lastSpecialIndex).Append(ControlChars.Backslash).Append(value[specialIndex]);
+						lastSpecialIndex = specialIndex + 1;
+					}
+					else
+					{
+						_ = sb.Append(value, lastSpecialIndex, value.Length - lastSpecialIndex);
+						break;
+					}
+				}
+				_ = sb.Append(ControlChars.Quote);
+			}
+			else
+			{
+				_ = sb.Append(value);
+			}
+
+			if (includeComma)
+			{
+				_ = sb.Append(ControlChars.DefaultSeparator);
+			}
 		}
 
 		/// <summary>
@@ -323,6 +355,7 @@ public static class StringBuilderExtensions
 			values = values.ArgumentNotNull();
 			separator ??= string.Empty;
 
+			// SUGGESTIONS FROM COPILOT SLOWER
 			separator = SetSeparator(separator);
 
 			sb.AppendValues(separator, values, (value) => sb.Append(value));
@@ -360,6 +393,7 @@ public static class StringBuilderExtensions
 			values = values.ArgumentNotNull();
 			separator ??= string.Empty;
 
+			// SUGGESTIONS FROM COPILOT SLOWER
 			separator = SetSeparator(separator);
 
 			sb.AppendValues(separator, values, (value) => sb.Append(value));
@@ -382,7 +416,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] Action<T> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -394,9 +428,23 @@ public static class StringBuilderExtensions
 				return;
 			}
 
+			// SUGGESTIONS FROM COPILOT SLOWER
 			separator = SetSeparator(separator);
 
-			AppendSeparatedValues(sb, values, separator, joinAction);
+			var appended = false;
+
+			//FrozenSet is slower.
+			foreach (var value in values)
+			{
+				joinAction(value);
+				_ = sb.Append(separator);
+				appended = true;
+			}
+
+			if (appended)
+			{
+				sb.Length -= separator.Length;
+			}
 		}
 
 		/// <summary>
@@ -410,7 +458,7 @@ public static class StringBuilderExtensions
 		/// <param name="joinAction">The action to perform for each value and the additional parameter.</param>
 		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param"/>, or <paramref name="joinAction"/> is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T, TParam>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam param, [DisallowNull] Action<T, TParam> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -423,9 +471,23 @@ public static class StringBuilderExtensions
 				return;
 			}
 
+			// SUGGESTIONS FROM COPILOT SLOWER
 			separator = SetSeparator(separator);
 
-			AppendSeparatedValues(sb, values, separator, param, joinAction);
+			var appended = false;
+
+			//Frozenset is slower.
+			foreach (var value in values)
+			{
+				joinAction(value, param);
+				_ = sb.Append(separator);
+				appended = true;
+			}
+
+			if (appended)
+			{
+				sb.Length -= separator.Length;
+			}
 		}
 
 		/// <summary>
@@ -449,7 +511,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T, TParam1, TParam2>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam1 param1, [DisallowNull] TParam2 param2, [DisallowNull] Action<StringBuilder, T, TParam1, TParam2> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -465,7 +527,20 @@ public static class StringBuilderExtensions
 
 			separator = SetSeparator(separator);
 
-			AppendSeparatedValues(sb, values, separator, param1, param2, joinAction);
+			var appended = false;
+
+			//FrozenSet is slower.
+			foreach (var value in values)
+			{
+				joinAction(sb, value, param1, param2);
+				_ = sb.Append(separator);
+				appended = true;
+			}
+
+			if (appended)
+			{
+				sb.Length -= separator.Length;
+			}
 		}
 
 		/// <summary>

@@ -30,6 +30,8 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 	private IAsyncEnumerable<Person> _personRefAsyncEnumerable = default!;
 	private IEnumerable<Person> _personRefEnumerable = default!;
 
+	private List<Person> _personRefEnumerableStart = default!;
+
 
 	[Benchmark(Description = nameof(EnumerableExtensions.PageAsync))]
 	public async Task PageAsync()
@@ -46,8 +48,8 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 
 		this._personRefEnumerable = this.GetPersonRefArray().Select(x => x);
 		this._personRefAsyncEnumerable = ToAsyncEnumerable(this.GetPersonRefArray());
+		this._personRefEnumerableStart = [.. this._personRefEnumerable.Take(this.HalfCount)];
 	}
-
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ToBlockingCollection))]
 	public void ToBlockingCollection()
@@ -112,6 +114,18 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 	public void ToReadOnlyCollection()
 	{
 		var result = this._personRefEnumerable.ToReadOnlyCollection();
+
+		this.ConsumeEnumerable(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToUniqueCollection))]
+	public void ToUniqueCollection()
+	{
+		var people = this._personRefEnumerable;
+
+		people = people.ToUniqueCollection();
+
+		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
 
 		this.Consume(result);
 	}

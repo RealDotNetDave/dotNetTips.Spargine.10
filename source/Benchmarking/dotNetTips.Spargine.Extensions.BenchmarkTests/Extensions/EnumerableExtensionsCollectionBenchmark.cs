@@ -720,26 +720,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
-	public void ToReadOnlyCollection()
-	{
-		var result = this._personRefEnumerable.ToReadOnlyCollection();
-
-		this.ConsumeEnumerable(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.ToUniqueCollection))]
-	public void ToUniqueCollection()
-	{
-		var people = this._personRefEnumerable;
-
-		people = people.ToUniqueCollection();
-
-		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - Array")]
 	[BenchmarkCategory(Categories.ReferenceType)]
 	public void TransformCollectionFastProcessorArray()
