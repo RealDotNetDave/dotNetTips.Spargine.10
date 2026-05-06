@@ -316,8 +316,11 @@ public static class StringBuilderExtensions
 
 					if (specialIndex >= 0)
 					{
-						_ = sb.Append(value, lastSpecialIndex, specialIndex - lastSpecialIndex).Append(ControlChars.Backslash).Append(value[specialIndex]);
-						lastSpecialIndex = specialIndex + 1;
+						var absoluteIndex = lastSpecialIndex + specialIndex;
+
+						_ = sb.Append(value, lastSpecialIndex, specialIndex).Append(ControlChars.Backslash).Append(value[absoluteIndex]);
+
+						lastSpecialIndex = absoluteIndex + 1;
 					}
 					else
 					{
