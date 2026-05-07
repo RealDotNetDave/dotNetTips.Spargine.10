@@ -4,7 +4,7 @@
 // Created          : 03-06-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -43,7 +43,7 @@ public class FastStringBuilderBenchmark : Benchmark
 
 		var result = sb.AppendFormat("Word1 {0}, Word2 {1}, Word3 {1}", this._words);
 
-		this.Consume(result);
+		this.Consume(result.ToString());
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Remove))]

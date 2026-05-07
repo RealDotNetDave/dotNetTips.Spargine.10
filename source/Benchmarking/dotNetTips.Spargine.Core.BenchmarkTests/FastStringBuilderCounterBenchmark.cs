@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -106,7 +106,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 			_ = sb.Append(string.Format(CultureInfo.InvariantCulture, "{0} ", arg));
 		}
 
-		this.Consume(sb.ToString().Trim());
+		this.Consume(sb.ToString());
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Concat) + ": with Char delimiter")]
@@ -176,7 +176,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 		var result = sb.AppendJoin(ControlChars.Comma, this._words);
 
-		this.Consume(result);
+		this.Consume(result.ToString());
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Join) + ": with String delimiter")]
@@ -196,7 +196,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 		var result = sb.AppendJoin(ControlChars.CommaSpace, this._words);
 
-		this.Consume(result);
+		this.Consume(result.ToString());
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.PerformAction))]
@@ -247,10 +247,9 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 		var result = FastStringBuilder.PerformAction(action);
 
-		_stringBuilderPool.Return(sb);
-
-
 		this.Consume(result);
+
+		_stringBuilderPool.Return(sb);
 	}
 	[Benchmark(Description = nameof(FastStringBuilder.BytesToString) + ": ReadOnlySpan")]
 	[BenchmarkCategory(Categories.Array, Categories.Strings)]
