@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,7 +44,7 @@ public class EnumerationBenchmark : Benchmark
 	{
 		var result = Enumeration.GetAll<NumericFormat>();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(Enumeration.TryFromDisplayName))]

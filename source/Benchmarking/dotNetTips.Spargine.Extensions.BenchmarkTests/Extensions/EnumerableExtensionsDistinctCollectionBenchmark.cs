@@ -4,7 +4,7 @@
 // Created          : 01-23-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsDistinctCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct(new PersonEqualityComparer());
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Comparer - Val")]
@@ -47,9 +47,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct(new Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer());
 
-		this.ConsumeEnumerable(result);
-
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": IEnumerable<ref>")]
@@ -59,7 +57,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": IEnumerable<val>")]
@@ -69,7 +67,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<ref>")]
@@ -79,7 +77,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<val>")]
@@ -89,7 +87,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": ReadOnlyCollection<ref>")]
@@ -99,7 +97,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": ReadOnlyCollection<val>")]
@@ -109,7 +107,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.FastDistinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct with Comparer - Ref")]
@@ -120,7 +118,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.Distinct(new PersonEqualityComparer());
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct with Comparer - Val")]
@@ -131,7 +129,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.Distinct(new Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer());
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct - IEnumerable<Ref>")]
@@ -142,7 +140,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.Distinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct - IEnumerable<Val>")]
@@ -153,7 +151,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 		var result = people.Distinct();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	public override void Setup()

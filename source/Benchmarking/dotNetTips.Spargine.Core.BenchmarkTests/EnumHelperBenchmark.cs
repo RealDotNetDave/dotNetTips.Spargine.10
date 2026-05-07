@@ -4,7 +4,7 @@
 // Created          : 06-02-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 11-28-2025
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -50,7 +50,7 @@ public class EnumHelperBenchmark : Benchmark
 	{
 		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	private static string GetDescriptionNoCache(Enum input)

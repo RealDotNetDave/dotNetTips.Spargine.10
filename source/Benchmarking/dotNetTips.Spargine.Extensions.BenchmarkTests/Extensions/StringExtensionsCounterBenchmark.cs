@@ -191,21 +191,21 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitCharSeparator()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, 2, ControlChars.Dot));
+		this.Consume(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, 2, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": Char Separator ")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitCharSeparatorNoCount()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
+		this.Consume(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = "Split")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitComparison()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(ControlChars.CRLF));
+		this.Consume(this._crlfString.Split(ControlChars.CRLF));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.SplitLines) + ": LineSplitEntry")]
@@ -222,35 +222,35 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitRemoveEmpty()
 	{
-		this.ConsumeEnumerable(this._crlfString.SplitRemoveEmpty());
+		this.Consume(this._crlfString.SplitRemoveEmpty());
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": String Separator + Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
 	public void SplitStringSeparator()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(ControlChars.CRLF, 2, StringSplitOptions.RemoveEmptyEntries));
+		this.Consume(this._crlfString.Split(ControlChars.CRLF, 2, StringSplitOptions.RemoveEmptyEntries));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": RemoveEmptyEntries")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithRemoveEmptyEntries()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
+		this.Consume(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": TrimEntries")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithTrimEntries()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.TrimEntries, ControlChars.Dot));
+		this.Consume(this._crlfString.Split(StringSplitOptions.TrimEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": TrimEntries + Count")]
 	[BenchmarkCategory(Categories.Strings)]
 	public void SplitWithTrimEntriesCount()
 	{
-		this.ConsumeEnumerable(this._crlfString.Split(StringSplitOptions.TrimEntries, 10, ControlChars.Dot));
+		this.Consume(this._crlfString.Split(StringSplitOptions.TrimEntries, 10, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64))]

@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -20,7 +20,6 @@ using System.Threading;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
@@ -194,16 +193,16 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[BenchmarkCategory(Categories.Collections)]
 	public void ShuffleFastShuffle()
 	{
-		this.ConsumeEnumerable(this._peopleRefList.FastShuffle());
+		this.Consume(this._peopleRefList.FastShuffle());
 	}
 
 	[Benchmark(Description = "LINQ.Shuffle")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void ShuffleShuffle()
 	{
-		var result = this._peopleRefList.Shuffle().ToList();
+		var result = this._peopleRefList.Shuffle();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ListExtensions.Split))]

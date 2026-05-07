@@ -4,7 +4,7 @@
 // Created          : 07-17-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-30-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -60,7 +60,7 @@ public class ImmutableArrayExtensionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefImmutableArray.FastShuffle();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 }

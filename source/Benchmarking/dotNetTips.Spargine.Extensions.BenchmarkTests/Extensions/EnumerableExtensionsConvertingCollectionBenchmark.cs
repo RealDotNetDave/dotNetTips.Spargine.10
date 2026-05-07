@@ -115,7 +115,7 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 	{
 		var result = this._personRefEnumerable.ToReadOnlyCollection();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ToUniqueCollection))]

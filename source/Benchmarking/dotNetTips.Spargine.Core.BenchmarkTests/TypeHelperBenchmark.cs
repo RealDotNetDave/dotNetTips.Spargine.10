@@ -69,7 +69,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.BuiltInTypes;
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.Create))]
@@ -118,7 +118,8 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypes()
 	{
 		var result = FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
-		this.ConsumeEnumerable(result);
+
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": Base Directory")]
@@ -126,7 +127,7 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypesBaseDirectory()
 	{
 		var result = TypeHelper.FindDerivedTypes(typeof(Exception), true);
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": Cached")]
@@ -134,7 +135,7 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypesCached()
 	{
 		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(Exception), true);
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": No Cache")]
@@ -143,7 +144,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllAbstractMethodsNoCache(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": Cached")]
@@ -152,7 +153,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllAbstractMethods(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": No Cache")]
@@ -161,7 +162,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllConstructorsNoCache(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": Cached")]
@@ -170,7 +171,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllConstructors(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": No Cache")]
@@ -179,7 +180,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllDeclaredFieldsNoCache(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": Cached")]
@@ -188,7 +189,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllDeclaredFields(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods) + ": No Cache")]
@@ -197,7 +198,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllDeclaredMethodsNoCache(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 
@@ -207,7 +208,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllDeclaredMethods(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllFields) + ": No Cache")]
@@ -216,7 +217,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllFieldsNoCache(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 
@@ -226,7 +227,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllFields(typeof(Benchmark));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllGenericMethods))]
@@ -235,7 +236,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllGenericMethods(typeof(StringBuilder));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": No Cache")]
@@ -244,7 +245,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllMethodsNoCache(typeof(StringBuilder));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": Cached")]
@@ -253,7 +254,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllMethods(typeof(StringBuilder));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllProperties) + ": No Cache")]
@@ -262,7 +263,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllPropertiesNoCache(typeof(Person));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 
@@ -272,7 +273,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllProperties(typeof(Person));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllPublicMethods))]
@@ -281,7 +282,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllPublicMethods(typeof(Person));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllStaticMethods))]
@@ -290,7 +291,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllStaticMethods(typeof(TypeHelper));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": FieldInfo")]
@@ -341,7 +342,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetGenericArguments(typeof(Dictionary<string, int>));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces))]
@@ -351,7 +352,7 @@ public class TypeHelperBenchmark : Benchmark
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list);
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces) + ": Interface Names")]
@@ -361,7 +362,7 @@ public class TypeHelperBenchmark : Benchmark
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list, new List<string> { nameof(IEnumerable), nameof(IDisposable) });
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaceTypes))]
@@ -371,7 +372,7 @@ public class TypeHelperBenchmark : Benchmark
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaceTypes(list);
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetInstanceHashCode))]
@@ -393,7 +394,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = GetMembersWithAttributeNoCache<InformationAttribute>(type);
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute) + ": Cached")]
@@ -404,7 +405,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = TypeHelper.GetMembersWithAttribute<InformationAttribute>(type);
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetPropertyValues))]
@@ -415,7 +416,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = TypeHelper.GetPropertyValues(person);
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": DisplayNameOptions")]
@@ -446,7 +447,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(typeof(TypeHelper));
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasBaseClass) + ": No Cache")]

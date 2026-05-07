@@ -4,7 +4,7 @@
 // Created          : 06-02-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="TypeExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -31,7 +31,7 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllDeclaredFields();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllDeclaredMethods))]
@@ -40,7 +40,7 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllDeclaredMethods();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllFields))]
@@ -49,7 +49,7 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllFields();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllMethods))]
@@ -58,7 +58,7 @@ public class TypeExtensionsBenchmark : Benchmark
 	{
 		var result = typeof(Person).GetAllMethods();
 
-		this.ConsumeEnumerable(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeExtensions.GetAllProperties))]
@@ -69,7 +69,7 @@ public class TypeExtensionsBenchmark : Benchmark
 		{
 			var result = typeof(Person).GetAllProperties();
 
-			this.ConsumeEnumerable(result);
+			this.Consume(result);
 		}
 		catch (Exception ex)
 		{
