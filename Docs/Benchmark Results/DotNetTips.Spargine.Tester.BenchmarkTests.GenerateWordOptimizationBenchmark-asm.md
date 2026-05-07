@@ -8,7 +8,7 @@
        mov       ecx,[rbx+140]
        mov       edx,61
        mov       r8d,7A
-       call      qword ptr [7FF964754CF0]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
+       call      qword ptr [7FF8D73D4E28]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
        mov       rbx,[rbx+138]
        lea       rcx,[rbx+8]
        mov       rdx,rax
@@ -74,7 +74,7 @@
        vmovdqa   xmmword ptr [rbp+90],xmm4
        xor       eax,eax
        mov       [rbp+0A0],rax
-       mov       rax,0A73EB3AFEE87
+       mov       rax,221E31F37957
        mov       [rbp+8],rax
        mov       ebx,ecx
        mov       esi,edx
@@ -147,20 +147,20 @@ M01_L04:
        mov       r8d,ebx
        xor       ecx,ecx
        mov       r9d,2
-       mov       rax,7FF96456AD98
+       mov       rax,7FF8D71EDDD0
        mov       [rbp+60],rax
        lea       rax,[M01_L05]
        mov       [rbp+70],rax
        lea       rax,[rbp+50]
        mov       [r14+8],rax
        mov       byte ptr [r14+4],0
-       mov       rax,7FFA029E3670
+       mov       rax,7FF97B6C3670
        call      rax
 M01_L05:
        mov       byte ptr [r14+4],1
-       cmp       dword ptr [7FF9C4093A10],0
+       cmp       dword ptr [7FF936CF3A10],0
        je        short M01_L06
-       call      qword ptr [7FF9C4081648]; CORINFO_HELP_STOP_FOR_GC
+       call      qword ptr [7FF936CE1648]; CORINFO_HELP_STOP_FOR_GC
 M01_L06:
        mov       rcx,[rbp+58]
        mov       [r14+8],rcx
@@ -200,7 +200,7 @@ M01_L10:
        lea       rcx,[rbp+30]
        call      System.String.Ctor(System.ReadOnlySpan`1<Char>)
 M01_L11:
-       mov       r8,0A73EB3AFEE87
+       mov       r8,221E31F37957
        cmp       [rbp+8],r8
        je        short M01_L12
        call      CORINFO_HELP_FAIL_FAST
@@ -221,15 +221,15 @@ M01_L13:
        test      cl,cl
        je        short M01_L14
        lea       rcx,[rbp+0A0]
-       call      qword ptr [7FF9646CFC60]
+       call      qword ptr [7FF8D734FD98]
        mov       ebx,eax
        jmp       near ptr M01_L00
 M01_L14:
-       call      qword ptr [7FF9646CFC78]
+       call      qword ptr [7FF8D734FDB0]
        mov       rbx,rax
        test      rbx,rbx
        jne       short M01_L15
-       call      qword ptr [7FF9647DC3D8]
+       call      qword ptr [7FF8D745C510]
        mov       rbx,rax
 M01_L15:
        mov       rcx,offset MT_System.ArgumentOutOfRangeException
@@ -237,33 +237,33 @@ M01_L15:
        mov       rsi,rax
        mov       rcx,rsi
        mov       r8,rbx
-       mov       rdx,21DA0BA2FC0
-       call      qword ptr [7FF9643CE6B8]
+       mov       rdx,1CF7C342FC0
+       call      qword ptr [7FF8D704E718]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
 M01_L16:
-       call      qword ptr [7FF96430F228]
+       call      qword ptr [7FF8D6F8F228]
        int       3
 M01_L17:
        mov       ecx,eax
-       call      qword ptr [7FF9647D7108]
+       call      qword ptr [7FF8D7457240]
        mov       rcx,rax
        call      CORINFO_HELP_THROW
        int       3
 M01_L18:
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,1DD0BC01E40
+       mov       rcx,18EE7401E40
        mov       rcx,[rcx]
        mov       edx,r15d
        cmp       [rcx],ecx
-       call      qword ptr [7FF9647460E8]
+       call      qword ptr [7FF8D73C9040]
        mov       [rbp+28],rax
-       mov       rcx,1DD0BC00B18
+       mov       rcx,18EE7400B50
        mov       rcx,[rcx]
        mov       edx,r15d
-       call      qword ptr [7FF9643DAF38]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FF8D707A678]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp+20],rax
        cmp       qword ptr [rbp+28],0
        je        short M01_L19
@@ -275,7 +275,7 @@ M01_L18:
        mov       [rbp+40],rcx
        mov       [rbp+48],eax
        lea       rcx,[rbp+40]
-       call      qword ptr [7FF9645556B0]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71D57E8]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
        cmp       qword ptr [rbp+20],0
        je        short M01_L19
        mov       rax,[rbp+20]
@@ -287,7 +287,7 @@ M01_L18:
        cmp       [r8+8],r15d
        jae       short M01_L20
 M01_L19:
-       call      qword ptr [7FF96430F228]
+       call      qword ptr [7FF8D6F8F228]
        int       3
 M01_L20:
        lea       rdx,[r8+10]
@@ -296,7 +296,7 @@ M01_L20:
        mov       [rbp+48],ecx
        lea       rdx,[rbp+40]
        lea       rcx,[rbp+90]
-       call      qword ptr [7FF96455D7E8]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71DD920]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
        mov       rcx,[rbp+90]
        mov       r8d,[rbp+98]
        xor       r10d,r10d
@@ -326,21 +326,21 @@ M01_L24:
        mov       rcx,[rbp+20]
        mov       r8d,r15d
        xor       edx,edx
-       call      00007FF964131548
+       call      00007FF8D6DB1548
        mov       rbx,rax
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,1DD0BC01E40
+       mov       rcx,18EE7401E40
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF9647460F0]
-       mov       rcx,1DD0BC00B18
+       call      qword ptr [7FF8D73C9048]
+       mov       rcx,18EE7400B50
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF9643DAF40]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D707A680]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        mov       rax,rbx
        jmp       near ptr M01_L11
 M01_L25:
@@ -348,22 +348,22 @@ M01_L25:
        int       3
        sub       rsp,28
        vzeroupper
-       test      byte ptr [7FF964745E20],1
+       test      byte ptr [7FF8D73C8D78],1
        jne       short M01_L26
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
        call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
 M01_L26:
-       mov       rcx,1DD0BC01E40
+       mov       rcx,18EE7401E40
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF9647460F0]
-       mov       rcx,1DD0BC00B18
+       call      qword ptr [7FF8D73C9048]
+       mov       rcx,18EE7400B50
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF9643DAF40]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D707A680]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        nop
        add       rsp,28
        ret
@@ -380,7 +380,7 @@ M01_L26:
        mov       ecx,[rbx+140]
        mov       edx,61
        mov       r8d,7A
-       call      qword ptr [7FF964774948]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
+       call      qword ptr [7FF8D73C4A38]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
        mov       rbx,[rbx+138]
        lea       rcx,[rbx+8]
        mov       rdx,rax
@@ -446,7 +446,7 @@ M01_L26:
        vmovdqa   xmmword ptr [rbp+90],xmm4
        xor       eax,eax
        mov       [rbp+0A0],rax
-       mov       rax,67D343098122
+       mov       rax,0CAB4D8DCF00E
        mov       [rbp+8],rax
        mov       ebx,ecx
        mov       esi,edx
@@ -519,20 +519,20 @@ M01_L04:
        mov       r8d,ebx
        xor       ecx,ecx
        mov       r9d,2
-       mov       rax,7FF96457B830
+       mov       rax,7FF8D71CD070
        mov       [rbp+60],rax
        lea       rax,[M01_L05]
        mov       [rbp+70],rax
        lea       rax,[rbp+50]
        mov       [r14+8],rax
        mov       byte ptr [r14+4],0
-       mov       rax,7FFA029E3670
+       mov       rax,7FF97B6C3670
        call      rax
 M01_L05:
        mov       byte ptr [r14+4],1
-       cmp       dword ptr [7FF9C4093A10],0
+       cmp       dword ptr [7FF936CF3A10],0
        je        short M01_L06
-       call      qword ptr [7FF9C4081648]; CORINFO_HELP_STOP_FOR_GC
+       call      qword ptr [7FF936CE1648]; CORINFO_HELP_STOP_FOR_GC
 M01_L06:
        mov       rcx,[rbp+58]
        mov       [r14+8],rcx
@@ -572,7 +572,7 @@ M01_L10:
        lea       rcx,[rbp+30]
        call      System.String.Ctor(System.ReadOnlySpan`1<Char>)
 M01_L11:
-       mov       r8,67D343098122
+       mov       r8,0CAB4D8DCF00E
        cmp       [rbp+8],r8
        je        short M01_L12
        call      CORINFO_HELP_FAIL_FAST
@@ -593,15 +593,15 @@ M01_L13:
        test      cl,cl
        je        short M01_L14
        lea       rcx,[rbp+0A0]
-       call      qword ptr [7FF9646EF900]; System.Nullable`1[[System.Int32, System.Private.CoreLib]].get_Value()
+       call      qword ptr [7FF8D733F9F0]; System.Nullable`1[[System.Int32, System.Private.CoreLib]].get_Value()
        mov       ebx,eax
        jmp       near ptr M01_L00
 M01_L14:
-       call      qword ptr [7FF9646EF918]
+       call      qword ptr [7FF8D733FA08]
        mov       rbx,rax
        test      rbx,rbx
        jne       short M01_L15
-       call      qword ptr [7FF964815470]
+       call      qword ptr [7FF8D74555A8]
        mov       rbx,rax
 M01_L15:
        mov       rcx,offset MT_System.ArgumentOutOfRangeException
@@ -609,33 +609,33 @@ M01_L15:
        mov       rsi,rax
        mov       rcx,rsi
        mov       r8,rbx
-       mov       rdx,1F213CA2FC0
-       call      qword ptr [7FF9643ED938]
+       mov       rdx,2A5A96B2FC0
+       call      qword ptr [7FF8D703D938]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
 M01_L16:
-       call      qword ptr [7FF96432F228]
+       call      qword ptr [7FF8D6F7F228]
        int       3
 M01_L17:
        mov       ecx,eax
-       call      qword ptr [7FF96477FC18]
+       call      qword ptr [7FF8D73CFD20]
        mov       rcx,rax
        call      CORINFO_HELP_THROW
        int       3
 M01_L18:
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,1B17EC01E28
+       call      qword ptr [7FF8D6DA5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,26514801E28
        mov       rcx,[rcx]
        mov       edx,r15d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475E9E0]
+       call      qword ptr [7FF8D73D0400]
        mov       [rbp+28],rax
-       mov       rcx,1B17EC00398
+       mov       rcx,26514800C88
        mov       rcx,[rcx]
        mov       edx,r15d
-       call      qword ptr [7FF9643BF8E0]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FF8D7070228]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp+20],rax
        cmp       qword ptr [rbp+28],0
        je        short M01_L19
@@ -647,7 +647,7 @@ M01_L18:
        mov       [rbp+40],rcx
        mov       [rbp+48],eax
        lea       rcx,[rbp+40]
-       call      qword ptr [7FF9645649F0]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71B4AF8]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
        cmp       qword ptr [rbp+20],0
        je        short M01_L19
        mov       rax,[rbp+20]
@@ -659,7 +659,7 @@ M01_L18:
        cmp       [r8+8],r15d
        jae       short M01_L20
 M01_L19:
-       call      qword ptr [7FF96432F228]
+       call      qword ptr [7FF8D6F7F228]
        int       3
 M01_L20:
        lea       rdx,[r8+10]
@@ -668,7 +668,7 @@ M01_L20:
        mov       [rbp+48],ecx
        lea       rdx,[rbp+40]
        lea       rcx,[rbp+90]
-       call      qword ptr [7FF96456CB28]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71BCC30]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
        mov       rcx,[rbp+90]
        mov       r8d,[rbp+98]
        xor       r10d,r10d
@@ -698,21 +698,21 @@ M01_L24:
        mov       rcx,[rbp+20]
        mov       r8d,r15d
        xor       edx,edx
-       call      00007FF964151548
+       call      00007FF8D6DA1548
        mov       rbx,rax
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,1B17EC01E28
+       call      qword ptr [7FF8D6DA5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,26514801E28
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475E9E8]
-       mov       rcx,1B17EC00398
+       call      qword ptr [7FF8D73D0408]
+       mov       rcx,26514800C88
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF9643BF8E8]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D7070230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        mov       rax,rbx
        jmp       near ptr M01_L11
 M01_L25:
@@ -720,22 +720,22 @@ M01_L25:
        int       3
        sub       rsp,28
        vzeroupper
-       test      byte ptr [7FF964752A78],1
+       test      byte ptr [7FF8D73A44A8],1
        jne       short M01_L26
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       call      qword ptr [7FF8D6DA5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
 M01_L26:
-       mov       rcx,1B17EC01E28
+       mov       rcx,26514801E28
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475E9E8]
-       mov       rcx,1B17EC00398
+       call      qword ptr [7FF8D73D0408]
+       mov       rcx,26514800C88
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF9643BF8E8]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D7070230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        nop
        add       rsp,28
        ret
@@ -752,7 +752,7 @@ M01_L26:
        mov       ecx,[rbx+140]
        mov       edx,61
        mov       r8d,7A
-       call      qword ptr [7FF9647747F8]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
+       call      qword ptr [7FF8D73B4978]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
        mov       rbx,[rbx+138]
        lea       rcx,[rbx+8]
        mov       rdx,rax
@@ -818,7 +818,7 @@ M01_L26:
        vmovdqa   xmmword ptr [rbp+90],xmm4
        xor       eax,eax
        mov       [rbp+0A0],rax
-       mov       rax,0F7FBD7A01FE6
+       mov       rax,8EEB0B7819D2
        mov       [rbp+8],rax
        mov       ebx,ecx
        mov       esi,edx
@@ -836,7 +836,7 @@ M01_L26:
        setg      cl
        movzx     ecx,cl
        test      ecx,ecx
-       je        near ptr M01_L12
+       je        near ptr M01_L13
 M01_L00:
        mov       r15d,ebx
        movzx     edi,di
@@ -863,7 +863,7 @@ M01_L01:
        lea       r15,[rsp+20]
 M01_L02:
        test      ebx,ebx
-       jl        near ptr M01_L15
+       jl        near ptr M01_L16
        mov       [rbp+18],r15
        mov       eax,ebx
        mov       r8d,2
@@ -891,25 +891,25 @@ M01_L04:
        mov       r8d,ebx
        xor       ecx,ecx
        mov       r9d,2
-       mov       rax,7FF96457AD98
+       mov       rax,7FF8D71BDDD0
        mov       [rbp+60],rax
        lea       rax,[M01_L05]
        mov       [rbp+70],rax
        lea       rax,[rbp+50]
        mov       [r14+8],rax
        mov       byte ptr [r14+4],0
-       mov       rax,7FFA029E3670
+       mov       rax,7FF97B6C3670
        call      rax
 M01_L05:
        mov       byte ptr [r14+4],1
-       cmp       dword ptr [7FF9C4093A10],0
+       cmp       dword ptr [7FF936CF3A10],0
        je        short M01_L06
-       call      qword ptr [7FF9C4081648]; CORINFO_HELP_STOP_FOR_GC
+       call      qword ptr [7FF936CE1648]; CORINFO_HELP_STOP_FOR_GC
 M01_L06:
        mov       rcx,[rbp+58]
        mov       [r14+8],rcx
        test      eax,eax
-       jne       near ptr M01_L16
+       jne       near ptr M01_L17
        xor       eax,eax
        mov       [rbp+88],rax
        mov       r15,[rbp+18]
@@ -918,8 +918,7 @@ M01_L07:
        mov       [rbp+88],rax
        xor       ecx,ecx
        test      ebx,ebx
-       jle       near ptr M01_L17
-       jmp       short M01_L08
+       jle       short M01_L09
 M01_L08:
        mov       r8d,ecx
        movzx     eax,byte ptr [r15+r8]
@@ -935,18 +934,21 @@ M01_L08:
        add       ecx,1
        jo        near ptr M01_L25
        cmp       ecx,ebx
-       jl        short M01_L08
+       jge       short M01_L10
+       jmp       short M01_L08
 M01_L09:
+       mov       r13,[rbp+10]
+M01_L10:
        mov       [rbp+30],r13
        mov       [rbp+38],ebx
        lea       rcx,[rbp+30]
        call      System.String.Ctor(System.ReadOnlySpan`1<Char>)
-M01_L10:
-       mov       r8,0F7FBD7A01FE6
-       cmp       [rbp+8],r8
-       je        short M01_L11
-       call      CORINFO_HELP_FAIL_FAST
 M01_L11:
+       mov       r8,8EEB0B7819D2
+       cmp       [rbp+8],r8
+       je        short M01_L12
+       call      CORINFO_HELP_FAIL_FAST
+M01_L12:
        nop
        lea       rsp,[rbp+0A8]
        pop       rbx
@@ -958,57 +960,54 @@ M01_L11:
        pop       r15
        pop       rbp
        ret
-M01_L12:
+M01_L13:
        movzx     ecx,byte ptr [rbp+0A0]
        test      cl,cl
-       je        short M01_L13
+       je        short M01_L14
        lea       rcx,[rbp+0A0]
-       call      qword ptr [7FF9646DF7B0]
+       call      qword ptr [7FF8D732F930]
        mov       ebx,eax
        jmp       near ptr M01_L00
-M01_L13:
-       call      qword ptr [7FF9646DF7C8]
+M01_L14:
+       call      qword ptr [7FF8D732F948]
        mov       rbx,rax
        test      rbx,rbx
-       jne       short M01_L14
-       call      qword ptr [7FF964815458]
+       jne       short M01_L15
+       call      qword ptr [7FF8D7445470]
        mov       rbx,rax
-M01_L14:
+M01_L15:
        mov       rcx,offset MT_System.ArgumentOutOfRangeException
        call      CORINFO_HELP_NEWSFAST
        mov       rsi,rax
        mov       rcx,rsi
        mov       r8,rbx
-       mov       rdx,32329E32FC0
-       call      qword ptr [7FF9643ED8A8]
+       mov       rdx,2C62FA42FC0
+       call      qword ptr [7FF8D702D968]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
-M01_L15:
-       call      qword ptr [7FF96432F228]
-       int       3
 M01_L16:
+       call      qword ptr [7FF8D6F6F228]
+       int       3
+M01_L17:
        mov       ecx,eax
-       call      qword ptr [7FF96477FBD0]
+       call      qword ptr [7FF8D73BFD38]
        mov       rcx,rax
        call      CORINFO_HELP_THROW
        int       3
-M01_L17:
-       mov       r13,[rbp+10]
-       jmp       near ptr M01_L09
 M01_L18:
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,2E295001E28
+       call      qword ptr [7FF8D6D95728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,2859AC01E28
        mov       rcx,[rcx]
        mov       edx,r15d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475DE80]
+       call      qword ptr [7FF8D73C0C90]
        mov       [rbp+28],rax
-       mov       rcx,2E295000C88
+       mov       rcx,2859AC00398
        mov       rcx,[rcx]
        mov       edx,r15d
-       call      qword ptr [7FF964420228]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FF8D7013BA0]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp+20],rax
        cmp       qword ptr [rbp+28],0
        je        short M01_L19
@@ -1020,7 +1019,7 @@ M01_L18:
        mov       [rbp+40],rcx
        mov       [rbp+48],eax
        lea       rcx,[rbp+40]
-       call      qword ptr [7FF9645648D0]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71A4A38]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
        cmp       qword ptr [rbp+20],0
        je        short M01_L19
        mov       rax,[rbp+20]
@@ -1032,7 +1031,7 @@ M01_L18:
        cmp       [r8+8],r15d
        jae       short M01_L20
 M01_L19:
-       call      qword ptr [7FF96432F228]
+       call      qword ptr [7FF8D6F6F228]
        int       3
 M01_L20:
        lea       rdx,[r8+10]
@@ -1041,7 +1040,7 @@ M01_L20:
        mov       [rbp+48],ecx
        lea       rdx,[rbp+40]
        lea       rcx,[rbp+90]
-       call      qword ptr [7FF96456CA08]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71ACB70]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
        mov       rcx,[rbp+90]
        mov       r8d,[rbp+98]
        xor       r10d,r10d
@@ -1071,48 +1070,48 @@ M01_L24:
        mov       rcx,[rbp+20]
        mov       r8d,r15d
        xor       edx,edx
-       call      00007FF964151548
+       call      00007FF8D6D91548
        mov       rbx,rax
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,2E295001E28
+       call      qword ptr [7FF8D6D95728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,2859AC01E28
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475DE88]
-       mov       rcx,2E295000C88
+       call      qword ptr [7FF8D73C0C98]
+       mov       rcx,2859AC00398
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF964420230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D7013BA8]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        mov       rax,rbx
-       jmp       near ptr M01_L10
+       jmp       near ptr M01_L11
 M01_L25:
        call      CORINFO_HELP_OVERFLOW
        int       3
        sub       rsp,28
        vzeroupper
-       test      byte ptr [7FF964751F28],1
+       test      byte ptr [7FF8D7394CB8],1
        jne       short M01_L26
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       call      qword ptr [7FF8D6D95728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
 M01_L26:
-       mov       rcx,2E295001E28
+       mov       rcx,2859AC01E28
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475DE88]
-       mov       rcx,2E295000C88
+       call      qword ptr [7FF8D73C0C98]
+       mov       rcx,2859AC00398
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF964420230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D7013BA8]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        nop
        add       rsp,28
        ret
-; Total bytes of code 1136
+; Total bytes of code 1127
 ```
 
 ## .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3 (Job: Job-EWDLIM(EvaluateOverhead=True, Server=True, IterationCount=5, LaunchCount=1, WarmupCount=1))
@@ -1125,7 +1124,7 @@ M01_L26:
        mov       ecx,[rbx+140]
        mov       edx,61
        mov       r8d,7A
-       call      qword ptr [7FF964774960]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
+       call      qword ptr [7FF8D73D4A38]; DotNetTips.Spargine.Tester.RandomData.GenerateWord(Int32, Char, Char)
        mov       rbx,[rbx+138]
        lea       rcx,[rbx+8]
        mov       rdx,rax
@@ -1191,7 +1190,7 @@ M01_L26:
        vmovdqa   xmmword ptr [rbp+90],xmm4
        xor       eax,eax
        mov       [rbp+0A0],rax
-       mov       rax,0DD8B3FF08F1F
+       mov       rax,76F65762ABC1
        mov       [rbp+8],rax
        mov       ebx,ecx
        mov       esi,edx
@@ -1264,20 +1263,20 @@ M01_L04:
        mov       r8d,ebx
        xor       ecx,ecx
        mov       r9d,2
-       mov       rax,7FF96457A758
+       mov       rax,7FF8D71DD070
        mov       [rbp+60],rax
        lea       rax,[M01_L05]
        mov       [rbp+70],rax
        lea       rax,[rbp+50]
        mov       [r14+8],rax
        mov       byte ptr [r14+4],0
-       mov       rax,7FFA029E3670
+       mov       rax,7FF97B6C3670
        call      rax
 M01_L05:
        mov       byte ptr [r14+4],1
-       cmp       dword ptr [7FF9C4093A10],0
+       cmp       dword ptr [7FF936CF3A10],0
        je        short M01_L06
-       call      qword ptr [7FF9C4081648]; CORINFO_HELP_STOP_FOR_GC
+       call      qword ptr [7FF936CE1648]; CORINFO_HELP_STOP_FOR_GC
 M01_L06:
        mov       rcx,[rbp+58]
        mov       [r14+8],rcx
@@ -1315,7 +1314,7 @@ M01_L09:
        lea       rcx,[rbp+30]
        call      System.String.Ctor(System.ReadOnlySpan`1<Char>)
 M01_L10:
-       mov       r8,0DD8B3FF08F1F
+       mov       r8,76F65762ABC1
        cmp       [rbp+8],r8
        je        short M01_L11
        call      CORINFO_HELP_FAIL_FAST
@@ -1336,15 +1335,15 @@ M01_L12:
        test      cl,cl
        je        short M01_L13
        lea       rcx,[rbp+0A0]
-       call      qword ptr [7FF9646DF918]; System.Nullable`1[[System.Int32, System.Private.CoreLib]].get_Value()
+       call      qword ptr [7FF8D734F9F0]; System.Nullable`1[[System.Int32, System.Private.CoreLib]].get_Value()
        mov       ebx,eax
        jmp       near ptr M01_L00
 M01_L13:
-       call      qword ptr [7FF9646DF930]
+       call      qword ptr [7FF8D734FA08]
        mov       rbx,rax
        test      rbx,rbx
        jne       short M01_L14
-       call      qword ptr [7FF9648154D0]
+       call      qword ptr [7FF8D7465488]
        mov       rbx,rax
 M01_L14:
        mov       rcx,offset MT_System.ArgumentOutOfRangeException
@@ -1352,17 +1351,17 @@ M01_L14:
        mov       rsi,rax
        mov       rcx,rsi
        mov       r8,rbx
-       mov       rdx,23864FA2FC0
-       call      qword ptr [7FF9643ED8D8]
+       mov       rdx,2BB87CD2FC0
+       call      qword ptr [7FF8D704D938]
        mov       rcx,rsi
        call      CORINFO_HELP_THROW
        int       3
 M01_L15:
-       call      qword ptr [7FF96432F228]
+       call      qword ptr [7FF8D6F8F228]
        int       3
 M01_L16:
        mov       ecx,eax
-       call      qword ptr [7FF96477FC48]
+       call      qword ptr [7FF8D73DFD20]
        mov       rcx,rax
        call      CORINFO_HELP_THROW
        int       3
@@ -1371,17 +1370,17 @@ M01_L17:
        jmp       near ptr M01_L09
 M01_L18:
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,1F7D0001E28
+       call      qword ptr [7FF8D6DB5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,27AF2C01E28
        mov       rcx,[rcx]
        mov       edx,r15d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475D8D8]
+       call      qword ptr [7FF8D73E03F0]
        mov       [rbp+28],rax
-       mov       rcx,1F7D0000C88
+       mov       rcx,27AF2C00C88
        mov       rcx,[rcx]
        mov       edx,r15d
-       call      qword ptr [7FF964420228]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
+       call      qword ptr [7FF8D7080228]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Rent(Int32)
        mov       [rbp+20],rax
        cmp       qword ptr [rbp+28],0
        je        short M01_L19
@@ -1393,7 +1392,7 @@ M01_L18:
        mov       [rbp+40],rcx
        mov       [rbp+48],eax
        lea       rcx,[rbp+40]
-       call      qword ptr [7FF9645649C0]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71C4AF8]; System.Security.Cryptography.RandomNumberGeneratorImplementation.FillSpan(System.Span`1<Byte>)
        cmp       qword ptr [rbp+20],0
        je        short M01_L19
        mov       rax,[rbp+20]
@@ -1405,7 +1404,7 @@ M01_L18:
        cmp       [r8+8],r15d
        jae       short M01_L20
 M01_L19:
-       call      qword ptr [7FF96432F228]
+       call      qword ptr [7FF8D6F8F228]
        int       3
 M01_L20:
        lea       rdx,[r8+10]
@@ -1414,7 +1413,7 @@ M01_L20:
        mov       [rbp+48],ecx
        lea       rdx,[rbp+40]
        lea       rcx,[rbp+90]
-       call      qword ptr [7FF96456CAF8]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
+       call      qword ptr [7FF8D71CCC30]; System.Span`1[[System.Byte, System.Private.CoreLib]].op_Implicit(System.Span`1<Byte>)
        mov       rcx,[rbp+90]
        mov       r8d,[rbp+98]
        xor       r10d,r10d
@@ -1444,21 +1443,21 @@ M01_L24:
        mov       rcx,[rbp+20]
        mov       r8d,r15d
        xor       edx,edx
-       call      00007FF964151548
+       call      00007FF8D6DB1548
        mov       rbx,rax
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
-       mov       rcx,1F7D0001E28
+       call      qword ptr [7FF8D6DB5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       mov       rcx,27AF2C01E28
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475D8E0]
-       mov       rcx,1F7D0000C88
+       call      qword ptr [7FF8D73E03F8]
+       mov       rcx,27AF2C00C88
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF964420230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D7080230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        mov       rax,rbx
        jmp       near ptr M01_L10
 M01_L25:
@@ -1466,22 +1465,22 @@ M01_L25:
        int       3
        sub       rsp,28
        vzeroupper
-       test      byte ptr [7FF9647513C8],1
+       test      byte ptr [7FF8D73B4460],1
        jne       short M01_L26
        mov       rcx,offset MT_System.Buffers.ArrayPool<System.Byte>
-       call      qword ptr [7FF964155728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       call      qword ptr [7FF8D6DB5728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
 M01_L26:
-       mov       rcx,1F7D0001E28
+       mov       rcx,27AF2C01E28
        mov       rcx,[rcx]
        mov       rdx,[rbp+28]
        xor       r8d,r8d
        cmp       [rcx],ecx
-       call      qword ptr [7FF96475D8E0]
-       mov       rcx,1F7D0000C88
+       call      qword ptr [7FF8D73E03F8]
+       mov       rcx,27AF2C00C88
        mov       rcx,[rcx]
        mov       rdx,[rbp+20]
        xor       r8d,r8d
-       call      qword ptr [7FF964420230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
+       call      qword ptr [7FF8D7080230]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)
        nop
        add       rsp,28
        ret
