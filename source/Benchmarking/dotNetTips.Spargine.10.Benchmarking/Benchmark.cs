@@ -378,7 +378,7 @@ public abstract class Benchmark
 	/// <typeparam name="T">The type of the elements.</typeparam>
 	/// <param name="collection">The list to consume. Must not be <c>null</c>.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeCollection), author: "David McCarter", createdOn: "4/17/2026", Status = Status.New)]
+	[Information(nameof(ConsumeCollection), author: "David McCarter", createdOn: "4/17/2026", Status = Status.Available)]
 	public void ConsumeCollection<T>([DisallowNull] IReadOnlyList<T> collection)
 	{
 		collection = collection.ArgumentNotNull();
@@ -466,7 +466,7 @@ public abstract class Benchmark
 	/// <typeparam name="T">The type of the elements contained in the <paramref name="span"/>.</typeparam>
 	/// <param name="span">The read-only span of items to consume.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeReadOnlySpan), author: "David McCarter", createdOn: "4/17/2026", Status = Status.New)]
+	[Information(nameof(ConsumeReadOnlySpan), author: "David McCarter", createdOn: "4/17/2026", Status = Status.Available)]
 	public void ConsumeReadOnlySpan<T>(ReadOnlySpan<T> span)
 	{
 		foreach (var item in span)
@@ -787,7 +787,7 @@ public abstract class Benchmark
 	/// <param name="action">The action to time. Must not be <c>null</c>.</param>
 	/// <param name="description">A label for the log output.</param>
 	/// <returns>The elapsed <see cref="TimeSpan"/>.</returns>
-	[Information(nameof(MeasureAction), author: "David McCarter", createdOn: "4/17/2026", Status = Status.New)]
+	[Information(nameof(MeasureAction), author: "David McCarter", createdOn: "4/17/2026", Status = Status.Available)]
 	protected static TimeSpan MeasureAction([DisallowNull] Action action, string description = "Action")
 	{
 		action = action.ArgumentNotNull();

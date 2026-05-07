@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10.Benchmarking</AssemblyTitle>
-    <AssemblyVersion>2026.10.5.0</AssemblyVersion>
+    <AssemblyVersion>2026.10.5.1</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
@@ -22,7 +22,7 @@
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.5.0</FileVersion>
+    <FileVersion>2026.10.5.1</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -51,7 +51,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.Benchmarking</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.5.0</Version>
+    <Version>2026.10.5.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="CollectionBenchmark.PersonRecord.cs" />

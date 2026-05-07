@@ -27,7 +27,6 @@ using System.Reflection;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
@@ -52,7 +51,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = BuiltInTypeNamesNoCache();
 
-		this.Consume(result);
+		this.ConsumeDictionary(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": Cached")]
@@ -61,7 +60,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.BuiltInTypeNames();
 
-		this.Consume(result);
+		this.ConsumeDictionary(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypes))]
@@ -70,7 +69,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.BuiltInTypes;
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.Create))]
@@ -119,7 +118,7 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypes()
 	{
 		var result = FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": Base Directory")]
@@ -127,7 +126,7 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypesBaseDirectory()
 	{
 		var result = TypeHelper.FindDerivedTypes(typeof(Exception), true);
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": Cached")]
@@ -135,7 +134,7 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypesCached()
 	{
 		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(Exception), true);
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": No Cache")]
@@ -144,7 +143,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = GetAllAbstractMethodsNoCache(typeof(Benchmark));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": Cached")]
@@ -153,7 +152,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllAbstractMethods(typeof(Benchmark));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": No Cache")]
@@ -189,7 +188,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllDeclaredFields(typeof(Benchmark));
 
-		this.Consume(result.Count());
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods) + ": No Cache")]
@@ -236,7 +235,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllGenericMethods(typeof(StringBuilder));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": No Cache")]
@@ -282,7 +281,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllPublicMethods(typeof(Person));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllStaticMethods))]
@@ -291,7 +290,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetAllStaticMethods(typeof(TypeHelper));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetAttribute) + ": FieldInfo")]
@@ -342,7 +341,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetGenericArguments(typeof(Dictionary<string, int>));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces))]
@@ -352,7 +351,7 @@ public class TypeHelperBenchmark : Benchmark
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list);
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaces) + ": Interface Names")]
@@ -362,7 +361,7 @@ public class TypeHelperBenchmark : Benchmark
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaces(list, new List<string> { nameof(IEnumerable), nameof(IDisposable) });
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetImplementedInterfaceTypes))]
@@ -372,7 +371,7 @@ public class TypeHelperBenchmark : Benchmark
 		var list = new List<int>();
 		var result = TypeHelper.GetImplementedInterfaceTypes(list);
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetInstanceHashCode))]
@@ -416,7 +415,7 @@ public class TypeHelperBenchmark : Benchmark
 
 		var result = TypeHelper.GetPropertyValues(person);
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.GetTypeDisplayName) + ": DisplayNameOptions")]
@@ -447,7 +446,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(typeof(TypeHelper));
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.HasBaseClass) + ": No Cache")]

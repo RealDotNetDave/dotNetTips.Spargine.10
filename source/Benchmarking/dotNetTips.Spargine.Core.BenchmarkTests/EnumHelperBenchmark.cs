@@ -50,7 +50,7 @@ public class EnumHelperBenchmark : Benchmark
 	{
 		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	private static string GetDescriptionNoCache(Enum input)
