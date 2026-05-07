@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -63,13 +63,13 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "TryWriteOnce")]
 	[BenchmarkCategory(Categories.Async)]
-	public async Task TryWriteOnce()
+	public void TryWriteOnce()
 	{
 		var queue = new ChannelQueue<string>();
 		var key = "k1";
 		var written = queue.TryWriteOnce("hello", key);
 
-		await this.ConsumeAsync(written).ConfigureAwait(false);
+		this.Consume(written);
 	}
 
 	/// <summary>
@@ -88,7 +88,7 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 			await channel.WriteAsync(people[peopleCount]).ConfigureAwait(false);
 		}
 
-		await this.ConsumeAsync(channel.Count).ConfigureAwait(false);
+		this.Consume(channel);
 	}
 
 	/// <summary>
@@ -104,7 +104,7 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 
 		await channel.WriteAsync(people).ConfigureAwait(false);
 
-		await this.ConsumeAsync(channel.Count).ConfigureAwait(false);
+		this.Consume(channel);
 	}
 
 	/// <summary>
@@ -126,7 +126,7 @@ public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 
 		Task.WaitAll([.. tasks]);
 
-		this.Consume(channel.Count);
+		this.Consume(channel);
 	}
 
 	/// <summary>

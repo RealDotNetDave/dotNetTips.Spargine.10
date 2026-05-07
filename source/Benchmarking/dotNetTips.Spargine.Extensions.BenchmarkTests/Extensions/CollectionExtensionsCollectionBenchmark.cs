@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -14,7 +14,6 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -46,7 +45,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		this._peopleRefList.AddIf(this._personToInsert, false);
 
-		this.Consume(this._peopleRefList.Count);
+		this.Consume(this._peopleRefList);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIf) + ": Condition True")]
@@ -55,7 +54,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		this._peopleRefList.AddIf(this._personToInsert, true);
 
-		this.Consume(this._peopleRefList.Count);
+		this.Consume(this._peopleRefList);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIfNotExists) + ": Existing Item")]
@@ -228,7 +227,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._peopleRefList.Upsert(person);
 
-		this.Consume(this._peopleRefList.Count);
+		this.Consume(this._peopleRefList);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item - Collection")]
@@ -239,7 +238,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._peopleRefCollection.Upsert(person);
 
-		this.Consume(this._peopleRefCollection.Count);
+		this.Consume(this._peopleRefCollection);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item - HashSet")]
@@ -250,7 +249,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._peopleRefHashSet.Upsert(person);
 
-		this.Consume(this._peopleRefHashSet.Count);
+		this.Consume(this._peopleRefHashSet);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": New Item")]
@@ -261,7 +260,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._peopleRefList.Upsert(person);
 
-		this.Consume(this._peopleRefList.Count);
+		this.Consume(this._peopleRefList);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": New Item - Collection")]
@@ -272,7 +271,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._peopleRefCollection.Upsert(person);
 
-		this.Consume(this._peopleRefCollection.Count);
+		this.Consume(this._peopleRefCollection);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": New Item - HashSet")]
@@ -283,7 +282,7 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 		this._peopleRefHashSet.Upsert(person);
 
-		this.Consume(this._peopleRefHashSet.Count);
+		this.Consume(this._peopleRefHashSet);
 	}
 
 }

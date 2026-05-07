@@ -4,7 +4,7 @@
 // Created          : 08-02-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-25-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="RandomDataCollectionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -128,7 +128,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = RandomData.GeneratePersonValCollection(this.Count);
 
-		this.Consume(result.Count);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateTempFile))]
@@ -184,7 +184,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRefCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result.Last());
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "OrderBy(): Record")]
@@ -193,7 +193,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result.Last());
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = "OrderBy(): Val")]
@@ -202,7 +202,7 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 	{
 		var result = this._personRecordCollection.OrderBy(p => p.LastName);
 
-		this.Consume(result.Last());
+		this.Consume(result);
 	}
 
 	public override void Setup()

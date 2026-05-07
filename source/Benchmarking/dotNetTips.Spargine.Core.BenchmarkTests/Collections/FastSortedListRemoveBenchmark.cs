@@ -4,7 +4,7 @@
 // Created          : 01-13-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="FastSortedListRemoveBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -40,7 +40,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 
 		_ = people.Remove(this._lastPersonRefFastSortedList);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "Remove: SortedList<ref>")]
@@ -51,7 +51,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 
 		_ = people.Remove(this._lastPersonRefSortedList.Value.Id);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "RemoveAt: FastSortedList<ref>")]
@@ -62,7 +62,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 
 		people.RemoveAt(people.Count - 1);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "RemoveAt: Comparer(LastName) - FastSortedList<ref>")]
@@ -73,7 +73,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 
 		people.RemoveAt(people.Count - 1);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "RemoveAt: FastSortedList<ref>")]
@@ -84,7 +84,7 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 
 		people.RemoveAt(people.Count - 1);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "RemoveAt: With Comparer(LastName) - SortedList<ref>")]

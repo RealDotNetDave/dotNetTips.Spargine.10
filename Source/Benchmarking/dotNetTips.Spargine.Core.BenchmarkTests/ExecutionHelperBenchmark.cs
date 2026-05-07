@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-24-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-24-2025
+// Last Modified By : David McCarter
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ExecutionHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -41,7 +41,7 @@ public class ExecutionHelperBenchmark : Benchmark
 	{
 		var result = await ExecutionHelper.ProgressiveRetryAsync(_successFunc, retryCount: 3, retryWaitMilliseconds: 1).ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ExecutionHelper.ProgressiveRetryAsync) + ": With Retries")]
@@ -49,7 +49,7 @@ public class ExecutionHelperBenchmark : Benchmark
 	{
 		var result = await ExecutionHelper.ProgressiveRetryAsync(_failThenSucceedFunc, retryCount: 3, retryWaitMilliseconds: 1).ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(ExecutionHelper.ProgressiveRetry) + ": Success")]

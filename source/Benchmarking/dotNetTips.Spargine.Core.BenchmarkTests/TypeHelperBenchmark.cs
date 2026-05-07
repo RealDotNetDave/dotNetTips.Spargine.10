@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-25-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -51,7 +51,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = BuiltInTypeNamesNoCache();
 
-		this.ConsumeDictionary(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": Cached")]
@@ -60,7 +60,7 @@ public class TypeHelperBenchmark : Benchmark
 	{
 		var result = TypeHelper.BuiltInTypeNames();
 
-		this.ConsumeDictionary(result);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypes))]

@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -258,7 +258,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	public void ToBase64()
 	{
 		var result = this._crlfString.ToBase64();
-		this.Consume(result.Length);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBase64Bytes))]
@@ -266,7 +266,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	public void ToBase64ByteSpan()
 	{
 		var result = this.Base64String.ToBase64Bytes();
-		this.Consume(result.Length);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToBrotliStringAsync))]
@@ -275,7 +275,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	{
 		var result = await this._crlfString.ToBrotliStringAsync().ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.ToGZipStringAsync))]
@@ -284,7 +284,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 	{
 		var result = await this._crlfString.ToGZipStringAsync().ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 }

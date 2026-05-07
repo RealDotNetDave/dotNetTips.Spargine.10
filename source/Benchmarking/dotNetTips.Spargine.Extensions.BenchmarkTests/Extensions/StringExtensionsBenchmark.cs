@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -230,7 +230,7 @@ public class StringExtensionsBenchmark : Benchmark
 	{
 		var result = await this._compressedString.FromDeflateStringAsync().ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.FromZLibStringAsync))]
@@ -239,7 +239,7 @@ public class StringExtensionsBenchmark : Benchmark
 	{
 		var result = await this._zlibString.FromZLibStringAsync().ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.HasValue))]

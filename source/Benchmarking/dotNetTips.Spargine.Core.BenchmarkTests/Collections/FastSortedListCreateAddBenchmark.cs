@@ -4,7 +4,7 @@
 // Created          : 03-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="FastSortedListCreateAddBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -40,7 +40,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 			people.Add(person);
 		}
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "Add: with Comparer(LastName)  - FastSortedList<ref>")]
@@ -54,7 +54,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 			people.Add(person);
 		}
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "Add: SortedList<ref>")]
@@ -68,7 +68,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 			people.Add(person.Key, person.Value);
 		}
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "Add: with OrdinalStringComparer")]
@@ -82,7 +82,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 			people.Add(person.Id, person);
 		}
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "Add: SortedList<ref> with Tuple")]
@@ -96,7 +96,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 			people.Add(key, value);
 		}
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "AddRange: FastSortedList<ref>")]
@@ -107,7 +107,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 
 		people.AddRange(this._peopleRefArrayToInsert);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "AddRange: with Comparer(LastName) - FastSortedList<ref>")]
@@ -118,7 +118,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 
 		people.AddRange(this._peopleRefArrayToInsert);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "AddRange: SortedList<ref>")]
@@ -129,7 +129,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 
 		_ = people.AddRange(this._peopleRefDictionaryToInsert);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "AddRange:  with OrdinalStringComparer - SortedList<ref>")]
@@ -140,7 +140,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 
 		_ = people.AddRange(this._peopleRefDictionaryToInsert);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "New: add collection in constructor - FastSortedList<ref>")]
@@ -149,7 +149,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	{
 		var people = new FastSortedList<Person>(this._peopleRefArrayToInsert);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "New: add items in constructor + Comparer(LastName) - FastSortedList<ref>")]
@@ -158,7 +158,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	{
 		var people = new FastSortedList<Person>(this._peopleRefArrayToInsert, new PersonComparerByLastName());
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "New: add collection in constructor - SortedList<ref>")]
@@ -167,7 +167,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	{
 		var people = new SortedList<string, Person>(this._peopleRefDictionaryToInsert);
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	[Benchmark(Description = "New: with OrdinalStringComparer - SortedList<ref>")]
@@ -176,7 +176,7 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 	{
 		var people = new SortedList<string, Person>(this._peopleRefDictionaryToInsert, new OrdinalStringComparer());
 
-		this.Consume(people.Count);
+		this.Consume(people);
 	}
 
 	public override void Setup()

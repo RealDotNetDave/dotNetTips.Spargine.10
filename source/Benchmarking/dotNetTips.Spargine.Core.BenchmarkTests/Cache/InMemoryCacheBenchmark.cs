@@ -4,7 +4,7 @@
 // Created          : 10-03-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -42,7 +42,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Email, item);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync))]
@@ -56,7 +56,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Email, item).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": DateTimeOffset")]
@@ -71,7 +71,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Email, item, futureDate).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": DataTimeOffset - IDataModel")]
@@ -86,7 +86,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Id, item, futureDate).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": DataTimeOffset - IDataRecord")]
@@ -101,7 +101,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Id, item, futureDate).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": IDataModel")]
@@ -115,7 +115,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Id, item).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": IDataRecord")]
@@ -129,7 +129,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Id, item).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": Timespan")]
@@ -144,7 +144,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Email, item, futureDate).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemAsync) + ": TimeSpan - IDataRecord")]
@@ -159,7 +159,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			await cache.AddCacheItemAsync(item.Id, item, futureDate).ConfigureAwait(false);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": DateTimeOffset")]
@@ -174,7 +174,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Email, item, futureDate);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": DataTimeOffset - IDataModel")]
@@ -189,7 +189,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Id, item, futureDate);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": DataTimeOffset - IDataRecord")]
@@ -204,7 +204,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Id, item, futureDate);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": IDataModel")]
@@ -218,7 +218,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Id, item);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": IDataRecord")]
@@ -232,7 +232,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Id, item);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": Timespan")]
@@ -247,7 +247,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Email, item, futureDate);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": TimeSpan - IDataRecord")]
@@ -262,7 +262,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			cache.AddCacheItem(item.Id, item, futureDate);
 		}
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.Clear))]
@@ -279,7 +279,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 
 		cache.Clear();
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.Compact))]
@@ -296,7 +296,7 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 
 		cache.Compact(0.5);
 
-		this.Consume(cache.Cache.Count);
+		this.Consume(cache);
 	}
 
 	[Benchmark(Description = nameof(InMemoryCache.GetAllKeys))]

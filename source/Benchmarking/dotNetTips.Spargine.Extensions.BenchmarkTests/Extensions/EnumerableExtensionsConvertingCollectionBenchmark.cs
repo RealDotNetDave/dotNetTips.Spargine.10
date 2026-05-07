@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-14-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-25-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsConvertingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -107,7 +107,7 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 
 		var result = await people.ToListAsync().ConfigureAwait(false);
 
-		await this.ConsumeAsync(result).ConfigureAwait(false);
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
