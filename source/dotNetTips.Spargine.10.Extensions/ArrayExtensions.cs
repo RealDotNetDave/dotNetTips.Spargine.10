@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -166,13 +166,13 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int LastIndexOf([DisallowNull] T item)
 		{
 			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
-			return Array.LastIndexOf(array, item);
+			return array.AsSpan().LastIndexOf(item);
 		}
 
 		/// <summary>
@@ -216,16 +216,14 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] FastSelectItems(int startIndex, int count)
 		{
 			array = array.ArgumentNotNull();
 			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
 			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
 
-			var result = new ArraySegment<T>(array, startIndex, count);
-
-			return result.ToArray();
+			return array.AsSpan(startIndex, count).ToArray();
 		}
 
 		/// <summary>
@@ -261,8 +259,8 @@ public static class ArrayExtensions
 		/// </summary>
 		/// <param name="arrayToCheck">The array to check.</param>
 		/// <returns><c>true</c> if the arrays are equal; otherwise, <c>false</c>.</returns>
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
 			if (array is null || arrayToCheck is null)

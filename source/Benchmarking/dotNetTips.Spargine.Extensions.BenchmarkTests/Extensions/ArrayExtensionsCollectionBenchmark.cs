@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -35,6 +35,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
+	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
 
 	private const int OperationsCount = 1024;
 	private byte[] _byteArray = default!;
@@ -54,11 +55,29 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void AddFirst_Val()
+	{
+		var result = this._personValArray.AddFirst(this.PersonVal01);
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.AddLast) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void AddLast_Ref()
 	{
 		var result = this._personRefArray.AddLast(this.PersonRef02);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AddLast) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void AddLast_Val()
+	{
+		var result = this._personValArray.AddLast(this.PersonVal02);
 
 		this.Consume(result);
 	}
@@ -118,6 +137,15 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void AsReadOnlySpan_Ref()
 	{
 		var result = this._personRefArray.AsReadOnlySpan();
+
+		this.Consume(result.Length);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AsReadOnlySpan) + " : Value")]
+	[BenchmarkCategory(Categories.Span, Categories.ValueType)]
+	public void AsReadOnlySpan_Val()
+	{
+		var result = this._personValArray.AsReadOnlySpan();
 
 		this.Consume(result.Length);
 	}
@@ -183,11 +211,36 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(this._personRefArray.FastLongCount());
 	}
 
+	[Benchmark(OperationsPerInvoke = OperationsCount, Description = nameof(ArrayExtensions.FastLongCount) + ": Val")]
+	[BenchmarkCategory(Categories.Array)]
+	public void FastLongCountArrayVal()
+	{
+		this.Consume(this._personValArray.FastLongCount());
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.FastProcessor) + ": Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void FastProcessorVal()
+	{
+		var count = 0;
+
+		this._personValArray.FastProcessor(_ => count++);
+
+		this.Consume(count);
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void GenerateHashCode_Ref()
 	{
 		this.Consume(this._personRefArray.GenerateHashCode());
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.GenerateHashCode) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void GenerateHashCode_Val()
+	{
+		this.Consume(this._personValArray.GenerateHashCode());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.FastHashData) + ": byte[]")]
@@ -386,11 +439,29 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ArrayExtensions.RemoveFirst) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void RemoveFirstVal()
+	{
+		var result = this._personValArray.RemoveFirst();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.RemoveLast) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void RemoveLastRef()
 	{
 		var result = this._personRefArray.RemoveLast();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.RemoveLast) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void RemoveLastVal()
+	{
+		var result = this._personValArray.RemoveLast();
 
 		this.Consume(result);
 	}
@@ -409,6 +480,15 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void SelectItemsFastSelectItems()
 	{
 		var result = this._personRefArray.FastSelectItems(0, this.HalfCount);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.FastSelectItems) + ": Value - Half Count")]
+	[BenchmarkCategory(Categories.Collections, Categories.ValueType)]
+	public void SelectItemsFastSelectItemsVal()
+	{
+		var result = this._personValArray.FastSelectItems(0, this.HalfCount);
 
 		this.Consume(result);
 	}
@@ -442,11 +522,25 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(this._personRefArrayWithDups.ToDistinct());
 	}
 
+	[Benchmark(Description = nameof(ArrayExtensions.ToDistinct) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void ToDistinctVal()
+	{
+		this.Consume(this._personValArray.ToDistinct());
+	}
+
 	[Benchmark(Description = nameof(ArrayExtensions.ToFrozenSet) + " : Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
 	public void ToFrozenSetRef()
 	{
 		this.Consume(this._personRefArray.ToFrozenSet());
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.ToFrozenSet) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void ToFrozenSetVal()
+	{
+		this.Consume(this._personValArray.ToFrozenSet());
 	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + ": Record")]
@@ -463,6 +557,15 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void UpsertRef()
 	{
 		var result = this._personRefArray.Upsert(this.PersonRef01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void UpsertVal()
+	{
+		var result = this._personValArray.Upsert(this.PersonVal01);
 
 		this.Consume(result);
 	}

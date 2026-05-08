@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-14-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCountCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -30,6 +30,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Person> _personRefEnumerable = default!;
+	private List<Person> _personRefList = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.CountAsync))]
 	public async Task CountCountAsync()
@@ -65,6 +66,14 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": List")]
+	public void CountFastLongCountList()
+	{
+		var result = this._personRefList.FastLongCount();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": With Predicate")]
 	public void CountFastLongCountWithPredicate()
 	{
@@ -87,6 +96,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 		base.Setup();
 
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
+		this._personRefList = [.. this.GetPersonRefArray()];
 	}
 
 	private static int CountWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Count(predicate);

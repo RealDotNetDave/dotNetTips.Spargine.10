@@ -26,6 +26,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [ThreadingDiagnoser]
 public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 {
+	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
+
 	private DistinctConcurrentBag<Person> _peopleRefDistinctConcurrentBag = default!;
 	private Person[] _peopleRefToInsert = default!;
 

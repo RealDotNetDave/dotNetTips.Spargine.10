@@ -23,6 +23,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
 public class ObservableListBenchmark : LargeCollectionBenchmark
 {
+	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
+
 	private Person[] _personRefItemsToInsert = default!;
 	private ObservableList<Person> _personRefObservableList = default!;
 

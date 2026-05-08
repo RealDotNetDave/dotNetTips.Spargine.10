@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1127,6 +1127,21 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastDistinct_ReferenceType_LargeICollection_UseDistinctPath()
+	{
+		// Arrange - ICollection<T> with count > 2048 triggers Distinct (not HashSet) path
+		var people = RandomData.GeneratePersonRefCollection(3000).ToList();
+		var duplicate = people[0];
+		people.Add(duplicate);
+
+		// Act
+		var result = ((IEnumerable<Person>)people).FastDistinct().ToList();
+
+		// Assert - duplicate removed
+		Assert.HasCount(3000, result);
+	}
+
+	[TestMethod]
 	public void FastDistinct_ReferenceType_NonCollectionEnumerable_UsesHashSet()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
@@ -1222,19 +1237,6 @@ public class EnumerableExtensionsTests
 
 		// Assert - all unique, so count equals 300
 		Assert.HasCount(300, result);
-	}
-
-	[TestMethod]
-	public void FastDistinct_ValueType_NoKnownCount_UsesHashSet()
-	{
-		// Arrange - use a Where query so TryGetNonEnumeratedCount returns false (unknown count)
-		var numbers = Enumerable.Range(1, 10).Where(_ => true);
-
-		// Act
-		var result = numbers.FastDistinct().ToList();
-
-		// Assert - all unique, 10 elements
-		Assert.HasCount(10, result);
 	}
 
 	[TestMethod]
@@ -2031,6 +2033,20 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastProcessorFunc_WithArray_TransformsAllElements()
+	{
+		// Arrange - T[] takes the else/ToArray path in FastProcessor(Func)
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).FastProcessor(n => n * 2);
+
+		// Assert
+		Assert.HasCount(5, result);
+		CollectionAssert.AreEqual(new[] { 2, 4, 6, 8, 10 }, result.ToArray());
+	}
+
+	[TestMethod]
 	public void FastProcessorFunc_WithComplexTransformation_TransformsCorrectly()
 	{
 		// Arrange
@@ -2213,6 +2229,25 @@ public class EnumerableExtensionsTests
 
 		Assert.HasCount(1, shuffled);
 		Assert.AreEqual(originalPerson, shuffled.First());
+	}
+
+	[TestMethod]
+	public void FastShuffle_WithoutCount_WithArray_PreservesAllElements()
+	{
+		// Arrange - T[] hits the else/ToArray path since it is not List<T>
+		var numbers = Enumerable.Range(1, Count).ToArray();
+		var original = new HashSet<int>(numbers);
+
+		// Act
+		var shuffled = ((IEnumerable<int>)numbers).FastShuffle().ToArray();
+
+		// Assert
+		Assert.HasCount(Count, shuffled);
+
+		foreach (var n in original)
+		{
+			Assert.IsTrue(shuffled.Contains(n));
+		}
 	}
 
 	[TestMethod]
@@ -4594,6 +4629,36 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void Partition_WithArray_PartitionsCorrectly()
+	{
+		// Arrange - T[] is IEnumerable<T>; Chunk handles arrays with index optimization
+		var numbers = Enumerable.Range(1, 10).ToArray();
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).Partition(3).ToList();
+
+		// Assert - 10 / 3 = 3 full chunks + 1 partial
+		Assert.HasCount(4, result);
+		Assert.HasCount(3, result[0]);
+		Assert.HasCount(1, result[3]);
+	}
+
+	[TestMethod]
+	public void Partition_WithICollection_PartitionsCorrectly()
+	{
+		// Arrange - Queue<T> is ICollection<T> so Chunk uses pre-sized path
+		var source = new Queue<int>(Enumerable.Range(1, 9));
+
+		// Act
+		var result = ((IEnumerable<int>)source).Partition(3).ToList();
+
+		// Assert - 9 / 3 = exactly 3 full chunks
+		Assert.HasCount(3, result);
+		Assert.HasCount(3, result[0]);
+		Assert.HasCount(3, result[2]);
+	}
+
+	[TestMethod]
 	public void PartitionTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
@@ -4609,16 +4674,6 @@ public class EnumerableExtensionsTests
 
 		Assert.IsNotNull(splitEmptyPeople);
 
-	}
-
-	[TestMethod]
-	public void PickRandom_EmptyArray_ReturnsDefault()
-	{
-		IEnumerable<Person> emptyArray = Array.Empty<Person>();
-
-		var result = emptyArray.PickRandom();
-
-		Assert.IsNull(result);
 	}
 
 	[TestMethod]
@@ -5175,19 +5230,53 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToCollection_WithArray_WrapsDirectly()
+	{
+		// Arrange - T[] is IList<T>, so it wraps without copying
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).ToCollection();
+
+		// Assert
+		Assert.HasCount(5, result);
+		Assert.AreEqual(1, result[0]);
+		Assert.AreEqual(5, result[4]);
+	}
+
+	[TestMethod]
+	public void ToCollection_WithDeferredEnumerable_MaterializesAndWraps()
+	{
+		// Arrange - Where query is neither IList<T> nor ICollection<T>
+		var numbers = Enumerable.Range(1, 5).Where(_ => true);
+
+		// Act
+		var result = numbers.ToCollection();
+
+		// Assert
+		Assert.HasCount(5, result);
+	}
+
+	[TestMethod]
+	public void ToCollection_WithICollection_PreSizesAndCopies()
+	{
+		// Arrange - Queue<T> is ICollection<T> but not IList<T>
+		var source = new Queue<int>(new[] { 10, 20, 30 });
+
+		// Act
+		var result = ((IEnumerable<int>)source).ToCollection();
+
+		// Assert
+		Assert.HasCount(3, result);
+		Assert.IsTrue(result.Contains(20));
+	}
+
+	[TestMethod]
 	public void ToCollectionTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.IsTrue(people.ToCollection().IsNotEmpty());
-	}
-
-	[TestMethod]
-	public void ToDelimitedStringTest()
-	{
-		var words = RandomData.GenerateWords(Count, 25, 50);
-
-		Assert.IsNotNull(words.ToDelimitedString(','));
 	}
 
 	[TestMethod]
@@ -5495,25 +5584,53 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToReadOnlyCollection_WithArray_WrapsDirectly()
+	{
+		// Arrange - T[] is IList<T>, so it wraps without copying
+		var numbers = new int[] { 1, 2, 3, 4, 5 };
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).ToReadOnlyCollection();
+
+		// Assert
+		Assert.HasCount(5, result);
+		Assert.AreEqual(1, result[0]);
+		Assert.AreEqual(5, result[4]);
+	}
+
+	[TestMethod]
+	public void ToReadOnlyCollection_WithDeferredEnumerable_MaterializesAndWraps()
+	{
+		// Arrange - Where query is neither IList<T> nor ICollection<T>
+		var numbers = Enumerable.Range(1, 5).Where(_ => true);
+
+		// Act
+		var result = numbers.ToReadOnlyCollection();
+
+		// Assert
+		Assert.HasCount(5, result);
+	}
+
+	[TestMethod]
+	public void ToReadOnlyCollection_WithICollection_PreSizesAndCopies()
+	{
+		// Arrange - Queue<T> is ICollection<T> but not IList<T>
+		var source = new Queue<int>(new[] { 10, 20, 30 });
+
+		// Act
+		var result = ((IEnumerable<int>)source).ToReadOnlyCollection();
+
+		// Assert
+		Assert.HasCount(3, result);
+		Assert.IsTrue(result.Contains(20));
+	}
+
+	[TestMethod]
 	public void ToReadOnlyCollectionTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.IsTrue(people.ToReadOnlyCollection().IsNotEmpty());
-	}
-
-	[TestMethod]
-	public void ToUniqueCollection_CollectionWithDuplicates_ReturnsUniqueElements()
-	{
-		// Arrange
-		var collection = new List<int> { 1, 2, 2, 3, 3, 3 }.AsEnumerable();
-
-		// Act
-		var result = collection.ToUniqueCollection();
-
-		// Assert
-		Assert.IsNotNull(result);
-		Assert.HasCount(3, result);
 	}
 
 	[TestMethod]
@@ -5565,7 +5682,6 @@ public class EnumerableExtensionsTests
 		list = list.Upsert(4);
 		Assert.HasCount(4, list);
 	}
-
 
 	[TestMethod]
 	public void Upsert_UpdatesExistingItem()

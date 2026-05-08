@@ -25,6 +25,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [ThreadingDiagnoser]
 public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 {
+	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
+
 	private ConcurrentHashSet<Person> _personRefConcurrentHashSet = default!;
 
 	[Benchmark(Description = "Clear")]

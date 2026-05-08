@@ -4,7 +4,7 @@
 // Created          : 01-02-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsAddRemoveCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,29 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 	{
 		var people = this._peopleRefList;
 
-		people.AddFirst(base.PersonRef01);
+		people.AddFirst(this.PersonRef01);
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.AddFirst) + ": Ref")]
+	public void AddFirstRef()
+	{
+		var people = this._peopleRefList;
+		var item = this._peopleRefSubSet.First();
+
+		people.AddFirst(item);
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.AddFirst) + ": Val")]
+	public void AddFirstVal()
+	{
+		var people = this._peopleValList;
+		var item = this._peopleValList[0];
+
+		people.AddFirst(item);
 
 		this.Consume(people);
 	}
@@ -53,6 +75,28 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 		this.Consume(people);
 	}
 
+	[Benchmark(Description = nameof(ListExtensions.AddLast) + ": Ref")]
+	public void AddLastRef()
+	{
+		var people = this._peopleRefList;
+		var item = this._peopleRefSubSet.First();
+
+		people.AddLast(item);
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.AddLast) + ": Val")]
+	public void AddLastVal()
+	{
+		var people = this._peopleValList;
+		var item = this._peopleValList[0];
+
+		people.AddLast(item);
+
+		this.Consume(people);
+	}
+
 	[Benchmark(Description = nameof(ListExtensions.AddRangeIfNotExists))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void AddRangeIfNotExists()
@@ -61,6 +105,16 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 		var peopleToAdd = this._peopleRefSubSet;
 
 		people.AddRangeIfNotExists(peopleToAdd);
+
+		this.Consume(people);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.AddRangeIfNotExists) + ": Ref")]
+	public void AddRangeIfNotExistsRef()
+	{
+		var people = this._peopleRefList;
+
+		people.AddRangeIfNotExists(this._peopleRefSubSet);
 
 		this.Consume(people);
 	}
@@ -83,11 +137,54 @@ public class ListExtensionsAddRemoveCollectionBenchmark : LargeCollectionBenchma
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(ListExtensions.RemoveFirst) + ": Ref")]
+	public void RemoveFirstRef()
+	{
+		var people = this._peopleRefList;
+		var item = this._peopleRefSubSet.First();
+
+		var result = people.RemoveFirst(item);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.RemoveFirst) + ": Val")]
+	public void RemoveFirstVal()
+	{
+		var people = this._peopleValList;
+		var item = this._peopleValList[0];
+
+		var result = people.RemoveFirst(item);
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(ListExtensions.RemoveLast))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void RemoveLast()
 	{
 		var result = this._peopleRefList.RemoveLast(this._peopleRefList.Last());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.RemoveLast) + ": Ref")]
+	public void RemoveLastRef()
+	{
+		var people = this._peopleRefList;
+		var item = this._peopleRefSubSet.First();
+
+		var result = people.RemoveLast(item);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.RemoveLast) + ": Val")]
+	public void RemoveLastVal()
+	{
+		var people = this._peopleValList;
+		var item = this._peopleValList.First();
+		var result = people.RemoveLast(item);
 
 		this.Consume(result);
 	}

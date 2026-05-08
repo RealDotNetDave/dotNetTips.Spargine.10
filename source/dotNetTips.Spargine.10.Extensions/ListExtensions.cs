@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-14-2018
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -538,7 +538,7 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public List<T> FastShuffle()
 		{
 			list = list.ArgumentNotNull();
@@ -549,7 +549,7 @@ public static class ListExtensions
 			// Shuffle in-place on the copy using span for optimal performance
 			Random.Shared.Shuffle(span);
 
-			return [.. span.ToArray()];
+			return [.. span];
 		}
 
 		/// <summary>
@@ -595,14 +595,14 @@ public static class ListExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Split), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Split), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlyCollection<ReadOnlyCollection<T>> Split(int size)
 		{
 			list = list.ArgumentNotNull();
 			size = size.ArgumentInRange(min: 1, max: list.Count);
 
 			var listCount = list.Count;
-			var chunks = (int)Math.Ceiling((double)listCount / size);
+			var chunks = (listCount + size - 1) / size;
 			var result = new List<ReadOnlyCollection<T>>(chunks);
 
 			for (var index = 0; index < listCount; index += size)
@@ -735,16 +735,13 @@ public static class ListExtensions
 		/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 		/// <returns>A task representing the asynchronous operation, with a <see cref="List{T}"/> result.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public async Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			list = list.ArgumentNotNull();
 
-			await Task.Yield();
-
 			cancellationToken.ThrowIfCancellationRequested();
-
-			return [.. list];
+			return await Task.FromResult(new List<T>(list)).ConfigureAwait(false);
 		}
 
 		/// <summary>

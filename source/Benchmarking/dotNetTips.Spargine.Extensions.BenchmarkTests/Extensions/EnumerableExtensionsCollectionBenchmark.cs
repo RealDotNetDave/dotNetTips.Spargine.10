@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -40,6 +40,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
+	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
+
 	private Person[] _personRefArray = default!;
 	private ConcurrentBag<Person> _personRefConcurrentBag = default!;
 	private ConcurrentQueue<Person> _personRefConcurrentQueue = default!;
@@ -268,6 +270,16 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void FastContainsHashSetRef()
 	{
 		var people = this._personRefHashSet;
+
+		var result = people.FastContains(this.PersonRefLookupLast);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastContains) + ": List<ref>")]
+	public void FastContainsListRef()
+	{
+		var people = this._personRefList;
 
 		var result = people.FastContains(this.PersonRefLookupLast);
 
@@ -691,6 +703,30 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void ShuffleFastShuffle()
 	{
 		var result = this._personRefEnumerable.FastShuffle();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + ": Array")]
+	public void ShuffleFastShuffleArray()
+	{
+		var result = this._personRefArray.FastShuffle();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + ": List")]
+	public void ShuffleFastShuffleList()
+	{
+		var result = this._personRefList.FastShuffle();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + ": List With Count(Half)")]
+	public void ShuffleFastShuffleListWithCount()
+	{
+		var result = this._personRefList.FastShuffle(this.HalfCount);
 
 		this.Consume(result);
 	}

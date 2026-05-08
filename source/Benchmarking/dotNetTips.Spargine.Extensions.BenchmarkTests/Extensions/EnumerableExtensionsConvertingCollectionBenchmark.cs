@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 12-14-2025
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsConvertingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -27,10 +27,12 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [BenchmarkCategory(Categories.Collections)]
 public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollectionBenchmark
 {
+	private Person[] _personRefArray = default!;
 	private IAsyncEnumerable<Person> _personRefAsyncEnumerable = default!;
 	private IEnumerable<Person> _personRefEnumerable = default!;
-
 	private List<Person> _personRefEnumerableStart = default!;
+	private List<Person> _personRefList = default!;
+	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable = default!;
 
 
 	[Benchmark(Description = nameof(EnumerableExtensions.PageAsync))]
@@ -46,9 +48,12 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 	{
 		base.Setup();
 
-		this._personRefEnumerable = this.GetPersonRefArray().Select(x => x);
-		this._personRefAsyncEnumerable = ToAsyncEnumerable(this.GetPersonRefArray());
+		this._personRefArray = this.GetPersonRefArray();
+		this._personRefEnumerable = this._personRefArray.Select(x => x);
+		this._personRefAsyncEnumerable = ToAsyncEnumerable(this._personRefArray);
 		this._personRefEnumerableStart = [.. this._personRefEnumerable.Take(this.HalfCount)];
+		this._personRefList = [.. this._personRefArray];
+		this._personValEnumerable = this.GetPersonValArray().AsEnumerable();
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ToBlockingCollection))]
@@ -67,6 +72,22 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection) + ": Array")]
+	public void ToCollectionArray()
+	{
+		var result = this._personRefArray.ToCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToCollection) + ": List")]
+	public void ToCollectionList()
+	{
+		var result = this._personRefList.ToCollection();
+
+		this.Consume(result);
+	}
+
 
 	[Benchmark(Description = nameof(EnumerableExtensions.ToDelimitedString))]
 	public void ToDelimitedString()
@@ -80,6 +101,22 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 	public void ToFrozenSet()
 	{
 		var result = this._personRefEnumerable.ToFrozenSet();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToFrozenSet) + ": Array")]
+	public void ToFrozenSetArray()
+	{
+		var result = this._personRefArray.ToFrozenSet();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToFrozenSet) + ": List")]
+	public void ToFrozenSetList()
+	{
+		var result = this._personRefList.ToFrozenSet();
 
 		this.Consume(result);
 	}
@@ -110,10 +147,34 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(EnumerableExtensions.ToListAsync) + ": List")]
+	public async Task ToListAsyncList()
+	{
+		var result = await this._personRefList.ToListAsync().ConfigureAwait(false);
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection))]
 	public void ToReadOnlyCollection()
 	{
 		var result = this._personRefEnumerable.ToReadOnlyCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection) + ": Array")]
+	public void ToReadOnlyCollectionArray()
+	{
+		var result = this._personRefArray.ToReadOnlyCollection();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToReadOnlyCollection) + ": List")]
+	public void ToReadOnlyCollectionList()
+	{
+		var result = this._personRefList.ToReadOnlyCollection();
 
 		this.Consume(result);
 	}
@@ -126,6 +187,14 @@ public class EnumerableExtensionsConvertingCollectionBenchmark : LargeCollection
 		people = people.ToUniqueCollection();
 
 		var result = people.ContainsAny(this._personRefEnumerableStart.AsReadOnly());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.ToUniqueCollection) + ": Val")]
+	public void ToUniqueCollectionVal()
+	{
+		var result = this._personValEnumerable.ToUniqueCollection();
 
 		this.Consume(result);
 	}

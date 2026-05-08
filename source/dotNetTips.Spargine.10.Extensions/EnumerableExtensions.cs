@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -18,7 +18,6 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -717,10 +716,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(2);
 
-			foreach (var people in collection.Chunk(pageCount))
-			{
-				yield return people;
-			}
+			return collection.Chunk(pageCount);
 		}
 
 		/// <summary>
@@ -782,6 +778,13 @@ public static class EnumerableExtensions
 		public IEnumerable<T> FastShuffle()
 		{
 			collection = collection.ArgumentNotNull();
+
+			if (collection is List<T> sourceList)
+			{
+				var copy = new List<T>(sourceList);
+				Random.Shared.Shuffle(CollectionsMarshal.AsSpan(copy));
+				return copy;
+			}
 
 			var array = collection.ToArray();
 
@@ -918,6 +921,18 @@ public static class EnumerableExtensions
 		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Collection<T> ToCollection()
 		{
+			if (collection is IList<T> list)
+			{
+				return new Collection<T>(list);
+			}
+
+			if (collection is ICollection<T> col)
+			{
+				var sized = new List<T>(col.Count);
+				sized.AddRange(col);
+				return new Collection<T>(sized);
+			}
+
 			return new Collection<T>([.. collection]);
 		}
 
@@ -932,7 +947,7 @@ public static class EnumerableExtensions
 		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
 		public string ToDelimitedString([ConstantExpected] char delimiter = ControlChars.Comma)
 		{
-			if ((collection is null) || (collection.FastLongCount() == 0))
+			if (collection is null || collection.IsEmpty())
 			{
 				return string.Empty;
 			}
@@ -946,10 +961,10 @@ public static class EnumerableExtensions
 				{
 					if (sb.Length > 0)
 					{
-						_ = sb.Append(delimiter.ToString(CultureInfo.CurrentCulture));
+						_ = sb.Append(delimiter);
 					}
 
-					_ = sb.Append($"{item}".ToString(CultureInfo.CurrentCulture));
+					_ = sb.Append(item);
 				}
 
 				return sb.ToString().Trim();
@@ -1298,14 +1313,16 @@ public static class EnumerableExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
+			if (collection.TryGetNonEnumeratedCount(out var fastCount))
+			{
+				return fastCount;
+			}
+
 			long count = 0;
 
-			using (var enumerator = collection.GetEnumerator())
+			foreach (var _ in collection)
 			{
-				while (enumerator.MoveNext())
-				{
-					count++;
-				}
+				count++;
 			}
 
 			return count;
@@ -1535,7 +1552,7 @@ public static class EnumerableExtensions
 		[Information(nameof(IsNullOrEmpty), "David McCarter", "1/7/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsNullOrEmpty()
 		{
-			return collection?.Any() != true;
+			return collection is null || collection.IsEmpty();
 		}
 
 		/// <summary>
@@ -1901,14 +1918,21 @@ public static class EnumerableExtensions
 		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddDistinct([AllowNull] params IEnumerable<T> items)
 		{
-			if ((collection == null) || (items == null) || (!items.Any()))
+			if (collection == null || items == null)
 			{
 				return collection ?? [];
 			}
 
+			var itemsList = items as ICollection<T> ?? items.ToList();
+
+			if (itemsList.Count == 0)
+			{
+				return collection;
+			}
+
 			var hashSet = new HashSet<T>(collection);
 
-			_ = hashSet.AddRange(items);
+			_ = hashSet.AddRange(itemsList);
 
 			return hashSet;
 		}
@@ -1993,6 +2017,18 @@ public static class EnumerableExtensions
 		[Information(nameof(ToReadOnlyCollection), "David McCarter", "2/5/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<T> ToReadOnlyCollection()
 		{
+			if (collection is IList<T> list)
+			{
+				return new ReadOnlyCollection<T>(list);
+			}
+
+			if (collection is ICollection<T> col)
+			{
+				var sized = new List<T>(col.Count);
+				sized.AddRange(col);
+				return new ReadOnlyCollection<T>(sized);
+			}
+
 			return new ReadOnlyCollection<T>([.. collection]);
 		}
 

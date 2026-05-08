@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-04-2026
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1121,6 +1121,15 @@ public class ArrayExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToDistinct_WithComparer_RemovesDuplicates()
+	{
+		var arr = new[] { "hello", "HELLO", "world", "World" };
+		var result = arr.ToDistinct(StringComparer.OrdinalIgnoreCase);
+
+		Assert.AreEqual(2, result.Length);
+	}
+
+	[TestMethod]
 	public void ToDistinctTest()
 	{
 		var words = RandomData.GenerateWords(10, 10, 100).ToArray();
@@ -1146,6 +1155,17 @@ public class ArrayExtensionsTests
 
 		Assert.Contains(2, frozen);
 		Assert.HasCount(3, frozen);
+	}
+
+	[TestMethod]
+	public void ToFrozenSet_WithComparer_ReturnsCorrectSet()
+	{
+		var arr = new[] { "alpha", "ALPHA", "beta", "Beta" };
+		var result = arr.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
+
+		Assert.HasCount(2, result);
+		Assert.IsTrue(result.Contains("alpha"));
+		Assert.IsTrue(result.Contains("beta"));
 	}
 
 	[TestMethod]

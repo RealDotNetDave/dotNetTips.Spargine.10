@@ -35,7 +35,6 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private List<Person> _peopleRefList = default!;
 	private List<Person> _peopleRefSubSet = default!;
 	private List<Spargine.Tester.Models.ValueTypes.Person> _peopleValList = default!;
-
 	private IComparer<Person> _personComparer = default!;
 
 	[Benchmark(Description = nameof(ListExtensions.AsReadOnlySpan))]
@@ -178,6 +177,18 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(sb.ToString());
 	}
 
+	[Benchmark(Description = nameof(ListExtensions.PerformAction) + " :Val")]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void PerformActionVal()
+	{
+		var people = this._peopleValList;
+		var sb = new StringBuilder();
+
+		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.ToString()}|"));
+
+		this.Consume(sb.ToString());
+	}
+
 	public override void Setup()
 	{
 		base.Setup();
@@ -194,6 +205,13 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	public void ShuffleFastShuffle()
 	{
 		this.Consume(this._peopleRefList.FastShuffle());
+	}
+
+	[Benchmark(Description = nameof(ListExtensions.FastShuffle) + ": Val")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void ShuffleFastShuffleVal()
+	{
+		this.Consume(this._peopleValList.FastShuffle());
 	}
 
 	[Benchmark(Description = "LINQ.Shuffle")]
