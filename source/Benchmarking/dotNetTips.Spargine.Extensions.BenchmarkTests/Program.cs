@@ -58,6 +58,7 @@ internal sealed class Program
 		//	typeof(AssemblyExtensionsBenchmark),
 		//	typeof(CharacterExtensionsBenchmark),
 		//	typeof(CollectionExtensionsCollectionBenchmark),
+		//  typeof(CollectionExtensionsMutatingCollectionBenchmark),
 		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
 		//	typeof(DataReaderExtensionsBenchmark),
 		//	typeof(DictionaryExtensionsCollectionBenchmark),

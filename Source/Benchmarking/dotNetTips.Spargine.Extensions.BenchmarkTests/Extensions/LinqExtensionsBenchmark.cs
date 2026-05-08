@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-21-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="LinqExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -65,9 +65,13 @@ public class LinqExtensionsBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[IterationSetup(Targets = [nameof(IfShouldTrue), nameof(IfShouldFalse), nameof(IfShouldTrueMultipleTransforms)])]
-	public void IterationSetup()
+	/// <summary>
+	/// Setups this instance.
+	/// </summary>
+	public override void Setup()
 	{
+		base.Setup();
+
 		this._people = this.GetPersonRefArray();
 	}
 

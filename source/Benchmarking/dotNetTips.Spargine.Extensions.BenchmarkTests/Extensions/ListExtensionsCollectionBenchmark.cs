@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -187,6 +187,12 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		people.PerformAction((person) => _ = sb.Append(CultureInfo.CurrentCulture, $"{person.ToString()}|"));
 
 		this.Consume(sb.ToString());
+	}
+
+	[IterationSetup(Targets = [nameof(ClearNulls)])]
+	public void Reset()
+	{
+		this._peopleRefList = [.. this.GetPersonRefArray()];
 	}
 
 	public override void Setup()
