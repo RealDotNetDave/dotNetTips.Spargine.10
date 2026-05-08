@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-15-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,12 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.ObjectModel;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic;
-using DotNetTips.Spargine.Extensions;
-using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
@@ -27,23 +24,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
 public class AutoDefaultDictionaryCollectionBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
-	private ReadOnlyCollection<Person> _peopleUpsertNew = default!;
 	private AutoDefaultDictionary<string, Person> _personRefAutoDefaultDictionary = default!;
-
-	[Benchmark(Description = "AddOrUpdate")]
-	public void AddOrUpdate()
-	{
-		var collection = this._personRefAutoDefaultDictionary.FastBinaryClone<AutoDefaultDictionary<string, Person>>();
-
-		this.Consume(collection.AddOrUpdate(this.PersonRef01.Id, this.PersonRef01, (key, existingValue) => this.PersonRef01));
-
-		foreach (var person in this._peopleUpsertNew)
-		{
-			this.Consume(collection.AddOrUpdate(person.Id, person, (key, existingValue) => person));
-		}
-	}
 
 	[Benchmark(Description = "ContainsValue")]
 	public void ContainsValue()
@@ -61,32 +42,6 @@ public class AutoDefaultDictionaryCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "GetOrAdd")]
-	public void GetOrAdd()
-	{
-		var collection = this._personRefAutoDefaultDictionary.FastBinaryClone<AutoDefaultDictionary<string, Person>>();
-
-		this.Consume(collection.GetOrAdd(this.PersonRef01.Id, this.PersonRef01));
-
-		foreach (var person in this._peopleUpsertNew)
-		{
-			this.Consume(collection.GetOrAdd(person.Id, person));
-		}
-	}
-
-	[Benchmark(Description = "GetOrAdd: Func")]
-	public void GetOrAddFunc()
-	{
-		var collection = this._personRefAutoDefaultDictionary.FastBinaryClone<AutoDefaultDictionary<string, Person>>();
-
-		this.Consume(collection.GetOrAdd(this.PersonRef01.Id, _ => this.PersonRef01));
-
-		foreach (var person in this._peopleUpsertNew)
-		{
-			this.Consume(collection.GetOrAdd(person.Id, _ => person));
-		}
-	}
-
 	[Benchmark(Description = "GetValueOrDefault")]
 	public void GetValueOrDefault()
 	{
@@ -100,8 +55,6 @@ public class AutoDefaultDictionaryCollectionBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this._personRefAutoDefaultDictionary = new AutoDefaultDictionary<string, Person>(this.GetPersonRefDictionary(), this.PersonRef01);
-
-		this._peopleUpsertNew = RandomData.GeneratePersonRefCollection(10);
 	}
 
 	[Benchmark(Description = "ToImmutableDictionary")]
@@ -112,29 +65,4 @@ public class AutoDefaultDictionaryCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "GetOrAdd: TryAdd")]
-	public void TryAdd()
-	{
-		var collection = this._personRefAutoDefaultDictionary.FastBinaryClone<AutoDefaultDictionary<string, Person>>();
-
-		this.Consume(collection.TryAdd(this.PersonRef01.Id, this.PersonRef01));
-
-		foreach (var person in this._peopleUpsertNew)
-		{
-			this.Consume(collection.TryAdd(person.Id, person));
-		}
-	}
-
-	[Benchmark(Description = "GetOrAdd: TryUpdate")]
-	public void TryUpdate()
-	{
-		var collection = this._personRefAutoDefaultDictionary.FastBinaryClone<AutoDefaultDictionary<string, Person>>();
-
-		this.Consume(collection.TryUpdate(this.PersonRef01.Id, this.PersonRef01, this.PersonRef01));
-
-		foreach (var person in this._peopleUpsertNew)
-		{
-			this.Consume(collection.TryUpdate(person.Id, person, person));
-		}
-	}
 }

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-26-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,8 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Threading;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
@@ -27,42 +25,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [ThreadingDiagnoser]
 public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
 	private DistinctBlockingCollection<Person> _peopleRefDistinctBlockingCollection = default!;
 	private Person[] _peopleRefToInsert = default!;
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Add))]
-	[BenchmarkCategory(Categories.Async)]
-	public void Add()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		people.Add(this.PersonRef01);
-		people.Add(this.PersonRef02);
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.AddRange))]
-	[BenchmarkCategory(Categories.Async)]
-	public void AddRange()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.AddRange(this._peopleRefToInsert));
-	}
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Clear))]
-	[BenchmarkCategory(Categories.Async)]
-	public void Clear()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		people.Clear();
-
-		this.Consume(people);
-	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Clone))]
 	[BenchmarkCategory(Categories.Async)]
@@ -88,15 +52,6 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(this._peopleRefDistinctBlockingCollection.ContainsAny(this._peopleRefToInsert));
 	}
 
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Remove))]
-	[BenchmarkCategory(Categories.Async)]
-	public void Remove()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.Remove(this.PersonRefLookupLast));
-	}
-
 	public override void Setup()
 	{
 		base.Setup();
@@ -106,60 +61,4 @@ public class DistinctBlockingCollectionBenchmark : LargeCollectionBenchmark
 
 	}
 
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd))]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryAdd()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryAdd(this.PersonRef01));
-		this.Consume(people.TryAdd(this.PersonRef02));
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAddRange))]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryAddRange()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryAddRange(this._peopleRefToInsert));
-	}
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd) + ": with Timeout")]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryAddWithTimeout()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryAdd(this.PersonRef01, 10));
-		this.Consume(people.TryAdd(this.PersonRef02, 10));
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd) + ": with Timeout & CancellationToken")]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryAddWithTimeoutAndCancellationToken()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryAdd(this.PersonRef01, 10, CancellationToken.None));
-		this.Consume(people.TryAdd(this.PersonRef02, 10, CancellationToken.None));
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DistinctBlockingCollection<>.TryAdd) + ": with Timespan")]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryAddWithTimespan()
-	{
-		using var people = new DistinctBlockingCollection<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryAdd(this.PersonRef01, TimeSpan.FromMilliseconds(10)));
-		this.Consume(people.TryAdd(this.PersonRef02, TimeSpan.FromMilliseconds(10)));
-
-		this.Consume(people);
-	}
 }

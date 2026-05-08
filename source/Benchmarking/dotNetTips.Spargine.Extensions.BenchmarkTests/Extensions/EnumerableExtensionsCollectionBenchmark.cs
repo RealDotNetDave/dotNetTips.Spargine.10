@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-07-2026
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -40,8 +40,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
 	private Person[] _personRefArray = default!;
 	private ConcurrentBag<Person> _personRefConcurrentBag = default!;
 	private ConcurrentQueue<Person> _personRefConcurrentQueue = default!;
@@ -491,55 +489,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Array")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessorArray()
-	{
-		var people = this._personRefArray;
-
-		people.FastProcessor(person => person.Phone = "5555555555");
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": IEnumerable")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessorEnumerable()
-	{
-		var people = this._personRefEnumerable;
-
-		people.FastProcessor(person => person.Phone = "5555555555");
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": List")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessorList()
-	{
-		var people = this._personRefList;
-
-		people.FastProcessor(person => person.Phone = "5555555555");
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = "Modify Collection: Normal Loop")]
-	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void ModifyCollectionLoop()
-	{
-		var people = this._personRefEnumerable;
-		var result = new List<Person>();
-
-		foreach (var person in people)
-		{
-			person.Phone = "5555555555";
-			result.Add(person);
-		}
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.OrderBy))]
 	public void OrderBy()
 	{
@@ -752,45 +701,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	{
 		var people = this._personRefEnumerable;
 		var result = people.StartsWith(this._personRefEnumerableStart);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - Array")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void TransformCollectionFastProcessorArray()
-	{
-		var result = this._personRefArray.FastProcessor(person =>
-		{
-			person.Phone = "5555555555";
-			return person;
-		});
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - IEnumerable")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void TransformCollectionFastProcessorEnumerable()
-	{
-		var result = this._personRefEnumerable.FastProcessor(person =>
-		{
-			person.Phone = "5555555555";
-			return person;
-		});
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - List")]
-	[BenchmarkCategory(Categories.ReferenceType)]
-	public void TransformCollectionFastProcessorList()
-	{
-		var result = this._personRefList.FastProcessor(person =>
-		{
-			person.Phone = "5555555555";
-			return person;
-		});
 
 		this.Consume(result);
 	}

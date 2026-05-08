@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-10-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,7 +13,6 @@
 // ***********************************************************************
 
 using System.Collections.Generic;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -27,32 +26,13 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]	
-
-	private HashSet<Person> _peopleRefToAdd = default!;
 	private HashSet<Person> _personRefHashSet = default!;
-
-	[Benchmark(Description = nameof(HashSetExtensions.AddIf))]
-	public void AddIf()
-	{
-		this._personRefHashSet.AddIf(this.PersonRef01, true);
-
-		this.Consume(this._personRefHashSet);
-	}
-
-	[IterationSetup(Targets = new[] { nameof(AddIf), nameof(Upsert) })]
-	public void IterationSetupRef()
-	{
-		this._personRefHashSet = [.. this.GetPersonRefArray()];
-	}
 
 	public override void Setup()
 	{
 		base.Setup();
 
 		this._personRefHashSet = [.. this.GetPersonRefArray()];
-		this._peopleRefToAdd = [.. this._personRefHashSet.Take(this.Count / 2)];
-
 	}
 
 	[Benchmark(Description = nameof(HashSetExtensions.ToConcurrent))]
@@ -71,12 +51,5 @@ public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(HashSetExtensions.Upsert))]
-	public void Upsert()
-	{
-		this._personRefHashSet.Upsert(this.PersonRef01);
-
-		this.Consume(this._personRefHashSet);
-	}
 
 }

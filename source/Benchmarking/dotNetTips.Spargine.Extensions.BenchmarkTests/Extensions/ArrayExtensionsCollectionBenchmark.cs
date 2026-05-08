@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-07-2026
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -35,8 +35,6 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
 	private const int OperationsCount = 1024;
 	private byte[] _byteArray = default!;
 	private PersonRecord[] _personRecordArray = default!;
@@ -404,68 +402,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(sb.ToString());
 	}
 
-	[Benchmark(Description = "Process Collection: FastProcessor()")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void ProcessCollectionFastProcessorRef()
-	{
-		var people = this._personRefArray;
-
-		people.FastProcessor(person => person.Phone = "5555555555");
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = "Process Collection: foreach()")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void ProcessCollectionNormalRef()
-	{
-		var people = this._personRefArray;
-
-		for (var index = 0; index < people.Length; index++)
-		{
-			people[index].Phone = "5555555555";
-		}
-
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.RemoveFirst) + " : Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void RemoveFirstRef()
-	{
-		var result = this._personRefArray.RemoveFirst();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.RemoveFirst) + " : Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void RemoveFirstVal()
-	{
-		var result = this._personValArray.RemoveFirst();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.RemoveLast) + " : Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void RemoveLastRef()
-	{
-		var result = this._personRefArray.RemoveLast();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.RemoveLast) + " : Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void RemoveLastVal()
-	{
-		var result = this._personValArray.RemoveLast();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = "Select Items: ArraySegment-HalfCount")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
 	public void SelectItemsArraySegment()
@@ -543,31 +479,5 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(this._personValArray.ToFrozenSet());
 	}
 
-	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + ": Record")]
-	[BenchmarkCategory(Categories.Array, Categories.RecordType)]
-	public void UpsertRecordRecord()
-	{
-		var result = this._personRecordArray.Upsert(this.PersonRecord01);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + " : Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void UpsertRef()
-	{
-		var result = this._personRefArray.Upsert(this.PersonRef01);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.Upsert) + " : Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void UpsertVal()
-	{
-		var result = this._personValArray.Upsert(this.PersonVal01);
-
-		this.Consume(result);
-	}
 
 }

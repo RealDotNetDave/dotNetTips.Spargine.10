@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-26-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="ObservableListBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -23,41 +23,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
 public class ObservableListBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
 	private Person[] _personRefItemsToInsert = default!;
 	private ObservableList<Person> _personRefObservableList = default!;
-
-	[Benchmark(Description = nameof(ObservableList<>.Add))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void Add()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.Add(this.PersonRefLookupLast));
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.AddRange))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void AddRange()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.AddRange(this._personRefItemsToInsert);
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.Clear))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void Clear()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.Clear();
-
-		this.Consume(people);
-	}
 
 	[Benchmark(Description = nameof(ObservableList<>.Contains))]
 	[BenchmarkCategory(Categories.GenericCollections)]
@@ -96,17 +63,6 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 		this.Consume(array);
 	}
 
-	[Benchmark(Description = nameof(ObservableList<>.ExceptWith))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void ExceptWith()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.ExceptWith(this._personRefItemsToInsert);
-
-		this.Consume(people);
-	}
-
 	[Benchmark(Description = nameof(ObservableList<>.FindAll))]
 	[BenchmarkCategory(Categories.GenericCollections)]
 	public void FindAll()
@@ -119,17 +75,6 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 	public void FirstOrDefault()
 	{
 		this.Consume(this._personRefObservableList.FirstOrDefault());
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.IntersectWith))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void IntersectWith()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.IntersectWith(this._personRefItemsToInsert);
-
-		this.Consume(people);
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.IsProperSubsetOf))]
@@ -175,70 +120,12 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 		this.Consume(this._personRefObservableList.Overlaps(this._personRefItemsToInsert));
 	}
 
-	[Benchmark(Description = nameof(ObservableList<>.Remove))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void Remove()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.Remove(this.PersonRefLookupLast));
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.RemoveRange))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void RemoveRange()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.RemoveRange(this._personRefItemsToInsert));
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.RemoveWhere))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void RemoveWhere()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.RemoveWhere(p => p.Addresses.Count > 0));
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.Reset))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void Reset()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.Reset(this._personRefItemsToInsert);
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.SetEquals))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void SetEquals()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.SetEquals(this._personRefItemsToInsert));
-	}
-
 	public override void Setup()
 	{
 		base.Setup();
 
 		this._personRefObservableList = [.. this.GetPersonRefArray()];
 		this._personRefItemsToInsert = this.GetPersonRefCollectionToInsert();
-	}
-
-	[Benchmark(Description = nameof(ObservableList<>.SymmetricExceptWith))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void SymmetricExceptWith()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.SymmetricExceptWith(this._personRefItemsToInsert);
-
-		this.Consume(people);
 	}
 
 	[Benchmark(Description = nameof(ObservableList<>.ToArray))]
@@ -263,15 +150,5 @@ public class ObservableListBenchmark : LargeCollectionBenchmark
 		this.Consume(person);
 	}
 
-	[Benchmark(Description = nameof(ObservableList<>.UnionWith))]
-	[BenchmarkCategory(Categories.GenericCollections)]
-	public void UnionWith()
-	{
-		var people = new ObservableList<Person>(this.GetPersonRefArray());
-
-		people.UnionWith(this._personRefItemsToInsert);
-
-		this.Consume(people);
-	}
 
 }

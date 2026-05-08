@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-26-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="DistinctConcurrentBagBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,43 +26,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [ThreadingDiagnoser]
 public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
 	private DistinctConcurrentBag<Person> _peopleRefDistinctConcurrentBag = default!;
 	private Person[] _peopleRefToInsert = default!;
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Add))]
-	[BenchmarkCategory(Categories.Async)]
-	public void Add()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray())
-		{
-			this.PersonRef01,
-			this.PersonRef02
-		};
-
-		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.AddRange))]
-	[BenchmarkCategory(Categories.Async)]
-	public void AddRange()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.AddRange(this._peopleRefToInsert));
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Clear))]
-	[BenchmarkCategory(Categories.Async)]
-	public void Clear()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		people.Clear();
-
-		this.Consume(people);
-	}
 
 	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Contains))]
 	[BenchmarkCategory(Categories.Async)]
@@ -87,24 +52,6 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 		this._peopleRefDistinctConcurrentBag.CopyTo(people, 0);
 
 		this.Consume(people);
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.Remove))]
-	[BenchmarkCategory(Categories.Async)]
-	public void Remove()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.Remove(this.PersonRefLookupLast));
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.RemoveRange))]
-	[BenchmarkCategory(Categories.Async)]
-	public void RemoveRange()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.RemoveRange(this._peopleRefToInsert));
 	}
 
 	public override void Setup()
@@ -137,48 +84,4 @@ public class DistinctConcurrentBagBenchmark : LargeCollectionBenchmark
 		this.Consume(this._peopleRefDistinctConcurrentBag.ToList());
 	}
 
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryAdd))]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryAdd()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryAdd(this.PersonRef01));
-		this.Consume(people.TryAdd(this.PersonRef02));
-
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryGetValue))]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryGetValue()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryGetValue(this.PersonRef01, out var person));
-
-		this.Consume(person);
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryPeek))]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryPeek()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryPeek(this.PersonRefLookupLast, out var person));
-
-		this.Consume(person);
-
-	}
-
-	[Benchmark(Description = nameof(DistinctConcurrentBag<>.TryTake))]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryTake()
-	{
-		var people = new DistinctConcurrentBag<Person>(this.GetPersonRefArray());
-
-		this.Consume(people.TryTake(out var person));
-
-		this.Consume(person);
-	}
 }

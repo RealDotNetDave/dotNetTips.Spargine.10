@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-08-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -25,20 +25,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [ThreadingDiagnoser]
 public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 {
-	// TODO: MOVE ADD/REMOVE METHODS TO SEPARATE BENCHMARK CLASS. USE [IterationSetup]
-
 	private ConcurrentHashSet<Person> _personRefConcurrentHashSet = default!;
-
-	[Benchmark(Description = "Clear")]
-	[BenchmarkCategory(Categories.Async)]
-	public void Clear()
-	{
-		var people = this._personRefConcurrentHashSet;
-
-		people.Clear();
-
-		this.Consume(people);
-	}
 
 	[Benchmark(Description = "Contains")]
 	[BenchmarkCategory(Categories.Async)]
@@ -83,15 +70,6 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "Remove")]
-	[BenchmarkCategory(Categories.Async)]
-	public void Remove()
-	{
-		var people = this._personRefConcurrentHashSet;
-
-		this.Consume(people.Remove(this.PersonRef01));
-	}
-
 	public override void Setup()
 	{
 		base.Setup();
@@ -119,14 +97,4 @@ public class ConcurrentHashSetCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(people.TryPeek(this.PersonRef01, out _));
 	}
 
-	[Benchmark(Description = "TryRemove")]
-	[BenchmarkCategory(Categories.Async)]
-	public void TryRemove()
-	{
-		var people = this._personRefConcurrentHashSet;
-
-		var result = people.TryRemove(this.PersonRef01);
-
-		this.Consume(result);
-	}
 }

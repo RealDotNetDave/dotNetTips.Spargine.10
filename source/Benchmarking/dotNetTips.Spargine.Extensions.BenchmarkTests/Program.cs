@@ -54,23 +54,27 @@ internal sealed class Program
 		// Group 1: A–E
 		//BenchmarkHelper.RunBenchmarks(config, true,
 		//	typeof(ArrayExtensionsCollectionBenchmark),
+		//  typeof(ArrayExtensionsMutatingCollectionBenchmark),
 		//	typeof(AssemblyExtensionsBenchmark),
 		//	typeof(CharacterExtensionsBenchmark),
 		//	typeof(CollectionExtensionsCollectionBenchmark),
 		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
 		//	typeof(DataReaderExtensionsBenchmark),
 		//	typeof(DictionaryExtensionsCollectionBenchmark),
+		//  typeof(DictionaryExtensionsMutatingCollectionBenchmark),
 		//	typeof(EnumExtensionsBenchmark),
 		//	typeof(EnumerableExtensionsCollectionBenchmark),
 		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
 		//	typeof(EnumerableExtensionsCountCollectionBenchmark),
 		//	typeof(EnumerableExtensionsDistinctCollectionBenchmark),
+		//  typeof(EnumerableExtensionsMutatingCollectionBenchmark),
 		//	typeof(ExceptionExtensionsBenchmark)
 		//);
 
 		// Group 2: H–O
 		//BenchmarkHelper.RunBenchmarks(config, true,
 		//	typeof(HashSetExtensionsCollectionBenchmark),
+		//  typeof(HashSetExtensionsMutatingCollectionBenchmark),
 		//	typeof(ImmutableArrayExtensionsBenchmark),
 		//	typeof(LinqExtensionsBenchmark),
 		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
