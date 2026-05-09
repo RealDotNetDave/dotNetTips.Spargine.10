@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 [SupportedOSPlatform("windows")]
 public class FileHelperBenchmark : Benchmark
 {
-	private const int FileCount = 10;
+	private const int FileCount = 256;
 	private const int FileLength = 4096;
 
 	private DirectoryInfo _destinationPath;

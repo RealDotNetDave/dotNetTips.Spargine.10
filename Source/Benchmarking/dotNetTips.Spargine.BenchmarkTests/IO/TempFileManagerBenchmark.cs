@@ -9,7 +9,7 @@
 // <copyright file="TempFileManagerBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>Benchmark tests for public methods in TempFileManager with BenchmarkStatus.Benchmark.</summary>
+// <summary>Benchmark tests for TempFileManager.DeleteAllFiles and DeleteFile. Create* benchmarks live in TempFileManagerCreateFilesBenchmark.</summary>
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;
@@ -41,42 +41,6 @@ public class TempFileManagerBenchmark : Benchmark
 
 		this._manager.DeleteAllFiles();
 		this._manager.Dispose();
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="TempFileManager.CreateFile"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(TempFileManager.CreateFile))]
-	[BenchmarkCategory(Categories.New)]
-	public void CreateFile()
-	{
-		var result = this._manager.CreateFile();
-
-		this.Consume(result);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="TempFileManager.CreateFiles"/> with a larger count (parallel path).
-	/// </summary>
-	[Benchmark(Description = "CreateFiles-Parallel")]
-	[BenchmarkCategory(Categories.New)]
-	public void CreateFilesParallel()
-	{
-		var result = this._manager.CreateFiles(10);
-
-		this.Consume(result);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="TempFileManager.CreateFiles"/> with a small count (sequential path).
-	/// </summary>
-	[Benchmark(Description = "CreateFiles-Sequential")]
-	[BenchmarkCategory(Categories.New)]
-	public void CreateFilesSequential()
-	{
-		var result = this._manager.CreateFiles(2);
-
-		this.Consume(result);
 	}
 
 	/// <summary>
