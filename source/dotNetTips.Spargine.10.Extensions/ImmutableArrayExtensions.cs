@@ -95,10 +95,12 @@ public static class ImmutableArrayExtensions
 		/// If the array does not contain any items, it is returned unchanged.
 		/// </remarks>
 		[Pure]
-		[Information(nameof(FastShuffle), "David McCarter", "8/27/2020", "1/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/27/2020", "1/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> FastShuffle()
 		{
-			return collection.IsEmpty() ? collection : [.. collection.OrderBy(_ => RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue))];
+			collection = collection.ArgumentNotNull();
+
+			return [.. collection.Shuffle()];
 		}
 	}
 }

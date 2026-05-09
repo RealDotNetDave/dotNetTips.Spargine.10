@@ -538,18 +538,12 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public List<T> FastShuffle()
 		{
 			list = list.ArgumentNotNull();
 
-			//Using array here was slower.
-			var span = list.AsSpan();
-
-			// Shuffle in-place on the copy using span for optimal performance
-			Random.Shared.Shuffle(span);
-
-			return [.. span];
+			return [.. list.Shuffle()];
 		}
 
 		/// <summary>
@@ -602,7 +596,7 @@ public static class ListExtensions
 			size = size.ArgumentInRange(min: 1, max: list.Count);
 
 			var listCount = list.Count;
-			var chunks = (listCount + size - 1) / size;
+			var chunks = (int)Math.Ceiling((double)listCount / size);
 			var result = new List<ReadOnlyCollection<T>>(chunks);
 
 			for (var index = 0; index < listCount; index += size)
@@ -735,12 +729,13 @@ public static class ListExtensions
 		/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 		/// <returns>A task representing the asynchronous operation, with a <see cref="List{T}"/> result.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public async Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			list = list.ArgumentNotNull();
 
 			cancellationToken.ThrowIfCancellationRequested();
+
 			return await Task.FromResult(new List<T>(list)).ConfigureAwait(false);
 		}
 

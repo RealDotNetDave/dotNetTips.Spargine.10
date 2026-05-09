@@ -48,7 +48,8 @@ internal sealed class Program
 		// Temp tests
 		BenchmarkHelper.RunBenchmarks(config, true,
 			typeof(ListExtensionsCollectionBenchmark),
-			typeof(ListExtensionsAddRemoveCollectionBenchmark)
+			typeof(EnumerableExtensionsCollectionBenchmark),
+			typeof(ImmutableArrayExtensionsBenchmark)
 		);
 
 		// Group 1: A–E
