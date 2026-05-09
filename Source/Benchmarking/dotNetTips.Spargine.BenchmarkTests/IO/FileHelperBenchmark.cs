@@ -14,7 +14,6 @@
 
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -38,7 +37,6 @@ public class FileHelperBenchmark : Benchmark
 	private const int FileLength = 4096;
 
 	private DirectoryInfo _destinationPath;
-	private FileInfo _gzipFile;
 	private FileInfo _singleFile;
 	private DirectoryInfo _sourcePath;
 	private FileInfo[] _testFiles;
@@ -148,48 +146,6 @@ public class FileHelperBenchmark : Benchmark
 
 		this._testFiles = this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly);
 		this._singleFile = this._testFiles[0];
-
-		// Create a gzip file for UnGZipAsync benchmarks
-		var gzipPath = Path.Combine(this._sourcePath.FullName, "test.gz");
-		using (var sourceStream = this._singleFile.OpenRead())
-		{
-			using (var gzipStream = new FileStream(gzipPath, FileMode.Create, FileAccess.Write))
-			{
-				using (var compressor = new GZipStream(gzipStream, CompressionMode.Compress))
-				{
-					sourceStream.CopyTo(compressor);
-				}
-			}
-		}
-
-		this._gzipFile = new FileInfo(gzipPath);
 	}
 
-	/// <summary>
-	/// Benchmark for <see cref="FileHelper.UnGZipAsync(FileInfo, DirectoryInfo, CancellationToken)"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(FileHelper.UnGZipAsync))]
-	[BenchmarkCategory(Categories.New)]
-	public async Task UnGZipAsync()
-	{
-		// Re-create the gzip on each iteration so the decompression target exists
-		var gzipPath = Path.Combine(this._sourcePath.FullName, "bench_" + RandomData.GenerateKey() + ".gz");
-		using (var sourceStream = this._singleFile.OpenRead())
-		{
-			using (var gzipStream = new FileStream(gzipPath, FileMode.Create, FileAccess.Write))
-			{
-				using (var compressor = new GZipStream(gzipStream, CompressionMode.Compress))
-				{
-					await sourceStream.CopyToAsync(compressor).ConfigureAwait(false);
-				}
-			}
-		}
-
-		var outDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.UnGZipAsync) + RandomData.GenerateKey()));
-		_ = Directory.CreateDirectory(outDir.FullName);
-
-		await FileHelper.UnGZipAsync(new FileInfo(gzipPath), outDir).ConfigureAwait(false);
-
-		_ = DirectoryHelper.DeleteDirectory(outDir, retries: 5);
-	}
 }
