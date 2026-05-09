@@ -664,14 +664,6 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + ": List")]
-	public void ShuffleFastShuffleList()
-	{
-		var result = this._personRefList.FastShuffle();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(EnumerableExtensions.FastShuffle) + ": List With Count(Half)")]
 	public void ShuffleFastShuffleListWithCount()
 	{

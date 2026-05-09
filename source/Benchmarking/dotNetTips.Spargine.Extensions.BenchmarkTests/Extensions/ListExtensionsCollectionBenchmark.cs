@@ -206,7 +206,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		this._personComparer = new PersonComparerByLastName();
 	}
 
-	[Benchmark(Description = nameof(ListExtensions.FastShuffle))]
+	[Benchmark(Description = nameof(ListExtensions.FastShuffle) + ": Ref")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void ShuffleFastShuffle()
 	{
