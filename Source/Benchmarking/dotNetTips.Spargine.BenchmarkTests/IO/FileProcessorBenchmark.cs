@@ -9,7 +9,7 @@
 // <copyright file="FileProcessorBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>Benchmark tests for all public methods in FileProcessor with BenchmarkStatus.Benchmark.</summary>
+// <summary>Benchmark tests for FileProcessor: CopyFiles, CopyFilesWithOriginalPath, DeleteFolders, MoveFiles, MoveFilesWithOriginalPath. DeleteFiles benchmark lives in FileProcessorDeleteFilesBenchmark.</summary>
 // ***********************************************************************
 
 using System.Collections.Generic;
@@ -78,26 +78,6 @@ public class FileProcessorBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Benchmark for <see cref="FileProcessor.DeleteFiles"/>.
-	/// Generates fresh files each iteration so there are real targets to delete.
-	/// </summary>
-	[Benchmark(Description = nameof(FileProcessor.DeleteFiles))]
-	[BenchmarkCategory(Categories.New)]
-	public void DeleteFiles()
-	{
-		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.DeleteFiles) + "_" + RandomData.GenerateKey()));
-		_ = Directory.CreateDirectory(tempDir.FullName);
-		_ = RandomData.GenerateFiles(tempDir.FullName, FileCount, FileLength);
-
-		var files = tempDir.GetFiles("*.*", SearchOption.TopDirectoryOnly).ToList();
-		var result = this._fileProcessor.DeleteFiles(files);
-
-		this.Consume(result);
-
-		_ = DirectoryHelper.DeleteDirectory(tempDir, retries: 5);
-	}
-
-	/// <summary>
 	/// Benchmark for <see cref="FileProcessor.DeleteFolders"/>.
 	/// Creates fresh directories each iteration so there are real targets to delete.
 	/// </summary>
@@ -143,23 +123,25 @@ public class FileProcessorBenchmark : Benchmark
 
 	/// <summary>
 	/// Benchmark for <see cref="FileProcessor.MoveFilesWithOriginalPath"/>.
-	/// Round-trips files between source and destination so iterations stay valid.
+	/// Round-trips files between source and destination using <see cref="FileProcessor.MoveFilesWithOriginalPath"/>
+	/// in both directions so the source layout is faithfully restored each iteration.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.MoveFilesWithOriginalPath))]
 	[BenchmarkCategory(Categories.New)]
 	public void MoveFilesWithOriginalPath()
 	{
-		// Move source → destination preserving relative structure
+		// Move source → destination preserving relative structure (this is what is being measured)
 		var moved = this._fileProcessor.MoveFilesWithOriginalPath(this._sourceFiles, this._destinationPath, overwrite: true);
 		this.Consume(moved);
 
-		// Move back — use a fresh temp destination so structure is preserved correctly
+		// Move back destination → source using the same path-preserving semantics so the
+		// source layout is identically restored for the next iteration
 		var destFiles = this._destinationPath.GetFiles("*.*", SearchOption.AllDirectories).ToList();
-		var movedBack = this._fileProcessor.MoveFiles(destFiles, this._sourcePath, overwrite: true);
+		var movedBack = this._fileProcessor.MoveFilesWithOriginalPath(destFiles, this._sourcePath, overwrite: true);
 		this.Consume(movedBack);
 
-		// Refresh the source file list for subsequent iterations
-		this._sourceFiles = [.. this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly)];
+		// Refresh the source file list; use AllDirectories in case structure was restored in subdirectories
+		this._sourceFiles = [.. this._sourcePath.GetFiles("*.*", SearchOption.AllDirectories)];
 	}
 
 	/// <summary>

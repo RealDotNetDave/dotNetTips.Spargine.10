@@ -6,10 +6,10 @@
 // Last Modified By : Copilot Agent
 // Last Modified On : 05-09-2026
 // ***********************************************************************
-// <copyright file="TempFileManagerBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="TempFileManagerDeleteFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>Benchmark tests for TempFileManager.DeleteAllFiles and DeleteFile. Create* benchmarks live in TempFileManagerCreateFilesBenchmark.</summary>
+// <summary>Benchmark tests for TempFileManager.DeleteAllFiles and DeleteFile using IterationSetup to isolate file creation from the measured delete operations.</summary>
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;
@@ -23,17 +23,20 @@ using DotNetTips.Spargine.IO;
 namespace DotNetTips.Spargine.BenchmarkTests.IO;
 
 /// <summary>
-/// Benchmark tests for public methods in <see cref="TempFileManager"/> with <c>BenchmarkStatus.Benchmark</c>.
+/// Benchmark tests for <see cref="TempFileManager.DeleteAllFiles"/> and <see cref="TempFileManager.DeleteFile"/>.
+/// Uses <see cref="IterationSetupAttribute"/> to create files before each iteration so that only the
+/// delete operation itself is measured, not the file creation cost.
 /// </summary>
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "TempFileManager is disposed in Cleanup(), which BenchmarkDotNet calls after all iterations.")]
-public class TempFileManagerBenchmark : Benchmark
+public class TempFileManagerDeleteFilesBenchmark : Benchmark
 {
 	private TempFileManager _manager;
+	private string _singleFile;
 
 	/// <summary>
-	/// Overrides Cleanup to dispose the <see cref="TempFileManager"/> and remove all temporary files.
+	/// Overrides Cleanup to dispose the <see cref="TempFileManager"/> and remove any remaining temporary files.
 	/// </summary>
 	public override void Cleanup()
 	{
@@ -45,29 +48,29 @@ public class TempFileManagerBenchmark : Benchmark
 
 	/// <summary>
 	/// Benchmark for <see cref="TempFileManager.DeleteAllFiles"/>.
-	/// Creates files before each delete so the operation has real targets.
+	/// Files are created in <see cref="IterationSetupAttribute"/>; only the delete is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.DeleteAllFiles))]
 	[BenchmarkCategory(Categories.New)]
-	public void DeleteAllFiles()
-	{
-		// Seed with fresh files each iteration
-		_ = this._manager.CreateFiles(10);
-
-		this._manager.DeleteAllFiles();
-	}
+	public void DeleteAllFiles() => this._manager.DeleteAllFiles();
 
 	/// <summary>
 	/// Benchmark for <see cref="TempFileManager.DeleteFile"/>.
-	/// Creates a file before each delete so the operation has a real target.
+	/// The target file is created in <see cref="IterationSetupAttribute"/>; only the delete is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.DeleteFile))]
 	[BenchmarkCategory(Categories.New)]
-	public void DeleteFile()
-	{
-		var file = this._manager.CreateFile();
+	public void DeleteFile() => this._manager.DeleteFile(this._singleFile);
 
-		this._manager.DeleteFile(file);
+	/// <summary>
+	/// Seeds 10 files into the manager before each iteration of <see cref="DeleteAllFiles"/>
+	/// and pre-creates one file for <see cref="DeleteFile"/>, so neither benchmark measures creation time.
+	/// </summary>
+	[IterationSetup]
+	public void IterationSetup()
+	{
+		_ = this._manager.CreateFiles(256);
+		this._singleFile = this._manager.CreateFile();
 	}
 
 	/// <summary>

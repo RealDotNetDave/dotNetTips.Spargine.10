@@ -66,7 +66,7 @@ public class TempFileManagerCreateFilesBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void CreateFilesParallel()
 	{
-		var result = this._manager.CreateFiles(10);
+		var result = this._manager.CreateFiles(256);
 
 		this.Consume(result);
 	}

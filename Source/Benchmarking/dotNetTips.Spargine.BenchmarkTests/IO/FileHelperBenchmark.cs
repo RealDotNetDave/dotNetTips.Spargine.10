@@ -9,13 +9,12 @@
 // <copyright file="FileHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>Comprehensive benchmark tests for public methods in FileHelper with BenchmarkStatus.Benchmark.</summary>
+// <summary>Benchmark tests for FileHelper: CalculateTotalFileSize, CheckPermission, FileHasInvalidChars, MoveFile. Copy benchmarks live in FileHelperCopyFileBenchmark.</summary>
 // ***********************************************************************
 
 using System;
 using System.IO;
 using System.Runtime.Versioning;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Loggers;
 using DotNetTips.Spargine.Benchmarking;
@@ -74,30 +73,6 @@ public class FileHelperBenchmark : Benchmark
 
 		_ = DirectoryHelper.DeleteDirectory(this._sourcePath, retries: 5);
 		_ = DirectoryHelper.DeleteDirectory(this._destinationPath, retries: 5);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="FileHelper.CopyFile(FileInfo, DirectoryInfo)"/>.
-	/// </summary>
-	[Benchmark(Description = "CopyFile")]
-	[BenchmarkCategory(Categories.New)]
-	public void CopyFile()
-	{
-		var result = FileHelper.CopyFile(this._singleFile, this._destinationPath);
-
-		this.Consume(result);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="FileHelper.CopyFileAsync"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(FileHelper.CopyFileAsync))]
-	[BenchmarkCategory(Categories.New)]
-	public async Task CopyFileAsync()
-	{
-		var result = await FileHelper.CopyFileAsync(this._singleFile, this._destinationPath).ConfigureAwait(false);
-
-		this.Consume(result);
 	}
 
 	/// <summary>
