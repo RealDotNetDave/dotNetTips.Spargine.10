@@ -3,126 +3,167 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-09-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperBenchmark.cs" company="DotNetTips.Spargine.BenchmarkTests">
 //     David McCarter
 // </copyright>
-// <summary></summary>
+// <summary>Comprehensive benchmark tests for all public methods in DirectoryHelper.</summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Versioning;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Loggers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
 
-//`![Spargine 6 Rocks Your Code](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
+//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.BenchmarkTests.IO;
 
 /// <summary>
-/// Class DirectoryHelperBenchmark.
-/// Implements the <see cref="Benchmark" />
+/// Benchmark tests for all public methods in <see cref="DirectoryHelper"/>.
 /// </summary>
-/// <seealso cref="Benchmark" />
 [BenchmarkCategory(Categories.IO)]
 public class DirectoryHelperBenchmark : Benchmark
 {
-
-	/// <summary>
-	/// The file count
-	/// </summary>
-	private const int FileCount = 100;
-	/// <summary>
-	/// The file length
-	/// </summary>
+	private const int FileCount = 256;
 	private const int FileLength = 1024;
 
-	/// <summary>
-	/// The source path
-	/// </summary>
-	private readonly DirectoryInfo _sourcePath = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), nameof(DirectoryHelperBenchmark) + RandomData.GenerateKey()));
+	private DirectoryInfo _copyDestinationPath;
+	private DirectoryInfo _sourcePath;
+	private DirectoryInfo _tempPath;
 
 	/// <summary>
-	/// The temporary path
-	/// </summary>
-	private readonly DirectoryInfo _tempPath = new(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + RandomData.GenerateKey()));
-
-	/// <summary>
-	/// Applications the data folder.
+	/// Benchmark for <see cref="DirectoryHelper.AppDataFolder"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.AppDataFolder))]
+	[BenchmarkCategory(Categories.New)]
 	public void AppDataFolder()
 	{
-		var folder = DirectoryHelper.AppDataFolder();
+		var result = DirectoryHelper.AppDataFolder();
 
-		this.Consume(folder);
+		this.Consume(result);
 	}
 
 	/// <summary>
-	/// Cleanups this instance.
+	/// Overrides Cleanup to remove test directories created during benchmarking.
 	/// </summary>
 	public override void Cleanup()
 	{
 		base.Cleanup();
 
-		_ = DirectoryHelper.DeleteDirectory(this._tempPath, retries: 5);
 		_ = DirectoryHelper.DeleteDirectory(this._sourcePath, retries: 5);
+		_ = DirectoryHelper.DeleteDirectory(this._tempPath, retries: 5);
+		_ = DirectoryHelper.DeleteDirectory(this._copyDestinationPath, retries: 5);
 	}
 
 	/// <summary>
-	/// Safes the directory search01.
+	/// Benchmark for <see cref="DirectoryHelper.CopyDirectory"/>.
+	/// </summary>
+	[Benchmark(Description = nameof(DirectoryHelper.CopyDirectory))]
+	[BenchmarkCategory(Categories.New)]
+	public void CopyDirectory()
+	{
+		DirectoryHelper.CopyDirectory(this._sourcePath, this._copyDestinationPath, overwrite: true);
+	}
+
+	/// <summary>
+	/// Benchmark for <see cref="DirectoryHelper.LoadFilesAsync"/> with <see cref="SearchOption.TopDirectoryOnly"/>.
+	/// </summary>
+	[Benchmark(Description = nameof(DirectoryHelper.LoadFilesAsync))]
+	[BenchmarkCategory(Categories.New)]
+	public async Task LoadFilesAsync()
+	{
+		var directories = new List<DirectoryInfo> { this._sourcePath };
+
+		await foreach (var files in DirectoryHelper.LoadFilesAsync(directories, "*.*", SearchOption.TopDirectoryOnly).ConfigureAwait(false))
+		{
+			this.Consume(files);
+		}
+	}
+
+	/// <summary>
+	/// Benchmark for <see cref="DirectoryHelper.LoadOneDriveFolders"/> on Windows.
+	/// </summary>
+	[SupportedOSPlatform("windows")]
+	[Benchmark(Description = nameof(DirectoryHelper.LoadOneDriveFolders))]
+	[BenchmarkCategory(Categories.New)]
+	public void LoadOneDriveFolders()
+	{
+		var result = DirectoryHelper.LoadOneDriveFolders();
+
+		this.Consume(result);
+	}
+
+	/// <summary>
+	/// Benchmark for <see cref="DirectoryHelper.SafeDirectorySearch"/> with <see cref="SearchOption.TopDirectoryOnly"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.SafeDirectorySearch))]
-	public void SafeDirectorySearch01()
+	[BenchmarkCategory(Categories.New)]
+	public void SafeDirectorySearch()
 	{
-		var folders = DirectoryHelper.SafeDirectorySearch(this._sourcePath, "*.dll", SearchOption.TopDirectoryOnly);
+		var result = DirectoryHelper.SafeDirectorySearch(this._sourcePath, "*.*", SearchOption.TopDirectoryOnly);
 
-		this.Consume(folders);
+		this.Consume(result);
 	}
 
 	/// <summary>
-	/// Safes the file search01.
+	/// Benchmark for <see cref="DirectoryHelper.SafeFileSearch(DirectoryInfo, string, SearchOption)"/>.
 	/// </summary>
-	[Benchmark(Description = nameof(DirectoryHelper.SafeFileSearch))]
-	public void SafeFileSearch01()
+	[Benchmark(Description = "SafeFileSearch(DirectoryInfo)")]
+	[BenchmarkCategory(Categories.New)]
+	public void SafeFileSearch()
 	{
-		var files = DirectoryHelper.SafeFileSearch(this._sourcePath, "*.dll", SearchOption.TopDirectoryOnly);
+		var result = DirectoryHelper.SafeFileSearch(this._sourcePath, "*.*", SearchOption.TopDirectoryOnly);
 
-		this.Consume(files);
+		this.Consume(result);
 	}
 
 	/// <summary>
-	/// Sets the file attributes to normal01.
+	/// Benchmark for <see cref="DirectoryHelper.SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
+	/// </summary>
+	[Benchmark(Description = "SafeFileSearch(IEnumerable<DirectoryInfo>)")]
+	[BenchmarkCategory(Categories.New)]
+	public void SafeFileSearchEnumerable()
+	{
+		var directories = new List<DirectoryInfo> { this._sourcePath };
+		var result = DirectoryHelper.SafeFileSearch(directories, "*.*", SearchOption.TopDirectoryOnly);
+
+		this.Consume(result);
+	}
+
+	/// <summary>
+	/// Benchmark for <see cref="DirectoryHelper.SetFileAttributesToNormal"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.SetFileAttributesToNormal))]
-	public void SetFileAttributesToNormal01()
+	[BenchmarkCategory(Categories.New)]
+	public void SetFileAttributesToNormal()
 	{
 		DirectoryHelper.SetFileAttributesToNormal(this._sourcePath);
 	}
 
 	/// <summary>
-	/// Setups this instance.
+	/// Overrides Setup to initialize test directories and generate files for benchmarking.
 	/// </summary>
 	public override void Setup()
 	{
 		base.Setup();
 
-		if (this._tempPath.Exists is false)
-		{
-			this._tempPath.Create();
-		}
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_source_" + RandomData.GenerateKey()));
+		this._tempPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_temp_" + RandomData.GenerateKey()));
+		this._copyDestinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_dest_" + RandomData.GenerateKey()));
 
-		if (Directory.Exists(this._sourcePath.FullName) is false)
-		{
-			_ = Directory.CreateDirectory(this._sourcePath.FullName);
-		}
+		_ = Directory.CreateDirectory(this._sourcePath.FullName);
+		_ = Directory.CreateDirectory(this._tempPath.FullName);
 
-		ConsoleLogger.Default.WriteLine($"Temp Path={this._tempPath}");
 		ConsoleLogger.Default.WriteLine($"Source Path={this._sourcePath}");
+		ConsoleLogger.Default.WriteLine($"Temp Path={this._tempPath}");
 
 		_ = RandomData.GenerateFiles(this._sourcePath.FullName, FileCount, FileLength);
 	}

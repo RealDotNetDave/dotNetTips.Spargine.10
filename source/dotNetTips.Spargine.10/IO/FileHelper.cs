@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-07-2026
+// Last Modified On : 05-09-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -147,7 +147,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static long CalculateTotalFileSize(ReadOnlySpan<FileInfo> files)
 	{
 		if (files.IsEmpty)
@@ -184,7 +184,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool CheckPermission([DisallowNull] FileInfo file, FileSystemRights permission = FileSystemRights.Read)
 	{
 		file = file.ArgumentNotNull();
@@ -220,7 +220,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static long CopyFile([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -273,7 +273,7 @@ public static class FileHelper
 	/// </example>
 	[OverloadResolutionPriority(1)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool CopyFile([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, [DisallowNull] CopyProgressRoutine progressCallback)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -310,7 +310,7 @@ public static class FileHelper
 	/// Console.WriteLine($"FileCopied file length: {fileLength}");
 	/// </code>
 	/// </example>
-	[Information(nameof(CopyFileAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFileAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<long> CopyFileAsync([DisallowNull] FileInfo file, [NotNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -342,7 +342,7 @@ public static class FileHelper
 	/// successfully deleted and any error information.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteFiles), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteFiles), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static SimpleResult<ReadOnlyCollection<string>> DeleteFiles([DisallowNull] this ReadOnlyCollection<string> files, bool stopOnFirstError = false)
 	{
 		files = files.ArgumentNotNull();
@@ -423,7 +423,7 @@ public static class FileHelper
 	/// await FileHelper.DownloadFileFromWebAsync(remoteFileUrl, destinationDir);
 	/// </code>
 	/// </example>
-	[Information(nameof(DownloadFileFromWebAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DownloadFileFromWebAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<SimpleResult<int>> DownloadFileFromWebAsync([DisallowNull] Uri remoteUri, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		remoteUri = remoteUri.ArgumentNotNull();
@@ -458,7 +458,7 @@ public static class FileHelper
 	/// This method utilizes FileInfo.Name to retrieve the file's name and checks it against a list of invalid characters obtained from FileHelper.InvalidFileNameChars.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FileHasInvalidChars), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(FileHasInvalidChars), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool FileHasInvalidChars([DisallowNull] FileInfo file)
 	{
 		file = file.ArgumentNotNull();
@@ -487,7 +487,7 @@ public static class FileHelper
 	/// <exception cref="IOException">Thrown if an I/O error occurs during the move operation.</exception>
 	/// <exception cref="UnauthorizedAccessException">Thrown if the caller does not have the required permission.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(MoveFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(MoveFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool MoveFile([DisallowNull] FileInfo file, [DisallowNull] FileInfo destinationFile, bool replaceExisting = true, int retryCount = 1)
 	{
 		file = file.ArgumentNotNull();
@@ -595,7 +595,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task</remarks>
-	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task UnGZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -629,7 +629,7 @@ public static class FileHelper
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[OverloadResolutionPriority(1)]
-	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(UnGZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task UnGZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, bool deleteGZipFile, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);

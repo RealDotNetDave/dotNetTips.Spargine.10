@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-09-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -71,7 +71,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// </summary>
 	/// <returns>The path of the created temporary file.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public string CreateFile()
 	{
 		var file = GenerateRandomFile();
@@ -86,7 +86,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <param name="count">The number of temporary files to create.</param>
 	/// <returns>A read-only collection of the paths of the created temporary files.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public ReadOnlyCollection<string> CreateFiles(in int count)
 	{
 		_ = count.ArgumentInRange(min: 1);
@@ -101,7 +101,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// Deletes all temporary files.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public void DeleteAllFiles()
 	{
 		// Pass _files directly to avoid the ToReadOnlyCollection() intermediate allocation.
@@ -126,7 +126,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// If the file name is null or empty, the method returns without performing any action.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public void DeleteFile(string fileName)
 	{
 		if (string.IsNullOrEmpty(fileName))
