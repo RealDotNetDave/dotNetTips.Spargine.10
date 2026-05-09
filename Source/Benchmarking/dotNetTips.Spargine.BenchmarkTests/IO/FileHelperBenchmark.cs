@@ -13,10 +13,8 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -102,26 +100,6 @@ public class FileHelperBenchmark : Benchmark
 		var result = await FileHelper.CopyFileAsync(this._singleFile, this._destinationPath).ConfigureAwait(false);
 
 		this.Consume(result);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="FileHelper.DeleteFiles"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(FileHelper.DeleteFiles))]
-	[BenchmarkCategory(Categories.New)]
-	public void DeleteFiles()
-	{
-		// Generate fresh files each iteration so the delete has real targets
-		var tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.DeleteFiles) + RandomData.GenerateKey()));
-		_ = Directory.CreateDirectory(tempDir.FullName);
-		_ = RandomData.GenerateFiles(tempDir.FullName, FileCount, FileLength);
-
-		var filePaths = new ReadOnlyCollection<string>([.. tempDir.GetFiles().Select(f => f.FullName)]);
-		var result = filePaths.DeleteFiles();
-
-		this.Consume(result);
-
-		_ = DirectoryHelper.DeleteDirectory(tempDir, retries: 5);
 	}
 
 	/// <summary>
