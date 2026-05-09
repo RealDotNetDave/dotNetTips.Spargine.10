@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-07-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -124,6 +124,44 @@ public static class FileHelper
 		{
 			file.Attributes |= FileAttributes.ReadOnly;
 		}
+	}
+
+	/// <summary>
+	/// Calculates the total size, in bytes, of all files in the specified span.
+	/// </summary>
+	/// <param name="files">A <see cref="Span{T}"/> of <see cref="FileInfo"/> objects representing the files to measure. An empty span returns zero.</param>
+	/// <returns>
+	/// The sum of <see cref="FileInfo.Length"/> for all files in <paramref name="files"/>,
+	/// or <c>0</c> if the span is empty.
+	/// </returns>
+	/// <remarks>
+	/// This method iterates the span without heap allocation and accumulates file lengths using a <see langword="long"/> accumulator
+	/// to avoid overflow for large file sets. Files that do not exist or have a length of zero contribute zero to the total.
+	/// </remarks>
+	/// <example>
+	/// <code>
+	/// var files = new DirectoryInfo("C:\\Logs").GetFiles("*.log");
+	/// long totalBytes = FileHelper.CalculateTotalFileSize(files.AsSpan());
+	/// Console.WriteLine($"Total size: {totalBytes} bytes");
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static long CalculateTotalFileSize(Span<FileInfo> files)
+	{
+		if (files.IsEmpty)
+		{
+			return 0;
+		}
+
+		var totalFileLength = 0L;
+
+		foreach (var file in files)
+		{
+			totalFileLength += file is not null && file.Exists ? file.Length : 0L;
+		}
+
+		return totalFileLength;
 	}
 
 	/// <summary>
