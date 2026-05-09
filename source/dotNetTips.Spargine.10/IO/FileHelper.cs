@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO.Compression;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -129,14 +130,14 @@ public static class FileHelper
 	/// <summary>
 	/// Calculates the total size, in bytes, of all files in the specified span.
 	/// </summary>
-	/// <param name="files">A <see cref="Span{T}"/> of <see cref="FileInfo"/> objects representing the files to measure. An empty span returns zero.</param>
+	/// <param name="files">A <see cref="ReadOnlySpan{T}"/> of <see cref="FileInfo"/> objects representing the files to measure. An empty span returns zero.</param>
 	/// <returns>
 	/// The sum of <see cref="FileInfo.Length"/> for all files in <paramref name="files"/>,
 	/// or <c>0</c> if the span is empty.
 	/// </returns>
 	/// <remarks>
 	/// This method iterates the span without heap allocation and accumulates file lengths using a <see langword="long"/> accumulator
-	/// to avoid overflow for large file sets. Files that do not exist or have a length of zero contribute zero to the total.
+	/// to avoid overflow for large file sets. Files that do not exist or are null contribute zero to the total.
 	/// </remarks>
 	/// <example>
 	/// <code>
@@ -145,9 +146,9 @@ public static class FileHelper
 	/// Console.WriteLine($"Total size: {totalBytes} bytes");
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Pure]
 	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
-	public static long CalculateTotalFileSize(Span<FileInfo> files)
+	public static long CalculateTotalFileSize(ReadOnlySpan<FileInfo> files)
 	{
 		if (files.IsEmpty)
 		{
