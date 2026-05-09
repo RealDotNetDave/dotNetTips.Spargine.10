@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-09-2026
 // ***********************************************************************
 // <copyright file="DriveHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,7 +45,7 @@ public static class DriveHelper
 	/// <returns>The file system format of the drive as a string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetDriveFormat), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetDriveFormat), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GetDriveFormat([DisallowNull] string drive)
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
@@ -60,7 +60,7 @@ public static class DriveHelper
 	/// <returns>The free space available on the drive in bytes.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetDriveFreeSpace), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetDriveFreeSpace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static long GetDriveFreeSpace([DisallowNull] string drive)
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
@@ -75,7 +75,7 @@ public static class DriveHelper
 	/// <returns>The volume label of the drive as a string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetDriveLabel), OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetDriveLabel), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string GetDriveLabel([DisallowNull] string drive)
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
@@ -94,7 +94,7 @@ public static class DriveHelper
 	/// It's important to ensure that the <paramref name="drive"/> parameter is not null or empty to avoid runtime errors.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetDriveSerialNumber), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://dotnettips.wordpress.com/2007/12/14/finding-a-drives-serial-number/", Status = Status.Available)]
+	[Information(nameof(GetDriveSerialNumber), author: "David McCarter", createdOn: "9/6/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string? GetDriveSerialNumber([DisallowNull] string drive)
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
@@ -120,7 +120,7 @@ public static class DriveHelper
 	/// <returns>The total size of the drive in bytes.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="drive"/> is null or empty.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetDriveTotalSize), author: "David McCarter", createdOn: "10/10/2023", OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetDriveTotalSize), author: "David McCarter", createdOn: "10/10/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static long GetDriveTotalSize([DisallowNull] string drive)
 	{
 		drive = drive.ArgumentNotNullOrEmpty();
@@ -138,7 +138,7 @@ public static class DriveHelper
 	/// </remarks>
 	/// <example>Result Example - [0]: {C:\}</example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetFixedDrives), author: "David McCarter", createdOn: "9/6/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
+	[Information(nameof(GetFixedDrives), author: "David McCarter", createdOn: "9/6/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Documentation = "https://bit.ly/SpargineJun2021", Status = Status.Available)]
 	public static ReadOnlyCollection<DriveInfo> GetFixedDrives()
 	{
 		return DriveInfo.GetDrives().Where(p => p.DriveType == DriveType.Fixed && p.IsReady).ToReadOnlyCollection();
