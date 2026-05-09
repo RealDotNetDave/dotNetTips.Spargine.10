@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.IO;
 /// intended for use on Windows platforms only.
 /// </remarks>
 [SupportedOSPlatform("windows")]
-[Information(nameof(FileHelper), Status = Status.Available, Documentation = "https://bit.ly/SpargineFileHelper")]
+[Information(nameof(FileHelper), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineFileHelper")]
 public static class FileHelper
 {
 
@@ -147,7 +147,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static long CalculateTotalFileSize(ReadOnlySpan<FileInfo> files)
 	{
 		if (files.IsEmpty)
@@ -801,7 +801,7 @@ public static class FileHelper
 	/// This method uses <see cref="ZipFile.ExtractToDirectory(string, string)"/> under the hood to perform the extraction.
 	/// Make sure to call .Dispose on Task
 	/// </remarks>
-	[Information(nameof(UnWinZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(UnWinZipAsync), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	private static async Task UnWinZipAsync([NotNull] string zipPath, [NotNull] string expandedDirectoryPath, CancellationToken cancellationToken = default)
 	{
 		using var zipFileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);

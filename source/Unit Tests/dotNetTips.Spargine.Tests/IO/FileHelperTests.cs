@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-09-2026
 // ***********************************************************************
 // <copyright file="FileHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -136,6 +136,89 @@ public class FileHelperTests
 
 		// Should not throw for non-existent files
 		FileHelper.AddReadOnlyAttribute(file);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CalculateTotalFileSize_EmptySpan_ReturnsZero()
+	{
+		var result = FileHelper.CalculateTotalFileSize(ReadOnlySpan<FileInfo>.Empty);
+
+		Assert.AreEqual(0L, result);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CalculateTotalFileSize_MixedValidAndNullAndNonExistent_ReturnsOnlyExistingFileSizes()
+	{
+		var filePath = RandomData.GenerateTempFile(FileLength);
+
+		try
+		{
+			var existingFile = new FileInfo(filePath);
+			var nonExistent = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt"));
+
+			var files = new FileInfo[] { existingFile, null, nonExistent };
+
+			var result = FileHelper.CalculateTotalFileSize(files);
+
+			Assert.AreEqual(existingFile.Length, result);
+		}
+		finally
+		{
+			File.Delete(filePath);
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CalculateTotalFileSize_NonExistentFiles_ReturnsZero()
+	{
+		var files = new FileInfo[]
+		{
+			new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt")),
+			new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt")),
+		};
+
+		var result = FileHelper.CalculateTotalFileSize(files);
+
+		Assert.AreEqual(0L, result);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CalculateTotalFileSize_NullEntries_SkipsNulls()
+	{
+		var files = new FileInfo[] { null, null };
+
+		var result = FileHelper.CalculateTotalFileSize(files);
+
+		Assert.AreEqual(0L, result);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CalculateTotalFileSize_ValidFiles_ReturnsTotalSize()
+	{
+		var filePath1 = RandomData.GenerateTempFile(FileLength);
+		var filePath2 = RandomData.GenerateTempFile(FileLength);
+
+		try
+		{
+			var file1 = new FileInfo(filePath1);
+			var file2 = new FileInfo(filePath2);
+
+			var expected = file1.Length + file2.Length;
+
+			var result = FileHelper.CalculateTotalFileSize(new FileInfo[] { file1, file2 });
+
+			Assert.AreEqual(expected, result);
+		}
+		finally
+		{
+			File.Delete(filePath1);
+			File.Delete(filePath2);
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
