@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-06-2023
+// Last Modified On : 05-09-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperBenchmark.cs" company="DotNetTips.Spargine.BenchmarkTests">
 //     David McCarter
@@ -69,8 +69,8 @@ public class DirectoryHelperBenchmark : Benchmark
 	{
 		base.Cleanup();
 
-		DirectoryHelper.DeleteDirectory(this._tempPath, retries: 5);
-		DirectoryHelper.DeleteDirectory(this._sourcePath, retries: 5);
+		_ = DirectoryHelper.DeleteDirectory(this._tempPath, retries: 5);
+		_ = DirectoryHelper.DeleteDirectory(this._sourcePath, retries: 5);
 	}
 
 	/// <summary>
@@ -92,7 +92,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	{
 		var files = DirectoryHelper.SafeFileSearch(this._sourcePath, "*.dll", SearchOption.TopDirectoryOnly);
 
-		base.Consume(files);
+		this.Consume(files);
 	}
 
 	/// <summary>
@@ -103,6 +103,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	{
 		DirectoryHelper.SetFileAttributesToNormal(this._sourcePath);
 	}
+
 	/// <summary>
 	/// Setups this instance.
 	/// </summary>

@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTips.Spargine.10", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{74F50B35-6B6E-4BB1-927A-2B33C9B9BB00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTips.Spargine.BenchmarkTests", "Source\Benchmarking\dotNetTips.Spargine.BenchmarkTests\DotNetTips.Spargine.BenchmarkTests.csproj", "{CE2FD97C-A911-2624-1361-4FD57F8260F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87FAE025-F112-3FB1-A133-FBFBE700868D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE2FD97C-A911-2624-1361-4FD57F8260F5}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2FD97C-A911-2624-1361-4FD57F8260F5}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{CE2FD97C-A911-2624-1361-4FD57F8260F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2FD97C-A911-2624-1361-4FD57F8260F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{4C91B283-645C-4F1B-B53A-5B21815133FC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DCE808A7-016A-5764-5D22-B678B7CBFE3D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{87FAE025-F112-3FB1-A133-FBFBE700868D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{CE2FD97C-A911-2624-1361-4FD57F8260F5} = {74F50B35-6B6E-4BB1-927A-2B33C9B9BB00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {327DC320-CCF4-4DD7-BAF2-D9060A5761F2}
