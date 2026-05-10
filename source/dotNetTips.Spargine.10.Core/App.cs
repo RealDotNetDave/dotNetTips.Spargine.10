@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-10-2026
 // ***********************************************************************
 // <copyright file="App.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,7 +19,6 @@
 
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -55,7 +54,7 @@ public static class App
 	/// <summary>
 	/// Application information.
 	/// </summary>
-	private static readonly Lazy<AppInfo> _appInfo = new(InitAppInfo());
+	private static readonly Lazy<AppInfo> _appInfo = new(InitAppInfo);
 
 	/// <summary>
 	/// A dictionary to store application state data.
@@ -261,13 +260,7 @@ public static class App
 	/// <value>The process path.</value>
 	[Pure]
 	[Information(nameof(GetProcessorInformation), "David McCarter", "1/20/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string ProcessPath
-	{
-		get
-		{
-			return _computerInfo.Value.CurrentWorkingDirectory;
-		}
-	}
+	public static string ProcessPath => Environment.ProcessPath ?? string.Empty;
 
 	/// <summary>
 	/// Gets the stack trace for the current thread.
@@ -397,8 +390,11 @@ public static class App
 	[Information(nameof(ExecutingFolder), author: "David McCarter", createdOn: "6/26/2017", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ExecutingFolder()
 	{
-		var currentWorkingDirectory = _computerInfo.Value.CurrentWorkingDirectory;
-		return currentWorkingDirectory is not null ? Path.GetDirectoryName(currentWorkingDirectory) ?? string.Empty : string.Empty;
+		var processPath = Environment.ProcessPath;
+
+		return string.IsNullOrWhiteSpace(processPath)
+			? AppContext.BaseDirectory
+			: Path.GetDirectoryName(processPath) ?? AppContext.BaseDirectory;
 	}
 
 	/// <summary>
@@ -452,7 +448,7 @@ public static class App
 	[Information(nameof(GetAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static object? GetAppState(string key, object? defaultValue = null)
 	{
-		return _appState.TryGetValue(key, out var value) ? value : defaultValue;
+		return _appState.TryGetValue(key.ArgumentNotNullOrEmpty(), out var value) ? value : defaultValue;
 	}
 
 	/// <summary>
@@ -480,9 +476,22 @@ public static class App
 	public static IReadOnlyDictionary<string, string> GetCommandLineArguments()
 	{
 		return Environment.GetCommandLineArgs()
-					.Skip(1)
-					.Select(arg => arg.Split('='))
-					.ToDictionary(parts => parts[0], parts => parts.Length > 1 ? parts[1] : string.Empty);
+			.Skip(1)
+			.Select(argument =>
+			{
+				var separatorIndex = argument.IndexOf('=', StringComparison.Ordinal);
+
+				return separatorIndex < 0
+					? new KeyValuePair<string, string>(argument, string.Empty)
+					: new KeyValuePair<string, string>(
+						argument[..separatorIndex],
+						argument[(separatorIndex + 1)..]);
+			})
+			.Where(pair => string.IsNullOrWhiteSpace(pair.Key) is false)
+			.ToDictionary(
+				pair => pair.Key,
+				pair => pair.Value,
+				StringComparer.OrdinalIgnoreCase);
 	}
 
 	/// <summary>
@@ -526,12 +535,12 @@ public static class App
 	public static IReadOnlyDictionary<string, string> GetEnvironmentVariables()
 	{
 		return Environment.GetEnvironmentVariables()
-					.Cast<DictionaryEntry>()
-					.Where(de => de.Key is not null && de.Value is not null) // Filter out null keys and values
-					.ToImmutableDictionary(
-						de => de.Key?.ToString() ?? string.Empty, // Safely handle null keys
-						de => de.Value?.ToString() ?? string.Empty // Safely handle null values
-					);
+			.Cast<DictionaryEntry>()
+			.Where(entry => entry.Key is string && entry.Value is string)
+			.ToDictionary(
+				entry => (string)entry.Key,
+				entry => (string)entry.Value!)
+			.AsReadOnly();
 	}
 
 	/// <summary>
@@ -620,7 +629,8 @@ public static class App
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool IsRunning()
 	{
-		return Process.GetProcessesByName(ProcessName).Length > 0;
+		return Process.GetProcessesByName(ProcessName)
+			.Any(process => process.Id == ProcessId);
 	}
 
 	/// <summary>
@@ -659,7 +669,7 @@ public static class App
 	[Information(Status = Status.Available)]
 	public static void Kill()
 	{
-		KillProcess(Path.GetFileNameWithoutExtension(AppContext.BaseDirectory));
+		KillProcess(ProcessName);
 	}
 
 	/// <summary>
@@ -710,7 +720,7 @@ public static class App
 	/// }
 	/// </code></example>
 	[Pure]
-	[RequiresUnreferencedCode("Calls Assembly.GetEntryAssembly() and GetReferencedAssemblies() which may be trimmed.")]
+	[RequiresUnreferencedCode("Referenced assemblies are not reliable in trimmed apps because unused assemblies and metadata may be removed.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ReferencedAssemblies()
 	{
@@ -749,7 +759,7 @@ public static class App
 	[Information(nameof(RemoveAppState), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool RemoveAppState(string key)
 	{
-		return _appState.TryRemove(key, out _);
+		return _appState.TryRemove(key.ArgumentNotNullOrEmpty(), out _);
 	}
 
 	/// <summary>
@@ -761,21 +771,28 @@ public static class App
 	[Information(UnitTestStatus = UnitTestStatus.Untestable, Status = Status.Available)]
 	public static void RunAsAdministrator()
 	{
+		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		{
+			throw new PlatformNotSupportedException(Resources.RebootingIsOnlySupportedOnWindows);
+		}
+
 		if (IsUserAdministrator())
 		{
 			return;
 		}
 
+		var processPath = Environment.ProcessPath
+			?? throw new InvalidOperationException("The current process path is unavailable.");
+
 		var processInfo = new ProcessStartInfo
 		{
-			FileName = _computerInfo.Value.CurrentWorkingDirectory,
+			FileName = processPath,
 			UseShellExecute = true,
 			Verb = "runas",
 		};
 
 		_ = Process.Start(processInfo);
 
-		Environment.ExitCode = 0;
 		Environment.Exit(0);
 	}
 

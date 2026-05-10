@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-29-2025
+// Last Modified On : 05-10-2026
 // ***********************************************************************
 // <copyright file="Config.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,10 +29,10 @@ namespace DotNetTips.Spargine.Core;
 /// </summary>
 /// <typeparam name="T">The type of the configuration object.</typeparam>
 [Serializable]
-[Information(Documentation = "https://bit.ly/SpargineConfig", Status = Status.Available)]
-public class Config<T> where T : class, new()
+[Information(Documentation = "https://bit.ly/SpargineConfig", Status = Status.UpdateDocumentation)]
+public class Config<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicFields)] T>
+	where T : class, new()
 {
-
 	/// <summary>
 	/// The singleton instance of the configuration object.
 	/// </summary>
@@ -43,10 +43,27 @@ public class Config<T> where T : class, new()
 	/// Sets up default paths for the configuration file based on application information.
 	/// </summary>
 	protected Config()
+		: this(App.AppInfo.Company!, App.AppInfo.Product!)
 	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Config{T}"/> class with the specified company and product names.
+	/// Sets up paths for the configuration file and folder under the user's local application data directory.
+	/// </summary>
+	/// <param name="companyName">The company name used to construct the configuration folder path. Must not be null or empty.</param>
+	/// <param name="productName">The product name used to construct the configuration file name. Must not be null or empty.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="companyName"/> or <paramref name="productName"/> is null or empty.</exception>
+	[Information("Initializes a new Config instance with company and product names.", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	protected Config([DisallowNull] string companyName, [DisallowNull] string productName)
+	{
+		companyName = companyName.ArgumentNotNullOrEmpty();
+		productName = productName.ArgumentNotNullOrEmpty();
+
 		var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-		this.ConfigFolderName = Path.Combine(localAppData, App.AppInfo.Company!);
-		this.ConfigFileName = Path.Combine(this.ConfigFolderName, $"{App.AppInfo.Product}.config");
+
+		this.ConfigFolderName = Path.Combine(localAppData, companyName);
+		this.ConfigFileName = Path.Combine(this.ConfigFolderName, $"{productName}.config");
 	}
 
 	/// <summary>
@@ -85,7 +102,7 @@ public class Config<T> where T : class, new()
 	/// This method attempts to deserialize the configuration object from a file specified by <see cref="ConfigFileName"/>.
 	/// If the file does not exist, the method returns <c>false</c>.
 	/// </remarks>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[RequiresUnreferencedCode("XML serialization uses reflection and may require members that are removed by trimming.")]
 	[Information(nameof(Load), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual bool Load()
 	{
@@ -103,7 +120,14 @@ public class Config<T> where T : class, new()
 	/// Saves the current instance of the configuration to the disk.
 	/// </summary>
 	/// <returns><c>true</c> if the configuration was successfully saved; otherwise, <c>false</c>.</returns>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	/// <remarks>
+	/// If a configuration file already exists at <see cref="ConfigFileName"/>, it is deleted before the new file is written.
+	/// The configuration is serialized to XML using <see cref="XmlSerialization.SerializeToFile"/>.
+	/// </remarks>
+	/// <exception cref="UnauthorizedAccessException">Thrown if the process does not have permission to write to the configuration file path.</exception>
+	/// <exception cref="IOException">Thrown if an I/O error occurs while deleting the existing file or writing the new configuration file.</exception>
+	[RequiresUnreferencedCode("XML serialization uses reflection and may require members that are removed by trimming.")]
+	[Information(nameof(Save), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual bool Save()
 	{
 		if (File.Exists(this.ConfigFileName))

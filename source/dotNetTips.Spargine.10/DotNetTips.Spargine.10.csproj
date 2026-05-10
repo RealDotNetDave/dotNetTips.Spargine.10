@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10</AssemblyTitle>
-    <AssemblyVersion>2026.10.5.4</AssemblyVersion>
+    <AssemblyVersion>2026.10.5.5</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
@@ -20,7 +20,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.5.4</FileVersion>
+    <FileVersion>2026.10.5.5</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -46,13 +46,13 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.5.4</Version>
+    <Version>2026.10.5.5</Version>
   </PropertyGroup>
   <PropertyGroup>
-	<IsTrimmable>true</IsTrimmable>
-	<EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
-	<ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
-	<TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <IsTrimmable>true</IsTrimmable>
+    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+    <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
   <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
