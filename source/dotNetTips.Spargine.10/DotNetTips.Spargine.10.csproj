@@ -13,15 +13,12 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <Company>dotNetTips.com - McCarter Consulting</Company>
-    <Configurations>Debug;DebugTrim;Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
     <Description>Main helper methods/ code for Spargine that target Windows.</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
-    <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
-    <PublishTrimmed>true</PublishTrimmed>
-    <ILLinkTreatWarningsAsErrors>false</ILLinkTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.5.4</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -52,25 +49,21 @@
     <Version>2026.10.5.4</Version>
   </PropertyGroup>
   <PropertyGroup>
+	<IsTrimmable>true</IsTrimmable>
+	<EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+	<ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
+	<TrimmerSingleWarn>false</TrimmerSingleWarn>
+  </PropertyGroup>
+  <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
-    <WarningsAsErrors Condition="$(ContinuousIntegrationBuild) == 'true' OR '$(Configuration)' == 'Release'">
-	  (WarningsAsErrors);NU1900;NU1901;NU1902;NU1903;NU1904
-	</WarningsAsErrors>
     <PackageReleaseNotes>
 	  --JAN 2026: Initial .NET 10 release.
 	  --APR 2026: Updated dependencies and added new helper methods.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\AppBin\</OutputPath>
-    <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.xml</DocumentationFile>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugTrim|AnyCPU'">
-    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <OutputPath>..\..\AppBin\</OutputPath>
     <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.xml</DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>

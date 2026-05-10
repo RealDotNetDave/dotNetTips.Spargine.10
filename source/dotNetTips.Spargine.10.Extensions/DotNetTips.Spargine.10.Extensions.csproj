@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -13,15 +13,12 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <Company>dotNetTips.com - McCarter Consulting</Company>
-    <Configurations>Debug;DebugTrim;Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <Copyright>McCarter Consulting (David McCarter)</Copyright>
     <Description>Extensions methods for Spargine.</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
-    <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
-    <PublishTrimmed>true</PublishTrimmed>
-    <ILLinkTreatWarningsAsErrors>false</ILLinkTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <FileVersion>2026.10.5.4</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -50,31 +47,24 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10.Extensions</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>$(WarningsNotAsErrors);IL2026;IL2046;IL2057;IL2060;IL2070;IL2072;IL2075;IL2077;IL2080;IL2087;IL2090;IL2091;IL2095;IL2104;IL2125</WarningsNotAsErrors>
     <Version>2026.10.5.4</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IsTrimmable>true</IsTrimmable>
+    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+    <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
   <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
-    <WarningsAsErrors Condition="$(ContinuousIntegrationBuild) == 'true' OR '$(Configuration)' == 'Release'">
-	  (WarningsAsErrors);NU1900;NU1901;NU1902;NU1903;NU1904
-	</WarningsAsErrors>
     <PackageReleaseNotes>
 	  --JAN 2026: Initial .NET 10 release.
 	  --APR 2026: Updated dependencies and added new helper methods.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <OutputPath>..\..\AppBin\</OutputPath>
-    <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
-    <WarningLevel>9999</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <NoWarn />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugTrim|AnyCPU'">
-    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <OutputPath>..\..\AppBin\</OutputPath>
     <DocumentationFile>..\..\AppBin\dotNetTips.Spargine.10.Extensions.xml</DocumentationFile>
