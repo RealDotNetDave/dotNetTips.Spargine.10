@@ -54,30 +54,6 @@ public class FileProcessorBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Benchmark for <see cref="FileProcessor.CopyFiles"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(FileProcessor.CopyFiles))]
-	[BenchmarkCategory(Categories.New)]
-	public void CopyFiles()
-	{
-		var result = this._fileProcessor.CopyFiles(this._sourceFiles, this._destinationPath, overwrite: true);
-
-		this.Consume(result);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="FileProcessor.CopyFilesWithOriginalPath"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(FileProcessor.CopyFilesWithOriginalPath))]
-	[BenchmarkCategory(Categories.New)]
-	public void CopyFilesWithOriginalPath()
-	{
-		var result = this._fileProcessor.CopyFilesWithOriginalPath(this._sourceFiles, this._destinationPath);
-
-		this.Consume(result);
-	}
-
-	/// <summary>
 	/// Benchmark for <see cref="FileProcessor.DeleteFolders"/>.
 	/// Creates fresh directories each iteration so there are real targets to delete.
 	/// </summary>

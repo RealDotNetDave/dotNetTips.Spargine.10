@@ -101,7 +101,7 @@ public static class DirectoryHelper
 	/// <returns>The path to the application data folder.</returns>
 	/// <exception cref="InvalidOperationException">Thrown when the user path environment variable is not set.</exception>
 	[SupportedOSPlatform("macos")]
-	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string AppDataFolder()
 	{
 		var userPath = LocalAppData;

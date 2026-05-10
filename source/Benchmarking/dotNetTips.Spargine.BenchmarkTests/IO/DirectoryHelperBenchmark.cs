@@ -11,7 +11,6 @@
 // </copyright>
 // <summary>Comprehensive benchmark tests for all public methods in DirectoryHelper.</summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Versioning;
@@ -30,6 +29,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Benchmark tests for all public methods in <see cref="DirectoryHelper"/>.
 /// </summary>
 [BenchmarkCategory(Categories.IO)]
+[SupportedOSPlatform("windows")]
 public class DirectoryHelperBenchmark : Benchmark
 {
 	private const int FileCount = 256;
@@ -38,18 +38,6 @@ public class DirectoryHelperBenchmark : Benchmark
 	private DirectoryInfo _copyDestinationPath;
 	private DirectoryInfo _sourcePath;
 	private DirectoryInfo _tempPath;
-
-	/// <summary>
-	/// Benchmark for <see cref="DirectoryHelper.AppDataFolder"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(DirectoryHelper.AppDataFolder))]
-	[BenchmarkCategory(Categories.New)]
-	public void AppDataFolder()
-	{
-		var result = DirectoryHelper.AppDataFolder();
-
-		this.Consume(result);
-	}
 
 	/// <summary>
 	/// Overrides Cleanup to remove test directories created during benchmarking.
@@ -91,7 +79,6 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// <summary>
 	/// Benchmark for <see cref="DirectoryHelper.LoadOneDriveFolders"/> on Windows.
 	/// </summary>
-	[SupportedOSPlatform("windows")]
 	[Benchmark(Description = nameof(DirectoryHelper.LoadOneDriveFolders))]
 	[BenchmarkCategory(Categories.New)]
 	public void LoadOneDriveFolders()
@@ -135,7 +122,7 @@ public class DirectoryHelperBenchmark : Benchmark
 		var directories = new List<DirectoryInfo> { this._sourcePath };
 		var result = DirectoryHelper.SafeFileSearch(directories, "*.*", SearchOption.TopDirectoryOnly);
 
-		this.Consume(result);
+		this.ConsumeEnumerable(result);
 	}
 
 	/// <summary>

@@ -66,7 +66,10 @@ public class FileProcessorDeleteFilesBenchmark : Benchmark
 	/// Removes the temporary directory after each iteration.
 	/// </summary>
 	[IterationCleanup]
-	public void IterationCleanup() => DirectoryHelper.DeleteDirectory(this._tempDir, retries: 5);
+	public void IterationCleanup()
+	{
+		_ = DirectoryHelper.DeleteDirectory(this._tempDir, retries: 5);
+	}
 
 	/// <summary>
 	/// Creates a fresh temporary directory and generates files before each iteration
