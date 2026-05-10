@@ -4,7 +4,7 @@
 // Created          : 01-12-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified On : 05-10-2026
 // ***********************************************************************
 // <copyright file="PathHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -22,6 +22,10 @@ using DotNetTips.Spargine.IO;
 
 namespace DotNetTips.Spargine.BenchmarkTests.IO;
 
+/// <summary>
+/// Benchmark tests for all public methods in <see cref="PathHelper"/>.
+/// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 public class PathHelperBenchmark : Benchmark
 {

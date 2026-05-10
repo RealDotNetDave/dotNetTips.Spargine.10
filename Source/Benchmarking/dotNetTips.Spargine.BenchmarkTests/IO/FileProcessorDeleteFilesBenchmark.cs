@@ -28,6 +28,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Benchmark test for <see cref="FileProcessor.DeleteFiles"/> using <see cref="IterationSetupAttribute"/> to isolate
 /// file generation from the measured delete operation.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileProcessorDeleteFilesBenchmark : Benchmark

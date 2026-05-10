@@ -30,6 +30,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Uses <see cref="IterationCleanupAttribute"/> to delete destination contents after each iteration so that
 /// every iteration measures a clean copy rather than an overwrite.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileProcessorCopyFilesBenchmark : Benchmark

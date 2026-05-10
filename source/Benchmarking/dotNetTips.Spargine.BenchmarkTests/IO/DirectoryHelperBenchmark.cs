@@ -28,6 +28,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// <summary>
 /// Benchmark tests for all public methods in <see cref="DirectoryHelper"/>.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class DirectoryHelperBenchmark : Benchmark
@@ -35,7 +36,6 @@ public class DirectoryHelperBenchmark : Benchmark
 	private const int FileCount = 256;
 	private const int FileLength = 1024;
 
-	private DirectoryInfo _copyDestinationPath;
 	private DirectoryInfo _sourcePath;
 	private DirectoryInfo _tempPath;
 
@@ -48,17 +48,6 @@ public class DirectoryHelperBenchmark : Benchmark
 
 		_ = DirectoryHelper.DeleteDirectory(this._sourcePath, retries: 5);
 		_ = DirectoryHelper.DeleteDirectory(this._tempPath, retries: 5);
-		_ = DirectoryHelper.DeleteDirectory(this._copyDestinationPath, retries: 5);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="DirectoryHelper.CopyDirectory"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(DirectoryHelper.CopyDirectory))]
-	[BenchmarkCategory(Categories.New)]
-	public void CopyDirectory()
-	{
-		DirectoryHelper.CopyDirectory(this._sourcePath, this._copyDestinationPath, overwrite: true);
 	}
 
 	/// <summary>
@@ -144,8 +133,6 @@ public class DirectoryHelperBenchmark : Benchmark
 
 		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_source_" + RandomData.GenerateKey()));
 		this._tempPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_temp_" + RandomData.GenerateKey()));
-		this._copyDestinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_dest_" + RandomData.GenerateKey()));
-
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 		_ = Directory.CreateDirectory(this._tempPath.FullName);
 

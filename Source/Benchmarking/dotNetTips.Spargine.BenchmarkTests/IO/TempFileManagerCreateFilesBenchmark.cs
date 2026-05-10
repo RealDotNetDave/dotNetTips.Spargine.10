@@ -27,6 +27,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Uses <see cref="IterationCleanupAttribute"/> to delete created files after each iteration, preventing
 /// unbounded state accumulation that would skew later iteration timings.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "TempFileManager is disposed in Cleanup(), which BenchmarkDotNet calls after all iterations.")]

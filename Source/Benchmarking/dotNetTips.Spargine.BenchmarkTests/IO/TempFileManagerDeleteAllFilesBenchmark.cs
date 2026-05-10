@@ -27,6 +27,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Uses <see cref="IterationSetupAttribute"/> to create files before each iteration so that only
 /// the delete operation is measured, not file creation cost.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "TempFileManager is disposed in Cleanup(), which BenchmarkDotNet calls after all iterations.")]

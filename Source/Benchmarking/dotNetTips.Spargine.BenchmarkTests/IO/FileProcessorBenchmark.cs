@@ -29,6 +29,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// <summary>
 /// Benchmark tests for all public methods in <see cref="FileProcessor"/> with <c>BenchmarkStatus.Benchmark</c>.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileProcessorBenchmark : Benchmark

@@ -32,6 +32,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// every iteration measures a clean copy with no pre-existing destination — avoiding the hidden
 /// <see cref="File.Delete"/> cost that the implementations perform when overwriting.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileHelperCopyFileBenchmark : Benchmark

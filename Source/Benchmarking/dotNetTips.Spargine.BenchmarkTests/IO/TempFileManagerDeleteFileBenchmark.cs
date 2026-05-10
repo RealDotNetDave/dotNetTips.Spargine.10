@@ -28,6 +28,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// and <see cref="IterationCleanupAttribute"/> to remove any leftover files, ensuring no
 /// accumulation across iterations.
 /// </summary>
+[MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "TempFileManager is disposed in Cleanup(), which BenchmarkDotNet calls after all iterations.")]
