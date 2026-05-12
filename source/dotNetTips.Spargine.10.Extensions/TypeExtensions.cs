@@ -375,7 +375,6 @@ public static class TypeExtensions
 		/// <returns><c>true</c> if the type implements <see cref="IEnumerable"/>; otherwise, <c>false</c>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsEnumerable()
 		{

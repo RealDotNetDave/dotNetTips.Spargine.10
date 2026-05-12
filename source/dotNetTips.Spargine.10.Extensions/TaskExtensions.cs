@@ -55,7 +55,14 @@ public static class TaskExtensions
 	[Information("Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineSep2022")]
 	public static void FireAndForget([DisallowNull] this Task task, [DisallowNull] Action<Exception> action)
 	{
-		_ = task.ArgumentNotNull().ContinueWith((tsk) => action?.Invoke(tsk.Exception!), CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+		task = task.ArgumentNotNull();
+		action = action.ArgumentNotNull();
+
+		_ = task.ContinueWith(
+			tsk => action(tsk.Exception!),
+			CancellationToken.None,
+			TaskContinuationOptions.OnlyOnFaulted,
+			TaskScheduler.Default);
 	}
 
 }
