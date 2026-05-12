@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="ComputerInfo.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,8 +22,6 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
 using DotNetTips.Spargine.Core.Devices;
-using DotNetTips.Spargine.Core.Internal;
-using DotNetTips.Spargine.Core.Serialization;
 using static System.Environment;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -321,11 +319,10 @@ public sealed class ComputerInfo
 	/// </returns>
 	[Pure]
 	[return: NotNull]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string ToJson()
 	{
-		return JsonSerialization.Serialize(this);
+		return JsonSerializer.Serialize(this, ComputerInfoJsonContext.Default.ComputerInfo);
 	}
 
 	/// <summary>
@@ -340,6 +337,19 @@ public sealed class ComputerInfo
 	/// </remarks>
 	[Pure]
 	[return: NotNull]
-	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Object.ToString override.")]
-	public override string ToString() => this.PropertiesToString();
+	public override string ToString()
+	{
+		return string.Create(
+			CultureInfo.CurrentCulture,
+			$"{nameof(this.MachineName)}: {this.MachineName}, " +
+			$"{nameof(this.OSDescription)}: {this.OSDescription}, " +
+			$"{nameof(this.OSArchitecture)}: {this.OSArchitecture}, " +
+			$"{nameof(this.ProcessArchitecture)}: {this.ProcessArchitecture}, " +
+			$"{nameof(this.ProcessorCount)}: {this.ProcessorCount}, " +
+			$"{nameof(this.FrameworkDescription)}: {this.FrameworkDescription}, " +
+			$"{nameof(this.FrameworkVersion)}: {this.FrameworkVersion}, " +
+			$"{nameof(this.Is64BitOperatingSystem)}: {this.Is64BitOperatingSystem}, " +
+			$"{nameof(this.Is64BitProcess)}: {this.Is64BitProcess}, " +
+			$"{nameof(this.PhysicalMemoryInUse)}: {this.PhysicalMemoryInUse}");
+	}
 }
