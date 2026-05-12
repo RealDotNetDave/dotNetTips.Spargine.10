@@ -43,31 +43,14 @@ public static class AssemblyHelper
 	/// <param name="referencedAssemblyName">The name of the referenced assembly.</param>
 	/// <returns><c>true</c> if the assembly references the specified assembly; otherwise, <c>false</c>.</returns>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(DoesAssemblyReference), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool DoesAssemblyReference([DisallowNull] FileInfo assemblyFile, [DisallowNull] string referencedAssemblyName)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
-		referencedAssemblyName = referencedAssemblyName.ArgumentNotNull();
+		referencedAssemblyName = referencedAssemblyName.ArgumentNotNullOrEmpty();
 
-		// Ensure the file is a valid .NET assembly before loading
-		if (!IsDotNetAssembly(assemblyFile))
-		{
-			Trace.WriteLine($"The file '{assemblyFile.FullName}' is not a valid .NET assembly.");
-			return false;
-		}
-
-		try
-		{
-			var assembly = Assembly.LoadFrom(assemblyFile.FullName);
-			return assembly.GetReferencedAssemblies()
-				.Any(reference => string.Equals(reference.Name, referencedAssemblyName, StringComparison.OrdinalIgnoreCase));
-		}
-		catch (Exception ex) //Write out all exceptions
-		{
-			Trace.WriteLine($"Error checking assembly references: {ex.Message}");
-			return false;
-		}
+		return GetDependentAssemblies(assemblyFile)
+			.Any(reference => string.Equals(reference.Name, referencedAssemblyName, StringComparison.OrdinalIgnoreCase));
 	}
 
 	/// <summary>
@@ -241,13 +224,11 @@ public static class AssemblyHelper
 	/// <param name="assemblyFile">The <see cref="FileInfo"/> representing the assembly file.</param>
 	/// <returns>A read-only collection containing metadata key-value pairs.</returns>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetAssemblyMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<KeyValuePair<string, string>> GetAssemblyMetadata([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
 
-		// Ensure the file is a valid .NET assembly before loading
 		if (!IsDotNetAssembly(assemblyFile))
 		{
 			Trace.WriteLine($"The file '{assemblyFile.FullName}' is not a valid .NET assembly.");
@@ -257,20 +238,34 @@ public static class AssemblyHelper
 
 		try
 		{
-			var assembly = Assembly.LoadFrom(assemblyFile.FullName);
-			var assemblyName = assembly.GetName();
+			using var stream = File.OpenRead(assemblyFile.FullName);
+			using var peReader = new PEReader(stream);
 
-			return new ReadOnlyCollection<KeyValuePair<string, string>>(
-				[
+			if (!peReader.HasMetadata)
+			{
+				return new ReadOnlyCollection<KeyValuePair<string, string>>([new("Error", "Assembly does not contain metadata")]);
+			}
+
+			var metadataReader = peReader.GetMetadataReader();
+			var assemblyDefinition = metadataReader.GetAssemblyDefinition();
+			var assemblyName = CreateAssemblyName(metadataReader, assemblyDefinition);
+
+			var cultureName = string.IsNullOrWhiteSpace(assemblyName.CultureName)
+				? "Neutral"
+				: assemblyName.CultureName;
+
+			return new ReadOnlyCollection<KeyValuePair<string, string>>
+			([
 				new("Name", assemblyName.Name ?? string.Empty),
-				new("Version", assemblyName.Version?.ToString() ?? "Unknown"),
-				new("Culture", string.IsNullOrWhiteSpace(assemblyName.CultureInfo?.Name) ? "Neutral" : assemblyName.CultureInfo.Name),
-				new("FullName", assembly.FullName ?? string.Empty)
-				]);
+			new("Version", assemblyName.Version?.ToString() ?? "Unknown"),
+			new("Culture", cultureName),
+			new("FullName", assemblyName.FullName ?? string.Empty)
+			]);
 		}
-		catch (Exception ex) //Write out all exceptions
+		catch (Exception ex)
 		{
 			Trace.WriteLine($"Error retrieving metadata from assembly '{assemblyFile.FullName}': {ex.Message}");
+
 			return new ReadOnlyCollection<KeyValuePair<string, string>>(Array.Empty<KeyValuePair<string, string>>());
 		}
 	}
@@ -364,34 +359,46 @@ public static class AssemblyHelper
 	/// <returns>A read-only collection of dependent assemblies.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="assemblyFile"/> is null.</exception>
 	/// <exception cref="FileNotFoundException">Thrown if the specified assembly file does not exist.</exception>
-	/// <exception cref="FileLoadException">Thrown if an assembly cannot be loaded.</exception>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetDependentAssemblies), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<AssemblyName> GetDependentAssemblies([DisallowNull] FileInfo assemblyFile)
 	{
 		assemblyFile = assemblyFile.ArgumentExists(assemblyFile);
 
-		// Ensure the file is a valid .NET assembly before loading
 		if (!IsDotNetAssembly(assemblyFile))
 		{
 			Trace.WriteLine($"The file '{assemblyFile.FullName}' is not a valid .NET assembly.");
+
 			return new ReadOnlyCollection<AssemblyName>(Array.Empty<AssemblyName>());
 		}
 
-#pragma warning disable CA1031 // Do not catch general exception assemblyTypes
 		try
 		{
-			var assembly = Assembly.LoadFrom(assemblyFile.FullName);
+			using var stream = File.OpenRead(assemblyFile.FullName);
+			using var peReader = new PEReader(stream);
 
-			return Array.AsReadOnly(assembly.GetReferencedAssemblies());
+			if (!peReader.HasMetadata)
+			{
+				return new ReadOnlyCollection<AssemblyName>(Array.Empty<AssemblyName>());
+			}
+
+			var metadataReader = peReader.GetMetadataReader();
+			var assemblyNames = new List<AssemblyName>();
+
+			foreach (var handle in metadataReader.AssemblyReferences)
+			{
+				var reference = metadataReader.GetAssemblyReference(handle);
+				assemblyNames.Add(CreateAssemblyName(metadataReader, reference));
+			}
+
+			return assemblyNames.AsReadOnly();
 		}
-		catch (Exception ex) //Write out all exceptions
+		catch (Exception ex)
 		{
 			Trace.WriteLine($"Error retrieving dependent assemblies from '{assemblyFile.FullName}': {ex.Message}");
+
 			return new ReadOnlyCollection<AssemblyName>(Array.Empty<AssemblyName>());
 		}
-#pragma warning restore CA1031 // Do not catch general exception assemblyTypes
 	}
 
 	/// <summary>
@@ -541,6 +548,77 @@ public static class AssemblyHelper
 		_ = context.LoadFromAssemblyPath(assemblyFile.FullName);
 
 		context.Unload();
+	}
+
+	/// <summary>
+	/// Creates an <see cref="AssemblyName"/> from an assembly definition read from metadata.
+	/// </summary>
+	/// <param name="metadataReader">The metadata reader.</param>
+	/// <param name="assemblyDefinition">The assembly definition.</param>
+	/// <returns>The created <see cref="AssemblyName"/>.</returns>
+	private static AssemblyName CreateAssemblyName(MetadataReader metadataReader, AssemblyDefinition assemblyDefinition)
+	{
+		var assemblyName = new AssemblyName
+		{
+			Name = metadataReader.GetString(assemblyDefinition.Name),
+			Version = assemblyDefinition.Version,
+			Flags = (AssemblyNameFlags)(int)assemblyDefinition.Flags
+		};
+
+		var cultureName = metadataReader.GetString(assemblyDefinition.Culture);
+
+		if (string.IsNullOrWhiteSpace(cultureName) is false)
+		{
+			assemblyName.CultureName = cultureName;
+		}
+
+		var publicKey = metadataReader.GetBlobBytes(assemblyDefinition.PublicKey);
+
+		if (publicKey.Length > 0)
+		{
+			assemblyName.SetPublicKey(publicKey);
+		}
+
+		return assemblyName;
+	}
+
+	/// <summary>
+	/// Creates an <see cref="AssemblyName"/> from an assembly reference read from metadata.
+	/// </summary>
+	/// <param name="metadataReader">The metadata reader.</param>
+	/// <param name="assemblyReference">The assembly reference.</param>
+	/// <returns>The created <see cref="AssemblyName"/>.</returns>
+	private static AssemblyName CreateAssemblyName(MetadataReader metadataReader, AssemblyReference assemblyReference)
+	{
+		var assemblyName = new AssemblyName
+		{
+			Name = metadataReader.GetString(assemblyReference.Name),
+			Version = assemblyReference.Version,
+			Flags = (AssemblyNameFlags)(int)assemblyReference.Flags
+		};
+
+		var cultureName = metadataReader.GetString(assemblyReference.Culture);
+
+		if (string.IsNullOrWhiteSpace(cultureName) is false)
+		{
+			assemblyName.CultureName = cultureName;
+		}
+
+		var publicKeyOrToken = metadataReader.GetBlobBytes(assemblyReference.PublicKeyOrToken);
+
+		if (publicKeyOrToken.Length > 0)
+		{
+			if ((assemblyReference.Flags & AssemblyFlags.PublicKey) == AssemblyFlags.PublicKey)
+			{
+				assemblyName.SetPublicKey(publicKeyOrToken);
+			}
+			else
+			{
+				assemblyName.SetPublicKeyToken(publicKeyOrToken);
+			}
+		}
+
+		return assemblyName;
 	}
 
 	/// <summary>
