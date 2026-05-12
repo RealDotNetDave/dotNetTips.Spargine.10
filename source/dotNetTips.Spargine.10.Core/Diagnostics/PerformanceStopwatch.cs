@@ -53,14 +53,6 @@ public sealed class PerformanceStopwatch : Stopwatch
 	private readonly ConcurrentBag<DiagnosticEntry> _diagnostics = [];
 
 	/// <summary>
-	/// JSON serializer options for exporting stopwatch data.
-	/// </summary>
-	private readonly JsonSerializerOptions _jsonSerializerOptions = new()
-	{
-		WriteIndented = true,
-	};
-
-	/// <summary>
 	/// A list of recorded lap times.
 	/// </summary>
 	private readonly ConcurrentBag<TimeSpan> _laps = [];
@@ -1380,26 +1372,23 @@ public sealed class PerformanceStopwatch : Stopwatch
 	/// <seealso cref="Diagnostics"/>
 	/// <seealso cref="JsonSerializer"/>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ExportToJson), "David McCarter", "05/08/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string ExportToJson()
 	{
+		var export = new PerformanceStopwatchExport(
+			this.Title,
+			this.Elapsed.TotalMilliseconds,
+			[.. this.GetLaps()],
+			[.. this.Diagnostics
+				.Select(d => new PerformanceStopwatchDiagnosticExport(
+					d.Timestamp,
+					d.Message,
+					d.Elapsed.TotalMilliseconds))]);
+
 		return JsonSerializer.Serialize(
-					new
-					{
-						this.Title,
-						ElapsedTimeMs = this.Elapsed.TotalMilliseconds,
-						Laps = this.GetLaps().ToArray(),
-						Diagnostics = this.Diagnostics.Select(
-							d => new
-							{
-								d.Timestamp,
-								d.Message,
-								ElapsedMs = d.Elapsed.TotalMilliseconds,
-							})
-							.ToArray()
-					}, this._jsonSerializerOptions);
+			export,
+			PerformanceStopwatchJsonContext.Default.PerformanceStopwatchExport);
 	}
 
 	/// <summary>
