@@ -28,18 +28,19 @@ namespace DotNetTips.Spargine.Core.Internal;
 /// <summary>
 /// Class InternalMethods.
 /// </summary>
-[RequiresUnreferencedCode("Calls DotNetTips.Spargine.Core.TypeHelper.BuiltInTypeNames()")]
 internal static class InternalMethods
 {
-
+	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
 	private static readonly CompositeFormat _propertiesAggregateFormat = CompositeFormat.Parse("{0}{1}{2}{3}{4}");
 
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("Uses reflection to enumerate object properties and read property values. Properties may be removed in trimmed apps.")]
 	[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyDictionary<string, string> PropertiesToDictionary(this object obj, [DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
+	public static ReadOnlyDictionary<string, string> PropertiesToDictionary(this object obj, string memberName = ControlChars.EmptyString,
+	bool ignoreNulls = true)
 	{
 		memberName = memberName.ArgumentNotNull();
 
@@ -82,9 +83,7 @@ internal static class InternalMethods
 
 		// Otherwise go deeper in the object tree.
 		// And foreach object public property collect each value
-#pragma warning disable IL2070 // objectType from obj.GetType() without DynamicallyAccessedMembers, but class already marked RequiresUnreferencedCode
 		var propertyCollection = objectType.GetProperties();
-#pragma warning restore IL2070
 
 		var newMemberName = string.Empty;
 
@@ -175,11 +174,8 @@ internal static class InternalMethods
 	{
 		type = type.ArgumentNotNull();
 
-#pragma warning disable IL2070 // type parameter without DynamicallyAccessedMembers — class marked RequiresUnreferencedCode
-		return type.GetInterfaces().Any(t => t == typeof(IEnumerable));
-#pragma warning restore IL2070
+		return type != typeof(string) && typeof(IEnumerable).IsAssignableFrom(type);
 	}
-
 
 	/// <summary>
 	/// Propertieses to string.
@@ -191,7 +187,7 @@ internal static class InternalMethods
 	/// <param name="ignoreNulls">if set to <c>true</c> [ignore nulls].</param>
 	/// <param name="includeMemberName">if set to <c>true</c> [include member name].</param>
 	/// <returns>System.String.</returns>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[RequiresUnreferencedCode("Uses reflection to enumerate object properties. Properties may be removed in trimmed apps.")]
 	internal static string PropertiesToString(this object obj, string header = ControlChars.EmptyString, char keyValueSeparator = ControlChars.Colon, string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 	{
 		var typeName = obj.GetType().Name;
