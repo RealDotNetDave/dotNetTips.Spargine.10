@@ -56,7 +56,7 @@ public class FileProcessorTests
 			files.Add(fi); // Add duplicate
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyDuplicate"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyDuplicate"));
 
 		// Act
 		var copiedCount = processor.CopyFiles(files, destination);
@@ -78,7 +78,7 @@ public class FileProcessorTests
 		var processor = new FileProcessor();
 		processor.Processed += this.Processor_Processed;
 		var files = new List<FileInfo>();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyEmpty"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyEmpty"));
 
 		// Act
 		var copiedCount = processor.CopyFiles(files, destination);
@@ -105,7 +105,7 @@ public class FileProcessorTests
 		files.Add(null);
 		files.Add(null);
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyNullEntries"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyNullEntries"));
 
 		// Act
 		var copiedCount = processor.CopyFiles(files, destination);
@@ -126,7 +126,7 @@ public class FileProcessorTests
 		// Arrange
 		var processor = new FileProcessor();
 		processor.Processed += this.Processor_Processed;
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyNull"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyNull"));
 
 		// Act
 		var copiedCount = processor.CopyFiles(null, destination);
@@ -151,7 +151,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyCancelled"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyCancelled"));
 		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
@@ -202,7 +202,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyNoOverwrite"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyNoOverwrite"));
 
 		// Copy once
 		processor.CopyFiles(files, destination, overwrite: true);
@@ -240,7 +240,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOverwriteTrue"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOverwriteTrue"));
 
 		// Copy once
 		processor.CopyFiles(files, destination, overwrite: true);
@@ -273,7 +273,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyBasic"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyBasic"));
 
 		// Act
 		var copiedCount = processor.CopyFiles(files, destination);
@@ -297,13 +297,13 @@ public class FileProcessorTests
 
 		var files = new List<FileInfo>
 		{
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copy1.txt")),
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copy2.txt"))
+			new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent_copy1.txt")),
+			new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent_copy2.txt"))
 		};
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyNonExistent"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyNonExistent"));
 
-		// Act & Assert - CopyFiles accesses FileInfo.Length on non-existent files which throws
+		// Act & Assert - FileProcessor accesses file.Length in the error path which throws for non-existent files
 		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFiles(files, destination));
 
 		// Cleanup
@@ -347,7 +347,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "Copy"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "Copy"));
 
 		Assert.AreEqual(FileCount, processor.CopyFilesWithOriginalPath(files, destination));
 
@@ -372,7 +372,7 @@ public class FileProcessorTests
 			files.Add(fi); // Add duplicate
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalDuplicate"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalDuplicate"));
 
 		// Act
 		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
@@ -397,7 +397,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventArgsCopyOriginalTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "EventArgsCopyOriginalTest"));
 		var eventArgsList = new List<ProgressEventArgs>();
 
 		processor.Processed += (sender, e) =>
@@ -441,7 +441,7 @@ public class FileProcessorTests
 		files.Add(null);
 		files.Add(null);
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNullEntries"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalNullEntries"));
 
 		// Act
 		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
@@ -469,7 +469,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalCancelled"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalCancelled"));
 		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
@@ -513,7 +513,7 @@ public class FileProcessorTests
 		// Arrange
 		var processor = new FileProcessor();
 		var files = new List<FileInfo>();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalEmpty"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalEmpty"));
 
 		// Act
 		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
@@ -533,13 +533,13 @@ public class FileProcessorTests
 
 		var files = new List<FileInfo>
 		{
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copyorig1.txt")),
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_copyorig2.txt"))
+			new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent_copyorig1.txt")),
+			new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent_copyorig2.txt"))
 		};
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNonExistent"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalNonExistent"));
 
-		// Act & Assert - CopyFilesWithOriginalPath accesses FileInfo.Length on non-existent files which throws
+		// Act & Assert - FileProcessor accesses file.Length in the error path which throws for non-existent files
 		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFilesWithOriginalPath(files, destination));
 
 		// Cleanup
@@ -571,7 +571,7 @@ public class FileProcessorTests
 	{
 		// Arrange
 		var processor = new FileProcessor();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyOriginalNull"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalNull"));
 
 		// Act
 		var copiedCount = processor.CopyFilesWithOriginalPath(null, destination);
@@ -641,8 +641,8 @@ public class FileProcessorTests
 
 		var files = new List<FileInfo>
 	{
-		new FileInfo(Path.Combine(App.ProcessPath, "nonexistent1.txt")),
-		new FileInfo(Path.Combine(App.ProcessPath, "nonexistent2.txt"))
+		new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent1.txt")),
+		new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent2.txt"))
 	};
 
 		// Act
@@ -1085,7 +1085,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveBasic"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveBasic"));
 
 		// Act
 		var movedCount = processor.MoveFiles(files, destination);
@@ -1121,7 +1121,7 @@ public class FileProcessorTests
 			files.Add(fi); // Add duplicate
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveDuplicate"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveDuplicate"));
 
 		// Act
 		var movedCount = processor.MoveFiles(files, destination);
@@ -1143,7 +1143,7 @@ public class FileProcessorTests
 		var processor = new FileProcessor();
 		processor.Processed += this.Processor_Processed;
 		var files = new List<FileInfo>();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveEmpty"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveEmpty"));
 
 		// Act
 		var movedCount = processor.MoveFiles(files, destination);
@@ -1171,11 +1171,11 @@ public class FileProcessorTests
 
 		var files = new List<FileInfo>
 	{
-		new FileInfo(Path.Combine(App.ProcessPath, "nonexistent1.txt")),
-		new FileInfo(Path.Combine(App.ProcessPath, "nonexistent2.txt"))
+		new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent1.txt")),
+		new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent2.txt"))
 	};
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveNonExistent"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveNonExistent"));
 
 		// Act
 		var movedCount = processor.MoveFiles(files, destination);
@@ -1203,7 +1203,7 @@ public class FileProcessorTests
 		files.Add(null);
 		files.Add(null);
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveNullEntries"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveNullEntries"));
 
 		// Act
 		var movedCount = processor.MoveFiles(files, destination);
@@ -1224,7 +1224,7 @@ public class FileProcessorTests
 		// Arrange
 		var processor = new FileProcessor();
 		processor.Processed += this.Processor_Processed;
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveNull"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveNull"));
 
 		// Act
 		var movedCount = processor.MoveFiles(null, destination);
@@ -1249,7 +1249,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveCancelled"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveCancelled"));
 		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
@@ -1297,7 +1297,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveNoOverwrite"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveNoOverwrite"));
 
 		// Copy files to destination first to create existing files
 		destination.Create();
@@ -1342,7 +1342,7 @@ public class FileProcessorTests
 			files1.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOverwrite"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOverwrite"));
 
 		// Create dummy files in destination with same names
 		destination.Create();
@@ -1393,7 +1393,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginal"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginal"));
 
 		// Act
 		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
@@ -1429,7 +1429,7 @@ public class FileProcessorTests
 			files.Add(fi); // Add duplicate
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalDuplicate"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalDuplicate"));
 
 		// Act
 		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
@@ -1454,7 +1454,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventArgsMoveOriginalTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "EventArgsMoveOriginalTest"));
 		var eventArgsList = new List<ProgressEventArgs>();
 
 		processor.Processed += (sender, e) =>
@@ -1498,7 +1498,7 @@ public class FileProcessorTests
 		files.Add(null);
 		files.Add(null);
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNullEntries"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalNullEntries"));
 
 		// Act
 		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
@@ -1526,7 +1526,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalCancelled"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalCancelled"));
 		var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
@@ -1575,7 +1575,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNoOverwrite"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalNoOverwrite"));
 
 		// Copy files to destination first to create existing files at the destination paths
 		processor.CopyFilesWithOriginalPath(files, destination);
@@ -1612,7 +1612,7 @@ public class FileProcessorTests
 		// Arrange
 		var processor = new FileProcessor();
 		var files = new List<FileInfo>();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalEmpty"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalEmpty"));
 
 		// Act
 		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
@@ -1640,11 +1640,11 @@ public class FileProcessorTests
 
 		var files = new List<FileInfo>
 		{
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_moveorig1.txt")),
-			new FileInfo(Path.Combine(App.ProcessPath, "nonexistent_moveorig2.txt"))
+			new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent_moveorig1.txt")),
+			new FileInfo(Path.Combine(App.ExecutingFolder(), "nonexistent_moveorig2.txt"))
 		};
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNonExistent"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalNonExistent"));
 
 		// Act
 		var movedCount = processor.MoveFilesWithOriginalPath(files, destination);
@@ -1682,7 +1682,7 @@ public class FileProcessorTests
 	{
 		// Arrange
 		var processor = new FileProcessor();
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalNull"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalNull"));
 
 		// Act
 		var movedCount = processor.MoveFilesWithOriginalPath(null, destination);
@@ -1709,7 +1709,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "MoveOriginalOverwrite"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "MoveOriginalOverwrite"));
 
 		// First move
 		var movedCount1 = processor.MoveFilesWithOriginalPath(files, destination, overwrite: true);
@@ -1753,7 +1753,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "EventTest"));
 		int eventFireCount = 0;
 
 		processor.Processed += (sender, e) =>
@@ -1786,7 +1786,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "NoHandlerTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "NoHandlerTest"));
 
 		// Act & Assert - no handler attached, should not throw
 		var copiedCount = processor.CopyFiles(files, destination);
@@ -1809,7 +1809,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "SenderTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "SenderTest"));
 		object capturedSender = null;
 
 		processor.Processed += (sender, e) =>
@@ -1844,7 +1844,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventArgsCopyTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "EventArgsCopyTest"));
 		var eventArgsList = new List<ProgressEventArgs>();
 
 		processor.Processed += (sender, e) =>
@@ -1961,7 +1961,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "EventArgsMoveTest"));
+		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "EventArgsMoveTest"));
 		var eventArgsList = new List<ProgressEventArgs>();
 
 		processor.Processed += (sender, e) =>

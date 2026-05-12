@@ -969,8 +969,8 @@ public class DirectoryHelperTests
 	[TestMethod]
 	public void MoveDirectoryTest()
 	{
-		var folderSource = new DirectoryInfo(Path.Combine(App.ProcessPath, "Move1"));
-		var folderDestination = new DirectoryInfo(Path.Combine(App.ProcessPath, "Move2"));
+		var folderSource = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "Move1"));
+		var folderDestination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "Move2"));
 
 		var files = RandomData.GenerateFiles(folderSource.FullName, 100);
 

@@ -53,7 +53,7 @@ public class CountryDataTests
 		var countries = CountryRepository.GetCountries();
 		var data = countries.Select(p => new { p.Id, p.Iso2, p.Iso3, p.Name, p.PhoneCode, p.PhoneNumberLength, p.PostalFormat, p.PostalRegex });
 
-		var file = new FileInfo(Path.Combine(App.ProcessPath, "CountryPhonePostalInfo.json"));
+		var file = new FileInfo(Path.Combine(App.ExecutingFolder(), "CountryPhonePostalInfo.json"));
 
 		JsonSerializerOptions options = new JsonSerializerOptions { NumberHandling = JsonNumberHandling.Strict, PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
