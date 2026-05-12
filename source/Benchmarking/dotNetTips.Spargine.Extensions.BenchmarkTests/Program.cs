@@ -46,11 +46,11 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ListExtensionsCollectionBenchmark),
-			typeof(EnumerableExtensionsCollectionBenchmark),
-			typeof(ImmutableArrayExtensionsBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	typeof(ListExtensionsCollectionBenchmark),
+		//	typeof(EnumerableExtensionsCollectionBenchmark),
+		//	typeof(ImmutableArrayExtensionsBenchmark)
+		//);
 
 		// Group 1: A–E
 		//BenchmarkHelper.RunBenchmarks(config, true,
@@ -87,15 +87,15 @@ internal sealed class Program
 		//);
 
 		// Group 3: R–T
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
-		//	typeof(ReadOnlySpanExtensionsBenchmark),
-		//	typeof(SortedDictionaryExtensionsBenchmark),
-		//	typeof(SortedSetExtensionsBenchmark),
-		//	typeof(StringBuilderExtensionsCounterBenchmark),
-		//	typeof(StringExtensionsBenchmark),
-		//	typeof(StringExtensionsCounterBenchmark),
-		//	typeof(TypeExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(ReadOnlyCollectionExtensionsBenchmark),
+			typeof(ReadOnlySpanExtensionsBenchmark),
+			typeof(SortedDictionaryExtensionsBenchmark),
+			typeof(SortedSetExtensionsBenchmark),
+			typeof(StringBuilderExtensionsCounterBenchmark),
+			typeof(StringExtensionsBenchmark),
+			typeof(StringExtensionsCounterBenchmark),
+			typeof(TypeExtensionsBenchmark)
+		);
 	}
 }

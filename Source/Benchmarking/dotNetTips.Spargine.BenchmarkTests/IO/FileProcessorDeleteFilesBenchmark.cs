@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileProcessorDeleteFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -38,17 +38,7 @@ public class FileProcessorDeleteFilesBenchmark : Benchmark
 
 	private FileProcessor _fileProcessor;
 	private List<FileInfo> _filesToDelete;
-	private DirectoryInfo _tempDir;
-
-	/// <summary>
-	/// Overrides Cleanup to remove the temporary directory if it still exists.
-	/// </summary>
-	public override void Cleanup()
-	{
-		base.Cleanup();
-
-		_ = DirectoryHelper.DeleteDirectory(this._tempDir, retries: 5);
-	}
+	private DirectoryInfo _tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorDeleteFilesBenchmark) + "_" + RandomData.GenerateKey()));
 
 	/// <summary>
 	/// Benchmark for <see cref="FileProcessor.DeleteFiles"/>.
