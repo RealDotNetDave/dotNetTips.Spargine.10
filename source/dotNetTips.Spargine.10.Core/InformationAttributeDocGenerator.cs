@@ -146,6 +146,7 @@ public static class InformationAttributeDocGenerator
 	/// </summary>
 	/// <param name="sb">The StringBuilder to append the documentation to.</param>
 	/// <param name="memberInfo">The member information to document.</param>
+	[RequiresUnreferencedCode("Generates documentation using reflection over members, attributes, parameters, and type metadata.")]
 	private static void GenerateMemberInfo(StringBuilder sb, MemberInfo memberInfo)
 	{
 		// Get InformationAttribute data
@@ -223,6 +224,7 @@ public static class InformationAttributeDocGenerator
 	/// </summary>
 	/// <param name="member">The member for which to get the signature.</param>
 	/// <returns>A string representing the signature of the member.</returns>
+	[RequiresUnreferencedCode("Builds member signatures using reflection metadata that may be removed in trimmed apps.")]
 	private static string GetMemberSignature(MemberInfo member)
 	{
 		switch (member.MemberType)
@@ -265,6 +267,7 @@ public static class InformationAttributeDocGenerator
 	/// </summary>
 	/// <param name="type">The type for which to get the display name.</param>
 	/// <returns>A string representing the display name of the type.</returns>
+	[RequiresUnreferencedCode("Formats type names using reflection metadata that may be removed in trimmed apps.")]
 	private static string GetTypeName(Type type) => TypeHelper.GetTypeDisplayName(type, includeGenericParameterNames: true);
 
 	/// <summary>
