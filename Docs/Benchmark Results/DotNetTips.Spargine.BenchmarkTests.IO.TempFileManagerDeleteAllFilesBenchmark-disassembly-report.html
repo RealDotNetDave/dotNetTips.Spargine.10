@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260510-142502</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260510-142502</th></tr>
+<tr>
+<th>DeleteAllFiles .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark.DeleteAllFiles()
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rcx,[rax+138]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BE175E8]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+DotNetTips.Spargine.IO.TempFileManager.DeleteAllFiles()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+		var snapshot = this._files.Count;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rax,[rbp+10]
+mov       rcx,[rax+8]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BD85570]
+mov       [rbp-4],eax
+		var filesDeletedResult = FileHelper.DeleteFiles(this._files.AsEnumerable().ToReadOnlyCollection());
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rax,[rbp+10]
+mov       rdx,[rax+8]
+mov       rcx,7FFB2BE400A8
+call      qword ptr [7FFB2BE17660]
+mov       [rbp-18],rax
+mov       rdx,[rbp-18]
+mov       rcx,7FFB2BE40158
+call      qword ptr [7FFB2BB75D70]
+mov       [rbp-20],rax
+mov       rcx,[rbp-20]
+xor       edx,edx
+call      qword ptr [7FFB2BE176C0]
+mov       [rbp-10],rax
+		if (filesDeletedResult.Value.Count == snapshot)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp-10]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BE176D8]
+mov       rcx,rax
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BBB5F68]
+cmp       eax,[rbp-4]
+jne       short 00007FFB2B7E33D7
+			this._files.Clear();
+			^^^^^^^^^^^^^^^^^^^^
+mov       rax,[rbp+10]
+mov       rcx,[rax+8]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BE176F0]
+nop
+add       rsp,50
+pop       rbp
+ret
+		this.DeleteFilesFromCache(filesDeletedResult.Value);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp-10]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BE176D8]
+mov       [rbp-28],rax
+mov       rdx,[rbp-28]
+mov       rcx,[rbp+10]
+call      qword ptr [7FFB2BE17708]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

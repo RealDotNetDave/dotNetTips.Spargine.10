@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260510-142557</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260510-142557</th></tr>
+<tr>
+<th>DeleteFile .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark.DeleteFile()
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rdx,[rax+140]
+mov       rax,[rbp+10]
+mov       rcx,[rax+138]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BDC5878]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)
+push      rbp
+sub       rsp,60
+lea       rbp,[rsp+60]
+xor       eax,eax
+mov       [rbp-38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-30],ymm4
+vmovdqa   xmmword ptr [rbp-10],xmm4
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+		if (string.IsNullOrEmpty(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp+18]
+call      qword ptr [7FFB2B92F1B0]
+test      eax,eax
+je        short 00007FFB2B7A145A
+add       rsp,60
+pop       rbp
+ret
+		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       dword ptr [rbp-0C],1
+mov       rcx,offset MT_System.Collections.Generic.List<System.String>
+call      CORINFO_HELP_NEWSFAST
+mov       [rbp-28],rax
+mov       rcx,[rbp-28]
+mov       edx,[rbp-0C]
+call      qword ptr [7FFB2BCA46C0]
+mov       r8d,[rbp-0C]
+mov       rdx,[rbp-28]
+mov       rcx,7FFB2BDD6FB8
+call      qword ptr [7FFB2BCAFD80]
+lea       rcx,[rbp-20]
+mov       r8,[rbp-28]
+mov       rdx,7FFB2BDD7040
+call      qword ptr [7FFB2BCAFDB0]
+cmp       dword ptr [rbp-18],0
+jbe       near ptr 00007FFB2B7A1539
+mov       rcx,[rbp-20]
+mov       rdx,[rbp+18]
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+mov       rcx,offset MT_System.Collections.ObjectModel.ReadOnlyCollection<System.String>
+call      CORINFO_HELP_NEWSFAST
+mov       [rbp-30],rax
+mov       rcx,[rbp-30]
+mov       rdx,[rbp-28]
+call      qword ptr [7FFB2BB3C7C8]
+mov       rcx,[rbp-30]
+xor       edx,edx
+call      qword ptr [7FFB2BDC5920]
+mov       [rbp-8],rax
+		if (filesDeletedResult.Value.Count > 0)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp-8]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BDC5938]
+mov       rcx,rax
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BB75F68]
+test      eax,eax
+jle       short 00007FFB2B7A1532
+			this.DeleteFilesFromCache(filesDeletedResult.Value);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp-8]
+cmp       [rcx],ecx
+call      qword ptr [7FFB2BDC5938]
+mov       [rbp-38],rax
+mov       rdx,[rbp-38]
+mov       rcx,[rbp+10]
+call      qword ptr [7FFB2BDC5950]
+nop
+add       rsp,60
+pop       rbp
+ret
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

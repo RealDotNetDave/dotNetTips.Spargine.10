@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperUnGZipAsyncBenchmark-20260510-135258</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.203
+  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO  
+</code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min     </th><th>Q1      </th><th>Median  </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>UnGZipAsync</td><td>1,177,891.2 ns</td><td>22,578.6 ns</td><td>59,084.1 ns</td><td>6,605.8 ns</td><td>1,029,300.0 ns</td><td>1,143,775.0 ns</td><td>1,178,200.0 ns</td><td>1,211,975.0 ns</td><td>1,381,200.0 ns</td><td>849.0</td><td>-3,262.9 ns</td><td>80.00</td><td>4.217</td><td>2.000</td><td>0.3461</td><td>1</td><td>*</td><td>No</td><td>-</td><td>296 B</td><td>83.59 KB</td>
+</tr></tbody></table>
+</body>
+</html>
