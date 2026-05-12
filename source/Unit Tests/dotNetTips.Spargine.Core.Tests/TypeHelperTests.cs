@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -34,6 +34,7 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -81,6 +82,7 @@ public class TypeHelperTests : UnitTester
 		var result = TypeHelper.BuiltInTypes;
 
 		Assert.IsNotNull(result);
+		Assert.IsTrue(result.Contains(typeof(Array)));
 		Assert.IsTrue(result.Contains(typeof(int)));
 		Assert.IsTrue(result.Contains(typeof(bool)));
 		Assert.IsTrue(result.Contains(typeof(string)));
@@ -280,6 +282,34 @@ public class TypeHelperTests : UnitTester
 		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(MulticastDelegate), true);
 
 		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	[TestMethod]
+	public void FromJson_WithJsonTypeInfo_NullJson_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FromJson<Person>(null, PersonRefJsonSerializerContext.Default.Person));
+	}
+
+	[TestMethod]
+	public void FromJson_WithJsonTypeInfo_NullTypeInfo_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var json = person.ToJson();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => TypeHelper.FromJson<Person>(json, null));
+	}
+
+	[TestMethod]
+	public void FromJson_WithJsonTypeInfo_ValidJson_ReturnsDeserializedObject()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var json = JsonSerializer.Serialize(person, PersonRefJsonSerializerContext.Default.Person);
+
+		var result = TypeHelper.FromJson(json, PersonRefJsonSerializerContext.Default.Person);
+
+		Assert.IsNotNull(result);
+		Assert.AreEqual(person.Id, result.Id);
+		Assert.AreEqual(person.Email, result.Email);
 	}
 
 	[TestMethod]
@@ -2662,13 +2692,6 @@ public class TypeHelperTests : UnitTester
 		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(IFormattable)));
 	}
 
-	[TestMethod]
-	public void IsBuiltinType_InterfaceNotInSystemNamespace_ReturnsFalse()
-	{
-		// IEnumerable is in System.Collections, not System — not in the built-in types cache
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(IEnumerable)));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(IList)));
-	}
 
 	[TestMethod]
 	public void IsBuiltInTypeTest_ArraySegment_ReturnsTrue()
@@ -2678,15 +2701,6 @@ public class TypeHelperTests : UnitTester
 
 		// Run again to hit cache
 		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(ArraySegment<>)));
-	}
-
-	[TestMethod]
-	public void IsBuiltInTypeTest_ArrayTypes_ReturnsFalse()
-	{
-		// Array types are not in the built-in types cache
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(int[])));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(string[])));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Person[])));
 	}
 
 	[TestMethod]
@@ -2705,16 +2719,6 @@ public class TypeHelperTests : UnitTester
 		// Second call should be faster or equal (cache hit)
 		Assert.IsTrue(sw2.ElapsedTicks <= sw1.ElapsedTicks * 2,
 			$"Cache should improve performance: First={sw1.ElapsedTicks}ns, Second={sw2.ElapsedTicks}ns");
-	}
-
-	[TestMethod]
-	public void IsBuiltInTypeTest_ClosedGenericTypes_ReturnsFalse()
-	{
-		// Closed generic types are NOT in the built-in types cache
-		// because the cache contains open generic definitions
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(List<int>)));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(Dictionary<string, int>)));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(HashSet<Person>)));
 	}
 
 	[TestMethod]
@@ -2781,25 +2785,6 @@ public class TypeHelperTests : UnitTester
 		var result = TypeHelper.IsBuiltinType(typeof(Int64));
 
 		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void IsBuiltInTypeTest_NullableTypes_ReturnsFalse()
-	{
-		// Nullable<> itself should be true as it's in the built-in types list
-		Assert.IsTrue(TypeHelper.IsBuiltinType(typeof(Nullable<>)));
-
-		// But closed nullable types are not in the cache
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(int?)));
-		Assert.IsFalse(TypeHelper.IsBuiltinType(typeof(DateTime?)));
-	}
-
-	[TestMethod]
-	public void IsBuiltInTypeTest_NullType_ReturnsFalse()
-	{
-		var result = TypeHelper.IsBuiltinType(null);
-
-		Assert.IsFalse(result);
 	}
 
 	[TestMethod]

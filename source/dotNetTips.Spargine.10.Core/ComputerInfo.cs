@@ -341,15 +341,32 @@ public sealed class ComputerInfo
 	{
 		return string.Create(
 			CultureInfo.CurrentCulture,
-			$"{nameof(this.MachineName)}: {this.MachineName}, " +
-			$"{nameof(this.OSDescription)}: {this.OSDescription}, " +
-			$"{nameof(this.OSArchitecture)}: {this.OSArchitecture}, " +
-			$"{nameof(this.ProcessArchitecture)}: {this.ProcessArchitecture}, " +
-			$"{nameof(this.ProcessorCount)}: {this.ProcessorCount}, " +
+			$"{nameof(this.ComputerCulture)}: {this.ComputerCulture}, " +
+			$"{nameof(this.ComputerUICulture)}: {this.ComputerUICulture}, " +
+			$"{nameof(this.CurrentManagedThreadId)}: {this.CurrentManagedThreadId}, " +
+			$"{nameof(this.CurrentStackTrace)}: {this.CurrentStackTrace}, " +
+			$"{nameof(this.CurrentSystemTickCount)}: {this.CurrentSystemTickCount}, " +
+			$"{nameof(this.CurrentWorkingDirectory)}: {this.CurrentWorkingDirectory}, " +
 			$"{nameof(this.FrameworkDescription)}: {this.FrameworkDescription}, " +
 			$"{nameof(this.FrameworkVersion)}: {this.FrameworkVersion}, " +
+			$"{nameof(this.HasShutdownStarted)}: {this.HasShutdownStarted}, " +
+			$"{nameof(this.IPAddress)}: {this.IPAddress}, " +
 			$"{nameof(this.Is64BitOperatingSystem)}: {this.Is64BitOperatingSystem}, " +
 			$"{nameof(this.Is64BitProcess)}: {this.Is64BitProcess}, " +
-			$"{nameof(this.PhysicalMemoryInUse)}: {this.PhysicalMemoryInUse}");
+			$"{nameof(this.IsNetworkAvailable)}: {this.IsNetworkAvailable}, " +
+			$"{nameof(this.IsUserInteractive)}: {this.IsUserInteractive}, " +
+			$"{nameof(this.MachineName)}: {this.MachineName}, " +
+			$"{nameof(this.OSArchitecture)}: {this.OSArchitecture}, " +
+			$"{nameof(this.OSDescription)}: {this.OSDescription}, " +
+			$"{nameof(this.OSMemoryPageSize)}: {this.OSMemoryPageSize}, " +
+			$"{nameof(this.PhysicalMemoryInUse)}: {this.PhysicalMemoryInUse}, " +
+			$"{nameof(this.ProcessArchitecture)}: {this.ProcessArchitecture}, " +
+			$"{nameof(this.ProcessorCount)}: {this.ProcessorCount}, " +
+			$"{nameof(this.SystemDirectory)}: {this.SystemDirectory}, " +
+			$"{nameof(this.SystemPageSize)}: {this.SystemPageSize}, " +
+			$"{nameof(this.TickCount)}: {this.TickCount}, " +
+			$"{nameof(this.TickCount64)}: {this.TickCount64}, " +
+			$"{nameof(this.UserDomainName)}: {this.UserDomainName}, " +
+			$"{nameof(this.UserName)}: {this.UserName}");
 	}
 }

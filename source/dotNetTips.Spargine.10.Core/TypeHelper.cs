@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 11-11-2020
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
@@ -351,7 +351,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json"/> is <c>null</c> or empty, or if <paramref name="typeInfo"/> is <c>null</c>.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or deserialization returns <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static T FromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	where T : class
 	{
@@ -1535,11 +1535,15 @@ public static class TypeHelper
 	/// <param name="type">The type to check.</param>
 	/// <returns><c>true</c> if the type is a built-in .NET type; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a cached dictionary of built-in types for O(1) lookup performance.
-	/// The cache is lazily initialized on first access and reused for all subsequent calls.
+	/// A type is considered built-in if it appears in the cached primitive/common-type dictionary,
+	/// or if it is any public type (class, struct, interface, enum, or delegate) defined in the
+	/// core .NET runtime assembly (<c>System.Private.CoreLib</c>) whose namespace is <c>"System"</c>
+	/// or begins with <c>"System."</c>.
+	/// The dictionary lookup is O(1); the assembly/namespace fallback is only reached when the type
+	/// is not in the dictionary. The cache is lazily initialized on first access.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type is null)
@@ -1552,7 +1556,16 @@ public static class TypeHelper
 			_ = BuiltInTypeNames();
 		}
 
-		return _cachedBuiltInTypes!.ContainsKey(type);
+		if (_cachedBuiltInTypes!.ContainsKey(type))
+		{
+			return true;
+		}
+
+		var ns = type.Namespace;
+
+		return ns is not null
+			&& (ns == "System" || ns.StartsWith("System.", StringComparison.Ordinal))
+			&& type.Assembly == typeof(object).Assembly;
 	}
 
 	/// <summary>
