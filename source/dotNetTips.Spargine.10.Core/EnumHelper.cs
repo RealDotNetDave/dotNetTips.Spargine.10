@@ -120,38 +120,31 @@ public static partial class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<EnumValue> GetItems<T>(bool fixNames = true)
+	public static ReadOnlyCollection<EnumValue> GetItems<
+		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] T>(
+		bool fixNames = true)
 		where T : Enum
 	{
 		var enumType = typeof(T);
 		var cacheKey = (enumType, fixNames);
 
-		// Check cache first
 		if (_itemsCache.TryGetValue(cacheKey, out var cachedResult))
 		{
 			return cachedResult;
 		}
 
-		// Get enum values as Array (faster than casting to int[])
 		var enumValues = Enum.GetValues(enumType);
 		var length = enumValues.Length;
-
-		// Pre-allocate with exact capacity
 		var result = new EnumValue[length];
-
-		// Get names once and cache as array
 		var enumNames = GetNames(enumType, fixNames);
 
-		// Direct indexed access - no span overhead for small collections
 		for (var i = 0; i < length; i++)
 		{
 			var value = Convert.ToInt32(enumValues.GetValue(i), CultureInfo.InvariantCulture);
 			result[i] = new EnumValue(value, enumNames[i]);
 		}
 
-		// Create read-only collection and cache it
 		var readOnlyResult = Array.AsReadOnly(result);
 		_ = _itemsCache.TryAdd(cacheKey, readOnlyResult);
 
@@ -220,19 +213,17 @@ public static partial class EnumHelper
 	/// <param name="fixNames">If set to <c>true</c>, adjusts the names for readability by adding spaces in camel case names and replacing underscores with spaces.</param>
 	/// <returns>A list of enumeration names as strings.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	private static List<string> GetNames([DisallowNull] Type type, bool fixNames = true)
+	private static List<string> GetNames(
+		[DisallowNull]
+	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)]
+	Type type,
+		bool fixNames = true)
 	{
-		// Load fields
 		var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-		// Pre-size to exact field count to avoid resizing
 		var result = new List<string>(fields.Length);
 
-		// Enum names (text) are defined as fields for the type
 		foreach (var enumValue in fields.AsSpan())
 		{
-			// If XML is specified and found, use this name
 			var attribute = Attribute.GetCustomAttribute(enumValue, typeof(XmlEnumAttribute)) as XmlEnumAttribute;
 
 			if (attribute?.Name is not null)
@@ -241,19 +232,11 @@ public static partial class EnumHelper
 				continue;
 			}
 
-			// Attempt to use the Description attribute (if present)
 			var description = Attribute.GetCustomAttribute(enumValue, typeof(DescriptionAttribute)) as DescriptionAttribute;
 
-			if (description?.Description is not null)
-			{
-				// Use this value
-				result.Add(description.Description);
-			}
-			else
-			{
-				// If not found, use the Enum name, with adjustment if requested
-				result.Add(fixNames ? AdjustName(enumValue.Name) : enumValue.Name);
-			}
+			result.Add(description?.Description is not null
+				? description.Description
+				: fixNames ? AdjustName(enumValue.Name) : enumValue.Name);
 		}
 
 		return result;
