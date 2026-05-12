@@ -17,6 +17,7 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions.Properties;
 using Microsoft.AspNetCore.Http;
@@ -232,7 +233,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">request</exception>
 	/// <remarks>Original code by Jerry Nixon</remarks>
 	[Pure]
-	[RequiresUnreferencedCode("JSON serialization and deserialization might require types that cannot be statically analyzed.")]
+	[RequiresUnreferencedCode("JSON deserialization might require types that cannot be statically analyzed. Use the JsonTypeInfo<T> overload in trimmed apps.")]
 	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, out T? value)
 	{
@@ -246,11 +247,13 @@ public static class HttpRequestExtensions
 
 		try
 		{
-			value = JsonSerializer.Deserialize<T>(BitConverter.ToString(bytes));
+			var json = Encoding.UTF8.GetString(bytes);
 
-			return true;
+			value = JsonSerializer.Deserialize<T>(json);
+
+			return value is not null;
 		}
-		catch (ArgumentNullException)
+		catch (JsonException)
 		{
 			value = default;
 			return false;
@@ -293,6 +296,61 @@ public static class HttpRequestExtensions
 			}
 
 			return bytes;
+		}
+	}
+
+	/// <summary>
+	/// Tries to deserialize the <see cref="HttpRequest"/> body into an instance of <typeparamref name="T"/>
+	/// using a source-generated <see cref="JsonTypeInfo{T}"/> for trim-safe, AOT-compatible deserialization.
+	/// Validates that <paramref name="request"/> and <paramref name="typeInfo"/> are not null.
+	/// </summary>
+	/// <typeparam name="T">The type to deserialize the request body into.</typeparam>
+	/// <param name="request">The <see cref="HttpRequest"/> whose body will be deserialized.</param>
+	/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe deserialization.</param>
+	/// <param name="value">
+	/// When this method returns <see langword="true"/>, contains the deserialized value of type <typeparamref name="T"/>;
+	/// otherwise, contains the default value for <typeparamref name="T"/>.
+	/// </param>
+	/// <returns>
+	/// <see langword="true"/> if the body was successfully read and deserialized into a non-null instance of <typeparamref name="T"/>;
+	/// otherwise, <see langword="false"/>.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> or <paramref name="typeInfo"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if the request body is empty.</exception>
+	/// <example>
+	/// Here is how you can use the trim-safe TryGetBody overload:
+	/// <code>
+	/// if (request.TryGetBody(MyJsonContext.Default.MyModel, out var model))
+	/// {
+	///     // use model
+	/// }
+	/// </code>
+	/// </example>
+	[Pure]
+	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, [DisallowNull] JsonTypeInfo<T> typeInfo, out T? value)
+	{
+		request = request.ArgumentNotNull();
+		typeInfo = typeInfo.ArgumentNotNull();
+
+		if (!request.TryGetBody(out var bytes))
+		{
+			value = default;
+			return false;
+		}
+
+		try
+		{
+			var json = Encoding.UTF8.GetString(bytes);
+
+			value = JsonSerializer.Deserialize(json, typeInfo);
+
+			return value is not null;
+		}
+		catch (JsonException)
+		{
+			value = default;
+			return false;
 		}
 	}
 

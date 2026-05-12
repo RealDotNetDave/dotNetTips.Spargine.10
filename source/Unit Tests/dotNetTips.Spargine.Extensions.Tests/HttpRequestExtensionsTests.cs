@@ -4,7 +4,7 @@
 // Created          : 04-06-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,6 +19,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNetTips.Spargine.Tester;
@@ -594,14 +596,105 @@ public class HttpRequestExtensionsTests
 	}
 
 	[TestMethod]
-	public void TryGetBodyGeneric_ValidBody_ThrowsJsonException()
+	public void TryGetBodyGeneric_ValidBody_ReturnsFalseForInvalidJson()
 	{
-		// Arrange - BitConverter.ToString produces hex like "48-65-6C-6C-6F" which is not valid JSON
+		// Arrange - raw binary bytes are not valid JSON; TryGetBody<T> catches JsonException and returns false
 		var content = RandomData.GenerateByteArray(16);
 		var request = CreateRequestWithBody(content);
 
+		// Act
+		var result = request.TryGetBody<string>(out var value);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(value);
+	}
+
+	[TestMethod]
+	public void TryGetBodyTypeInfo_BodyAtEnd_ReturnsFalse()
+	{
+		// Arrange - stream has content but position is at end, so CopyTo yields empty bytes
+		var content = RandomData.GenerateByteArray(16);
+		var stream = new MemoryStream(content);
+		stream.Position = stream.Length;
+		var request = new StubHttpRequest { Body = stream, ContentLength = content.Length };
+
+		// Act
+		var result = request.TryGetBody(RequestPayloadJsonContext.Default.RequestPayload, out var value);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(value);
+	}
+
+	[TestMethod]
+	public void TryGetBodyTypeInfo_EmptyBody_ThrowsArgumentException()
+	{
+		// Arrange
+		var request = CreateRequestWithBody([]);
+
 		// Act & Assert
-		_ = Assert.ThrowsExactly<JsonException>(() => request.TryGetBody<string>(out _));
+		_ = Assert.ThrowsExactly<ArgumentException>(() =>
+			request.TryGetBody(RequestPayloadJsonContext.Default.RequestPayload, out _));
+	}
+
+	[TestMethod]
+	public void TryGetBodyTypeInfo_InvalidJson_ReturnsFalse()
+	{
+		// Arrange - raw binary is not valid JSON
+		var content = RandomData.GenerateByteArray(16);
+		var request = CreateRequestWithBody(content);
+
+		// Act
+		var result = request.TryGetBody(RequestPayloadJsonContext.Default.RequestPayload, out var value);
+
+		// Assert
+		Assert.IsFalse(result);
+		Assert.IsNull(value);
+	}
+
+	// =====================================================
+	// TryGetBody<T>(JsonTypeInfo) tests
+	// =====================================================
+
+	[TestMethod]
+	public void TryGetBodyTypeInfo_NullRequest_ThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpRequest request = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
+			request.TryGetBody(RequestPayloadJsonContext.Default.RequestPayload, out _));
+	}
+
+	[TestMethod]
+	public void TryGetBodyTypeInfo_NullTypeInfo_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var request = CreateRequestWithBody(Encoding.UTF8.GetBytes("{}"));
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() =>
+			request.TryGetBody((JsonTypeInfo<RequestPayload>)null, out _));
+	}
+
+	[TestMethod]
+	public void TryGetBodyTypeInfo_ValidJson_ReturnsTrueWithValue()
+	{
+		// Arrange
+		var payload = new RequestPayload { Name = "Alice", Value = 42 };
+		var json = JsonSerializer.Serialize(payload, RequestPayloadJsonContext.Default.RequestPayload);
+		var request = CreateRequestWithBody(Encoding.UTF8.GetBytes(json));
+
+		// Act
+		var result = request.TryGetBody(RequestPayloadJsonContext.Default.RequestPayload, out var value);
+
+		// Assert
+		Assert.IsTrue(result);
+		Assert.IsNotNull(value);
+		Assert.AreEqual(payload.Name, value.Name);
+		Assert.AreEqual(payload.Value, value.Value);
 	}
 
 	private static StubHttpRequest CreateRequestWithBody(byte[] content)
@@ -655,3 +748,16 @@ public class HttpRequestExtensionsTests
 	}
 
 }
+
+[ExcludeFromCodeCoverage]
+internal sealed class RequestPayload
+{
+
+	public string Name { get; set; }
+
+	public int Value { get; set; }
+
+}
+
+[JsonSerializable(typeof(RequestPayload))]
+internal sealed partial class RequestPayloadJsonContext : JsonSerializerContext { }
