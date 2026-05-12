@@ -3167,6 +3167,16 @@
 * **Description:** GetAttribute
 * **Modified On:** 
 
+### System.String GetDescription(T input)
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetDescription
+* **Modified On:** 
+
 ### System.String GetDescription(System.Enum input)
 
 * **Status:** Available
@@ -3185,6 +3195,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** GetDisplayName
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems(T input)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetItems
 * **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems(System.Enum input)
@@ -3255,6 +3275,29 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToInt64
+* **Modified On:** 
+
+*****
+## DotNetTips.Spargine.Extensions.EnumExtensions.<G>$1AEBB925A470955AA56007A9C9196757<$T0>
+
+### System.String GetDescription()
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetDescription
+* **Modified On:** 
+
+### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems()
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetItems
 * **Modified On:** 
 
 *****
@@ -3558,6 +3601,16 @@
 * **Modified By:** David McCarter
 * **Modified On:** 
 
+### T GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, T typeInfo, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** GetAndDeserializeFromStreamAsync
+* **Modified On:** 
+
 ### T GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
@@ -3606,6 +3659,26 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** PostAndDeserializeAsync
+* **Modified On:** 
+
+### T PostAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, T requestTypeInfo, T responseTypeInfo, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **CreatedOn:** 
+* **Description:** PostAndDeserializeAsync
+* **Modified On:** 
+
+### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T request, T requestTypeInfo, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** PostAndEnsureSuccessAsync
 * **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
@@ -3822,6 +3895,18 @@
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/7/2023
+* **Description:** TryGetBody
+* **Modified By:** David McCarter
+* **Modified On:** 
+
+### System.Boolean TryGetBody(Microsoft.AspNetCore.Http.HttpRequest request, T typeInfo, T value)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** None
+* **Author:** David McCarter
+* **CreatedOn:** 5/12/2026
 * **Description:** TryGetBody
 * **Modified By:** David McCarter
 * **Modified On:** 
@@ -5697,6 +5782,16 @@
 * **Description:** BuildSelectedPropertiesDictionary
 * **Modified On:** 
 
+### System.String ComputeSha256Hash(System.Object obj, T typeInfo)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ComputeSha256Hash
+* **Modified On:** 
+
 ### System.String ComputeSha256Hash(System.Object obj)
 
 * **Status:** Available
@@ -6159,6 +6254,16 @@
 * **Description:** ToJson
 * **Modified On:** 
 
+### System.Void ToJsonFile(System.Object obj, System.IO.FileInfo file, T typeInfo)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ToJsonFile
+* **Modified On:** 
+
 ### System.Void ToJsonFile(System.Object obj, System.IO.FileInfo file)
 
 * **Status:** Available
@@ -6262,6 +6367,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** As
+* **Modified On:** 
+
+### System.String ComputeSha256Hash(T typeInfo)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ComputeSha256Hash
 * **Modified On:** 
 
 ### System.String ComputeSha256Hash()
@@ -6532,6 +6647,16 @@
 * **Unit Test Status:** Completed
 * **CreatedOn:** 
 * **Description:** ToJson
+* **Modified On:** 
+
+### System.Void ToJsonFile(System.IO.FileInfo file, T typeInfo)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **CreatedOn:** 
+* **Description:** ToJsonFile
 * **Modified On:** 
 
 ### System.Void ToJsonFile(System.IO.FileInfo file)
@@ -8720,4 +8845,4 @@
 * **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/12/2026 6:17:19 PM UTC**
+**Generated by Spargine - dotNetTips.com on 5/12/2026 8:20:18 PM UTC**

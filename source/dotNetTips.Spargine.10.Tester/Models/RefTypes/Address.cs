@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="Address.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -115,7 +115,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(100, ErrorMessageResourceName = "ErrorAddressLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(100, ErrorMessageResourceName = "ErrorAddressLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Address1")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Address1), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Address1
 	{
@@ -155,7 +154,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(100, ErrorMessageResourceName = "ErrorAddressLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(100, ErrorMessageResourceName = "ErrorAddressLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Address2")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Address2), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Address2
 	{
@@ -194,7 +192,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(100, ErrorMessageResourceName = "ErrorCityLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(100, ErrorMessageResourceName = "ErrorCityLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("City")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(City), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string City
 	{
@@ -233,7 +230,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(55, ErrorMessageResourceName = "ErrorCountryLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(55, ErrorMessageResourceName = "ErrorCountryLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Country")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Country), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Country
 	{
@@ -273,7 +269,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(60, ErrorMessageResourceName = "ErrorCountyProvinceLengthIsLimitedToCharacter", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(60, ErrorMessageResourceName = "ErrorCountyProvinceLengthIsLimitedToCharacter", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("CountyProvince")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(CountyProvince), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string CountyProvince
 	{
@@ -315,7 +310,6 @@ public sealed class Address : IAddress<Address>
 	[ReadOnly(true)]
 	[Required(AllowEmptyStrings = false, ErrorMessageResourceName = "ErrorIdIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Id", IsNullable = false)]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Id), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Id
 	{
@@ -348,7 +342,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(50, ErrorMessageResourceName = "ErrorMessagePhoneNumberIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[Phone(ErrorMessageResourceName = "ErrorMessagePhoneNumberIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Phone")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Phone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Phone
 	{
@@ -387,7 +380,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(25, ErrorMessageResourceName = "ErrorPostalCodeLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(25, ErrorMessageResourceName = "ErrorPostalCodeLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("PostalCode")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(PostalCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string PostalCode
 	{
@@ -427,7 +419,6 @@ public sealed class Address : IAddress<Address>
 	[MaxLength(60, ErrorMessageResourceName = "ErrorStateLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(60, ErrorMessageResourceName = "ErrorStateLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("State")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(State), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string State
 	{
@@ -767,8 +758,6 @@ public sealed class Address : IAddress<Address>
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString()
 	{
-#pragma warning disable IL2026 // PropertiesToString uses reflection — suppressed because ToString must match base signature
 		return this.PropertiesToString();
-#pragma warning restore IL2026
 	}
 }

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -1825,7 +1825,6 @@ public static class RandomData
 		string PostalCode,
 		string StateName);
 
-#pragma warning disable IL2026 // ToLazy uses reflection — suppressed for static field initializers with known concrete types
 	/// <summary>
 	/// A lazy-loaded read-only collection of countries.
 	/// </summary>
@@ -1845,7 +1844,6 @@ public static class RandomData
 	/// A lazy-loaded array of last names.
 	/// </summary>
 	private static readonly Lazy<string[]> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
-#pragma warning restore IL2026
 
 
 }

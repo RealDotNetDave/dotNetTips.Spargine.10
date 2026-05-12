@@ -39,37 +39,6 @@ public class FileProcessorTests
 	/// </summary>
 	private const int FileCount = 100;
 
-	/// <summary>
-	/// Defines the test method CopyFiles_BasicCopy_CopiesSuccessfully.
-	/// </summary>
-	[TestMethod]
-	public void CopyFiles_BasicCopy_CopiesSuccessfully()
-	{
-		// Arrange
-		var processor = new FileProcessor();
-		processor.Processed += this.Processor_Processed;
-
-		var generateFiles = RandomData.GenerateFiles(FileCount, fileExtension: "processor.test");
-		var files = new List<FileInfo>(generateFiles.Files.Count);
-
-		foreach (var file in generateFiles.Files)
-		{
-			files.Add(new FileInfo(file));
-		}
-
-		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyBasic"));
-
-		// Act
-		var copiedCount = processor.CopyFiles(files, destination);
-
-		// Assert
-		Assert.AreEqual(FileCount, copiedCount);
-		Assert.IsTrue(destination.Exists);
-
-		// Cleanup
-		destination.Delete(true);
-	}
-
 	[TestMethod]
 	public void CopyFiles_DuplicateFiles_CopiesDistinctOnly()
 	{
@@ -281,6 +250,37 @@ public class FileProcessorTests
 
 		// Assert
 		Assert.AreEqual(5, copiedCount);
+
+		// Cleanup
+		destination.Delete(true);
+	}
+
+	/// <summary>
+	/// Defines the test method CopyFiles_BasicCopy_CopiesSuccessfully.
+	/// </summary>
+	[TestMethod]
+	public void CopyFilesBasicCopyCopiesSuccessfully()
+	{
+		// Arrange
+		var processor = new FileProcessor();
+		processor.Processed += this.Processor_Processed;
+
+		var generateFiles = RandomData.GenerateFiles(FileCount, fileExtension: "processor.test");
+		var files = new List<FileInfo>(generateFiles.Files.Count);
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		var destination = new DirectoryInfo(Path.Combine(App.ProcessPath, "CopyBasic"));
+
+		// Act
+		var copiedCount = processor.CopyFiles(files, destination);
+
+		// Assert
+		Assert.AreEqual(FileCount, copiedCount);
+		Assert.IsTrue(destination.Exists);
 
 		// Cleanup
 		destination.Delete(true);

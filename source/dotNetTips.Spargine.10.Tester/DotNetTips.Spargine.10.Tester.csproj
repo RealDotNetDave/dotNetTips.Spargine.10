@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -41,6 +41,8 @@
     <RootNamespace>DotNetTips.Spargine.Tester</RootNamespace>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <!-- IL2026: project is not trimmable; suppress trim-analysis warnings globally -->
+    <NoWarn>$(NoWarn);IL2026;IL2046;IL2067;IL2070;IL2072;IL2075;IL2091</NoWarn>
     <SignAssembly>false</SignAssembly>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net10.0</TargetFramework>

@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -204,7 +204,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> or <paramref name="propertySelector"/> is null.</exception>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void PrintToDebug<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -238,7 +237,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.
 	/// </exception>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(PrintToDebug), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void PrintToDebug<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -260,7 +258,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <returns>The full path of the saved JSON file.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> is null.</exception>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveAsJsonToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveAsJsonToFile<T>([NotNull] T input, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -399,7 +396,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> or <paramref name="propertySelector"/> is null.</exception>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -430,7 +426,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.
 	/// </exception>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveToFile<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -487,7 +482,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </code>
 	/// </example>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveToFile<T>(T input, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -545,7 +539,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </code>
 	/// </example>
 	[DebuggerStepThrough]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -608,7 +601,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
@@ -659,7 +651,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="input"/> or <paramref name="propertySelector"/> is null.</exception>
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "PropertiesToString uses reflection over a generic type T; T is constrained to caller-supplied types that are present at runtime, so required members are preserved.")]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] T input, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName][NotNull] string methodName = ControlChars.EmptyString)
 	{
@@ -725,7 +716,6 @@ public abstract class UnitTester(string? outputDirectory = null)
 	[AsyncStateMachine(typeof(Task))]
 	[DebuggerStepThrough]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(SaveToFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public async Task<string> SaveToFileAsync<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{

@@ -4,7 +4,7 @@
 // Created          : 06-04-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -17,7 +17,6 @@
 // ***********************************************************************
 
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
@@ -214,7 +213,6 @@ public sealed class Coordinate : ICoordinate, IEquatable<Coordinate>, IComparabl
 	/// Returns a string that represents the current <see cref="Coordinate"/>.
 	/// </summary>
 	/// <returns>A string representation of the current <see cref="Coordinate"/>, including its X, Y, and Z values.</returns>
-	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Object.ToString override.")]
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString() => this.PropertiesToString(includeMemberName: false);
 }

@@ -4,7 +4,7 @@
 // Created          : 10-25-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -169,7 +169,6 @@ public struct Person() : IPerson<Person, Address>
 	[MaxLength(50, ErrorMessageResourceName = "ErrorMessagePhoneNumberIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[Phone(ErrorMessageResourceName = "ErrorMessagePhoneNumberIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("CellPhone")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(CellPhone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string CellPhone
 	{
@@ -210,7 +209,6 @@ public struct Person() : IPerson<Person, Address>
 	[MaxLength(75, ErrorMessageResourceName = "ErrorMessageEmailLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[Required(ErrorMessageResourceName = "ErrorMessageEmailIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Email", IsNullable = false)]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Email), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Email
 	{
@@ -246,7 +244,6 @@ public struct Person() : IPerson<Person, Address>
 	[Required(ErrorMessageResourceName = "ErrorFirstNameIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(50, ErrorMessageResourceName = "ErrorFirstNameLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("FirstName")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(FirstName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string FirstName
 	{
@@ -285,7 +282,6 @@ public struct Person() : IPerson<Person, Address>
 	[ReadOnly(true)]
 	[Required(AllowEmptyStrings = false, ErrorMessageResourceName = "ErrorIdIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Id", IsNullable = false)]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Id), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Id
 	{
@@ -316,7 +312,6 @@ public struct Person() : IPerson<Person, Address>
 	[Required(ErrorMessageResourceName = "ErrorLastNameIsRequired", ErrorMessageResourceType = typeof(Resources))]
 	[StringLength(50, ErrorMessageResourceName = "ErrorLastNameLengthIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("LastName")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(LastName), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string LastName
 	{
@@ -353,7 +348,6 @@ public struct Person() : IPerson<Person, Address>
 	[MaxLength(50, ErrorMessageResourceName = "ErrorMessagePhoneNumberIsLimitedToCharacters", ErrorMessageResourceType = typeof(Resources))]
 	[Phone(ErrorMessageResourceName = "ErrorPhoneNumberInvalid", ErrorMessageResourceType = typeof(Resources))]
 	[XmlElement("Phone")]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "The Resources type is referenced directly via typeof(Resources) in the same assembly, ensuring it is preserved by the trimmer.")]
 	[Information(nameof(Phone), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public string Phone
 	{
@@ -628,7 +622,6 @@ public struct Person() : IPerson<Person, Address>
 	/// <returns>
 	/// A string representation of the person.
 	/// </returns>
-	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Object.ToString override.")]
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString()
 	{

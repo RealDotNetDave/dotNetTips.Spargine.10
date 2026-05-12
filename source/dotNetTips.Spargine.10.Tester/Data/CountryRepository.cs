@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,7 +15,6 @@
 // </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -170,7 +169,6 @@ public static class CountryRepository
 	/// Thrown when deserialization fails due to invalid JSON format.
 	/// </exception>
 	[MethodImpl(MethodImplOptions.NoInlining)]
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "JsonSerializer.Deserialize<Country[]> is called with a statically known type. The Country type and all its members are preserved by the application's own reference, so trimming will not remove required metadata.")]
 	private static ReadOnlyCollection<Country> DeserializeCountries()
 	{
 		try
