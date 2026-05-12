@@ -3,7 +3,7 @@
 // Author           : Copilot Agent
 // Created          : 05-12-2026
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileProcessorMoveFilesWithOriginalPathBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -31,8 +31,9 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 
 /// <summary>
 /// Benchmark test for <see cref="FileProcessor.MoveFilesWithOriginalPath"/>.
-/// Uses <see cref="IterationCleanupAttribute"/> to move files back from the destination to the source
-/// using path-preserving semantics so that only a single forward move is measured per iteration.
+/// Uses <see cref="IterationSetupAttribute"/> to snapshot the source file list immediately before
+/// each timed run, and <see cref="IterationCleanupAttribute"/> to move files back from the destination
+/// to the source using path-preserving semantics so that only a single forward move is measured per iteration.
 /// </summary>
 [MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
@@ -60,7 +61,7 @@ public class FileProcessorMoveFilesWithOriginalPathBenchmark : Benchmark
 
 	/// <summary>
 	/// Moves files from the destination back to the source using path-preserving semantics after
-	/// each iteration, then refreshes the source file list so the next iteration has a full set to move.
+	/// each iteration so the source directory is fully restored before the next run.
 	/// </summary>
 	[IterationCleanup]
 	public void IterationCleanup()
@@ -71,13 +72,22 @@ public class FileProcessorMoveFilesWithOriginalPathBenchmark : Benchmark
 		{
 			_ = this._fileProcessor.MoveFilesWithOriginalPath(destFiles, this._sourcePath, overwrite: true);
 		}
+	}
 
+	/// <summary>
+	/// Snapshots the source file list immediately before each timed run so the benchmark body
+	/// always operates on the current, fully-restored set of source files.
+	/// </summary>
+	[IterationSetup]
+	public void IterationSetup()
+	{
 		this._sourceFiles = [.. this._sourcePath.GetFiles("*.*", SearchOption.AllDirectories)];
 	}
 
 	/// <summary>
 	/// Benchmark for <see cref="FileProcessor.MoveFilesWithOriginalPath"/>.
-	/// Source files are restored via <see cref="IterationCleanupAttribute"/>; only the forward move is measured.
+	/// Source files are snapshotted in <see cref="IterationSetupAttribute"/> and restored via
+	/// <see cref="IterationCleanupAttribute"/>; only the forward move is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.MoveFilesWithOriginalPath))]
 	[BenchmarkCategory(Categories.New)]
@@ -107,7 +117,6 @@ public class FileProcessorMoveFilesWithOriginalPathBenchmark : Benchmark
 
 		_ = RandomData.GenerateFiles(this._sourcePath.FullName, FileCount, FileLength);
 
-		this._sourceFiles = [.. this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly)];
 		this._fileProcessor = new FileProcessor();
 	}
 }

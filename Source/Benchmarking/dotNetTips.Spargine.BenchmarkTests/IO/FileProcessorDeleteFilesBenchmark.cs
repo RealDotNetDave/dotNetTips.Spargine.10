@@ -69,7 +69,7 @@ public class FileProcessorDeleteFilesBenchmark : Benchmark
 	[IterationSetup]
 	public void IterationSetup()
 	{
-		this._tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorDeleteFilesBenchmark) + "_" + RandomData.GenerateKey()));
+		this._tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorDeleteFilesBenchmark) + "_FileProcessor_" + RandomData.GenerateKey()));
 		_ = Directory.CreateDirectory(this._tempDir.FullName);
 		_ = RandomData.GenerateFiles(this._tempDir.FullName, FileCount, FileLength);
 

@@ -36,8 +36,6 @@ public class FileHelperBenchmark : Benchmark
 	private const int FileCount = 256;
 	private const int FileLength = 4096;
 
-	private DirectoryInfo _destinationPath;
-	private FileInfo _singleFile;
 	private DirectoryInfo _sourcePath;
 	private FileInfo[] _testFiles;
 
@@ -60,7 +58,7 @@ public class FileHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void CheckPermission()
 	{
-		var result = FileHelper.CheckPermission(this._singleFile);
+		var result = FileHelper.CheckPermission(this._testFiles[0]);
 
 		this.Consume(result);
 	}
@@ -73,7 +71,6 @@ public class FileHelperBenchmark : Benchmark
 		base.Cleanup();
 
 		_ = DirectoryHelper.DeleteDirectory(this._sourcePath, retries: 5);
-		_ = DirectoryHelper.DeleteDirectory(this._destinationPath, retries: 5);
 	}
 
 	/// <summary>
@@ -83,23 +80,9 @@ public class FileHelperBenchmark : Benchmark
 	[BenchmarkCategory(Categories.New)]
 	public void FileHasInvalidChars()
 	{
-		var result = FileHelper.FileHasInvalidChars(this._singleFile);
+		var result = FileHelper.FileHasInvalidChars(this._testFiles[0]);
 
 		this.Consume(result);
-	}
-
-	/// <summary>
-	/// Benchmark for <see cref="FileHelper.MoveFile"/>.
-	/// </summary>
-	[Benchmark(Description = nameof(FileHelper.MoveFile))]
-	[BenchmarkCategory(Categories.New)]
-	public void MoveFile()
-	{
-		// Round-trip the file: source → dest → source so iterations stay valid
-		var destFile = new FileInfo(Path.Combine(this._destinationPath.FullName, this._singleFile.Name));
-
-		_ = FileHelper.MoveFile(this._singleFile, destFile, replaceExisting: true);
-		_ = FileHelper.MoveFile(destFile, this._singleFile, replaceExisting: true);
 	}
 
 	/// <summary>
@@ -110,18 +93,14 @@ public class FileHelperBenchmark : Benchmark
 		base.Setup();
 
 		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperBenchmark) + "_src_" + RandomData.GenerateKey()));
-		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperBenchmark) + "_dst_" + RandomData.GenerateKey()));
 
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
-		_ = Directory.CreateDirectory(this._destinationPath.FullName);
 
 		ConsoleLogger.Default.WriteLine($"Source Path={this._sourcePath}");
-		ConsoleLogger.Default.WriteLine($"Destination Path={this._destinationPath}");
 
 		_ = RandomData.GenerateFiles(this._sourcePath.FullName, FileCount, FileLength);
 
 		this._testFiles = this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly);
-		this._singleFile = this._testFiles[0];
 	}
 
 }

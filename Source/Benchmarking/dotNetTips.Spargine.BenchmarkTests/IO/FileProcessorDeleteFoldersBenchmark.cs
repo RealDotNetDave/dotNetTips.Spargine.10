@@ -67,7 +67,9 @@ public class FileProcessorDeleteFoldersBenchmark : Benchmark
 		for (var folderIndex = 0; folderIndex < FolderCount; folderIndex++)
 		{
 			var dir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorDeleteFoldersBenchmark) + "_" + RandomData.GenerateKey()));
+
 			_ = Directory.CreateDirectory(dir.FullName);
+
 			this._foldersToDelete.Add(dir);
 		}
 	}
