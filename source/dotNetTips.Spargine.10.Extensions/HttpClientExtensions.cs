@@ -19,6 +19,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions.Properties;
 
@@ -196,6 +197,47 @@ public static class HttpClientExtensions
 
 			return JsonSerializer.Deserialize<T>(stringResponse, options)!;
 		}
+	}
+
+	/// <summary>
+	/// Sends a GET request to the specified URL and deserializes the JSON response from a stream into an instance of <typeparamref name="T"/>
+	/// using a source-generated <see cref="JsonTypeInfo{T}"/> for trim-safe, AOT-compatible deserialization.
+	/// Uses <see cref="HttpCompletionOption.ResponseHeadersRead"/> and stream-based deserialization to minimize memory allocations.
+	/// </summary>
+	/// <typeparam name="T">The type to deserialize the JSON response into.</typeparam>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to send the GET request to.</param>
+	/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe deserialization.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="T"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, or <paramref name="typeInfo"/> is null.</exception>
+	/// <exception cref="JsonException">Thrown if the response body cannot be deserialized into <typeparamref name="T"/>.</exception>
+	/// <exception cref="HttpRequestException">Thrown if the HTTP response status code does not indicate success.</exception>
+	/// <example>
+	/// Here is how you can use the trim-safe GetAndDeserializeFromStreamAsync overload:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/api/items");
+	/// var item = await httpClient.GetAndDeserializeFromStreamAsync(url, MyJsonContext.Default.MyItem);
+	/// </code>
+	/// </example>
+	[Pure]
+	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static async Task<T> GetAndDeserializeFromStreamAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonTypeInfo<T> typeInfo, CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+		typeInfo = typeInfo.ArgumentNotNull();
+
+		using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+		_ = response.EnsureSuccessStatusCode();
+
+#pragma warning disable IDISP001
+		var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#pragma warning restore IDISP001
+
+		return await JsonSerializer.DeserializeAsync(stream, typeInfo, cancellationToken).ConfigureAwait(false)
+			?? throw new JsonException($"Failed to deserialize response to {typeof(T)}.");
 	}
 
 	/// <summary>
@@ -454,6 +496,108 @@ public static class HttpClientExtensions
 	}
 
 	/// <summary>
+	/// Sends a POST request with a JSON-serialized body to the specified URL and deserializes the JSON response
+	/// into an instance of <typeparamref name="TResponse"/> using source-generated <see cref="JsonTypeInfo{T}"/>
+	/// for trim-safe, AOT-compatible serialization and deserialization.
+	/// Uses <see cref="HttpCompletionOption.ResponseHeadersRead"/> and stream-based deserialization to minimize memory allocations.
+	/// </summary>
+	/// <typeparam name="TRequest">The type of the request body to serialize as JSON.</typeparam>
+	/// <typeparam name="TResponse">The type to deserialize the JSON response into.</typeparam>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to send the POST request to.</param>
+	/// <param name="request">The request body to serialize as JSON.</param>
+	/// <param name="requestTypeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe serialization of the request body.</param>
+	/// <param name="responseTypeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe deserialization of the response body.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="TResponse"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, <paramref name="request"/>, <paramref name="requestTypeInfo"/>, or <paramref name="responseTypeInfo"/> is null.</exception>
+	/// <exception cref="JsonException">Thrown if the response body cannot be deserialized into <typeparamref name="TResponse"/>.</exception>
+	/// <exception cref="HttpRequestException">Thrown if the HTTP response status code does not indicate success.</exception>
+	/// <example>
+	/// Here is how you can use the trim-safe PostAndDeserializeAsync overload:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/api/items");
+	/// var newItem = new MyItem { Name = "Test", Value = 42 };
+	/// var createdItem = await httpClient.PostAndDeserializeAsync(
+	///     url, newItem,
+	///     MyJsonContext.Default.MyItem,
+	///     MyJsonContext.Default.MyItemResponse);
+	/// </code>
+	/// </example>
+	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static async Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo, [DisallowNull] JsonTypeInfo<TResponse> responseTypeInfo, CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+		request = request.ArgumentNotNull();
+		requestTypeInfo = requestTypeInfo.ArgumentNotNull();
+		responseTypeInfo = responseTypeInfo.ArgumentNotNull();
+
+		return await SendAndDeserializeAsync(
+			client,
+			HttpMethod.Post,
+			url,
+			request,
+			requestTypeInfo,
+			responseTypeInfo,
+			cancellationToken).ConfigureAwait(false);
+	}
+
+	/// <summary>
+	/// Sends a POST request with a JSON-serialized body to the specified URL and ensures a successful response,
+	/// returning the <see cref="HttpStatusCode"/>. Uses a source-generated <see cref="JsonTypeInfo{T}"/> for
+	/// trim-safe, AOT-compatible serialization. No response body deserialization is performed, making this
+	/// suitable for endpoints that return 201 Created or 204 No Content with no meaningful body.
+	/// </summary>
+	/// <typeparam name="TRequest">The type of the request body to serialize as JSON.</typeparam>
+	/// <param name="client">The <see cref="HttpClient"/> instance to send the request.</param>
+	/// <param name="url">The URL to send the POST request to.</param>
+	/// <param name="request">The request body to serialize as JSON.</param>
+	/// <param name="requestTypeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe serialization of the request body.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="HttpStatusCode"/> from the response.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, <paramref name="request"/>, or <paramref name="requestTypeInfo"/> is null.</exception>
+	/// <exception cref="HttpRequestException">Thrown if the HTTP response status code does not indicate success.</exception>
+	/// <example>
+	/// Here is how you can use the trim-safe PostAndEnsureSuccessAsync overload:
+	/// <code>
+	/// using var httpClient = new HttpClient();
+	/// var url = new Uri("https://example.com/api/items");
+	/// var newItem = new MyItem { Name = "Test", Value = 42 };
+	/// HttpStatusCode statusCode = await httpClient.PostAndEnsureSuccessAsync(url, newItem, MyJsonContext.Default.MyItem);
+	/// </code>
+	/// </example>
+	[Information(nameof(PostAndEnsureSuccessAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static async Task<HttpStatusCode> PostAndEnsureSuccessAsync<TRequest>(
+	[DisallowNull] this HttpClient client,
+	[DisallowNull] Uri url,
+	[DisallowNull] TRequest request,
+	[DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo,
+	CancellationToken cancellationToken = default)
+	{
+		client = client.ArgumentNotNull();
+		url = url.ArgumentNotNull();
+		request = request.ArgumentNotNull();
+		requestTypeInfo = requestTypeInfo.ArgumentNotNull();
+
+		var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(request, requestTypeInfo);
+
+		using var content = new ByteArrayContent(jsonBytes);
+		content.Headers.ContentType = new MediaTypeHeaderValue("application/json") { CharSet = "utf-8" };
+
+		using var requestMessage = new HttpRequestMessage(HttpMethod.Post, url)
+		{
+			Content = content,
+		};
+
+		using var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+		_ = response.EnsureSuccessStatusCode();
+
+		return response.StatusCode;
+	}
+
+	/// <summary>
 	/// Sends a POST request with a JSON-serialized body to the specified URL and ensures a successful response,
 	/// returning the <see cref="HttpStatusCode"/>. No response body deserialization is performed, making this
 	/// suitable for endpoints that return 201 Created or 204 No Content with no meaningful body.
@@ -622,5 +766,35 @@ public static class HttpClientExtensions
 			ExceptionThrower.ThrowInvalidOperationException(message: string.Format(CultureInfo.CurrentCulture, _resourceWasNotFound, url), ex);
 			return default!;
 		}
+	}
+
+	private static async Task<TResponse> SendAndDeserializeAsync<TRequest, TResponse>(
+	HttpClient client,
+	HttpMethod method,
+	Uri url,
+	TRequest request,
+	JsonTypeInfo<TRequest> requestTypeInfo,
+	JsonTypeInfo<TResponse> responseTypeInfo,
+	CancellationToken cancellationToken)
+	{
+		var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(request, requestTypeInfo);
+
+		using var content = new ByteArrayContent(jsonBytes);
+		content.Headers.ContentType = new MediaTypeHeaderValue("application/json") { CharSet = "utf-8" };
+
+		using var requestMessage = new HttpRequestMessage(method, url)
+		{
+			Content = content,
+		};
+
+		using var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+		_ = response.EnsureSuccessStatusCode();
+
+#pragma warning disable IDISP001
+		var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#pragma warning restore IDISP001
+
+		return await JsonSerializer.DeserializeAsync(stream, responseTypeInfo, cancellationToken).ConfigureAwait(false)
+			?? throw new JsonException($"Failed to deserialize response to {typeof(TResponse)}.");
 	}
 }

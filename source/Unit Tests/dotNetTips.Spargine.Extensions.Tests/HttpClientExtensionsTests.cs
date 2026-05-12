@@ -4,7 +4,7 @@
 // Created          : 04-06-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-13-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="HttpClientExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,6 +19,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -500,23 +502,6 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task GetAndDeserializeFromStreamAsyncNullOptionsThrowsArgumentNullException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-		{
-			await client.GetAndDeserializeFromStreamAsync<TestPayload>(url, null);
-		});
-	}
-
-	[TestMethod]
 	public async Task GetAndDeserializeFromStreamAsyncNullUrlThrowsArgumentNullException()
 	{
 		// Arrange
@@ -530,6 +515,95 @@ public class HttpClientExtensionsTests
 		{
 			await client.GetAndDeserializeFromStreamAsync<TestPayload>(null, new JsonSerializerOptions());
 		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeFromStreamAsyncTypeInfoNotFoundThrowsHttpRequestException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
+		{
+			await client.GetAndDeserializeFromStreamAsync(url, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	// ──────────────────────────────────────────────
+	// GetAndDeserializeFromStreamAsync (JsonTypeInfo overload)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public async Task GetAndDeserializeFromStreamAsyncTypeInfoNullClientThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpClient client = null;
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.GetAndDeserializeFromStreamAsync(url, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeFromStreamAsyncTypeInfoNullTypeInfoThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.GetAndDeserializeFromStreamAsync<TestPayload>(url, (JsonTypeInfo<TestPayload>)null);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeFromStreamAsyncTypeInfoNullUrlThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.GetAndDeserializeFromStreamAsync(null, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task GetAndDeserializeFromStreamAsyncTypeInfoValidResponseReturnsDeserializedObject()
+	{
+		// Arrange
+		var expected = new TestPayload { Name = "StreamTypeInfo", Value = 7 };
+		var json = JsonSerializer.Serialize(expected, TestPayloadJsonContext.Default.TestPayload);
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, json))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act
+		var result = await client.GetAndDeserializeFromStreamAsync(url, TestPayloadJsonContext.Default.TestPayload);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(expected.Name, result.Name);
+		Assert.AreEqual(expected.Value, result.Value);
 	}
 
 	[TestMethod]
@@ -700,23 +774,6 @@ public class HttpClientExtensionsTests
 		});
 	}
 
-	[TestMethod]
-	public async Task HeadersAsyncInternalServerErrorThrowsInvalidOperationException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
-		{
-			await client.HeadersAsync(url);
-		});
-	}
-
 	// ──────────────────────────────────────────────
 	// HeadersAsync
 	// ──────────────────────────────────────────────
@@ -773,6 +830,23 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
+	public async Task HeadersAsyncInternalServerErrorThrowsInvalidOperationException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(async () =>
+		{
+			await client.HeadersAsync(url);
+		});
+	}
+
+	[TestMethod]
 	public async Task PatchAndDeserializeAsyncCancellationRequestedThrowsInvalidOperationException()
 	{
 		// Arrange
@@ -794,10 +868,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PatchAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
+	public async Task PatchAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -813,10 +887,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PatchAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	public async Task PatchAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -950,10 +1024,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PostAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
+	public async Task PostAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -969,10 +1043,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PostAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	public async Task PostAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -1062,6 +1136,149 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoNotFoundThrowsHttpRequestException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
+		{
+			await client.PostAndDeserializeAsync(url, requestBody,
+				TestPayloadJsonContext.Default.TestPayload,
+				TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	// ──────────────────────────────────────────────
+	// PostAndDeserializeAsync (JsonTypeInfo overload)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoNullClientThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpClient client = null;
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndDeserializeAsync(url, requestBody,
+				TestPayloadJsonContext.Default.TestPayload,
+				TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoNullRequestThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndDeserializeAsync<TestPayload, TestPayload>(url, null,
+				TestPayloadJsonContext.Default.TestPayload,
+				TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoNullRequestTypeInfoThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody,
+				null,
+				TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoNullResponseTypeInfoThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndDeserializeAsync<TestPayload, TestPayload>(url, requestBody,
+				TestPayloadJsonContext.Default.TestPayload,
+				null);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoNullUrlThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndDeserializeAsync(null, requestBody,
+				TestPayloadJsonContext.Default.TestPayload,
+				TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndDeserializeAsyncTypeInfoValidResponseReturnsDeserializedObject()
+	{
+		// Arrange
+		var expected = new TestPayload { Name = "Created", Value = 99 };
+		var json = JsonSerializer.Serialize(expected, TestPayloadJsonContext.Default.TestPayload);
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, json))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "New", Value = 0 };
+
+		// Act
+		var result = await client.PostAndDeserializeAsync(url, requestBody,
+			TestPayloadJsonContext.Default.TestPayload,
+			TestPayloadJsonContext.Default.TestPayload);
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.AreEqual(expected.Name, result.Name);
+		Assert.AreEqual(expected.Value, result.Value);
+	}
+
+	[TestMethod]
 	public async Task PostAndDeserializeAsyncValidResponseReturnsDeserializedObject()
 	{
 		// Arrange
@@ -1106,10 +1323,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PostAndEnsureSuccessAsyncNotFoundThrowsInvalidOperationException()
+	public async Task PostAndEnsureSuccessAsyncInternalServerErrorThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -1125,10 +1342,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PostAndEnsureSuccessAsyncInternalServerErrorThrowsInvalidOperationException()
+	public async Task PostAndEnsureSuccessAsyncNotFoundThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -1160,24 +1377,6 @@ public class HttpClientExtensionsTests
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 		{
 			await client.PostAndEnsureSuccessAsync(url, requestBody, options);
-		});
-	}
-
-	[TestMethod]
-	public async Task PostAndEnsureSuccessAsyncNullOptionsThrowsArgumentNullException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, string.Empty))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test");
-		var requestBody = new TestPayload { Name = "Test", Value = 1 };
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-		{
-			await client.PostAndEnsureSuccessAsync(url, requestBody, null);
 		});
 	}
 
@@ -1215,6 +1414,113 @@ public class HttpClientExtensionsTests
 		{
 			await client.PostAndEnsureSuccessAsync(null, requestBody, options);
 		});
+	}
+
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncTypeInfoNotFoundThrowsHttpRequestException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<HttpRequestException>(async () =>
+		{
+			await client.PostAndEnsureSuccessAsync(url, requestBody, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	// ──────────────────────────────────────────────
+	// PostAndEnsureSuccessAsync (JsonTypeInfo overload)
+	// ──────────────────────────────────────────────
+
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncTypeInfoNullClientThrowsArgumentNullException()
+	{
+		// Arrange
+		HttpClient client = null;
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndEnsureSuccessAsync(url, requestBody, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncTypeInfoNullRequestThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndEnsureSuccessAsync<TestPayload>(url, null, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncTypeInfoNullTypeInfoThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndEnsureSuccessAsync(url, requestBody, (JsonTypeInfo<TestPayload>)null);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncTypeInfoNullUrlThrowsArgumentNullException()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var requestBody = new TestPayload { Name = "Test", Value = 1 };
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
+		{
+			await client.PostAndEnsureSuccessAsync(null, requestBody, TestPayloadJsonContext.Default.TestPayload);
+		});
+	}
+
+	[TestMethod]
+	public async Task PostAndEnsureSuccessAsyncTypeInfoValidResponseReturnsStatusCode()
+	{
+		// Arrange
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.Created, string.Empty))
+		{
+			BaseAddress = new Uri("https://example.com"),
+		};
+		var url = new Uri("https://example.com/api/test");
+		var requestBody = new TestPayload { Name = "New", Value = 42 };
+
+		// Act
+		var statusCode = await client.PostAndEnsureSuccessAsync(url, requestBody, TestPayloadJsonContext.Default.TestPayload);
+
+		// Assert
+		Assert.AreEqual(HttpStatusCode.Created, statusCode);
 	}
 
 	[TestMethod]
@@ -1258,10 +1564,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PutAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
+	public async Task PutAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -1277,10 +1583,10 @@ public class HttpClientExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task PutAndDeserializeAsyncInternalServerErrorThrowsInvalidOperationException()
+	public async Task PutAndDeserializeAsyncNotFoundThrowsInvalidOperationException()
 	{
 		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.InternalServerError, string.Empty))
+		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.NotFound, string.Empty))
 		{
 			BaseAddress = new Uri("https://example.com"),
 		};
@@ -1431,13 +1737,18 @@ public class HttpClientExtensionsTests
 
 	}
 
-	private sealed class TestPayload
-	{
-
-		public string Name { get; set; }
-
-		public int Value { get; set; }
-
-	}
 
 }
+
+[ExcludeFromCodeCoverage]
+internal sealed class TestPayload
+{
+
+	public string Name { get; set; }
+
+	public int Value { get; set; }
+
+}
+
+[JsonSerializable(typeof(TestPayload))]
+internal sealed partial class TestPayloadJsonContext : JsonSerializerContext { }
