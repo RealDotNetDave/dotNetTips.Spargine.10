@@ -62,7 +62,6 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	/// Initializes a new instance of the <see cref="DistinctConcurrentBag{T}"/> class with a custom comparer.
 	/// </summary>
 	/// <param name="comparer">The <see cref="IEqualityComparer{T}"/> to use for comparing items.</param>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public DistinctConcurrentBag([NotNull] IEqualityComparer<T> comparer)
 	{
@@ -277,7 +276,7 @@ public sealed class DistinctConcurrentBag<T> : ICollection<T>
 	[Information(nameof(ToFrozenSet), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public FrozenSet<T> ToFrozenSet()
 	{
-		return this._uniqueItems.ToArray().ToFrozenSet();
+		return this._uniqueItems.ToArray().ToFrozenSet(this._comparer);
 	}
 
 	/// <summary>
