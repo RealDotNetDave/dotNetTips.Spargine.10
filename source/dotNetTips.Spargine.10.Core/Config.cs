@@ -54,7 +54,7 @@ public class Config<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.P
 	/// <param name="companyName">The company name used to construct the configuration folder path. Must not be null or empty.</param>
 	/// <param name="productName">The product name used to construct the configuration file name. Must not be null or empty.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="companyName"/> or <paramref name="productName"/> is null or empty.</exception>
-	[Information("Initializes a new Config instance with company and product names.", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information("Config", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	protected Config([DisallowNull] string companyName, [DisallowNull] string productName)
 	{
 		companyName = companyName.ArgumentNotNullOrEmpty();
