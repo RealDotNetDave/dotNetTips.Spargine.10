@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="JsonSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Serialization;
 /// Utilizes the System.Text.Json namespace for efficient processing. This class supports custom serialization
 /// options and aims to simplify the use of JSON serialization in .NET applications.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.UpdateDocumentation)]
 public static class JsonSerialization
 {
 	/// <summary>
@@ -37,27 +37,6 @@ public static class JsonSerialization
 	{
 		NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
 	};
-
-	/// <summary>
-	/// Converts a specified JSON string into its corresponding object representation.
-	/// </summary>
-	/// <typeparam name="TResult">The type of the object to deserialize to.</typeparam>
-	/// <param name="json">The JSON string to deserialize.</param>
-	/// <returns>An instance of <typeparamref name="TResult"/> deserialized from the JSON string.</returns>
-	/// <exception cref="InvalidOperationException">Failed to deserialize the JSON string to {typeof(TResult)}.</exception>
-	/// <remarks>This method uses the configured <see cref="JsonSerializerOptions"/> for deserialization.
-	/// It throws an <see cref="InvalidOperationException"/> if the deserialization process fails
-	/// or if the result is null, ensuring that a valid object is always returned.</remarks>
-	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(Deserialize), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static TResult Deserialize<TResult>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json)
-	{
-		json = json.ArgumentNotNullOrEmpty();
-
-		return JsonSerializer.Deserialize<TResult>(json, _options) ??
-				throw new InvalidOperationException($"Failed to deserialize the JSON string to {typeof(TResult)}.");
-	}
 
 	/// <summary>
 	/// Converts a specified JSON string into its corresponding object representation using the provided <see cref="JsonSerializerOptions"/>.
@@ -230,35 +209,80 @@ public static class JsonSerialization
 	/// <typeparam name="T">The type of objects to deserialize.</typeparam>
 	/// <param name="json">The JSON string containing the collection.</param>
 	/// <param name="count">The number of objects to deserialize from the JSON string.</param>
-	/// <param name="info">The metadata information for the type to deserialize.</param>
+	/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for reflection-free deserialization. Cannot be <c>null</c>.</param>
 	/// <returns>An array of deserialized objects of type <typeparamref name="T"/>.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if the count is less than 1.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
 	[Pure]
 	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static T[] LoadCollectionFromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, int count, JsonTypeInfo info)
+	public static T[] LoadCollectionFromJson<T>(
+		[DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json,
+		int count,
+		[DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		json = json.ArgumentNotNullOrEmpty();
 		count = count.ArgumentInRange(min: 1);
-		info = info.ArgumentNotNull();
+		typeInfo = typeInfo.ArgumentNotNull();
+
+		using var doc = JsonDocument.Parse(json);
+		var root = doc.RootElement;
+
+		if (root.GetArrayLength() < count)
+		{
+			throw new ArgumentOutOfRangeException(nameof(count), $"The JSON array contains fewer than {count} elements.");
+		}
 
 		var items = new T[count];
 
-		using (var doc = JsonDocument.Parse(json))
+		for (var itemCount = 0; itemCount < count; itemCount++)
 		{
-			var root = doc.RootElement;
+			items[itemCount] = root[itemCount].Deserialize(typeInfo)
+				?? throw new JsonException($"Failed to deserialize item at index {itemCount}.");
+		}
 
-			if (root.GetArrayLength() < count)
-			{
-				throw new ArgumentOutOfRangeException(nameof(count), $"The JSON array contains fewer than {count} elements.");
-			}
+		return items;
+	}
 
-			for (var itemCount = 0; itemCount < count; itemCount++)
-			{
-				var deserializedItem = root[itemCount].Deserialize(info) ?? throw new JsonException($"Failed to deserialize item at index {itemCount}.");
+	/// <summary>
+	/// Reads JSON content from a specified file and deserializes it into an array of objects using a source-generated <see cref="JsonTypeInfo{T}"/>.
+	/// </summary>
+	/// <typeparam name="T">The type of objects to deserialize.</typeparam>
+	/// <param name="file">The file containing the JSON array. The file must exist.</param>
+	/// <param name="count">The number of objects to deserialize from the JSON array.</param>
+	/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for reflection-free deserialization. Cannot be <c>null</c>.</param>
+	/// <returns>An array of deserialized objects of type <typeparamref name="T"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="file"/> or <paramref name="typeInfo"/> is <c>null</c>.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="count"/> is less than 1, or if the JSON array contains fewer elements than <paramref name="count"/>.</exception>
+	/// <exception cref="JsonException">Thrown if the JSON is invalid or cannot be deserialized to the specified type.</exception>
+	/// <remarks>
+	/// This overload streams the file directly to avoid loading the entire JSON content into memory.
+	/// Prefer this overload over the string-based overload when processing large JSON files.
+	/// </remarks>
+	[Pure]
+	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count, [DisallowNull] JsonTypeInfo<T> typeInfo)
+	{
+		file = file.ArgumentExists();
+		count = count.ArgumentInRange(min: 1);
+		typeInfo = typeInfo.ArgumentNotNull();
 
-				items[itemCount] = (T)deserializedItem;
-			}
+		using var stream = file.OpenRead();
+		using var doc = JsonDocument.Parse(stream);
+
+		var root = doc.RootElement;
+
+		if (root.GetArrayLength() < count)
+		{
+			throw new ArgumentOutOfRangeException(nameof(count), $"The JSON array contains fewer than {count} elements.");
+		}
+
+		var items = new T[count];
+
+		for (var itemCount = 0; itemCount < count; itemCount++)
+		{
+			items[itemCount] = root[itemCount].Deserialize(typeInfo)
+				?? throw new JsonException($"Failed to deserialize item at index {itemCount}.");
+
 		}
 
 		return items;
@@ -315,6 +339,31 @@ public static class JsonSerialization
 		typeInfo = typeInfo.ArgumentNotNull();
 
 		return JsonSerializer.Serialize(obj, typeInfo);
+	}
+
+	/// <summary>
+	/// Serializes an object into its JSON string representation and saves it to a specified file using a source-generated <see cref="JsonTypeInfo{T}"/>.
+	/// </summary>
+	/// <typeparam name="T">The type of the object to serialize.</typeparam>
+	/// <param name="obj">The object to serialize. Cannot be <c>null</c>.</param>
+	/// <param name="file">The <see cref="FileInfo"/> representing the file where the JSON content will be written. Cannot be <c>null</c>.</param>
+	/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for reflection-free serialization. Cannot be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="obj"/>, <paramref name="file"/>, or <paramref name="typeInfo"/> is <c>null</c>.</exception>
+	/// <remarks>
+	/// This overload is the preferred approach for AOT and trimming-safe scenarios because it uses a
+	/// source-generated <see cref="JsonTypeInfo{T}"/> instead of runtime reflection.
+	/// All directories and subdirectories in the specified path are created if they do not already exist.
+	/// </remarks>
+	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public static void SerializeToFile<T>([DisallowNull] T obj, [DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
+	{
+		obj = obj.ArgumentNotNull();
+		file = file.ArgumentNotNull();
+		typeInfo = typeInfo.ArgumentNotNull();
+
+		file.Directory?.Create();
+
+		File.WriteAllText(file.FullName, Serialize(obj, typeInfo));
 	}
 
 	/// <summary>

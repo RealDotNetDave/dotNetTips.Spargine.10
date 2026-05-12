@@ -585,7 +585,7 @@ public class JsonSerializationTests
 	public void LoadCollectionFromJson_WithTypeInfo_NullJson_ThrowsArgumentNullException()
 	{
 		var info = PersonRefJsonSerializerContext.Default.Person;
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json: null, count: 1, info: info));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => JsonSerialization.LoadCollectionFromJson<Person>(json: null, count: 1, typeInfo: info));
 	}
 
 	[TestMethod]
