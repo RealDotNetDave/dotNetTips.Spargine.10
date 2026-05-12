@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-04-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -49,11 +49,9 @@ public static class ObjectExtensions
 	private const string Item = "Item";
 #pragma warning restore IDE0051
 #pragma warning disable IDE0052 // Remove unread private members - false positive: used in extension block (PropertiesToDictionary, FieldsToDictionary)
-#pragma warning disable IL2026 // BuiltInTypeNames uses reflection — suppressed for static field initializer
 #pragma warning disable CA1859 // IReadOnlyDictionary is intentional here to preserve read-only API intent and avoid coupling this field to a specific dictionary implementation
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
 #pragma warning restore CA1859
-#pragma warning restore IL2026
 #pragma warning restore IDE0052
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
@@ -178,8 +176,9 @@ public static class ObjectExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[UnconditionalSuppressMessage("Trimming", "IL2091", Justification = "Lazy<T> is constructed with a factory delegate overload; the PublicParameterlessConstructor constraint on Lazy<T>'s type parameter is not exercised at runtime.")]
 	[Information(nameof(ToLazy), author: "David McCarter", createdOn: "9/8/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static Lazy<T> ToLazy<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>([DisallowNull] this T value)
+	public static Lazy<T> ToLazy<T>([DisallowNull] this T value)
 	{
 		value = value.ArgumentNotNull();
 
@@ -652,6 +651,49 @@ public static class ObjectExtensions
 	/// <param name="obj">The object instance to extend.</param>
 	extension([DisallowNull] object obj)
 	{
+
+		/// <summary>
+		/// Serializes the object to a JSON file using a source-generated <see cref="JsonTypeInfo{T}"/>
+		/// for trim-safe, AOT-compatible serialization. Uses optimized streaming I/O to avoid
+		/// intermediate string allocations.
+		/// </summary>
+		/// <typeparam name="T">The type of the object to serialize. The object must be assignable to <typeparamref name="T"/>.</typeparam>
+		/// <param name="file">The <see cref="FileInfo"/> representing the destination file. Must not be null.</param>
+		/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe JSON serialization.</param>
+		/// <exception cref="ArgumentNullException">Thrown if <paramref name="file"/> or <paramref name="typeInfo"/> is null.</exception>
+		/// <exception cref="InvalidOperationException">Thrown if the object is not assignable to <typeparamref name="T"/>.</exception>
+		/// <exception cref="JsonException">Thrown if an error occurs during serialization.</exception>
+		/// <exception cref="IOException">Thrown if an error occurs while writing the file.</exception>
+		/// <example>
+		/// <code>
+		/// var person = new Person { Name = "Alice", Age = 30 };
+		/// var file = new FileInfo("person.json");
+		/// person.ToJsonFile(file, MyJsonContext.Default.Person);
+		/// </code>
+		/// </example>
+		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+		public void ToJsonFile<T>([DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
+		{
+			file = file.ArgumentNotNull();
+			typeInfo = typeInfo.ArgumentNotNull();
+
+			if (obj is not T typedObject)
+			{
+				throw new InvalidOperationException($"The object is not of type {typeof(T).FullName}.");
+			}
+
+			file.Directory?.Create();
+
+			using var stream = new FileStream(
+				file.FullName,
+				FileMode.Create,
+				FileAccess.Write,
+				FileShare.None,
+				bufferSize: 81920,
+				FileOptions.SequentialScan);
+
+			JsonSerializer.Serialize(stream, typedObject, typeInfo);
+		}
 
 		/// <summary>
 		/// Returns the maximum of two comparable objects.
@@ -1148,7 +1190,12 @@ public static class ObjectExtensions
 			obj = obj.ArgumentNotNull();
 			typeInfo = typeInfo.ArgumentNotNull();
 
-			return JsonSerializer.Serialize(obj, typeInfo);
+			if (obj is not T typedObject)
+			{
+				throw new InvalidOperationException($"The object is not of type {typeof(T).FullName}.");
+			}
+
+			return JsonSerializer.Serialize(typedObject, typeInfo);
 		}
 
 		/// <summary>
@@ -1258,6 +1305,7 @@ public static class ObjectExtensions
 		/// <returns>A deep clone of the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("MessagePack serialization may use runtime type discovery depending on resolver configuration.")]
 		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastBinaryClone<T>()
 		{
@@ -1321,6 +1369,7 @@ public static class ObjectExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[RequiresUnreferencedCode("MessagePack serialization may use runtime type discovery depending on resolver configuration.")]
 		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastBinaryClone<T>([AllowNull] MessagePackSerializerOptions options = null)
 		{
@@ -1328,6 +1377,55 @@ public static class ObjectExtensions
 
 			return MessagePackSerializer.Deserialize<T>(
 				MessagePackSerializer.Serialize(obj, options), options);
+		}
+
+		/// <summary>
+		/// Generates a SHA-256 hash of the object's serialized JSON using a source-generated <see cref="JsonTypeInfo{T}"/>
+		/// for trim-safe, AOT-compatible serialization.
+		/// </summary>
+		/// <typeparam name="T">The type of the object to serialize. The object must be assignable to <typeparamref name="T"/>.</typeparam>
+		/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for trim-safe JSON serialization.</param>
+		/// <returns>A lowercase hexadecimal SHA-256 hash string of the object's JSON representation.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the object or <paramref name="typeInfo"/> is null.</exception>
+		/// <exception cref="InvalidOperationException">Thrown if the object is not assignable to <typeparamref name="T"/>.</exception>
+		/// <example>
+		/// <code>
+		/// var person = new Person { Name = "Alice", Age = 30 };
+		/// var hash = person.ComputeSha256Hash(MyJsonContext.Default.Person);
+		/// </code>
+		/// </example>
+		[Pure]
+		[return: NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(ComputeSha256Hash), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+		public string ComputeSha256Hash<T>([DisallowNull] JsonTypeInfo<T> typeInfo)
+		{
+			obj = obj.ArgumentNotNull();
+			typeInfo = typeInfo.ArgumentNotNull();
+
+			if (obj is not T typedObject)
+			{
+				throw new InvalidOperationException($"The object is not of type {typeof(T).FullName}.");
+			}
+
+			var json = JsonSerializer.Serialize(typedObject, typeInfo);
+			var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(json)).AsSpan();
+
+			var sb = _stringBuilderPool.Value.Get();
+
+			try
+			{
+				foreach (var @byte in bytes)
+				{
+					_ = sb.AppendFormat(CultureInfo.InvariantCulture, "{0:x2}", @byte);
+				}
+
+				return sb.ToString();
+			}
+			finally
+			{
+				_stringBuilderPool.Value.Return(sb.Clear());
+			}
 		}
 
 		/// <summary>
