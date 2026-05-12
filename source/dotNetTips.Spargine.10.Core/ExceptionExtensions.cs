@@ -4,20 +4,23 @@
 // Created          : 05-04-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Provides extension methods for enhanced exception handling, traversal, logging, and metadata management.
+// </summary>
 // ***********************************************************************
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using DotNetTips.Spargine.Core.Logging;
-using DotNetTips.Spargine.Core.Serialization;
 using Microsoft.Extensions.Logging;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -93,7 +96,41 @@ public static partial class ExceptionExtensions
 		}
 	}
 
-	///<summary></summary>
+	/// <summary>
+	/// Provides a source-generated <see cref="JsonSerializerContext"/> for serializing
+	/// <see cref="ExceptionJsonInfo"/> instances without runtime reflection.
+	/// </summary>
+	[JsonSerializable(typeof(ExceptionJsonInfo))]
+	private sealed partial class ExceptionExtensionsJsonContext : JsonSerializerContext
+	{
+	}
+
+	/// <summary>
+	/// Represents a lightweight, serializable snapshot of an inner exception, containing only
+	/// the exception message and optional stack trace.
+	/// </summary>
+	/// <param name="Message">The exception message.</param>
+	/// <param name="StackTrace">The stack trace, or <c>null</c> if not available.</param>
+	private sealed record ExceptionInnerJsonInfo(
+		string Message,
+		string? StackTrace);
+
+	/// <summary>
+	/// Represents a serializable snapshot of an exception, including its message, optional stack trace,
+	/// and an array of all inner exceptions captured as <see cref="ExceptionInnerJsonInfo"/> records.
+	/// </summary>
+	/// <param name="Message">The top-level exception message.</param>
+	/// <param name="StackTrace">The stack trace of the top-level exception, or <c>null</c> if not available.</param>
+	/// <param name="InnerExceptions">An array of inner exception snapshots.</param>
+	private sealed record ExceptionJsonInfo(
+	string Message,
+	string? StackTrace,
+	ExceptionInnerJsonInfo[] InnerExceptions);
+
+	/// <summary>
+	/// Provides extension methods for traversing exception hierarchies.
+	/// </summary>
+	/// <typeparam name="TSource">The type of exception to extend. Must derive from <see cref="Exception"/>.</typeparam>
 	extension<TSource>([DisallowNull] TSource source) where TSource : Exception
 	{
 		/// <summary>
@@ -102,6 +139,7 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <param name="accumulatorFunction">A delegate that defines the method to retrieve the next exception in the hierarchy.</param>
 		/// <returns>An <see cref="IEnumerable{TSource}"/> that represents the hierarchy of exceptions.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="accumulatorFunction"/> is <c>null</c>.</exception>
 		[Information(nameof(FromHierarchy), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<TSource> FromHierarchy([DisallowNull] Func<TSource, TSource> accumulatorFunction)
 		{
@@ -119,6 +157,7 @@ public static partial class ExceptionExtensions
 		/// <param name="nextItem">A function to get the next item in the hierarchy from the current item.</param>
 		/// <param name="canContinuePredicate">A function that determines whether to continue traversing the hierarchy from the current item.</param>
 		/// <returns>A sequence of items from the source up through the hierarchy as determined by <paramref name="nextItem"/> and <paramref name="canContinuePredicate"/>.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="nextItem"/> or <paramref name="canContinuePredicate"/> is <c>null</c>.</exception>
 		[Information(nameof(FromHierarchy), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<TSource> FromHierarchy([DisallowNull] Func<TSource, TSource> nextItem, [DisallowNull] Func<TSource, bool> canContinuePredicate)
 		{
@@ -134,13 +173,18 @@ public static partial class ExceptionExtensions
 		}
 	}
 
-	///<summary></summary>
+	/// <summary>
+	/// Provides extension methods for exception analysis, formatting, logging, and metadata extraction.
+	/// </summary>
 	extension([DisallowNull] Exception exception)
 	{
 		/// <summary>
 		/// Retrieves all inner exceptions from the specified exception as a flat list.
 		/// </summary>
-		/// <returns>A list of all inner exceptions.</returns>
+		/// <returns>A read-only list of all inner exceptions. If there are no inner exceptions, an empty list is returned.</returns>
+		/// <remarks>
+		/// This method traverses the entire exception hierarchy starting from the current exception and collects all inner exceptions.
+		/// </remarks>
 		[Information(nameof(GetAllInnerExceptions), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IReadOnlyList<Exception> GetAllInnerExceptions()
 		{
@@ -152,7 +196,11 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Extracts all key-value pairs from the <see cref="Exception.Data"/> property.
 		/// </summary>
-		/// <returns>A dictionary containing all key-value pairs from the exception's data.</returns>
+		/// <returns>A read-only dictionary containing all key-value pairs from the exception's data. If the Data property is empty, an empty dictionary is returned.</returns>
+		/// <remarks>
+		/// The <see cref="Exception.Data"/> property is an <see cref="IDictionary"/> that allows custom data to be attached to exceptions.
+		/// This method safely extracts all entries into a strongly-typed read-only dictionary.
+		/// </remarks>
 		[Information(nameof(ExtractData), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyDictionary<object, object?> ExtractData()
 		{
@@ -165,8 +213,12 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Determines whether the exception or any of its inner exceptions is of the specified type.
 		/// </summary>
-		/// <typeparam name="T">The type of exception to check for.</typeparam>
+		/// <typeparam name="T">The type of exception to check for. Must derive from <see cref="Exception"/>.</typeparam>
 		/// <returns><c>true</c> if the exception or any inner exception is of type <typeparamref name="T"/>; otherwise, <c>false</c>.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the exception is <c>null</c>.</exception>
+		/// <remarks>
+		/// This method traverses the entire exception hierarchy to search for the specified exception type.
+		/// </remarks>
 		[Information(nameof(ContainsExceptionOfType), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ContainsExceptionOfType<T>() where T : Exception
 		{
@@ -178,7 +230,12 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Extracts metadata associated with the exception.
 		/// </summary>
-		/// <returns>A dictionary containing metadata key-value pairs.</returns>
+		/// <returns>A read-only dictionary containing metadata key-value pairs. Returns an empty dictionary if no metadata is associated with the exception.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the exception is <c>null</c>.</exception>
+		/// <remarks>
+		/// The metadata includes information such as whether the exception has been logged.
+		/// This method is thread-safe and uses internal synchronization to access the metadata store.
+		/// </remarks>
 		[Information(nameof(GetMetadata), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyDictionary<string, object> GetMetadata()
 		{
@@ -201,7 +258,11 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Determines whether the exception or any of its inner exceptions is an <see cref="AggregateException"/>.
 		/// </summary>
-		/// <returns><c>true</c> if an <see cref="AggregateException"/> is found; otherwise, <c>false</c>.</returns>
+		/// <returns><c>true</c> if an <see cref="AggregateException"/> is found in the exception hierarchy; otherwise, <c>false</c>.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the exception is <c>null</c>.</exception>
+		/// <remarks>
+		/// This method traverses the entire exception hierarchy to search for any <see cref="AggregateException"/> instances.
+		/// </remarks>
 		[Information(nameof(ContainsAggregateException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ContainsAggregateException()
 		{
@@ -213,8 +274,12 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Determines whether the exception or any of its inner exceptions contains the specified message.
 		/// </summary>
-		/// <param name="message">The message to search for.</param>
-		/// <returns><c>true</c> if the message is found; otherwise, <c>false</c>.</returns>
+		/// <param name="message">The message to search for. Cannot be <c>null</c> or empty.</param>
+		/// <returns><c>true</c> if the message is found in any exception in the hierarchy; otherwise, <c>false</c>.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="message"/> is <c>null</c> or empty.</exception>
+		/// <remarks>
+		/// The search is case-insensitive and traverses the entire exception hierarchy.
+		/// </remarks>
 		[Information(nameof(ContainsMessage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool ContainsMessage([DisallowNull] string message)
 		{
@@ -227,9 +292,12 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Serializes the exception and its details into a JSON string.
 		/// </summary>
-		/// <returns>A JSON string representing the exception.</returns>
+		/// <returns>A JSON string representing the exception, including its message, stack trace, and all inner exceptions. Returns an empty string if the exception is <c>null</c>.</returns>
+		/// <remarks>
+		/// The JSON output includes the exception message, stack trace, and an array of all inner exceptions with their respective messages and stack traces.
+		/// This method uses System.Text.Json with a source-generated serializer context for optimal performance.
+		/// </remarks>
 		[return: NotNull]
-		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 		[Information(nameof(ToJson), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public string ToJson()
 		{
@@ -238,22 +306,29 @@ public static partial class ExceptionExtensions
 				return string.Empty;
 			}
 
-			var exceptionDetails = new
-			{
+			var exceptionDetails = new ExceptionJsonInfo(
 				exception.Message,
 				exception.StackTrace,
-				InnerExceptions = exception.GetAllInnerExceptions()
-				.Select(ex => new { ex.Message, ex.StackTrace })
-			};
+				exception.GetAllInnerExceptions()
+					.Select(ex => new ExceptionInnerJsonInfo(ex.Message, ex.StackTrace))
+					.ToArray());
 
-			return JsonSerialization.Serialize(exceptionDetails);
+			return JsonSerializer.Serialize(
+				exceptionDetails,
+				ExceptionExtensionsJsonContext.Default.ExceptionJsonInfo);
 		}
 
 		/// <summary>
 		/// Logs the exception and its details using the provided logger and FastLoggerExtensions.
 		/// </summary>
-		/// <param name="logger">The logger to use for logging.</param>
-		/// <param name="logLevel">The log level to use. Defaults to Error.</param>
+		/// <param name="logger">The logger to use for logging. Cannot be <c>null</c>.</param>
+		/// <param name="logLevel">The log level to use. Defaults to <see cref="LogLevel.Error"/>.</param>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="logger"/> is <c>null</c>.</exception>
+		/// <remarks>
+		/// This method logs both the main exception and all inner exceptions at the specified log level.
+		/// After logging, the exception is marked as logged using <see cref="SetIsLogged"/>.
+		/// If the logger is not enabled for the specified log level, no logging occurs.
+		/// </remarks>
 		[Information(nameof(LogException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void LogException([DisallowNull] ILogger logger, LogLevel logLevel = LogLevel.Error)
 		{
@@ -366,7 +441,11 @@ public static partial class ExceptionExtensions
 		/// Each tuple in the collection contains the message and the stack trace of an exception.
 		/// If the stack trace is null, "NONE" is used as a placeholder.
 		/// </summary>
-		/// <returns>A <see cref="ReadOnlyCollection{T}"/> where each item is a tuple containing the message and stack trace of an exception.</returns>
+		/// <returns>A <see cref="IReadOnlyList{T}"/> where each item is a tuple containing the message and stack trace of an exception.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the exception is <c>null</c>.</exception>
+		/// <remarks>
+		/// This method traverses the entire exception hierarchy and collects message-stack trace pairs for each exception.
+		/// </remarks>
 		[Information(nameof(GetAllMessagesWithStackTrace), author: "David McCarter", createdOn: "10/12/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2024")]
 		public IReadOnlyList<(string message, string StackTrace)> GetAllMessagesWithStackTrace()
 		{
@@ -387,6 +466,10 @@ public static partial class ExceptionExtensions
 		/// </summary>
 		/// <param name="delimiter">The character used to separate individual exception messages in the resulting string. Defaults to a comma.</param>
 		/// <returns>A string containing all exception messages, separated by the specified delimiter.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the exception is <c>null</c>.</exception>
+		/// <remarks>
+		/// This method traverses the entire exception hierarchy and joins all exception messages using the specified delimiter.
+		/// </remarks>
 		[return: NotNull]
 		[Information(nameof(GetAllMessages), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2024")]
 		public string GetAllMessages([ConstantExpected] char delimiter = ControlChars.Comma)
@@ -404,6 +487,10 @@ public static partial class ExceptionExtensions
 		/// <see cref="IndexOutOfRangeException"/>, or <see cref="AccessViolationException"/>.
 		/// </summary>
 		/// <returns><c>true</c> if the exception is critical; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Critical exceptions typically indicate severe runtime failures that may not be recoverable.
+		/// This implementation is derived from .NET Core source patterns.
+		/// </remarks>
 		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsCritical()
 		{
@@ -421,6 +508,10 @@ public static partial class ExceptionExtensions
 		/// Determines whether the specified <see cref="Exception"/> is fatal. A fatal exception is one that is severe enough to justify terminating the application, such as <see cref="OutOfMemoryException"/>.
 		/// </summary>
 		/// <returns><c>true</c> if the exception is fatal; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Fatal exceptions represent catastrophic failures from which the application typically cannot recover.
+		/// This implementation is derived from .NET Core source patterns.
+		/// </remarks>
 		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsFatal()
 		{
@@ -432,6 +523,10 @@ public static partial class ExceptionExtensions
 		/// A critical exception is one of the types identified by the <see cref="IsCritical"/> method.
 		/// </summary>
 		/// <returns><c>true</c> if the exception is a <see cref="SecurityException"/> or critical; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// This method combines security-related exception checking with critical exception detection.
+		/// This implementation is derived from .NET Core source patterns.
+		/// </remarks>
 		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public bool IsSecurityOrCritical()
 		{
@@ -441,8 +536,13 @@ public static partial class ExceptionExtensions
 		/// <summary>
 		/// Traverses the exception hierarchy starting from the specified exception to find an exception of type <typeparamref name="T"/>.
 		/// </summary>
-		/// <typeparam name="T">The type of exception to search for.</typeparam>
-		/// <returns>An exception of type <typeparamref name="T"/> if found; otherwise, null.</returns>
+		/// <typeparam name="T">The type of exception to search for. Must be a reference type.</typeparam>
+		/// <returns>An exception of type <typeparamref name="T"/> if found; otherwise, <c>null</c>.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the exception is <c>null</c>.</exception>
+		/// <remarks>
+		/// This method walks through the exception hierarchy by following the <see cref="Exception.InnerException"/> chain
+		/// until an exception of the specified type is found or the end of the chain is reached.
+		/// </remarks>
 		[Information(nameof(TraverseFor), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public T? TraverseFor<T>()
 			where T : class
