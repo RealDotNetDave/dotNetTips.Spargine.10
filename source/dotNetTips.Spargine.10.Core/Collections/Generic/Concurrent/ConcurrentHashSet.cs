@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -172,7 +172,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 		}
 
 		var locks = CreateLockObjects(concurrencyLevel);
-		var countPerLock = new int[locks.LongLength];
+		var countPerLock = new int[locks.Length];
 		var buckets = new Node[capacity];
 
 		this._tables = new Tables(buckets, locks, countPerLock);
