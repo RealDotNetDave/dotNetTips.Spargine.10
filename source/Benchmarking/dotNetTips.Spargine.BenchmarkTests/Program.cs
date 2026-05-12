@@ -9,7 +9,8 @@
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary></summary>
+// Benchmark Runtime: 00:45 hours
+// Benchmark count: 40 benchmarks.
 // ***********************************************************************
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
