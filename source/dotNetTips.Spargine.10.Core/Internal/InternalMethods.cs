@@ -30,7 +30,6 @@ namespace DotNetTips.Spargine.Core.Internal;
 /// </summary>
 internal static class InternalMethods
 {
-	[UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "<Pending>")]
 	private static readonly IReadOnlyDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames();
 	private static readonly CompositeFormat _propertiesAggregateFormat = CompositeFormat.Parse("{0}{1}{2}{3}{4}");
 
@@ -61,7 +60,7 @@ internal static class InternalMethods
 		}
 
 		// If the type implements the IEnumerable interface.
-		if (TypeHelper.IsEnumerable(objectType))
+		if (IsEnumerable(objectType))
 		{
 			// Cast obj to IEnumerable before iterating
 			if (obj is IEnumerable enumerable)
@@ -190,6 +189,8 @@ internal static class InternalMethods
 	[RequiresUnreferencedCode("Uses reflection to enumerate object properties. Properties may be removed in trimmed apps.")]
 	internal static string PropertiesToString(this object obj, string header = ControlChars.EmptyString, char keyValueSeparator = ControlChars.Colon, string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 	{
+		obj = obj.ArgumentNotNull();
+
 		var typeName = obj.GetType().Name;
 
 		if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))

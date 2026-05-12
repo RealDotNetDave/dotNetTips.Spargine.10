@@ -19,7 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core.Properties;
-using DotNetTips.Spargine.Core.Serialization;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -144,13 +143,13 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// Clones this instance of <see cref="DistinctBlockingCollection{T}"/>.
 	/// </summary>
 	/// <returns>A shallow copy of the current <see cref="DistinctBlockingCollection{T}"/>.</returns>
-	/// <remarks>This type implements IDisposable. Make sure to call .Dispose() or use the 'using' statement
-	/// to remove from memory.</remarks>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Clone uses JSON serialization with reflection; cannot annotate ICloneable<T>.Clone interface.")]
-	[Information("Clone", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public DistinctBlockingCollection<T> Clone() => JsonSerialization.Deserialize<DistinctBlockingCollection<T>>(JsonSerialization.Serialize(this));
+	[Information(nameof(Clone), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public DistinctBlockingCollection<T> Clone()
+	{
+		return new DistinctBlockingCollection<T>(this);
+	}
 
 	/// <summary>
 	/// Removes the first occurrence of a specific object from the <see cref="DistinctBlockingCollection{T}"/>.
@@ -196,16 +195,48 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	}
 
 	/// <summary>
-	/// Removes the first occurrence of a specific object from the <see cref="DistinctBlockingCollection{T}"/>.
+	/// Removes the first occurrence of a specific item from the <see cref="DistinctBlockingCollection{T}"/>.
 	/// </summary>
-	/// <param name="item">The object to remove from the <see cref="DistinctBlockingCollection{T}"/>. The value cannot be null.</param>
-	/// <returns><see langword="true" /> if <paramref name="item" /> was successfully removed from the <see cref="DistinctBlockingCollection{T}"/>; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if <paramref name="item" /> is not found in the original collection.</returns>
+	/// <param name="item">The item to remove from the collection.</param>
+	/// <returns>
+	/// <see langword="true"/> if the item was found and removed; otherwise, <see langword="false"/>.
+	/// </returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Remove), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Remove), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool Remove(T item)
 	{
-		return this.TryTake(out item!);
+		if (item is null)
+		{
+			return false;
+		}
+
+		if (this.IsAddingCompleted)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(Resources.CannotRemoveItemsAfterAddingHasBeenComplet);
+		}
+
+		var comparer = EqualityComparer<T>.Default;
+		var removed = false;
+		var itemsToRestore = new List<T>();
+
+		while (this.TryTake(out var currentItem))
+		{
+			if (!removed && comparer.Equals(currentItem, item))
+			{
+				removed = true;
+				continue;
+			}
+
+			itemsToRestore.Add(currentItem);
+		}
+
+		foreach (var itemToRestore in itemsToRestore)
+		{
+			base.Add(itemToRestore);
+		}
+
+		return removed;
 	}
 
 	/// <summary>
