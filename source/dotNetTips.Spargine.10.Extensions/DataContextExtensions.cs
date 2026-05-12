@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-13-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="DataContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -151,7 +151,8 @@ public static class DataContextExtensions
 	/// <exception cref="ArgumentNullException">context</exception>
 	[Pure]
 	[return: NotNull]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
+	[RequiresUnreferencedCode(
+	"Uses reflection to access non-public LinqToDB DataContext tracking fields. This is not reliable in trimmed apps and may break across LinqToDB versions.")]
 	[Information(nameof(GetTrackedObjects), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<Tuple<T, T>> GetTrackedObjects<T>([DisallowNull] this DataContext context)
 	{

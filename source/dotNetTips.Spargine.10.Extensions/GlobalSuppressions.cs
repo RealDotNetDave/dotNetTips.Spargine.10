@@ -37,6 +37,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.ListExtensions.`1")]
 [assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.ArrayExtensions.")]
 [assembly: SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.Extensions.StringExtensions.CombineToString(System.String,System.String[])~System.String")]
+[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "C# 14 extension block is misidentified as a nested type by CA1034.", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.EnumExtensions.`1")]
 [assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.EnumExtensions.")]
 [assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.HashSetExtensions.`1")]
 [assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>", Scope = "type", Target = "~T:DotNetTips.Spargine.Extensions.ImmutableArrayExtensions.`1")]

@@ -106,6 +106,56 @@ public static partial class EnumHelper
 	}
 
 	/// <summary>
+	/// Gets the description of the enum value by checking multiple attributes in this order:
+	/// 1. <see cref="DescriptionAttribute"/>
+	/// 2. <see cref="EnumMemberAttribute"/>
+	/// 3. The enum's name as a fallback.
+	/// This overload is trim-safe and avoids boxing by using a generic type parameter.
+	/// </summary>
+	/// <typeparam name="TEnum">The enum type. Must have its public fields accessible for trimming.</typeparam>
+	/// <param name="input">The enum value to get the description for.</param>
+	/// <returns>
+	/// The <see cref="DescriptionAttribute"/> value if present; otherwise the <see cref="EnumMemberAttribute"/> value
+	/// if present; otherwise the enum member's name.
+	/// </returns>
+	[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	public static string GetDescription<
+	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
+	where TEnum : struct, Enum
+	{
+		var type = typeof(TEnum);
+		var name = Enum.GetName(input);
+
+		if (name is null)
+		{
+			return input.ToString();
+		}
+
+		var field = type.GetField(name);
+
+		if (field is null)
+		{
+			return name;
+		}
+
+		var descriptionAttr = field.GetCustomAttribute<DescriptionAttribute>(false);
+
+		if (descriptionAttr is not null && string.IsNullOrEmpty(descriptionAttr.Description) is false)
+		{
+			return descriptionAttr.Description;
+		}
+
+		var enumMemberAttr = field.GetCustomAttribute<EnumMemberAttribute>(false);
+
+		if (enumMemberAttr is not null && string.IsNullOrEmpty(enumMemberAttr.Value) is false)
+		{
+			return enumMemberAttr.Value;
+		}
+
+		return name;
+	}
+
+	/// <summary>
 	/// Gets the enumeration names and values for a specified enumeration type.
 	/// </summary>
 	/// <typeparam name="T">The type of the enumeration.</typeparam>
@@ -120,7 +170,7 @@ public static partial class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static ReadOnlyCollection<EnumValue> GetItems<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] T>(
 		bool fixNames = true)

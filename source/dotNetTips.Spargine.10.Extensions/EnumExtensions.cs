@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for the <see cref="Enum" /> type, enhancing enum functionality with additional utilities such as getting descriptions, parsing, and retrieving items.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static class EnumExtensions
 {
 	/// <summary>
@@ -47,6 +47,48 @@ public static class EnumExtensions
 	}
 
 	/// <summary>
+	/// Provides trim-aware extension members for strongly typed enum values.
+	/// </summary>
+	/// <typeparam name="TEnum">The enum type.</typeparam>
+	/// <param name="input">The enum value to extend.</param>
+	extension<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
+		where TEnum : struct, Enum
+	{
+		/// <summary>
+		/// Gets the description of the enum value using enum metadata preserved for trimming.
+		/// </summary>
+		/// <returns>The description of the enum value, or its name if no description is available.</returns>
+		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
+		public string? GetDescription()
+		{
+			return EnumHelper.GetDescription(input);
+		}
+
+		/// <summary>
+		/// Gets the names and values of the enum.
+		/// </summary>
+		/// <returns>A read-only collection of enum names and values.</returns>
+		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public ReadOnlyCollection<(string Description, int Value)> GetItems()
+		{
+			var enumValues = Enum.GetValues<TEnum>();
+			var enumNames = Enum.GetNames<TEnum>();
+
+			var items = new List<(string Description, int Value)>(enumValues.Length);
+
+			for (var index = 0; index < enumValues.Length; index++)
+			{
+				items.Add((
+					Description: enumNames[index],
+					Value: Convert.ToInt32(enumValues[index], CultureInfo.InvariantCulture)));
+			}
+
+			return items.ToReadOnlyCollection();
+		}
+	}
+
+
+	/// <summary>
 	/// Provides extension methods for an <see cref="Enum"/> instance.
 	/// </summary>
 	/// <param name="input">The enum value to extend.</param>
@@ -62,6 +104,7 @@ public static class EnumExtensions
 		/// <remarks>
 		/// This method delegates to <see cref="EnumHelper.GetDescription(Enum)"/> and preserves any custom enum member descriptions.
 		/// </remarks>
+		[RequiresUnreferencedCode("Uses runtime enum metadata. Use a generic enum overload in trimmed apps.")]
 		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
 		public string? GetDescription()
 		{
@@ -123,6 +166,7 @@ public static class EnumExtensions
 		/// </summary>
 		/// <returns>A collection of individual flag values that are set.</returns>
 		/// <exception cref="ArgumentException">Thrown if the enum type is not decorated with <see cref="FlagsAttribute"/>.</exception>
+		[RequiresUnreferencedCode("Uses runtime enum metadata and attribute discovery. Use a generic enum overload in trimmed apps.")]
 		[Information(nameof(GetSetFlags), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Enum> GetSetFlags()
 		{
@@ -154,6 +198,7 @@ public static class EnumExtensions
 		[Information(nameof(get_FlagCount), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int FlagCount
 		{
+			[RequiresUnreferencedCode("Uses runtime enum metadata and attribute discovery. Use a generic enum overload in trimmed apps.")]
 			get
 			{
 				var enumType = input.GetType();
@@ -180,6 +225,7 @@ public static class EnumExtensions
 		/// Gets the next enum value in sequence, or the first value if at the end.
 		/// </summary>
 		/// <returns>The next enum value.</returns>
+		[RequiresUnreferencedCode("Uses runtime enum metadata. Use a generic enum overload in trimmed apps.")]
 		[Information(nameof(Next), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Enum Next()
 		{
@@ -195,6 +241,7 @@ public static class EnumExtensions
 		/// Gets the previous enum value in sequence, or the last value if at the beginning.
 		/// </summary>
 		/// <returns>The previous enum value.</returns>
+		[RequiresUnreferencedCode("Uses runtime enum metadata. Use a generic enum overload in trimmed apps.")]
 		[Information(nameof(Previous), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Enum Previous()
 		{
@@ -212,6 +259,7 @@ public static class EnumExtensions
 		/// The description is obtained from the enum member's name itself.
 		/// </summary>
 		/// <returns>A <see cref="ReadOnlyCollection{T}" /> where T is a tuple of string and int, representing the description and value of each enum member.</returns>
+		[RequiresUnreferencedCode("Uses runtime enum metadata. Use a generic enum overload in trimmed apps.")]
 		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<(string Description, int Value)> GetItems()
 		{
