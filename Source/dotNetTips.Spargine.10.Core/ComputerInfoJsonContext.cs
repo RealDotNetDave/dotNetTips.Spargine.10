@@ -19,6 +19,6 @@ using System.Text.Json.Serialization;
 namespace DotNetTips.Spargine.Core;
 
 [JsonSerializable(typeof(ComputerInfo))]
-internal partial class ComputerInfoJsonContext : JsonSerializerContext
+internal sealed partial class ComputerInfoJsonContext : JsonSerializerContext
 {
 }
