@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,7 +20,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
-using DotNetTips.Spargine.Core.Internal;
 using Microsoft.Extensions.ObjectPool;
 
 namespace DotNetTips.Spargine.Core.Network;
@@ -200,103 +199,58 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 	/// Builds a detailed, human-readable report of active network connections.
 	/// </summary>
 	/// <param name="includeIPProperties">
-	/// If <c>true</c>, includes the IP properties section for each connection (such as DNS, gateways, and IP configurations).
-	/// If <c>false</c>, omits the IP properties section for a faster, lighter report.
+	/// If <c>true</c>, includes the IP properties section for each connection.
 	/// </param>
-	/// <returns>
-	/// A formatted <see cref="string"/> containing one section per active network interface, including:
-	/// name, basic details (description, type, status, speed, receive-only flag, physical address),
-	/// IP statistics, IPv4 statistics, and optionally IP properties.
-	/// </returns>
-	/// <remarks>
-	/// - Interfaces are filtered to operational status <see cref="OperationalStatus.Up"/> and speed &gt; 0.
-	/// - Uses a pooled <see cref="StringBuilder"/> to minimize allocations.
-	/// - Relies on extension methods for formatting (e.g., <see cref="InternalMethods.PropertiesToDictionary(object, string, bool)"/>).
-	/// - Each interface section is separated by a header line of '=' characters for readability.
-	/// </remarks>
+	/// <returns>A formatted report of active network interfaces.</returns>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetNetworkConnections), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetNetworkConnectionsReport), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static string GetNetworkConnectionsReport(bool includeIPProperties = false)
 	{
 		var connections = GetNetworkConnections();
-
 		var sb = _stringBuilderPool.Get().Clear();
 
-		foreach (var connection in connections.Where(p => p.Speed > 0))
+		try
 		{
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"Name: {connection.Name}");
-			sb.AppendRepeatedCharsLine(ControlChars.Equal, 40);
-
-			//Basic info
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Description: {connection.Description}");
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Type: {connection.NetworkInterfaceType.GetDescription()}");
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Status: {connection.OperationalStatus.GetDescription()}");
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Speed: {connection.Speed}");
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Receive only: {connection.IsReceiveOnly}");
-			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Physical Address: {connection.GetPhysicalAddress().ToString()}");
-			_ = sb.AppendLine();
-
-			//Add IP Statistics
-			var ipStats = connection.GetIPStatistics();
-
-			if (ipStats is not null)
+			foreach (var connection in connections.Where(static p => p.Speed > 0))
 			{
-				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"IP Statistics:");
+				AppendNetworkInterfaceSummary(sb, connection);
 
-				var ipStatsInfo = ipStats.PropertiesToDictionary();
+				var ipStats = connection.GetIPStatistics();
 
-				foreach (var kvp in ipStatsInfo)
+				if (ipStats is not null)
 				{
-					_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {kvp.Key}: {kvp.Value}");
+					AppendIPInterfaceStatistics(sb, "IP Statistics", ipStats);
 				}
 
-				_ = sb.AppendLine();
-			}
-
-			//Add IPv4 Statistics
-			var ipv4Stats = connection.GetIPv4Statistics();
-
-			if (ipv4Stats is not null)
-			{
-				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"IPv4 Statistics:");
-
-				var ipv4StatsInfo = ipv4Stats.PropertiesToDictionary();
-
-				foreach (var kvp in ipv4StatsInfo)
+				if (connection.Supports(NetworkInterfaceComponent.IPv4))
 				{
-					_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {kvp.Key}: {kvp.Value}");
-				}
+					var ipv4Stats = connection.GetIPv4Statistics();
 
-				_ = sb.AppendLine();
-			}
-
-			if (includeIPProperties)
-			{
-				//Add IP Properties
-				var ipProperties = connection.GetIPProperties();
-
-				if (ipProperties is not null)
-				{
-					_ = sb.AppendLine(CultureInfo.CurrentCulture, $"IP Properties:");
-
-					var ipPropertiesInfo = ipProperties.PropertiesToDictionary();
-
-					foreach (var kvp in ipPropertiesInfo)
+					if (ipv4Stats is not null)
 					{
-						_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {kvp.Key}: {kvp.Value}");
+						AppendIPv4InterfaceStatistics(sb, "IPv4 Statistics", ipv4Stats);
 					}
-
-					_ = sb.AppendLine();
 				}
+
+				if (includeIPProperties)
+				{
+					var ipProperties = connection.GetIPProperties();
+
+					if (ipProperties is not null)
+					{
+						AppendIPProperties(sb, ipProperties);
+					}
+				}
+
+				_ = sb.AppendLine();
 			}
 
-			// Add ending blank line
-			_ = sb.AppendLine();
-
+			return sb.ToString();
 		}
-
-		return sb.ToString();
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
 	}
 
 	/// <summary>
@@ -532,5 +486,189 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 		}
 
 		return false;
+	}
+
+	/// <summary>
+	/// Appends formatted gateway address information to the provided <see cref="StringBuilder"/>.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted gateway addresses to.</param>
+	/// <param name="addresses">A collection of <see cref="GatewayIPAddressInformation"/> objects to format and append.</param>
+	private static void AppendGatewayAddresses(StringBuilder sb, IEnumerable<GatewayIPAddressInformation> addresses)
+	{
+		_ = sb.AppendLine("  Gateway Addresses:");
+
+		foreach (var address in addresses)
+		{
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"    {address.Address}");
+		}
+	}
+
+	/// <summary>
+	/// Appends a formatted collection of IP addresses to the provided <see cref="StringBuilder"/> with a custom title.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted addresses to.</param>
+	/// <param name="title">The title to display above the list of addresses.</param>
+	/// <param name="addresses">A collection of <see cref="IPAddress"/> objects to format and append.</param>
+	private static void AppendIPAddressCollection(StringBuilder sb, string title, IEnumerable<IPAddress> addresses)
+	{
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {title}:");
+
+		foreach (var address in addresses)
+		{
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"    {address}");
+		}
+	}
+
+	/// <summary>
+	/// Appends a formatted collection of IP address information to the provided <see cref="StringBuilder"/> with a custom title.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted addresses to.</param>
+	/// <param name="title">The title to display above the list of addresses.</param>
+	/// <param name="addresses">A collection of <see cref="IPAddressInformation"/> objects to format and append.</param>
+	private static void AppendIPAddressInformationCollection(StringBuilder sb, string title, IEnumerable<IPAddressInformation> addresses)
+	{
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  {title}:");
+
+		foreach (var address in addresses)
+		{
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"    {address.Address}");
+		}
+	}
+
+	/// <summary>
+	/// Appends detailed IP interface statistics to the provided <see cref="StringBuilder"/>.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted statistics to.</param>
+	/// <param name="sectionTitle">The title to display for the statistics section.</param>
+	/// <param name="statistics">The <see cref="IPInterfaceStatistics"/> object containing the statistics to format and append.</param>
+	/// <remarks>
+	/// This method formats and appends comprehensive network interface statistics including bytes sent/received,
+	/// packet counts, error counts, and queue lengths.
+	/// </remarks>
+	private static void AppendIPInterfaceStatistics(StringBuilder sb, string sectionTitle, IPInterfaceStatistics statistics)
+	{
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"{sectionTitle}:");
+
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Bytes Received: {statistics.BytesReceived:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Bytes Sent: {statistics.BytesSent:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Incoming Packets Discarded: {statistics.IncomingPacketsDiscarded:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Incoming Packets With Errors: {statistics.IncomingPacketsWithErrors:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Incoming Unknown Protocol Packets: {statistics.IncomingUnknownProtocolPackets:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Non-Unicast Packets Received: {statistics.NonUnicastPacketsReceived:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Non-Unicast Packets Sent: {statistics.NonUnicastPacketsSent:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Outgoing Packets Discarded: {statistics.OutgoingPacketsDiscarded:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Outgoing Packets With Errors: {statistics.OutgoingPacketsWithErrors:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Output Queue Length: {statistics.OutputQueueLength:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Unicast Packets Received: {statistics.UnicastPacketsReceived:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Unicast Packets Sent: {statistics.UnicastPacketsSent:N0}");
+		_ = sb.AppendLine();
+	}
+
+	/// <summary>
+	/// Appends comprehensive IP properties information to the provided <see cref="StringBuilder"/>.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted properties to.</param>
+	/// <param name="properties">The <see cref="IPInterfaceProperties"/> object containing the properties to format and append.</param>
+	/// <remarks>
+	/// This method appends detailed IP configuration including DNS settings, DHCP information, gateway addresses,
+	/// and various address collections (unicast, anycast, multicast, WINS servers).
+	/// </remarks>
+	private static void AppendIPProperties(StringBuilder sb, IPInterfaceProperties properties)
+	{
+		_ = sb.AppendLine("IP Properties:");
+
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  DNS Suffix: {properties.DnsSuffix}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  DNS Enabled: {properties.IsDnsEnabled}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Dynamic DNS Enabled: {properties.IsDynamicDnsEnabled}");
+
+		AppendIPAddressCollection(sb, "DNS Addresses", properties.DnsAddresses);
+		AppendIPAddressCollection(sb, "DHCP Server Addresses", properties.DhcpServerAddresses);
+		AppendIPAddressCollection(sb, "WINS Server Addresses", properties.WinsServersAddresses);
+		AppendGatewayAddresses(sb, properties.GatewayAddresses);
+		AppendUnicastAddresses(sb, properties.UnicastAddresses);
+		AppendIPAddressInformationCollection(sb, "Anycast Addresses", properties.AnycastAddresses);
+		AppendIPAddressInformationCollection(sb, "Multicast Addresses", properties.MulticastAddresses);
+
+		_ = sb.AppendLine();
+	}
+
+	/// <summary>
+	/// Appends detailed IPv4 interface statistics to the provided <see cref="StringBuilder"/>.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted statistics to.</param>
+	/// <param name="sectionTitle">The title to display for the statistics section.</param>
+	/// <param name="statistics">The <see cref="IPv4InterfaceStatistics"/> object containing the statistics to format and append.</param>
+	/// <remarks>
+	/// This method formats and appends IPv4-specific network interface statistics including bytes sent/received,
+	/// unicast and non-unicast packet counts, error counts, and queue lengths.
+	/// </remarks>
+	private static void AppendIPv4InterfaceStatistics(StringBuilder sb, string sectionTitle, IPv4InterfaceStatistics statistics)
+	{
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"{sectionTitle}:");
+
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Bytes Received: {statistics.BytesReceived:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Bytes Sent: {statistics.BytesSent:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Incoming Packets Discarded: {statistics.IncomingPacketsDiscarded:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Incoming Packets With Errors: {statistics.IncomingPacketsWithErrors:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Incoming Unknown Protocol Packets: {statistics.IncomingUnknownProtocolPackets:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Non-Unicast Packets Received: {statistics.NonUnicastPacketsReceived:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Non-Unicast Packets Sent: {statistics.NonUnicastPacketsSent:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Outgoing Packets Discarded: {statistics.OutgoingPacketsDiscarded:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Outgoing Packets With Errors: {statistics.OutgoingPacketsWithErrors:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Output Queue Length: {statistics.OutputQueueLength:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Unicast Packets Received: {statistics.UnicastPacketsReceived:N0}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Unicast Packets Sent: {statistics.UnicastPacketsSent:N0}");
+		_ = sb.AppendLine();
+	}
+
+	/// <summary>
+	/// Appends a summary of network interface information to the provided <see cref="StringBuilder"/>.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted summary to.</param>
+	/// <param name="networkInterface">The <see cref="NetworkInterface"/> object containing the information to format and append.</param>
+	/// <remarks>
+	/// This method formats and appends key network interface details including name, description, type,
+	/// operational status, speed, multicast support, and physical (MAC) address.
+	/// </remarks>
+	private static void AppendNetworkInterfaceSummary(StringBuilder sb, NetworkInterface networkInterface)
+	{
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"Name: {networkInterface.Name}");
+		_ = sb.AppendLine(new string(ControlChars.Equal, 40));
+
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Description: {networkInterface.Description}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Type: {networkInterface.NetworkInterfaceType}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Status: {networkInterface.OperationalStatus}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Speed: {networkInterface.Speed:N0} bps");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Receive Only: {networkInterface.IsReceiveOnly}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Supports Multicast: {networkInterface.SupportsMulticast}");
+		_ = sb.AppendLine(CultureInfo.CurrentCulture, $"  Physical Address: {networkInterface.GetPhysicalAddress()}");
+		_ = sb.AppendLine();
+	}
+
+	/// <summary>
+	/// Appends detailed unicast address information to the provided <see cref="StringBuilder"/>.
+	/// </summary>
+	/// <param name="sb">The <see cref="StringBuilder"/> to append the formatted addresses to.</param>
+	/// <param name="addresses">A collection of <see cref="UnicastIPAddressInformation"/> objects to format and append.</param>
+	/// <remarks>
+	/// This method formats and appends comprehensive unicast address details including the address itself,
+	/// IPv4 mask, prefix length, prefix/suffix origins, duplicate address detection state, DNS eligibility,
+	/// and transient status.
+	/// </remarks>
+	private static void AppendUnicastAddresses(StringBuilder sb, IEnumerable<UnicastIPAddressInformation> addresses)
+	{
+		_ = sb.AppendLine("  Unicast Addresses:");
+
+		foreach (var address in addresses)
+		{
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"    Address: {address.Address}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      IPv4 Mask: {address.IPv4Mask}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      Prefix Length: {address.PrefixLength}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      Prefix Origin: {address.PrefixOrigin}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      Suffix Origin: {address.SuffixOrigin}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      Duplicate Address Detection State: {address.DuplicateAddressDetectionState}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      DNS Eligible: {address.IsDnsEligible}");
+			_ = sb.AppendLine(CultureInfo.CurrentCulture, $"      Transient: {address.IsTransient}");
+		}
 	}
 }
