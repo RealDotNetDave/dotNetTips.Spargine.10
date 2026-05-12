@@ -73,7 +73,10 @@ public class TempFileManagerDeleteFileBenchmark : Benchmark
 	/// Creates exactly one temporary file before each iteration so only the single-file delete is measured.
 	/// </summary>
 	[IterationSetup]
-	public void IterationSetup() => this._singleFile = this._manager.CreateFile();
+	public void IterationSetup()
+	{
+		this._singleFile = this._manager.CreateFile();
+	}
 
 	/// <summary>
 	/// Overrides Setup to initialize a fresh <see cref="TempFileManager"/> instance.

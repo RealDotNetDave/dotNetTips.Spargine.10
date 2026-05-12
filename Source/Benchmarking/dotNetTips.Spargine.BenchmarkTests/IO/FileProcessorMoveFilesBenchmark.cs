@@ -31,9 +31,9 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 
 /// <summary>
 /// Benchmark test for <see cref="FileProcessor.MoveFiles"/>.
-/// Uses <see cref="IterationSetupAttribute"/> to copy source files back from the destination before
-/// each iteration so that only a single forward move is measured, and <see cref="IterationCleanupAttribute"/>
-/// to clear any residual destination files.
+/// Uses <see cref="IterationSetupAttribute"/> to snapshot the source file list immediately before
+/// each timed run, and <see cref="IterationCleanupAttribute"/> to move files back from the destination
+/// to the source so that only a single forward move is measured per iteration.
 /// </summary>
 [MemoryDiagnoser]
 [BenchmarkCategory(Categories.IO)]
@@ -60,8 +60,8 @@ public class FileProcessorMoveFilesBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Moves any files that landed in the destination back to the source directory after each iteration,
-	/// and refreshes the source file list so the next iteration has a full set to move.
+	/// Moves any files that landed in the destination back to the source directory after each iteration
+	/// so the source directory is fully restored before the next run.
 	/// </summary>
 	[IterationCleanup]
 	public void IterationCleanup()
@@ -72,13 +72,22 @@ public class FileProcessorMoveFilesBenchmark : Benchmark
 		{
 			_ = this._fileProcessor.MoveFiles(destFiles, this._sourcePath, overwrite: true);
 		}
+	}
 
+	/// <summary>
+	/// Snapshots the source file list immediately before each timed run so the benchmark body
+	/// always operates on the current, fully-restored set of source files.
+	/// </summary>
+	[IterationSetup]
+	public void IterationSetup()
+	{
 		this._sourceFiles = [.. this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly)];
 	}
 
 	/// <summary>
 	/// Benchmark for <see cref="FileProcessor.MoveFiles"/>.
-	/// Source files are restored in <see cref="IterationCleanupAttribute"/>; only the forward move is measured.
+	/// Source files are snapshotted in <see cref="IterationSetupAttribute"/> and restored via
+	/// <see cref="IterationCleanupAttribute"/>; only the forward move is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.MoveFiles))]
 	[BenchmarkCategory(Categories.New)]
@@ -108,7 +117,6 @@ public class FileProcessorMoveFilesBenchmark : Benchmark
 
 		_ = RandomData.GenerateFiles(this._sourcePath.FullName, FileCount, FileLength);
 
-		this._sourceFiles = [.. this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly)];
 		this._fileProcessor = new FileProcessor();
 	}
 }
