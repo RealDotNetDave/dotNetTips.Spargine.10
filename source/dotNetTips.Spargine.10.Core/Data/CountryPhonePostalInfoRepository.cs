@@ -4,7 +4,7 @@
 // Created          : 09-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 02-05-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="CountryPhonePostalInfoRepository.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,7 +22,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using DotNetTips.Spargine.Core.Data.Models;
 using DotNetTips.Spargine.Core.Properties;
@@ -39,7 +38,6 @@ namespace DotNetTips.Spargine.Core.Data;
 public static class CountryPhonePostalInfoRepository
 {
 	private static ReadOnlyCollection<CountryPhonePostalInfo>? _countries;
-	private static readonly JsonSerializerOptions? _options = ConfigureSerializerOptions();
 
 	/// <summary>
 	/// Retrieves a cached, read-only collection that contains phone and postal information for all supported countries.
@@ -80,7 +78,6 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="DeserializeCountryPhonePostalInfo"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.Synchronized)]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ReadOnlyCollection<CountryPhonePostalInfo> GetCountryPhonePostalInfo()
 	{
@@ -112,7 +109,6 @@ public static class CountryPhonePostalInfoRepository
 	/// var usByIso3 = CountryPhonePostalInfoRepository.GetCountryPhonePostalInfo("USA");
 	/// </example>
 	[Pure]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(GetCountryPhonePostalInfo), "David McCarter", "9/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static CountryPhonePostalInfo? GetCountryPhonePostalInfo([NotNull] string countryNameOrIso)
 	{
@@ -200,7 +196,6 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="GetCountryPhonePostalInfo(string)"/>
 	/// <seealso cref="ValidatePostalCode(string, string)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ValidatePhoneNumber), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ValidatePhoneNumber([NotNull] string countryNameOrIso, [NotNull] string phoneNumber, bool validateCountryCode = false)
 	{
@@ -317,7 +312,6 @@ public static class CountryPhonePostalInfoRepository
 	/// <seealso cref="PostalCodeState"/>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(ValidatePostalCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static PostalCodeState ValidatePostalCode([NotNull] string countryNameOrIso, [NotNull] string postalCode)
 	{
@@ -343,38 +337,25 @@ public static class CountryPhonePostalInfoRepository
 			: PostalCodeState.Invalid;
 	}
 
-	/// <summary>
-	/// Configures and returns the serializer options for JSON serialization.
-	/// </summary>
-	/// <returns>A <see cref="JsonSerializerOptions"/> object configured with custom settings for serialization.</returns>
-	/// <remarks>
-	/// This method sets up JSON serializer options to handle numbers as strings for compatibility during deserialization.
-	/// </remarks>
-	private static JsonSerializerOptions ConfigureSerializerOptions()
-	{
-		return new JsonSerializerOptions
-		{
-			NumberHandling = JsonNumberHandling.AllowReadingFromString,
-		};
-	}
 
 	/// <summary>
 	/// Deserializes the country phone and postal information from the embedded JSON resource.
 	/// </summary>
 	/// <returns>A <see cref="ReadOnlyCollection{CountryPhonePostalInfo}"/> containing country data.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if deserialization fails.</exception>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.NoInlining)]
 	private static ReadOnlyCollection<CountryPhonePostalInfo> DeserializeCountryPhonePostalInfo()
 	{
 		try
 		{
-			var countries = JsonSerializer.Deserialize<CountryPhonePostalInfo[]>(Resources.CountryPhonePostalInfo, _options);
+			var countries = JsonSerializer.Deserialize(
+				Resources.CountryPhonePostalInfo,
+				CountryPhonePostalInfoJsonContext.Default.CountryPhonePostalInfoArray);
+
 			return countries?.AsReadOnly() ?? new ReadOnlyCollection<CountryPhonePostalInfo>([]);
 		}
 		catch (JsonException ex)
 		{
-			// Log the exception or handle it as needed.
 			throw new InvalidOperationException(Resources.FailedToDeserializeCountriesData, ex);
 		}
 	}
