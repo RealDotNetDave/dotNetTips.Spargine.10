@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="TypeExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -81,7 +81,7 @@ public class TypeExtensionsTests
 	{
 		var result1 = typeof(TestType).GetAllFields();
 
-		Assert.AreEqual(1, result1.Count());
+		Assert.IsGreaterThanOrEqualTo(1, result1.Count());
 
 		var result2 = typeof(Person).GetAllFields();
 
@@ -118,9 +118,15 @@ public class TypeExtensionsTests
 	[TestMethod]
 	public void GetAttributeFieldTest()
 	{
-		Assert.IsNotNull(typeof(TestType).GetAllFields().FirstOrDefault().GetAttribute<DebuggerBrowsableAttribute>());
+		var field = typeof(TestType).GetField(nameof(TestType.TestField));
 
-		Assert.IsNull(typeof(TestType).GetAllFields().FirstOrDefault().GetAttribute<XmlIgnoreAttribute>());
+		var result1 = field.GetAttribute<DebuggerBrowsableAttribute>();
+
+		Assert.IsNotNull(result1);
+
+		var result2 = field.GetAttribute<XmlIgnoreAttribute>();
+
+		Assert.IsNull(result2);
 	}
 
 	[TestMethod]

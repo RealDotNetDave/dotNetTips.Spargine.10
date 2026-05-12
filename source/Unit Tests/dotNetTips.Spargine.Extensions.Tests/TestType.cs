@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-16-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-29-2023
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="TestType.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -23,6 +23,20 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [XmlRoot]
 public class TestType
 {
+
+	/// <summary>
+	/// A field decorated with <see cref="DebuggerBrowsableAttribute"/> for attribute-inspection tests.
+	/// </summary>
+	[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+	public string TestField;
+
+	/// <summary>
+	/// Gets or sets the name of the user.
+	/// </summary>
+	/// <value>The name of the user.</value>
+	[XmlIgnore]
+	[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+	public string UserName { get; set; }
 
 	/// <summary>
 	/// Gets the name.
@@ -51,14 +65,6 @@ public class TestType
 	{
 		//Do Nothing
 	}
-
-	/// <summary>
-	/// Gets or sets the name of the user.
-	/// </summary>
-	/// <value>The name of the user.</value>
-	[XmlIgnore]
-	[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-	public string UserName { get; set; }
 
 }
 

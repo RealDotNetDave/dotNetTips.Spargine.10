@@ -4,7 +4,7 @@
 // Created          : 01-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-21-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -52,18 +52,17 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() and Type.GetInterfaces() which require runtime type discovery.")]
+		[RequiresUnreferencedCode("Uses assembly-wide runtime type discovery. Types or interfaces may be removed in trimmed apps.")]
 		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
 			assembly = assembly.ArgumentNotNull();
-
 			var interfaces = new List<Type>();
 
 			// USING SPAN CAUSES ISSUES.
 			// FrozenSet is slower.
 			// Recommendation from CoPilot is slower.
-			var array = assembly.GetTypes();
+			var array = AssemblyExtensionsHelper.GetLoadableTypes(assembly);
 
 			foreach (var arrayItem in array)
 			{
@@ -72,6 +71,7 @@ public static class AssemblyExtensions
 
 			return interfaces.Distinct().ToReadOnlyCollection();
 		}
+
 
 		/// <summary>
 		/// Gets all non-abstract types in an <see cref="Assembly" />.
@@ -87,9 +87,8 @@ public static class AssemblyExtensions
 		[Information(nameof(GetAllTypes), "David McCarter", "1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllTypes()
 		{
-			assembly = assembly.ArgumentNotNull();
+			var types = AssemblyExtensionsHelper.GetLoadableTypes(assembly);
 
-			var types = assembly.GetTypes();
 			var result = new List<Type>(types.Length);
 
 			foreach (var type in types)
@@ -117,23 +116,35 @@ public static class AssemblyExtensions
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[RequiresUnreferencedCode("This method uses Assembly.GetTypes() and Activator.CreateInstance() which require runtime type discovery.")]
+		[RequiresUnreferencedCode("Uses assembly-wide runtime type discovery and Activator.CreateInstance. Types, constructors, or metadata may be removed in trimmed apps.")]
 		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
-			assembly = assembly.ArgumentNotNull();
-
-			var types = assembly.GetTypes();
+			var types = AssemblyExtensionsHelper.GetLoadableTypes(assembly);
 			var targetType = typeof(T);
 
 			foreach (var type in types)
 			{
-				if (!type.IsInterface && !type.IsAbstract && !type.IsGenericType && targetType.IsAssignableFrom(type))
+				if (type.IsInterface || type.IsAbstract || type.IsGenericType || !targetType.IsAssignableFrom(type))
 				{
-					if (Activator.CreateInstance(type) is T instance)
-					{
-						yield return instance;
-					}
+					continue;
+				}
+
+				object? instance;
+
+				try
+				{
+					instance = Activator.CreateInstance(type);
+				}
+				catch (MissingMethodException ex)
+				{
+					Trace.WriteLine(ex.Message);
+					continue;
+				}
+
+				if (instance is T typedInstance)
+				{
+					yield return typedInstance;
 				}
 			}
 		}
@@ -152,10 +163,9 @@ public static class AssemblyExtensions
 		[Information(nameof(GetTypes), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetTypes([DisallowNull] Type type)
 		{
-			assembly = assembly.ArgumentNotNull();
 			type = type.ArgumentNotNull();
 
-			var types = assembly.GetTypes();
+			var types = AssemblyExtensionsHelper.GetLoadableTypes(assembly);
 			var result = new List<Type>(types.Length);
 
 			foreach (var t in types)
@@ -168,6 +178,38 @@ public static class AssemblyExtensions
 
 			return result.ToReadOnlyCollection();
 
+		}
+	}
+}
+
+/// <summary>
+/// Internal helper providing assembly type-loading utilities for <see cref="AssemblyExtensions"/>.
+/// </summary>
+internal static class AssemblyExtensionsHelper
+{
+	/// <summary>
+	/// Attempts to retrieve all types defined in the specified assembly, gracefully handling partial load failures.
+	/// </summary>
+	/// <param name="assembly">The assembly from which to load types. Must not be <c>null</c>.</param>
+	/// <returns>
+	/// An array of <see cref="Type"/> objects defined in <paramref name="assembly"/>.
+	/// If a <see cref="ReflectionTypeLoadException"/> occurs, returns only the types that were successfully loaded,
+	/// filtering out any <c>null</c> entries.
+	/// </returns>
+	[RequiresUnreferencedCode("Uses Assembly.GetTypes() which requires runtime type discovery.")]
+	internal static Type[] GetLoadableTypes(Assembly assembly)
+	{
+		assembly = assembly.ArgumentNotNull();
+
+		try
+		{
+			return assembly.GetTypes();
+		}
+		catch (ReflectionTypeLoadException ex)
+		{
+			return [.. ex.Types
+				.Where(static type => type is not null)
+				.Cast<Type>()];
 		}
 	}
 }
