@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-10-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerDeleteFileBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -54,14 +54,20 @@ public class TempFileManagerDeleteFileBenchmark : Benchmark
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.DeleteFile))]
 	[BenchmarkCategory(Categories.New)]
-	public void DeleteFile() => this._manager.DeleteFile(this._singleFile);
+	public void DeleteFile()
+	{
+		this._manager.DeleteFile(this._singleFile);
+	}
 
 	/// <summary>
 	/// Removes any file that was not deleted during the benchmark iteration (e.g., if the benchmark
 	/// was skipped or errored) so files do not accumulate.
 	/// </summary>
 	[IterationCleanup]
-	public void IterationCleanup() => this._manager.DeleteAllFiles();
+	public void IterationCleanup()
+	{
+		this._manager.DeleteAllFiles();
+	}
 
 	/// <summary>
 	/// Creates exactly one temporary file before each iteration so only the single-file delete is measured.
@@ -79,3 +85,4 @@ public class TempFileManagerDeleteFileBenchmark : Benchmark
 		this._manager = new TempFileManager();
 	}
 }
+

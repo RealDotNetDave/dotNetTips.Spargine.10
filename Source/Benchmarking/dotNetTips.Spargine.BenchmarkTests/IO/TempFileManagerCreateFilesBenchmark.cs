@@ -89,7 +89,10 @@ public class TempFileManagerCreateFilesBenchmark : Benchmark
 	/// Removes all managed files after each iteration so file count stays constant across iterations.
 	/// </summary>
 	[IterationCleanup]
-	public void IterationCleanup() => this._manager.DeleteAllFiles();
+	public void IterationCleanup()
+	{
+		this._manager.DeleteAllFiles();
+	}
 
 	/// <summary>
 	/// Overrides Setup to initialize a fresh <see cref="TempFileManager"/> instance.

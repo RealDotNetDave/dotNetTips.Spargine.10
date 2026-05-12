@@ -58,25 +58,9 @@ public class DirectoryHelperCopyDirectoryBenchmark : Benchmark
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.CopyDirectory))]
 	[BenchmarkCategory(Categories.New)]
-	public void CopyDirectory() =>
-		DirectoryHelper.CopyDirectory(this._sourcePath, this._copyDestinationPath, overwrite: true);
-
-	/// <summary>
-	/// Deletes all files and subdirectories inside the destination directory after each iteration
-	/// so the next iteration always measures a clean copy with no pre-existing destination files.
-	/// </summary>
-	[IterationCleanup]
-	public void IterationCleanup()
+	public void CopyDirectory()
 	{
-		foreach (var file in this._copyDestinationPath.GetFiles("*.*", SearchOption.AllDirectories))
-		{
-			file.Delete();
-		}
-
-		foreach (var dir in this._copyDestinationPath.GetDirectories("*", SearchOption.TopDirectoryOnly))
-		{
-			dir.Delete(recursive: true);
-		}
+		DirectoryHelper.CopyDirectory(this._sourcePath, this._copyDestinationPath, overwrite: true);
 	}
 
 	/// <summary>

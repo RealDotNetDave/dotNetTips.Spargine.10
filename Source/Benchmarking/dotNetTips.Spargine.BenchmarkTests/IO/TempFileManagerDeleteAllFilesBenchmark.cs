@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-10-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerDeleteAllFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -52,13 +52,19 @@ public class TempFileManagerDeleteAllFilesBenchmark : Benchmark
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.DeleteAllFiles))]
 	[BenchmarkCategory(Categories.New)]
-	public void DeleteAllFiles() => this._manager.DeleteAllFiles();
+	public void DeleteAllFiles()
+	{
+		this._manager.DeleteAllFiles();
+	}
 
 	/// <summary>
 	/// Creates 256 temporary files before each iteration so only the delete is measured.
 	/// </summary>
 	[IterationSetup]
-	public void IterationSetup() => _ = this._manager.CreateFiles(256);
+	public void IterationSetup()
+	{
+		_ = this._manager.CreateFiles(256);
+	}
 
 	/// <summary>
 	/// Overrides Setup to initialize a fresh <see cref="TempFileManager"/> instance.

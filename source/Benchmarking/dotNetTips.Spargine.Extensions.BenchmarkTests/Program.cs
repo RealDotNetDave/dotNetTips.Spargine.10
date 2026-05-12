@@ -74,28 +74,28 @@ internal sealed class Program
 		//);
 
 		// Group 2: H–O
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(HashSetExtensionsCollectionBenchmark),
-		//  typeof(HashSetExtensionsMutatingCollectionBenchmark),
-		//	typeof(ImmutableArrayExtensionsBenchmark),
-		//	typeof(LinqExtensionsBenchmark),
-		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
-		//	typeof(ListExtensionsCollectionBenchmark),
-		//	typeof(NumericExtensionsBenchmark),
-		//	typeof(ObjectExtensionsBenchmark),
-		//	typeof(ObservableCollectionExtensionsCollectionBenchmark)
-		//);
-
-		// Group 3: R–T
 		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ReadOnlyCollectionExtensionsBenchmark),
-			typeof(ReadOnlySpanExtensionsBenchmark),
-			typeof(SortedDictionaryExtensionsBenchmark),
-			typeof(SortedSetExtensionsBenchmark),
-			typeof(StringBuilderExtensionsCounterBenchmark),
-			typeof(StringExtensionsBenchmark),
-			typeof(StringExtensionsCounterBenchmark),
-			typeof(TypeExtensionsBenchmark)
+			typeof(HashSetExtensionsCollectionBenchmark),
+		  typeof(HashSetExtensionsMutatingCollectionBenchmark),
+			typeof(ImmutableArrayExtensionsBenchmark),
+			typeof(LinqExtensionsBenchmark),
+			typeof(ListExtensionsAddRemoveCollectionBenchmark),
+			typeof(ListExtensionsCollectionBenchmark),
+			typeof(NumericExtensionsBenchmark),
+			typeof(ObjectExtensionsBenchmark),
+			typeof(ObservableCollectionExtensionsCollectionBenchmark)
 		);
+
+		// Group 3: R–T - 5 hours, 444 benchmarks
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
+		//	typeof(ReadOnlySpanExtensionsBenchmark),
+		//	typeof(SortedDictionaryExtensionsBenchmark),
+		//	typeof(SortedSetExtensionsBenchmark),
+		//	typeof(StringBuilderExtensionsCounterBenchmark),
+		//	typeof(StringExtensionsBenchmark),
+		//	typeof(StringExtensionsCounterBenchmark),
+		//	typeof(TypeExtensionsBenchmark)
+		//);
 	}
 }
