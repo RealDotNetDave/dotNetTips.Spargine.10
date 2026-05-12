@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperBenchmark.cs" company="DotNetTips.Spargine.BenchmarkTests">
 //     David McCarter
@@ -131,8 +131,8 @@ public class DirectoryHelperBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_source_" + RandomData.GenerateKey()));
-		this._tempPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_temp_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_source_directoryhelper_" + RandomData.GenerateKey()));
+		this._tempPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperBenchmark) + "_temp_directoryhelper_" + RandomData.GenerateKey()));
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 		_ = Directory.CreateDirectory(this._tempPath.FullName);
 

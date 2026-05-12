@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-10-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperCopyDirectoryBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -71,8 +71,8 @@ public class DirectoryHelperCopyDirectoryBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperCopyDirectoryBenchmark) + "_src_" + RandomData.GenerateKey()));
-		this._copyDestinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperCopyDirectoryBenchmark) + "_dst_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperCopyDirectoryBenchmark) + "_source_directoryhelper_" + RandomData.GenerateKey()));
+		this._copyDestinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(DirectoryHelperCopyDirectoryBenchmark) + "_destination_directoryhelper_" + RandomData.GenerateKey()));
 
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 		_ = Directory.CreateDirectory(this._copyDestinationPath.FullName);

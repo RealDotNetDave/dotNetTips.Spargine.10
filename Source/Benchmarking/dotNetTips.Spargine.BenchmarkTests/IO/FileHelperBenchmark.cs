@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -92,7 +92,7 @@ public class FileHelperBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperBenchmark) + "_src_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperBenchmark) + "_source_filehelper_" + RandomData.GenerateKey()));
 
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 

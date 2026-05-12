@@ -106,8 +106,8 @@ public class FileProcessorMoveFilesBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesBenchmark) + "_src_" + RandomData.GenerateKey()));
-		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesBenchmark) + "_dst_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesBenchmark) + "_source_fileprocessor_" + RandomData.GenerateKey()));
+		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesBenchmark) + "_destination_fileprocessor_" + RandomData.GenerateKey()));
 
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 		_ = Directory.CreateDirectory(this._destinationPath.FullName);

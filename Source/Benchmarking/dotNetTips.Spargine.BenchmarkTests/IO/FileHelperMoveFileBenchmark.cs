@@ -3,14 +3,16 @@
 // Author           : Copilot Agent
 // Created          : 05-12-2026
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileHelperMoveFileBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>Benchmark test for FileHelper.MoveFile using IterationCleanup to move the file back
-// after each iteration so only a single forward move is measured.</summary>
+// <summary>
+// Benchmark test for FileHelper.MoveFile using IterationCleanup to move the file back
+// after each iteration so only a single forward move is measured.
+// </summary>
 // ***********************************************************************
 
 using System.IO;
@@ -85,8 +87,8 @@ public class FileHelperMoveFileBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperMoveFileBenchmark) + "_src_" + RandomData.GenerateKey()));
-		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperMoveFileBenchmark) + "_dst_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperMoveFileBenchmark) + "_source_filehelper_" + RandomData.GenerateKey()));
+		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperMoveFileBenchmark) + "_destination_filehelper_" + RandomData.GenerateKey()));
 
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 		_ = Directory.CreateDirectory(this._destinationPath.FullName);

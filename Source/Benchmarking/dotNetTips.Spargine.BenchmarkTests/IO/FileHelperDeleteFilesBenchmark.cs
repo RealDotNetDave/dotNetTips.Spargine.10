@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileHelperDeleteFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -68,7 +68,7 @@ public class FileHelperDeleteFilesBenchmark : Benchmark
 	[IterationSetup]
 	public void IterationSetup()
 	{
-		this._tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperDeleteFilesBenchmark) + "_" + RandomData.GenerateKey()));
+		this._tempDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperDeleteFilesBenchmark) + "_temp_filehelper_" + RandomData.GenerateKey()));
 		_ = Directory.CreateDirectory(this._tempDir.FullName);
 		_ = RandomData.GenerateFiles(this._tempDir.FullName, FileCount, FileLength);
 

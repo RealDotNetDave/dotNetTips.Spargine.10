@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileHelperUnGZipAsyncBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -81,7 +81,7 @@ public class FileHelperUnGZipAsyncBenchmark : Benchmark
 		}
 
 		this._gzipFile = new FileInfo(gzipPath);
-		this._outDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperUnGZipAsyncBenchmark) + "_out_" + RandomData.GenerateKey()));
+		this._outDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperUnGZipAsyncBenchmark) + "_out_filehelper_" + RandomData.GenerateKey()));
 		_ = Directory.CreateDirectory(this._outDir.FullName);
 	}
 
@@ -92,7 +92,7 @@ public class FileHelperUnGZipAsyncBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperUnGZipAsyncBenchmark) + "_src_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileHelperUnGZipAsyncBenchmark) + "_source_filehelper_" + RandomData.GenerateKey()));
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 
 		ConsoleLogger.Default.WriteLine($"Source Path={this._sourcePath}");

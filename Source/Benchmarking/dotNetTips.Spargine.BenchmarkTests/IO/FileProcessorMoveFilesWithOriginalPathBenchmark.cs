@@ -3,7 +3,7 @@
 // Author           : Copilot Agent
 // Created          : 05-12-2026
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="FileProcessorMoveFilesWithOriginalPathBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -106,8 +106,8 @@ public class FileProcessorMoveFilesWithOriginalPathBenchmark : Benchmark
 	{
 		base.Setup();
 
-		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesWithOriginalPathBenchmark) + "_src_" + RandomData.GenerateKey()));
-		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesWithOriginalPathBenchmark) + "_dst_" + RandomData.GenerateKey()));
+		this._sourcePath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesWithOriginalPathBenchmark) + "_source_fileprocessor_" + RandomData.GenerateKey()));
+		this._destinationPath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(FileProcessorMoveFilesWithOriginalPathBenchmark) + "_destination_fileprocessor_" + RandomData.GenerateKey()));
 
 		_ = Directory.CreateDirectory(this._sourcePath.FullName);
 		_ = Directory.CreateDirectory(this._destinationPath.FullName);
