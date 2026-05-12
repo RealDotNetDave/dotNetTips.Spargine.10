@@ -20,6 +20,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using DotNetTips.Spargine.Core.Devices;
@@ -176,7 +177,6 @@ public static class LoggingHelper
 	/// AppInfo:FileVersion - 15.0.0
 	/// AppInfo:Title - dotNetTips.Spargine
 	/// </example>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(LogApplicationInformation), author: "David McCarter", createdOn: "11/03/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void LogApplicationInformation([DisallowNull] ILogger logger)
 	{
@@ -187,15 +187,16 @@ public static class LoggingHelper
 			return;
 		}
 
-		var values = TypeHelper.GetPropertyValues(input: App.AppInfo);
+		var appInfo = App.AppInfo;
 
-		if (values?.Count > 0)
-		{
-			foreach (var item in values.OrderBy(static p => p.Key))
-			{
-				logger.LogInformationMessage($"{nameof(AppInfo)}:{item.Key} - {item.Value}");
-			}
-		}
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Company)} - {appInfo.Company}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Configuration)} - {appInfo.Configuration}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Copyright)} - {appInfo.Copyright}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Description)} - {appInfo.Description}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.FileVersion)} - {appInfo.FileVersion}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Product)} - {appInfo.Product}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Title)} - {appInfo.Title}");
+		logger.LogInformationMessage($"{nameof(AppInfo)}:{nameof(appInfo.Version)} - {appInfo.Version}");
 	}
 
 	/// <summary>
@@ -229,25 +230,49 @@ public static class LoggingHelper
 	/// AppInfo:SystemDirectory - C:\\WINDOWS\\system32
 	/// AppInfo:HasShutdownStarted - False
 	/// </example>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information(nameof(LogComputerInformation), author: "David McCarter", createdOn: "11/04/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void LogComputerInformation([DisallowNull] ILogger logger)
 	{
 		logger = logger.ArgumentNotNull();
 
-		var values = TypeHelper.GetPropertyValues(new ComputerInfo());
-
-		if (values is null || values.Count == 0)
+		if (!logger.IsEnabled(LogLevel.Information))
 		{
 			return;
 		}
 
-		var sortedItems = values.OrderBy(static p => p.Key);
+		var computerInfo = new ComputerInfo();
 
-		foreach (var item in sortedItems)
-		{
-			logger.LogComputerInfoItem(item.Key, item.Value);
-		}
+		logger.LogComputerInfoItem(nameof(computerInfo.ComputerCulture), computerInfo.ComputerCulture);
+		logger.LogComputerInfoItem(nameof(computerInfo.ComputerUICulture), computerInfo.ComputerUICulture);
+		logger.LogComputerInfoItem(nameof(computerInfo.CurrentManagedThreadId), computerInfo.CurrentManagedThreadId.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.CurrentStackTrace), computerInfo.CurrentStackTrace);
+		logger.LogComputerInfoItem(nameof(computerInfo.CurrentSystemTickCount), computerInfo.CurrentSystemTickCount.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.CurrentWorkingDirectory), computerInfo.CurrentWorkingDirectory);
+		logger.LogComputerInfoItem(nameof(computerInfo.DiskUsage), computerInfo.DiskUsage);
+		logger.LogComputerInfoItem(nameof(computerInfo.FrameworkDescription), computerInfo.FrameworkDescription);
+		logger.LogComputerInfoItem(nameof(computerInfo.FrameworkVersion), computerInfo.FrameworkVersion.ToString());
+		logger.LogComputerInfoItem(nameof(computerInfo.GetCpuUsagePrivilegedTime), computerInfo.GetCpuUsagePrivilegedTime.ToString());
+		logger.LogComputerInfoItem(nameof(computerInfo.HasShutdownStarted), computerInfo.HasShutdownStarted.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.IPAddress), computerInfo.IPAddress);
+		logger.LogComputerInfoItem(nameof(computerInfo.Is64BitOperatingSystem), computerInfo.Is64BitOperatingSystem.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.Is64BitProcess), computerInfo.Is64BitProcess.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.IsNetworkAvailable), computerInfo.IsNetworkAvailable.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.IsUserInteractive), computerInfo.IsUserInteractive.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.LogicalDrives), computerInfo.LogicalDrives);
+		logger.LogComputerInfoItem(nameof(computerInfo.MachineName), computerInfo.MachineName);
+		logger.LogComputerInfoItem(nameof(computerInfo.OSArchitecture), computerInfo.OSArchitecture);
+		logger.LogComputerInfoItem(nameof(computerInfo.OSDescription), computerInfo.OSDescription);
+		logger.LogComputerInfoItem(nameof(computerInfo.OSMemoryPageSize), computerInfo.OSMemoryPageSize.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.PhysicalMemoryInUse), computerInfo.PhysicalMemoryInUse.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.ProcessArchitecture), computerInfo.ProcessArchitecture.ToString());
+		logger.LogComputerInfoItem(nameof(computerInfo.ProcessorCount), computerInfo.ProcessorCount.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.SystemDirectory), computerInfo.SystemDirectory);
+		logger.LogComputerInfoItem(nameof(computerInfo.SystemPageSize), computerInfo.SystemPageSize.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.TickCount), computerInfo.TickCount.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.TickCount64), computerInfo.TickCount64.ToString(CultureInfo.CurrentCulture));
+		logger.LogComputerInfoItem(nameof(computerInfo.Uptime), computerInfo.Uptime.ToString());
+		logger.LogComputerInfoItem(nameof(computerInfo.UserDomainName), computerInfo.UserDomainName);
+		logger.LogComputerInfoItem(nameof(computerInfo.UserName), computerInfo.UserName);
 	}
 
 	/// <summary>
