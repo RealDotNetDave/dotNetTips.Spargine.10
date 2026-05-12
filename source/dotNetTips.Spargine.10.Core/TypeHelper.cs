@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core.Cache;
 using Microsoft.Extensions.ObjectPool;
 
@@ -47,7 +48,7 @@ namespace DotNetTips.Spargine.Core;
 /// converting objects to and from JSON. It also provides methods to get default values, hash codes, property values,
 /// and display names for types, as well as determining if a type is a built-in .NET type or if an assembly is a .NET assembly.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTypeHelper")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTypeHelper")]
 public static class TypeHelper
 {
 	/// <summary>
@@ -157,42 +158,27 @@ public static class TypeHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(BuiltInTypeNames), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(BuiltInTypeNames), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static Dictionary<Type, string> BuiltInTypeNames()
 	{
-		// Check if the cache is already populated
-		if (_cachedBuiltInTypes != null)
+		if (_cachedBuiltInTypes is not null)
 		{
 			return _cachedBuiltInTypes;
 		}
 
-		var builtInTypes = new Dictionary<Type, string>(512);
-
+		var builtInTypes = new Dictionary<Type, string>(_primitiveTypes.Length + _commonTypes.Length);
 		var options = new DisplayNameOptions(fullName: false, includeGenericParameterNames: true, includeGenericParameters: true);
 
-		// Add primitive types
 		foreach (var type in _primitiveTypes.AsSpan())
 		{
 			builtInTypes[type] = GetTypeDisplayName(type, options);
 		}
 
-		// Add other common built-in types
 		foreach (var type in _commonTypes.AsSpan())
 		{
-			builtInTypes[type] = GetTypeDisplayName(type, includeGenericParameterNames: true, includeGenericParameters: true);
+			builtInTypes[type] = GetTypeDisplayName(type, options);
 		}
 
-		// Add types from the System namespace
-		var systemTypes = Assembly.GetAssembly(typeof(int))?.GetTypes()
-			.Where(t => string.Equals(t.Namespace, "System", StringComparison.Ordinal) && t.IsPublic && !t.IsGenericType);
-
-		foreach (var type in systemTypes!)
-		{
-			builtInTypes[type] = GetTypeDisplayName(type, includeGenericParameterNames: true, includeGenericParameters: true);
-		}
-
-		// Cache the result
 		_cachedBuiltInTypes = builtInTypes;
 
 		return builtInTypes;
@@ -211,10 +197,9 @@ public static class TypeHelper
 	/// Original code by: Jeremy Clark
 	/// </remarks>
 	[return: NotNull]
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static T Create<T>()
-		where T : class => Activator.CreateInstance<T>();
+	where T : class, new() => new();
 
 	/// <summary>
 	/// Creates an instance of the specified type <typeparamref name="T"/> using the provided parameters.
@@ -354,6 +339,27 @@ public static class TypeHelper
 	public static T FromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json) where T : class
 	{
 		return JsonSerializer.Deserialize<T>(json)!;
+	}
+
+	/// <summary>
+	/// Deserializes a JSON string into an instance of type <typeparamref name="T"/> using the provided <see cref="JsonTypeInfo{T}"/>.
+	/// </summary>
+	/// <typeparam name="T">The type of the object to deserialize to. Must be a reference type.</typeparam>
+	/// <param name="json">The JSON string to deserialize. Must not be <c>null</c> or empty.</param>
+	/// <param name="typeInfo">The <see cref="JsonTypeInfo{T}"/> used for source-generated or metadata-based deserialization. Must not be <c>null</c>.</param>
+	/// <returns>An instance of <typeparamref name="T"/> deserialized from the JSON string.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json"/> is <c>null</c> or empty, or if <paramref name="typeInfo"/> is <c>null</c>.</exception>
+	/// <exception cref="JsonException">Thrown if the JSON is invalid or deserialization returns <c>null</c>.</exception>
+	[return: NotNull]
+	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static T FromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, [DisallowNull] JsonTypeInfo<T> typeInfo)
+	where T : class
+	{
+		json = json.ArgumentNotNullOrEmpty();
+		typeInfo = typeInfo.ArgumentNotNull();
+
+		return JsonSerializer.Deserialize(json, typeInfo)
+			?? throw new JsonException($"Failed to deserialize JSON to {typeof(T)}.");
 	}
 
 	/// <summary>
@@ -1532,7 +1538,6 @@ public static class TypeHelper
 	/// This method uses a cached dictionary of built-in types for O(1) lookup performance.
 	/// The cache is lazily initialized on first access and reused for all subsequent calls.
 	/// </remarks>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
@@ -1579,20 +1584,12 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool IsEnumerable([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();
 
-		// Check if type is an array
-		if (type.IsArray)
-		{
-			return true;
-		}
-
-		// Check if type implements IEnumerable or ICollection
-		return type.GetInterfaces().Any(t => t == typeof(IEnumerable) || t == typeof(ICollection));
+		return type.IsArray || typeof(IEnumerable).IsAssignableFrom(type);
 	}
 
 	/// <summary>
