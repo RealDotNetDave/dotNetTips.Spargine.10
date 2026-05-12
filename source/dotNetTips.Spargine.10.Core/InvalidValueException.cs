@@ -12,7 +12,6 @@
 // <summary>Custom exception to be used when an invalid value is encountered.</summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
-using DotNetTips.Spargine.Core.Internal;
 using DotNetTips.Spargine.Core.Properties;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -80,27 +79,16 @@ public sealed class InvalidValueException<TValue> : Exception
 	public TValue Value { get; private set; }
 
 	/// <summary>
-	/// Converts to string.
-	/// Provides a string representation of the exception, including the message, inner exception, and the invalid value.
+	/// Converts this exception to a string representation.
 	/// </summary>
 	/// <returns>A string that represents the current exception.</returns>
 	[return: NotNull]
-	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "PropertiesToString uses reflection; cannot annotate Exception.ToString override.")]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public override string ToString()
 	{
-		var valueProperties = string.Empty;
-		var innerException = string.Empty;
+		var valueText = this.Value?.ToString() ?? string.Empty;
+		var innerExceptionText = this.InnerException?.ToString() ?? string.Empty;
 
-		if (this.Value is not null)
-		{
-			valueProperties = this.Value.PropertiesToString();
-		}
-
-		if (this.InnerException is not null)
-		{
-			innerException = this.InnerException.PropertiesToString();
-		}
-
-		return $"{this.Message} InnerException: {innerException} Value: {valueProperties}.";
+		return $"{this.Message} InnerException: {innerExceptionText} Value: {valueText}.";
 	}
 }
