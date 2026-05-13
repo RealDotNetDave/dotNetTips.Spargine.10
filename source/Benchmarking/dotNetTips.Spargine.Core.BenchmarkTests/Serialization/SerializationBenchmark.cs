@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="SerializationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -41,6 +41,7 @@ public class SerializationBenchmark : Benchmark
 	private string _jsonPersonRecord = default!;
 	private string _jsonPersonRef = default!;
 	private string _jsonPersonRefList = default!;
+	private FileInfo _jsonSerializeToFile = default!;
 	private List<Person> _personRefList = default!;
 	private string _xmlPersonRecord = default!;
 	private string _xmlPersonRef = default!;
@@ -205,6 +206,15 @@ public class SerializationBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(JsonSerialization.SerializeToFile) + ": JSON=Person, TypeInfo")]
+	[BenchmarkCategory(Categories.JSON)]
+	public void SerializeToFile_Json_Ref_Person()
+	{
+		JsonSerialization.SerializeToFile(this.PersonRef01, this._jsonSerializeToFile, PersonRefJsonSerializerContext.Default.Person);
+
+		this.Consume(this._jsonSerializeToFile.Exists);
+	}
+
 	/// <summary>
 	/// Serializes the XML reference to a file.
 	/// </summary>
@@ -230,6 +240,7 @@ public class SerializationBenchmark : Benchmark
 		this._xmlPersonRecord = XmlSerialization.Serialize(this.PersonRecord01);
 		this._jsonPersonRefList = RandomData.GeneratePersonRefCollection(Count).ToJson();
 		this._personRefList = [.. RandomData.GeneratePersonRefCollection(100)];
+		this._jsonSerializeToFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json"));
 		this._xmlSerializeToFile = new FileInfo(Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.xml"));
 	}
 
