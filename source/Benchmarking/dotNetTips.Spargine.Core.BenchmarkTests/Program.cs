@@ -49,7 +49,7 @@ internal sealed class Program
 
 		// Run Selected Tests
 		BenchmarkHelper.RunBenchmarks(config, true,
-		  typeof(DistinctBlockingCollectionMutatingCollectionBenchmark), typeof(TypeHelperBenchmark));
+		  typeof(DistinctBlockingCollectionMutatingCollectionBenchmark));
 
 	}
 }

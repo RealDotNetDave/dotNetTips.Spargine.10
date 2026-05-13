@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Async)]
 [ThreadingDiagnoser]
-public sealed class DistinctBlockingCollectionMutatingCollectionBenchmark : LargeCollectionBenchmark, IDisposable
+public class DistinctBlockingCollectionMutatingCollectionBenchmark : LargeCollectionBenchmark
 {
 	private DistinctBlockingCollection<Person> _people = default!;
 	private Person[] _peopleRefToInsert = default!;
@@ -59,15 +59,6 @@ public sealed class DistinctBlockingCollectionMutatingCollectionBenchmark : Larg
 		this.Consume(this._people.AddRange(this._peopleRefToInsert));
 	}
 
-	/// <summary>
-	/// Disposes the working collection after each benchmark iteration.
-	/// </summary>
-	[IterationCleanup]
-	public void Cleanup()
-	{
-		this._people?.Dispose();
-	}
-
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Clear))]
 	[BenchmarkCategory(Categories.Async)]
 	public void Clear()
@@ -77,11 +68,13 @@ public sealed class DistinctBlockingCollectionMutatingCollectionBenchmark : Larg
 		this.Consume(this._people);
 	}
 
-	/// <inheritdoc/>
-	public void Dispose()
+	/// <summary>
+	/// Disposes the working collection after each benchmark iteration.
+	/// </summary>
+	[IterationCleanup]
+	public void IterationCleanup()
 	{
 		this._people?.Dispose();
-		GC.SuppressFinalize(this);
 	}
 
 	[Benchmark(Description = nameof(DistinctBlockingCollection<>.Remove))]
