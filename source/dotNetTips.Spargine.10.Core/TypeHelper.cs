@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -353,7 +353,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json"/> is <c>null</c> or empty, or if <paramref name="typeInfo"/> is <c>null</c>.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or deserialization returns <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static T FromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	where T : class
 	{
@@ -1599,7 +1599,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">
 	/// Thrown if <paramref name="type"/> is <c>null</c>.
 	/// </exception>
-	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(IsEnumerable), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool IsEnumerable([DisallowNull] Type type)
 	{
 		type = type.ArgumentNotNull();

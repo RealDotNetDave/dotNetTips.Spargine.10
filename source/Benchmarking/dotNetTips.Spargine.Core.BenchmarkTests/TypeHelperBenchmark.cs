@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -27,8 +27,10 @@ using System.Reflection;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -43,6 +45,7 @@ public class TypeHelperBenchmark : Benchmark
 {
 
 	private readonly int _collectionCount = 50;
+	private string _jsonPersonRef = default!;
 	private List<Person> _people = default!;
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": No Cache")]
@@ -135,6 +138,15 @@ public class TypeHelperBenchmark : Benchmark
 	public void FindDerivedTypesCached()
 	{
 		var result = TypeHelper.FindDerivedTypes(AppDomain.CurrentDomain, typeof(Exception), true);
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.FromJson) + ": TypeInfo")]
+	[BenchmarkCategory(Categories.JSON)]
+	public void FromJson_TypeInfo()
+	{
+		var result = TypeHelper.FromJson(this._jsonPersonRef, PersonRefJsonSerializerContext.Default.Person);
+
 		this.Consume(result);
 	}
 
@@ -558,6 +570,15 @@ public class TypeHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(TypeHelper.IsEnumerable))]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void IsEnumerable()
+	{
+		var result = TypeHelper.IsEnumerable(typeof(List<int>));
+
+		this.Consume(result);
+	}
+
 	public override void Setup()
 	{
 		base.Setup();
@@ -568,6 +589,7 @@ public class TypeHelperBenchmark : Benchmark
 			list.Add(RandomData.GenerateKey(), RandomData.GenerateKey());
 		}
 
+		this._jsonPersonRef = JsonSerialization.Serialize(this.PersonRef01);
 		this._people = [.. RandomData.GeneratePersonRefCollection(this._collectionCount)];
 	}
 
