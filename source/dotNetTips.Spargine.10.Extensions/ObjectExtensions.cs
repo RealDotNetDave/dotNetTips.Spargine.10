@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// These methods are designed to extend the capabilities of all objects and simplify common operations related to serialization,
 /// reflection, and memory management.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineObjectExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineObjectExtensions")]
 public static class ObjectExtensions
 {
 #pragma warning disable IDE0051
@@ -1397,7 +1397,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ComputeSha256Hash), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+		[Information(nameof(ComputeSha256Hash), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public string ComputeSha256Hash<T>([DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			obj = obj.ArgumentNotNull();
