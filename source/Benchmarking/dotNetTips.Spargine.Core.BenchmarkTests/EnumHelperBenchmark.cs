@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-02-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -45,10 +45,18 @@ public class EnumHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumHelper.GetItems))]
-	public void GetValues()
+	[Benchmark(Description = nameof(EnumHelper.GetItems) + "_FixNames_False")]
+	public void GetItems_FixNamesFalse()
 	{
 		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumHelper.GetItems) + "_FixNames_True")]
+	public void GetItems_FixNamesTrue()
+	{
+		var result = EnumHelper.GetItems<RequestCacheLevel>(true);
 
 		this.Consume(result);
 	}

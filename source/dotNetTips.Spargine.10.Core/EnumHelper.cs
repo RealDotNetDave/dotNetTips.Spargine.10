@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -170,10 +170,9 @@ public static partial class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<EnumValue> GetItems<
-		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] T>(
-		bool fixNames = true)
+		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] T>(bool fixNames = true)
 		where T : Enum
 	{
 		var enumType = typeof(T);

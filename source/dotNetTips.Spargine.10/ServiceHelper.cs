@@ -53,7 +53,7 @@ public static class ServiceHelper
 	/// </summary>
 	/// <returns>A read-only collection of strings containing the names of all requests.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AllServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(AllServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> AllServices()
 	{
 		var services = ServiceController.GetServices();
@@ -142,7 +142,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ServiceExists), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(ServiceExists), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool ServiceExists([DisallowNull] string serviceName)
 	{
 		using var service = LoadService(serviceName.ArgumentNotNullOrEmpty());
@@ -165,7 +165,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ServiceStatus), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(ServiceStatus), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static ServiceControllerStatus ServiceStatus([DisallowNull] string serviceName)
 	{
 		using var service = LoadService(serviceName.ArgumentNotNullOrEmpty());
@@ -208,7 +208,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ServiceActionResult StartService([DisallowNull] string serviceName, bool startServicesDependedOn = false, bool startDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
@@ -284,7 +284,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void StartServices([DisallowNull] in IEnumerable<string> requests, ILogger? logger = null)
 	{
 		foreach (var request in requests.ArgumentNotNull())
@@ -341,7 +341,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartStopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StartStopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void StartStopServices([DisallowNull] in IEnumerable<ServiceAction> requests, ILogger? logger = null)
 	{
 		foreach (var request in requests.ArgumentNotNull())
@@ -395,7 +395,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(StopService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static ServiceActionResult StopService([DisallowNull] string serviceName, bool stopServicesDependedOn = false, bool stopDependingServices = false, ILogger? logger = null)
 	{
 		serviceName = serviceName.ArgumentNotNullOrEmpty();
@@ -463,7 +463,7 @@ public static class ServiceHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(StopServices), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void StopServices([DisallowNull] IEnumerable<string> requests, ILogger? logger = null)
 	{
 		foreach (var request in requests.ArgumentNotNull())
@@ -493,7 +493,7 @@ public static class ServiceHelper
 	/// }
 	/// </code>
 	/// </example>
-	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available, Documentation = "https://bit.ly/SpargineJun2021")]
+	[Information(nameof(LoadService), author: "David McCarter", createdOn: "1/1/2016", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static ServiceController? LoadService([DisallowNull] string serviceName)
 	{
 		var services = ServiceController.GetServices();
