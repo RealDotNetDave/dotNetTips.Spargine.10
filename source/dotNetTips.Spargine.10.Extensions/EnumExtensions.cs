@@ -55,10 +55,10 @@ public static class EnumExtensions
 		where TEnum : struct, Enum
 	{
 		/// <summary>
-		/// Gets the description of the enum value using enum metadata preserved for trimming.
+		/// Gets the description of the enum value using enum metadata.
 		/// </summary>
 		/// <returns>The description of the enum value, or its name if no description is available.</returns>
-		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.New)]
+		[Information(nameof(GetDescription), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
 		public string? GetDescription()
 		{
 			return EnumHelper.GetDescription(input);
@@ -68,7 +68,7 @@ public static class EnumExtensions
 		/// Gets the names and values of the enum.
 		/// </summary>
 		/// <returns>A read-only collection of enum names and values.</returns>
-		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<(string Description, int Value)> GetItems()
 		{
 			var enumValues = Enum.GetValues<TEnum>();

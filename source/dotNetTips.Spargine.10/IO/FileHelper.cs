@@ -147,7 +147,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static long CalculateTotalFileSize(ReadOnlySpan<FileInfo> files)
 	{
 		if (files.IsEmpty)

@@ -259,7 +259,7 @@ public static class JsonSerialization
 	/// Prefer this overload over the string-based overload when processing large JSON files.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		file = file.ArgumentExists();
@@ -354,7 +354,7 @@ public static class JsonSerialization
 	/// source-generated <see cref="JsonTypeInfo{T}"/> instead of runtime reflection.
 	/// All directories and subdirectories in the specified path are created if they do not already exist.
 	/// </remarks>
-	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void SerializeToFile<T>([DisallowNull] T obj, [DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		obj = obj.ArgumentNotNull();

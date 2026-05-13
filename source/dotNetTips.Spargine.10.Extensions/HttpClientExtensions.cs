@@ -222,7 +222,7 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static async Task<T> GetAndDeserializeFromStreamAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonTypeInfo<T> typeInfo, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
@@ -525,7 +525,7 @@ public static class HttpClientExtensions
 	///     MyJsonContext.Default.MyItemResponse);
 	/// </code>
 	/// </example>
-	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static async Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo, [DisallowNull] JsonTypeInfo<TResponse> responseTypeInfo, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
@@ -568,7 +568,7 @@ public static class HttpClientExtensions
 	/// HttpStatusCode statusCode = await httpClient.PostAndEnsureSuccessAsync(url, newItem, MyJsonContext.Default.MyItem);
 	/// </code>
 	/// </example>
-	[Information(nameof(PostAndEnsureSuccessAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(PostAndEnsureSuccessAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static async Task<HttpStatusCode> PostAndEnsureSuccessAsync<TRequest>(
 	[DisallowNull] this HttpClient client,
 	[DisallowNull] Uri url,

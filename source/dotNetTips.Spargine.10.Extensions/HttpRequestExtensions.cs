@@ -327,7 +327,7 @@ public static class HttpRequestExtensions
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, [DisallowNull] JsonTypeInfo<T> typeInfo, out T? value)
 	{
 		request = request.ArgumentNotNull();
