@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -490,6 +490,17 @@ public class ObjectExtensionsBenchmark : Benchmark
 		people.ToJsonFile(this._tempJsonFile);
 
 		// Verify file was created
+		this.Consume(this._tempJsonFile.Exists);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.ToJsonFile) + ": JsonTypeInfo")]
+	[BenchmarkCategory(Categories.Serialization, Categories.JSON)]
+	public void ToJsonFileJsonTypeInfo()
+	{
+		var person = this.PersonRef01;
+
+		person.ToJsonFile(this._tempJsonFile, PersonRefJsonSerializerContext.Default.Person);
+
 		this.Consume(this._tempJsonFile.Exists);
 	}
 

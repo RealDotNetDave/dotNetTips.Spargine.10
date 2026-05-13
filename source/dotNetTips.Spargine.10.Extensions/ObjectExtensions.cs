@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -671,7 +671,7 @@ public static class ObjectExtensions
 		/// person.ToJsonFile(file, MyJsonContext.Default.Person);
 		/// </code>
 		/// </example>
-		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void ToJsonFile<T>([DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			file = file.ArgumentNotNull();
