@@ -259,7 +259,7 @@ public static class JsonSerialization
 	/// Prefer this overload over the string-based overload when processing large JSON files.
 	/// </remarks>
 	[Pure]
-	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(LoadCollectionFromJson), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static T[] LoadCollectionFromJson<T>([DisallowNull] FileInfo file, int count, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		file = file.ArgumentExists();
