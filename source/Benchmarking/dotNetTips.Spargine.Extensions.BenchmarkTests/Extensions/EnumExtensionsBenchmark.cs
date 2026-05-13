@@ -3,13 +3,13 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="EnumExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary></summary>
+// <summary>Benchmark tests for EnumExtensions methods.</summary>
 // ***********************************************************************
 
 using System;
@@ -34,10 +34,19 @@ public class EnumExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumExtensions.GetItems))]
+	[Benchmark(Description = nameof(EnumExtensions.GetItems) + " (Enum)")]
 	public void GetItems()
 	{
 		var result = this._testEnum.GetItems();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumExtensions.GetItems) + " (Generic)")]
+	public void GetItemsGeneric()
+	{
+		var value = StringComparison.OrdinalIgnoreCase;
+		var result = value.GetItems();
 
 		this.Consume(result);
 	}

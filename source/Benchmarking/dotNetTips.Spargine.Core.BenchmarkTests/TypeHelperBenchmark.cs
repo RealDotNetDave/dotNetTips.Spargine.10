@@ -143,7 +143,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.FromJson) + ": TypeInfo")]
 	[BenchmarkCategory(Categories.JSON)]
-	public void FromJson_TypeInfo()
+	public void FromJsonTypeInfo()
 	{
 		var result = TypeHelper.FromJson(this._jsonPersonRef, PersonRefJsonSerializerContext.Default.Person);
 

@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-28-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -68,7 +68,7 @@ public static class EnumExtensions
 		/// Gets the names and values of the enum.
 		/// </summary>
 		/// <returns>A read-only collection of enum names and values.</returns>
-		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(GetItems), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public ReadOnlyCollection<(string Description, int Value)> GetItems()
 		{
 			var enumValues = Enum.GetValues<TEnum>();
